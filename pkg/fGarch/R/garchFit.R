@@ -384,8 +384,8 @@ garchFit <-
         TOLG = 1.0e-6,
         TOLD = 1.0e-6,
         TOLS = 1.0e-4,
-        RPF  = 1.0e-2) # 1.0e-4)
-
+        RPF  = 1.0e-2, # 1.0e-4)
+        IPRNT = 2)
     # Return Value:
     con
 }

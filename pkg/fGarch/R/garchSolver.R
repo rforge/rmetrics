@@ -211,8 +211,8 @@
 
     # Control:
     INDEX = .params$index
+    if (trace) IPRNT = .params$contorl$IPRNT else IPRNT = 0
     IPAR = c(
-        IPRNT = as.integer(trace),    #  [1, 200, 500, 2, 2, 1, 4]
         MIT = .params$control$MIT,
                     # maximum number of iterations (200)
         MFV = .params$control$MFV,
@@ -267,22 +267,23 @@
     N = length(.series$x)
     DPARM = c(.params$delta, .params$skew, .params$shape)
     if(IPAR[1] == 0) sink("@sink@")
-    fit = .Fortran("garchfit",
-        N = as.integer(N),
-        Y = as.double(.series$x),
-        Z = as.double(rep(2, times = N)),
-        H = as.double(rep(0, times = N)),
-        NF = as.integer(NF),
-        X = as.double(.params$params[INDEX]),
-        XL = as.double(.params$U[INDEX]),
-        XU = as.double(.params$V[INDEX]),
-        DPARM = as.double(DPARM),
-        MDIST = as.integer(MDIST),
-        IPAR = as.integer(IPAR),
-        RPAR = as.double(RPAR),
-        MYPAR = as.integer(MYPAR),
-        F = as.double(FALSE),
-        PACKAGE = "fGarch")
+    fit <- .Fortran("garchfit",
+                    N = as.integer(N),
+                    Y = as.double(.series$x),
+                    Z = as.double(rep(2, times = N)),
+                    H = as.double(rep(0, times = N)),
+                    NF = as.integer(NF),
+                    X = as.double(.params$params[INDEX]),
+                    XL = as.double(.params$U[INDEX]),
+                    XU = as.double(.params$V[INDEX]),
+                    DPARM = as.double(DPARM),
+                    MDIST = as.integer(MDIST),
+                    IPAR = as.integer(IPAR),
+                    RPAR = as.double(RPAR),
+                    IPRNT = as.integer(IPRNT),
+                    MYPAR = as.integer(MYPAR),
+                    F = as.double(FALSE),
+                    PACKAGE = "fGarch")
     if(IPAR[1] == 0) {
         sink()
         unlink("@sink@")
@@ -295,7 +296,7 @@
         print(RPAR)
     }
     fit$par = fit[[6]]
-    fit$value = fit[[14]]
+    fit$value = fit[[15]]
 
     # Update .series
     names(fit$par) = names(.params$params[INDEX])
