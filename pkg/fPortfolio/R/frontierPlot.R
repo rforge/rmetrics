@@ -41,11 +41,11 @@
 #   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .monteCarloPlot              Adds randomly produced feasible portfolios
 # FUNCTION:                    DESCRIPTION:
-#   .weightsWheel                Adds a pie of weights to frontier plot
-#   .attributesWheel             Adds a pie of attributes to frontier plot
-# FUNCTION:
-#   .notStackedWeightsPlot       Plots the not stacked weights of potfolio
-#   .addlegend                   Adds legend to sliders
+#   .weightsWheel               Adds a pie of weights to frontier plot
+#   .attributesWheel            Adds a pie of attributes to frontier plot
+# FUNCTION:                    DESCRIPTION:
+#   .notStackedWeightsPlot      Plots the not stacked weights of potfolio
+#   .addlegend                  Adds legend to sliders
 ################################################################################
 
 

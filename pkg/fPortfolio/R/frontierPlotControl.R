@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                     PRINT AND PLOT METHODS:            
-#  frontierPlotControl
+#  frontierPlotControl           Sets frontier plot control parameters
 ################################################################################
 
 
@@ -70,6 +70,9 @@ frontierPlotControl <-
     )   
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Sets frontier plot control parameters
     
     # FUNCTION:
     

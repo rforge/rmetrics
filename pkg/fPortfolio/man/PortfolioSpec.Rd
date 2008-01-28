@@ -365,18 +365,6 @@ setTrace(spec) <- value
    # Change Risk Free Rate
    setRiskFreeRate(Spec) = 3
    Spec
-
-## portfolioStatistics -
-   # Load Data, i.e. a List of Returns:
-   Data = as.timeSeries(data(smallcap.ts))
-   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
-   # Estimating Mean and Covariance with mean()and cov()
-   portfolioStatistics(Data)
-   # Set Covariance Estimator to "shrink" Estimator:
-   setEstimator(Spec) = c("mean", "shrink")
-   # Estimating Mean and Covariance MCD
-   portfolioStatistics(Data, Spec)
 }
 
 
