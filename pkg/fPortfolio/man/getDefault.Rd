@@ -40,7 +40,7 @@
   
     A collection and description of functions 
     allowing to get information about objects
-    of class fPFOLIODATA, FPFOLIOSPEC, and 
+    of class fPFOLIODATA, fPFOLIOSPEC, and 
     fPORTFOLIO. 
     \cr
     

@@ -26,7 +26,6 @@
     
     \tabular{ll}{
     \code{portfolioSpec} \tab Specifies a portfolio, \cr
-    \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
     \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
     
 }
