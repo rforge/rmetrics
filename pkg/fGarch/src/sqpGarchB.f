@@ -414,6 +414,9 @@ c     +  NIT,NFV,NFG,F,CMAX,GMAX
          CALL DBLEPR("LLH improved to:", -1, F, 1)
          CALL DBLEPR("With X:", -1, X, NF)
       END IF 
+
+c     Allowing interrupts from R
+      CALL RCHKUSR() 
 *
 *     START OF THE ITERATION WITH TESTS FOR TERMINATION.
 *
