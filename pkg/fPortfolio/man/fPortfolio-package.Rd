@@ -192,17 +192,13 @@
 }
 
 
-\section{Rolling Portfolio and Backtesting{
+\section{Rolling Portfolio and Backtesting}{
 
     \code{rollingPortfolio}
     
     \code{portfolioBacktesting}
     
 }
-
-
-
-
    
 
 \keyword{models}
