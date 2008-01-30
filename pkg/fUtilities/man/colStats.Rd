@@ -1,6 +1,5 @@
-\name{ColumnStatistics}
+\name{colStats}
 
-\alias{ColumnStatistics}
 
 \alias{colStats} 
 \alias{colSums}
@@ -19,6 +18,7 @@
 
 \alias{mean.timeSeries}           
 \alias{var.timeSeries}
+
 
 \title{Column Statistics}
 

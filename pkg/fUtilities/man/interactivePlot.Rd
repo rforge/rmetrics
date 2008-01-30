@@ -1,6 +1,5 @@
-\name{PlotUtilities}
+\name{interactivePlot}
 
-\alias{PlotUtilities}
 
 \alias{interactivePlot}
 \alias{gridVector}

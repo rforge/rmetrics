@@ -1,6 +1,7 @@
-\name{ColorPalettes}
+\name{colorPalette}
 
-\alias{ColorPalettes}
+
+\alias{colorPalette}
 
 \alias{rainbowPalette} 
 \alias{heatPalette}

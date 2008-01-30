@@ -97,7 +97,16 @@
 \section{Column and Row Statistics for Rectangular Objects}{
 
     Functions to compute column and row statistical properties 
-    of financial and economic time series data.
+    of financial and economic time series data. 
+    
+    The \code{colStats} and \code{rowStats} are quite general functions
+    which allow to specify the function to compute the desired statistics
+    by the user.
+    
+    The remaining column and row statistics functions are thought to
+    compute often used time series statistics. This includes the sum(,
+    mean, standard deviations, variance, skewness, kurtosis, maximum,
+    minimum, product, and quantile value.
     
     Column Statistics:
     

@@ -1,6 +1,5 @@
-\name{RowStatistics}
+\name{rowStats}
 
-\alias{RowStatistics}
 
 \alias{rowStats} 
 \alias{rowSums}
@@ -17,7 +16,8 @@
 \alias{rowAvgs}           
 \alias{rowStdevs}
 
-\title{row Statistics}
+
+\title{Row Statistics}
 
 
 \description{

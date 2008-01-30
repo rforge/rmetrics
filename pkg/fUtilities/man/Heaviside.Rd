@@ -1,6 +1,5 @@
-\name{HeavisideFunction}
+\name{Heaviside}
 
-\alias{HeavisideFunction}
 
 \alias{Heaviside}
 \alias{Sign}
