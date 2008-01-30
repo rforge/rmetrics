@@ -28,31 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:                 SOME UTILITIES:
-#  .description              Sets default description string
+# FUNCTION:                 DESCRIPTION:
 #  .unirootNA                Computes zero without error exit
 ################################################################################
-
-
-.description <- 
-    function()
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Descriptions:
-    #   Sets default description string:
-
-    # FUNCTION:
-
-    # Description String:
-    ans = paste(as.character(date()), "by user:", Sys.getenv("USERNAME"))
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .unirootNA <- 
@@ -102,46 +80,6 @@
 
     # Return Value:
     ans$root
-}
-
-
-################################################################################
-
-
-.print <- 
-    function(x, ...)
-{
-    UseMethod(".print")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.plot <- 
-    function(x, ...)
-{
-    UseMethod(".plot")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.summary <- 
-    function(object, ...)
-{
-    UseMethod(".summary")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.predict <- 
-    function(object, ...)
-{
-    UseMethod(".predict")
 }
 
 
