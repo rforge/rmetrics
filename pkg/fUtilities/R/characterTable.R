@@ -28,18 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+# FUNCTION:                 DESCRIPTION:
 #  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
 ################################################################################
-
-
-################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
 
 
 characterTable <-  
@@ -90,76 +81,6 @@ characterTable <-
     
     # Return Value:
     invisible(font)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-symbolTable <- 
-    function(font = par('font'), cex = 0.7) 
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Shows a table of plot characters.
-    
-    # Example:
-    #   symbolTable()
-    
-    # Author:
-    #   Unknown, code found on the internet.
-
-    # FUNCTION:
-    
-    # Table:
-    plot(0, 0, xlim = c(-1, 11), ylim = c(0, 26), type = 'n', 
-        axes = FALSE, xlab = '', ylab = '', 
-        main = "Table of Plot Characters")
-    j = -1
-    for(i in 0:255) {
-        if(i %% 25 == 0) {j = j+1; k = 26}
-        k = k-1
-        points(j, k, pch = i, font = font, cex = cex, col = 2)
-        text(j+0.50, k, i, cex = cex) 
-    }
-    
-    # Return Value:
-    invisible(font)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-colorTable <- 
-    function(cex = 0.7) 
-{   
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Displays a table of plot colors.
-    
-    # Author:
-    #   Unknown, code found on the internet.
-    
-    # Example:
-    #   colorTable()
-  
-    # FUNCTION:
-    
-    # Plot:
-    plot(0, 0, xlim = c(-1, 10), ylim = c(0, 10), type = 'n', axes = FALSE, 
-        xlab = '', ylab = '', cex = cex, main = "Table of Color Codes")
-    j = -1
-    for(i in 0:99) {
-        if(i %% 10 == 0) {j = j+1; k = 10}
-        k = k-1
-        points(j, k, pch = 15, col = i, cex = 2)
-        text(j+0.45, k, i, cex = cex)}
-    
-    # Return Value:
-    invisible()
 }
 
 
