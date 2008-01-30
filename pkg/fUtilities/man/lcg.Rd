@@ -1,7 +1,7 @@
-\name{PortableInnovations}
+\name{lcg}
 
 
-\alias{PortableInnovations}
+\alias{lcg}
 
 \alias{set.lcgseed}
 \alias{get.lcgseed}
