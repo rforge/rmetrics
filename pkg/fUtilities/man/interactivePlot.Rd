@@ -5,12 +5,12 @@
 \alias{gridVector}
 
 
-\title{Explorative Data Analysis}
+\title{Interactive Plot Utility}
 
 
 \description{
 
-    Functions for plotting with emphasis on interactive plots.
+    Plots with emphasis on interactive plots.
     \cr
       
     The plot utility functions are:

@@ -1,4 +1,4 @@
-\name{ColorLocator}
+\name{colorLocator}
 
 
 \alias{colorLocator}

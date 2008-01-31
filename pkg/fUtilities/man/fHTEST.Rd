@@ -1,6 +1,5 @@
-\name{HypothesisTesting}
+\name{fHTEST}
 
-\alias{HypothesisTesting}
 
 \alias{fHTEST}
 \alias{fHTEST-class}

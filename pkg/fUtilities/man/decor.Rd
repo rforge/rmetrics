@@ -1,4 +1,4 @@
-\name{DecorFunctions}
+\name{decor}
 
 \alias{decor}
 \alias{hgrid}

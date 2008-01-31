@@ -20,6 +20,7 @@
 
 \usage{
 kurtosis(x, \dots)
+
 \method{kurtosis}{default}(x, na.rm = FALSE, method = c("excess", "moment", "fisher"), \dots)
 \method{kurtosis}{data.frame}(x, \dots)
 \method{kurtosis}{POSIXct}(x, \dots)

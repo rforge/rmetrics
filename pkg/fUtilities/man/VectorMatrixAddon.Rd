@@ -25,7 +25,6 @@
 \alias{vec}
 \alias{vech}
 
-
 \alias{tslag}
 \alias{pdl}
 

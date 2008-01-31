@@ -1,8 +1,9 @@
-\name{GeneralS4Extractors}
+\name{getS4}
 
-\alias{GeneralS4Extractors}
+\alias{getS4}
 
 \alias{isS4}
+
 \alias{getCall}
 \alias{getModel}
 \alias{getTitle}
