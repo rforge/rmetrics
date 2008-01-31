@@ -1,0 +1,2 @@
+useDynlib(Rsocp)
+export(socp)
