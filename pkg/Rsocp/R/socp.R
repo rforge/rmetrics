@@ -88,7 +88,9 @@ socp  <-
     stopifnot(any(dim(A) == c(sum(N), n)))
     stopifnot(length(b) == sum(N))
     stopifnot(any(dim(C) == c(L, n)))
-    stopifnot(length(d) == n)
+    stopifnot(length(d) == L)
+    stopifnot(length(z) == L)
+    stopifnot(length(w) == L)
 
     # storage convention for socp.c routine
     Ni <- seq(from = 1, length = N[1])
