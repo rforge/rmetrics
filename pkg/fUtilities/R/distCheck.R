@@ -33,7 +33,7 @@
 ################################################################################
 
 
-.distCheck = 
+distCheck <- 
     function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -42,8 +42,14 @@
     #   Checks consistency of distributions
     
     # Arguments:
-    #   fun - name of distribution
-    #   ... - distributional parameters
+    #   fun - a character string denoting the name of the distribution
+    #   n - an integer specifying the number of random variates to be
+    #       generated
+    #   robust -  a logical flag, should robust estimates be used? By
+    #       default \code{TRUE}
+    #   subdivisions - an integer specifying the numbers of subdivisions
+    #       in integration
+    #   ... - the distributional parameters
     
     # Examples:
     #   .distCheck("norm", mean = 1, sd = 1)
@@ -123,6 +129,15 @@
     # Return Value:
     unlist(ans)
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.distCheck <- distCheck
+
+    # Keep for older Rmetrics Versions
+
 
 
 ################################################################################

@@ -28,8 +28,8 @@
 
 
 ################################################################################
-# FUNCTION:                 PLOT UTILITIES:
-#  gridVector                Creates from two vectors rectangular grid points
+# FUNCTION:               DESCRIPTION:
+#  gridVector              Creates from two vectors rectangular grid coordinates
 ################################################################################
 
 
@@ -39,16 +39,16 @@ gridVector <-
     # A function implemented by Diethelm Wuertz, GPL
 
     # Description:
-    #   Creates from two vectors x and y all grid points
+    #   Creates from two vectors rectangular grid coordinates
+    
+    # Arguments:
+    #   x, y - two numeric vectors of length m and n which span the 
+    #   rectangular grid of size m times n.
     
     # Details: 
     #   The two vectors x and y span a rectangular grid with nx=length(x) 
     #   times ny=length(y) points which are returned as a matrix of size
     #   (nx*ny) times 2.
-    
-    # Arguments:
-    #   x, y - two numeric vectors of length m and n which span the 
-    #   rectangular grid of size m times n.
     
     # Value:
     #   returns a list with two elements X and Y each of length m 

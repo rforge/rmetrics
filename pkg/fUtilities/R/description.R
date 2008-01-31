@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .description              Sets default description string
+#  description               Sets default description string
 ################################################################################
 
 
-.description <- 
+description <- 
     function()
 {   
     # A function implemented by Diethelm Wuertz
@@ -49,6 +49,14 @@
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.description <- description
+
+    # Keep for older Rmetrics Versions
 
 
 ################################################################################

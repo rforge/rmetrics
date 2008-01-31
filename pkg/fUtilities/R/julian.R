@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                 DATE FUNCTIONS:
-#  .fjulian                  Transform formatted dates to julian day numbers
+#  .fjulian                  Transforms formatted dates to julian day numbers
 #  .julian                   Implements SPlus like 'julian'
 #  .isPOSIX                  Checks for an object of class POSIX
 #  .by2seconds               Converts 'by' string into numeric value of seconds

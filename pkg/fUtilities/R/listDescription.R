@@ -29,20 +29,20 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .listDescription          Extracts R package description
+#  listDescription           Extracts R package description
 ################################################################################
 
 
-.listDescription <-
+listDescription <-
     function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Extract package description
+    #   Extracts package description
     
     # Example:
-    #   .listIndex("fSeries")
+    #   listDescription("fSeries")
     
     # FUNCTION:
     
