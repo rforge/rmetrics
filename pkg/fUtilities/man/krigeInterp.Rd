@@ -28,7 +28,8 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
         the arguments \code{x} and \code{y} are 
         two numeric vectors of grid pounts, and \code{z} is a numeric 
         matrix or any other rectangular object which can be transformed 
-        by the function \code{as.matrix} into a matrix object.  
+        by the function \code{as.matrix} into a matrix object. 
+        } 
     \item{gridPoints}{
         an integer value specifying the number of grid points in \code{x} 
         and \code{y} direction.
@@ -36,11 +37,15 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
     \item{xo, yo}{
         two numeric vectors of data points spanning the grid.
         }
+    \item{extrap}{
+        a logical, if \code{TRUE} then the data points are extrapolated.
+        }
     \item{polDegree}{
         the polynomial krige degree, an integer ranging between 1 and 6.
         }
     
 }
+
 
 \note{
 

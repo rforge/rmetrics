@@ -20,6 +20,7 @@
 
 \usage{
 skewness(x, \dots)
+
 \method{skewness}{default}(x, na.rm = FALSE, method = c("moment", "fisher"), \dots)
 \method{skewness}{data.frame}(x, \dots)
 \method{skewness}{POSIXct}(x, \dots)
@@ -43,7 +44,7 @@ skewness(x, \dots)
         exact unbiasedness is not possible. 
         }
     \item{x}{
-        a numeric vector.        
+        a numeric vector or object.      
         }
     \item{\dots}{
         arguments to be passed.

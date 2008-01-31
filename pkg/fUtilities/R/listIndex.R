@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .listIndex                Extracts R package index
+#  listIndex                 Extracts R package index
 ################################################################################
 
 
-.listIndex <-
+listIndex <-
     function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
@@ -42,7 +42,7 @@
     #   Extracts R package index
     
     # Example:
-    #   .listIndex("fSeries")
+    #   listIndex("fSeries")
     
     # FUNCTION:
     

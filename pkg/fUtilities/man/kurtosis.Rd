@@ -46,6 +46,9 @@ kurtosis(x, \dots)
         definition of sample variance, although in the case of
         kurtosis exact unbiasedness is not possible. 
         }
+    \item{x}{
+        a numeric vector or object.      
+        }
     \item{\dots}{
         arguments to be passed.
         }

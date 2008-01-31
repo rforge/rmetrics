@@ -36,7 +36,7 @@ distCheck(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, \dots)
         an integer specifying the numbers of subdivisions
         in integration.
         }
-    \item{dots}{
+    \item{\dots}{
         the distributional parameters.
         }
         

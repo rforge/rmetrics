@@ -1,7 +1,7 @@
-\name{BasicExtensions}
+\name{baseMethods}
 
 
-\alias{BasicExtensions}
+\alias{baseMethods}
 
 
 \alias{align}
@@ -216,10 +216,6 @@ colnames(x) <- value
         a character string, one of \code{"average"}, \code{"first"}, 
         \code{"random"}, \code{"max"}, \code{"min"} specifying how 
         ties are treated, can be abbreviated, see \code{rank}.
-        }
-    \item{tz}{
-        [as.POSIXlt] - \cr
-        time zone specification.
         }
     \item{value}{
         [colnames][rownames] - \cr
