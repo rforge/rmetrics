@@ -19,14 +19,8 @@
 \alias{rank}
 \alias{rank.default}
 
-%\alias{round}
-%\alias{round.default}
-
 \alias{sample}
 \alias{sample.default}
-
-%only for R <= 2.3.x: \alias{sort}
-% " \alias{sort.default}
 
 \alias{var}
 \alias{var.default}
@@ -46,8 +40,6 @@
 \alias{stdev}
 \alias{stdev.default}
 
-\alias{print.control}
-
 \alias{rownames<-}
 \alias{rownames<-.default}
 
@@ -57,14 +49,12 @@
 \alias{atoms}
 \alias{atoms.default}
 
-\alias{as.POSIXlt}
-\alias{as.POSIXlt.default}
 
-\alias{as.matrix.ts}
-\alias{as.matrix.mts}
+%only for R <= 2.3.x: \alias{sort}
+% " \alias{sort.default}
 
 
-\title{Basic Extensions}
+\title{generic Functions Extensions}
 
 
 \description{
@@ -77,25 +67,20 @@
     
     \tabular{ll}{
     \code{align} \tab adds align function, \cr
-    \code{as.POSIXlt} \tab adds as.POSIXlt function, \cr
     \code{atoms} \tab adds atoms function, \cr
     \code{attach} \tab extends attach function, \cr
+    \code{colnames<-} \tab adds colnames assignment, \cr
     \code{cor} \tab extends cor function, \cr
     \code{cov} \tab extends cov function, \cr
     \code{log} \tab extends log function, \cr
     \code{outlier} \tab adds outlier function, \cr
     \code{rank} \tab extends rank function, \cr
+    \code{rownames<-} \tab adds rownames assigment, \cr
     \code{sample} \tab extends sample function, \cr
     \code{stdev} \tab adds stdev function, \cr
-    \code{var} \tab extends var function, \cr
-    \code{volatility} \tab adds volatility function, \cr
     \code{termPlot} \tab adds term plot function, \cr
-    \code{rownames<-} \tab adds rownames assigment, \cr
-    \code{colnames<-} \tab adds colnames assignment, \cr
-    \code{as.matrix.ts} \tab adds as.matrix.ts method, \cr
-    \code{as.matrix.mts} \tab adds as.matrix.mts method, \cr
-    %%
-    \code{print.control} \tab adds print.control method. }
+    \code{var} \tab extends var function, \cr
+    \code{volatility} \tab adds volatility function. }
 
 }
 
@@ -104,8 +89,16 @@
 \method{align}{default}(x, y, xout, method = "linear", n = 50, rule = 1, 
     f = 0, ties = mean, \dots)
 
+\method{atoms}{default}(x, \dots)
+
 \method{attach}{default}(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
+
+\method{cor}{default}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+    
+\method{cov}{default}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
 
 \method{log}{default}(x, base = exp(1))
 
@@ -116,33 +109,17 @@
 
 \method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
 
-\method{var}{default}(x, y = NULL, na.rm = FALSE, use)
-
-\method{cov}{default}(x, y = NULL, use = "all.obs", 
-    method = c("pearson", "kendall", "spearman"))
-
-\method{cor}{default}(x, y = NULL, use = "all.obs", 
-    method = c("pearson", "kendall", "spearman"))
-    
-\method{volatility}{default}(object, \dots)
-    
-\method{termPlot}{default}(model, \dots)
-
 \method{stdev}{default}(x, na.rm = FALSE)
 
-\method{atoms}{default}(x, \dots)
+\method{termPlot}{default}(model, \dots)
 
+\method{var}{default}(x, y = NULL, na.rm = FALSE, use)
+   
+\method{volatility}{default}(object, \dots)
+    
 rownames(x) <- value
 colnames(x) <- value
 
-as.POSIXlt(x, tz = "")
-
-\method{as.matrix}{ts}(x, \dots)
-\method{as.matrix}{mts}(x, \dots)
-
-%%\method{head}{ts}(x, n = 6, \dots)
-
-\method{print}{control}(x, \dots)
 }
 
 

@@ -1,4 +1,4 @@
-\name{ characterTable
+\name{characterTable}
 
 
 \alias{characterTable}
