@@ -63,9 +63,9 @@ skewness(x, \dots)
 }
 
 
-\seealso {
+\seealso{
 
-    \code{link{kurtosis}.
+    \code{link{kurtosis}}.
     
 }
 

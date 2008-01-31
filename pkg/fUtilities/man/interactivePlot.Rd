@@ -2,7 +2,6 @@
 
 
 \alias{interactivePlot}
-\alias{gridVector}
 
 
 \title{Interactive Plot Utility}
@@ -11,13 +10,6 @@
 \description{
 
     Plots with emphasis on interactive plots.
-    \cr
-      
-    The plot utility functions are:
-    
-    \tabular{ll}{
-    \code{interactivePlot} \tab a framework for interactive plot displays, \cr
-    \code{gridVector} \tab creates from two vectors x and y all grid points. }
     
 }
 
@@ -25,20 +17,17 @@
 \usage{
 interactivePlot(x, choices = paste("Plot", 1:9), 
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
-gridVector(x, y)
 }
 
 
 \arguments{
 
     \item{choices}{
-        [interactivePlot] - \cr
         a vector of character strings for the
         choice menu. By Default \code{"Plot 1"} ... \code{"Plot 9"}
         allowing for 9 plots at maximum.
         }
     \item{plotFUN}{
-        [interactivePlot] - \cr
         a vector of character strings naming the
         plot functions. By Default \code{"plot.1"} ... \code{"plot.9"}
         allowing for 9 plots at maximum.
@@ -50,9 +39,8 @@ gridVector(x, y)
         which are set \code{TRUE} are displayed, if a character string
         named \code{"all"} all plots are displayed.
         }
-    \item{x, y}{
-        [gridVector] - \cr
-        two numeric vector which span the two dimensional grid. 
+    \item{x}{
+        an object to be plotted. 
         }
     \item{\dots}{
         additional arguments passed to the FUN or plot function.
@@ -91,9 +79,6 @@ gridVector(x, y)
    # Try:
    # par(mfrow = c(1,1))
    # testPlot(rnorm(500), which = "ask")
-        
-## Grid Vector - 
-   gridVector(1:5, 1:5)
 }
 
 

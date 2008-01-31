@@ -36,7 +36,8 @@ linearInterpp(x, y = NULL, z = NULL, xo, yo)
         of equal length or if  \code{y} and \code{z} are NULL, a list with 
         entries \code{x}, \code{y}, \code{z}, or named data frame with 
         \code{x} in the first, \code{y} in the second, and \code{z} in 
-        the third column. \cr
+        the third column. 
+        }
     \item{gridPoints}{
         an integer value specifying the number of grid points in \code{x} 
         and \code{y} direction.
@@ -72,7 +73,7 @@ linearInterpp(x, y = NULL, z = NULL, xo, yo)
 
 \seealso{
 
-    \code{\link{akimaInterp}}, and \code{\link{{krigeInterp}}.
+    \code{\link{akimaInterp}}, and \code{\link{krigeInterp}}.
     
 }
 
