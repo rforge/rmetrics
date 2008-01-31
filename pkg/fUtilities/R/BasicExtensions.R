@@ -31,43 +31,36 @@
 # FUNCTION:                 BASIC EXTENSIONS:                                   
 #  align                     aligns time series objects by approximation        
 #  align.default             align default method                               
+#  atoms                     Extracts atoms from 'timeSeries' object           
+#  atoms.default             atoms default method
 #  attach                    attach a database to the R path                    
-#  attach.default            attach default method                              
+#  attach.default            attach default method 
+#  colnames<-                colnames<- has become a generic function          
+#  colnames<-.default        colnames<- default method 
+#  cor                       cor has become a generic function                  
+#  cor.default               cor default method    
+#  cov                       var has become a generic function                  
+#  cov.default               var default method                          
 #  log                       log has become a generic function                  
-#  log.default               log default method     
+#  log.default               log default method 
+#  outlier                   outlier added generic function                  
+#  outlier.default           outlier default method    
+#  rownames<-                rownames<- has become a generic function          
+#  rownames<-.default        rownames<- default method
 #  rank                      rank has become a generic function 
 #  rank.default              rank default method                                                       
 #  sample                    sample has become a generic function               
 #  sample.default            sample default method                              
 #  sort                      sort has become a generic function                 
-#  sort.default              sort default method                                
+#  sort.default              sort default method   
+#  stdev                     stdev added generic function                 
+#  stdev.default             stdev default method
+#  termPlot                  termPlot has become a generic function                  
+#  termPlot.default          termPlot default method                              
 #  var                       var has become a generic function                  
 #  var.default               var default method 
 #  volatility                volatility has become a generic function                  
-#  volatility.default        volatility default method
-#  termPlot                  termPlot has become a generic function                  
-#  termPlot.default          termPlot default method                                
-#  cov                       var has become a generic function                  
-#  cov.default               var default method                                 
-#  stdev                     for SPLUS compatibility 
-# FUNCTION:                 CONTROL ATTRIBUTES:
-#  print.control             Prints unlisted control attributes                                  
-# FUNCTION:                 ROW AND COLUMN NAMES:                              
-#  "rownames<-"              rownames<- has become a generic function          
-#  "rownames<-.default"      rownames<- default method                         
-#  "colnames<-"              colnames<- has become a generic function          
-#  "colnames<-.default"      colnames<- default method                         
-# FUNCTION:                 DATE AND TIME SERIES FUNCTIONS:                    
-#  modify                    Modifies a 'timeSeries' object                    
-#  modify.default            Default Method                                    
-#  atoms                     Extracts atoms from 'timeSeries' object           
-#  atoms.default             Default Method                                    
-#  as.POSIXlt                Converts objects of class POSIXlt                 
-#  as.POSIXlt.default        Default Method                                    
-#  as.matrix.ts              Converts univariate ts to 1-column matrix         
-#  as.matrix.mts             Converts multivariate ts to matrix  
-#  head.ts                   Adds head method              
-#  Sys.putenv                depreciated after 2.4.1                           
+#  volatility.default        volatility default method                                                                                                                                                                                                         
 ################################################################################
 
 
@@ -75,37 +68,6 @@
 
 
 # ------------------------------------------------------------------------------
-
-
-if (!exists("Sys.setenv"))
-{
-    Sys.setenv =
-    function(...)
-    {
-        x <- list(...)
-        nm <- names(x)
-        val <- as.character(unlist(x))
-        x <- paste(nm, val, sep = "=")
-        invisible(.Internal(putenv(x)))
-    }
-}
-
-
-################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  align                         aligns time series objects by approximation
-#  align.default                 align default method
-#  attach                        attach a database to the R path
-#  attach.default                attach default method
-#  log                           log has become a generic function
-#  log.default                   log default method
-#  sample                        sample has become a generic function
-#  sample.default                sample default method
-#  sort                          sort has become a generic function
-#  sort.default                  sort default method
-#  var                           var has become a generic function
-#  var.default                   var default method
-#  stdev                         for SPLUS compatibility
 
 
 align <- 
@@ -143,6 +105,36 @@ align.default <-
 # ------------------------------------------------------------------------------
 
 
+atoms <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm WUertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("atoms")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+atoms.default <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm WUertz
+
+    # FUNCTION:
+
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 attach <- 
     function(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
@@ -165,52 +157,66 @@ attach.default <- base::attach
 # ------------------------------------------------------------------------------
 
 
-if(getRversion() < "2.4.0") {
-
-    # Note:
-    # sort() has been S3 generic in 'base' since 2.4.0
-    # Otherwise use something that works here
-
-    sort <- function (x, decreasing = FALSE, ...)
-    {
-        if (!is.logical(decreasing) || length(decreasing) != 1)
-            stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
-        UseMethod("sort")
-    }
-    
-    sort.default <- function(x, decreasing = FALSE, ...) {
-        if (is.object(x))
-        x[order(x, decreasing = decreasing)]
-        else base::sort(x, decreasing = decreasing, ...)
-    }
-
-}# endif {only for outdated R}
-
-
-# ------------------------------------------------------------------------------
-
-
-sample <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+"colnames<-" =
+    function(x, value)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # Return Value:
-    UseMethod("sample")
+    UseMethod("colnames<-")
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-sample.default <-  
-    function (x, size, replace = FALSE, prob = NULL, ...)
-{
+`colnames<-.default` <- base::`colnames<-`
+
+
+# ------------------------------------------------------------------------------
+
+
+cor <- 
+    function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{   
+    # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
-    
-    base::sample(x, size, replace = replace, prob = prob)
+
+    # Return Value:
+    UseMethod("cor")
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+cor.default <- stats::cor
+
+
+# ------------------------------------------------------------------------------
+
+
+cov <-
+    function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("cov")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cov.default <- stats::cov
 
 
 # ------------------------------------------------------------------------------
@@ -277,6 +283,57 @@ rank.default <-
 # ------------------------------------------------------------------------------
 
 
+sample <-
+    function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("sample")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+sample.default <-  
+    function (x, size, replace = FALSE, prob = NULL, ...)
+{
+    # FUNCTION:
+    
+    base::sample(x, size, replace = replace, prob = prob)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+if(getRversion() < "2.4.0") {
+
+    # Note:
+    # sort() has been S3 generic in 'base' since 2.4.0
+    # Otherwise use something that works here
+
+    sort <- function (x, decreasing = FALSE, ...)
+    {
+        if (!is.logical(decreasing) || length(decreasing) != 1)
+            stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
+        UseMethod("sort")
+    }
+    
+    sort.default <- function(x, decreasing = FALSE, ...) {
+        if (is.object(x))
+        x[order(x, decreasing = decreasing)]
+        else base::sort(x, decreasing = decreasing, ...)
+    }
+
+}# endif {only for outdated R}
+
+
+# ------------------------------------------------------------------------------
+
+
 outlier <- 
     function(x, sd = 5, complement = TRUE, ...)
 {   
@@ -307,6 +364,12 @@ outlier.default <-
     #       be detected.
     #   complement - a logical flag, should the outlier series
     #       or its complements be returned.
+    
+    # Note:
+    #   This function is thought to find splits in financial
+    #   price or index data. If a price or index is splitted we
+    #   observe in the returns a big jump of several standard
+    #   deviations.
 
     # FUNCTION:
 
@@ -321,6 +384,77 @@ outlier.default <-
 
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"rownames<-" =
+    function(x, value)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("rownames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+`rownames<-.default` <- base::`rownames<-`
+
+
+# ------------------------------------------------------------------------------
+
+
+stdev.default <-
+    function(x, na.rm = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Return Value:
+    stats::sd(x = x, na.rm = na.rm)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+stdev <- base::sd
+
+
+# ------------------------------------------------------------------------------
+
+
+termPlot <-
+    function(model, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:   
+    UseMethod("termPlot")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+termPlot.default <-
+function(model, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    stats::termplot(model, ...)
 }
 
 
@@ -343,65 +477,6 @@ var <-
 
 
 var.default <- stats::var
-
-
-# ------------------------------------------------------------------------------
-
-
-cov <-
-    function(x, y = NULL, use = "all.obs",
-    method = c("pearson", "kendall", "spearman"))
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("cov")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-cov.default <- stats::cov
-
-
-# ------------------------------------------------------------------------------
-
-
-cor <- 
-    function(x, y = NULL, use = "all.obs",
-    method = c("pearson", "kendall", "spearman"))
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("cor")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-cor.default <- stats::cor
-
-
-# ------------------------------------------------------------------------------
-
-
-stdev <-
-    function(x, na.rm = FALSE)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Return Value:
-    stats::sd(x = x, na.rm = na.rm)
-}
 
 
 # ------------------------------------------------------------------------------
@@ -436,283 +511,6 @@ volatility.default <-
     # Return Value:
     ans
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-termPlot <-
-    function(model, ...) 
-{
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:   
-    UseMethod("termPlot")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-termPlot.default <-
-function(model, ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    stats::termplot(model, ...)
-}
-
-
-################################################################################
-# FUNCTION:                 CONTROL ATTRIBUTES:
-#  print.control             Prints unlisted control attributes  
-
-
-print.control <-
-    function(x, ...)
-{
-    # Return Value:
-    print(unlist(x))
-}
-
-
-################################################################################
-# FUNCTION:                     COLUMN AND ROW STATISTICS:
-#  colSums                       colSums has become a generic function
-#  colMeans                      colMeans has become a generic function
-#  rowSums                       rowSums has become a generic function
-#  rowMeans                      roowMeans has become a generic function
-
-
-## DW: moved to Column Row Statistics ...
-## colMeans.default <- base::colMeans
-## colSums.default <- base::colSums
-## rowMeans.default <- base::rowMeans
-## rowSums.default <- base::rowSums
-
-
-################################################################################
-#  "rownames<-"                  rownames<- has become a generic function
-#  "rownames<-.default"          rownames<- default method
-#  "colnames<-"                  colnames<- has become a generic function
-#  "colnames<-.default"          colnames<- default method
-
-
-"rownames<-" =
-    function(x, value)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("rownames<-")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-`rownames<-.default` <- base::`rownames<-`
-
-
-# ------------------------------------------------------------------------------
-
-
-"colnames<-" =
-    function(x, value)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("colnames<-")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-`colnames<-.default` <- base::`colnames<-`
-
-
-################################################################################
-#  atoms                     Extracts atoms from 'timeSeries' object
-#  atoms.default             Default Method
-
-
-atoms <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm WUertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("atoms")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-atoms.default <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm WUertz
-
-    # FUNCTION:
-
-    # Return Value:
-    invisible(x)
-}
-
-
-################################################################################
-
-
-as.POSIXlt <- 
-    function(x, tz = "")
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("as.POSIXlt")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.POSIXlt.default <- 
-    function (x, tz = "")
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # As Posix:
-    fromchar <- function(x) {
-        xx <- x[1]
-        if (is.na(xx)) {
-            j <- 1
-            while (is.na(xx) && (j <- j + 1) <= length(x)) xx <- x[j]
-            if (is.na(xx))
-                f <- "%Y-%m-%d"
-        }
-        if (is.na(xx) || !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
-            !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
-            !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) || !is.na(strptime(xx,
-            f <- "%Y/%m/%d %H:%M")) || !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-            !is.na(strptime(xx, f <- "%Y/%m/%d"))) {
-            res <- strptime(x, f)
-            if (nchar(tz))
-                attr(res, "tzone") <- tz
-            return(res)
-        }
-        stop("character string is not in a standard unambiguous format")
-    }
-    if (inherits(x, "POSIXlt"))
-        return(x)
-    if (inherits(x, "Date"))
-        return(.Internal(Date2POSIXlt(x)))
-    tzone <- attr(x, "tzone")
-    if (inherits(x, "date") || inherits(x, "dates"))
-        x <- as.POSIXct(x)
-    if (is.character(x))
-        return(fromchar(unclass(x)))
-    if (is.factor(x))
-        return(fromchar(as.character(x)))
-    if (is.logical(x) && all(is.na(x)))
-        x <- as.POSIXct.default(x)
-    if (!inherits(x, "POSIXct"))
-        stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
-            deparse(substitute(x))))
-    if (missing(tz) && !is.null(tzone))
-        tz <- tzone[1]
-    .Internal(as.POSIXlt(x, tz))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.matrix.ts <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Coerces a "ts" object into a matrix
-
-    # FUNCTION:
-
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.matrix.mts <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Coerces a multivariate "ts" object into a matrix
-
-    # FUNCTION:
-
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-## head.ts <- 
-##     function(x, n = 6, ...)
-## {
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Adds head method
-    
-    # Example:
-    #   ts = ts(rnorm(50)); head(ts)
-    #   mts = ts(cbind(rnorm(50), rnorm(50))); head(mts) 
-    
-    # FUNCTION:
-    
-##     if (NCOL(x) == 1) {
-##         return(stats::as.ts(x[1:n], ...)) 
-##     } else {
-##         return(stats::as.ts(x[1:n, ], ...))
-##     }
-    
-## }
 
 
 ################################################################################

@@ -26,60 +26,58 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-
-################################################################################
-# FUNCTION:                 CONTROL ATTRIBUTES:
-#  print.control             Prints unlisted control attributes  
-# FUNCTION:                 DESCRIPTION:
-#  .print                    Used in regression package
-################################################################################
-
-
-print.control <-
-    function(x, ...)
-{
-    # Return Value:
-    print(unlist(x))
-}
-
-
+                                                
+################################################################################                                                                                                                                                                                 
+# FUNCTION:                 DESCRIPTION:                                                                                                   
+#  Sys.putenv                depreciated after 2.4.1   
+#  head.ts                   Adds head method                        
 ################################################################################
 
-.print <- 
-    function(x, ...)
-{
-    UseMethod(".print")
-}
+
+.conflicts.OK = TRUE
 
 
 # ------------------------------------------------------------------------------
 
 
-.plot <- 
-    function(x, ...)
+if (!exists("Sys.setenv"))
 {
-    UseMethod(".plot")
+    Sys.setenv =
+    function(...)
+    {
+        x <- list(...)
+        nm <- names(x)
+        val <- as.character(unlist(x))
+        x <- paste(nm, val, sep = "=")
+        invisible(.Internal(putenv(x)))
+    }
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-.summary <- 
-    function(object, ...)
-{
-    UseMethod(".summary")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.predict <- 
-    function(object, ...)
-{
-    UseMethod(".predict")
-}
+## head.ts <- 
+##     function(x, n = 6, ...)
+## {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Adds head method
+    
+    # Example:
+    #   ts = ts(rnorm(50)); head(ts)
+    #   mts = ts(cbind(rnorm(50), rnorm(50))); head(mts) 
+    
+    # FUNCTION:
+    
+##     if (NCOL(x) == 1) {
+##         return(stats::as.ts(x[1:n], ...)) 
+##     } else {
+##         return(stats::as.ts(x[1:n, ], ...))
+##     }
+    
+## }
 
 
 ################################################################################
