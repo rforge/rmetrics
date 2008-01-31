@@ -53,6 +53,7 @@ socp(f, A, b, C, d, N, x, z, w, control = list())
  z <- c(1, 0, 0)
  w <- c(2,1)
  fit <- socp(f, A, b, C, d, N, x, z, w)
+ fit
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
