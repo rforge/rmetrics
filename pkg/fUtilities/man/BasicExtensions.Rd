@@ -1,6 +1,8 @@
 \name{BasicExtensions}
 
+
 \alias{BasicExtensions}
+
 
 \alias{align}
 \alias{align.default}
@@ -42,6 +44,7 @@
 \alias{termPlot.default}
 
 \alias{stdev}
+\alias{stdev.default}
 
 \alias{print.control}
 
@@ -67,7 +70,7 @@
 \description{
 
     Basic extensions which which add and/or modify
-    S function functionality.
+    additional functionality.
     \cr
     
     Added and/or modified functions:
@@ -114,8 +117,10 @@
 \method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
 
 \method{var}{default}(x, y = NULL, na.rm = FALSE, use)
+
 \method{cov}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
+
 \method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
@@ -123,8 +128,9 @@
     
 \method{termPlot}{default}(model, \dots)
 
-stdev(x, na.rm = FALSE)
-atoms(x, \dots)
+\method{stdev}{default}(x, na.rm = FALSE)
+
+\method{atoms}{default}(x, \dots)
 
 rownames(x) <- value
 colnames(x) <- value

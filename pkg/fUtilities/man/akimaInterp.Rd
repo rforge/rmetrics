@@ -10,8 +10,8 @@
 
 \description{
     
-    Bivariate Akima Spline Interpolation. Two options are
-    available gridded and pointwise interpolation.
+    Interpolates bivariate data sets using Akima 
+    spline interpolation. 
     
 }
     
@@ -53,6 +53,15 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
         }
     
 }
+
+
+\details{
+
+    Two options are available gridded and pointwise 
+    interpolation.
+    
+}
+
 
 \note{
 
