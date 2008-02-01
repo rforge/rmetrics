@@ -1,6 +1,7 @@
-\name{VectorMatrixAddon}
+\name{matrixAddon}
 
-\alias{VectorMatrixAddon}
+
+\alias{matrixAddon}
 
 \alias{triang}
 \alias{Triang}
