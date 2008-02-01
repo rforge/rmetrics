@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  listFunctions             Lists all functions in a package
+#  listFunctionss            Lists all functions in a package
 #  countFunctions            Counts all functions in a package
 ################################################################################
 
@@ -82,7 +82,7 @@ countFunctions <-
     # FUNCTION:
     
     # Count:
-    ans = length(.listFunctions(package))
+    ans = length(listFunctions(package))
     names(ans) = package
     
     # Return Value:

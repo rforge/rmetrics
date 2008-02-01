@@ -59,7 +59,7 @@
     
     \tabular{ll}{
     \code{align} \tab adds align function, \cr
-    \code{as.POSIXlt} adds POSIXlt function, \cr                
+    \code{as.POSIXlt} \tab adds POSIXlt function, \cr                
     \code{atoms} \tab adds atoms function, \cr
     \code{attach} \tab extends attach function, \cr
     \code{colnames<-} \tab adds colnames assignment, \cr
@@ -219,8 +219,8 @@
     \code{isPositiveDefinite} \tab Checks if a matrix is positive definite, \cr
     \code{makePositiveDefinite} \tab Forces a matrix to be positive definite, \cr
     \code{colIds} \tab Retrieves or sets the colnames of an object, \cr
-    \code{rowIds} \tab Retrieves or sets the rowumn names, \cr 
-
+    \code{rowIds} \tab Retrieves or sets the rowumn names.}
+    
     Linear algebra functions in R's base package include the
     \code{\%*\%} product of two matrices, the
     \code{\%x\%} Kronecker product, the
@@ -248,8 +248,7 @@
     together with the functions
     \code{backsolve} used when the matrix is upper triangular, and
     \code{forwardsolve} used when the matrix is lower triangular.
-    
-    
+        
 }
     
     
@@ -297,7 +296,9 @@
 
     \tabular{ll}{
     \code{gridVector} \tab creates from two vectors x and y all grid points.}
-    
+  
+}  
+
 
 \author{
 
