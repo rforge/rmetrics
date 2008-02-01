@@ -50,59 +50,56 @@
 
 \section{Basic Function Extensions}{
 
-    Functions which add and/or modify S function 
-    functionality:
+    Several functions are added by Rmetrics which are missing 
+    in R's basic packages.
     
-    Extensions:
+    The first set of these functions are concerned with R functions
+    which were made generic, so that they could be used to add
+    additional methods:
     
     \tabular{ll}{
     \code{align} \tab adds align function, \cr
-    \code{as.POSIXlt} \tab adds as.POSIXlt function, \cr
+    \code{as.POSIXlt} adds POSIXlt function, \cr                
     \code{atoms} \tab adds atoms function, \cr
     \code{attach} \tab extends attach function, \cr
+    \code{colnames<-} \tab adds colnames assignment, \cr
     \code{cor} \tab extends cor function, \cr
     \code{cov} \tab extends cov function, \cr
     \code{log} \tab extends log function, \cr
     \code{outlier} \tab adds outlier function, \cr
     \code{rank} \tab extends rank function, \cr
+    \code{rownames<-} \tab adds rownames assigment, \cr
     \code{sample} \tab extends sample function, \cr
     \code{stdev} \tab adds stdev function, \cr
+    \code{termPlot} \tab adds term plot function, \cr
     \code{var} \tab extends var function, \cr
     \code{volatility} \tab adds volatility function.}
     
-    Assignment Functions:
+    All these functions have now default methods. Furthermore
+    the \code{fUtilities} package also provides additional methods.
+    These include:
     
     \tabular{ll}{
-    \code{rownames<-} \tab adds rownames assigment, \cr
-    \code{colnames<-} \tab adds colnames assignment, \cr
     \code{as.matrix.ts} \tab adds as.matrix.ts method, \cr
     \code{as.matrix.mts} \tab adds as.matrix.mts method, \cr
-    \code{print.control} \tab adds print.control method. }
-    
-    Tests Class Representation and Utilities:
-
-    \tabular{ll}{
-    \code{fHTEST} \tab Representation for an S4 object of class "fHTEST", \cr
-    \code{show} \tab S4 print method. }
-        
-    Interactive Plot Function:
-    
-    \tabular{ll}{
-    \code{interactivePlot} \tab a framework for interactive plot displays, \cr
-    \code{gridVector} \tab creates from two vectors x and y all grid points. }
+    \code{print.control} \tab adds print.control method.}
     
 }
 
 
-\section{Column and Row Statistics for Rectangular Objects}{
-
-    Functions to compute column and row statistical properties 
-    of financial and economic time series data. 
+\section{Statistical Function Extensions}{   
     
-    The \code{colStats} and \code{rowStats} are quite general functions
-    which allow to specify the function to compute the desired statistics
-    by the user.
+    Beside the basic function extensions also statistical function
+    extensions are provided. This concerns the missing
+    "skewness" and "kurtosis" functions in R
     
+    \tabular{ll}{
+    \code{skewness} \tab returns value of skewness, \cr
+    \code{kurtosis} \tab returns value of kurtosis.}
+    
+    and functions for column and row statistics. The \code{colStats} 
+    and \code{rowStats} are quite general functions which allow to 
+    specify the function to compute the desired statistics by the user.
     The remaining column and row statistics functions are thought to
     compute often used time series statistics. This includes the sum(,
     mean, standard deviations, variance, skewness, kurtosis, maximum,
@@ -137,18 +134,56 @@
     \code{rowMins} \tab calculates minimum values in each row, \cr
     \code{rowProds} \tab computes product of all values in each row, \cr
     \code{rowQuantiles} \tab computes quantiles of each row. }
+    
 
+    For hypothesis testing Rmetrics offers a new S4 class and
+    print method:
+    
+    \tabular{ll}{  
+    \code{fHTEST} \tab Representation for an S4 object of class "fHTEST", \cr
+    \code{show} \tab S4 print method.}
+    
+    
 }
+    
+
+\section{Graph and Plot Tools}{
 
 
-\section{Skewness and Kurtosis Statistics}{
-
-    Functions to compute skewness and kurtosis:
- 
+    Character, symbol and color tables are useful tools
+    if one is concerned with graphs and charts:
+    
     \tabular{ll}{
-    \code{skewness} \tab returns value of skewness, \cr
-    \code{kurtosis} \tab returns value of kurtosis. }
+    \code{characterTable} \tab Table of Numerical Equivalents to Latin Characters, \cr
+    \code{symbolTable} \tab Table of plot characters, plot symbols, \cr
+    \code{colorTable} \tab Table of Color Codes and Plot Colors itself, \cr
+    \code{colorLocator} \tab Plots R's 657 named colors for selection, \cr
+    \code{colorMatrix} \tab Returns matrix of R's color names. }
+       
+    Many wrapper functions to create color palettes are also added, 
+    all following the same naming conventions:
 
+    \tabular{ll}{
+    \code{rainbowPalette} \tab Contiguous rainbow color palette, \cr
+    \code{heatPalette} \tab Contiguous heat color palette, \cr
+    \code{terrainPalette} \tab Contiguous terrain color palette, \cr
+    \code{topoPalette} \tab Contiguous topo color palette, \cr
+    \code{cmPalette} \tab Contiguous cm color palette, \cr
+    \code{greyPalette} \tab R's gamma-corrected gray palette, \cr
+    \code{timPalette} \tab Tim's Matlab like color palette, \cr
+    \code{rampPalette} \tab Color ramp palettes, \cr
+    \code{seqPalette} \tab Sequential color brewer palettes, \cr
+    \code{divPalette} \tab Diverging color brewer palettes, \cr
+    \code{qualiPalette} \tab Qualified color brewer palettes, \cr
+    \code{focusPalette} \tab Red, green blue focus palettes, \cr
+    \code{monoPalette} \tab Red, green blue mono palettes. }
+    
+    An interactive plot function allows to create easily interactive
+    plots:
+    
+    \tabular{ll}{
+    \code{interactivePlot} \tab a framework for interactive plot displays.}
+    
 }
 
 
@@ -166,134 +201,62 @@
 }
 
 
-\section{Code Tables, Color Selection and Palettes}{
-    
-    Functions which are useful utilities and 
-    tools in selecting characters, symbols and 
-    colors for plotting.
-    
-    Functions to display code tables:
-    
-    \tabular{ll}{
-    \code{characterTable} \tab Table of Numerical Equivalents to Latin Characters, \cr
-    \code{symbolTable} \tab Table of plot characters, plot symbols, \cr
-    \code{colorTable} \tab Table of Color Codes and Plot Colors itself. }
-        
-    Functions to display R's 657 named colors for selection:
-    
-    \tabular{ll}{
-    \code{colorLocator} \tab Plots R's 657 named colors for selection, \cr
-    \code{colorMatrix} \tab Returns matrix of R's color names. }
-       
-    Functions to create color palettes:
-
-    \tabular{ll}{
-    \code{rainbowPalette} \tab Contiguous rainbow color palette, \cr
-    \code{heatPalette} \tab Contiguous heat color palette, \cr
-    \code{terrainPalette} \tab Contiguous terrain color palette, \cr
-    \code{topoPalette} \tab Contiguous topo color palette, \cr
-    \code{cmPalette} \tab Contiguous cm color palette, \cr
-    \code{greyPalette} \tab R's gamma-corrected gray palette, \cr
-    \code{timPalette} \tab Tim's Matlab like color palette, \cr
-    \code{rampPalette} \tab Color ramp palettes, \cr
-    \code{seqPalette} \tab Sequential color brewer palettes, \cr
-    \code{divPalette} \tab Diverging color brewer palettes, \cr
-    \code{qualiPalette} \tab Qualified color brewer palettes, \cr
-    \code{focusPalette} \tab Red, green blue focus palettes, \cr
-    \code{monoPalette} \tab Red, green blue mono palettes. }
-    
-}
-
-
 \section{Vector/Matrix Arithmetics and Linear Algebra Addons}{
     
     Functions for matrix arithmetics and linear algebra. These functions 
     are often  very useful for the manipulation of the data slot of 
-    multivariate financial time series. The listing includes also functions 
-    from R's base package.
- 
+    multivariate financial time series.
+    
     General Matrix Functions:
     
     \tabular{ll}{  
-    \code{matrix} \tab Creates a matrix from the given set of values, \cr
-    \code{diag} \tab Creates a diagonal matrix or extracts diagonals, \cr
     \code{triang} \tab Extracs the lower tridiagonal part from a matrix, \cr
     \code{Triang} \tab Extracs the upper tridiagonal part from a matrix, \cr
     \code{pascal} \tab Creates a Pascal matrix, \cr
     \code{hilbert} \tab Creates a Hilbert matrix, \cr
     \code{colVec} \tab Creates a column vector from a vector, \cr
     \code{rowVec} \tab Creates a row vector from a vector, \cr
-    \code{as.matrix} \tab Attempts to turn its argument into a matrix, \cr
-    \code{is.matrix} \tab Tests if its argument is a (strict) matrix, \cr
     \code{isPositiveDefinite} \tab Checks if a matrix is positive definite, \cr
     \code{makePositiveDefinite} \tab Forces a matrix to be positive definite, \cr
-    \code{dimnames} \tab Retrieves or sets the dimnames of an object, \cr
-    \code{colnames} \tab Retrieves or sets the column names, \cr 
-    \code{colIds} \tab ... use alternatively, \cr 
-    \code{rownames} \tab Retrieves or sets the row names, \cr   
-    \code{rowIds} \tab ... use alternatively. }
-    
-    Simple Matrix Operations:
-            
-    \tabular{ll}{ 
-    \code{dim} \tab Returns the dimension of a matrix object, \cr
-    \code{ncol} \tab Counts columns of a matrix object, \cr 
-    \code{nrow} \tab Counts rows of a matrix object, \cr 
-    \code{length} \tab Counts elements of a matrix object, \cr 
-    \code{"["} \tab Subsets a matrix object, \cr
-    \code{"[["} \tab Subsets a matrix object, \cr
-    \code{cbind} \tab Augments a matrix object by columns, \cr 
-    \code{rbind} \tab Augments a matrix object by rows. } 
+    \code{colIds} \tab Retrieves or sets the colnames of an object, \cr
+    \code{rowIds} \tab Retrieves or sets the rowumn names, \cr 
 
-    Basic Statistical Functions:
-            
-    \tabular{ll}{
-    \code{var} \tab Returns the variance matrix, \cr
-    \code{cov} \tab Returns the covariance matrix, \cr 
-    \code{colStats} \tab Calculates column statistics, \cr
-    \code{rowStats} \tab Calculates row statistics, \cr
-    \code{colMeans} \tab Calculates column means, \cr 
-    \code{rowMeans} \tab Calculates row means, \cr 
-    \code{colAvgs} \tab Calculates column averages, \cr
-    \code{rowAvgs} \tab Calculates row averages, \cr
-    \code{colVars} \tab Calculates column variances, \cr 
-    \code{rowVars} \tab Calculates row variances, \cr 
-    \code{colStdevs} \tab Calculates column standard deviations, \cr
-    \code{rowStdevs} \tab Calculates row standard deviations, \cr
-    \code{colSkewness} \tab Calculates column skewness, \cr
-    \code{rowSkewness} \tab Calculates row skewness, \cr
-    \code{colKurtosis} \tab Calculates column kurtosis, \cr 
-    \code{rowKurtosis} \tab Calculates row kurtosis, \cr 
-    \code{colCumsums} \tab Calculates column cumulated sums, \cr  
-    \code{rowCumsums} \tab Calculates row cumulated sums. }  
-            
-    Linear algebra:
+    Linear algebra functions in R's base package include the
+    \code{\%*\%} product of two matrices, the
+    \code{\%x\%} Kronecker product, the
+    \code{det} determinant of a matrix, and the
+    \code{t} transposed matrix. 
     
+    Rmetrics adds the foloowing functions:
+        
     \tabular{ll}{
-    \code{\%*\%} \tab Returns the product of two matrices, \cr
-    \code{\%x\%}, \code{kron} \tab Returns the Kronecker product, \cr 
-    \code{det} \tab Returns the determinante of a matrix, \cr
     \code{inv} \tab Returns the inverse of a matrix, \cr
     \code{norm} \tab Returns the norm of a matrix, \cr 
     \code{rk} \tab Returns the rank of a matrix, \cr
     \code{tr} \tab Returns trace of a matrix, \cr 
-    \code{t} \tab Returns the transposed matrix, \cr
     \code{vech} \tab Is the operator that stacks the lower triangle, \cr
     \code{vec} \tab Is the operator that stacks a matrix.}
     
-    More linear algebra:
+    Note, additional linear algebra functionality is provided in R 
+    through the functions
+    \code{chol} which returns the Cholesky factor matrix,
+    \code{eigen} which computes eigenvalues and eigenvectors,  
+    \code{svd} which does singular value decomposition,
+    \code{kappa} which determines the condition number of a matrix, 
+    \code{qr} which performs the QR decomposition of a matrix, 
+    \code{solve} which solves a system of linear equations, 
+    together with the functions
+    \code{backsolve} used when the matrix is upper triangular, and
+    \code{forwardsolve} used when the matrix is lower triangular.
     
-    \tabular{ll}{
-    \code{chol} \tab Returns the Cholesky factor matrix, \cr
-    \code{eigen} \tab Returns eigenvalues and eigenvectors, \cr 
-    \code{svd} \tab Returns the singular value decomposition, \cr
-    \code{kappa} \tab Returns the condition number of a matrix, \cr 
-    \code{qr} \tab Returns the QR decomposition of a matrix, \cr
-    \code{solve} \tab Solves a system of linear equations, \cr
-    \code{backsolve} \tab ... use when the matrix is upper triangular, \cr
-    \code{forwardsolve} \tab ... use when the matrix is lower triangular. } 
     
-    Time Series Generation:
+}
+    
+    
+\section{Time Series Generation}{
+
+    For the computation of lagged or leading series the following
+    two functions are provided by Rmetrics:
     
     \tabular{ll}{
     \code{tslag} \tab Lagged or leading vector/matrix of selected order(s), \cr
@@ -305,7 +268,7 @@
 \section{Special Functions Addon}{
 
     Functions which compute special functions missing in R's base
-    package.
+    package include:
 
     Heaviside and Related Functions:
     
@@ -327,6 +290,22 @@
     
 }
 
+
+\section{Some utility functions}{
+
+    Finally we like to mention some further utility functions:
+
+    \tabular{ll}{
+    \code{gridVector} \tab creates from two vectors x and y all grid points.}
+    
+
+\author{
+
+    The \code{fUtilities} package was originally written by Diethelm Wuertz
+    and is since 2007 maintained and further developed by the Rmetrics
+    core team.
+
+}
 
 
 \keyword{package}
