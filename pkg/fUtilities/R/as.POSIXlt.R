@@ -30,10 +30,20 @@
 ################################################################################                                                                                                                                                          
 # FUNCTION:                 DESCRIPTION:                                                                                          
 #  as.POSIXlt                Converts objects of class POSIXlt                 
-#  as.POSIXlt.default        Default Method                                    
-#  as.matrix.ts              Converts univariate ts to 1-column matrix         
-#  as.matrix.mts             Converts multivariate ts to matrix                        
+#  as.POSIXlt.default        Default Method                                                            
 ################################################################################
+
+
+# IMPORTANT NOTE:
+#   as.POSIXlt was introduced as generic function in R 2.7.0
+#   Preliminarily, keep the function here to ne downward 
+#   compatible with previous R Versions. DW
+
+
+.conflicts.OK = TRUE
+
+
+# ------------------------------------------------------------------------------
 
 
 as.POSIXlt <- 
@@ -98,54 +108,6 @@ as.POSIXlt.default <-
     if (missing(tz) && !is.null(tzone))
         tz <- tzone[1]
     .Internal(as.POSIXlt(x, tz))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.matrix.ts <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Coerces a "ts" object into a matrix
-
-    # FUNCTION:
-
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.matrix.mts <- 
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Coerces a multivariate "ts" object into a matrix
-
-    # FUNCTION:
-
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
-
-    # Return Value:
-    ans
 }
 
 
