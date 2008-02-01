@@ -34,13 +34,6 @@ listDescription(package = "Rmetrics")
     prints the description file.
 
 }
-    
-    
-\author{
-
-    Diethelm Wuertz for this Rmetrics port.
-    
-}
 
 
 \examples{

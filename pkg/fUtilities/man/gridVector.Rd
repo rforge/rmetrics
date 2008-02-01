@@ -34,13 +34,6 @@ gridVector(x, y)}
     giving the coordinates which span the bivariate grid.
 
 }
-    
-    
-\author{
-
-    Diethelm Wuertz for this Rmetrics port.
-    
-}
 
 
 \examples{

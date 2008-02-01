@@ -36,24 +36,17 @@ symbolTable(font = par('font'), cex = 0.7)
 
 \value{
 
-    \code{symbolTable}\cr
-    \cr
+    \code{symbolTable}
     
     displays a table with the plot characters and symbols numbered from 
-    0 to 255.
+    0 to 255 and returns invisible the name of the font.
        
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{  
-## Default Symbol Table:
+## symbolTable - 
+   # Default Symbol Table:
    symbolTable()
 }
 

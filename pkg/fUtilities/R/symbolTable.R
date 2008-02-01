@@ -45,7 +45,7 @@ symbolTable <-
     #   symbolTable()
     
     # Author:
-    #   Unknown, code found on the internet.
+    #   Unknown, pice of code found on the internet.
 
     # FUNCTION:
     

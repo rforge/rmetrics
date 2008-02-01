@@ -19,13 +19,6 @@ description()
 }
 
 
-\author{
-
-    Diethelm Wuertz for this Rmetrics port.
-    
-}
-
-
 \examples{
 ## description:
    description()

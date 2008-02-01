@@ -89,12 +89,6 @@ rowAvgs(x, \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
 
 \examples{
 ## Simulated Return Data in Matrix Form:

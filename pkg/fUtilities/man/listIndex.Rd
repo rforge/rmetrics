@@ -34,13 +34,6 @@ listIndex(package = "Rmetrics")
     prints the index file.
 
 }
-    
-    
-\author{
-
-    Diethelm Wuertz for this Rmetrics port.
-    
-}
 
 
 \examples{

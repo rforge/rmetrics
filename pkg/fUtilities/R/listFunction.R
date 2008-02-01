@@ -29,13 +29,13 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .listFunctions            Lists all functions in a package
-#  .countFunctions           Counts all functions in a package
+#  listFunctions             Lists all functions in a package
+#  countFunctions            Counts all functions in a package
 ################################################################################
 
 
-.listFunctions <- 
-    function(package = "Rmetrics") 
+listFunctions <- 
+    function(package) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -68,7 +68,7 @@
 # ------------------------------------------------------------------------------
 
 
-.countFunctions <- 
+countFunctions <- 
     function(package) 
 {   
     # A function implemented by Diethelm Wuertz

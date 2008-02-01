@@ -59,7 +59,6 @@ kurtosis(x, \dots)
 \value{
     
     \code{kurtosis}
-    \cr
     
     returns the value of the statistics, a numeric value. An 
     attribute which reports the used method is added.
@@ -70,13 +69,6 @@ kurtosis(x, \dots)
 \seealso{
 
     \code{link{skewness}}.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

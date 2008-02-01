@@ -58,13 +58,6 @@ getSlot(object, slotName)
 }
 
 
-\author{
-
-    Diethelm Wuertz for this R port.
-    
-}
-
-
 \examples{
 ## Example S4 Representation:
    # Hyothesis Testing with Control Settings 

@@ -43,13 +43,6 @@ distCheck(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for this Rmetrics port.
-    
-}
-
-
 \examples{
 ## distCheck:
    distCheck("norm", mean = 1, sd = 1)

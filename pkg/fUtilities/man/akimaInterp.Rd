@@ -58,8 +58,15 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 
 \details{
 
-    Two options are available gridded and pointwise 
-    interpolation.
+    Two options are available gridded and pointwise interpolation. 
+    
+    \code{akimaInterp} is a function wrapper to the \code{interp} 
+    function provided by the contributed R package \code{akima}.
+    The Fortran code of the Akima spline interpolation routine was
+    written by H. Akima.
+    
+    Linear surface fitting and krige surface fitting are provided by
+    the functions \code{linearInterp} and \code{krigeInterp}.
     
 }
 
@@ -76,15 +83,14 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
     
 \value{
 
-    \code{akimaInterp}\cr
-    \cr
+    \code{akimaInterp} 
     
     returns a list with at least three entries, \code{x}, \code{y} 
     and \code{z}. Note, that the returned values, can be directly 
     used by the  \code{persp} and \code{contour} 3D plotting methods.
-    
-    \code{akimaInterpp}\cr
     \cr
+    
+    \code{akimaInterpp} 
     
     returns a data.frame with columns \code{"x"}, \code{"y"}, 
     and \code{"z"}.
@@ -99,11 +105,18 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 }
 
 
+\references{
 
-\author{
+    Akima H., 1978,
+    \emph{A Method of Bivariate Interpolation and Smooth Surface Fitting for 
+    Irregularly Distributed Data Points},
+    ACM Transactions on Mathematical Software 4, 148--164.
 
-    Diethelm Wuertz for the Rmetrics \R-port,\cr
-    H. Akima for the Fortran Code of the Akima spline interpolation routine.\cr
+    Akima H., 1996,
+    \emph{Algorithm 761: Scattered-Data Surface Fitting that has the Accuracy 
+    of a Cubic Polynomial},
+    ACM Transactions on Mathematical Software 22, 362–-371. 
+    
     
 }
 

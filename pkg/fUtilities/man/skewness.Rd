@@ -71,13 +71,6 @@ skewness(x, \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{   
 ## mean -
 ## var -

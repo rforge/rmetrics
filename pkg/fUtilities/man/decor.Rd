@@ -59,13 +59,6 @@ copyright()
 }
 
 
-\author{
-
-    Diethelm Wuertz for this R port.
-    
-}
-
-
 \examples{
 ## Test Plot Function:
    plot(x = rnorm(100), type = "l", col = "red", 

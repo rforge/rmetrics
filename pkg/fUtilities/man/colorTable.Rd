@@ -32,17 +32,9 @@ colorTable(cex = 0.7)
 
 \value{
     
-    \code{colorTable}\cr
-    \cr
+    \code{colorTable} 
     
     returns a table of plot plot colors with the associated color numbers.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

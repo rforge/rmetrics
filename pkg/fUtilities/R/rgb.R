@@ -37,9 +37,10 @@
 
 
 .asRGB <- 
-function (col = rainbowPalette(64), alpha = FALSE)
+    function (col = rainbowPalette(64), alpha = FALSE)
 {   
-    # A function implemented by Diethelm Wuertz   
+    # A function implemented by Diethelm Wuertz  
+     
     # Description:
     #   Converts any R color to RGB (red/green/blue)
 

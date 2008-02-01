@@ -99,13 +99,6 @@ Altman, N.S. (1988);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## set.lcgseed -
    set.lcgseed(seed = 65890)

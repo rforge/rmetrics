@@ -10,14 +10,8 @@
 
 \description{
     
-    Displays R's 657 named colors for selection
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{colorLocator} \tab Plots R's 657 named colors for selection, \cr
-    \code{colorMatrix} \tab Returns matrix of R's color names. }
+    Displays R's 657 named colors for selection and
+    returns optionally R's color names.
     
 }
     
@@ -33,8 +27,8 @@ colorMatrix(locator = TRUE)
    
     \item{locator}{
         a logical flag,
-        activates \code{locator} for interactive selection of color names,
-        default is \code{FALSE}.
+        activates \code{locator} for interactive selection of color 
+        names, default is \code{FALSE}.
         }
     
 }
@@ -61,15 +55,10 @@ colorMatrix(locator = TRUE)
     select the colors for which you want names. To end selection, right 
     click on the mouse and select 'Stop', then R returns the selected 
     color names. 
+    
+    The functions used here are wrappers to the functions provided by
+    Tomas Aragon in the contributed R package. \code{epitools}.
        
-}
-    
-    
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port, \cr
-    Tomas Aragon, aragon@berkeley.edu, for the color locator and matrix.
-    
 }
 
 

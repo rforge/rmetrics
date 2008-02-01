@@ -3,7 +3,6 @@
 
 \alias{baseMethods}
 
-
 \alias{align}
 \alias{align.default}
 
@@ -49,7 +48,6 @@
 \alias{atoms}
 \alias{atoms.default}
 
-
 %only for R <= 2.3.x: \alias{sort}
 % " \alias{sort.default}
 
@@ -60,7 +58,8 @@
 \description{
 
     Basic extensions which which add and/or modify
-    additional functionality.
+    additional functionality which is not available
+    in R's basic packages.
     \cr
     
     Added and/or modified functions:
@@ -274,14 +273,6 @@ colnames(x) <- value
 \details{
 
     For details we refer to the original help pages.
-
-}
-
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 

@@ -42,7 +42,7 @@ colorTable <-
     #   Displays a table of plot colors.
     
     # Author:
-    #   Unknown, code found on the internet.
+    #   Unknown, piece of code found on the internet.
     
     # Example:
     #   colorTable()

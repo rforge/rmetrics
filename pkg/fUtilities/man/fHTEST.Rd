@@ -96,14 +96,6 @@ show.fHTEST(object)
 }
 
 
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## fHTEST -
    getClass("fHTEST")

@@ -57,20 +57,11 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
     
 \value{
     
-    \code{krigeInterp}\cr
-    \cr
+    \code{krigeInterp}
     
     returns a list with at least three entries, \code{x}, \code{y} 
     and \code{z}. Note, that the returned values, can be directly 
     used by the  \code{persp} and \code{contour} 3D plotting methods.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port,\cr
-    H. Akima for the Fortran Code of the Akima spline interpolation routine.\cr
     
 }
 

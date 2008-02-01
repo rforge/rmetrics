@@ -49,13 +49,6 @@ interactivePlot(x, choices = paste("Plot", 1:9),
 }
 
 
-\author{
-
-    Diethelm Wuertz for this R port.
-    
-}
-
-
 \examples{
 ## Test Plot Function:
    testPlot = function(x, which = "all", ...) {   

@@ -34,6 +34,7 @@
     
     \tabular{ll}{  
     \code{colStats}\tab calculates column statistics, \cr
+    
     \code{colSums} \tab calculates column sums, \cr
     \code{colMeans} \tab calculates column means, \cr
     \code{colSds} \tab calculates column standard deviations, \cr
@@ -90,26 +91,11 @@ colAvgs(x, \dots)
 }
 
 
-\note{
-
-    The functions \code{colStdevs}, \code{colAvgs},
-    \code{mean.timeSeries}, and \code{var.timeSeries} are no longer 
-    in use.
-    
-}
-
-
 \value{
     
     the functions return a numeric vector of the statistics.
 }
 
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
 
 
 \examples{

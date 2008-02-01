@@ -55,15 +55,13 @@ linearInterpp(x, y = NULL, z = NULL, xo, yo)
     
 \value{
     
-    \code{linearInterp}\cr
-    \cr
+    \code{linearInterp}
 
     returns a list with at least three entries, \code{x}, \code{y} 
     and \code{z}. Note, that the returned values, can be directly 
     used by the  \code{persp} and \code{contour} 3D plotting methods.
     
-    \code{linearInterpp}\cr
-    \cr
+    \code{linearInterpp} 
     
     returns a data.frame with columns \code{"x"}, \code{"y"}, 
     and \code{"z"}.
@@ -74,13 +72,6 @@ linearInterpp(x, y = NULL, z = NULL, xo, yo)
 \seealso{
 
     \code{\link{akimaInterp}}, and \code{\link{krigeInterp}}.
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.\cr
     
 }
 

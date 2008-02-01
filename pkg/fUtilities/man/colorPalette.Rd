@@ -223,29 +223,30 @@ monoPalette(n, name = c("redmono", "greenmono", "bluemono"))
 
 \note{
 
-    Additional undocumented hidden Functions:
-    
-    \tabular{ll}{
-    % RGB CONVERTER:
-    \code{.asRGB} \tab Converts any R color to RGB (red/green/blue), \cr
-    % CONVERSION HEXIMAL/DECIMAL:
-    \code{.chcode} \tab Changes from one to another number system, \cr
-    \code{.hex.to.dec} \tab Converts heximal numbers do decimal numbers, \cr
-    \code{.dec.to.hex} \tab Converts decimal numbers do heximal numbers.}
-
-}
-    
-    
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port, \cr
+    The palettes are wrapper functions provided in several contributed 
+    R packages. These include:
+     
     Cynthia Brewer and Mark Harrower for the brewer palettes, \cr
-    Peter Carl and  Brian G. Peterson for the "PerformanceAnalytics" package, \cr
+    Peter Carl and Brian G. Peterson for the "PerformanceAnalytics" package, \cr
     Tim Keitt for the "colorRamps" package, \cr
     Ross Ihaka for the "colorspace" package, \cr
     Tomas Aragon for the "epitools" package, \cr
     Doug Nychka for the "fields" package, \cr
     Erich Neuwirth for the "RColorBrewer" package.
+    \cr
+    
+    Additional undocumented hidden functions:
+    
+    \tabular{ll}{
+    
+    % RGB CONVERTER:
+    \code{.asRGB} \tab Converts any R color to RGB (red/green/blue), \cr
+    
+    % CONVERSION HEXIMAL/DECIMAL:
+    \code{.chcode} \tab Changes from one to another number system, \cr
+    \code{.hex.to.dec} \tab Converts heximal numbers do decimal numbers, \cr
+    \code{.dec.to.hex} \tab Converts decimal numbers do heximal numbers.}
+
 }
 
 

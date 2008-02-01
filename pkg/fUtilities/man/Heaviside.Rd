@@ -108,13 +108,6 @@ Weisstein W. (2004);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## Heaviside -
    x = sort(round(c(-1, -0.5, 0, 0.5, 1, 5*rnorm(5)), 2))
