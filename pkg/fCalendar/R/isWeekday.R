@@ -33,15 +33,13 @@
 #  isWeekend                 Tests if a date falls on a weekend or not
 #  isBizday                  Tests if a date is a business day or not
 #  isHoliday                 Tests if a date is a non-business day or not
-#  getDayOfWeek              Returns the day of the week to a 'timeDate' object
-#  getDayOfYear              Returns the day of the year to a 'timeDate' object
-#  length.timeDate           Gets the length of a 'timeDate' object
 ################################################################################
 
 
-isWeekday = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+isWeekday <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Test if a date is a weekday day or not
@@ -55,9 +53,6 @@ function(x)
     # Example:
     #   isWeekday(timeDate("2004-07-01"))
     #   isWeekday(Sys.timeDate())
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -74,9 +69,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
     
-isWeekend = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+isWeekend <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests if a date is a weekend day or not
@@ -105,8 +101,9 @@ function(x)
 
     
 isBizday = 
-function(x, holidays = holidayNYSE()) 
-{   # A function implemented by Diethelm Wuertz
+    function(x, holidays = holidayNYSE()) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Test if a date is a business day or not
@@ -122,9 +119,6 @@ function(x, holidays = holidayNYSE())
     #   x = timeSequence(from = "2005-05-15", to = "2005-07-15")
     #   h = holiday.NYSE(2005)
     #   cbind(as.character(x), is.bizday(x, h))
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -147,8 +141,9 @@ function(x, holidays = holidayNYSE())
 
 
 isHoliday = 
-function(x, holidays = holidayNYSE()) 
-{   # A function implemented by Diethelm Wuertz
+    function(x, holidays = holidayNYSE()) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Test if a date is a holiday or not
@@ -168,88 +163,6 @@ function(x, holidays = holidayNYSE())
     # Return Value:
     return(!isBizday(x, holidays)) 
 }   
-
-
-# ------------------------------------------------------------------------------
-
-
-getDayOfWeek =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns day of week for time date objects
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    
-    # Example:
-    #   weekDay(Sys.timeDate())
-    #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
-    
-    # FUNCTION:
-    
-    # Get Day of Week:
-    wd = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    n = as.POSIXlt(x@Data)$wday + 1
-    wdays = wd[n]
-    names(wdays) = as.character(x@Data)
-    
-    # Return Value:
-    wdays
-}    
-
-
-# ------------------------------------------------------------------------------
-
-
-getDayOfYear =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns day of week for time date objects
-    
-    # Arguments:
-    #   #   x - an object of class "timeDate"
-     
-    # FUNCTION:
-    
-    # Assign:
-    yd = 1:366
-    n = as.POSIXlt(x@Data)$yday + 1
-    ydays = yd[n]
-    names(ydays) = as.character(x@Data)
-    
-    # Return Value:
-    ydays
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-length.timeDate = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Gets the length of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns the lengths of an object of class 'timeDate'.
-
-    # FUNCTION:
-    
-    # Length:
-    ans = length(x@Data)
-    
-    # Return Value:
-    ans
-}
 
 
 ################################################################################

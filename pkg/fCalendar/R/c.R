@@ -38,9 +38,10 @@
 ################################################################################
 
 
-c.timeDate = 
-function(..., recursive = FALSE)
-{   # A function implemented by Diethelm Wuertz
+c.timeDate <- 
+    function(..., recursive = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Concatenates objects of class 'timeDate'
@@ -93,9 +94,10 @@ function(..., recursive = FALSE)
 # ------------------------------------------------------------------------------
 
 
-rep.timeDate =
-function(x, ...) 
-{   # A function implemented by Diethelm Wuertz
+rep.timeDate <- 
+    function(x, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Replicates objects of class 'timeDate'
@@ -125,9 +127,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sample.timeDate =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sample.timeDate <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
   
     # FUNCTION:
     
@@ -144,9 +147,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sort.timeDate =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sort.timeDate <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -163,9 +167,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-unique.timeDate =
-function(x, ...) 
-{   # A function Implemented by Diethelm Wuertz
+unique.timeDate <- 
+    function(x, ...) 
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a timeDate object with duplicate entries removed
@@ -189,9 +194,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-rev.timeDate =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+rev.timeDate <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Reverts  a 'timeDate' vector object.

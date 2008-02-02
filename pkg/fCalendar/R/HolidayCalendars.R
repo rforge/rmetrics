@@ -30,15 +30,13 @@
 ################################################################################
 # FUNCTION:                 HOLIDAY CALENDAR FUNCTIONS:
 #  holiday                   Returns a holiday date of G7 and CH 
-#  holidayNYSE               Returns holidays for full-day NYSE calendar
-#  holidayZURICH             Returns holidays for ZURICH calendar
-#  holidayTSX                Returns holidays for TSX calendar
 ################################################################################
 
 
-holiday = 
-function(year = currentYear, Holiday = "Easter")
-{   # A function implemented by Diethelm Wuertz
+holiday <- 
+    function(year = currentYear, Holiday = "Easter")
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the date of a holiday, year may be a vector.
