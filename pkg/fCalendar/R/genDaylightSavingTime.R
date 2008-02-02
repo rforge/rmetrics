@@ -28,7 +28,7 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-# fCalendar::genDaylightSavingTime.R
+
 ################################################################################
 # FUNCTION:                 DESCRIPOTION:
 #  .genDaylightSavingTime   Create file with Daylight Saving Time Rules for all

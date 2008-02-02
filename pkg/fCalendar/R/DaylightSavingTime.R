@@ -29,7 +29,6 @@
 #   see Rmetrics's copyright file
 
 
-# fCalendar::2A-DaylightSavingTime.R
 ################################################################################
 # FUNCTION:                 DESCRIPOTION:
 #  Algiers                   Returns Algiers Daylight Saving Time Rules
