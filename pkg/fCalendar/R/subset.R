@@ -36,6 +36,7 @@
 #  end.timeDate              Extracts the last entry of a 'timeDate' object
 #  blockStart                Creates start dates for equally sized blocks
 #  blockEnd                  Creates end dates for equally sized blocks
+#  length.timeDate           Gets the length of a 'timeDate' object
 ################################################################################
 
 
@@ -265,6 +266,33 @@ function(x, block = 20)
     
     # Return Value:
     to
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+length.timeDate <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Gets the length of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns the lengths of an object of class 'timeDate'.
+
+    # FUNCTION:
+    
+    # Length:
+    ans = length(x@Data)
+    
+    # Return Value:
+    ans
 }
 
 

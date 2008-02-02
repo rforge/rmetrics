@@ -31,13 +31,13 @@
 # FUNCTION:                 DESCRIPTION:
 #  getDayOfWeek              Returns the day of the week to a 'timeDate' object
 #  getDayOfYear              Returns the day of the year to a 'timeDate' object
-#  length.timeDate           Gets the length of a 'timeDate' object
 ################################################################################
 
 
 getDayOfWeek <-
-function(x)
-{   # A function implemented by Diethelm Wuertz
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns day of week for time date objects
@@ -65,9 +65,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-getDayOfYear =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+getDayOfYear <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns day of week for time date objects
@@ -86,32 +87,6 @@ function(x)
     # Return Value:
     ydays
 }   
-
-
-# ------------------------------------------------------------------------------
-
-
-length.timeDate = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Gets the length of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns the lengths of an object of class 'timeDate'.
-
-    # FUNCTION:
-    
-    # Length:
-    ans = length(x@Data)
-    
-    # Return Value:
-    ans
-}
 
 
 ################################################################################
