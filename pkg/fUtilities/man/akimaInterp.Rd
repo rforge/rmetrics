@@ -110,12 +110,12 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
     Akima H., 1978,
     \emph{A Method of Bivariate Interpolation and Smooth Surface Fitting for 
     Irregularly Distributed Data Points},
-    ACM Transactions on Mathematical Software 4, 148--164.
+    ACM Transactions on Mathematical Software 4, 149-164.
 
     Akima H., 1996,
     \emph{Algorithm 761: Scattered-Data Surface Fitting that has the Accuracy 
     of a Cubic Polynomial},
-    ACM Transactions on Mathematical Software 22, 362–-371. 
+    ACM Transactions on Mathematical Software 22, 362-371. 
     
     
 }

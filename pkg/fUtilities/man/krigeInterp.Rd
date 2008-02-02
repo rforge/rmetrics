@@ -84,7 +84,6 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
    persp(ans, theta = -40, phi = 30, col = "steelblue",
         xlab = "x", ylab = "y", zlab = "z")
    contour(ans)
-   }
 }
 
 
