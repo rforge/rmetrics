@@ -504,7 +504,10 @@ garchFit <-
     residuals = .series$z
     fitted.values = .series$x - residuals
     h.t = .series$h
-    deltainv = 1/fit$params$delta
+    if (.params$includes["delta"])
+        deltainv = 1/fit$par["delta"]
+    else
+        deltainv = 1/fit$params$delta
     sigma.t = (.series$h)^deltainv
 
     # Standard Errors and t-Values:
