@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,61 +33,61 @@
 ################################################################################
 
 
-setMethod(f = "summary", signature(object = "fGARCH"), definition = 
-    function(object) 
-{   
+setMethod(f = "summary", signature(object = "fGARCH"), definition =
+    function(object)
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Summary method for an object of class "fGARCH"
-    
+
     # Arguments:
     #   object - an object of class 'fGARCH'
-    
+
     # FUNCTION:
-     
+
     # Title:
     cat("\nTitle:\n ")
     cat(object@title, "\n")
-    
+
     # Call:
     cat("\nCall:\n ")
     cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
-    
+
     # Mean Equation:
     cat("\nMean and Variance Equation:\n ")
     print(formula)
-        
+
     # Conditional Distribution:
     cat("\nConditional Distribution:\n ")
     cat(object@fit$params$cond.dist, "\n")
-  
+
     # Coefficients:
     cat("\nCoefficient(s):\n")
     digits = max(6, getOption("digits") - 4)
-    print.default(format(object@fit$par, digits = digits), print.gap = 2, 
-         quote = FALSE)    
-    
+    print.default(format(object@fit$par, digits = digits), print.gap = 2,
+         quote = FALSE)
+
     # Error Analysis:
     digits = max(4, getOption("digits") - 5)
-    fit = object@fit 
+    fit = object@fit
     # fit$cvar = solve(fit$hessian)
     # fit$se.coef = sqrt(diag(fit$cvar))
     # fit$tval = fit$coef/fit$se.coef
-    # fit$matcoef = cbind(fit$coef, fit$se.coef, 
+    # fit$matcoef = cbind(fit$coef, fit$se.coef,
     #     fit$tval, 2*(1-pnorm(abs(fit$tval))))
-    # dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate", 
+    # dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate",
     #    " Std. Error", " t value", "Pr(>|t|)"))
     signif.stars = getOption("show.signif.stars")
     cat("\nError Analysis:\n")
-    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars) 
-    
+    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars)
+
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
     LLH = object@fit$value
     N = length(object@data$x)
     cat(LLH, "   normalized: ", LLH/N, "\n")
-        
+
     # Lagged Series:
     .tslagGarch = function (x, k = 1) {
         ans = NULL
@@ -98,10 +98,10 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
         ans }
     .tslag1Garch = function (x, k) {
         c(rep(NA, times = k), x[1:(length(x) - k)]) }
-        
+
     # Statistical Tests:
     cat("\nStandadized Residuals Tests:\n")
-    r.s = object@residuals/sqrt(object@h.t)
+    r.s = object@residuals/object@sigma.t
     ans = NULL
     # Normality Tests:
     jbtest = jarqueberaTest(r.s)@test
@@ -126,7 +126,7 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
     ans = rbind(ans, c(box10[1], box10[3]))
     ans = rbind(ans, c(box15[1], box15[3]))
     ans = rbind(ans, c(box20[1], box20[3]))
-    # Ljung-Box Tests - tslag required 
+    # Ljung-Box Tests - tslag required
     lag.n = 12
     x.s = as.matrix(r.s)^2
     n = nrow(x.s)
@@ -148,11 +148,11 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
         " LM Arch Test       R    TR^2  ")
     colnames(ans) = c("Statistic", "p-Value")
     print(ans)
-    
+
     # Information Criterion Statistics:
     cat("\nInformation Criterion Statistics:\n")
     print(object@fit$ics)
-        
+
     # Description:
     cat("\nDescription:\n ")
     cat(object@description, "\n")
