@@ -178,10 +178,11 @@ function(xi = 0, mu = 0, beta = 1)
     xi0 = c(0, beta*euler, 0)
 
     # Supress warning for NaN's from Gamma Function:
+    warn.old <- getOption("warn")
     options(warn = -1)
     gevMean = mu + beta * xinv * (gamma(1-xi)-1) * g[sign(xi-1)+2] +
         xi0[(sign(xi)+2)]
-    options(warn = 0)
+    options(warn = warn.old)
 
     # VAR: Returns for x >= 1 NaN:
     g = c(1, 0, NaN)
@@ -189,10 +190,11 @@ function(xi = 0, mu = 0, beta = 1)
     xi0 = c(0, (beta*pi)^2 / 6, 0)
 
     # Supress warning for NaN's from Gamma Function:
+    warn.old <- getOption("warn")
     options(warn = -1)
     gevVar = (beta*xinv)^2 * (gamma(1-2*xi) - gamma(1-xi)^2 ) *
         g[sign(2*xi-1)+2] + xi0[(sign(xi)+2)]
-    options(warn = 0)
+    options(warn = warn.old)
 
     # Result:
     param = c(xi = xi, mu = mu, beta = beta)
