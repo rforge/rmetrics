@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -38,9 +37,9 @@ function(lib, pkg)
     dsc <- packageDescription(pkg)
     if(interactive() || getOption("verbose")) { 
         # not in test scripts
-        MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
+        MSG(sprintf("\nPackage %s (%s) loaded.\n%s",
             pkg, dsc$Version, dsc$Title),
-            "Rmetrics, (C) 1999-2008, Diethelm Wuertz, Rmetrics Foundation, GPL\n")
+            "Rmetrics, (C) 1999-2008, GPL\n")
     }
 
     # Load dll:
