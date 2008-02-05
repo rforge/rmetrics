@@ -26,17 +26,17 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-                                                
-################################################################################                                                                                                                                                          
-# FUNCTION:                 DESCRIPTION:                                                                                                                            
-#  as.matrix.ts              Converts univariate ts to 1-column matrix         
-#  as.matrix.mts             Converts multivariate ts to matrix                        
+
+################################################################################
+# FUNCTION:                 DESCRIPTION:
+#  as.matrix.ts              Converts univariate ts to 1-column matrix
+#  as.matrix.mts             Converts multivariate ts to matrix
 ################################################################################
 
 
-as.matrix.ts <- 
+as.matrix.ts <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -58,9 +58,9 @@ as.matrix.ts <-
 # ------------------------------------------------------------------------------
 
 
-as.matrix.mts <- 
+as.matrix.mts <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
