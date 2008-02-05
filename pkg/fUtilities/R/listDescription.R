@@ -34,19 +34,21 @@
 
 
 listDescription <-
-    function(package = "Rmetrics")
+    function(package = "Rmetrics", character.only = FALSE)
 {
-    # A function implemented by Diethelm Wuertz
-    
+    # A function implemented by Diethelm Wuertz & Yohan Chalabi
+
     # Description:
     #   Extracts package description
-    
+
     # Example:
     #   listDescription("fSeries")
-    
+
     # FUNCTION:
-    
+
     # Extract Description:
+    if (!character.only)
+        package <- as.character(substitute(package))
     cmd = paste("library(help =", package, ")", sep = "" )
     ans = eval(parse(text = cmd))
     name = ans$name
@@ -55,7 +57,7 @@ listDescription <-
     index = ans$info[[2]]
     cat("\n", package, "Description:\n\n")
     cat(paste(" ", description), sep = "\n")
-}   
+}
 
 
 ################################################################################
