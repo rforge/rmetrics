@@ -38,7 +38,8 @@
 
 .fjulian <- 
     function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Transforms formatted dates (fdates) from several formats
