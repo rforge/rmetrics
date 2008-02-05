@@ -24,14 +24,8 @@
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
 #   see Rmetrics's copyright file
-<<<<<<< .mine
-    
-  
-=======
 
 
-# fEcofin::VectorMatrixAddon.R
->>>>>>> .r2776
 ################################################################################
 # GENERATION:               DESCRIPTION:
 #  matrix                    R  Creates a matrix from the given set of values
