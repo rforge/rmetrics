@@ -15,17 +15,21 @@
 
 
 \usage{
-listDescription(package = "Rmetrics")
+listDescription(package = "Rmetrics", character.only = FALSE)
 }
 
 
 \arguments{
 
-    \item{package}{
-        a character string denoting the name of the package
-        to be listed.
-        }
-        
+  \item{package}{
+    a literal character or character string denoting the name of the
+    package to be listed.
+  }
+  \item{character.only}{
+    a logical indicating whether 'package' can be
+    assumed to be character strings.
+  }
+	
 }
 
 
