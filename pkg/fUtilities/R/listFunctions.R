@@ -34,24 +34,25 @@
 ################################################################################
 
 
-listFunctions <- 
-    function(package) 
-{   
+listFunctions <-
+    function(package)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Lists all functions in a package
-    
+
     # Arguments:
     #   package - a character string, the name of the Package
 
     # Author:
     #   Original code from B. Ripley
-    
+
     # FUNCTION:
-    
+
     # List:
-    if(require(package, character.only = TRUE)) {
+    package <- as.character(substitute(package))
+    if(require(package, character.only = TRUE, quietly = TRUE)) {
         env <- paste("package", package, sep = ":")
         nm <- ls(env, all = TRUE)
         ans = nm[unlist(lapply(nm, function(n) exists(n, where = env,
@@ -59,7 +60,7 @@ listFunctions <-
     } else {
         ans = character(0)
     }
-    
+
     # Return Value:
     ans
 }
@@ -68,23 +69,23 @@ listFunctions <-
 # ------------------------------------------------------------------------------
 
 
-countFunctions <- 
-    function(package) 
-{   
+countFunctions <-
+    function(package)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Counts all functions in a package
-    
+
     # Arguments:
     #   package - a character string, the name of the Package
-    
+
     # FUNCTION:
-    
+
     # Count:
     ans = length(listFunctions(package))
     names(ans) = package
-    
+
     # Return Value:
     ans
 }
