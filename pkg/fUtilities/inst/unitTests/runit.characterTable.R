@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,47 +27,23 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+# FUNCTION:                 DESCRIPTION:
 #  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
 ################################################################################
 
 
-
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.symbolTable = 
-function()
+test.characterTable <- 
+    function()
 {
-    # Symbol Table:
-    args(symbolTable)
+    # Character Table:
+    args(characterTable)
     par(mfrow = c(1, 1))
-    symbolTable()
+    characterTable()
     
     # Return Value:
     return()
 }
-    
-  
-# ------------------------------------------------------------------------------
 
-
-test.colorTable = 
-function()
-{
-    # Color Table:
-    args(colorTable)
-    par(mfrow = c(1, 1))
-    colorTable()
-    
-    # Return Value:
-    return()
-}
-   
 
 ################################################################################
 

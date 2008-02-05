@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,47 +27,25 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
+# FUNCTION:             NORMALITY TESTS:
+#  'fHTEST'              S4 Class Representation
+#  show.fHTEST           S4 Print Method
 ################################################################################
 
 
-
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.symbolTable = 
+test.fhtest =
 function()
 {
-    # Symbol Table:
-    args(symbolTable)
-    par(mfrow = c(1, 1))
-    symbolTable()
-    
-    # Return Value:
-    return()
-}
-    
-  
-# ------------------------------------------------------------------------------
-
-
-test.colorTable = 
-function()
-{
-    # Color Table:
-    args(colorTable)
-    par(mfrow = c(1, 1))
-    colorTable()
-    
-    # Return Value:
-    return()
-}
+   # Class:
+   getClass("fHTEST")
    
+   # Slots:
+   getSlots("fHTEST")
+   
+   # Return Value:
+   return()
+}
+
 
 ################################################################################
 

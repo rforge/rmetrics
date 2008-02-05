@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,28 +27,16 @@
 
 
 ################################################################################
-# FUNCTION:             SKEWNESS AND KURTOSIS:
-#  skewness              Returns a number which is the skewness of the data
-#   skewness.default      Default method
-#   skewness.data.frame   Method for objects of class data.frame
-#   skewness.POSIXct      Method for objects of class POSIXct 
-#   skewness.POSIXlt      Method for objects of class POSIXlt 
-#  kurtosis              Returns a number which is the kurtosis of the data
-#   kurtosis.default      Default method
-#   kurtosis.data.frame   Method for objects of class data.frame
-#   kurtosis.POSIXct      Method for objects of class POSIXct
-#   kurtosis.POSIXlt      Method for objects of class POSIXlt
+# FUNCTION:                BIVARIATE GRIDDED INTERPOLATION:
+#  akimaInterp              Interpolates and smoothes irregularly spaced points
+#  akimaInterpp             Interpolates and smoothes pointwise
 ################################################################################
 
 
-test.skewness = 
-function()
+test.akimaInterp <-
+    function() 
 {
-    #  skewness              Returns a number which is the skewness of the data
-    #   skewness.default      Default method
-    #   skewness.data.frame   Method for objects of class data.frame
-    #   skewness.POSIXct      Method for objects of class POSIXct 
-    #   skewness.POSIXlt      Method for objects of class POSIXlt
+    NA
     
     # Return Value:
     return()
@@ -59,14 +46,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.kurtosis = 
-function()
+test.akimaInterpp <-
+    function() 
 {
-    #  kurtosis              Returns a number which is the kurtosis of the data
-    #   kurtosis.default      Default method
-    #   kurtosis.data.frame   Method for objects of class data.frame
-    #   kurtosis.POSIXct      Method for objects of class POSIXct
-    #   kurtosis.POSIXlt      Method for objects of class POSIXlt
+    NA
     
     # Return Value:
     return()

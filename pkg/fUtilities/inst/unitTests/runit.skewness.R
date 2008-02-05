@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,47 +27,62 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
+# FUNCTION:             SKEWNESS:
+#   skewness.default      Default method
+#   skewness.data.frame   Method for objects of class data.frame
+#   skewness.POSIXct      Method for objects of class POSIXct 
+#   skewness.POSIXlt      Method for objects of class POSIXlt 
 ################################################################################
 
 
-
+test.skewness.default <-
+    function() 
+{
+    NA
+    
+    # Return Value:
+    return()
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-test.symbolTable = 
-function()
+test.skewness.data.frame <-
+    function() 
 {
-    # Symbol Table:
-    args(symbolTable)
-    par(mfrow = c(1, 1))
-    symbolTable()
+    NA
     
     # Return Value:
     return()
 }
+
     
-  
 # ------------------------------------------------------------------------------
 
 
-test.colorTable = 
-function()
+test.skewness.POSIXct <-
+    function() 
 {
-    # Color Table:
-    args(colorTable)
-    par(mfrow = c(1, 1))
-    colorTable()
+    NA
     
     # Return Value:
     return()
 }
-   
+
+    
+# ------------------------------------------------------------------------------
+
+
+test.skewness.POSIXlt <-
+    function() 
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
 
 ################################################################################
 

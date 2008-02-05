@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,47 +27,62 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
+# FUNCTION:             kurtosis:
+#   kurtosis.default      Default method
+#   kurtosis.data.frame   Method for objects of class data.frame
+#   kurtosis.POSIXct      Method for objects of class POSIXct 
+#   kurtosis.POSIXlt      Method for objects of class POSIXlt 
 ################################################################################
 
 
-
+test.kurtosis.default <-
+    function() 
+{
+    NA
+    
+    # Return Value:
+    return()
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-test.symbolTable = 
-function()
+test.kurtosis.data.frame <-
+    function() 
 {
-    # Symbol Table:
-    args(symbolTable)
-    par(mfrow = c(1, 1))
-    symbolTable()
+    NA
     
     # Return Value:
     return()
 }
+
     
-  
 # ------------------------------------------------------------------------------
 
 
-test.colorTable = 
-function()
+test.kurtosis.POSIXct <-
+    function() 
 {
-    # Color Table:
-    args(colorTable)
-    par(mfrow = c(1, 1))
-    colorTable()
+    NA
     
     # Return Value:
     return()
 }
-   
+
+    
+# ------------------------------------------------------------------------------
+
+
+test.kurtosis.POSIXlt <-
+    function() 
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
 
 ################################################################################
 

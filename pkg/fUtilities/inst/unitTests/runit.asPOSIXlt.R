@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,48 +26,27 @@
 #   see Rmetrics's copyright file 
 
 
-################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
+################################################################################                                                                                                                                                          
+# FUNCTION:                 DESCRIPTION:                                                                                                        
+#  as.POSIXlt.default        Default Method                                                            
 ################################################################################
 
 
+# IMPORTANT NOTE:
+#   as.POSIXlt was introduced as generic function in R 2.7.0
+#   Preliminarily, keep the function here to ne downward 
+#   compatible with previous R Versions. DW
 
 
-    
-# ------------------------------------------------------------------------------
-
-
-test.symbolTable = 
-function()
+as.POSIXlt.default <- 
+    function() 
 {
-    # Symbol Table:
-    args(symbolTable)
-    par(mfrow = c(1, 1))
-    symbolTable()
+    NA
     
     # Return Value:
     return()
 }
-    
-  
-# ------------------------------------------------------------------------------
 
-
-test.colorTable = 
-function()
-{
-    # Color Table:
-    args(colorTable)
-    par(mfrow = c(1, 1))
-    colorTable()
-    
-    # Return Value:
-    return()
-}
-   
 
 ################################################################################
 

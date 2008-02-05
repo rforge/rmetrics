@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,23 +27,17 @@
 
 
 ################################################################################
-# FUNCTION:             NORMALITY TESTS:
-#  'fHTEST'              S4 Class Representation
-#  show.fHTEST           S4 Print Method
+# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
 ################################################################################
 
 
-test.fhtest =
-function()
+test.xxx <- 
+    function() 
 {
-   # Class:
-   getClass("fHTEST")
-   
-   # Slots:
-   getSlots("fHTEST")
-   
-   # Return Value:
-   return()
+    NA
+    
+    # Return Value:
+    return()
 }
 
 
