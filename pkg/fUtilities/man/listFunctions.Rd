@@ -16,8 +16,8 @@
 
 
 \usage{
-listFunctions(package)
-countFunctions(package)
+listFunctions(package, character.only = FALSE)
+countFunctions(package, character.only = FALSE)
 }
 
 
@@ -26,8 +26,11 @@ countFunctions(package)
     \item{package}{
       a literal character or a character string denoting the name of the
       package to be listed. 
-        }
-        
+    }
+    \item{character.only}{
+      a logical indicating whether 'package' can be
+      assumed to be character strings.
+    }
 }
 
 
