@@ -16,9 +16,8 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -34,8 +33,8 @@
 ################################################################################
 
 
-.jbALM =
-function()
+.jbALM <- 
+    function()
 {
 structure(list("5" = c(3.6559e-05, 3.6676e-05, 3.8408e-05, 3.9805e-05,
 4.0283e-05, 4.0549e-05, 4.062e-05, 4.1218e-05, 4.2351e-05, 4.2355e-05,

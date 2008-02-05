@@ -16,9 +16,8 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -37,9 +36,10 @@
 ################################################################################
 
 
-.jbTable =
-function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
-{   # A function implemented by Diethelm Wuertz
+.jbTable <- 
+    function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Finite sample p values for the Jarque Bera test
@@ -103,9 +103,10 @@ function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
 # ------------------------------------------------------------------------------
 
 
-.jbPlot =
-function(type = c("LM", "ALM"))
-{   # A function implemented by Diethelm Wuertz
+.jbPlot <- 
+    function(type = c("LM", "ALM"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Match Arguments:
     type = match.arg(type)
@@ -131,9 +132,10 @@ function(type = c("LM", "ALM"))
 # ------------------------------------------------------------------------------
 
 
-.pjb =
-function(q, N = Inf, type = c("LM", "ALM"))
-{   # A function implemented by Diethelm Wuertz
+.pjb <- 
+    function(q, N = Inf, type = c("LM", "ALM"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns probabilities for the JB Test given quantiles
@@ -189,9 +191,10 @@ function(q, N = Inf, type = c("LM", "ALM"))
 # ------------------------------------------------------------------------------
 
 
-.qjb =
-function(p, N = Inf, type = c("LM", "ALM"))
-{   # A function implemented by Diethelm Wuertz
+.qjb <- 
+    function(p, N = Inf, type = c("LM", "ALM"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles for the ADF Test given probabilities
