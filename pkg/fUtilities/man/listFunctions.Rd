@@ -24,8 +24,8 @@ countFunctions(package)
 \arguments{
 
     \item{package}{
-        a character string denoting the name of the package
-        to be listed.
+      a literal character or a character string denoting the name of the
+      package to be listed. 
         }
         
 }
