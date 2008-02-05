@@ -34,19 +34,21 @@
 
 
 listIndex <-
-    function(package = "Rmetrics")
+    function(package = "Rmetrics", character.only = FALSE)
 {
-    # A function implemented by Diethelm Wuertz
-    
+    # A function implemented by Diethelm Wuertz & Yohan Chalabi
+
     # Description:
     #   Extracts R package index
-    
+
     # Example:
     #   listIndex("fSeries")
-    
+
     # FUNCTION:
-    
+
     # Extract Index:
+    if (!character.only)
+        package <- as.character(substitute(package))
     cmd = paste("library(help =", package, ")", sep = "" )
     ans = eval(parse(text = cmd))
     name = ans$name
@@ -54,8 +56,8 @@ listIndex <-
     description = ans$info[[1]]
     index = ans$info[[2]]
     cat("\n", package, "Index:\n\n")
-    cat(paste(" ", index), sep = "\n")    
-}   
+    cat(paste(" ", index), sep = "\n")
+}
 
 
 ################################################################################
