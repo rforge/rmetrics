@@ -35,9 +35,9 @@
 
 
 listFunctions <-
-    function(package)
+    function(package, character.only = FALSE)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz & Yohan Chalabi
 
     # Description:
     #   Lists all functions in a package
@@ -51,7 +51,8 @@ listFunctions <-
     # FUNCTION:
 
     # List:
-    package <- as.character(substitute(package))
+    if (!character.only)
+        package <- as.character(substitute(package))
     if(require(package, character.only = TRUE, quietly = TRUE)) {
         env <- paste("package", package, sep = ":")
         nm <- ls(env, all = TRUE)
@@ -70,9 +71,9 @@ listFunctions <-
 
 
 countFunctions <-
-    function(package)
+    function(package, character.only = FALSE)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz & Yohan Chalabi
 
     # Description:
     #   Counts all functions in a package
@@ -83,7 +84,9 @@ countFunctions <-
     # FUNCTION:
 
     # Count:
-    ans = length(listFunctions(package))
+    if (!character.only)
+        package <- as.character(substitute(package))
+    ans = length(listFunctions(package, character.only = TRUE))
     names(ans) = package
 
     # Return Value:
