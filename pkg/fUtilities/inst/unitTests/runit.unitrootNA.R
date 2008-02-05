@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,36 +27,20 @@
 
 
 ################################################################################
-
-
-
+# FUNCTION:                 DESCRIPTION:
+#  .unirootNA                Computes zero without error exit
 ################################################################################
 
 
-test.codTables =
-function()
+test.unitrootNA <- 
+    function()
 {
-    # Tables Font-1:
-    characterTable(font = 1, cex = 0.9)
-    box()
-    mtext("Font=1", side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-    
-    # Tables Font-2:
-    characterTable(font = 2, cex = 0.9)
-    box()
-    mtext("Font=2", side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-       
-    # Symbol Table:
-    symbolTable(font = par('font'), cex = 0.8)
-    box() 
-    
-    # Color Table:
-    colorTable(cex = 1)
-    box()
+    NA
     
     # Return Value:
     return()
 }
+   
 
+################################################################################
 
-# ------------------------------------------------------------------------------

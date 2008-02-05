@@ -27,15 +27,13 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+# FUNCTION:                 BIVARIATE GRIDDED INTERPOLATION:
+#  linearInterp             Interpolates linearly irregularly spaced data points
+#  linearInterpp            Interpolates linearly pointwise
 ################################################################################
 
 
-test.kurtosis.default <-
+test.linearInterp <-
     function() 
 {
     NA
@@ -44,37 +42,11 @@ test.kurtosis.default <-
     return()
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
+test.linearInterp <-
     function() 
 {
     NA

@@ -27,56 +27,26 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+# FUNCTION:                 INTERNAL USED PLOT FUNCTIONS:
+#  .residualsPlot            Returns a residual series plot
+#  .acfPlot                  Returns a autocorrelation function plot
+#  .pacfPlot                 Returns a partial ACF plot
+#  .mrlPlot                  Returns a mean residual life plot
+# FUNCTION:                 INTERNAL USED BIVARIATE PLOT FUNCTIONS:
+#  .responsesPlot            Returns a response series plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
+# FUNCTION:                 INTERNAL THREE-DIMENSIONAL PLOT UTILITIES:
+#  .circlesPlot              Returns a circles plot indexing 3rd variable
+#  .perspPlot                Returns a perspective plot in 2 dimensions
+#  .contourPlot              Returns a contour plot in 2 dimensions
+#  .histStack                Returns a stacked histogram plot
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
+test.plot <-  
+    function()
 {
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
-    function() 
-{
+    # Plot:
     NA
     
     # Return Value:

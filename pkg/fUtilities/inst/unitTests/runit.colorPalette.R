@@ -27,14 +27,30 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 COLOR PALETTES:
+#  rainbowPalette            Creates a rainbow color palette          
+#  heatPalette               Creates a heat color palette
+#  terrainPalette            Creates a terrain color palette
+#  topoPalette               Creates a topo color palette 
+#  cmPalette                 Creates a cm color palette
+#  greyPalette               Creates a grey palette
+#  timPalette                Creates a cyan, yellow, to orange palette
+# FUNCTION:                 COLOR RAMPS:
+#  rampPalette               Creates a color ramp palette
+#  seqPalette                Creates a sequential color palette
+#  divPalette                Creates a diverging color palette
+#  qualiPalette              Creates a qualitative color palette 
+#  focusPalette              Creates a focus color palette
+#  monoPalette               Creates a mono color palette
 ################################################################################
 
 
-test.xxx <- 
-    function() 
+test.greyPalette <- 
+    function()
 {
-    NA
+    # Grey Palette:
+    args(greyPalette)
+    greyPalette()
     
     # Return Value:
     return()

@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -34,15 +33,12 @@
 #  Delta                 Computes delta function
 #  Boxcar                Computes boxcar function
 #  Ramp                  Computes ramp function
-#  .heavisideSlider      Displays Heaviside and related functions
 ################################################################################
 
 
-test.heavisideSlider = 
-function()
+test.Heaviside <- 
+    function()
 {
-    # Slider:
-    # .heavisideSlider()
     NA
         
     # Return Value:

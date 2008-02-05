@@ -27,11 +27,13 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 COLOR NAMES:
+#  colorLocator              Plots R's 657 named colors for selection
+#  colorMatrix               Returns matrix of R's color names
 ################################################################################
 
 
-test.xxx <- 
+test.colorLocator <- 
     function() 
 {
     NA

@@ -27,11 +27,12 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 DESCRIPTION:
+#  description               Sets default description string
 ################################################################################
 
 
-test.xxx <- 
+test.description <- 
     function() 
 {
     NA

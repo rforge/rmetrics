@@ -27,54 +27,12 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+# FUNCTION:                 BIVARIATE GRIDDED INTERPOLATION:
+#  krigeInterp              Kriges irregularly distributed data points
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
+test.krigeInterp <-
     function() 
 {
     NA

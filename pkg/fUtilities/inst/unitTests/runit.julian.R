@@ -27,54 +27,15 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+# FUNCTION:                 DATE FUNCTIONS:
+#  .fjulian                  Transforms formatted dates to julian day numbers
+#  .julian                   Implements SPlus like 'julian'
+#  .isPOSIX                  Checks for an object of class POSIX
+#  .by2seconds               Converts 'by' string into numeric value of seconds
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
+test.fjulian <-
     function() 
 {
     NA

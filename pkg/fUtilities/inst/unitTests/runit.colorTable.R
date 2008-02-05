@@ -27,14 +27,18 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 DESCRIPTION:
+#  colorTable                Shows a table of plot color codes
 ################################################################################
 
 
-test.xxx <- 
-    function() 
+test.colorTable = 
+function()
 {
-    NA
+    # Color Table:
+    args(colorTable)
+    par(mfrow = c(1, 1))
+    colorTable()
     
     # Return Value:
     return()

@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -38,11 +37,11 @@
 ################################################################################
 
 
-test.portableInnovations = 
-function()
+test.portableInnovations <- 
+    function()
 {
-    #  set.lcgseed          Sets initial random seed
-    #  get.lcgseed          Gets the current valus of the random seed
+    #  set.lcgseed  Sets initial random seed
+    #  get.lcgseed  Gets the current valus of the random seed
     
     # Set initial random seed - set.lcgseed(seed = 4711)
     set.lcgseed()
@@ -58,12 +57,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.randomNumbers = 
-function()
+test.randomNumbers <- 
+    function()
 {
-    #  runif.lcg            Generates portable uniform linear congruational rvs
-    #  rnorm.lcg            Generates portable normal linear congruational rvs
-    #  rt.lcg               Generates portable Student-t linear congruational rvs
+    #  runif.lcg    Generates portable uniform linear congruational rvs
+    #  rnorm.lcg    Generates portable normal linear congruational rvs
+    #  rt.lcg       Generates portable Student-t linear congruational rvs
     
     # Uniform:
     x = runif.lcg(n = 1000, min = 0, max = 1)

@@ -27,56 +27,17 @@
 
 
 ################################################################################
+# FUNCTION:                 CONTROL ATTRIBUTES:
+#  print.control             Prints unlisted control attributes  
 # FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+#  .print                    Used in regression package
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
+test.print <-  
+    function()
 {
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
-    function() 
-{
+    # Print:
     NA
     
     # Return Value:

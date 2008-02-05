@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -30,12 +29,11 @@
 ################################################################################
 # FUNCTION:            PLOT UTILITIES:
 #  interactivePlot      Plots several graphs interactively
-#  gridVector           Creates from two vectors rectangular grid points
 ################################################################################
 
 
-test.interactivePlot = 
-function()
+test.interactivePlot <- 
+    function()
 {
     # interactivePlot(x, choices = paste("Plot", 1:9), 
     #   plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
@@ -67,22 +65,6 @@ function()
     # Try:
     # par(mfrow = c(1,1)); testPlot(rnorm(500), which = "ask")
         
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.gridVector = 
-function()
-{
-    # Grid Vector - gridVector(x, y)
-    gridVector(1:3, 1:3)
-    as.data.frame(gridVector(1:3, 1:3))
-    as.matrix(as.data.frame(gridVector(1:3, 1:3)))
-
     # Return Value:
     return()
 }

@@ -27,11 +27,12 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 DESCRIPTION:
+#  .distCheck                Checks consistency of distributions
 ################################################################################
 
 
-test.xxx <- 
+test.distCheck <- 
     function() 
 {
     NA

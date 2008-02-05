@@ -27,11 +27,26 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:                 COLUMN STATISTICS:
+#  colStats                  Computes sample statistics by column
+#  colSums                   Computes sums of all values in each column
+#  colMeans                  Computes means of all values in each column
+#  colSds                    Computes standardard deviation of each column
+#  colVars                   Computes sample variance by column
+#  colSkewness               Computes sample skewness by column
+#  colKurtosis               Computes sample kurtosis by column
+#  colMaxs                   Computes maximum values in each colum
+#  colMins                   Computes minimum values in each colum
+#  colProds                  Computes product of all values in each colum
+# FUNCTION:                 NO LONGER USED:
+#  colAvgs                   Computes sample mean by column
+#  colStdevs                 Computes sample standard deviation by column
+#  mean.timeSeries           Computes sample means by column
+#  var.timeSeries            Computes sample variance by column
 ################################################################################
 
 
-test.xxx <- 
+test.colStats <- 
     function() 
 {
     NA

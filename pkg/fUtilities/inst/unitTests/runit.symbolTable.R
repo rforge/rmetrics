@@ -27,62 +27,23 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+#  symbolTable               Shows a table of plot symbols
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
+test.symbolTable <- 
+    function()
 {
-    NA
+    # Symbol Table:
+    args(symbolTable)
+    par(mfrow = c(1, 1))
+    symbolTable()
     
     # Return Value:
     return()
 }
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
+   
 
 ################################################################################
 

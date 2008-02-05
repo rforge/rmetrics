@@ -26,63 +26,22 @@
 #   see Rmetrics's copyright file 
 
 
-################################################################################
-# FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+################################################################################                                                                                                                                                                                 
+# FUNCTION:                 DESCRIPTION:                                                                                                   
+#  Sys.putenv                depreciated after 2.4.1   
+#  head.ts                   Adds head method                        
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
+test.Sys.putenv <- 
+    function()
 {
     NA
     
     # Return Value:
     return()
 }
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.data.frame <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
+   
 
 ################################################################################
 

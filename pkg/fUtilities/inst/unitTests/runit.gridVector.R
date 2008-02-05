@@ -27,15 +27,19 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:               DESCRIPTION:
+#  gridVector              Creates from two vectors rectangular grid coordinates
 ################################################################################
 
 
-test.xxx <- 
-    function() 
+test.gridVector = 
+function()
 {
-    NA
-    
+    # Grid Vector - gridVector(x, y)
+    gridVector(1:3, 1:3)
+    as.data.frame(gridVector(1:3, 1:3))
+    as.matrix(as.data.frame(gridVector(1:3, 1:3)))
+
     # Return Value:
     return()
 }

@@ -28,56 +28,30 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#   kurtosis.default         Default method
-#   kurtosis.data.frame      Method for objects of class data.frame
-#   kurtosis.POSIXct         Method for objects of class POSIXct 
-#   kurtosis.POSIXlt         Method for objects of class POSIXlt 
+#  listFunctionss            Lists all functions in a package
+#  countFunctions            Counts all functions in a package
 ################################################################################
 
 
-test.kurtosis.default <-
-    function() 
+test.listFunctions <-  
+    function()
 {
-    NA
+    # List Functions:
+    print(listFunctions("fUtilities"))
     
     # Return Value:
     return()
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-test.kurtosis.data.frame <-
-    function() 
+test.countFunctions <-  
+    function()
 {
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXct <-
-    function() 
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kurtosis.POSIXlt <-
-    function() 
-{
-    NA
+    # Count Functions:
+    print(countFunctions("fUtilities"))
     
     # Return Value:
     return()

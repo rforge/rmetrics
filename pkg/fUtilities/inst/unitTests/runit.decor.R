@@ -27,11 +27,19 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:                                                                                                                                                                                                                                                  
+# FUNCTION:
+#  decor
+#  hgrid
+#  vgrid
+#  boxL
+#  box_
+#  xrug
+#  yrug
+#  copyright
 ################################################################################
 
 
-test.xxx <- 
+test.decor <- 
     function() 
 {
     NA

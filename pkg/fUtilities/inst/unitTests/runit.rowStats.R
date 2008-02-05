@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -36,33 +35,7 @@
 #   rowSkewness           Computes sample skewness by row
 #   rowKurtosis           Computes sample kurtosis by row
 #   rowCumsums            Computes sample cumulated sums by row
-#  colStats              Computes sample statistics by column
-#   colAvgs               Computes sample mean by column
-#   colVars               Computes sample variance by column
-#   colStdevs             Computes sample variance by column
-#   colSkewness           Computes sample skewness by column
-#   colKurtosis           Computes sample kurtosis by column
-#   colCumsums            Computes sample cumulated sums by column
 ################################################################################
-
-
-test.rowStats = 
-function()
-{
-    #  rowStats              Computes sample statistics by row
-    #   rowAvgs               Computes sample mean by row
-    #   rowVars               Computes sample variance by row
-    #   rowStdevs             Computes sample variance by row
-    #   rowSkewness           Computes sample skewness by row
-    #   rowKurtosis           Computes sample kurtosis by row
-    #   rowCumsums            Computes sample cumulated sums by row
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
 
 
 test.colStats = 

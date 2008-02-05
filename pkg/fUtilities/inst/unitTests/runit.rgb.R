@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,31 +27,16 @@
 
 
 ################################################################################
-# FUNCTION:                 COLOR PALETTES:
-#  greyPalette               Creates a grey palette
+# FUNCTION:                 UTILITIES:
+#  .asRGB                    Converts any R color to RGB (red/green/blue)
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 ################################################################################
 
 
-test.greyPalette = 
-function()
-{
-    # Grey Palette:
-    args(greyPalette)
-    greyPalette()
-    
-    # Return Value:
-    return()
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.hexCode = 
-function()
+test.hexCode <- 
+    function()
 {
     #  .chcode                   Changes from one to another number system
     #  .hex.to.dec               Converts heximal numbers do decimal numbers
