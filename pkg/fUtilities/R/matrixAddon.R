@@ -18,16 +18,20 @@
 # for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
 #   see Rmetrics's copyright file
+<<<<<<< .mine
+    
+  
+=======
 
 
 # fEcofin::VectorMatrixAddon.R
+>>>>>>> .r2776
 ################################################################################
 # GENERATION:               DESCRIPTION:
 #  matrix                    R  Creates a matrix from the given set of values
