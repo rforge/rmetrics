@@ -33,21 +33,21 @@
 rdonlp2Control <- 
     function(            
     
-    # setup
+    # Setup:
     iterma = 4000, nstep = 20,fnscale = 1,
     report = FALSE, rep.freq = 1,
     # perfomance and tunings
     tau0 = 1.0, tau = 0.1, del0 = 1.0,
     
-    # termination criteria
+    # Termination Criteria:
     epsx = 1e-5, delmin = 0.1*del0,
     epsdif = 1e-8, nreset.multiplier = 1,
     
-    # numerical differentiation
+    # Numerical Differentiation:
     difftype = 3, epsfcn = 1e-16, taubnd = 1.0,
     hessian = FALSE,
     
-    # information
+    # Information:
     te0 = TRUE, te1 = FALSE, te2 = FALSE, te3 = FALSE,
     silent = FALSE, intakt = TRUE )
 {
