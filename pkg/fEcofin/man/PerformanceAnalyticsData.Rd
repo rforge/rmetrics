@@ -14,14 +14,14 @@
 \description{
 
     A collection and description of data sets 
-    used in the examples of the PerformanceAnalytics 
-    packages.
+    used in the examples of the contributed
+    R package "PerformanceAnalytics".
     
     The data sets are:
     
     \tabular{ll}{
-    \code{edhec} \tab composite hedge fund style index returns, \cr
-    \code{managers} \tab fixed income benchmarks. }
+    \code{edhec.tS} \tab composite hedge fund style index returns, \cr
+    \code{managers.tS} \tab fixed income benchmarks. }
    
 }
 
@@ -60,13 +60,14 @@
     the US Treasury 10-year bond and 3-month bill. Monthly returns for
     all series end in December 2006 and begin at different periods starting
     from January 1996.
+    
 }
 
 
 \format{
     
     All files are in CSV Excel spreadsheet format. The
-    delimiter is a semicolon. 
+    delimiter is a semicolon. The time stamps are ISO-8601 formatted.
     
 }
 
@@ -86,13 +87,18 @@ Vaissie Mathieu (2003);
     \emph{A Detailed Analysis of the Construction Methods and Management 
         Principles of Hedge Fund Indices},\cr
     \url{http://www.edhec-risk.com/site_edhecrisk/public/indexes/EDHEC_Publications/RISKReview1072705188065793513}.
+
+Carl P., Peterson B.G. (2007);
+   \emph{PerformanceAnalytics: Econometric Tools for Performance and 
+    Risk Analysis}, \cr
+    \url{http://cran.r-project.org/doc/packages/PerformanceAnalytics.pdf}.
 }
 
 
 \examples{
 ## Load Example Data Set:
-   data(edhec)
-   edhec
+   data(edhec.tS)
+   edhec.tS
 }
  
  
