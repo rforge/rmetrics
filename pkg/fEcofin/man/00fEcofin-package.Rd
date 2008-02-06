@@ -36,7 +36,7 @@
 
 \section{Bond Market Data Sets}{
 
-    contains demo data sets from the Bond Market
+    contains demo data sets from the Bond Market.
     
     The data sets are:
     
@@ -155,8 +155,8 @@
     The data sets are:
     
     \tabular{ll}{
-    \code{edhec} \tab composite hedge fund style index returns, \cr
-    \code{managers} \tab fixed income benchmarks. }
+    \code{edhec.tS} \tab composite hedge fund style index returns, \cr
+    \code{managers.tS} \tab fixed income benchmarks. }
    
 }    
 
