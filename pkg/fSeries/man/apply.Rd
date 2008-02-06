@@ -1,11 +1,11 @@
-\name{apply}
+\name{fapply}
 
 
 \title{Applies Functions Over timeSeries Margins}
 
-
-\alias{apply}
 \alias{fapply}
+\alias{apply}
+
 
 
 \description{
