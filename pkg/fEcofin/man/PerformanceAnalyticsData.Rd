@@ -4,8 +4,8 @@
 \alias{PerformanceAnalyticsData}
 
 
-\alias{edhec}
-\alias{managers}
+\alias{edhec.tS}
+\alias{managers.tS}
 
 
 \title{Performance Analytics Data Sets} 
