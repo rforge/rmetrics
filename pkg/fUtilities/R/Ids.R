@@ -28,51 +28,11 @@
 
 ################################################################################
 # GENERATION:               DESCRIPTION:
-#  triang                    Extracs the lower tridiagonal part from a matrix
-#  Triang                    Extracs the upper tridiagonal part from a matrix
+#  colIds                    Retrieves column names of a matrix-like object
+#  rowIds                    Retrieves row names of a matrix-like object
+#  colIds<-                  Sets column names of a matrix-like object
+#  rowIds<-                  Sets row names of a matrix-like object
 ################################################################################
-
-
-triang <-
-    function(x)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns lower triangle matrix
-
-    # FUNCTION:
-
-    # Triangulate:
-    x[row(x) < col(x)] = 0
-
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-Triang <-
-    function(x)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns upper triangle matrix
-
-    # FUNCTION:
-
-    # Triangulate
-    x[row(x) > col(x)] = 0
-
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 colIds <-

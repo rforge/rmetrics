@@ -3,31 +3,11 @@
 
 \alias{matrixAddon}
 
-\alias{triang}
-\alias{Triang}
-\alias{pascal}
-\alias{hilbert}
-\alias{colVec}
-\alias{rowVec}
-\alias{colIds}
-\alias{rowIds}
-\alias{colIds<-}
-\alias{rowIds<-}
-
-\alias{isPositiveDefinite}
-\alias{makePositiveDefinite}
-
 \alias{inv}
 \alias{norm}
 \alias{rk}
 \alias{tr}
 \alias{kron}
-
-\alias{vec}
-\alias{vech}
-
-\alias{tslag}
-\alias{pdl}
 
 
 \title{Vector/Matrix Arithmetics and Linear Algebra}
@@ -146,58 +126,22 @@
 
 
 \usage{
-triang(x)
-Triang(x)
-pascal(n)
-hilbert(n)
-
-isPositiveDefinite(x)
-makePositiveDefinite(x)
-
-colVec(x)
-rowVec(x)
-colIds(x, \dots)
-rowIds(x, \dots)
-
-isPositiveDefinite(x)
-makePositiveDefinite(x)
-
 inv(x)
 norm(x, p = 2)
 rk(x, method = c("qr", "chol"))
 tr(x)
 kron(x, y)
-
-vec(x)
-vech(x)
-
-pdl(x, d = 2, q = 3, trim = FALSE)
-tslag(x, k = 1, trim = FALSE)
 }
 
 
 \arguments{
 
-    \item{d}{
-        [pdl] - \cr
-        an integer specifying the order of the polynomial. 
-        }
-    \item{k}{
-        [tslag] - \cr
-        an integer value, the number of positions the new series is 
-        to lag or to lead the input series. 
-        }
     \item{method}{
-        [rk] - \cr
         a character value, the dimension of the square matrix. One can
         choose from two methods: For \code{method = "qr"} the rank is
         computed as \code{qr(x)\$rank}, or alternatively for 
         \code{method="chol"} the rank is
         computed as \code{attr(chol(x, pivot=TRUE), "rank")}.
-        }
-    \item{n}{
-        [pascal] - \cr
-        an integer value, the dimension of the square matrix.
         }
     \item{p}{
         [norm] - \cr
@@ -212,30 +156,8 @@ tslag(x, k = 1, trim = FALSE)
         as the maximum of the sum of the absolute valued elements
         of rows of the matrix.
         }
-    \item{q}{
-        [pdl] - \cr
-        an integer specifying the number of lags to use in 
-        creating polynomial distributed lags. This must be 
-        greater than d. 
-        }
-    \item{trim}{
-        [pdl] - \cr
-        a logical flag; if TRUE, the missing values at 
-        the beginning of the returned matrix will be trimmed. 
-        \cr
-        [tslag] - \cr
-         a logical flag, if TRUE, the missing values at the 
-        beginning or end of the returned series will be trimmed. 
-        The default value is FALSE. 
-        }
     \item{x, y}{
         a numeric matrix.
-        \cr
-        [tslag] - \cr
-        a numeric vector, missing values are allowed.
-        \cr
-        [pdl] - \cr
-        a numeric vector.
         }
     \item{\dots}{
         arguments to be passed.
@@ -245,14 +167,6 @@ tslag(x, k = 1, trim = FALSE)
 
 
 \details{
-
-    \bold{Function from R's Base Package:}
-    \cr
-    
-    Most of the functions are described in their R help pages which we
-    recommend to consult for further information. For the additiotnal 
-    functions added by Rmetrics we give a brief introduction.
-    \cr
     
     
     \bold{General Functions:}
@@ -294,11 +208,6 @@ tslag(x, k = 1, trim = FALSE)
     eigenvalues of a triangular matrix are the diagonal elements.
     \cr
     
-    The function \code{isPositiveDefinite} checks if a square matrix is 
-    positive definite, and the function \code{makePositiveDefinite} forces 
-    a matrix to be positive definite.
-    \cr
-    
     The functions \code{colVec} and \code{rowVec} transform a vector into 
     a column and row vector, respectively. A column vector is a matrix 
     object with one column, and a row vector is a matrix object with one row.
@@ -331,10 +240,6 @@ tslag(x, k = 1, trim = FALSE)
     
     
     \bold{Basic Statistical Functions:}
-    \cr
-    
-    The functions \code{var} and \code{cov} compute the variance and
-    covariance of a matrix.
     \cr
     
     Beside these functions \code{\link{colMeans}} and \code{\link{rowMeans}} 
@@ -432,7 +337,7 @@ tslag(x, k = 1, trim = FALSE)
 
 \references{
 
-Higham N.J., (2002);
+Higham, N.J., (2002);
     \emph{Accuracy and Stability of Numerical Algorithms}, 
     2nd ed., SIAM.
 
@@ -449,13 +354,6 @@ Moler C., van Loan C., (2003);
     \emph{Nineteen dubious ways to compute the exponential of a matrix, 
     twenty-five years later},
     SIAM Review 45, 3--49.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

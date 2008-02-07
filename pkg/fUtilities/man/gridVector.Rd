@@ -15,14 +15,15 @@
 
 
 \usage{
-gridVector(x, y)}
+gridVector(x, y = NULL)}
 
 
 \arguments{
 
     \item{x, y}{
         two numeric vectors of length m and n which span the 
-        rectangular grid of size m times n.
+        rectangular grid of size m times n. If \code{y} takes
+        the default value, \code{NULL}, then \code{y=x}.
         }
         
 }
@@ -36,8 +37,16 @@ gridVector(x, y)}
 }
 
 
+\seealso{
+
+    \code{\link{expand.grid}}.
+
+}
+
+
 \examples{
 ## gridVector -
+   gridVector((0:10)/10) 
    gridVector((0:10)/10, (0:10)/10)
 }
 

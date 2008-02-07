@@ -33,9 +33,9 @@
 
 
 gridVector <-  
-    function(x, y)
+    function(x, y = NULL)
 {   
-    # A function implemented by Diethelm Wuertz, GPL
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates from two vectors rectangular grid coordinates
@@ -64,6 +64,9 @@ gridVector <-
     #       [6,]    3    2
 
     # FUNCTION: 
+    
+    # DW:
+    if (is.null(y)) y = x
     
     # Prepare for Input:
     nx = length(x)

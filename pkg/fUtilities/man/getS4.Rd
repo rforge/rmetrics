@@ -51,10 +51,26 @@ getSlot(object, slotName)
         an object of class S4.
         }
     \item{slotName}{
-        [getSlot] - \cr
         a character string, the name of the slot to be extracted from the 
         S4 object.
         } 
+}
+
+
+\value{
+
+    \code{isS4}\cr
+    
+    returns either TRUR or FALSE depending if the argument is
+    an object of class S4 or not.
+    
+    \code{getCall}\cr
+    \code{getModel}\cr
+    \code{getTitle}\cr
+    \code{getDescription}\cr
+    \code{getSlot}\cr
+    return the content of the slot.
+    
 }
 
 
