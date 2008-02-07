@@ -28,49 +28,8 @@
 
 ################################################################################
 # LINEAR ALGEBRA:           DESCRIPTION:
-#  inv                       Returns the inverse of a matrix, synonyme
 #  norm                      Returns the norm of a matrix
-#  rk                        Returns the rank of a matrix
-#  tr                        Returns the trace of a matrix
-#  kron                      Returns the Kronecker product
-# R BASE FUNCTIONS:         DESCRIPTION:
-#  t                         Returns the transposed matrix
-#  det                       Returns the determinant of a matrix
-#  chol2inv                  Returns the inverse of a matrix
-#  %*%                       Returns the product of two matrices
-#  %x%                       Returns the Kronecker product
-#  chol                      Returns the Cholesky factor matrix
-#  eigen                     Returns eigenvalues and eigenvectors
-#  svd                       Returns the singular value decomposition
-#  kappa                     Returns the condition number of a matrix
-#  qr                        Returns the QR decomposition of a matrix
-#  solve                     Solves a system of linear equations
-#  backsolve                 ... use when the matrix is upper triangular
-#  forwardsolve              ... use when the matrix is lower triangular
 ################################################################################
-
-
-inv <-
-    function(x)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the inverse of a matrix
-
-    # FUNCTION:
-
-    # Inverse:
-    # ans = chol2inv(chol(x))
-    # or ...
-    ans = solve(x)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 norm <-
@@ -114,78 +73,6 @@ norm <-
     if (is.na(ans)) stop("Invalid value for p")
 
     # Return value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rk <-
-    function(x, method = c("qr", "chol"))
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the rank of a matrix
-
-    # FUNCTION:
-
-    # Rank:
-    method = method[1]
-    if (method == "chol") {
-        ans = attr(chol(x, pivot = TRUE), "rank")
-    } else {
-        ans = qr(x)$rank
-    }
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-tr <-
-    function(x)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the trace of a matrix
-
-    # FUNCTION:
-
-    # Trace:
-    if (dim(x)[1] != dim(x)[2] ) {
-        return(NA)
-    } else {
-        return(sum(diag(x)))
-    }
-
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-kron <-
-    function(x, y)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns Kronecker product
-
-    # FUNCTION:
-
-    # Kronecker Product:
-    ans = x %*% y
-
-    # Return Value:
     ans
 }
 
