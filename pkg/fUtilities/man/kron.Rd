@@ -4,7 +4,7 @@
 \alias{kron}
 
 
-\title{Kronecker Product
+\title{Kronecker Product}
 
 
 \description{
@@ -39,7 +39,9 @@ kron(x, y)
 
 \note{
 
-    \code{kron} is a synonyme to \code{%x%}.
+    \code{kron} is a synonyme to \code{\%x\%}.
+
+}
 
 
 \references{
