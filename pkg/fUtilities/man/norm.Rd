@@ -21,7 +21,7 @@ norm(x, p = 2)
 
 \arguments{
 
-    \item{x, y}{
+    \item{x}{
         a numeric matrix.
         }
     \item{p}{

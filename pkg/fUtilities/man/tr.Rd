@@ -51,7 +51,7 @@ Golub, van Loan, (1996);
    P
   
 ## Trace:
-   TR(p)                                  
+   tr(P)                                  
 }
 
 
