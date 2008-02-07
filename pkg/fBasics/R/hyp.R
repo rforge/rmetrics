@@ -33,9 +33,7 @@
 #  qhyp                  Returns quantiles for hyperbolic DF
 #  rhyp                  Returns random variates for hyperbolic DF
 # FUNCTION:             DESCRIPTION:
-#  hypMode               Computes the hyperbolic mode
 #  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
-#  .hyp[1234]Mode         Internal functions called by 'hypMode'
 ################################################################################
 
 
@@ -168,30 +166,6 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
     ans
 }   
 
-
-# ------------------------------------------------------------------------------
-
-
-hypMode =
-function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the mode of the Hyperbolic PDF
-  
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Return Value:
-    ans = NA
-    if (pm == 1) return(.hyp1Mode(alpha, beta, delta, mu))
-    if (pm == 2) return(.hyp2Mode(alpha, beta, delta, mu))
-    if (pm == 3) return(.hyp3Mode(alpha, beta, delta, mu))
-    if (pm == 4) return(.hyp4Mode(alpha, beta, delta, mu))  
-}
-  
 
 # ------------------------------------------------------------------------------
 
@@ -926,94 +900,6 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     
     # Return Value:
     ans = rhyp(n, alpha, beta, delta, mu)
-    ans
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-.hyp1Mode =
-function(alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the mode of the Hyperbolic PDF
-
-    # FUNCTION:
-    
-    # Mode:
-    ans = mu + delta * beta / sqrt(alpha^2 - beta^2)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.hyp2Mode =
-function(zeta = 1, rho = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the hyperbolic mode in the 2nd parameterization
-
-    # FUNCTION:
-    
-    # Parameter Change:
-    alpha = zeta / ( delta * sqrt(1 - rho*rho) )
-    beta = alpha * rho
-    
-    # Return Value:
-    ans = hypMode(alpha, beta, delta, mu)
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.hyp3Mode = 
-function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the hyperbolic mode in the 3rd parameterization
-
-    # FUNCTION:
-    
-    # Parameter Change:
-    rho = chi / xi
-    zeta = 1/xi^2 - 1   
-    alpha = zeta / ( delta * sqrt(1 - rho*rho) )
-    beta = alpha * rho
-    
-    # Return Value:
-    ans = hypMode(alpha, beta, delta, mu)
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.hyp4Mode = 
-function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the hyperbolic mode in the 4th parameterization
-
-    # FUNCTION:
-    
-    # Parameter Change:
-    alpha = a.bar / delta
-    beta = b.bar / delta
-    
-    # Return Value:
-    ans = hypMode(alpha, beta, delta, mu)
     ans
 }   
 
