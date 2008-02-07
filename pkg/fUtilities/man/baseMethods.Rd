@@ -52,7 +52,7 @@
 % " \alias{sort.default}
 
 
-\title{generic Functions Extensions}
+\title{Generic Functions Extensions}
 
 
 \description{

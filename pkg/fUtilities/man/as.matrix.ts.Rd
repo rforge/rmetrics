@@ -5,7 +5,7 @@
 \alias{as.matrix.mts}
 
 
-\title{Convert time series to matrix}
+\title{Convert Time Series to Matrix}
 
 
 \description{

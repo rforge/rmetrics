@@ -4,7 +4,7 @@
 \alias{pdl}
 
 
-\title{Regressor Matrix for Polynomial Distributed Lags}
+\title{Polynomial Distributed Lags}
 
 
 \description{
