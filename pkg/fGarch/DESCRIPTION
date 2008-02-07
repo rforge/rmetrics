@@ -12,5 +12,5 @@ NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
       AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyLoad: yes
 LazyData: yes
-License: GPL Version 2 or later
+License: GPL (>= 2)
 URL: http://www.rmetrics.org 
