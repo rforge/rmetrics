@@ -1,10 +1,10 @@
-\name{RK}
+\name{rk}
 
 
 \alias{rk}
 
 
-\title{The rank of a matrix}
+\title{The rank of a Matrix}
 
 
 \description{

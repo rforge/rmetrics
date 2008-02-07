@@ -1,7 +1,5 @@
-\name{matrixAddon}
+\name{inv}
 
-
-\alias{matrixAddon}
 
 \alias{inv}
 
