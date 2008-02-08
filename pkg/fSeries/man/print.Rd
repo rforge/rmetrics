@@ -47,7 +47,7 @@ show.timeSeries(object)
 \examples{
 ## print -  
    myFinCenter <<- "GMT"
-   EDHEC = as.timeSeries(data(edhec))[1:12, 1:4]
+   EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 6)
    print(EDHEC)
 }
