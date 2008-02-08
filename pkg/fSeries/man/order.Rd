@@ -120,15 +120,15 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 
 \examples{
 ## data - 
-   edhec = as.timeSeries(data(edhec))
-   colnames(edhec) = abbreviate(colnames(edhec), 6)
+   edhec.tS = as.timeSeries(data(edhec.tS))
+   colnames(edhec.tS) = abbreviate(colnames(edhec.tS), 6)
 
 ## sortColnames -
    # Sort alphabetically
-   sortColnames(edhec)
+   sortColnames(edhec.tS)
   
 ## hclustColnames -
-   head(edhec[, hclustColnames(edhec)])  
+   head(edhec.tS[, hclustColnames(edhec.tS)])  
 }
 
 
