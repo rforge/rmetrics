@@ -18,15 +18,19 @@
     \cr
     
     \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr        
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr 
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr    
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries'
+    object, \cr
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new
+    positions,\cr 
+    
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given
+    period, \cr
     \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }  
 }
 
 
 \usage{
-dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter, 
+dummyDailySeries(x = rnorm(365), units = NULL, zone = myFinCenter, 
     FinCenter = myFinCenter)
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL, zone = myFinCenter, 
