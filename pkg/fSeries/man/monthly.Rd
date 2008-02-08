@@ -88,7 +88,7 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
    
 ## data -   
    # EDHEC Hedge Funds Monthly Data Set
-   x = as.timeSeries(data(edhec))
+   x = as.timeSeries(data(edhec.tS))
    isMonthly(x)   
 }
 
