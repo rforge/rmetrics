@@ -48,7 +48,7 @@
 
 \examples{
 ## data -  
-   EDHEC = as.timeSeries(data(edhec))[1:12, 1:4]
+   EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 4)
     
 ## summary -
