@@ -39,67 +39,6 @@
 ################################################################################
 
 
-test.feasibleConstrainedMVPortfolio = 
-function()
-{
-   
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    spec
- 
-    # Constraints:
-    constraints = NULL
-    constraints
-    
-    # Feasible Portfolio:
-    Portfolio = .feasibleConstrainedMVPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-   
- 
-test.feasibleConstrainedMVPortfolio.LongOnly = 
-function()
-{   
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification + Random Weights:
-    spec = portfolioSpec()
-    nAssets = ncol(data)
-    Weights = runif(nAssets, 0, 1)
-    Weights = Weights/sum(Weights)
-    setWeights(spec) <- Weights
-    spec
-    
-    # Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Feasible Portfolio:
-    Portfolio = .feasibleConstrainedMVPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
-
-################################################################################
-
-
 test.efficientConstrainedMVPortfolio.LongOnly = 
 function()
 {

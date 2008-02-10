@@ -29,97 +29,12 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:   
-#  solveShortExact              Solves Analytically Unlimited Short Portfolio 
-#  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
-#  solveRDonlp2                 Calls Spelucci's donlp2 solver
-#  solveRlpSolve                Calls linear programming solver                    
+#  solveRdonlp2                 Calls Spelucci's donlp2 solver                  
 ################################################################################
 
 
-test.solveShortExact =
-function()
-{ 
-    # Tod:
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-    
-    
-test.solveRQuadprog =
-function()
-{ 
-    # Direct Access:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification
-    spec = portfolioSpec()
-    spec
-    
-    # Default Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Quadprog:
-    setTargetReturn(spec) = mean(as.matrix(data))
-    ans = solveRQuadprog(data, spec, constraints)
-    ans
-    
-    # Check Termination Error:
-    setTargetReturn(spec) = mean(as.matrix(10*data))
-    ans = solveRQuadprog(10*data, spec, constraints)
-    ans
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.solveRQuadprog.twoAssets =
-function()
-{ 
-    # Direct Access:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    spec
-    
-    # Default Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Quadprog:
-    setTargetReturn(spec) = mean(as.matrix(data))
-    ans = solveRQuadprog(data, spec, constraints) 
-    ans
-    
-    # Check Termination Error:
-    setTargetReturn(spec) = mean(as.matrix(10*data))
-    ans = solveRQuadprog(10*data, spec, constraints)
-    ans 
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.solverRDonlp2 =
-function()
+test.solverRDonlp2 <- 
+    function()
 { 
     if (FALSE) {
         
@@ -163,8 +78,8 @@ function()
 # ------------------------------------------------------------------------------
     
  
-test.solverRDonlp2.budgetConsatraints =
-function()
+test.solverRdonlp2.budgetConsatraints <- 
+    function()
 {     
     if (FALSE) {
         
@@ -203,8 +118,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.solveRDonlp2.twoAssets =
-function()
+test.solveRdonlp2.twoAssets =
+    function()
 { 
     if (FALSE) {
         
@@ -229,38 +144,6 @@ function()
         ans$weights
         
     }
-    
-    # Return Value:
-    return()
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-test.solveRlpSolve = 
-function()
-{
-    # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(colAvgs(data))
-    setTargetAlpha(spec) = 0.05
-    setSolver(spec) <- "lpSolve"
-    spec
-    
-    # Constraints:
-    constraints = NULL
-    
-    # CVaR Portfolio Optimization:  
-    ans = solveRlpSolve(data, spec, constraints)
-    ans$weights
     
     # Return Value:
     return()

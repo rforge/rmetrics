@@ -27,18 +27,35 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  maxddStats                Expectation of Drawdowns for BM with drift
-# FUNCTION:                 DISTRIBUTION AND RANDOM VARIATES:
-#  dmaxdd                    Density function of mean Max-Drawdowns
-#  pmaxdd                    Probability function of mean Max-Drawdowns
-#  rmaxdd                    Random Variates of mean Max-Drawdowns                    
+# FUNCTION:                    DESCRIPTION:   
+#  solveRQuadprog               Calls Goldfarb and Idnani's QP solver                  
 ################################################################################
 
-
-test.maxddStats =
-function()
+    
+test.solveRquadprog <- 
+    function()
 { 
+    # Direct Access:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification
+    spec = portfolioSpec()
+    spec
+    
+    # Default Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Quadprog:
+    setTargetReturn(spec) = mean(as.matrix(data))
+    solveRquadprog(data, spec, constraints)
+    
+    # Should give the same results ...
+    setTargetReturn(spec) = mean(as.matrix(10*data))
+    solveRquadprog(10*data, spec, constraints)
+    
     # Return Value:
     return()
 }
@@ -47,13 +64,34 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.maxdd =
-function()
+test.solveRquadprog.twoAssets <- 
+    function()
 { 
+    # Direct Access:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Default Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Quadprog:
+    setTargetReturn(spec) = mean(as.matrix(data))               ## problems ...
+    solveRquadprog(data, spec, constraints) 
+    
+    # Check Termination Error:
+    setTargetReturn(spec) = mean(as.matrix(10*data))
+    solveRquadprog(10*data, spec, constraints)
+    
     # Return Value:
     return()
 }
- 
+
 
 ################################################################################
 

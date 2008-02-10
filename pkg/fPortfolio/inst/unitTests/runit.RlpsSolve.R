@@ -18,6 +18,7 @@
 # for this R-port: 
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,33 +28,38 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  maxddStats                Expectation of Drawdowns for BM with drift
-# FUNCTION:                 DISTRIBUTION AND RANDOM VARIATES:
-#  dmaxdd                    Density function of mean Max-Drawdowns
-#  pmaxdd                    Probability function of mean Max-Drawdowns
-#  rmaxdd                    Random Variates of mean Max-Drawdowns                    
+# FUNCTION:                    DESCRIPTION:   
+#  solveRlpSolve                Calls linear programming solver                    
 ################################################################################
 
 
-test.maxddStats =
+test.solveRlpSolve = 
 function()
-{ 
+{
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # CVaR Specification:
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(colAvgs(data))
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) <- "lpSolve"
+    spec
+    
+    # Constraints:
+    constraints = NULL
+    
+    # CVaR Portfolio Optimization:  
+    ans = solveRlpSolve(data, spec, constraints)
+    ans$weights
+    
     # Return Value:
     return()
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-test.maxdd =
-function()
-{ 
-    # Return Value:
-    return()
-}
- 
 
 ################################################################################
 

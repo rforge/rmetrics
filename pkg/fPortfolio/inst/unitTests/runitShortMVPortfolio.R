@@ -39,58 +39,6 @@
 ################################################################################
 
 
-test.feasibleShortMVPortfolio = 
-function()
-{  
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification - Equal Weights Portfolio:
-    spec = portfolioSpec()
-    spec
-    
-    # Constraints are ignored:
-    constraints = NULL
-    constraints
-    
-    # Portfolio:
-    Portfolio = .feasibleShortMVPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.feasibleShortMVPortfolio.Short = 
-function()
-{  
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification - Equal Weights Portfolio:
-    spec = portfolioSpec()
-    spec
-    
-    # Constraints can natursally also defined as:
-    constraints = "Short"
-    constraints
-    
-    # Portfolio:
-    Portfolio = .feasibleShortMVPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
 
 ################################################################################
 

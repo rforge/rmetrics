@@ -18,6 +18,7 @@
 # for this R-port: 
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,33 +28,21 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  maxddStats                Expectation of Drawdowns for BM with drift
-# FUNCTION:                 DISTRIBUTION AND RANDOM VARIATES:
-#  dmaxdd                    Density function of mean Max-Drawdowns
-#  pmaxdd                    Probability function of mean Max-Drawdowns
-#  rmaxdd                    Random Variates of mean Max-Drawdowns                    
+# FUNCTION:                    DESCRIPTION:   
+#  solveShortExact              Solves Analytically Unlimited Short Portfolio                   
 ################################################################################
 
 
-test.maxddStats =
+test.solveShortExact =
 function()
 { 
+    # Tod:
+    NA
+    
     # Return Value:
     return()
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-test.maxdd =
-function()
-{ 
-    # Return Value:
-    return()
-}
- 
 
 ################################################################################
 
