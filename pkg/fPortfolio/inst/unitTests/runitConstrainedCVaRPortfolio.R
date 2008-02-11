@@ -59,73 +59,11 @@ function()
 
 
 
-################################################################################
-
-
-test.cmlPortfolio = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(data@Data)
-    setAlpha(spec) = 0.05
-    setRiskFreeRate(spec) = mean(data@Data)/10
-    spec
-    
-    # Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # CVaR Portfolio:
-    Portfolio = cmlPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
 
 ################################################################################
 
 
-test.tangencyPortfolio = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(data@Data)
-    setAlpha(spec) = 0.10
-    spec
-    
-    # Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Portfolio:
-    Portfolio = tangencyPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
-
-################################################################################
-
-
-test.minvariancePortfolio =
+test.minvariancePortfolio.CVaR =
 function()
 {
     # Data:

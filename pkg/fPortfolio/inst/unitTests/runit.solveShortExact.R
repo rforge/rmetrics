@@ -33,10 +33,39 @@
 ################################################################################
 
 
-test.solveShortExact =
+test.solveShortExact.givenTargetReturn =
 function()
 { 
-    # Tod:
+    # Direct Access:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    data = portfolioData(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(as.matrix(data))
+    spec
+    
+    # Default Constraints:
+    constraints = "Short"
+    constraints
+ 
+    # Optimization:
+    solveShortExact(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.solveShortExact.givenTargetRisk =
+function()
+{ 
+    # Not yet implemented:
     NA
     
     # Return Value:

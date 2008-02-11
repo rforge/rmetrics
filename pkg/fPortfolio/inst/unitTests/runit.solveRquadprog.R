@@ -35,13 +35,17 @@
 test.solveRquadprog <- 
     function()
 { 
+    # Quadratic Programmming - Mean-Variance Portfolio:
+    #   The target return is fixed, we minimize the risk!
+
     # Direct Access:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
-    # Specification
+    # Specification:
     spec = portfolioSpec()
+    setTargetReturn(spec) = mean(as.matrix(data))
     spec
     
     # Default Constraints:
@@ -49,11 +53,10 @@ test.solveRquadprog <-
     constraints
     
     # Quadprog:
-    setTargetReturn(spec) = mean(as.matrix(data))
     solveRquadprog(data, spec, constraints)
     
     # Should give the same results ...
-    setTargetReturn(spec) = mean(as.matrix(10*data))
+    setTargetReturn(spec) = 10*getTargetReturn(spec)
     solveRquadprog(10*data, spec, constraints)
     
     # Return Value:
@@ -67,6 +70,9 @@ test.solveRquadprog <-
 test.solveRquadprog.twoAssets <- 
     function()
 { 
+    # Solved Analytically
+    #   Speeds up the two-assets forntier significantly!
+
     # Direct Access:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
@@ -74,6 +80,7 @@ test.solveRquadprog.twoAssets <-
     
     # Specification:
     spec = portfolioSpec()
+    setTargetReturn(spec) = mean(as.matrix(data))   
     spec
     
     # Default Constraints:
@@ -81,12 +88,7 @@ test.solveRquadprog.twoAssets <-
     constraints
     
     # Quadprog:
-    setTargetReturn(spec) = mean(as.matrix(data))               ## problems ...
     solveRquadprog(data, spec, constraints) 
-    
-    # Check Termination Error:
-    setTargetReturn(spec) = mean(as.matrix(10*data))
-    solveRquadprog(10*data, spec, constraints)
     
     # Return Value:
     return()

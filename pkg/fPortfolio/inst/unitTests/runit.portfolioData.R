@@ -27,14 +27,10 @@
 
 
 ################################################################################
-# FUNCTION:                     Classical and Robust Estimators
+# FUNCTION:                     DESCRIPTION:
 #  portfolioData                 Creates portfolio data list
 #  portfolioStatistics           Estimates mu and Sigma statistics
-################################################################################
-
-
-################################################################################
-# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
+# FUNCTION:                     DESCRIPTION:
 #  getData
 #   getSeries                    Extracts assets series data 
 #   getNumberOfAssets            Extracts number of assets from statistics
