@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2007, Rmetrics Foundation, GPL
 #   Contact: Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,7 +27,7 @@
 
 
 ################################################################################
-# FUNCTION:
+#     function:
 #  getConstraints
 #  getCov
 #  getCovRiskBudgets
@@ -61,9 +60,10 @@
 ################################################################################
 
 
-getConstraints =
-function(object)
-{   # A function implemented by Rmetrics
+getConstraints <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getConstraints")
 }
@@ -72,9 +72,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getCov =
-function(object)
-{   # A function implemented by Rmetrics
+getCov <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getCov")
 }
@@ -83,9 +84,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getData =
-function(object)
-{   # A function implemented by Rmetrics
+getData <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getData")
 }
@@ -94,9 +96,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getCovRiskBudgets = 
-function(object) 
-{   # A function implemented by Rmetrics
+getCovRiskBudgets <- 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getCovRiskBudgets")
 }
@@ -105,9 +108,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getEstimator =
-function(object)
-{   # A function implemented by Rmetrics
+getEstimator <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getEstimator")
 }
@@ -116,9 +120,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getMean =
-function(object)
-{   # A function implemented by Rmetrics
+getMean <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getMean")
 }
@@ -127,9 +132,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getMu =
-function(object)
-{   # A function implemented by Rmetrics
+getMu <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getMu")
 }
@@ -138,9 +144,10 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getNAssets =
-function(object)
-{   # A function implemented by Rmetrics
+getNAssets <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getNAssets")
 }
@@ -149,9 +156,10 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getNames =
-function(object)
-{   # A function implemented by Rmetrics
+getNames <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getNames")
 }
@@ -160,9 +168,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getNFrontierPoints =
-function(object)
-{   # A function implemented by Rmetrics
+getNFrontierPoints <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getNFrontierPoints")
 }
@@ -171,9 +180,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getOptim =
-function(object)
-{   # A function implemented by Rmetrics
+getOptim <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getOptim")
 }
@@ -182,9 +192,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getPortfolio =
-function(object)
-{   # A function implemented by Rmetrics
+getPortfolio <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getPortfolio")
 }
@@ -193,9 +204,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getParams =
-function(object)
-{   # A function implemented by Rmetrics
+getParams <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getParams")
 }
@@ -204,9 +216,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getRiskFreeRate =
-function(object)
-{   # A function implemented by Rmetrics
+getRiskFreeRate <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getRiskFreeRate")
 }
@@ -215,9 +228,10 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getSeries =
-function(object)
-{   # A function implemented by Rmetrics
+getSeries <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getSeries") 
 }
@@ -226,9 +240,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSigma =
-function(object)
-{   # A function implemented by Rmetrics
+getSigma <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getSigma")
 }
@@ -237,9 +252,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSolver =
-function(object)
-{   # A function implemented by Rmetrics
+getSolver <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getSolver")
 }
@@ -248,9 +264,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSpec =
-function(object)
-{   # A function implemented by Rmetrics
+getSpec <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getSpec")
 }
@@ -259,9 +276,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getStatistics =
-function(object)
-{   # A function implemented by Rmetrics
+getStatistics <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getStatistics")
 }
@@ -270,9 +288,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getStatus =
-function(object)
-{   # A function implemented by Rmetrics
+getStatus <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getStatus")
 }
@@ -281,9 +300,9 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTailRisk =
-function(object)
-{   # A function implemented by Rmetrics
+getTailRisk <-
+    function(object)
+{   # A function implemented by Diethelm Wuertz
 
     UseMethod("getTailRisk")
 }
@@ -292,9 +311,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTailRiskBudgets = 
-function(object) 
-{   # A function implemented by Rmetrics
+getTailRiskBudgets <- 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getTailRiskBudgets")
 }
@@ -303,9 +323,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getAlpha =
-function(object)
-{   # A function implemented by Rmetrics
+getAlpha <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getAlpha")
 }
@@ -314,9 +335,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetReturn =
-function(object)
-{   # A function implemented by Rmetrics
+getTargetReturn <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getTargetReturn")
 }
@@ -325,9 +347,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetRisk =
-function(object)
-{   # A function implemented by Rmetrics
+getTargetRisk <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getTargetRisk")
 }
@@ -336,9 +359,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTrace =
-function(object)
-{   # A function implemented by Rmetrics
+getTrace <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getTrace")
 }
@@ -347,9 +371,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getType =
-function(object)
-{   # A function implemented by Rmetrics
+getType <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getType")
 }
@@ -358,9 +383,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getWeights =
-function(object)
-{   # A function implemented by Rmetrics
+getWeights <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     UseMethod("getWeights")
 }

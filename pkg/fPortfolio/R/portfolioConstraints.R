@@ -47,9 +47,9 @@ portfolioConstraints <-
     #   Checks Consistency of Constraints Strings
 
     # Arguments
-    #   data - 
-    #   spec - 
-    #   constraints
+    #   data - a portfolio data object
+    #   spec - a portfolio specification object
+    #   constraints - a constraints string
     
     # FUNCTION:
     
@@ -213,7 +213,7 @@ portfolioConstraints <-
     # Bind Results:
     ans = cbind(A = A, b = b0)
     colnames(ans) = c(colnames(A), "Exposure")
-    class(ans) = c("constraintsMatrix", "matrix")
+    class(ans) = "matrix"
  
     # Return Value:
     ans

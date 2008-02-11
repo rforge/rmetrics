@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -33,16 +32,10 @@
 ################################################################################
 
 
-.DEBUG = NA
-
-
-# ------------------------------------------------------------------------------
-
-
 solveShortExact <- 
     function(data, spec, constraints)
 {   
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Solves Analyticallu Unlimited Short Portfolio 
@@ -56,8 +49,14 @@ solveShortExact <-
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    
+    # Trace:
+    trace = getTrace(spec)
+    if(trace) cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n\n")
+    
+    # Covariance:
+    mu = getMu(data)
+    Sigma = getSigma(data)
     
     # Parameter Settings:
     C0 = 1
@@ -69,8 +68,8 @@ solveShortExact <-
     d = as.numeric(a*c - b^2)
 
     # Get Target Return - if NULL use Tangency Portfolio:
-    targetReturn = spec@portfolio$targetReturn 
-    if (is.null(targetReturn)) targetreturn = (a/b)*C0     
+    targetReturn = getTargetReturn(spec) 
+    if (is.null(targetReturn)) targetReturn = (a/b)*C0     
     
     # Get Target Risk:
     targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
@@ -82,9 +81,6 @@ solveShortExact <-
     ans = list(
         weights = weights, 
         targetReturn = targetReturn, targetRisk = targetRisk)
-        
-    # For Debugging ...
-    .DEBUG <<- ans
 
     # Return Value:
     ans

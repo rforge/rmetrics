@@ -33,16 +33,10 @@
 ################################################################################
 
 
-.DEBUG = NA
-
-
-# ------------------------------------------------------------------------------
-
-
 solveRdonlp2 <- 
     function(data, spec, constraints)
 {   
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Calls Spelucci's donlp2 solver  
@@ -56,6 +50,10 @@ solveRdonlp2 <-
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    
+    # Trace:
+    trace = getTrace(spec)
+    if(trace) cat("\nPortfolio Optimiziation:\n Using Rdonlp2 ...\n\n")
     
     # Get Specifications:
     mu = getMu(data) 
@@ -198,9 +196,6 @@ solveRdonlp2 <-
         # if (solver.trace) 
             cat("Rdonlp2 Message:", ans$message, "\n")
    }
-   
-   # For Debugging ...
-   .DEBUG <<- ans
    
    # Return Value:
    ans

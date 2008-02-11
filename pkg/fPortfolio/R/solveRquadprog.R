@@ -33,12 +33,6 @@
 ################################################################################
 
 
-.DEBUG = NA
-
-
-# ------------------------------------------------------------------------------
-
-
 solveRquadprog <- 
     function(data, spec, constraints)
 {   
@@ -70,6 +64,10 @@ solveRquadprog <-
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     
+    # Trace:
+    trace = getTrace(spec)
+    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
+    
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
@@ -84,7 +82,7 @@ solveRquadprog <-
         # Two Assets Portfolio:
         stopifnot(targetReturn >= min(mu))
         stopifnot(targetReturn <= max(mu))  
-        names(targetReturn) <- spec@model$estimator[1]
+        ## names(targetReturn) <- spec@model$estimator[1]
         weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
         weights = c(weights, 1- weights)
         ans = list(
@@ -143,9 +141,6 @@ solveRquadprog <-
             iact = res1$iact[1:res1$nact],
             solver = "quadprog")
     }
-    
-    # For Debugging ...
-    .DEBUG <<- ans
 
     # Return Value:
     ans

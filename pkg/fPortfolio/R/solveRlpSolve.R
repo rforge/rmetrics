@@ -33,12 +33,6 @@
 ################################################################################
 
 
-.DEBUG = NA
-
-
-# ------------------------------------------------------------------------------
-
-
 solveRlpSolve <- 
     function(data, spec, constraints)
 {   
@@ -76,6 +70,10 @@ solveRlpSolve <-
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     
+    # Trace:
+    trace = getTrace(spec)
+    if(trace) cat("\nPortfolio Optimiziation:\n Using RlpSolve ...\n\n")
+       
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
@@ -183,9 +181,6 @@ solveRlpSolve <-
         ans$solver = "lpSolve"
         ans$targetAlpha = targetAlpha
     }
-    
-    # For Debugging ...
-    .DEBUG <<- ans
 
     # Return Value:
     ans

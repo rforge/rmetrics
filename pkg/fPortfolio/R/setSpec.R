@@ -343,7 +343,7 @@
     # FUNCTION:
     
     # Set Trace:
-    spec@solver$trace = value
+    spec@optim$trace = value
     
     # Return Value:
     spec
