@@ -47,7 +47,8 @@
 
     # FUNCTION:
 
-    stopifnot(require("RUnit", quietly = TRUE))
+    if (!require(RUnit, quietly = TRUE))
+        stop("\n -- Package RUnit not available -- \n\n")
 
     pkg = package
     library(package = pkg, character.only = TRUE)

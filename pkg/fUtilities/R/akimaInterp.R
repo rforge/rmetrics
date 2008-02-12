@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received A copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received A copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -33,32 +33,32 @@
 ################################################################################
 
 
-akimaInterp <- 
+akimaInterp <-
     function(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
     yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates and Smoothes Irregularly Distributed Data Points
-    
+
     # Arguments:
-    #   x, y, z - either three numeric vectors of equal length or if 
-    #       y and z are NULL, a list with entries x, y, a, or named 
+    #   x, y, z - either three numeric vectors of equal length or if
+    #       y and z are NULL, a list with entries x, y, a, or named
     #       data.frame with x in the first, y in the second, and z in
     #       the third column.
     #   gridPoints - number of grid points in x and y direction.
     #   xo, yo, a sequence of data points spanning the grid
     #   extrap - a logical, if TRUE then the data points are extrapolated.\
-    
+
     # Value:
-    #   A list with three elements, $x and $y which are vectors of length 
+    #   A list with three elements, $x and $y which are vectors of length
     #   'gridPoints' and $z which is a matrix of size 'gridPoints^2'.
 
     # Requirements:
     #   akima Builtin Fortran Code.
-    
+
     # Example:
     #   set.seed(1953)
     #   x = runif(999)-0.5; y = runif(999)-0.5; z = cos(2*pi*(x^2+y^2))
@@ -66,12 +66,15 @@ akimaInterp <-
     #   persp(ans, theta = -50, phi = 30, col = "steelblue")
     #   ans = akimaInterp(x, y, z, extrap = TRUE)
     #   persp(ans, theta = -50, phi = 30, col = "steelblue")
-    
+
     # Note:
     #   Uses Fortran akima Builtin
-    
+
     # FUNCTION:
-    
+
+    if (!require(akima, quietly = TRUE))
+        stop("\n -- Package akima not available -- \n\n")
+
     # Arguments:
     if (is.list(x)) x = matrix(unlist(x), ncol = 3)
     if (is.data.frame(x)) x = as.matrix.data.frame(x)
@@ -80,7 +83,7 @@ akimaInterp <-
         y = x[, 2]
         x = x[, 1]
     }
-    
+
     # Interpolation:
     ans = .interp.new(x, y, z, xo, yo, linear = FALSE, ncp = NULL,
         extrap = extrap, duplicate = "median", dupfun = NULL)
@@ -90,49 +93,52 @@ akimaInterp <-
 
     # Return Value:
     ans
-}   
-    
+}
+
 
 # ------------------------------------------------------------------------------
 
 
-akimaInterpp <- 
+akimaInterpp <-
     function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates and Smoothes Irregularly Distributed Data Points
-    
+
     # Arguments:
-    #   x, y, z - either three numeric vectors of equal length or if 
-    #       y and z are NULL, a list with entries x, y, a, or named 
+    #   x, y, z - either three numeric vectors of equal length or if
+    #       y and z are NULL, a list with entries x, y, a, or named
     #       data.frame with x in the first, y in the second, and z in
     #       the third column.
     #   gridPoints - number of grid points in x and y direction.
     #   xo, yo, a sequence of data points for pointwise interpolation
-    
+
     # Note:
     #   Extrapolation is not possible in the case of linear interpolation.
-    
+
     # Value:
-    #   A list with three elements, $x and $y which are vectors of length 
+    #   A list with three elements, $x and $y which are vectors of length
     #   'gridPoints' and $z which is a matrix of size 'gridPoints^2'.
 
     # Requirements:
     #   akima Builtin Fortran Code.
-    
+
     # Example:
     #   set.seed(1953)
     #   x = runif(999)-0.5; y = runif(999)-0.5; z = cos(2*pi*(x^2+y^2))
     #   ans = akimaInterpp(x, y, z, c(mean(x), 0, 100), c(mean(y), 0, 100))
     #   persp(ans, theta = -50, phi = 30, col = "steelblue")
-    
+
     # Note:
     #   Uses Fortran akima Builtin
-    
+
     # FUNCTION:
-    
+
+    if (!require(akima, quietly = TRUE))
+        stop("\n -- Package akima not available -- \n\n")
+
     # Arguments:
     if (is.list(x)) x = matrix(unlist(x), ncol = 3)
     if (is.data.frame(x)) x = as.matrix.data.frame(x)
@@ -141,15 +147,15 @@ akimaInterpp <-
         y = x[, 2]
         x = x[, 1]
     }
-    
+
     # Settings:
     duplicate = "median"
     dupfun = NULL
     linear = TRUE
-    
+
     # Interpolation:
-    ans = .interpp.new(x, y, z, xo, yo, 
-        extrap = extrap, duplicate = "median", dupfun = NULL)       
+    ans = .interpp.new(x, y, z, xo, yo,
+        extrap = extrap, duplicate = "median", dupfun = NULL)
     ans = data.frame(matrix(unlist(t(ans)), 3))
     colnames(ans) = c("x", "y", "z")
 
@@ -163,14 +169,14 @@ akimaInterpp <-
 # with the "new" algorithm!
 
 
-.interp.old <- 
-    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
-    max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error", 
-    dupfun = NULL) 
-{   
+.interp.old <-
+    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
+    max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error",
+    dupfun = NULL)
+{
     # A copy from contributed package akima
 
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
+    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (ncp > 25) {
         ncp <- 25
@@ -178,26 +184,26 @@ akimaInterpp <-
     }
     drx <- diff(range(x))
     dry <- diff(range(y))
-    if (drx == 0 || dry == 0) 
+    if (drx == 0 || dry == 0)
         stop("all data collinear")
-    if (drx/dry > 10000 || drx/dry < 1e-04) 
+    if (drx/dry > 10000 || drx/dry < 1e-04)
         stop("scales of x and y are too dissimilar")
     n <- length(x)
     nx <- length(xo)
     ny <- length(yo)
-    if (length(y) != n || length(z) != n) 
+    if (length(y) != n || length(z) != n)
         stop("Lengths of x, y, and z do not match")
     xy <- paste(x, y, sep = ",")
     if (duplicate == "error") {
-        if (any(duplicated(xy))) 
+        if (any(duplicated(xy)))
             stop("duplicate data points: need to set 'duplicate = ..' ")
     } else {
         i <- match(xy, xy)
-        if (duplicate == "user") 
+        if (duplicate == "user")
             dupfun <- match.fun(dupfun)
         ord <- !duplicated(xy)
         if (duplicate != "strip") {
-            centre <- function(x) switch(duplicate, mean = mean(x), 
+            centre <- function(x) switch(duplicate, mean = mean(x),
                 median = median(x), user = dupfun(x))
             z <- unlist(lapply(split(z, i), centre))
         } else {
@@ -211,13 +217,13 @@ akimaInterpp <-
     storage.mode(zo) <- "double"
     miss <- !extrap
     misso <- matrix(miss, nx, ny)
-    if (extrap & ncp == 0) 
+    if (extrap & ncp == 0)
         warning("Cannot extrapolate with linear option")
-    ans <- .Fortran("idsfft", as.integer(1), as.integer(ncp), 
-        as.integer(n), as.double(x), as.double(y), as.double(z), 
-        as.integer(nx), as.integer(ny), x = as.double(xo), y = as.double(yo), 
-        z = zo, integer((31 + ncp) * n + nx * ny), double(5 * 
-            n), misso = as.logical(misso), PACKAGE = "akima")[c("x", 
+    ans <- .Fortran("idsfft", as.integer(1), as.integer(ncp),
+        as.integer(n), as.double(x), as.double(y), as.double(z),
+        as.integer(nx), as.integer(ny), x = as.double(xo), y = as.double(yo),
+        z = zo, integer((31 + ncp) * n + nx * ny), double(5 *
+            n), misso = as.logical(misso), PACKAGE = "akima")[c("x",
         "y", "z", "misso")]
     ans$z[ans$misso] <- NA
     ans[c("x", "y", "z")]
@@ -227,45 +233,45 @@ akimaInterpp <-
 # ------------------------------------------------------------------------------
 
 
-.interp.new <- 
-    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
-    max(y), length = 40), linear = FALSE, ncp = NULL, extrap = FALSE, 
-    duplicate = "error", dupfun = NULL) 
-{   
+.interp.new <-
+    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
+    max(y), length = 40), linear = FALSE, ncp = NULL, extrap = FALSE,
+    duplicate = "error", dupfun = NULL)
+{
     # A copy from contributed package akima
 
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
+    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (!is.null(ncp)) {
-        if (ncp != 0) 
+        if (ncp != 0)
             warning("'ncp' not supported, automatically choosen by Fortran code\n")
         else linear <- TRUE
     }
-    if (linear) 
-        stop("linear interpolation not implemented in interp.new().\n", 
+    if (linear)
+        stop("linear interpolation not implemented in interp.new().\n",
             "use 'interp()' (or 'interp.old()').")
     drx <- diff(range(x))
     dry <- diff(range(y))
-    if (drx == 0 || dry == 0) 
+    if (drx == 0 || dry == 0)
         stop("all data collinear")
-    if (drx/dry > 10000 || drx/dry < 1e-04) 
+    if (drx/dry > 10000 || drx/dry < 1e-04)
         stop("scales of x and y are too dissimilar")
     n <- length(x)
     nx <- length(xo)
     ny <- length(yo)
-    if (length(y) != n || length(z) != n) 
+    if (length(y) != n || length(z) != n)
         stop("Lengths of x, y, and z do not match")
     xy <- paste(x, y, sep = ",")
     if (duplicate == "error") {
-        if (any(duplicated(xy))) 
+        if (any(duplicated(xy)))
             stop("duplicate data points: need to set 'duplicate = ..' ")
     } else {
         i <- match(xy, xy)
-        if (duplicate == "user") 
+        if (duplicate == "user")
             dupfun <- match.fun(dupfun)
         ord <- !duplicated(xy)
         if (duplicate != "strip") {
-            centre <- function(x) switch(duplicate, mean = mean(x), 
+            centre <- function(x) switch(duplicate, mean = mean(x),
                 median = median(x), user = dupfun(x))
             z <- unlist(lapply(split(z, i), centre))
         } else {
@@ -279,17 +285,17 @@ akimaInterpp <-
     storage.mode(zo) <- "double"
     miss <- !extrap
     misso <- matrix(TRUE, nx, ny)
-    if (extrap && if (is.null(ncp)) 
+    if (extrap && if (is.null(ncp))
         linear
-    else (ncp == 0)) 
+    else (ncp == 0))
         warning("Cannot extrapolate with linear option")
-    ans <- .Fortran("sdsf3p", as.integer(1), as.integer(n), as.double(x), 
-        as.double(y), as.double(z), as.integer(nx), x = as.double(xo), 
-        as.integer(ny), y = as.double(yo), z = zo, ier = integer(1), 
-        double(36 * n), integer(25 * n), extrap = as.logical(misso), 
-        near = integer(n), nxt = integer(n), dist = double(n), 
+    ans <- .Fortran("sdsf3p", as.integer(1), as.integer(n), as.double(x),
+        as.double(y), as.double(z), as.integer(nx), x = as.double(xo),
+        as.integer(ny), y = as.double(yo), z = zo, ier = integer(1),
+        double(36 * n), integer(25 * n), extrap = as.logical(misso),
+        near = integer(n), nxt = integer(n), dist = double(n),
         PACKAGE = "akima")[c("x", "y", "z", "extrap")]
-    if (miss) 
+    if (miss)
         ans$z[ans$extrap] <- NA
     ans[c("x", "y", "z")]
 }
@@ -298,17 +304,17 @@ akimaInterpp <-
 # ------------------------------------------------------------------------------
 
 
-.interpp.old <- 
-    function (x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error", 
-    dupfun = NULL) 
-{   
+.interpp.old <-
+    function (x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error",
+    dupfun = NULL)
+{
     # A copy from contributed package akima
 
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
+    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
-    if (is.null(xo)) 
+    if (is.null(xo))
         stop("xo missing")
-    if (is.null(yo)) 
+    if (is.null(yo))
         stop("yo missing")
     if (ncp > 25) {
         ncp <- 25
@@ -316,23 +322,23 @@ akimaInterpp <-
     }
     drx <- diff(range(x))
     dry <- diff(range(y))
-    if (drx == 0 || dry == 0) 
+    if (drx == 0 || dry == 0)
         stop("all data collinear")
-    if (drx/dry > 10000 || drx/dry < 1e-04) 
+    if (drx/dry > 10000 || drx/dry < 1e-04)
         stop("scales of x and y are too dissimilar")
     n <- length(x)
     np <- length(xo)
-    if (length(yo) != np) 
+    if (length(yo) != np)
         stop("length of xo and yo differ")
-    if (length(y) != n || length(z) != n) 
+    if (length(y) != n || length(z) != n)
         stop("Lengths of x, y, and z do not match")
     xy <- paste(x, y, sep = ",")
     i <- match(xy, xy)
-    if (duplicate == "user" && !is.function(dupfun)) 
+    if (duplicate == "user" && !is.function(dupfun))
         stop("duplicate=\"user\" requires dupfun to be set to a function")
     if (duplicate != "error") {
         centre <- function(x) {
-            switch(duplicate, mean = mean(x), median = median(x), 
+            switch(duplicate, mean = mean(x), median = median(x),
                 user = dupfun(x))
         }
         if (duplicate != "strip") {
@@ -342,25 +348,25 @@ akimaInterpp <-
             y <- y[ord]
             n <- length(x)
         } else {
-            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = seq(0.5, 
+            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = seq(0.5,
                 max(i) + 0.5, 1))$counts == 1)
             x <- x[ord]
             y <- y[ord]
             z <- z[ord]
             n <- length(x)
         }
-    } else if (any(duplicated(xy))) 
+    } else if (any(duplicated(xy)))
         stop("duplicate data points")
     zo <- rep(0, np)
     storage.mode(zo) <- "double"
     miss <- !extrap
     misso <- seq(miss, np)
-    if (extrap & ncp == 0) 
+    if (extrap & ncp == 0)
         warning("Cannot extrapolate with linear option")
-    ans <- .Fortran("idbvip", as.integer(1), as.integer(ncp), 
-        as.integer(n), as.double(x), as.double(y), as.double(z), 
-        as.integer(np), x = as.double(xo), y = as.double(yo), 
-        z = zo, integer((31 + ncp) * n + np), double(8 * n), 
+    ans <- .Fortran("idbvip", as.integer(1), as.integer(ncp),
+        as.integer(n), as.double(x), as.double(y), as.double(z),
+        as.integer(np), x = as.double(xo), y = as.double(yo),
+        z = zo, integer((31 + ncp) * n + np), double(8 * n),
         misso = as.logical(misso), PACKAGE = "akima")
     temp <- ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] <- NA
@@ -371,37 +377,37 @@ akimaInterpp <-
 # ------------------------------------------------------------------------------
 
 
-.interpp.new <- 
-    function (x, y, z, xo, yo, extrap = FALSE, duplicate = "error", 
-    dupfun = NULL) 
-{   
+.interpp.new <-
+    function (x, y, z, xo, yo, extrap = FALSE, duplicate = "error",
+    dupfun = NULL)
+{
     # A copy from contributed package akima
 
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
+    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
-    if (is.null(xo)) 
+    if (is.null(xo))
         stop("xo missing")
-    if (is.null(yo)) 
+    if (is.null(yo))
         stop("yo missing")
     drx <- diff(range(x))
     dry <- diff(range(y))
-    if (drx == 0 || dry == 0) 
+    if (drx == 0 || dry == 0)
         stop("all data collinear")
-    if (drx/dry > 10000 || drx/dry < 1e-04) 
+    if (drx/dry > 10000 || drx/dry < 1e-04)
         stop("scales of x and y are too dissimilar")
     n <- length(x)
     np <- length(xo)
-    if (length(yo) != np) 
+    if (length(yo) != np)
         stop("length of xo and yo differ")
-    if (length(y) != n || length(z) != n) 
+    if (length(y) != n || length(z) != n)
         stop("Lengths of x, y, and z do not match")
     xy <- paste(x, y, sep = ",")
     i <- match(xy, xy)
-    if (duplicate == "user" && !is.function(dupfun)) 
+    if (duplicate == "user" && !is.function(dupfun))
         stop("duplicate=\"user\" requires dupfun to be set to a function")
     if (duplicate != "error") {
         centre <- function(x) {
-            switch(duplicate, mean = mean(x), median = median(x), 
+            switch(duplicate, mean = mean(x), median = median(x),
                 user = dupfun(x))
         }
         if (duplicate != "strip") {
@@ -412,27 +418,27 @@ akimaInterpp <-
             n <- length(x)
         }
         else {
-            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = seq(0.5, 
+            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = seq(0.5,
                 max(i) + 0.5, 1))$counts == 1)
             x <- x[ord]
             y <- y[ord]
             z <- z[ord]
             n <- length(x)
         }
-    } else if (any(duplicated(xy))) 
+    } else if (any(duplicated(xy)))
         stop("duplicate data points")
     zo <- rep(0, np)
     storage.mode(zo) <- "double"
     miss <- !extrap
     extrap <- seq(TRUE, np)
-    ans <- .Fortran("sdbi3p", as.integer(1), as.integer(n), as.double(x), 
-        as.double(y), as.double(z), as.integer(np), x = as.double(xo), 
-        y = as.double(yo), z = zo, ier = integer(1), wk = double(17 * 
-            n), iwk = integer(25 * n), extrap = as.logical(extrap), 
-        near = integer(n), nxt = integer(n), dist = double(n), 
+    ans <- .Fortran("sdbi3p", as.integer(1), as.integer(n), as.double(x),
+        as.double(y), as.double(z), as.integer(np), x = as.double(xo),
+        y = as.double(yo), z = zo, ier = integer(1), wk = double(17 *
+            n), iwk = integer(25 * n), extrap = as.logical(extrap),
+        near = integer(n), nxt = integer(n), dist = double(n),
         PACKAGE = "akima")
     temp <- ans[c("x", "y", "z", "extrap")]
-    if (miss) 
+    if (miss)
         temp$z[temp$extrap] <- NA
     temp[c("x", "y", "z")]
 }
