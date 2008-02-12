@@ -34,20 +34,20 @@
 ################################################################################
 
 
-.runitTest <- 
+.runitTest <-
     function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Performs RUnit tests
-    
+
     # Example:
     #   .runitTest"fCalendar")
-    
+
     # FUNCTION:
 
-    # if(require("RUnit", quietly = TRUE)) {
+    stopifnot(require("RUnit", quietly = TRUE))
 
     pkg = package
     library(package = pkg, character.only = TRUE)
@@ -59,7 +59,7 @@
     # Define tests
     testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), dirs = path)
 
-    cat("Now have RUnit Test Suite 'testSuite' for package '", 
+    cat("Now have RUnit Test Suite 'testSuite' for package '",
         pkg, "' :\n", sep='')
     str(testSuite)
     cat('', "Consider doing",
@@ -80,32 +80,32 @@
 
     # Print TXT Report to File:
     printTextProtocol(tests)
-    printTextProtocol(tests, 
+    printTextProtocol(tests,
         fileName = paste(pathReport, ".txt", sep = ""))
-    
+
     # Print HTML Report to File:
     fileName = paste(pathReport, ".html", sep = "")
     printHTMLProtocol(tests, fileName = fileName)
-    
+
     # Repair href Links:
     protocol.html = scan(file = fileName, what = character(0))
     protocol.html = gsub('href=\"', 'href=\"file://', protocol.html)
     write(protocol.html, fileName)
-    
+
     # stop() if there are any failures i.e. FALSE to unit test.
     # This will cause R CMD check to return error and stop
     if(getErrors(tests)$nFail > 0) {
         stop("one of the unit tests failed")
     }
-  
+
     # Check for RUnit:
     # ... do we need this ?
     cat("R package 'RUnit' cannot be loaded -- no unit tests run\n",
         "for package", pkg,"\n")
-        
+
     # Where you can find me ...
     cat("\nHTML Report saved to", fileName, "\n\n")
-    
+
     # Return Value:
     invisible()
 }
@@ -114,19 +114,19 @@
 # ------------------------------------------------------------------------------
 
 
-.rmetricsPackages <- 
+.rmetricsPackages <-
     function()
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Lists all Rmetrics packages
-    
+
     # FUNCTION:
-    
+
     # All Rmetrics Packages:
     ans = c(
-        "fUtilities",     
+        "fUtilities",
         "fEcofin",
         "fCalendar",
         "fSeries",
@@ -135,7 +135,7 @@
         "fArma",
         "fGarch",
         "fNonlinear",
-        "fUnitRoots",   
+        "fUnitRoots",
         "fTrading",
         "fMultivar",
         "fRegression",
@@ -146,35 +146,35 @@
         "fAsianOptions",
         "fAssets",
         "fPortfolio")
-        
+
     # Return Value:
-    ans        
+    ans
 }
 
-        
+
 # ------------------------------------------------------------------------------
 
 
 .rmetricsUnitTest =
     function()
-{       
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Performs RUnit tests for all Rmetrics packages
-    
+
     # FUNCTION:
-    
+
     # Do Unit Tests:
     Packages = .rmetricsPackages()
     for (package in Packages) {
         cat("\n\nPackage:", package, "\n")
         .runitTest(package)
     }
-    
+
     # Return Value:
-    invisible()       
-}   
+    invisible()
+}
 
 
 ################################################################################
