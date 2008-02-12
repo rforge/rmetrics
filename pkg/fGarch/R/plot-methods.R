@@ -359,7 +359,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 10. ACF of Standardized Residuals:
-    sres = residuals(x, standardize = TRUE)
+    sres = as.matrix(residuals(x, standardize = TRUE))
     n = length(sres)
     lag.max = as.integer(10*log10(n))
     acf(sres, lag.max = lag.max, xlab = "Lags", col = "steelblue",
@@ -379,7 +379,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 11. ACF of Squared Standardized Residuals:
-    sres2 = residuals(x, standardize = TRUE)^2
+    sres2 = as.matrix(residuals(x, standardize = TRUE)^2)
     n = length(sres2)
     lag.max = as.integer(10*log10(n))
     acf(sres2, lag.max = lag.max, xlab = "Lags", col = "steelblue",
