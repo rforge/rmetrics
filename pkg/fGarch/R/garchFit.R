@@ -93,7 +93,7 @@ garchFit <-
         include.shape = NULL, leverage = NULL,
     trace = TRUE,
     algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("fda", "cda"),
+    hessian = c("cda", "fda"),
     control = list(),
     title = NULL, description = NULL, ...)
 {
