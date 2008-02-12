@@ -52,7 +52,7 @@
     # FUNCTION:
 
     # Port3 nlminb R-code Solver:
-    if(trace) cat("\n\n\nR coded nlminb Solver: \n\n\n")
+    if(trace) cat("\nR coded nlminb Solver: \n\n")
 
     # Scale Function and Parameters:
     INDEX = .params$index
@@ -104,7 +104,7 @@
     # FUNCTION:
 
     # optim[L-BFGS-B] Solver:
-    if(trace) cat("\n\n\nR coded optim[L-BFGS-B] Solver: \n\n")
+    if(trace) cat("\nR coded optim[L-BFGS-B] Solver: \n\n")
 
     # Scale Function and Parameters:
     INDEX = .params$index
@@ -157,7 +157,7 @@
     # FUNCTION:
 
     # Nelder-Mead as Hybrid Solver:
-    if(trace) cat("\n\n\nR coded Nelder-Mead Hybrid Solver: \n\n")
+    if(trace) cat("\nR coded Nelder-Mead Hybrid Solver: \n\n")
 
     # Scale Function and Parameters:
     INDEX = .params$index
@@ -207,7 +207,7 @@
     # FUNCTION:
 
     # SQP Full Fortran Solver:
-    if(trace) cat("\n\n\nFortran coded SQP Solver: \n\n")
+    if(trace) cat("\nFortran coded SQP Solver: \n\n")
 
     # Control:
     INDEX = .params$index
@@ -323,7 +323,7 @@
 
     # donlp2 R-code Solver:
     if(!require(Rdonlp2)) stop("Package Rdonlp2 cannot be loaded")
-    if(trace) cat("\n\n\nNow DONLP2 \n\n\n")
+    if(trace) cat("\nNow DONLP2 \n\n")
 
     # Scale Function and Parameters:
     INDEX = .params$index
@@ -360,7 +360,7 @@
     # FUNCTION:
 
     # nlminb Full Fortran Solver:
-    if(trace) cat(" NLMINB FULL FORTRAN Algorithm\n\n")
+    if(trace) cat("\nNLMINB FULL FORTRAN Algorithm\n\n")
 
     # The following comes from SQP ...
     #   should be adapted:
