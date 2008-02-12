@@ -1,7 +1,7 @@
-\name{solveShortExact}
+\name{solveRshortExact}
 
 
-\alias{solveShortExact}
+\alias{solveRshortExact}
 
 
 \title{Exat unlimit Short Selling Solver}
@@ -16,7 +16,7 @@
 
 
 \usage{
-solveShortExact(data, spec, constraints)
+solveRshortExact(data, spec, constraints)
 }
 
 

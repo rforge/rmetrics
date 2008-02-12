@@ -26,6 +26,29 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:                    DESCRIPTION:
+#  covEllipsesPlot              Plots covariance ellipses
+################################################################################
+
+
+test.covEllipsesPlot <- 
+    function()
+{ 
+    # Data:
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    head(LPP)
+   
+    # Standard and robust Covariances:
+    Cov = cov(LPP)
+    robustCov = covMcdEstimator(LPP)$Sigma
+   
+    # covEllipsesPlot -
+    covEllipsesPlot(list(Cov, robustCov))  
+    
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 

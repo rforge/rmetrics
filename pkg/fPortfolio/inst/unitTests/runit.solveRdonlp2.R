@@ -31,40 +31,32 @@
 ################################################################################
 
 
-test.solverRDonlp2 <- 
+test.solveRdonlp2.MV.LongOnly.MinRisk <- 
     function()
 { 
-    if (FALSE) {
+    # Given Target Return Minimize Risk
+    
+    if (require(Rdonlp2)) {
         
-        require(Rdonlp2)
-        
-        # Load Data:   
+        # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         head(data)
         
         # Specification:
         spec = portfolioSpec()
-        setSolver(spec) = "Rdonlp2"
+        setTargetReturn(spec) = mean(as.matrix(data))
+        setSolver(spec) = "solveRdonlp2"
+        setTrace(spec) = TRUE
         spec
         
-        # Long Only Constraints:
-        constraints = NULL
+        # Default Constraints:
+        constraints = "LongOnly"
         constraints
-        
-        # Donlp2:
-        setTargetReturn(spec) = mean(as.matrix(data))
-        ans = solveRDonlp2(data, spec, constraints) 
-        ans
-        
-        # Check Termination Error:
-        setTargetReturn(spec) = mean(as.matrix(10*data))
-        ans10 = solveRDonlp2(10*data, spec, constraints)
-        ans10
-        
-        # Compare:
-        ans$weights
-        ans10$weights
+     
+        # Optimization:
+        portfolio = solveRdonlp2(data, spec, constraints)
+        portfolio
         
     }
     
@@ -76,12 +68,13 @@ test.solverRDonlp2 <-
 # ------------------------------------------------------------------------------
     
  
-test.solverRdonlp2.budgetConsatraints <- 
+test.solverRdonlp2.CovRiskBudgets.MinRisk <- 
     function()
 {     
-    if (FALSE) {
-        
-        require(Rdonlp2)
+    # Given Target Return Minimize Risk
+    #   ... but now we have a Quadratic Covariance Risk Budget Constraint!
+    
+    if (require(Rdonlp2)) {
         
         # Load Data:   
         data = as.timeSeries(data(smallcap.ts))
@@ -90,21 +83,25 @@ test.solverRdonlp2.budgetConsatraints <-
         
         # Specification:
         spec = portfolioSpec()
-        setSolver(spec) = "Rdonlp2"
         setTargetReturn(spec) = mean(as.matrix(data))
+        setSolver(spec) = "solveRdonlp2"
+        setTrace(spec) = FALSE
         spec
         
-        # Add Budget Constraints:
+        # Add Large Covariance Budget Constraints:
         constraints = c("minW[1:4]=0", "maxB[1:4]=1")
-        constraints
-        ans = solveRDonlp2(data, spec, constraints)
-        ans$weights
+        ans = solveRdonlp2(data, spec, constraints)
+        setWeights(spec) = ans$weights
+        portfolio = feasiblePortfolio(data, spec, constraints)
+        portfolio
         
-        # Scaled Donlp2 - Add Budget Constraints:
+        # Make Covariance Risk Budget Constraints active:
+        setTargetReturn(spec) = mean(as.matrix(data))
         constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
-        constraints
-        ans = solveRDonlp2(data, spec, constraints)
-        ans$weights
+        ans = solveRdonlp2(data, spec, constraints)
+        setWeights(spec) = ans$weights
+        portfolio = feasiblePortfolio(data, spec, constraints)
+        portfolio
         
     }
     
@@ -119,9 +116,7 @@ test.solverRdonlp2.budgetConsatraints <-
 test.solveRdonlp2.twoAssets =
     function()
 { 
-    if (FALSE) {
-        
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
         
         # Direct Access:
         data = as.timeSeries(data(smallcap.ts))

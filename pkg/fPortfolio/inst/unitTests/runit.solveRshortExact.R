@@ -31,18 +31,21 @@
 ################################################################################
 
 
-test.solveShortExact.givenTargetReturn =
-function()
+test.solveRshortExact.MV.Short.MinRisk <- 
+    function()
 { 
-    # Direct Access:
+    # Given Target Return Minimize Risk
+    
+    # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-    data = portfolioData(data)
     
     # Specification:
     spec = portfolioSpec()
     setTargetReturn(spec) = mean(as.matrix(data))
+    setSolver(spec) = "solveRshortExact"
+    setTrace(spec) = TRUE
     spec
     
     # Default Constraints:
@@ -50,7 +53,8 @@ function()
     constraints
  
     # Optimization:
-    solveShortExact(data, spec, constraints)
+    portfolio = solveRshortExact(data, spec, constraints)
+    portfolio
     
     # Return Value:
     return()
@@ -60,9 +64,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.solveShortExact.givenTargetRisk =
-function()
+test.solveRshortExact.MV.Short.MaxReturn <- 
+    function()
 { 
+    # Given Target Risk Maximize Return Return
+    
     # Not yet implemented:
     NA
     

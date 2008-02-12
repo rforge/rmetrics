@@ -28,11 +28,11 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION: 
-#  solveShortExact              Solves Analytically Unlimited Short Portfolio 
+#  solveRshortExact              Solves Analytically Unlimited Short Portfolio 
 ################################################################################
 
 
-solveShortExact <- 
+solveRshortExact <- 
     function(data, spec, constraints)
 {   
     # A function implemented by Diethelm Wuertz
@@ -79,7 +79,7 @@ solveShortExact <-
     
     # Prepare Output List:
     ans = list(
-        weights = weights, 
+        weights = weights, status = NA, 
         targetReturn = targetReturn, targetRisk = targetRisk)
 
     # Return Value:

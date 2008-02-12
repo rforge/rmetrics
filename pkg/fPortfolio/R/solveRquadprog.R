@@ -46,6 +46,21 @@ solveRquadprog <-
     #   spec - specification of the portfolio
     #   constraints - string of constraints
     
+    # Note:
+    #   This function is thought to minimize MV risk for a fixed return
+    #   and additional box and group constraints.
+    #   The function can in principle handle any case of linear constraints.
+    
+    # Details:
+    #   The fortran function "qpgen2" is builtin from the contributed 
+    #   R package quadprog:
+    #   quadprog:   Functions to solve Quadratic Programming Problems.
+    #   Version:    1.4-11
+    #   Date:       2007-07-12
+    #   Author:     S original by Berwin A. Turlach R port by A. Weingessel
+    #   Maintainer: Andreas Weingessel
+    #   License:    GPL-2
+    
     # Value of slove.QP():
     #   solution - vector containing the solution of the quadratic 
     #       programming problem.

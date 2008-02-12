@@ -30,6 +30,37 @@
 ################################################################################
 
 
+test.efficientPortfolio.MV.Short = 
+function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) <- mean(seriesData(data))
+    setOptimSolver(spec) <- "solveShortExact"
+    setTrace(spec) <- TRUE
+    spec
+ 
+    # Constraints:
+    constraints = "Short"
+    constraints
+    
+    # Optimization:
+    portfolio = efficientPortfolio(data, spec, constraints)
+    portfolio
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.efficientPortfolio.MV.LongOnly = 
 function()
 {  
