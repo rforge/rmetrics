@@ -22,7 +22,7 @@ garchFit(formula, data, init.rec = c("mci", "uev"),
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
         include.shape = NULL, leverage = NULL, trace = TRUE, 
     algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    hessian = c("fda", "cda"), control = list(), 
+    hessian = c("cda", "fda"), control = list(), 
     title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
