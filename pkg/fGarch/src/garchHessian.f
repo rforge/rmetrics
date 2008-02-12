@@ -1,6 +1,7 @@
 
 
 C ------------------------------------------------------------------------------
+
 C Central Difference Hessian:
 C
 C Central difference approximations are usually more precise than forward
@@ -8,6 +9,112 @@ C   difference approaximations, but they consume more computer time!
 C
 C
       SUBROUTINE GARCHHESS(NN, YY, ZZ, HH, NF, X, DPARM,
+     +  MDIST, MYPAR, EPS, HESS)
+C
+C  CHOOSE EPS=1.0D-4
+C     
+      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
+      DOUBLE PRECISION YY(NN), ZZ(NN), HH(NN)
+      DOUBLE PRECISION Y(99999), Z(99999), H(99999)
+      DOUBLE PRECISION X(NF), HESS(NF,NF), DPARM(3)
+      DOUBLE PRECISION X1(99), X2(99), X3(99), X4(99), X5(99), DEPS(99)
+      
+      INTEGER MYPAR(10) 
+     
+      COMMON /HESS1/ Y, Z, H, N     
+      COMMON /HESS2/ INCMEAN, NR, NS, NP, NQ, INITREC
+      COMMON /HESS3/ INCDELTA, LEVERAGE
+      COMMON /HESS4/ XDELTA, XSKEW, XSHAPE
+      COMMON /HESS5/ NDIST, INCSKEW, INCSHAPE
+C            
+C     SET COMMON BLOCK:
+      N = NN
+      DO I = 1, NN
+         Y(I) = YY(I)
+         Z(I) = ZZ(I)
+         H(I) = HH(I)
+      END DO       
+C   
+C     MY PARAMETERS: 
+      NDIST    = MDIST
+      INITREC  = MYPAR(1)
+      LEVERAGE = MYPAR(2)
+      INCMEAN  = MYPAR(3)
+      INCDELTA = MYPAR(4)
+      INCSKEW  = MYPAR(5)
+      INCSHAPE = MYPAR(6)
+      NR = MYPAR(7)
+      NS = MYPAR(8)
+      NP = MYPAR(9)
+      NQ = MYPAR(10) 
+C           
+      XDELTA = DPARM(1)
+      XSKEW  = DPARM(2)
+      XSHAPE = DPARM(3)             
+C      
+      DO I = 1, NF
+         DEPS(I) = EPS * X(I)
+      END DO
+C     Calculate non diagonal elements
+      DO I = 1, NF  
+         DO J = 1, NF  
+            DO K = 1, NF
+               X1(K) = X(K)
+               X2(K) = X(K)
+               X3(K) = X(K)
+               X4(K) = X(K)
+            END DO
+            IF (.NOT. (I.EQ.J)) THEN
+               X1(I) = X1(I) + DEPS(I)
+               X1(J) = X1(J) + DEPS(J)
+               X2(I) = X2(I) + DEPS(I)
+               X2(J) = X2(J) - DEPS(J)
+               X3(I) = X3(I) - DEPS(I)
+               X3(J) = X3(J) + DEPS(J)
+               X4(I) = X4(I) - DEPS(I)
+               X4(J) = X4(J) - DEPS(J)           
+               CALL LLH4HESS(NF, X1, F1)            
+               CALL LLH4HESS(NF, X2, F2)         
+               CALL LLH4HESS(NF, X3, F3)     
+               CALL LLH4HESS(NF, X4, F4) 
+               HESS(I,J) = (F1-F2-F3+F4)/(4.0D0*DEPS(I)*DEPS(J))
+            END IF
+         END DO
+      END DO
+C     Calculate diagonal elements
+      DO I = 1, NF  
+         DO K = 1, NF
+            X1(K) = X(K)
+            X2(K) = X(K)
+            X3(K) = X(K)
+            X4(K) = X(K)
+            X5(K) = X(K)
+         END DO
+         X1(I) = X1(I) + 2.0*DEPS(I)
+         X2(I) = X2(I) + DEPS(I)
+         X4(I) = X4(I) - DEPS(I)
+         X5(I) = X5(I) - 2.0*DEPS(I)
+         CALL LLH4HESS(NF, X1, F1)            
+         CALL LLH4HESS(NF, X2, F2)         
+         CALL LLH4HESS(NF, X3, F3)     
+         CALL LLH4HESS(NF, X4, F4)           
+         CALL LLH4HESS(NF, X5, F5)           
+         HESS(I,I) = (-F1+16.0*F2-30.0*F3+16.0*F4-F5)/(12.0*DEPS(I)**2)
+      END DO
+C     
+      RETURN
+      END 
+C
+C      
+C ------------------------------------------------------------------------------
+
+
+C Forward Difference Hessian:
+C
+C Forward difference approximations 
+C
+C
+      SUBROUTINE GARCHFHESS(NN, YY, ZZ, HH, NF, X, DPARM,
      +  MDIST, MYPAR, EPS, HESS)
 C
 C  CHOOSE EPS=1.0D-4
@@ -66,16 +173,12 @@ C
             X1(I) = X1(I) + DEPS(I)
             X1(J) = X1(J) + DEPS(J)
             X2(I) = X2(I) + DEPS(I)
-            X2(J) = X2(J) - DEPS(J)
-            X3(I) = X3(I) - DEPS(I)
             X3(J) = X3(J) + DEPS(J)
-            X4(I) = X4(I) - DEPS(I)
-            X4(J) = X4(J) - DEPS(J)           
             CALL LLH4HESS(NF, X1, F1)            
             CALL LLH4HESS(NF, X2, F2)         
             CALL LLH4HESS(NF, X3, F3)     
-            CALL LLH4HESS(NF, X4, F4)           
-            HESS(I,J) = (F1-F2-F3+F4)/(4.0D0*DEPS(I)*DEPS(J))
+            CALL LLH4HESS(NF, X4, F4)     
+            HESS(I,J) = (F1-F2-F3+F4)/(DEPS(I)*DEPS(J))
          END DO
       END DO
 C     
@@ -83,7 +186,8 @@ C
       END 
 C
 C      
-C ------------------------------------------------------------------------------
+
+C -----------------------------------------------------------------------
 C
 C     
       SUBROUTINE LLH4HESS(NF, X, F) 
@@ -306,9 +410,9 @@ C     MY PARAMETERS:
       XSHAPE = DPARM(3)             
       
       MACHEP = R1MACH(4)
-C      C = MACHEP**(1.0D0/3.0D0)
+      C = MACHEP**(1.0D0/3.0D0)
       
-      C = 1.0D-4
+C      C = 1.0D-4
      
       CALL LLH4HESS(NF, X, FNVAL)
       FC = FNVAL
