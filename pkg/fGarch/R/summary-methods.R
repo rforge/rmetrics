@@ -56,7 +56,7 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
 
     # Mean Equation:
     cat("\nMean and Variance Equation:\n ")
-    print(formula)
+    print(object@formula)
 
     # Conditional Distribution:
     cat("\nConditional Distribution:\n ")
@@ -85,7 +85,7 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
     LLH = object@fit$value
-    N = length(object@data$x)
+    N = NROW(object@data$Data)
     cat(LLH, "   normalized: ", LLH/N, "\n")
 
     # Lagged Series:
