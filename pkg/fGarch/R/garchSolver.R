@@ -126,8 +126,8 @@
             parscale = parscale,
             lmm = 20,
             pgtol = 1.0e-11 * TOL1,
-            factr = 1.0 * TOL1),
-        trace = trace)
+            factr = 1.0 * TOL1,
+        trace = as.integer(trace)))
     names(fit$par) = names(.params$params[INDEX])
 
     print(fit$hessian)
@@ -173,13 +173,13 @@
         fn = .garchLLH,
         method = "Nelder-Mead",
         control = list(
-            ndeps = rep(1e-14*TOL2, length = length(INDEX)),
-            maxit = 10000,
-            reltol = 1.0e-11 * TOL2,
-            fnscale = fnscale,
-            parscale = c(1, abs((.params$params[INDEX])[-1]))),
-        hessian = TRUE,
-        trace = trace)
+        ndeps = rep(1e-14*TOL2, length = length(INDEX)),
+        maxit = 10000,
+        reltol = 1.0e-11 * TOL2,
+        fnscale = fnscale,
+        parscale = c(1, abs((.params$params[INDEX])[-1])),
+        trace = as.integer(trace)),
+        hessian = TRUE)
     names(fit$par) = names(.params$params[INDEX])
 
     # Result:
