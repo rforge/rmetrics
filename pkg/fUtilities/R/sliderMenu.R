@@ -55,7 +55,7 @@
 
     # Requirement:
     if (!require(tcltk, quietly = TRUE))
-        stop("Package tcltk not available")
+        return(cat("\n -- Package tcltk not available -- \n\n"))
 
     # Environment:
     if (!exists(".slider.env")) {
@@ -146,7 +146,7 @@
 
     # Requirement:
     if (!require(tcltk, quietly = TRUE))
-        stop("Package tcltk not available")
+        return(cat("\n -- Package tcltk not available -- \n\n"))
 
     # Setup:
     if(!missing(no)) {
