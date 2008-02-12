@@ -257,7 +257,7 @@ C     COMPUTE LIKELIHOOD:
          DD = DLOG( DIST(ZZ, HH, XSKEW, XSHAPE, NDIST) )
          LLH = LLH - DD
       END DO
-      F = LLH/NORM
+      F = LLH
       
       IF (F.LT.FXLLH) THEN
         FXLLH = F
