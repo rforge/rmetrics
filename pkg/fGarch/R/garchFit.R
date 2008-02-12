@@ -1161,7 +1161,7 @@ garchFit <-
     TOL2 = .params$control$tol2
 
     # Optimize:
-    if(trace) cat("\nIteration Path:\n")
+    if(trace) cat("\n\n--- START OF TRACE ---\n")
 
 
     # First Method: Two Step Apparoach > Trust Region + Nelder-Mead Simplex
