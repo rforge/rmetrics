@@ -70,6 +70,9 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     if(missing(i)) { i <- min(1, nrow(x@Data)):nrow(x@Data) }
     if(missing(j)) { j <- min(1, ncol(x@Data)):ncol(x@Data) }
 
+    if (is.timeSeries(i) && is.logical(i@Data))
+        i <- as.logical(i@Data)
+
     if (!is.numeric(i) && !is.logical(i))
         i <- as.character(i)
 
