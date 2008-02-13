@@ -367,12 +367,12 @@ plot.portfolioBacktest <-
     # Weights:
     nAssets = length(assets)
     naWeights <-
-        matrix(rep(NA, times = (horizonLength - 1) * nAssets), ncol = nAssets)
+        matrix(rep(NA, times = horizonLength * nAssets), ncol = nAssets)
 
     # Plot:
     ts.plot(rbind(naWeights, weights), xlab = xlab, ylab = ylab,
             xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
-             ylim = c(0, 1), col = 2:(nAssets+1), main = main, gpars = gpars)
+            ylim = c(0, 1), col = 2:(nAssets+1), main = main, gpars = gpars)
 
     # Labels ?
     if (labels) {
@@ -435,7 +435,8 @@ plot.portfolioBacktest <-
 
     # Plot:
     ts.plot(diffWeights, xlab = xlab, ylab = ylab,
-        col = 1:(nAssets+1), main = main, gpars = gpars)
+            xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
+            col = 1:(nAssets+1), main = main, gpars = gpars)
 
     # Add Labels"
     if(labels) {
