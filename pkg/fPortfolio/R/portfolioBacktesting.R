@@ -15,7 +15,7 @@
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -31,11 +31,11 @@
 ################################################################################
 
 
-portfolioBacktesting <- 
+portfolioBacktesting <-
     function(formula, data, spec = portfolioSpec(), constraints = NULL,
     portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
     trace = TRUE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -72,7 +72,7 @@ portfolioBacktesting <-
     #       4.  Extract the weights from the optimal portfolio and
     #           perform an exponential moving average with a smoothing
     #           period defined by the value 'smoothing'.
-    #       5.  Do an investiment with the obtained weights for the next
+    #       5.  Do an investing with the obtained weights for the next
     #           month and calculate in the next time step the resulting
     #           gain or loss.
 
@@ -239,9 +239,9 @@ portfolioBacktesting <-
 # ------------------------------------------------------------------------------
 
 
-plot.portfolioBacktest <- 
+plot.portfolioBacktest <-
     function(x, which = "all", labels = TRUE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -270,7 +270,7 @@ plot.portfolioBacktest <-
 
 .backtestAssetsPlot <-
     function(object, labels = TRUE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -330,7 +330,7 @@ plot.portfolioBacktest <-
 
 .backtestWeightsRecommendationPlot <-
     function(object, labels = TRUE, gpars = list())
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -389,7 +389,7 @@ plot.portfolioBacktest <-
 
 .backtestWeightsChangesPlot <-
     function(object, labels = TRUE, gpars = list())
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -452,7 +452,7 @@ plot.portfolioBacktest <-
 
 .backtestPortfolioPlot <-
     function(object, labels = TRUE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -511,9 +511,9 @@ plot.portfolioBacktest <-
 # ------------------------------------------------------------------------------
 
 
-print.portfolioBacktest <- 
+print.portfolioBacktest <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -535,9 +535,9 @@ print.portfolioBacktest <-
 # ------------------------------------------------------------------------------
 
 
-summary.portfolioBacktest <- 
+summary.portfolioBacktest <-
     function(object, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
