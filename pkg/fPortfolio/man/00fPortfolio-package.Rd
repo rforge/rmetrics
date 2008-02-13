@@ -94,7 +94,7 @@
             \code{covMcdEstimator}, 
             \code{covOGKEstimator},
             \code{mveEstimator},
-            \code{nnveEstimator), or
+            \code{nnveEstimator}, or
             \code{mcdEstimator}.
         In addition a shrinkage covariance estimator named
             \code{shrinkEstimator},
@@ -103,7 +103,7 @@
         Note the experienced user can add his own function to estimate in any
         alternative way the mean and the covariance of the multivariate assets
         data series. In this case he has to write a function, e.g. named
-            \code{myEstimator=function((x,spec=NULL,...),
+            \code{myEstimator=function((x,spec=NULL,...)},
         where \code{x} is a multivariate time series, \code{spec} optionally 
         the portfolio specification, if rquired, and \code{...} additional
         arguments passed to the users code. Note, \code{myEstimator} must
