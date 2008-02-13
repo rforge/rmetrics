@@ -16,16 +16,89 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Founbdattion, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
 # FUNCTION:
+#  test.fPFOLIOCON
+#  test.show.fPFOLIOCON.Short
+#  test.show.fPFOLIOCON.LongOnly
+################################################################################
+
+
+## DW
+## Note, there is no print function in show-methods.R
+
+
+# ------------------------------------------------------------------------------
+
+
+test.fPFOLIOCON = 
+function()
+{  
+    # Class:
+    getClass("fPFOLIOCON")
+   
+    # Slots:
+    getSlots("fPFOLIOCON")
+   
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.show.fPFOLIOCON.Short = 
+function()
+{  
+    # Constraints:
+    constraints = "Short"
+   
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    ## DW
+    ## Although this is not neede in general, we should set the
+    ## box and group constraints properly to +/- Inf !
+    
+    # As Object:
+    portfolioConstraints(data, spec = portfolioSpec(), constraints)
+   
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.show.fPFOLIOCON.LongOnly = 
+function()
+{  
+    # Constraints:
+    constraints = "LongOnly"
+   
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # As Object:
+    portfolioConstraints(data, spec = portfolioSpec(), constraints)
+   
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 

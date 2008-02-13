@@ -16,15 +16,11 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
@@ -36,7 +32,7 @@
 feasiblePortfolio <- 
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
-    # A function implemented by Rmetrics
+    # A function implemented Diethelm Wuertz
     
     # Description:
     #   Computes Risk and Return for a feasible portfolio
@@ -48,8 +44,10 @@ feasiblePortfolio <-
     
     # FUNCTION:
     
-    # Check Data:
+    # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(Constraints)) constraints = "LongOnly"
+    if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Get Weights:
     if(is.null(getWeights(spec))) {

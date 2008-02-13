@@ -16,16 +16,51 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Founbdattion, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
 # FUNCTION:
+################################################################################
+
+
+test.fPFOLIOSPEC <-  
+    function()
+{  
+    # Class:
+    getClass("fPFOLIOSPEC")
+   
+    # Slots:
+    getSlots("fPFOLIOSPEC")
+   
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.show.fPFOLIOSPEC <-
+    function()
+{   
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Default Specification:
+    PFOLIOSPEC = portfolioData(data, spec = portfolioSpec())
+    print(PFOLIOSPEC)
+   
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 

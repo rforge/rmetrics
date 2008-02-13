@@ -2,7 +2,6 @@
 
 
 \alias{efficientPortfolio}
-\alias{cmlPortfolio}
 \alias{tangencyPortfolio}
 \alias{minvariancePortfolio}
 
@@ -20,7 +19,6 @@
 \usage{
 efficientPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
-cmlPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 tangencyPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
@@ -74,17 +72,13 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     the efficient portfolio as an S4 object of class \code{fPORTFOLIO}.
     
     
-    \bold{Capital Market Line Portfolio:}
-    \cr\cr
-    
-    This is the portfolio with the highest Sharpe ratio on the
-    efficient frontier.
-    
-    
     \bold{Tangency Portfolio:}
     \cr\cr
     
-    This is the CML portfolio with zero risk free rate.
+    This is the portfolio with the highest Sharpe ratio on the efficient 
+    frontier for a given risk free rate. The default value of the risk free
+    rate is zero.
+    
     
     \bold{Minimum Variance Portfolio:}
     \cr\cr

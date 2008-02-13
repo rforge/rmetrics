@@ -16,21 +16,16 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO CLASS:
 #  efficientPortfolio            Returns a frontier portfolio
-#  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
 ################################################################################
@@ -39,7 +34,7 @@
 efficientPortfolio <- 
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes target risk and weights for an efficient portfolio
@@ -51,8 +46,10 @@ efficientPortfolio <-
     
     # FUNCTION:
     
-    # Check Data:
+    # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(Constraints)) constraints = "LongOnly"
+    if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Optimize Portfolio:
     Solver = match.fun(getSolver(spec))         
@@ -73,10 +70,10 @@ efficientPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-cmlPortfolio <-  
+tangencyPortfolio <-  
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Capital Market Line
@@ -88,8 +85,10 @@ cmlPortfolio <-
      
     # FUNCTION:
     
-    # Check Data:
+    # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(Constraints)) constraints = "LongOnly"
+    if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Compute Sharpe ratio to be minimized:
     sharpeRatio = function(x, data, spec, constraints) {
@@ -120,44 +119,10 @@ cmlPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-tangencyPortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = "LongOnly")
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Computes target risk and weights for the tangency portfolio
-    
-    # Arguments:
-    #   data - a rectangular object of assets
-    #   spec - an object of class 'fPFOLIOSPEC'
-    #   constraints - a character vector or NULL
-     
-    # FUNCTION:
-    
-    # Check Data:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    
-    # Set zero risk free rate:
-    setRiskFreeRate(spec) = 0
-   
-    # Compose Portfolio:
-    portfolio = cmlPortfolio(data, spec, constraints)
-    portfolio@call = match.call()
-    portfolio@title = "Tangency Portfolio"
-  
-    # Return Value:
-    portfolio
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 minvariancePortfolio <- 
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes minimum variance portfolio
@@ -169,8 +134,10 @@ minvariancePortfolio <-
     
     # FUNCTION:
     
-    # Check Data:
+    # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(Constraints)) constraints = "LongOnly"
+    if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Compute target risk to be minimized:
     targetRisk = function(x, data, spec, constraints) {

@@ -16,14 +16,11 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
@@ -54,6 +51,17 @@ solveRshortExact <-
     trace = getTrace(spec)
     if(trace) cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n\n")
     
+    # What to optimize target risk or target return ?
+    optimize = NA
+    if (is.null(getWeights(spec)) & is.null(getTargetReturn(spec)))
+    optimize = "targetReturn"
+    if (!is.numeric(targetRisk)) optimize = NA
+    if (is.null(getWeights(spec)) & is.null(getTargetRisk(spec)))
+    optimize = "targetRisk"
+    if (!is.numeric(targetReturn)) optimize = NA
+    if (is.na(optimize))
+        stop("Weights, target return and target risk are inconsistent!")
+    
     # Covariance:
     mu = getMu(data)
     Sigma = getSigma(data)
@@ -67,20 +75,40 @@ solveRshortExact <-
     c = as.numeric(one %*% invSigma %*% one)
     d = as.numeric(a*c - b^2)
 
-    # Get Target Return - if NULL use Tangency Portfolio:
-    targetReturn = getTargetReturn(spec) 
-    if (is.null(targetReturn)) targetReturn = (a/b)*C0     
+    if (optimize == "targetRisk") 
+    {
+        # Get Target Return:
+        # Note: for the Tangency Portfolio we have targetReturn = (a/b)*C0     
+        targetReturn = getTargetReturn(spec) 
     
-    # Get Target Risk:
-    targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
+        # Compute Target Risk:
+        targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
     
-    # Get Weights:
-    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    } else if (optimize == "targetReturn")  {
+        
+        # DW 2008-02-12 added
+        
+        # Get Target Risk:
+        targetRisk = getTargetRisk(spec)    
+    
+        # Compute Target Return:
+        aq = c
+        bq = -2*b*C0
+        cq = a*c0^2 - d*targetRisk^2
+        targetReturn = ( -bq + sqrt(bq^2 - 4*aq*cq) ) / (2*aq)
+    }
+    
+    # Compute Weights:
+    weights = 
+        as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    
     
     # Prepare Output List:
     ans = list(
-        weights = weights, status = NA, 
-        targetReturn = targetReturn, targetRisk = targetRisk)
+        weights = weights, 
+        status = NA, 
+        targetReturn = targetReturn, 
+        targetRisk = targetRisk)
 
     # Return Value:
     ans

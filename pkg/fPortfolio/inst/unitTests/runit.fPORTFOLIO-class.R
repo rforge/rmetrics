@@ -16,32 +16,15 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Founbdattion, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO CLASS:
-#  'fPORTFOLIO'                  S4 Portfolio Class
-#  portfolioFrontier             Returns the efficient frontier of a portfolio
-# FUNCTION:                     SINGLE PORTFOLIOS:
-#  feasiblePortfolio             Returns a feasible portfolio
-#  efficientPortfolio            Returns a frontier portfolio
-#  cmlPortfolio                  Returns capital market line
-#  tangencyPortfolio             Returns the tangency portfolio
-#  minvariancePortfolio          Returns the minimum variance portfolio
-# FUNCTION:                     PRINT AND PLOT METHODS: 
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects          
-#  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
-#  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
-# FUNCTION:                     EDUCATIONAL PORTFOLIO SLIDERS: 
-#  weightsSlider                 Weights Slider           
-#  frontierSlider                Efficient Frontier Slider                   
+# FUNCTION:                 
 ################################################################################
 
 
@@ -56,7 +39,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.portfolioFrontier =

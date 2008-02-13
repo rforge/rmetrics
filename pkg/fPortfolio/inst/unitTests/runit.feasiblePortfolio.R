@@ -16,39 +16,33 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Founbdattion, GPL
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other sources:
+#   see Rmetric's copyright and license files
 
 
 ################################################################################
 # FUNCTION:
+#  test.feasiblePortfolio.MV.Default
+#  test.feasiblePortfolio.MV.RandomWeights.LongOnly
+#  test.feasiblePortfolio.MV.Short
+#  test.feasiblePortfolio.CVaR.LongOnly.Alpha
 ################################################################################
 
 
-test.feasiblePortfolio.ConstrainedMV = 
-function()
+test.feasiblePortfolio.Default <- 
+    function()
 {  
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
-    # Specification:
-    spec = portfolioSpec()
-    spec
- 
-    # Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Feasible Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)
-    Portfolio
+    # Default Feasible Portfolio - Equal Weights - Long Only:
+    portfolio = feasiblePortfolio(data)
+    portfolio
     
     # Return Value:
     return()
@@ -58,8 +52,8 @@ function()
 # ------------------------------------------------------------------------------
    
  
-test.feasiblePortfolio.RandomWeights.LongOnly = 
-function()
+test.feasiblePortfolio.MV.RandomWeights.LongOnly <- 
+    function()
 {   
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -79,8 +73,8 @@ function()
     constraints
     
     # Feasible Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)
-    Portfolio
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio
     
     # Return Value:
     return()
@@ -90,8 +84,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.feasiblePortfolio.MV.Short = 
-function()
+test.feasiblePortfolio.MV.Short <-  
+    function()
 {  
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -100,59 +94,28 @@ function()
     
     # Specification - Equal Weights Portfolio:
     spec = portfolioSpec()
+    setTargetReturn(spec) = 10*mean(as.matrix(data))
+    setTrace = TRUE
     spec
     
-    # Constraints are ignored:
+    # Constraints:
     constraints = "Short"
     constraints
     
     # Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)
-    Portfolio
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio
     
     # Return Value:
     return()
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-test.feasibleShortMVPortfolio.Short = 
-function()
-{  
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification - Equal Weights Portfolio:
-    spec = portfolioSpec()
-    spec
-    
-    # Constraints can natursally also defined as:
-    constraints = "Short"
-    constraints
-    
-    # Portfolio:
-    Portfolio = .feasibleShortMVPortfolio(data, spec, constraints)
-    Portfolio
-    
-    # Return Value:
-    return()
-}
-
-
 
 
 ################################################################################
 
 
-
-
-
-test.feasiblePortfolio.CVaR.LongOnly.Alpha =
-function()
+test.feasiblePortfolio.CVaR.LongOnly.Alpha <- 
+    function()
 {   
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -177,4 +140,7 @@ function()
     # Return Value:
     return()
 }
+
+
+################################################################################
 
