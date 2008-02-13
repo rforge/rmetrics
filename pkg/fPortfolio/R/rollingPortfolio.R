@@ -114,7 +114,7 @@ rollingCmlPortfolio <-
         series = cut(data, from = from[i], to = to[i]) 
         
         # Calculation efficient frontiers and save them all in a list:
-        portfolio = cmlPortfolio(data = series, spec, constraints)
+        portfolio = tangencyPortfolio(data = series, spec, constraints)
         roll[[i]] = portfolio
         
         # Now you can do any "action" you want to do with the EFs:

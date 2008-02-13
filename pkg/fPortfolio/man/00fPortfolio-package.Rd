@@ -11,7 +11,7 @@
 
 
 \description{
-...
+Portfolio Package
 }
 
 
@@ -103,15 +103,15 @@
         Note the experienced user can add his own function to estimate in any
         alternative way the mean and the covariance of the multivariate assets
         data series. In this case he has to write a function, e.g. named
-            \code{myEstimator=function((x,spec=NULL,...)},
+            \code{myEstimator=function(x,spec=NULL,...)},
         where \code{x} is a multivariate time series, \code{spec} optionally 
         the portfolio specification, if rquired, and \code{...} additional
         arguments passed to the users code. Note, \code{myEstimator} must
         a return a named list, with at least the following two entries
-        \code{$mu} and \code{$Sigma}, which represent estimators for the
+        \code{\$mu} and \code{\$Sigma}, which represent estimators for the
         mean and covariance, respectively. The LPM portfolio is just a
         Markowitz mean-variance portfolio with a modified covariance 
-        estimator. In this case the setting of the \code{@model$type} 
+        estimator. In this case the setting of the \code{@model\$type} 
         changes the covariance estimator function name \code{"covEstimator"} 
         or any other selection pfreviously made to the function automatically
         to \code{"assetsLPM"} which returns the LPM mean and covariance 
@@ -174,7 +174,7 @@
         values we recommend to inspect the help page of the selected
         solver, the name of the solver can be returned by the function
         \code{getSolver}.
-        Use the function \code{setSolver to reset the value to \code{NA}
+        Use the function \code{setSolver} to reset the value to \code{NA}
         if it should be required.
         
         The name of the default solver used for optimization can be retrieved
@@ -206,11 +206,11 @@
     
     \code{getSpec}
     
-        The function \code{get***} ...
+        The function \code{get} ...
     
     \code{setSpec}
     
-        The function \code{get***} ...
+        The function \code{get} ...
     
 }
 

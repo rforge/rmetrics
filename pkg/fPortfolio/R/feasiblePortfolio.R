@@ -46,7 +46,7 @@ feasiblePortfolio <-
     
     # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(Constraints)) constraints = "LongOnly"
+    if (is.null(constraints)) constraints = "LongOnly"
     if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Get Weights:

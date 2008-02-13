@@ -94,7 +94,7 @@ solveRshortExact <-
         # Compute Target Return:
         aq = c
         bq = -2*b*C0
-        cq = a*c0^2 - d*targetRisk^2
+        cq = a*C0^2 - d*targetRisk^2
         targetReturn = ( -bq + sqrt(bq^2 - 4*aq*cq) ) / (2*aq)
     }
     

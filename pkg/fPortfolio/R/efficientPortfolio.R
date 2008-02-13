@@ -48,7 +48,7 @@ efficientPortfolio <-
     
     # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(Constraints)) constraints = "LongOnly"
+    if (is.null(constraints)) constraints = "LongOnly"
     if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Optimize Portfolio:
@@ -87,7 +87,7 @@ tangencyPortfolio <-
     
     # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(Constraints)) constraints = "LongOnly"
+    if (is.null(constraints)) constraints = "LongOnly"
     if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Compute Sharpe ratio to be minimized:
@@ -136,7 +136,7 @@ minvariancePortfolio <-
     
     # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(Constraints)) constraints = "LongOnly"
+    if (is.null(constraints)) constraints = "LongOnly"
     if (constraints == "Short") setSolver(spec) = "solveRshortExact"
     
     # Compute target risk to be minimized:

@@ -227,7 +227,7 @@ cmlPoints <-
     Type = getType(object)
 
     # Add Capital Market Line Tangency Point:
-    cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
+    cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
     assets = frontierPoints(cmlPortfolio)
     points(assets, ...)
     
@@ -256,7 +256,7 @@ cmlLines <-
     Type = getType(object)
 
     # Add Capital Market Line:
-    cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
+    cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
     riskFreeRate = getRiskFreeRate(Spec)
     slope = ((getTargetReturn(cmlPortfolio)[, "mean"] - riskFreeRate) /
         getTargetRisk(cmlPortfolio)[, "cov"])
