@@ -61,15 +61,10 @@ portfolioBacktesting <-
     #   The rolling backtesting strategy is the following.
     #       1.  Consider a rolling window of financial returns of length
     #           'horizon'.
-    #       2.  Compute the target Return for the "safe" portfolio based
+    #       2.  Compute the target Return for the portfolio based
     #           on this window and the 'data' listed in the 'formula'
     #           expression.
-    #       3.  If the benchmark return is higher than the target return
-    #           of the "safe" portfolio, then replace the "safe"
-    #           portfolio by the efficient portfolio with a target return
-    #           given by the benchmark. We call the resulting portfolio
-    #           the "optimal" portfolio
-    #       4.  Extract the weights from the optimal portfolio and
+    #       3.  Extract the weights from the portfolio and
     #           perform an exponential moving average with a smoothing
     #           period defined by the value 'smoothing'.
     #       5.  Do an investing with the obtained weights for the next
