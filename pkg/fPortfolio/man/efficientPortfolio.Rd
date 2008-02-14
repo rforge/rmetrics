@@ -11,7 +11,7 @@
 
 \description{
   
-    Optimizes efficient portfolios.
+    Returns efficient portfolios.
     
 }
     
@@ -100,28 +100,44 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     }    
     
     \bold{Tangency Portfolio:}
-    \cr\cr
     
-    This is the portfolio with the highest Sharpe ratio on the efficient 
-    frontier for a given risk free rate. The default value of the risk free
-    rate is zero.
-    
+    The function \code{tangencyPortfolio} returns the portfolio with 
+    the highest return/risk ratio on the efficient frontier. For the
+    Markowitz portfolio this is the same as the Sharpae ratio. To find 
+    this point on the frontier the return/risk ratio calculated from 
+    the target return and target risk returned by the function 
+    \code{efficientPortfolio}.
+    Note, the default value of the risk free rate is zero. 
+
     
     \bold{Minimum Variance Portfolio:}
-    \cr\cr
     
-    This is the portfolio with the minimal risk on the efficient
-    frontier.
+    The function \code{minvariancePortfolio} returns the portfolio 
+    with the minimal risk on the efficient frontier. To find the 
+    minimal risk point the target risk returned by the function
+    \code{efficientPortfolio} is minimized.
 
 }
 
 
 \value{
     
-    \code{feasiblePortfolio} function returns an S4 object of class 
-    \code{"fPORTFOLIO"}.
+    returns an S4 object of class \code{"fPORTFOLIO"}.
     
 }
+
+
+\note{
+    
+    The \code{cmlPortfolio} function has been removed with Version 2.7.0.
+    This function produced some misunderstanding by the users in that way
+    they assumed to compute the capital market line. What the function
+    really did was to compute the tangency portfolio for a non zero risk
+    free market rate. So just set the rate and use the function
+    \code{tangencyPortfolio} which will delover the same results as the
+    deprecated function \code{cmlPortfolio}.
+    
+} 
 
 
 
@@ -130,7 +146,6 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 \examples{
 ## data -
-   
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -145,11 +160,17 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 ## Allow for unlimited Short Selling:
    Constraints = "LongOnly"
    
-## Compute properties of efficient Portfolio
+## efficientPortfolio -
+   # Compute properties of efficient Portfolio:
    efficientPortfolio(Data, Spec, Constraints)
    
-## Compute properties of tangency Portfolio
+## tangency Portfolio -
+   # Compute properties of tangency Portfolio:
    tangencyPortfolio(Data, Spec, Constraints)   
+   
+## minvariancePortfolio -
+   # Compute properties of minimum variance Portfolio:
+   minvariancePortfolio(Data, Spec, Constraints)
 }
 
 
