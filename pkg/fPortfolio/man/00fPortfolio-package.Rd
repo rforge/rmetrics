@@ -11,7 +11,29 @@
 
 
 \description{
-Portfolio Package
+
+    The Rmetrics fPortfolio package is a very powerful collection
+    of functions to optimize portfolios and to to analyze their risk.
+    
+    The implemented portfolio models include the traditional 
+    mean--variance Markowitz portfolio, robust variants of
+    the Markowitz portfoio, the mean--LPM lower partial moment
+    portfolio, and the mean-CVaR conditional value-at-Risk portfolio.
+    
+    Optimization is possible either by minimizing the risk if the return
+    is specified, or by maximizing the return if the risk is specified.
+    
+    Linear box/group constraints and quadratic covariance risk budgets 
+    and/or copulae tail risk budgets can be specified.
+    
+    Depending on the model of the portfolio and the constraints
+    powerful solvers are used for optimization including a linear
+    programming solver, a quadratic programming solver, a 
+    sequential quadratic programming, and a second order programming
+    solver.
+    
+    Several Charts can be produced using powerful graphics tools. 
+
 }
 
 
@@ -26,6 +48,13 @@ Portfolio Package
         Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
         URL:        \tab \url{http://www.rmetrics.org}
     }
+    
+}
+
+
+\section{Overview:}{
+
+    ...
     
 }
 
@@ -335,3 +364,4 @@ Portfolio Package
    
 
 \keyword{models}
+
