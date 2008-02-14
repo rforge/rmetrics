@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -29,26 +29,26 @@
 ################################################################################
 
 
-feasiblePortfolio <- 
+feasiblePortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
-{   
+{
     # A function implemented Diethelm Wuertz
-    
+
     # Description:
     #   Computes Risk and Return for a feasible portfolio
-    
+
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # FUNCTION:
-    
+
     # Check Arguments:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     if (is.null(constraints)) constraints = "LongOnly"
-    if (constraints == "Short") setSolver(spec) = "solveRshortExact"
-    
+    if (constraints[1] == "Short") setSolver(spec) = "solveRshortExact"
+
     # Get Weights:
     if(is.null(getWeights(spec))) {
         nAssets = getNAssets(data)
@@ -56,44 +56,44 @@ feasiblePortfolio <-
     }
     weights = as.vector(getWeights(spec))
     names(weights) = colnames(data@data$series)
-    
+
     # Compute Return:
     targetReturn = c(mean = (data@statistics$mean %*% weights)[[1]])
-    
+
     # Compute Covariance Risk:
     Cov = data@statistics$Cov
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
-    
+
     # Compute VaR:
     alpha = getAlpha(spec)
     returns = as.matrix(data@data$series) %*% weights
     VaR = quantile(returns, alpha, type = 1)
-    
+
     # Compute CVaR:
-    CVaR = VaR - 0.5*mean(((VaR-returns) + abs(VaR-returns))) / alpha 
-    
+    CVaR = VaR - 0.5*mean(((VaR-returns) + abs(VaR-returns))) / alpha
+
     # Compose Risks:
-    targetRisk = c(cov, CVaR, VaR) 
+    targetRisk = c(cov, CVaR, VaR)
     names(targetRisk) = c("cov", "CVaR", "VaR")
-    
+
     # Compute Risk Budgets:
     covRiskBudgets = (weights * Cov %*% weights)[,1] / cov^2
 
     # Compose Portfolio:
-    portfolio = list(weights = t(weights), targetReturn = t(targetReturn), 
-        targetRisk = t(targetRisk), targetAlpha = alpha, 
+    portfolio = list(weights = t(weights), targetReturn = t(targetReturn),
+        targetRisk = t(targetRisk), targetAlpha = alpha,
         covRiskBudgets = t(covRiskBudgets),
         status = getStatus(spec))
 
     # Return Value:
-    new("fPORTFOLIO", 
+    new("fPORTFOLIO",
         call = match.call(),
-        data = list(data = data), 
-        spec = list(spec = spec), 
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = constraints,
         portfolio = portfolio,
         title = paste("Feasible Portfolio"),
-        description = .description() ) 
+        description = .description() )
 }
 
 
