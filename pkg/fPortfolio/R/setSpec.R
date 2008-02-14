@@ -25,13 +25,15 @@
 
 ################################################################################
 # FUNCTION:                     MODEL SLOT:
-#  setType<-                     Sets type of portfolio Optimization
+#  setType<-                     Sets type of portfolio optimization
+#  setOptimize<-                 Sets what to optimze, minRisk or maxRetururn
 #  setEstimator<-                Sets name of mean-covariance estimator
 #  setTailRisk<-                 Sets tail dependency matrix
 #  setParams<-                   Sets optional model parameters
 # FUNCTION:                     PORTFOLIO SLOT:
 #  setWeights<-                  Sets weights vector
 #  setTargetReturn<-             Sets target return value
+#  setTargetRisk<-               Sets target return value
 #  setTargetAlpha<-              Sets CVaR target alpha value
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
@@ -55,6 +57,27 @@
     # Type ?
     spec@model$type = value
     if (value == "CVaR") setSolver(spec) <- "solveRlpSolve"
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setOptimize<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
+
+    # Description:                
+    #   Sets the portfolio type for a portfolio structure
+    
+    # FUNCTION:
+    
+    # Type ?
+    spec@model$optimize = value
     
     # Return Value:
     spec
@@ -118,10 +141,8 @@
     
     # Weights ?
     spec@portfolio$weights = value
-    if(!is.null(value)) {
-        spec@portfolio$targetReturn = NULL
-        spec@portfolio$targetRisk = NULL
-    }
+    spec@portfolio$targetReturn = NULL
+    spec@portfolio$targetRisk = NULL
     
     # Return Value:
     spec
@@ -143,10 +164,9 @@
 
     # Target Return ?
     spec@portfolio$targetReturn = value
-    if(!is.null(value)) {
-        spec@portfolio$weights = NULL
-        spec@portfolio$targetRisk = NULL
-    }
+    spec@portfolio$weights = NULL
+    spec@portfolio$targetRisk = NULL
+    spec@model$optimize = "minRisk"
     
     # Return Value:
     spec
@@ -163,15 +183,14 @@
 
     # Description:                                   
     #   Sets the target return value for a portfolio structure
-    
+  
     # FUNCTION:
  
     # Target Return ?
     spec@portfolio$targetRisk = value
-    if(!is.null(value)) {
-        spec@portfolio$weights = NULL
-        spec@portfolio$return = NULL
-    }
+    spec@portfolio$weights = NULL
+    spec@portfolio$targetReturn = NULL
+    spec@model$optimize = "maxReturn"
     
     # Return Value:
     spec
