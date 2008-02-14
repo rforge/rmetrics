@@ -4,6 +4,9 @@
 \alias{fPFOLIOCON}
 \alias{fPFOLIOCON-class}
 
+\alias{show.fPFOLIOCON}
+\alias{show,fPFOLIOCON-method}
+
 
 \title{Portfolio Constraints Handling}
 
@@ -15,14 +18,22 @@
 }
 
 
-%\references{}
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
+\usage{
+show.fPFOLIOCON(object)
 }
+
+
+\arguments{
+
+    \item{object}{
+        an object of class \code{fPFOLIOCON} as returned by the function
+        \code{portfolioData}.
+        }
+
+}
+
+
+%\references{}
 
 
 \examples{

@@ -4,6 +4,7 @@
 \alias{setSpec}
 
 \alias{setType<-}
+\alias{setOptimize<-}
 \alias{setEstimator<-}
 \alias{setTailRisk<-}
 \alias{setParams<-}
@@ -32,6 +33,7 @@
     
     \tabular{ll}{
     \code{setType} \tab Sets type of portfolio optimization, \cr
+    \code{setOptimize} \tab Sets what to optimize, min risk or max return, \cr
     \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
     \code{setParams} \tab Sets optional model parameters, \cr
     
@@ -51,6 +53,7 @@
 
 \usage{
 setType(spec) <- value
+setOptimize(spec) <- value
 setEstimator(spec) <- value
 setTailRisk(spec) <- value
 setParams(spec) <- value
@@ -94,6 +97,7 @@ setTrace(spec) <- value
 \value{
   
     \code{setType}\cr
+    \code{setOptimize}\cr
     \code{setEstimator}\cr 
     \code{setParam}\cr
     \cr
@@ -126,14 +130,6 @@ setTrace(spec) <- value
 
 
 %\references{}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics port,\cr
-    Oliver Greshake for addons.
-    
-}
 
 
 \examples{

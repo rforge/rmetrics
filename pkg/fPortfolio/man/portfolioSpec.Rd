@@ -16,8 +16,9 @@
 
 \usage{
 portfolioSpec(
-    model = list(type = "MV", estimator = "covEstimator", 
-        tailRisk = list(), params = list(alpha = 0.05, a = 1)), 
+    model = list(type = "MV", optimize = "minRisk",
+        estimator = "covEstimator", tailRisk = list(), 
+        params = list(alpha = 0.05, a = 1)), 
     portfolio = list(weights = NULL, targetReturn = NULL, 
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
         status = 0),
@@ -62,6 +63,10 @@ portfolioSpec(
     \code{"MV"}, later we will add lower partial moments \code{LPM} and 
     conditional value at risk \code{"CVaR"}.
     \cr
+    \emph{Optimzer:} Tells us what should be optimized. Two options are
+    allowed: \code{"minRisk"} to minimize the risk, which is the default
+    value, and \code{maxReturns"} to maximize the Return. 
+    \cr
     \emph{Estimators:} The estimator(s) for the mean vector and covariance 
     matrix are determined by the argument \code{model$type}, which is a 
     character vector with two elements, the first for the mean and the 
@@ -105,14 +110,6 @@ portfolioSpec(
 
 
 %\references{}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics port,\cr
-    Oliver Greshake for addons.
-    
-}
 
 
 \examples{

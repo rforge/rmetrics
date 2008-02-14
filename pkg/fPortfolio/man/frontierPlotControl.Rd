@@ -85,13 +85,6 @@ frontierPlotControl(
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
-
-
 \examples{
 ## --
 }

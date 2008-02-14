@@ -45,7 +45,8 @@
 
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
-    col = c("black", "grey"), add = FALSE, \dots)
+    col = c("black", "grey"), add = FALSE, labels = TRUE, 
+    title = TRUE, \dots)
 
 minvariancePoints(object, \dots)
 cmlPoints(object, \dots)
@@ -80,12 +81,20 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
         for all points below the minimum variance return and \code{"upper"}
         for the actual efficient frontier, by default "both".
         }
+    \item{labels}{
+        a logical flag, should the plot be automatically labeled and
+        decorated? By default \code{TRUE}.
+        }
     \item{mcSteps}{
         an integer value, the number of Monte Carlo steps.
         }
     \item{object}{
         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
         specification, constraints, portfolio, title, description.
+        }
+    \item{title}{
+        a logical flag, should the plot obtain a default main title and
+        x- and y-labels? By default \code{TRUE}.
         }
     \item{\dots}{
         optional arguments to be passed.\cr
@@ -96,29 +105,52 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
 
 \details{
 
-    \bold{Frontier Plot:}
-    \cr\cr
-    The frontier plot provides plotting three parts of the efficient frontier.
-    The part superior to the minimum variance portfolio is plotted with argument
-    frontier = "upper". The part below is plotted with "lower". Both parts are
-    plotted with "both", which is default. The ranges of plots are determined 
-    by maximum of the ranges of the assets or the minimum and maximum of the
-    efficient frontier. Adding an efficient frontier to an existing plot is
-    possible with the argument add. The argument col determines the color of 
-    the upper and lower part of the efficient frontier.
+    \bold{Frontier Plot:}\cr
+    
+    The \code{frontierPlot} functions allows to plot the efficient.
+    frontier. 
+    
+    \emph{Selecting the upper and/or lower part of the frontier:}
+    
+    One can choose one from three different plot options selectable 
+    by the argument \code{frontier}. 
+    The part superior to the minimum variance portfolio is plotted with 
+    argument \code{frontier="upper"}. 
+    The part below is plotted with \code{frontier="lower"}. 
+    Both parts are plotted with \code{frontier="both"}, which is default. 
+    
+    \emph{Selecting the color of the frontier points:}
+    
+    Different colors for the lower and upper part are selected from the
+    argument \code{col}, the defaults are grey and black, the first for
+    the lower part of the frontier, thye second for the upper part.
+    
+    \emph{Plotting the frontiers for several portfolios in one plot:}
+    
+    The function comes with an argument \code{add}. If \code{add=FALSE}
+    then a new plot is opended displaying the frontier for the selected 
+    portfolio. On the other hand setting \code{add=TRUE} allows to add
+    new efficient frontiers from other portfolios to the same plot.
+    
+    \emph{Removing labels from the plot:}
+    By default we have \code{labels=TRUE} and thus additional information
+    is plotted on the third side of the graph. To discard this information
+    one has to set \code{labels = FALSE}.
+    
+    \emph{Adding user supplied title and axis-labels:}
+    By default we have \code{title=TRUE} and thus a default main title and 
+    default x- and y-labels are automatically added. To discard this
+    kind of decoration set \code{title=FALSE}. Then using the function
+    \code{title} allows to add user specified titles and axis-labels. 
+    
+    \emph{The dot arguments:}
+    With the \code{\dots} arguments one can pass additional arguments to
+    the internal plot and points functions.
 
 }
-
 
 
 %\references{}
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
 
 
 \examples{
@@ -147,7 +179,7 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
    equalWeightsPoints(Frontier, pch = 15, col = "grey")
    singleAssetPoints(Frontier, pch = 19, cex = 1.5, col = topo.colors(6))
    twoAssetsLines(Frontier, lty = 3, col = "grey")
-   sharpeRatioLines(Frontier, lty = 3, col = "orange")
+   sharpeRatioLines(Frontier, col = "orange", lwd = 2)
 
 ## Feasible Portfolios:
    frontierPlot(Frontier, col = c("orange", "orange"), pch = 19)

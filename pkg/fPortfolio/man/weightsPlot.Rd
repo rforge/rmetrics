@@ -73,13 +73,6 @@ tailRiskBudgetsPlot(object, col = NULL, legend = TRUE)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
-
-
 \examples{
 ## portfolioFrontier -
    # Load Data:

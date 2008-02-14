@@ -116,13 +116,6 @@ Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics port.
-    
-}
-
-
 \examples{
 ## rmaxdd -
    # Set a random seed

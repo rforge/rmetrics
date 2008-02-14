@@ -120,24 +120,13 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
-%\value{
-%
-%}
+%\value{}
 
 
-%\details{
-%
-%}
+%\details{}
 
 
 %\references{}
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
 
 
 \examples{

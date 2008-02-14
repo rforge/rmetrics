@@ -42,13 +42,6 @@ solveRdonlp2(data, spec, constraints)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
-
-
 \examples{
 ## data -
    # Load Data:

@@ -97,13 +97,6 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz this Rmetrics port.
-    
-}
-
-
 \examples{
 ## ...
 }

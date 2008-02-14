@@ -120,14 +120,6 @@ show.fPFOLIOSPEC(object)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics port,\cr
-    Oliver Greshake for addons.
-    
-}
-
-
 \examples{
 ## portfolioSpec -
    

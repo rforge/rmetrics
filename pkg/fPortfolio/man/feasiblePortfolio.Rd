@@ -108,13 +108,6 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
-
-
 \examples{
 ## data -
    # Load Data and Convert to timeSeries Object:

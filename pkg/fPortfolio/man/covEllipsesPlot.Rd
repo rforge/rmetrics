@@ -43,13 +43,6 @@ covEllipsesPlot(x = list(), \dots)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
-
-
 \examples{
 ## data -
    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]

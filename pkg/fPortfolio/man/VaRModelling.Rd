@@ -193,13 +193,6 @@ Uryasev S. (2000);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics port.
-    
-}
-
-
 \examples{
 ## assetsSim -
    myAssets = 100/12 * assetsSim(n = 120, dim = 4)

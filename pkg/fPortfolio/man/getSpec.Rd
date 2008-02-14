@@ -2,7 +2,8 @@
 
 
 \alias{getModel.fPFOLIOSPEC}
-\alias{getType.fPFOLIOSPEC}         
+\alias{getType.fPFOLIOSPEC}  
+\alias{getOptimize.fPFOLIOSPEC}        
 \alias{getEstimator.fPFOLIOSPEC} 
 \alias{getTailRisk.fPFOLIOSPEC}      
 \alias{getParams.fPFOLIOSPEC} 
@@ -34,10 +35,11 @@
     The functions are:
     
     \tabular{ll}{
-    \code{getType} \tab Extract portfolio type from specification, \cr
-    \code{getEstimator} \tab Extract type of covariance estimator, \cr
-    \code{getTailRisk} \tab Extract list of tail dependency risk matrixes, \cr
-    \code{getParams} \tab Extract parameters from specification, \cr
+    \code{getType} \tab Extracts portfolio type from specification, \cr
+    \code{getType} \tab Extracts what to optimize from specification, \cr
+    \code{getEstimator} \tab Extracts type of covariance estimator, \cr
+    \code{getTailRisk} \tab Extracts list of tail dependency risk matrixes, \cr
+    \code{getParams} \tab Extracts parameters from specification, \cr
     \code{getWeights} \tab Extracts weights from a portfolio object, \cr
     \code{getTargetReturn} \tab Extracts target return from specification, \cr
     \code{getTargetRisk} \tab Extracts target riks from specification, \cr
@@ -54,6 +56,7 @@
 \usage{
 \method{getModel}{fPFOLIOSPEC}(object)
 \method{getType}{fPFOLIOSPEC}(object)
+\method{getOptimize}{fPFOLIOSPEC}(object)
 \method{getEstimator}{fPFOLIOSPEC}(object)
 \method{getTailRisk}{fPFOLIOSPEC}(object)
 \method{getParams}{fPFOLIOSPEC}(object)
@@ -83,14 +86,6 @@
 
 
 %\references{}
-
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
 
 
 \examples{

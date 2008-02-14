@@ -33,21 +33,30 @@ frontierPoints(object, frontier = c("both", "lower", "upper"),
         }
     \item{return, risk}{
         character strings denoting which return and risk 
-        has to be plotted.
+        has to be plotted. Allowed values are for the
+        return "mean", and for the risk either "cov,"
+        "VaR", or "CVaR".
         }
 
 }
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
-
-
 \examples{
-## ---
+## portfolioFrontier -
+   
+   # Load Data and Convert to timeSeries Object:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   
+   # Compute Efficient Frontier:
+   Frontier = portfolioFrontier(Data) 
+   
+## frontierPoints:
+
+   # Extract Points and Plot:
+   x = frontierPoints(Frontier, risk = "VaR")
+   x = frontierPoints(Frontier, risk = "CVaR")
+
 }
 
 

@@ -235,13 +235,6 @@ weightsSlider(object, control = list(), \dots)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
-
-
 \examples{
 ## minvariancePortfolio -
    # Load Data and Convert to timeSeries Object:

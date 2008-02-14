@@ -14,6 +14,7 @@
 \alias{getNAssets}
 \alias{getNFrontierPoints}
 \alias{getOptim}
+\alias{getOptimize}
 \alias{getPortfolio}
 \alias{getParams} 
 \alias{getRiskFreeRate} 
@@ -61,6 +62,7 @@ getNames(object)
 getNAssets(object)
 getNFrontierPoints(object)
 getOptim(object)
+getOptimize(object)
 getPortfolio(object)
 getParams(object)
 getRiskFreeRate(object)
@@ -92,13 +94,6 @@ getWeights(object)
         optional arguments to be passed.\cr
         }
 
-}
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
 }
 
 

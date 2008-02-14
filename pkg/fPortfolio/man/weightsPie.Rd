@@ -80,13 +80,6 @@ tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 %\references{}
 
 
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-
-}
-
-
 \examples{
 ## portfolioFrontier -
    # Load Data:

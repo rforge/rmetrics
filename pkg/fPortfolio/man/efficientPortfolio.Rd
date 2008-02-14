@@ -72,6 +72,33 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     the efficient portfolio as an S4 object of class \code{fPORTFOLIO}.
     
     
+    \emph{The efficient Portfolio Tree:}
+    
+    \preformatted{
+                       Optimize:    Type:      Constraints:  Solver:
+                       
+                                               +  short
+                                    +--MV------+  lin
+                                    |          +  quad 
+                                    |                         
+                       +-MinRisk----+--LPM-----+  lin
+                       |            |          +  quad
+                       |            |
+                       |            +--CVaR----+  lin
+                       |                       +  quad
+                       |
+    efficientPortfolio-+
+                       |                       +  short
+                       |            +--MV------+  lin     
+                       |            |          +  quad     
+                       |            |                   
+                       +-MaxReturn--+--LPM-----+  lin     
+                                    |          +  quad    
+                                    |                   
+                                    +--CVaR----+  lin     
+                                               +  quad
+    }    
+    
     \bold{Tangency Portfolio:}
     \cr\cr
     
@@ -99,13 +126,6 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 
 %\references{}
-
-
-\author{
-
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
-    
-}
 
 
 \examples{

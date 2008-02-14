@@ -256,11 +256,9 @@ Portfolio Package
 \section{Efficient Portfolios}{
 
     
-    \code{fficientPortfolio}
+    \code{efficientPortfolio}
     
     \code{minvariancePortfolio}
-    
-    \code{cmlPortfolio}
     
     \code{tangencyPortfolio}  
     
@@ -270,7 +268,21 @@ Portfolio Package
 \section{Portfolio Frontier}{
 
     
-    \code{portfolioFrontier} 
+    The function \code{portfolioFrontier} allows to compute points 
+    along the efficient frontier. The points cover the whole range
+    of feasible returns in equidistant steps. The number of steps 
+    is taken from the portfolio specification and can be changed by 
+    the user:
+    
+    \preformatted{
+    > mySpec = portfolioSpec()
+    > getNFrontierPoints(mySpec)
+    [1] 50
+    > setNFrontierPoints(mySpec) <- 25
+    }
+    
+    The returned value from the function \code{portfolioFrontier} is
+    an S4 object class \code{fPORTFOLIO}. 
     
 }
 
