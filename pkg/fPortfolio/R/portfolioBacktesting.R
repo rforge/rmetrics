@@ -488,6 +488,9 @@ plot.portfolioBacktest <-
     cumX = colCumsums(X)
     cumP = portfolioReturns + offsetReturn
     cumB = benchmarkReturns + offsetReturn
+    # we want to start from the benchmark offsetReturn
+    cumP <- rbind(timeSeries(offsetReturn, charvec = names(offsetReturn)), cumP)
+    cumB <- rbind(timeSeries(offsetReturn, charvec = names(offsetReturn)), cumB)
 
     # Plot:
     MAX = max(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
