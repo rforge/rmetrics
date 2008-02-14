@@ -24,15 +24,138 @@
 
 
 ################################################################################
-# FUNCTION:                     PRINT AND PLOT METHODS:           
+# FUNCTION:                     DESCRIPTION:
+#  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects  
+#  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
+#  show.fPFOLIOCON               Print method for 'fPFOLIOCON' objects          
 #  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 ################################################################################
 
 
-show.fPORTFOLIO <- 
+setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC <- 
     function(object)
 {   
     # A function implemented by Rmetrics
+
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIOSPEC"
+    
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+    
+    # FUNCTION:
+    
+    # Model:
+    cat("\nPortfolio Type:\n ")
+    cat(object@model$optimize, object@model$type, "\n")
+    
+    cat("\nCovariance Estimator:\n ")
+    cat(object@model$estimator, "\n")
+    
+    # Portfolio:
+    if (!is.null(object@portfolio$weights)) {
+        cat("\nPortfolio Weights:\n")
+        print(object@portfolio$weights) 
+    }
+    if (!is.null(object@portfolio$targetReturn)) {
+        cat("\nTarget Return:\n")
+        print(object@portfolio$targetReturn)
+    }
+    if (!is.null(object@portfolio$targetAlpha)) {
+        cat("\nTarget Alpha:\n ")
+        cat(object@portfolio$targetAlpha, "\n")
+    }
+    if (!is.null(object@portfolio$riskFreeRate)) {
+        cat("\nPortfolio Risk-Free Rate:\n ")
+        cat(object@portfolio$riskFreeRate, "\n")
+    }
+    if (!is.null(object@portfolio$nFrontierPoints)) {
+        cat("\nNumber of Frontier Points:\n ")
+        cat(object@portfolio$nFrontierPoints, "\n")
+    }
+    
+    # Optimization:
+    cat("\nOptimizer:\n ")
+    cat(object@optim$solver, "\n")
+        
+    # Return Value: 
+    invisible(object)
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPFOLIODATA", show.fPFOLIODATA <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIODATA"
+    
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+    
+    # FUNCTION:
+    
+    # Series:
+    cat("\nSeries Data:\n\n")
+    print(object@data$series)
+    
+    # Statistics:
+    cat("\nStatistics:\n\n")
+    print(object@statistics)
+    
+    # Tailrisk:
+    # NYI
+        
+    # Return Value: 
+    invisible(object)
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPFOLIOCON", show.fPFOLIOCON <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIODATA"
+    
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+    
+    # FUNCTION:
+    
+    # Print Title:
+    cat("\nTitle:\n ")
+    cat("Constraints:\n")
+    
+    cat("Constraint String:\n")
+    print(object@stringConstraints)
+    
+    cat("Box Group Constraints:\n")
+    print(object@boxgroupConstraints)
+    
+    cat("Cov Risk Budget Constraints:\n")
+    print(object@riskbudgetConstraints)
+       
+    # Return Value: 
+    invisible(object)
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPORTFOLIO", show.fPORTFOLIO <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   S4 Print Method for an object of class "fPORTFOLIO"
@@ -85,13 +208,7 @@ show.fPORTFOLIO <-
         
     # Return Value: 
     invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPORTFOLIO", show.fPORTFOLIO)
+})
 
 
 ################################################################################
