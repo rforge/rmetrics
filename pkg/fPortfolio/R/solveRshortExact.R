@@ -49,19 +49,28 @@ solveRshortExact <-
     
     # Trace:
     trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n\n")
+    if(trace) 
+        cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n")
     
     # What to optimize target risk or target return ?
     optimize = NA
     if (is.null(getWeights(spec)) & is.null(getTargetReturn(spec)))
-    optimize = "targetReturn"
-    if (!is.numeric(targetRisk)) optimize = NA
+    {
+        optimize = "target return"
+        if (is.null(getTargetRisk(spec))) 
+            stop("Either target return or target risk must be specified")
+    }
     if (is.null(getWeights(spec)) & is.null(getTargetRisk(spec)))
-    optimize = "targetRisk"
-    if (!is.numeric(targetReturn)) optimize = NA
+    {
+        optimize = "target risk"
+        if (is.null(getTargetReturn(spec))) 
+            stop("Either target return or target risk must be specified")
+    }
     if (is.na(optimize))
         stop("Weights, target return and target risk are inconsistent!")
-    
+    if (trace)
+        cat("\nProblem:\n Optimize", optimize, "\n")
+        
     # Covariance:
     mu = getMu(data)
     Sigma = getSigma(data)
@@ -75,7 +84,7 @@ solveRshortExact <-
     c = as.numeric(one %*% invSigma %*% one)
     d = as.numeric(a*c - b^2)
 
-    if (optimize == "targetRisk") 
+    if (optimize == "target risk") 
     {
         # Get Target Return:
         # Note: for the Tangency Portfolio we have targetReturn = (a/b)*C0     
@@ -83,8 +92,14 @@ solveRshortExact <-
     
         # Compute Target Risk:
         targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
+        
+        # trace:
+        if (trace) {
+            cat("\nTarget Return:\n ", targetReturn, "\n")    
+            cat("\nTarget Risk:\n ", targetRisk, "\n") 
+        }   
     
-    } else if (optimize == "targetReturn")  {
+    } else if (optimize == "target return")  {
         
         # DW 2008-02-12 added
         
@@ -96,17 +111,26 @@ solveRshortExact <-
         bq = -2*b*C0
         cq = a*C0^2 - d*targetRisk^2
         targetReturn = ( -bq + sqrt(bq^2 - 4*aq*cq) ) / (2*aq)
+        
+        # trace:
+        if (trace) {
+            cat("\nTarget Return:\n ", targetReturn, "\n")    
+            cat("\nTarget Risk:\n ", targetRisk, "\n") 
+        }   
     }
     
     # Compute Weights:
     weights = 
         as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
-    
+    if (trace) {
+        cat("\nWeights:\n", weights, "\n\n")    
+    }   
+        
     
     # Prepare Output List:
     ans = list(
         weights = weights, 
-        status = NA, 
+        status = 0, 
         targetReturn = targetReturn, 
         targetRisk = targetRisk)
 
