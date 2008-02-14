@@ -27,6 +27,7 @@
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getModel                      Extract model slot
 #   getType                       Extract portfolio type from specification 
+#   getOptimize                   Extract what to optimize from specification
 #   getEstimator                  Extract type of covariance estimator
 #   getTailRisk                   Extract list of tail dependency risk matrixes
 #   getParams                     Extract parameters from specification
@@ -49,6 +50,7 @@
     # fPFOLIOSPEC
     # model = list(
     #   type = "MV",
+    #   optimize = "minRisk",
     #   estimator = "covEstimator",
     #   tailRisk = NULL,
     #   params = list())
@@ -70,6 +72,7 @@
 
 getModel.fPFOLIOSPEC <- function(object) object@model  
   getType.fPFOLIOSPEC <- function(object) object@model$type[1]
+  getOptimize.fPFOLIOSPEC <- function(object) object@model$optimize
   getEstimator.fPFOLIOSPEC <- function(object) object@model$estimator
   getTailRisk.fPFOLIOSPEC <- function(object) object@model$tailRisk
   getParams.fPFOLIOSPEC <- function(object) object@model$params

@@ -36,6 +36,7 @@
 #  getNames
 #  getNFrontierPoints
 #  getOptim
+#  getOptimize
 #  getPortfolio
 #  getParams
 #  getRiskFreeRates
@@ -183,6 +184,18 @@ getOptim <-
     # A function implemented by Diethelm Wuertz
 
     UseMethod("getOptim")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getOptimize <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getOptimize")
 }
 
 
