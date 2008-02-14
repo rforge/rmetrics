@@ -33,8 +33,10 @@ portfolioSpec <-
     function(
     model = list(
         type = "MV",                     # Alternatives: "LPM", "CVaR"
+        optimize = "minRisk",            # Alternatives: "maxReturn"
         estimator = "covEstimator",      # Alternatives: "shrinkEstimator", ...
-        tailRisk = list(),               #               "lpmEstimator", ...
+                                         #               "lpmEstimator", ...
+        tailRisk = list(),  
         params = list(alpha = 0.05, a = 1)),
     portfolio = list(
         weights = NULL, 
@@ -73,6 +75,7 @@ portfolioSpec <-
     # Model Slot:
     Model = list(
         type = "MV", 
+        optimize = "minRisk",
         estimator = "covEstimator",
         tailRisk = NULL,
         params = list())
@@ -83,10 +86,10 @@ portfolioSpec <-
     Portfolio = list(
         weights = NULL, 
         targetReturn = NULL, 
-        targetRisk = NULL,
-        targetAlpha = NULL, 
+        targetRisk = NULL, 
         riskFreeRate = 0, 
-        nFrontierPoints = 50)
+        nFrontierPoints = 50,
+        status = 0)
     Portfolio[(Names <- names(portfolio))] <- portfolio
     
     # Check Portfolio - weights, targetReturn, targetRisk:
