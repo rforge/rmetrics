@@ -25,5 +25,51 @@
 
 ################################################################################
 # FUNCTION:
+#  test.frontierPlot
 ################################################################################
 
+
+
+test.frontierPlot.MV.LongOnly <-  
+    function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Portfolio:
+    portfolio = portfolioFrontier(data)
+    portfolio
+    
+    # Plot:
+    par(mfrow = c(2, 2))
+    frontierPlot(portfolio, frontier = "both")
+    frontierPlot(portfolio, frontier = "lower")
+    frontierPlot(portfolio, frontier = "upper")
+    frontierPlot(portfolio)
+    frontierPlot(portfolio, col = c("darkgreen", "red"), add = TRUE)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+#   minvariancePoints             Adds minimum variance point
+#   cmlPoints                     Adds market portfolio 
+#   cmlLines                      Adds capital market Line
+#   tangencyPoints                Adds tangency portfolio point 
+#   tangencyLines                 Adds tangency line
+#   equalWeightsPoints            Adds point of equal weights portfolio
+#   singleAssetPoints             Adds points of single asset portfolios
+#   twoAssetsLines                Adds EF for all combinations of two assets
+#   sharpeRatioLines              Adds Sharpe ratio line
+#   monteCarloPoints              Adds randomly produced feasible portfolios
+
+
+frontierPlot(portfolio, pch = 19)
+minvariancePoints(portfolio)
+
+################################################################################

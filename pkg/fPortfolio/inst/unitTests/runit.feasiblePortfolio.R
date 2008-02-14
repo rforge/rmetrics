@@ -64,8 +64,9 @@ test.feasiblePortfolio.MV.RandomWeights.LongOnly <-
     spec = portfolioSpec()
     nAssets = ncol(data)
     Weights = runif(nAssets, 0, 1)
-    Weights = Weights/sum(Weights)
+    Weights = round(Weights/sum(Weights), 3)
     setWeights(spec) <- Weights
+    setTrace = TRUE
     spec
     
     # Constraints:

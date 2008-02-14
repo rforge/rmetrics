@@ -25,12 +25,35 @@
 
 ################################################################################
 # FUNCTION:
+#  test.efficientPortfolio
 #  test.efficientPortfolio.MV.Short
 #  test.efficientPortfolio.MV.LongOnly
 #  test.efficientPortfolio.MV.LongOnly.Rdonlp2
 #  test.efficientPortfolio.BoxConstraints.RDonlp2
 #  test.efficientPortfolio.MV.LongOnly.twoAssets
 ################################################################################
+
+
+test.efficientPortfolio <- 
+    function()
+{  
+    # The default returns the MV long only tangency portfolio ...
+    
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Optimization:
+    portfolio = efficientPortfolio(data)
+    portfolio
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 test.efficientPortfolio.MV.Short <- 
@@ -43,9 +66,6 @@ test.efficientPortfolio.MV.Short <-
     
     # Specification:
     spec = portfolioSpec()
-    setTargetReturn(spec) <- mean(seriesData(data))
-    setOptimSolver(spec) <- "solveShortExact"
-    setTrace(spec) <- TRUE
     spec
  
     # Constraints:
@@ -53,8 +73,28 @@ test.efficientPortfolio.MV.Short <-
     constraints
     
     # Optimization:
-    portfolio = efficientPortfolio(data, spec, constraints)
-    portfolio
+    getWeights(spec)
+    getTargetReturn(spec)
+    getTargetRisk(spec)
+    # ... since all three are NULL, the tangency portfolio will be returned:
+    try(efficientPortfolio(data, spec, constraints))
+    # Fails since ...
+    #   Either target return or target risk must be specified!
+    
+    # Specify Target Return to minimize risk ...
+    setTargetReturn(spec) = mean(as.matrix(data))
+    getWeights(spec)
+    getTargetReturn(spec)
+    getTargetRisk(spec)
+    efficientPortfolio(data, spec, constraints)
+    
+    # Specify Target Risk to maximize the return ...
+    setTargetRisk(spec) = getTargetRisk(portfolio)[,"cov"]
+    setOptimize(spec) = "maxReturn"
+    getWeights(spec)
+    getTargetReturn(spec)
+    getTargetRisk(spec)
+    efficientPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -74,7 +114,6 @@ test.efficientPortfolio.MV.LongOnly <-
     
     # Specification:
     spec = portfolioSpec()
-    setTargetReturn(spec) <- mean(data@Data)
     setTrace(spec) <- TRUE
     spec
  
@@ -82,9 +121,17 @@ test.efficientPortfolio.MV.LongOnly <-
     constraints = "LongOnly"
     constraints
     
-    # Optimization:
+    # Risk Minimized Optimization:
+    setTargetReturn(spec) <- mean(as.matrix(data))
     portfolio = efficientPortfolio(data, spec, constraints)
     portfolio
+    getSolver(portfolio)
+    
+    # Return Maximized Optimization:
+    setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
+    portfolio = efficientPortfolio(data, spec, constraints)
+    portfolio
+    getSolver(portfolio)
     
     # Return Value:
     return()
@@ -106,17 +153,25 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
         
         # Specification:
         spec = portfolioSpec()
-        setTargetReturn(spec) <- mean(seriesData(data))
-        setSolver(spec) = "Rdonlp2"
+        setTrace(spec) <- TRUE
         spec
-        
+     
         # Constraints:
         constraints = "LongOnly"
         constraints
         
-        # Efficient Portfolio:
+        # Risk Minimized Optimization:
+        setSolver = "solveRdonlp2"
+        setTargetReturn(spec) <- mean(as.matrix(data))
         portfolio = efficientPortfolio(data, spec, constraints)
         portfolio
+        getSolver(portfolio)
+        
+        # Return Maximized Optimization:
+        setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
+        portfolio = efficientPortfolio(data, spec, constraints)
+        portfolio
+        getSolver(portfolio)
         
     }
     
