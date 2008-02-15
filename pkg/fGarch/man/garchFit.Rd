@@ -78,7 +78,7 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
         }
     \item{hessian}{
         a string denoting how the Hessian matrix should be evaluated,
-        either \code{hessian ="fda"}, the default, or \code{"cda"}.
+        either \code{hessian ="cda"}, the default, or \code{"fda"}.
         The forward difference approximation, \code{"fda"} consumes less 
         computer time, but is usually not as precise as approximations 
         that use central difference approximation, \code{"cda"}, formula.
