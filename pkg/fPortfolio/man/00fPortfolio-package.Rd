@@ -7,7 +7,7 @@
 \docType{package}
 
 
-\title{Portfolio Modelling, Optimization and Benchmarking}
+\title{Portfolio Modelling, Optimization and Backtesting}
 
 
 \description{
@@ -65,8 +65,8 @@
         2. \tab How to Prepare the Data Input ?\cr
         3. \tab How to Define Portfolio Constraints ?\cr
         4. \tab How to Optimize a Portfolio ?\cr
-        5. \tab How to Display an Optimized Portfolio ?\cr
-        6. \tab How to compute the efficient frontier ?
+        5. \tab How to Analyze an Optimized Portfolio ?\cr
+        6. \tab How to Backtest a Rolling Portfolio ?
     }
     
 }
@@ -113,7 +113,7 @@
     }
     
     To retrieve or modify portfolio specifications several 
-    \code{\link{getSpec}} and \code{\link{setSpec}} function are
+    \code{\link{getSpec}} and \code{setSpec} function are
     available. To set a portfolio specification from scratch
     one can also use the function \code{\link{portfolioSpec}}.
     
@@ -141,7 +141,7 @@
       representation(
         data = "list",
         statistics = "list",
-        tailRisk = "list")  
+        tailRisk = "list") )
     }
     
     An object of class \code{fPFOLIODATA} has three slots repfresented
@@ -225,7 +225,7 @@
       representation(
         stringConstraints = "character",
         boxgroupConstraints = "matrix",
-        riskbudgetConstraints = "matrix")  
+        riskbudgetConstraints = "matrix") )
     }
     
     An object of class \code{fPFOLIOCON} has three slots represented
@@ -259,19 +259,20 @@
 \section{4. How to Compute and Optimize Portfolios ?}{
 
     Rmetrics offers several functions to compute and optimize portfolios.
-    These include the functions
+    These include the functions\cr
     
-    \tabular{rl}{
-        1. \tab \code{feasiblePortfolio(data, spec, constraints)} \cr
-        2. \tab \code{efficientPortfolio(data, spec, constraints)} \cr
-        3. \tab \code{tangencyPortfolio(data, spec, constraints)} \cr
-        4. \tab \code{minvariancePortfolio(data, spec, constraints)} \cr
-        5. \tab \code{portfolioFrontier(data, spec, constraints)}
+    \preformatted{
+    feasiblePortfolio(data, spec, constraints) 
+    efficientPortfolio(data, spec, constraints) 
+    tangencyPortfolio(data, spec, constraints) 
+    minvariancePortfolio(data, spec, constraints) 
+    portfolioFrontier(data, spec, constraints) 
     }
     
     For all functions the user has to specifiy the \code{data} as an 
-    S4 object of class \code{timeSeries}, \code{spec=portfolioSpec()}, 
-    and \code{constraints="LongOnly"} have default values.
+    S4 object of class \code{timeSeries}. The remaining two arguments 
+    \code{spec=portfolioSpec()}, and \code{constraints="LongOnly"} have 
+    default values.
 
     The portfolio functions return an S4 object of \code{class-fPORTFOLIO} 
     which is represented by the following slots:
@@ -279,14 +280,13 @@
     \preformatted{
     setClass("fPFOLIOCON", 
       representation(
-        representation(
         call = "call",
         data = "list",
         spec = "list",
         constraints = "character",
         portfolio = "list",
         title = "character",
-        description = "character")  
+        description = "character") )  
     }
     
     To retrieve information from a portfolio object use one of the
@@ -304,21 +304,21 @@
     class \code{fPortfolio}.
     
     The optimization of an efficient portfolio is done by the function
-    \code{efficientPortfolio}. By default a mean--variance Markowitz
+    \code{\link{efficientPortfolio}}. By default a mean--variance Markowitz
     optimization is performed with "LongOnly". If neither the target
-    return is specified by the function \code{setTargetReturn} nor the
-    risk is pecified by the function \code{setTargetRisk}, then the
+    return is specified by the function \code{setTargetReturn} nor 
+    the risk is pecified by the function \code{setTargetRisk}, then the
     results for the tangency portfolio with given risk free rate, will
     be returned.
     
-    The \code{\linlk{tangenyPortfolio}} and \code{link\{minvariancePortfolio}} 
-    are two special effieint portfolios, the first yields the tangency
+    The \code{\link{tangencyPortfolio}} and \code{\link{minvariancePortfolio}} 
+    are two special efficient portfolios, the first yields the tangency
     point on the efficient frontier with respect to the rosk free rate,
     and the second the point on the efficient frontier with the lowest
-    risk
+    risk.
         
-    The function \code{portfolioFrontier} allows to compute points 
-    along the efficient frontier, use \code{\link{setNFrontierPoints}}
+    The function \code{\link{portfolioFrontier}} allows to compute points 
+    along the efficient frontier, use \code{setNFrontierPoints}
     to modify the default value of 50. The points cover the whole range
     of feasible points on the efficient frontier with returns in equidistant 
     steps. 
@@ -326,59 +326,48 @@
     The solver used for portfolio optimization is selected automatically,
     but can also chosen by the experienced user. It is in the responsibility 
     of the user that he select a solver which is not in conflict with
-    the specified portfolio model. Provided interfaces and solvers are:
+    the specified portfolio model. Provided interfaces and solvers are:\cr
    
-
-    \tabular{ll}{
-        \code{\link{solveShortExact} \tab for unlimited short selling, \cr
-        \code{solveRquadprog} \tab for quadratic objective with linear constraints, \cr
-        \code{solveRlpSolve} \tab for linear objective with linear constraints, \cr
-        \code{solveRsocp} \tab linear objective with linear/quadratic constraints, \cr
-        \code{solveRdonlp2} \tab Non-linear objective with non-linear constraints.
-    }
+    \code{\link{solveRshortExact}} for unlimited short selling, \cr  
+    \code{\link{solveRquadprog}} for quadratic objective with linear constraints, \cr 
+    \code{\link{solveRlpSolve}} for linear objective with linear constraints, \cr 
+    \code{\link{solveRsocp}} for linear objective with linear/quadratic constraints,\cr
+    \code{\link{solveRdonlp2}} for non-linear objective with non-linear constraints. \cr
        
 }
 
 
-\section{How to Display an Optimized Portfolio ?}{
+\section{5. How to Analyze an Optimized Portfolio ?}{
 
     There exist several plots to display the results of an optimized
     portfolio or to display the portfolio frontier.
     
     For an individual portfolio ...
     
+    \code{weightsPie}
+     
+    
     For the efficient frontier ...
     
-    \code{frontierPlot}
-    
     \code{plot}
-    
+    \code{frontierPlot}
     \code{weightsPlot}
-    
-    \code{weightsPie}
-    
     \code{frontierSlider}
-    
     \code{weightsSlider}
     
 }
 
 
 
-\section{How to Backtest a Rolling Portfolio ?}{
+\section{6. How to Backtest a Rolling Portfolio ?}{
 
-    \code{rollingPortfolio}
+    Rmetrics offers functions for a rolling backtesting of 
+    historical portolios:\cr
     
-    \code{portfolioBacktesting}
-    
-}
-
-
-\section{How to Define a Portfolio Strategy ?}{
-
-    \code{rollingPortfolio}
-    
-    \code{portfolioBacktesting}
+    \code{rollingPortfolio} \cr
+    \code{portfolioBacktesting} \cr
+    \code{rollingPortfolio} \cr 
+    \code{portfolioBacktesting} \cr
     
 }
    
@@ -387,14 +376,13 @@
 
     With Rmetrics version 2.7.0 the function \code{cmlPortfolio}
     has been deprecated. Setting the risk free rate, sing the 
-    function \code{\link{setRiskFreeRate}} as before and calling 
-    the function \code{\link{tangencyPortfolio}} will yield the same
-    results.
+    function \code{setRiskFreeRate} as before and calling the 
+    function \code{tangencyPortfolio} will yield the same results.
     
     The following functions and group of functions have been moved 
     to the \code{fAssets} package, since they rather deal with multivariate
-    assets data and not with portfolios. \code{\link{covEllipsesPlot}},
-    \code{\link{VarModelling}}.
+    assets data and not with portfolios. \code{covEllipsesPlot},
+    \code{VarModelling}.
     
     The function \code{maxxdd} which computes the theoretical density
     of drawdowns for random walks has been moved to the \code{fBasics}

@@ -107,6 +107,11 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     Again, \code{Asset(s)} is an index of one or more assets, and \code{value} 
     a numeric value or vector with numbers ranging between zero and one,
     assigning the desired risk budgets. 
+    
+    
+    Note, risk budget constraints will enforce diversification at the 
+    expense of return generation. The resulting portfolios will thus lie 
+    below the unconstrained efficient frontier.
 
 }
 
@@ -126,8 +131,12 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
+   
+## portfolioSpec -
    # Specification:
    Spec = portfolioSpec() 
+   
+## portfolioConstraints -
    # Portfolio Constraints:
    Constraints = "minW[1:4]"
    portfolioConstraints(Data, Spec, Constraints)

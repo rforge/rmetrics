@@ -1,22 +1,22 @@
-\name{solveRshortExact}
+\name{solveRsocp}
 
 
-\alias{solveRshortExact}
+\alias{solveRsocp}
 
 
-\title{Exat unlimit Short Selling Solver}
+\title{Second Order Cone Programming Solver}
 
 
 \description{
 
-    Optimizes an unlimited short selling portfolio 
-    analytically.
+    Optimizes a portfolio using a second order cone 
+    programming solver.
 
 }
 
 
 \usage{
-solveRshortExact(data, spec, constraints)
+solveRsocp(data, spec, constraints)
 }
 
 
@@ -49,7 +49,7 @@ solveRshortExact(data, spec, constraints)
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## solveShortExact - 
+## solveRsocp - 
    # ...
 }
 

@@ -6,13 +6,13 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA  02111-1307  USA
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA 02111-1307 USA
 
 # Copyrights (C)
 # for this R-port: 
@@ -24,31 +24,30 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:                    DESCRIPTION: 
+#  solveRsocp                   Seconde order cone programming solver
 ################################################################################
 
 
-test.weightsPie <-  
-    function()
-{  
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+solveRsocp <- 
+    function(data, spec, constraints)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Solves by second order cone programming
     
-    # Specification:
-    spec = portfolioSpec()
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
-    # Constraints:
-    constraints = "LongOnly"
+    # FUNCTION:
     
-    # Portfolio:
-    portfolio = portfolioFrontier(data, spec, constraints)
-    portfolio
-    
-    # Plot:
-    
+    stop("Not yet implemented")
+
     # Return Value:
-    return()
+    NA
 }
 
 

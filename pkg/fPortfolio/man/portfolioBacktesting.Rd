@@ -19,9 +19,9 @@
     
 
 \usage{  
-portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL, 
-    portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m", 
-    trace = TRUE)
+portfolioBacktesting(formula, data, spec = portfolioSpec(), 
+    constraints = "LongOnly", portfolio = "minvariancePortfolio", 
+    horizon = "12m", smoothing = "6m", trace = TRUE)
 
 \method{print}{portfolioBacktest}(x, \dots)    
 \method{plot}{portfolioBacktest}(x, which = "all", labels = TRUE, \dots)
@@ -29,14 +29,12 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
 }
 
 
-
 \arguments{
 
 
     \item{constraints}{
-        a character string vector, containing the constraints of the form\cr
-        \code{"minW[asset]=percentage"} for box constraints resp. \cr
-        \code{"maxsumW[assets]=percentage"} for sector constraints.
+        a character string value or vector defining the constraints, for
+        details we refer to \code{portfolioConstraints}.
         }    
     \item{data}{
         an object of class \code{timeSeries}.

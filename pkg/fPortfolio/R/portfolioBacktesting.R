@@ -32,7 +32,7 @@
 
 
 portfolioBacktesting <-
-    function(formula, data, spec = portfolioSpec(), constraints = NULL,
+    function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
     trace = TRUE)
 {
