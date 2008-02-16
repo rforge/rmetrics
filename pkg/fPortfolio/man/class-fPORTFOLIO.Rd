@@ -3,9 +3,6 @@
 
 \alias{fPORTFOLIO}
 \alias{fPORTFOLIO-class}
-
-\alias{show.fPORTFOLIO}
-\alias{show,fPORTFOLIO-method}
    
 \alias{plot.fPORTFOLIO}
 \alias{summary.fPORTFOLIO}
@@ -28,13 +25,10 @@
     
 
 \usage{
-show.fPORTFOLIO(object)
-
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
 
 \method{summary}{fPORTFOLIO}(object, \dots)
 }
-
 
 
 \arguments{

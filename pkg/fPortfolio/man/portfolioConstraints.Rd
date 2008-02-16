@@ -9,17 +9,8 @@
 
 \description{
   
-    A collection and description of functions, which 
-    allow to set, manipulate and/or view portfolio 
-    constraints. Type of constraints include box/group 
-    constraints of weights, and covariance risk-budget 
-    constraints.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{portfolioConstraints} \tab Checks portfolio constraints for consistency. }
+    Computes portfolio constraints given by a constraints
+    string.
     
 }    
 

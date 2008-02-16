@@ -12,8 +12,9 @@
 
 \description{
 
-    The Rmetrics fPortfolio package is a very powerful collection
-    of functions to optimize portfolios and to to analyze their risk.
+    The Rmetrics "fPortfolio" package is a very powerful collection
+    of functions to optimize portfolios and to analyze them from
+    different points ov view.
     
     The implemented portfolio models include the traditional 
     mean--variance Markowitz portfolio, robust variants of
@@ -29,10 +30,11 @@
     Depending on the model of the portfolio and the constraints
     powerful solvers are used for optimization including a linear
     programming solver, a quadratic programming solver, a 
-    sequential quadratic programming, and a second order programming
-    solver.
+    sequential quadratic programming solver, and a second order 
+    programming solver.
     
-    Several Charts can be produced using powerful graphics tools. 
+    Several kinds of charts can be produced using powerful graphics 
+    tools to visualize the results. 
 
 }
 
@@ -54,270 +56,298 @@
 
 \section{Overview:}{
 
-    ...
+    The following chapters give a brief introduction how to optimize
+    and analyze portfolios.
+    
+    Table of Content:
+    \tabular{rl}{
+        1. \tab How to Specify a Portfolio ?\cr
+        2. \tab How to Prepare the Data Input ?\cr
+        3. \tab How to Define Portfolio Constraints ?\cr
+        4. \tab How to Optimize a Portfolio ?\cr
+        5. \tab How to Display an Optimized Portfolio ?\cr
+        6. \tab How to compute the efficient frontier ?
+    }
     
 }
 
    
-\section{fPFOLIOSPEC: Portfolio Specification Class}{
+\section{1. How to Specify a Portfolio?}{
 
-    To optimize a portfolio of assets we first have to specify it. 
-    
-    \code{fPFOLIOSPEC}
-    
-        The portfolio specification is represented by a S4 object of class
-        \code{fPFOLIOSPEC}.
+    To optimize a portfolio of assets we first have to specify it. All
+    settings which specify a portfolio of assets are respresented by a
+    S4 object of \code{\link{class-fPFOLIOSPEC}}:
         
-        \preformatted{
-        setClass("fPFOLIOSPEC", 
-          representation(
-            model = "list",
-            portfolio = "list",
-            optim = "list") )
-        }
-        
-        The first slot \code{@model} holds the model information, the second
-        slot \code{@portfolio} the portfolio information, and the last slot
-        \code{optim} the information about the solver used for optimization.
-        
-        The default settings are as follows:
-        
-        \preformatted{
-        model = list(
-            type = "MV",    
-            estimator = "covEstimator",     
-            tailRisk = list(),               
-            params = list(a=2, targetAlpha=0.05)),
-        portfolio = list(
-            weights = NULL, 
-            targetReturn = NULL, 
-            targetRisk = NULL,
-            riskFreeRate = 0, 
-            nFrontierPoints = 50,
-            status = NA),
-        optim = list(
-            solver = NULL,         
-            trace = FALSE)
-        }
-        
-        
-        The list entry \code{type} from the \code{@model} slot describes 
-        the type of the desired portfolio. The current implementation 
-        supports three type of portfolios. This may be 
-        a Markowitz mean-variance portfolio named \code{"MV"}, 
-        a mean - lower partial moment portfolio named \code{"LPM"}, or a 
-        mean - CVaR condititional value-at-risk portfolio named 
-        \code{"CVaR"}. Note, it is possible that an experienced user can
-        add his own portfolio models, so the validity of the input is not
-        spell checked.
-        Use the function \code{setType} to modify this selection.
-         
-        
-        The list entry \code{estimator} from the \code{@model} slot requests 
-        for a string that denotes the function name of the covariance 
-        estimator which should be used for the estimation of risk in 
-        Markowitz' mean-variance portfolio model. By default the function 
-        \code{covEstimator} is used which computes the standard column means 
-        of the multivariate assets data series and the standard covariance 
-        matrix. Alternative robust estimators include 
-            \code{covMcdEstimator}, 
-            \code{covOGKEstimator},
-            \code{mveEstimator},
-            \code{nnveEstimator}, or
-            \code{mcdEstimator}.
-        In addition a shrinkage covariance estimator named
-            \code{shrinkEstimator},
-        and a bagged covariance estimator named
-            \code{baggedEstimator} are also available.
-        Note the experienced user can add his own function to estimate in any
-        alternative way the mean and the covariance of the multivariate assets
-        data series. In this case he has to write a function, e.g. named
-            \code{myEstimator=function(x,spec=NULL,...)},
-        where \code{x} is a multivariate time series, \code{spec} optionally 
-        the portfolio specification, if rquired, and \code{...} additional
-        arguments passed to the users code. Note, \code{myEstimator} must
-        a return a named list, with at least the following two entries
-        \code{\$mu} and \code{\$Sigma}, which represent estimators for the
-        mean and covariance, respectively. The LPM portfolio is just a
-        Markowitz mean-variance portfolio with a modified covariance 
-        estimator. In this case the setting of the \code{@model\$type} 
-        changes the covariance estimator function name \code{"covEstimator"} 
-        or any other selection pfreviously made to the function automatically
-        to \code{"assetsLPM"} which returns the LPM mean and covariance 
-        estimates.   
-        Be aware, that the validity of the input name of the estimator
-        function is not spell checked.
-        Use the function \code{setEstimator} to modify this selection.
-         
-         
-        The list entry \code{tailRisk} from the \code{@model} slot is an empty 
-        list. It can be used to add tail risk budget constrains to the 
-        optimization. In this case a square matrix of the size of the 
-        number of assets is expected as list entry, which contains bivariate 
-        tail risk measures, i.e. the tail dependence coefficients estaimated 
-        via a copulae approach.   
-        Use the function \code{setType} to modify this selection.
-        
-        
-        The list entry \code{parameters} from the \code{@model} slot is a 
-        list with additional parameters used in different situations. It can 
-        be ebhanced by the user if needed. 
-        By default it contains the exponent \code{a=2}, the parameter needed 
-            for "LPM" portfolio optimization,
-        and it contains the \code{targetAlpha=0.05}, the confidence level
-            for "CVaR" portfolio optimization.
-        Use the function \code{setParams} to modify this selection.
-        
-        The values \code{weights}, \code{targetReturn}, and \code{targetRisk}
-        from the \code{portfolio} slot have to be considered in common. By
-        default all three are set to \code{NULL}. If this is the case, then 
-        it is assumed that an equal weight portfolio should be calculated.
-        If only one of the three values is different from \code{NULL} then
-        the following procedure will be startet. 
-        If the weights are specified then it is assumed that a feasible 
-            portfolio should be considered.
-        If the target return is fixed then it is assumed that the efficient 
-            portfolio with the minimal risk will be considered. 
-        And finally if the risk is fixed, then the return should be maximized.
-        Use the functions \code{setWeights}, \code{setTargetReturn}, and
-        \code{setTargetRisk} to modify this selection.Note, the change in of
-        the three functions will influence the settings of the other two.
-        
-        
-        The \code{riskFreeRate=0} is also stored in the \code{portfolio} slot.
-        Its value defaults to zero. It can be changed by the user.
-        Use the function \code{setRiskFreeRate} to modify this selection.
-        
-        
-        The number of frontier points reqauired by the calculation of
-        the \code{portfolioFrontier} is obtained from the value of
-        \code{nFrontierPoints=50} hold in the \code{portfolio} slot.
-        Its value defaults to 50. It can be changed by the user.
-        Use the function \code{setNFrontierPoints} to modify this selection.
-        
-        
-        The final \code{status} of portfolio optimization is returned 
-        and stored in the \code{portfolio} slot. Before optimization the
-        value is unset to \code{NA}, after optimization a value of 
-        \code{status=0} means a successful termination. For other
-        values we recommend to inspect the help page of the selected
-        solver, the name of the solver can be returned by the function
-        \code{getSolver}.
-        Use the function \code{setSolver} to reset the value to \code{NA}
-        if it should be required.
-        
-        The name of the default solver used for optimization can be retrieved
-        calling the function \code{getSolver}. The default value for the
-        value \code{solver} in the specification is set to \code{NULL} 
-        which means that the best solver availalbe will be autoselected 
-        and used. Before optimization the user can change the setting
-        to another solver. Be aware, that a possible personal change will 
-        be overwritten by the function \code{setType}, so call 
-        \code{setSolver} after setting the type of the portfolio.
-        
-        
-        The logical flag \code{trace} in the slot \code{optim} allows
-        to trace optionally the portfolio optimization process. By 
-        default this will not be the case since the default value is 
-        \code{trace=FALSE}. Use the fanction \code{setTrace} to modify
-        the selection.
-        
-                
-    \code{print}
-    
-    
-        There is a generic print function to print information from
-        specification. What is printed depends on the values of the
-        settings. For example \code{print(portfolioSpec())} returns
-        the type of portfolio, the name of the covariance estimator,
-        the portfolios risk free rate, and the desired solver.
-    
-    
-    \code{getSpec}
-    
-        The function \code{get} ...
-    
-    \code{setSpec}
-    
-        The function \code{get} ...
-    
-}
-
-
-
-\section{fPFOLIODATA: Portfolio Data and Statistics Class}{
-
-    \code{fPFOLIODATA}
-    
-    \code{portfolioData}
-    
-    \code{getData}
-    
-    
-}
-
-
-\section{fPFOLIOCON: Portfolio Constraints Class}{
-
-    \code{fPFOLIOCON}
-    
-    \code{portfolioConstraints}
-    
-    \code{setConstraints}
-    
-    \code{getConstraints}
-    
-    
-}
-
-
-\section{fPORTFOLIO: Portfolio Class}{
-
-    \code{fPORTFOLIO}
-    
-    \code{feasiblePortfolio}
-    
-    \code{print} method
-    
-}    
-    
-
-\section{Efficient Portfolios}{
-
-    
-    \code{efficientPortfolio}
-    
-    \code{minvariancePortfolio}
-    
-    \code{tangencyPortfolio}  
-    
-} 
-
-
-\section{Portfolio Frontier}{
-
-    
-    The function \code{portfolioFrontier} allows to compute points 
-    along the efficient frontier. The points cover the whole range
-    of feasible returns in equidistant steps. The number of steps 
-    is taken from the portfolio specification and can be changed by 
-    the user:
-    
     \preformatted{
-    > mySpec = portfolioSpec()
-    > getNFrontierPoints(mySpec)
-    [1] 50
-    > setNFrontierPoints(mySpec) <- 25
+    setClass("fPFOLIOSPEC", 
+      representation(
+        model = "list",
+        portfolio = "list",
+        optim = "list") )
+    }
+        
+    An object of class \code{fPFOLIOSPEC} has three slots, named
+    \code{@model}, \@code{portfolio}, and \code{@optim}
+    The first slot \code{@model} holds the model information, the second
+    slot \code{@portfolio} the portfolio information, and the last slot
+    \code{@optim} the information about the solver used for optimization.
+    The default settings are as follows:
+        
+    \preformatted{
+    model = list(
+        type = "MV",
+        optimize = "minRisk",   
+        estimator = "covEstimator",     
+        tailRisk = list(),               
+        params = list(alpha=0.05, a=2)),
+    portfolio = list(
+        weights = NULL, 
+        targetReturn = NULL, 
+        targetRisk = NULL,
+        riskFreeRate = 0, 
+        nFrontierPoints = 50,
+        status = NA),
+    optim = list(
+        solver = NULL,         
+        trace = FALSE)
     }
     
-    The returned value from the function \code{portfolioFrontier} is
-    an S4 object class \code{fPORTFOLIO}. 
+    To retrieve or modify portfolio specifications several 
+    \code{\link{getSpec}} and \code{\link{setSpec}} function are
+    available. To set a portfolio specification from scratch
+    one can also use the function \code{\link{portfolioSpec}}.
+    
+    Note, there is a generic print function to print information from
+    portfolio specifications. For example \code{print(portfolioSpec()}
+    prints the default portfolio specification.
     
 }
 
 
-\section{Plotting a Portfolio}{
+\section{2. How to Prepare the Data Input ?}{
 
+    
+    To optimize a portfolio or to compute the efficient frontier of
+    a portfolio the assets which compose the portfolio must be available
+    as a set of multivariate time series. These must be available in
+    form of an S4 object of class \code{"timeSeries"}, the preferred
+    time series representation in Rmetrics.
+       
+    Internally, the portfolio functions use the \code{\link{portfolioData}}
+    function to generate an S4 object of \code{class-fPFOLIODATA}:
+    
+    \preformatted{
+    setClass("fPFOLIODATA", 
+      representation(
+        data = "list",
+        statistics = "list",
+        tailRisk = "list")  
+    }
+    
+    An object of class \code{fPFOLIODATA} has three slots repfresented
+    by lists, named \code{@data}, \@code{@statistics}, and \code{@tailrisk}.
+    The first slot \code{@data} holds the data information, the second
+    slot \code{@statistics} the estimated mean and covariance together
+    with optional robust estimates, and the last slot \code{@tailRisk} 
+    optional information if we include copulae tail risk baskets into
+    portfolio optimization.
+    
+    The function 
+    
+    \preformatted{
+    portfolioData(data, spec = portfolioSpec())
+    }
+    
+    creates an S4 object of class \code{fPFOLIODATA} using the
+    portfolio specification to get the required information how to
+    estimate mean and covariance matrix of the assets. 
+    
+    To retrieve information about the portfolios data set of assets
+    several \code{\link{getData}} functions are available.
+    
+    Note, there is a generic print function to print information from
+    a portfolio data object.
+    
+}
+
+
+\section{3. How to Define Portfolio Constraints ?}{
+
+    Portfolio optimization functions expect information about the
+    constraints. These may be either box constraints, group constraints,
+    covariance risk budget constraints or copulae tail risk budgets. 
+    In addition \code{"LongOnly"} constraints generate box constraints
+    for all weights ranging between zero and one, \code{"Short"}
+    constraints allow for unlimited short selling.
+    
+    Weight constrained portfolios may be specified by a vector of
+    character strings which describe executable code, setting values to
+    vectors \code{minW}, \code{maxW}, \code{minsumW}, and \code{maxsumW}.
+    The individual string elements of such vectors have the following 
+    form for box and group constraints
+    
+    \description{
+        \item{box constraints}{
+            \code{"minW[Asset(s)]=Value(s)"}, and/or \cr
+            \code{"maxW[Asset(s)]=Value(s)"}.
+        }
+        \item{group constraints}{
+            \code{"minsumW[Asset(s)]=Value(s)"}, and/or \cr
+            \code{"maxsumW[Asset(s)]=Value(s)"}. 
+        }
+    }
+    
+    \code{Asset(s)} is an index of one or more assets, and \code{Value(s)} 
+    a numeric value or vector assigning the desired value. 
+    By default, risk budgets are not included in the portfolio optimization.
+    Covariance risk budget constraints have to be added explicitely, and 
+    have the following form:
+    
+    \describe{
+        \item{box constraints}{
+            \code{"minB[Asset(s)]=Value(s)"}, and/or \cr
+            \code{"minB[Asset(s)]=Value(s)"}.
+        }
+    }
+    
+    Again, \code{Asset(s)} is an index of one or more assets, and 
+    \code{Value(s)} a numeric value or vector with numbers ranging between 
+    zero and one, assigning the desired risk budgets. 
+    %Copulae tail risk budget constraints have the same notation, but now 
+    %\code{"minB"} and \code{"maxB"} replaced by \code{"minT"} and \code{"maxT"}.
+    
+    Internally, the portfolio functions use the 
+    \code{\link{portfolioConstraints}} function to generate an S4 object 
+    of \code{class-fPFOLIOCON}:
+    
+    \preformatted{
+    setClass("fPFOLIOCON", 
+      representation(
+        stringConstraints = "character",
+        boxgroupConstraints = "matrix",
+        riskbudgetConstraints = "matrix")  
+    }
+    
+    An object of class \code{fPFOLIOCON} has three slots represented
+    by lists, named \code{@stringConstraints}, \@code{@boxgroupConstraints}, 
+    and \code{@riskbudgetConstraints}.
+    The first slot \code{@stringConstraints} holds the constraints 
+    information given by the string specification, the second
+    slot \code{@boxgroupConstraints} holds the box and group constraints
+    in form of a matrix, and the last slot \code{@riskbudgetConstraints} 
+    holds the covariance risk budget constraint also in form of a numerical
+    matrix.
+    
+    The function which returns the constraints as an S4 object
+    
+    \preformatted{
+    portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+    }
+    
+    requires as input the portfolio data set, the portfolio specification, 
+    and the string of constraints. 
+    
+    To retrieve information about the portfolios constraints use the
+    function \code{\link{getConstraints}}.
+    
+    Note, there is a generic print function to print information from
+    a portfolio data object.
+    
+}
+
+
+\section{4. How to Compute and Optimize Portfolios ?}{
+
+    Rmetrics offers several functions to compute and optimize portfolios.
+    These include the functions
+    
+    \tabular{rl}{
+        1. \tab \code{feasiblePortfolio(data, spec, constraints)}\cr
+        2. \tab \code{efficientPortfolio(data, spec, constraints)}\cr
+        3. \tab \code{tangencyPortfolio(data, spec, constraints)}\cr
+        4. \tab \code{minvariancePortfolio(data, spec, constraints)}\cr
+        5. \tab \code{portfolioFrontier(data, spec, constraints)}
+    }
+    
+    For all functions the user has to specifiy the \code{data} as an 
+    S4 object of class \cpde{"timeSeries"}, \data{spec=portfolioSpec()}, 
+    and \code{constraints="LongOnly" have default values.
+
+    The portfolio functions return an S4 object of \code{class-fPORTFOLIO} 
+    which is represented by the following slots:
+    
+    \preformatted{
+    setClass("fPFOLIOCON", 
+      representation(
+        representation(
+        call = "call",
+        data = "list",
+        spec = "list",
+        constraints = "character",
+        portfolio = "list",
+        title = "character",
+        description = "character")  
+    }
+    
+    To retrieve information from a portfolio object use one of the
+    extractor function, see \code{\link{getPortfolio}}. 
+    
+    Note, there is a generic print function to print information 
+    from a portfolio data object and a plot function to display
+    charts.
+    
+    The computation of a \code{feasiblePortfolio} doesn't require portfolio 
+    optimization at all. Given the weights through portfolio
+    specifiaction, use \code{setWeights}, the function 
+    \code{\link{feasiblePortfolio}} directly computes the target return 
+    and the target risk. The results are returned as an S4 object of
+    class \code{"fPortfolio"}.
+    
+    The optimization of an efficient portfolio is done by the function
+    \code{efficientPortfolio}. By default a mean--variance Markowitz
+    optimization is performed with "LongOnly". If neither the target
+    return is specified by the function \code{setTargetReturn} nor the
+    risk is pecified by the function \code{setTargetRisk}, then the
+    results for the tangency portfolio with given risk free rate, will
+    be returned.
+    
+    The \code{\linlk{tangenyPortfolio}} and \code{link\{minvariancePortfolio}} 
+    are two special effieint portfolios, the first yields the tangency
+    point on the efficient frontier with respect to the rosk free rate,
+    and the second the point on the efficient frontier with the lowest
+    risk
+        
+    The function \code{portfolioFrontier} allows to compute points 
+    along the efficient frontier, use \code{\link{setNFrontierPoints}}
+    to modify the default value of 50. The points cover the whole range
+    of feasible points on the efficient frontier with returns in equidistant 
+    steps. 
+    
+    The solver used for portfolio optimization is selected automatically,
+    but can also chosen by the experienced user. It is in the responsibility 
+    of the user that he select a solver which is not in conflict with
+    the specified portfolio model. Provided interfaces and solvers are:
+   
+
+    \tabular{ll}{
+        \code{\link{solveShortExact} \tab for unlimited short selling, \cr
+        \code{solveRquadprog} \tab for quadratic objective with linear constraints, \cr
+        \code{solveRlpSolve} \tab for linear objective with linear constraints, \cr
+        \code{solveRsocp} \tab linear objective with linear/quadratic constraints, \cr
+        \code{solveRdonlp2} \tab Non-linear objective with non-linear constraints.
+    }
+       
+}
+
+
+\section{How to Display an Optimized Portfolio ?}{
+
+    There exist several plots to display the results of an optimized
+    portfolio or to display the portfolio frontier.
+    
+    For an individual portfolio ...
+    
+    For the efficient frontier ...
     
     \code{frontierPlot}
     
@@ -334,27 +364,17 @@
 }
 
 
-\section{Portfolio Optimization: The Solvers}{
 
-    \code{solveShortExact}\cr
-    Unlimited short selling
+\section{How to Backtest a Rolling Portfolio ?}{
+
+    \code{rollingPortfolio}
     
-    \code{solveRquadprog}\cr
-    Quadratic objective with linear constraints
-    
-    \code{solveRlpSolve}\cr
-    Linear objective with linear constraints 
-    
-    \code{solveRsocp}\cr
-    Linear objective with linear/quadratic constraints
-    
-    \code{solveRdonlp2}\cr
-    Non-linear objective with non-linear constraints
+    \code{portfolioBacktesting}
     
 }
 
 
-\section{Rolling Portfolio and Backtesting}{
+\section{How to Define a Portfolio Strategy ?}{
 
     \code{rollingPortfolio}
     
@@ -362,6 +382,32 @@
     
 }
    
+
+\note{
+
+    With Rmetrics version 2.7.0 the function \code{cmlPortfolio}
+    has been deprecated. Setting the risk free rate, sing the 
+    function \code{\link{setRiskFreeRate}} as before and calling 
+    the function \code{\link{tangencyPortfolio}} will yield the same
+    results.
+    
+    The following functions and group of functions have been moved 
+    to the \code{fAssets} package, since they rather deal with multivariate
+    assets data and not with portfolios. \code{\link{covEllipsesPlot}},
+    \code{\link{VarModelling}}.
+    
+    The function \code{maxxdd} which computes the theoretical density
+    of drawdowns for random walks has been moved to the \code{fBasics}
+    package which covers the field of distributions.
+    
+    The packages \code{Rdonlp2} with the non-linear programming solver
+    and \code{Rsocp} swith the second order cone programming solver
+    are suggested packages. The first can be downloaded from the website 
+    \url{http://arumat.net/Rdonlp2/} or from the Rmetrics repository,
+    for the second package please contact \emph{wuertz@phys.ethz.ch}.
+    
+}
+    
 
 \keyword{models}
 

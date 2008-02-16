@@ -4,7 +4,7 @@
 \alias{socp}
 
 
-\title{socp}
+\title{Second Order Cone Programming Solver}
 
 
 \description{

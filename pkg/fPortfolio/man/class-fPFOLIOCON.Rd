@@ -37,7 +37,17 @@ show.fPFOLIOCON(object)
 
 
 \examples{
-## ...
+## getClass-
+   getClass("fPFOLIOCON")
+   
+## getSlots - 
+   getSlots("fPFOLIOCON")   
+    
+## data -
+   data = as.timeSeries(data(smallcap.ts))
+
+## portfolioConstraints -
+   portfolioConstraints(data, portfolioSpec(), "LongOnly")
 }
 
 

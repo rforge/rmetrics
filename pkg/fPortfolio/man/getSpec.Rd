@@ -1,6 +1,8 @@
 \name{getSpec}
 
 
+%%\alias{getSpec} %%conflicts with getDefault
+
 \alias{getModel.fPFOLIOSPEC}
 \alias{getType.fPFOLIOSPEC}  
 \alias{getOptimize.fPFOLIOSPEC}        
@@ -36,7 +38,7 @@
     
     \tabular{ll}{
     \code{getType} \tab Extracts portfolio type from specification, \cr
-    \code{getType} \tab Extracts what to optimize from specification, \cr
+    \code{getOptimize} \tab Extracts what to optimize from specification, \cr
     \code{getEstimator} \tab Extracts type of covariance estimator, \cr
     \code{getTailRisk} \tab Extracts list of tail dependency risk matrixes, \cr
     \code{getParams} \tab Extracts parameters from specification, \cr
