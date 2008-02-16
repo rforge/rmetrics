@@ -262,16 +262,16 @@
     These include the functions
     
     \tabular{rl}{
-        1. \tab \code{feasiblePortfolio(data, spec, constraints)}\cr
-        2. \tab \code{efficientPortfolio(data, spec, constraints)}\cr
-        3. \tab \code{tangencyPortfolio(data, spec, constraints)}\cr
-        4. \tab \code{minvariancePortfolio(data, spec, constraints)}\cr
+        1. \tab \code{feasiblePortfolio(data, spec, constraints)} \cr
+        2. \tab \code{efficientPortfolio(data, spec, constraints)} \cr
+        3. \tab \code{tangencyPortfolio(data, spec, constraints)} \cr
+        4. \tab \code{minvariancePortfolio(data, spec, constraints)} \cr
         5. \tab \code{portfolioFrontier(data, spec, constraints)}
     }
     
     For all functions the user has to specifiy the \code{data} as an 
-    S4 object of class \cpde{"timeSeries"}, \data{spec=portfolioSpec()}, 
-    and \code{constraints="LongOnly" have default values.
+    S4 object of class \code{timeSeries}, \code{spec=portfolioSpec()}, 
+    and \code{constraints="LongOnly"} have default values.
 
     The portfolio functions return an S4 object of \code{class-fPORTFOLIO} 
     which is represented by the following slots:
@@ -296,12 +296,12 @@
     from a portfolio data object and a plot function to display
     charts.
     
-    The computation of a \code{feasiblePortfolio} doesn't require portfolio 
-    optimization at all. Given the weights through portfolio
+    The computation of a \code{\link{feasiblePortfolio}} doesn't require 
+    portfolio optimization at all. Given the weights through portfolio
     specifiaction, use \code{setWeights}, the function 
     \code{\link{feasiblePortfolio}} directly computes the target return 
     and the target risk. The results are returned as an S4 object of
-    class \code{"fPortfolio"}.
+    class \code{fPortfolio}.
     
     The optimization of an efficient portfolio is done by the function
     \code{efficientPortfolio}. By default a mean--variance Markowitz

@@ -2,6 +2,8 @@
 
 
 \alias{fPFOLIODATA}
+\alias{class-fPFOLIODATA}
+
 \alias{fPFOLIODATA-class}
 
 \alias{show.fPFOLIODATA}

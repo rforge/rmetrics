@@ -2,6 +2,8 @@
 
 
 \alias{fPFOLIOSPEC}
+\alias{class-fPFOLIOSPEC}
+
 \alias{fPFOLIOSPEC-class}
 \alias{fPfoliospec}
 

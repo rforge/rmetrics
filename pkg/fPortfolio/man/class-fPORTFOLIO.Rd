@@ -2,6 +2,7 @@
 
 
 \alias{fPORTFOLIO}
+\alias{class-fPORTFOLIO}
 \alias{fPORTFOLIO-class}
    
 \alias{plot.fPORTFOLIO}

@@ -2,6 +2,8 @@
 
 
 \alias{fPFOLIOCON}
+\alias{class-fPFOLIOCON}
+
 \alias{fPFOLIOCON-class}
 
 \alias{show.fPFOLIOCON}
