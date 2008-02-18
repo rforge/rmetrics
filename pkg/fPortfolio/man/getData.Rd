@@ -80,7 +80,7 @@
 
    # Load time series data:
    data = as.timeSeries(data(smallcap.ts))
-   data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
    data
    
    # Create portfolio data object:
