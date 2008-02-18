@@ -310,10 +310,10 @@ portfolioSpec(
    getRiskFreeRate(spec) 
    spec
    
-## getRiskFreeRate -
+## setRiskFreeRate -
    # Modify Risk Free Rate
-   getRiskFreeRate(spec) <- 2.5
-   spec
+   setRiskFreeRate(spec) <- 2.5
+
 }
 
 
