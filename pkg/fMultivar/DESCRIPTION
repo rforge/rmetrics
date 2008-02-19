@@ -3,7 +3,7 @@ Version: 270.73
 Date: 1997 - 2008
 Title: Rmetrics - Multivariate Market Analysis
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, sn, mnormt, fBasics
+Depends: R (>= 2.4.0), methods, sn, fBasics
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
