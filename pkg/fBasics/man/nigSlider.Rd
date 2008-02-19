@@ -33,9 +33,7 @@ nigSlider()
 
 \examples{   
 ## nigSlider -
-   \dontRun{
-   nigSlider()
-   }
+   # nigSlider()
 }
 
 

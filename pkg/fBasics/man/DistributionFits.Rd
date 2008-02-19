@@ -64,7 +64,7 @@ show.fDISTFIT(object)
 
 \arguments{
   
-    \item{alpha, beta, gamma, delta, mu, lambda, nu}{
+    \item{alpha, beta, gamma, delta, mu}{
         [stable] - \cr
         The parameters are \code{alpha}, \code{beta}, \code{gamma}, 
         and \code{delta}:\cr
@@ -74,15 +74,14 @@ show.fDISTFIT(object)
         shift parameter \code{delta}.
         \cr
         [hyp] - \cr
-        The parameters are \code{alpha}, \code{beta}, \code{delta}, 
-        \code{mu}, and and \code{lambda}:\cr
+        The parameters are \code{alpha}, \code{beta}, \code{delta}, and
+        \code{mu}:\cr
         shape parameter \code{alpha};
         skewness parameter \code{beta}, \code{abs(beta)} is in the 
         range (0, alpha);
         scale parameter \code{delta}, \code{delta} must be zero or 
         positive; 
-        location parameter \code{mu}, by default 0;
-        and lambda parameter \code{lambda}, by default 1.
+        location parameter \code{mu}, by default 0.
         These is the meaning of the parameters in the first 
         parameterization \code{pm=1} which is the default 
         parameterization selection.
@@ -95,6 +94,7 @@ show.fDISTFIT(object)
         In the fourth parameterization, \code{pm=4} \code{alpha}
         and \code{beta} take the meaning of the shape parameters
         (usually named) \code{a.bar} and \code{b.bar}.
+        }
     \item{description}{
         a character string which allows for a brief description.
         }

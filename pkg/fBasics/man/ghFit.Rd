@@ -27,7 +27,7 @@ ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
     \item{x}{
         a numeric vector. 
         }
-    \item{alpha, beta, gamma, delta, mu, lambda}{
+    \item{alpha, beta, delta, mu, lambda}{
         The parameters are \code{alpha}, \code{beta}, \code{delta}, 
         \code{mu}, and and \code{lambda}:\cr
         shape parameter \code{alpha};

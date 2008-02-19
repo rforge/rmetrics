@@ -141,7 +141,7 @@ Lehmann E.L. (1986);
 ## correlationTest - 
    correlationTest(x, y, "pearson")
    correlationTest(x, y, "kendall")
-   correlationTest(x, y, "tau")
+   correlationTest(x, y, "spearman")
 }
 
 

@@ -99,6 +99,8 @@ ks2Test(x, y, title = NULL, description = NULL)
     distribution, not necessarily a normal distribution. That means that 
     it is not specified what that common distribution is. 
 
+}
+
 
 \references{
 

@@ -30,7 +30,7 @@ ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10,
     \item{x}{
         a numeric vector. 
         }
-    \item{beta, gamma, delta, mu}{
+    \item{beta, delta, mu}{
         The parameters are \code{beta}, \code{delta}, and \code{mu}:\cr
         skewness parameter \code{beta} is in the range (0, alpha);
         scale parameter \code{delta} must be zero or positive; 
@@ -127,13 +127,7 @@ ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10,
 
 \examples{    
 ## ghtFit -
-   # Simulate random variates:
-   set.seed(1953)
-   s = rght(n = 1000, beta = 0.3, delta = 0.5, mu = -1.0, nu = 5) 
-
-## ghtFit -  
-   # Fit Parameters:
-   ghtFit(s, mu = mean(s), doplot = TRUE) 
+   # ...
 }
 
 

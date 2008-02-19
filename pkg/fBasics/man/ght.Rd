@@ -48,6 +48,9 @@ qght(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
     \item{x, q}{
         a numeric vector of quantiles.
         }
+    \item{\dots}{
+        arguments to be passed.
+        }
     
 }
 
