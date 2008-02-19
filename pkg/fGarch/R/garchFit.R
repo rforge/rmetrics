@@ -90,10 +90,10 @@ garchFit <-
     delta = 2, skew = 1, shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"),
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-        include.shape = NULL, leverage = NULL,
+    include.shape = NULL, leverage = NULL,
     trace = TRUE,
     algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("cda", "fda"),
+    hessian = c("fcd", "rcd"),
     control = list(),
     title = NULL, description = NULL, ...)
 {
@@ -126,8 +126,9 @@ garchFit <-
 
     # Match arguments:
     init.rec = match.arg(init.rec)
+    cond.dist = match.arg(cond.dist)
     hessian = match.arg(hessian)
-    algorithm = algorithm[1]
+    algorithm = match.arg(algorithm)
 
     # Call:
     CALL = match.call()
@@ -1207,11 +1208,15 @@ garchFit <-
 
 
     # Compute the Hessian:
-    if (hessian == "cda") {
+    if (hessian == "fcd") {
         fit$hessian = .garchFCDAHessian(
             par = fit$par, .params = .params, .series = .series)
             titleHessian = "Central"
-    } else if (hessian == "fda") {
+    } else if (hessian == "rcd") {
+        fit$hessian = .garchRCDAHessian(
+            par = fit$par, .params = .params, .series = .series)
+            titleHessian = "Central"
+    } else if (hessian == "ffd") {
         fit$hessian = .garchFFDAHessian(
             par = fit$par, .params = .params, .series = .series)
             titleHessian = "Forward"
