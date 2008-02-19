@@ -5,39 +5,46 @@
 
 
 \alias{[.timeSeries} 
+\alias{[<-.timeSeries}
 \alias{cut.timeSeries} 
 \alias{window.timeSeries}
 \alias{head.timeSeries}
 \alias{tail.timeSeries}
 \alias{outlier.timeSeries}
-  
+
 
 \title{timeSeries Subsetting}
 
 
 \description{
-    
-    A collection and description of functions 
-    and methods for subsetting timeSeries objects.         
-    \cr
-
-    \tabular{ll}{
-    \code{"["} \tab "[" method for a 'timeSeries' object, \cr
+  
+  A collection and description of functions 
+  and methods for subsetting timeSeries objects.         
+  \cr
+  
+  \tabular{ll}{
+    \code{[} \tab "[" method for a 'timeSeries' object, \cr
+    \code{[<-} \tab "[<-" method to assign value for a subset of a
+    'timeSeries' object, \cr
     \code{window} \tab Windows a piece from a 'timeSeries' object, \cr
     \code{cut} \tab A no longer used synonyme for window, \cr
     \code{head} \tab Returns the head of a 'timeSeries' object, \cr
     \code{tail} \tab Returns the tail of a 'timeSeries' object, \cr
     \code{outliers} \tab Removes outliers from a 'timeSeries' object. }
-   
+  
 }
 
 
 \usage{
-\method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
-    j = min(1, ncol(x@Data)):ncol(x@Data))
+
+\method{[}{timeSeries}(x, i, j)
+\method{[}{timeSeries}(x, i, j) <- value
+
 \method{window}{timeSeries}(x, from, to, \dots)
+
 \method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 \method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
+
 \method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
 
 \method{cut}{timeSeries}(x, from, to, \dots)
@@ -76,6 +83,10 @@
         times the standard deviation will be removed from
         the series.
         }
+      \item{value}{
+        a numeric value to use as a replacement. It will be repeated a
+        whole number of times if necessary. 
+     }
      \item{x}{
         an object of class \code{timeSeries}.
         }
