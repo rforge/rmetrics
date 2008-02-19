@@ -30,6 +30,7 @@
 ################################################################################
 # METHOD:                   SUBSETTING METHODS ON DATA:
 #  [.timeSeries              Subsets of a 'timeSeries' object
+#  [<-.timeSeries            Assign value to subsets of a 'timeSeries' object
 #  cut.timeSeries            Cuts a block from a 'timeSeries' object
 #  windows.timeSeries        Windows a piece from a 'timeSeries' object.
 #  head.timeSeries           Returns the head of a 'timeSeries' object
@@ -38,10 +39,10 @@
 ################################################################################
 
 
-"[.timeSeries" =
-    function(x, i = min(1, nrow(x@Data)):nrow(x@Data),
-j = min(1, ncol(x@Data)):ncol(x@Data))
+"[.timeSeries" <-
+    function(x, i , j)
 {   # A function implemented by Diethelm Wuertz
+    # Modified by Yohan Chalabi
 
     # Description:
     #   Extracts or replaces subsets from 'timeSeries' objects
@@ -93,9 +94,45 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     x
 }
 
-
 # ------------------------------------------------------------------------------
 
+"[<-.timeSeries" <-
+    function(x, i, j, value)
+{   # A function implemented by Yohan Chalabi
+
+    # Description:
+    #   assign subsets of 'timeSeries' objects
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   i, j - subset indexes.
+    #   value - value to be assign
+
+    # Value:
+    #   Returns an object 'timeSeries' with the new value assigned.
+
+    # FUNCTION:
+
+    # Subsets:
+    if(missing(i)) { i <- min(1, nrow(x@Data)):nrow(x@Data) }
+    if(missing(j)) { j <- min(1, ncol(x@Data)):ncol(x@Data) }
+
+    if (is.timeSeries(i) && is.logical(i@Data))
+        i <- as.matrix(i@Data)
+
+    if (!is.numeric(i) && !is.logical(i))
+        i <- as.character(i)
+
+    if (NCOL(i) == 1)
+        x@Data[i,j] <- value
+    else
+        x@Data[i] <- value
+
+    # Return Value:
+    x
+}
+
+# ------------------------------------------------------------------------------
 
 cut.timeSeries =
 function (x, from, to, ...)
