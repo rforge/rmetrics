@@ -148,13 +148,6 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{   
 ## data - 
    # require(MASS)

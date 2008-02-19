@@ -60,13 +60,6 @@ boxPercentilePlot(x, col = "steelblue", title = TRUE, \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## boxplot -
 }

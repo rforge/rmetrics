@@ -52,13 +52,6 @@ basicStats(x, ci = 0.95)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## basicStats -
    # Simulated Monthly Return Data:

@@ -90,6 +90,35 @@ drawdownPlot(x, labels = TRUE, type = "l", col = "steelblue",
 }
 
 
+\details{
+
+    The plot functions can be used to plot univariate and multivariate
+    time series of class \code{timeSeries}.
+    
+    The graphical parameters \code{type} and \code{col} can be set by the
+    values specified through the argument list. In the case of multivariate
+    time series \code{col} can be specified by the values returned by
+    a color palette.
+    
+    Automated titles including main title, x- and y-lables, grid lines,
+    box style and rug represenatations cann be selected by setting these
+    arguments to \code{TRUE} which is the default. If the title flag
+    is unset, then the main title, x-, and y-labels are empty strings.
+    This allows to set user defined labels with the function \code{title}
+    after the plot is drawn.
+    
+    Beside \code{type}, \code{col}, \code{main}, \code{xlab} and 
+    \code{ylab}, all other \code{par} arguments can be passed to the
+    \code{plot} function.
+    
+    If the \code{labels} flag is unset to \code{FALSE}, then no decorations 
+    will be added tothe  plot, and the plot can be fully decorated by the
+    user.
+    
+} 
+    
+
+
 \value{
     
     displays a time series plot.
@@ -97,15 +126,8 @@ drawdownPlot(x, labels = TRUE, type = "l", col = "steelblue",
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
-## basicStats -
+## seriesPlot -
    tS = as.timeSeries(data(LPP2005REC))
    seriesPlot(tS)
 }

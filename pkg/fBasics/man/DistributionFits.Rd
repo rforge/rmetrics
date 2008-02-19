@@ -13,10 +13,8 @@
 
 \alias{stableFit}
 
-\alias{ghFit}
 \alias{hypFit}
 \alias{nigFit}
-\alias{ghtFit}
 \alias{print.fDISTFIT}
 
 \title{Parameter Fit of a Distribution}
@@ -38,10 +36,8 @@
     \code{nFit} \tab MLE parameter fit for a normal distribution, \cr
     \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
-    \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
     \code{hypFit} \tab MLE parameter fit for a hyperbolic distribution, \cr
-    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution, \cr 
-    \code{ghtFit} \tab MLE parameter fit for a skew Student-t GH distribution. }
+    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution. }
 
 }
 
@@ -55,16 +51,10 @@ stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
     type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
     description = NULL)
     
-ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
-    title = NULL, description = NULL, \dots) 
 hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
-    title = NULL, description = NULL, \dots) 
-ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
     
@@ -105,17 +95,10 @@ show.fDISTFIT(object)
         In the fourth parameterization, \code{pm=4} \code{alpha}
         and \code{beta} take the meaning of the shape parameters
         (usually named) \code{a.bar} and \code{b.bar}.
-        \cr
-        [ght] - \cr
-        The additional parameter \code{nu} defines the number of
-        degrees of freedom. Note, \code{alpha} takes the limit
-        of \code{abs(beta)}, and \code{lambda=-nu/2}.
-        }
     \item{description}{
         a character string which allows for a brief description.
         }
     \item{df}{
-        [tFit] - \cr
         the number of degrees of freedom for the Student distribution, 
         \code{df > 2}, maybe non-integer. By default a value of 4 is
         assumed.
@@ -125,7 +108,6 @@ show.fDISTFIT(object)
         an S4 class object as returned from the fitting functions.
         }
     \item{doplot}{
-        [tFit][hypFit][nigFit] - \cr
         a logical flag. Should a plot be displayed?
         }
     \item{scale}{
@@ -146,7 +128,6 @@ show.fDISTFIT(object)
         a character string which allows for a project title.
         }
     \item{trace}{
-        [*Fit] - \cr
         a logical flag. Should the parameter estimation process be
         traced?
         }
@@ -156,7 +137,6 @@ show.fDISTFIT(object)
         approach, or \code{"qm"}, McCulloch's quantile method.
         }
     \item{x}{
-        [*Fit] - \cr
         a numeric vector. 
         }
     \item{\dots}{
@@ -209,20 +189,10 @@ show.fDISTFIT(object)
 
 \details{
 
-    \bold{Maximum Likelihood Estimation:}
-    \cr
     The function \code{\link{nlm}} is used to minimize the "negative" 
     maximum log-likelihood function. \code{nlm} carries out a minimization 
     using a Newton-type algorithm.
-    \cr\cr
        
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

@@ -95,13 +95,6 @@ logDensityPlot(x, labels = TRUE, col = "steelblue", robust = TRUE,
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## histPlot
 }
