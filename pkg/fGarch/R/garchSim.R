@@ -97,7 +97,7 @@ garchSim <-
     # Expand to whole Sample:
     delta = model$delta
     z = c(rev(spec@presample[, 1]), z)
-    h = c(rev(spec@presample[, 2])^delta, rep(NA, times = n))
+    h = c(rev(spec@presample[, 2]), rep(NA, times = n))
     y = c(rev(spec@presample[, 3]), rep(NA, times = n))
     m = length(spec@presample[, 1])
     names(z) = names(h) = names(y) = NULL
