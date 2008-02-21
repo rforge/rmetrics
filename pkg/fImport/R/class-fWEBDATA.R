@@ -30,14 +30,12 @@
 ################################################################################
 # FUNCTION:             DESCRIPTION:
 #  fWEBDATA              Class Representation for WEB download
-#  show.fWEBDATA         S4 Show Method for WEB downloaded data
 ################################################################################
 
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
 #  fWEBDATA              Class Representation
-#  show.fWEBDATA         S4 Show Method
 
 
 setClass("fWEBDATA", 
@@ -48,43 +46,6 @@ setClass("fWEBDATA",
         title = "character",
         description = "character")  
 )
-
-
-# ------------------------------------------------------------------------------
-
-
-show.fWEBDATA <-  
-    function(object)
-{   
-    # A function implemented by Diethelm Wuertz
-    
-    # FUNCTION:
-       
-    # Unlike print the argument for show is 'object'.
-    x = object
-    
-    # Title:
-    cat("\nTitle:\n", object@title, "\n", sep = "")
-    
-    # Parameter:
-    cat("\nParameter:\n")
-    param = cbind(object@param)
-    colnames(param) = "Value:"
-    print(param, quotes = FALSE) 
-    
-    # Description:
-    cat("\nDescription:\n", object@description, sep = "")   
-    cat("\n\n")
-    
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fWEBDATA", show.fWEBDATA)
 
 
 ################################################################################
