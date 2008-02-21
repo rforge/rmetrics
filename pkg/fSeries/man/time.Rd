@@ -19,9 +19,8 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods extracting and modifying positions 
-    on 'timeSeries' objects.       
+    Functions and methods extracting and modifying positions 
+    of 'timeSeries' objects.       
     \cr
     
     The functions and methods for the Generation of 'timeSeries' Objects are:         
