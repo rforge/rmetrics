@@ -15,7 +15,7 @@
 
 \description{
     
-    Calculate financial returns from Prices or Indexes.
+    Compute financial returns from prices or indexes.
        
 }
 

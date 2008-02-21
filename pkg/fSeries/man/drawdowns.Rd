@@ -10,8 +10,8 @@
 
 \description{
     
-    Calculate series of drawdowns and compute
-    drawdown statisitcs.      
+    Compute series of drawdowns from financial returns 
+    and ccalculate drawdown statisitcs.      
     \cr
     
     The functions are:

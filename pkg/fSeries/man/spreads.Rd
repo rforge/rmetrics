@@ -13,7 +13,7 @@
 
 \description{
     
-    Calculate spreds and midquotes from price streams.
+    Compute spreads and midquotes from price streams.
        
 }
 

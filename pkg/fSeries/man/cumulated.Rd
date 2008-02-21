@@ -10,7 +10,7 @@
 
 \description{
     
-    Calculate cumulated financial series, e.g. prices 
+    Compute cumulated financial series, e.g. prices 
     or indexes, from financial returns.
 
 }

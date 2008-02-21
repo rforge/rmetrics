@@ -13,19 +13,17 @@
 \alias{outlier.timeSeries}
 
 
-\title{Subset a Time Series}
+\title{Subsettig Time Series}
 
 
 \description{
   
-    A collection and description of functions 
-    and methods for subsetting timeSeries objects.         
+    Subset a 'timeSeries' objects due to different aspects.         
     \cr
   
     \tabular{ll}{
     \code{[} \tab "[" method for a 'timeSeries' object, \cr
-    \code{[<-} \tab "[<-" method to assign value for a subset of a
-    'timeSeries' object, \cr
+    \code{[<-} \tab "[<-" method to assign value for a subset of a 'timeSeries' object, \cr
     \code{window} \tab Windows a piece from a 'timeSeries' object, \cr
     \code{cut} \tab A no longer used synonyme for window, \cr
     \code{head} \tab Returns the head of a 'timeSeries' object, \cr
