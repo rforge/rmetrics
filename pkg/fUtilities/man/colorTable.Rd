@@ -39,6 +39,14 @@ colorTable(cex = 0.7)
 }
 
 
+\seealso{
+
+    \code{link{characterTable}},
+    \code{link{symbolTable}}.
+    
+}
+
+
 \examples{   
 ## Color Table:
    colorTable()

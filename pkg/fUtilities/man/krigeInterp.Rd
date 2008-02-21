@@ -68,7 +68,8 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 
 \seealso{
 
-    \code{\link{akimaInterp}}, and \code{\link{linearInterp}}.
+    \code{\link{akimaInterp}}, 
+    \code{\link{linearInterp}}.
     
 }
 

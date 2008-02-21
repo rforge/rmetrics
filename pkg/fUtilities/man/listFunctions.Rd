@@ -41,6 +41,14 @@ countFunctions(package, character.only = FALSE)
 }
 
 
+\seealso{
+    
+    \code{\link{listFunctions}},
+    \code{\link{listIndex}}.
+    
+}
+
+
 \examples{
 ## listFunctions -
    listFunctions("fUtilities")

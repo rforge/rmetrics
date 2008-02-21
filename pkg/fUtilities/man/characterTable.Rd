@@ -46,6 +46,13 @@ characterTable(font = 1, cex = 0.7)
 }
 
 
+\seealso{
+
+    \code{link{colorTable}},
+    \code{link{symbolTable}}.
+    
+}
+
 \examples{
 ## Character Table for Font 2:
    characterTable(font = 1)

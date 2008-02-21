@@ -100,7 +100,8 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 
 \seealso{
 
-    \code{\link{linearInterp}}, and \code{\link{krigeInterp}}.
+    \code{\link{linearInterp}}, 
+    \code{\link{krigeInterp}}.
     
 }
 

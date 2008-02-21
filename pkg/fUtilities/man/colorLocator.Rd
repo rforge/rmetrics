@@ -62,6 +62,17 @@ colorMatrix(locator = TRUE)
 }
 
 
+
+\seealso{
+
+    \code{link{colorPalette}},
+    \code{link{colorTable}}.
+    
+}
+
+
+
+
 \examples{
 ## colorLocator -
    colorLocator()

@@ -21,15 +21,15 @@ listDescription(package = "Rmetrics", character.only = FALSE)
 
 \arguments{
 
-  \item{package}{
-    a literal character or character string denoting the name of the
-    package to be listed.
-  }
-  \item{character.only}{
-    a logical indicating whether 'package' can be
-    assumed to be character strings.
-  }
-	
+    \item{package}{
+        a literal character or character string denoting the name of the
+        package to be listed.
+    }
+    \item{character.only}{
+        a logical indicating whether 'package' can be
+        assumed to be character strings.
+    }
+    
 }
 
 
@@ -37,6 +37,14 @@ listDescription(package = "Rmetrics", character.only = FALSE)
 
     prints the description file.
 
+}
+
+
+\seealso{
+    
+    \code{\link{listFunctions}},
+    \code{\link{listIndex}}.
+    
 }
 
 

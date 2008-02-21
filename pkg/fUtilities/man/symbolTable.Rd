@@ -44,6 +44,14 @@ symbolTable(font = par('font'), cex = 0.7)
 }
 
 
+\seealso{
+
+    \code{link{characterTable}},
+    \code{link{colorTable}}.
+    
+}
+
+
 \examples{  
 ## symbolTable - 
    # Default Symbol Table:

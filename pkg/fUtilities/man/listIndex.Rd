@@ -21,14 +21,14 @@ listIndex(package = "Rmetrics", character.only = FALSE)
 
 \arguments{
 
-  \item{package}{
-    a literal character string or a character string denoting the name
-    of the package to be listed.
-  }
-  \item{character.only}{
-    a logical indicating whether 'package' can be
-    assumed to be character strings.
-  }
+    \item{package}{
+        a literal character string or a character string denoting the name
+        of the package to be listed.
+    }
+    \item{character.only}{
+        a logical indicating whether 'package' can be
+        assumed to be character strings.
+    }
   
 }
 
@@ -37,6 +37,14 @@ listIndex(package = "Rmetrics", character.only = FALSE)
 
     prints the index file.
 
+}
+
+
+\seealso{
+    
+    \code{\link{listDescription}},
+    \code{\link{listIndex}}.
+    
 }
 
 

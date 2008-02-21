@@ -90,6 +90,14 @@ rowAvgs(x, \dots)
 
 
 
+\seealso{
+
+    \code{link{colStats}}.
+    
+}
+
+
+
 \examples{
 ## Simulated Return Data in Matrix Form:
    x = matrix(rnorm(10*10), nrow = 10)

@@ -97,6 +97,12 @@ colAvgs(x, \dots)
 }
 
 
+\seealso{
+
+    \code{link{rowStats}}.
+    
+}
+
 
 \examples{
 ## Simulated Return Data in Matrix Form:

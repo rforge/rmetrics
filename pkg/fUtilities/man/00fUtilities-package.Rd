@@ -36,19 +36,18 @@
 
 \section{Overview of Topics:}{
 
-    Basic Function Extensions\cr
-    Column and Row Statistics for Rectangular Objects\cr
-    Skewness and Kurtosis Statistics\cr
-    Bivariate Interpolation and Kriging\cr
-    Code Tables, Color Selection and Palettes\cr
-    Vector/Matrix Arithmetics and Linear Algebra Addons\cr
-    Special Functions Addon\cr
-    
-    
+    1. Basic Function Extensions\cr
+    2. Column and Row Statistics for Rectangular Objects\cr
+    3. Skewness and Kurtosis Statistics\cr
+    4. Bivariate Interpolation and Kriging\cr
+    5. Code Tables, Color Selection and Palettes\cr
+    6. Vector/Matrix Arithmetics and Linear Algebra Addons\cr
+    7. Special Functions Addon
+      
 }  
 
 
-\section{Basic Function Extensions}{
+\section{1. Basic Function Extensions}{
 
     Several functions are added by Rmetrics which are missing 
     in R's basic packages.
@@ -87,7 +86,7 @@
 }
 
 
-\section{Statistical Function Extensions}{   
+\section{2. Statistical Function Extensions}{   
     
     Beside the basic function extensions also statistical function
     extensions are provided. This concerns the missing
@@ -147,7 +146,7 @@
 }
     
 
-\section{Graph and Plot Tools}{
+\section{3. Graph and Plot Tools}{
 
 
     Character, symbol and color tables are useful tools
@@ -187,7 +186,7 @@
 }
 
 
-\section{Bivariate Interpolation and Kriging}{
+\section{4. Bivariate Interpolation and Kriging}{
     
     Functions which allow to interpolate and smooth bivariate irregular 
     data sets including linear interpolation, Akima spline interpolation, 
@@ -201,7 +200,7 @@
 }
 
 
-\section{Vector/Matrix Arithmetics and Linear Algebra Addons}{
+\section{4. Vector/Matrix Arithmetics and Linear Algebra Addons}{
     
     Functions for matrix arithmetics and linear algebra. These functions 
     are often  very useful for the manipulation of the data slot of 
@@ -252,7 +251,7 @@
 }
     
     
-\section{Time Series Generation}{
+\section{6. Time Series Generation}{
 
     For the computation of lagged or leading series the following
     two functions are provided by Rmetrics:
@@ -264,7 +263,7 @@
 }
 
 
-\section{Special Functions Addon}{
+\section{7. Special Functions Addon}{
 
     Functions which compute special functions missing in R's base
     package include:
@@ -290,7 +289,7 @@
 }
 
 
-\section{Some utility functions}{
+\section{8. Some utility functions}{
 
     Finally we like to mention some further utility functions:
 
@@ -303,7 +302,7 @@
 \author{
 
     The \code{fUtilities} package was originally written by Diethelm Wuertz
-    and is since 2007 maintained and further developed by the Rmetrics
+    and is maintained since 2007 and further developed by him and the Rmetrics
     core team.
 
 }
