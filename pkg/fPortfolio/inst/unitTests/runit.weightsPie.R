@@ -28,7 +28,7 @@
 ################################################################################
 
 
-test.weightsPie <-  
+test.weightsPie.portfolio <-  
     function()
 {  
     # Data:
@@ -42,10 +42,66 @@ test.weightsPie <-
     constraints = "LongOnly"
     
     # Portfolio:
-    portfolio = portfolioFrontier(data, spec, constraints)
+    portfolio = tangencyPortfolio(data, spec, constraints)
     portfolio
     
-    # Plot:
+    # Graph Frame:
+    par(mfrow = c(2, 2))
+    
+    # Pie Plot 1:
+    weightsPie(portfolio)
+    
+    # Pie Plot 2:
+    weightsPie(portfolio, col = seqPalette(4, "Blues"), box = FALSE)
+    boxL()
+    
+    # Pie Plot 3:
+    weightsPie(portfolio, labels = letters[1:4], init.angle = -17, 
+        col = qualiPalette(4, "Accent"), radius = 0.7, box = FALSE)
+    mtext("Portfolio Weights", line = 1, adj = 0, font = 4)
+    box_()
+    copyright()
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.weightsPie.frontier <-  
+    function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Specification:
+    spec = portfolioSpec()
+    
+    # Constraints:
+    constraints = "LongOnly"
+    
+    # Portfolio:
+    frontier = portfolioFrontier(data, spec, constraints)
+    frontier
+    
+    # Graph Frame:
+    par(mfrow = c(2, 2))
+    
+    # Pie Plot 2:
+    for (pos in 10*(1:4)) {
+        weightsPie(frontier, labels = FALSE, pos = pos, 
+            col = qualiPalette(4, "Pastel1"), 
+            box = FALSE, radius = 0.6, cex = 0.8, font = 4) 
+        copyright()
+        Return = round(100*getTargetReturn(frontier)[pos,], 2)
+        mtext(paste("Return", Return, "%"), 
+            side = 3, line = 0.5, adj= 0, font = 2)
+        abline(h = 1.07, lwd = 2)
+        box_()
+    }
     
     # Return Value:
     return()

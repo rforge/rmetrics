@@ -34,7 +34,6 @@
 #  setWeights<-                  Sets weights vector
 #  setTargetReturn<-             Sets target return value
 #  setTargetRisk<-               Sets target return value
-#  setTargetAlpha<-              Sets CVaR target alpha value
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
 #  setStatus<-                   Sets portfolio status information

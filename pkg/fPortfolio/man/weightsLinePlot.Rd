@@ -1,36 +1,36 @@
-\name{weightsPlot}
+\name{weightsLinePlot}
 
 
-\alias{weightsPlot}
+\alias{weightsLinePlot}
 
-\alias{weightedReturnsPlot}
-\alias{covRiskBudgetsPlot}
-\alias{tailRiskBudgetsPlot}
+\alias{weightedReturnsLinePlot}
+\alias{covRiskBudgetsLinePlot}
+%\alias{tailRiskBudgetsLinePlot}
 
 
-\title{Portfolio Weights Pie Plots}
+\title{Portfolio Weights Line Plots}
 
 
 \description{
 
-    Displays plots of weights, investments, covariance 
+    Displays line plots of weights, weighted returns, covariance 
     and tail risk budgets.
 
 }
 
 
 \usage{   
-weightsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
+weightsLinePlot(object, labels = TRUE, col = NULL, title = TRUE, 
     box = TRUE, legend = TRUE, ...)
     
-weightedReturnsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
+weightedReturnsLinePlot(object, labels = TRUE, col = NULL, title = TRUE, 
     box = TRUE, legend = TRUE, ...)
     
-covRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
+covRiskBudgetsLinePlot(object, labels = TRUE, col = NULL, title = TRUE, 
     box = TRUE, legend = TRUE, ...)
-    
-tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
-    box = TRUE, legend = TRUE, ...)
+% NYI   
+%tailRiskBudgetsLinePlot(object, labels = TRUE, col = NULL, title = TRUE, 
+%    box = TRUE, legend = TRUE, ...)
 }
 
 
@@ -80,7 +80,7 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
 
 \details{
 
-    These barplots plots allow for different views on the results obtained
+    These line plots allow for different views on the results obtained
     from a feasible or an optimized portfolio.
     
     The function \code{weightsPlot} displays the weights composition
@@ -92,10 +92,11 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
     The function \code{covRiskBudgetsPlot} displays the covariance risk
     budgets composition along the frontier of a portfolio.
 
-    The function \code{tailRiskBudgetsPlot} displays the copulae tail
-    risk budgets composition along the frontier of a portfolio. Note, 
-    this is only possible if in the portfolio specificsation a copulae 
-    tail risk is defined.
+    % NYI
+    %The function \code{tailRiskBudgetsPlot} displays the copulae tail
+    %risk budgets composition along the frontier of a portfolio. Note, 
+    %this is only possible if in the portfolio specification a copulae 
+    %tail risk is defined.
 
 }
 
@@ -118,7 +119,6 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
 
 \seealso{
 
-    \code{\link{weightsLinePlot}}, 
     \code{\link{weightsPie}}, 
     \code{\link{weightsSlider}}.
     
@@ -136,8 +136,8 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
    frontier = portfolioFrontier(Data)
    
 ## weightsLinePlot -
-   # View Weights Plot:
-   # weightsPlot(frontier)
+   # View Weights Line Plot:
+   # weightsLinePlot(frontier)
 }
 
 

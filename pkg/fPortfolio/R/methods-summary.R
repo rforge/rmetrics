@@ -48,13 +48,13 @@ summary.fPORTFOLIO <-
     funCalled = as.character(object@call[1])
     if (funCalled == "portfolioFrontier") {      
         weightsPlot(object)
-        attributesPlot(object)
+        weightedReturnsPlot(object)
         covRiskBudgetsPlot(object)
         # Plot Frontier:
         plot(object, which = 1)
     } else {
         weightsPie(object)
-        attributesPie(object)
+        weightedReturnsPie(object)
         covRiskBudgetsPie(object)
     }
           

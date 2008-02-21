@@ -65,8 +65,9 @@
         2. \tab How to Prepare the Data Input ?\cr
         3. \tab How to Define Portfolio Constraints ?\cr
         4. \tab How to Optimize a Portfolio ?\cr
-        5. \tab How to Analyze an Optimized Portfolio ?\cr
-        6. \tab How to Backtest a Rolling Portfolio ?
+        5. \tab Implemented Portfolios \cr
+        6. \tab How to Analyze an Optimized Portfolio ?\cr
+        7. \tab How to Backtest a Rolling Portfolio ?
     }
     
 }
@@ -337,7 +338,38 @@
 }
 
 
-\section{5. How to Analyze an Optimized Portfolio ?}{
+\section{5. Implemented Portfolios}{
+
+
+    \emph{Optimize a Mean-Variance Short Selling Portfolio:}
+    
+    
+    \emph{Optimize a Mean-Variance Long-Only Portfolio:}
+    
+    
+    \emph{Optimize a Mean-Variance Portfolio with Box/Group Constraints:}
+    
+    
+    \emph{Optimize a Mean-Variance Portfolio with Risk Budget Constraints:}
+    
+    
+    \emph{Optimize a Mean-LPM Long Only Portfolio:}
+    
+    
+    \emph{Optimize a Mean-LPM Portfolio with linear Constraints:}
+    
+    
+    \emph{Optimize a Mean-CVaR Long-Only Portfolio:}
+    
+    
+    \emph{Optimize a Mean-CVaR Portfolio with linear Constraints:}
+    
+        
+}
+
+
+
+\section{6. How to Analyze an Optimized Portfolio ?}{
 
     There exist several plots to display the results of an optimized
     portfolio or to display the portfolio frontier.
@@ -349,25 +381,25 @@
     
     For the efficient frontier ...
     
-    \code{plot}
-    \code{frontierPlot}
-    \code{weightsPlot}
-    \code{frontierSlider}
+    \code{plot}\cr
+    \code{frontierPlot}\cr
+    \code{weightsPlot}\cr
+    \code{frontierSlider}\cr
     \code{weightsSlider}
     
 }
 
 
 
-\section{6. How to Backtest a Rolling Portfolio ?}{
+\section{7. How to Backtest a Rolling Portfolio ?}{
 
     Rmetrics offers functions for a rolling backtesting of 
-    historical portolios:\cr
+    historical portfolios:\cr
     
     \code{rollingPortfolio} \cr
     \code{portfolioBacktesting} \cr
     \code{rollingPortfolio} \cr 
-    \code{portfolioBacktesting} \cr
+    \code{portfolioBacktesting} 
     
 }
    

@@ -25,15 +25,16 @@
 
 ################################################################################
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
-#  weightsPie                   Plots staggered weights
-#  attributesPie                Plots weighted means
+#  weightsPie                   Plots weights
+#  weightedReturnsPie           Plots weighted means
 #  covRiskBudgetsPie            Plots covariance risk budgets
-#  tailRiskBudgetsPie           Plots tail risk budgets
+#  tailRiskBudgetsPie           Plots copulae tail risk budgets
 ################################################################################
 
 
 weightsPie <- 
-    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+    function(object, pos = NULL, labels = TRUE, col = NULL, 
+    box = TRUE, legend = TRUE, radius = 0.8, ...)
 {   
     # A function implemented by Rmetrics
 
@@ -41,8 +42,16 @@ weightsPie <-
     #   Plots a Pie Chart of Weigths
         
     # Arguments:
-    #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by default the rainbow palette
+    #   object - an object of class 'fPORTFOLIO'.
+    #   pos - a numeric value, determining the position on the efficient 
+    #       frontier plotting the pie, by default NULL, i.e. expecting 
+    #       an object having only one set of weights like the tangency 
+    #       portfolio.
+    #   box - a logical value, determining whether a frame (box) should 
+    #       be plotted around the pie, by default TRUE. 
+    #   col - a color palette, by default the rainbow palette.
+    #   legend - a logical value, determining whether a legend with 
+    #       the names of the assets should be plotted, by default TRUE. 
     
     # Example:
     #   weightsPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
@@ -50,141 +59,177 @@ weightsPie <-
     
     # FUNCTION:
     
-    # Extracting weights position, if specified
+    # Default Settings:
+    Title = "Weights"
+    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    
+    # Extracting weights position on the efficient frontier:
     if(!is.null(pos)){
-        Object = object
-        object@portfolio$weights = getWeights(Object)[pos, ]
+        object = object
+        object@portfolio$weights = getWeights(object)[pos, ]
     }
 
-    # Plot Circle:
-    weights = getWeights(object)
-    nWeights = length(weights)
-    # if(length(weights) != nWeights) stop("Plot position is not specified")
-    Sign = rep("+", nWeights)
-    Sign[(1:nWeights)[weights < 0]] = "-"
+    # Get Weights:
+    X = getWeights(object)
     
-    # Color Palette:
-    if (is.null(col)) col = rainbow(nWeights)
+    # Check for Negative Pie Segments:
+    nX = getNAssets(object)
+    Sign = rep("+", nX)
+    Sign[(1:nX)[X < 0]] = "-"
+    absX = abs(X)
+    Index = (1:nX)[X > 0]
+    
+    # Take care of labels, they are also used by the function pie():
+    if (!is.logical(labels)) {
+        Names = pieLabels = labels
+        labels = FALSE
+    } else  {
+        Names = pieLabels = getNames(object)
+    }
     
     # Pie Chart:
-    Weights = abs(weights)
-    Index = (1:nWeights)[Weights > 0]
     col = col[Index]
-    names = names(weights)
-    legendAssets = names[Index]
-    Labels = paste(names, Sign)
-    Labels = Labels[Weights > 0]
-    Weights = Weights[Weights > 0]
-    Radius = 0.8
-    if (length(Weights) > 10) Radius = 0.65
-    pie(Weights, labels = Labels, col = col, radius = Radius)
-    if (box) box()
+    legendAssets = Names[Index]
+    Labels = paste(Names, Sign)
+    Labels = Labels[X > 0]
+    Y = X[X > 0]
+    
+    # Plot:
+    if (labels) {
+        pie(Y, labels = Labels, col = col, radius = radius, cex = CEX)
+    } else {
+        pie(Y, labels = pieLabels, col = col, radius = radius, ...)
+    }
     
     # Add Title:
-    title(main = "Weights")
+    if (title) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
     
     # Add Info:
-    mtext(paste(getType(object), "|", getSolver(object)), 
-        side = 4, adj = 0, col = "grey", cex = 0.7)
+    if (title) {
+        mtext(paste(getType(object), "|", getSolver(object)), 
+            side = 4, adj = 0, col = "grey", cex = 0.7)
+    }
     
     # Add Legend:
     if (legend) {
-        # Add Legend:
-        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+        legend("topleft", legend = legendAssets, bty = "n", cex = CEX, 
             fill = col)
-        
-        # Add Legend:
-        legendWeights = as.character(round(100*Weights, digits = 1))
-        legendWeights = paste(Sign[Index], legendWeights, sep = "")
-        legendWeights = paste(legendWeights, "%")
-        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+        legendY = as.character(round(100*Y, digits = 1))
+        legendY = paste(Sign[Index], legendY, sep = "")
+        legendY = paste(legendY, "%")
+        legend("topright", legend = legendY, bty = "n", cex = CEX, 
             fill = col)
     }
     
+    # Add Box:
+    if (box) box()
+    
     # Return Value:
-    invisible()
+    invisible(Y)
 }
-
 
 
 # ------------------------------------------------------------------------------
 
 
-attributesPie <- 
-    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+weightedReturnsPie <- 
+    function(object, pos = NULL, labels = TRUE, col = NULL, 
+    box = TRUE, legend = TRUE, radius = 0.8, ...)
 {   
     # A function implemented by Rmetrics
 
     # Description:
     #   Adds a pie plot of the weights
         
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'.
+    #   pos - a numeric value, determining the position on the efficient 
+    #       frontier plotting the pie, by default NULL, i.e. expecting 
+    #       an object having only one set of weights like the tangency 
+    #       portfolio.
+    #   box - a logical value, determining whether a frame (box) should 
+    #       be plotted around the pie, by default TRUE. 
+    #   col - a color palette, by default the rainbow palette.
+    #   legend - a logical value, determining whether a legend with 
+    #       the names of the assets should be plotted, by default TRUE. 
+    
     # Example:
     #   attributesPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
     #   title(main = "Tangency Portfolio Weights")
     
     # FUNCTION:
     
+    # Default Settings:
+    Title = "Weighted Returns"
+    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    
     # Extracting weights position, if specified
     if(!is.null(pos)){
-        Object = object
-        object@portfolio$weights = getWeights(Object)[pos, ]
+        object = object
+        object@portfolio$weights = getWeights(object)[pos, ]
     }
     
-    # Get weighted Returns:
+    # Get Weighted Returns:
     weights = getWeights(object)
-    names = names(weights)
-    nWeights = length(weights)
-    # if(length(weights) != nWeights) stop("Plot position is not specified")
     returns = getStatistics(object)$mu
-    weightedReturns = weights * returns
+    X = weights * returns
     
-    # Plot Circle:
-    Sign = rep("+", nWeights)
-    Sign[(1:nWeights)[weightedReturns < 0]] = "-"
-    names = substr(names, 1, 3)
+    # Check for Negative Pie Segments:
+    nX = getNAssets(object)
+    Sign = rep("+", nX)
+    Sign[(1:nX)[X < 0]] = "-"
+    absX = abs(X)
+    Index = (1:nX)[X > 0]
     
-    # Color Palette:
-    if (is.null(col)) col = rainbow(nWeights)
-
+    # Take care of labels, they are also used by the function pie():
+    if (!is.logical(labels)) {
+        Names = pieLabels = labels
+        labels = FALSE
+    } else  {
+        Names = pieLabels = getNames(object)
+    }
+    
     # Pie Chart:
-    WeightedReturns = abs(weightedReturns)
-    Index = (1:nWeights)[WeightedReturns > 0]
     col = col[Index]
-    names = names(weights)
-    legendAssets = names[Index]
-    Labels = paste(names, Sign)
-    Labels = Labels[WeightedReturns > 0]
-    WeightedReturns = WeightedReturns[WeightedReturns > 0]
-    Radius = 0.8
-    if (length(WeightedReturns) > 10) Radius = 0.65
-    pie(WeightedReturns, labels = Labels, col = col, radius = Radius)
-    if (box) box()
+    legendAssets = Names[Index]
+    Labels = paste(Names, Sign)
+    Labels = Labels[X > 0]
+    Y = X[X > 0]
+    
+    # Plot:
+    if (labels) {
+        pie(Y, labels = Labels, col = col, radius = radius, cex = CEX)
+    } else {
+        pie(Y, labels = pieLabels, col = col, radius = radius, ...)
+    }
     
     # Add Title:
-    title(main = "Investments")
+    if (title) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
     
     # Add Info:
-    mtext(paste(getType(object), "|", getSolver(object)), 
-        side = 4, adj = 0, col = "grey", cex = 0.7)
+    if (title) {
+        mtext(paste(getType(object), "|", getSolver(object)), 
+            side = 4, adj = 0, col = "grey", cex = 0.7)
+    }
     
     # Add Legend:
     if (legend) {
-        # Add Legend:
-        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+        legend("topleft", legend = legendAssets, bty = "n", cex = CEX, 
             fill = col)
-        
-        # Add Legend:
-        sumWeightedReturns = sum(WeightedReturns)
-        legendWeights = as.character(round(100*WeightedReturns/
-            sumWeightedReturns, digits = 1))
-        legendWeights = paste(Sign[Index], legendWeights)
-        legendWeights = paste(legendWeights, "%")
-        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+        legendY = as.character(round(100*Y, digits = 1))
+        legendY = paste(Sign[Index], legendY, sep = "")
+        legendY = paste(legendY, "%")
+        legend("topright", legend = legendY, bty = "n", cex = CEX, 
             fill = col)
     }
     
+    # Add Box:
+    if (box) box()
+    
     # Return Value:
-    invisible()
+    invisible(Y)
 }
 
 
@@ -192,10 +237,23 @@ attributesPie <-
 
 
 covRiskBudgetsPie <- 
-    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+    function(object, pos = NULL, labels = TRUE, col = NULL, 
+    box = TRUE, legend = TRUE, radius = 0.8, ...)
 {   
     # A function implemented by Rmetrics
 
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'.
+    #   pos - a numeric value, determining the position on the efficient 
+    #       frontier plotting the pie, by default NULL, i.e. expecting 
+    #       an object having only one set of weights like the tangency 
+    #       portfolio.
+    #   box - a logical value, determining whether a frame (box) should 
+    #       be plotted around the pie, by default TRUE. 
+    #   col - a color palette, by default the rainbow palette.
+    #   legend - a logical value, determining whether a legend with 
+    #       the names of the assets should be plotted, by default TRUE. 
+    
     # Description:
     #   Plots a Pie Chart of Risk Budgets
         
@@ -209,60 +267,74 @@ covRiskBudgetsPie <-
     
     # FUNCTION:
     
+    # Default Settings:
+    Title = "Covariance Risk Budgets"
+    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    
     # Extracting weights position, if specified
     if(!is.null(pos)){
-        Object = object
-        object@portfolio$weights = getWeights(Object)[pos, ]
+        object@portfolio$weights = getWeights(object)[pos, ]
+        object@portfolio$covRiskBudgets = getCovRiskBudgets(object)[pos, ]
     }
 
-    # Plot Circle:
-    riskBudgets = getCovRiskBudgets(object)
-    nRiskBudgets = length(riskBudgets)
-    if(length(riskBudgets) != nRiskBudgets) 
-        stop("Plot position is not specified")
-    Sign = rep("+", nRiskBudgets)
-    Sign[(1:nRiskBudgets)[riskBudgets < 0]] = "-"
+    # Get Covariance Risk Budgets:
+    X = getCovRiskBudgets(object)
     
-    # Color Palette:
-    if (is.null(col)) col = rainbow(nRiskBudgets)
+    # Check for Negative Pie Segments:
+    nX = getNAssets(object)
+    Sign = rep("+", nX)
+    Sign[(1:nX)[X < 0]] = "-"
+    absX = abs(X)
+    Index = (1:nX)[X > 0]
     
-    # Pie Chart:
-    RiskBudgets = abs(riskBudgets)
-    Index = (1:nRiskBudgets)[RiskBudgets > 0]
+    # Take care of labels, they are also used by the function pie():
+    if (!is.logical(labels)) {
+        Names = pieLabels = labels
+        labels = FALSE
+    } else  {
+        Names = pieLabels = getNames(object)
+    }
+    
+    # Legend Labels:
     col = col[Index]
-    names = names(RiskBudgets)
-    legendAssets = names[Index]
-    Labels = paste(names, Sign)
-    Labels = Labels[RiskBudgets > 0]
-    RiskBudgets = RiskBudgets[RiskBudgets > 0]
-    Radius = 0.8
-    if (length(RiskBudgets) > 10) Radius = 0.65
-    pie(RiskBudgets, labels = Labels, col = col, radius = Radius)
-    if (box) box()
+    legendAssets = Names[Index]
+    Labels = paste(Names, Sign)
+    Labels = Labels[X > 0]
+    Y = X[X > 0]
+    
+    # Plot:
+    if (labels) {
+        pie(Y, labels = Labels, col = col, radius = radius, cex = CEX)
+    } else {
+        pie(Y, labels = pieLabels, col = col, radius = radius, ...)
+    }
     
     # Add Title:
-    title(main = "Cov Risk Budgets")
+    if (title) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
     
     # Add Info:
-    mtext(paste(getType(object), "|", getSolver(object)), 
-        side = 4, adj = 0, col = "grey", cex = 0.7)
+    if (title) {
+        mtext(paste(getType(object), "|", getSolver(object)), 
+            side = 4, adj = 0, col = "grey", cex = 0.7)
+    }
     
     # Add Legend:
     if (legend) {
-        # Add Legend:
-        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+        legend("topleft", legend = legendAssets, bty = "n", cex = CEX, 
             fill = col)
-        
-        # Add Legend:
-        legendRiskBudgets = as.character(round(100*RiskBudgets, digits = 1))
-        legendRiskBudgets = paste(Sign[Index], legendRiskBudgets)      
-        legendRiskBudgets = paste(legendRiskBudgets, "%")
-        legend("topright", legend = legendRiskBudgets, bty = "n", cex = 0.8, 
+        legendY = as.character(round(100*Y, digits = 1))
+        legendY = paste(Sign[Index], legendY, sep = "")
+        legendY = paste(legendY, "%")
+        legend("topright", legend = legendY, bty = "n", cex = CEX, 
             fill = col)
     }
     
+    # Add Box:
+    if (box) box()
+    
     # Return Value:
-    invisible()
+    invisible(Y)
 }
 
 
@@ -270,10 +342,23 @@ covRiskBudgetsPie <-
 
 
 tailRiskBudgetsPie <- 
-    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+    function(object, pos = NULL, labels = TRUE, col = NULL, 
+    box = TRUE, legend = TRUE, radius = 0.8, ...)
 {   
     # A function implemented by Rmetrics
 
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'.
+    #   pos - a numeric value, determining the position on the efficient 
+    #       frontier plotting the pie, by default NULL, i.e. expecting 
+    #       an object having only one set of weights like the tangency 
+    #       portfolio.
+    #   box - a logical value, determining whether a frame (box) should 
+    #       be plotted around the pie, by default TRUE. 
+    #   col - a color palette, by default the rainbow palette.
+    #   legend - a logical value, determining whether a legend with 
+    #       the names of the assets should be plotted, by default TRUE. 
+    
     # Description:
     #   Plots a Pie Chart of Tail Risk Budgets
         
@@ -287,60 +372,76 @@ tailRiskBudgetsPie <-
     
     # FUNCTION:
     
+    # Default Settings:
+    Title = "Tail Risk Budgets"
+    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    
     # Extracting weights position, if specified
     if(!is.null(pos)){
-        Object = object
-        object@portfolio$weights = getWeights(Object)[pos, ]
+        object = object
+        object@portfolio$weights = getWeights(object)[pos, ]
     }
 
-    # Plot Circle:
-    riskBudgets = getTailRiskBudgets(object)
-    nRiskBudgets = length(riskBudgets)
-    if(length(riskBudgets) != nRiskBudgets) 
-        stop("Plot position is not specified")
-    Sign = rep("+", nRiskBudgets)
-    Sign[(1:nRiskBudgets)[riskBudgets < 0]] = "-"
+    # Check:
+    stop("Not yet implemented")
+    tailRiskMatrix = getTailRisk(object) 
+    X = getCovRiskBudgets(object)
     
-    # Color Palette:
-    if (is.null(col)) col = rainbow(nRiskBudgets)
+    # Check for Negative Pie Segments:
+    nX = getNAssets(object)
+    Sign = rep("+", nX)
+    Sign[(1:nX)[X < 0]] = "-"
+    absX = abs(X)
+    Index = (1:nX)[X > 0]
     
-    # Pie Chart:
-    RiskBudgets = abs(riskBudgets)
-    Index = (1:nRiskBudgets)[RiskBudgets > 0]
+    # Take care of labels, they are also used by the function pie():
+    if (!is.logical(labels)) {
+        Names = pieLabels = labels
+        labels = FALSE
+    } else  {
+        Names = pieLabels = getNames(object)
+    }
+    
+    # Legend Labels:
     col = col[Index]
-    names = names(RiskBudgets)
-    legendAssets = names[Index]
-    Labels = paste(names, Sign)
-    Labels = Labels[RiskBudgets > 0]
-    RiskBudgets = RiskBudgets[RiskBudgets > 0]
-    Radius = 0.8
-    if (length(RiskBudgets) > 10) Radius = 0.65
-    pie(RiskBudgets, labels = Labels, col = col, radius = Radius)
-    if (box) box()
+    legendAssets = Names[Index]
+    Labels = paste(Names, Sign)
+    Labels = Labels[X > 0]
+    Y = X[X > 0]
+    
+    # Plot:
+    if (labels) {
+        pie(Y, labels = Labels, col = col, radius = radius, cex = CEX)
+    } else {
+        pie(Y, labels = pieLabels, col = col, radius = radius, ...)
+    }
     
     # Add Title:
-    title(main = "Tail Risk Budgets")
+    if (title) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
     
     # Add Info:
-    mtext(paste(getType(object), "|", getSolver(object)), 
-        side = 4, adj = 0, col = "grey", cex = 0.7)
+    if (title) {
+        mtext(paste(getType(object), "|", getSolver(object)), 
+            side = 4, adj = 0, col = "grey", cex = 0.7)
+    }
     
     # Add Legend:
     if (legend) {
-        # Add Legend:
-        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+        legend("topleft", legend = legendAssets, bty = "n", cex = CEX, 
             fill = col)
-        
-        # Add Legend:
-        legendRiskBudgets = as.character(round(100*RiskBudgets, digits = 1))
-        legendRiskBudgets = paste(Sign[Index], legendRiskBudgets)      
-        legendRiskBudgets = paste(legendRiskBudgets, "%")
-        legend("topright", legend = legendRiskBudgets, bty = "n", cex = 0.8, 
+        legendY = as.character(round(100*Y, digits = 1))
+        legendY = paste(Sign[Index], legendY, sep = "")
+        legendY = paste(legendY, "%")
+        legend("topright", legend = legendY, bty = "n", cex = CEX, 
             fill = col)
     }
     
+    # Add Box:
+    if (box) box()
+    
     # Return Value:
-    invisible()
+    invisible(Y)
 }
 
 

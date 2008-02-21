@@ -97,49 +97,52 @@ weightsSlider <-
         N = .sliderMenu(no = 1)
         
         # Reset Frame:
-        par(mfrow = c(2, 2), cex = 0.7)
+        par(mfrow = c(2, 2))
         
-        # Plot 1 - Weights Plot: 
-        weightsPlot(object)
-        abline(v = N, col = "black")
-        
-        # Plot 2 - Single Weights Plot:
-        .notStackedWeightsPlot(object)
-        abline(v = N, col = "black")
-
-        # Plot 3 - Frontier Plot:
+        # Plot 1 - Frontier Plot:
+    
         frontier = frontierPoints(object)
+        
         fPoint = frontier[N, ]
+        
         frontierPlot(object, xlim = con$xlim, ylim = con$ylim,
-            xlab = "", ylab = "")
-        mtext("Target Risk", side = 1, line = 2, cex = 0.7)
-        mtext("Target Return", side = 2, line = 2, cex = 0.7)
+            xlab = "", ylab = "", title = FALSE)
+                    
+        mtext("Target Risk", side = 1, line = 2, adj = 1, cex = 0.7)
+        mtext("Target Return", side = 2, line = 2, adj = 1, cex = 0.7)
+          
         points(fPoint[1], fPoint[2], col = con$runningPoint.col, pch = 19,
             cex = con$runningPoint.cex)
+            
         tangencyLines(object, col = con$tangency.col, pch = con$tangency.pch)
         tangencyPoints(object, col = con$tangency.col)
+        
         singleAssetPoints(object, col = con$singleAsset.col,
             cex = con$singleAsset.cex, pch = con$singleAsset.pch)
+            
         minvariancePoints(object, col = con$minvariance.col,
             cex = con$minvariancePlot.cex, pch = con$minvariance.pch)
+            
         Title = paste(
             "Return =", signif(fPoint[2], 2), "|", 
             "Risk = ", signif(fPoint[1], 2))
-        # Add Legend:
-        .addlegend(object = object, control = con)
-        title(main = Title)
-        grid()
+
+        Title = "Efficient Frontier"
+        mtext(Title, adj = 0, line = 2.5, font = 2, cex = 0.7)
         
-        # Plot 4 - Weights Pie:
-        Object = object
-        Object@portfolio$weights = getWeights(object)[N, ]
-        weightsPie(Object)
-        targetReturn = signif(getTargetReturn(object)[N], 3)
-        targetRisk = signif(getTargetRisk(object)[N], 3)
-        Text = paste(
-            "Target Return =", targetReturn, " | ", 
-            "Target Risk =", targetRisk)
-        mtext(Text, side = 1, line = 0, adj = 0, cex = 0.7)
+        grid()
+    
+        
+        # Plot 2 - Weights Pie:
+        weightsPie(object, pos = N)
+        
+        # Plot 3 - Weights Plot: 
+        weightsPlot(object)
+        abline(v = N, col = "black")
+        
+        # Plot 4 - Single Weights Plot:
+        weightsLinePlot(object)
+        abline(v = N, col = "black")
 
     }
   
