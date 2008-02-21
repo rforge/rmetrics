@@ -27,65 +27,31 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:    
-#  'fDISTFIT'           S4 Class representation
-#  show.fDISTFIT        Prints Results from a Fitted Distribution
+# FUNCTION:             DESCRIPTION:
+#  ghMode                Computes the generalized hyperbolic mode
 ################################################################################
 
 
-setClass("fDISTFIT", 
-    representation(
-        call = "call",
-        model = "character",
-        data = "data.frame",
-        fit = "list",
-        title = "character",
-        description = "character"
-    )  
-)
-
-
-# ------------------------------------------------------------------------------
-
-
-show.fDISTFIT = 
-function(object)
-{   # A function implemented by Diethelm Wuertz
+ghMode <- 
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Prints Results from a Fitted Distribution
-    
+    #   Computes the mode of the Generalized Hyperbolic PDF
+  
     # FUNCTION:
     
-    # Title:
-    cat("\nTitle:\n ")
-    cat(object@title, "\n")
-    
-    # Call:
-    cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), 
-        "\n", sep = "")
-      
-    # Model: 
-    cat("\nModel:\n ", object@model, "\n", sep = "")
-    
-    # Estimate:
-    cat("\nEstimated Parameter(s):\n")
-    print(object@fit$estimate)
+    # Find Maximum: 
+    min = qgh(0.01, alpha, beta, delta, mu, lambda)
+    max = qgh(0.99, alpha, beta, delta, mu, lambda)
+    ans = optimize(f = dgh, interval = c(min, max), 
+        alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = lambda, 
+        maximum = TRUE, tol = .Machine$double.eps)$maximum
         
-    # Description:
-    cat("\nDescription:\n ")
-    cat(object@description, "\n\n")
-    
     # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fDISTFIT", show.fDISTFIT)
+    ans
+} 
 
 
 ################################################################################

@@ -29,9 +29,9 @@
 ################################################################################
 # FUNCTION:             CORRELATION TESTS:
 #  correlationTest       Performs correlation tests on two samples
-#  .pearsonTest          Pearson product moment correlation coefficient
-#  .kendallTest          Kendall's tau correlation test
-#  .spearmanTest         Spearman's rho correlation test
+#  pearsonTest           Pearson product moment correlation coefficient
+#  kendallTest           Kendall's tau correlation test
+#  spearmanTest          Spearman's rho correlation test
 ################################################################################
 
 
@@ -49,13 +49,13 @@ correlationTest <-
     # Test:
     method = match.arg(method)
     if (method[1] == "pearson") {
-        ans = .pearsonTest(x, y, title = title, description = description) 
+        ans = pearsonTest(x, y, title = title, description = description) 
     }
     if (method[1] == "kendall") {
-        ans = .kendallTest(x, y, title = title, description = description) 
+        ans = kendallTest(x, y, title = title, description = description) 
     }  
     if (method[1] == "spearman") {
-       ans = .spearmanTest(x, y, title = title, description = description)
+       ans = spearmanTest(x, y, title = title, description = description)
     }
         
     # Return Value:
@@ -66,7 +66,7 @@ correlationTest <-
 # ------------------------------------------------------------------------------
 
 
-.pearsonTest <- 
+pearsonTest <- 
     function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
@@ -164,7 +164,7 @@ correlationTest <-
 # ------------------------------------------------------------------------------
 
 
-.kendallTest <- 
+kendallTest <- 
     function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
@@ -289,7 +289,7 @@ correlationTest <-
 # ------------------------------------------------------------------------------
 
 
-.spearmanTest <- 
+spearmanTest <- 
     function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
