@@ -1,46 +1,47 @@
-\name{fSeries-package
+\name{fSeries-package}
 
 
-\alias{fSeries-package
+\alias{fSeries-package}
 
 
-\alias{fSeries
+\alias{fSeries}
 
 
-\docType{package
+\docType{package}
 
 
-\title{Utilities and Tools Package
+\title{Utilities and Tools Package}
 
 
 \description{
 
-    Package of Time Series Tools and Utilities.
+    Package of time series tools and utilities.
     
 }
 
 
 \details{
 
-    \tabular{ll{
+    \tabular{ll}{
         Package:    \tab fSeries\cr
         Type:       \tab Package\cr
-        Version:    \tab 270.73\cr
+        Version:    \tab 270.73.1\cr
         Date:       \tab 2008\cr
         License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz, Rmetrics Foundation, GPL\cr
-        URL:        \tab \url{http://www.rmetrics.org
+        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
+        URL:        \tab \url{http://www.rmetrics.org}
+    }
     
-
+}
 
 
 
 \section{Overview of Topics:}{
 
-    1. S4 timeSeries Class Definition\sr
+    1. S4 timeSeries Class Definition\cr
     2. Creating timeSeries Objects\cr
     3. Printing and Plotting timeSeries Objects\cr
-    4. Modifying 'timeSeries' Objects\cr
+    4. Modifying 'timeSeries' Objects
     
 }   
   
@@ -57,6 +58,7 @@
     isUnivariate\cr
     isMultivariate
     
+}
 
 
 \section{2. Creating timeSeries Objects}{
@@ -64,7 +66,8 @@
     'timeSeries' objects can be created in several ways. One can create 
     them from scratch, or one can read them from a file. If we have a file
     it is assumed that the first column holds a character string with the
-    date/time positions, named charvec", and the remaining column(s) the 
+    date/time positions, named "charvec", and the remaining column(s),
+    depending if we consider the univariate or multivariate case the 
     numeric time series records named "data".
     
     \emph{Create a 'timeSeries' object from scratch:}
@@ -82,7 +85,11 @@
     \emph{Attach a 'timeSeries' object to the search path:}
     
     
+    List of Functions:
+    
     \tabular{ll}{
+    \code{timeSeries} \tab Creates a 'timeSeries' from scratuch, \cr
+    \code{readSeries} \tab reads a time series from a file, \cr
     \code{attach} \tab attaches a 'timeSeries' object, \cr
     \code{detach} \tab detaches a 'timeSeries' object [see base package]. } 
     
@@ -91,14 +98,16 @@
 
 \section{3. Printing and Plotting 'timeSeries' Objects}{
 
-    print
+    List of Functions:
     
-    plot\cr
-    points\cr
-    lines 
+    \tabular{ll}{
+    \code{print} \tab ..., \cr
+    \code{plot} \tab ..., \cr
+    \code{points} \tab ..., \cr
+    \code{lines} \tab ... . 
+    }
 
 }
-
 
 
 \section{4. Modifying 'timeSeries' Objects}{
@@ -127,13 +136,13 @@
 \section{Subsetting timeSeries Objects}{
     
     'timeSeries' objects can subsetted in several ways. The method
-    \code{window} (and the deprecated function \code(cut}) extracts 
+    \code{window} (and the deprecated function \code{cut}) extracts 
     the subset of a 'timeSeries' observed between the times \code{from} 
     and  \code{to}. The methods \code{head} and \code{tail} return the
     first or last part of a time series for a specified length.
     The method \code{outlier} can be used to remove huge "outliers"
     which may appear for example through the redefinition of an index
-    (it should not be used for outlier detection!).
+    (it should not be used for outlier detection).
     
     There are other functions provided which can be considered in broader
     sense as subset functions. For example the function 
@@ -159,20 +168,16 @@
     List of Functions:
     
     \tabular{ll}{  
-    \code{"["} \tab \cr
-    \code{"[<-"} \tab \cr
-    
-    \code{window} \tab \cr 
-    \code{head} \tab \cr
-    \code{tail} \tab \cr
-    
-    \code{outlier} \tab \cr
-    
-    \code{fapply} \tab \cr
-    \code{aggreagte \tab
+    \code{"["} \tab ..., \cr
+    \code{"[<-"} \tab ..., \cr 
+    \code{window} \tab ..., \cr 
+    \code{head} \tab ..., \cr
+    \code{tail} \tab ..., \cr
+    \code{outlier} \tab ..., \cr
+    \code{fapply} \tab ..., \cr
+    \code{aggreagte} \tab ... .
     }
-    
-    
+      
 }
 
 
@@ -180,9 +185,11 @@
 
     List of Functions:
     
-    merge\cr
-    rbind\cr
-    lag
+    \tabular{ll}{  
+    \code{merge} \tab merges ..., \cr
+    \code{rbind} \tab binds ..., \cr
+    \code{lag} \tab lags ... .
+    }
     
 }
 
@@ -191,12 +198,14 @@
 
     List of Functions:
     
-    orderColnames\cr
-    sortColname\cr
-    sampleColnames\cr
-    statsColnames\cr
-    pcaColnames\cr
-    hclustColnames
+    \tabular{ll}{  
+    \code{orderColnames} \tab  ..., \cr
+    \code{sortColname} \tab  ..., \cr
+    \code{sampleColnames} \tab  ..., \cr
+    \code{statsColnames} \tab  ..., \cr
+    \code{pcaColnames} \tab  ..., \cr
+    \code{hclustColnames} \tab  ... .
+    }
     
 }
 
@@ -205,12 +214,13 @@
 
     List of Functions:
     
-    dim\cr
-    dim.timeSeries\cr
-    dimnames.timeSeries\cr
-    colnames<-.timeSeries\cr
-    rownames<-.timeSeries\cr
-    is.array.timeSeries
+    \tabular{ll}{
+    \code{dim} \tab ..., \cr
+    \code{dimnames} \tab  ..., \cr
+    \code{colnames<-} \tab  ..., \cr
+    \code{rownames<-} \tab  ..., \cr
+    \code{is.array} \tab  ...
+    }
     
 }
 
@@ -237,6 +247,7 @@
 \section{Handling Missing Data}{
 
     List of Functions:
+    
     \tabular{ll}{  
     \code{na.omit} \tab Handles NAs in a timeSeries object, \cr
     \code{removeNA} \tab removes NAs from a matrix object, \cr
@@ -261,19 +272,17 @@
     It is also worth to note, that Rmetrics uses in this case by default 
     the ISO-8601 format "\%Y-\%m-\%d".
     
-    \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr  
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
-    \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }  
-    
-    
     In the case of monthly data, it is important to note that Rmetrics 
     always expects the full date for the position vector and not only
     the years ans monhts. ...
     
+    List of Functions:
     
     \tabular{ll}{   
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr  
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
+    \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr
     \code{countMonthlyRecords} \tab Returns a series with monthly counts of records, \cr
     \code{isMonthly} \tab Decides if the series consists of monthly records, \cr
     \code{rollMonthlyWindows} \tab Returns start and end dates for rolling time windows, \cr        
@@ -286,10 +295,13 @@
 
     List of Functions:
     
-    colStats\cr
-    rowStats
+    \tabular{ll}{
+    \code{colStats} \tab ..., \cr
+    \code{rowStats} \tab ... .
+    }
     
 }
+
 
 \section{Coercion of timeSeries Objects}{
 
