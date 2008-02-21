@@ -1,7 +1,7 @@
 \name{cor}
 
 
-\title{timeSeries Correlations}
+\title{Time Series Correlations}
 
 
 \alias{cor}
@@ -12,8 +12,7 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with correlations between
+    Functions and methods dealing with correlations between
     'timeSeries' objects. 
     \cr
     

@@ -1,7 +1,7 @@
 \name{SpecialDailySeries}
 
 
-\title{SpecialDailySeries}
+\title{Special Daily Time Series}
 
 
 \alias{dummyDailySeries}
@@ -13,18 +13,13 @@
 
 \description{
     
-    A collection and description of special
-    daily timeSeries functions.  
+    Special daily 'timeSeries' functions.  
     \cr
     
     \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries'
-    object, \cr
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new
-    positions,\cr 
-    
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given
-    period, \cr
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr  
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
     \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }  
 }
 
@@ -146,13 +141,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \code{ohlcDailyPlot} 
     displays a Open-High-Low-Close Plot of daily data records.
         
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

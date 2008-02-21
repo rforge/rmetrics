@@ -10,7 +10,7 @@
 
 \description{
     
-    Computes Summary Statistics of Data Subsets      
+    Aggregates a 'timeSeries' Object.      
     
 }
 

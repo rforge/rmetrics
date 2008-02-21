@@ -1,7 +1,7 @@
 \name{cumulated}
 
 
-\title{Calculations of Cumulated Series from Returns}
+\title{Cumulated Time Series from Returns}
 
 
 \alias{cumulated}
@@ -10,9 +10,8 @@
 
 \description{
     
-    Functions to calculate cumulated financial 
-    series, e.g. prices or indexes, from financial 
-    returns.
+    Calculate cumulated financial series, e.g. prices 
+    or indexes, from financial returns.
 
 }
 

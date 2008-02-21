@@ -24,38 +24,29 @@
 
 \description{
   
-  A collection and description of functions 
-  and methods dealing with the coercion of
-  'timeSeries' objects.       
-  \cr
-  
-  Functions to create 'timeSeries' objects from other objects:
-  
-  \tabular{ll}{
-    \code{as.timeSeries} \tab Generic function to convert a 'timeSeries'
-    object, \cr 
-    \code{as.timeSeries.default} \tab Returns unchanged the 'timeSeries'
-    object, \cr 
-    \code{as.timeSeries.numeric} \tab Converts from a numeric vector,
-    \cr 
-    \code{as.timeSseries.data.frame} \tab Converts from a numeric
-    vector, \cr 
+    Functions and methods dealing with the coercion of
+    'timeSeries' objects.       
+    \cr
+    
+    Functions to create 'timeSeries' objects from other objects:
+    
+    \tabular{ll}{
+    \code{as.timeSeries} \tab Generic function to convert a 'timeSeries' object, \cr 
+    \code{as.timeSeries.default} \tab Returns unchanged the 'timeSeries' object, \cr 
+    \code{as.timeSeries.numeric} \tab Converts from a numeric vector, \cr 
+    \code{as.timeSseries.data.frame} \tab Converts from a numeric vector, \cr 
     \code{as.timeSeries.matrix} \tab Converts from a matrix, \cr 
-    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts', 
-    \cr 
-    \code{as.timeSeries.character} \tab Converts from a named demo file, 
-    \cr 
+    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts', \cr 
+    \code{as.timeSeries.character} \tab Converts from a named demo file, \cr 
     \code{as.timeSeries.zoo} \tab Converts an object of class zoo. }
-
-  Functions to transform 'timeSeries' objects into other objects:
-  
-  \tabular{ll}{
+    
+    Functions to transform 'timeSeries' objects into other objects:
+    
+    \tabular{ll}{
     \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector, \cr
     \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix, \cr
-    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a
-    data.frame, \cr 
-    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts'
-    object. }
+    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a data.frame, \cr 
+    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts' object. }
   
 }
 
@@ -63,87 +54,79 @@
 \usage{
 is.timeSeries(object)
 \method{as.timeSeries}{numeric}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
 \method{as.timeSeries}{data.frame}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
 \method{as.timeSeries}{matrix}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
 \method{as.timeSeries}{ts}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
 \method{as.timeSeries}{character}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
 \method{as.timeSeries}{zoo}(x,zone = myFinCenter, FinCenter =
-myFinCenter, \dots) 
+    myFinCenter, \dots) 
  
 \method{as.vector}{timeSeries}(x, mode = "any")
 \method{as.matrix}{timeSeries}(x, \dots)
-\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL,
-\dots)
+\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
 }
 
 
 \arguments{
   
-  \item{FinCenter}{
-    a character with the the location of the  financial center named 
-    as "continent/city". 
-  }
-  \item{mode}{ 
-    a character string giving an atomic mode or \code{"list"},
-    or (not for 'vector') \code{"any"}.
-  }
-  \item{object}{  
-    an object of class \code{timeSeries}.
-  }
-  \item{optional}{
-    A logical value. If \code{TRUE}, setting row names and converting
-    column names (to syntactic names) is optional.
-  }
-  \item{row.names}{
-    \code{NULL} or a character vector giving the row names for the
-    data frame. Missing values are not allowed.
-  }
-  \item{x}{ 
-    an object which is coerced according to the generic function.
-  } 
-  \item{zone}{
-    the time zone or financial center where the data were recorded.
-  }  
-  \item{\dots}{
-    arguments passed to other methods.
-  }
+    \item{FinCenter}{
+        a character with the the location of the  financial center named 
+        as "continent/city". 
+      }
+      \item{mode}{ 
+            a character string giving an atomic mode or \code{"list"},
+            or (not for 'vector') \code{"any"}.
+      }
+      \item{object}{  
+            an object of class \code{timeSeries}.
+      }
+      \item{optional}{
+            A logical value. If \code{TRUE}, setting row names and converting
+            column names (to syntactic names) is optional.
+      }
+      \item{row.names}{
+            \code{NULL} or a character vector giving the row names for the
+            data frame. Missing values are not allowed.
+      }
+      \item{x}{ 
+            an object which is coerced according to the generic function.
+      } 
+      \item{zone}{
+            the time zone or financial center where the data were recorded.
+      }  
+      \item{\dots}{
+            arguments passed to other methods.
+      }
   
 }
 
 
 \value{
 
-  \code{is.timeSeries}
-  \cr
-  returns \code{TRUE} or \code{FALSE} depending on whether its
-  argument is of \code{timeSeries} type or not.
-  \cr
-  
-  \code{as.timeSeries}\cr
-  \cr
-  returns a S4 object of class \code{timeSeries}.
-  \cr
-  
-  \code{as.vector}\cr
-  \code{as.data.frame}\cr
-  \code{as.matrix}\cr
-  \code{as.ts}
-  \cr
-  return depending on the generic function a numeric vector, a 
-  data frame, a matrix, or an object of class \code{ts}.
-  
-}
-
-
-\author{
-
-  Diethelm Wuertz for the Rmetrics \R-port.
+    \code{is.timeSeries}
+    \cr
+    returns \code{TRUE} or \code{FALSE} depending on whether its
+    argument is of \code{timeSeries} type or not.
+    \cr
+    
+    \code{as.timeSeries}\cr
+    \cr
+    returns a S4 object of class \code{timeSeries}.
+    \cr
+    
+    \code{as.vector}\cr
+    \code{as.data.frame}\cr
+    \code{as.matrix}\cr
+    \code{as.ts}
+    \cr
+    return depending on the generic function a numeric vector, a 
+    data frame, a matrix, or an object of class \code{ts}.
   
 }
 

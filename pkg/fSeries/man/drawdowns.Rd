@@ -10,11 +10,12 @@
 
 \description{
     
-    Functions to calculate series of drawdowns
-    and drawdown statisitcs.
-
-    Functions:         
-
+    Calculate series of drawdowns and compute
+    drawdown statisitcs.      
+    \cr
+    
+    The functions are:
+    
     \tabular{ll}{   
     \code{drawdowns} \tab Generates 'timeSeries' object of drawdown levels, \cr
     \code{drawdownsStats} \tab Compute drawdown stats for univariate time series. }

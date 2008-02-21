@@ -1,7 +1,7 @@
 \name{dim}
   
 
-\title{timeSeries Columns and Rows}
+\title{Time Series Columns and Rows}
 
 
 \alias{dim}
@@ -14,8 +14,7 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with columns and rows of 
+    Functions and methods handling columns and rows of 
     'timeSeries' objects. 
     \cr
     

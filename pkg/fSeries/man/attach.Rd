@@ -10,9 +10,7 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with the attachment
-    of timeSeries objects to the search path.         
+    Attach a 'timeSeries' object to the search path.        
     \cr
     
     \tabular{ll}{
