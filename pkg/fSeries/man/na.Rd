@@ -1,7 +1,8 @@
 \name{na}
 
 
-\title{Handling Missing Values}
+\title{Handling Missing Time Series Values}
+
 
 \alias{na}
 \alias{na.omit}
@@ -14,8 +15,7 @@
 
 \description{
     
-    A collection and description of functions 
-    for handling missing values in 'timeSeries' 
+    Functions for handling missing values in 'timeSeries' 
     objects or in objects which can be transformed 
     into a vector or a two dimensional matrix.
     \cr

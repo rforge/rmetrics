@@ -1,7 +1,7 @@
 \name{durations}
 
 
-\title{Computes durations from a timeSeries}
+\title{Durations from a Time Series}
 
 
 \alias{durations}
@@ -11,7 +11,7 @@
 
 \description{
     
-    Computes durations from an object of class 'timeSeries'.  
+    Compute durations from an object of class 'timeSeries'.  
        
 }
 

@@ -1,7 +1,7 @@
 \name{plot}
 
 
-\title{Plot Reports}
+\title{Plot a Time Series}
 
 
 \alias{plot}
@@ -12,7 +12,7 @@
 
 \description{
     
-    Functions to plot timeSeries objects.
+    Plot 'timeSeries' objects.
     
 }
 

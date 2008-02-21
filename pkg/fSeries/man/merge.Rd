@@ -1,7 +1,7 @@
 \name{merge}
 
 
-\title{Merge two timeSeries objects}
+\title{Merge two Time Series}
 
 
 \alias{merge}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Merges two timeSeries objects.         
+    Merge columnwise two 'timeSeries' objects.         
    
 }
 

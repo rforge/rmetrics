@@ -1,7 +1,7 @@
 \name{model.fram}
 
 
-\title{Model Frames for timeSeries Objects}
+\title{Model Frames for Time Series Objects}
 
 
 \alias{model.frame}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Allows to work with model frames for 'timeSeries' objects.               
+    Allow to work with model frames for 'timeSeries' objects.               
 }
 
 

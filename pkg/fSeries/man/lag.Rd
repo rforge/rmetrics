@@ -1,7 +1,7 @@
 \name{lag}
 
 
-\title{Lag a timeSeries Object}
+\title{Lag a Time Series}
 
 
 \alias{lag}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Computes a lagged version of a timeSeries object.        
+    Compute a lagged version of a 'timeSeries' object.        
    
 }
 

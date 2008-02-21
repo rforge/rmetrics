@@ -1,7 +1,7 @@
 \name{orderColnames}
 
 
-\title{Reorders column names of a time series}
+\title{Reorder Column Names of a Time Series}
 
 
 \alias{orderColnames}
@@ -14,8 +14,7 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with the rearrangement
+    Functions and methods dealing with the rearrangement
     of column names of 'timeSeries' objects. 
     \cr
     

@@ -1,9 +1,6 @@
 \name{monthly}
 
 
-\title{Special Monthly Series}
-
-
 \alias{monthly}
 
 \alias{countMonthlyRecords}
@@ -13,10 +10,12 @@
 \alias{rollMonthlySeries}
 
 
+\title{Special Monthly Series}
+
+
 \description{
     
-    A collection and description of functions 
-    and methods dealing with special monthly 
+    Functions and methods dealing with special monthly 
     'timeSeries' objects.      
     \cr  
     

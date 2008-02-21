@@ -1,7 +1,7 @@
 \name{fapply}
 
 
-\title{Applies Functions Over timeSeries Margins}
+\title{Apply Function Over Time Series Margins}
 
 \alias{fapply}
 \alias{apply}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Applies Functions Over timeSeries Margins          
+    Apply a functions over 'timeSeries' margins.          
     
 }
 

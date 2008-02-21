@@ -17,13 +17,12 @@
 \alias{quantile.timeSeries}
   
 
-\title{Mathematical timeSeries Operations}
+\title{Mathematical Time Series Operations}
 
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with mathematical timeSeries
+    Functions and methods dealing with mathematical 'timeSeries'
     operations .        
     \cr
     
