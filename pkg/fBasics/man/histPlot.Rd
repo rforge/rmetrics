@@ -6,7 +6,7 @@
 \alias{logDensityPlot}
 
 
-\title{Return Series Plots}
+\title{Histogram and Density Plots}
 
 
 \description{

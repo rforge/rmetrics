@@ -6,6 +6,7 @@
 \alias{pstable}
 \alias{qstable}
 \alias{rstable}
+
 \alias{stableMode}
 
 \alias{stableSlider}

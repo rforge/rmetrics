@@ -24,8 +24,8 @@
     \code{acfPlot} \tab autocorrelation function plot, \cr
     \code{pacfPlot} \tab partial autocorrelation function plot, \cr
     \code{lacfPlot} \tab lagged autocorrelation function plot, \cr
-    \code{teffectPlot} \tab Taylor effect plot. }
-    
+    \code{teffectPlot} \tab Taylor effect plot.}
+     
 }
 
 

@@ -2,6 +2,9 @@
 
 
 \alias{correlationTest}
+\alias{pearsonTest}
+\alias{kendallTest}
+\alias{spearmanTest}
 
 
 \title{Correlation Tests}
@@ -17,6 +20,11 @@
 \usage{    
 correlationTest(x, y, method = c("pearson", "kendall", "spearman"), 
     title = NULL, description = NULL)
+   
+
+pearsonTest(x, y, title = NULL, description = NULL) 
+kendallTest(x, y, title = NULL, description = NULL)
+spearmanTest(x, y, title = NULL, description = NULL)
 }
 
 
@@ -133,6 +141,15 @@ Lehmann E.L. (1986);
 }
 
 
+\seealso{
+
+    \code{\link{locationTest}},
+    \code{\linl{scaleTest}},
+    \code{\link{varianceTest}}.
+    
+}
+
+
 \examples{
 ## x, y -
    x = rnorm(50)
@@ -141,7 +158,7 @@ Lehmann E.L. (1986);
 ## correlationTest - 
    correlationTest(x, y, "pearson")
    correlationTest(x, y, "kendall")
-   correlationTest(x, y, "spearman")
+   spearmanTest(x, y)
 }
 
 

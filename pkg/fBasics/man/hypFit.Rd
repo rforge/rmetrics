@@ -1,82 +1,33 @@
-\name{DistributionFits}
+\name{hypFit}
 
-\alias{DistributionFits}
+\alias{hypFit}
 
-\alias{fDISTFIT}
-\alias{fDISTFIT-class}
-
-\alias{show.fDISTFIT}
-\alias{show,fDISTFIT-method}
-
-\alias{nFit}
-\alias{tFit}
-
-\alias{stableFit}
-
-\alias{nigFit}
-\alias{print.fDISTFIT}
-
-\title{Parameter Fit of a Distribution}
+\title{Fit of a Hyperbolic Distribution}
 
 
 \description{
 
-    A collection and description of moment and maximum 
-    likelihood estimators to fit the parameters of a 
-    distribution. Included are estimators for the Student-t, 
-    for the stable, for the generalized hyperbolic hyperbolic, 
-    for the normal inverse Gaussian, and for empirical 
-    distributions. 
-    \cr
-
-    The functions are:
-    
-    \tabular{ll}{
-    \code{nFit} \tab MLE parameter fit for a normal distribution, \cr
-    \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
-    \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
-    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution. }
+    Estimates the parameters of a hyperbolic distribution.
 
 }
 
 
-\usage{
-nFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
-tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
-    description = NULL, \dots)
-    
-stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-    type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
-    description = NULL)
-    
-nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+\usage{    
+hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
-    
-show.fDISTFIT(object)
 }
 
 
 \arguments{
   
-    \item{alpha, beta, gamma, delta, mu}{
-        [stable] - \cr
-        The parameters are \code{alpha}, \code{beta}, \code{gamma}, 
-        and \code{delta}:\cr
-        value of the index parameter \code{alpha} with \code{alpha = (0,2]};
-        skewness parameter \code{beta}, in the range [-1, 1];
-        scale parameter \code{gamma}; and
-        shift parameter \code{delta}.
-        \cr
-        [hyp] - \cr
-        The parameters are \code{alpha}, \code{beta}, \code{delta}, and
-        \code{mu}:\cr
-        shape parameter \code{alpha};
-        skewness parameter \code{beta}, \code{abs(beta)} is in the 
-        range (0, alpha);
-        scale parameter \code{delta}, \code{delta} must be zero or 
-        positive; 
-        location parameter \code{mu}, by default 0.
+    \item{alpha, beta, delta, mu}{
+        \code{alpha} is a shape parameter by default 1,
+        \code{beta} is a skewness parameter by default 0, 
+            note \code{abs(beta)} is in the range (0, alpha),
+        \code{delta} is a scale parameter by default 1, 
+            note, \code{delta} must be zero or positive, and
+        \code{mu} is a location parameter, by default 0.
         These is the meaning of the parameters in the first 
         parameterization \code{pm=1} which is the default 
         parameterization selection.
@@ -92,15 +43,6 @@ show.fDISTFIT(object)
         }
     \item{description}{
         a character string which allows for a brief description.
-        }
-    \item{df}{
-        the number of degrees of freedom for the Student distribution, 
-        \code{df > 2}, maybe non-integer. By default a value of 4 is
-        assumed.
-        }
-    \item{object}{
-        [show] - \cr
-        an S4 class object as returned from the fitting functions.
         }
     \item{doplot}{
         a logical flag. Should a plot be displayed?
@@ -125,11 +67,6 @@ show.fDISTFIT(object)
     \item{trace}{
         a logical flag. Should the parameter estimation process be
         traced?
-        }
-    \item{type}{
-        a character string which allows to select the method for
-        parameter estimation: \code{"mle"}, the maximum log likelihood
-        approach, or \code{"qm"}, McCulloch's quantile method.
         }
     \item{x}{
         a numeric vector. 
@@ -192,16 +129,15 @@ show.fDISTFIT(object)
 
 
 \examples{    
-## nigFit -
+## rhyp -
    # Simulate random variates HYP(1.5, 0.3, 0.5, -1.0):
    set.seed(1953)
-   s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
+   x = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
 
-## nigFit -  
-   # Fit Parameters:
-   # Note, this may take some time.
+## hypFit -  
+   # Fit Parameters, this may take some time ...
    # Starting vector (1, 0, 1, mean(s)):
-   nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
+   hypFit(x, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 
 
