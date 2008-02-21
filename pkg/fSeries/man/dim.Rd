@@ -64,14 +64,6 @@ rownames<-.timeSeries(x) <- value
 }
 
 
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## NYI
 }

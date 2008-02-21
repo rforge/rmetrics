@@ -65,14 +65,7 @@ spreadSeries(\dots)
     for \code{returns}, \code{midquotes}, and \code{spreads}.
 
 }
-    
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
+   
 
 \examples{
 ## data -  

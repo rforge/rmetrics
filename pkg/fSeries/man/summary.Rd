@@ -38,14 +38,6 @@
 }
 
 
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data -  
    EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]

@@ -36,14 +36,6 @@ show.timeSeries(object)
 }
 
 
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## print -  
    myFinCenter <<- "GMT"

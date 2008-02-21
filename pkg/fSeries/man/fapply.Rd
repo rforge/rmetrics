@@ -38,13 +38,6 @@ fapply(x, from, to, FUN, \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data - 
 

@@ -56,13 +56,6 @@
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## Simulated Monthly Return Data:
    x = matrix(rnorm(24), ncol = 2)

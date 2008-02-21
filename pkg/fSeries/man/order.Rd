@@ -110,13 +110,6 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data - 
    edhec.tS = as.timeSeries(data(edhec.tS))

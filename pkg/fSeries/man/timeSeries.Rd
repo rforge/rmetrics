@@ -51,7 +51,8 @@
 \usage{
 timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter, 
     FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
-    documentation = NULL, ...)   
+    documentation = NULL, \dots)
+       
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
  
@@ -229,13 +230,6 @@ isMultivariate(x)
     under Microsoft's Windows operating system where timze zones, 
     daylight saving times and holiday calendars are insuffeciently 
     supported. 
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

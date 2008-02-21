@@ -78,31 +78,31 @@ is.timeSeries(object)
     \item{FinCenter}{
         a character with the the location of the  financial center named 
         as "continent/city". 
-      }
-      \item{mode}{ 
-            a character string giving an atomic mode or \code{"list"},
-            or (not for 'vector') \code{"any"}.
-      }
-      \item{object}{  
-            an object of class \code{timeSeries}.
-      }
-      \item{optional}{
-            A logical value. If \code{TRUE}, setting row names and converting
-            column names (to syntactic names) is optional.
-      }
-      \item{row.names}{
-            \code{NULL} or a character vector giving the row names for the
-            data frame. Missing values are not allowed.
-      }
-      \item{x}{ 
-            an object which is coerced according to the generic function.
-      } 
-      \item{zone}{
-            the time zone or financial center where the data were recorded.
-      }  
-      \item{\dots}{
-            arguments passed to other methods.
-      }
+    }
+    \item{mode}{ 
+        a character string giving an atomic mode or \code{"list"},
+        or (not for 'vector') \code{"any"}.
+    }
+    \item{object}{  
+        an object of class \code{timeSeries}.
+    }
+    \item{optional}{
+        A logical value. If \code{TRUE}, setting row names and converting
+        column names (to syntactic names) is optional.
+    }
+    \item{row.names}{
+        \code{NULL} or a character vector giving the row names for the
+        data frame. Missing values are not allowed.
+    }
+    \item{x}{ 
+        an object which is coerced according to the generic function.
+    } 
+    \item{zone}{
+        the time zone or financial center where the data were recorded.
+    }  
+    \item{\dots}{
+        arguments passed to other methods.
+    }
   
 }
 

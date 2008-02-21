@@ -70,9 +70,8 @@ drawdownsStats(x, \dots)
 
 \author{
 
-    Diethelm Wuertz for the Rmetrics \R-port, \cr
-    Peter Carl and Sankalp Upadhyay for code from contributed 
-        R package PortfolioAnalytics.
+    Peter Carl and Sankalp Upadhyay for code from the contributed 
+    R package PortfolioAnalytics.
     
 }
 

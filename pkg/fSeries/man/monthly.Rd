@@ -71,12 +71,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         
 }
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
 
 \examples{
 ## data - 

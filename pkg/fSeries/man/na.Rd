@@ -128,14 +128,6 @@ Troyanskaya O., Cantor M., Sherlock G., Brown P., Hastie T.,
 }
 
 
-\author{
-
-    Raphael Gottardo for the \code{knn} function, \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## Create a Matrix with NAs:
    X = matrix(rnorm(100), ncol = 5)

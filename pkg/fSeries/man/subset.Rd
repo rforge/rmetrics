@@ -13,16 +13,16 @@
 \alias{outlier.timeSeries}
 
 
-\title{timeSeries Subsetting}
+\title{Subset a Time Series}
 
 
 \description{
   
-  A collection and description of functions 
-  and methods for subsetting timeSeries objects.         
-  \cr
+    A collection and description of functions 
+    and methods for subsetting timeSeries objects.         
+    \cr
   
-  \tabular{ll}{
+    \tabular{ll}{
     \code{[} \tab "[" method for a 'timeSeries' object, \cr
     \code{[<-} \tab "[<-" method to assign value for a subset of a
     'timeSeries' object, \cr
@@ -101,13 +101,6 @@
 
     all functions return an object of class \code{timeSeries}.
   
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

@@ -51,13 +51,6 @@ durationSeries(\dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data -  
    # Microsoft Data: 

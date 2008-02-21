@@ -44,13 +44,6 @@
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data - 
    x = as.timeSeries(data(msft.dat))[1:12, ]

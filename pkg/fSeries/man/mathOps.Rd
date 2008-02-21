@@ -103,13 +103,6 @@
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## data - 
    # Create an artificial timeSeries object:
