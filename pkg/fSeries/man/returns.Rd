@@ -1,7 +1,7 @@
 \name{returns}
 
 
-\title{Calculations of Financial Returns}
+\title{Financial Returns}
 
 
 \alias{returns}
@@ -15,7 +15,7 @@
 
 \description{
     
-    Functions to calculate financial returns.
+    Calculate financial returns from Prices or Indexes.
        
 }
 

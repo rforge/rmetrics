@@ -1,7 +1,7 @@
 \name{print}
 
 
-\title{Prints timeSeries objects}
+\title{Print a Time Series}
 
 
 \alias{show.timeSeries}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Prints objects of class timeSeries.
+    Print 'timeSeries' pbjects.
     
 }
 

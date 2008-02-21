@@ -1,7 +1,7 @@
 \name{rank}
 
 
-\title{timeSeries Correlations}
+\title{Sample Ranks of a Time Series}
 
 
 \alias{rank.timeSeries}
@@ -9,7 +9,7 @@
 
 \description{
     
-    Returns the sample ranks of the values of a 
+    Return the sample ranks of the values of a 
     'timeSeries' object.
       
 }

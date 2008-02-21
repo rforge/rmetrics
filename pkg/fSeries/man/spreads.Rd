@@ -1,7 +1,7 @@
 \name{spreads}
 
 
-\title{Calculations of spreads and mid quotes}
+\title{Spreads and Mid Quotes}
 
 
 \alias{spreads}
@@ -13,7 +13,7 @@
 
 \description{
     
-    Functions to calculate spreds and midquotes from price streams.
+    Calculate spreds and midquotes from price streams.
        
 }
 

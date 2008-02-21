@@ -13,7 +13,7 @@
 
 \description{
 
-    Functions to compute cumulative row Statistics.
+    Compute cumulative row Statistics.
 
 }
 

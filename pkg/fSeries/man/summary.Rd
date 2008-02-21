@@ -9,7 +9,7 @@
 
 \description{
     
-    produces a result summary of a timeSeries object.         
+    Produce a result summary for a time series.         
     
 }
 
