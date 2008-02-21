@@ -34,7 +34,19 @@
 }
 
 
-\section{Bond Market Data Sets}{
+\section{Overview of Topics:}{
+
+    1. Bond Market Data Sets\cr
+    2. Portfolio Data Sets\cr
+    3. Time Series Data Sets\cr
+    4. World Federation of Stock Exchanges Data Sets\cr
+    5. CIA Factbook Data Sets\cr
+    6. Performance Analytics Data Sets
+    
+}
+    
+    
+\section{1. Bond Market Data Sets}{
 
     contains demo data sets from the Bond Market.
     
@@ -48,7 +60,7 @@
 }
 
 
-\section{Portfolio Data Sets}{
+\section{2. Portfolio Data Sets}{
 
     contains demo data sets for portfolio optimization.
     
@@ -73,7 +85,7 @@
 }
 
 
-\section{Time Series Data Sets}{
+\section{3. Time Series Data Sets}{
 
     contains demo time series data sets for economic and 
     financial market analysis.
@@ -106,7 +118,7 @@
 }
 
 
-\section{World Federation of Stock Exchanges}{
+\section{4. World Federation of Stock Exchanges Data Sets}{
 
 
     contains data sets of financial and economic market 
@@ -127,7 +139,7 @@
 }
 
 
-\section{CIA Factbook}{
+\section{5. CIA Factbook Data Sets}{
 
     
     A collection and description of functions to extract 
@@ -146,7 +158,7 @@
 }
 
     
-\section{Performance Analytics Data Sets}{
+\section{6. Performance Analytics Data Sets}{
 
 
     contains data sets for use in the examples of portfolio performance
