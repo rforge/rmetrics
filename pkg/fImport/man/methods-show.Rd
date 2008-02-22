@@ -1,7 +1,5 @@
 \name{show-methods}
 
-\alias{show}
-
 
 \alias{show.fWEBDATA}
 \alias{show,fWEBDATA-method}
@@ -12,15 +10,7 @@
 
 \description{
     
-    A collection and description of functions to import 
-    financial and economic market data from the Internet.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{fWEBDATA} \tab Represents objects of class WEBDATA, \cr
-    \code{show|print} \tab prins objects of class fWEBDATA.}
+    Pprint an objects of class fWEBDATA.}
    
 }
 

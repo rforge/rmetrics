@@ -1,80 +1,65 @@
-\name{WebDataImport}
+\name{fWEBDATA-class}
 
-\alias{WebDataImport}
 
-\alias{fWEBDATA}
+\docType{class}
+
+
 \alias{fWEBDATA-class}
 
-\alias{show.fWEBDATA}
-\alias{show,fWEBDATA-method}
+
+\title{Class "fWEBDATA"}
 
 
-\title{Import Market Data from the Internet}
+\description{ 
 
-
-\description{
-    
-    A collection and description of functions to import 
-    financial and economic market data from the Internet.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{fWEBDATA} \tab Represents objects of class WEBDATA, \cr
-    \code{show|print} \tab prins objects of class fWEBDATA.}
-   
+    The class fWEBDATA represents a download from the internet.
 }
 
 
-\usage{           
-show.fWEBDATA(object)
+\section{Objects from the Class}{
+
+    Objects can be created by calls of the functions \code{*Import}.
+    
 }
 
 
-\arguments{
-
-    \item{object}{
-        an S4 object of class \code{"fWEBDATA"}.
-        }
-}
-
-
-\value{
+\section{Slots}{
+    \describe{
 
     An S4 object of class \code{fWEBDATA} has the following slots:
     
-    \item{@call}{
-        the function call.  
+    \item{\code{call}:}{Object of class \code{"call"}: 
+        the call of the \code{garch} function.
         }
-    \item{@data}{
+    \item{\call{data}:}{Object of class \code{"data.frame"}:
         the data as downloaded formatted as a data.frame.
         }
-    \item{@param}{
+    \item{\call{param}:}{Object of class \code{"character"}:
         a character vector whose elements contain the values of selected 
         parameters of the argument list.
         }
-    \item{@title}{
+    \item{\call{title}:}{Object of class \code{"character"}:
         a character string with the name of the download. This can be 
         overwritten specifying a user defined input argument.
         }
-    \item{@description}{
+    \item{\call{description}:}{Object of class \code{" character"}:
         a character string with an optional user defined description. 
         By default just the current date when the test was applied will
-        be returned.}
-   
+        be returned.}  
+    }
+    
+}       
+
+
+\section{Methods}{
+    \describe{
+    
+    \item{show}{\code{signature(object = "fWEBDATA")}: 
+        prints an object of class 'fGARCHSPEC'. 
+        }
+        
+    }
 }
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-}
-
-
-%\examples{
-%## 
-%}
 
 
 \keyword{data}
