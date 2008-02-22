@@ -29,43 +29,25 @@
 
 ################################################################################
 # FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
-#  .is.timeDate               Tests if the object is of class 'timeDate'
+#  'timeDate'                S4 Class representation for timeDate objects
 ################################################################################
 
 
-.is.timeDate <- 
-    function(object)
-{   
-    # A function implemented by Diethelm Wuertz
+setClass("timeDate",
+    # A class implemented by Diethelm Wuertz
 
-    ## MM: should be deprecated ---  use   is(object, "timeDate") !!!
-    .Deprecated("is( . , \"timeDate\")")
-
-    ## DW removed it
-    
     # Description:
-    #   Checks if object is of class 'timeDate'
+    #   Class representatation for 'timeDate' Objects.
 
-    # Arguments:
-    #   object - a 'timeDate' object to be checked.
+    # CLASS:
 
-    # Value:
-    #   Returns 'TRUE' or 'FALSE' depending on whether its
-    #   argument is of 'timeDate' type or not.
-
-    # FUNCTION:
-
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")
-    Sys.setenv(TZ = "GMT")
-
-    # Check Object:
-    ans = inherits(object, "timeDate")
-
-    # Return Value:
-    Sys.setenv(TZ = myTZ)
-    ans
-}
+    representation(
+        Data = "POSIXct",
+        Dim = "numeric",
+        format = "character",
+        FinCenter = "character"
+    )
+)
 
 
 ################################################################################

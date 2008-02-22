@@ -1,28 +1,20 @@
 \name{TimeDateClass}
+
+
 \title{timeDate Class}
-%
-\alias{TimeDateClass}
+
 
 \alias{currentYear}
 \alias{myUnits}
 
-\alias{timeDate}
-\alias{timeDate-class}
-
-\alias{is.timeDate}% deprecated!
-
-\alias{timeCalendar}
-\alias{timeSequence}
-\alias{seq.timeDate}
-\alias{Sys.timeDate}
-
 \alias{show.timeDate}
 \alias{show,timeDate-method}
-\alias{summary.timeDate}
+
 
 \alias{plot.timeDate}
 \alias{points.timeDate}
 \alias{lines.timeDate}
+
 \alias{format.timeDate}
 
 
@@ -37,21 +29,9 @@
     implemented on a specific computer.
     \cr
 
-    The functions for the Generation of 'timeDate' objects are:
-
-    \tabular{ll}{
-    \code{timeDate} \tab S4: Creates 'timeDate' object from a character vector, \cr
-%% Use is(*, "timeDate") !!
-%%    \code{is.timeDate} \tab Tests if the object is of class 'timeDate', \cr
-    \code{timeCalendar} \tab Creates 'timeDate' object from calendar atoms, \cr
-    \code{timeSequence} \tab Creates regularly spaced object of class 'timeDate', \cr
-    \code{seq} \tab A synonyme function for timeSequence, \cr
-    \code{Sys.timeDate} \tab Returns system time as an object of class 'timeDate'. }
-
     The functions to represent 'timeDate' objects:
     \tabular{ll}{
     \code{print.timeDate} \tab Prints 'timeDate' Object, \cr
-    \code{summary.timeDate} \tab Summarizes details of a 'timeDate' object, \cr
     \code{plot.timeDate} \tab Plots with GMT 'timeDate' x-axis, \cr
     \code{points.timeDate} \tab Adds points to a 'timeDate' plot, \cr
     \code{lines.timeDate} \tab Adds lines to a 'timeDate' plot, \cr
@@ -64,92 +44,21 @@
 myUnits
 currentYear
 
-timeDate(charvec = Sys.timeDate(), format = NULL,
-    zone = myFinCenter, FinCenter = myFinCenter)
-
-timeCalendar(y = currentYear, m = 1:12, d = 1,
-    h = 0, min = 0, s = 0,
-    zone = myFinCenter, FinCenter = myFinCenter)
-
-timeSequence(from, to = format(Sys.time(), "\%Y-\%m-\%d"),
-    by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
-    length.out = NULL, format = NULL,
-    zone = myFinCenter, FinCenter = myFinCenter)
-
-Sys.timeDate(FinCenter = myFinCenter)
-
-\method{seq}{timeDate}(from, to, by = c("day", "year", "quarter", "month",
-    "week", "hour", "min", "sec"), length.out = NULL, \dots)
-
-show.timeDate(object)
-
 \method{plot}{timeDate}(x, y, \dots)
-\method{summary}{timeDate}(object, \dots)
+
 \method{format}{timeDate}(x, \dots)
 }
 
 
 \arguments{
 
-    \item{by}{
-        a character string, containing one of "sec", "min",
-        "hour", "day", "week", "month" or "year".
-        This can optionally be preceded by an integer and a
-        space, or followed by "s".
-        }
-    \item{charvec}{
-        a character vector of dates and times.
-        }
-    \item{FinCenter}{
-        a character with the the location of the
-        financial center named as "continent/city".
-        }
-    \item{format}{
-        the format specification of the input character vector.
-        }
-    \item{from, to}{
-        [timeSequence] - \cr
-        starting date, required, and end date, optional. If supplied
-        \code{to} must be after \code{from}, \cr
-        [seq] - cr
-        in this case the \code{from} and \code{to} dates must be objects
-        of class \code{timeDate}.
-        }
-    \item{h, min, s}{
-        hours of the days (0-23), defaults are 0,
-        minutes of the days (0-59), defaults are 0, and
-        seconds of the days (0-59), defaults are 0.
-        }
-    \item{length.out}{
-        length.out integer, optional. Desired length
-        of the sequence, if specified "to" will be ignored.
-        }
-    \item{method}{
-        [modify] - \cr
-        a character string defining the modification method, one of
-        \code{"sort"}, \code{"round"}, or \code{"trunc"}.
-        }
-    \item{object}{
-        [show][summary] - \cr
-        an object of class \code{timeDate}.
-        }
+ 
     \item{x}{
-        [isWeekday][isWeekend][isBizday][weekDay] - \cr
-        an object of class \code{timeDate}.
-        \cr
         [format][print][plot] - \cr
         an object of class \code{timeDate}.
         }
-    \item{y, m, d}{
-        [timeCalendar] - \cr
-        calendar years (e.g. 1997), defaults are 1960,
-        calendar months (1-12), defaults are 1, and
-        calendar days (1-31), defaults are 1, \cr
-        [plot] - \cr
+    \item{y}{
         a numeric vector.
-        }
-    \item{zone}{
-        the time zone or financial center where the data were recorded.
         }
     \item{\dots}{
         arguments passed to other methods.

@@ -1,14 +1,16 @@
-\name{HolidayDates}
+\name{holidayDates}
 
-\alias{HolidayDates}
 
+\title{Public and Ecclesiastical Holidays}
+
+
+\alias{holidayDates}
 
 \alias{Septuagesima}
 \alias{Quinquagesima}
 \alias{AshWednesday}
 \alias{PalmSunday}
 \alias{GoodFriday}
-\alias{Easter}
 \alias{EasterSunday}
 \alias{EasterMonday}
 \alias{RogationSunday}
@@ -122,9 +124,6 @@
 \alias{JPBankHolidayDec31}
 
 
-\title{Public and Ecclesiastical Holidays}
-
-
 \description{
     
     A collection and description of functions and methods 
@@ -141,7 +140,6 @@ Quinquagesima(year = currentYear)
 AshWednesday(year = currentYear)
 PalmSunday(year = currentYear)
 GoodFriday(year = currentYear)
-Easter(year = currentYear)
 EasterSunday(year = currentYear)
 EasterMonday(year = currentYear)
 RogationSunday(year = currentYear)
@@ -268,21 +266,19 @@ JPBankHolidayDec31(year = currentYear)
 
 \value{
 
-    Returns an ISO-8601 formatted calendar date \code{CCYYMMDD}, an
-    object of class \code{"sdate"} which represents an integer
-    value or vector.
+    The function \code{listHolidays} returns a character vector
+    with the names of the supported holidays.
+    
+    The holiday functions return an ISO-8601 formatted 'timeDate'
+    of the requested holiday.
    
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
+## listHolidays -
+   listHolidays()
+   
 ## CHSechselaeuten -
    # Sechselaeuten a half Day Bank Holiday in Switzerland
    CHSechselaeuten(2000:2010)

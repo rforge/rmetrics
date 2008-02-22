@@ -15,7 +15,9 @@
 
 \description{
 
-    Package of calendar utilities for Rmetrics.
+    Package of calendar, date and time tools and utilities for 
+    Rmetrics.
+    
 }
 
 
@@ -36,56 +38,163 @@
 
 \section{Overview of Topics:}{
 
-    1. Daylight Saving Time and Financial Centers\cr
-    2. S4 'timeDate' Class and Functions\cr
-    3. Holidays and Haliday Calendars
+    This help file describes the concepts and methods behind the S4
+    'timeDate' class used in Rmetrics for financial data and time 
+    management together with the management of public and ecclestical
+    holidays.
     
+    The 'timeDate' class fulfills the conventions of the ISO 8601 
+    standard as well as of the ANSI C and POSIX standards. Beyond
+    these standards Rmetrics has added the "Financial Center" concept
+    which allows to handle data records collected in different time 
+    zones and mix them up to have always the right time stamps
+    with respect to your personal financial center, or to the GMT
+    reference time. It can thus also handle time stamps from historical 
+    data records from the same time zone, even if the financial 
+    centers changed day light saving times at different calendar
+    dates.
     
+    Evenmore 'timeDate' is almost compatible with the 'timeDate'
+    class in Insightful's 'timeDate' class. Thus if you move between 
+    the two worlds of R and SPlus, you have not to rewrite your
+    code, this is very important mainly for business applications.
+    
+    The 'timeDate' class offers not only date and time functionality
+    it als offers very sophisticated calendar manipulations concerned
+    with business days, weekends, and public and ecclestical holidays. 
+    
+    The information given in this help page is presented in three
+    major chapters:
+       
+    1. S4 'timeDate' Class and Functions\cr
+    2. Daylight Saving Time and Financial Centers\cr
+    3. Holidays and Holiday Calendars
+ 
 }  
 
 
-\section{1. Daylight Saving Time and Financial Centers}{
-
-    To each financial center worldwide we can attribute a function 
-    with the appropriate Daylight Saving Time Rules. Almost 400
-    prototypes are made available through the Olson time zone
-    data base. The cities and regions can be listed using the
-    command \code{listFinCenter}. The DST rules for a specific
-    financial center can be listed by its name, e.g. \code{Zurich()}.
-    Additional financial centers can be added by the user taking care
-    of the format specification of the DST functions.
-    
-    There is also function which allows to updata the tables ...
-    
-}
+\section{1. Working with 'timeDate' Objects}{
 
 
-\section{2. Creating timeDate Objects from Scratch}{
+    \emph{Representation of S4 'timeDate' objects:}
+    
+    
+    Date and time stamps are represented by an S4 object of class 'timeDate'. 
+        
+    \preformatted{
+    setClass("timeDate",
+        representation(
+            Data = "POSIXct",
+            format = "character",
+            FinCenter = "character"
+        ))
+    }
+    
+    Thus 'timeDate' objects are represented by the \code{@Data} time
+    stamps which are \code{POSIXct} formatted as specified in the 
+    \code{@format} slot, and they belong to the financial center expressed
+    through the slot \code{@FinCenter}.
+    
+    
+    \emph{How to create 'timeDate' objects ?}
+    
+    There are several possibilities to create 'timeDate' objects:
+    
+    \code{timeDate} Creates a 'timeDate' object from scratch, \cr
+    \code{timeSequence} creates a sequence of 'timeDate' objects,\cr
+    \code{timeCalendar} creates a 'timeData' object from calendar atoms,\cr
+    \code{Sys.timeDate} returns the current date and time as a 'timeDate' object.  
+    
+    
+    1. Creating a 'timeDate' object from scratch, some examples ...
+    
+    \preformatted{
+        # Show My local Financial Center - Note, by Default this is "GMT"
+        print(myFinCenter)
+        
+        # Compose Character Vector of Dates:
+        Dates <- c("1989-09-28","2001-01-15","2004-08-30","1990-02-09")
+        Times <- c(  "23:12:55",  "10:34:02",  "08:30:00",  "11:18:23")
+        charvec = paste(Dates, Times)
+        
+        # You get it in GMT - your Financial Center?
+        timeDate(charvec)
+        
+        # From now on my financial center will be Zurich:
+        myFinCenter <- ZurichtimeDate(charvec)
+        timeDate(charvec)
+        timeDate(charvec, FinCenter = "Tokyo")
+        
+        # Automated Format Identification:
+        print(.whichFormat(charvec))
+    }
+
+    NOTE: Rmetrics has implemented an automated date/time format identifyer
+    for many common date/time formats which tries to recognize automatically 
+    the format for the character vector of dates and times. 
+    
+    NOTE: Rmetrics automatically enforces that the midnight standard on dates 
+    and times is always fulfilled, try to see it 
+    \code{.midnightStandard("2008-01-31 24:00:00")}
+    
+    
+    2. Creating a sequence of 'timeDate' objects, some examples
+    
+    \preformatted{
+        # Lets work in an international environment:
+        myFinCenter <- "GMT"
+        
+        # You get it in GMT - your Financial Center?
+        timeDate(charvec)
+        
+        # Daily January 2008 Sequence:
+        timeSequence(from = "2008-01-01", to = "2008-01-31", by = "day")
+        
+        # Monthly 2008 Sequence:
+        tS = timeSequence(from = "2008-01-01", to = "2008-12-31", by = "month")
+        tS
+        
+        # Do you want the last Day or the last Friday in Month Data ?
+        timeLastDayInMonth(tS)
+        timeLastNdayInMonth(tS, nday = 5)
+    }
+    
+    
+    3. Creating a 'timeDate' object from calendar atoms, some examples ...
+
+    
+    \preformatted{
+        # Monthly calendar for Current Year
+        currentYear
+        timeCalendar() 
+        
+        # Daily 'timeDates' for January data from Tokyo local time 16:00
+        timeCalendar(2008, m=1, d=1:31, h=16, zone = "Tokyo", FinCenter = "Zurich") 
+    }
+    
+    4. The current date and time
+    
+    \preformatted{
+        # Current date and Time:
+        Sys.timeDate()
+        
+        # What time is it now in Tokyo ?
+        Sys.timeDate("Tokyo")
+    }
 
 
-    \emph{S4 'timeDate' Class:}
-    
-    
-    \emph{Creating timeDate Objects from Scratch:}
-    
-    
-    \code{timeDate}\cr
-    \code{timeSequence}\cr
-    \code{timeCalendar}\cr
-    \code{Sys.timeDate}\cr
-    
-    
     \emph{Math Operations on 'timeDate' Objects:}
     
     
-    \tabular{ll}{
-    \code{Ops.timeDate} \tab Group 'Ops' operations on 'timeDate' objects,\cr
-    \code{+.timeDate} \tab Performs + operation on 'timeDate' objects,\cr
-    \code{-.timeDate} \tab Performs - operation on 'timeDate' objects,\cr
-    \code{diff.timeDate} \tab Returns suitably lagged and iterated differences,\cr
-    \code{difftimeDate} \tab Returns a difference of two 'timeDate' objects,\cr
-    \code{round.timeDate} \tab Rounds objects of class 'timeDate',\cr
-    \code{trunc.timeDate} \tab Truncates objects of class 'timeDate'.}
+    \code{Ops.timeDate} Group 'Ops' operations on 'timeDate' objects,\cr
+    \code{+.timeDate} Performs + operation on 'timeDate' objects,\cr
+    \code{-.timeDate} Performs - operation on 'timeDate' objects,\cr
+    \code{round.timeDate} Rounds objects of class 'timeDate',\cr
+    \code{trunc.timeDate} Truncates objects of class 'timeDate'. 
+    
+    
+    \code{diff.timeDate} Returns suitably lagged and iterated differences,\cr
+    \code{difftimeDate}Returns a difference of two 'timeDate' objects. 
 
     
     \emph{Coercion and Transformations of 'timeDate' Objects:}
@@ -94,44 +203,99 @@
     There exist several methods to coerce and transform \code{timeDate}
     objects into other objects:
     
-    \tabular{ll}{
-    \code{as.timeDate} \tab Implements Use Method,\cr
-    \code{timeDate.default} \tab Default Method,\cr
-    \code{as.timeDate.POSIXt} \tab Returns a 'POSIX' object as 'timeDate' object,\cr
-    \code{as.timeDate.Date} \tab Returns a 'POSIX' object as 'timeDate' object.}
+
+    \code{as.timeDate} Implements Use Method,\cr
+    \code{timeDate.default} default Method,\cr
+    \code{as.timeDate.POSIXt} returns a 'POSIX' object as 'timeDate' object,\cr
+    \code{as.timeDate.Date} returns a 'POSIX' object as 'timeDate' object. 
     
-    \tabular{ll}{
-    \code{as.character.timeDate} \tab Returns a 'timeDate' object as 'character' string,\cr
-    \code{as.double.timeDate} \tab Returns a 'timeDate' object as 'numeric' object,\cr
-    \code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as 'data.frame' object,\cr
-    \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as 'POSIXct' object,\cr
-    \code{as.POSIXlt.timeDate} \tab Returns a 'timeDate' object as 'POSIXlt' object,\cr
-    \code{as.Date.timeDate} \tab Returns a 'timeDate' object as 'Date' object.}
+
+    \code{as.character.timeDate} Returns a 'timeDate' object as 'character' string,\cr
+    \code{as.double.timeDate} returns a 'timeDate' object as 'numeric' object,\cr
+    \code{as.data.frame.timeDate} returns a 'timeDate' object as 'data.frame' object,\cr
+    \code{as.POSIXct.timeDate} returns a 'timeDate' object as 'POSIXct' object,\cr
+    \code{as.POSIXlt.timeDate} returns a 'timeDate' object as 'POSIXlt' object,\cr
+    \code{as.Date.timeDate} returns a 'timeDate' object as 'Date' object. 
 
 
     \emph{Concatenation, Ordering, and Sorting of timeDate Objects:}
     
+    'timeDate' objects can be concatenated, replicated, sorted and
+    resampled, unified and reverted. The generic functions to do that are:
+
+    \code{c} Concatenates 'timeDate' objects,\cr
+    \code{rep} Replicates a 'timeDate' object,\cr
+    \code{sort} Sorts a 'timeDate' object,\cr
+    \code{sample} Resamples a 'timeDate' object,\cr
+    \code{unique} Makes a 'timeDate' object unique,\cr
+    \code{rev} Reverts a 'timeDate' object. 
     
-    \tabular{ll}{
-    \code{c.timeDate} \tab Concatenates 'timeDate' objects,\cr
-    \code{rep.timeDate} \tab Replicates a 'timeDate' object,\cr
-    \code{sort.timeDate} \tab Sorts a 'timeDate' object,\cr
-    \code{sample.timeDate} \tab Resamples a 'timeDate' object,\cr
-    \code{unique.timeDate} \tab Makes a 'timeDate' object unique,\cr
-    \code{rev.timeDate} \tab Reverts a 'timeDate' object.}
+    Here are same examples:
+    
+    \preformatted{
+        # Compose Character Vector of Dates:
+        Dates <- c("1989-09-28","2001-01-15","2004-08-30","1990-02-09")
+        Times <- c(  "23:12:55",  "10:34:02",  "08:30:00",  "11:18:23")
+        charvec = paste(Dates, Times)
+        
+        # Concatenate the local timpe stamps to Zurich time ...
+        ZH = timeDate(charvec, FinCenter = "Zurich")
+        NY = timeDate(charvec, FinCenter = "NewYork")
+    }
+    
 
 }
 
 
+\section{2. Daylight Saving Time and Financial Centers}{
 
-\section{3. Holidays and Haliday Calendars}{
+    To each financial center worldwide we can attribute a function 
+    with the appropriate Daylight Saving Time Rules. Almost 400
+    prototypes are made available through the Olson time zone
+    data base. The cities and regions can be listed using the
+    command \code{listFinCenter}. The DST rules for a specific
+    financial center can be viewed by their name, e.g. \code{Zurich()}.
+    Additional financial centers can be added by the user taking care
+    of the format specification of the DST functions.
+    
+    \preformatted{
+        # What is my current Financial Center - Set it to "GMT" 
+        print(myFinCenter)
+        myFinCenter = "GMT"
+        
+        # List the Financial Centers Worldwide:
+        listFinCenter()
+        
+        # List European Financial Centers:
+        listFinCenter("Europe")
+        
+        # Show Daylight Saving Time for Zurich
+        Zurich()
+    }
+}
+
+\section{3. Holidays and Holiday Calendars}{
 
 
     \emph{Holidays:}
     
+    
+    
     \emph{Holiday Calendars:}
+    
+    
+    \code{holidayZURICH}\cr
+    \code{holidayNYSE}\cr
+    \code{holidayZURICH}
+    
+    
+    Thanks to all the Rmetrics users who gave us many additional
+    information concerned with local holidays. 
 
 }
+
+
+
 
 
 \keyword{package}

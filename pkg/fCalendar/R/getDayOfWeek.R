@@ -74,7 +74,7 @@ getDayOfYear <-
     #   Returns day of week for time date objects
     
     # Arguments:
-    #   #   x - an object of class "timeDate"
+    #   x - an object of class "timeDate"
      
     # FUNCTION:
     

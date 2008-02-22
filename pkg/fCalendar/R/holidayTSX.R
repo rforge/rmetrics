@@ -34,8 +34,9 @@
 
 
 holidayTSX <- 
-function (year = currentYear) 
-{   # A function implemented by Diethelm Wuertz
+    function (year = currentYear) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   TSX Holiday Calendar

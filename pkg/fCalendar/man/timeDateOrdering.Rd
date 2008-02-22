@@ -1,6 +1,11 @@
 \name{timeDateOrdering}
 
+
+\title{timeDate Concatenation, Sorting and Re-Ordering}
+
+
 \alias{timeDateOrdering}
+
 
 \alias{c.timeDate}
 \alias{rep.timeDate}
@@ -10,14 +15,10 @@
 \alias{rev.timeDate}
 
 
-\title{timeDate Concatenation, Sorting and Re-Ordering}
-
-
 \description{
     
-    A collection and description of generic functions 
-    to concatenate, to sort and to reorder 'timeDate'
-    aobjects
+    Functions to concatenate, to sort and to reorder 'timeDate'
+    objects
     \cr
  
     The functions are:

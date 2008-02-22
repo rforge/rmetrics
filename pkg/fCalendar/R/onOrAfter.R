@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                 DAYS BEFORE AND AFTER:
+# FUNCTION:                 DESCRIPTION:
 #  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER
 #  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE
 # OLD FUNCTIONS:            DESCRIPTION:

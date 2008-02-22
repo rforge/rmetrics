@@ -29,42 +29,15 @@
 
 ################################################################################
 # FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
-#  'timeDate'                S4 Class representation for timeDate objects
 #  timeDate                  Creates a 'timeDate' object from given dates
 ################################################################################
 
 
-## DW: Do we need this ?
-require(methods)
-
-
-# ------------------------------------------------------------------------------
-
-
-setClass("timeDate",
-    # A class implemented by Diethelm Wuertz
-
-    # Description:
-    #   Class representatation for 'timeDate' Objects.
-
-    # CLASS:
-
-    representation(
-        Data = "POSIXct",
-        Dim = "numeric",
-        format = "character",
-        FinCenter = "character"
-    )
-)
-
-
-# ------------------------------------------------------------------------------
-
-
 timeDate <-
-function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
-FinCenter = myFinCenter)
-{   # A function implemented by Diethelm Wuertz
+    function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
+    FinCenter = myFinCenter)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a "timeDate' object from a character vector
@@ -192,10 +165,14 @@ FinCenter = myFinCenter)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .timeDate.OLD = 
-function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter, 
-FinCenter = myFinCenter) 
-{   # A function implemented by Diethelm Wuertz
+    function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter, 
+    FinCenter = myFinCenter) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a "timeDate' object from a character vector

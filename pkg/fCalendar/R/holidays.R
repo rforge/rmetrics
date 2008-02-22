@@ -143,73 +143,67 @@ holiday <-
 
 Septuagesima =
 function(year = currentYear) {
-    ans = .easter(year, -63)
+    ans = Easter(year, -63)
     timeDate(as.character(ans)) }
 
 Quinquagesima =
 function(year = currentYear) {
-    ans = .easter(year, -49)
+    ans = Easter(year, -49)
     timeDate(as.character(ans)) }
 
 AshWednesday =
 function(year = currentYear) {
-    ans = .easter(year, -46)
+    ans = Easter(year, -46)
     timeDate(as.character(ans)) }
 
 PalmSunday =
 function(year = currentYear) {
-    ans = .easter(year, -7)
+    ans = Easter(year, -7)
     timeDate(as.character(ans)) }
 
 GoodFriday =
 function(year = currentYear) {
-    ans = .easter(year, -2)
-    timeDate(as.character(ans)) }
-
-Easter =
-function(year = currentYear) {
-    ans = .easter(year)
+    ans = Easter(year, -2)
     timeDate(as.character(ans)) }
 
 EasterSunday =
 function(year = currentYear) {
-    ans = .easter(year = currentYear)
+    ans = Easter(year = currentYear)
     timeDate(as.character(ans)) }
 
 EasterMonday =
 function(year = currentYear) {
-    ans = .easter(year, 1)
-
+    ans = Easter(year, 1)
     timeDate(as.character(ans)) }
 
 RogationSunday =
 function(year = currentYear) {
-    ans = .easter(year, 35)
+    ans = Easter(year, 35)
     timeDate(as.character(ans)) }
 
 Ascension =
 function(year = currentYear) {
-    ans = .easter(year, 39)
+    ans = Easter(year, 39)
     timeDate(as.character(ans)) }
 
 Pentecost =
 function(year = currentYear) {
-    ans = .easter(year, 49)
+    ans = Easter(year, 49)
     timeDate(as.character(ans)) }
 
 PentecostMonday =
 function(year = currentYear) {
-    ans = .easter(year, 50)
+    ans = Easter(year, 50)
     timeDate(as.character(ans)) }
 
 TrinitySunday =
 function(year = currentYear) {
-    ans = .easter(year, 56)
+    ans = Easter(year, 56)
     timeDate(as.character(ans)) }
 
 CorpusChristi =
 function(year = currentYear) {
-    ans = .easter(year, 60)
+    ans = Easter(year, 60)
     timeDate(as.character(ans)) }
 
 
@@ -342,7 +336,7 @@ function(year = currentYear) {
     ans = NULL
     for (y in year) {
         theDate = .nth.of.nday(y, 4, 1, 3)
-        if (as.character(theDate) == as.character(.easter(y, +1))) {
+        if (as.character(theDate) == as.character(Easter(y, +1))) {
             theDate = .nth.of.nday(y, 4, 1, 4)
         }
         ans = c(ans, theDate)
@@ -351,7 +345,7 @@ function(year = currentYear) {
 
 CHAscension =
 function(year = currentYear) {
-    ans = .easter(year, 39)
+    ans = Easter(year, 39)
     timeDate(as.character(ans)) }
 
 CHConfederationDay =
@@ -394,12 +388,12 @@ function(year = currentYear) {
 
 DEAscension =
 function(year = currentYear) {
-    ans = .easter(year, 39)
+    ans = Easter(year, 39)
     timeDate(as.character(ans)) }
 
 DECorpusChristi =
 function(year = currentYear) {
-    ans = .easter(year, 60)
+    ans = Easter(year, 60)
     timeDate(as.character(ans)) }
 
 DEGermanUnity =
@@ -428,7 +422,7 @@ function(year = currentYear) {
 
 FRAscension =
 function(year = currentYear) {
-    ans = .easter(year, 39)
+    ans = Easter(year, 39)
     timeDate(as.character(ans)) }
 
 FRBastilleDay =
@@ -561,7 +555,7 @@ function(year = currentYear) {
 
 USGoodFriday =
 function(year = currentYear) {
-    ans = .easter(year, -2)
+    ans = Easter(year, -2)
     timeDate(as.character(ans)) }
 
 USPresidentsDay =
@@ -826,5 +820,4 @@ function(year = currentYear) {
 
 
 ################################################################################
-
 
