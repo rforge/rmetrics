@@ -33,7 +33,7 @@
 ################################################################################
 
 
-show.fWEBDATA <-  
+setMethod("show", signature(object = "fWEBDATA"), definition = 
     function(object)
 {   
     # A function implemented by Diethelm Wuertz
@@ -58,13 +58,7 @@ show.fWEBDATA <-
     
     # Return Value:
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fWEBDATA", show.fWEBDATA)
+})
 
 
 ################################################################################

@@ -1,62 +1,35 @@
 \name{show-methods}
 
 
-\alias{show.fWEBDATA}
+\docType{methods}
+
+
+\alias{show-methods}
+\alias{show,ANY-method}
 \alias{show,fWEBDATA-method}
 
 
-\title{Print Method for fWEBDATA objects}
+\title{WEBDATA Download Show Methods}
 
 
 \description{
     
-    Pprint an objects of class fWEBDATA.}
+    Show methods for WEBDATA downloads. 
    
 }
 
 
-\usage{           
-show.fWEBDATA(object)
-}
+\section{Methods}{
+    \describe{
 
-
-\arguments{
-
-    \item{object}{
-        an S4 object of class \code{"fWEBDATA"}.
+    \item{object = "ANY"}{
+        Generic function.
         }
-}
-
-
-\value{
-
-    An S4 object of class \code{fWEBDATA} has the following slots:
-    
-    \item{@call}{
-        the function call.  
-        }
-    \item{@data}{
-        the data as downloaded formatted as a data.frame.
-        }
-    \item{@param}{
-        a character vector whose elements contain the values of selected 
-        parameters of the argument list.
-        }
-    \item{@title}{
-        a character string with the name of the download. This can be 
-        overwritten specifying a user defined input argument.
-        }
-    \item{@description}{
-        a character string with an optional user defined description. 
-        By default just the current date when the test was applied will
-        be returned.}
-   
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
+    \item{object = "fWEBDATA"}{
+        Print function for objects of class \code{"fWEBDATA"}.
+        }   
+        
+    }
 }
 
 
