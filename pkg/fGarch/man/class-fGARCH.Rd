@@ -82,11 +82,9 @@
     \item{summary}{\code{signature(object = "fGARCH")}: 
         summarizes an object of class 'fGARCH'.
         }
-
     \item{predict}{\code{signature(object = "fGARCH")}: 
         forecasts mean and volatility from an object of class 'fGARCH'.
         }
-        
     \item{fitted}{\code{signature(object = "fGARCH")}: 
         extracts fitted values from an object of class 'fGARCH'.
         }     
@@ -96,7 +94,6 @@
     \item{volatility}{\code{signature(object = "fGARCH")}: 
         extracts conditional volatility from an object of class 'fGARCH'.
         }
-        
     \item{coef}{\code{signature(object = "fGARCH")}: 
         extracts fitted coefficients from an object of class 'fGARCH'.
         }
