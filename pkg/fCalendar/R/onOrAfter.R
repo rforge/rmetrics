@@ -226,8 +226,7 @@ timeNdayOnOrBefore <-
     a = (14-month)%/%12
     y = year - a
     m = month + 12*a - 2
-    (day + y + y%/%4 - y%/%100 + y%/%400 + (31*m)%/%12)%%7
-    ans }
+    (day + y + y%/%4 - y%/%100 + y%/%400 + (31*m)%/%12)%%7 }
 
 .day.of.week <- function (month, day, year) {  
     .sday.of.week(year * 10000 + month * 100 + day) }
