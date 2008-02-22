@@ -2820,7 +2820,7 @@ offSet = c(3600, 3600, 7200, 3600, 7200, 3600, 7200, 3600,
 class = "data.frame") }
 
 
-".Berlin" = "Frankfurt" =
+".Berlin" = ".Frankfurt" =
 function() {
 structure(list(Berlin = structure(as.integer(c(1, 2, 3, 4, 5,
 6, 7, 8, 9, 10, 11, 12, 13, 14, NA, 15, 16, 17, 18, 19, NA, 20,
