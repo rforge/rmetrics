@@ -842,7 +842,7 @@ structure(list(Indianapolis = structure(as.integer(c(1, 2, 3,
 "31", "32", "33", "34", "35", "36", "37", "38", "39"), class = "data.frame") }
 
 
-".LosAngeles" = "Pacific" =
+".LosAngeles" = ".Pacific" =
 function() {
 structure(list(LosAngeles = structure(as.integer(c(1, 2, 3,
 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -1158,7 +1158,7 @@ offSet = c(-14400, -18000, -14400, -18000, -14400, -18000,
 "209", "210", "211", "212", "213", "214", "215", "216"), class = "data.frame") }
 
 
-".Toronto" <- Montreal
+".Toronto" <- ".Montreal"
 
 
 ".Nassau" =
@@ -1251,7 +1251,7 @@ structure(list(Nassau = structure(as.integer(c(1, 2, 3, 4, 5,
 "134"), class = "data.frame") }
 
 
-".NewYork" = "Eastern" =
+".NewYork" = ".Eastern" =
 function() {
 structure(list(NewYork = structure(as.integer(c(1, 2, 3, 4,
 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
