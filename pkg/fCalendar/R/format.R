@@ -28,66 +28,22 @@
 
 
 ################################################################################
-# FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
-#  .whichFormat              Returns format string called by 'timeDate'
+# FUNCTION:                 DESCRIPTION:
 #  .midnightStandard         Corrects midnight standard called by 'timeDate'
 #  .formatFinCenter          Internal called by timeDate
 ################################################################################
 
 
-.whichFormat =
-function(charvec, silent = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Charvec String:
-    charvec = as.character(charvec)
-
-    # Specifications:
-    NCHAR = mean(nchar(charvec))
-    NCHAR = nchar(charvec[1])
-    SUBSTR = (substring(charvec[1], 5, 5) == "-")
-
-    # American Format:
-    if (regexpr("/....", charvec[1])[[1]] > 0) return("%m/%d/%Y")
-    if (regexpr("-...-....", charvec[1])[[1]] > 0) return("%d-%b-%Y")
-
-    # Human readable ISO:
-    if (NCHAR ==  4 & !SUBSTR) return("%Y")
-    if (NCHAR ==  7 &  SUBSTR) return("%Y-%m")
-    if (NCHAR == 10 &  SUBSTR) return("%Y-%m-%d")
-    if (NCHAR == 13 &  SUBSTR) return("%Y-%m-%d %H")
-    if (NCHAR == 16 &  SUBSTR) return("%Y-%m-%d %H:%M")
-    if (NCHAR == 19 &  SUBSTR) return("%Y-%m-%d %H:%M:%S")
-
-    # Short ISO:
-    if (NCHAR ==  6 & !SUBSTR) return("%Y%m")
-    if (NCHAR ==  8 & !SUBSTR) return("%Y%m%d")
-    if (NCHAR == 10 & !SUBSTR) return("%Y%m%d%H")
-    if (NCHAR == 12 & !SUBSTR) return("%Y%m%d%H%M")
-    if (NCHAR == 14 & !SUBSTR) return("%Y%m%d%H%M%S")
-
-    # Otherwise:
-    if (!silent)
-    warning("Could not determine time(date) format")
-    
-    # Return Value:
-    "unknown"
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .midnightStandard <- 
-function(charvec, format)
-{   # A function written by Diethelm Wuertz   
+    function(charvec, format)
+{   
+    # A function written by Diethelm Wuertz   
     # and entirely rewritten by Martin Maechler
     
     # Description:
+    #   Midnight Standard & conversion to isoFormat:
     
     # FUNCTION:
-    
-    ## Midnight Standard & conversion to isoFormat:
 
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
     ##         In that case, subtract 1 seconds convert and re-add it
@@ -183,9 +139,10 @@ function(charvec, format)
 # ------------------------------------------------------------------------------
 
 
-.midnightStandard.OLD = 
-function(charvec, format)
-{   # A function implemented by Diethelm Wuertz
+.midnightStandard.OLD <- 
+    function(charvec, format)
+{   
+    # A function implemented by Diethelm Wuertz
   
     # FUNCTION:
     
@@ -223,8 +180,9 @@ function(charvec, format)
 
 
 .formatFinCenter <- 
-function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
-{   # A function implemented by Diethelm Wuertz
+    function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal function used by function timeDate()
