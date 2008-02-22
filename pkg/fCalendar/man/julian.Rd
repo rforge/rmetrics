@@ -12,7 +12,7 @@
 \description{
     
     Returns Julian day counts, date/time atoms from a 'timeDate' object, 
-    and extracts month atoms from a 'timeDate' object. } 
+    and extracts month atoms from a 'timeDate' object.  
        
 }
 

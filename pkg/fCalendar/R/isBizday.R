@@ -29,75 +29,11 @@
 
 ################################################################################
 # METHODS:                  DESCRIPTION:
-#  isWeekday                 Tests if a date is a weekday or not
-#  isWeekend                 Tests if a date falls on a weekend or not
+#  isBizday                  Tests if a date is a business day or not
+#  isHoliday                 Tests if a date is a non-business day or not
 ################################################################################
 
 
-isWeekday <- 
-    function(x) 
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Test if a date is a weekday day or not
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    
-    # Value:
-    #   returns a logical or a vector of logicals
-    
-    # Example:
-    #   isWeekday(timeDate("2004-07-01"))
-    #   isWeekday(Sys.timeDate())
-    
-    # FUNCTION:
-    
-    # Test for Weekdays:
-    wday = as.POSIXlt(x@Data)$wday
-    ans = (!(wday == 0 | wday == 6)) 
-    names(ans) = x@Data
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-    
-isWeekend <- 
-    function(x) 
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tests if a date is a weekend day or not
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    
-    # Value:
-    #   Returns a logical or a vector of logicals
-    
-    # Example:
-    #   isWeekend(timeDate("2004-07-01"))
-    #   isWeekend(Sys.timeDate())
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Return Value:
-    return(!isWeekday(x)) 
-}   
-
-
-# ------------------------------------------------------------------------------
-
-    
 isBizday = 
     function(x, holidays = holidayNYSE()) 
 {   
@@ -152,9 +88,6 @@ isHoliday =
     
     # Value:
     #   Returns a logical or a vector of logicals
-
-    # Changes:
-    #
     
     # FUNCTION:
     

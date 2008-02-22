@@ -16,9 +16,9 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@phys.ethz.ch>
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -30,10 +30,6 @@
 ################################################################################
 # MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
-#  window.timeDate           Extracts a piece from a 'timeDate' object
-#  cut.timeDate              Extracts a piece from a 'timeDate' object
-#  start.timeDate            Extracts the first entry of a 'timeDate' object
-#  end.timeDate              Extracts the last entry of a 'timeDate' object
 #  blockStart                Creates start dates for equally sized blocks
 #  blockEnd                  Creates end dates for equally sized blocks
 #  length.timeDate           Gets the length of a 'timeDate' object
@@ -81,148 +77,10 @@ function(x, ..., drop = TRUE)
 # ------------------------------------------------------------------------------
 
 
-window.timeDate = 
-function(x, start, end, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Descriptions:
-    #   Subsets a timeDate object between from and to dates. 
- 
-    # Arguments
-    #   x - an object of class "timeDate"
-    #   start, end - start and end dates as "timeDate" objects.
-    
-    # Note:
-    #   This is synonome for the function window() which should 
-    #   be preferred.
-    
-    # FUNCTION:
-    
-    # Extract Subset:
-    X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    FROM = timeDate(start, zone = x@FinCenter, FinCenter = "GMT")
-    TO = timeDate(end, zone = x@FinCenter, FinCenter = "GMT")
-    test = (X >= FROM & X <= TO)
-    ans = timeDate(X[test], zone = "GMT", FinCenter = x@FinCenter)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-cut.timeDate = 
-function(x, from , to, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Descriptions:
-    #   Subsets a timeDate object between from and to dates. 
- 
-    # Arguments
-    #   x - an object of class "timeDate"
-    #   from, to - start and end dates as "timeDate" objects.
-    
-    # Note:
-    #   This is synonome for the function window() which should 
-    #   be preferred.
-    
-    # FUNCTION:
-    
-    # Extract Subset:
-    X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    FROM = timeDate(from, zone = x@FinCenter, FinCenter = "GMT")
-    TO = timeDate(to, zone = x@FinCenter, FinCenter = "GMT")
-    test = (X >= FROM & X <= TO)
-    ans = timeDate(X[test], zone = "GMT", FinCenter = x@FinCenter)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-start.timeDate =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts the first object of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns from 'x' the earliest entry as an object of class 
-    #   'timeDate'.
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # First element:
-    # print(x@FinCenter)
-    xGMT = timeDate(x, zone=x@FinCenter, FinCenter="GMT")@Data
-    z = as.numeric(as.POSIXct(xGMT))
-    order(z)[1]
-    
-    # Return Value:
-    Sys.setenv(TZ = myTZ)
-    x[1]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-end.timeDate =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts the last object of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns an object of class 'timeDate'.
-
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Last element:
-    # print(x@FinCenter)
-    xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
-    z = as.numeric(as.POSIXct(xGMT))
-    n = order(z)[length(z)]
-    
-    # Return Value:
-    Sys.setenv(TZ = myTZ)
-    x[n]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-blockStart =
+blockStart <- 
 function(x, block = 20)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes start dates for numeric blocks of dates
@@ -253,8 +111,6 @@ function(x, block = 20)
     
     # Example:
     #   blockEnd(timeSequence(), block = 30)
-    
-    # Changes:
 
     # FUNCTION:
     

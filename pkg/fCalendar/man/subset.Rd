@@ -1,17 +1,21 @@
 \name{subset}
 
+
 \alias{subset}
+
 \alias{[.timeDate}
 \alias{window.timeDate}
-\alias{cut.timeDate}
 \alias{start.timeDate}
 \alias{end.timeDate}
-\alias{blockStart}
-\alias{blockEnd}
 \alias{length.timeDate}
 
+\alias{cut.timeDate}
 
-\title{Subsetting}
+\alias{blockStart}
+\alias{blockEnd}
+
+
+\title{Subsetting 'timeDate' Objects}
 
 
 \description{

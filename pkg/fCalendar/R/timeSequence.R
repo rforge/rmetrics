@@ -15,10 +15,10 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
+# for this R-port: 
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@phys.ethz.ch>
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -82,6 +82,10 @@ timeSequence <-
         Sys.setenv(TZ = "GMT")
         on.exit(Sys.setenv(TZ = TZ))
     }
+    
+    # Missing from:
+    if (missing(from)) from = timeDate(to, format = format, zone = zone,
+        FinCenter = FinCenter) - 24*29*3600
 
     # Settings and Checks:
     if (!is.null(length.out)) to = from
@@ -116,7 +120,7 @@ timeSequence <-
 
     # Return timeDate Object:
     timeDate(charvec = charvec, format = .whichFormat(charvec[1]),
-             zone = zone, FinCenter = FinCenter)
+        zone = zone, FinCenter = FinCenter)
 }
 
 

@@ -76,7 +76,8 @@
 \section{1. Working with 'timeDate' Objects}{
 
 
-    \emph{Representation of S4 'timeDate' objects:}
+    % --------------------------------------------------------------------------
+    \bold{Representation of S4 'timeDate' objects:}
     
     
     Date and time stamps are represented by an S4 object of class 'timeDate'. 
@@ -96,7 +97,9 @@
     through the slot \code{@FinCenter}.
     
     
-    \emph{How to create 'timeDate' objects ?}
+    % --------------------------------------------------------------------------
+    \bold{How to create 'timeDate' objects ?}
+    
     
     There are several possibilities to create 'timeDate' objects:
     
@@ -183,20 +186,98 @@
     }
 
 
-    \emph{Math Operations on 'timeDate' Objects:}
+    % --------------------------------------------------------------------------
+    \bold{Math Operations on 'timeDate' Objects:}
     
     
-    \code{Ops.timeDate} Group 'Ops' operations on 'timeDate' objects,\cr
-    \code{+.timeDate} Performs + operation on 'timeDate' objects,\cr
-    \code{-.timeDate} Performs - operation on 'timeDate' objects,\cr
+    Math operations allow to add and subtract dates and times,
+    and perform logical operations on 'timeDate' objects.\cr
+    
+    
+    \describe{
+        \item{\code{Ops}}{\cr
+            Group 'Ops' operations on 'timeDate' objects,
+            }
+        \item{\code{+}}{\cr
+            Performs + operation on 'timeDate' objects,
+            }
+        \item{\code{-}}{\cr
+            Performs - operation on 'timeDate' objects.
+            }
+    }
+            
+            
+    \code{Ops} Group 'Ops' operations on 'timeDate' objects,\cr
+    \code{+} Performs + operation on 'timeDate' objects,\cr
+    \code{-} Performs - operation on 'timeDate' objects,\cr
+    
+    
+    \preformatted{
+        
+        # Date and Time now:
+        now = Sys.timeDate()
+        
+        # One hour later:
+        now - 3600
+
+    }
+    
+    
+    
     \code{round.timeDate} Rounds objects of class 'timeDate',\cr
     \code{trunc.timeDate} Truncates objects of class 'timeDate'. 
     
     
     \code{diff.timeDate} Returns suitably lagged and iterated differences,\cr
-    \code{difftimeDate}Returns a difference of two 'timeDate' objects. 
+    \code{difftimeDate}Returns a difference of two 'timeDate' objects.
+    
+    \preformatted{
+        # Current Time Difference between Zurich and Tokyo:
+        ? now = Sys.timeDate("Zurich")
+        ? now - timeDate(now, FinCenter = "Tokyo")
+    }
+    
+    
+    % --------------------------------------------------------------------------
+    \emph{Subsetting 'timeDate' Objects:}
+    
+    Subsetting a 'timeDate' is a very important issue in the management of 
+    dates and times. Rmetrics offers several functions which are usefule in 
+    this context:\cr
+    
+    \code{[} \tab Extracts or replaces subsets from 'timeDate' objects, \cr
+    \code{window, cut} \tab extract a piece from a 'timeDate' object, \cr
+    \code{start} \tab extracts the first entry of a 'timeDate' object, \cr
+    \code{end} \tab extracts the last entry of a 'timeDate' object, \cr
+    \code{length} \tab returns the length of a 'timeDate' object. \cr 
+    
+    
+    \preformatted{
+        tC = timeCalendar()
+        tC
+        
+        # The first quarter - Several alternative Solutions:
+        tC[1:3]
+        tC[-(4:length(tC))]
+        window(tC, "2001-01-01", "2001-03-31")
+        cut(tC, "2001-01-01", "2001-03-31")
+        
+        # The quarterly series:
+        tC[seq(3, 12, by = 3)]
+        
+        # Start, end and length of a 'timeDate' object
+        start(tC)
+        end(tC)
+        length(tC)
+    }
+    
+    
+    \code{blockStart} Creates start dates for equally sized blocks, \cr
+    \code{blockEnd} Creates end dates for equally sized blocks.
+     
 
     
+    % --------------------------------------------------------------------------
     \emph{Coercion and Transformations of 'timeDate' Objects:}
     
     
@@ -218,7 +299,9 @@
     \code{as.Date.timeDate} returns a 'timeDate' object as 'Date' object. 
 
 
+    % --------------------------------------------------------------------------
     \emph{Concatenation, Ordering, and Sorting of timeDate Objects:}
+    
     
     'timeDate' objects can be concatenated, replicated, sorted and
     resampled, unified and reverted. The generic functions to do that are:
@@ -277,10 +360,12 @@
 \section{3. Holidays and Holiday Calendars}{
 
 
+    % --------------------------------------------------------------------------
     \emph{Holidays:}
     
     
     
+    % --------------------------------------------------------------------------
     \emph{Holiday Calendars:}
     
     
