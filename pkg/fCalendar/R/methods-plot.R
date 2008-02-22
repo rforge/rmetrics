@@ -35,9 +35,14 @@
 ################################################################################
 
 
-plot.timeDate =
-function(x, y, ...)
-{   # A function implemented by Diethelm Wuertz
+## DW
+##  These S3 methods should become S4 methods ...
+
+
+plot.timeDate <- 
+    function(x, y, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Note:
     #   Doesn't yet support the features of timeDate objects ...
@@ -50,9 +55,10 @@ function(x, y, ...)
 # ------------------------------------------------------------------------------
 
 
-points.timeDate =
-function(x, y, ...)
-{   # A function implemented by Diethelm Wuertz
+points.timeDate <- 
+    function(x, y, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Note:
     #   Doesn't yet support the features of timeDate objects ...
@@ -65,9 +71,10 @@ function(x, y, ...)
 # ------------------------------------------------------------------------------
 
 
-lines.timeDate =
-function(x, y, ...)
-{   # A function implemented by Diethelm Wuertz
+lines.timeDate <- 
+    function(x, y, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Note:
     #   Doesn't yet support the features of timeDate objects ...

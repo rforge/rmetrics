@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  getDayOfWeek              Returns the day of the week to a 'timeDate' object
+#  getDayOfYear              Returns the day of the year to a 'timeDate' object
 ################################################################################
 
 
-getDayOfWeek <-
+getDayOfYear <- 
     function(x)
 {   
     # A function implemented by Diethelm Wuertz
@@ -43,22 +43,18 @@ getDayOfWeek <-
     
     # Arguments:
     #   x - an object of class "timeDate"
-    
-    # Example:
-    #   weekDay(Sys.timeDate())
-    #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
-    
+     
     # FUNCTION:
     
-    # Get Day of Week:
-    wd = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    n = as.POSIXlt(x@Data)$wday + 1
-    wdays = wd[n]
-    names(wdays) = as.character(x@Data)
+    # Assign:
+    yd = 1:366
+    n = as.POSIXlt(x@Data)$yday + 1
+    ydays = yd[n]
+    names(ydays) = as.character(x@Data)
     
     # Return Value:
-    wdays
-}    
+    ydays
+}   
 
 
 ################################################################################
