@@ -28,22 +28,25 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# METHODS:                  DESCRIPTION:
+#  summary.timeDate          Summarizes details of a 'timeDate' object
 ################################################################################
 
 
-.currentYear <- 
-    function()
-{   
-    # A function implemented by Diethelm Wuertz
+summary.timeDate =
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets date of the current year
-    
-    # FUNCTION:
-    
+    #   Summarizes details of a 'timeDate' object
+
+    # Arguments:
+    #   x - a 'timeDate' object to be summarized.
+
+    # Effect:
+    #   Produce a summary report of the details of a 'timeDate'
+    #   object.
+
     # Check Time Zone:
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -51,15 +54,19 @@
         on.exit(Sys.setenv(TZ = TZ))
     }
 
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
+    # Print:
+    x = object
+    cat(  "Object:       ", as.character(match.call())[2])
+    cat("\nStart Record: ", as.character(start(x)))
+    cat("\nEnd Record:   ", as.character(end(x)))
+    cat("\nObservations: ", length(as.character(x)))
+    cat("\nFormat:       ", x@format)
+    cat("\nFinCenter:    ", x@FinCenter)
+    cat("\n")
+
+    # Return Value:
+    invisible(object)
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-currentYear <- .currentYear()
 
 
 ################################################################################

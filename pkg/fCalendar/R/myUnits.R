@@ -28,38 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# FUNCTION:                 DESCRIPTION:
+#  myUnits                   Sets date units
 ################################################################################
 
 
-.currentYear <- 
-    function()
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Sets date of the current year
-    
-    # FUNCTION:
-    
-    # Check Time Zone:
-    TZ <- Sys.getenv("TZ")
-    if(TZ[[1]] != "GMT") {
-        Sys.setenv(TZ = "GMT")
-        on.exit(Sys.setenv(TZ = TZ))
-    }
-
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-currentYear <- .currentYear()
+myUnits <- "days"
 
 
 ################################################################################

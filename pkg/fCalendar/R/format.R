@@ -30,7 +30,6 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  .midnightStandard         Corrects midnight standard called by 'timeDate'
-#  .formatFinCenter          Internal called by timeDate
 ################################################################################
 
 
@@ -133,117 +132,6 @@
 
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.midnightStandard.OLD <- 
-    function(charvec, format)
-{   
-    # A function implemented by Diethelm Wuertz
-  
-    # FUNCTION:
-    
-    # Format:
-    nchar.iso = mean(nchar(charvec))
-    isoFormat = "%Y-%m-%d %H:%M:%S"
-    
-    # ISO-8601 Midnight Standard:
-    s = rep(0, length(charvec))
-    if (nchar.iso == 19) {
-        s[grep("24:00:00", charvec)] = 1
-        charvec = gsub("24:00:00", "23:59:59", charvec) 
-        # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, isoFormat)
-    }
-    if (nchar.iso == 14) {
-        # Fixed DW 2006-03-13
-        charvec.date = substr(charvec, 1, 8)
-        charvec.time = substr(charvec, 9, 14)
-        s[grep("240000", charvec.time)] = 1
-        sub.charvec = substr(charvec, 9, 14)
-        # charvec = gsub("240000", "235959", charvec) 
-        charvec.time = gsub("240000", "235959", charvec.time) 
-        charvec = paste(charvec.date, charvec.time, sep = "")
-        # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, isoFormat)
-    }   
-    
-    # Return Value:
-    charvec 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.formatFinCenter <- 
-    function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Internal function used by function timeDate()
-
-    if (FinCenter == "GMT")
-        return(charvec)
-
-    ## else start working:
-
-    type <- match.arg(type)
-    signum <- switch(type,
-                     "gmt2any" = +1,
-                     "any2gmt" = -1)
-    ##  otherwise give error
-
-
-        # Get the DST list from the database:
-        dst.list = rulesFinCenter(FinCenter)
-        # Update list with last entry:
-        z = as.matrix(dst.list)
-        z[dim(z)[1], ]
-        vec1 = as.vector(c(z[, 1], "2099-01-01 00:00:00"))
-        vec2 = as.vector(c(z[, 2], rev(z[, 2])[1]))
-        dst.list = data.frame(ruleChanges = as.character(vec1),
-            offSet = as.integer(vec2))
-        # Extract the dates when DST was changed:
-        dst.dates = as.character(dst.list[, 1])
-        # Extract the Offsets to GMT
-        dst.offsets = as.character(dst.list[, 2])
-        # The new dates ar the charvec's:
-        new.dates = charvec
-        # The new offsets are still unknown:
-        new.offsets = rep(NA, length(charvec))
-        # Combine all Dates and Offsets:
-        dates = c(dst.dates, new.dates)
-        offsets = c(dst.offsets, new.offsets)
-        # The number of Offsets:
-        n = length(dates)
-        # Order the Dates:
-        o = order(dates)
-        # Dates and Offsets in the right order:
-        o.dates = dates[o]
-        o.offsets = offsets[o]
-        # The points at which we have to determine the offsets
-        xout = (1:n)[is.na(o.offsets)]
-        # The date indexes:
-        x = (1:n)[-xout]
-        # The corresponding offsets
-        y = o.offsets[x]
-        # The new offsets:
-        yout = approx(x, y , xout, method = "constant")$y
-        # All dates:
-        m = length(dst.dates)
-        # Put them in the right order:
-        # Added DW: 2005-05-27
-        idx = order(o[which(o>m)])
-        offSets = yout[idx]
-        dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")
-
-    ## Return Value:
-    format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
 }
 
 

@@ -6,19 +6,18 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,39 +27,40 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# MEHODS:                   DESCRIPTION:
+#  rep.timeDate              Replicates a 'timeDate' object
 ################################################################################
 
 
-.currentYear <- 
-    function()
+rep.timeDate <- 
+    function(x, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets date of the current year
+    #   Replicates objects of class 'timeDate'
     
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   times - a non-negative integer.  A vector giving the number 
+    #       of times to repeat each element if of length 'length(x)', 
+    #       or to repeat the whole vector if of length 1.
+    
+    # Value:
+    #   Returns a vector of repeated elements belonging to the same 
+    #   class as 'x'.
+ 
     # FUNCTION:
-    
-    # Check Time Zone:
-    TZ <- Sys.getenv("TZ")
-    if(TZ[[1]] != "GMT") {
-        Sys.setenv(TZ = "GMT")
-        on.exit(Sys.setenv(TZ = TZ))
-    }
 
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
+    # Replicate: 
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = rep(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-currentYear <- .currentYear()
-
-
+    
 ################################################################################
 

@@ -28,43 +28,52 @@
 
 
 ################################################################################
-# FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
-#  .is.timeDate               Tests if the object is of class 'timeDate'
+# METHODS:                  DESCRIPTION:
+#  plot.timeDate             Plots 'timeDate' object
+#  points.timeDate           Adds points to a 'timeDate' plot
+#  lines.timeDate            Adds lines to a 'timeDate' plot
 ################################################################################
 
 
-.is.timeDate <- 
-    function(object)
-{   
-    # A function implemented by Diethelm Wuertz
+plot.timeDate =
+function(x, y, ...)
+{   # A function implemented by Diethelm Wuertz
 
-    ## MM: should be deprecated ---  use   is(object, "timeDate") !!!
-    .Deprecated("is( . , \"timeDate\")")
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
+ 
+    # Plot:
+    plot(as.POSIXct(x), y, ...)
+}
 
-    ## DW removed it
+
+# ------------------------------------------------------------------------------
+
+
+points.timeDate =
+function(x, y, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
     
-    # Description:
-    #   Checks if object is of class 'timeDate'
+    # Add Points:
+    points(as.POSIXct(x), y, ...)
+}
 
-    # Arguments:
-    #   object - a 'timeDate' object to be checked.
 
-    # Value:
-    #   Returns 'TRUE' or 'FALSE' depending on whether its
-    #   argument is of 'timeDate' type or not.
+# ------------------------------------------------------------------------------
 
-    # FUNCTION:
 
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")
-    Sys.setenv(TZ = "GMT")
+lines.timeDate =
+function(x, y, ...)
+{   # A function implemented by Diethelm Wuertz
 
-    # Check Object:
-    ans = inherits(object, "timeDate")
-
-    # Return Value:
-    Sys.setenv(TZ = myTZ)
-    ans
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
+    
+    # Add Lines:
+    lines(as.POSIXct(x), y, ...)
 }
 
 

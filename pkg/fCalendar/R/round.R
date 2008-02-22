@@ -18,6 +18,7 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,60 +28,55 @@
 
 
 ################################################################################
-# MEHODS:                   DESCRIPTION:
-#  c.timeDate                Concatenates 'timeDate' objects
+# MEHODS:                   MATHEMATICAL OPERATIONS:
+#  round.timeDate            Rounds objects of class 'timeDate'
+#  trunc.timeDate            Truncates objects of class 'timeDate' 
 ################################################################################
 
 
-c.timeDate <- 
-    function(..., recursive = FALSE)
-{   
-    # A function implemented by Diethelm Wuertz
+round.timeDate =
+function(x, digits = c("days", "hours", "mins"))     
+{   # A function implemented by Diethelm Wuertz
+    
+    # Note:
+    #   round.timeDate(x, units = c("days", "hours", "mins"))    # FAILS !!!  
+    
+    # FUNCTION:
+    
+    # Get Units:
+    units = match.arg(digits)
+  
+    # Use:
+    lt = round.POSIXt(x@Data, units = units)
+    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
+}
 
-    # Description:
-    #   Concatenates objects of class 'timeDate'
-    
-    # Arguments:
-    #   ... - objects to be concatenated.
-    #   recursive - a logical. If 'recursive=TRUE', the function 
-    #       recursively descends through lists combining all their 
-    #       elements into a vector.
-    
-    # Value:
-    #   Returns all arguments to be coerced to a 'timeDate' object  
-    #   which is the type of the returned value.
-    
-    # Example:
-    #   timeCalendar()[0]; c(timeCalendar()[0], timeCalendar())
 
-    # Details:
-    #   This is a generic function which combines its arguments.
+# ------------------------------------------------------------------------------
+
+
+trunc.timeDate =
+function(x, units = c("days", "hours", "mins"), ...) 
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-        
-    # List all:
-    z = list(...)
+    # Get Units:
+    units = match.arg(units)
     
-    # Convert to GMT character vectors:
-    all = NULL
-    for (i in 1:length(z)) {
-        # DW added if:
-        if (z[[i]]@Dim > 0) {
-            new = format(timeDate(z[[i]], zone = z[[i]]@FinCenter, 
-                FinCenter = "GMT")@Data, "%Y-%m-%d %H:%M:%S")
-            all = c(all, new)
-        }
-    }
+    # Sorting under GMT is not what we want!
+    # GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    # lt = trunc.POSIXt(GMT@Data, units = units)
+    # ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)
     
-    # Convert to Financial Center of the first element:
-    ans = timeDate(all, zone = "GMT", FinCenter = z[[1]]@FinCenter)
+    # Use:
+    lt = trunc.POSIXt(x@Data, units = units)
+    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
     
     # Return Value:
-    Sys.setenv(TZ = myTZ)
     ans
 }
 

@@ -28,38 +28,48 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# METHODS:                  DESCRIPTION:
+#  show.timeDate             Prints 'timeDate' object
 ################################################################################
 
 
-.currentYear <- 
-    function()
-{   
-    # A function implemented by Diethelm Wuertz
+show.timeDate = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets date of the current year
-    
+    #   Print method for an S4 object of class "timeDate"
+ 
     # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
     
-    # Check Time Zone:
-    TZ <- Sys.getenv("TZ")
-    if(TZ[[1]] != "GMT") {
-        Sys.setenv(TZ = "GMT")
-        on.exit(Sys.setenv(TZ = TZ))
-    }
-
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.setenv(TZ = "GMT")
+    
+    # Print:
+    cat(x@FinCenter, "\n", sep = "")
+    layout = paste("[", as.character(x@Data), "]", sep = "")
+    
+    # timeDate:
+    Sys.setenv(TZ = myTZ)
+    print(layout, quote = FALSE)
+    
+    # Control:
+    control = attr(x, "control")
+    if (!is.null(control)) print(control)
+    
+    # Return Value:
+    invisible(x)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-currentYear <- .currentYear()
+setMethod("show", "timeDate", show.timeDate)
 
 
 ################################################################################

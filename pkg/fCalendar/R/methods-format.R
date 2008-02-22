@@ -28,22 +28,24 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# METHODS:                  DESCRIPTION:
+#  format.timeDate           Formats 'timeDate' as ISO conform string
 ################################################################################
 
 
-.currentYear <- 
-    function()
-{   
-    # A function implemented by Diethelm Wuertz
+format.timeDate =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets date of the current year
-    
-    # FUNCTION:
-    
+    #   Formats 'timeDate' as ISO conform character string
+
+    # Arguments:
+    #   x - a 'timeDate' object
+
+    # Value:
+    #   Returns an ISO conform formatted character string.
+
     # Check Time Zone:
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -51,15 +53,9 @@
         on.exit(Sys.setenv(TZ = TZ))
     }
 
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
+    # Format - format.POSIXlt(x, format = "", usetz = FALSE, ...)
+    format.POSIXct(x@Data, ...)
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-currentYear <- .currentYear()
 
 
 ################################################################################

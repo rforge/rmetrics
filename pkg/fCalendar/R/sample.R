@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,39 +28,27 @@
 
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
-#  currentYear               Sets date of the current year
-#  .currentYear              Returns the the current year
+# MEHODS:                   DESCRIPTION:
+#  sample.timeDate           Resamples a 'timeDate' object
 ################################################################################
 
 
-.currentYear <- 
-    function()
+sample.timeDate <- 
+    function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Sets date of the current year
-    
+  
     # FUNCTION:
     
-    # Check Time Zone:
-    TZ <- Sys.getenv("TZ")
-    if(TZ[[1]] != "GMT") {
-        Sys.setenv(TZ = "GMT")
-        on.exit(Sys.setenv(TZ = TZ))
-    }
-
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
+    # Sample:
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = sample(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-currentYear <- .currentYear()
-
-
+    
 ################################################################################
 

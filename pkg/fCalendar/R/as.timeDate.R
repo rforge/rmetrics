@@ -36,8 +36,8 @@
 ################################################################################
 
 
-as.timeDate = 
-function(x, zone = NULL, FinCenter = NULL) 
+as.timeDate <- 
+    function(x, zone = NULL, FinCenter = NULL) 
 {
     UseMethod("as.timeDate")
 }
@@ -46,9 +46,10 @@ function(x, zone = NULL, FinCenter = NULL)
 # ------------------------------------------------------------------------------
 
 
-as.timeDate.default = 
-function(x, zone = myFinCenter, FinCenter = myFinCenter) 
-{   # A function implemented by Diethelm Wuertz
+as.timeDate.default <- 
+    function(x, zone = myFinCenter, FinCenter = myFinCenter) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns default object as 'timeDate' object
@@ -73,9 +74,10 @@ function(x, zone = myFinCenter, FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
-as.timeDate.POSIXt = 
-function(x, zone = myFinCenter, FinCenter = myFinCenter) 
-{   # A function implemented by Diethelm Wuertz
+as.timeDate.POSIXt <- 
+    function(x, zone = myFinCenter, FinCenter = myFinCenter) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a 'POSIXt' object as 'timeDate' object
@@ -100,9 +102,10 @@ function(x, zone = myFinCenter, FinCenter = myFinCenter)
 
 
  
-as.timeDate.Date = 
-function(x, zone = myFinCenter, FinCenter = myFinCenter) 
-{   # A function implemented by Diethelm Wuertz
+as.timeDate.Date <- 
+    function(x, zone = myFinCenter, FinCenter = myFinCenter) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a 'Date' object as 'timeDate' object

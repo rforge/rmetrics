@@ -34,8 +34,6 @@
 #  -.timeDate                Performs - operation on 'timeDate' objects
 #  diff.timeDate             Returns suitably lagged and iterated differences
 #  difftimeDate              Returns a difference of two 'timeDate' objects
-#  round.timeDate            Rounds objects of class 'timeDate'
-#  trunc.timeDate            Truncates objects of class 'timeDate' 
 ################################################################################
 
 
@@ -257,56 +255,6 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
     # Return Value:
     Sys.setenv(TZ = myTZ)
     difftime(time1GMT@Data, time2GMT@Data, tz = "GMT", units = units[1]) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-round.timeDate =
-function(x, digits = c("days", "hours", "mins"))     
-{   # A function implemented by Diethelm Wuertz
-    
-    # Note:
-    #   round.timeDate(x, units = c("days", "hours", "mins"))    # FAILS !!!  
-    
-    # FUNCTION:
-    
-    # Get Units:
-    units = match.arg(digits)
-  
-    # Use:
-    lt = round.POSIXt(x@Data, units = units)
-    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-trunc.timeDate =
-function(x, units = c("days", "hours", "mins"), ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Get Units:
-    units = match.arg(units)
-    
-    # Sorting under GMT is not what we want!
-    # GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    # lt = trunc.POSIXt(GMT@Data, units = units)
-    # ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)
-    
-    # Use:
-    lt = trunc.POSIXt(x@Data, units = units)
-    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
-    
-    # Return Value:
-    ans
 }
 
     
