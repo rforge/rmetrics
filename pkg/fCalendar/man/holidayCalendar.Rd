@@ -66,13 +66,6 @@ ISO-8601 (1988);
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## holidayNYSE -
    holidayNYSE(currentYear)

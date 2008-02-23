@@ -54,17 +54,9 @@
 \section{Methods}{
     \describe{
     
-    %\item{plot}{\code{signature(x = "fGARCH", y = "missing)}: 
-    %    plots an object of class 'fGARCH'.
-    %    }
-    
     \item{show}{\code{signature(object = "fGARCH")}: 
         prints an object of class 'fGARCH'.
         }  
-            
-    %\item{summary}{\code{signature(object = "fGARCH")}: 
-    %    summarizes an object of class 'fGARCH'.
-    %    }
    
     }
 }  

@@ -12,6 +12,7 @@
 
 \alias{timeNdayOnOrAfter}
 \alias{timeNdayOnOrBefore}
+
 \alias{timeNthNdayInMonth}
 \alias{timeLastNdayInMonth}
 
@@ -131,20 +132,6 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
     the Saturday.
     \cr
 
-}
-
-
-\seealso{
-
-    \code{timeDate}
-    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

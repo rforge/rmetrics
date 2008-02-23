@@ -73,7 +73,7 @@
 }  
 
 
-\section{1. Working with 'timeDate' Objects}{
+\section{1. S4 'timeDate' Class and Functions}{
 
 
     % --------------------------------------------------------------------------
@@ -101,12 +101,12 @@
     \bold{How to create 'timeDate' objects ?}
     
     
-    There are several possibilities to create 'timeDate' objects:
+    There are several possibilities to create 'timeDate' objects:\cr
     
-    \code{timeDate} Creates a 'timeDate' object from scratch, \cr
-    \code{timeSequence} creates a sequence of 'timeDate' objects,\cr
-    \code{timeCalendar} creates a 'timeData' object from calendar atoms,\cr
-    \code{Sys.timeDate} returns the current date and time as a 'timeDate' object.  
+    \code{timeDate} -- Creates a 'timeDate' object from scratch, \cr
+    \code{timeSequence} -- creates a sequence of 'timeDate' objects,\cr
+    \code{timeCalendar} -- creates a 'timeData' object from calendar atoms,\cr
+    \code{Sys.timeDate} -- returns the current date and time as a 'timeDate' object.  
     
     
     1. Creating a 'timeDate' object from scratch, some examples ...
@@ -196,8 +196,8 @@
     Math operations allow to add and subtract dates and times,
     and perform logical operations on 'timeDate' objects.\cr
             
-    \code{+} Performs + operation on 'timeDate' objects,\cr
-    \code{-} Performs - operation on 'timeDate' objects,\cr
+    \code{+} -- Performs + operation on 'timeDate' objects,\cr
+    \code{-} -- Performs - operation on 'timeDate' objects,\cr
     
     
     \preformatted{
@@ -233,8 +233,8 @@
     }
     
     
-    \code{diff.timeDate} Returns suitably lagged and iterated differences,\cr
-    \code{difftimeDate}Returns a difference of two 'timeDate' objects.
+    \code{diff.timeDate} -- Returns suitably lagged and iterated differences,\cr
+    \code{difftimeDate} -- Returns a difference of two 'timeDate' objects.
     
     
     \preformatted{
@@ -310,8 +310,8 @@
     \code{Ops} Group 'Ops' operations on 'timeDate' objects.\cr
     
     
-    %\code{blockStart} Creates start dates for equally sized blocks, \cr
-    %\code{blockEnd} Creates end dates for equally sized blocks.
+    %\code{blockStart} -- Creates start dates for equally sized blocks, \cr
+    %\code{blockEnd} -- Creates end dates for equally sized blocks.
      
 
     

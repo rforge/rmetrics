@@ -86,12 +86,6 @@ currentYear
     returns the system time as class \code{"timeDate"} object.
     \cr
 
-%     \code{is.timeDate}
-%     \cr
-%     returns \code{TRUE} or \code{FALSE} depending on whether its
-%     argument is of \code{timeDate} type or not.
-%     \cr
-
     \emph{print}
     \cr
     prints the financial center and date and time vector for a
@@ -278,21 +272,6 @@ Zivot, E., Wang J. (2003);
     Springer, New-York.
 }
 
-
-\seealso{
-
-    \code{timeDateCoercion}, \code{timeDateSpecDates}
-
-    We also recommend to inspect the help pages for the POSIX time and date
-    class, \code{\link{Dates}}, and the help pages from the contributed R packages
-    \code{chron} and \code{date}.
-}
-
-
-\author{
-    Diethelm Wuertz for the Rmetrics \R-port; some improvements: % bug fixes 
-    Martin Maechler.
-}
 
 \examples{
 ## timeDate -

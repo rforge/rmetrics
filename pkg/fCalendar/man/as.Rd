@@ -66,7 +66,9 @@
 
 
 \examples{
-## as.
+## as.character -
+   # Convert 'timeDate' to a character strings:
+   as.character(timeCalendar())
 }
 
 
