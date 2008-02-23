@@ -27,34 +27,30 @@
 
 
 ################################################################################
-# MEHODS:                   MATHEMATICAL OPERATIONS:
-#  diff.timeDate             Returns suitably lagged and iterated differences
+# MEHODS:                   DESCRIPTION:
+#  difftimeDate              Returns a difference of two 'timeDate' objects
 ################################################################################
 
 
-diff.timeDate <- 
-    function (x, lag = 1, differences = 1, ...) 
+difftimeDate <- 
+    function(time1, time2, 
+    units = c("auto", "secs", "mins", "hours", "days", "weeks")) 
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns suitably lagged and iterated differences
+    #   Takes a difference of two 'timeDate' objects
     
     # Arguments:
-    #   x - a 'timeDate' object.
-    #   lag - an integer indicating which lag to use, by 
-    #       default 1.
-    #   differences - an integer indicating the order of the 
-    #       difference, by default 1.
-    #   ... - further arguments to be passed to or from methods.
-  
+    #   time1, time2 - 'timeDate' objects.
+    #   units - a character string. The units in which the results 
+    #       are desired, one of the following: "auto", "secs", 
+    #       "mins", "hours", "days", "weeks"
+    
     # Value:
-    #   If 'x' is a vector of length 'n' and 'differences=1', then 
-    #   the computed result is equal to the successive differences
-    #   'x[(1+lag):n] - x[1:(n-lag)]'.
-    #   If 'difference' is larger than one this algorithm is applied
-    #   recursively to 'x'. Note that the returned value is a vector 
-    #   which is shorter than 'x'.
+    #   'difftimeDate' takes a difference of two 'timeDate' 
+    #   objects and returns an object of class 'difftime' with
+    #   an attribute indicating the units. 
 
     # FUNCTION:
     
@@ -63,16 +59,16 @@ diff.timeDate <-
     Sys.setenv(TZ = "GMT")
     
     # Convert to GMT:
-    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
-    ans = diff.POSIXt(as.POSIXct(GMT@Data), 
-        lag = lag, differences = differences, ...) 
-        
-    # Reset Timezone:
-    Sys.setenv(TZ = myTZ)
+    time1GMT = timeDate(time1, zone = time1@FinCenter, 
+        FinCenter = "GMT") 
+    time2GMT = timeDate(time2, zone = time2@FinCenter, 
+        FinCenter = "GMT") 
 
     # Return Value:
-    ans
+    Sys.setenv(TZ = myTZ)
+    difftime(time1GMT@Data, time2GMT@Data, tz = "GMT", units = units[1]) 
 }
+
 
     
 ################################################################################
