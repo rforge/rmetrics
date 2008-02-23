@@ -47,15 +47,15 @@
     standard as well as of the ANSI C and POSIX standards. Beyond
     these standards Rmetrics has added the "Financial Center" concept
     which allows to handle data records collected in different time 
-    zones and mix them up to have always the right time stamps
-    with respect to your personal financial center, or to the GMT
+    zones and mix them up to have always the proper time stamps with 
+    respect to your personal financial center, or alternatively to the GMT
     reference time. It can thus also handle time stamps from historical 
     data records from the same time zone, even if the financial 
     centers changed day light saving times at different calendar
     dates.
     
     Evenmore 'timeDate' is almost compatible with the 'timeDate'
-    class in Insightful's 'timeDate' class. Thus if you move between 
+    class in Insightful's SPlus 'timeDate' class. Thus if you move between 
     the two worlds of R and SPlus, you have not to rewrite your
     code, this is very important mainly for business applications.
     
@@ -185,51 +185,57 @@
         Sys.timeDate("Tokyo")
     }
 
-
+   
     % --------------------------------------------------------------------------
     \bold{Math Operations on 'timeDate' Objects:}
     
     
+    \emph{Adding and Subtracting 'timeDate' objects:}\cr
+    
+    
     Math operations allow to add and subtract dates and times,
     and perform logical operations on 'timeDate' objects.\cr
-    
-    
-    \describe{
-        \item{\code{Ops}}{\cr
-            Group 'Ops' operations on 'timeDate' objects,
-            }
-        \item{\code{+}}{\cr
-            Performs + operation on 'timeDate' objects,
-            }
-        \item{\code{-}}{\cr
-            Performs - operation on 'timeDate' objects.
-            }
-    }
             
-            
-    \code{Ops} Group 'Ops' operations on 'timeDate' objects,\cr
     \code{+} Performs + operation on 'timeDate' objects,\cr
     \code{-} Performs - operation on 'timeDate' objects,\cr
     
     
     \preformatted{
-        
-        # Date and Time now:
+        # Date and Time Now:
         now = Sys.timeDate()
         
         # One hour later:
-        now - 3600
-
+        now + 3600
+        
     }
     
     
+    \emph{Rounding and Truncating 'timeDate' objects:}\cr
     
-    \code{round.timeDate} Rounds objects of class 'timeDate',\cr
-    \code{trunc.timeDate} Truncates objects of class 'timeDate'. 
+    
+    Dates and times can be truncated with the help of the functions:\cr
+    
+    \code{round} -- rounds objects of class 'timeDate',\cr
+    \code{trunc} -- truncates objects of class 'timeDate'. 
+    
+    \preformatted{
+        # Create a Monthly Sequence with Random Time Stamps
+        tR = timeCalendar() + runif(12, 0, 24*3600)
+
+        # Round to the nearest hour:
+        round(tR, "h")
+        
+        # Truncate by hour
+        trunc(tR, "h")
+        
+        # Truncate to the Next Full Hour
+        trunc(tR + 3600, "h")
+    }
     
     
     \code{diff.timeDate} Returns suitably lagged and iterated differences,\cr
     \code{difftimeDate}Returns a difference of two 'timeDate' objects.
+    
     
     \preformatted{
         # Current Time Difference between Zurich and Tokyo:
@@ -239,91 +245,132 @@
     
     
     % --------------------------------------------------------------------------
-    \emph{Subsetting 'timeDate' Objects:}
+    \bold{Subsetting 'timeDate' Objects:}
+    
     
     Subsetting a 'timeDate' is a very important issue in the management of 
     dates and times. Rmetrics offers several functions which are usefule in 
     this context:\cr
     
-    \code{[} \tab Extracts or replaces subsets from 'timeDate' objects, \cr
-    \code{window, cut} \tab extract a piece from a 'timeDate' object, \cr
-    \code{start} \tab extracts the first entry of a 'timeDate' object, \cr
-    \code{end} \tab extracts the last entry of a 'timeDate' object, \cr
-    \code{length} \tab returns the length of a 'timeDate' object. \cr 
+    
+    \code{[} -- Extracts or replaces subsets from 'timeDate' objects, \cr
+    \code{window, cut} -- extract a piece from a 'timeDate' object, \cr
+    \code{start} -- extracts the first entry of a 'timeDate' object, \cr
+    \code{end} -- extracts the last entry of a 'timeDate' object, \cr
+    \code{length} -- returns the length of a 'timeDate' object. \cr 
     
     
     \preformatted{
-        tC = timeCalendar()
+        # Create Monthly Calendar for next year
+        tC = timeCalendar(currentYear + 1)
         tC
         
-        # The first quarter - Several alternative Solutions:
+        # The first Quarter - Several Alternative Solutions:
         tC[1:3]
         tC[-(4:length(tC))]
-        window(tC, "2001-01-01", "2001-03-31")
-        cut(tC, "2001-01-01", "2001-03-31")
+        window(tC, start = tC[1], end = tC[3])
+        cut(tC, from = tC[1], to = tC[3])
         
-        # The quarterly series:
+        # The Quarterly Series:
         tC[seq(3, 12, by = 3)]
         
-        # Start, end and length of a 'timeDate' object
+        # Start, end and length of 'timeDate' objects
         start(tC)
         end(tC)
-        length(tC)
+        length(tC)    
     }
     
     
-    \code{blockStart} Creates start dates for equally sized blocks, \cr
-    \code{blockEnd} Creates end dates for equally sized blocks.
+    Weekdays, weekends, business days, and holidays can easily be
+    subsetted using the following functions:\cr
+    
+    \code{isWeekday} -- tests if a date is a weekday or not, \cr
+    \code{isWeekend} -- tests if a date is a weekend day or not, \cr
+    \code{isBizday} -- tests if a date is a business day or not, \cr
+    \code{isHoliday} -- tests if a date is a holiday day or not \cr
+    
+    \preformatted{
+        # A 'timeDate' Sequence around Easter 2008
+        Easter(2008)
+        tS <- timeSequence(Easter(2008, -14), Easter(2008, +14))
+        tS
+        
+        # Subset weekdays and business days:
+        tW <- tS[isWeekday(tS)]; tW
+        getDayOfWeek(tW)
+        tB <- tS[isBizday(tS, holidayZURICH())]; tB
+        getDayOfWeek(tB)
+        
+    }
+    
+    
+    \emph{Subsetting by logical operations:}\cr
+    
+    
+    \code{Ops} Group 'Ops' operations on 'timeDate' objects.\cr
+    
+    
+    %\code{blockStart} Creates start dates for equally sized blocks, \cr
+    %\code{blockEnd} Creates end dates for equally sized blocks.
      
 
     
     % --------------------------------------------------------------------------
-    \emph{Coercion and Transformations of 'timeDate' Objects:}
+    \bold{Coercion and Transformations of 'timeDate' Objects:}
     
     
     There exist several methods to coerce and transform \code{timeDate}
     objects into other objects:
     
 
-    \code{as.timeDate} Implements Use Method,\cr
-    \code{timeDate.default} default Method,\cr
-    \code{as.timeDate.POSIXt} returns a 'POSIX' object as 'timeDate' object,\cr
-    \code{as.timeDate.Date} returns a 'POSIX' object as 'timeDate' object. 
+    \code{as.timeDate} -- Implements Use Method,\cr
+    \code{timeDate.default} -- default Method,\cr
+    \code{as.timeDate.POSIXt} -- returns a 'POSIX' object as 'timeDate' object,\cr
+    \code{as.timeDate.Date} -- returns a 'POSIX' object as 'timeDate' object. 
     
 
-    \code{as.character.timeDate} Returns a 'timeDate' object as 'character' string,\cr
-    \code{as.double.timeDate} returns a 'timeDate' object as 'numeric' object,\cr
-    \code{as.data.frame.timeDate} returns a 'timeDate' object as 'data.frame' object,\cr
-    \code{as.POSIXct.timeDate} returns a 'timeDate' object as 'POSIXct' object,\cr
-    \code{as.POSIXlt.timeDate} returns a 'timeDate' object as 'POSIXlt' object,\cr
-    \code{as.Date.timeDate} returns a 'timeDate' object as 'Date' object. 
+    \code{as.character.timeDate} -- Returns a 'timeDate' object as 'character' string,\cr
+    \code{as.double.timeDate} -- returns a 'timeDate' object as 'numeric' object,\cr
+    \code{as.data.frame.timeDate} -- returns a 'timeDate' object as 'data.frame' object,\cr
+    \code{as.POSIXct.timeDate} -- returns a 'timeDate' object as 'POSIXct' object,\cr
+    \code{as.POSIXlt.timeDate} -- returns a 'timeDate' object as 'POSIXlt' object,\cr
+    \code{as.Date.timeDate} -- returns a 'timeDate' object as 'Date' object. 
 
 
     % --------------------------------------------------------------------------
-    \emph{Concatenation, Ordering, and Sorting of timeDate Objects:}
+    \bold{Concatenation, Ordering, and Sorting of timeDate Objects:}
     
     
     'timeDate' objects can be concatenated, replicated, sorted and
-    resampled, unified and reverted. The generic functions to do that are:
+    resampled, unified and reverted. The generic functions to do that 
+    are:\cr
 
-    \code{c} Concatenates 'timeDate' objects,\cr
-    \code{rep} Replicates a 'timeDate' object,\cr
-    \code{sort} Sorts a 'timeDate' object,\cr
-    \code{sample} Resamples a 'timeDate' object,\cr
-    \code{unique} Makes a 'timeDate' object unique,\cr
-    \code{rev} Reverts a 'timeDate' object. 
+    \code{c} -- Concatenates 'timeDate' objects,\cr
+    \code{rep} -- Replicates a 'timeDate' object,\cr
+    \code{sort} -- Sorts a 'timeDate' object,\cr
+    \code{sample} -- Resamples a 'timeDate' object,\cr
+    \code{unique} -- Makes a 'timeDate' object unique,\cr
+    \code{rev} -- Reverts a 'timeDate' object. 
     
-    Here are same examples:
+    NOTE: Concatenating 'timeDate' objects takes care on possible different
+    financial centers belongig to each object to be concatenated. In such
+    a case, the time stamps will all be transformed to the financial
+    center of the first tamp stamp used in conatenation:\cr 
+
     
     \preformatted{
-        # Compose Character Vector of Dates:
-        Dates <- c("1989-09-28","2001-01-15","2004-08-30","1990-02-09")
-        Times <- c(  "23:12:55",  "10:34:02",  "08:30:00",  "11:18:23")
-        charvec = paste(Dates, Times)
-        
         # Concatenate the local timpe stamps to Zurich time ...
-        ZH = timeDate(charvec, FinCenter = "Zurich")
-        NY = timeDate(charvec, FinCenter = "NewYork")
+        ZH = timeDate("2008-01-01 16:00:00", zone = "GMT", FinCenter = "Zurich")
+        NY = timeDate("2008-01-01 18:00:00", zone = "GMT", FinCenter = "NewYork")
+        c(ZH, NY)
+        c(NY, ZH)
+        
+        tC = timeCalendar(); tC
+        tS = sample(tC); tS
+        tO = sort(tS); tO
+        tV = rev(tO); tV
+        tU = unique(c(tS, tS)); tU
+        
     }
     
 
@@ -354,19 +401,51 @@
         
         # Show Daylight Saving Time for Zurich
         Zurich()
+        
     }
 }
+
 
 \section{3. Holidays and Holiday Calendars}{
 
 
+    Complications begin when we need to know which of the dates business 
+    dates and which are weekends and holidays. This results in difficult 
+    programming tasks, not difficult in an algorithmic sense, but difficult 
+    because it can become tedious to implement the rules of the calendar 
+    themselves, for example the date of Easter.
+
+    In the following we briefly summarize the functions which allow to 
+    calculate the dates of ecclesiastical and public holidays. With the 
+    help of these functions we can create business and holiday calendars.
+
+    
     % --------------------------------------------------------------------------
-    \emph{Holidays:}
+    \bold{Holidays:}
     
+    
+    Holidays may have two origins, ecclesiastical and public/federal. The 
+    ecclesiastical calendars of Christian churches are based on cycles 
+    of moveable and immoveable feasts. Christmas, December 25, is the 
+    principal immoveable feast. Easter is the principal moveable feast, 
+    and dates of most other moveable feasts are determined with respect 
+    to Easter. However, the moveable feasts of the Advent and Epiphany 
+    seasons are Sundays reckoned from Christmas and the Feast of the Epiphany, 
+    respectively.
+    
+    
+    \preformatted{
+        # List Holidays available in Rmetrics
+        listHolidays()
+        
+        # The date of Easter for the next 5 years:
+        Easter(currentYear:(currentYear+5))
+        
+    }
     
     
     % --------------------------------------------------------------------------
-    \emph{Holiday Calendars:}
+    \bold{Holiday Calendars:}
     
     
     \code{holidayZURICH}\cr

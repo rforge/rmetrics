@@ -5,8 +5,6 @@
 \alias{Ops.timeDate}
 \alias{+.timeDate}
 \alias{-.timeDate}
-\alias{diff.timeDate}
-\alias{difftimeDate}
 \alias{round.timeDate}
 \alias{trunc.timeDate}
 
@@ -27,8 +25,6 @@
     \code{Ops.timeDate} \tab Group 'Ops' generic functions for 'timeDate' objects, \cr
     \code{+.timeDate} \tab Performs arithmetic + operation on 'timeDate' objects, \cr
     \code{-.timeDate} \tab Performs arithmetic - operation on 'timeDate' objects, \cr
-    \code{diff.timeDate} \tab Returns suitably lagged and iterated differences, \cr
-    \code{difftimeDate} \tab Returns a difference of two 'timeDate' objects, \cr
     \code{round.timeDate} \tab Rounds objects of class 'timeDate', \cr
     \code{trunc.timeDate} \tab Truncates objects of class 'timeDate'. }
        
@@ -37,11 +33,10 @@
 
 \usage{
 \method{Ops}{timeDate}(e1, e2)
+
 \method{+}{timeDate}(e1, e2)
 \method{-}{timeDate}(e1, e2)
-\method{diff}{timeDate}(x, lag = 1, differences = 1, \dots)
-difftimeDate(time1, time2, 
-    units = c("auto", "secs", "mins", "hours", "days", "weeks"))
+
 \method{round}{timeDate}(x, digits = c("days", "hours", "mins")) 
 \method{trunc}{timeDate}(x, units = c("days", "hours", "mins"), ...)     
 }
@@ -49,12 +44,7 @@ difftimeDate(time1, time2,
 
 \arguments{
   
-    \item{differences}{
-        [diff] - \cr
-        an integer indicating the order of the difference.
-        }
     \item{digits, units}{
-        [difftimeDate][round][trunc] -\cr
         a character string denoting the date/time units in which the 
         results are desired.
         }
@@ -63,22 +53,8 @@ difftimeDate(time1, time2,
         usually objects of class \code{timeDate}, in the case of
         addition and subtraction \code{e2} may be of class
         \code{numeric}.
-        }
-    \item{lag}{
-        [lag] - \cr
-        an integer indicating which lag to use.  
-        }
-    \item{method}{
-        [modify] - \cr
-        a character string defining the modification method, one of
-        \code{"sort"}, \code{"round"}, or \code{"trunc"}. 
-        }     
-    \item{time1, time2}{
-        [difftime] - \cr
-        two objects objects of class \code{timeDate}.
-        }
+        }    
     \item{x}{
-        [diff][round][trunc] -\cr
         an object of class \code{timeDate}.
         }  
     \item{\dots}{
@@ -113,12 +89,6 @@ difftimeDate(time1, time2,
     recursively to \code{x}. Note that the returned value is a vector 
     which is shorter than \code{x}.
     
-    \code{difftimeDate}
-    \cr
-    The function, \code{difftimeDate}, takes a difference of two 
-    \code{timeDate} objects and returns an object of class \code{"difftime"} 
-    with an attribute indicating the units.
-    
     \code{round.timeDate}\cr
     \code{trunc.timeDate}
     \cr
@@ -138,13 +108,6 @@ difftimeDate(time1, time2,
     We also recommend to inspect the help pages for the POSIX time and date 
     class, \code{?Dates}, and the help pages from the contributed R packages
     \code{chron} and \code{date}.
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

@@ -4,7 +4,6 @@
 \title{timeDate Class}
 
 
-\alias{currentYear}
 \alias{myUnits}
 
 \alias{show.timeDate}
