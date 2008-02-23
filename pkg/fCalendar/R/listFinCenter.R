@@ -27,15 +27,10 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL CENTERS:
-#  myFinCenter               Sets my financial center
-#  rulesFinCenter            Returns DST rules for a financial center
+# FUNCTION:                 DESCRIPTION:
 #  listFinCenter             Lists all supported financial centers
 #  .FinCenterList            The list with FinCenter names
 ################################################################################
-
-
-myFinCenter = "GMT"
 
 
 listFinCenter <-
