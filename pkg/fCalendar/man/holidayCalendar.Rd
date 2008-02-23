@@ -55,17 +55,6 @@ holidayTSX(year = currentYear)
 }
 
 
-\references{
-
-ISO-8601 (1988); 
-    \emph{Data Elements and Interchange Formats -
-    Information Interchange, Representation of Dates and Time},
-    International Organization for Standardization,
-    Reference Number ISO 8601, 14 pages.
-
-}
-
-
 \examples{
 ## holidayNYSE -
    holidayNYSE(currentYear)

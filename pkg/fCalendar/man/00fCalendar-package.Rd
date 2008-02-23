@@ -437,27 +437,81 @@
     \bold{Setting Financial Centers}
     
     
+    All time stamps are handled according to the time zone and daylight
+    saving time rules specified by the center through the variable
+    \code{myFinCenter}. This variable is set by default \code{"GMT"}
+    but can be changed to your local financial center or to any other
+    financial center you want to use. 
+    
+    NOTE: A setting of the financial center to a continent/city which 
+    lies outsite of the time zone used by your computer does not change
+    any time settings or environment variables used by your computer.
+    
+    To change the name of a financial center from one setting to another
+    just assign to the variable \code{myFinCenter} the desired name
+    of the city:
+    
+    Examples:
+    \preformatted{
+        # What is my current Financial Center ?
+        print(myFinCenter)
+
+        # Change to Zurich:
+        myFinCenter = "Zurich"
+        
+    }
+    
+    From now on all dates and times are handled within the middle European 
+    time zone and the DST ruled which are valid for Zurich.
+
+    
     \bold{List of Financial Centers}
+    
+    There are many other financial centers supported by Rmetrics. They
+    can be displayed by the function \code{listFinCenter}. One can also
+    display partial lists, using wildcards and regular expressions:
     
     
     Examples:
     \preformatted{
-        # What is my current Financial Center - Set it to "GMT" 
-        print(myFinCenter)
-        myFinCenter = "GMT"
-        
-        # List the Financial Centers Worldwide:
+        # List all supported Financial Centers Worldwide:
         listFinCenter()
         
         # List European Financial Centers:
-        listFinCenter("Europe")
-        
-        # Show Daylight Saving Time for Zurich
-        Zurich()
+        listFinCenter("Europe/*")
         
     }
     
     \bold{DST Rules}
+    
+    
+    For each financial center a file is availalble which keeps the
+    information on time zones and DST rule. Such an object is 
+    represented by a data.frame with 4Columns:
+    
+    \preformatted{
+                         Zurich offSet isdst TimeZone
+        ...
+        62  2008-03-30 01:00:00   7200     1     CEST
+        63  2008-10-26 01:00:00   3600     0      CET
+        ...
+        }
+    
+    The first column tolds us, when time was changes, the second
+    gives us the offset to "GMT", the third columns returns the
+    daylight savings time flag which is positive if in force, zero 
+    if not, and negative if unknown. The last column gives the name
+    of the time zone. have a look on the whole file: \cr
+
+       
+    Examples:
+    \preformatted{
+        # Show the DST Rules for Zurich:
+        Zurich()
+        
+        # List European Financial Centers:
+        listFinCenter("Europe/*")
+    }
     
 }
 
@@ -527,7 +581,31 @@
 }
 
 
+\references{
 
+Bateman R., (2000);
+    \emph{Time Functionality in the Standard C Library},
+    Novell AppNotes, September 2000 Issue, 73--85.
+
+ISO-8601, (1988);
+    \emph{Data Elements and Interchange Formats -
+    Information Interchange, Representation of Dates and Time},
+    International Organization for Standardization,
+    Reference Number ISO 8601, 14 pages.
+
+James D.A., Pregibon D. (1992),
+    \emph{Chronological Objects for Data Analysis},
+    Reprint.
+
+Ripley B.D., Hornik K. (2001);
+    \emph{Date-Time Classes},
+    R-News, Vol. 1/2 June 2001, 8--12.
+
+Zivot, E., Wang J. (2003);
+    \emph{Modeling Financial Time Series with S-Plus},
+    Springer, New-York.
+    
+}
 
 
 \keyword{package}

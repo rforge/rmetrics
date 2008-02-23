@@ -62,31 +62,5 @@
 }  
 
 
-\references{
-
-Bateman R., (2000);
-    \emph{Time Functionality in the Standard C Library},
-    Novell AppNotes, September 2000 Issue, 73--85.
-
-ISO-8601, (1988);
-    \emph{Data Elements and Interchange Formats -
-    Information Interchange, Representation of Dates and Time},
-    International Organization for Standardization,
-    Reference Number ISO 8601, 14 pages.
-
-James D.A., Pregibon D. (1992),
-    \emph{Chronological Objects for Data Analysis},
-    Reprint.
-
-Ripley B.D., Hornik K. (2001);
-    \emph{Date-Time Classes},
-    R-News, Vol. 1/2 June 2001, 8--12.
-
-Zivot, E., Wang J. (2003);
-    \emph{Modeling Financial Time Series with S-Plus},
-    Springer, New-York.
-}
-
-
 \keyword{chron}
 

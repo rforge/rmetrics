@@ -454,13 +454,6 @@
 }
 
 
-\author{
-
-    Diethelm Wuertz & Yohan Chalabi for the Rmetrics \R-port.
-    
-}
-
-
 \examples{
 ## DST Rules for Zurich:
    head(Zurich())
@@ -469,3 +462,4 @@
 
 
 \keyword{data}
+
