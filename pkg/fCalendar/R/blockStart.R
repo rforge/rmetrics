@@ -29,26 +29,59 @@
 
 ################################################################################
 # MEHODS:                   DESCRIPTION:
-#  sample.timeDate           Resamples a 'timeDate' object
+#  blockStart                Creates start dates for equally sized blocks
+#  blockEnd                  Creates end dates for equally sized blocks
 ################################################################################
 
 
-sample.timeDate <- 
-    function(x, ...)
+blockStart <- 
+    function(x, block = 20)
 {   
     # A function implemented by Diethelm Wuertz
-  
+
+    # Description:
+    #   Computes start dates for numeric blocks of dates
+    
+    # Example:
+    #   blockEnd(timeSequence(), block = 30)
+
     # FUNCTION:
     
-    # Sample:
-    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    charvec = sample(as.character(GMT@Data), ...)
-    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    # Start Dates of Blocks:
+    nx = length(as.character(x))
+    fromIdx = seq(1, nx, by = block)
+    from = x[fromIdx]
     
     # Return Value:
-    ans
+    from
 }
 
+# ------------------------------------------------------------------------------
+
+
+blockEnd <- 
+    function(x, block = 20)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes start dates for numeric blocks of dates
     
+    # Example:
+    #   blockEnd(timeSequence(), block = 30)
+
+    # FUNCTION:
+    
+    # End Dates of Blocks:
+    nx = length(as.character(x))
+    fromIdx = seq(1, nx, by = block)
+    toIdx = c(fromIdx[-1]-1, nx)
+    to = x[toIdx]
+    
+    # Return Value:
+    to
+}
+
+
 ################################################################################
 

@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                 HOLIDAY CALENDAR FUNCTIONS:
+# FUNCTION:                 DESCRIPTION:
 #  holidayZURICH             Returns holidays for ZURICH calendar
 ################################################################################
      

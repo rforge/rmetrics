@@ -15,10 +15,10 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
+# for this R-port: 
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@phys.ethz.ch>
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# METHODS:                  DESCRIPTION:
+# FUNCTION:                 DESCRIPTION:
 #  plot.timeDate             Plots 'timeDate' object
 #  points.timeDate           Adds points to a 'timeDate' plot
 #  lines.timeDate            Adds lines to a 'timeDate' plot

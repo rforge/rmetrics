@@ -36,9 +36,10 @@
 ################################################################################
 
 
-"[.timeDate" =
-function(x, ..., drop = TRUE)
-{   # A function implemented by Diethelm Wuertz
+"[.timeDate" <-
+    function(x, ..., drop = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Extracts or replaces subsets from 'timeDate' objects
@@ -78,7 +79,7 @@ function(x, ..., drop = TRUE)
 
 
 blockStart <- 
-function(x, block = 20)
+    function(x, block = 20)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -102,9 +103,10 @@ function(x, block = 20)
 # ------------------------------------------------------------------------------
 
 
-blockEnd =
-function(x, block = 20)
-{   # A function implemented by Diethelm Wuertz
+blockEnd <- 
+    function(x, block = 20)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes start dates for numeric blocks of dates

@@ -16,9 +16,9 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
+#   1999 - Diethelm Wuertz, GPL
+#   2007 - Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@phys.ethz.ch>
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,16 +28,17 @@
 
 
 ################################################################################
-# MEHODS:                   MATHEMATICAL OPERATIONS:
+# MEHODS:                   DESCRIPTION:
 #  Ops.timeDate              Group 'Ops' operations on 'timeDate' objects
 #  +.timeDate                Performs + operation on 'timeDate' objects
 #  -.timeDate                Performs - operation on 'timeDate' objects
 ################################################################################
 
 
-Ops.timeDate = 
-function(e1, e2)
-{   # A function implemented by Diethelm Wuertz
+Ops.timeDate <- 
+    function(e1, e2)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Uses group 'Ops' generic functions for 'timeDate' objects
@@ -80,9 +81,10 @@ function(e1, e2)
 # ------------------------------------------------------------------------------
 
 
-"+.timeDate" =
-function(e1, e2)
-{   # A function implemented by Diethelm Wuertz
+"+.timeDate" <- 
+    function(e1, e2)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Performs arithmetic "+" operation on 'timeDate' objects.
@@ -122,9 +124,10 @@ function(e1, e2)
 # ------------------------------------------------------------------------------
 
 
-"-.timeDate" = 
-function(e1, e2)
-{   # A function implemented by Diethelm Wuertz
+"-.timeDate" <-  
+    function(e1, e2)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Performs arithmetic "-" operation on 'timeDate' objects

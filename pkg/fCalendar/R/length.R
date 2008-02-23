@@ -29,26 +29,33 @@
 
 ################################################################################
 # MEHODS:                   DESCRIPTION:
-#  sample.timeDate           Resamples a 'timeDate' object
+#  length.timeDate           Gets the length of a 'timeDate' object
 ################################################################################
 
 
-sample.timeDate <- 
-    function(x, ...)
+length.timeDate <- 
+    function(x) 
 {   
     # A function implemented by Diethelm Wuertz
-  
+
+    # Description:
+    #   Gets the length of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns the lengths of an object of class 'timeDate'.
+
     # FUNCTION:
     
-    # Sample:
-    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    charvec = sample(as.character(GMT@Data), ...)
-    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    # Length:
+    ans = length(x@Data)
     
     # Return Value:
     ans
 }
 
-    
+
 ################################################################################
 
