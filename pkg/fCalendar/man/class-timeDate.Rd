@@ -165,7 +165,7 @@
     different representations. Included are methods to transform 
     \code{timeDate} objects to character strings, to data frames, 
     to POSIXct or POSIXlt objects, to \code{\link{julian}}
-    counts. One can extract date/time \code{\link{atoms}} from calendar 
+    counts. One can extract date/time \code{atoms} from calendar 
     dates, and the \code{\link{months}} atoms from a \code{timeDate} 
     object.
     

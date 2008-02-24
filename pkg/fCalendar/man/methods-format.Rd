@@ -42,6 +42,8 @@
 
     \code{as.character}.
 
+}
+    
 
 \examples{
 ## timeCalendar -

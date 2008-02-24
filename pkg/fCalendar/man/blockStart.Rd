@@ -38,9 +38,10 @@ blockEnd(x, block = 20)
 
     The functions \code{blockStart} and \code{blockEnd} create vectors 
     of start and end values for equally sized 'timeDate' blocks. Note,
-    \block{block} is an event counter and not a time counter between
-    start and end dates! For equally sized blocks in time one has 
-    before to align the time stamps in equal time differences.
+    the functions are event counters and not a time counter between
+    measuring time intervals between start and end dates! For equally 
+    sized blocks in time one has before to align the time stamps in equal 
+    time differences.
     
 }
 

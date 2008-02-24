@@ -41,7 +41,7 @@ timeDate(charvec = Sys.timeDate(), format = NULL,
 
 \value{
 
-    returns an object of class \code{"timeDate"}.
+    returns an object of class \code{timeDate}.
 
 }
 

@@ -2,7 +2,7 @@
 
 
 \alias{firstDay}
-
+\alias{lastDay}
 
 \alias{timeFirstDayInMonth}
 \alias{timeLastDayInMonth}
@@ -53,32 +53,17 @@ timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter,
 }
 
 
-\details{
-
-    We have implemented functions to generate special \code{"timeDate"} 
-    sequences. These are functions to compute the last day in a given 
-    month and year.
-    
-    See also the functions to compute the dates in a month that is a 
-    n-day on or after a given date, to compute the dates in a month that 
-    is a n-day on or before a specified date, to compute the n-th ocurrances 
-    of a n-day for a specified year/month vectors, and finally to compute 
-    the last n-day for a specified year/month value or vector. n-days
-    are numbered from 0 to 6 where 0 correspond to the Sunday and 6 to 
-    the Saturday.
-
-}
-
-
 \value{
 
+    returns an object of class \code{timeDate}.
+    
     For the functions \code{timeLastDayInMonth} and \code{timeLastDayInMonth}
     return the last or first day respectively in a given month and year.
     
     The same functionality for quarterly time horizons is returned by the
     functions \code{timeLastDayInQuarter} and \code{timeLastDayInQuarter}.
    
-    The returned values are objects of class \code{timeDate}.
+    
     
 }
 
