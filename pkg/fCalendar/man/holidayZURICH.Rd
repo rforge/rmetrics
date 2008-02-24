@@ -35,11 +35,23 @@ holidayZURICH(year = currentYear)
 }
 
 
-\examples{
-## holidayZurich -
-   holidayZurich()
-   holidayZurich(2008-2010)
+\details{
+
+    The Zurich holiday calendar includes the following holidays:
+    NewYearsDay, GoodFriday, EasterMonday, 
+    LaborDay, PentecostMonday, ChristmasDay, 
+    BoxingDay, CHBerchtoldsDay, CHSechselaeuten, 
+    CHAscension, CHConfederationDay, CHKnabenschiessen.
+
 }
+
+
+\examples{
+## holidayZURICH -
+   holidayZURICH()
+   holidayZURICH(2008:2010)
+}
+
 
 \keyword{chron}
 

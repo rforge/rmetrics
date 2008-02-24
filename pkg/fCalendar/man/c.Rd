@@ -42,17 +42,15 @@
 
 
 \examples{
-## c -
+## timeCalendar -
    # Create Character Vectors:
-   dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
-   dts
-   tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
-   tms
+   GMT = timeCalendar(zone = "GMT", FinCenter = "GMT") + 16*3600
+   ZUR = timeCalendar(zone = "GMT", FinCenter = "Zurich") + 16*3600
    
 ## c - 
    # Concatenate and Replicate timeDate Objects:
-   c(GMT[1:2], ZUR[1:2])
-   c(ZUR[1:2], GMT[1:2]) 
+   sort(c(GMT, ZUR))
+   sort(c(ZUR, GMT))
 }
 
 

@@ -50,8 +50,8 @@ rulesFinCenter(FinCenter = myFinCenter)
 
 
 \examples{
-## rulesFincenter - 
-   rulesFincenter(Zurich)
+## rulesFinCenter - 
+   rulesFinCenter("Zurich")
 }
 
 
