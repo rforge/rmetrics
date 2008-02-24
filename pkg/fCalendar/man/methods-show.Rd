@@ -15,5 +15,11 @@
 }
 
 
+\examples{
+## print | show -
+   print(timeCalendar())
+}
+
+
 \keyword{chron}
 
