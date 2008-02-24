@@ -4,7 +4,7 @@
 \title{Frequency of date/time Units}
 
 
-\alias{currentYear}
+\alias{myUnits}
 
 
 \description{
