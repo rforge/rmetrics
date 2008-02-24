@@ -30,9 +30,6 @@
 ################################################################################
 # MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
-#  blockStart                Creates start dates for equally sized blocks
-#  blockEnd                  Creates end dates for equally sized blocks
-#  length.timeDate           Gets the length of a 'timeDate' object
 ################################################################################
 
 
@@ -73,85 +70,6 @@
         format = x@format,
         FinCenter = x@FinCenter)      
 }   
-
-
-# ------------------------------------------------------------------------------
-
-
-blockStart <- 
-    function(x, block = 20)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes start dates for numeric blocks of dates
-    
-    # Example:
-    #   blockEnd(timeSequence(), block = 30)
-
-    # FUNCTION:
-    
-    # Start Dates of Blocks:
-    nx = length(as.character(x))
-    fromIdx = seq(1, nx, by = block)
-    from = x[fromIdx]
-    
-    # Return Value:
-    from
-}
-
-# ------------------------------------------------------------------------------
-
-
-blockEnd <- 
-    function(x, block = 20)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes start dates for numeric blocks of dates
-    
-    # Example:
-    #   blockEnd(timeSequence(), block = 30)
-
-    # FUNCTION:
-    
-    # End Dates of Blocks:
-    nx = length(as.character(x))
-    fromIdx = seq(1, nx, by = block)
-    toIdx = c(fromIdx[-1]-1, nx)
-    to = x[toIdx]
-    
-    # Return Value:
-    to
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-length.timeDate <- 
-    function(x) 
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Gets the length of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns the lengths of an object of class 'timeDate'.
-
-    # FUNCTION:
-    
-    # Length:
-    ans = length(x@Data)
-    
-    # Return Value:
-    ans
-}
 
 
 ################################################################################

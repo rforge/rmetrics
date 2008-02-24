@@ -51,18 +51,18 @@ start.timeDate <-
     
     # FUNCTION:
     
-    # Set Timezone to GMT:
+    # First Time Stamp:
     myTZ = Sys.getenv("TZ")  
     Sys.setenv(TZ = "GMT")
     
     # First element:
     xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
     z = as.numeric(as.POSIXct(xGMT))
-    order(z)[1]
+    ans = sort(z)[1]
     
     # Return Value:
     Sys.setenv(TZ = myTZ)
-    x[1]
+    ans
 }
 
 
@@ -92,11 +92,11 @@ end.timeDate <-
     # Last element:
     xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
     z = as.numeric(as.POSIXct(xGMT))
-    n = order(z)[length(z)]
+    ans = sort(z)[length(z)]
     
     # Return Value:
     Sys.setenv(TZ = myTZ)
-    x[n]
+    ans
 }
 
 
