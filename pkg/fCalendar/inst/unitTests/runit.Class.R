@@ -173,8 +173,8 @@ function()
 # ------------------------------------------------------------------------------
  
   
-test.whichFormat = 
-function()
+test.whichFormat <-  
+    function()
 {
     # Which Format:
     WF = .whichFormat("20010101")

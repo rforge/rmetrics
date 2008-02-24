@@ -27,53 +27,11 @@
 #   see Rmetrics's copyright file
 
 
-
-################################################################################
-# S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
-#  as.timeDate            Use Method
-#  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
-#  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
-# S3 METHOD:             DESCRIPTION:
-#  as.character.timeDate  Returns a 'timeDate' object as 'character' string
-#  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
-#  as.data.frame.timeDate Returns a 'timeDate' object as 'data.frame' object
-#  as.POSIXct.timeDate    Returns a 'timeDate' object as 'POSIXct' object
-#  as.POSIXlt.timeDate    Returns a 'timeDate' object as 'POSIXlt' object
-#  as.Date.timeDate       Returns a 'timeDate' object as 'Date' object
-# S3 METHOD:             DESCRIPTION:
-#  julian.timeDate        Returns Julian day counts since 1970-01-01
-#  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
-#  months.timeDate        Extract months atom from a 'timeDate' object
 ################################################################################
 
- 
-test.toTimeDate = 
-function()
-{
-    #  as.timeDate            Use Method
-    #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
-    #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
-    
-    # Current Time:
-    as.timeDate(Sys.time())
-    
-    # Coerce:
-    myFinCenter <<- "GMT"
-    Sys.Date()
-    as.timeDate(Sys.Date())
-    as.timeDate(Sys.Date(), zone = myFinCenter, FinCenter = myFinCenter)
-    as.timeDate(Sys.Date(), zone = "Zurich", FinCenter = "Zurich")
-    
-    # Return Value:
-    return()     
-} 
 
-
-# ------------------------------------------------------------------------------
-
-
-test.fromTimeDate = 
-function()
+test.as  
+    function()
 {
     #  as.character.timeDate  Returns a 'timeDate' object as 'character' string
     #  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
@@ -142,13 +100,34 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.extractTimeDate = 
-function()
+test.asTimeDate = 
+    function()
+{
+    #  as.timeDate            Use Method
+    #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
+    #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
+    
+    # Current Time:
+    as.timeDate(Sys.time())
+    
+    # Coerce:
+    myFinCenter <<- "GMT"
+    Sys.Date()
+    as.timeDate(Sys.Date())
+    as.timeDate(Sys.Date(), zone = myFinCenter, FinCenter = myFinCenter)
+    as.timeDate(Sys.Date(), zone = "Zurich", FinCenter = "Zurich")
+    
+    # Return Value:
+    return()     
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.julian <-  
+    function()
 {    
-    #  julian.timeDate        Returns Julian day counts since 1970-01-01
-    #  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
-    #  months.timeDate        Extract months atom from a 'timeDate' object
-                      
     # julian.timeDate = function(x, FinCenter = myFinCenter, ...)
     myFinCenter <<- "GMT"
     GD = timeDate("1970-01-01 00:00:00", zone = "GMT", FinCenter = "GMT")
@@ -157,14 +136,52 @@ function()
     J
     class(J)  
     checkIdentical(as.numeric(J), 0)
-      
+        
+    # Return Value:
+    return()             
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.atoms <- 
+    function()
+{    
     # atoms.timeDate = function(x, ...)
     TC = timeCalendar()
     AT = atoms(TC)  
-    AT             
+    AT 
+                
     # months.timeDate = function(x, abbreviate = NULL)
     MO = months(TC) 
     MO
+    
+    # Compare:
+    checkIdentical(as.vector(AT[, 2]), as.vector(MO))    
+
+        
+    # Return Value:
+    return()             
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.months <- 
+    function()
+{                         
+    # atoms.timeDate = function(x, ...)
+    TC = timeCalendar()
+    AT = atoms(TC)  
+    AT
+                 
+    # months.timeDate = function(x, abbreviate = NULL)
+    MO = months(TC) 
+    MO
+    
+    # Compare:
     checkIdentical(as.vector(AT[, 2]), as.vector(MO))    
 
         

@@ -35,7 +35,7 @@
 
 
 listHolidays <- 
-    function() 
+    function(pattern = ".*") 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -45,7 +45,7 @@ listHolidays <-
     # FUNCTION:
     
     # List:
-    ans = c(
+    holidayList = c(
         "Septuagesima",
         "Quinquagesima",
         "AshWednesday",
@@ -162,11 +162,19 @@ listHolidays <-
         "JPTennouTanjyouBi",
         "JPBankHolidayDec31")
         
+    # Financial Centers:
+    if (pattern == "*") pattern = "\\\\*"
+
     # Return Value:
-    ans = data.frame(matrix(sort(ans), ncol = 1))
-    colnames(ans) = "HOLIDAYS"
-    ans
+    as.character(holidayList[grep(pattern = pattern, x = holidayList)])
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+# Keep for compatibility of older Rmetrics versions ...
+.holidayList <- listHolidays()
 
 
 ################################################################################

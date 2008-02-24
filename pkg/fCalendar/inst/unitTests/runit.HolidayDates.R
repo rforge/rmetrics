@@ -59,6 +59,8 @@ function()
 {
     # Easter:
     Easter()
+    
+    # Old Function stoll available for compatibility
     .easter()
     
     # Return Value:
