@@ -68,7 +68,8 @@ test.easter =
 function()
 {
     # Easter:
-    Eeaster()
+    Easter()
+    .easter()
     
     # Return Value:
     return()  
@@ -78,11 +79,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.holidayList =
+test.listHolidays =
 function()
 {
     # Holiday List:
-    .holidayList()
+    listHolidays()
     
     # Return Value:
     return()  

@@ -84,37 +84,37 @@ test.holidayNYSE <-
     # ... except if at the end of monthly/yearly accounting period
     # this is the last business day of a month.
     publishedHolidays <- c(
-                           # holidays listed in http://www.nyse.com/events
-                           "2007-01-01", # New Year's Day
-                           "2007-01-15", # Martin Luther King, Jr. Day
-                           "2007-02-19", # Washington's Birthday/Presidents' Day
-                           "2007-04-06", # Good Friday
-                           "2007-05-28", # Memorial Day
-                           "2007-07-04", # Independence Day
-                           "2007-09-03", # Labor Day
-                           "2007-11-22", # Thanksgiving Day
-                           "2007-12-25", # Christmas
-                           # holidays published on http://nyse.com/holidays
-                           "2008-01-01", # New Year's Day
-                           "2008-01-21", # Martin Luther King, Jr. Day
-                           "2008-02-18", # Washington's Birthday/Presidents' Day
-                           "2008-03-21", # Good Friday
-                           "2008-05-26", # Memorial Day
-                           "2008-07-04", # Independence Day
-                           "2008-09-01", # Labor Day
-                           "2008-11-27", # Thanksgiving Day
-                           "2008-12-25", # Christmas
-                           "2009-01-01", # New Year's Day
-                           "2009-01-19", # Martin Luther King, Jr. Day
-                           "2009-02-16", # Washington's Birthday/Presidents' Day
-                           "2009-04-10", # Good Friday
-                           "2009-05-25", # Memorial Day
-                           "2009-07-03", # Independence Day (observed)
-                           "2009-09-07", # Labor Day
-                           "2009-11-26", # Thanksgiving Day
-                           "2009-12-25" ) # Christmas+
+        # holidays listed in http://www.nyse.com/events
+        "2007-01-01", # New Year's Day
+        "2007-01-15", # Martin Luther King, Jr. Day
+        "2007-02-19", # Washington's Birthday/Presidents' Day
+        "2007-04-06", # Good Friday
+        "2007-05-28", # Memorial Day
+        "2007-07-04", # Independence Day
+        "2007-09-03", # Labor Day
+        "2007-11-22", # Thanksgiving Day
+        "2007-12-25", # Christmas
+        # holidays published on http://nyse.com/holidays
+        "2008-01-01", # New Year's Day
+        "2008-01-21", # Martin Luther King, Jr. Day
+        "2008-02-18", # Washington's Birthday/Presidents' Day
+        "2008-03-21", # Good Friday
+        "2008-05-26", # Memorial Day
+        "2008-07-04", # Independence Day
+        "2008-09-01", # Labor Day
+        "2008-11-27", # Thanksgiving Day
+        "2008-12-25", # Christmas
+        "2009-01-01", # New Year's Day
+        "2009-01-19", # Martin Luther King, Jr. Day
+        "2009-02-16", # Washington's Birthday/Presidents' Day
+        "2009-04-10", # Good Friday
+        "2009-05-25", # Memorial Day
+        "2009-07-03", # Independence Day (observed)
+        "2009-09-07", # Labor Day
+        "2009-11-26", # Thanksgiving Day
+        "2009-12-25" ) # Christmas+
     publishedHolidays <- timeDate( publishedHolidays, zone="NewYork",
-                                  FinCenter="NewYork" )
+        FinCenter="NewYork" )
     checkTrue(all.equal(publishedHolidays, holidayNYSE(2007:2009)))
 
     # Return Value:
@@ -128,11 +128,9 @@ test.holidayNYSE <-
 test.holidayZURICH =
 function()
 {
-    # Holiday Zurich -                              # CHECK
-    # HD = holidayZURICH(currentYear)
-    # print(HD)
-    # checkTrue(inherits(HD, "timeDate"))
-
+    # Holiday Zurich -                          
+    holidayZURICH(currentYear)
+    
     # Return Value:
     return()
 }
