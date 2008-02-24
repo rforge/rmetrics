@@ -37,6 +37,13 @@ dayOfWeek(x)
 }
 
 
+\note{
+
+    With version 2.7 the function has been renamed from \code{getdayOfWeek}.
+    
+}
+
+
 \seealso{
 
     \code{\link{dayOfYear}}
@@ -50,6 +57,10 @@ dayOfWeek(x)
        
 ## The days of the Year:
    dayOfWeek(tC)
+   
+## Use Deprecated Function:
+   getDayOfWeek <- dayOfWeek
+   getDayOfWeek(tC)
 }
 
 

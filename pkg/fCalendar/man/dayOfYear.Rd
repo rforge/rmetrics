@@ -42,6 +42,13 @@ dayOfYear(x)
 }
 
 
+\note{
+
+    With version 2.7 the function has been renamed from \code{getdayOfYear}.
+    
+}
+
+
 
 \examples{  
 ## timeCalendat -  
@@ -49,6 +56,10 @@ dayOfYear(x)
        
 ## The days of the Year:
    dayOfYear(tC)
+   
+## Use Deprecated Function:
+   getDayOfYear <- dayOfYear
+   getDayOfYear(tC)
 }
 
 

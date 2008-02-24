@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  getDayOfWeek              Returns the day of the week to a 'timeDate' object
+#  dayOfWeek                 Returns the day of the week to a 'timeDate' object
 ################################################################################
 
 
-getDayOfWeek <-
+dayOfWeek <-
     function(x)
 {   
     # A function implemented by Diethelm Wuertz

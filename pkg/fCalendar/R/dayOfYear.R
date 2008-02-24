@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  getDayOfYear              Returns the day of the year to a 'timeDate' object
+#  dayOfYear                 Returns the day of the year to a 'timeDate' object
 ################################################################################
 
 
-getDayOfYear <- 
+dayOfYear <- 
     function(x)
 {   
     # A function implemented by Diethelm Wuertz
