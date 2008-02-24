@@ -28,29 +28,121 @@
 
 
 ################################################################################
-# FUNCTION:              SPECIAL TIMEDATE OPERATIONS:
-#  timeLastDayInMonth     Computes the last day in a given month and year
-#  timeFirstDayInMonth    Computes the first day in a given month and year
-#  timeLastDayInQuarter   Computes the last day in a given quarter and year
-#  timeFirstDayInQuarter  Computes the first day in a given quarter and year
-#  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
-#  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
-#  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
-#  timeLastNdayInMonth    Computes the last n-day in year/month
-################################################################################
+
+   
+test.timeLastDayInMonth <- 
+    function()
+{ 
+    # What date has the last day in a month for a given date ?
+    charvec = "2006-04-16"
+    
+    timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 
+        zone = myFinCenter, FinCenter = myFinCenter)
+    
+    timeLastDayInMonth(charvec)
+    
+    timeLastDayInMonth(charvec, FinCenter = "Zurich")
+    
+    # Return Value:
+    return()  
+}
+
+    
+# ------------------------------------------------------------------------------
+
+   
+test.timeFirstDayInMonth <- 
+    function()
+{ 
+    # What date has the first day in a month for a given date ?
+    charvec = "2006-04-16"
+    timeFirstDayInMonth(charvec)
+     
+    # Return Value:
+    return()  
+}
 
 
-test.specialDates =
-function()
+# ------------------------------------------------------------------------------
+
+   
+test.timeLastDayInQuarter <- 
+    function()
+{ 
+    # What date has the last day in a quarter for a given date ?
+    charvec = "2006-04-16"
+    timeLastDayInQuarter(charvec)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.timeFirstDayInQuarter <- 
+    function()
 {
-    #  timeLastDayInMonth     Computes the last day in a given month and year
-    #  timeFirstDayInMonth    Computes the first day in a given month and year
-    #  timeLastDayInQuarter   Computes the last day in a given quarter and year
-    #  timeFirstDayInQuarter  Computes the first day in a given quarter and year
-    #  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
-    #  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
-    #  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
-    #  timeLastNdayInMonth    Computes the last n-day in year/month
+    # What date has the first day in a quarter for a given date ?
+    charvec = "2006-04-16"
+    timeFirstDayInQuarter(charvec)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.timeNdayOnOrAfter <- 
+    function()
+{
+    # What date has the first Monday on or after March 15, 1986 ?
+    timeNdayOnOrAfter("1986-03-15", 1)
+    
+    # Return Value:
+    return()  
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+test.timeNdayOnOrBefore <- 
+    function()
+{
+    # What date has Friday on or before April 22, 1977 ?
+    timeNdayOnOrBefore("1986-03-15", 5)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.timeNthNdayInMonth <- 
+    function()
+{
+    # What date is the second Monday in April 2004 ?
+    timeNthNdayInMonth("2004-04-01", 1, 2)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.timeLastNdayInMonth <- 
+    function()
+{
+    # What date has the last Tuesday in May, 1996 ?
+    timeLastNdayInMonth("1996-05-01", 2)
     
     # Return Value:
     return()  

@@ -82,7 +82,6 @@ end.timeDate <-
     ans = sort(x)[length(x)]
     
     # Return Value:
-    Sys.setenv(TZ = myTZ)
     ans
 }
 

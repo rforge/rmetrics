@@ -45,16 +45,9 @@
 ################################################################################
 
 
-test.timeDateSubsets =
-function()
+test.Easter <- 
+    function()
 {
-    #  isWeekday          Tests if a date is a weekday or not
-    #  isWeekend          Tests if a date falls on a weekend or not
-    #  isBizday           Tests if a date is a business day or not
-    #  isHoliday          Tests if a date is a non-business day or not
-    #  dayOfWeek          Returns the day of the week to a 'timeDate' object
-    #  dayOfYear          Returns the day of the year to a 'timeDate' object
-
     # Easter() Function:
     myFinCenter = "Zurich"
     target = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
@@ -65,25 +58,69 @@ function()
     current = timeDate(charvec)
     print(current)
     checkIdentical(target, current)
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.isWeekday <- 
+    function()
+{
     # Weekdays:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WD = isWeekday(tS)
     current = c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     checkIdentical(as.logical(WD), current)
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.isWeekend <- 
+    function()
+{
     # Weekends:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WE = isWeekend(tS)
     current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     checkIdentical(as.logical(WE), current)
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.dayOfWeek <- 
+    function()
+{
     # Day of Week:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     DOW = dayOfWeek(tS)
     current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     checkIdentical(as.character(DOW), current)
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.holidayNYSE <- 
+    function()
+{
     # NYSE Business Days - Dates:
     NYSE = holidayNYSE(2006)
     charvec = c(
@@ -99,14 +136,36 @@ function()
     # Holidays:
     TD = Easter(2006)
     checkIdentical(format(TD), "2006-04-16")
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.isBizday <- 
+    function()
+{
     # Bizdays:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     target = isBizday(tS, holidayNYSE(2006))
     current = c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
     names(current) = names(target)
     checkIdentical(target, current)
+    
+    # Return Value:
+    return()
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+test.isHoliday<- 
+    function()
+{
     # Holidays:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     target = isHoliday(tS, holidayNYSE(2006))
@@ -122,16 +181,9 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.extractSubsets =
-function()
+test.subset <- 
+    function()
 {
-    #  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
-    #  cut.timeDate           Extracts a piece from a 'timeDate' object
-    #  start.timeDate         Extracts the first entry of a 'timeDate' object
-    #  end.timeDate           Extracts the last entry of a 'timeDate' object
-    #  blockStart             Creates start dates for equally sized blocks
-    #  blockEnd               Creates end dates for equally sized blocks
-
     # Holidays:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
 
@@ -140,6 +192,19 @@ function()
     tS[isBizday(tS)]
     tS[isHoliday(tS)]
 
+    # Return Value:
+    return()
+}
+
+# ------------------------------------------------------------------------------
+
+
+test.cut <- 
+    function()
+{
+    # Holidays:
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
+    
     # cut -
     GF = GoodFriday(2006)
     print(GF)
@@ -154,6 +219,17 @@ function()
         target,
         current)
 
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.start <- 
+    function()
+{
     # start -
     tS = timeCalendar(currentYear)
     target = start(tS)
@@ -172,17 +248,19 @@ function()
         format(target),
         current = format(timeDate(currentDate)))
 
-    # head | tail -
-    tS = timeCalendar()
-    head(tS)
-    tail(tS)
+    # Return Value:
+    return()
+}
 
-    # order | sample | uniq -
-    tS = timeCalendar()
-    # order.timeDate - not yet available
-    sample(tS)
-    unique(tS)
-    unique(sort(c(tS, tS)))
+
+# ------------------------------------------------------------------------------
+
+
+test.blockStart <- 
+    function()
+{
+    # blockStart -
+    NA
 
     # Return Value:
     return()
