@@ -47,7 +47,6 @@
     recursively to \code{x}. Note that the returned value is a vector 
     which is shorter than \code{x}.
     
-
 }
 
 

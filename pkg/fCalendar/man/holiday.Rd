@@ -40,8 +40,6 @@ holiday(year = currentYear, Holiday = "Easter")
 
 \details{
 
-    \bold{Holidays:}
-    \cr\cr
     Easter is the central ecclestial holiday. Many other holidays
     are related to this feast. The function \code{Easter} computes
     the dates of Easter and related ecclestial holidays for the 
@@ -53,70 +51,69 @@ holiday(year = currentYear, Holiday = "Easter")
     the holidays is collected from several web pages about holiday 
     calendars.
     The following ecclestial and public \code{[HOLIDAY]} functions 
-    in the G7 countries and Switzerland are available: 
-    \cr\cr
+    in the G7 countries and Switzerland are available: \cr
     
     \emph{Holidays Related to Easter:} 
-    \cr
+
     Septuagesima, Quinquagesima, AshWednesday, PalmSunday,
     GoodFriday,  EasterSunday, Easter, EasterMonday, 
     RogationSunday, Ascension, Pentecost, PentecostMonday, 
-    TrinitySunday CorpusChristi. 
+    TrinitySunday CorpusChristi. \cr 
      
     \emph{Holidays Related to Christmas:} 
-    \cr
+
     ChristTheKing, Advent1st, Advent1st, Advent3rd, 
     Advent4th, ChristmasEve, ChristmasDay, BoxingDay, 
-    NewYearsDay. 
+    NewYearsDay. \cr
     
     \emph{Other Ecclestical Feasts:} 
-    \cr
+
     SolemnityOfMary, Epiphany, PresentationOfLord, 
     Annunciation, TransfigurationOfLord, AssumptionOfMary, 
     AssumptionOfMary, BirthOfVirginMary, CelebrationOfHolyCross, 
-    MassOfArchangels, AllSaints, AllSouls. 
+    MassOfArchangels, AllSaints, AllSouls. \cr
     
     \emph{CHZurich - Public Holidays:} 
-    \cr
+
     CHBerchtoldsDay, CHSechselaeuten, CHAscension, 
-    CHConfederationDay, CHKnabenschiessen. 
+    CHConfederationDay, CHKnabenschiessen. \cr
     
     \emph{GBLondon - Public Holidays:} 
-    \cr
+
     GBMayDay, GBBankHoliday, GBSummerBankHoliday, 
-    GBNewYearsEve.
+    GBNewYearsEve. \cr
 
     \emph{DEFrankfurt - Public Holidays:} 
-    \cr
+
     DEAscension, DECorpusChristi, DEGermanUnity, DEChristmasEve,
-    DENewYearsEve. 
+    DENewYearsEve. \cr
     
     \emph{FRParis - Public Holidays:} 
-    \cr
+    
     FRFetDeLaVictoire1945, FRAscension, FRBastilleDay, 
-    FRAssumptionVirginMary, FRAllSaints, FRArmisticeDay. 
+    FRAssumptionVirginMary, FRAllSaints, FRArmisticeDay. \cr
     
     \emph{ITMilano - Public Holidays:} 
-    \cr
+
     ITEpiphany, ITLiberationDay, ITRepublicAnniversary, 
     ITAssumptionOfVirginMary, ITAllSaints, ITWWIVictoryAnniversary, 
-    ITStAmrose, ITImmaculateConception. 
+    ITStAmrose, ITImmaculateConception. \cr
     
     \emph{USNewYork/USChicago - Public Holidays:} 
-    \cr
+
     USNewYearsDay, USInaugurationDay, USMLKingsBirthday, 
     USLincolnsBirthday, USWashingtonsBirthday, USMemorialDay, 
     USIndependenceDay, USLaborDay,  USColumbusDay, USElectionDay, 
     USVeteransDay, USThanksgivingDay, USChristmasDay, 
-    USCPulaskisBirthday, USGoodFriday. 
+    USCPulaskisBirthday, USGoodFriday. \cr 
     
     \emph{CAToronto/CAMontreal - Public Holidays:} 
-    \cr
+
     CAVictoriaDay, CACanadaDay, CACivicProvincialHoliday, 
-    CALabourDay, CAThanksgivingDay, CaRemembranceDay. 
+    CALabourDay, CAThanksgivingDay, CaRemembranceDay. \cr
     
     \emph{JPTokyo/JPOsaka - Public Holidays:} 
-    \cr
+
     JPNewYearsDay, JPGantan, JPBankHolidayJan2, JPBankHolidayJan3,
     JPComingOfAgeDay, JPSeijinNoHi, JPNatFoundationDay,
     JPKenkokuKinenNoHi, JPGreeneryDay, JPMidoriNoHi, 
@@ -127,19 +124,22 @@ holiday(year = currentYear, Holiday = "Easter")
     JPHealthandSportsDay, JPTaiikuNoHi, JPNationalCultureDay, 
     JPBunkaNoHi, JPThanksgivingDay, JPKinrouKanshaNohi, 
     JPKinrou-kansha-no-hi, JPEmperorsBirthday,
-    JPTennou-tanjyou-bi, JPTennou-tanjyou-bi. 
+    JPTennou-tanjyou-bi, JPTennou-tanjyou-bi. \cr
     
 }
 
 
 \examples{
-## easter -
+## holiday -
    # Dates for GoodFriday from 2000 until 2010:                     
    holiday(2000:2010, "GoodFriday")                  
    
-## holidays -   
-   Easter(2000:2010)                                
+## Easter -   
+   Easter(2000:2010)
+   
+## GoodFriday -                           
    GoodFriday(2000:2010)
+   Easter(2000:2010, -2) 
 }
 
 

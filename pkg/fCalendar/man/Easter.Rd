@@ -39,12 +39,10 @@ Easter(year = currentYear, shift = 0)
     cycles of moveable and immoveable feasts. Christmas, December 25th, 
     is the principal immoveable feast. Easter is the principal moveable 
     feast, and dates of most other moveable feasts are determined with 
-    respect to Easter. However, the moveable feasts of the Advent and 
-    Epiphany seasons are Sundays reckoned from Christmas and the
-    Feast of the Epiphany, respectively.
+    respect to Easter. 
     
     The date of Easter is evaluated by a complex procedure whose detailed 
-    explanation goes beyond this paper. The reason that the calculation 
+    explanation goes beyond this description. The reason that the calculation 
     is so complicate is, because the date of Easter is linked to (an 
     inaccurate version of) the Hebrew calendar. But nevertheless a short 
     answer to the question "When is Easter?" is the following: Easter 

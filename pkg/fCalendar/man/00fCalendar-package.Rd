@@ -587,6 +587,9 @@ Bateman R., (2000);
     \emph{Time Functionality in the Standard C Library},
     Novell AppNotes, September 2000 Issue, 73--85.
 
+Becker R.A., Chambers J.M., Wilks A.R. (1988);
+    \emph{The New S Language}, Wadsworth & Brooks/Cole. 
+
 ISO-8601, (1988);
     \emph{Data Elements and Interchange Formats -
     Information Interchange, Representation of Dates and Time},

@@ -1,13 +1,14 @@
 \name{holidayCalendar}
 
+
+\title{Holiday Calendars}
+
+
 \alias{holidayCalendar}
 
 \alias{holidayNYSE}
 \alias{holidayZURICH}
 \alias{holidayTSX}
-
-
-\title{Holiday Calendars}
 
 
 \description{
@@ -46,10 +47,10 @@ holidayTSX(year = currentYear)
 
 \details{
 
-    \bold{Holiday Calendars:}
-    \cr\cr
-    Two examples are implemented, the holiday calendar for the
-    New York Stock Exchange, and the public holidays for Zurich.
+    Three examples are implemented, the holiday calendar for the
+    New York Stock Exchange, for the Toronto Stock Exchange, and 
+    the public holidays for Zurich.
+    
     Have a look on the code to write your own holiday calendars.
 
 }
@@ -59,8 +60,9 @@ holidayTSX(year = currentYear)
 ## holidayNYSE -
    holidayNYSE(currentYear)
    
-## holidayZURICH =
-   holidayZURICH = function(year = currentYear) {
+## .holidayZURICH -
+   # Your Own Calendar:
+   holidayZUR = function(year = currentYear) {
      holidays = c(
         NewYearsDay(year),
         GoodFriday(year),   
@@ -80,9 +82,10 @@ holidayTSX(year = currentYear)
      # Add Financial Center:
      holidays@FinCenter = "Zurich"
      # Return Value:
-     holidays }
+     holidays 
+   }
 
-   holidayZURICH(2007:2009)
+   .holidayZURICH(2007:2009)
 }
 
 \keyword{chron}
