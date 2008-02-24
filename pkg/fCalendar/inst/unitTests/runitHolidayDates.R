@@ -32,8 +32,7 @@
 #  ...                   Holiday Functions
 # FUNCTION:             DESCRIPTION:
 #  .holidayList          Prints all public and ecclestical holidays
-#  .easter               Returns date of easter or related feasts 
-#  .easterSunday         Easter Algorithm 
+#  Easter                Returns date of easter or related feasts 
 # FUNCTION:             DESCRIPTION:
 #  .on.or.after          Computes date in month that is a nday ON OR AFTER date
 #  .on.or.before         Computes date in month that is a nday ON OR BEFORE date
@@ -47,11 +46,11 @@
 ################################################################################
 
 
-test.holidays =
+test.holiday =
 function()
 {
     # Holidays:
-    holidays = as.vector(.holidayList()[,1])
+    holidays = as.vector(listHolidays()[,1])
     for (holiday in holidays) {
         Holiday = match.fun(holiday)
         cat(as.character(Holiday(currentYear)), holiday, "\n")
@@ -69,8 +68,7 @@ test.easter =
 function()
 {
     # Easter:
-    .easter()
-    .easterSunday(2007)
+    Eeaster()
     
     # Return Value:
     return()  

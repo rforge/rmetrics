@@ -33,8 +33,8 @@
 #  isWeekend              Tests if a date falls on a weekend or not
 #  isBizday               Tests if a date is a business day or not
 #  isHoliday              Tests if a date is a non-business day or not
-#  getDayOfWeek           Returns the day of the week to a 'timeDate' object
-#  getDayOfYear           Returns the day of the year to a 'timeDate' object
+#  dayOfWeek              Returns the day of the week to a 'timeDate' object
+#  dayOfYear              Returns the day of the year to a 'timeDate' object
 # S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
 #  cut.timeDate           Extracts a piece from a 'timeDate' object
@@ -48,12 +48,12 @@
 test.timeDateSubsets =
 function()
 {
-    #  isWeekday              Tests if a date is a weekday or not
-    #  isWeekend              Tests if a date falls on a weekend or not
-    #  isBizday               Tests if a date is a business day or not
-    #  isHoliday              Tests if a date is a non-business day or not
-    #  getDayOfWeek           Returns the day of the week to a 'timeDate' object
-    #  getDayOfYear           Returns the day of the year to a 'timeDate' object
+    #  isWeekday          Tests if a date is a weekday or not
+    #  isWeekend          Tests if a date falls on a weekend or not
+    #  isBizday           Tests if a date is a business day or not
+    #  isHoliday          Tests if a date is a non-business day or not
+    #  dayOfWeek          Returns the day of the week to a 'timeDate' object
+    #  dayOfYear          Returns the day of the year to a 'timeDate' object
 
     # Easter() Function:
     myFinCenter = "Zurich"
@@ -80,7 +80,7 @@ function()
 
     # Day of Week:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
-    DOW = getDayOfWeek(tS)
+    DOW = dayOfWeek(tS)
     current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     checkIdentical(as.character(DOW), current)
 
@@ -92,7 +92,7 @@ function()
     checkIdentical(format(NYSE), charvec)
 
     # NYSE Business Days - Day-of-Week:
-    DOW = getDayOfWeek(NYSE)
+    DOW = dayOfWeek(NYSE)
     current = c("Mon", "Mon", "Mon", "Fri", "Mon", "Tue", "Mon", "Thu", "Mon")
     checkIdentical(as.character(DOW), current)
 

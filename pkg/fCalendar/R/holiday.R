@@ -115,9 +115,6 @@ holiday <-
     #   Additional holidays, which are not yet available there, can be added
     #   to this data base file.
 
-    # Changes:
-    #
-
     # FUNCTION:
 
     # Determine Function:
