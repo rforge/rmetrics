@@ -26,6 +26,12 @@ currentYear
 }
 
 
+\note{
+
+    It is not allowed to change this variable.
+    
+}
+
 
 \examples{
 ## currentYear -

@@ -1,10 +1,10 @@
-\name{holidayDates}
+\name{holidayDate}
 
 
 \title{Public and Ecclesiastical Holidays}
 
 
-\alias{holidayDates}
+\alias{holidayDate}
 
 \alias{Septuagesima}
 \alias{Quinquagesima}
