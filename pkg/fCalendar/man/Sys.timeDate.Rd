@@ -1,7 +1,7 @@
 \name{Sys.timeDate}
 
 
-\title{System time as 'timeDate' object}
+\title{System Time as 'timeDate' Object}
 
 
 \alias{Sys.timeDate}

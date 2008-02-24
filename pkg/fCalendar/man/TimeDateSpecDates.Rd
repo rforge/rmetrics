@@ -4,12 +4,6 @@
 \alias{timeSpecialDate}
 
 
-\alias{timeLastDayInMonth}
-\alias{timeFirstDayInMonth}
-
-\alias{timeLastDayInQuarter}
-\alias{timeFirstDayInQuarter}
-
 \alias{timeNdayOnOrAfter}
 \alias{timeNdayOnOrBefore}
 
@@ -31,11 +25,6 @@
     The functions for special 'timeDate' sequences are:
     
     \tabular{ll}{
-    \code{timeFirstDayInMonth} \tab Computes the first day in a given month and year, \cr
-    \code{timeLastDayInMonth} \tab Computes the last day in a given month and year, \cr
-    \code{timeFirstDayInQuarter} \tab Computes the first day in a given quarter and year, \cr
-    \code{timeLastDayInQuarter} \tab Computes the last day in a given quarter and year, \cr
-    \code{timeNdayOnOrAfter} \tab Computes date that is a "on-or-after" n-day, \cr  
     \code{timeNdayOnOrBefore} \tab Computes date that is a "on-or-before" n-day, \cr
     \code{timeNthNdayInMonth} \tab Computes n-th ocurrance of a n-day in year/month, \cr
     \code{timeLastNdayInMonth} \tab Computes the last n-day in year/month.}
@@ -44,16 +33,6 @@
 
 
 \usage{
-timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-
-timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-
 timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", 
     zone = myFinCenter, FinCenter = myFinCenter)
 timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d", 
@@ -94,15 +73,6 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
 
 \value{
 
-    \code{timeLastDayInMonth}\cr
-    \code{timeFirstDayInMonth}\cr
-    \code{timeLastDayInQuarter}\cr
-    \code{timeFirstDayInQuarter}\cr
-    \code{timeNdayOnOrAfter}\cr
-    \code{timeNdayOnOrBefore}\cr
-    \code{timeNthNdayInMonth}\cr
-    \code{timeLastNdayInMonth}
-    \cr
     these functions return \code{timeDate} objects on special dates. For 
     the functions \code{timeLastDayInMonth} and \code{timeLastDayInMonth}
     return the last or first day respectively in a given month and year.
@@ -123,14 +93,15 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
 
     We have implemented functions to generate special \code{"timeDate"} 
     sequences. These are functions to compute the last day in a given 
-    month and year, to compute the dates in a month that is a n-day on or 
-    after a given date, to compute the dates in a month that is a n-day 
-    on or before a specified date, to compute the n-th ocurrances of a 
-    n-day for a specified year/month vectors, and finally to compute 
+    month and year.
+    
+    See also the functions to compute the dates in a month that is a 
+    n-day on or after a given date, to compute the dates in a month that 
+    is a n-day on or before a specified date, to compute the n-th ocurrances 
+    of a n-day for a specified year/month vectors, and finally to compute 
     the last n-day for a specified year/month value or vector. n-days
     are numbered from 0 to 6 where 0 correspond to the Sunday and 6 to 
     the Saturday.
-    \cr
 
 }
 

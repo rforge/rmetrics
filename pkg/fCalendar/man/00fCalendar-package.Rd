@@ -527,10 +527,23 @@
 
     In the following we briefly summarize the functions which allow to 
     calculate the dates of ecclesiastical and public holidays. With the 
-    help of these functions we can create business and holiday calendars. \cr
+    help of these functions we can create also business and holiday 
+    calendars. 
 
     
     \bold{Special Dates:}
+    
+    The implemented functions allow to compute the last day in a given 
+    month and year, to compute the dates in a month that is a n-day 
+    (e.g. n- = Sun) on or after a given date, to compute the dates in a 
+    month that is a n-day on or before a specified date, to compute 
+    the n-th ocurrances of a n-day for a specified year/month vectors, 
+    and finally to compute the last n-day for a specified year/month value 
+    or vector. 
+    
+    NOT: n-days are numbered from 0 to 6 where 0 correspond to the 
+    Sunday and 6 to the Saturday.
+    
     
     \code{timeFirstDayInMonth} -- Computes the first day in a given month and year, \cr
     \code{timeLastDayInMonth} -- Computes the last day in a given month and year, \cr

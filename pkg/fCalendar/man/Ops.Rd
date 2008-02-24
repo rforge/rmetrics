@@ -14,8 +14,7 @@
 
 \description{
     
-    A collection and description of functions for 
-    mathematical and logical operations on 'timeDate'
+    Functions for mathematical and logical operations on 'timeDate'
     objects.
     \cr
      
