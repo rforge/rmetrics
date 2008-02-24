@@ -1,10 +1,8 @@
-\name{myUnits}
+\name{show-methods}
 
 
-\title{My Time Units}
+\title{Show Methods}
 
-
-\alias{myUnits}
 
 \alias{show.timeDate}
 \alias{show,timeDate-method}
@@ -12,13 +10,8 @@
 
 \description{
 
-    myUnits
+    show methods
 
-}
-
-
-\usage{
-myUnits
 }
 
 

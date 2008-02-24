@@ -27,24 +27,6 @@
 
 \arguments{
   
-    \item{block}{
-        an integer value specifying the length in number of records
-        for numerically sized blocks of dates.
-        }
-    \item{drop}{
-        ["["] - \cr
-        a logical flag, by default \code{TRUE}.
-        }
-    \item{from, to}{
-        [cut] - \cr
-        starting date, required, and end date, ptional. If supplied 
-        \code{to} must be after \code{from}.
-        }
-    \item{start, end}{
-        [window] - \cr
-        starting date, required, and end date, ptional. If supplied 
-        \code{to} must be after \code{from}.
-        }
     \item{x}{
         an object of class \code{timeDate}.
         }
@@ -61,7 +43,7 @@
     way that the first observation appears in time before the 
     last observation.
     
-    }
+}
 
 
 \value{
