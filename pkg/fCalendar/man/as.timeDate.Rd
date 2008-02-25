@@ -11,8 +11,8 @@
 
 
 \description{
-    
-    Coerce and transform objects of class 'timeDate'.
+  
+  Coerce and transform objects of class 'timeDate'.
   
 }
 
@@ -28,26 +28,26 @@
 
 \arguments{
   
-    \item{x}{
-        an object of class \code{timeDate}.
-        }
-    \item{zone}{
-        the time zone or financial center where the data were recorded.
-        }
-    \item{FinCenter}{
-        a character with the the location of the  
-        financial center named as "continent/city". 
-        }
+  \item{x}{
+    an object of class \code{timeDate}.
+  }
+  \item{zone}{
+    the time zone or financial center where the data were recorded.
+  }
+  \item{FinCenter}{
+    a character with the the location of the  
+    financial center named as "continent/city". 
+  }
   
 }
 
 
 \value{
   
-    \code{as.timeDate.POSIXt} returns an object of class \code{POSIXt}.
-    
-    \code{as.timeDate.Date} returns an object of class \code{Date}.
-    
+  \code{as.timeDate.POSIXt} returns an object of class \code{POSIXt}.
+  
+  \code{as.timeDate.Date} returns an object of class \code{Date}.
+  
 }
 
 
