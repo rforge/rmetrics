@@ -146,6 +146,9 @@
 
 \section{OX Interface}{
 
+  NOTE: garchOxFit is no longer part of fGarch package. If you are
+  interested to use, please contact us.
+  
   contains a Windows interface to OX.
   
   The function \code{garchOxFit} interfaces a subset of the functionality 
