@@ -62,9 +62,7 @@ timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter,
     
     The same functionality for quarterly time horizons is returned by the
     functions \code{timeLastDayInQuarter} and \code{timeLastDayInQuarter}.
-   
-    
-    
+     
 }
 
 

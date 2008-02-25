@@ -32,6 +32,7 @@
 \method{Ops}{timeDate}(e1, e2)
 
 \method{+}{timeDate}(e1, e2)
+
 \method{-}{timeDate}(e1, e2)    
 }
 

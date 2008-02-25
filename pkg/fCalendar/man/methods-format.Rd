@@ -1,4 +1,4 @@
-\name{plot-methods}
+\name{format-methods}
 
 
 \title{Format Methods}
@@ -35,6 +35,13 @@
 
     returns an ISO conform formatted character string.
    
+}
+
+
+\note{
+
+    This S3 method will become in the future a S4 method
+    
 }
 
 

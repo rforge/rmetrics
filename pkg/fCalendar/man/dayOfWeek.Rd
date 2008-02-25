@@ -1,7 +1,7 @@
 \name{dayOfWeek}
 
 
-\title{The Day of the Year}
+\title{Day of the Week}
 
 
 \alias{dayOfWeek}

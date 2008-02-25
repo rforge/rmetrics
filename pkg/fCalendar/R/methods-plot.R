@@ -32,11 +32,15 @@
 #  plot.timeDate             Plots 'timeDate' object
 #  points.timeDate           Adds points to a 'timeDate' plot
 #  lines.timeDate            Adds lines to a 'timeDate' plot
+#  axis.timeDate             Adds an Axis to a Plot
 ################################################################################
 
 
 ## DW
 ##  These S3 methods should become S4 methods ...
+
+
+# ------------------------------------------------------------------------------
 
 
 plot.timeDate <- 
@@ -47,6 +51,8 @@ plot.timeDate <-
     # Note:
     #   Doesn't yet support the features of timeDate objects ...
  
+    # FUNCTION:
+    
     # Plot:
     plot(as.POSIXct(x), y, ...)
 }
@@ -60,6 +66,8 @@ points.timeDate <-
 {   
     # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Note:
     #   Doesn't yet support the features of timeDate objects ...
     
@@ -76,11 +84,50 @@ lines.timeDate <-
 {   
     # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Note:
     #   Doesn't yet support the features of timeDate objects ...
     
     # Add Lines:
     lines(as.POSIXct(x), y, ...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+axis.timeDate <-
+    function(side, x, at, format = NULL, labels = TRUE, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Arguments:
+    #   side - an integer specifying which side of the plot the axis 
+    #       is to be drawn on. The axis is placed as follows: 
+    #       1=below, 2=left, 3=above and 4=right.
+    #   x - a 'timeDate' object
+    #   at - a 'timeDate' object
+    #   format - format string  
+    #   labels - either a logical value specifying whether annotations 
+    #       are to be made at the tickmarks, or a vector of character
+    #       strings to be placed at the tickpoints. 
+    #   ... - further arguments to be passed from or to other methods, 
+    #       typically graphical parameters or arguments of plot.default. 
+    #       For the plot methods, also format. 
+
+    # FUNCTION:
+    
+    # Format:
+    if (is.null(format)) format = .whichFormat(x)
+    
+    # Add Axis:
+    axis.POSIXct(side = side, x = as.POSIXct(x), at = as.POSIXct(at), 
+        format = format, labels = TRUE, ...)
+        
+    # Return Value:
+    invisible()
+    
 }
 
 

@@ -417,11 +417,14 @@
 
 \description{
 
-    A collection and description of functions for about 
-    400 cities and regions, which return time zone offsets
-    and daylight saving time rules. 
-    \cr
+    Functions for about 400 cities and regions, which return time 
+    zone offsets and daylight saving time rules. 
     
+}
+
+
+\details{
+
     As a selection of these functions:
 
     Adelaide Algiers Amsterdam Anchorage Andorra Athens Auckland Bahrain

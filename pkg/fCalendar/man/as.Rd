@@ -25,10 +25,15 @@
 
 \usage{
 \method{as.character}{timeDate}(x, \dots)
-\method{as.double}{timeDate}(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
+
+\method{as.double}{timeDate}(x, 
+    units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
 \method{as.data.frame}{timeDate}(x, \dots)
+
 \method{as.POSIXct}{timeDate}(x, tz = "", \dots)
+
 \method{as.POSIXlt}{timeDate}(x, tz = "")
+
 \method{as.Date}{timeDate}(x, method = c("trunc", "round", "next"), \dots)
 }
 

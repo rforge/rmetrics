@@ -2,7 +2,7 @@
 
 \alias{holiday}
 
-\title{Holidays}
+\title{Holiday Dates}
 
 
 \description{
@@ -53,6 +53,7 @@ holiday(year = currentYear, Holiday = "Easter")
     The following ecclestial and public \code{[HOLIDAY]} functions 
     in the G7 countries and Switzerland are available: \cr
     
+    
     \emph{Holidays Related to Easter:} 
 
     Septuagesima, Quinquagesima, AshWednesday, PalmSunday,
@@ -60,11 +61,13 @@ holiday(year = currentYear, Holiday = "Easter")
     RogationSunday, Ascension, Pentecost, PentecostMonday, 
     TrinitySunday CorpusChristi. \cr 
      
+    
     \emph{Holidays Related to Christmas:} 
 
     ChristTheKing, Advent1st, Advent1st, Advent3rd, 
     Advent4th, ChristmasEve, ChristmasDay, BoxingDay, 
     NewYearsDay. \cr
+    
     
     \emph{Other Ecclestical Feasts:} 
 
@@ -73,31 +76,37 @@ holiday(year = currentYear, Holiday = "Easter")
     AssumptionOfMary, BirthOfVirginMary, CelebrationOfHolyCross, 
     MassOfArchangels, AllSaints, AllSouls. \cr
     
+    
     \emph{CHZurich - Public Holidays:} 
 
     CHBerchtoldsDay, CHSechselaeuten, CHAscension, 
     CHConfederationDay, CHKnabenschiessen. \cr
+    
     
     \emph{GBLondon - Public Holidays:} 
 
     GBMayDay, GBBankHoliday, GBSummerBankHoliday, 
     GBNewYearsEve. \cr
 
+    
     \emph{DEFrankfurt - Public Holidays:} 
 
     DEAscension, DECorpusChristi, DEGermanUnity, DEChristmasEve,
     DENewYearsEve. \cr
+    
     
     \emph{FRParis - Public Holidays:} 
     
     FRFetDeLaVictoire1945, FRAscension, FRBastilleDay, 
     FRAssumptionVirginMary, FRAllSaints, FRArmisticeDay. \cr
     
+    
     \emph{ITMilano - Public Holidays:} 
 
     ITEpiphany, ITLiberationDay, ITRepublicAnniversary, 
     ITAssumptionOfVirginMary, ITAllSaints, ITWWIVictoryAnniversary, 
     ITStAmrose, ITImmaculateConception. \cr
+    
     
     \emph{USNewYork/USChicago - Public Holidays:} 
 
@@ -107,10 +116,12 @@ holiday(year = currentYear, Holiday = "Easter")
     USVeteransDay, USThanksgivingDay, USChristmasDay, 
     USCPulaskisBirthday, USGoodFriday. \cr 
     
+    
     \emph{CAToronto/CAMontreal - Public Holidays:} 
 
     CAVictoriaDay, CACanadaDay, CACivicProvincialHoliday, 
     CALabourDay, CAThanksgivingDay, CaRemembranceDay. \cr
+    
     
     \emph{JPTokyo/JPOsaka - Public Holidays:} 
 

@@ -2,6 +2,8 @@
 
 
 \alias{round}
+\alias{trunc}
+
 \alias{round.timeDate}
 \alias{trunc.timeDate}
 

@@ -69,7 +69,7 @@ Easter(year = currentYear, shift = 0)
    Easter()
    
    # From 2001 to 2010:
-   Easter(2001-2010)
+   Easter(2001:2010)
 }
 
 

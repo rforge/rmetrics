@@ -31,6 +31,7 @@
 # MEHODS:                   DESCRIPTION:
 #  start.timeDate            Extracts the first entry of a 'timeDate' object
 #  end.timeDate              Extracts the last entry of a 'timeDate' object
+#  range.timeDate            Extracts range of a 'timeDate' object
 ################################################################################
 
 
@@ -84,6 +85,16 @@ end.timeDate <-
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+min.timeDate <- function(..., na.rm = FALSE) start.timeDate(...)
+min.timeDate <- function(..., na.rm = FALSE) end.timeDate(...)
+
+range.timeDate <- function(..., na.rm = FALSE) {
+    c(start(..., na.rm = na.rm), end(..., na.rm = na.rm)) }
 
 
 ################################################################################

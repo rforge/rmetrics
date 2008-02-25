@@ -1,7 +1,7 @@
 \name{dayOfYear}
 
 
-\title{The Day of the Year}
+\title{Day of the Year}
 
 
 \alias{dayOfYear}

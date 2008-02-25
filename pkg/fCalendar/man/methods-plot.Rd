@@ -7,6 +7,7 @@
 \alias{plot.timeDate}
 \alias{points.timeDate}
 \alias{lines.timeDate}
+\alias{axis.timeDate}
 
 
 \description{
@@ -17,13 +18,32 @@
 
 \usage{
 \method{plot}{timeDate}(x, y, \dots)
+
+\method{lines}{timeDate}(x, y, \dots)
+
+\method{points}{timeDate}(x, y, \dots)
+
+\method{axis}{timeDate}(side, x, at, format = NULL, labels = TRUE, \dots)
 }
 
 
 \arguments{
 
-    \item{object}{
+    \item{x, y, at}{
         an object of class \code{timeDate}.
+        }
+    \item{side}{
+        an integer specifying which side of the plot the axis 
+        is to be drawn on. The axis is placed as follows: 
+        1=below, 2=left, 3=above and 4=right.
+        }
+    \item{format}{
+        format - format string.
+        }
+    \item{labels}{
+        either a logical value specifying whether annotations 
+        are to be made at the tickmarks, or a vector of character
+        strings to be placed at the tickpoints. 
         }
     \item{\dots}{
         arguments passed to other methods.
@@ -41,8 +61,26 @@
 }
 
 
+\note{
+
+    These S3 methods will become in the future S4 methods.
+    
+}
+
+
 \examples{
-## plot -
+## timeCalendar -
+   x = timeCalendar()
+   y = rnorm(12)
+   
+## plot -    
+   plot(x, y, type = "l")
+   points(x, y, pch = 19, col = "red")
+   
+   plot(x, y, type = "l", xaxt = "n")
+   axis.timeDate(1, at = x[c(1, 3, 5, 7, 9, 11)], format = "\%b")
+   axis.timeDate(1, at = x[12], format = "\%Y")
+   hgrid()
 }
 
 

@@ -1,7 +1,7 @@
 \name{holidayTSX}
 
 
-\title{Zurich Holiday Calendar}
+\title{TSX Holiday Calendar}
 
 
 \alias{holidayTSX}

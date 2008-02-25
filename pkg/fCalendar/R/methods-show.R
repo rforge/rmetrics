@@ -33,7 +33,7 @@
 ################################################################################
 
 
-show.timeDate <- 
+setMethod("show", "timeDate", show.timeDate <-
     function(object)
 {   
     # A function implemented by Diethelm Wuertz
@@ -64,13 +64,7 @@ show.timeDate <-
     
     # Return Value:
     invisible(x)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "timeDate", show.timeDate)
+})
 
 
 ################################################################################

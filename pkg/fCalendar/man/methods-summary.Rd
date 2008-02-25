@@ -39,6 +39,13 @@
 }
 
 
+\note{
+
+    This S3 method will become in the future a S4 method
+    
+}
+
+
 \examples{
 ## summary -
    tC = timeCalendar()

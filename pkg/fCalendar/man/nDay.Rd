@@ -1,12 +1,12 @@
 \name{nDay}
 
 
+\title{n-th n-day Dates}
+
+
 \alias{nDay}
 \alias{timeNthNdayInMonth}
 \alias{timeLastNdayInMonth}
-
-
-\title{n-th n-day Dates}
 
 
 \description{

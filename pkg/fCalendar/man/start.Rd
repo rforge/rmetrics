@@ -2,18 +2,25 @@
 
 
 \alias{start}
+\alias{end}
 
 \alias{start.timeDate}
 \alias{end.timeDate}
 
+\alias{min.timeDate}
+\alias{max.timeDate}
 
-\title{Terminal Times}
+\alias{range.timeDate}
+
+
+\title{Terminal Times and Range}
 
 
 \description{
     
     Extracts the time the first or last 
-    observation was taken. 
+    observation was taken, or computes the
+    range.
     
 }
 
@@ -22,6 +29,12 @@
 \method{start}{timeDate}(x, \dots)
 
 \method{end}{timeDate}(x, \dots)
+
+\method{min}{timeDate}(\dots, na.rm = FALSE)
+
+\method{max}{timeDate}(\dots, na.rm = FALSE)
+
+\method{range}{timeDate}(\dots, na.rm = FALSE)
 }
 
 
@@ -31,8 +44,15 @@
         an object of class \code{timeDate}.
         }
     \item{\dots}{
-        arguments passed to other methods.
-        }         
+        [start][end] - \cr
+        not used, \cr
+        [min][max] -
+        'timeDates' objects.
+        } 
+    \item{na.rm}{
+        not used.
+        }
+                
 }
 
 
@@ -71,6 +91,7 @@
    
 ## The Range:
    c(start(tR), end(tR))
+   range(tR)
 }
 
 

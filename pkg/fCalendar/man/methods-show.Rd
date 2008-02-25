@@ -1,17 +1,35 @@
 \name{show-methods}
 
 
-\title{Show Methods}
+\docType{methods}
 
 
-\alias{show.timeDate}
+\alias{show-methods}
+\alias{show,ANY-method}
 \alias{show,timeDate-method}
+
+
+\title{Show Methods}
 
 
 \description{
 
-    show methods
+    Show methods for 'timeDate' objects. 
 
+}
+
+
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function.
+        }
+    \item{object = "timeDate"}{
+        Print function for objects of class \code{"timeDate"}.
+        } 
+        
+    }
 }
 
 

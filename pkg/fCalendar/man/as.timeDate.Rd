@@ -1,10 +1,8 @@
-\name{TimeDateCoercion}
+\name{as.timeDate}
 
 
-\title{timeDate Class, Coercion and Transformation}
+\title{Coercion into 'timeDate' Objects}
 
-
-\alias{TimeDateCoercion}
 
 \alias{as.timeDate}
 \alias{as.timeDate.default}
@@ -14,26 +12,16 @@
 
 \description{
     
-    A collection and description of functions and 
-    methods for coercion and transformation of 
-    objects of class 'timeDate'.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{as.timeDate.POSIXt} \tab Returns a 'POSIX' object as 'timeDate' object, \cr
-    \code{as.timeDate.Date} \tab Returns a 'POSIX' object as 'timeDate' object, \cr
-    \code{as.character.timeDate} \tab Returns a 'timeDate' object as character string, \cr
-    \code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as data frame, \cr
-    \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object. } 
-       
+    Coerce and transform objects of class 'timeDate'.
+  
 }
 
 
 \usage{
 \method{as.timeDate}{default}(x, zone = myFinCenter, FinCenter = myFinCenter)
+
 \method{as.timeDate}{POSIXt}(x, zone = myFinCenter, FinCenter = myFinCenter)
+
 \method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter = myFinCenter) 
 }
 
@@ -65,10 +53,10 @@
 
 \examples{
 ## timeDate - 
-   tD = timeDate()
    tC = timeCalendar()
    
-## 
+## Coerce a 'Date' object into a 'timeDate' object:
+   as.timeDate(Sys.Date())
 }
 
 
