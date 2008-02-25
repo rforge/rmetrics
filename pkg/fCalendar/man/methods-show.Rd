@@ -7,6 +7,7 @@
 \alias{show-methods}
 \alias{show,ANY-method}
 \alias{show,timeDate-method}
+\alias{show.timeDate}
 
 
 \title{Show Methods}
