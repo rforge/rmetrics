@@ -1,8 +1,6 @@
 \name{DaylightSavingTime}
 
-
 \alias{DaylightSavingTime}
-
 
 \alias{Abidjan}
 \alias{Accra}
@@ -411,48 +409,46 @@
 \alias{Zaporozhye}
 \alias{Zurich}
 
-
 \title{Daylight Saving Time Rules}
-
 
 \description{
 
-    Functions for about 400 cities and regions, which return time 
-    zone offsets and daylight saving time rules. 
-    
+  Functions for about 400 cities and regions which return daylight
+  saving time rules and time zone offsets.
+  
 }
 
 
 \details{
 
-    As a selection of these functions:
+  As a selection of these functions:
 
-    Adelaide Algiers Amsterdam Anchorage Andorra Athens Auckland Bahrain
-    Bangkok Beirut Belfast Belgrade Berlin Bogota Bratislava Brisbane
-    Brussels Bucharest Budapest BuenosAires Cairo Calcutta Caracas
-    Casablanca Cayman Chicago Copenhagen Darwin Denver Detroit Dubai
-    Dublin Eastern Edmonton Frankfurt Helsinki HongKong Honolulu
-    Indianapolis Istanbul Jakarta Jerusalem Johannesburg Kiev
-    KualaLumpur Kuwait Lagos Lisbon Ljubljana London LosAngeles
-    Luxembourg Madrid Manila Melbourne MexicoCity Monaco Montreal Moscow
-    Nairobi Nassau NewYork Nicosia Oslo Pacific Paris Perth Prague Riga
-    Riyadh Rome Seoul Shanghai Singapore Sofia Stockholm Sydney Taipei
-    Tallinn Tehran Tokyo Tunis Vaduz Vancouver Vienna Vilnius Warsaw
-    Winnipeg Zagreb Zurich, ...
-    
+  Adelaide Algiers Amsterdam Anchorage Andorra Athens Auckland Bahrain
+  Bangkok Beirut Belfast Belgrade Berlin Bogota Bratislava Brisbane
+  Brussels Bucharest Budapest BuenosAires Cairo Calcutta Caracas
+  Casablanca Cayman Chicago Copenhagen Darwin Denver Detroit Dubai
+  Dublin Eastern Edmonton Frankfurt Helsinki HongKong Honolulu
+  Indianapolis Istanbul Jakarta Jerusalem Johannesburg Kiev
+  KualaLumpur Kuwait Lagos Lisbon Ljubljana London LosAngeles
+  Luxembourg Madrid Manila Melbourne MexicoCity Monaco Montreal Moscow
+  Nairobi Nassau NewYork Nicosia Oslo Pacific Paris Perth Prague Riga
+  Riyadh Rome Seoul Shanghai Singapore Sofia Stockholm Sydney Taipei
+  Tallinn Tehran Tokyo Tunis Vaduz Vancouver Vienna Vilnius Warsaw
+  Winnipeg Zagreb Zurich, ...
+  
 }
 
 
 \note{
 
-    There are currently two synonymes available "Pacific" for Los Angeles
-    and "Eastern" for New York. 
-    
-    Note that we leave the space in all double named cities like New York 
-    or Hong Kong and use an underscore for it.
-    
-    All the entries are retrieved from the tzdata library which is 
-    available under GNU's GPL licence. 
+  There are currently two synonymes available "Pacific" for Los Angeles
+  and "Eastern" for New York. 
+  
+  Note we leave the space in all double named cities like New York 
+  or Hong Kong and use an underscore for it.
+  
+  All the entries are retrieved from the tzdata library which is 
+  available under GNU's GPL licence. 
 
 }
 
