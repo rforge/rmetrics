@@ -22,12 +22,13 @@
 \details{
 
     \tabular{ll}{
-        Package:    \tab fGarch\cr
-        Type:       \tab Package\cr
-        Version:    \tab 261.73.1\cr
-        Date:       \tab 2008\cr
-        License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
+        Package:    \tab fGarch \cr
+        Type:       \tab Package \cr
+        Version:    \tab 270.73 \cr
+        Date:       \tab 2008 \cr
+        License:    \tab GPL (>= 2) \cr
+        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics
+        Foundation \cr
         URL:        \tab \url{http://www.rmetrics.org}
     }
     
