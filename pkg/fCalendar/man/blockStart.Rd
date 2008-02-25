@@ -9,9 +9,9 @@
 
 
 \description{
-    
-    Creates start (end) dates for equally sized 'timeDate' blocks.
-       
+  
+  Creates start (end) dates for equally sized 'timeDate' blocks.
+  
 }
 
 
@@ -23,33 +23,33 @@ blockEnd(x, block = 20)
 
 \arguments{
   
-    \item{block}{
-        an integer value specifying the length in number of records
-        for numerically sized blocks of dates.
-        }
-    \item{x}{
-        an object of class \code{timeDate}.
-        }
-                
+  \item{block}{
+    an integer value specifying the length in number of records
+    for numerically sized blocks of dates.
+  }
+  \item{x}{
+    an object of class \code{timeDate}.
+  }
+  
 }
 
 
 \details{
 
-    The functions \code{blockStart} and \code{blockEnd} create vectors 
-    of start and end values for equally sized 'timeDate' blocks. Note,
-    the functions are event counters and not a time counter between
-    measuring time intervals between start and end dates! For equally 
-    sized blocks in time one has before to align the time stamps in equal 
-    time differences.
-    
+  The functions \code{blockStart} and \code{blockEnd} create vectors 
+  of start and end values for equally sized 'timeDate' blocks. Note,
+  the functions are event counters and not a time counter between
+  measuring time intervals between start and end dates! For equally 
+  sized blocks in time one has before to align the time stamps in equal 
+  time differences.
+  
 }
 
 
 \value{
-   
-    returns an object of class \code{"timeDate"}.
-    
+  
+  returns an object of class \code{"timeDate"}.
+  
 }
 
 
