@@ -1,14 +1,9 @@
 \name{fGarch-package}
 
-
 \alias{fGarch-package}
-
-
 \alias{fGarch}
 
-
 \docType{package}
-
 
 \title{GARCH Modelling Package}
 
