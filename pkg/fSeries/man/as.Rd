@@ -14,6 +14,7 @@
 \alias{as.timeSeries.matrix}
 \alias{as.timeSeries.ts}
 \alias{as.timeSeries.character}
+\alias{as.timeSeries.timeSeries}
 \alias{as.timeSeries.zoo} 
 
 \alias{as.vector.timeSeries}
@@ -31,12 +32,17 @@
     Functions to create 'timeSeries' objects from other objects:
     
     \tabular{ll}{
-    \code{as.timeSeries} \tab Generic function to convert a 'timeSeries' object, \cr 
-    \code{as.timeSeries.default} \tab Returns unchanged the 'timeSeries' object, \cr 
+      \code{as.timeSeries} \tab Generic function to convert an object to
+      a 'timeSeries' object, \cr
+      \code{as.timeSeries.default} \tab Returns the unchanged  object, \cr
     \code{as.timeSeries.numeric} \tab Converts from a numeric vector, \cr 
     \code{as.timeSseries.data.frame} \tab Converts from a numeric vector, \cr 
     \code{as.timeSeries.matrix} \tab Converts from a matrix, \cr 
-    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts', \cr 
+    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts',
+ \cr
+ \code{as.timeSeries.timeSeries} \tab Converts from an object of class 
+      'timeSeries' (can be used to convert a timeSeries to new 
+      financial center), \cr 
     \code{as.timeSeries.character} \tab Converts from a named demo file, \cr 
     \code{as.timeSeries.zoo} \tab Converts an object of class zoo. }
     
@@ -60,7 +66,9 @@ is.timeSeries(object)
 \method{as.timeSeries}{matrix}(x,zone = myFinCenter, FinCenter =
     myFinCenter, \dots) 
 \method{as.timeSeries}{ts}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
+    myFinCenter, \dots)
+\method{as.timeSeries}{timeSeries}(x,zone = x@FinCenter, FinCenter =
+    myFinCenter, \dots)
 \method{as.timeSeries}{character}(x,zone = myFinCenter, FinCenter =
     myFinCenter, \dots) 
 \method{as.timeSeries}{zoo}(x,zone = myFinCenter, FinCenter =
@@ -156,4 +164,3 @@ is.timeSeries(object)
 
 
 \keyword{chron}
-

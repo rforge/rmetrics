@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -35,66 +35,67 @@
 ################################################################################
 
 
-setClass("timeSeries", 
+setClass("timeSeries",
     # A class implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Class representatation for 'timeSeries' Objects.
-   
+
     # CLASS:
-    
+
     representation(
         Data = "matrix",
         positions = "character",
         format = "character",
-        FinCenter = "character",      
+        FinCenter = "character",
         units = "character",
         recordIDs = "data.frame",
         title = "character",
-        documentation = "character")    
+        documentation = "character")
 )
-   
+
 
 # ------------------------------------------------------------------------------
 
 
-show.timeSeries = 
+show.timeSeries =
 function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print method for an S4 object of class "timeSeries"
- 
+
     # FUNCTION:
-       
+
     # Unlike print the argument for show is 'object'.
     x = object
     recordIDs = FALSE
-    
+
     # Series:
+    cat(x@FinCenter, "\n", sep = "")
     if (recordIDs) {
         if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
             print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE)
         } else {
             print(x@Data)
-        }  
+        }
     } else {
         print(x@Data)
     }
-    
+
     # Control:
     control = attr(x, "control")
     if (!is.null(control)) print(control)
-    
+
     # Return Value:
     invisible(x)
-}  
-    
+}
+
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("show", "timeSeries", show.timeSeries) 
+setMethod("show", "timeSeries", show.timeSeries)
 
 
 ################################################################################

@@ -56,8 +56,6 @@
 
     # FUNCTION:
 
-
-
     # Check Timezone:
     TZ = Sys.getenv("TZ")
     if (TZ[[1]] != "GMT") {
@@ -114,19 +112,16 @@
     # FUNCTION:
 
     # Subsets:
-    if(missing(i)) { i <- min(1, nrow(x@Data)):nrow(x@Data) }
-    if(missing(j)) { j <- min(1, ncol(x@Data)):ncol(x@Data) }
 
-    if (is.timeSeries(i) && is.logical(i@Data))
-        i <- as.matrix(i@Data)
+    if (!missing(i) && is.timeSeries(i) && is.logical(i@Data))
+        i <- as.logical(i@Data)
 
-    if (!is.numeric(i) && !is.logical(i))
+    if (!missing(i) && !is.numeric(i) && !is.logical(i))
         i <- as.character(i)
 
-    if (NCOL(i) == 1)
-        x@Data[i,j] <- value
-    else
-        x@Data[i] <- value
+    if (!missing(i) && !missing(j)) x@Data[i,j] <- value
+    if (!missing(i) && missing(j)) x@Data[i,] <- value
+    if (missing(i) && !missing(j)) x@Data[,j] <- value
 
     # Return Value:
     x

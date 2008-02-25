@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -29,88 +29,102 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
+#  merge.timeSeries          Merges two 'timeSeries' objects
 #  cbind.timeSeries          Binds columns of two 'timeSeries' objects
 #  rbind.timeSeries          Binds rows of two 'timeSeries' objects
+#  c.timeseries              Binds rows of two 'timeSeries' objects
 ################################################################################
 
-
-cbind.timeSeries =
-function(x, y, units = NULL)
+merge.timeSeries <-
+    function(x, y, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
-    
+    # Modified by Yohan chalabi
+
     # Description:
-    #   Merges two 'timeSeries' objects 
-    
+    #   Merges two 'timeSeries' objects
+
     # Arguments:
     #   x, y - 'timeSeries' objects
-    #   units - Optional user specified units
- 
+
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
- 
+
     # FUNCTION:
-    
+
+    # convert series y to FinCenter of series x
+    y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
+
     # Manipulate in matrix form:
-    positions = as.character(c(x@positions, y@positions))
-    LENGTH = length(as.character(seriesPositions(x)))
-    DUP = duplicated(positions)[1:LENGTH]
-    DUP2 = duplicated(positions)[-(1:LENGTH)]
-    M1 = as.matrix(x)
-    M2 = as.matrix(y)
-    dim1 = dim(M1) 
-    dim2 = dim(M2) 
-    X1 = matrix(rep(NA, times = dim1[1]*dim2[2]), ncol = dim2[2])
-    X2 = matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
-    colnames(X1) = colnames(M2) 
-    NC = (dim1 + dim2)[2]+1
-    Z = rbind(cbind(M1, X1, DUP), cbind(X2, M2, DUP2))
-    Z = Z[order(rownames(Z)), ]
-    NC1 = dim1[2]+1
-    IDX = (1:(dim1+dim2)[1])[Z[, NC] == 1]
-    Z[IDX-1, NC1:(NC-1)] = Z[IDX, NC1:(NC-1)]
-    Z = Z[!Z[, NC], -NC]
-    
+    positions <- as.character(c(x@positions, y@positions))
+    LENGTH <- length(as.character(seriesPositions(x)))
+    DUP <- duplicated(positions)[1:LENGTH]
+    DUP2 <- duplicated(positions)[-(1:LENGTH)]
+    M1 <- as.matrix(x)
+    M2 <- as.matrix(y)
+    dim1 <- dim(M1)
+    dim2 <- dim(M2)
+    X1 <- matrix(rep(NA, times = dim1[1]*dim2[2]), ncol = dim2[2])
+    X2 <- matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
+    colnames(X1) <- colnames(M2)
+    NC <- (dim1 + dim2)[2]+1
+    Z <- rbind(cbind(M1, X1, DUP), cbind(X2, M2, DUP2))
+    Z <- Z[order(rownames(Z)), ]
+    NC1 <- dim1[2]+1
+    IDX <- (1:(dim1+dim2)[1])[Z[, NC] == 1]
+    Z[IDX-1, NC1:(NC-1)] <- Z[IDX, NC1:(NC-1)]
+    Z <- Z[!Z[, NC], -NC]
+
+    if (is.null(units)) units <- c(x@units, y@units)
+
     # Create time series:
-    ans = timeSeries(data = Z, charvec = rownames(Z), zone =
-        x@FinCenter, FinCenter = x@FinCenter, units = c(x@units, y@units))
-    
-    # Optionally add user specified units:
-    if (!is.null(units)) {
-        ans@units = units
-        colnames(ans@Data) <- units
-    }
-    
+    ans <- timeSeries(data = Z, charvec = rownames(Z), zone =
+        x@FinCenter, FinCenter = x@FinCenter, units = units, ...)
+
     # Return Value:
     ans
 }
 
+# ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------ 
- 
-   
-rbind.timeSeries =
-function(x, y, units = NULL)
+cbind.timeSeries <- merge.timeSeries
+
+# ------------------------------------------------------------------------------
+
+
+rbind.timeSeries <-
+    function(x, y, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
+    # Modified by Yohan chalabi
 
     # Check Arguments:
     stopifnot(is.timeSeries(x) & is.timeSeries(y))
     stopifnot(dim(x)[2] == dim(y)[2])
-    
-    # Bind:
-    x@positions = c(x@positions, y@positions)   
-    x@Data = as.matrix(rbind(x@Data, y@Data))
-    x@recordIDs = as.data.frame(rbind(x@recordIDs, y@recordIDs))
-    
-    # Optionally add user specified units:
-    if (!is.null(units)) {
-        x@units = units
-        colnames(x@Data) <- units
-    }
-    
-    # Return Value
-    x
-}  
 
-   
+    y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
+
+    # Bind:
+    data <- as.matrix(rbind(x@Data, y@Data))
+    positions <- c(x@positions, y@positions)
+    recordIDs <- as.data.frame(rbind(x@recordIDs, y@recordIDs))
+
+    # Order series
+    order <- order(positions)
+    data <- data[order,]
+    positions <- positions[order]
+    zone <- FinCenter <- x@FinCenter
+    recordIDs <- recordIDs[order,]
+
+    ans <- timeSeries(data = data, charvec = positions,
+                      zone = zone, FinCenter = FinCenter,
+                      units = units, ...)
+
+    # Return Value
+    ans
+}
+
+# ------------------------------------------------------------------------------
+
+c.timeSeries <- rbind.timeSeries
+
 ################################################################################
 
