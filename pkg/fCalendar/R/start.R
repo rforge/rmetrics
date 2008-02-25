@@ -91,7 +91,7 @@ end.timeDate <-
 
 
 min.timeDate <- function(..., na.rm = FALSE) start.timeDate(...)
-min.timeDate <- function(..., na.rm = FALSE) end.timeDate(...)
+max.timeDate <- function(..., na.rm = FALSE) end.timeDate(...)
 
 range.timeDate <- function(..., na.rm = FALSE) {
     c(start(..., na.rm = na.rm), end(..., na.rm = na.rm)) }

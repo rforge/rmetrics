@@ -54,8 +54,8 @@
 \section{Methods}{
     \describe{
     
-    \item{show}{\code{signature(object = "fGARCH")}: 
-        prints an object of class 'fGARCH'.
+    \item{show}{\code{signature(object = "timeDate")}: 
+        prints an object of class 'timeDate'.
         }  
    
     }
