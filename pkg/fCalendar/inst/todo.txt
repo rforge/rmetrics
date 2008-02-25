@@ -23,3 +23,9 @@ DW  listHolidays should work with pattern recognition
     
 DW  I think today() and now() would be helpful
     timeDate functions
+    
+DW  min, max, range generic functions should be added.
+    2008-02-24 DW done
+    
+DW  axis.timeDate for plotting should be added.
+    2008-02-24 DW done 
