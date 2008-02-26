@@ -40,11 +40,14 @@ test.holiday =
 function()
 {
     # Holidays:
-    holidays = as.vector(listHolidays()[,1])
+    holidays = as.vector(listHolidays())
     for (holiday in holidays) {
         Holiday = match.fun(holiday)
         cat(as.character(Holiday(currentYear)), holiday, "\n")
     }
+     
+    # GB Holidays:
+    listHolidays("GB")
     
     # Return Value:
     return()  
