@@ -94,7 +94,7 @@ timeDate <-
 
     if (inherits(charvec, "character")) { # Autodetect Format:
         if (is.null(format))
-            format <- .whichFormat(charvec)
+            format <- whichFormat(charvec)
     } else { ## convert from known classes to ISO :
         format <- isoFormat
         charvec <-
@@ -110,7 +110,7 @@ timeDate <-
     }
 
     # Midnight Standard & conversion to isoFormat:
-    charvec <- .midnightStandard(charvec, format)
+    charvec <- midnightStandard(charvec, format)
 
     # Financial Centers:
     recFinCenter = zone      # Time zone where the data were recorded

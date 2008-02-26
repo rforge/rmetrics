@@ -96,8 +96,8 @@ timeSequence <-
     # Auto-detect Input Format:
     format.from = format.to = format
     if (is.null(format)) {
-        format.from = .whichFormat(as.character(from))
-        format.to = .whichFormat(as.character(to))
+        format.from = whichFormat(as.character(from))
+        format.to = whichFormat(as.character(to))
     }
     if (format.from == format.to) {
         format = format.from
@@ -119,7 +119,7 @@ timeSequence <-
     }
 
     # Return timeDate Object:
-    timeDate(charvec = charvec, format = .whichFormat(charvec[1]),
+    timeDate(charvec = charvec, format = whichFormat(charvec[1]),
         zone = zone, FinCenter = FinCenter)
 }
 

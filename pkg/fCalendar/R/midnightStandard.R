@@ -50,7 +50,7 @@ midnightStandard <-
     paste0 <- function(...) paste(..., sep = '')
     
     # Missing Format:
-    if (missing(format)) format = .whichFormat(charvec)
+    if (missing(format)) format = whichFormat(charvec)
     
     # Format:
     rng.nch <- range(nchar(charvec[!is.na(charvec)]))

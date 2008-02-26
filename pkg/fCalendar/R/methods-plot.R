@@ -119,7 +119,7 @@ axis.timeDate <-
     # FUNCTION:
     
     # Format:
-    if (is.null(format)) format = .whichFormat(x)
+    if (is.null(format)) format = whichFormat(x)
     
     # Add Axis:
     axis.POSIXct(side = side, x = as.POSIXct(x), at = as.POSIXct(at), 
