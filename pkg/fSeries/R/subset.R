@@ -267,6 +267,7 @@ function(x, n = 6, recordIDs = FALSE, ...)
     # FUNCTION:
 
     # Head:
+    cat(x@FinCenter, "\n", sep = "")
     if (recordIDs) {
         if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
             Head = head(cbind(x@Data, as.matrix(x@recordIDs)), n = n, ...)
@@ -301,6 +302,7 @@ function(x, n = 6, recordIDs = FALSE, ...)
     # FUNCTION:
 
     # Tail:
+    cat(x@FinCenter, "\n", sep = "")
     if (recordIDs) {
         if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
             Tail = tail(cbind(x@Data, as.matrix(x@recordIDs)), n = n, ...)
