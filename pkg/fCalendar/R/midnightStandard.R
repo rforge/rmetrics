@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .midnightStandard         Corrects midnight standard called by 'timeDate'
+#  midnightStandard          Corrects midnight standard called by 'timeDate'
 ################################################################################
 
 
-.midnightStandard <- 
+midnightStandard <- 
     function(charvec, format)
 {   
     # A function written by Diethelm Wuertz   
@@ -133,6 +133,12 @@
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.midnightStandard <- midnightStandard
 
 
 ################################################################################

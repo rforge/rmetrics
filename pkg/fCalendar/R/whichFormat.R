@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .whichFormat              Returns format string called by 'timeDate'
+#  whichFormat               Returns format string called by 'timeDate'
 ################################################################################
 
 
-.whichFormat <-
+whichFormat <-
     function(charvec, silent = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
@@ -75,6 +75,12 @@
     # Return Value:
     "unknown"
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.which.format <- which.format
 
 
 ################################################################################

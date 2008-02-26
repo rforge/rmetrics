@@ -46,13 +46,13 @@
   
   The 'timeDate' class fulfils the conventions of the ISO 8601 
   standard as well as of the ANSI C and POSIX standards. Beyond
-  these standards Rmetrics has added the "Financial Centre" concept
+  these standards Rmetrics has added the "Financial Center" concept
   which allows to handle data records collected in different time 
   zones and mix them up to have always the proper time stamps with 
-  respect to your personal financial centre, or alternatively to the GMT
+  respect to your personal financial center, or alternatively to the GMT
   reference time. It can thus also handle time stamps from historical 
   data records from the same time zone, even if the financial 
-  centres changed day light saving times at different calendar
+  centers changed day light saving times at different calendar
   dates.
   
   Moreover 'timeDate' is almost compatible with the 'timeDate'
@@ -68,7 +68,7 @@
   
   1. S4 'timeDate' Class and Functions \cr
   2. Operations on 'timeDate' Objects \cr
-  3. Daylight Saving Time and Financial Centres \cr
+  3. Daylight Saving Time and Financial Centers \cr
   4. Holidays and Holiday Calendars
   
 }  
@@ -91,7 +91,7 @@
   They have three slots.  The \code{@Data} slot holds the time
   stamps which are \code{POSIXct} formatted as specified in the 
   \code{@format} slot. The time stamps are local and belong to the 
-  financial centre expressed through the slot \code{@FinCenter}.
+  financial center expressed through the slot \code{@FinCenter}.
   
   
   There are several possibilities to generate a 'timeDate' object. The
@@ -107,15 +107,15 @@
   
   With the function \code{timeDate} you can create 'timeDate' objects 
   from scratch by specifying a character vector of time stamps and a
-  financial centre which the character vector belongs to. "GMT" is used
+  financial center which the character vector belongs to. "GMT" is used
   by default as the  reference for all date/time operations.
   But you can set the variable \code{myFinCenter} to your local
-  financial centre reference  if you want to reference dates/time to
+  financial center reference  if you want to reference dates/time to
   it. \cr
   
   Examples:
   \preformatted{
-    # Show My local Financial Centre - Note, by Default this is "GMT"
+    # Show My local Financial Center - Note, by Default this is "GMT"
     print(myFinCenter)
     
     # Compose Character Vectors of Dates and Times:
@@ -126,17 +126,17 @@
     # Create a 'timeDate' object
     timeDate(charvec)
     
-    # Create a 'timeDate' object with my financial centre set to Zurich
+    # Create a 'timeDate' object with my financial center set to Zurich
     myFinCenter <- "Zurich"
     timeDate(charvec)
 
-    # if the 'timeDate' was recorded in a different financial centre, it
-    # will be automatically converted to your financial centre,
+    # if the 'timeDate' was recorded in a different financial center, it
+    # will be automatically converted to your financial center,
     # i.e. "Zurich". 
     timeDate(charvec, zone = "Tokyo")
 
     # You can also convert a recorded 'timeDate' from your financial
-    # centre "Zurich" to another one, for example "NewYork".
+    # center "Zurich" to another one, for example "NewYork".
     timeDate(charvec, FinCenter = "NewYork")
     
   }
@@ -166,7 +166,7 @@
     # Lets work in an international environment:
     myFinCenter <- "GMT"
     
-    # Your 'timeDate' is now in the Financial Centre "GMT"
+    # Your 'timeDate' is now in the Financial Center "GMT"
     timeDate(charvec)
     
     # Daily January 2008 Sequence:
@@ -413,9 +413,9 @@
   \code{rev} -- reverts a 'timeDate' object. \cr
   
   NOTE: The function \code{c} of a 'timeDate' objects takes care of
-  possible different financial centres specific to each object to be
+  possible different financial centers specific to each object to be
   concatenated. In such cases, all time stamps will be transformed to
-  the financial centre of the first time stamp used in the
+  the financial center of the first time stamp used in the
   concatenation: \cr 
 
   Examples:
@@ -438,38 +438,38 @@
 }
 
 
-\section{3. Daylight Saving Time and Financial Centres}{
+\section{3. Daylight Saving Time and Financial Centers}{
 
-  Each financial centre worldwide has a function 
+  Each financial center worldwide has a function 
   which returns Daylight Saving Time Rules. Almost 400
   prototypes are made available through the Olson time zone
   data base. The cities and regions can be listed using the
   command \code{listFinCenter}. The DST rules for specific
-  financial centre can be viewed by their name, e.g. \code{Zurich()}.
-  Additional financial centres can be added by the user taking care
+  financial center can be viewed by their name, e.g. \code{Zurich()}.
+  Additional financial centers can be added by the user taking care
   of the format specification of the DST functions.\cr
   
   
-  \bold{Setting Financial Centres}
+  \bold{Setting Financial Centers}
   
   
   All time stamps are handled according to the time zone and daylight
-  saving time rules specified by the centre through the variable
+  saving time rules specified by the center through the variable
   \code{myFinCenter}. This variable is set by default to \code{"GMT"}
-  but can be changed to your local financial centre or to any other
-  financial centre you want to use. \cr 
+  but can be changed to your local financial center or to any other
+  financial center you want to use. \cr 
   
-  NOTE: By setting the financial centre to a continent/city which 
+  NOTE: By setting the financial center to a continent/city which 
   lies outside of the time zone used by your computer does not change
   any time settings or environment variables used by your computer. \cr 
   
-  To change the name of a financial centre from one setting to another
+  To change the name of a financial center from one setting to another
   just assign to the variable \code{myFinCenter} the desired name
   of the city:
   
   Examples:
   \preformatted{
-    # What is my current Financial Centre ?
+    # What is my current Financial Center ?
     print(myFinCenter)
 
     # Change to Zurich:
@@ -482,26 +482,26 @@
   time zone and the DST rules which are valid for Zurich.
 
   
-  \bold{List of Financial Centres}
+  \bold{List of Financial Centers}
   
-  There are many other financial centres supported by Rmetrics. They
+  There are many other financial centers supported by Rmetrics. They
   can be displayed by the function \code{listFinCenter}. You can also
   display partial lists with wildcards and regular expressions:
   
   
   Examples:
   \preformatted{
-    # List all supported Financial Centres Worldwide:
+    # List all supported Financial Centers Worldwide:
     listFinCenter()
     
-    # List European Financial Centres:
+    # List European Financial Centers:
     listFinCenter("Europe/*")
     
   }
   
   \bold{DST Rules}
   
-  For each financial centre a function is available. It keeps the
+  For each financial center a function is available. It keeps the
   information of the time zones and the DST rules. The functions return
   a data.frame with 4Columns :
   
@@ -524,7 +524,7 @@
     # Show the DST Rules for Zurich:
     Zurich()
     
-    # List European Financial Centres:
+    # List European Financial Centers:
     listFinCenter("Europe/*")
   }
   
