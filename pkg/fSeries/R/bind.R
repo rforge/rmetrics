@@ -54,10 +54,24 @@ merge.timeSeries <-
     # convert series y to FinCenter of series x
     y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
 
+    # check if x and y have same date format,
+    # if not convert to the most extended one
+    if (y@format != x@format) {
+        if (nchar(y@format) > nchar(x@format)) {
+            x@positions <- format(seriesPositions(x), format = y@format)
+            rownames(x@Data) <- x@positions
+            x@format <- y@format
+        } else {
+            y@positions <- format(seriesPositions(y), format = x@format)
+            rownames(y@Data) <- y@positions
+            y@format <- x@format
+        }
+    }
+
     # Manipulate in matrix form:
     positions <- as.character(c(x@positions, y@positions))
-    LENGTH <- length(as.character(seriesPositions(x)))
-    DUP <- duplicated(positions)[1:LENGTH]
+    LENGTH <- length(as.character(x@positions))
+    DUP1 <- duplicated(positions)[1:LENGTH]
     DUP2 <- duplicated(positions)[-(1:LENGTH)]
     M1 <- as.matrix(x)
     M2 <- as.matrix(y)
@@ -67,7 +81,7 @@ merge.timeSeries <-
     X2 <- matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
     colnames(X1) <- colnames(M2)
     NC <- (dim1 + dim2)[2]+1
-    Z <- rbind(cbind(M1, X1, DUP), cbind(X2, M2, DUP2))
+    Z <- rbind(cbind(M1, X1, DUP1), cbind(X2, M2, DUP2))
     Z <- Z[order(rownames(Z)), ]
     NC1 <- dim1[2]+1
     IDX <- (1:(dim1+dim2)[1])[Z[, NC] == 1]
@@ -78,7 +92,7 @@ merge.timeSeries <-
 
     # Create time series:
     ans <- timeSeries(data = Z, charvec = rownames(Z), zone =
-        x@FinCenter, FinCenter = x@FinCenter, units = units, ...)
+                      x@FinCenter, FinCenter = x@FinCenter, units = units, ...)
 
     # Return Value:
     ans
@@ -101,6 +115,20 @@ rbind.timeSeries <-
     stopifnot(dim(x)[2] == dim(y)[2])
 
     y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
+
+    # check if x and y have same date format,
+    # if not convert to the most extended one
+    if (y@format != x@format) {
+        if (nchar(y@format) > nchar(x@format)) {
+            x@positions <- format(seriesPositions(x), format = y@format)
+            rownames(x@Data) <- x@positions
+            x@format <- y@format
+        } else {
+            y@positions <- format(seriesPositions(y), format = x@format)
+            rownames(y@Data) <- y@positions
+            y@format <- x@format
+        }
+    }
 
     # Bind:
     data <- as.matrix(rbind(x@Data, y@Data))
