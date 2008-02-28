@@ -17,8 +17,8 @@ checkBeforeCommit  <-
     stopifnot(package %in% pkgsRmetrics)
 
     # remove package which do not depend on the package we want to test
-    idx <- max(match(package, pkgsRmetrics))
-    pkgsToCheck <- pkgsRmetrics[seq(idx)]
+    idx <- min(match(package, pkgsRmetrics))
+    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsToCheck))]
 
     # Run R CMD check ...
     Rbin <- paste(R.home(), "bin", "R", sep = "/")
@@ -27,6 +27,7 @@ checkBeforeCommit  <-
     cmd <- paste(Rcmd, options, paste(pkgsToCheck, collapse = " "), ...)
     try(system(cmd))
 
+    logWarning <- NULL
     # check for ERRORs and WARNINGs
     for (i in seq(pkgsToCheck)) {
 
@@ -36,25 +37,25 @@ checkBeforeCommit  <-
 
         ERROR <- grep("ERROR", log)
         WARNING <- grep("WARNING", log)
+
         if (length(ERROR)) {
-            cat("\n ######################## ERROR ########################\n")
-            cat(" In package", pkgsToCheck[i], "\n\n")
-            cat(paste(log[seq(ERROR, length(ERROR))], collapse = "\n"), "\n")
-            cat("\n More details in", logFile, "\n")
-            cat(" ####################### WARNING #######################\n")
-            stop("There was an ERROR")
+            msg <- paste("More details in", logFile)
+            stop(msg)
         }
         if (length(WARNING)) {
-            cat("\n ####################### WARNING #######################\n")
-            cat(" In package", pkgsToCheck[i], "\n")
-            cat(paste(log[seq(WARNING-1, WARNING+3)], collapse = "\n"), "\n")
-            cat("\n More details in", logFile, "\n")
-            cat(" ####################### WARNING #######################\n")
-            warning("There are WARNINGs")
+            logWarning <- c(logWarning,
+            "\n ####################### WARNING #######################\n",
+            paste(" In package", pkgsToCheck[i], "\n"),
+            paste(paste(log[seq(WARNING, WARNING+5)], collapse = "\n "), "\n"),
+            paste("\n More details in", logFile, "\n"),
+            paste(" ####################### WARNING #######################\n"))
         }
     }
 
+    # print WARINGs
+    cat(logWarning)
+
     # Return
-    if (length(WARNING) && length(ERROR)) STATUS <- FALSE else STATUS <- TRUE
+    if (length(WARNING) | length(ERROR)) STATUS <- FALSE else STATUS <- TRUE
     return(STATUS)
 }
