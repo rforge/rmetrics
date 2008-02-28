@@ -18,7 +18,7 @@ checkBeforeCommit  <-
 
     # remove package which do not depend on the package we want to test
     idx <- min(match(package, pkgsRmetrics))
-    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsToCheck))]
+    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
 
     # Run R CMD check ...
     Rbin <- paste(R.home(), "bin", "R", sep = "/")
