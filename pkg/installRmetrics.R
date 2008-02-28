@@ -14,23 +14,16 @@
 ################################################################################
 
 installRmetrics  <-
-    function(repoRmetrics = NULL, repoCRAN = "http://stat.ethz.ch/CRAN/",
-             suggests = TRUE)
+    function(repoCRAN = "http://stat.ethz.ch/CRAN/", suggests = TRUE, ...)
 {
-
-    file <- "Rmetrics/DESCRIPTION"
-    pkgInfo <- tools:::.split_description(tools:::.read_description(file))
-    pkgs <- names(pkgInfo$Depends)
+    pkgs <- getDepends("Rmetrics")
 
     # extract dependencies of third packages
-    fileDepends = paste(pkgs, "DESCRIPTION", sep = "/")
     pkgsDepends <- NULL
-    for (i in seq(length(fileDepends))) {
-        pkgInfoDepends <-
-            tools:::.split_description(tools:::.read_description(fileDepends[i]))
-        pkgsDepends <- c(pkgsDepends, names(pkgInfoDepends$Depends))
+    for (i in seq(length(pkgs))) {
+        pkgsDepends <- c(pkgsDepends, getDepends(pkgs[i]))
         if (suggests)
-            pkgsDepends <- c(pkgsDepends, names(pkgInfoDepends$Suggests))
+            pkgsDepends <- c(pkgsDepends, getSuggests(pkgs[i]))
     }
 
     # remove Rmetrics packages and double entries
@@ -45,21 +38,64 @@ installRmetrics  <-
     # install third packages if not already installed
     for (i in seq(length(pkgsDepends))) {
         if (!require(pkgsDepends[i], character.only = TRUE, quietly = TRUE)) {
-            install.packages(pkgsDepends[i], repos = repoCRAN)
+            install.packages(pkgsDepends[i], repos = repoCRAN, ...)
         }
     }
-    # Note Rdonlp2 is not part of Rmetrics !!
-    if (!require(Rdonlp2, quietly = TRUE)) {
-        install.packages("Rdonlp2", repos = repoRmetrics, type = "source")
-    }
+    ### # Note Rdonlp2 is not part of Rmetrics !!
+    ### if (!require(Rdonlp2, quietly = TRUE)) {
+    ### install.packages("Rdonlp2", repos = repoRmetrics, type = "source", ...)
+    ### }
     options(ow) # set default warning option
 
     # install Rmetrics packages from local files
-    install.packages(pkgs, repos = repoRmetrics, type = "source")
+    install.packages(pkgs, repos = NULL, type = "source", ...)
 
     # install Rmetrics package
-    install.packages("Rmetrics", repos = repoRmetrics, type = "source")
+    install.packages("Rmetrics", repos = NULL, type = "source", ...)
 
     # Return
     return (require("Rmetrics"))
+}
+
+
+getDepends <-
+    function(package)
+{
+    stopifnot(is.character(package))
+    ans <- NULL
+    for (i in seq(length(package))) {
+        file <- paste(package[i], "DESCRIPTION", sep = "/")
+        pkgInfo <- tools:::.split_description(tools:::.read_description(file))
+        ans <- c(ans, names(pkgInfo$Depends))
+    }
+
+    # Return
+    ans
+}
+
+getSuggests <-
+    function(package)
+{
+    stopifnot(is.character(package))
+    ans <- NULL
+    for (i in seq(length(package))) {
+        file <- paste(package[i], "DESCRIPTION", sep = "/")
+        pkgInfo <- tools:::.split_description(tools:::.read_description(file))
+        ans <- names(pkgInfo$Suggests)
+    }
+
+    # Return
+    ans
+}
+
+getPath <-
+    function(package)
+{
+    # extract path of package in order to set working directory
+    path <- unlist(strsplit(package, "/"))
+    if (path[length(path)] == "") path <- path[-length(path)]
+    package <- path[length(path)]
+    path <- paste(path[-length(path)], collapse = "/")
+    ans <- list(package = package, path = path)
+    ans
 }
