@@ -10,7 +10,7 @@ checkBeforeCommit  <-
     if (is.null(outdir)) outdir <- "Rcheck"
 
     # if outdir does not exist, create it
-    if (file.exists(outdir)) dir.create(outdir, showWarnings = FALSE)
+    if (!file.exists(outdir)) dir.create(outdir)
 
     # extract list of Rmetrics packages
     pkgsRmetrics <- getDepends("Rmetrics")
