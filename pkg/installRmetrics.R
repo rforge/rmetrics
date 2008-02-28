@@ -53,8 +53,10 @@ installRmetrics  <-
     # install Rmetrics package
     install.packages("Rmetrics", repos = NULL, type = "source", ...)
 
+    OK <- require("Rmetrics")
+
     # Return
-    return (require("Rmetrics"))
+    return(OK)
 }
 
 
