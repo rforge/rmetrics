@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -35,7 +35,7 @@
 
 whichFormat <-
     function(charvec, silent = FALSE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Charvec String:
@@ -52,7 +52,7 @@ whichFormat <-
 
     # DW:
     #   There should be better checks on the format identification ...
-    
+
     # Human readable ISO:
     if (NCHAR ==  4 & !SUBSTR) return("%Y")
     if (NCHAR ==  7 &  SUBSTR) return("%Y-%m")
@@ -71,7 +71,7 @@ whichFormat <-
     # Otherwise:
     if (!silent)
     warning("Could not determine time(date) format")
-    
+
     # Return Value:
     "unknown"
 }
@@ -80,7 +80,7 @@ whichFormat <-
 # ------------------------------------------------------------------------------
 
 
-.which.format <- whichFormat
+.whichFormat <- whichFormat
 
 
 ################################################################################
