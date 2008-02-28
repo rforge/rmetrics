@@ -1,7 +1,7 @@
 Package: fUtilities
 Version: 270.73
 Date: 1997 - 2008
-Title: Utilities - Rmetrics Function Utilities
+Title: Rmetrics - Rmetrics Function Utilities
 Author: Diethelm Wuertz and many others. See the SOURCE file
 Depends: R (>= 2.4.0), methods, MASS, zoo
 Suggests: tcltk, RUnit, akima, spatial
