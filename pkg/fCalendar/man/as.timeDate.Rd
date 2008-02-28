@@ -8,7 +8,7 @@
 \alias{as.timeDate.default}
 \alias{as.timeDate.POSIXt}
 \alias{as.timeDate.Date}
-
+\alias{as.timeDate.timeDate}
 
 \description{
   
@@ -18,11 +18,16 @@
 
 
 \usage{
-\method{as.timeDate}{default}(x, zone = myFinCenter, FinCenter = myFinCenter)
+\method{as.timeDate}{default}(x, zone = myFinCenter, FinCenter =
+myFinCenter)  
 
-\method{as.timeDate}{POSIXt}(x, zone = myFinCenter, FinCenter = myFinCenter)
+\method{as.timeDate}{POSIXt}(x, zone = myFinCenter, FinCenter =
+myFinCenter)
 
-\method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter = myFinCenter) 
+\method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter =
+myFinCenter)
+\method{as.timeDate}{timeDate}(x, zone = myFinCenter, FinCenter =
+myFinCenter)  
 }
 
 
@@ -44,9 +49,9 @@
 
 \value{
   
-  \code{as.timeDate.POSIXt} returns an object of class \code{POSIXt}.
+  \code{as.timeDate.POSIXt} returns an object of class \code{timeDate}.
   
-  \code{as.timeDate.Date} returns an object of class \code{Date}.
+  \code{as.timeDate.Date} returns an object of class \code{timeDate}.
   
 }
 
