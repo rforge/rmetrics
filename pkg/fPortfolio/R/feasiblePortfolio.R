@@ -67,7 +67,7 @@ feasiblePortfolio <-
     # Compute Alternative/Robust Covariance Risk:
     Sigma = data@statistics$Sigma
     rcov = sqrt((weights %*% Sigma %*% weights)[[1]])
-    
+
     # Compute VaR:
     alpha = getAlpha(spec)
     returns = as.matrix(data@data$series) %*% weights
@@ -77,7 +77,7 @@ feasiblePortfolio <-
     CVaR = VaR - 0.5*mean(((VaR-returns) + abs(VaR-returns))) / alpha
 
     # Compose Risks:
-    targetRisk = c(cov, rcov, CVaR, VaR)
+    targetRisk = c(cov, rcov, -CVaR, -VaR)
     names(targetRisk) = c("cov", "sigma", "CVaR", "VaR")
 
     # Compute Risk Budgets:
@@ -85,9 +85,9 @@ feasiblePortfolio <-
 
     # Compose Portfolio:
     portfolio = list(
-        weights = t(weights), 
+        weights = t(weights),
         targetReturn = t(targetReturn),
-        targetRisk = t(targetRisk), 
+        targetRisk = t(targetRisk),
         targetAlpha = alpha,
         covRiskBudgets = t(covRiskBudgets),
         status = getStatus(spec))
