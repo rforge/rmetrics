@@ -681,6 +681,7 @@ garchFit <-
     model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
         formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     p = model.order[1]
+    if (p == 1) stop("in GARCH/APARCH(p,q), order p must be > 0")
     q = 0
     if(length(model.order) == 2) q = model.order[2]
 
@@ -806,6 +807,7 @@ garchFit <-
     if(.DEBUG) { cat("\nDEBUG - fixed: \n"); print(index) }
 
     # Persistence:
+    alpha <- beta <- NULL
     if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
     if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
     if(p > 0 & !leverage) gamma = rep(0, times = p)
@@ -976,6 +978,7 @@ garchFit <-
     cond.dist = .params$cond.dist
 
     # Extracting the parameters by name ...
+    alpha <- beta <- NULL
     mu = c(mu = .params$mu)
     delta = c(delta = .params$delta)
     skew = c(skew = .params$skew)
