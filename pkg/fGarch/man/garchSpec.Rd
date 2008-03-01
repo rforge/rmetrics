@@ -59,7 +59,7 @@ garchSpec(model = list(), presample = NULL,
         a numeric three column matrix with start values for the series, 
         for the innovations, and for the conditional variances. For an 
         ARMA(m,n)-GARCH(p,q) process the number of rows must be at least 
-        max(m,n,p,q), longer presamples are cutted. Note, all presamples
+        max(m,n,p,q)+1, longer presamples are cutted. Note, all presamples
         are initialized by a normal-GARCH(p,q) process.
         }
     \item{rseed}{

@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -34,27 +34,27 @@
 ################################################################################
 
 
-setMethod(f = "show", signature(object = "fGARCH"), definition = 
-    function(object) 
-{   
+setMethod(f = "show", signature(object = "fGARCH"), definition =
+    function(object)
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Print method for an object of class "fGARCH"
-    
+
     # Arguments:
     #   object - an object of class 'fGARCH'
-    
+
     # FUNCTION:
-     
+
     # Title:
     cat("\nTitle:\n ")
     cat(object@title, "\n")
-    
+
     # Call:
     cat("\nCall:\n ")
     cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
-    
+
     # Mean and Variance Equation:
     cat("\nMean and Variance Equation:\n ")
     Name = unclass(attr(object@formula, "data"))
@@ -62,30 +62,30 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
     attr(Formula, "data") <- NULL
     print(Formula)
     cat(" [", Name, "]\n", sep = "")
-        
+
     # Conditional Distribution:
     cat("\nConditional Distribution:\n ")
     cat(object@fit$params$cond.dist, "\n")
-  
+
     # Coefficients:
     cat("\nCoefficient(s):\n")
     digits = max(6, getOption("digits") - 4)
-    print.default(format(object@fit$par, digits = digits), print.gap = 2, 
-         quote = FALSE)    
-    
+    print.default(format(object@fit$par, digits = digits), print.gap = 2,
+         quote = FALSE)
+
     # Error Analysis:
     digits = max(4, getOption("digits") - 5)
-    fit = object@fit 
+    fit = object@fit
     signif.stars = getOption("show.signif.stars")
     cat("\nError Analysis:\n")
-    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars) 
-    
+    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars)
+
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
     LLH = object@fit$value
     N = NROW(object@data$data)
     cat(LLH, "   normalized: ", LLH/N, "\n")
-        
+
     # Description:
     cat("\nDescription:\n ")
     cat(object@description, "\n")
@@ -99,46 +99,46 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
 # ------------------------------------------------------------------------------
 
 
-setMethod(f = "show", signature(object = "fGARCHSPEC"), definition = 
+setMethod(f = "show", signature(object = "fGARCHSPEC"), definition =
     function(object)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   S4 Print Method for objects of class 'fGARCHSPEC'
-    
+
     # Arguments:
     #   object - Object of class 'fGARCHSPEC'
-    
+
     # FUNCTION:
-    
+
     # Formula:
     x = object
     cat("\nFormula: \n ")
     cat(as.character(x@formula))
-    
+
     # Model:
     cat("\nModel:")
-    if (sum(abs(x@model$ar)) != 0) 
+    if (sum(abs(x@model$ar)) != 0)
         cat("\n ar:   ", x@model$ar)
-    if (sum(abs(x@model$ma)) != 0)    
+    if (sum(abs(x@model$ma)) != 0)
         cat("\n ma:   ", x@model$ma)
-    if (x@model$mu != 0)              
+    if (x@model$mu != 0)
         cat("\n mu:   ", x@model$mu)
-    if (x@model$omega != 0)           
+    if (x@model$omega != 0)
         cat("\n omega:", x@model$omega)
-    if (sum(abs(x@model$alpha)) != 0) 
+    if (sum(abs(x@model$alpha)) != 0)
         cat("\n alpha:", x@model$alpha)
-    if (sum(abs(x@model$gamma)) != 0) 
+    if (sum(abs(x@model$gamma)) != 0)
         cat("\n gamma:", x@model$gamma)
-    if (sum(abs(x@model$beta)) != 0)  
+    if (sum(abs(x@model$beta)) != 0)
         cat("\n beta: ", x@model$beta)
-    if (x@model$delta != 2)  
+    if (x@model$delta != 2)
         cat("\n delta:", x@model$delta)
-    
-    # Distribution: 
+
+    # Distribution:
     cat("\nDistribution: \n ")
-    cat(x@distribution)   
+    cat(x@distribution)
     if (x@distribution != "norm") {
         if (x@distribution == "snorm") {
             cat("\nDistributional Parameters: \n")
@@ -146,26 +146,26 @@ setMethod(f = "show", signature(object = "fGARCHSPEC"), definition =
         }
         if (x@distribution == "ged" | x@distribution == "std") {
             cat("\nDistributional Parameter: \n")
-            cat(" nu =", x@model$shape) 
+            cat(" nu =", x@model$shape)
         }
         if (x@distribution == "sged" | x@distribution == "sstd") {
             cat("\nDistributional Parameters: \n")
             cat(" nu =", x@model$shape, " xi =", x@model$skew)
         }
     }
-    
-    # Seed: 
+
+    # Seed:
     if (x@rseed != 0) {
         cat("\nRandom Seed: \n ")
         cat(x@rseed)
-    }     
-    
+    }
+
     # Presample:
     cat("\nPresample: \n")
     n = -(length(x@presample[, 1])-1)
-    time = 0:n
+    time = n:0
     print(data.frame(cbind(time, x@presample)))
-    
+
     # Return Value:
     invisible()
 })

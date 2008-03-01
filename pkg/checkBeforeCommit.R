@@ -1,5 +1,5 @@
 checkBeforeCommit  <-
-    function(package, lib = NULL, outdir = NULL, ...)
+    function(package = "Rmetrics", lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(package))
 
@@ -14,11 +14,20 @@ checkBeforeCommit  <-
 
     # extract list of Rmetrics packages
     pkgsRmetrics <- getDepends("Rmetrics")
+    if (package == "Rmetrics") package <- pkgsRmetrics
     stopifnot(package %in% pkgsRmetrics)
 
     # remove package which do not depend on the package we want to test
-    idx <- min(match(package, pkgsRmetrics))
-    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
+    ## # 1 possibility (to be discussed)
+    ## idx <- min(match(package, pkgsRmetrics))
+    ## pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
+    # 2 possibility (to be discussed)
+    pkgsToCheck <- package
+    for (i in seq(pkgsRmetrics)) {
+        if (package %in% getDepends(pkgsRmetrics[i]))
+            pkgsToCheck <- c(pkgsToCheck, pkgsRmetrics[i])
+    }
+
 
     # Run R CMD check ...
     Rbin <- paste(R.home(), "bin", "R", sep = "/")
