@@ -681,7 +681,7 @@ garchFit <-
     model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
         formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     p = model.order[1]
-    if (p == 1) stop("in GARCH/APARCH(p,q), order p must be > 0")
+    if (p == 0) stop("in GARCH/APARCH(p,q), order p must be > 0")
     q = 0
     if(length(model.order) == 2) q = model.order[2]
 
