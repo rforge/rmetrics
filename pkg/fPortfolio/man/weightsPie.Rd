@@ -135,7 +135,7 @@ tailRiskBudgetsPie(object, pos = NULL, labels = TRUE, col = NULL,
    weightsPie(portfolio)
 
 ## portfolioFrontier - 
-   frontier = portfilioFrontier(Data)
+   frontier = portfolioFrontier(Data)
    
 ## weightsPie -
    weightsPie(frontier, pos = 40)

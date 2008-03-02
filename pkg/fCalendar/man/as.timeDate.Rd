@@ -26,7 +26,7 @@ myFinCenter)
 
 \method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter =
 myFinCenter)
-\method{as.timeDate}{timeDate}(x, zone = myFinCenter, FinCenter =
+\method{as.timeDate}{timeDate}(x, zone = x@FinCenter, FinCenter =
 myFinCenter)  
 }
 

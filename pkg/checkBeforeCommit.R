@@ -19,14 +19,14 @@ checkBeforeCommit  <-
 
     # remove package which do not depend on the package we want to test
     ## # 1 possibility (to be discussed)
-    ## idx <- min(match(package, pkgsRmetrics))
-    ## pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
+    idx <- min(match(package, pkgsRmetrics))
+    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
     # 2 possibility (to be discussed)
-    pkgsToCheck <- package
-    for (i in seq(pkgsRmetrics)) {
-        if (package %in% getDepends(pkgsRmetrics[i]))
-            pkgsToCheck <- c(pkgsToCheck, pkgsRmetrics[i])
-    }
+###     pkgsToCheck <- package
+###     for (i in seq(pkgsRmetrics)) {
+###         if (package %in% getDepends(pkgsRmetrics[i]))
+###             pkgsToCheck <- c(pkgsToCheck, pkgsRmetrics[i])
+###     }
 
 
     # Run R CMD check ...

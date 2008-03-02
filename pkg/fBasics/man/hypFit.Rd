@@ -132,12 +132,12 @@ hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0,
 ## rhyp -
    # Simulate random variates HYP(1.5, 0.3, 0.5, -1.0):
    set.seed(1953)
-   x = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
+   s = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
 
 ## hypFit -  
    # Fit Parameters, this may take some time ...
    # Starting vector (1, 0, 1, mean(s)):
-   hypFit(x, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
+   hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 
 
