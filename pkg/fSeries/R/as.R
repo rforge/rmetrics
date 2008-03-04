@@ -184,10 +184,10 @@ as.timeSeries.data.frame <-
     dummyDates = FALSE
     firstColumn = TRUE
     charvec = as.character(as.vector(x[, 1]))
-    format = .whichFormat(charvec, ...)
+    format = .whichFormat(charvec, silent = TRUE)
     if (format == "unknown") {
         charvec = rownames(x)
-        format = .whichFormat(charvec, ...)
+        format = .whichFormat(charvec, silent = TRUE)
         if (format == "unknown") {
             # warning("Could not identify timeDate Format")
             dummyDates = TRUE
@@ -195,7 +195,9 @@ as.timeSeries.data.frame <-
             charvec = as.character(timeSequence(from = "1970-01-01",
                 length.out = N, format = "%Y-%m-%d", zone = zone,
                 FinCenter = FinCenter))
-            format = .whichFormat(charvec, ...)
+            format = .whichFormat(charvec, silent = TRUE)
+            warning("Dummy Dates Used in as.timeSeries()", call. = FALSE)
+
         }
         firstColumn = FALSE
     }
@@ -230,7 +232,6 @@ as.timeSeries.data.frame <-
     ans = timeSeries(data = data, charvec = charvec,
         units = colnames(data), format = format, zone = zone,
         FinCenter = FinCenter, recordIDs = recordIDs)
-    if (dummyDates) attr(ans, "control")<-"Dummy Dates Used"
 
     # Return Value:
     ans
