@@ -247,27 +247,27 @@ as.timeSeries.matrix <-
 
     # FUNCTION:
 
-    if (attr(x, "oclass") == "timeSeries") {
-        data <- matrix(as.numeric(x), ncol = ncol(x))
-        charvec <- rownames(x)
-        units <- attr(x, "units")
-        format <- attr(x, "format")
-        zone <- FinCenter <- attr(x, "FinCenter")
-        recordIDs <- attr(x, "recordIDs")
-        title <- attr(x, "title")
-        documentation <- attr(x, "documentation")
+###     if (attr(x, "oclass") == "timeSeries") {
+###         data <- matrix(as.numeric(x), ncol = ncol(x))
+###         charvec <- rownames(x)
+###         units <- attr(x, "units")
+###         format <- attr(x, "format")
+###         zone <- FinCenter <- attr(x, "FinCenter")
+###         recordIDs <- attr(x, "recordIDs")
+###         title <- attr(x, "title")
+###         documentation <- attr(x, "documentation")
 
-        ans <- timeSeries(data = data, charvec = charvec, units = units,
-                          format = format, zone = zone, FinCenter =FinCenter,
-                          # recordIDs = recordIDs,
-                          title = title,
-                          documenation = documentation)
-    } else {
+###         ans <- timeSeries(data = data, charvec = charvec, units = units,
+###                           format = format, zone = zone, FinCenter =FinCenter,
+###                           # recordIDs = recordIDs,
+###                           title = title,
+###                           documenation = documentation)
+###     } else {
 
         # As timeSeries:
         x <- as.data.frame(x)
         ans <- as.timeSeries(x, zone = zone, FinCenter = FinCenter, ...)
-    }
+###    }
 
     # Return Value:
     ans
