@@ -406,14 +406,14 @@ as.matrix.timeSeries <-
     # Convert:
     ans = as.matrix(x@Data) # is matrix
 
-    attr(ans, "oclass") <- "timeSeries"
-#    attr(ans, "positions") <- as.character(x@positions)
-    attr(ans, "format") <- x@format
-    attr(ans, "FinCenter") <- x@FinCenter
-    attr(ans, "units") <- x@units
-    attr(ans, "recordIDs") <- x@recordIDs
-    attr(ans, "title") <- x@title
-    attr(ans, "documentation") <- x@documentation
+###     attr(ans, "oclass") <- "timeSeries"
+### #    attr(ans, "positions") <- as.character(x@positions)
+###     attr(ans, "format") <- x@format
+###     attr(ans, "FinCenter") <- x@FinCenter
+###     attr(ans, "units") <- x@units
+###     attr(ans, "recordIDs") <- x@recordIDs
+###     attr(ans, "title") <- x@title
+###     attr(ans, "documentation") <- x@documentation
 
     # Return Value:
     ans
