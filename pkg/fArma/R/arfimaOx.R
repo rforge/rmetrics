@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,7 +33,7 @@
 #  * armaSim               Simulates a time series process from the ARIMA family
 #    arfimaOxFit           Fits parameters for AR(FI)MA time series processes
 # S3 METHOD:              PREDICTION:
-#  * predict.fARMA         S3: Predicts from an ARMA time series prrocess 
+#  * predict.fARMA         S3: Predicts from an ARMA time series prrocess
 # S3 METHOD:              RINT - PLOT - SUMMARY METHODS:
 #  * show.fARMA            S4: Prints a fitted ARMA time series object
 #  * plot.fARMA            S3: Plots stylized facts of a fitted ARMA object
@@ -47,203 +47,18 @@
 ################################################################################
 
 
-.OXPATH = "C:\\Ox\\Ox3"
-
-
 # ------------------------------------------------------------------------------
 
 
-arfimaOxFit = 
-function(formula, data, method = c("mle", "nls", "mpl"), trace = TRUE, 
+arfimaOxFit =
+function(formula, data, method = c("mle", "nls", "mpl"), trace = TRUE,
 title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Fits Model Parameters for an ARFIMA Time Series Process
-    
-    # Arguments:
-    #   formula - defines the model to be fitted
-    #       x ~ arma(2, 1)
-    #       x ~ arima(2, 1, 1)
-    #       x ~ arfima(2, 1)
-    #   method - defines the parameter fitting method
-    #   trace - should the estimation be traced ?
-    
-    # Notes:
-    #   This is an interface to the Arfime Ox Software Package
-    
-    # Example:
-    #   .OXPATH <<- "C:\\Ox\\Ox3"
-    #   x = armaSim(list(ar=0.2, ma=-0.4, d=0.3), n = 500) 
-    #   object = arfimaOxFit(x ~ arfima(2, 1))
-       
-    # FUNCTION:
-    
-    # Debug Mode:
-    DEBUG = FALSE
-    
-    # Call:
-    call = match.call()
-    
-    # Get Series:
-    # DW 2005-09-03
-    mf = match.call(expand.dots = FALSE)
-    m = match(c("formula", "data"), names(mf), 0)
-    mf = mf[c(1, m)]
-    mf[[1]] = as.name(".modelSeries")
-    mf$fake = FALSE
-    mf$lhs = TRUE
-    if (missing(data)) data = eval(parse(text = search()[2]), parent.frame())
-    mf$data = data
-    x = eval(mf, parent.frame())
-    x = ts = as.vector(x[, 1])
-    if (DEBUG) print(head(x))
-
-    # Allow for univariate 'timeSeries' Objects:
-    # Added 2004-09-04 DW
-    if (class(ts) == "timeSeries") ts = as.vector(ts)
-
-    # Which Model - Valid?
-    K = length(formula)
-    end = regexpr("\\(", as.character(formula[K]))-1
-    tsmodel =  substr(as.character(formula[K]), 1, end)
-    valid = FALSE
-    if (tsmodel == "arfima") {
-        tsmodel = "arfimaOX"
-        valid = TRUE
-    }
-    if (!valid) stop("Invalid Formula Specification")
-    if (DEBUG) print(tsmodel)
-    
-    # Which Order?
-    order = c(0, 0, 0)
-    order[1] = as.numeric(as.character(formula[[K]])[2])
-    order[2] = 0
-    order[3] = as.numeric(as.character(formula[[K]])[3])
-    if (DEBUG) print(order)
-    
-    # Which method ?
-    method = match.arg(method)
-    Methods = 1:3
-    names(Methods) = c("mle", "nls", "mpl")
-    method = Methods[method]
-    if (DEBUG) print(method)
-                                            
-    # Write parameters to file - OxArguments.csv:
-    parameters = c(
-        nt = length(ts), 
-        method = method, 
-        fixD = 0,
-        p = order[1], 
-        d = order[2], 
-        q = order[3])
-    write(x = parameters, file = "OxArguments.csv") 
-    
-    # Write data to file - OxSeries.csv:
-    write(ts, file = "OxSeries.csv", ncolumns = 1)                        
-    
-    # Estimate Parameters:    
-    command = paste(.OXPATH, "\\bin\\oxl.exe ", 
-        .OXPATH, "\\lib\\ArfimaOxFit.ox", sep = "")
-    system(command, show.output.on.console = trace, invisible = TRUE)
-    
-    # Put All Together:
-    fit = list()
-    fit$call = match.call()
-    fit$residuals = scan("OxResiduals.csv", skip = 1, quiet = TRUE)
-    fit$fitted = ts - as.vector(fit$residuals)
-    fit.parameters = scan("OxParameters.csv", quiet = TRUE)
-    nPar = order[1]+1+order[3]
-    Names = "d"
-    if (order[1] > 0) Names = c(Names, paste("AR-", 1:order[1], sep = "")) 
-    if (order[3] > 0) Names = c(Names, paste("MA-", 1:order[3], sep = "")) 
-    fit$coef = fit.parameters[1:nPar]
-    names(fit$coef) = Names
-    fit$se.coef = fit.parameters[(nPar+1):(2*nPar)]
-    names(fit$se.coef) = Names
-    fit$cov = matrix(fit.parameters[(2*nPar+1):(2*nPar+nPar^2)], ncol = nPar)
-    colnames(fit$cov) = rownames(fit$cov) = Names
-    fit$sigma2 = c(sigma2 = fit.parameters[2*nPar+nPar^2+1])
-    fit$llh = c(llh = fit.parameters[2*nPar+nPar^2+2])
-    fit$tstitle = fit$tsmodel = tsmodel
-    fit$order = order
-    fit$class = "fARMA"
-    class(fit) = "list"
-       
-    # Add title and desription:
-    if (is.null(title)) title = "ARFIMA Ox Modelling"
-    if (is.null(description)) description = .description()
-      
-    # Result:
-    ans = new("fARMA",     
-        call = call,
-        formula = as.formula(formula), 
-        method = as.character(method),
-        parameter = list(include.mean = NA, fixed = NA, order = order),
-        data = list(x = x),
-        fit = fit,
-        residuals = list(residuals = fit$residuals),
-        fitted = list(fitted = fit$fitted),
-        title = as.character(title), 
-        description = as.character(description) )
-        
-    # Return Value:
-    ans
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-.arfimaOxPredict = 
-function(object, n.ahead = 10, n.back = 50, trace = FALSE) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Predicts from an ARMA Time Series Process
-    
-    # Note:
-    #   This function is called by predict.fARMA()
-    
-    # FUNCTION:
-    
-    # Object:
-    fit = object@fit
-    
-    # Write parameters to file - OxArguments.csv:
-    x = as.vector(object@data$x)
-    nt = length(x)
-    ar = fit$order[1]
-    d  = fit$order[2]
-    ma = fit$order[3]
-    write(x = n.ahead, file = "OxArguments.csv") 
-    write(x = n.back, file = "OxArguments.csv", append = TRUE) 
-    write(x = nt, file = "OxArguments.csv", append = TRUE) 
-    write(x = d,  file = "OxArguments.csv", append = TRUE) 
-    write(x = ar, file = "OxArguments.csv", append = TRUE) 
-    write(x = ma, file = "OxArguments.csv", append = TRUE) 
-    for (i in 1:length(fit$coef)) {
-        write(x = fit$coef[i], file = "OxArguments.csv", append = TRUE) 
-    }
-
-    # Write data to file - OxSeries:
-    write(x, file = "OxSeries.csv", ncolumns = 1)   
-    
-    # Calculate:    
-    command = paste(.OXPATH, "\\bin\\oxl.exe ", 
-        .OXPATH, "\\lib\\ArfimaOxPredict.ox", sep = "")
-    system(command, show.output.on.console = trace, invisible = TRUE)
-    
-    # Result:
-    mForecast = read.table("OxParameters.csv")
-    pred = as.ts(mForecast[, 1])
-    se = as.ts(mForecast[, 2])
-    ans = list(pred = pred, se = se)
-
-    # Return Value:
-    ans
+{
+print("arfimaOxFit is no more available")
+print("If you are interested to use, please contact us")
+invisible()
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
