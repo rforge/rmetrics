@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,49 +33,29 @@
 ################################################################################
 
 
-setMethod(f = "fitted", signature(object = "fGARCH"), definition =  
-    function(object) 
-{   
+setMethod(f = "fitted", signature(object = "fGARCH"), definition =
+    function(object)
+{
     # A function implemented by Diethelm Wuertz
-    
-    # Description:  
+
+    # Description:
     #   S3 Fitted values method for an object of class fGARCH
-    
+
     # Arguments:
     #   object - an object of class fGarch as returned by the function
     #       garchFit
-    
+
     # FUNCTION:
-    
+
     # Get numeric vector of fitted, optionally standardized
     fitted = object@fitted
-    
+
     # Get original time series class:
-    data = slot(object, "data")$data
-    Data = slot(object, "data")$Data
+    ans = slot(object, "data")
     Name = as.character(fit@formula[2])
-    dataClass = class(Data)[1]
-    
-    if (dataClass == "timeSeries") {
-        ans = Data
-        data.mat = matrix(fitted)
-        rownames(data.mat) = rownames(Data)
-        colnames(data.mat) = Name
-        ans@Data = data.mat
-    } else if (dataClass == "zoo") {
-        ans = fitted
-        attr(ans, "index") = attr(Data, "index")
-        class(ans) = "zoo"
-    } else if (dataClass == "ts" | dataClass == "mts") {
-        ans = fitted
-        attr(ans, "tsp") = attr(Data, "tsp")
-        class(ans) = "ts"
-    } else {
-        ans = data
-    }
-    
+    attr(ans, "Name") <- Name
     # Return Value:
-    ans 
+    ans
 })
 
 

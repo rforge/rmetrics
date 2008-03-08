@@ -35,7 +35,7 @@
 
 garchSim <-
     function(spec = garchSpec(), n = 100, n.start = 100,
-    returnClass = c("ts", "numeric", "mts"))
+             extended = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -65,14 +65,12 @@ garchSim <-
     #   n - an integer, the length of the series
     #   n.start - the length of the warm-up sequence to reduce the
     #       effect of initial conditions.
-    #   returnClass - the class of the object to be returned.
 
     # FUNCTION:
 
     # Specification:
     stopifnot(class(spec) == "fGARCHSPEC")
     model = spec@model
-    returnClass = match.arg(returnClass)
 
     # Random Seed:
     if (spec@rseed != 0) set.seed(spec@rseed)
@@ -142,20 +140,9 @@ garchSim <-
 
 
     # Return Values:
-    class(spec) = "fGARCHSPEC"
-    if (returnClass == "ts") {
-        ans = as.ts(as.vector(data[, 3]))
-        attr(ans, "control") = list(garchSpec = spec)
-    }
-    if (returnClass == "numeric") {
-        ans = as.numeric(as.vector(data[, 3]))
-
-    }
-    if (returnClass == "mts") {
-        ans = as.ts(data[, c(3,2,1)])
-        colnames(ans) = c("garch", "sigma", "eps")
-        attr(ans, "control") = list(garchSpec = spec)
-    }
+    ans = as.timeSeries(data[, c(3,2,1)])
+    colnames(ans) = c("garch", "sigma", "eps")
+    ans <- if (extended) ans else ans[,"garch"]
     attr(ans, "control") = list(garchSpec = spec)
 
     # Return Value:

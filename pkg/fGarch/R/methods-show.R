@@ -82,8 +82,8 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
 
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
-    LLH = object@fit$value
-    N = NROW(object@data$data)
+    LLH = - object@fit$value
+    N = NROW(object@data)
     cat(LLH, "   normalized: ", LLH/N, "\n")
 
     # Description:

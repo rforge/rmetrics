@@ -168,7 +168,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 1. Time Series:
-    xseries = x@data$Data
+    xseries = x@data
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
         main = "Time Series")
     abline(h = 0, col = "grey", lty = 3)
@@ -208,14 +208,8 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 3. Series with 2 Conditional SD Superimposed:
-    if(class(x@data$Data) == "timeSeries") {
-        xseries = x@data$Data
-        xseries@data= as.matrix(x@data$data)
-        xcsd = volatility(x, "sigma")
-    } else {
-        xseries = x@data$data
-        xcsd = x@sigma.t
-    }
+    xseries = x@data
+    xcsd = volatility(x, "sigma")
     ci = 2
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
         main = "Series with 2 Conditional SD Superimposed")
@@ -238,7 +232,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 4. ACF of the Observations:
-    xseries = as.vector(x@data$data)
+    xseries = as.vector(x@data)
     n = length(xseries)
     lag.max = as.integer(10*log10(n))
     acf(xseries, lag.max = lag.max, xlab = "Lags", col = "steelblue",
@@ -258,7 +252,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 5. ACF of the Squared Observations:
-    xseries = as.vector(x@data$data)
+    xseries = as.vector(x@data)
     xseries2 = xseries^2
     n = length(xseries)
     lag.max = as.integer(10*log10(n))
@@ -279,7 +273,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
 
     # 6. Cross Correlation between x^2 and x:
-    xseries = as.vector(x@data$data)
+    xseries = as.vector(x@data)
     xseries2 = xseries^2
     n = length(xseries)
     lag.max = as.integer(10*log10(n))

@@ -61,8 +61,9 @@
    coef(spec)
    
 ## garchSim -
-   # Simulate an univariate "ts" series
+   # Simulate an univariate "timeSeries" series
    x = garchSim(spec, n = 200)
+   x = x[,1]
   
 ## garchFit - 
    fit = garchFit( ~ garch(1, 1), data = x)

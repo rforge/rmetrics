@@ -29,8 +29,7 @@
 
 ################################################################################
 # METHOD:                 EXTRACTORS:
-#  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
-#  .residuals.fGARCH       Internal Function to standardize residuals
+#  residuals.fGARCH        S4 residuals method for an object of class 'fGARCH'
 ################################################################################
 
 
@@ -40,7 +39,7 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S3 Residuals method for an object of class fGARCH
+    #   S4 Residuals method for an object of class fGARCH
 
     # Arguments:
     #   object - an object of class fGarch as returned by the
@@ -51,54 +50,6 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
 
     # FUNCTION:
 
-    # Get numeric vector of residuals, optionally standardized
-    residuals = .residuals.fGARCH(object = object, standardize = standardize)
-
-    # Get original time series class:
-    data = slot(object, "data")$Data
-    dataClass = class(data)[1]
-
-    if (dataClass == "timeSeries") {
-        ans = data
-        data.mat = matrix(residuals)
-        rownames(data.mat) = rownames(data)
-        colnames(data.mat) = object@data$unit
-        ans@Data = data.mat
-    } else if (dataClass == "zoo") {
-        ans = residuals
-        attr(ans, "index") = attr(data, "index")
-        class(ans) = "zoo"
-    } else if (dataClass == "ts" | dataClass == "mts") {
-        ans = residuals
-        attr(ans, "tsp") = attr(data, "tsp")
-        class(ans) = "ts"
-    } else {
-        ans = data
-    }
-
-    # Return Value:
-    ans
-})
-
-
-# ------------------------------------------------------------------------------
-
-
-.residuals.fGARCH <-
-    function(object, standardize = FALSE)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   S3 Residuals method for an object of class fGARCH
-
-    # Arguments:
-    #   object - an object of class fGarch as returned by the
-    #       function garchFit
-    #   standardize - a logial flag, should the residuals be
-    #       standardized
-
-    # FUNCTION:
 
     # Residuals:
     if (standardize) {
@@ -109,8 +60,8 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
 
     # Return Value:
     ans
-}
+
+})
 
 
-################################################################################
-
+# ------------------------------------------------------------------------------

@@ -64,31 +64,10 @@ setMethod(f = "volatility", signature(object = "fGARCH"), definition =
         volatility = slot(object, "h.t")
     }
 
-    # Get original time series class:
-    data = slot(object, "data")$Data
-    dataClass = class(data)[1]
-
-    if (dataClass == "timeSeries") {
-        ans = data
-        data.mat = matrix(volatility)
-        rownames(data.mat) = rownames(data)
-        colnames(data.mat) = object@data$unit
-        ans@Data = data.mat
-    } else if (dataClass == "zoo") {
-        ans = volatility
-        attr(ans, "index") = attr(data, "index")
-        class(ans) = "zoo"
-    } else if (dataClass == "ts" | dataClass == "mts") {
-        ans = volatility
-        attr(ans, "tsp") = attr(data, "tsp")
-        class(ans) = "ts"
-    } else {
-        ans = data
-    }
-    attr(ans, "type") <- type
+    attr(volatility, "type") <- type
 
     # Return Value:
-    ans
+    volatility
 
 })
 

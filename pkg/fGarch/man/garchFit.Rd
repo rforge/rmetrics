@@ -10,8 +10,43 @@
 
 \description{
 
-  Estimates the parameters of an univariate GARCH process.
+  Estimates the parameters of an univariate ARMA-GARCH/APARCH process.
 
+  The mean equatinon of the the ARMA(m,n) process is defined as
+
+  \deqn{
+    x_t  =  \mu
+    ~ + ~ \sum_{i=1}^m a_i x_{t-i}
+    ~ + ~ \sum_{j=1}^n b_j \varepsilon_{t-j}  + \varepsilon_t ~.}
+	
+  And the variance equation of the APARCH(p,q) process is
+
+  \deqn{
+    \sigma_t^\delta  =  \omega
+    ~+~ \sum_{i=1}^p \alpha_i
+    ( | \varepsilon_{t-i} | - \gamma_i \varepsilon_{t-i} )^\delta
+    ~+~ \sum_{j=1}^q \beta_j \sigma_{t-j}^\delta ~
+    with ~ \varepsilon_t = z_t \sigma_t ~.} 
+
+  The family of APARCH models includes the ARCH and GARCH models, and five other
+  ARCH extensions as special cases:
+
+    \begin{itemize}
+    \item \emph{ARCH Model of Engle}
+        when $\delta=2$, $\gamma_i=0$, and $\beta_j=0$.
+    \item \emph{GARCH Model of Bollerslev}
+        when $\delta=2$, and $\gamma_i=0$.
+    \item \emph{TS-GARCH Model of Taylor and Schwert}
+        when $\delta=1$, and $\gamma_i=0$.
+    \item \emph{GJR-GARCH Model of Glosten, Jagannathan, and Runkle}
+        when $\delta=2$.
+    \item \emph{T-ARCH Model of Zakoian}
+        when $\delta=1$.
+    \item \emph{N-ARCH Model of Higgens and Bera}
+        when $\gamma_i=0$, and $\beta_j=0$.
+    \item \emph{Log-ARCH Model of Geweke and Pentula}
+        when $\delta \rightarrow 0$.
+    \end{itemize}
 }
 
 
@@ -142,13 +177,54 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
 
 \value{
   
-  returns an object of class \code{"fGARCH"}.
+  \code{garchFit} \cr
+  \cr
+  returns a S4 object of class \code{"fGARCH"} with the following slots: 
+  
+  \item{@call}{
+    the call of the \code{garch} function.
+  }
+  \item{@formula}{
+    a list with two formula entries, one for the mean and the other 
+    one for the variance equation.
+  }
+  \item{@method}{
+    a string denoting the optimization method, by default the  
+    returneds string is "Max Log-Likelihood Estimation".
+  }  
+  \item{@data}{
+    a list with one entry named \code{x}, containing the data of 
+    the time series to be estimated, the same as given by the
+    input argument \code{series}.
+  } 
+  \item{@fit}{
+    a list with the results from the parameter estimation. The entries 
+    of the list depend on the selected algorithm, see below.
+  }
+  \item{@residuals}{
+     a numeric vector with the (raw, unstandardized) residual values.
+  }
+  \item{@fitted}{
+    a numeric vector with the fitted values.
+  }
+  \item{@h.t}{
+    a numeric vector with the conditional variances
+    (\eqn{h_t = \sigma_t^\delta}{h.t = sigma.t^delta}). 
+  }
+  \item{@sigma.t}{
+    a numeric vector with the conditional standard deviation.
+  }
+  \item{@title}{
+    a title string.
+  }
+  \item{@description}{
+    a string with a brief description.
+  } 
   
   The entries of the @fit slot show the results from the
   optimization.
 
 }
-
 
 \details{
 
@@ -165,7 +241,7 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
   univariate time series objects from several classes:
   
   \preformatted{ 
-    x.vec = 100*garchSim(spec = garchSpec(), n = 1000, returnClass =
+    x.vec = 100*garchSim(spec = garchSpec(), n = 1000)
     "numeric")
     x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11")  
     x.zoo = zoo(as.vector(x.vec), order.by =
@@ -423,10 +499,10 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
 }
 
 
-\section{Tracing the Output}{
+% \section{Tracing the Output}{
 
-  to do ...
-}
+%   to do ...
+% }
 
 
 \references{
@@ -486,16 +562,18 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
    
    # A numeric Vector from default GARCH(1,1) - fix the seed:
    N = 200
-   x.vec = garchSim(garchSpec(rseed = 1985), n = N, returnClass = "numeric")
-   garchFit( ~ garch(1,1), data = x.vec, trace = FALSE)
+   x.vec = as.vector(garchSim(garchSpec(rseed = 1985), n = N)[,1])
+   garchFit(~ garch(1,1), data = x.vec, trace = FALSE)
 
    # An univariate timeSeries object with dummy dates:
    x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11")
    garchFit(~ garch(1,1), data = x.timeSeries, trace = FALSE)         
 
+\dontrun{
    # An univariate zoo object:
    x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.timeSeries)))
    garchFit(~ garch(1,1), data = x.zoo, trace = FALSE) 
+}
 
    # An univariate "ts" object:
    x.ts = as.ts(x.vec)
@@ -511,10 +589,12 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
    # A multivariate timeSeries object with dummy dates:
    X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) 
    garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)
-    
+
+\dontrun{    
    # A multivariate zoo object:
    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries)))
    garchFit(GARCH11 ~ garch(1,1), data = X.zoo)
+}
 
    # A multivariate "mts" object:
    X.mts = as.ts(X.mat)
@@ -524,7 +604,7 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
     
    X.timeSeries = as.timeSeries(data(LPP2005REC))
    X.mat = as.matrix(x.timeSeries)
-   X.zoo = zoo(X.mat, order.by = as.Date(rownames(X.mat)))
+   \dontrun{X.zoo = zoo(X.mat, order.by = as.Date(rownames(X.mat)))}
    X.mts = ts(X.mat)
    garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.timeSeries)
    # The remaining are not yet supported ...

@@ -106,7 +106,7 @@ garchFit <-
     #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance
     #       specification
     #   data - any univariate time series which can be converted
-    #       into anumeric vector using the generic function asVector
+    #       into a timeSeries using the generic function as.timeSeries
     #   init.rec - names type of initialization of recurrence
     #       mci = mu-current-iteration, or
     #       uev = unconditional-expected-variances
@@ -134,10 +134,14 @@ garchFit <-
     CALL = match.call()
 
     # Parse formula and data for garchFit ...
-    #   Note in the new version we are working with data frames ...
+    #   Note in the new version we are working with timeSeries ...
     Name = capture.output(substitute(data))
-    Data = data
-    data = as.data.frame(data)
+    if(is.character(data)) {
+        eval(parse(text = paste("data(", data, ")")))
+        data = eval(parse(text = data))
+    }
+    # data <- if (inherits(data, "timeSeries") data else as.timeSeries(data)
+    data <- as.data.frame(data)
 
     # Column Names:
     if (isUnivariate(data)) {
@@ -180,7 +184,6 @@ garchFit <-
         control,
         title, description, ...)
     ans@call = CALL
-    ans@data = list(data = args$series, Data = Data)
     attr(formula, "data") <- paste("data = ", Name, sep = "")
     ans@formula = formula
 
@@ -203,7 +206,7 @@ garchFit <-
     # Arguments:
     #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance
     #       specification
-    #   data - time series input as a data frame object
+    #   data - time series input as a timeSeries
 
     # Note:
     #   This function returns the input formula and input data in
@@ -268,11 +271,10 @@ garchFit <-
     }
 
     # Result:
-    ans = list(
-        formula.mean = formula.mean,
-        formula.var = formula.var,
-        formula.lhs = formula.lhs,
-        series = x)
+    ans <- list(formula.mean = formula.mean,
+                formula.var = formula.var,
+                formula.lhs = formula.lhs,
+                series = x)
 
     # Return Value:
     ans
@@ -418,10 +420,6 @@ garchFit <-
     #   formula.mean - ARMA(m,n) mean specification
     #   formula.var - GARCH/APARCH(p,q) variance specification
     #   series - time series
-    #       by default the data are taken from the series x
-    #           if x is a data.frame then the first column is selected
-    #       if series is a character string then the data are
-    #           retrieved from data(series)
     #   init.rec - names type of initialization of recurrence
     #       mci = mu-current-iteration, or
     #       uev = unconditional-expected-variances
@@ -455,16 +453,6 @@ garchFit <-
     if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
         stop("Algorithm only supported for mci Recursion")
     }
-
-    # Series:
-    if(is.character(series)) {
-        eval(parse(text = paste("data(", series, ")")))
-        series = eval(parse(text = series))
-    }
-    if(is.data.frame(series)) {
-        series = series[, 1]
-    }
-    series = as.vector(series)
 
     # Start Time:
     .StartFit <- Sys.time()
@@ -512,7 +500,7 @@ garchFit <-
     sigma.t = (.series$h)^deltainv
 
     # Standard Errors and t-Values:
-    fit$cvar = solve(fit$hessian)
+    fit$cvar = - solve(fit$hessian)
     fit$se.coef = sqrt(diag(fit$cvar))
     fit$tval = fit$coef/fit$se.coef
     fit$matcoef = cbind(fit$coef, fit$se.coef,
@@ -536,7 +524,7 @@ garchFit <-
         call = as.call(match.call()),
         formula = as.formula(paste("~", formula.mean, "+", formula.var)),
         method = "Max Log-Likelihood Estimation",
-        data = list(x = series),
+        data = series,
         fit = fit,
         residuals = residuals,
         fitted = fitted.values,
@@ -1212,15 +1200,15 @@ garchFit <-
 
     # Compute the Hessian:
     if (hessian == "fcd") {
-        fit$hessian = .garchFCDAHessian(
+        fit$hessian = - .garchFCDAHessian(
             par = fit$par, .params = .params, .series = .series)
             titleHessian = "Central"
     } else if (hessian == "rcd") {
-        fit$hessian = .garchRCDAHessian(
+        fit$hessian = - .garchRCDAHessian(
             par = fit$par, .params = .params, .series = .series)
             titleHessian = "Central"
     } else if (hessian == "ffd") {
-        fit$hessian = .garchFFDAHessian(
+        fit$hessian = - .garchFFDAHessian(
             par = fit$par, .params = .params, .series = .series)
             titleHessian = "Forward"
     }
@@ -1229,16 +1217,16 @@ garchFit <-
     N = length(.series$x)
     NPAR = length(fit$par)
     fit$ics = c(
-        AIC  = (-2*fit$value)/N + 2 * NPAR/N,
-        BIC  = (-2*fit$value)/N + NPAR * log(N)/N,
-        SIC  = (-2*fit$value)/N + log((N+2*NPAR)/N),
-        HQIC = (-2*fit$value)/N + (2*NPAR*log(log(N)))/N )
+        AIC  = (2*fit$value)/N + 2 * NPAR/N,
+        BIC  = (2*fit$value)/N + NPAR * log(N)/N,
+        SIC  = (2*fit$value)/N + log((N+2*NPAR)/N),
+        HQIC = (2*fit$value)/N + (2*NPAR*log(log(N)))/N )
 
     # Print LLH if we trace:
     if(trace) {
         # Note, that .garchLLH() will print the final estimate ...
         .llh <<- 1.0e99
-        cat("\nFinal Estimate:\n")
+        cat("\nFinal Estimate of the Negative LLH:\n")
         .llh <<- .garchLLH(fit$par, trace)
     }
 

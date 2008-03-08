@@ -84,8 +84,8 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
 
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
-    LLH = object@fit$value
-    N = NROW(object@data$Data)
+    LLH = - object@fit$value
+    N = NROW(object@data)
     cat(LLH, "   normalized: ", LLH/N, "\n")
 
     # Lagged Series:
@@ -100,7 +100,7 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
         c(rep(NA, times = k), x[1:(length(x) - k)]) }
 
     # Statistical Tests:
-    cat("\nStandadized Residuals Tests:\n")
+    cat("\nStandardised Residuals Tests:\n")
     r.s = object@residuals/object@sigma.t
     ans = NULL
     # Normality Tests:

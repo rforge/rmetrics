@@ -13,8 +13,7 @@
 
 
 \usage{
-garchSim(spec = garchSpec(), n = 100, n.start = 100,
-    returnClass = c("ts", "numeric", "mts"))
+garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE) 
 }
 
 
@@ -96,19 +95,12 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100,
 
 \value{
 
-    The function \code{garchSim} returns an objects of class \code{"ts"}
-    attributed by a list with entry \code{$garchSpec} giving the GARCH 
-    specification structure as returned by the function \code{garchSpec}. 
+    The function \code{garchSim} returns an objects of class
+    \code{"timeSeries"} attributed by a list with entry
+    \code{$garchSpec} giving the GARCH specification structure as
+    returned by the function \code{garchSpec} and with information on 
+    conditional standard deviations and innovations. See details above.
     
-    Optionally, the function can return a numeric vector when setting
-    the argument \code{returnClass="numeric"}. In this case the 
-    specification structure will not be attributed to the returned numeric 
-    vector. 
-    
-    Alternatively, the function can return an object of class \code{"mts"}
-    delivering additional information on conditional standard deviations
-    and innovations, see details above.
- 
 }
 
 
@@ -125,23 +117,11 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100,
    spec
 
 ## garchSim -
-   # Simulate a "ts" object:
+   # Simulate a "timeSeries" object:
    x = garchSim(spec, n = 50)
    class(x)
    print(x) 
    
-## garchSim - 
-   # Simulate a numeric vector:
-   y = garchSim(spec, n = 50, returnClass = "numeric")
-   class(y)
-   print(y)
-   
-## garchSim - 
-   # Provide also Standard Deviations and Innovations:
-   y = garchSim(spec, n = 25, returnClass = "mts")
-   class(y)
-   print(y)
- 
 ## More simulations ...
 
    # Default GARCH(1,1) - uses default parameter settings

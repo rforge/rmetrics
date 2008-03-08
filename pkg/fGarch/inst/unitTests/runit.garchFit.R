@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,78 +28,78 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION: 
-#  'fGARCH'                S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION:
+#  'fGARCH'                S4: fGARCH Class representation
 #  garchFit                Fits GARCH and APARCH processes
 ################################################################################
 
 
 # garchFit(
-    #   formula, 
-    #   data, 
-    #   init.rec = c("mci", "uev"), 
-    #   delta = 2, 
-    #   skew = 1, 
-    #   shape = 4, 
-    #   cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
-    #   include.mean = TRUE, 
-    #   include.delta = NULL, 
-    #   include.skew = NULL, 
-    #   include.shape = NULL, 
-    #   leverage = NULL, 
-    #   trace = TRUE, 
-    #   algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    #   control = list(), 
-    #   title = NULL, 
-    #   description = NULL, 
+    #   formula,
+    #   data,
+    #   init.rec = c("mci", "uev"),
+    #   delta = 2,
+    #   skew = 1,
+    #   shape = 4,
+    #   cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"),
+    #   include.mean = TRUE,
+    #   include.delta = NULL,
+    #   include.skew = NULL,
+    #   include.shape = NULL,
+    #   leverage = NULL,
+    #   trace = TRUE,
+    #   algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
+    #   control = list(),
+    #   title = NULL,
+    #   description = NULL,
     #   ...)
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-test.garchInputSeries <- 
+test.garchInputSeries <-
 function()
 {
     # Numeric Vector RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry") 
-    
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+
     # Simulate normal GARCH(1, 1) numeric Vector:
     model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
     spec = garchSpec(model)
     print(spec)
-    N = 10 
-    
-    
+    N = 10
+
+
     # UNIVARIATE:
-    
+
     # A numeric Vector:
     x.vec = 100*garchSim(spec, N, returnClass = "numeric")
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
-    x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.tS)))
-    print(head(x.zoo))
+#   x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.tS)))
+#    print(head(x.zoo))
     x.ts = ts(x.vec)
     print(head(x.ts))
-    
+
     # MULTIVARIATE:
-    
+
     # A numeric matrix:
     X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
     print(head(X.mat))
     X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
     print(head(X.tS))
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
-    print(head(X.zoo))
+#    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
+#    print(head(X.zoo))
     X.mts = ts(X.mat)
     print(head(X.mts))
-    
+
     # Return Value:
-    return()   
+    return()
 }
- 
+
 
 ################################################################################
-    
+

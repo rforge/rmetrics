@@ -115,17 +115,17 @@ setMethod(f = "predict", signature(object = "fGARCH"), definition =
 
     # Retrieve Series Lengths:
     M = n.ahead
-    N = length(object@data$data)
+    N = length(object@data)
 
     # Get and Extend Series:
-    x = c(object@data$data, rep(mu, M))
+    x = c(object@data, rep(mu, M))
     h = c(object@h.t, rep(0, M))
     z = c(fit$series$z, rep(mu, M))
 
     # Forecast and Optionally Trace Mean Model:
     # Note we set maxit=0 to get an object of class Arima with fixed
     #   init parameters ...
-    ARMA = arima(x = object@data$data, order = c(max(u, 1), 0, max(v, 1)),
+    ARMA = arima(x = object@data, order = c(max(u, 1), 0, max(v, 1)),
         init = c(ar, ma, mu), transform.pars = FALSE, optim.control =
         list(maxit = 0))
     prediction = predict(ARMA, n.ahead)

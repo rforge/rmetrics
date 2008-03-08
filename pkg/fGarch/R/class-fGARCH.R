@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -34,19 +34,19 @@
 
 
 # Class Representation:
-setClass("fGARCH", 
+setClass("fGARCH",
     representation(
         call = "call",
         formula = "formula",
         method = "character",
-        data = "list",
+        data = "numeric",
         fit = "list",
         residuals = "numeric",
         fitted = "numeric",
         h.t = "numeric",
         sigma.t = "numeric",
         title = "character",
-        description = "character")  
+        description = "character")
 )
 
 
