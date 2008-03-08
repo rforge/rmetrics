@@ -32,7 +32,6 @@
 #  rowCumsums                Computes sample cumulated sums by row
 #  rowCumsums.default        S3 default method (for matrix objects)
 #  rowCumsums.timeSeries     S3 method for timeSeries objects
-#  rowCumsums.zoo            S3 method for zoo objects
 ################################################################################
 
 
@@ -51,7 +50,7 @@
 rowCumsums =
 function(x, na.rm = FALSE, ...)
 {
-    UseMethod("rowCumsums") 
+    UseMethod("rowCumsums")
 }
 
 
@@ -66,7 +65,7 @@ function(x, na.rm = FALSE, ...)
     #   Computes sample cumulated sums by row (for matrix objects)
 
     # Arguments:
-    
+
     # FUNCTION:
 
     # Transform:
@@ -99,7 +98,7 @@ function(x, na.rm = FALSE, ...)
     #   Computes sample cumulated sums by row for timeSeries objects
 
     # Arguments:
-    
+
     # FUNCTION:
 
     # Cumulative Sums:
@@ -114,36 +113,6 @@ function(x, na.rm = FALSE, ...)
     # Return Value:
     result
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-rowCumsums.zoo =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by row for zoo objects
-
-    # Arguments:
-    
-    # FUNCTION:
-
-    # Cumulative Sums:
-    x = rowCumsums(as.matrix(x, ...))
- 
-    # Zoo Input ?
-    if (class(x) == "zoo") {
-        index = attr(x, "index")
-        frequency = attr(x, "frequency")
-        result = zoo(result, index, frequency)
-    }
-
-    # Return Value:
-    result
-}
-
 
 ################################################################################
 

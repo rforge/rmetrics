@@ -110,7 +110,7 @@ documentation = NULL, ...)
     if (is(charvec, "timeDate")) {
         timeDates = charvec
     } else {
-        if (is.null(format)) format = .whichFormat(charvec)
+        if (is.null(format)) format = whichFormat(charvec)
         timeDates = timeDate(charvec = charvec,
             format = format, zone = zone, FinCenter = FinCenter)
     }
@@ -257,11 +257,11 @@ documentation = x@documentation, ...)
     if (is.null(from) & is.null(to)) {
         if (by[1] == "monthly") {
             # Use monthly blocks:
-            from = unique(timeFirstDayInMonth(seriesPositions(x)))
-            to = unique(timeLastDayInMonth(seriesPositions(x)))
+            from = unique(timeFirstDayInMonth(time(x)))
+            to = unique(timeLastDayInMonth(time(x)))
         } else if (by[1] == "quarterly") {
-            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
-            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+            from = unique(timeFirstDayInQuarter(time(x)))
+            to = unique(timeLastDayInQuarter(time(x)))
         } else {
             stop("by must be eiter monthly or quarterly")
         }
@@ -275,13 +275,13 @@ documentation = x@documentation, ...)
     fun = match.fun(FUN)
 
     # Blocks:
-    j.pos = as.POSIXct(seriesPositions(x))
+    j.pos = as.POSIXct(time(x))
     j.from = as.POSIXct(from)
     j.to = as.POSIXct(to)
 
     # Iterate:
     y = x@Data
-    pos = seriesPositions(x)
+    pos = time(x)
     rowNames = rownames(x@Data)
     rowBind = NULL
     for (i in 1:from@Dim) {
@@ -323,12 +323,12 @@ FUN = colAvgs, units = NULL, ...)
     if (is.null(from) & is.null(to)) {
         by = match.arg(by)
         if (by == "monthly") {
-            from = unique(timeFirstDayInMonth(seriesPositions(x)))
-            to = unique(timeLastDayInMonth(seriesPositions(x)))
+            from = unique(timeFirstDayInMonth(time(x)))
+            to = unique(timeLastDayInMonth(time(x)))
         }
         else if (by == "quarterly") {
-            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
-            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+            from = unique(timeFirstDayInQuarter(time(x)))
+            to = unique(timeLastDayInQuarter(time(x)))
         }
         from@FinCenter = to@FinCenter = x@FinCenter
     }

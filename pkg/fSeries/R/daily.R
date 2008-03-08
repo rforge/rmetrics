@@ -109,7 +109,7 @@ FinCenter = myFinCenter)
         myUnits <- "days"
         # Fill with NAs:
         if (method == "fillNA") {
-            positions = seriesPositions(x)
+            positions = time(x)
             u = as.integer(julian(positions))
             v = as.vector(x@Data[, 1])
             x = u[1]:u[length(u)]
@@ -133,7 +133,7 @@ FinCenter = myFinCenter)
                 method = "constant"
                 f = 1 }
             # Get Positions and Data:
-            positions = seriesPositions(x)
+            positions = time(x)
             u = as.integer(julian(positions))
             v = as.vector(x@Data[, 1])
             # Approximate:
@@ -160,7 +160,7 @@ FinCenter = myFinCenter)
                 wday = as.POSIXlt(as.POSIXct(x))$wday
                 return(!(wday == 0 | wday == 6)) }
             # Test:
-            test = is.weekday(seriesPositions(td))
+            test = is.weekday(time(td))
             td@Data = as.matrix(td@Data[test, 1])
             td@positions = td@positions[test] }
         # Units:
@@ -228,7 +228,7 @@ rollDailySeries =
         periodUnit = substr(period, nchar(period), nchar(period))
         N = nrow(x)
         Start = start(x) + (periodLength-1)*24*3600
-        Positions = seriesPositions(x)
+        Positions = time(x)
         to = Positions[Positions > Start]
         from = to - periodLength*24*3600
 
@@ -264,7 +264,7 @@ grid.nx = 7, grid.lty = "solid", ...)
 
     # Next:
     x.filled = alignDailySeries(x, method = "fillNA", include.weekends = TRUE)
-    jul = as.integer(julian(seriesPositions(x.filled)))
+    jul = as.integer(julian(time(x.filled)))
     X = ts(x.filled@Data[, 1:4], start = min(jul), end = max(jul))
 
     # Plot OHLC:

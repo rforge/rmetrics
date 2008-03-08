@@ -79,7 +79,8 @@
     subx <- x@Data[i, j, drop = FALSE]
     x@Data = subx
     x@positions = x@positions[i]
-    x@units = colnames(subx)
+    x@units = as.character(colnames(subx))
+    # YC as.character important if colnames == NULL
 
     # Record IDs:
     if (sum(dim(x@recordIDs)) > 0) {
@@ -148,7 +149,7 @@ function (x, from, to, ...)
 
     from = timeDate(from)
     to = timeDate(to)
-    Positions = seriesPositions(x)
+    Positions = time(x)
     Units = x@units
     colNames = colnames(x@Data)
     test = (Positions >= from & Positions <= to)
@@ -189,7 +190,7 @@ function(x, from, to, ...)
     if (!is(to, "timeDate"))
         to = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
 
-    Positions = seriesPositions(x)
+    Positions = time(x)
     if (missing(from)) from = Positions[1]
     if (missing(to)) to = rev(Positions)[1]
     Positions = as.POSIXct(Positions, tz = "GMT")
@@ -231,7 +232,7 @@ function (x, from, to, ...)
 
     from = timeDate(from)
     to = timeDate(to)
-    Positions = seriesPositions(x)
+    Positions = time(x)
     Units = x@units
     colNames = colnames(x@Data)
     test = (Positions >= from & Positions <= to)

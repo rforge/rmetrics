@@ -6,16 +6,16 @@
 #
 # Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -32,7 +32,7 @@
 #  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timeSeries' object  
+#  returnSeries         Computes returns from a 'timeSeries' object
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 # FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
@@ -46,16 +46,16 @@
 #  points.timeSeries    S3: Points method for a 'timeSeries' object
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
-#  alignDailySeries     Aligns a 'timeSeries' object to new positions 
-#  ohlcDailyPlot        Plots open–high–low–close bar chart         
+#  alignDailySeries     Aligns a 'timeSeries' object to new positions
+#  ohlcDailyPlot        Plots open–high–low–close bar chart
 ################################################################################
 
 
-test.timeSeries = 
+test.timeSeries =
 function()
-{    
+{
     #  timeSeries - Creates a 'timeSeries' object from scratch
-    
+
     # Settings:
     myFinCenter <<- "GMT"
     set.seed(4711)
@@ -65,156 +65,156 @@ function()
     charvec = format(timeCalendar(2006))
     charvec
     class(charvec)
-    
+
     # Compose Univariate daily random sequence
     myFinCenter <<- "GMT"
     uTS = timeSeries(data, charvec, units = "uTS")
     uTS@Data
     print(uTS)
-    
+
     # FinCenter Functionality:
     timeSeries(data, charvec, units = "uTS", zone = "GMT", FinCenter = "GMT")
     timeSeries(data, charvec, units = "uTS", zone = "Zurich", FinCenter = "Zurich")
     timeSeries(data, charvec, units = "uTS", zone = "GMT", FinCenter = "Zurich")
     timeSeries(data, charvec, units = "uTS", zone = "Zurich", FinCenter = "GMT")
-   
+
     # Load Microsoft Data:
     data(msft.dat)
     MSFT.df = msft.dat
     X = as.timeSeries(MSFT.df)
     print(X)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.readSeries = 
+test.readSeries =
 function()
 {
     #  readSeries - Reads from a spreadsheet and creates a 'timeSeries'
-    
+
     # Microsoft Data:
     data(msft.dat)
     MSFT.df = msft.dat
-    
+
     # Read Data Frame:
     write.table(MSFT.df, file = "msft.dat.csv", sep = ";")
-    read.table("msft.dat.csv", sep = ";") 
-    
+    read.table("msft.dat.csv", sep = ";")
+
     # Read Time Series:
-    X = readSeries("msft.dat.csv")  
+    X = readSeries("msft.dat.csv")
     X = X[1:12, ]
     class(X)
-    
+
     # Show Part of Series:
     head(X)[, 1:5]
     head(X[, 1:5])
     head(X[, 1:5], 2)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.returnSeries = 
+test.returnSeries =
 function()
-{    
-    #  returnSeries - Computes returns from a 'timeSeries' object     
-    
+{
+    #  returnSeries - Computes returns from a 'timeSeries' object
+
     # Load Time Series:
     X = as.timeSeries(data(msft.dat))
     head(X)
-    
+
     # returnSeries:
     OPEN = X[, 1]
     print(OPEN)
     MSFT.RET = returnSeries(OPEN)
     print(MSFT.RET)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.applySeries = 
-function()
-{     
-    #  applySeries - Applies a function to blocks of a 'timeSeries'    
-
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.orderStatistics = 
+test.applySeries =
 function()
 {
-    #  orderStatistics - Compute order statistic of a 'timeSeries' 
-   
+    #  applySeries - Applies a function to blocks of a 'timeSeries'
+
+    NA
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.orderStatistics =
+function()
+{
+    #  orderStatistics - Compute order statistic of a 'timeSeries'
+
     # Load Data:
     X = as.timeSeries(data(msft.dat))
     head(X)
-    
+
     # returnSeries:
     OPEN = X[, 1]
     print(OPEN)
-    
+
     # ORDER STATISTICS:
     orderStatistics(OPEN)
     orderStatistics(X[, -5])
     orderStatistics(X[, -5])$Open
-     
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
-    
 
-test.seriesData = 
+
+test.seriesData =
 function()
-{    
+{
     #  seriesData - Extracts data slot from 'timeSeries' object
 
     # Load Microsoft Data:
     X = as.timeSeries(data(msft.dat))
     X = X[1:12, ]
     class(X)
-    
+
     # Return Series:
     OPEN = X[, 1]
     OPEN
     returnSeries(OPEN)
-    
+
     # Volatility Series:
     abs(returnSeries(OPEN))
-    
+
     # Data Matrix:
     seriesData(OPEN)
     Y = seriesData(X)
     Y
     class(Y)
-    
+
     # Position Vector:
-    PO = seriesPositions(OPEN)
+    PO = time(OPEN)
     PO
-    PX = seriesPositions(X)
+    PX = time(X)
     PX
     class(PX)
     checkEquals(
@@ -222,62 +222,62 @@ function()
         current = 0)
 
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
-    
 
-test.isUnivariate = 
+
+test.isUnivariate =
 function()
-{            
+{
     #  isUnivariate     Tests if an object of class 'timeSeries' is univariate
 
     # Load Microsoft Data:
-    X = as.timeSeries(data(msft.dat))  
-    OPEN = X[, 1]  
-        
+    X = as.timeSeries(data(msft.dat))
+    OPEN = X[, 1]
+
     # Is Univariate?
     checkTrue(!isUnivariate(X))
     checkTrue(isUnivariate(OPEN))
-      
-    
-    checkTrue(isMultivariate(X))    
+
+
+    checkTrue(isMultivariate(X))
     checkTrue(!isMultivariate(OPEN))
 
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
-    
 
-test.isMultivariate = 
+
+test.isMultivariate =
 function()
-{  
+{
     #  isMultivariate - Tests if an object of class 'timeSeries' is multivariate
-    
+
     # Load Microsoft Data:
-    X = as.timeSeries(data(msft.dat))  
-    OPEN = X[, 1]  
-        
-    # Is Multivariate?   
-    checkTrue(isMultivariate(X))    
+    X = as.timeSeries(data(msft.dat))
+    OPEN = X[, 1]
+
+    # Is Multivariate?
+    checkTrue(isMultivariate(X))
     checkTrue(!isMultivariate(OPEN))
 
     # Return Value:
-    return()    
+    return()
 }
-   
+
 
 # ------------------------------------------------------------------------------
 
 
-test.displayMethods = 
+test.displayMethods =
 function()
-{    
+{
     #  print.timeSeries     Print method for a 'timeSeries' object
     #  plot.timeSeries      Plot method for a 'timeSeries' object
     #  lines.timeSeries     Lines method for a 'timeSeries' object
@@ -315,34 +315,34 @@ function()
     20010502, 71.0000, 71.1500, 69.3500, 69.7600,  46432200,
     20010503, 69.2500, 70.1800, 68.1400, 68.5300,  33136700,
     20010504, 68.0000, 71.0500, 67.9600, 70.7500,  59769200,
-    20010507, 70.8300, 72.1500, 70.7000, 71.3800,  54678100), 
+    20010507, 70.8300, 72.1500, 70.7000, 71.3800,  54678100),
     byrow = TRUE, ncol = 6))
     colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
-   
+
     # Data:
     X = as.timeSeries(MSFT.df)
     X = X[1:12, ]
     OPEN = X[, 1]
-    
+
     # Print:
     print(X)
     print(OPEN)
-    
+
     # Plot:
     par(mfrow = c(1, 1))
     plot(OPEN, type = "l")
-    
+
     # GMT - Plot:
     tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "GMT")
     tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC)
     plot(tS)
-    
+
     # Zurich - Plot:
     tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "Zurich")
     tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC,
         zone = "GMT", FinCenter = "Zurich")
     plot(tS)
-    
+
     # New York - Plot:
     tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "NewYork")
     tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC,
@@ -351,18 +351,18 @@ function()
     lines (tS, col = "red",  lty = 3)
     points(tS, col = "blue", pch = 19)
     abline(h=0, col = "grey")
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.dummyDailySeries = 
+test.dummyDailySeries =
 function()
-{    
+{
     #  dummyDailySeries - Creates a dummy daily 'timeSeries' object
 
     # Create Dummy Time Series:
@@ -371,46 +371,46 @@ function()
     print(tS)
 
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.alignDailySeries = 
+test.alignDailySeries =
 function()
-{    
-    # alignDailySeries - Aligns a 'timeSeries' object to new positions 
+{
+    # alignDailySeries - Aligns a 'timeSeries' object to new positions
 
     # Time Series:
     myFinCenter = "GMT"
     tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
     dim(tS)
-    
+
     # Align Daily Series:
     alignDailySeries(tS, method = "interp")
-    
+
     # Align Daily Series:
     alignDailySeries(tS, method = "fillNA")
-    
+
     # Align Daily Series:
     alignDailySeries(tS, method = "fillNA", include.weekends = TRUE)
 
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.ohlcDailyPlot = 
+test.ohlcDailyPlot =
 function()
-{    
-    # ohlcDailyPlot - Plots open–high–low–close bar chart 
-    
+{
+    # ohlcDailyPlot - Plots open–high–low–close bar chart
+
     # Price or Incdex Series:
     myFinCenter = "GMT"
     tS = as.timeSeries(data(msft.dat))[1:25, ]
@@ -420,10 +420,10 @@ function()
 
     # Graph Frame:
     par(mfrow = c(2, 1), cex = 0.7)
-    ohlcDailyPlot(tS)       
+    ohlcDailyPlot(tS)
 
     # Return Value:
-    return()    
+    return()
 }
 
 
@@ -433,46 +433,46 @@ function()
 test.modelSeries =
 function()
 {
-    if (FALSE) {   
-        
+    if (FALSE) {
+
         # Move to fArma ...
-        
+
         # Undocumented Material:
         Matrix = cbind(X = rnorm(10), Y = rnorm(10))
         Matrix = cbind(Matrix, Z = Matrix[, "Y"] - Matrix[, "X"])
         TS = dummyDailySeries(Matrix, units = c("X", "Y", "Z") )
         head(TS)
-                
-        .modelSeries(Y ~ ar(2), data = TS, lhs = TRUE)  
+
+        .modelSeries(Y ~ ar(2), data = TS, lhs = TRUE)
         .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
         .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
-        
-        .modelSeries(Y ~ ar(2), data = as.data.frame(TS), lhs = TRUE)  
+
+        .modelSeries(Y ~ ar(2), data = as.data.frame(TS), lhs = TRUE)
         .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
         .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
-        
+
         require(fSeries)
-        .modelSeries(Y ~ ar(2), data = rnorm(10)) 
-        .modelSeries(Y ~ ar(2), data = as.ts(rnorm(10))) 
+        .modelSeries(Y ~ ar(2), data = rnorm(10))
+        .modelSeries(Y ~ ar(2), data = as.ts(rnorm(10)))
         .modelSeries(x ~ arima(2, 0, 1), data = armaSim(n=10))
-        
+
         .modelSeries(~ ar(2), rnorm(10))
-        
+
         # attach(TS)                                    # CHECK
-        # .modelSeries(Y ~ ar(2), lhs = TRUE) 
-        
+        # .modelSeries(Y ~ ar(2), lhs = TRUE)
+
         .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10))
         .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10), lhs = TRUE)
         .modelSeries(Y ~ ar(2) + garch(1,1), data = TS, lhs = TRUE)
-        
+
     } else {
-        
+
         NA
-        
+
     }
-        
+
     # Return Value:
-    return()  
+    return()
 }
 
 

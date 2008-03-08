@@ -43,10 +43,6 @@
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
-# METHOD:                   HANDLING ZOO OBJECTS:
-#  .as.vector.zoo            Converts a 'zoo' into a 'vector' object
-#  .as.matrix.zoo            Converts a 'zoo' into a 'matrix' object
-#  .quantile.zoo             Computes quantiles from a 'zoo' object
 ################################################################################
 
 
@@ -131,7 +127,7 @@ as.timeSeries.timeSeries <-
         warning("argument zone is ignored and FinCenter\n of series is used as zone")
 
     # convert to user financial centre
-    positions <- timeDate(charvec = seriesPositions(x), zone = x@FinCenter,
+    positions <- timeDate(charvec = time(x), zone = x@FinCenter,
                           FinCenter = FinCenter)
 
     newPositions(x) <- positions
@@ -184,10 +180,12 @@ as.timeSeries.data.frame <-
     dummyDates = FALSE
     firstColumn = TRUE
     charvec = as.character(as.vector(x[, 1]))
-    format = .whichFormat(charvec, silent = TRUE)
-    if (format == "unknown") {
+    format = whichFormat(charvec, silent = TRUE)
+    if (is.numeric(x[,1])) {
+        # is.nuermic() is better than format == "unkown"
+        # which can give wrong result. i.e. whichFormat(0.1253328600)
         charvec = rownames(x)
-        format = .whichFormat(charvec, silent = TRUE)
+        format = whichFormat(charvec, silent = TRUE)
         if (format == "unknown") {
             # warning("Could not identify timeDate Format")
             dummyDates = TRUE
@@ -195,7 +193,7 @@ as.timeSeries.data.frame <-
             charvec = as.character(timeSequence(from = "1970-01-01",
                 length.out = N, format = "%Y-%m-%d", zone = zone,
                 FinCenter = FinCenter))
-            format = .whichFormat(charvec, silent = TRUE)
+            format = whichFormat(charvec, silent = TRUE)
             warning("Dummy Dates Used in as.timeSeries()", call. = FALSE)
 
         }
@@ -286,7 +284,9 @@ as.timeSeries.ts <-
     # FUNCTION:
 
     # Create a dummay daily 'timeSeries' object:
-    ans <- dummyDailySeries(as.vector(x), zone = zone, FinCenter = FinCenter, ...)
+    ans <- dummyDailySeries(as.matrix(x),
+                            zone = zone, FinCenter = FinCenter,
+                            unit = colnames(x), ...)
 
     # Return Value:
     ans
@@ -481,116 +481,7 @@ as.ts.timeSeries <-
     }
 
     # Add Attribute:
-    attr(ans, "positions") = seriesPositions(x)
-
-    # Return Value:
-    ans
-}
-
-
-################################################################################
-# METHODS:              HANDLING ZOO OBJECTS:
-#  .as.vector.zoo            Converts a 'zoo' into a 'vector' object
-#  .as.matrix.zoo           Converts a 'zoo' into a 'matrix' object
-#  .quantile.zoo            Computes quantiles from a 'zoo' object
-
-
-.as.vector.zoo <-
-function(x, mode = "any")
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Converts a univariate "zoo" series to a vector
-
-    # Arguments:
-    #   x - a 'zoo' object
-
-    # Example:
-    #   require(tseries); as.vector(get.hist.quote("IBM", quote = "Close"))
-
-    # Value:
-    #   Returns the data of an 'zoo' object as a named vector.
-
-    # FUNCTION:
-
-    # Check:
-    if (class(x) != "zoo")
-        stop("x is not a timeSeries object!")
-    if (dim(x)[[2]] != 1)
-        stop("x is not an univariate zoo object!")
-
-    # Convert:
-    Names = as.character(attr(x, "index"))
-    x = unclass(x)[,1]
-    names(x) = Names
-    attr(x, "index") = NULL
-
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.as.matrix.zoo <-
-    function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Converts a 'zoo' into a 'matrix' object
-
-    # Arguments:
-    #   x - a 'timeSeries' object
-
-    # Value:
-    #   Returns the data of an 'zoo' object as a named matrix.
-
-    # Example:
-    #   require(tseries); as.matrix(get.hist.quote("IBM"))
-
-    # FUNCTION:
-
-    # Check:
-    if (class(x) != "zoo")
-        stop("x is not a timeSeries object!")
-    if (dim(x)[[2]] <= 1)
-        stop("x is not a multivariate zoo object!")
-
-    # Convert:
-    Names = as.character(attr(x, "index"))
-    x = unclass(x)
-    rownames(x) = Names
-    attr(x, "index") = NULL
-
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.quantile.zoo <-
-    function(x, probs = 0.95, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes quantiles from a 'zoo' object
-
-    # Arguments:
-    #   x - an object of class 'timeSeries'. The quantiles will be
-    #       computed for the selected column.
-    #   probs - a numeric value or numeric vector with probabilities.
-    #   column - the selected column
-
-    # Examples:
-    #   quantile(as.timeSeries(data(daxRet)))
-
-    # FUNCTION:
-
-    # Convert to timeSeries:
-    ans = quantile(as.timeSeries(x), ...)
+    attr(ans, "positions") = time(x)
 
     # Return Value:
     ans

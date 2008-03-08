@@ -6,16 +6,16 @@
 #
 # Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -42,11 +42,11 @@
 #  as.vector.timeS*     S3: Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
 #  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
-#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'     
+#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'
 ################################################################################
 
 
-test.asTimeSeries = 
+test.asTimeSeries =
 function()
 {
     # as.timeSeries.default - Returns the input
@@ -56,7 +56,7 @@ function()
     # as.timeSeries.ts - Tranf orms a 'ts' object into a 'timeSeries'
     # as.timeSeries.character - Loads and transformas from a demo file
     # as.timeSeries.zoo - Transforms a 'zoo' object into a 'timeSeries'
-    
+
     # Create timeSeries Object:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -70,24 +70,24 @@ function()
     # Check Positions:
     positions = timeCalendar()
     class(positions)
-    .whichFormat(format(positions))
-    .whichFormat(as.character(positions))
+    whichFormat(format(positions))
+    whichFormat(as.character(positions))
 
     # Data Input is a Vector - Returns a timeSeries with dummy positions:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(12)
-        
+
     # as.numeric - add dummy dates:
     data = as.numeric(x)
     tS = as.timeSeries(data)
     head(tS)
-    
+
     # as. numeric [as.vector] - add dummy dates:
     data = as.vector(x)
     tS = as.timeSeries(data)
     head(tS)
-    
+
     # Data Inpiut is a data.frame:
     data(msft.dat)
     x.df = msft.dat
@@ -106,54 +106,54 @@ function()
     x.mat = as.matrix(msft.dat)
     # tS = as.timeSeries(x.mat)
     # head(tS)                              # CHECK
-        
-    # Data Input is an Univariate/Muiltivariate timeSeries: 
+
+    # Data Input is an Univariate/Muiltivariate timeSeries:
     x = as.timeSeries(msft.dat)
     class(x)
     tS = as.timeSeries(x)
     head(tS)
-    
-    # Note, data is a demo file ... 
+
+    # Note, data is a demo file ...
     tS = as.timeSeries(msft.dat)
     head(tS)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.asTimeSeriesDJ1 = 
+test.asTimeSeriesDJ1 =
 function()
-{   
+{
     # Load Data:
-    # data(DowJones30) 
+    # data(DowJones30)
     # use instead dummy data set just for testing ...
-    Data = matrix(exp(cumsum(rnorm(30*100, sd = 0.1))), ncol = 30) 
+    Data = matrix(exp(cumsum(rnorm(30*100, sd = 0.1))), ncol = 30)
     Positions = format(timeSequence("2006-01-01", length.out = 100))
     DowJones30 = data.frame(Positions, Data)
-    
+
     # Taking Dates from First Column:
     DJ = DowJones30[21:30, c(1, 11:15)]
     DJ
-    class(DJ) 
+    class(DJ)
     as.timeSeries(DJ)
-   
+
     # Adding Dates through Rownames Assignment:
     DJ = DowJones30[21:30, c(11:15)]
     rownames(DJ)<-DowJones30[21:30, 1]
     DJ
     as.timeSeries(DJ)
-   
+
     # Missing Dates - Using Dummy Dates:
     DJ = DowJones30[21:30, c(11:15)]
     DJ
     class(DJ)
     as.timeSeries(DJ)
-   
-    # With recordIDs:  
+
+    # With recordIDs:
     if (FALSE) {
         DJ = DowJones30[21:30, c(1,11:15)]
         DJ = cbind(DJ, LETTERS[1:10])
@@ -162,14 +162,14 @@ function()
         tsDJ
         tsDJ@recordIDs
     }
-   
+
     DJ = DowJones30[21:30, c(11:15)]
     rownames(DJ) = DowJones30[21:30, 1]
     DJ = cbind(DJ, LETTERS[1:10])
     tsDJ = as.timeSeries(DJ)
     tsDJ
     tsDJ@recordIDs
-   
+
     DJ = DowJones30[21:30, c(11:15)]
     DJ =cbind(DJ, LETTERS[1:10])
     tsDJ = as.timeSeries(DJ)
@@ -177,21 +177,21 @@ function()
     tsDJ@recordIDs
 
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.fromTimeSeriesUV = 
+test.fromTimeSeriesUV =
 function()
-{     
+{
     # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
     # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
     # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
     # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
-      
+
     # Univariate Case:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -199,54 +199,54 @@ function()
     charvec = timeCalendar(2006)
     uTS = timeSeries(data, charvec, units = "uTS")
     uTS
-    
+
     # Vector:
-    VEC = as.vector(uTS) 
+    VEC = as.vector(uTS)
     head(VEC)
     class(VEC)
     checkIdentical(class(VEC), "numeric")
-    
+
     # Numeric:
     # VEC = as.numeric(uTS)                         # Not implemented !
     # head(VEC)
     # class(VEC)
     # checkIdentical(class(VEC), "numeric")
-    
+
     # Matrix:
-    MAT = as.matrix(uTS)  
+    MAT = as.matrix(uTS)
     head(MAT)
     class(MAT)
     checkIdentical(class(MAT), "matrix")
     checkIdentical(target = MAT[,1], current = VEC)
-    
+
     # Data Frame:
-    DF = as.data.frame(uTS)  
+    DF = as.data.frame(uTS)
     head(DF)
     checkIdentical(class(DF), "data.frame")
     checkIdentical(target = as.matrix(DF)[,1], current = VEC)
-    
+
     # Time Series:
     TS = as.ts(uTS)
     head(TS)
     class(TS)
     checkIdentical(class(TS), "ts")
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.fromTimeSeriesMV = 
+test.fromTimeSeriesMV =
 function()
-{     
+{
     # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
     # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
     # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
     # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
-    
+
     # Multivariate Case:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -254,36 +254,36 @@ function()
     charvec = timeCalendar(2006)
     mTS = timeSeries(data, charvec)
     mTS
-     
+
     # Matrix:
-    MAT = as.matrix(mTS)  
+    MAT = as.matrix(mTS)
     head(MAT)
     class(MAT)
     checkIdentical(
-        target = class(MAT), 
+        target = class(MAT),
         current = "matrix")
     checkIdentical(
-        target = as.vector(MAT[, 1]), 
+        target = as.vector(MAT[, 1]),
         current = as.numeric(MAT)[1:12])
-    
+
     # Data Frame:
-    DF = as.data.frame(mTS)  
+    DF = as.data.frame(mTS)
     head(DF)
     class(DF)
     checkIdentical(
-        target = class(DF), 
+        target = class(DF),
         current = "data.frame")
-    
+
     # Time Series:
     TS = as.ts(mTS)
     head(TS)
     class(TS)
     checkIdentical(
-        target = class(TS), 
+        target = class(TS),
         current = c("mts", "ts"))
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 

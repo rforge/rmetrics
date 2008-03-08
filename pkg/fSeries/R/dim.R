@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# METHOD:                   DIM OPERATIONS ON DATA: 
+# METHOD:                   DIM OPERATIONS ON DATA:
 #  dim.timeSeries            Returns dimension of a 'timeSeries' object
 #  dimnames<-.timeSeries     NYI
 #  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
@@ -43,64 +43,62 @@
 # Base Functions:
 
     # Generate from Matrix:
-    # edhec.zoo = zoo(edhec.mat, rownames(edhec.mat))
     # edhec.tS = timeSeries(edhec.mat, rownames(edhec.mat))
     # edhec.ts = ts(edhec.mat, start = c(1997, 1), frequency = 12)
-    
+
     # Univariate time Series:
     # edhec1.tS = edhec.tS[, 1]
-    # edhec1.zoo = edhec.zoo[, 1]
-    
-    #   dim                 
-    #                       dim(edhec.tS)                       # 20 4  
+
+    #   dim
+    #                       dim(edhec.tS)                       # 20 4
     #                       dim(edhec1.tS)                      # 20 1
-    #                       dim(edhec.zoo)                      # 20 4                       
-    #                       dim(edhec1.zoo)                     # NULL
+
+
     #   DIM
     #                       DIM = function(x) {c(NROW(x), NCOL(x))}
-    #                       DIM(edhec.tS)                       # 20 4  
+    #                       DIM(edhec.tS)                       # 20 4
     #                       DIM(edhec1.tS)                      # 20 1
-    #                       DIM(edhec.zoo)                      # 20 4                       
-    #                       DIM(edhec1.zoo)                     # 20 1
-    #   length 
-    #                       length(edhec.tS)                    # 1  
-    #                       length(edhec.zoo)                   # 80
-    #                      
-    #   LENGTH              
-    #                       LENGTH = function(x) NROW(x) 
-    #                       LENGTH(edhec.tS)                    # 20  
-    #                       LENGTH(edhec1.tS)                   # 20  
-    #                       LENGTH(edhec.zoo)                   # 20                         
-    #                       LENGTH(edhec1.zoo)                  # 20  
-    #                                             
+
+
+    #   length
+    #                       length(edhec.tS)                    # 1
+
+    #
+    #   LENGTH
+    #                       LENGTH = function(x) NROW(x)
+    #                       LENGTH(edhec.tS)                    # 20
+    #                       LENGTH(edhec1.tS)                   # 20
+
+
+    #
     #   ncol / nrow
-    #                       ncol(edhec.tS)                      # 4  
-    #                       ncol(edhec.zoo)                     # 4
-    #                      
-    #                       ncol(edhec1.tS)                     # 1  
-    #                       ncol(edhec1.zoo)                    # NULL   
-    #                      
+    #                       ncol(edhec.tS)                      # 4
+
+    #
+    #                       ncol(edhec1.tS)                     # 1
+
+    #
     #  NCOL / NRWO
-    #                       NCOL(edhec.tS)                      # 4  
-    #                       NCOL(edhec.zoo)                     # 4
-    #                      
-    #                       NCOL(edhec1.tS)                     # 1  
-    #                       NCOL(edhec1.zoo)                    # 1  
-    #                       
-    #  isUnivariate  
-    #                       isUnivariate = function(x) NCOL(x) == 1 
-    #                       isUnivariate(edhec.tS) 
-    #                       isUnivariate(edhec1.tS) 
-    #                       isUnivariate(edhec.zoo) 
-    #                       isUnivariate(edhec1.zoo) 
-    #                      
-    # isMultivariate        # Just Negation of isUnivariate            
+    #                       NCOL(edhec.tS)                      # 4
+
+    #
+    #                       NCOL(edhec1.tS)                     # 1
+
+    #
+    #  isUnivariate
+    #                       isUnivariate = function(x) NCOL(x) == 1
+    #                       isUnivariate(edhec.tS)
+    #                       isUnivariate(edhec1.tS)
+
+
+    #
+    # isMultivariate        # Just Negation of isUnivariate
     #
     #
     #
-    
-# ------------------------------------------------------------------------------    
-  
+
+# ------------------------------------------------------------------------------
+
 
 # length
 # dim
@@ -113,7 +111,7 @@
 # NCOL
 # NROW
 
- 
+
 dim.timeSeries =
 function(x)
 {   # A function implemented by Diethelm Wuertz
@@ -122,10 +120,10 @@ function(x)
     #   Returns the dimension of a 'timeSeries' object
 
     # FUNCTION:
-    
+
     # Dimension:
     ans = dim(x@Data)
-    
+
     # Return Value:
     ans
 }
@@ -144,10 +142,10 @@ function(x)
     # Note:
     #   dimnames() is .Primitive
     # FUNCTION:
-    
+
     # Dimension Names:
     ans = dimnames(x@Data)
-    
+
     # Return Value:
     ans
 }
@@ -169,17 +167,17 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-"colnames<-.timeSeries" =
-function(x, value)
+"colnames<-.timeSeries" <-
+    function(x, value)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Assigns column names to a 'timeSeries' object
 
     # FUNCTION:
-    
+
     # Assign Column Names:
-    X = x@Data
+    X <- x@Data
     dn <- dimnames(X)
     if(is.null(dn)) {
         if(is.null(value)) return(x)
@@ -189,12 +187,12 @@ function(x, value)
     }
     if(length(dn) < 2) stop(
         "attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
-    dimnames(X) <- dn   
-    
-    # DW addded for timeSeries objects 
-    x@Data = X
-    x@units = colnames(X)
+    dn[2] <- if (is.null(value)) list(NULL) else list(value)
+    dimnames(X) <- dn
+
+    # DW addded for timeSeries objects
+    x@Data <- X
+    x@units <- as.character(value) # YC as.character needed if value == NULL
     x
 }
 
@@ -210,7 +208,7 @@ function(x, value)
     #   Assigns row names to a 'timeSeries' object
 
     # FUNCTION:
-    
+
     # Assign Row Names:
     X = x@Data
     dn <- dimnames(X)
@@ -223,13 +221,13 @@ function(x, value)
     if(length(dn) < 2) stop(
         "attempt to set colnames on object with less than two dimensions")
     if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
-    dimnames(X) <- dn 
-    
-    # DW addded for timeSeries objects 
+    dimnames(X) <- dn
+
+    # DW addded for timeSeries objects
     x@Data = X
     x@positions = rownames(X)
-       
-    # Return Value: 
+
+    # Return Value:
     x
 }
 
@@ -237,22 +235,22 @@ function(x, value)
 # ------------------------------------------------------------------------------
 
 
-is.array.timeSeries = 
+is.array.timeSeries =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Allows that NCOL and NROW work properly
-  
+
     # FUNCTION:
-    
+
     # Is an array:
     ans = TRUE
-    
+
     # Return Value:
-    ans    
+    ans
 }
 
-   
+
 ################################################################################
 

@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,21 +33,21 @@
 ################################################################################
 
 
-summary.timeSeries = 
-function(object, ...) 
+summary.timeSeries =
+function(object, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   S3 Summary method for objects of class "timeDate"
-    
+
     # Arguments
     #   x - an object of class "timeDate"
-    
-    # FUNCTION: 
+
+    # FUNCTION:
 
     # Series Name:
     cat("Time Series:          ")
-    cat("\n Name:              ", substitute(object))    
+    cat("\n Name:              ", substitute(object))
     # Data Matrix:
     Dim = dim(object@Data)
     cat("\nData Matrix:        ")
@@ -57,7 +57,7 @@ function(object, ...)
     lastName = rownames(object@Data)[Dim[1]]
     cat("\n Row Names:         ", firstName, " ... ", lastName)
     # Date/Time Positions:
-    positions = seriesPositions(object)
+    positions = time(object)
     cat("\nPositions:          ")
     cat("\n Start:             ", as.character(start(positions)))
     cat("\n End:               ", as.character(end(positions)))
@@ -68,11 +68,11 @@ function(object, ...)
     cat("\n Units:             ", object@units)
     cat("\n Title:             ", object@title)
     cat("\n Documentation:     ", object@documentation)
-    cat("\n") 
-    
+    cat("\n")
+
     # Return Value:
     invisible()
-}  
+}
 
 
 ################################################################################

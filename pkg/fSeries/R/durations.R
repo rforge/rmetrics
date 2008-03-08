@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,39 +28,39 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
+# FUNCTION:                 FINANCIAL TIME SERIES:
 #  durations                 Computes durations from a 'timeSeries' object
 ################################################################################
 
 
-durations = 
+durations =
 function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes durations from a financial price series
-    
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
+
+    # Arguments:
+    #   x - a univariate or multivariate 'timeSeries' object or a
     #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
+    #   trim - a logical flag, by default TRUE, the first missing
+    #       observation in the return series will be removed.
+    #   units - a character value or vector which allows to set the
     #       units in which the durations are measured
 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-  
+
     # FUNCTION:
-    
+
     # Positions and Durations:
-    pos = seriesPositions(x)
+    pos = time(x)
     dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
-    
+
     # Data Matrix:
     x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
     if (trim) x = x[-1, ]
-    
+
     # Return Series:
     x
 }
@@ -69,7 +69,7 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 # ------------------------------------------------------------------------------
 
 
-durationSeries = 
+durationSeries =
 function(...)
 {
     durations(...)

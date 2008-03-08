@@ -58,11 +58,11 @@ merge.timeSeries <-
     # if not convert to the most extended one
     if (y@format != x@format) {
         if (nchar(y@format) > nchar(x@format)) {
-            x@positions <- format(seriesPositions(x), format = y@format)
+            x@positions <- format(time(x), format = y@format)
             rownames(x@Data) <- x@positions
             x@format <- y@format
         } else {
-            y@positions <- format(seriesPositions(y), format = x@format)
+            y@positions <- format(time(y), format = x@format)
             rownames(y@Data) <- y@positions
             y@format <- x@format
         }
@@ -120,11 +120,11 @@ rbind.timeSeries <-
     # if not convert to the most extended one
     if (y@format != x@format) {
         if (nchar(y@format) > nchar(x@format)) {
-            x@positions <- format(seriesPositions(x), format = y@format)
+            x@positions <- format(time(x), format = y@format)
             rownames(x@Data) <- x@positions
             x@format <- y@format
         } else {
-            y@positions <- format(seriesPositions(y), format = x@format)
+            y@positions <- format(time(y), format = x@format)
             rownames(y@Data) <- y@positions
             y@format <- x@format
         }
