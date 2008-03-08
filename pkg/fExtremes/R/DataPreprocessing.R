@@ -77,14 +77,14 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     }
     if (class(x) == "timeSeries") {
         if (is.numeric(block)) {
-            from = blockStart(seriesPositions(x), block = block)
-            to = blockEnd(seriesPositions(x), block = block)
+            from = blockStart(time(x), block = block)
+            to = blockEnd(time(x), block = block)
         } else if (block == "monthly") {
-            from = unique(timeFirstDayInMonth(seriesPositions(x)))
-            to = unique(timeLastDayInMonth(seriesPositions(x)))
+            from = unique(timeFirstDayInMonth(time(x)))
+            to = unique(timeLastDayInMonth(time(x)))
         } else if (block == "quarterly") {
-            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
-            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+            from = unique(timeFirstDayInQuarter(time(x)))
+            to = unique(timeLastDayInQuarter(time(x)))
         } else {
             stop("Unknown block size for timeSeries Object")
         }
@@ -249,7 +249,7 @@ function(x, run = 20, doplot = TRUE)
     stopifnot(isUnivariate(x))
 
     # Decluster time Series:
-    positions = seriesPositions(x)
+    positions = time(x)
     data = seriesData(x)
     gapLengths = c(0, diff(positions)) # / (24*3600)
     clusterNumbers = cumsum(gapLengths > run) + 1
