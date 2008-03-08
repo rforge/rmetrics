@@ -3,7 +3,7 @@ Version: 270.73
 Date: 1997 - 2008
 Title: Rmetrics - Rmetrics Function Utilities
 Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.4.0), methods, MASS, zoo
+Depends: R (>= 2.4.0), methods, MASS
 Suggests: tcltk, RUnit, akima, spatial
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
