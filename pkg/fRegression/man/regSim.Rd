@@ -75,8 +75,8 @@ GAM3(n = 100, seed = 4711)
     normal deviates of length \code{n}.
     
     The \code{model} function should return an rectangular series defined 
-    as an object of class \code{data.frame}, \code{timeSeries}, \code{mts},
-    or\code{zoo} which can be accepted from the parameter estimation
+    as an object of class \code{data.frame}, \code{timeSeries} or \code{mts}
+    which can be accepted from the parameter estimation
     functions \code{regFit} and \code{gregFit}.
     
 }
@@ -86,8 +86,8 @@ GAM3(n = 100, seed = 4711)
 
     The function \code{garchSim} returns an object of the same class 
     as returned by the underlying function \code{match.fun(model)}.
-    These may be objects of class \code{data.frame}, \code{timeSeries}, 
-    \code{mts}, or\code{zoo}.
+    These may be objects of class \code{data.frame}, \code{timeSeries} or
+    \code{mts}.
     
 }
 

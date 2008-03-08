@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -53,16 +53,16 @@
 ################################################################################
 
 
-regFit <- 
-    function (formula, data, family = gaussian, 
-    use = c("lm", "rlm", "glm", "gam", "ppr", "nnet", "polymars"), 
-    title = NULL, description = NULL, ...) 
-{   
+regFit <-
+    function (formula, data, family = gaussian,
+    use = c("lm", "rlm", "glm", "gam", "ppr", "nnet", "polymars"),
+    title = NULL, description = NULL, ...)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Common function call for several selected regression models.
-    
+
     # Details:
     #   This is a wrapper function for the following regrssion models:
     #     LM          Linear Regression Modelling
@@ -72,24 +72,24 @@ regFit <-
     #     PPR         Projection Pursuit Regression
     #     NNET        Feedforward Neural Net
     #     POLYMARS    Polytochomous MARS Modeling
-    
+
     # Notes:
     #   Available Methods are
     #   "print", "plot", "summary", "predict"
-    #   "coef", "formula", "residuals" "fitted", "vcov" 
-    
+    #   "coef", "formula", "residuals" "fitted", "vcov"
+
     # Example:
     #   regFit(Y ~ X1 + X2 + X3, regSim())
-    
+
     # FUNCTION:
-    
+
     # Match Arguments:
     use = match.arg(use)
-   
+
     # Transform data into a dataframe
-    Data = data
+    Data <- if (inherits(data, "timeSeries")) data else as.timeSeries(data)
     data = as.data.frame(data)
-    
+
     # Function to be called:
     fun = paste(".", match.arg(use), sep = "")
 
@@ -100,44 +100,44 @@ regFit <-
         if (use == "glm") title = "Generalized Linear Modeling"
         if (use == "gam") title = "Generalized Additive Modeling"
         if (use == "ppr") title = "Projection Pursuit Regression"
-        if (use == "nnet") title = "Feedforward Neural Network Modeling" 
+        if (use == "nnet") title = "Feedforward Neural Network Modeling"
         if (use == "polymars") title = "Polytochomous MARS Modeling"
-    } 
-    
+    }
+
     # Description:
     if (is.null(description)) {
         description = .description()
     }
-    
+
     # Compose Command to be Called:
     cmd = match.call()
-    if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
+    if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]
     cmd[[1]] <- as.name(fun)
-    
+
     # Fit Regression Model:
-    fit <- eval(cmd, parent.frame()) 
-      
+    fit <- eval(cmd, parent.frame())
+
     # Add "cmd" to Fit:
     fit$cmd = cmd
-    
+
     # Add "xlevels" to Fit (if missing):
     if (is.null(fit$xlevels)) fit$xlevels = list()
-    
+
     # Add "residuals" and "fitted" to Fit (to be sure ...):
-    fit$residuals = as.vector(fit$residuals)    
+    fit$residuals = as.vector(fit$residuals)
     fit$fitted.values = as.vector(fit$fitted.values)
-    
+
     # Add "parameters" as Alternative:
     fit$parameters = fit$coef
- 
+
     # Extend to class "list":
     class(fit) = c("list", class(fit))
     if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
 
     # Return Value:
-    new("fREG",     
+    new("fREG",
         call = as.call(match.call()),
-        formula = as.formula(formula), 
+        formula = as.formula(formula),
         family = as.character(gaussian()),
         method = use,
         # data is data.frame, Data original input:
@@ -145,7 +145,7 @@ regFit <-
         fit = fit,
         residuals = fit$residuals,
         fitted = fit$fitted.values,
-        title = as.character(title), 
+        title = as.character(title),
         description = as.character(description)
     )
 }
@@ -158,9 +158,9 @@ regFit <-
 .rlm <- MASS::rlm
 .glm <- stats::glm
 .gam <- mgcv::gam
-.ppr <- function(..., nterms = 2) 
+.ppr <- function(..., nterms = 2)
     stats::ppr(..., nterms = nterms)
-.nnet <- function(..., trace = FALSE, size = 2, linout = TRUE) 
+.nnet <- function(..., trace = FALSE, size = 2, linout = TRUE)
     nnet::nnet(..., trace = trace, size = size, linout = linout)
 .polymars <- .polymarsFormula
 

@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -32,24 +32,24 @@
 #  fitted.fREG           Fitted values method for an object of class fREG
 ################################################################################
 
-        
-setMethod(f = "fitted", signature(object = "fREG"), definition =  
-    function(object) 
-{   
+
+setMethod(f = "fitted", signature(object = "fREG"), definition =
+    function(object)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fitted values method for an object of class fREG
-    
+
     # FUNCTION:
-    
+
     # Fitted Values:
     fitted = object@fitted
-    
+
     # Get original time series class:
     data = slot(object, "data")$data
     dataClass = class(data)[1]
-    
+
     # Transform:
     if (dataClass == "timeSeries") {
         ans = data
@@ -58,25 +58,14 @@ setMethod(f = "fitted", signature(object = "fREG"), definition =
         colnames(data.mat) = object@data$unit
         ans@Data = data.mat
         colnames(ans) = as.character(object@formula[2])
-    } else if (dataClass == "zoo") {
-        ans = fitted
-        attr(ans, "index") = attr(data, "index")
-        class(ans) = "zoo"
-    } else if (dataClass == "ts" | dataClass == "mts") {
-        ans = fitted
-        attr(ans, "tsp") = attr(data, "tsp")
-        class(ans) = "ts"
-    } else if (dataClass == "data.frame") {
-        ans = data.frame(matrix(fitted))
-        colnames(ans) = as.character(object@formula[2])
     } else {
         ans = data
     }
-            
+
     # Return Value:
     ans
 })
-        
+
 
 ################################################################################
 
