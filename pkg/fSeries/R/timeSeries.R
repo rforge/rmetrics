@@ -48,11 +48,12 @@
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 
 
-timeSeries =
-function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
-documentation = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+timeSeries <- 
+    function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
+    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+    documentation = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a 'timeSeries' object from scratch.
@@ -91,7 +92,14 @@ documentation = NULL, ...)
     #   timeSeries(data.mat, charvec)
 
     # FUNCTION:
-
+    
+    
+    # Default:
+    if(missing(data) && missing(charvec)) {
+        data = matrix(rnorm(24), 12)
+        charvec = as.character(timeCalendar())
+    }
+        
     # This allows data to be a vector as input ...
     if (is.vector(data)) data = matrix(data)
 
@@ -165,10 +173,11 @@ documentation = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-readSeries =
-function(file, header = TRUE, sep = ";", zone = myFinCenter,
-FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+readSeries <- 
+    function(file, header = TRUE, sep = ";", zone = myFinCenter,
+    FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Reads from a spreadsheet and creates a 'timeSeries' object
@@ -215,12 +224,13 @@ FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-applySeries =
-function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter,
-FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
-documentation = x@documentation, ...)
-{   # A function implemented by Diethelm Wuertz
+applySeries <- 
+    function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
+    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter,
+    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
+    documentation = x@documentation, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Apply a function to the margins of a 'timeSeries' object
@@ -305,9 +315,9 @@ documentation = x@documentation, ...)
 }
 
 
-.applySeries =
-function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-FUN = colAvgs, units = NULL, ...)
+.applySeries <- 
+    function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
+    FUN = colAvgs, units = NULL, ...)
 {
     # Old/Alternative Version
 
@@ -365,9 +375,10 @@ FUN = colAvgs, units = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-orderStatistics =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+orderStatistics <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the order statistics for a 'timeSeries object
@@ -404,6 +415,7 @@ function(x)
 #  isUnivariate         Tests if an object of class 'timeSeries' is univariate
 #  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
 
+
 seriesData =
 function(object)
 {   # A function implemented by Diethelm Wuertz
@@ -433,9 +445,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-isUnivariate =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+isUnivariate <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests if a time series is univariate
@@ -450,9 +463,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-isMultivariate =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+isMultivariate <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests if a time series is multivariate
