@@ -15,7 +15,7 @@
 
 
 \usage{
-whichFormat(charvec, silent = FALSE))  
+whichFormat(charvec, silent = FALSE)  
 }
 
 
