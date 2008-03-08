@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,90 +33,90 @@
 ################################################################################
 
 
-armaSim = 
+armaSim =
 function(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
-positions = NULL, innov = NULL, n.start = 100, start.innov = NULL, 
-rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...) 
+innov = NULL, n.start = 100, start.innov = NULL,
+rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Simulates an ARIMA Time Series Process
-    
+
     # Details:
     #   Splus-Like argument list ...
     #   Rmetrics Notation:
     #     armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
-    #       innov = NULL, n.start = 100, start.innov = NULL, 
-    #       rand.gen = rnorm, rseed = NULL, ...) 
+    #       innov = NULL, n.start = 100, start.innov = NULL,
+    #       rand.gen = rnorm, rseed = NULL, ...)
     # SPlus Notation:
-    #     arima.sim (model, n = 100, 
-    #       innov = rand.gen(n, ...), n.start = 100, start.innov = NULL, 
+    #     arima.sim (model, n = 100,
+    #       innov = rand.gen(n, ...), n.start = 100, start.innov = NULL,
     #       rand.gen = rnorm, xreg = NULL, reg.coef = NULL, ...)
-    
+
     # Example:
     #   armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1))
     #   armaSim(model = list(ar = c(0.5, -0.5), d = 0.2, ma = 0.1))
     #   armaSim(model = list(ar = 0, d = 0.2, ma = 0))
     #   armaSim(model = list(d = 0.2))
-   
+
     # FUNCTION:
-    
+
     # Checks:
-    if (!is.list(model)) 
+    if (!is.list(model))
         stop("model must be a list")
-        
+
     # Simulate:
-    if (!is.null(rseed))  
+    if (!is.null(rseed))
         set.seed(rseed)
-    if (is.null(innov)) 
+    if (is.null(innov))
         innov = rand.gen(n, ...)
-    n = length(innov) 
-    if (is.null(start.innov)) 
-        start.innov = rand.gen(n, ...) 
+    n = length(innov)
+    if (is.null(start.innov))
+        start.innov = rand.gen(n, ...)
     n.start = length(start.innov)
 
     # AR PART:
     p = length(model$ar)
-    if (p == 1 && model$ar == 0) 
+    if (p == 1 && model$ar == 0)
         p = 0
-    if (p) { 
+    if (p) {
         minroots = min(Mod(polyroot(c(1, -model$ar))))
-        if (minroots <= 1) warning(" AR part of model is not stationary") 
+        if (minroots <= 1) warning(" AR part of model is not stationary")
     }
-    
+
     # MA PART:
     q = length(model$ma)
-    if (q == 1 && model$ma == 0) 
+    if (q == 1 && model$ma == 0)
         q = 0
-    if (n.start < p + q) 
+    if (n.start < p + q)
         stop("burn-in must be as long as ar + ma")
-    
+
     # DIFFERENCING:
-    ## if (model$d < 0) stop("d must be positive ") 
-    dd = length(model$d)    
-    if (dd) { 
+    ## if (model$d < 0) stop("d must be positive ")
+    dd = length(model$d)
+    if (dd) {
         # ARFIMA|FRACDIFF if "dd" is a non-integer value:
         d = model$d
-        if (d != round(d) ) { 
-            TSMODEL = "ARFIMA" 
-        } else { 
-            TSMODEL = "ARIMA" 
-        } 
+        if (d != round(d) ) {
+            TSMODEL = "ARFIMA"
+        } else {
+            TSMODEL = "ARIMA"
+        }
     } else {
-        d = 0 
-        TSMODEL = "ARIMA" 
-    } 
-    
+        d = 0
+        TSMODEL = "ARIMA"
+    }
+
     # ARMA:
     if (TSMODEL == "ARIMA") {
-        x = ts(c(start.innov, innov), start = 1 - n.start) 
+        x = ts(c(start.innov, innov), start = 1 - n.start)
         if (length(model$ma)) x = filter(x, c(1, model$ma), sides = 1)
         if (length(model$ar)) x = filter(x, model$ar, method = "recursive")
         x = x[-(1:n.start)]
-        if (d > 0) x = diffinv(x, differences = d) 
+        if (d > 0) x = diffinv(x, differences = d)
     }
-     
-    # ARFIMA [FRACDIFF]:   
+
+    # ARFIMA [FRACDIFF]:
     if (TSMODEL == "ARFIMA") {
         if (p == 0) model$ar = 0
         if (q == 0) model$ma = 0
@@ -125,23 +125,17 @@ rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
         # This is a BUILTIN function ...
         if (!is.null(rseed)) set.seed(rseed)
         eps = rnorm(n + q)
-        x = .Fortran("fdsim", as.integer(n), as.integer(p), as.integer(q), 
-            as.double(model$ar), as.double(model$ma), as.double(model$d), 
-            as.double(mu), as.double(eps), x = double(n + q), 
-            as.double(.Machine$double.xmin), as.double(.Machine$double.xmax), 
-            as.double(.Machine$double.neg.eps), as.double(.Machine$double.eps), 
-            PACKAGE = "fArma")$x[1:n] 
+        x = .Fortran("fdsim", as.integer(n), as.integer(p), as.integer(q),
+            as.double(model$ar), as.double(model$ma), as.double(model$d),
+            as.double(mu), as.double(eps), x = double(n + q),
+            as.double(.Machine$double.xmin), as.double(.Machine$double.xmax),
+            as.double(.Machine$double.neg.eps), as.double(.Machine$double.eps),
+            PACKAGE = "fArma")$x[1:n]
     }
-               
+
     # Time Series:
-    if (is.null(positions)) {
-        ans = as.ts(x)
-    } else {
-        stopifnot(class(positions) == "timeDate")
-        stopifnot(n == length(positions))
-        ans = timeSeries(data = matrix(x, ncol = 1), charvec = positions, ...)
-    }
-    
+    ans = timeSeries(data = matrix(x, ncol = 1), ...)
+
     # Add Control:
     if (addControl) {
         control = c(ar = model$ar, d = model$d, ma = model$ma)
@@ -151,7 +145,7 @@ rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
         if (!is.null(rseed)) control = c(control, rseed = rseed)
         attr(ans, "control") = control
     }
-    
+
     # Return Value:
     ans
 }
