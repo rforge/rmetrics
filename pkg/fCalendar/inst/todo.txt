@@ -1,7 +1,7 @@
 
 
 DW  Should unctions .whichFormat and .midnightStandard  
-    become non-hidden ?
+    become non-hidden ? done
     
 DW  Should we add a time.timeDate method like the methods
     time.default, time.timeSeries, time.ts time.zoo ? 
