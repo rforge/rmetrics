@@ -37,6 +37,7 @@ checkBeforeCommit  <-
     try(system(cmd))
 
     logWarning <- NULL
+    logNOTE <- NULL
     # check for ERRORs and WARNINGs
     for (i in seq(pkgsToCheck)) {
 
@@ -46,6 +47,7 @@ checkBeforeCommit  <-
 
         ERROR <- grep("ERROR", log)
         WARNING <- grep("WARNING", log)
+        NOTE <- grep("NOTE", log)
 
         if (length(ERROR)) {
             msg <- paste("More details in", logFile)
@@ -59,10 +61,20 @@ checkBeforeCommit  <-
             paste("\n More details in", logFile, "\n"),
             paste(" ####################### WARNING #######################\n"))
         }
+        if (length(NOTE)) {
+            logNOTE <- c(logNOTE,
+            "\n #######################  NOTE  #######################\n",
+            paste(" In package", pkgsToCheck[i], "\n"),
+            paste(paste(log[seq(NOTE, NOTE+8)], collapse = "\n "), "\n"),
+            paste("\n More details in", logFile, "\n"),
+            paste(" #######################  NOTE  #######################\n"))
+        }
     }
 
     # print WARINGs
+    cat(logNOTE)
     cat(logWarning)
+
 
     # Return
     if (length(WARNING) | length(ERROR)) STATUS <- FALSE else STATUS <- TRUE
