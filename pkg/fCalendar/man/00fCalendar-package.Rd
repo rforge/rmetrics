@@ -145,7 +145,7 @@
   for many common date/time formats which tries to automatically recognise  
   the format for the character vector of dates and times. You can have a
   look at \cr
-  \code{.whichFormat(charvec)}. \cr
+  \code{whichFormat(charvec)}. \cr
   
   NOTE: Rmetrics always uses the midnight standard on dates and
   times. You can see it with  \cr
