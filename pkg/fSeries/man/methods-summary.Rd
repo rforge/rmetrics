@@ -1,4 +1,4 @@
-\name{summary}
+\name{summary-methods}
 
 
 \title{Object Summary}

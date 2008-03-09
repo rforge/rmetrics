@@ -1,4 +1,4 @@
-\name{plot}
+\name{plot-methods}
 
 
 \title{Plot a Time Series}

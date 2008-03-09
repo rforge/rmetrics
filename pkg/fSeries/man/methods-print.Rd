@@ -1,4 +1,4 @@
-\name{print}
+\name{print-methods}
 
 
 \title{Print a Time Series}
