@@ -27,25 +27,16 @@
 
 
 ################################################################################
-# FUNCTION:                 GENERATION OF TIME SERIES OBJECTS:
+# FUNCTION:                 DESCRIPTION:
 #  timeSeries                Creates a 'timeSeries' object from scratch
 #  readSeries                Reads a spreadsheet and creates a 'timeSeries'
 #  orderStatistics           Compute order statistic of a 'timeSeries'
-# FUNCTION:                 DATA SLOT AND CLASSIFICATION:
 #  seriesData                Extracts data slot from 'timeSeries' object
-#  isUnivariate              Tests if 'timeSeries' object is univariate
-#  isMultivariate            Tests if 'timeSeries' object is multivariate
 # MOVED:                    WHERE ?
+#  isUnivariate              moved to isUnivariate.R
+#  isMultivariate            moved to isUnivariate.R
 #  applySeries               Moved to apply.R
 ################################################################################
-
-
-################################################################################
-# FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
-#  timeSeries           Creates a 'timeSeries' object from scratch
-#  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  applySeries          Applies a function to blocks of a 'timeSeries'
-#  orderStatistics      Compute order statistic of a 'timeSeries'
 
 
 timeSeries <- 
@@ -223,12 +214,6 @@ readSeries <-
 # ------------------------------------------------------------------------------
 
 
-# applySeries has been moved to script apply.R
-
-
-# ------------------------------------------------------------------------------
-
-
 orderStatistics <- 
     function(x)
 {   
@@ -264,10 +249,7 @@ orderStatistics <-
 }
 
 
-################################################################################
-#  seriesData           Extracts data slot from 'timeSeries' object
-#  isUnivariate         Tests if an object of class 'timeSeries' is univariate
-#  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
+# ------------------------------------------------------------------------------
 
 
 seriesData =
@@ -294,48 +276,6 @@ function(object)
     # Return Value:
     ans
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-isUnivariate <- 
-    function(x)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tests if a time series is univariate
-
-    # FUNCTION:
-
-    # Return Value:
-    if (NCOL(x) == 1) return(TRUE) else return(FALSE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-isMultivariate <- 
-    function(x)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tests if a time series is multivariate
-
-    # FUNCTION:
-
-    # Examples:
-    #   isMultivariate(as.timeSeries(data(daxRet)))
-
-    # FUNCTION:
-
-    # Return Value:
-    if (NCOL(x) > 1) return(TRUE) else return(FALSE)
-}
-
 
 
 ################################################################################

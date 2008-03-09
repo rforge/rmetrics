@@ -14,19 +14,13 @@
 
 \alias{seriesData}
 
-\alias{isUnivariate}
-\alias{isMultivariate}
-
 
 \description{
     
     A collection and description of functions 
     and methods dealing with regular and irregular 
     'timeSeries' objects. Dates and times are 
-    implemented as 'timeDate' objects. Included 
-    are functions and methods for the generation 
-    and representation of 'timeSeries' objects, 
-    and for mathematical operations.          
+    implemented as 'timeDate' objects. 
     \cr
     
     Functions to generate and modify 'timeSeries' objects:         
@@ -39,9 +33,7 @@
     Data Slot and classification of 'timeSeries' objects: 
     
     \tabular{ll}{        
-    \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
-    \code{isUnivariate} \tab Tests if a 'timeSeries' object is univariate, \cr
-    \code{isMultivariate} \tab Tests if a 'timeSeries' object is multivariate. }          
+    \code{seriesData} \tab Extracts data slot from a 'timeSeries'. }          
 }
 
 
@@ -56,8 +48,6 @@ readSeries(file, header = TRUE, sep = ";", zone = myFinCenter,
 orderStatistics(x)
 
 seriesData(object)
-isUnivariate(x)
-isMultivariate(x)
 }
 
 
@@ -121,11 +111,6 @@ isMultivariate(x)
         automatically. 
         }     
     \item{x}{
-        [as] - \cr   
-        a \code{matrix} type object to be converted.\cr
-        [as.vector][as.matrix][as.data.frame] -\cr
-        [applySeries] - \cr
-        [cut][end][mergeSeries][plot][print][rev][start] - \cr
         an object of class \code{timeSeries}.
         }
     \item{zone}{
@@ -143,7 +128,6 @@ isMultivariate(x)
     \code{timeSeries}\cr
     \code{readSeries}\cr
     \code{returnSeries}\cr
-    \code{applySeries}
     \cr
     return a S4 object of class \code{timeSeries}.
     \cr
@@ -157,21 +141,6 @@ isMultivariate(x)
     \cr
     extracts the \code{@Data} slot from a \code{timeSeries} object. 
     Thus, \code{seriesData} returns an object of class \code{matrix}.
-    \cr
-    
-    \code{isUnivariate}\cr
-    \code{isMultivariate}\cr
-    \cr
-    returns a logical depending if the test is true or not.
-    \cr
-    
-    \code{plot}\cr
-    \code{lines}\cr
-    \code{points}\cr
-    \code{print}
-    \cr
-    plot and print methods for an object of class \code{timeSeries}.
-    \cr
         
 }
 
