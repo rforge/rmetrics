@@ -30,12 +30,7 @@
 # FUNCTION:                 DESCRIPTION:
 #  timeSeries                Creates a 'timeSeries' object from scratch
 #  readSeries                Reads a spreadsheet and creates a 'timeSeries'
-#  orderStatistics           Compute order statistic of a 'timeSeries'
 #  seriesData                Extracts data slot from 'timeSeries' object
-# MOVED:                    WHERE ?
-#  isUnivariate              moved to isUnivariate.R
-#  isMultivariate            moved to isUnivariate.R
-#  applySeries               Moved to apply.R
 ################################################################################
 
 
@@ -208,44 +203,6 @@ readSeries <-
 
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-orderStatistics <- 
-    function(x)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute the order statistics for a 'timeSeries object
-
-    # Value:
-    #   A named list with the order statistics for each column of
-    #   the inputted series.
-
-    # FUNCTION:
-
-    # Order Statistics
-    Units = x@units
-    nUnits = length(Units)
-    ans = list()
-    for (i in 1:nUnits) {
-        X = x[, i]
-        positions = X@positions
-        S = sort(X@Data, index.return = TRUE)
-        X@Data = matrix(S$x, ncol = 1)
-        X@positions = rownames(X@Data) = positions[S$ix]
-        colnames(X@Data) = Units[i]
-        TEXT = paste("ans$", Units[i], "=X", sep = "")
-        eval(parse(text = TEXT))
-    }
-
-    # Return Value:
-    ans
-
 }
 
 

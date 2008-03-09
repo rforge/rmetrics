@@ -10,8 +10,6 @@
 
 \alias{readSeries}
 
-\alias{orderStatistics}
-
 \alias{seriesData}
 
 
@@ -27,8 +25,7 @@
 
     \tabular{ll}{   
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
-    \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
-    \code{orderStatistics} \tab Computes order statistic of a 'timeSeries'. }
+    \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file. }
     
     Data Slot and classification of 'timeSeries' objects: 
     
@@ -44,8 +41,6 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter,
        
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
-    
-orderStatistics(x)
 
 seriesData(object)
 }
@@ -110,9 +105,6 @@ seriesData(object)
         \code{NULL} which means that the column names are selected
         automatically. 
         }     
-    \item{x}{
-        an object of class \code{timeSeries}.
-        }
     \item{zone}{
         the time zone or financial center where the data were recorded.
         }  
