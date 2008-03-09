@@ -10,8 +10,6 @@
 
 \alias{readSeries}
 
-\alias{applySeries}
-
 \alias{orderStatistics}
 
 \alias{seriesData}
@@ -36,7 +34,6 @@
     \tabular{ll}{   
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
-    \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
     \code{orderStatistics} \tab Computes order statistic of a 'timeSeries'. }
     
     Data Slot and classification of 'timeSeries' objects: 
@@ -55,11 +52,6 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter,
        
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
- 
-applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
-    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
-    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
-    documentation = x@documentation, \dots)
     
 orderStatistics(x)
 
@@ -71,14 +63,6 @@ isMultivariate(x)
 
 \arguments{
 
-    \item{by}{
-        [applySeries] - \cr
-        a character either \code{"monthly"} or \code{"quarterly"}. The
-        default value is \code{"monthly"}. Only operative when both arguments
-        \code{from} and \code{to} have ther default values \code{NULL}.
-        In this case the function \code{FUN} will be applied to monthly or
-        quarterly periods.
-        }
     \item{charvec}{
         a character vector of dates and times.
         }
@@ -110,14 +94,6 @@ isMultivariate(x)
         a character string with the format in POSIX notation to be passed 
         to the time series object.
         }  
-    \item{from, to}{
-        starting date and end date, \code{to} must be after \code{from}.
-        }
-    \item{FUN}{ 
-        the function to be applied.\cr
-        [applySeries] - \cr
-        a function to use for aggregation, by default \code{colAvgs}.
-        }
     \item{object}{
         [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
@@ -139,17 +115,11 @@ isMultivariate(x)
         name is deparsed.
         }
     \item{units}{
-        [applySeries][lag][returnSeries][mergeSeries] - \cr
         an optional character string, which allows to overwrite the 
         current column names of a \code{timeSeries} object. By default 
         \code{NULL} which means that the column names are selected
-        automatically.
-        \cr
-        [durationSeries] - \cr
-        a character value or vector which allows to set the 
-        units in which the durations are measured. By default durations
-        are measured in seconds. 
-        } 
+        automatically. 
+        }     
     \item{x}{
         [as] - \cr   
         a \code{matrix} type object to be converted.\cr
