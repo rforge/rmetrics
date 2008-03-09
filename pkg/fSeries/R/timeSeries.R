@@ -18,7 +18,6 @@
 # for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -31,12 +30,13 @@
 # FUNCTION:                 GENERATION OF TIME SERIES OBJECTS:
 #  timeSeries                Creates a 'timeSeries' object from scratch
 #  readSeries                Reads a spreadsheet and creates a 'timeSeries'
-#  applySeries               Applies a function to blocks of a 'timeSeries'
 #  orderStatistics           Compute order statistic of a 'timeSeries'
 # FUNCTION:                 DATA SLOT AND CLASSIFICATION:
 #  seriesData                Extracts data slot from 'timeSeries' object
 #  isUnivariate              Tests if 'timeSeries' object is univariate
 #  isMultivariate            Tests if 'timeSeries' object is multivariate
+# MOVED:                    WHERE ?
+#  applySeries               Moved to apply.R
 ################################################################################
 
 
@@ -92,8 +92,7 @@ timeSeries <-
     #   timeSeries(data.mat, charvec)
 
     # FUNCTION:
-    
-    
+       
     # Default:
     if(missing(data) && missing(charvec)) {
         data = matrix(rnorm(24), 12)
@@ -224,152 +223,7 @@ readSeries <-
 # ------------------------------------------------------------------------------
 
 
-applySeries <- 
-    function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter,
-    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
-    documentation = x@documentation, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Apply a function to the margins of a 'timeSeries' object
-
-    # Details:
-    #   This function can be used to aggregate and coursen a
-    #   'timeSeries' object.
-
-    # Arguments:
-    #   x - a 'timeSeries' object to be aggregated
-    #   from, to - two 'timeDate' position vectors which size the
-    #       blocks
-    #   by - calendarical block, only active when both 'from'
-    #       and 'to' are NULL
-    #   FUN - function to be applied, by default 'colAvgs'
-    #   units - a character vector with column names, allows to
-    #       overwrite the column names of the input 'timeSeries'
-    #       object.
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-
-    # Notes:
-    #   The size of the 'moving' window and the selection of an
-    #   'adj'-acent endpoint are not needed, all the information
-    #   is kept in the 'from' and 'to' position vectors.
-
-    # FUNCTION:
-
-    # Check object:
-    if (class(x) != "timeSeries") stop("s is not a timeSeries object")
-
-    # Monthly and Quarterly from and to:
-    if (is.null(from) & is.null(to)) {
-        if (by[1] == "monthly") {
-            # Use monthly blocks:
-            from = unique(timeFirstDayInMonth(time(x)))
-            to = unique(timeLastDayInMonth(time(x)))
-        } else if (by[1] == "quarterly") {
-            from = unique(timeFirstDayInQuarter(time(x)))
-            to = unique(timeLastDayInQuarter(time(x)))
-        } else {
-            stop("by must be eiter monthly or quarterly")
-        }
-        from@FinCenter = to@FinCenter = FinCenter
-    }
-
-    # Column Names:
-    colNames = units
-
-    # Function:
-    fun = match.fun(FUN)
-
-    # Blocks:
-    j.pos = as.POSIXct(time(x))
-    j.from = as.POSIXct(from)
-    j.to = as.POSIXct(to)
-
-    # Iterate:
-    y = x@Data
-    pos = time(x)
-    rowNames = rownames(x@Data)
-    rowBind = NULL
-    for (i in 1:from@Dim) {
-        test = (j.pos >= j.from[i] & j.pos <= j.to[i])
-        # make sure that cutted is a matrix ...
-        cutted = as.matrix(y[test, ])
-        ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
-        ans = fun(cutted, ...)
-        rowBind = rbind(rowBind, ans)
-    }
-    rownames(rowBind) = as.character(to)
-    if (is.null(colNames)) {
-        units = x@units
-    } else {
-        units = colNames }
-
-    # Return Value:
-    timeSeries(data = rowBind, charvec = as.character(to), units = units,
-        format = format, zone = zone, FinCenter = FinCenter, recordIDs =
-        recordIDs, title = title, documentation = documentation, ...)
-}
-
-
-.applySeries <- 
-    function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-    FUN = colAvgs, units = NULL, ...)
-{
-    # Old/Alternative Version
-
-    # Chreck for 'timeSeries' Object:
-    stopifnot(is.timeSeries(x),
-              is(from, "timeDate") || is.null(from),
-              is(to,   "timeDate") || is.null(to))
-
-    # Allow for colMeans:
-    if (substitute(FUN) == "colMeans") FUN = "colAvgs"
-
-    # Monthly and Quarterly from and to:
-    if (is.null(from) & is.null(to)) {
-        by = match.arg(by)
-        if (by == "monthly") {
-            from = unique(timeFirstDayInMonth(time(x)))
-            to = unique(timeLastDayInMonth(time(x)))
-        }
-        else if (by == "quarterly") {
-            from = unique(timeFirstDayInQuarter(time(x)))
-            to = unique(timeLastDayInQuarter(time(x)))
-        }
-        from@FinCenter = to@FinCenter = x@FinCenter
-    }
-
-    # Start Cutting Process:
-    fun = match.fun(FUN)
-    cutted = NULL
-    i = 1
-
-    # Find First Interval which is not empty:
-    while (is.null(cutted)) {
-        cutted = cut(x, from[i], to[i])
-        if (!is.null(cutted)) {
-            # Non empty Interval:
-            ans = fun(cutted, ...)
-        }
-        i = i + 1
-    }
-    # Continue up to the end:
-    for (j in i:from@Dim) {
-        cutted = cut(x, from[j], to[j])
-        if (!is.null(cutted)) {
-            # Non empty Interval:
-            newAns = fun(cutted, ...)
-            ans = rbind(ans, newAns)
-        }
-    }
-
-    # Return Value:
-    ans
-}
+# applySeries has been moved to script apply.R
 
 
 # ------------------------------------------------------------------------------
