@@ -67,8 +67,8 @@
 # ------------------------------------------------------------------------------
 
 
-colCumsums =
-function(x, na.rm = FALSE, ...)
+colCumsums <- 
+    function(x, na.rm = FALSE, ...)
 {
     UseMethod("colCumsums")
 }
@@ -77,9 +77,10 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumsums.default =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+colCumsums.default <- 
+    function(x, na.rm = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample cumulated sums by column (for matrix objects)
@@ -110,9 +111,10 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumsums.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+colCumsums.timeSeries <- 
+    function(x, na.rm = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample cumulated sums by column for timeSeries objects
@@ -138,8 +140,8 @@ function(x, na.rm = FALSE, ...)
 # DW: moved from BasicExtensions ...
 
 
-colCummaxs =
-function(x, na.rm = FALSE, ...)
+colCummaxs <- 
+    function(x, na.rm = FALSE, ...)
 {
     UseMethod("colCummaxs")
 }
@@ -148,8 +150,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCummaxs.default =
-function(x, na.rm = FALSE, ...)
+colCummaxs.default <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -169,8 +171,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCummaxs.timeSeries =
-function(x, na.rm = FALSE, ...)
+colCummaxs.timeSeries <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -187,7 +189,6 @@ function(x, na.rm = FALSE, ...)
         ans = x
     }
 
-
     # Return Value:
     ans
 }
@@ -196,8 +197,8 @@ function(x, na.rm = FALSE, ...)
 ################################################################################
 
 
-colCummins =
-function(x, na.rm = FALSE, ...)
+colCummins <- 
+    function(x, na.rm = FALSE, ...)
 {
     UseMethod("colCummmins")
 }
@@ -206,8 +207,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCummins.default =
-function(x, na.rm = FALSE, ...)
+colCummins.default <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -227,8 +228,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCummins.timeSeries =
-function(x, na.rm = FALSE, ...)
+colCummins.timeSeries <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -254,8 +255,8 @@ function(x, na.rm = FALSE, ...)
 ################################################################################
 
 
-colCumprods =
-function(x, na.rm = FALSE, ...)
+colCumprods <- 
+    function(x, na.rm = FALSE, ...)
 {
     UseMethod("colCumprods")
 }
@@ -264,8 +265,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumprods.default =
-function(x, na.rm = FALSE, ...)
+colCumprods.default <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -285,8 +286,8 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumprods.timeSeries =
-function(x, na.rm = FALSE, ...)
+colCumprods.timeSeries <- 
+    function(x, na.rm = FALSE, ...)
 {
     # Description:
 
@@ -311,8 +312,8 @@ function(x, na.rm = FALSE, ...)
 ################################################################################
 
 
-colCumreturns =
-function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+colCumreturns <- 
+    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
 {
     UseMethod("colCumreturns")
 }
@@ -321,9 +322,10 @@ function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumreturns.default =
-function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+colCumreturns.default <- 
+    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Cumulates Returns from a stream of returns
@@ -337,16 +339,15 @@ function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
     # FUNCTION:
 
     # Handle Missing Values:
-    if (na.rm) R = na.omit(R, ...)
+    if (na.rm) x = na.omit(x, ...)
 
     # Cumulative Returns:
     if (method == "geometric") {
-        ans = cumsum(R)
+        ans = cumsum(x)
     } else if (method == "simple") {
-        ans = cumprod(1+R) - 1
+        ans = cumprod(1+x) - 1
     }
-    names(ans) = colnames(R)
-
+    names(ans) = colnames(x)
 
     # Return Value:
     ans
@@ -356,8 +357,8 @@ function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-colCumreturns.timeSeries =
-function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+colCumreturns.timeSeries <- 
+    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
 {
     # Description:
 
@@ -381,12 +382,14 @@ function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
 
 ################################################################################
 
+
 # NO LONGER IN USE
 
 
-cumsum.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+cumsum.timeSeries <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   No longer in use, use colCumsums()
