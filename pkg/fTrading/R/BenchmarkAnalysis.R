@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -38,20 +38,20 @@
 ################################################################################
 
 
-maxDrawDown = 
+maxDrawDown =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the maximum drawdown
-    
+
     # FUNCTION:
-    
+
     # Check for timeSeries Object:
     TS = is.timeSeries(x)
     if (TS) {
         positions = x@positions
-        x = seriesData(x)
+        x = series(x)
         x = removeNA(x)
     }
 
@@ -59,29 +59,29 @@ function(x)
     if (NCOL(x) > 1) {
         stop("x is not a vector or univariate timeSeries")
     }
-    
+
     # Check for NAs:
     if(any(is.na(x))) {
         stop("NAs in x")
     }
-    
+
     # Maximum Drawdown:
     cmaxx = cummax(x)-x
     mdd = max(cmaxx)
     to = which(mdd == cmaxx)
     from = double(NROW(to))
     for (i in 1:NROW(to))
-        from[i] = max(which(cmaxx[1:to[i]] == 0))   
-     
-    # For time Series objects:   
+        from[i] = max(which(cmaxx[1:to[i]] == 0))
+
+    # For time Series objects:
     if (TS) {
         from = positions[from]
         to = positions[to]
     }
-    
+
     # Result:
     ans = list(maxdrawdown = mdd, from = from, to = to)
-        
+
     # Return Value:
     ans
 }
@@ -90,24 +90,24 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-sharpeRatio = 
+sharpeRatio =
 function(x, r = 0, scale = sqrt(250))
 {   # A function implemented by Diethelm Wuertz
 
     # Notes:
     #   A copy from A. Traplettis "tseries" package
-    
+
     # FUNCTION:
-    
+
     # Check for timeSeries Object:
-    if (is.timeSeries(x)) x = removeNA(seriesData(x))
-    
+    if (is.timeSeries(x)) x = removeNA(series(x))
+
     # Check for Univariate Series:
     if (NCOL(x) > 1) stop("x is not a vector or univariate time series")
-        
+
     # Check for NAs:
     if(any(is.na(x))) stop("NAs in x")
-     
+
     # Sharpe Ratio:
     if (NROW(x) == 1) {
         return(NA)
@@ -115,7 +115,7 @@ function(x, r = 0, scale = sqrt(250))
         y = diff(x)
         return(scale * (mean(y)-r)/sd(y))
     }
-    
+
     # Return Value:
     invisible()
 }
@@ -124,29 +124,29 @@ function(x, r = 0, scale = sqrt(250))
 # ------------------------------------------------------------------------------
 
 
-sterlingRatio = 
+sterlingRatio =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Notes:
     #   A copy from A. Traplettis "tseries" package
-    
+
     # FUNCTION:
-    
+
     # Check for timeSeries Object:
     TS = is.timeSeries(x)
     if (TS) {
         Unit = x@units
-        x = seriesData(x)
+        x = series(x)
         x = removeNA(x)
     }
-        
+
     # Check for Univariate Series:
     if(NCOL(x) > 1) stop("x is not a vector or univariate time series")
-        
+
     # Check for NAs:
     if(any(is.na(x))) stop("NAs in x")
-        
+
     # Sterling Ratio:
     if (NROW(x) == 1) {
         return(NA)
@@ -155,7 +155,7 @@ function(x)
         if (TS) names(ans) = Unit
         return(ans)
     }
-    
+
     # Return Value:
     invisible()
 }
@@ -164,8 +164,8 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-ohlcPlot = 
-function(x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"), 
+ohlcPlot =
+function(x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
 bg = par("bg"), axes = TRUE, frame.plot = axes, ann = par("ann"), main = NULL,
 date = c("calendar", "julian"), format = "%Y-%m-%d",
 origin = "1899-12-30", ...)
@@ -173,9 +173,9 @@ origin = "1899-12-30", ...)
 
     # Notes:
     #   A copy from A. Traplettis 'tseries' package
-    
+
     # FUNCTION:
-    
+
     # Checks:
     if ((!is.mts(x)) || (colnames(x)[1] != "Open") ||
         (colnames(x)[2] != "High") || (colnames(x)[3] != "Low") ||
@@ -199,7 +199,7 @@ origin = "1899-12-30", ...)
         segments(time.x[i], x[i,"Close"], time.x[i] + dt, x[i,"Close"],
             col = col[1], bg = bg)
     }
-    if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)  
+    if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)
     if (axes) {
         if (date == "julian") {
             axis(1, ...)
@@ -207,7 +207,7 @@ origin = "1899-12-30", ...)
         } else {
             n = NROW(x)
             lab.ind = round(seq(1, n, length=5))
-            D = as.vector(time.x[lab.ind]*86400) + 
+            D = as.vector(time.x[lab.ind]*86400) +
                 as.POSIXct(origin, tz = "GMT")
             DD = format.POSIXct(D, format = format, tz ="GMT")
             axis(1, at=time.x[lab.ind], lab=DD, ...)
