@@ -122,6 +122,9 @@ as.timeSeries.timeSeries <-
     # Extended by Yohan Chalabi
 
     # FUNCTION:
+
+    .Deprecated("finCenter<-", "fSeries")
+
     stopifnot(class(x) == "timeSeries")
     if (zone != x@FinCenter)
         warning("argument zone is ignored and FinCenter\n of series is used as zone")
@@ -130,7 +133,7 @@ as.timeSeries.timeSeries <-
     positions <- timeDate(charvec = time(x), zone = x@FinCenter,
                           FinCenter = FinCenter)
 
-    newPositions(x) <- positions
+    time(x) <- positions
 
     # Return Value:
     x
