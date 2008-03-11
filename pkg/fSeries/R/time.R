@@ -31,6 +31,7 @@
 # FUNCTION:                 POSITIONS:
 #  seriesPositions           Extracts positions slot from 'timeSeries' object
 #  newPositions<-            Modifies positions of a 'timeSeries' object
+#  time<-                    Modifies positions of a 'timeSeries' object
 # METHOD:                   POSITION HANDLING:
 #  time.timeSeries           extracs time positions from a 'timeSeries'
 #  sample.timeSeries         Resamples a 'timeSeries' object in time
@@ -74,6 +75,7 @@ function(object)
 function(object, value)
 {   # A function implemented by Diethelm Wuertz
 
+    .Deprecated("time<-", "fSeries")
 
     # FUNCTION:
     ans = timeSeries(object, value)
@@ -82,6 +84,20 @@ function(object, value)
     ans
 }
 
+# ------------------------------------------------------------------------------
+
+"time<-" <-
+    function(object, value)
+{
+    stopifnot(is.timeSeries(object))
+
+    # FUNCTION:
+    ans = timeSeries(object, value)
+
+    # Return Value:
+    ans
+
+}
 
 ################################################################################
 # METHOD:                   POSITION HANDLING:
@@ -112,6 +128,7 @@ function(x, ...)
     timeDate(charvec = x@positions, format = x@format,
         zone = x@FinCenter, FinCenter = x@FinCenter)
 }
+
 
 
 # ------------------------------------------------------------------------------
@@ -174,9 +191,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-.sort.timeSeries =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sort.timeSeries <-
+    function(x, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Time sorts a 'timeSeries' object
@@ -190,51 +208,32 @@ function(x, ...)
     # FUNCTION:
 
     # Data:
-    POS = x@positions
-    index = sort(POS, index.return = TRUE)$ix
-    x = x[index, ]
+    POS <- x@positions
+    index <- order(POS)
+    x <- x[index, ]
 
-    # recordIDs:
-    DF = x@recordIDs
-    DIM = dim(DF)
-    if (sum(DIM) > 0) {
-        df = rev(DF[index, 1])
-        if (DIM[2] > 1)
-            for (i in 2:DIM[2]) df = data.frame(df, rev(DF[index, i]))
-        colnames(df) <- colnames(DF)
-        rownames(df) <- x@positions
-        x@recordIDs = df
-    }
+    ### Version of DW
+    ###     # recordIDs:
+    ###     DF <- x@recordIDs
+    ###     DIM <- dim(DF)
+    ###     if (sum(DIM) > 0) {
+    ###         df <- rev(DF[index, 1])
+    ###         if (DIM[2] > 1)
+    ###             for (i in 2:DIM[2]) df = data.frame(df, rev(DF[index, i]))
+    ###         colnames(df) <- colnames(DF)
+    ###         rownames(df) <- x@positions
+    ###         x@recordIDs = df
+    ###     }
 
     # Return Value:
     x
 }
 
-
-sort.timeSeries =
-function (x, ...)
-{
-    # Index:
-    # Index = sort(as.POSIXct(x@positions), index.return = TRUE)$ix
-    Index = sort(x@positions, index.return = TRUE)$ix
-
-    # Compose Series:
-    x@positions = x@positions[Index]
-    x@Data = as.matrix(x@Data[Index, ])
-    colnames(x@Data) = x@units
-    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
-
-    # Return value:
-    x
-}
-
-
 # ------------------------------------------------------------------------------
-
 
 rev.timeSeries =
 function(x)
-{   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Time reverts a 'timeSeries' object
@@ -252,17 +251,18 @@ function(x)
     index = nPOS:1
     x = x[index, ]
 
-    # IDs:
-    DF = x@recordIDs
-    DIM = dim(DF)
-    if (sum(DIM) > 0) {
-        df = rev(DF[, 1])
-        if (DIM[2] > 1)
-            for (i in 2:DIM[2]) df = data.frame(df, rev(DF[, i]))
-        colnames(df) <- colnames(DF)
-        rownames(df) <- x@positions
-        x@recordIDs = df
-    }
+    ### Version of DW
+    ###     # IDs:
+    ###     DF = x@recordIDs
+    ###     DIM = dim(DF)
+    ###     if (sum(DIM) > 0) {
+    ###         df = rev(DF[, 1])
+    ###         if (DIM[2] > 1)
+    ###             for (i in 2:DIM[2]) df = data.frame(df, rev(DF[, i]))
+    ###         colnames(df) <- colnames(DF)
+    ###         rownames(df) <- x@positions
+    ###         x@recordIDs = df
+    ###     }
 
     # Return Value:
     x
