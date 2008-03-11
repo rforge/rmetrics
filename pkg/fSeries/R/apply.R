@@ -1,29 +1,16 @@
-
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
-# version 2 of the License, or (at your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Library General Public License for more details.
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA  02111-1307  USA
-
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  ../../COPYING
 
 
 ################################################################################
@@ -31,17 +18,17 @@
 #  applySeries               Applies a function to blocks of a 'timeSeries'
 #  fapply                    Applies a function to 'timeSeries' windows
 # OLD AND OBSOLETE:
-#  .applySeries 
+#  .applySeries
 #  .fapply
 ################################################################################
 
 
-applySeries <- 
+applySeries <-
     function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
     FUN = colMeans, units = NULL, format = x@format, zone = x@FinCenter,
     FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
     documentation = x@documentation, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -130,16 +117,16 @@ applySeries <-
 # ------------------------------------------------------------------------------
 
 
-fapply <- 
+fapply <-
 function(x, from, to, FUN, ...)
 {
     # Check x:
     stopifnot(is(x, "timeSeries"))
-    
+
     # Check for missing form/to:
     if(missing(from)) from = start(x)
     if(missing(to)) from = end(x)
-    
+
     # Return Value:
     applySeries(x = x, from = from, to = to, FUN = FUN, ...)
 }
@@ -150,7 +137,7 @@ function(x, from, to, FUN, ...)
 # Check if it is still used somewhere ...
 
 
-.applySeries <- 
+.applySeries <-
     function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
     FUN = colAvgs, units = NULL, ...)
 {
@@ -212,9 +199,9 @@ function(x, from, to, FUN, ...)
 # Check if it is still used somewhere ...
 
 
-.fapply <- 
+.fapply <-
 function(x, from, to, FUN, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
