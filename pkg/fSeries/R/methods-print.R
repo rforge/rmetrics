@@ -102,14 +102,14 @@ setMethod("show", "timeSeries", show.timeSeries)
 # ------------------------------------------------------------------------------
 
 
-.print.timeSeries <-  
+print.timeSeries <-
 function(x, style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Allows for horizontal and ts like print output.
-    
+
     # Arguments:
     #   x - an object of class timeSeries
     #   style - a character value specifying how to print:
@@ -118,28 +118,28 @@ function(x, style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
     #       "ts" R's base style for regular time series
     #   by - specifies the period for a regular time serie,
     #       note only active for style="ts".
-    
+
     # FUNCTION:
-    
+
     # Print:
     style = match.arg(style)
-    by = match.arg(by)   
+    by = match.arg(by)
     if (style == "tS") {
         show(x)
     } else if (style == "h") {
         stopifnot(isUnivariate(x))
-        print(as.vector(x))  
+        print(as.vector(x))
     } else if (style == "ts") {
         freq = c(month = 12, quarter = 4)
         start(x)
         start = unlist(atoms(start(x)))
-        end = unlist(atoms(end(x)))    
+        end = unlist(atoms(end(x)))
         ts = ts(as.vector(x@Data), start[1:2], end[1:2], freq[by])
         print(ts)
-    } 
-    
+    }
+
     # Return Value:
-    return(invisible(x))        
+    return(invisible(x))
 }
 
 
