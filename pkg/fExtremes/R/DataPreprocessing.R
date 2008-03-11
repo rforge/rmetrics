@@ -250,7 +250,7 @@ function(x, run = 20, doplot = TRUE)
 
     # Decluster time Series:
     positions = time(x)
-    data = seriesData(x)
+    data = series(x)
     gapLengths = c(0, diff(positions)) # / (24*3600)
     clusterNumbers = cumsum(gapLengths > run) + 1
     N = length(data)
