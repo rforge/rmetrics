@@ -31,6 +31,7 @@
 # METHOS:              POSITIONS:
 #  time                 Extracts positions slot from 'timeSeries' object
 #  newPositions<-       Modifies positions of a 'timeSeries' object
+#  time<-               Modifies positions of a 'timeSeries' object
 # METHODS:             ORDERING:
 #  sample.timeSeries    S3: Resamples a 'timeSeries' object in time
 #  sort.timeSeries      S3: Sorts reverts a 'timeSeries' object in time
@@ -66,7 +67,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.newPositions =
+"test.time<-" =
 function()
 {
     # Generate nivariate daily random sequence
@@ -78,7 +79,7 @@ function()
 
     # Add one Day to Positions:
     POS = time(uTS)
-    newPositions(uTS) <- POS + 24*3600
+    time(uTS) <- POS + 24*3600
     uTS
 
     # Return Value:

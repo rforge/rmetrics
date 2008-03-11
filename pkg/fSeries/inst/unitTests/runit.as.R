@@ -6,31 +6,50 @@
 #
 # Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL, wuertz@phys.ethz.ch
 #   2008 - Rmetrics Foundation, GPL, <Rmetrics-core@r-project.org>
 #   www.rmetrics.org
-# Copyrights and Authors for code used from R's base packages, from 
-#   contributed R-packages, and/or other sources is mentioned at the 
+# Copyrights and Authors for code used from R's base packages, from
+#   contributed R-packages, and/or other sources is mentioned at the
 #   places  where used.
 
 
 ################################################################################
 
 
-test.as <- 
+test.as <-
 function()
 {
-    NA
+    # RUnit Test:
+
+    # Note, you can also use ...
+    is(timeSeries(), "timeSeries")
+
+    # Series
+    x = .signalSeries()
+    y = .timeSeries()
+
+    # A vector to a timeSeries
+    as.vector(x)
+    as.vector(x[,1])
+    as.vector(y)
+    as.vector(y[,1])
+
+    # ?? as.numeric:
+    as.numeric(x)           # errors !!!
+    as.numeric(x[,1])
+    as.numeric(y)
+    as.numeric(y[,1])
 }
 
 

@@ -187,10 +187,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.seriesData =
+test.series =
 function()
 {
-    #  seriesData - Extracts data slot from 'timeSeries' object
+    #  series - Extracts data slot from 'timeSeries' object
 
     # Load Microsoft Data:
     X = as.timeSeries(data(msft.dat))
@@ -206,8 +206,8 @@ function()
     abs(returnSeries(OPEN))
 
     # Data Matrix:
-    seriesData(OPEN)
-    Y = seriesData(X)
+    series(OPEN)
+    Y = series(X)
     Y
     class(Y)
 

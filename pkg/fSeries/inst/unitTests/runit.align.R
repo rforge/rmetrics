@@ -6,33 +6,44 @@
 #
 # Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL, wuertz@phys.ethz.ch
 #   2008 - Rmetrics Foundation, GPL, <Rmetrics-core@r-project.org>
 #   www.rmetrics.org
-# Copyrights and Authors for code used from R's base packages, from 
-#   contributed R-packages, and/or other sources is mentioned at the 
+# Copyrights and Authors for code used from R's base packages, from
+#   contributed R-packages, and/or other sources is mentioned at the
 #   places  where used.
 
 
 ################################################################################
 
-
-test.align <- 
+test.align.timeSeries <-
 function()
 {
-    NA
-}
+    # RUnit Test:
 
+    # .align.timeSeries(x, method = c("before", "after", "interp"),
+    #   startOn = "hours", by = "30 m")
+
+    set.seed(1953)
+    tD = timeCalendar(
+        y = rep(2008, times = 6), m = rep(4, times = 6), d = rep(10:11, each = 3),
+        h = sample(1:23)[1:6], min = sample(1:59)[1:6], s = sample(1:59)[1:6])
+    tS = timeSeries(rnorm(6), tD)
+    .align.timeSeries(tS)
+    .align.timeSeries(tS, "interp")
+
+    # Note, we should als add an argument to trim NAs
+}
 
 ################################################################################
 
