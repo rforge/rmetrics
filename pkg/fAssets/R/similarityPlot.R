@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -35,49 +35,49 @@
 ################################################################################
 
 
-assetsDendrogramPlot <- 
-    function(x, labels = TRUE, title = TRUE, box = TRUE, 
+assetsDendrogramPlot <-
+    function(x, labels = TRUE, title = TRUE, box = TRUE,
     method = c(dist = "euclidian", clust = "complete"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays hierarchical clustering dendrogram
-    
+
     # FUNCTION:
-    
+
     # Compute Distance Matrix:
     if (class(x) == "dist") {
         DIST = x
     } else {
-        X = t(seriesData(x))
+        X = t(series(x))
         DIST = dist(X, method[1])
     }
 
     # Hierarchical Clustering:
-    ans = hclust(DIST, method = method[2]) 
-    
+    ans = hclust(DIST, method = method[2])
+
     # Plot Dendrogram:
     if (labels) {
         plot(ans, xlab = "", main = "", sub = "", ...)
         mtext(paste(
             "Distance Method:", method[1], " | ",
             "Clustering Method:", method[2]),
-            side = 4, line = 0.1, adj = 0, col = "darkgrey")  
+            side = 4, line = 0.1, adj = 0, col = "darkgrey")
     } else {
         plot(ans, ann = FALSE, ...)
     }
-    
+
     # Add Box:
     if (box) {
         box()
     }
-    
+
     # Add Optional Title:
     if (title) {
         title(main = "Dendrogram", sub = "", xlab = "", ylab = "Heights")
     }
-   
+
     # Return Value:
     invisible(list(dist = DIST, hclust = ans))
 }
@@ -86,58 +86,58 @@ assetsDendrogramPlot <-
 # ------------------------------------------------------------------------------
 
 
-assetsCorEigenPlot <- 
+assetsCorEigenPlot <-
     function(x, labels = TRUE, title = TRUE, box = TRUE,
     method = c("pearson", "kendall", "spearman"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays ratio of the largest two eigenvalues
-    
+
     # Arguments:
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    
+
     # Example:
     #   assetsCorEigenPlot(x=100*as.timeSeries(data(LPP2005REC)))
-    
+
     # FUNCTION:
-    
+
     # Settings:
     stopifnot(is.timeSeries(x))
-    x = seriesData(x)
+    x = series(x)
     method = match.arg(method)
-       
+
     # Plot:
     x.cor = cor(x, use = 'pair', method = method)
     x.eig = eigen(x.cor)$vectors[, 1:2]
     e1 = x.eig[, 1]
     e2 = x.eig[, 2]
-    plot(e1, e2, col = 'white', ann = FALSE, 
+    plot(e1, e2, col = 'white', ann = FALSE,
         xlim = range(e1, e2), ylim = range(e1, e2), ...)
     abline(h = 0, lty = 3, col = "grey")
     abline(v = 0, lty = 3, col = "grey")
     arrows(0, 0, e1, e2, cex = 0.5, col = "steelblue", length = 0.1)
     text(e1, e2, rownames(x.cor), ...)
-    
+
     # Labels:
     if (labels) {
         mtext(method, side = 4, adj = 0, cex = 0.7, col = "grey")
     }
-    
+
     # Add Box:
     if (box) {
         box()
     }
-    
+
     # Add Title:
     if(title) {
         title(main = "Eigenvalue Ratio Plot", sub = "",
             xlab = "Eigenvalue 1", ylab = "Eigenvalue 2")
     }
-    
+
     # Return Value:
     invisible()
 }
@@ -146,31 +146,31 @@ assetsCorEigenPlot <-
 # ------------------------------------------------------------------------------
 
 
-assetsTreePlot <- 
+assetsTreePlot <-
     function(x, labels = TRUE, title = TRUE, box = TRUE,
     method = "euclidian", seed = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a minimum spanning tree of assets
-    
+
     # FUNCTION:
-    
+
     # Settings:
     if (title) {
         Main = substitute(x)
     } else {
         Main = ""
     }
-    
+
     # Compute Distance Matrix:
     Order = NULL
     if (class(x) == "dist") {
         DIST = x
     } else {
         # Rank Seed:
-        x = seriesData(x)
+        x = series(x)
         if (is.null(seed)) {
             Order = sample(1:ncol(x))
             x = x[, Order]
@@ -178,15 +178,15 @@ assetsTreePlot <-
         DIST = dist(t(x), method[1])
     }
     method = attr(DIST, "method")
-       
+
     # Compute Minimum Spanning Tree"
     MST = .mst(DIST)
-      
+
     # Plot Tree:
     .mstPlot(MST, ".nsca", main = Main, ...)
-    mtext(paste("Distance Method:", method), 
+    mtext(paste("Distance Method:", method),
         side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)
-    
+
     # Return Value:
     invisible(list(mst = MST, dist = DIST, order = Order))
 }
