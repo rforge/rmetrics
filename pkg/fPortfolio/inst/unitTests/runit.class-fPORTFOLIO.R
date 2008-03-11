@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -24,16 +24,16 @@
 
 
 ################################################################################
-# FUNCTION:                 
+# FUNCTION:
 ################################################################################
 
 
 test.fPORTFOLIO =
 function()
-{ 
+{
     # Class:
     getClass("fPORTFOLIO")
-  
+
     # Return Value:
     return()
 }
@@ -44,25 +44,25 @@ function()
 
 test.portfolioFrontier =
 function()
-{ 
+{
     # Arguments:
-    # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
-    #   title = NULL, description = NULL) 
-   
+    # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL,
+    #   title = NULL, description = NULL)
+
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setNFrontierPoints(spec) = 10
     spec
-   
+
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(data, spec)
     Frontier
-    
+
     # Return Value:
     return()
 }
@@ -73,24 +73,24 @@ function()
 
 test.feasiblePortfolio =
 function()
-{ 
+{
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setWeights(spec) = rep(1/4, times = 4)
     spec
-    
+
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(data, spec)  
-    Portfolio                                                           
-     
+    Portfolio = feasiblePortfolio(data, spec)
+    Portfolio
+
     # Return Value:
     return()
 }
@@ -101,35 +101,35 @@ function()
 
 test.feasiblePortfolio.RDonlp2 =
 function()
-{ 
+{
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     if (FALSE) {
-        
+
         require(Rdonlp2)
-        
+
         # Get Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         head(data)
-       
+
         # Set Default Specifications - Long Only MV Portfolio
         spec = portfolioSpec()
         setWeights(spec) = rep(1/4, times = 4)
         setSolver(spec)<-"Rdonlp2"
         spec
-        
+
         # Constraints:
         constraints = NULL
         constraints
-        
+
         # Optimize Long Only Minimum Variance Portfolio:
-        Portfolio = feasiblePortfolio(data, spec, constraints)  
-        Portfolio  
-        
-    }                                                     
-     
+        Portfolio = feasiblePortfolio(data, spec, constraints)
+        Portfolio
+
+    }
+
     # Return Value:
     return()
 }
@@ -140,29 +140,29 @@ function()
 
 test.feasiblePortfolio.lpsolve =
 function()
-{ 
+{
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setWeights(spec) = rep(1/4, times = 4)
     setSolver(spec) = "lpSolve"
     spec
-    
+
     # Constraints:
     constraints = NULL
     constraints
-    
+
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)  
-    Portfolio                                                       
-     
+    Portfolio = feasiblePortfolio(data, spec, constraints)
+    Portfolio
+
     # Return Value:
     return()
 }
@@ -173,28 +173,28 @@ function()
 
 test.efficientPortfolio =
 function()
-{ 
+{
     # Arguments:
-    # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL) 
- 
+    # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
-    setTargetReturn(spec) = mean(seriesData(data))
+    setTargetReturn(spec) = mean(series(data))
     spec
-    
+
     # Constraints:
     constraints = NULL
     constraints
-   
+
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = efficientPortfolio(data, spec, constraints)
     Portfolio
-   
+
     # Return Value:
     return()
 }
@@ -205,23 +205,23 @@ function()
 
 test.cmlPortfolio =
 function()
-{ 
+{
     # Arguments:
     # cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Specifications:
     spec = portfolioSpec()
     spec
-    
+
     # Portfolio:
     Portfolio = cmlPortfolio(data, spec)
     Portfolio
-    
+
     # Return Value:
     return()
 }
@@ -232,23 +232,23 @@ function()
 
 test.tangencyPortfolio =
 function()
-{ 
+{
     # Arguments:
     # tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-    
+
     # Specifications:
     spec = portfolioSpec()
     spec
-    
+
     # Portfolio:
     Portfolio = tangencyPortfolio(data, spec)
     Portfolio
-    
+
     # Return Value:
     return()
 }
@@ -259,19 +259,19 @@ function()
 
 test.minvariancePortfolio =
 function()
-{ 
+{
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-    
+
     # Specifications:
     spec = portfolioSpec()
     spec
-    
+
     # Portfolio:
     Portfolio = minvariancePortfolio(data, spec)
     Portfolio
@@ -286,30 +286,30 @@ function()
 
 test.minvariancePortfolio.RDonlp2 =
 function()
-{ 
+{
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
+
     if (FALSE) {
-        
+
         require(Rdonlp2)
-        
+
         # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         head(data)
-        
+
         # Specifications:
         spec = portfolioSpec()
         setSolver(spec) = "Rdonlp2"
         spec
-        
+
         # Portfolio:
         Portfolio = minvariancePortfolio(data, spec)
         Portfolio
-        
+
     }
-    
+
     # Return Value:
     return()
 }
@@ -320,21 +320,21 @@ function()
 
 test.show =
 function()
-{ 
+{
     # Load Data::
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Set Default Specifications:
     spec = portfolioSpec()
     setNFrontierPoints(spec) = 10
     spec
-   
+
     # Calculation of Long Only Minimum Variance Portfolio:
     Frontier = portfolioFrontier(data, spec)
     show(Frontier)
-    
+
     # Return Value:
     return()
 }
@@ -345,35 +345,35 @@ function()
 
 test.plot.RQuadprog =
 function()
-{ 
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   
+
     # Specifications:
     spec = portfolioSpec()
-    
+
     # Constraints:
     constraints = "LongOnly"
-   
+
     # Frontier:
     Frontier = object = portfolioFrontier(data, spec, constraints)
-    
+
     # Plot:
     par(mfrow = c(1, 1))
     frontierPlot(Frontier, pch = 19)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
+    .tangencyPlot(Frontier, col = "green")
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
     .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
     .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
-    
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+
     # Plot Ask:
     # plot(Frontier, which = "ask")
-    
+
     # Return Value:
     return()
 }
@@ -384,42 +384,42 @@ function()
 
 test.plot.Rdonlp2 =
 function()
-{   
+{
     if (FALSE) {
-        
+
         require(Rdonlp2)
-        
+
         # Data:
         Data = as.timeSeries(data(smallcap.ts))
         Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-       
+
         # Specifications:
         Spec = portfolioSpec()
         setSolver(Spec)<-"Rdonlp2"
-        
+
         # Constraints:
         Constraints = "LongOnly"
-        
+
         # Frontier:
         Frontier = portfolioFrontier(Data, Spec, Constraints)
-       
+
         # Plot:
         par(mfrow = c(1, 1))
         frontierPlot(Frontier)
-        .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-        .tangencyPlot(Frontier, col = "green") 
+        .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
+        .tangencyPlot(Frontier, col = "green")
         .singleAssetPlot(Frontier, col = "red", cex = 1.5)
         .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
         .twoAssetsPlot(Frontier, col = "grey")
         .weightsWheel(Frontier)
-        .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-        .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
-        
+        .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+        .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+
         # Plot Ask:
         # plot(Frontier, which = "ask")
-        
+
     }
-    
+
     # Return Value:
     return()
 }
@@ -430,36 +430,36 @@ function()
 
 test.plot.RlpSolve =
 function()
-{     
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   
+
     # Specifications:
     spec = portfolioSpec()
     setType(spec) <- "CVaR"
-    
+
     # Constraints:
     constraints = "LongOnly"
-    
+
     # Frontier:
     Frontier = portfolioFrontier(data, spec, constraints)
-   
+
     # Plot:
     par(mfrow = c(1, 1))
     frontierPlot(Frontier)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
+    .tangencyPlot(Frontier, col = "green")
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
     .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
     .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
-    
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+
     # Plot Ask:
     # plot(Frontier, which = "ask")
-    
+
     # Return Value:
     return()
 }
@@ -470,25 +470,25 @@ function()
 
 test.weightsSlider =
 function()
-{ 
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Specifications:
     spec = portfolioSpec()
     setNFrontierPoints(spec) = 15
     spec
-   
+
     # Frontier:
     Frontier = portfolioFrontier(data, spec)
     Frontier
-    
+
     # Slider:
-    # weightsSlider(Frontier) 
+    # weightsSlider(Frontier)
     NA
-    
+
     # Return Value:
     return()
 }
@@ -499,25 +499,25 @@ function()
 
 test.frontierSlider =
 function()
-{ 
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-   
+
     # Specifications:
     spec = portfolioSpec()
     setNFrontierPoints(spec) = 15
     spec
-   
+
     # Frontier:
     Frontier = portfolioFrontier(data, spec)
     Frontier
-    
+
     # Slider:
-    # frontierSlider(Frontier)                                            
-    NA 
-    
+    # frontierSlider(Frontier)
+    NA
+
     # Return Value:
     return()
 }
