@@ -29,23 +29,24 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  timeSeries                Creates a 'timeSeries' object from scratch
-#  readSeries                Reads a spreadsheet and creates a 'timeSeries'
-#  seriesData                Extracts data slot from 'timeSeries' object
+#  .timeSeries
+#  .signalSeries
 ################################################################################
 
 
-timeSeries <- 
+timeSeries <-
     function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
-    documentation = NULL, ...)
-{   
-    # A function implemented by Diethelm Wuertz
+              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+              documentation = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Creates a 'timeSeries' object from scratch.
 
     # Arguments:
-    #   data -a 'data frame or a 'matrix' object of numeric data.
+    #   data -a numeric 'data.frame' object or any other object which
+    #       can be transformed by the function as.data.frame.
     #   charvec - a character vector of dates and times.
     #   units - an optional units string, NULL defaults an empty
     #       string.
@@ -68,23 +69,72 @@ timeSeries <-
     #       the first column is expected to hold the positions,
     #       and the column name the "format" string.
 
-    # Details:
-    #    This is a minimal implementation of the SPLUS "timeSeries"
-    #    object.
+    # FUNCTION:
 
-    # Example:
-    #   data.mat = matrix(round(rnorm(30),2), 10)
-    #   charvec =  paste("2004-01-", c(paste("0", 1:9, sep=""), 10:30), sep="")
-    #   timeSeries(data.mat, charvec)
+    # Convert data to data.frame:
+    if (missing(data)) {
+        data = data.frame(runif(12), runif(12))
+        units = c("TS.1", "TS.2")
+        charvec <- timeCalendar()
+    } else {
+        data <- as.data.frame(data)
+    }
+
+    # Determine format
+    if (missing(format)) {
+        if (missing(charvec)) {
+            format <- "unknown"
+        } else {
+            format <- whichFormat(charvec, silent = TRUE)
+        }
+        if (format == "unknown") {
+            format <- whichFormat(rownames(data), silent = TRUE)
+            charvec <- rownames(data)
+        }
+        if (format == "unknown" && !(is.numeric(data[,1]))) {
+            format <- whichFormat(data[,1], silent = TRUE)
+            charvec <- data[,1]
+        }
+    }
+
+    # Construct Time Series:
+    if (format == "counts" || format == "unknown") {
+        # Signal Counts:
+        charvec <- signalCounts(1:NROW(data))
+        ans <- .signalSeries(data, charvec, units, title, documentation)
+    } else {
+        # Time Stamps:
+        ans <- .timeSeries(data, charvec, units, format, zone, FinCenter,
+                           recordIDs, title, documentation, ...)
+    }
+
+    # Return Value:
+    ans
+}
+
+# ------------------------------------------------------------------------------
+
+.timeSeries <-
+    function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
+              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+              documentation = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Creates a timeSeries with time stamps
+
+    # Detail:
+    #   Internal Function called by timeSeries
 
     # FUNCTION:
-       
+
     # Default:
     if(missing(data) && missing(charvec)) {
         data = matrix(rnorm(24), 12)
         charvec = as.character(timeCalendar())
     }
-        
+
     # This allows data to be a vector as input ...
     if (is.vector(data)) data = matrix(data)
 
@@ -96,7 +146,7 @@ timeSeries <-
     if (missing(charvec)) {
         N = dim(as.matrix(data))[1]
         charvec = timeSequence(from = "1970-01-01", length.out = N,
-            zone = "GMT", FinCenter = "GMT")
+        zone = "GMT", FinCenter = "GMT")
     }
 
     # charvector | Time Positions:
@@ -105,7 +155,7 @@ timeSeries <-
     } else {
         if (is.null(format)) format = whichFormat(charvec)
         timeDates = timeDate(charvec = charvec,
-            format = format, zone = zone, FinCenter = FinCenter)
+        format = format, zone = zone, FinCenter = FinCenter)
     }
 
     # Data | Dimension Names:
@@ -131,7 +181,7 @@ timeSeries <-
     # DW:
     # No double row Names in data.frames - this generates problems!
     # if (sum(dim(recordIDs)) > 0)
-        # rownames(recordIDs) = c(as.character(charvec))
+    # rownames(recordIDs) = c(as.character(charvec))
 
     # Add title and Documentation:
     if (is.null(title)) title = "Time Series Object"
@@ -139,101 +189,58 @@ timeSeries <-
 
     # Result:
     ans = new("timeSeries",
-        Data = as.matrix(data),
-        positions = rownames(data),
-        format = timeDates@format,
-        FinCenter = timeDates@FinCenter,
-        units = as.character(units),
-        recordIDs = recordIDs,
-        title = as.character(title),
-        documentation = as.character(documentation)
-        )
+    Data = as.matrix(data),
+    positions = rownames(data),
+    format = timeDates@format,
+    FinCenter = timeDates@FinCenter,
+    units = as.character(units),
+    recordIDs = recordIDs,
+    title = as.character(title),
+    documentation = as.character(documentation)
+    )
     attr(ans, "dimension") = c(NCOL(data), NROW(data))
 
     # Return Value:
     ans
 }
 
-
 # ------------------------------------------------------------------------------
 
-
-readSeries <- 
-    function(file, header = TRUE, sep = ";", zone = myFinCenter,
-    FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
-{   
-    # A function implemented by Diethelm Wuertz
+.signalSeries <-
+    function (data, charvec, units = NULL, title = NULL,
+              documentation = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
-    #   Reads from a spreadsheet and creates a 'timeSeries' object
+    #   Creates a timeSeries with signal counts
 
-    # Arguments:
-    #   file - the filename of a spreadsheet data set from which
-    #       to import the data records.
-    #   header -
-    #   sep -
-    #   zone - the time zone or financial center where the data were
-    #       recorded.
-    #   FinCenter - a character with the the location of the
-    #       financial center named as "continent/city". By default
-    #       an empty string which means that internally "GMT" will
-    #       be used.
-    #   title - an optional title string, if not specified the inputs
-    #       data name is deparsed.
-    #   documentation - optional documentation string.
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-
-    # Notes:
-    #   Note we expect that the header of the spreadsheet file in
-    #   the first cell holds the time/date format specification!
+    # Detail:
+    #   Internal Function called by timeSeries
 
     # FUNCTION:
 
-    # Read Data:
-    df = read.table(file = file, header = header, sep = ";", ...)
-
-    # Create Time Series:
-    ans = as.timeSeries(df)
-
-    # Add title and Documentation:
-    if (is.null(title)) ans@title = "Time Series Object"
-    if (is.null(documentation)) ans@documentation = as.character(date())
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-seriesData =
-function(object)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #    Returns the series Data of an ordered data object.
-
-    # Arguments:
-    #   object - a 'timeSeries' object
-
-    # Value:
-    #    Returns an object of class 'matrix'.
-
-    # FUNCTION:
-
-    # Test:
-    if(class(object) != "timeSeries") stop("Object is not a time Series")
-
-    # Get Data Slot:
-    ans = object@Data
+    # Signal Series:
+    if (missing(data)) data = matrix(runif(24), 12)
+    data = as.matrix(data)
+    if (missing(charvec)) charvec = signalCounts(1:NROW(data))
+    nCol = NCOL(data)
+    positions = rownames(data) = signalCounts(charvec)
+    if (is.null(units)) units = paste("SS", 1:nCol, sep = ".")
+    colnames(data) = units
+    if(is.null(title)) title = "Signal Series"
+    if(is.null(documentation)) documentation = description()
 
     # Return Value:
-    ans
+    new("timeSeries",
+        Data = data,
+        positions = positions,
+        format = "counts",
+        FinCenter = "",
+        units = units,
+        recordIDs = data.frame(),
+        title = title,
+        documentation = documentation)
 }
-
 
 ################################################################################
-
