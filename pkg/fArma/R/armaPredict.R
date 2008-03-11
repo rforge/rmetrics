@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -29,45 +29,45 @@
 
 ################################################################################
 # S3 METHOD:              PREDICTION:
-#  predict.fARMA           S3: Predicts from an ARMA time series prrocess 
+#  predict.fARMA           S3: Predicts from an ARMA time series prrocess
 #  .arPpredict              Internal function called by predict.fARMA
 #  .arimaPpredict           Internal function called by predict.fARMA
 #  .arfimaPredict           Internal function - Not yet implemented
 ################################################################################
 
 
-predict.fARMA = 
-function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), 
-doplot = TRUE, ...) 
+predict.fARMA =
+function (object, n.ahead = 10, n.back = 50, conf = c(80, 95),
+doplot = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Predicts from an ARMA Time Series Process
-    
+
     # Example:
     #   x = armaSim(n = 500)
     #   object = armaFit(formula = x ~ arima(2, 0, 1))
     #   predict(object)
 
     # FUNCTION:
-    
-    # OX Arfima:
-    if (object@call[[1]] == "arfimaOxFit") {
-        # .arfimaOxPredict(object, n.ahead = 10, n.back = 50, trace = FALSE)
-        ans = .arfimaOxPredict(object, n.ahead, n.back, ...)
-        return(ans)
-    }
-    
+
+###     # OX Arfima:
+###     if (object@call[[1]] == "arfimaOxFit") {
+###         # .arfimaOxPredict(object, n.ahead = 10, n.back = 50, trace = FALSE)
+###         ans = .arfimaOxPredict(object, n.ahead, n.back, ...)
+###         return(ans)
+###     }
+
     # Predict "ar":
     if (object@fit$tsmodel == "ar") {
         pred = .arPredict(object, n.ahead, se.fit = TRUE, ...)
     }
-    
+
     # Predict "arima":
     if (object@fit$tsmodel == "arima") {
         pred = .arimaPredict(object, n.ahead, se.fit = TRUE, ...)
     }
-        
+
     # Predict "arfima":
     if (object@fit$tsmodel == "arfima") {
         warning(" Prediction for ARFIMA not yet implemented")
@@ -78,62 +78,62 @@ doplot = TRUE, ...)
     if (object@fit$tsmodel == "arfimaOX") {
         pred = .arfimaOxPredict(object, n.ahead, ...)
     }
-    
+
     # Prediction:
     names(pred$pred) = names(pred$se) = NULL
     ans = list(pred = pred$pred, se = pred$se)
-    
+
     # Plot:
     if (doplot) {
-         
+
         # Data:
-        data = as.ts(object@data$x) 
+        data = as.ts(object@data$x)
         freq = frequency(data)
         start = start(data)
-        n = length(data)   
-        
+        n = length(data)
+
         # Fit Slot:
         options(warn = -1)
         fit = object@fit
         class(fit) = fit$class
-    
+
         # Upper and Lower Bands:
         nint = length(conf)
         upper = lower = matrix(NA, ncol = nint, nrow = length(pred$pred))
         for (i in 1:nint) {
             qq = qnorm(0.5 * (1 + conf[i]/100))
             lower[, i] = pred$pred - qq * pred$se
-            upper[, i] = pred$pred + qq * pred$se}    
+            upper[, i] = pred$pred + qq * pred$se}
         colnames(lower) = colnames(upper) = paste(conf, "%", sep = "")
-            
+
         # Colors:
         shadecols = switch(1 + (length(conf) > 1), 7, length(conf):1)
         shadepalette = heat.colors(length(conf))
         col = 1
-        
-        # Plot History:  
-        npred = length(pred$pred) 
+
+        # Plot History:
+        npred = length(pred$pred)
         ylim = range(c(data[(n-n.back+1):n], pred$pred), na.rm = TRUE)
-        ylim = range(ylim, lower, upper, na.rm = TRUE)   
+        ylim = range(ylim, lower, upper, na.rm = TRUE)
         ylab = paste("Series: ", fit$series)
-        vTS = ts(c(data[(n-n.back+1):n], pred$pred[1], rep(NA, npred-1)), 
+        vTS = ts(c(data[(n-n.back+1):n], pred$pred[1], rep(NA, npred-1)),
             end = tsp(data)[2] + npred/freq, f = freq)
         plot(vTS, type = "o", pch = 19, ylim = ylim, ylab = ylab)
-        title(main = paste(fit$tstitle)) 
-             
+        title(main = paste(fit$tstitle))
+
         # Confidence Intervals:
         xx = tsp(data)[2] + (1:npred)/freq
         idx = rev(order(conf))
-        if (nint > 1) palette(shadepalette)     
-        for (i in 1:nint) { polygon(c(xx, rev(xx)), c(lower[, idx[i]], 
+        if (nint > 1) palette(shadepalette)
+        for (i in 1:nint) { polygon(c(xx, rev(xx)), c(lower[, idx[i]],
             rev(upper[, idx[i]])), col = shadecols[i], border = FALSE) }
         palette("default")
-        
+
         # Mean:
         vTS = ts(pred$pred, start = tsp(data)[2]+1/freq, f = freq)
         lines(vTS, lty = 1, col = 4)
         points(vTS, pch = 19)
-       
+
         # Printout:
         nconf = length(conf)
         out = pred$pred
@@ -150,15 +150,15 @@ doplot = TRUE, ...)
             names = c(names, paste("High", conf[i])) }
         out = round(out, digits = 4)[,2:(2*nconf+2)]
         colnames(out) = names[2:(2*nconf+2)]
-        
+
         # Grid:
         grid()
-        options(warn = 0)  
-        
+        options(warn = 0)
+
         # Add to Output:
         ans$out = out
     }
- 
+
     # Return Value:
     ans
 }
@@ -167,43 +167,43 @@ doplot = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.arPredict = 
-function (object, n.ahead = 10, se.fit = TRUE, ...) 
+.arPredict =
+function (object, n.ahead = 10, se.fit = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Predict - object@fit$tsmodel = "ar":
     fit = object@fit
     class(fit) = "ar"
-    ans = predict(object = fit, newdata = fit$x, 
-        n.ahead = n.ahead, se.fit = se.fit)  
-        
+    ans = predict(object = fit, newdata = fit$x,
+        n.ahead = n.ahead, se.fit = se.fit)
+
     # Return Value:
-    ans 
+    ans
 }
-  
+
 
 # ------------------------------------------------------------------------------
 
 
-.arimaPredict = 
-function (object, n.ahead = 10, se.fit = TRUE, ...) 
+.arimaPredict =
+function (object, n.ahead = 10, se.fit = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Predict - object@fit$tsmodel = "arima":
     fit = object@fit
     class(fit) = "Arima"
     if (!exists("xreg")) xreg = NULL
     if (!exists("newxreg")) newxreg = NULL
     class(object) = "Arima"
-    ans = predict(object = fit, n.ahead = n.ahead, 
-        newxreg = newxreg, se.fit = se.fit, xreg = xreg, ...) 
-            
+    ans = predict(object = fit, n.ahead = n.ahead,
+        newxreg = newxreg, se.fit = se.fit, xreg = xreg, ...)
+
     # Return Value:
-    ans 
+    ans
 }
 
 
