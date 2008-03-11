@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,23 +33,23 @@
 ################################################################################
 
 
-attach.timeSeries = 
-function(what, pos = 2, name = deparse(substitute(what)), 
-warn.conflicts = TRUE) 
+attach.timeSeries =
+function(what, pos = 2, name = deparse(substitute(what)),
+warn.conflicts = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Attaches a 'timeSeries' object   
-    
+    #   Attaches a 'timeSeries' object
+
     # FUNCTION:
-    
-    # Convert to data.frame Object:    
+
+    # Convert to data.frame Object:
     what.df = as.data.frame(what)
-    
+
     # Attach:
     return(attach.default(what.df, pos, name, warn.conflicts))
 }
 
-   
+
 ################################################################################
 
