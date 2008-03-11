@@ -141,7 +141,7 @@ solveRlpSolve <-
         f.con[2, (2+m):(2+m+w-1)] = 1
         f.con[3:(m+2), 1] = 1
         f.con[3:(m+2), 2:(m+1)] = diag(m)
-        f.con[3:(m+2), (2+m):(2+m+w-1)] = seriesData(Data)
+        f.con[3:(m+2), (2+m):(2+m+w-1)] = series(Data)
 
         # Box and Group Constraints:
         tmpConstraints = .setConstraints(data, spec, constraints)
