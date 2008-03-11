@@ -1476,7 +1476,7 @@ function(tradeSignals)
 
     # Get Lengths from Signals:
     stopifnot(is.timeSeries(tradeSignals))
-    data = diff(seriesPositions(tradeSignals))
+    data = diff(time(tradeSignals))
     charvec = tradeSignals@positions[-1]
     tradeLengths = timeSeries(data, charvec, units = "tradeLengths")
 
