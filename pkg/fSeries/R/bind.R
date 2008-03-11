@@ -29,13 +29,12 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  merge.timeSeries          Merges two 'timeSeries' objects
 #  cbind.timeSeries          Binds columns of two 'timeSeries' objects
 #  rbind.timeSeries          Binds rows of two 'timeSeries' objects
 #  c.timeseries              Binds rows of two 'timeSeries' objects
 ################################################################################
 
-merge.timeSeries <-
+cbind.timeSeries <-
     function(x, y, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     # Modified by Yohan chalabi
@@ -52,7 +51,7 @@ merge.timeSeries <-
     # FUNCTION:
 
     # convert series y to FinCenter of series x
-    y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
+    FinCenter <- finCenter(y) <- finCenter(x)
 
     # check if x and y have same date format,
     # if not convert to the most extended one
@@ -90,17 +89,22 @@ merge.timeSeries <-
 
     if (is.null(units)) units <- c(x@units, y@units)
 
+    # change colnames if there are the same
+    if (length(unique(units)) != length(units)) {
+        for (name in unique(units)) {
+            pos <- grep(name, units)
+            if (length(pos) != 1)
+                units[pos] <- paste(units[pos], seq(pos), sep = ".")
+        }
+    }
+
     # Create time series:
     ans <- timeSeries(data = Z, charvec = rownames(Z), zone =
-                      x@FinCenter, FinCenter = x@FinCenter, units = units, ...)
+                      FinCenter, FinCenter = FinCenter, units = units, ...)
 
     # Return Value:
     ans
 }
-
-# ------------------------------------------------------------------------------
-
-cbind.timeSeries <- merge.timeSeries
 
 # ------------------------------------------------------------------------------
 
@@ -114,7 +118,7 @@ rbind.timeSeries <-
     stopifnot(is.timeSeries(x) & is.timeSeries(y))
     stopifnot(dim(x)[2] == dim(y)[2])
 
-    y <- as.timeSeries(y, zone = y@FinCenter, FinCenter = x@FinCenter)
+    FinCenter <- finCenter(y) <- finCenter(x)
 
     # check if x and y have same date format,
     # if not convert to the most extended one
@@ -139,11 +143,10 @@ rbind.timeSeries <-
     order <- order(positions)
     data <- data[order,]
     positions <- positions[order]
-    zone <- FinCenter <- x@FinCenter
     recordIDs <- recordIDs[order,]
 
     ans <- timeSeries(data = data, charvec = positions,
-                      zone = zone, FinCenter = FinCenter,
+                      zone = FinCenter, FinCenter = FinCenter,
                       units = units, ...)
 
     # Return Value
@@ -155,4 +158,3 @@ rbind.timeSeries <-
 c.timeSeries <- rbind.timeSeries
 
 ################################################################################
-
