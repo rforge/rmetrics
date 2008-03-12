@@ -16,28 +16,29 @@
 installRmetrics  <-
     function(repoCRAN = "http://stat.ethz.ch/CRAN/", suggests = TRUE, ...)
 {
-    pkgs <- getDepends("Rmetrics")
+    pkgs <- getDepends("Rmetrics")# from current directory tree
 
-    # extract dependencies of third packages
+    ## extract dependencies of third packages
     pkgsDepends <- NULL
-    for (i in seq(length(pkgs))) {
-        pkgsDepends <- c(pkgsDepends, getDepends(pkgs[i]))
-        if (suggests)
-            pkgsDepends <- c(pkgsDepends, getSuggests(pkgs[i]))
+    for (i in seq_along(pkgs)) {
+        pkgsDepends <- c(pkgsDepends, getDepends(pkgs[i]),
+                         if (suggests) getSuggests(pkgs[i]))
     }
 
-    # remove Rmetrics packages and double entries
+    ## remove Rmetrics packages and duplicate entries
+    ## --> only "outside dependencies"
     pkgsDepends <- unique(pkgsDepends[!(pkgsDepends %in% pkgs)])
 
-    # Remove Rdonlp2 from list because it is installed from local directory
-    pkgsDepends <- pkgsDepends[(pkgsDepends != "Rdonlp2")]
+    ## Remove Rdonlp2 from list because it is installed from local directory
+    pkgsDepends <- pkgsDepends[pkgsDepends != "Rdonlp2"]
 
-    # disable unnecessary warning message when package is not installed
-    ow <- options("warn")
-    options(warn = -1)
-    # install third packages if not already installed
-    for (i in seq(length(pkgsDepends))) {
+    ## disable unnecessary warning message when package is not installed
+    ow <- options(warn = -1)
+    ## install third packages if not already installed
+    for (i in seq_along(pkgsDepends)) {
         if (!require(pkgsDepends[i], character.only = TRUE, quietly = TRUE)) {
+            message("installing package", pkgsDepends[i],
+                    " from CRAN ", repoCRAN, " ...")
             install.packages(pkgsDepends[i], repos = repoCRAN, ...)
         }
     }
@@ -47,57 +48,41 @@ installRmetrics  <-
     ### }
     options(ow) # set default warning option
 
-    # install Rmetrics packages from local files
+    ## install Rmetrics packages from local files
     install.packages(pkgs, repos = NULL, type = "source", ...)
 
-    # install Rmetrics package
+    ## install Rmetrics package
     install.packages("Rmetrics", repos = NULL, type = "source", ...)
 
     OK <- require("Rmetrics")
 
-    # Return
+    ## Return
     return(OK)
 }
 
 
-getDepends <-
-    function(package)
+getDESCR <- function(package, infokind)
 {
     stopifnot(is.character(package))
-    ans <- NULL
-    for (i in seq(length(package))) {
-        file <- paste(package[i], "DESCRIPTION", sep = "/")
-        pkgInfo <- tools:::.split_description(tools:::.read_description(file))
-        ans <- c(ans, names(pkgInfo$Depends))
-    }
-
-    # Return
-    ans
+    unlist(lapply(package, function(pkg)
+              {
+                  file <- file.path(pkg, "DESCRIPTION")
+                  descr <- tools:::.read_description(file)
+                  tools:::.split_description(descr)[[ infokind ]]
+              }), recursive = FALSE)
 }
 
-getSuggests <-
-    function(package)
-{
-    stopifnot(is.character(package))
-    ans <- NULL
-    for (i in seq(length(package))) {
-        file <- paste(package[i], "DESCRIPTION", sep = "/")
-        pkgInfo <- tools:::.split_description(tools:::.read_description(file))
-        ans <- names(pkgInfo$Suggests)
-    }
+getDepends <- function(package)  names(getDESCR(package, "Depends"))
 
-    # Return
-    ans
-}
+getSuggests <- function(package) names(getDESCR(package, "Suggests"))
 
-getPath <-
-    function(package)
+## MM: Hmm, I think this is just what  basename()  and  dirname() do:
+getPath <- function(pkgFile)
 {
-    # extract path of package in order to set working directory
-    path <- unlist(strsplit(package, "/"))
+    ## extract path of package in order to set working directory
+    path <- unlist(strsplit(pkgFile, "/"))
     if (path[length(path)] == "") path <- path[-length(path)]
-    package <- path[length(path)]
-    path <- paste(path[-length(path)], collapse = "/")
-    ans <- list(package = package, path = path)
-    ans
+    ## return
+    list(package = path[length(path)],
+         path = paste(path[-length(path)], collapse = "/"))
 }

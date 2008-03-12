@@ -3,25 +3,48 @@ checkBeforeCommit  <-
 {
     stopifnot(is.character(package))
 
-    source("installRmetrics.R")
+    installFile <- "installRmetrics.R"
+    if(!file.exists(installFile)) {
+        user <- Sys.getenv("USER")
+        myDir <-
+            switch(user,
+                   "maechler" = "~/R/D/R-forge/Rmetrics",
+                   "chalabi" = stop(" please fix in checkBeforeCommit()"),
+                   "wuertz" = stop(" please fix in checkBeforeCommit()"),
+                   ## otherwise:
+                   stop("unknown user: please fix in checkBeforeCommit()"))
 
-    # Set library and outdir paths
-    if (is.null(lib)) lib <- .libPaths()[1]
-    if (is.null(outdir)) outdir <- "Rcheck"
+        setwd(file.path(myDir, "pkg"))
+        ##                    ------- on R-forge
 
-    # if outdir does not exist, create it
+        if(!file.exists(installFile))
+            stop(installFile," is not in current directory",
+                 "(",getwd(),")")
+    }
+    message("in ", getwd(),": source()ing ", installFile,":")
+    source(installFile)
+
+    ## Set library and outdir paths
+    if (is.null(lib)) {
+        lib <- .libPaths()[1]
+        message("will install the R packages into ", lib)
+    }
+    if (is.null(outdir)) outdir <- "../Rcheck"
+
+    ## if outdir does not exist, create it
     if (!file.exists(outdir)) dir.create(outdir)
 
-    # extract list of Rmetrics packages
+    ## extract list of Rmetrics packages
     pkgsRmetrics <- getDepends("Rmetrics")
-    if (package == "Rmetrics") package <- pkgsRmetrics
+    if (package == "Rmetrics") ## 'Rmetrics' is virtual: check all of them:
+        package <- pkgsRmetrics
     stopifnot(package %in% pkgsRmetrics)
 
-    # remove package which do not depend on the package we want to test
+    ## remove package which do not depend on the package we want to test
     ## # 1 possibility (to be discussed)
     idx <- min(match(package, pkgsRmetrics))
     pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
-    # 2 possibility (to be discussed)
+    ## 2 possibility (to be discussed)
 ###     pkgsToCheck <- package
 ###     for (i in seq(pkgsRmetrics)) {
 ###         if (package %in% getDepends(pkgsRmetrics[i]))
@@ -29,20 +52,21 @@ checkBeforeCommit  <-
 ###     }
 
 
-    # Run R CMD check ...
-    Rbin <- paste(R.home(), "bin", "R", sep = "/")
+    ## Run R CMD check ...
+    Rbin <- file.path(R.home(), "bin", "R")
     Rcmd <- paste(Rbin, "CMD check")
-    options <- paste("--library=", lib, " --outdir=", outdir, sep = "")
+    options <- paste("--library=", lib,
+                     " --outdir=", outdir, sep = "")
     cmd <- paste(Rcmd, options, paste(pkgsToCheck, collapse = " "), ...)
     try(system(cmd))
 
     logWarning <- NULL
     logNOTE <- NULL
-    # check for ERRORs and WARNINGs
-    for (i in seq(pkgsToCheck)) {
-
-        dirCheck <- paste(pkgsToCheck[i], ".Rcheck", sep = "")
-        logFile <- paste(outdir, dirCheck, "00check.log", sep ="/")
+    ## check for ERRORs and WARNINGs
+    for (i in seq_along(pkgsToCheck)) {
+        pkg <- pkgsToCheck[i]
+        dirCheck <- paste(pkg, ".Rcheck", sep = "")
+        logFile <- file.path(outdir, dirCheck, "00check.log")
         log  <- readLines(logFile)
 
         ERROR <- grep("ERROR", log)
@@ -56,7 +80,7 @@ checkBeforeCommit  <-
         if (length(WARNING)) {
             logWarning <- c(logWarning,
             "\n ####################### WARNING #######################\n",
-            paste(" In package", pkgsToCheck[i], "\n"),
+            paste(" In package", pkg, "\n"),
             paste(paste(log[seq(WARNING, WARNING+5)], collapse = "\n "), "\n"),
             paste("\n More details in", logFile, "\n"),
             paste(" ####################### WARNING #######################\n"))
@@ -64,19 +88,18 @@ checkBeforeCommit  <-
         if (length(NOTE)) {
             logNOTE <- c(logNOTE,
             "\n #######################  NOTE  #######################\n",
-            paste(" In package", pkgsToCheck[i], "\n"),
+            paste(" In package", pkg, "\n"),
             paste(paste(log[seq(NOTE, NOTE+8)], collapse = "\n "), "\n"),
             paste("\n More details in", logFile, "\n"),
             paste(" #######################  NOTE  #######################\n"))
         }
     }
 
-    # print WARINGs
-    cat(logNOTE)
-    cat(logWarning)
+    ## print Notes and Warnings:
+    message(logNOTE)
+    message(logWarning)
 
-
-    # Return
-    if (length(WARNING) | length(ERROR)) STATUS <- FALSE else STATUS <- TRUE
+    ## Return
+    STATUS <- !(length(WARNING) || length(ERROR))
     return(STATUS)
 }
