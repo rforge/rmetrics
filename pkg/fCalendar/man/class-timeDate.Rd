@@ -33,10 +33,6 @@
       a vector of POSIXct dates and times always related to
       "GMT".
     } 
-    \item{\code{Dim}:}{Object of class \code{"numeric"}: 
-      an integer value with the number (length) of the 
-      time stamp vector Data.
-    }
     \item{\code{format}:}{Object of class \code{"character"}: 
       a character string denoting the format specification of 
       the input Data character vector.
