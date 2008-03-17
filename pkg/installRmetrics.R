@@ -75,14 +75,3 @@ getDESCR <- function(package, infokind)
 getDepends <- function(package)  names(getDESCR(package, "Depends"))
 
 getSuggests <- function(package) names(getDESCR(package, "Suggests"))
-
-## MM: Hmm, I think this is just what  basename()  and  dirname() do:
-getPath <- function(pkgFile)
-{
-    ## extract path of package in order to set working directory
-    path <- unlist(strsplit(pkgFile, "/"))
-    if (path[length(path)] == "") path <- path[-length(path)]
-    ## return
-    list(package = path[length(path)],
-         path = paste(path[-length(path)], collapse = "/"))
-}
