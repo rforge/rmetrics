@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -24,34 +24,34 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:   
-#  solveRlpSolve                Calls linear programming solver                    
+# FUNCTION:                    DESCRIPTION:
+#  solveRlpSolve                Calls linear programming solver
 ################################################################################
 
 
-test.solveRlpSolve = 
+test.solveRlpSolve =
 function()
 {
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
-    
+
     # CVaR Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(colAvgs(data))
+    setTargetReturn(spec) = mean(colMeans(data))
     setTargetAlpha(spec) = 0.05
     setSolver(spec) <- "lpSolve"
     spec
-    
+
     # Constraints:
     constraints = NULL
-    
-    # CVaR Portfolio Optimization:  
+
+    # CVaR Portfolio Optimization:
     ans = solveRlpSolve(data, spec, constraints)
     ans$weights
-    
+
     # Return Value:
     return()
 }
