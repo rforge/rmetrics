@@ -61,7 +61,7 @@ timeSeries <-
     # Convert data to data.frame:
     if (missing(data)) {
         data = matrix(runif(24), ncol = 2)
-        units = c("TS.1", "TS.2")
+        if (is.null(units)) units = c("TS.1", "TS.2")
         charvec <- timeCalendar()
     } else {
         data <- as.matrix(data)
@@ -135,6 +135,7 @@ timeSeries <-
         N = dim(as.matrix(data))[1]
         charvec = timeSequence(from = "1970-01-01", length.out = N,
         zone = "GMT", FinCenter = "GMT")
+        warning("Dummy dates used in .timeSeries")
     }
 
     # charvector | Time Positions:
@@ -209,13 +210,21 @@ timeSeries <-
     # FUNCTION:
 
     # Signal Series:
-    if (missing(data)) data = matrix(runif(24), 12)
-    data = as.matrix(data)
-    if (missing(charvec)) charvec = signalCounts(1:NROW(data))
-    nCol = NCOL(data)
-    positions = rownames(data) = signalCounts(charvec)
-    if (is.null(units)) units = paste("SS", 1:nCol, sep = ".")
-    colnames(data) = units
+
+    # Get data
+    data <- if (missing(data)) matrix(runif(24), ncol = 2) else as.matrix(data)
+    if (missing(charvec)) charvec <- signalCounts(1:NROW(data))
+
+    # get positions
+    nCol <- NCOL(data)
+    positions = rownames(data) <- signalCounts(charvec)
+
+    # get units
+    if (is.null(units)) units <- colnames(data)
+    if (is.null(units)) units <- paste("SS", 1:nCol, sep = ".")
+    colnames(data) <- units
+
+    # get title and description
     if(is.null(title)) title = "Signal Series"
     if(is.null(documentation)) documentation = description()
 
