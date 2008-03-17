@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -29,15 +29,15 @@
 
 ################################################################################
 # FUNCTION:             ASSETS STATISTICS:
-#  assetsLPM             Computes Lower Partial Moments                    
+#  assetsLPM             Computes Lower Partial Moments
 ################################################################################
 
 
 test.assetsLPM =
 function()
-{ 
+{
     tS = .usPortfolioData()
-    # assetsLPM(x = tS, tau = colAvgs(tS), a = 1)                  # CHECK error
+    # assetsLPM(x = tS, tau = colMeans(tS), a = 1)                 # CHECK error
 
 
 # Return Value:
