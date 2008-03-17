@@ -33,10 +33,10 @@
 ################################################################################
 
 
-armaSim =
-function(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
-innov = NULL, n.start = 100, start.innov = NULL,
-rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
+armaSim <-
+    function(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
+             innov = NULL, n.start = 100, start.innov = NULL,
+             rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -134,7 +134,10 @@ rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
     }
 
     # Time Series:
-    ans = timeSeries(data = matrix(x, ncol = 1), ...)
+    from <-
+        timeDate(format(Sys.time(), format = "%Y-%m-%d")) - NROW(x)*24*3600
+    charvec  <- timeSequence(from = from, length.out = NROW(x))
+    ans = timeSeries(data = matrix(x, ncol = 1), charvec = charvec, ...)
 
     # Add Control:
     if (addControl) {
