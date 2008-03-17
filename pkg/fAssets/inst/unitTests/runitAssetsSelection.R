@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -31,41 +31,41 @@
 # FUNCTION:             ASSETS SELECTION:
 #  assetsSelect          Selects individual assets from a set of assets
 #   method = "hclust"     hierarchical clustering of returns
-#   method = "kmeans"     k-means clustering of returns                   
+#   method = "kmeans"     k-means clustering of returns
 ################################################################################
 
 
 test.assetsSelectHClust =
 function()
-{ 
+{
     # Hierarchical Clustering:
     # Select the 4 most dissimilar assets from Berndt's data set
 
-    # The data set "berndtInvest" is from Berndt's textbook 
+    # The data set "berndtInvest" is from Berndt's textbook
     # "The Practice of Econometrics". It is a data.frame consisting
     # of 18 columns with the following entries:
-    #  [1] %d/%B/%y "CITCRP" "CONED"  "CONTIL" "DATGEN" "DEC"      
-    #  [7] "DELTA"  "GENMIL" "GERBER" "IBM"    "MARKET" "MOBIL"    
-    # [13] "PANAM"  "PSNH"   "TANDY"  "TEXACO" "WEYER"  "RKFREE"  
+    #  [1] %d/%B/%y "CITCRP" "CONED"  "CONTIL" "DATGEN" "DEC"
+    #  [7] "DELTA"  "GENMIL" "GERBER" "IBM"    "MARKET" "MOBIL"
+    # [13] "PANAM"  "PSNH"   "TANDY"  "TEXACO" "WEYER"  "RKFREE"
     # The first column holds the date, the 11th the market rate,
     # and the last (the 18th) the risk free rate.
-        
+
     # Load the Data and Create an Object of Class 'timeSeries':
     data(berndtInvest)
     berndtInvest = as.timeSeries(berndtInvest)
     class(berndtInvest)
     head(berndtInvest)
-        
-    # Exclude the Date, Market Returns and Interest Rate Columns 
+
+    # Exclude the Date, Market Returns and Interest Rate Columns
     # from the data frame, then multiply by 100 for percentual returns ...
     allAssets = 100 * berndtInvest[, -c(1, 10, 17)]
     class(allAssets)
     head(allAssets)
-         
+
     # Graph Frame:
-    par(mfrow = c(2, 1), cex = 0.7)   
-    
-    # Select the "n" Most Dissimilar Assets from 
+    par(mfrow = c(2, 1), cex = 0.7)
+
+    # Select the "n" Most Dissimilar Assets from
     # Hierarchical Clustering:
     n = 4
     args(assetsSelect)
@@ -74,7 +74,7 @@ function()
     myAssets = allAssets[, c(clustered$order[1:n])]
     colnames(myAssets)
     # Print the Column Return:
-    mu.vec = colAvgs(myAssets)
+    mu.vec = colMeans(myAssets)
     mu.vec
     # or ...
     mu.vec = colMeans(myAssets@Data)
@@ -82,14 +82,14 @@ function()
     # Print the Covariance Matrix:
     cov.mat = cov(myAssets@Data)
     cov.mat
-  
+
     # Plot Cumulated Returns of the Assets:
     ts.plot(colCumsums(myAssets), col = 1:4)
     grid()
     legend(0, 250, legend = colnames(myAssets), pch = "----", col = 1:4)
     title(main = "Cumulated Returns", ylab = "Cumulated Returns")
     abline(h = 0, lty = 3)
-    
+
     # Return Value:
     return()
 }
@@ -100,7 +100,7 @@ function()
 
 test.assetsSelectKMeans =
 function()
-{ 
+{
     # K-Means Clustering:
 
     # Load Data
@@ -108,12 +108,12 @@ function()
     allAssets = 100 * berndtInvest[, -c(1, 10, 17)]
     allAssets = as.matrix(allAssets)
     head(allAssets)
-         
-    # assetsSelect(x, method = c("hclust", "kmeans"), kmeans.centers = 5, 
-    #   kmeans.maxiter = 10, doplot = TRUE, ...) 
+
+    # assetsSelect(x, method = c("hclust", "kmeans"), kmeans.centers = 5,
+    #   kmeans.maxiter = 10, doplot = TRUE, ...)
     clustered = assetsSelect(t(allAssets), method = "kmeans",
         kmeans.centers = 4, doplot = TRUE)
-    
+
     # Return Value:
     return()
 }
@@ -124,20 +124,20 @@ function()
 
 test.assetsSelectKMeans =
 function()
-{ 
+{
     if (FALSE) {
     require(cluster)
-        
-        
-    .assetsSelect = 
-    function (x, k, 
-    method = c("hclust", "kmeans", "agnes", "diana", "pam", "clara"), 
-    doplot = TRUE, control = FALSE, ...) 
+
+
+    .assetsSelect =
+    function (x, k,
+    method = c("hclust", "kmeans", "agnes", "diana", "pam", "clara"),
+    doplot = TRUE, control = FALSE, ...)
     {
         # Settings:
         X = as.matrix(x)
         method = match.arg(method)
-        
+
         # Hierarchical Clustering:
         if (method == "hclust") {
             ans = hclust(dist(t(X)), ...)
@@ -154,7 +154,7 @@ function()
             index = rev(ans$order)[1:k]
             if (doplot) plot(ans)
         }
-        
+
         # K-Means Clustering:
         if (method == "kmeans") {
             ans = kmeans(x = X, centers = k, ...)
@@ -185,31 +185,31 @@ function()
             index = ans$i.med
             if (doplot) plot(ans)
         }
-        
+
         # Select data and optionally add control:
-        data = x[, index] 
+        data = x[, index]
         if (control) attr(data, "control")<-ans
-        
+
         # Return Value:
         data
     }
 
     # Data:
     berndtInvest = as.timeSeries(data(berndtInvest))
-    X = 100 * berndtInvest[, -c(1, 10, 17)]       
-        
+    X = 100 * berndtInvest[, -c(1, 10, 17)]
+
     # Selection:
     .assetsSelect(X, 4, "hclust", doplot = FALSE)
     .assetsSelect(X, 4, "agnes", doplot = FALSE)
     .assetsSelect(X, 4, "diana", doplot = FALSE)
-    
+
     .assetsSelect(X, 4, "kmeans", doplot = FALSE)
     .assetsSelect(X, 4, "pam", doplot = FALSE)
     .assetsSelect(X, 4, "clara", doplot = FALSE)
-    
+
     }
     NA
-   
+
     # Return Value:
     return()
 }
