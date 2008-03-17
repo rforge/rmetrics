@@ -140,10 +140,14 @@ garchSim <-
 
 
     # Return Values:
-    ans = as.timeSeries(data[, c(3,2,1)])
-    colnames(ans) = c("garch", "sigma", "eps")
+    from <-
+        timeDate(format(Sys.time(), format = "%Y-%m-%d")) - NROW(data)*24*3600
+    charvec  <- timeSequence(from = from, length.out = NROW(data))
+    ans <- timeSeries(data = data[, c(3,2,1)], charvec = charvec)
+
+    colnames(ans) <- c("garch", "sigma", "eps")
     ans <- if (extended) ans else ans[,"garch"]
-    attr(ans, "control") = list(garchSpec = spec)
+    attr(ans, "control") <- list(garchSpec = spec)
 
     # Return Value:
     ans
