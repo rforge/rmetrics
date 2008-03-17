@@ -34,7 +34,7 @@ function()
 
     applySeries <-
     function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter,
+    FUN = colMeans, units = NULL, format = x@format, zone = x@FinCenter,
     FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
     documentation = x@documentation, ...)
 
