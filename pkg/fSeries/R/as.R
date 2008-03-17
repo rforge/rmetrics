@@ -137,44 +137,28 @@ as.timeSeries.data.frame <-
 
     # FUNCTION:
 
-    # Check if the first column has a valid ISO-format:
-    dummyDates = FALSE
-    firstColumn = TRUE
-    charvec = as.character(as.vector(x[, 1]))
-    format = whichFormat(charvec, silent = TRUE)
+    # Check if rownames(x) or the first column has a valid ISO-format:
     if (is.numeric(x[,1])) {
-        # is.nuermic() is better than format == "unkown"
+        # is.numeric() is better than format == "unkown"
         # which can give wrong result. i.e. whichFormat(0.1253328600)
-        charvec = rownames(x)
-        format = whichFormat(charvec, silent = TRUE)
-        if (format == "unknown") {
-            # warning("Could not identify timeDate Format")
-            dummyDates = TRUE
-            N = length(as.vector(x[, 1]))
-            charvec = as.character(timeSequence(from = "1970-01-01",
-                length.out = N, format = "%Y-%m-%d", zone = zone,
-                FinCenter = FinCenter))
-            format = whichFormat(charvec, silent = TRUE)
-            warning("Dummy Dates Used in as.timeSeries()", call. = FALSE)
-
-        }
-        firstColumn = FALSE
-    }
-
-    # Transform to Matrix:
-    if (firstColumn) {
-        X = cbind(x[, -1])
+        format = whichFormat(rownames(x), silent = TRUE)
+        if (format == "unknown") format = "counts"
+        X <- x
+        colNames = colnames(x)
     } else {
-        X = x
+        charvec = as.character(as.vector(x[, 1]))
+        format = whichFormat(charvec, silent = TRUE)
+        if (format == "unkown")
+            stop("can not read the first column as a valid ISO-format date")
+        X <- data.frame(x[,-1])
+        colNames <- colnames(x)[-1]
     }
-    colNames = colnames(X)
-    # rownames(X) = charvec
 
     Numeric = NULL
-    for (i in 1:length(X[1, ])) {
-        if (is.numeric(X[1, i])) Numeric = c(Numeric, i)
+    for (i in seq_len(NCOL(X))) {
+        if (is.numeric(X[, i])) Numeric = c(Numeric, i)
     }
-    if (is.null(numeric)) {
+    if (is.null(Numeric)) {
         stop("x contains no numeric columns")
     } else {
         data = as.matrix(X[, Numeric])
@@ -187,10 +171,12 @@ as.timeSeries.data.frame <-
         }
     }
 
+    units <- colnames(data)
+
     # Create Time Series Object:
-    ans = timeSeries(data = data, charvec = charvec,
-        units = colnames(data), format = format, zone = zone,
-        FinCenter = FinCenter, recordIDs = recordIDs)
+    ans <- timeSeries(data = data, charvec = charvec,
+                      units = colnames(data), format = format, zone = zone,
+                      FinCenter = FinCenter, recordIDs = recordIDs)
 
     # Return Value:
     ans
@@ -201,7 +187,7 @@ as.timeSeries.data.frame <-
 
 
 as.timeSeries.matrix <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter,...)
+    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
