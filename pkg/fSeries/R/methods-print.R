@@ -14,36 +14,10 @@
 
 
 ################################################################################
-# CLASS:                    REPRESENTATION:
-#  'timeSeries'              S4 Class representation
 # METHODS:                  PRINT AND PLOT FUNCTIONS:
 #  show.timeSeries           Prints a 'timeSeries' object
 #  .print.timeSeries         For internal use
 ################################################################################
-
-
-setClass("timeSeries",
-    # A class implemented by Diethelm Wuertz
-
-    # Description:
-    #   Class representatation for 'timeSeries' Objects.
-
-    # CLASS:
-
-    representation(
-        Data = "matrix",
-        positions = "character",
-        format = "character",
-        FinCenter = "character",
-        units = "character",
-        recordIDs = "data.frame",
-        title = "character",
-        documentation = "character")
-)
-
-
-# ------------------------------------------------------------------------------
-
 
 show.timeSeries =
 function(object)

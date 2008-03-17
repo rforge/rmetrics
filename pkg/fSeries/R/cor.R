@@ -30,53 +30,52 @@
 # Add robust methods ...
 
 
-cov.timeSeries =
-function(x, y = NULL,
-use = "all.obs",
-method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
+## cov.timeSeries <-
+##     function(x, y = NULL,
+##              use = "all.obs", method = c("pearson", "kendall", "spearman"))
+## {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Returns variance/covariance for a 'timeSeries' object
+##     # Description:
+##     #   Returns variance/covariance for a 'timeSeries' object
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    # Settings:
-    x = x@Data
-    if (!is.null(y)) y = y@Data
+##     # Settings:
+##     x = x@Data
+##     if (!is.null(y)) y = y@Data
 
-    # CoVariance:
-    ans = cov.default(x, y, use = use, method = method)
+##     # CoVariance:
+##     ans = cov.default(x, y, use = use, method = method)
 
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
+##     # Return Value:
+##     ans
+## }
 
 
-cor.timeSeries =
-function(x, y = NULL,
-use = "all.obs",
-method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
+## # ------------------------------------------------------------------------------
 
-    # Description:
-    #   Returns correlations for a 'timeSeries' object
 
-    # FUNCTION:
+## cor.timeSeries =
+## function(x, y = NULL,
+## use = "all.obs",
+## method = c("pearson", "kendall", "spearman"))
+## {   # A function implemented by Diethelm Wuertz
 
-    # Settings:
-    x = x@Data
-    if (!is.null(y)) y = y@Data
+##     # Description:
+##     #   Returns correlations for a 'timeSeries' object
 
-    # CoVariance:
-    ans = cor.default(x, y, use = use, method = method)
+##     # FUNCTION:
 
-    # Return Value:
-    ans
-}
+##     # Settings:
+##     x = x@Data
+##     if (!is.null(y)) y = y@Data
+
+##     # CoVariance:
+##     ans = cor.default(x, y, use = use, method = method)
+
+##     # Return Value:
+##     ans
+## }
 
 
 ################################################################################

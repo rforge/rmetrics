@@ -22,7 +22,7 @@
 
 
 drawdowns <-
-function(x, ...)
+    function(x, ...)
 {
     # A function implemetned by Diethelm Wuertz
 

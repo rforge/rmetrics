@@ -19,8 +19,8 @@
 ################################################################################
 
 
-durations =
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+durations <-
+    function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -38,6 +38,9 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Positions and Durations:
     pos = time(x)

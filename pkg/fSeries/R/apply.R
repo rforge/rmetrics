@@ -44,7 +44,7 @@ applySeries <-
     #       blocks
     #   by - calendarical block, only active when both 'from'
     #       and 'to' are NULL
-    #   FUN - function to be applied, by default 'colAvgs'
+    #   FUN - function to be applied, by default 'colMeans'
     #   units - a character vector with column names, allows to
     #       overwrite the column names of the input 'timeSeries'
     #       object.
@@ -61,6 +61,8 @@ applySeries <-
 
     # Check object:
     if (class(x) != "timeSeries") stop("s is not a timeSeries object")
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Monthly and Quarterly from and to:
     if (is.null(from) & is.null(to)) {
@@ -93,7 +95,7 @@ applySeries <-
     pos = time(x)
     rowNames = rownames(x@Data)
     rowBind = NULL
-    for (i in 1:from@Dim) {
+    for (i in seq_len(length(from))) {
         test = (j.pos >= j.from[i] & j.pos <= j.to[i])
         # make sure that cutted is a matrix ...
         cutted = as.matrix(y[test, ])
@@ -122,6 +124,8 @@ function(x, from, to, FUN, ...)
 {
     # Check x:
     stopifnot(is(x, "timeSeries"))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Check for missing form/to:
     if(missing(from)) from = start(x)
@@ -139,7 +143,7 @@ function(x, from, to, FUN, ...)
 
 .applySeries <-
     function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
-    FUN = colAvgs, units = NULL, ...)
+    FUN = colMeans, units = NULL, ...)
 {
     # Old/Alternative Version
 
@@ -180,7 +184,7 @@ function(x, from, to, FUN, ...)
         i = i + 1
     }
     # Continue up to the end:
-    for (j in i:from@Dim) {
+    for (j in seq_len(length(from))) {
         cutted = cut(x, from[j], to[j])
         if (!is.null(cutted)) {
             # Non empty Interval:
@@ -214,7 +218,7 @@ function(x, from, to, FUN, ...)
     # Arguments:
     #   x - a 'timeSeries' object to be aggregated
     #   from, to - two 'timeDate' position vectors which size the blocks
-    #   FUN - function to be applied, by default 'colAvgs'
+    #   FUN - function to be applied, by default 'colMeans'
 
     # Value:
     #   Returns a S4 object of class 'timeSeries' if FUN returns
@@ -273,7 +277,7 @@ function(x, from, to, FUN, ...)
     if (is.timeSeries(ans)) {
         ## DW can this happen - check ?
         rowBind = ans
-        for (i in 2:from@Dim) {
+        for (i in 2L:length(from)) {
             test = (j.pos >= j.from[1] & j.pos <= j.to[1])
             # make sure that cutted is a matrix ...
             cutted = as.matrix(y[test, ])
@@ -297,7 +301,7 @@ function(x, from, to, FUN, ...)
         listBind = list()
         ## DW [] -> [[]]
         listBind[[1]] = ans
-        for (i in 2:from@Dim) {
+        for (i in 2L:length(from)) {
             test = (j.pos >= j.from[i] & j.pos <= j.to[i])
             # make sure that cutted is a matrix ...
             cutted = as.matrix(y[test, ])

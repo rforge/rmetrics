@@ -99,38 +99,10 @@ as.timeSeries.default <-
 }
 
 
-
-# ------------------------------------------------------------------------------
-
-as.timeSeries.timeSeries <-
-    function(x, zone = x@FinCenter, FinCenter = myFinCenter, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
-
-    # FUNCTION:
-
-    .Deprecated("finCenter<-", "fSeries")
-
-    stopifnot(class(x) == "timeSeries")
-    if (zone != x@FinCenter)
-        warning("argument zone is ignored and FinCenter\n of series is used as zone")
-
-    # convert to user financial centre
-    positions <- timeDate(charvec = time(x), zone = x@FinCenter,
-                          FinCenter = FinCenter)
-
-    time(x) <- positions
-
-    # Return Value:
-    x
-}
-
-
-
 # ------------------------------------------------------------------------------
 
 
-as.timeSeries.numeric =
+as.timeSeries.numeric <-
     function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
@@ -235,27 +207,8 @@ as.timeSeries.matrix <-
 
     # FUNCTION:
 
-###     if (attr(x, "oclass") == "timeSeries") {
-###         data <- matrix(as.numeric(x), ncol = ncol(x))
-###         charvec <- rownames(x)
-###         units <- attr(x, "units")
-###         format <- attr(x, "format")
-###         zone <- FinCenter <- attr(x, "FinCenter")
-###         recordIDs <- attr(x, "recordIDs")
-###         title <- attr(x, "title")
-###         documentation <- attr(x, "documentation")
-
-###         ans <- timeSeries(data = data, charvec = charvec, units = units,
-###                           format = format, zone = zone, FinCenter =FinCenter,
-###                           # recordIDs = recordIDs,
-###                           title = title,
-###                           documenation = documentation)
-###     } else {
-
-        # As timeSeries:
-        x <- as.data.frame(x)
-        ans <- as.timeSeries(x, zone = zone, FinCenter = FinCenter, ...)
-###    }
+    x <- as.data.frame(x)
+    ans <- as.timeSeries(x, zone = zone, FinCenter = FinCenter, ...)
 
     # Return Value:
     ans
@@ -322,7 +275,7 @@ as.timeSeries.zoo <-
     # Seperate x in numeric and non-numeric parts
     data <- as.matrix(x)
     recordIDs <- data.frame()
-    charvec <- attr(x, "index") # ! check if this is POSIX or Date object
+    charvec <- time(x)
 
     ans <- timeSeries(data = data, charvec = charvec,
                       units = colnames(x), recordIDs = recordIDs,
@@ -395,15 +348,6 @@ as.matrix.timeSeries <-
 
     # Convert:
     ans = as.matrix(x@Data) # is matrix
-
-###     attr(ans, "oclass") <- "timeSeries"
-### #    attr(ans, "positions") <- as.character(x@positions)
-###     attr(ans, "format") <- x@format
-###     attr(ans, "FinCenter") <- x@FinCenter
-###     attr(ans, "units") <- x@units
-###     attr(ans, "recordIDs") <- x@recordIDs
-###     attr(ans, "title") <- x@title
-###     attr(ans, "documentation") <- x@documentation
 
     # Return Value:
     ans

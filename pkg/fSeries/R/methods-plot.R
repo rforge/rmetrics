@@ -33,7 +33,12 @@ function(x, ...)
     # FUNCTION:
 
     # Plot:
-    plot(x = as.POSIXct(x@positions), y = x@Data, ...)
+    positions <- time(x)
+    if (x@format == "counts") {
+        plot(x = positions, y = x@Data, ...)
+    } else {
+        plot(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
     # Return Value:
     invisible(x)
@@ -59,7 +64,12 @@ function(x, ...)
     # FUNCTION:
 
     # Plot:
-    lines(x = as.POSIXct(x@positions), y = x@Data, ...)
+    positions <- time(x)
+    if (x@format == "counts") {
+        lines(x = positions, y = x@Data, ...)
+    } else {
+        lines(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
     # Return Value:
     invisible(x)
@@ -85,7 +95,12 @@ function(x, ...)
     # FUNCTION:
 
     # Add to Plot:
-    points(x = as.POSIXct(x@positions), y = x@Data, ...)
+    positions <- time(x)
+    if (x@format == "counts") {
+        points(x = positions, y = x@Data, ...)
+    } else {
+        points(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
     # Return Value:
     invisible(x)

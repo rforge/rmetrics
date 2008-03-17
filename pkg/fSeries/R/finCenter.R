@@ -26,9 +26,9 @@ function(x)
 
     # FUNCTION:
 
-    stopifnot(inherits(x, "timeSeries"))
+    stopifnot(is.timeSeries(x))
 
-    ans <- x@FinCenter
+    ans <-  x@FinCenter
     ans
 
 }
@@ -46,8 +46,9 @@ function(x, value)
     #
 
     # FUNCTION:
-
-    stopifnot(inherits(x, "timeSeries"))
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # convert to user financial centre
     positions <- timeDate(charvec = time(x), zone = finCenter(x),

@@ -45,6 +45,9 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
     #   Add "1m"
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Should the series be aligned:
     if (align) x = alignDailySeries(x)
@@ -96,6 +99,9 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
     #   Add "1m"
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Match Arguments:
     nYearsBack = match.arg(nYearsBack)
@@ -195,6 +201,9 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
     #   Add "1m"
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Match Arguments:
     nYearsBack = match.arg(nYearsBack)

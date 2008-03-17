@@ -46,8 +46,13 @@ function(object)
     .Deprecated("time", package = "fSeries")
 
     # Create 'timeDate' Object:
-    ans = timeDate(charvec = object@positions, format = object@format,
-        zone = object@FinCenter, FinCenter = object@FinCenter)
+    ans <-
+        if (object@format == "counts") {
+            as.integer(object@positions)
+        } else {
+            timeDate(charvec = object@positions, format = object@format,
+                     zone = object@FinCenter, FinCenter = object@FinCenter)
+        }
 
     # Return Value:
     ans
@@ -73,6 +78,15 @@ function(object, value)
 # ------------------------------------------------------------------------------
 
 "time<-" <-
+    function(x, value)
+{
+
+    UseMethod("time<-")
+}
+
+# ------------------------------------------------------------------------------
+
+"time<-.timeSeries" <-
     function(object, value)
 {
     stopifnot(is.timeSeries(object))
@@ -111,15 +125,23 @@ function(x, ...)
     # FUNCTION:
 
     # Get Positions:
-    timeDate(charvec = x@positions, format = x@format,
-        zone = x@FinCenter, FinCenter = x@FinCenter)
+    ans <-
+        if (x@format == "counts") {
+            as.integer(x@positions)
+        } else {
+            timeDate(charvec = x@positions, format = x@format,
+                     zone = x@FinCenter, FinCenter = x@FinCenter)
+        }
+
+    # Return Value:
+    ans
 }
 
 
 
 # ------------------------------------------------------------------------------
 
-.sample.timeSeries =
+sample.timeSeries =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -135,43 +157,13 @@ function(x, ...)
     # FUNCTION:
 
     # Data:
-    nPOS = length(x@positions)
+    nPOS = length(time(x))
     index = sample(1:nPOS)
     x = x[index, ]
-
-    # recordIDs:
-    DF = x@recordIDs
-    DIM = dim(DF)
-    if (sum(DIM) > 0) {
-        df = rev(DF[, 1])
-        if (DIM[2] > 1)
-            for (i in 2:DIM[2]) df = data.frame(df, rev(DF[index, i]))
-        colnames(df) <- colnames(DF)
-        rownames(df) <- x@positions
-        x@recordIDs = df
-    }
 
     # Return Value:
     x
 }
-
-
-sample.timeSeries =
-function (x, ...)
-{
-    # Index:
-    Index = sample(1:length(x@positions))
-
-    # Compose Series:
-    x@positions = x@positions[Index]
-    x@Data = as.matrix(x@Data[Index, ])
-    colnames(x@Data) = x@units
-    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
-
-    # Return value:
-    x
-}
-
 
 
 # ------------------------------------------------------------------------------
@@ -195,21 +187,10 @@ sort.timeSeries <-
 
     # Data:
     POS <- x@positions
-    index <- order(POS)
+    # YC: as.integer is important because order(c(" 1", " 2", "10"))
+    # YC: gives different results on Windows and Linux !
+    index <- if (x@format == "counts") order(as.integer(POS)) else order(POS)
     x <- x[index, ]
-
-    ### Version of DW
-    ###     # recordIDs:
-    ###     DF <- x@recordIDs
-    ###     DIM <- dim(DF)
-    ###     if (sum(DIM) > 0) {
-    ###         df <- rev(DF[index, 1])
-    ###         if (DIM[2] > 1)
-    ###             for (i in 2:DIM[2]) df = data.frame(df, rev(DF[index, i]))
-    ###         colnames(df) <- colnames(DF)
-    ###         rownames(df) <- x@positions
-    ###         x@recordIDs = df
-    ###     }
 
     # Return Value:
     x
@@ -237,19 +218,6 @@ function(x)
     index = nPOS:1
     x = x[index, ]
 
-    ### Version of DW
-    ###     # IDs:
-    ###     DF = x@recordIDs
-    ###     DIM = dim(DF)
-    ###     if (sum(DIM) > 0) {
-    ###         df = rev(DF[, 1])
-    ###         if (DIM[2] > 1)
-    ###             for (i in 2:DIM[2]) df = data.frame(df, rev(DF[, i]))
-    ###         colnames(df) <- colnames(DF)
-    ###         rownames(df) <- x@positions
-    ###         x@recordIDs = df
-    ###     }
-
     # Return Value:
     x
 }
@@ -275,7 +243,8 @@ function(x, ...)
     # FUNCTION:
 
     # S3 Method:
-    ans = start.timeDate(time(x))
+    POS <- time(x)
+    ans <- sort(POS)[1]
 
     # Return Value:
     ans
@@ -302,7 +271,8 @@ function(x, ...)
     # FUNCTION:
 
     # S3 Method:
-    ans = end.timeDate(time(x))
+    POS <- time(x)
+    ans <- sort(POS)[length(POS)]
 
     # Return Value:
     ans

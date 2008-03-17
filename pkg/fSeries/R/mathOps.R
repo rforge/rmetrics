@@ -104,37 +104,54 @@ function(e1, e2 = 1)
 
 # ------------------------------------------------------------------------------
 
-Math.timeSeries <-
-    function(x, ...)
-{
-    s <- x
-    x <- x@Data
-    ans <- NextMethod(.Generic, ...)
-    s@Data <- ans
-    s
+members <- c("Math", "Math2", "Summary")
+
+# template definition
+template <-  c("{",
+               "finCenter <- finCenter(XXX)",
+               "XXX <- as.matrix(XXX)",
+               "ans <- callNextMethod()",
+               "if (is.matrix(ans))",
+               "    ans <- timeSeries(ans, zone = finCenter,",
+               "                      FinCenter = finCenter)",
+               "ans",
+               "}")
+
+# set the Methods in a loop
+for (f in members) {
+    def <- function()NULL
+    formals(def) <- formals(f)
+    bodyText <- gsub("XXX", names(formals(f))[1], template)
+    body(def) <- parse(text = bodyText)
+    setMethod(f, "timeSeries", def)
 }
 
 # ------------------------------------------------------------------------------
 
-Math2.timeSeries <-
-    function(x, digits)
-{
-    s <- x
-    x <- x@Data
-    ans <- NextMethod(.Generic, digits = digits)
-    s@Data <- ans
-    s
-}
-
-# ------------------------------------------------------------------------------
-
-Summary.timeSeries <-
-    function(x, ..., na.rm = FALSE)
-{
-    x <- x@Data
-    ans <- NextMethod(.Generic, ..., na.rm = na.rm)
-    ans
-}
+###      Note that two members of the 'Math' group, 'log' and 'trunc', have
+###      more than one argument: S4 group dispatch will always pass only
+###      one argument to the method so if you want to handle 'base' in
+###      'log', set a specific method as well.
+setMethod("log",
+          "timeSeries",
+          function(x, base = exp(1)) {
+              finCenter <- finCenter(x)
+              x <- as.matrix(x)
+              ans <- log(x, base = base)
+              ans <- timeSeries(ans, zone = finCenter,
+                                FinCenter = finCenter)
+              ans
+          })
+setMethod("trunc",
+          "timeSeries",
+          function(x, ...) {
+              finCenter <- finCenter(x)
+              x <- as.matrix(x)
+              ans <- trunc(x, ...)
+              ans <- timeSeries(ans, zone = finCenter,
+                                FinCenter = finCenter)
+              ans
+          })
 
 # ------------------------------------------------------------------------------
 
@@ -216,32 +233,5 @@ scale.timeSeries <-
     # Return Value:
     x
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-quantile.timeSeries <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Modified by Yohan Chalabi
-
-    # Description:
-    #   Returns quantiles of an univariate 'timeSeries
-
-    # Arguments:
-
-    # FUNCTION:
-
-    # Check:
-    stopifnot(NCOL(x) == 1)
-
-    # Quantiles:
-    ans = quantile(x = as.vector(x), ...)
-
-    # Return Value:
-    ans
-}
-
 
 ################################################################################

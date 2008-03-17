@@ -88,16 +88,16 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
 
     # Cumulative Sums:
-    x = rowCumsums(as.matrix(x, ...))
+    ans = rowCumsums(as.matrix(x, ...))
 
     # Time Series Input ?
     if (class(x) == "timeSeries") {
-        x@Data = result
+        x@Data = ans
         result = x
     }
 
     # Return Value:
-    result
+    ans
 }
 
 ################################################################################

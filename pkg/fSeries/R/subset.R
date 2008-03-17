@@ -100,6 +100,8 @@
 
     # Subsets:
 
+    value <- as.matrix(value)
+
     if (!missing(i) && is.timeSeries(i) && is.logical(i@Data))
         i <- as.logical(i@Data)
 
@@ -118,7 +120,7 @@
 
 cut.timeSeries =
 function (x, from, to, ...)
-{   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Cuts out a piece from a 'timeSeries' object.
@@ -132,69 +134,25 @@ function (x, from, to, ...)
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
+
+    .Deprecated("window", "fSeries")
+
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     from = timeDate(from)
     to = timeDate(to)
     Positions = time(x)
-    Units = x@units
-    colNames = colnames(x@Data)
+
     test = (Positions >= from & Positions <= to)
-    Data = as.matrix(x@Data)[test, ]
-    Data = as.matrix(Data)
-    x@Data = Data
-    x@positions = x@positions[test]
-    x@units = Units
-    x@recordIDs = data.frame()
-    colnames(x@Data) = colNames
+    ans <- x[test,]
 
     # Return value:
-    x
+    ans
 }
-
-
-.cut.timeSeries =
-function(x, from, to, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Cuts out a piece from a 'timeSeries' object.
-
-    # Arguments:
-    #   x - a 'timeSeries' object
-    #   from, to - two 'timeDate' position vectors which size the
-    #       blocks
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-
-    # FUNCTION:
-
-    # Check:
-    stopifnot(is.timeSeries(x))
-    if (!is(from, "timeDate"))
-        from = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
-    if (!is(to, "timeDate"))
-        to = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
-
-    Positions = time(x)
-    if (missing(from)) from = Positions[1]
-    if (missing(to)) to = rev(Positions)[1]
-    Positions = as.POSIXct(Positions, tz = "GMT")
-    from = as.POSIXct(from, tz = "GMT")
-    to = as.POSIXct(to, tz = "GMT")
-
-    # Cut:
-    test = (Positions >= from & Positions <= to)
-    Index = (1:length(test))[test]
-    if (length(Index) == 0) return()
-
-    # Return value:
-    x[Index, ]
-}
-
 
 # ------------------------------------------------------------------------------
-
 
 window.timeSeries =
 function (x, from, to, ...)
@@ -215,23 +173,19 @@ function (x, from, to, ...)
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     from = timeDate(from)
     to = timeDate(to)
     Positions = time(x)
-    Units = x@units
-    colNames = colnames(x@Data)
+
     test = (Positions >= from & Positions <= to)
-    Data = as.matrix(x@Data)[test, ]
-    Data = as.matrix(Data)
-    x@Data = Data
-    x@positions = x@positions[test]
-    x@units = Units
-    x@recordIDs = data.frame()
-    colnames(x@Data) = colNames
+    ans <- x[test,]
 
     # Return value:
-    x
+    ans
 }
 
 

@@ -26,7 +26,7 @@ merge.timeSeries <-
     if(test == 1)
         stop("You cannot merge a signal and time Series")
 
-    FinCenter <- finCenter(y) <- finCenter(x)
+    if (test == 0) FinCenter <- finCenter(y) <- finCenter(x)
 
     # Convert to Data Frame:
     df.x = data.frame(positions = x@positions, x@Data)
@@ -52,6 +52,7 @@ merge.timeSeries <-
         ans = sort(
             .signalSeries(data = data, charvec = as.character(df[,1])))
     }
+
     # Return Value:
     ans
 }

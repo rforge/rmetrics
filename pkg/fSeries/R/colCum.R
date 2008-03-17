@@ -186,7 +186,7 @@ colCummaxs.timeSeries <-
 colCummins <-
     function(x, na.rm = FALSE, ...)
 {
-    UseMethod("colCummmins")
+    UseMethod("colCummins")
 }
 
 
@@ -326,14 +326,15 @@ colCumreturns.default <-
 
     # Handle Missing Values:
     if (na.rm) x = na.omit(x, ...)
+    method <- match.arg(method)
 
     # Cumulative Returns:
     if (method == "geometric") {
-        ans = cumsum(x)
+        ans = colCumsums(x)
     } else if (method == "simple") {
-        ans = cumprod(1+x) - 1
+        ans = colCumprods(1+x) - 1
     }
-    names(ans) = colnames(x)
+    colnames(ans) = colnames(x)
 
     # Return Value:
     ans
@@ -353,7 +354,7 @@ colCumreturns.timeSeries <-
     # FUNCTION:
 
     # Cumulated Maxima:
-    ans = colCumreturns(as.matrix(x, ...), na.rm, ...)
+    ans = colCumreturns(as.matrix(x), method = method, na.rm = na.rm, ...)
 
     # Time Series Input ?
     if (class(x) == "timeSeries") {
@@ -368,27 +369,4 @@ colCumreturns.timeSeries <-
 
 ################################################################################
 
-
-# NO LONGER IN USE
-
-
-cumsum.timeSeries <-
-    function(x)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   No longer in use, use colCumsums()
-
-    # FUNCTION:
-
-    # Cumulate:
-    x@Data = colCumsums(x@Data)
-
-    # Return Value:
-    x
-}
-
-
-################################################################################
 

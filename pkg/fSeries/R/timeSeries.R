@@ -32,8 +32,8 @@ timeSeries <-
     #   Creates a 'timeSeries' object from scratch.
 
     # Arguments:
-    #   data -a numeric 'data.frame' object or any other object which
-    #       can be transformed by the function as.data.frame.
+    #   data -a numeric 'matrix' object or any other object which
+    #       can be transformed by the function as.matrix.
     #   charvec - a character vector of dates and times.
     #   units - an optional units string, NULL defaults an empty
     #       string.
@@ -60,11 +60,12 @@ timeSeries <-
 
     # Convert data to data.frame:
     if (missing(data)) {
-        data = data.frame(runif(12), runif(12))
+        data = matrix(runif(24), ncol = 2)
         units = c("TS.1", "TS.2")
         charvec <- timeCalendar()
     } else {
-        data <- as.data.frame(data)
+        data <- as.matrix(data)
+        stopifnot(is.numeric(data))
     }
 
     # Determine format

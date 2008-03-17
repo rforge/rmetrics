@@ -37,7 +37,10 @@ cbind.timeSeries <-
     # FUNCTION:
 
     # convert series y to FinCenter of series x
-    FinCenter <- finCenter(y) <- finCenter(x)
+    test = as.integer((x@format == "counts") + (y@format == "counts"))
+    if(test == 1)
+        stop("You cannot merge a signal and time Series")
+    if (test == 0) FinCenter <- finCenter(y) <- finCenter(x)
 
     # check if x and y have same date format,
     # if not convert to the most extended one
@@ -104,7 +107,11 @@ rbind.timeSeries <-
     stopifnot(is.timeSeries(x) & is.timeSeries(y))
     stopifnot(dim(x)[2] == dim(y)[2])
 
-    FinCenter <- finCenter(y) <- finCenter(x)
+    test = as.integer((x@format == "counts") + (y@format == "counts"))
+    if(test == 1)
+        stop("You cannot merge a signal and time Series")
+    if (test == 0) {
+        FinCenter <- finCenter(y) <- finCenter(x)
 
     # check if x and y have same date format,
     # if not convert to the most extended one
@@ -123,6 +130,7 @@ rbind.timeSeries <-
     # Bind:
     data <- as.matrix(rbind(x@Data, y@Data))
     positions <- c(x@positions, y@positions)
+    if (x@format == "counts") positions <- as.numeric(positions)
     recordIDs <- as.data.frame(rbind(x@recordIDs, y@recordIDs))
 
     # Order series
@@ -133,7 +141,11 @@ rbind.timeSeries <-
 
     ans <- timeSeries(data = data, charvec = positions,
                       zone = FinCenter, FinCenter = FinCenter,
-                      units = units, ...)
+                      units = units, format = x@format, ...)
+    } else {
+        data <- as.matrix(rbind(x@Data, y@Data))
+        ans <- timeSeries(data = data, format = "counts")
+    }
 
     # Return Value
     ans

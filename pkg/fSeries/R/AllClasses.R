@@ -14,22 +14,26 @@
 
 
 ################################################################################
-# FUNCTION:                 COLUMN STATISTICS IN FUTILITIES:
-#  rank.timeSeries           Returns sample ranks of a timeSeries object.
+# CLASS:                    REPRESENTATION:
+#  'timeSeries'              S4 Class representation
 ################################################################################
 
 
-rank.timeSeries <-
-function(x, ...)
-{
-    # rank, timeSeries method ...
+setClass("timeSeries",
+    # A class implemented by Diethelm Wuertz
 
-    x = apply(x, 2, rank, ...)
+    # Description:
+    #   Class representatation for 'timeSeries' Objects.
 
-    # Return Value:
-    x
-}
+    # CLASS:
 
-
-################################################################################
-
+    representation(
+        Data = "matrix",
+        positions = "character",
+        format = "character",
+        FinCenter = "character",
+        units = "character",
+        recordIDs = "data.frame",
+        title = "character",
+        documentation = "character")
+)

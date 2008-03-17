@@ -28,6 +28,8 @@ by = "30 m")
     #   Aligns a 'timeSeries' object
 
     # FUNCTION:
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Settings:
     method = match.arg(method)

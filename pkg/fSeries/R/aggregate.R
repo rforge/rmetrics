@@ -34,7 +34,7 @@ function(x, by = c("monthly", "quarterly"), FUN = colMeans, units = NULL, ...)
     #   x - a 'timeSeries' object to be aggregated
     #   by - calendarical block, only active when both 'from'
     #       and 'to' are NULL
-    #   FUN - function to be applied, by default 'colAvgs'
+    #   FUN - function to be applied, by default 'colMeans'
     #   units - a character vector with column names, allows to
     #       overwrite the column names of the input 'timeSeries'
     #       object.
@@ -44,6 +44,11 @@ function(x, by = c("monthly", "quarterly"), FUN = colMeans, units = NULL, ...)
 
     # FUNCTION:
 
+    # Check object:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+
     # Settings:
     format = x@format
     zone = x@FinCenter
@@ -51,9 +56,6 @@ function(x, by = c("monthly", "quarterly"), FUN = colMeans, units = NULL, ...)
     recordIDs = data.frame()
     title = x@title
     documentation = x@documentation
-
-    # Check object:
-    stopifnot(is.timeSeries(x))
 
     # Monthly and Quarterly from and to timeDate Objects:
     if (by[1] == "monthly") {
@@ -84,10 +86,10 @@ function(x, by = c("monthly", "quarterly"), FUN = colMeans, units = NULL, ...)
     pos = time(x)
     rowNames = rownames(x@Data)
     rowBind = NULL
-    for (i in 1:from@Dim) {
+    for (i in 1L:length(from)) {
         test = (j.pos >= j.from[i] & j.pos <= j.to[i])
-        # make sure that cutted is a matrix ...
-        cutted = as.matrix(y[test, ])
+        # make sure that cutted is a matrix with same number of col as x !
+        cutted = matrix(y[test, ], ncol = NCOL(x))
         ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
         ans = fun(cutted, ...)
         rowBind = rbind(rowBind, ans)

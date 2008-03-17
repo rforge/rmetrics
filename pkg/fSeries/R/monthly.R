@@ -34,6 +34,9 @@ function(x)
     #   x = as.timeSeries(data(edhec)); countMonthlyRecords(x)
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Count:
     ans = rollMonthlySeries(x[, 1], period = "1m", by = "1m", FUN = NROW)
@@ -59,6 +62,9 @@ function(x)
     #   x = as.timeSeries(data(edhec)); isMonthly(x)
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Compare Counts wit Number of Records:
     Counts = colSums(countMonthlyRecords(x))[[1]]
@@ -88,6 +94,9 @@ function(x, period = "12m", by = "1m")
     #       e.g. "3m" means one quarter
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Get Window Parameter:
     periodLength = as.numeric(substr(period, 1, nchar(period)-1))
@@ -140,6 +149,9 @@ function(x, period = "12m", by = "1m", FUN, ...)
     #   FUN - function to be applied
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Settings:
     windows = rollMonthlyWindows(x = x[, 1], period = period, by = by)

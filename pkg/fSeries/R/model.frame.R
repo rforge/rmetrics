@@ -24,7 +24,7 @@ function(formula, data, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Extracting the “Environment” of a Model Formula
+    #   Extracting the Environment of a Model Formula
 
     # Arguments:
     #   formula - a model formula

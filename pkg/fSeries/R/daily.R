@@ -23,8 +23,8 @@
 
 
 dummyDailySeries <-
-function(x = rnorm(365), units = NULL,
-zone = myFinCenter, FinCenter = myFinCenter)
+    function(x = rnorm(365), units = NULL,
+             zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -58,9 +58,9 @@ zone = myFinCenter, FinCenter = myFinCenter)
 
 
 alignDailySeries <-
-function (x, method = c("before", "after", "interp", "fillNA"),
-include.weekends = FALSE, units = NULL, zone = myFinCenter,
-FinCenter = myFinCenter)
+    function (x, method = c("before", "after", "interp", "fillNA"),
+              include.weekends = FALSE, units = NULL, zone = myFinCenter,
+              FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -82,7 +82,12 @@ FinCenter = myFinCenter)
     # FUNCTION:
 
     # Settings:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+
     method = match.arg(method)
+
 
     # Internal Function
     # Univariate Time Series Alignment:
@@ -186,57 +191,61 @@ FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
-rollDailySeries =
+rollDailySeries <-
     function(x, period = "7d", FUN, ...)
-    {   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-        # Description:
-        #   Rolls daily a 'timeSeries' on a given period
+    # Description:
+    #   Rolls daily a 'timeSeries' on a given period
 
-        # Arguments:
-        #   x - an univariate "timeSeries" object or a numeric vector.
-        #   n - an integer specifying the number of periods or
-        #       terms to use in each rolling/moving sample.
-        #   trim - a logical flag: if TRUE, the first n-1 missing values in
-        #       the returned object will be removed; if FALSE, they will
-        #       be saved in the returned object. The default is TRUE.
-        #   FUN - the rolling function, arguments to this function can be
-        #       passed through the \code{\dots} argument.
+    # Arguments:
+    #   x - an univariate "timeSeries" object or a numeric vector.
+    #   n - an integer specifying the number of periods or
+    #       terms to use in each rolling/moving sample.
+    #   trim - a logical flag: if TRUE, the first n-1 missing values in
+    #       the returned object will be removed; if FALSE, they will
+    #       be saved in the returned object. The default is TRUE.
+    #   FUN - the rolling function, arguments to this function can be
+    #       passed through the \code{\dots} argument.
 
-        # FUNCTION:
+    # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
-        # Fix missing matrix method for quantile(), still to do ...
-        .quantile.matrix = function(x, probs = 0.95, ...) {
-            apply(as.matrix(x), 2, quantile, probs = probs) }
+    # Fix missing matrix method for quantile(), still to do ...
+    .quantile.matrix = function(x, probs = 0.95, ...) {
+        apply(as.matrix(x), 2, quantile, probs = probs) }
 
-        # Settings:
-        periodLength = as.numeric(substr(period, 1, nchar(period) - 1))
-        periodUnit = substr(period, nchar(period), nchar(period))
-        N = nrow(x)
-        Start = start(x) + (periodLength-1)*24*3600
-        Positions = time(x)
-        to = Positions[Positions > Start]
-        from = to - periodLength*24*3600
+    # Settings:
+    periodLength = as.numeric(substr(period, 1, nchar(period) - 1))
+    periodUnit = substr(period, nchar(period), nchar(period))
+    N = nrow(x)
+    Start = start(x) + (periodLength-1)*24*3600
+    Positions = time(x)
+    to = Positions[Positions > Start]
+    from = to - periodLength*24*3600
 
-        # Apply Function:
-        ans = applySeries(x = x, from = from, to = to, FUN = FUN, ...)
+    # Apply Function:
+    ans = applySeries(x = x, from = from, to = to, FUN = FUN, ...)
 
-        # Return Value:
-        ans
-    }
+    # Return Value:
+    ans
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-ohlcDailyPlot =
-function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab =
-c("Date", "Date"), ylab = c("Price", "Volume"), main = c("O-H-L-C", "Volume"),
-grid.nx = 7, grid.lty = "solid", ...)
+ohlcDailyPlot <-
+    function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab =
+             c("Date", "Date"), ylab = c("Price", "Volume"),
+             main = c("O-H-L-C", "Volume"),
+             grid.nx = 7, grid.lty = "solid", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plots open–high–low–close bar chart
+    #   Plots open | high | low | close bar chart
 
     # Arguments:
     #   x - an S4 object of class 'timeSeries' with named entries:
@@ -247,6 +256,9 @@ grid.nx = 7, grid.lty = "solid", ...)
     #   function from his R-package "tseries".
 
     # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     # Next:
     x.filled = alignDailySeries(x, method = "fillNA", include.weekends = TRUE)
