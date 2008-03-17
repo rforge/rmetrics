@@ -37,7 +37,7 @@
 timeDate <-
     function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
     FinCenter = myFinCenter)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -124,29 +124,29 @@ timeDate <-
     }
 
     ## Convert:
-    if (recFinCenter == "GMT" && useFinCenter == "GMT") {   
+    if (recFinCenter == "GMT" && useFinCenter == "GMT") {
         ## GMT -> GMT:
         ## nothing to do
-    } else if (recFinCenter == "GMT" && useFinCenter != "GMT") {  
+    } else if (recFinCenter == "GMT" && useFinCenter != "GMT") {
         ## GMT -> nonGMT
         charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
-    } else if (recFinCenter != "GMT" && useFinCenter == "GMT") {  
+    } else if (recFinCenter != "GMT" && useFinCenter == "GMT") {
         ## nonGMT -> GMT
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
-    } else if (recFinCenter == useFinCenter) {        
+    } else if (recFinCenter == useFinCenter) {
         ## nonGMT -> equal nonGMT
         ## nothing to do
-    } else if (recFinCenter != useFinCenter) {        
+    } else if (recFinCenter != useFinCenter) {
         ## nonGMT -> other nonGMT
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
         charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
-    } else { 
+    } else {
         ## impossible
         ## when *not* returning a timeDate() object, we should warn
         message("returning NULL instead of \"timeDate\"")
         return(invisible())
     }
-    
+
     ## In all good cases :
     if (trace) {
         cat("\nOutput: ")
@@ -160,7 +160,6 @@ timeDate <-
 
     new("timeDate",
         Data = as.POSIXct(lt),
-        Dim = as.integer(length(charvec)),
         format = if(noTime) isoDate else isoFormat,
         FinCenter = useFinCenter)
 }
@@ -169,9 +168,9 @@ timeDate <-
 # ------------------------------------------------------------------------------ ------------------------------------------------------------------------------
 
 
-.formatFinCenter <- 
+.formatFinCenter <-
     function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
