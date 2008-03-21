@@ -156,7 +156,7 @@ show.fHTEST <-
     cat("\n\n")
     
     # Return Value:
-    invisible()
+    #   invisible()  # made visible by DW
 }
 
 
