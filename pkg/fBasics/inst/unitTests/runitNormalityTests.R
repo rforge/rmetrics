@@ -51,59 +51,54 @@
 ################################################################################
  
 
-test.normalTests = 
+test.NormalityTests = 
 function()
-{   
-    if (FALSE) {
-             
-        require(akima)
-        
-        # Normal Data:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        X = rnorm(50)
-        
-        TEST = ksnormTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-          
-        TEST = shapiroTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = jarqueberaTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-         
+{       
+    # Normal Data:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    X = rnorm(50)
+    
+    TEST = ksnormTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+      
+    TEST = shapiroTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = jarqueberaTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+     
+    if(try(require(akima))) {
         TEST = jbTest(X)
         print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = dagoTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = adTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = cvmTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = lillieTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = pchiTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = sfTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-    }
+        checkIdentical(as.character(class(TEST)), "fHTEST") }
+    
+    TEST = dagoTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = adTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = cvmTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = lillieTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = pchiTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = sfTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Return Value:
     return()
@@ -113,62 +108,52 @@ function()
 # ------------------------------------------------------------------------------ 
     
 
-test.normalTestsTS = 
+test.NormalityTests.MSFT = 
 function()
-{      
-    if (FALSE) {
-             
-        require(akima)
-        
-        # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
-        # SRC = "ZivotWang/data/msft.dat.csv"
-        # DATA = paste(URL, SRC, sep = "") 
-        # download.file(DATA, destfile = "msft.dat.csv")
-        # msft.dat = readSeries("msft.dat.csv")
-        # from Ecofin ...
-        X = returnSeries(as.timeSeries(data(msft.dat)))[, 1]
-        
-        TEST = ksnormTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-          
-        TEST = shapiroTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = jarqueberaTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-         
+{            
+    X = returnSeries(as.timeSeries(data(msft.dat)))[, 1]
+    
+    TEST = ksnormTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+      
+    TEST = shapiroTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = jarqueberaTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+     
+
+    if(try(require(akima))) {
         TEST = jbTest(X)
         print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = dagoTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = adTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = cvmTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = lillieTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = pchiTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-        TEST = sfTest(X)
-        print(TEST)
-        checkIdentical(as.character(class(TEST)), "fHTEST")
-        
-    }
+        checkIdentical(as.character(class(TEST)), "fHTEST")}
+    
+    TEST = dagoTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = adTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = cvmTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = lillieTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = pchiTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = sfTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Return Value:
     return()
