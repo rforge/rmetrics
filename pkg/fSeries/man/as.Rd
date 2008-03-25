@@ -3,21 +3,20 @@
 
 \title{timeSeries Class, Coercion and Transformation}
 
-
 \alias{as}
-\alias{is.timeSeries}
-
 \alias{as.timeSeries}
 \alias{as.timeSeries.default}
-\alias{as.timeSeries.numeric}
 \alias{as.timeSeries.data.frame} 
-\alias{as.timeSeries.matrix}
-\alias{as.timeSeries.ts}
 \alias{as.timeSeries.character}
-\alias{as.timeSeries.timeSeries}
 \alias{as.timeSeries.zoo} 
 
+\alias{coerce,ANY,timeSeries-method}
+\alias{coerce,data.frame,timeSeries-method}
+\alias{coerce,character,timeSeries-method}
+\alias{coerce,ANY,timeSeries-method}
+
 \alias{as.vector.timeSeries}
+\alias{as.numeric.timeSeries}
 \alias{as.matrix.timeSeries}
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
@@ -40,9 +39,6 @@
     \code{as.timeSeries.matrix} \tab Converts from a matrix, \cr 
     \code{as.timeSeries.ts} \tab Converts from an object of class 'ts',
  \cr
- \code{as.timeSeries.timeSeries} \tab Converts from an object of class 
-      'timeSeries' (can be used to convert a timeSeries to new 
-      financial center), \cr 
     \code{as.timeSeries.character} \tab Converts from a named demo file, \cr 
     \code{as.timeSeries.zoo} \tab Converts an object of class zoo. }
     
@@ -50,6 +46,7 @@
     
     \tabular{ll}{
     \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector, \cr
+    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric, \cr
     \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix, \cr
     \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a data.frame, \cr 
     \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts' object. }
@@ -58,23 +55,15 @@
 
 
 \usage{
-is.timeSeries(object)
-\method{as.timeSeries}{numeric}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
-\method{as.timeSeries}{data.frame}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
-\method{as.timeSeries}{matrix}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
-\method{as.timeSeries}{ts}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots)
-\method{as.timeSeries}{timeSeries}(x,zone = x@FinCenter, FinCenter =
-    myFinCenter, \dots)
-\method{as.timeSeries}{character}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
-\method{as.timeSeries}{zoo}(x,zone = myFinCenter, FinCenter =
-    myFinCenter, \dots) 
- 
+\method{as.timeSeries}{default}(x, \dots) 
+\method{as.timeSeries}{data.frame}(x, \dots) 
+\method{as.timeSeries}{character}(x, \dots) 
+\method{as.timeSeries}{zoo}(x, \dots) 
+
+% \S4method{coerce}{ANY,timeSeries}(from, to)
+
 \method{as.vector}{timeSeries}(x, mode = "any")
+\method{as.numeric}{timeSeries}(x, \dots)
 \method{as.matrix}{timeSeries}(x, \dots)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
@@ -83,16 +72,10 @@ is.timeSeries(object)
 
 \arguments{
   
-    \item{FinCenter}{
-        a character with the the location of the  financial center named 
-        as "continent/city". 
-    }
+
     \item{mode}{ 
         a character string giving an atomic mode or \code{"list"},
         or (not for 'vector') \code{"any"}.
-    }
-    \item{object}{  
-        an object of class \code{timeSeries}.
     }
     \item{optional}{
         A logical value. If \code{TRUE}, setting row names and converting
@@ -105,9 +88,6 @@ is.timeSeries(object)
     \item{x}{ 
         an object which is coerced according to the generic function.
     } 
-    \item{zone}{
-        the time zone or financial center where the data were recorded.
-    }  
     \item{\dots}{
         arguments passed to other methods.
     }
@@ -116,12 +96,6 @@ is.timeSeries(object)
 
 
 \value{
-
-    \code{is.timeSeries}
-    \cr
-    returns \code{TRUE} or \code{FALSE} depending on whether its
-    argument is of \code{timeSeries} type or not.
-    \cr
     
     \code{as.timeSeries}\cr
     \cr
@@ -129,6 +103,7 @@ is.timeSeries(object)
     \cr
     
     \code{as.vector}\cr
+    \code{as.numeric}\cr
     \code{as.data.frame}\cr
     \code{as.matrix}\cr
     \code{as.ts}
@@ -148,9 +123,6 @@ is.timeSeries(object)
    TS = timeSeries(data, charvec, units = "RAND")
    TS
 
-## Test for timeSeries:
-   is.timeSeries(TS)
-   
 ## As Vector:
    as.vector(TS)
    

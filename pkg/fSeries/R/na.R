@@ -24,9 +24,9 @@
 ################################################################################
 
 
-na.omit.timeSeries <-
-function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-interp = c("before", "linear", "after"), ...)
+setMethod("na.omit", "timeSeries",
+          function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+                   interp = c("before", "linear", "after"), ...)
 {
     # Description
     #    Handles NAs in timeSeries objects
@@ -34,41 +34,42 @@ interp = c("before", "linear", "after"), ...)
     # FUNTION:
 
     # Check Arguments:
-    method = match.arg(method)
-    interp = match.arg(interp)
+    method <- match.arg(method)
+    interp <- match.arg(interp)
 
     # Skip ?
     if (method == "s") return(object)
 
     # Handle NAs in data matrix:
-    x = .naOmitMatrix(as.matrix(object), method, interp)
+    x <- .naOmitMatrix(as.matrix(object), method, interp)
 
     # Handle recordIDs ...
-    recordIDs = object@recordIDs
-    modID = c(r = TRUE, z = FALSE, ir = TRUE, iz = FALSE, ie = FALSE)
+    recordIDs <- object@recordIDs
+    modID <- c(r = TRUE, z = FALSE, ir = TRUE, iz = FALSE, ie = FALSE)
     if(modID[method] > 0 && sum(dim(recordIDs)) > 0 ) {
-        index = attr(x, "n.action")
-        recordIDs = recordIDs[index, ]
+        index <- attr(x, "n.action")
+        recordIDs <- recordIDs[index, ]
     }
 
     # Return Value:
     new("timeSeries",
-        Data = x,
-        positions = rownames(x),
+        data = x,
+        charvec = rownames(x),
+        units = colnames(x),
         format = object@format,
+        zone = object@FinCenter,
         FinCenter = object@FinCenter,
-        units = colnames(object),
         recordIDs = recordIDs,
         title = object@title,
         documentation = object@documentation)
-}
+})
 
 
 # ------------------------------------------------------------------------------
 
 
-.naOmitMatrix =
-function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+.naOmitMatrix <-
+    function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
 interp = c("before", "linear", "after"))
 {
     # Internal Function called from na.omit.timSeries()

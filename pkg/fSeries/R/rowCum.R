@@ -16,8 +16,8 @@
 ################################################################################
 # FUNCTION:                 COLUMN/ROW CUMULATIVE STATISTICS:
 #  rowCumsums                Computes sample cumulated sums by row
-#  rowCumsums.default        S3 default method (for matrix objects)
-#  rowCumsums.timeSeries     S3 method for timeSeries objects
+#  rowCumsums,ANY            S4 method (for object which can be converted to  matrix
+#  rowCumsums,timeSeries     S4 method for timeSeries objects
 ################################################################################
 
 
@@ -33,72 +33,57 @@
 ################################################################################
 
 
-rowCumsums =
-function(x, na.rm = FALSE, ...)
-{
-    UseMethod("rowCumsums")
-}
+setMethod("rowCumsums", "ANY",
+          function(x, na.rm = FALSE, ...)
+      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
+          # Description:
+          #   Computes sample cumulated sums by row (for matrix objects)
+
+          # Arguments:
+
+          # FUNCTION:
+
+          # Transform:
+          X <- as(x, "matrix")
+
+          # Statistics:
+          if (na.rm) {
+              result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
+          } else {
+              result = apply(X, MARGIN = 2, FUN = cumsum, ...)
+          }
+          colnames(result) <- paste(1:NCOL(x))
+
+          # Statistics:
+          result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
+
+          # Return Value:
+          result
+      })
 
 
 # ------------------------------------------------------------------------------
 
 
-rowCumsums.default =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod("rowCumsums", "timeSeries",
+          function(x, na.rm = FALSE, ...)
+      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    # Description:
-    #   Computes sample cumulated sums by row (for matrix objects)
+          # Description:
+          #   Computes sample cumulated sums by row for timeSeries objects
 
-    # Arguments:
+          # Arguments:
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Transform:
-    X = as.matrix(x, ...)
+          # Cumulative Sums:
 
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
-    } else {
-        result = apply(X, MARGIN = 2, FUN = cumsum, ...)
-    }
-    colnames(result) = paste(1:ncol(x))
+          series(x) <- callGeneric(as(x, "matrix"), na.rm, ...)
 
-    # Statistics:
-    result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowCumsums.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by row for timeSeries objects
-
-    # Arguments:
-
-    # FUNCTION:
-
-    # Cumulative Sums:
-    ans = rowCumsums(as.matrix(x, ...))
-
-    # Time Series Input ?
-    if (class(x) == "timeSeries") {
-        x@Data = ans
-        result = x
-    }
-
-    # Return Value:
-    ans
-}
+          # Return Value:
+          x
+      })
 
 ################################################################################
 

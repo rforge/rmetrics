@@ -5,7 +5,7 @@
 
 
 \alias{attach}
-\alias{attach.timeSeries}
+\alias{attach,timeSeries-method}
 
 
 \description{
@@ -21,7 +21,7 @@
 
 
 \usage{
-\method{attach}{timeSeries}(what, pos = 2, name = deparse(substitute(what)), 
+\S4method{attach}{timeSeries}(what, pos = 2, name = deparse(substitute(what)), 
     warn.conflicts = TRUE)
 }
 

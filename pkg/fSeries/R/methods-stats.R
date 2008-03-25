@@ -15,10 +15,10 @@
 
 # experimental
 
-members <- c("cov", "cor")
+.members <- c("cov", "cor")
 
 # template definition
-templateXY <-  c("{",
+.templateXY <-  c("{",
                "finCenter <- finCenter(x)",
                "x <- as.matrix(x)",
                "if (!is.null(y)) y <- as.matrix(y)",
@@ -27,21 +27,21 @@ templateXY <-  c("{",
                "}")
 
 # set the Methods in a loop
-for (f in members) {
-    def <- function()NULL
-    formals(def) <- formals(f)
-    body(def) <- parse(text = templateXY)
-    setMethod(f, "timeSeries", def)
+for (.f in .members) {
+    .def <- function()NULL
+    formals(.def) <- formals(.f)
+    body(.def) <- parse(text = .templateXY)
+    setMethod(.f, "timeSeries", .def)
 }
 
 # ------------------------------------------------------------------------------
 
-members <- c("quantile", "dnorm", "dcauchy", "dt")
+.members <- c("quantile", "dnorm", "dcauchy", "dt")
 
 # template definition
-templateXXX <-  c("{",
-                  "finCenter <- finCenter(XXX)",
-                  "XXX <- as.matrix(XXX)",
+.templateANY <-  c("{",
+                  "finCenter <- finCenter(ANY)",
+                  "ANY <- as.matrix(ANY)",
                   "ans <- callNextMethod()",
                   "if (is.matrix(ans))",
                   "    ans <- timeSeries(ans, zone = finCenter,",
@@ -50,10 +50,10 @@ templateXXX <-  c("{",
                   "}")
 
 # set the Methods in a loop
-for (f in members) {
-    def <- function()NULL
-    formals(def) <- formals(f)
-    bodyText <- gsub("XXX", names(formals(f))[1], templateXXX)
-    body(def) <- parse(text = bodyText)
-    setMethod(f, "timeSeries", def)
+for (.f in .members) {
+    .def <- function()NULL
+    formals(.def) <- formals(.f)
+    .bodyText <- gsub("ANY", names(formals(.f))[1], .templateANY)
+    body(.def) <- parse(text = .bodyText)
+    setMethod(.f, "timeSeries", .def)
 }

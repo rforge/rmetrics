@@ -42,7 +42,7 @@
 \examples{
 ## data - 
    x = as.timeSeries(data(msft.dat))[, 1:4]
-   x = 100*returnSeries(x)
+   x = 100*returns(x)
 
 ## rank -
    rank(x[, "Open"])

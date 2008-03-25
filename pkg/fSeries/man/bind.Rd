@@ -6,7 +6,7 @@
 \alias{merge}
 \alias{cbind}
 \alias{rbind}
-\alias{merge.timeSeries}
+\alias{merge,timeSeries,timeSeries-method}
 \alias{cbind.timeSeries} 
 \alias{rbind.timeSeries} 
 \alias{c.timeSeries} 
@@ -19,7 +19,7 @@
 
 
 \usage{
-\method{merge}{timeSeries}(x, y, units = NULL, ...)  
+\S4method{merge}{timeSeries,timeSeries}(x, y, units = NULL, ...)  
 \method{cbind}{timeSeries}(x, y, units = NULL, ...)  
 \method{rbind}{timeSeries}(x, y, units = NULL, ...)
 \method{cbind}{timeSeries}(x, y, units = NULL, ...)
@@ -54,7 +54,7 @@
    x = as.timeSeries(data(msft.dat))[1:12, ]
 
 ## cbind -
-   cbind(x[, "Open"], returnSeries(x[, "Open"]), units = c("Open", "Return"))
+   cbind(x[, "Open"], returns(x[, "Open"]), units = c("Open", "Return"))
 
 ## rbind -
    rbind(x[1:3, "Open"], x[10:12, "Open"])

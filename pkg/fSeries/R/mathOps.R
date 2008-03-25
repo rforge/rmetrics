@@ -14,116 +14,80 @@
 
 
 ################################################################################
-# METHOD:                   MATHEMATICAL OPERATIONS ON DATA:
-#  Ops.timeSeries            Returns group 'Ops' for a 'timeSeries' object
-#  Math.timeSeries           Returns group Math for a 'timeSeries' object
-#  Math2.timeSeries          Returns group Math2 for a 'timeSeries' object
-#  Summary.timeSeries        Returns group Summary for a 'timeSeries' object
-#  diff.timeSeries           Differences a 'timeSeries' object
-#  scale.timeSeries          Centers and/or scales a 'timeSeries' object
-#  quantile.timeSeries       Returns quantiles of an univariate 'timeSeries'
+# S4 METHOD:                MATHEMATICAL OPERATIONS ON DATA:
+#  Compare,timeSeries        Returns group 'Compare' for a 'timeSeries' object
+#  Ops,timeSeries            Returns group 'Ops' for a 'timeSeries' object
+#  Math,timeSeries           Returns group Math for a 'timeSeries' object
+#  Math2,timeSeries          Returns group Math2 for a 'timeSeries' object
+#  Summary,timeSeries        Returns group Summary for a 'timeSeries' object
+#  diff,timeSeries           Differences a 'timeSeries' object
+#  scale,timeSeries          Centers and/or scales a 'timeSeries' object
+#  quantile,timeSeries       Returns quantiles of an univariate 'timeSeries'
 ################################################################################
 
+setMethod("Ops", c("timeSeries", "timeSeries"),
+          function(e1, e2)
+      {
 
-Ops.timeSeries =
-function(e1, e2 = 1)
-{   # A function implemented by Diethelm Wuertz
-    # Modified by Yohan Chalabi
+          # check if FinCenter are identical
+          if (finCenter(e1) != finCenter(e2)) {
+              finCenter(e2) <- finCenter(e1)
+              warning("FinCenter changed to ", finCenter(e2), call. = FALSE)
+          }
 
-    # Description:
-    #   Uses group 'Ops' generic functions for 'timeSeries' objects
+          # check if positions are identical
+          if (!identical(time(e1), time(e2)))
+              stop("positions slot do not match")
 
-    # Arguments:
-    #   e1, e2 - two objects of class 'timeSeries'.
+          series(e1) <- callGeneric(as(e1, "matrix"), as(e2, "matrix"))
 
-    # Value:
-    #   Returns an object of class 'timeSeries'.
+          e1@recordIDs <- data.frame(e1@recordIDs, e2@recordIDs)
 
-    # FUNCTION:
+          e1
+      })
 
-    # Save:
-    s1 = e1
-    s2 = e2
+setMethod("Ops", c("timeSeries", "ANY"),
+          function(e1, e2)
+      {
+          series(e1) <- callGeneric(as(e1, "matrix"), e2)
+          e1
+      })
 
-    # Which one is a 'timeSeries' object?
-    i1 = inherits(e1, "timeSeries")
-    i2 = inherits(e2, "timeSeries")
+setMethod("Ops", c("ANY", "timeSeries"),
+          function(e1, e2)
+      {
+          series(e2) <- callGeneric(e1, as(e2, "matrix"))
+          e2
+      })
 
-    # Match positions and FinCenter?
-    if (i1 && i2) {
-        if (nrow(e1@Data) == nrow(e2@Data) &&
-            !identical(as.vector(e1@positions), as.vector(e2@positions)))
-            stop("positions slot must match")
-        if (!identical(e1@FinCenter, e2@FinCenter))
-            stop("FinCenter slot must match")
-    }
-
-    # Extract Data Slot:
-    if (i1 && sum(dim(e1)) == 2) {
-        e1 = as.double(e1@Data)
-        i1 = FALSE
-    } else if (i1) {
-        e1 = e1@Data
-    }
-    if (i2 && sum(dim(e2)) == 2) {
-        e2 = as.double(e2@Data)
-        i2 = FALSE
-    } else if (i2) {
-        e2 = e2@Data
-    }
-
-    # Compute:
-   s = NextMethod(.Generic)
-
-    # Make timeSeries:
-    if ( i1)        { s1@Data = s; s = s1 }
-    if (!i1 &&  i2) { s2@Data = s; s = s2 }
-    if ( i1 && !i2) s@units = s1@units
-    if (!i1 &&  i2) s@units = s2@units
-    if ( i1 &&  i2) s@units = paste(s1@units, "_", s2@units, sep = "")
-    colnames(s@Data) = s@units
-
-    df = data.frame()
-    if (i1) {
-        if (dim(s1@recordIDs)[1] > 0)
-            df = s1@recordIDs
-    }
-    if (i2) {
-        if (dim(s2@recordIDs)[1] > 0)
-            df = s2@recordIDs
-    }
-    if (i1 & i2) {
-        if (dim(s1@recordIDs)[1] > 0 & dim(s2@recordIDs)[1] > 0)
-            df = data.frame(s1@recordIDs, s2@recordIDs)
-    }
-    s@recordIDs = df
-
-    # Return Value:
-    s
-}
+# important for +/- timeSeries()
+setMethod("+", c("timeSeries", "missing"), function(e1, e2) e1)
+setMethod("-", c("timeSeries", "missing"), function(e1, e2) 0-e1)
 
 # ------------------------------------------------------------------------------
+#
+# Auto-generate S4 methods for Math, Math2 and Summary
 
-members <- c("Math", "Math2", "Summary")
+.members <- c("Math", "Math2", "Summary")
 
 # template definition
-template <-  c("{",
-               "finCenter <- finCenter(XXX)",
-               "XXX <- as.matrix(XXX)",
-               "ans <- callNextMethod()",
-               "if (is.matrix(ans))",
-               "    ans <- timeSeries(ans, zone = finCenter,",
-               "                      FinCenter = finCenter)",
-               "ans",
-               "}")
+.template <-  c("{",
+                "finCenter <- finCenter(ANY)",
+                "ANY <- as.matrix(ANY)",
+                "ans <- callNextMethod()",
+                "if (is.matrix(ans))",
+                "    ans <- timeSeries(ans, zone = finCenter,",
+                "                      FinCenter = finCenter)",
+                "ans",
+                "}")
 
 # set the Methods in a loop
-for (f in members) {
-    def <- function()NULL
-    formals(def) <- formals(f)
-    bodyText <- gsub("XXX", names(formals(f))[1], template)
-    body(def) <- parse(text = bodyText)
-    setMethod(f, "timeSeries", def)
+for (.f in .members) {
+    .def <- function()NULL
+    formals(.def) <- formals(.f)
+    .bodyText <- gsub("ANY", names(formals(.f))[1], .template)
+    body(.def) <- parse(text = .bodyText)
+    setMethod(.f, "timeSeries", .def)
 }
 
 # ------------------------------------------------------------------------------
@@ -132,93 +96,94 @@ for (f in members) {
 ###      more than one argument: S4 group dispatch will always pass only
 ###      one argument to the method so if you want to handle 'base' in
 ###      'log', set a specific method as well.
+
 setMethod("log",
           "timeSeries",
           function(x, base = exp(1)) {
-              finCenter <- finCenter(x)
+              FinCenter <- finCenter(x)
               x <- as.matrix(x)
               ans <- log(x, base = base)
-              ans <- timeSeries(ans, zone = finCenter,
-                                FinCenter = finCenter)
+              ans <- timeSeries(ans, zone = FinCenter,
+                                FinCenter = FinCenter)
               ans
           })
 setMethod("trunc",
           "timeSeries",
           function(x, ...) {
-              finCenter <- finCenter(x)
+              FinCenter <- finCenter(x)
               x <- as.matrix(x)
               ans <- trunc(x, ...)
-              ans <- timeSeries(ans, zone = finCenter,
-                                FinCenter = finCenter)
+              ans <- timeSeries(ans, zone = FinCenter,
+                                FinCenter = FinCenter)
               ans
           })
 
 # ------------------------------------------------------------------------------
 
-diff.timeSeries <-
-function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Modified by Yohan Chalabi
+setMethod("diff", "timeSeries",
+          function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+      {   # A function implemented by Diethelm Wuertz
+          # Modified by Yohan Chalabi
 
-    # Description:
-    #   Difference 'timeSeries' objects.
+          # Description:
+          #   Difference 'timeSeries' objects.
 
-    # Arguments:
-    #   x - a 'timeSeries' object.
-    #   lag - an integer indicating which lag to use.
-    #       By default 1.
-    #   diff - an integer indicating the order of the difference.
-    #       By default 1.
-    #   trim - a logical. Should NAs at the beginning of the
-    #       series be removed?
-    #   pad - a umeric value with which NAs should be replaced
-    #       at the beginning of the series.
+          # Arguments:
+          #   x - a 'timeSeries' object.
+          #   lag - an integer indicating which lag to use.
+          #       By default 1.
+          #   diff - an integer indicating the order of the difference.
+          #       By default 1.
+          #   trim - a logical. Should NAs at the beginning of the
+          #       series be removed?
+          #   pad - a umeric value with which NAs should be replaced
+          #       at the beginning of the series.
 
-    # Value:
-    #   Returns a differenced object of class 'timeSeries'.
+          # Value:
+          #   Returns a differenced object of class 'timeSeries'.
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Convert:
-    y = as.matrix(x)
+          # Convert:
+          y = as.matrix(x)
 
-    # Check NAs:
-    # if (any(is.na(y))) stop("NAs are not allowed in time series")
+          # Check NAs:
+          # if (any(is.na(y))) stop("NAs are not allowed in time series")
 
-    # Difference:
-    z = diff(y, lag = lag, difference = diff)
+          # Difference:
+          z = diff(y, lag = lag, difference = diff)
 
-    # Trim:
-    if (!trim) {
-        diffNums = dim(y)[1] - dim(z)[1]
-        zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
-        rownames(zpad) = rownames(y)[1:diffNums]
-        z = rbind(zpad, z)
-    }
+          # Trim:
+          if (!trim) {
+              diffNums = dim(y)[1] - dim(z)[1]
+              zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
+              rownames(zpad) = rownames(y)[1:diffNums]
+              z = rbind(zpad, z)
+          }
 
-    # Record IDs:
-    df = x@recordIDs
-    if (trim) {
-        if (sum(dim(df)) > 0) {
-            TRIM = dim(df)[1] - dim(z)[1]
-            df = df[-(1:TRIM), ]
-        }
-    }
+          # Record IDs:
+          df = x@recordIDs
+          if (trim) {
+              if (sum(dim(df)) > 0) {
+                  TRIM = dim(df)[1] - dim(z)[1]
+                  df = df[-(1:TRIM), ]
+              }
+          }
 
-    # Return Value:
-    timeSeries(data = z, charvec = rownames(z), units = colnames(z),
-        format = x@format, zone = x@FinCenter, FinCenter = x@FinCenter,
-        recordIDs = df, title = x@title, documentation = x@documentation)
-}
+          # Return Value:
+          timeSeries(data = z, charvec = rownames(z), units = colnames(z),
+                     format = x@format, zone = x@FinCenter,
+                     FinCenter = x@FinCenter, recordIDs = df,
+                     title = x@title, documentation = x@documentation)
+      })
 
 
 # ------------------------------------------------------------------------------
 
 
-scale.timeSeries <-
-    function(x, center = TRUE, scale = TRUE)
-{   # A function implemented by Diethelm Wuertz
-    # Modified by Yohan Chalabi
+setMethod("scale", "timeSeries",
+          function(x, center = TRUE, scale = TRUE)
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Centers and/or scales a 'timeSeries' object.
@@ -232,6 +197,6 @@ scale.timeSeries <-
 
     # Return Value:
     x
-}
+})
 
 ################################################################################

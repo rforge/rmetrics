@@ -5,7 +5,7 @@
 
 
 \alias{summary}
-\alias{summary.timeSeries}
+\alias{summary,timeSeries-method}
 
 \description{
     
@@ -15,7 +15,7 @@
 
 
 \usage{
-\method{summary}{timeSeries}(object, \dots)
+\S4method{summary}{timeSeries}(object, \dots)
 }
 
 

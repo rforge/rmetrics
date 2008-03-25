@@ -14,51 +14,51 @@
 
 
 ################################################################################
-# METHODS:                  PRINT AND PLOT FUNCTIONS:
-#  summary.timeSeries        Summarizes a 'timeSeries' object
+# S4 METHODS:               PRINT AND PLOT FUNCTIONS:
+#  summary,timeSeries        Summarizes a 'timeSeries' object
 ################################################################################
 
 
-summary.timeSeries =
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod("summary", "timeSeries",
+          function(object, ...)
+      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    # Description:
-    #   S3 Summary method for objects of class "timeDate"
+          # Description:
+          #   S3 Summary method for objects of class "timeDate"
 
-    # Arguments
-    #   x - an object of class "timeDate"
+          # Arguments
+          #   x - an object of class "timeDate"
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Series Name:
-    cat("Time Series:          ")
-    cat("\n Name:              ", substitute(object))
-    # Data Matrix:
-    Dim = dim(object@Data)
-    cat("\nData Matrix:        ")
-    cat("\n Dimension:         ", Dim)
-    cat("\n Column Names:      ", colnames(object@Data) )
-    firstName = rownames(object@Data)[1]
-    lastName = rownames(object@Data)[Dim[1]]
-    cat("\n Row Names:         ", firstName, " ... ", lastName)
-    # Date/Time Positions:
-    positions = time(object)
-    cat("\nPositions:          ")
-    cat("\n Start:             ", as.character(start(positions)))
-    cat("\n End:               ", as.character(end(positions)))
-    # Other Attributes:
-    cat("\nAttributes:         ")
-    cat("\n Format:            ", object@format)
-    cat("\n FinCenter:         ", object@FinCenter)
-    cat("\n Units:             ", object@units)
-    cat("\n Title:             ", object@title)
-    cat("\n Documentation:     ", object@documentation)
-    cat("\n")
+          # Series Name:
+          cat("Time Series:          ")
+          cat("\n Name:              ", substitute(object))
+          # Data Matrix:
+          Dim = dim(object@Data)
+          cat("\nData Matrix:        ")
+          cat("\n Dimension:         ", Dim)
+          cat("\n Column Names:      ", colnames(object@Data) )
+          firstName = rownames(object@Data)[1]
+          lastName = rownames(object@Data)[Dim[1]]
+          cat("\n Row Names:         ", firstName, " ... ", lastName)
+          # Date/Time Positions:
+          positions = time(object)
+          cat("\nPositions:          ")
+          cat("\n Start:             ", as.character(start(positions)))
+          cat("\n End:               ", as.character(end(positions)))
+          # Other Attributes:
+          cat("\nAttributes:         ")
+          cat("\n Format:            ", object@format)
+          cat("\n FinCenter:         ", object@FinCenter)
+          cat("\n Units:             ", object@units)
+          cat("\n Title:             ", object@title)
+          cat("\n Documentation:     ", object@documentation)
+          cat("\n")
 
-    # Return Value:
-    invisible()
-}
+          # Return Value:
+          invisible()
+      })
 
 
 ################################################################################

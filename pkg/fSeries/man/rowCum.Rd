@@ -5,9 +5,9 @@
 
 
 \alias{rowCum}
-\alias{rowCumsums} 
-\alias{rowCumsums.default}
-\alias{rowCumsums.timeSeries}
+\alias{rowCumsums}
+\alias{rowCumsums,ANY-method}
+\alias{rowCumsums,timeSeries-method}
 
 
 \description{
@@ -18,8 +18,8 @@
 
 
 \usage{
-\method{rowCumsums}{default}(x, na.rm = FALSE, \dots)
-\method{rowCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
+\S4method{rowCumsums}{ANY}(x, na.rm = FALSE, \dots)
+\S4method{rowCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
 }
 
 

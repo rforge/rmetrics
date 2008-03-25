@@ -6,7 +6,7 @@
 
 \alias{na}
 \alias{na.omit}
-\alias{na.omit.timeSeries}
+\alias{na.omit,timeSeries-method}
 
 \alias{removeNA}
 \alias{substituteNA}
@@ -33,7 +33,7 @@
 
 
 \usage{
-\method{na.omit}{timeSeries}(object, method = c("r", "s", "z", "ir", "iz", "ie"), 
+\S4method{na.omit}{timeSeries}(object, method = c("r", "s", "z", "ir", "iz", "ie"), 
     interp = c("before", "linear", "after"), \dots)
 
 removeNA(x, \dots)

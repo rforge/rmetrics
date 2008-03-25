@@ -158,7 +158,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01    
    # Align with NA:
-   tsRet = returnSeries(tsApril01, trim = TRUE)
+   tsRet = returns(tsApril01, trim = TRUE)
    GoodFriday(2001)   
    EasterMonday(2001) 
    alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)

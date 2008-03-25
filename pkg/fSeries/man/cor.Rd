@@ -1,13 +1,15 @@
-\name{cor}
+\name{cor-method}
+
+
+\docType{methods}
+
+\alias{cor-methods}
+\alias{cov-methods}
+\alias{cor,timeSeries-method}
+\alias{cov,timeSeries-method}
 
 
 \title{Time Series Correlations}
-
-
-\alias{cor}
-\alias{cov}
-\alias{cor.timeSeries}
-\alias{cov.timeSeries}
 
 
 \description{
@@ -24,10 +26,10 @@
 
 
 \usage{
-\method{cov}{timeSeries}(x, y = NULL, use = "all.obs", 
+\S4method{cov}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
-\method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
+\S4method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
 }
 
@@ -67,13 +69,13 @@
 \examples{
 ## data - 
    x = as.timeSeries(data(msft.dat))[, 1:4]
-   x = 100*returnSeries(x)
+   x = 100*returns(x)
 
 ## cov -
    cov(x[, "Open"], x[, "Close"])
    cov(x)
 }
 
-
+\keyword{methods}
 \keyword{chron}
 

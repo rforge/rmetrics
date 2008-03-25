@@ -14,94 +14,86 @@
 
 
 ################################################################################
-# METHODS:                  PRINT AND PLOT FUNCTIONS:
-#  show.timeSeries           Prints a 'timeSeries' object
-#  .print.timeSeries         For internal use
+# S4 METHODS:               PRINT AND PLOT FUNCTIONS:
+#  show,timeSeries           Prints a 'timeSeries' object
+#  print,timeSeries          For internal use
 ################################################################################
 
-show.timeSeries =
-function(object)
-{   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Print method for an S4 object of class "timeSeries"
+setMethod("show", "timeSeries", function(object)
+      {   # A function implemented by Diethelm Wuertz
 
-    # FUNCTION:
+          # Description:
+          #   Print method for an S4 object of class "timeSeries"
 
-    # Unlike print the argument for show is 'object'.
-    x = object
-    recordIDs = FALSE
+          # FUNCTION:
 
-    # Series:
-    cat(x@FinCenter, "\n", sep = "")
-    if (recordIDs) {
-        if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
-            print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE)
-        } else {
-            print(x@Data)
-        }
-    } else {
-        print(x@Data)
-    }
+          # Unlike print the argument for show is 'object'.
+          x = object
+          recordIDs = FALSE
 
-    # Control:
-    control = attr(x, "control")
-    if (!is.null(control)) print(control)
+          # Series:
+          cat(x@FinCenter, "\n", sep = "")
+          if (recordIDs) {
+              if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
+                  print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE)
+              } else {
+                  print(x@Data)
+              }
+          } else {
+              print(x@Data)
+          }
 
-    # Return Value:
-    invisible(x)
-}
+          # Control:
+          control = attr(x, "control")
+          if (!is.null(control)) print(control)
 
+          # Return Value:
+          invisible(x)
+      })
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("show", "timeSeries", show.timeSeries)
+setMethod("print", "timeSeries",
+          function(x, style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
+      {
+          # A function implemented by Diethelm Wuertz
 
+          # Description:
+          #   Allows for horizontal and ts like print output.
 
-# ------------------------------------------------------------------------------
+          # Arguments:
+          #   x - an object of class timeSeries
+          #   style - a character value specifying how to print:
+          #       "tS" Rmetrics' default vertical print style
+          #       "h" horizontal print style,
+          #       "ts" R's base style for regular time series
+          #   by - specifies the period for a regular time serie,
+          #       note only active for style="ts".
 
+          # FUNCTION:
 
-print.timeSeries <-
-function(x, style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
-{
-    # A function implemented by Diethelm Wuertz
+          # Print:
+          style = match.arg(style)
+          by = match.arg(by)
+          if (style == "tS") {
+              show(x)
+          } else if (style == "h") {
+              stopifnot(isUnivariate(x))
+              print(as.vector(x))
+          } else if (style == "ts") {
+              freq = c(month = 12, quarter = 4)
+              start(x)
+              start = unlist(atoms(start(x)))
+              end = unlist(atoms(end(x)))
+              ts = ts(as.vector(x@Data), start[1:2], end[1:2], freq[by])
+              print(ts)
+          }
 
-    # Description:
-    #   Allows for horizontal and ts like print output.
-
-    # Arguments:
-    #   x - an object of class timeSeries
-    #   style - a character value specifying how to print:
-    #       "tS" Rmetrics' default vertical print style
-    #       "h" horizontal print style,
-    #       "ts" R's base style for regular time series
-    #   by - specifies the period for a regular time serie,
-    #       note only active for style="ts".
-
-    # FUNCTION:
-
-    # Print:
-    style = match.arg(style)
-    by = match.arg(by)
-    if (style == "tS") {
-        show(x)
-    } else if (style == "h") {
-        stopifnot(isUnivariate(x))
-        print(as.vector(x))
-    } else if (style == "ts") {
-        freq = c(month = 12, quarter = 4)
-        start(x)
-        start = unlist(atoms(start(x)))
-        end = unlist(atoms(end(x)))
-        ts = ts(as.vector(x@Data), start[1:2], end[1:2], freq[by])
-        print(ts)
-    }
-
-    # Return Value:
-    return(invisible(x))
-}
+          # Return Value:
+          return(invisible(x))
+      })
 
 
 ################################################################################
-

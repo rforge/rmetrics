@@ -14,37 +14,24 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES:
-#  returns                   Computes returns from a financial time series
-#  returns.default           Computes returns from a 'matrix' object
-#  returns.timeSeries        Computes returns from a 'timeSeries' object
+# S4 METHOD                 FINANCIAL TIME SERIES:
+#  returns,ANY               Computes returns from a 'matrix' object
+#  returns,timeSeries        Computes returns from a 'timeSeries' object
 # OLD FUNCTIONS:            KEEP THESE FUNCTIONS FOR COMPATIBILIT:
 #  returnSeries              <- returns.timeSeries
 #  getReturns                <- returns.timeSeries
 ################################################################################
 
 
-returns <-
-function(x, ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes returns from a financial time series
-
-    # Return Value:
-    UseMethod("returns")
-}
-
 
 # ------------------------------------------------------------------------------
 
-
-returns.default <-
-    function(x, method = c("continuous", "discrete", "compound", "simple"),
-    percentage = FALSE, ...)
+setMethod("returns", "ANY",
+          function(x,
+                   method = c("continuous", "discrete", "compound", "simple"),
+                   percentage = FALSE, ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan  Chalabi
 
     # Description:
     #   Computes returns from a 'matrix' object
@@ -61,35 +48,36 @@ returns.default <-
     # FUNCTION:
 
     # Settings:
-    method = match.arg(method)
+    method <- match.arg(method)
 
     # Calculate Returns:
-    data = as.matrix(x)
-    positions = time(x)
+    data <- as(x, "matrix")
+    positions <- time(x)
 
     if(method == "compound" || method == "continuous") {
-        data = rbind( data[1, , drop = FALSE]*NA, apply(log(data), 2, diff))
+        data <- rbind( data[1, , drop = FALSE]*NA, apply(log(data), 2, diff))
     }
     if(method == "simple" || method == "discrete") {
-        data = apply(rbind(data, NA*data[1,]), 2, diff) / data
-        data = rbind(data[1, , drop = FALSE]*NA, data)
-        data = data[-(length(positions) + 1), , drop = FALSE]
+        data <- apply(rbind(data, NA*data[1,]), 2, diff) / data
+        data <- rbind(data[1, , drop = FALSE]*NA, data)
+        data <- data[-(length(positions) + 1), , drop = FALSE]
     }
-    if (percentage) data = 100*data
+    if (percentage) data <- 100*data
 
     # Return Value:
     data
-}
+})
 
 
 # ------------------------------------------------------------------------------
 
 
-returns.timeSeries <-
-    function(x, method = c("continuous", "discrete", "compound", "simple"),
-    percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
+setMethod("returns", "timeSeries",
+          function(x,
+                   method = c("continuous", "discrete", "compound", "simple"),
+                   percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
 
@@ -98,14 +86,14 @@ returns.timeSeries <-
     # FUNCTION:
 
     # Get Returns:
-    if (na.rm) x = na.omit(x, ...)
-    x@Data = returns(as.matrix(x), method, percentage)
-    if (trim) x = na.omit(x, "r")
+    if (na.rm) x <- na.omit(x, ...)
+    series(x) <- returns(as(x, "matrix"), method, percentage)
+    if (trim) x <- na.omit(x, "r")
 
     # Return Value:
     x
 
-}
+})
 
 
 # ------------------------------------------------------------------------------
@@ -121,8 +109,9 @@ returnSeries <-
     # Arguments:
 
     # FUNCTION:
+    .Deprecated("returns", "fSeries")
 
-    returns.timeSeries(...)
+    returns(...)
 }
 
 
@@ -138,8 +127,8 @@ getReturns <-  function(...)
     # Arguments:
 
     # FUNCTION:
-
-    returns.timeSeries(...)
+    .Deprecated("returns", "fSeries")
+    returns(...)
 }
 
 

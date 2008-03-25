@@ -16,8 +16,8 @@
 # FUNCTION:                 DESCRIPTION:
 #  merge.timeSeries          Merges two 'timeSeries' objects
 
-merge.timeSeries <-
-    function(x, y, units = NULL, ...)
+setMethod("merge", c("timeSeries", "timeSeries"),
+    function(x, y, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -32,7 +32,6 @@ merge.timeSeries <-
     df.x = data.frame(positions = x@positions, x@Data)
     rownames(df.x) = 1:length(x@positions)
     df.y = data.frame(positions = y@positions, y@Data)
-
     rownames(df.y) = length(x@positions) + (1:length(y@positions))
 
     # Merge as Data Frame:
@@ -45,16 +44,17 @@ merge.timeSeries <-
     if (test == 0) {
         # Time Series Case:
         ans = sort(
-            .timeSeries(data = data, charvec = as.character(df[,1]),
+            timeSeries(data = data, charvec = as.character(df[,1]),
             format = NULL, zone = FinCenter, FinCenter = FinCenter))
     } else {
         # SignalSeries Case:
         ans = sort(
-            .signalSeries(data = data, charvec = as.character(df[,1])))
+            timeSeries(data = data, charvec = as.character(df[,1]),
+                       format = "counts"))
     }
 
     # Return Value:
     ans
-}
+})
 
 

@@ -1,12 +1,11 @@
-\name{aggregate}
+\name{aggregate-methods}
+
+\docType{methods}
+\alias{aggregate-methods}
+\alias{aggregate,timeSeries-method}
 
 
 \title{timeSeries Class, Functions and Methods}
-
-
-\alias{aggregate}
-\alias{aggregate.timeSeries}
-
 
 \description{
     
@@ -16,7 +15,7 @@
 
 
 \usage{
-\method{aggregate}{timeSeries}(x, by = c("monthly", "quarterly"), 
+\S4method{aggregate}{timeSeries}(x, by = c("monthly", "quarterly"), 
     FUN = colMeans, units = NULL, \dots)
 }
 
@@ -63,5 +62,6 @@
 }
 
 
+\keyword{methods}
 \keyword{chron}
 

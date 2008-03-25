@@ -4,9 +4,8 @@
 \title{Print a Time Series}
 
 
-\alias{show.timeSeries}
 \alias{show,timeSeries-method}
-
+\alias{print,timeSeries-method}
 
 \description{
     
@@ -15,9 +14,9 @@
 }
 
 
-\usage{
-show.timeSeries(object)
-}
+% \usage{
+% show.timeSeries(object)
+% }
 
 
 \arguments{

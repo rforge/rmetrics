@@ -3,8 +3,20 @@
 
 \alias{TimeSeriesSubsettings}
 
+\alias{[,timeSeries,missing,missing,ANY-method} 
+\alias{[,timeSeries,missing,index,missing-method} 
+\alias{[,timeSeries,missing,index,logical-method} 
+\alias{[,timeSeries,index,missing,missing-method} 
+\alias{[,timeSeries,index,missing,logical-method} 
+\alias{[,timeSeries,index,index,missing-method} 
+\alias{[,timeSeries,index,index,logical-method} 
+\alias{[,timeSeries,ANY,ANY,ANY-method} 
+\alias{[,timeSeries,timeSeries,missing,missing-method} 
+\alias{[,timeSeries,timeSeries,missing,logical-method} 
+\alias{[,timeSeries,timeDate,missing,missing-method} 
+\alias{[,timeSeries,timeDate,index,missing-method} 
+\alias{[,timeSeries,timeDate,index,logical-method} 
 
-\alias{[.timeSeries} 
 \alias{[<-.timeSeries}
 \alias{cut.timeSeries} 
 \alias{window.timeSeries}
@@ -35,7 +47,7 @@
 
 \usage{
 
-\method{[}{timeSeries}(x, i, j)
+% \method{[}{timeSeries}(x, i, j, drop)
 \method{[}{timeSeries}(x, i, j) <- value
 
 \method{window}{timeSeries}(x, from, to, \dots)

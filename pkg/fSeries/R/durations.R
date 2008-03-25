@@ -21,7 +21,7 @@
 
 durations <-
     function(x, trim = FALSE, units = c("secs", "mins", "hours"))
-{   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Computes durations from a financial price series
@@ -38,17 +38,18 @@ durations <-
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Positions and Durations:
-    pos = time(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
+    pos <- time(x)
+    dur <- c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
 
     # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
+    series(x) <- matrix(dur, dimnames = list(x@positions, "Duration"))
+    if (trim) x <- x[-1, ]
 
     # Return Series:
     x
@@ -58,8 +59,7 @@ durations <-
 # ------------------------------------------------------------------------------
 
 
-durationSeries =
-function(...)
+durationSeries <- function(...)
 {
     durations(...)
 }

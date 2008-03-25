@@ -13,9 +13,9 @@
 #  ../../COPYING
 
 finCenter  <-
-function(x)
+    function(x)
 {
-    # A function implemented by Yohan Chalabi
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
     #
@@ -26,17 +26,18 @@ function(x)
 
     # FUNCTION:
 
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
 
     ans <-  x@FinCenter
-    ans
 
+    ans
 }
 
+
 "finCenter<-" <-
-function(x, value)
+    function(x, value)
 {
-    # A function implemented by Yohan Chalabi
+    # A function implemented by  Yohan Chalabi and Diethelm Wuertz
 
     # Description:
     #
@@ -46,9 +47,11 @@ function(x, value)
     #
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
+
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # convert to user financial centre
     positions <- timeDate(charvec = time(x), zone = finCenter(x),
@@ -59,3 +62,4 @@ function(x, value)
     # Return Value:
     x
 }
+

@@ -26,9 +26,6 @@
 \alias{colCumreturns.default}
 \alias{colCumreturns.timeSeries}
 
-\alias{cumsum.timeSeries}  
-
-
 \description{
 
     Functions to compute cumulative column statistics.
@@ -49,7 +46,6 @@
 \method{colCumreturns}{default}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
 \method{colCumreturns}{timeSeries}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
 
-\method{cumsum}{timeSeries}(x)
 }
 
 
@@ -76,14 +72,6 @@
 \value{
     
     all functions return an S4 object of class \code{timeSeries}.
-    
-}
-
-
-\note{
-    
-    The method \code{cumsum.timeSeries} will be no longer supported
-    use instead \code{colCumsums}.
     
 }
 

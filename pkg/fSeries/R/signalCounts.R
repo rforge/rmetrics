@@ -12,8 +12,8 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-signalCounts <-
-function(int)
+.signalCounts <-
+    function(int)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 

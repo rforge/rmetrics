@@ -5,10 +5,10 @@
 
 
 \alias{time}
-\alias{seriesPositions}
-\alias{newPositions<-}
+\alias{time<-}
 
 \alias{time.timeSeries}
+\alias{time<-.timeSeries}
 \alias{sample.timeSeries}
 \alias{sort.timeSeries}
 \alias{rev.timeSeries}
@@ -26,23 +26,28 @@
     The functions and methods for the Generation of 'timeSeries' Objects are:         
 
     \tabular{ll}{   
-    \code{seriesPositions} \tab Extracts positions slot from a 'timeSeries', \cr
-    \code{newPositions<-} \tab Modifies positions of a 'timeSeries' object, \cr
-    \code{time.timeSeries} \tab Extracts time positions from a 'timeSeries', \cr
-    \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in time, \cr
-    \code{sort.timeSeries} \tab Sorts reverts a 'timeSeries' object in time, \cr
-    \code{rev.timeSeries} \tab Reverts a 'timeSeries' object in time, \cr 
-    \code{start.timeSeries} \tab Extracts start date of a 'timeSeries' object, \cr 
-    \code{end.timeSeries} \tab Extracts end date of a 'timeSeries' object. }
+    \code{time.timeSeries} \tab Extracts time positions from a
+    'timeSeries', \cr 
+    \code{time<-.timeSeries} \tab Assign time positions to a
+    'timeSeries', \cr 
+    \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in
+    time, \cr 
+    \code{sort.timeSeries} \tab Sorts reverts a 'timeSeries' object in
+    time, \cr 
+    \code{rev.timeSeries} \tab Reverts a 'timeSeries' object in time,
+    \cr  
+    \code{start.timeSeries} \tab Extracts start date of a 'timeSeries' 
+    object, \cr  
+    \code{end.timeSeries} \tab Extracts end date of a 'timeSeries'
+    object. } 
         
 }
 
 
 \usage{
-seriesPositions(object)
-newPositions(object) <- value
 
 \method{time}{timeSeries}(x, \dots)
+\method{time}{timeSeries}(x) <- value
 
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
@@ -64,13 +69,8 @@ newPositions(object) <- value
         position, or \code{"linear"}, interpolate linearly between 
         \code{"before"} and \code{"after"}. 
         }      
-    \item{object}{
-        [is][seriesData][seriesPositions][summary] -    
-        an object of class \code{timeSeries}.
-        }
     \item{value}{
-        a valid value for that component of \code{newPositions(x)}, i.e.
-        an object of class \code{"timeDate"} with appropriate length.
+        a valid value for the component of \code{time(x)}.
         }
     \item{x}{
         [as] - \cr   
@@ -152,8 +152,8 @@ newPositions(object) <- value
 ## Create dummy timeSeries:     
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
-## seriesPositions -
-   seriesPositions(X)
+## series positions -
+   time(X)
 }
 
 

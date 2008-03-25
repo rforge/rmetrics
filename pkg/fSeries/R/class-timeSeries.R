@@ -14,28 +14,26 @@
 
 
 ################################################################################
-# S4 METHOD:                   DATABASE ATTACHEMENT:
-#  attach.timeSeries         Attaches a 'timeSeries' object
+# CLASS:                    REPRESENTATION:
+#  'timeSeries'              S4 Class representation
 ################################################################################
 
 
-setMethod("attach", "timeSeries",
-          function(what, pos = 2, name = deparse(substitute(what)),
-                   warn.conflicts = TRUE)
-      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+setClass("timeSeries",
+    # A class implemented by Diethelm Wuertz
 
-          # Description:
-          #   Attaches a 'timeSeries' object
+    # Description:
+    #   Class representatation for 'timeSeries' Objects.
 
-          # FUNCTION:
+    # CLASS:
 
-          # Convert to data.frame Object:
-          what.df <- as.data.frame(what)
-
-          # Attach:
-          return(attach.default(what.df, pos, name, warn.conflicts))
-      })
-
-
-################################################################################
-
+    representation(
+        Data = "matrix",
+        positions = "character",
+        format = "character",
+        FinCenter = "character",
+        units = "character",
+        recordIDs = "data.frame",
+        title = "character",
+        documentation = "character")
+)

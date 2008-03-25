@@ -5,8 +5,8 @@
 
 
 \alias{returns}
-\alias{returns.default}
-\alias{returns.timeSeries}
+\alias{returns,ANY-method}
+\alias{returns,timeSeries-method}
 
 \alias{returnSeries}
 \alias{getReturns}
@@ -22,9 +22,9 @@
 \usage{
 returns(x, \dots)
 
-\method{returns}{default}(x, method = c("continuous", "discrete", 
+\S4method{returns}{ANY}(x, method = c("continuous", "discrete", 
     "compound", "simple"), percentage = FALSE, \dots)
-\method{returns}{timeSeries}(x, method = c("continuous", "discrete", 
+\S4method{returns}{timeSeries}(x, method = c("continuous", "discrete", 
     "compound", "simple"), percentage = FALSE, na.rm = TRUE, 
     trim = TRUE, \dots)
     

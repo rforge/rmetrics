@@ -7,6 +7,7 @@
 
 \alias{timeSeries}
 \alias{timeSeries-class}
+\alias{initialize,timeSeries-method}
 
 \alias{readSeries}
 
@@ -188,17 +189,15 @@ seriesData(object)
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
-## returnSeries -  
-   # Compute Returns:
-   args(returnSeries)
+## returns -  
    # Continuous Returns:
-   returnSeries(tsApril01)
+   returns(tsApril01)
    # Discrete Returns:
-   returnSeries(tsApril01, type = "discrete")
+   returns(tsApril01, type = "discrete")
    # Don't trim:
-   returnSeries(tsApril01, trim = FALSE)
+   returns(tsApril01, trim = FALSE)
    # Use Percentage Values:
-   tsRet = returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
+   tsRet = returns(tsApril01, percentage = TRUE, trim = FALSE)
    tsRet
      
 ## applySeries -   

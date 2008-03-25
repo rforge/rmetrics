@@ -87,12 +87,12 @@ function(object, value)
 # ------------------------------------------------------------------------------
 
 "time<-.timeSeries" <-
-    function(object, value)
+    function(x, value)
 {
-    stopifnot(is.timeSeries(object))
+    stopifnot(is.timeSeries(x))
 
     # FUNCTION:
-    ans = timeSeries(object, value)
+    ans = timeSeries(x, value)
 
     # Return Value:
     ans

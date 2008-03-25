@@ -22,9 +22,9 @@
 ################################################################################
 
 
-countMonthlyRecords =
+countMonthlyRecords <-
 function(x)
-{   # A function implemented by Rmetrics
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a series with monthly counts of records
@@ -34,12 +34,14 @@ function(x)
     #   x = as.timeSeries(data(edhec)); countMonthlyRecords(x)
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
+
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Count:
-    ans = rollMonthlySeries(x[, 1], period = "1m", by = "1m", FUN = NROW)
+    ans <- rollMonthlySeries(x[, 1], period = "1m", by = "1m", FUN = NROW)
     colnames(ans) <- "Counts"
 
     # Return Value:
@@ -50,9 +52,9 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-isMonthly =
-function(x)
-{   # A function implemented by Rmetrics
+isMonthly <-
+    function(x)
+{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Decides if the series consists of monthly records
@@ -62,13 +64,14 @@ function(x)
     #   x = as.timeSeries(data(edhec)); isMonthly(x)
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Compare Counts wit Number of Records:
-    Counts = colSums(countMonthlyRecords(x))[[1]]
-    Months = NROW(x) - 1
+    Counts <- colSums(countMonthlyRecords(x))[[1]]
+    Months <- NROW(x) - 1
 
 
     # Return Value:
@@ -79,9 +82,9 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-rollMonthlyWindows =
-function(x, period = "12m", by = "1m")
-{   # A function implemented by Rmetrics
+rollMonthlyWindows <-
+    function(x, period = "12m", by = "1m")
+{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns start and end dates for rolling time windows
@@ -94,35 +97,37 @@ function(x, period = "12m", by = "1m")
     #       e.g. "3m" means one quarter
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
+
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Get Window Parameter:
-    periodLength = as.numeric(substr(period, 1, nchar(period)-1))
-    periodUnit = substr(period, nchar(period), nchar(period))
-    byLength = as.numeric(substr(by, 1, nchar(by)-1))
-    byUnit = substr(by, nchar(by), nchar(by))
+    periodLength <- as.numeric(substr(period, 1, nchar(period)-1))
+    periodUnit <- substr(period, nchar(period), nchar(period))
+    byLength <- as.numeric(substr(by, 1, nchar(by)-1))
+    byUnit <- substr(by, nchar(by), nchar(by))
     stopifnot(periodUnit == "m")
     stopifnot(byUnit == "m")
 
     # Get Window Parameter:
-    periodLength = as.numeric(substr(period, 1, nchar(period)-1))
-    periodUnit = substr(period, nchar(period), nchar(period))
-    byLength = as.numeric(substr(by, 1, nchar(by)-1))
-    byUnit = substr(by, nchar(by), nchar(by))
+    periodLength <- as.numeric(substr(period, 1, nchar(period)-1))
+    periodUnit <- substr(period, nchar(period), nchar(period))
+    byLength <- as.numeric(substr(by, 1, nchar(by)-1))
+    byUnit <- substr(by, nchar(by), nchar(by))
     stopifnot(periodUnit == "m")
     stopifnot(byUnit == "m")
 
     # Make Windows - We expect monthly data records ...
-    positions = time(x)
-    Positions = unique(timeFirstDayInMonth(positions))
-    numberOfPositions = length(Positions)
-    startDates = Positions[1:(numberOfPositions-periodLength)]
-    endDates = Positions[(periodLength+1):numberOfPositions]-24*3600
+    positions <- time(x)
+    Positions <- unique(timeFirstDayInMonth(positions))
+    numberOfPositions <- length(Positions)
+    startDates <- Positions[1:(numberOfPositions-periodLength)]
+    endDates <- Positions[(periodLength+1):numberOfPositions]-24*3600
 
     # Windows:
-    windows = list(from = startDates, to = endDates)
+    windows <- list(from = startDates, to = endDates)
     attr(windows, "control") = c(start = start(positions), end = end(positions))
 
     # Return Value:
@@ -133,9 +138,9 @@ function(x, period = "12m", by = "1m")
 # ------------------------------------------------------------------------------
 
 
-rollMonthlySeries =
+rollMonthlySeries <-
 function(x, period = "12m", by = "1m", FUN, ...)
-{   # A function implemented by Rmetrics
+{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Rolls monthly a 'timeSeries' on a given period
@@ -149,16 +154,17 @@ function(x, period = "12m", by = "1m", FUN, ...)
     #   FUN - function to be applied
 
     # FUNCTION:
-    stopifnot(is.timeSeries(x))
+    stopifnot(is(x, "timeSeries"))
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Settings:
-    windows = rollMonthlyWindows(x = x[, 1], period = period, by = by)
+    windows <- rollMonthlyWindows(x = x[, 1], period = period, by = by)
 
     # Apply Function:
-    ans = applySeries(x = x, from = windows$from, to = windows$to,
-        FUN = FUN, ...)
+    ans <- applySeries(x = x, from = windows$from, to = windows$to,
+                       FUN = FUN, ...)
 
     # Return Value:
     ans

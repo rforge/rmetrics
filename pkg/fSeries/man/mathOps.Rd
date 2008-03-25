@@ -1,18 +1,20 @@
 \name{math}
 
-
 \alias{math}
 
+\alias{Ops,timeSeries,timeSeries-method}
+\alias{Ops,timeSeries,ANY-method}
+\alias{Ops,ANY,timeSeries-method}
+\alias{Math,timeSeries-method}
+\alias{Math2,timeSeries-method}
+\alias{Summary,timeSeries-method}
+\alias{trunc,timeSeries-method}
+\alias{log,timeSeries-method}
 
-\alias{Ops.timeSeries}
-\alias{Math.timeSeries}
-\alias{Math2.timeSeries}
-\alias{Summary.timeSeries}
+\alias{diff,timeSeries-method}
+\alias{scale,timeSeries-method}
 
-\alias{diff.timeSeries}
-\alias{scale.timeSeries}
-
-\alias{quantile.timeSeries}
+\alias{quantile,timeSeries-method}
 
 
 \title{Mathematical Time Series Operations}
@@ -24,13 +26,13 @@
   operations. \cr
   
   \tabular{ll}{  
-    \code{Ops.timeSeries} \tab Group 'Ops' methods for a 'timeSeries'
+    \code{Ops-method} \tab Group 'Ops' methods for a 'timeSeries'
     object \cr
-    \code{Math.timeSeries} \tab Group 'Math' methods for a 'timeSeries'
+    \code{Math-method} \tab Group 'Math' methods for a 'timeSeries'
     object \cr
-    \code{Math2.timeSeries} \tab Group 'Math2' methods for a 'timeSeries'
+    \code{Math2-method} \tab Group 'Math2' methods for a 'timeSeries'
     object \cr
-    \code{Summary.timeSeries} \tab Group 'Summary' methods for a 'timeSeries'
+    \code{Summary-method} \tab Group 'Summary' methods for a 'timeSeries'
     object \cr
     \code{diff} \tab Differences a 'timeSeries' object, \cr  
     \code{scale} \tab Centers and/or scales a 'timeSeries' object, \cr
@@ -40,13 +42,13 @@
 
 
 \usage{
-\method{Ops}{timeSeries}(e1, e2)
-\method{Math}{timeSeries}(x, ...)
-\method{Math2}{timeSeries}(x, digits)
-\method{Summary}{timeSeries}(x, ..., na.rm = FALSE)
-\method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
-\method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
-\method{quantile}{timeSeries}(x, \dots)
+% \S4method{Ops}{timeSeries}(e1, e2)
+% \S4method{Math}{timeSeries}(x, ...)
+% \S4method{Math2}{timeSeries}(x, digits)
+% \S4method{Summary}{timeSeries}(x, ..., na.rm = FALSE)
+\S4method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
+\S4method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
+\S4method{quantile}{timeSeries}(x, \dots)
 }
 
 
@@ -59,19 +61,24 @@
   \item{diff}{
     an integer indicating the order of the difference. By default 1.
   }
-  \item{digits} {
-    number of digits to be used in 'round' or 'signif'.
-  }
-  \item{e1, e2}{
-    [Ops] - \cr   
-    two objects of class \code{timeSeries}.
-  } 
+  
+%   \item{digits} {
+%     number of digits to be used in 'round' or 'signif'.
+%   }
+  
+%   \item{e1, e2}{
+%     [Ops] - \cr   
+%     two objects of class \code{timeSeries}.
+%   }
+  
   \item{lag}{   
     an integer indicating which lag to use. By default 1.
   }
-  \item{na.rm}{
-    logical: should missing values be removed?
-  }
+
+%   \item{na.rm}{
+%     logical: should missing values be removed?
+%   }
+
   \item{pad}{
     [diffSeries] - \cr
     which value should get the padded values? By default \code{NA}.
@@ -114,11 +121,11 @@
    # Mathematical Operations:
    TS^2
    TS[2:4]
-   OR = returnSeries(TS)
+   OR = returns(TS)
    OR
    OR > 0
 }
 
 
 \keyword{chron}
-
+\keyword{methods}

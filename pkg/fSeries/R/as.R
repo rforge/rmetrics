@@ -15,18 +15,15 @@
 
 ################################################################################
 # METHOD:                   CREATE A TIMESERIES FROM OTHER OBJECTS:
-#  is.timeSeries             Tests for a 'timeSeries' object
 #  as.timeSeries             Defines method for a 'timeSeries' object
 #  as.timeSeries.default     Returns the input
-#  as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
 #  as.timeSeries.data.frame  Transformas a 'data.frame' into a 'timeSeries'
-#  as.timeSeries.matrix      Transformas a 'matrix' into a 'timeSeries'
-#  as.timeSeries.ts          Transforms a 'ts' object into a 'timeSeries'
 #  as.timeSeries.character   Loads and transformas from a demo file
 #  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
 # METHOD:                   TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
+#  as.numeric.timeSeries     Converts a 'timeSeries' to a 'numeric'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
 ################################################################################
@@ -34,7 +31,6 @@
 
 ################################################################################
 # METHODS:                  CREATE A TIMESERIES FROM OTHER OBJECTS:
-#  is.timeSeries             Tests for a 'timeSeries' object
 #  as.timeSeries             Defines method for a 'timeSeries' object
 #  as.timeSerie.default      Returns the input
 #  as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
@@ -44,39 +40,8 @@
 #  as.timeSeries.character   Loads and transformas from a demo file
 #  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
 
-
-is.timeSeries <-
-    function (object)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tests for a 'timeSeries' object.
-
-    # Arguments:
-    #   object - a 'timeSeries' object to be tested.
-
-    # Value:
-    #   Returns 'TRUE' or 'FALSE' depending on whether its
-    #   argument is of 'timeSeries' type or not.
-
-    # Changes:
-    #
-
-    # FUNCTION:
-
-    # Check:
-    ans <- inherits(object, "timeSeries")
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 as.timeSeries <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
@@ -88,41 +53,24 @@ as.timeSeries <-
 
 
 as.timeSeries.default <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
     # FUNCTION:
 
     # Return Value:
-    x
-}
+    ans <- timeSeries(x, ...)
 
-
-# ------------------------------------------------------------------------------
-
-
-as.timeSeries.numeric <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
-
-    # FUNCTION:
-
-    # Create a dummay daily 'timeSeries' object:
-    if (is.null(dim(x))) x <- matrix(x)
-    ans <- dummyDailySeries(x, zone = zone, FinCenter = FinCenter, ...)
-
-    # Return Value:
     ans
 }
 
+setAs("ANY", "timeSeries", function(from) as.timeSeries.default(from))
 
 # ------------------------------------------------------------------------------
 
-
 as.timeSeries.data.frame <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
@@ -141,7 +89,8 @@ as.timeSeries.data.frame <-
     if (is.numeric(x[,1])) {
         # is.numeric() is better than format == "unkown"
         # which can give wrong result. i.e. whichFormat(0.1253328600)
-        format = whichFormat(rownames(x), silent = TRUE)
+        charvec <- rownames(x)
+        format = whichFormat(charvec, silent = TRUE)
         if (format == "unknown") format = "counts"
         X <- x
         colNames = colnames(x)
@@ -174,58 +123,20 @@ as.timeSeries.data.frame <-
     units <- colnames(data)
 
     # Create Time Series Object:
-    ans <- timeSeries(data = data, charvec = charvec,
-                      units = colnames(data), format = format, zone = zone,
-                      FinCenter = FinCenter, recordIDs = recordIDs)
+    ans <- timeSeries(data = data, charvec = charvec, format = format,
+                      recordIDs = recordIDs, ...)
 
     # Return Value:
     ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-as.timeSeries.matrix <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
-
-    # FUNCTION:
-
-    x <- as.data.frame(x)
-    ans <- as.timeSeries(x, zone = zone, FinCenter = FinCenter, ...)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.timeSeries.ts <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter,...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
-
-    # FUNCTION:
-
-    # Create a dummay daily 'timeSeries' object:
-    ans <- dummyDailySeries(as.matrix(x),
-                            zone = zone, FinCenter = FinCenter,
-                            unit = colnames(x), ...)
-
-    # Return Value:
-    ans
-}
-
+setAs("data.frame", "timeSeries", function(from) as.timeSeries.data.frame(from))
 
 # ------------------------------------------------------------------------------
 
 
 as.timeSeries.character <-
-function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
+function(x, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
@@ -238,19 +149,19 @@ function(x, zone = myFinCenter, FinCenter = myFinCenter, ...)
     x <- eval(parse(text = eval(x)))
 
     # timeSeries:
-    ans <- as.timeSeries(x, zone = zone, FinCenter = FinCenter, ...)
+    ans <- as.timeSeries(x, ...)
 
     # Return Value:
     ans
 }
 
-
+setAs("character", "timeSeries", function(from) as.timeSeries.character(from))
 
 # ------------------------------------------------------------------------------
 
 
 as.timeSeries.zoo <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter,...)
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
     # Extended by Yohan Chalabi
 
@@ -260,12 +171,9 @@ as.timeSeries.zoo <-
 
     # Seperate x in numeric and non-numeric parts
     data <- as.matrix(x)
-    recordIDs <- data.frame()
     charvec <- time(x)
 
-    ans <- timeSeries(data = data, charvec = charvec,
-                      units = colnames(x), recordIDs = recordIDs,
-                      zone = zone, FinCenter = FinCenter, ...)
+    ans <- timeSeries(data = data, charvec = charvec, ...)
 
     # Return Value:
     ans
@@ -277,6 +185,7 @@ as.timeSeries.zoo <-
 # METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
+#  as.numeric.timeSeries      Converts a 'timeSeries' to a 'numeric'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
 
@@ -296,15 +205,17 @@ as.vector.timeSeries <-
 
     # FUNCTION:
 
-    # Check:
-    stopifnot(isUnivariate(x))
+###     # Check:
+###     stopifnot(isUnivariate(x))
 
-    # Convert:
-    rownames = dimnames(x)[[1]]
-    x = x@Data
-    class(x) = "numeric"
-    x = as.vector(x)
-    names(x) = rownames
+###     # Convert:
+###     rownames = dimnames(x)[[1]]
+###     x = x@Data
+###     class(x) = "numeric"
+###     x = as.vector(x)
+###     names(x) = rownames
+
+    x <- as.vector(as.matrix(x))
 
     # Return Value:
     x
@@ -342,9 +253,36 @@ as.matrix.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
+as.numeric.timeSeries <-
+    function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a multivariate "timeSeries" to a matrix
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+
+    # Value:
+    #   Returns the data slot of a 'timesSeries' object as a vector.
+
+    # FUNCTION:
+
+    # Check:
+    if (class(x) != "timeSeries") stop("x is not a timeSeries object!")
+
+    # Convert:
+    ans = as.numeric(x@Data) # is matrix
+
+    # Return Value:
+    ans
+}
+
+# ------------------------------------------------------------------------------
+
 
 as.data.frame.timeSeries <-
-function(x, row.names = NULL, optional = NULL, ...)
+    function(x, row.names = NULL, optional = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

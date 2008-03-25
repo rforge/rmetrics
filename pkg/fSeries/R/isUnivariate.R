@@ -23,7 +23,7 @@
 isUnivariate <-
     function(x)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Tests if a time series or rectangular object is univariate
@@ -31,7 +31,9 @@ isUnivariate <-
     # FUNCTION:
 
     # Return Value:
-    if (NCOL(x) == 1) return(TRUE) else return(FALSE)
+    ans <- if (NCOL(x) == 1) TRUE else FALSE
+
+    ans
 }
 
 
@@ -41,7 +43,7 @@ isUnivariate <-
 isMultivariate <-
     function(x)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Tests if a time series or rectangular object is multivariate
@@ -52,7 +54,9 @@ isMultivariate <-
     # FUNCTION:
 
     # Return Value:
-    if (NCOL(x) > 1) return(TRUE) else return(FALSE)
+    ans <- if (NCOL(x) > 1) TRUE else FALSE
+
+    ans
 }
 
 

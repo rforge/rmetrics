@@ -14,15 +14,15 @@
 
 
 ################################################################################
-# METHOD:                   DIM OPERATIONS ON DATA:
-#  dim.timeSeries            Returns dimension of a 'timeSeries' object
-#  dimnames<-.timeSeries     NYI
-#  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
-#  colnames.timeSeries       NYI
-#  rownames.timeSeries       NYI
-#  colnames<-.timeSeries     Assigns column names to a 'timeSeries' object
-#  rownames<-.timeSeries     Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries       Allows that NCOL and NROW work properly
+# S4 METHOD:                   DIM OPERATIONS ON DATA:
+#  dim,timeSeries            Returns dimension of a 'timeSeries' object
+#  dimnames,timeDSeries      Returns dimension names of a 'timeSeries' object
+#  dimnames<-,timeSeries     Assign dimension names of a 'timeSeries' object
+#  colnames,timeSeries       Return column names to a 'timeSeries' object
+#  rownames,timeSeries       Return row names to a 'timeSeries' object
+#  colnames<-,timeSeries     Assigns column names to a 'timeSeries' object
+#  rownames<-,timeSeries     Assigns row names to a 'timeSeries' object
+#  is.array,timeSeries       Allows that NCOL and NROW work properly
 ################################################################################
 
 
@@ -97,132 +97,41 @@
 # NCOL
 # NROW
 
+setMethod("dim", "timeSeries", function(x) callGeneric(as(x, "matrix")))
 
-dim.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+setMethod("dimnames", "timeSeries", function(x) callGeneric(as(x, "matrix")))
 
-    # Description:
-    #   Returns the dimension of a 'timeSeries' object
+setReplaceMethod("dimnames", "timeSeries",
+                 function(x, value)
+             {
+                 data <- callGeneric(as(x, "matrix"), value)
+                 charvec <- rownames(data)
+                 units <- colnames(data)
+                 format <- NULL
+                 zone <- finCenter(x)
+                 FinCenter <- finCenter(x)
+                 recordIDs <- x@recordIDs
+                 title <- x@title
+                 documentation <- x@documentation
 
-    # FUNCTION:
-
-    # Dimension:
-    ans = dim(x@Data)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-dimnames.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the dimension names of a 'timeSeries' object
-
-    # Note:
-    #   dimnames() is .Primitive
-    # FUNCTION:
-
-    # Dimension Names:
-    ans = dimnames(x@Data)
-
-    # Return Value:
-    ans
-}
+                 new("timeSeries", data, charvec, units, format, zone,
+                     FinCenter, recordIDs, title, documentation)
+             })
 
 
 # ------------------------------------------------------------------------------
 
 
-# "dimnames<-"
-
-
-# ------------------------------------------------------------------------------
-
-
-# colnames
-# rownames
-
+# colnames # default methods works fine
+# rownames # default methods works fine
+# colnames<- # default methods works fine because it uses dimnames defined above
+# rownmaes<- # default methods works fine because it uses dimnames defined above
 
 # ------------------------------------------------------------------------------
 
 
-"colnames<-.timeSeries" <-
-    function(x, value)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Assigns column names to a 'timeSeries' object
-
-    # FUNCTION:
-
-    # Assign Column Names:
-    X <- x@Data
-    dn <- dimnames(X)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(X))) < 2) stop(
-            "attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 2) stop(
-        "attempt to set colnames on object with less than two dimensions")
-    dn[2] <- if (is.null(value)) list(NULL) else list(value)
-    dimnames(X) <- dn
-
-    # DW addded for timeSeries objects
-    x@Data <- X
-    x@units <- as.character(value) # YC as.character needed if value == NULL
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-"rownames<-.timeSeries" =
-function(x, value)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Assigns row names to a 'timeSeries' object
-
-    # FUNCTION:
-
-    # Assign Row Names:
-    X = x@Data
-    dn <- dimnames(X)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(X))) < 2) stop(
-            "attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 2) stop(
-        "attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
-    dimnames(X) <- dn
-
-    # DW addded for timeSeries objects
-    x@Data = X
-    x@positions = rownames(X)
-
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-is.array.timeSeries =
-function(x)
+is.array.timeSeries <-
+    function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

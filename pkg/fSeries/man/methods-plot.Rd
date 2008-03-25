@@ -5,9 +5,9 @@
 
 
 \alias{plot}
-\alias{plot.timeSeries}
-\alias{lines.timeSeries}
-\alias{points.timeSeries}
+\alias{plot,timeSeries,missing-method}
+\alias{lines,timeSeries-method}
+\alias{points,timeSeries-method}
 
 
 \description{
@@ -18,9 +18,9 @@
 
 
 \usage{
-\method{plot}{timeSeries}(x, \dots) 
-\method{lines}{timeSeries}(x, \dots)
-\method{points}{timeSeries}(x, \dots)
+\S4method{plot}{timeSeries,missing}(x, \dots) 
+\S4method{lines}{timeSeries}(x, \dots)
+\S4method{points}{timeSeries}(x, \dots)
 }
 
 

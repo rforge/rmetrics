@@ -35,7 +35,8 @@ seriesData <-
     # FUNCTION:
 
     # Test:
-    if(class(object) != "timeSeries") stop("Object is not a time Series")
+    if (class(object) != "timeSeries")
+        stop("Object is not a time Series")
 
     .Deprecated("series", "fSeries")
 
@@ -48,44 +49,52 @@ seriesData <-
 
 # ------------------------------------------------------------------------------
 
-series <-
-function(object)
-{   # A function implemented by Diethelm Wuertz
+setMethod("series", "timeSeries",
+          function(x)
+      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    # Description:
-    #    Returns the series Data of an ordered data object.
+          # Description:
+          #    Returns the series Data of an ordered data object.
 
-    # Arguments:
-    #   object - a 'timeSeries' object
+          # Arguments:
+          #   object - a 'timeSeries' object
 
-    # Value:
-    #    Returns an object of class 'matrix'.
+          # Value:
+          #    Returns an object of class 'matrix'.
 
-    # FUNCTION:
-
-    # Test:
-    stopifnot(inherits(object, "timeSeries"))
-
-    # Get Data Slot:
-    ans = object@Data
+          # FUNCTION:
 
 
-    # Return Value:
-    ans
-}
+          # Get Data Slot:
+          ans <- x@Data
 
+
+          # Return Value:
+          ans
+      })
 
 # ------------------------------------------------------------------------------
 
-"series<-" <-
-    function(x, value)
-{
+setMethod("series<-", "timeSeries",
+          function(x, value)
+      {
+          # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    stopifnot(inherits(x, "timeSeries"))
+          # Description:
+          #    Assign the series Data to a timeSeries object.
 
-    x[seq(NROW(x)), seq(NCOL(x))] <- value
-    x
-}
+          # Arguments:
+          #   object - a 'timeSeries' object
+
+          # Value:
+          #    Assign to be assign as series Data of a timeSeries.
+
+          # FUNCTION:
+          x@Data <- value
+          x
+      })
 
 ################################################################################
+
+
 
