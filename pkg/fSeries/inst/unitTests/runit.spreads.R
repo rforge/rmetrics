@@ -33,7 +33,7 @@ function()
     # RUnit Test:
 
 
-    tS = timeSeries(units = c("Bit", "Ask"))
+    tS = timeSeries(units = c("Bid", "Ask"))
     head(tS)
     midquotes(tS)
     spreads(tS)

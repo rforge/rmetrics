@@ -18,15 +18,14 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE)
 
 
 \arguments{
-\
-    \item{spec}{
-        a specification object of class \code{"fGARCHSPEC"} as
-        returned by the function \code{garchSpec}. The model parameters
-        are taken from the \code{@model} slot, a list with the 
-        following entries:\cr
-        \code{omega} - the constant coefficient of the variance equation,
-            by default 1e-6; \cr
-        \code{alpha} - the value or vector of autoregressive coefficients, 
+  \item{spec}{
+    a specification object of class \code{"fGARCHSPEC"} as
+      returned by the function \code{garchSpec}. The model parameters
+      are taken from the \code{@model} slot, a list with the 
+      following entries:\cr
+      \code{omega} - the constant coefficient of the variance equation,
+      by default 1e-6; \cr
+      \code{alpha} - the value or vector of autoregressive coefficients, 
             by default 0.1, specifying a model of order 1; \cr
         \code{beta} - the value or vector of variance coefficients,
             by default 0.8, specifying a model of order 1; 
@@ -52,9 +51,6 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE)
         }
     \item{n.start}{
         length of "burn-in" period, by default 100.
-        }
-    \item{returnClass}{
-        the class of the object to be returned.
         }
 
 }

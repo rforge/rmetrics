@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -37,7 +37,7 @@
 ################################################################################
 
 
-test.rollingWindows <- 
+test.rollingWindows <-
     function()
 {
     # Load Data:
@@ -45,34 +45,34 @@ test.rollingWindows <-
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)
     dim(Data)
-    
+
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
     windows
-    
+
     # Return Value:
-    return()  
+    return()
 }
 
 
 ################################################################################
 
 
-test.rollingCmlPortfolio <- 
+test.rollingCmlPortfolio <-
     function()
 {
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    
+
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
-    
+
     # Rolling CML Portfolio:
     ans = rollingCmlPortfolio(data = Data, spec = portfolioSpec(),
         constraints = NULL, from = windows$from, to = windows$to)
     ans[[5]]
-    
+
     # Return Value:
     return()
 }
@@ -81,21 +81,21 @@ test.rollingCmlPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-test.rollingTangencyPortfolio <- 
+test.rollingTangencyPortfolio <-
     function()
 {
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    
+
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
-    
+
     # Rolling Tangency Portfolio:
     ans = rollingTangencyPortfolio(data = Data, spec = portfolioSpec(),
         constraints = NULL, from = windows$from, to = windows$to)
     ans[[5]]
-    
+
     # Return Value:
     return()
 }
@@ -103,22 +103,22 @@ test.rollingTangencyPortfolio <-
 
 # ------------------------------------------------------------------------------
 
-   
-test.rollingMinvariancePortfolio <- 
+
+test.rollingMinvariancePortfolio <-
     function()
 {
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    
+
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
-    
+
     # Rolling Portfolio:
     ans = rollingMinvariancePortfolio(data = Data, spec = portfolioSpec(),
         constraints = NULL, from = windows$from, to = windows$to)
     ans[[5]]
-    
+
     # Return Value:
     return()
 }
@@ -127,21 +127,21 @@ test.rollingMinvariancePortfolio <-
 ################################################################################
 
 
-test.rollingPortfolioFrontier <- 
+test.rollingPortfolioFrontier <-
     function()
 {
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    
+
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
-    
+
     # Rolling Portfolio:
     ans = rollingPortfolioFrontier(data = Data, spec = portfolioSpec(),
         constraints = NULL, from = windows$from, to = windows$to)
     ans[[5]]
-    
+
     # Return Value:
     return()
 }
@@ -150,34 +150,34 @@ test.rollingPortfolioFrontier <-
 ################################################################################
 
 
-test.portfolioBacktesting.MeanVariance.LP60 <- 
+test.portfolioBacktesting.MeanVariance.LP60 <-
     function()
-{   
+{
     # Does portfolio backtesting ...
-    # portfolioBacktesting(formula, data, spec = portfolioSpec(), 
-    #   constraints = NULL, portfolio = "minvariancePortfolio", 
-    #   horizon = "12m", smoothing = "6m", trace = TRUE)   
-    
+    # portfolioBacktesting(formula, data, spec = portfolioSpec(),
+    #   constraints = NULL, portfolio = "minvariancePortfolio",
+    #   horizon = "12m", smoothing = "6m", trace = TRUE)
+
     # Load Data:
     SWXLP = as.timeSeries(data(SWXLP))
-    Data = returnSeries(SWXLP, percentage = TRUE)
+    Data = returns(SWXLP, percentage = TRUE)
     head(Data)
     colnames(Data)
-    
+
     # Graph Frame:
     par(mfrow = c(2, 2))
-    
+
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
-        formula = LP60 ~ SBI + SPI + SII, 
-        data = Data, 
-        spec = portfolioSpec(), 
-        constraints = NULL, 
-        portfolio = "minvariancePortfolio", 
-        horizon = "12m", 
-        smoothing = "12m", 
-        trace = TRUE)  
-        
+        formula = LP60 ~ SBI + SPI + SII,
+        data = Data,
+        spec = portfolioSpec(),
+        constraints = NULL,
+        portfolio = "minvariancePortfolio",
+        horizon = "12m",
+        smoothing = "12m",
+        trace = TRUE)
+
     #                        Portfolio Benchmark
     # Total Return               34.81     22.53
     # Mean Return                 0.45      0.29
@@ -186,47 +186,47 @@ test.portfolioBacktesting.MeanVariance.LP60 <-
     # Var 10% Quantile           -0.76     -3.23
     # 5% Expected Shortfall      -1.83     -6.47
     # Minimum Monthly Return     -2.30     -7.26
- 
+
     # Return Value:
     return()
-}        
-  
-      
-# ------------------------------------------------------------------------------       
- 
+}
 
-test.portfolioBacktesting.MeanVariance.myPortfolio <- 
+
+# ------------------------------------------------------------------------------
+
+
+test.portfolioBacktesting.MeanVariance.myPortfolio <-
     function()
-{    
+{
     # Load Data:
     SWXLP = as.timeSeries(data(SWXLP))
-    Data = returnSeries(SWXLP, percentage = TRUE)
+    Data = returns(SWXLP, percentage = TRUE)
     head(Data)
     colnames(Data)
-    
+
     # Strategy Portfolio:
-    myPortfolio <-  
+    myPortfolio <-
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)
         Status = strategyPortfolio@portfolio$status
-        if(Status == 1)  
+        if(Status == 1)
             strategyPortfolio = minvariancePortfolio(data, spec, contraints)
         strategyPortfolio
     }
-    
+
     # Mean-Variance Backtesting:
     par(mfrow = c(2, 2))
     ans = portfolioBacktesting(
-        formula = LP60 ~ SBI + SPI + SII, 
-        data = Data, 
-        spec = portfolioSpec(), 
-        constraints = NULL, 
-        portfolio = "myPortfolio", 
-        horizon = "12m", 
-        smoothing = "12m", 
-        trace = TRUE)  
-     
+        formula = LP60 ~ SBI + SPI + SII,
+        data = Data,
+        spec = portfolioSpec(),
+        constraints = NULL,
+        portfolio = "myPortfolio",
+        horizon = "12m",
+        smoothing = "12m",
+        trace = TRUE)
+
     #                        Portfolio Benchmark
     # Total Return               34.83     22.53
     # Mean Return                 0.45      0.29
@@ -244,51 +244,51 @@ test.portfolioBacktesting.MeanVariance.myPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioBacktesting.MeanCVaR <- 
+test.portfolioBacktesting.MeanCVaR <-
     function()
-{   
+{
     # Does portfolio backtesting ...
-    # portfolioBacktesting(formula, data, spec = portfolioSpec(), 
-    #   constraints = NULL, portfolio = "minvariancePortfolio", 
-    #   horizon = "12m", smoothing = "6m", trace = TRUE)   
-    
+    # portfolioBacktesting(formula, data, spec = portfolioSpec(),
+    #   constraints = NULL, portfolio = "minvariancePortfolio",
+    #   horizon = "12m", smoothing = "6m", trace = TRUE)
+
     # Load Data:
     SWXLP = as.timeSeries(data(SWXLP))
-    Data = returnSeries(SWXLP, percentage = TRUE)
+    Data = returns(SWXLP, percentage = TRUE)
     head(Data)
     colnames(Data)
-    
+
     # Strategy Portfolio:
-    myPortfolio = 
+    myPortfolio =
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)
         Status = strategyPortfolio@portfolio$status
-        if(Status == 1)  
+        if(Status == 1)
             strategyPortfolio = minvariancePortfolio(data, spec, contraints)
         strategyPortfolio
     }
-    
+
     # Specifications:
     Spec = portfolioSpec()
     setType(Spec) = "CVaR"
     setSolver(Spec) = "lpSolve"
-    
+
     if (FALSE) {
         # Mean-CVaR Backtesting - Please be pagtient ...
         par(mfrow = c(2,2))
         portfolioBacktesting(
-            formula = LP60 ~ SBI + SPI + SII, 
-            data = Data, 
+            formula = LP60 ~ SBI + SPI + SII,
+            data = Data,
             spec = Spec,
-            constraints = NULL, 
-            # portfolio = "minvariancePortfolio", 
-            portfolio = "myPortfolio", 
-            horizon = "12m", 
-            smoothing = "12m", 
-            trace = TRUE) 
+            constraints = NULL,
+            # portfolio = "minvariancePortfolio",
+            portfolio = "myPortfolio",
+            horizon = "12m",
+            smoothing = "12m",
+            trace = TRUE)
     }
-        
+
     #                        Portfolio Benchmark
     # Total Return               35.69     22.53
     # Mean Return                 0.46      0.29
@@ -302,108 +302,108 @@ test.portfolioBacktesting.MeanCVaR <-
     return()
 }
 
-          
+
 # ------------------------------------------------------------------------------
 
- 
-test.Stats <- 
-    function() 
+
+test.Stats <-
+    function()
 {
     # Load Data:
     SWXLP = as.timeSeries(data(SWXLP))
-    Data = returnSeries(SWXLP, percentage = TRUE)
+    Data = returns(SWXLP, percentage = TRUE)
     head(Data)
     colnames(Data)
-    
+
     # Graph Frame:
     par(mfrow = c(2, 2))
-    
+
     # Specification Structure:
     Spec = portfolioSpec()
-    
+
     # Set Covariance Estimator to "shrink" Estimator:
     setEstimator(Spec) = c("mean", "shrink")
- 
+
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
-        formula = LP60 ~ SBI + SPI + SII, 
-        data = Data, 
-        spec = Spec, 
-        constraints = NULL, 
-        portfolio = "minvariancePortfolio", 
-        horizon = "12m", 
-        smoothing = "12m", 
-        trace = TRUE)  
-                
+        formula = LP60 ~ SBI + SPI + SII,
+        data = Data,
+        spec = Spec,
+        constraints = NULL,
+        portfolio = "minvariancePortfolio",
+        horizon = "12m",
+        smoothing = "12m",
+        trace = TRUE)
+
     # Moving Average Horizon in Months:
     N = ema = 12
-    
+
     # Graphics Frame:
     par(mfrow = c(3, 2))
-    
-    
+
+
     # Extrakt Shrinkage Lambda:
     Lambda = attr(getStatistics(ans$tg[[1]])$Sigma, "lambda")
     for (i in 2:length(ans$tg)) {
         lambda = attr(getStatistics(ans$tg[[i]])$Sigma, "lambda")
-        Lambda = rbind(Lambda, lambda)      
+        Lambda = rbind(Lambda, lambda)
     }
-    plot(x = (1:length(Lambda)) + N, emaTA(Lambda, N), pch = 19, 
+    plot(x = (1:length(Lambda)) + N, emaTA(Lambda, N), pch = 19,
         type = "o", xlim = c(0, length(Lambda) + N), main = "lambda" )
     grid()
-    
-    
+
+
     # Extrakt Eigenvalue Ratio:
     Values = eigen(getStatistics(ans$tg[[1]])$Sigma)$values
     Eigen = Values[1]/rev(Values)[1]
     for (i in 2:length(ans$tg)) {
         Values = eigen(getStatistics(ans$tg[[i]])$Sigma)$values
-        Eigen = rbind(Eigen, Values[1]/rev(Values)[1])    
+        Eigen = rbind(Eigen, Values[1]/rev(Values)[1])
     }
-    plot(x = (1:length(Eigen)) + N, emaTA(-log(Eigen), N), pch = 19, 
+    plot(x = (1:length(Eigen)) + N, emaTA(-log(Eigen), N), pch = 19,
         type = "o", xlim = c(0, length(Eigen) + N), main = "eigen" )
     grid()
-    
-    
+
+
     # Condition Number:
     Kappa = kappa(getStatistics(ans$tg[[1]])$Sigma)
     for (i in 2:length(ans$tg)) {
-        kappa = kappa(getStatistics(ans$tg[[i]])$Sigma) 
-        Kappa = rbind(Kappa, kappa)    
+        kappa = kappa(getStatistics(ans$tg[[i]])$Sigma)
+        Kappa = rbind(Kappa, kappa)
     }
-    plot(x = (1:length(Kappa)) + N, emaTA(-log(Kappa), N), pch = 19, 
+    plot(x = (1:length(Kappa)) + N, emaTA(-log(Kappa), N), pch = 19,
         type = "o", xlim = c(0, length(Kappa) + N), main = "kappa" )
     grid()
-    
-    
+
+
     # Collect Portfolio Risk:
     monthlyAssets = applySeries(Data[, 1:3], FUN = colSums)
     pfRisk = getTargetRisk(ans$tg[[1]])
-    for (i in 2:length(ans$tg)) {  
+    for (i in 2:length(ans$tg)) {
         pfRisk = rbind(pfRisk, getTargetRisk(ans$tg[[i]]))
     }
     pfRisk = matrix(pfRisk, ncol = 3)
     pfRisk1 = pfRisk[, 1]
-    plot(x = (1:length(pfRisk1)) + N, emaTA(pfRisk1, N), pch = 19, 
+    plot(x = (1:length(pfRisk1)) + N, emaTA(pfRisk1, N), pch = 19,
         type = "o", xlim = c(0, length(pfRisk1) + N), main = "Covariance Risk" )
     grid()
     pfRisk2 = pfRisk[, 2]
-    plot(x = (1:length(pfRisk2)) + N, -emaTA(pfRisk2, N), pch = 19, 
+    plot(x = (1:length(pfRisk2)) + N, -emaTA(pfRisk2, N), pch = 19,
         type = "o", xlim = c(0, length(pfRisk2) + N), main = "-CVaR" )
     grid()
-    
-     
+
+
     # Extrakt Covariance Norm:
     Norm = norm(getStatistics(ans$tg[[1]])$Sigma)
     for (i in 2:length(ans$tg)) {
         norm = norm(getStatistics(ans$tg[[i]])$Sigma)
-        Norm = rbind(Norm, norm)      
+        Norm = rbind(Norm, norm)
     }
-    plot(x = (1:length(Norm)) + N, emaTA(Norm, N), pch = 19, 
-        type = "o", xlim = c(0, length(Norm) + N), main = "Covariance Norm" )  
+    plot(x = (1:length(Norm)) + N, emaTA(Norm, N), pch = 19,
+        type = "o", xlim = c(0, length(Norm) + N), main = "Covariance Norm" )
     grid()
-    
-    
+
+
     # Return Value:
     invisible()
 }
@@ -412,47 +412,47 @@ test.Stats <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioBacktesting.MeanVariance.LPP <- 
+test.portfolioBacktesting.MeanVariance.LPP <-
     function()
-{    
-    
+{
+
     # Load Data:
     Data = 100 * as.timeSeries(data(LPP2005REC))
-    
+
     # Spec:
     Spec= portfolioSpec()
     setType(Spec) = "CVaR"
-    
+
     # Strategy Portfolio:
-    myPortfolio <<- 
+    myPortfolio <<-
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)
         Status = strategyPortfolio@portfolio$status
-        if(Status == 1)  
+        if(Status == 1)
             strategyPortfolio = minvariancePortfolio(data, spec, contraints)
         strategyPortfolio
     }
-    
+
     # Graph Frame:
     par(mfrow = c(2, 2))
-    
+
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
         formula = LPP60 ~ SBI + SPI + SII + LMI + MPI + ALT,
-        data = Data, 
-        spec = Spec, 
-        constraints = NULL, 
-        portfolio = "myPortfolio", 
-        horizon = "6m", 
-        smoothing = "6m", 
-        trace = TRUE)  
+        data = Data,
+        spec = Spec,
+        constraints = NULL,
+        portfolio = "myPortfolio",
+        horizon = "6m",
+        smoothing = "6m",
+        trace = TRUE)
 
     # Return Value:
     return()
-}        
+}
 
 
 ################################################################################
 
-    
+

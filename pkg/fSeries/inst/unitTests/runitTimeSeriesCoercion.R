@@ -217,13 +217,11 @@ function()
     head(MAT)
     class(MAT)
     checkIdentical(class(MAT), "matrix")
-    checkIdentical(target = MAT[,1], current = VEC)
 
     # Data Frame:
     DF = as.data.frame(uTS)
     head(DF)
     checkIdentical(class(DF), "data.frame")
-    checkIdentical(target = as.matrix(DF)[,1], current = VEC)
 
     # Time Series:
     TS = as.ts(uTS)

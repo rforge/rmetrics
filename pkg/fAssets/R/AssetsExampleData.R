@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY, without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library, if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library, if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Rmetrics Foundation, GPL
 #   Contact: Diethelm Wuertz <wuertz@phys.ethz.ch>
 #   info@rmetrics.org
@@ -32,7 +32,7 @@
 #  .dutchPortfolioData            Example Data from Engel's Diploma Thesis
 #  .usPortfolioData               Annual US Economics Portfolio Data
 #  .sm132PortfolioData            Example from Scherer, Martin: Chapter 1.32
-#  .worldIndexData                A data set of World Indexes  
+#  .worldIndexData                A data set of World Indexes
 ################################################################################
 
 
@@ -42,18 +42,18 @@ function()
 
     # Description:
     #   Example Portfolio Data from Engels
-    
+
     # Example:
-    #   engelsPortfolioData() 
-    
+    #   engelsPortfolioData()
+
     # FUNCTION:
-    
+
     # Mean Returns:
     mu = c(0.266, 0.274, 0.162, 0.519, 0.394, 0.231, 0.277) / 1000
     names(mu) = c(
-        "Elsevier", "Fortis", "Getronics", "Heineken", 
-        "Philips", "RoyalDutch", "Unilever")  
-    
+        "Elsevier", "Fortis", "Getronics", "Heineken",
+        "Philips", "RoyalDutch", "Unilever")
+
     # Variance-Covariance Risk:
     Sigma = c(
         0.345, 0.150, 0.183, 0.088, 0.186, 0.090, 0.095,
@@ -62,10 +62,10 @@ function()
         0.088, 0.107, 0.075, 0.243, 0.096, 0.064, 0.086,
         0.186, 0.236, 0.325, 0.096, 0.734, 0.147, 0.114,
         0.090, 0.130, 0.110, 0.064, 0.147, 0.221, 0.093,
-        0.095, 0.127, 0.091, 0.086, 0.114, 0.093, 0.219)    
+        0.095, 0.127, 0.091, 0.086, 0.114, 0.093, 0.219)
     Sigma = matrix(Sigma, ncol = 7)
     colnames(Sigma) = rownames(Sigma) = names(mu)
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -79,19 +79,19 @@ function()
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Annual US Economics Portfolio Data 
-    
+    #   Annual US Economics Portfolio Data
+
     # Example:
-    #   usPortfolioData() 
+    #   usPortfolioData()
     #   list(mu = round(mean(usPortfolioData()),5),
     #   Sigma = round(var(usPortfolioData()), 5))
-    
+
     # FUNCTION:
-    
+
     # Units:
     Units = c("TBills3m", "LongBonds", "SP500", "Wilshire5000",
         "NASDAQComp", "LehmanBonds", "EAFE", "Gold")
-    
+
     # Time Series Object:
     tS = as.timeSeries(as.data.frame(matrix(c(
         19731231,1.075,0.942,0.852,0.815,0.698,1.023,0.851,1.677,
@@ -118,7 +118,7 @@ function()
         19941231,1.045,0.889,1.012,0.999,0.968,0.965,1.078,0.990),
         byrow = TRUE, ncol = 9)))
     colnames(tS)<-Units
-    
+
     # Return Value:
     tS
 }
@@ -127,7 +127,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.sm132PortfolioData = 
+.sm132PortfolioData =
 function()
 {
     # A function implemented by Rmetrics
@@ -135,7 +135,7 @@ function()
     # Description:
     #   Example from Scherer, Martin:  "Modern Portfolio Omtimization":
     #       Cheapter 1.32
-    
+
     # FUNCTION:
     corr = matrix(data =
         c(  1, 0.4, 0.5, 0.5, 0.4, 0.1, 0.1, 0.1,
@@ -148,28 +148,28 @@ function()
           0.1, 0.1, 0.1, 0.5, 0.0, 0.0, 0.2, 1.0),
           nrow = 8, ncol = 8)
     vol = diag(c(17, 21, 22, 20, 8, 8, 8, 8))
-    Cov = vol %*% corr %*% vol    
-    
+    Cov = vol %*% corr %*% vol
+
     # Average return
     mu = c(3, 4, 5, 6, 0.25, 0.5, 0.75, 1)
-    
+
     # Return value:
-    list(mu = mu, Sigma = Cov)   
+    list(mu = mu, Sigma = Cov)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.worldIndexData = 
+.worldIndexData =
 function()
 {
     # Description:
     #   A data set of World Indexs contributed by Dominik Locher
-    
+
     # Units:
     Units = c("Asia", "EasternEurope", "FarEast", "LatinAmerica")
-    
+
     # Time Series Object:
     x = c(
         20070327,370.04,302.41,326.56,3100.66,
@@ -351,11 +351,11 @@ function()
         20061002,323.89,261.75,285.40,2482.37,
         20061001,322.90,260.28,284.41,2473.06,
         20060930,322.90,260.28,284.41,2473.06,
-        20060929,322.90,260.28,284.41,2473.06)    
+        20060929,322.90,260.28,284.41,2473.06)
     tS = as.timeSeries(data.frame(matrix(x, byrow = TRUE, ncol = 5)))
-    tS = returnSeries(rev(tS))
+    tS = returns(rev(tS))
     colnames(tS)<-Units
-    
+
     # Return Value:
     tS
 }

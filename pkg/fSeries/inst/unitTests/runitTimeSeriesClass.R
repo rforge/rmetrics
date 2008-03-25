@@ -123,19 +123,19 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.returnSeries =
+test.returns =
 function()
 {
-    #  returnSeries - Computes returns from a 'timeSeries' object
+    #  returns - Computes returns from a 'timeSeries' object
 
     # Load Time Series:
     X = as.timeSeries(data(msft.dat))
     head(X)
 
-    # returnSeries:
+    # returns :
     OPEN = X[, 1]
     print(OPEN)
-    MSFT.RET = returnSeries(OPEN)
+    MSFT.RET = returns(OPEN)
     print(MSFT.RET)
 
     # Return Value:
@@ -170,7 +170,7 @@ function()
     X = as.timeSeries(data(msft.dat))
     head(X)
 
-    # returnSeries:
+    # returns:
     OPEN = X[, 1]
     print(OPEN)
 
@@ -200,10 +200,10 @@ function()
     # Return Series:
     OPEN = X[, 1]
     OPEN
-    returnSeries(OPEN)
+    returns(OPEN)
 
     # Volatility Series:
-    abs(returnSeries(OPEN))
+    abs(returns(OPEN))
 
     # Data Matrix:
     series(OPEN)

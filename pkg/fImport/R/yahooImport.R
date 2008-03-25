@@ -220,7 +220,7 @@ yahooSeries <-
     }
 
     # Compute Return Series ?
-    if (getReturns) X = returnSeries(X, ...)
+    if (getReturns) X = returns(X, ...)
 
     # Return as Object ?
     if (returnClass == "matrix") {

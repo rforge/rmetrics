@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -24,7 +24,7 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file 
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -38,26 +38,26 @@
 #  qqgaussPlot           Returns a Gaussian quantile-quantile plot
 #  scalinglawPlot        Evaluates and plots scaling law behavior
 ################################################################################
-  
 
-test.acfPlot = 
+
+test.acfPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # acfPlot -
     acfPlot(x = msft.ret)
-    
+
     # acfPlot -
     acfPlot(x = msft.ret, labels = FALSE)
-    
+
     # Return Value:
     return()
 }
@@ -66,24 +66,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.pacfPlot = 
+test.pacfPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # pacfPlot -
     pacfPlot(x = msft.ret)
-    
+
     # pacfPlot -
     pacfPlot(x = msft.ret, labels = FALSE)
-    
+
     # Return Value:
     return()
 }
@@ -92,24 +92,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.teffectPlot = 
+test.teffectPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # teffectPlot -
     teffectPlot(x = msft.ret)
-    
+
     # teffectPlot -
     teffectPlot(x = msft.ret, labels = FALSE)
-    
+
     # Return Value:
     return()
 }
@@ -118,34 +118,34 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.lmacfPlot = 
+test.lmacfPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # lmacfPlot -
     ## lmacfPlot(x = abs(msft.ret), type = "acf")
     ## lmacfPlot(x = abs(msft.ret), type = "hurst")
     # ... CHECK ACF OF RETURNS
-    
+
     # lmacfPlot -
     ## lacfPlot(x = msft, n = 4, type = "values")                   ## CHECK !!!
-    
+
     # lmacfPlot -
     ## lmacfPlot(x = abs(msft.ret), type = "acf", labels = FALSE)
     ## lmacfPlot(x = abs(msft.ret), type = "hurst", labels = FALSE)
     # ... CHECK ACF OF RETURNS
-    
+
     # lmacfPlot -
     ## lacfPlot(x = msft, n = 4, labels = FALSE, type = "values")   ## CHECK !!!
-    
+
     # Return Value:
     return()
 }
@@ -154,18 +154,18 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.lacfPlot = 
+test.lacfPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # Return Value:
     return()
 }
@@ -174,30 +174,30 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.logpdfPlot = 
+test.logpdfPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # logpdfPlot -
     logpdfPlot(x = msft.ret, labels = FALSE)
     logpdfPlot(x = msft.ret, type = "log-log")
     # ... CHECK WARNINGS
     # ... CHECK COLORS
-    
+
     # logpdfPlot -
     logpdfPlot(x = msft.ret, labels = FALSE)
     logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
     # ... CHECK WARNINGS
     # ... CHECK COLORS
-    
+
     # Return Value:
     return()
 }
@@ -206,24 +206,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.qqgausPlot = 
+test.qqgausPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # qqgaussPlot -
     qqgaussPlot(x = msft.ret)
-    
+
     # qqgaussPlot -
     qqgaussPlot(x = msft.ret, labels = FALSE)
-    
+
     # Return Value:
     return()
 }
@@ -232,26 +232,26 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.scalinglawPlot = 
+test.scalinglawPlot =
 function()
 {
     # MSFT Data:
     msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
-    msft.ret = returnSeries(msft)
-    
+    msft.ret = returns(msft)
+
     # Graph Frame:
     par(mfrow = c(1, 1))
-    
+
     # scalinglawPlot -
     scalinglawPlot(x = msft.ret, span = 4)
     # ... CHECK COLORS
-    
+
     # scalinglawPlot -
     scalinglawPlot(x = msft.ret, span = 4, labels = FALSE)
     # ... CHECK COLORS
-    
+
     # Return Value:
     return()
 }

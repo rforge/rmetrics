@@ -121,7 +121,7 @@
    # Error in .garchArgsParser(formula = formula, data = data, trace = FALSE) : 
    #   Formula and data units do not match
    # Note, you can use default columnames, the following call would work ...
-   garchFit(V1 ~garch(1, 1), data = z, trace = FALSE)
+  garchFit(TS.1 ~garch(1, 1), data = z, trace = FALSE)
 }
 
 

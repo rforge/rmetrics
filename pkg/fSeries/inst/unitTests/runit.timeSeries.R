@@ -34,8 +34,8 @@ function()
 
     x = rnorm(12)
     y = rnorm(12)
-    .signalSeries(x, 1:12)
-    .signalSeries(cbind(x,y), 1:12)
+    .signalSeries(timeSeries(NULL), x, 1:12)
+    .signalSeries(timeSeries(NULL), cbind(x,y), 1:12)
 }
 
 

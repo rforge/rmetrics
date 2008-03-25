@@ -74,10 +74,10 @@ doplot = TRUE, ...)
         return()
     }
 
-    # Predict "arfima" from Ox:
-    if (object@fit$tsmodel == "arfimaOX") {
-        pred = .arfimaOxPredict(object, n.ahead, ...)
-    }
+###     # Predict "arfima" from Ox:
+###     if (object@fit$tsmodel == "arfimaOX") {
+###         pred = .arfimaOxPredict(object, n.ahead, ...)
+###     }
 
     # Prediction:
     names(pred$pred) = names(pred$se) = NULL
