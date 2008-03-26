@@ -97,6 +97,22 @@ setMethod("[", signature(x = "timeSeries", i = "index", j = "index", drop = "mis
 
 setMethod("[", signature(x = "timeSeries", i = "ANY", j = "ANY", drop = "ANY"), function(x,i,j, drop, ...) stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
+setMethod("[", signature(x = "timeSeries", i = "matrix", j = "missing", drop = "missing"), function(x, i, j, drop, ...) callGeneric(x, i = i, drop=FALSE))
+
+setMethod("[", signature(x = "timeSeries", i = "matrix", j = "missing", drop = "logical"),
+          function(x, i, j, drop, ...)
+      {
+          i <- as(i, "vector")
+
+          if (!is.logical(i))
+              stop("matrix used as an index must be logical")
+
+          if (NROW(i) == NROW(x))
+              callGeneric(x, i = i , drop = drop, ...)
+          else
+              as.vector(x)[i]
+      })
+
 setMethod("[", signature(x = "timeSeries", i = "timeSeries", j = "missing", drop = "missing"), function(x, i, j, drop, ...) callGeneric(x, i = i, drop=FALSE))
 
 setMethod("[", signature(x = "timeSeries", i = "timeSeries", j = "missing", drop = "logical"),
