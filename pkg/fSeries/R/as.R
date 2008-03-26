@@ -215,10 +215,14 @@ as.vector.timeSeries <-
 ###     x = as.vector(x)
 ###     names(x) = rownames
 
-    x <- as.vector(as.matrix(x))
+    ans <- as.vector(as.matrix(x))
+
+    # add row names to the vector if the time series is univariate
+    if (isUnivariate(x))
+        names(ans) = rownames(x)
 
     # Return Value:
-    x
+    ans
 }
 
 
