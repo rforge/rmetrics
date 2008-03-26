@@ -138,7 +138,7 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
    
 ## portfolioConstraints -
    # Portfolio Constraints:
-   Constraints = "minW[1:4]"
+   Constraints = c("minW[1:4] = 0.1", "maxsumW[c(\"GG\",\"GYMB\")] = 0.8")
    portfolioConstraints(Data, Spec, Constraints)
 }
 
