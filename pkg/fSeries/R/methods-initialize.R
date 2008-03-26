@@ -67,7 +67,9 @@ setMethod("initialize", "timeSeries",
           } else if (missing(data) || !NROW(data)) {
               data = matrix(runif(24), ncol = 2)
               charvec <-
-                  if (is.null(charvec) || length(charvec) != 12) {
+                  if (missing(charvec) ||    # new("timeSeries")
+                      is.null(charvec) ||       # timeSeries()
+                      length(charvec) != 12) {
                       as.character(timeCalendar())
                   } else {
                       as.character(charvec)[seq(12)]
