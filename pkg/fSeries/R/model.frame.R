@@ -18,7 +18,6 @@
 #  model.frame.default       Allows to use model.frame for "timeSeries"
 ################################################################################
 
-
 model.frame.timeSeries =
 function(formula, data, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -44,18 +43,20 @@ function(formula, data, ...)
     Data = data
     data = data.frame(data@Data)
     Model = stats::model.frame.default(formula, data, ...)
+    recordIDs <-
+        if (NROW(Data) == NROW(Data@recordIDs)) Data@recordIDs else data.frame()
 
     # Convert to timeSeries:
-    ans = timeSeries(
-        data = as.matrix(Model),
-        charvec = rownames(Data),
-        units = colnames(Model),
-        format = Data@format,
-        FinCenter = Data@FinCenter,
-        recordIDs = Data@recordIDs,
-        title = Data@title,
-        documentation = .description()
-        )
+    ans <- new("timeSeries",
+               data = as.matrix(Model),
+               charvec = rownames(Data),
+               units = colnames(Model),
+               format = Data@format,
+               FinCenter = Data@FinCenter,
+               recordIDs = recordIDs,
+               title = Data@title,
+               documentation = .description()
+               )
 
     # Return value:
     ans

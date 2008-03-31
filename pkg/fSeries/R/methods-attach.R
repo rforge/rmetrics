@@ -14,31 +14,28 @@
 
 
 ################################################################################
+# S4 METHOD:                   DATABASE ATTACHEMENT:
+#  attach.timeSeries         Attaches a 'timeSeries' object
+################################################################################
 
 
-.First.lib =
-function(lib, pkg)
-{
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
+setMethod("attach", "timeSeries",
+          function(what, pos = 2, name = deparse(substitute(what)),
+                   warn.conflicts = TRUE)
+      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    # Load dll:
-    # library.dynam("fSeries", pkg, lib)
+          # Description:
+          #   Attaches a 'timeSeries' object
 
-    # see ?cbind2
-    # Currently, a call 'methods:::bind_activation(TRUE)'
-    methods:::bind_activation(TRUE)
-}
+          # FUNCTION:
 
-.onUnload <- function(libpath) methods:::bind_activation(FALSE)
+          # Convert to data.frame Object:
+          what.df <- as.data.frame(what)
 
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+          # Attach:
+          return(attach.default(what.df, pos, name, warn.conflicts))
+      })
+
 
 ################################################################################
 

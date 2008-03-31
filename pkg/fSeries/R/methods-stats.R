@@ -15,7 +15,7 @@
 
 # experimental
 
-.members <- c("cov", "cor")
+.members <- c("var", "cov", "cor")
 
 # template definition
 .templateXY <-  c("{",

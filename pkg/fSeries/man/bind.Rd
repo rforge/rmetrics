@@ -54,7 +54,8 @@
    x = as.timeSeries(data(msft.dat))[1:12, ]
 
 ## cbind -
-   cbind(x[, "Open"], returns(x[, "Open"]), units = c("Open", "Return"))
+   x1 <- cbind(x[, "Open"], returns(x[, "Open"]))
+   colnames(x1) <- c("Open", "Return")
 
 ## rbind -
    rbind(x[1:3, "Open"], x[10:12, "Open"])
