@@ -20,92 +20,294 @@
 ################################################################################
 
 
-setMethod("plot", c("timeSeries","missing"),
-          function(x, y, ...)
-      {   # A function implemented by Diethelm Wuertz
+setMethod("plot", c("timeSeries", "missing"),
+    function(x, y, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
-          # Description:
-          #   NEW Plot method for an object of class "timeSeries"
+    # Description:
+    #   NEW Plot method for an object of class "timeSeries"
 
-          # Arguments:
-          #   x - a "timeSeries" object
+    # Arguments:
+    #   x - a "timeSeries" object
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Plot:
-          positions <- time(x)
-          if (x@format == "counts") {
-              plot(x = positions, y = x@Data, ...)
-          } else {
-              plot(x = as.POSIXct(positions), y = x@Data, ...)
-          }
+    # Plot:
+    positions <- time(x)
+    if (x@format == "counts") {
+        plot(x = positions, y = x@Data, ...)
+    } else {
+        plot(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
-          # Return Value:
-          invisible(x)
-      })
+    # Return Value:
+    invisible(x)
+})
 
 
 # ------------------------------------------------------------------------------
 
 
 setMethod("lines", c("timeSeries"),
-          function(x,  ...)
-      {   # A function implemented by Diethelm Wuertz
+    function(x,  ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
-          # Description:
-          #   NEW Lines method for an object of class "timeSeries"
+    # Description:
+    #   NEW Lines method for an object of class "timeSeries"
 
-          # Arguments:
-          #   x - a "timeSeries" object
+    # Arguments:
+    #   x - a "timeSeries" object
 
-          # Example:
-          #   plot(MSFT[,1]); lines(MSFT[,1], col = "red")
+    # Example:
+    #   plot(MSFT[, 1]); lines(MSFT[, 1], col = "red")
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Plot:
-          positions <- time(x)
-          if (x@format == "counts") {
-              lines(x = positions, y = x@Data, ...)
-          } else {
-              lines(x = as.POSIXct(positions), y = x@Data, ...)
-          }
+    # Plot:
+    positions <- time(x)
+    if (x@format == "counts") {
+        lines(x = positions, y = x@Data, ...)
+    } else {
+        lines(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
-          # Return Value:
-          invisible(x)
-      })
+    # Return Value:
+    invisible(x)
+})
 
 
 # ------------------------------------------------------------------------------
 
 
 setMethod("points", "timeSeries",
-          function(x, ...)
-      {   # A function implemented by Diethelm Wuertz
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
-          # Description:
-          #   Plot method for an object of class "timeSeries"
+    # Description:
+    #   Plot method for an object of class "timeSeries"
 
-          # Arguments:
-          #   x - a "timeSeries" object
+    # Arguments:
+    #   x - a "timeSeries" object
 
-          # Value:
-          #   Plots a 'timeSeries' object.
+    # Value:
+    #   Plots a 'timeSeries' object.
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Add to Plot:
-          positions <- time(x)
-          if (x@format == "counts") {
-              points(x = positions, y = x@Data, ...)
-          } else {
-              points(x = as.POSIXct(positions), y = x@Data, ...)
-          }
+    # Add to Plot:
+    positions <- time(x)
+    if (x@format == "counts") {
+        points(x = positions, y = x@Data, ...)
+    } else {
+        points(x = as.POSIXct(positions), y = x@Data, ...)
+    }
 
-          # Return Value:
-          invisible(x)
-      })
+    # Return Value:
+    invisible(x)
+})
 
 
 ################################################################################
-
+                                                                                     
+                                                                                       
+.plot.timeSeries <-                                                                      
+function (                                                                               
+    x, y = NULL, format = whichFormat(time(x)), ticks = 6,                               
+    plot.type = c("multiple", "single"), widths = 1, heights = 1,                        
+    xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,                            
+    mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),                                
+    oma.multi = c(6, 0, 5, 0), axes = TRUE, grid = FALSE, ...)                           
+{                                                                                        
+    # A function implemented by Diethelm Wuertz                                          
+                                                                                         
+    # Description:                                                                       
+    #   Plots 'timeSeries' objects                                                       
+                                                                                         
+    # Arguments:                                                                         
+    #   see plot.ts()                                                                               
+                                                                                                                                                                                                  
+    # Additional Arguments:                                                              
+    #   format, ticks to beautify axis.POSIXct() function                                        
+    #   widths, heights to handle layout() function                                              
+                                                                                         
+    # Details:                                                                           
+    #   This function is build in exactly the same way as the function                   
+    #   plot.ts() for regular time series (R's ts) objects...         
+    
+    # Examples:                                                                          
+    #   x = as.timeSeries(data(msft.dat))[, 1:4]                                         
+    #   .plot.timeSeries(x)                                                              
+    #   .plot.timeSeries(x[,1], x[,2], pch = 19)                                         
+    #   .plot.timeSeries(x, plot.type = "single", col = 2:5, format = "%b %y", ticks = 4)
+                                                                                         
+    # FUNCTION:                                                                          
+                                                                                         
+    # Labels:                                                                            
+    xlabel <- if (!missing(x)) deparse(substitute(x))                                    
+    ylabel <- if (!missing(y)) deparse(substitute(y))                                    
+                                                                                         
+    # Return Value:                                                                      
+    .plotTimeSeries(x = x, y = y, plot.type = plot.type,                                 
+        xy.labels = xy.labels, xy.lines = xy.lines, panel = panel,                       
+        nc = nc, xlabel = xlabel, ylabel = ylabel, axes = axes,                          
+        mar.multi = mar.multi, oma.multi = oma.multi, yax.flip = yax.flip,               
+        format = format, ticks = ticks, widths = widths, heights = heights,              
+        ...)                                                                             
+}                                                                                        
+                                                                                         
+                                                                                         
+# ------------------------------------------------------------------------------         
+                                                                                         
+                                                                                         
+.plotTimeSeries <-                                                                       
+    function(x, y = NULL, plot.type = c("multiple", "single"),                           
+    xy.labels, xy.lines, panel = lines, nc, xlabel, ylabel,                              
+    type = "l", xlim = NULL, ylim = NULL, xlab = "Time", ylab, log = "",                 
+    col = par("col"), bg = NA, pch = par("pch"), cex = par("cex"),                       
+    lty = par("lty"), lwd = par("lwd"), axes = TRUE, frame.plot = axes,                  
+    ann = par("ann"), main = NULL, mar.multi, oma.multi, yax.flip,                       
+    format = format, ticks = ticks, widths = widths, heights = heights, ...)             
+{                                                                                        
+    # A function implemented by Diethelm Wuertz                                          
+                                                                                         
+    # Description:                                                                       
+    #   Plots timeSeries objects - Internal Function                                     
+                                                                                         
+    # Detatils:                                                                          
+    #   A modified copy of R's internal 'plotts()' function,                             
+    #   see 'plot.ts'.                                                                   
+                                                                                         
+    # FUNCTION:                                                                          
+                                                                                         
+    # Utility Fnction:                                                                   
+    plot.type <- match.arg(plot.type)                                                    
+    nser <- NCOL(x)                                                                      
+                                                                                         
+    # Multiple Plots, each one Curve, on one Page:                                       
+    if (plot.type == "multiple" && nser > 1) {                                           
+        ngraph = nser                                                                    
+        addmain <- function(main,                                                        
+            cex.main = par("cex.main"),                                                  
+            font.main = par("font.main"),                                                
+            col.main = par("col.main"), ...)                                             
+            mtext(main, side = 3, line = 3, cex = cex.main,                              
+            font = font.main, col = col.main, ...)                                       
+        panel <- match.fun(panel)                                                        
+        nser <- NCOL(x)                                                                  
+        if (nser > 10) stop("cannot plot more than 10 series as \"multiple\"")           
+        if (is.null(main)) main <- xlabel                                                
+        nm <- colnames(x)                                                                
+        if (is.null(nm)) nm <- paste("Series", 1:nser)                                   
+        if (missing(nc)) nc <- if (nser > 4) 2 else 1                                    
+        nr <- ceiling(nser/nc)                                                           
+        oldpar <- par(mar = mar.multi, oma = oma.multi, mfcol = c(nr, nc))               
+        on.exit(par(oldpar))                                                             
+        nr <- ceiling(ngraph/nc)                                                         
+        layout(matrix(seq(nr * nc), nr), widths = widths, heights = heights)             
+        for (i in 1:nser) {                                                              
+            plot(as.POSIXct(time(x)), x@Data[, i], axes = FALSE,                         
+                xlab = "", ylab = "", log = log, col = col, bg = bg,                     
+                pch = pch, ann = ann, type = "n", ...)                                   
+            panel(as.POSIXct(time(x)), x@Data[, i], col = col, bg = bg,                  
+                pch = pch, type = type, ...)                                             
+            if (frame.plot) box(...)                                                     
+            y.side <- if (i%%2 || !yax.flip) 2 else 4                                    
+            do.xax <- i%%nr == 0 || i == nser                                            
+            if (axes) {                                                                  
+                axis(y.side, xpd = NA)                                                   
+                if (do.xax) {                                                            
+                    Index = round(seq(1, length(time(x)), length = ticks))               
+                    axis.POSIXct(1, at = as.POSIXct(time(x)[Index]),                     
+                        format = format)                                                 
+                }                                                                        
+            }                                                                            
+            if (ann) {                                                                   
+                mtext(nm[i], y.side, line = 3, ...)                                      
+                if (do.xax) mtext(xlab, side = 1, line = 3, ...)                         
+            }                                                                            
+        }                                                                                
+        if (ann && !is.null(main)) {                                                     
+            par(mfcol = c(1, 1))                                                         
+            addmain(main, ...)                                                           
+        }                                                                                
+        return(invisible())                                                              
+    }                                                                                    
+                                                                                         
+    # Scatter Plot:                                                                      
+    if (!is.null(y)) {                                                                   
+        stopifnot(isUnivariate(x))                                                       
+        stopifnot(isUnivariate(y))                                                       
+        xy = merge(x, y)                                                                 
+        xy <- xy.coords(xy@Data[, 1], xy@Data[, 2], xlabel, ylabel, log)                 
+        xlab <- if (missing(xlab)) xy$xlab else xlab                                     
+        ylab <- if (missing(ylab)) xy$ylab else ylab                                     
+        xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim                
+        ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim                
+        n <- length(xy$x)                                                                
+        if (missing(xy.labels)) xy.labels <- (n <= 150)                                  
+        if (!is.logical(xy.labels)) {                                                    
+            if (!is.character(xy.labels))                                                
+              stop("'xy.labels' must be logical or character")                           
+            do.lab <- TRUE                                                               
+        } else {                                                                         
+            do.lab <- xy.labels                                                          
+        }                                                                                
+        ptype <- if (do.lab) "n" else if (missing(type)) "p" else type                   
+        plot.default(xy, type = ptype, xlab = xlab, ylab = ylab,                         
+            xlim = xlim, ylim = ylim, log = log, col = col,                              
+            bg = bg, pch = pch, axes = axes, frame.plot = frame.plot,                    
+            ann = ann, main = main, ...)                                                 
+        if (missing(xy.lines)) {                                                         
+            xy.lines <- do.lab                                                           
+        }                                                                                
+        if (do.lab)                                                                      
+            text(xy, labels =                                                            
+                if (is.character(xy.labels)) xy.labels                                   
+                else seq_along(xy$x), col = col, cex = cex)                              
+        if (xy.lines) {                                                                  
+            type = if (do.lab) "c" else "l"                                              
+            lines(xy, col = col, lty = lty, lwd = lwd, type = type)                      
+        }                                                                                
+        return(invisible())                                                              
+    }                                                                                    
+                                                                                         
+    # Multiple Curves all in one Plot, on one Page:                                      
+    if (missing(ylab)) {                                                                 
+        ylab <- colnames(x)                                                              
+        if (length(ylab) != 1) ylab <- xlabel                                            
+    }                                                                                    
+    if (is.null(ylim)) ylim <- range(x@Data)                                             
+    i = 1                                                                                
+    plot(as.POSIXct(time(x)), x@Data[, i], ylim = ylim,                                  
+        col = col[(i - 1)%%length(col) + 1],                                             
+        lty = lty[(i - 1)%%length(lty) + 1],                                             
+        lwd = lwd[(i - 1)%%length(lwd) + 1],                                             
+        bg = bg[(i - 1)%%length(bg) + 1],                                                
+        pch = pch[(i - 1)%%length(pch) + 1],                                             
+        type = type, axes = FALSE)                                                       
+    if (NCOL(x) > 1)                                                                     
+    for (i in 2:NCOL(x))                                                                 
+        lines(as.POSIXct(time(x)), x@Data[, i],                                          
+            col = col[(i - 1)%%length(col) + 1],                                         
+            lty = lty[(i - 1)%%length(lty) + 1],                                         
+            lwd = lwd[(i - 1)%%length(lwd) + 1],                                         
+            bg = bg[(i - 1)%%length(bg) + 1],                                            
+            pch = pch[(i - 1)%%length(pch) + 1],                                         
+            type = type)                                                                 
+    if (ann)                                                                             
+        title(main = main, xlab = xlab, ylab = ylab, ...)                                
+    if (axes) {                                                                          
+        Index = round(seq(1, length(time(x)), length = ticks))                           
+        axis.POSIXct(1, at = as.POSIXct(time(x)[Index]), format = format)                
+        axis(2, ...)                                                                     
+    }                                                                                    
+    if (frame.plot) box(...)                                                             
+    return(invisible())                                                                  
+}                                                                                        
+                                                                                         
+                                                                                         
+################################################################################         
+                                                                                         
