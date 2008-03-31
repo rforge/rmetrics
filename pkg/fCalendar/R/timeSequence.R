@@ -153,7 +153,7 @@ seq.timeDate <-
     by = match.arg(by)
     to = timeDate(to, zone = to@FinCenter, FinCenter = from@FinCenter)
     ans = timeSequence(from = from, to = to, by = by, length.out = length.out,
-        format = NULL, zone = from@Fincenter, FinCenter = from@FinCenter)
+        format = NULL, zone = from@FinCenter, FinCenter = from@FinCenter)
 
     # Return Value:
     ans
