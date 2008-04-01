@@ -18,7 +18,7 @@
 
 
 \usage{
-\S4method{plot}{timeSeries,missing}(x, \dots) 
+\S4method{plot}{timeSeries, missing}(x, \dots) 
 \S4method{lines}{timeSeries}(x, \dots)
 \S4method{points}{timeSeries}(x, \dots)
 }
@@ -45,13 +45,13 @@
 
 \examples{
 ## data -  
-   myFinCenter <<- "GMT"
    EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 6)
+   finCenter(EDHEC) <- "GMT"
 
 ## plot -  
-   plot(EDHEC[,1], type = "o", col = "steelblue", 
-     main = "EDHEC", xlab = "1997", ylab = "Return")
+   # plot(EDHEC[, 1], type = "o", col = "steelblue", 
+   #   main = "EDHEC", xlab = "1997", ylab = "Return")
 }
 
 
