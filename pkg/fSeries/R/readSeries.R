@@ -51,14 +51,14 @@ readSeries <-
     # FUNCTION:
 
     # Read Data:
-    df = read.table(file = file, header = header, sep = ";", ...)
+    df = read.table(file = file, header = header, sep = sep, ...)
 
-    # Create Time Series:
-    ans = as.timeSeries(df)
+    # Create Time Series from Data Frame:
+    ans = as.timeSeries(df, zone = zone, FinCenter = FinCenter))
 
     # Add title and Documentation:
     if (is.null(title)) ans@title = "Time Series Object"
-    if (is.null(documentation)) ans@documentation = as.character(date())
+    if (is.null(documentation)) ans@documentation = description()
 
     # Return Value:
     ans
