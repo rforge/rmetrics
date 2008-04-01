@@ -20,7 +20,7 @@
 ################################################################################
 
 
-setMethod("plot", "timeSeries",
+plot.timeSeries <- 
     function(x, y = NULL, FinCenter = NULL, 
     plot.type = c("multiple", "single"), 
     format = "auto", at = "auto", 
@@ -70,7 +70,7 @@ setMethod("plot", "timeSeries",
         xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
         oma.multi = oma.multi, yax.flip = yax.flip, 
         format = format, at = at, widths = widths, heights = heights, ...)
-})
+}
 
 
 # ------------------------------------------------------------------------------
