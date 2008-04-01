@@ -26,6 +26,7 @@
 #  as.numeric.timeSeries     Converts a 'timeSeries' to a 'numeric'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
+#  as.ts.logical             Converts a 'timeSeries' to 'logical'
 ################################################################################
 
 
@@ -188,7 +189,7 @@ as.timeSeries.zoo <-
 #  as.numeric.timeSeries      Converts a 'timeSeries' to a 'numeric'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
-
+#  as.ts.logical             Converts a 'timeSeries' to 'logical'
 
 as.vector.timeSeries <-
     function(x, mode = "any")
@@ -284,7 +285,6 @@ as.numeric.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
-
 as.data.frame.timeSeries <-
     function(x, row.names = NULL, optional = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -314,9 +314,7 @@ as.data.frame.timeSeries <-
     ans
 }
 
-
 # ------------------------------------------------------------------------------
-
 
 as.ts.timeSeries <-
     function(x, ...)
@@ -348,6 +346,9 @@ as.ts.timeSeries <-
     ans
 }
 
+# ------------------------------------------------------------------------------
+
+as.logical.timeSeries <- function(x, ...) as.logical(series(x), ...)
 
 ################################################################################
 
