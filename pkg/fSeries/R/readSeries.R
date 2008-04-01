@@ -54,7 +54,7 @@ readSeries <-
     df = read.table(file = file, header = header, sep = sep, ...)
 
     # Create Time Series from Data Frame:
-    ans = as.timeSeries(df, zone = zone, FinCenter = FinCenter))
+    ans = as.timeSeries(df, zone = zone, FinCenter = FinCenter)
 
     # Add title and Documentation:
     if (is.null(title)) ans@title = "Time Series Object"
