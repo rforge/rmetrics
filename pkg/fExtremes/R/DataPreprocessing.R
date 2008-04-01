@@ -198,7 +198,7 @@ function(x, u = quantile(x, 0.95), doplot = FALSE)
     CLASS = class(x)
     if (CLASS == "timeSeries") {
         stopifnot(isUnivariate(x))
-        X = x[x > u]
+        X = x[x > u,]
     } else {
         X = as.vector(x)
         X = X[X > u]
