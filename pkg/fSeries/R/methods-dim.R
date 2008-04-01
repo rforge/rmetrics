@@ -111,9 +111,7 @@ setMethod("dimnames<-", "timeSeries",
               = x@title, documentation = x@documentation)
       })
 
-
 # ------------------------------------------------------------------------------
-
 
 # colnames # default methods works fine
 # rownames # default methods works fine
@@ -122,6 +120,10 @@ setMethod("dimnames<-", "timeSeries",
 
 # ------------------------------------------------------------------------------
 
+setMethod("rownames<-", c("timeSeries", "timeDate"),
+          function(x, value) callGeneric(x, as.character(value)))
+
+# ------------------------------------------------------------------------------
 
 is.array.timeSeries <-
     function(x)

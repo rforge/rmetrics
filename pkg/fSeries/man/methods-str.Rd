@@ -1,21 +1,21 @@
-\name{summary-methods}
+\name{str-methods}
 
 
-\title{Object Summary}
+\title{Object Str}
 
 
-\alias{summary}
-\alias{summary,timeSeries-method}
+\alias{str}
+\alias{str,timeSeries-method}
 
 \description{
     
-    Produce a result summary for a time series.         
+    Produce a result str for a time series.         
     
 }
 
 
 \usage{
-\S4method{summary}{timeSeries}(object, \dots)
+\S4method{str}{timeSeries}(object, \dots)
 }
 
 
@@ -33,7 +33,7 @@
 
 \value{
 
-    returns a summary report for an object of class \code{timeSeries}.
+    returns a str report for an object of class \code{timeSeries}.
         
 }
 
@@ -43,8 +43,8 @@
    EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 4)
     
-## summary -
-   summary(EDHEC)
+## str -
+   str(EDHEC)
 }
 
 

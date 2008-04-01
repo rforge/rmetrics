@@ -15,19 +15,19 @@
 
 ################################################################################
 # S4 METHODS:               PRINT AND PLOT FUNCTIONS:
-#  summary,timeSeries        Summarizes a 'timeSeries' object
+#  str,timeSeries        Summarizes a 'timeSeries' object
 ################################################################################
 
 
-setMethod("summary", "timeSeries",
+setMethod("str", "timeSeries",
           function(object, ...)
       {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
           # Description:
-          #   S3 Summary method for objects of class "timeDate"
+          #   S4 str method for objects of class "timeDate"
 
           # Arguments
-          #   x - an object of class "timeDate"
+          #   x - an object of class "timeSeries"
 
           # FUNCTION:
 
@@ -48,7 +48,7 @@ setMethod("summary", "timeSeries",
           cat("\n Start:             ", as.character(start(positions)))
           cat("\n End:               ", as.character(end(positions)))
           # Other Attributes:
-          cat("\nAttributes:         ")
+          cat("\nWith:               ")
           cat("\n Format:            ", object@format)
           cat("\n FinCenter:         ", object@FinCenter)
           cat("\n Units:             ", object@units)
