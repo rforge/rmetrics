@@ -6,6 +6,8 @@
 \alias{CPI.dat}
 \alias{danishClaims}
 \alias{dem2gbp}
+\alias{DEM98NYC}
+\alias{DEM98ZRH}
 \alias{DowJones30}
 \alias{ford.s}
 \alias{hp.s}
@@ -26,6 +28,7 @@
 \alias{usdthb}
 \alias{yhoo.df}
 
+
 \title{Time Series Data Sets} 
 
 
@@ -43,6 +46,8 @@
     \code{IP.dat} \tab US Industrial Production Index, \cr
     \code{danishClaims} \tab Danish Fire Losses, \cr
     \code{dem2gbp} \tab DEM/GBP Foreign Exchange Rate, \cr
+    \code{DEM98NYC} \tab BID prices of USDDEM FX rates recorded at NYC, \cr
+    \code{DEM98ZRH} \tab BID prices of USDDEM FX rates recorded at ZRH, \cr
     \code{DowJones30} \tab Down Jones 30 Stocks, \cr
     \code{ford.s} \tab Daily Ford Stock Prices, \cr
     \code{hp.s} \tab Daily Hewlett-Packard Stock Prices, \cr
@@ -118,7 +123,19 @@
     The data set ranges from 1984-01-03 to 1991-12-31.\cr
     The columns are named: \cr
     Source: Journal of Business and Economic Statistics, 
-        \emph{ftp://www.amstat.org}.\cr
+    \emph{ftp://www.amstat.org}.\cr
+    
+    
+    \bold{BID Prices of USDDEM FX Rates:}\cr
+    \cr
+    \code{DEM98NYC} and  \code{DEM98ZRH}
+    contain intra-daily foreign exchange bid prices for the USDDEM
+        exchange rate for the third week in March 1998. One file is 
+        recorded in local New York City time, the other in local
+        Zurich time.
+    The data set ranges from:\cr
+    The columns are named: BID\cr 
+    Source: Diethelm Wuertz and Remo Schnidrig.\cr
     
     
     \bold{Down Jones 30 Stocks:}\cr

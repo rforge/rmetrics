@@ -30,6 +30,8 @@
 # FUNCTIONS:                   
 #  CPI.dat
 #  dem2gbp
+#  DEM98NYC 
+#  DEM98ZRH 
 #  DowJones30
 #  ford.s
 #  hp.s
