@@ -72,7 +72,7 @@
    finCenter(ZRH) <- "Zurich"
    finCenter(NYC) <- "Zurich"
    at = unique(round(time(ZRH)))
-   plot(ZRH, type = "p", pch = 19, col = "blue", format = "%b %d", at = at, 
+   plot(ZRH, type = "p", pch = 19, col = "blue", format = "\%b \%d", at = at, 
        xlab = paste(ZRH@FinCenter, "local Time"), main = ZRH@FinCenter)
    points(NYC, pch = 19, col = "red")
    hgrid()
@@ -82,7 +82,7 @@
    finCenter(ZRH) <- "Zurich"
    finCenter(NYC) <- "NewYork"
    at = unique(round(time(ZRH)))
-   plot(ZRH, type = "p", pch = 19, col = "blue", format = "%b %d", at = at, 
+   plot(ZRH, type = "p", pch = 19, col = "blue", format = "\%b \%d", at = at, 
        FinCenter = "GMT", xlab = "GMT", main = "ZRH - GMT")
    points(NYC, FinCenter = "GMT", pch = 19, col = "red")
    hgrid()
