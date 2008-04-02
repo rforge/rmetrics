@@ -247,13 +247,13 @@ plot.portfolioBacktest <-
 
     # Plot:
     if(which == "1" || which == "all")
-        .backtestAssetsPlot(x, labels)
+        .backtestAssetsPlot(x, labels, ...)
     if(which == "2" || which == "all")
-        .backtestWeightsRecommendationPlot(x, labels)
+        .backtestWeightsRecommendationPlot(x, labels, ...)
     if(which == "3" || which == "all")
-        .backtestWeightsChangesPlot(x, labels)
+        .backtestWeightsChangesPlot(x, labels, ...)
     if(which == "4" || which == "all")
-        .backtestPortfolioPlot(x, labels)
+        .backtestPortfolioPlot(x, labels, ...)
 
     # Return Value:
     invisible()
@@ -303,10 +303,10 @@ plot.portfolioBacktest <-
     ylim = c(MIN, MAX)
 
     # Plot:
-    plot(cumsum(x[, benchmark]), type = "l", ylab = ylab, col = "black",
+    plot(colCumsums(x[, benchmark]), type = "l", ylab = ylab, col = "black",
         ylim = ylim, ...)
     for (i in 1:nAssets)
-        lines( cumsum(x[, assets[i]]), type = "l", col = i+1)
+        lines( colCumsums(x[, assets[i]]), type = "l", col = i+1)
     if (labels) {
         assetsTitle = paste(assets, collapse = " - ", sep = "")
         title(main = paste(benchmark, "~", assetsTitle))
@@ -324,7 +324,7 @@ plot.portfolioBacktest <-
 
 
 .backtestWeightsRecommendationPlot <-
-    function(object, labels = TRUE, gpars = list())
+    function(object, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -365,12 +365,16 @@ plot.portfolioBacktest <-
         matrix(rep(NA, times = horizonLength * nAssets), ncol = nAssets)
 
     # Plot:
-    ts.plot(rbind(naWeights, weights), xlab = xlab, ylab = ylab,
-            xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
-            ylim = c(0, 1), col = 2:(nAssets+1), main = main, gpars = gpars)
+    ### ts.plot(rbind(naWeights, weights), xlim = c(horizonLength,
+    ### horizonLength - 1 + NROW(weights)), ylim = c(0, 1), col =
+    ### 2:(nAssets+1), gpars = gpars)
+
+    plot(timeSeries(weights), ylim = c(0, 1), ann = FALSE,
+         col = 2:(nAssets+1), plot.type = "single", ...)
 
     # Labels ?
     if (labels) {
+        title(main = main, xlab = xlab, ylab = ylab)
         text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
         mtext(text, line = 0.5, cex = 0.7)
         grid()
@@ -385,7 +389,7 @@ plot.portfolioBacktest <-
 
 
 .backtestWeightsChangesPlot <-
-    function(object, labels = TRUE, gpars = list())
+    function(object, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -428,13 +432,18 @@ plot.portfolioBacktest <-
     diffWeights = apply(diffWeights, 1, FUN = absSum)
     diffWeights = cbind(diffWeights, rbind(naWeights, diff(weights)))
 
-    # Plot:
-    ts.plot(diffWeights, xlab = xlab, ylab = ylab,
-            xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
-            col = 1:(nAssets+1), main = main, gpars = gpars)
+    ### # Plot:
+    ### ts.plot(diffWeights,
+    ### xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
+    ### col = 1:(nAssets+1), gpars = gpars)
+
+    ts <- timeSeries(diffWeights[-seq(horizon + 1),],
+                     charvec = rownames(diffWeights)[-seq(horizon + 1)])
+    plot(ts, col = 1:(nAssets+1), ann = FALSE, plot.type = "single", ...)
 
     # Add Labels"
     if(labels) {
+        title(main = main, xlab = xlab, ylab = ylab)
         text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
         mtext(text, line = 0.5, cex = 0.7)
         grid()
@@ -490,8 +499,7 @@ plot.portfolioBacktest <-
     # Plot:
     MAX = max(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
     MIN = min(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
-    plot(cumX, type = "l", col = "black", ylab = ylab, main = main,
-        ylim = c(MIN, MAX), ...)
+    plot(cumX, type = "l", col = "black", ylim = c(MIN, MAX), ann = FALSE, ...)
     lines(cumP, col = "red", lwd = 2)
     lines(cumB, col = "blue", lwd = 2)
 
@@ -499,6 +507,7 @@ plot.portfolioBacktest <-
 
     # Add Labels"
     if(labels) {
+        title(main = main, ylab = ylab)
         text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
         mtext(text, line = 0.5, cex = 0.7)
         grid()
