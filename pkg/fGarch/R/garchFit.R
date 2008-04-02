@@ -978,6 +978,7 @@ garchFit <-
     omega = params[substr(Names, 1, 5) == "omega"]
     if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
     if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
+    if(p > 0 & !leverage) gamma = rep(0, times = p)
     if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
     if(.params$includes["delta"]) delta = params["delta"]
     if(.params$includes["skew"])  skew  = params["skew"]
