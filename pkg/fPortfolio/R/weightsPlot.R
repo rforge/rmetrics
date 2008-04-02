@@ -75,11 +75,11 @@ weightsPlot <-
     if (labels) {
         if(!legend){
         barplot(t(pos.weights), col = col, space = 0, ylab = "",
-            ylim = c(ymin, ymax), border = "grey")
+            ylim = c(ymin, ymax), border = "grey", ...)
         } else {
             barplot(t(pos.weights), col = col, space = 0, ylab = "",
                 xlim = c(xmin, xmax), ylim = c(ymin, ymax),
-                border = "grey")
+                border = "grey", ...)
             legendtext = names(getStatistics(object)$mu)
             if(is.null(legendtext)){
                 for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
@@ -88,7 +88,7 @@ weightsPlot <-
                 fill = col)
         }
         barplot(t(neg.weights), col = col, space = 0, add = TRUE,
-            border = "grey")
+            border = "grey", ...)
     } else {
         barplot(t(pos.weights), col = col, ...)
     }
@@ -190,7 +190,7 @@ weightedReturnsPlot <-
         if(legend){
             barplot(t(pos.weightedReturns), space = 0, ylab = "",
                 xlim = c(xmin, xmax), ylim = c(ymin, ymax), col = col,
-                border = "grey")
+                border = "grey", ...)
             legendtext = names(getStatistics(object)$mu)
             if(is.null(legendtext)){
                 for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
@@ -199,10 +199,10 @@ weightedReturnsPlot <-
                 fill = col)
         } else {
             barplot(t(pos.weightedReturns), space = 0, ylab = "",
-                ylim = c(ymin, ymax), col = col, border = "grey")
+                ylim = c(ymin, ymax), col = col, border = "grey", ...)
         }
         barplot(t(neg.weightedReturns), space = 0, add = TRUE, col = col,
-            border = "grey")
+            border = "grey", ...)
     } else {
         barplot(t(pos.weightedReturns), col = col, ...)
     }
@@ -298,19 +298,19 @@ covRiskBudgetsPlot <-
     if (labels) {
         if(!legend){
             barplot(t(pos.budgets), space = 0, ylab = "",
-                ylim = c(ymin, ymax), col = col, border = "grey")
+                ylim = c(ymin, ymax), col = col, border = "grey", ...)
         } else {
             legendtext = names(getStatistics(object)$mu)
             if(is.null(legendtext)){
                 for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
             }
             barplot(t(pos.budgets), space = 0, ylab = "", xlim = c(xmin, xmax),
-                ylim = c(ymin, ymax), col = col, border = "grey")
+                ylim = c(ymin, ymax), col = col, border = "grey", ...)
             legend("topright", legend = legendtext, bty = "n", cex = 0.7,
                 fill = col)
         }
         barplot(t(neg.budgets), space = 0, add = TRUE, col = col,
-            border = "grey")
+            border = "grey", ...)
     } else {
         barplot(t(pos.budgets), col = col, ...)
     }
@@ -411,18 +411,19 @@ tailRiskBudgetsPlot <-
     # Create Bar Plots:
     if(!legend){
         barplot(t(pos.budgets), space = 0, ylab = "",
-            ylim = c(ymin, ymax), col = col, border = "grey")
+            ylim = c(ymin, ymax), col = col, border = "grey", ...)
     } else {
         legendtext = names(getStatistics(object)$mu)
         if(is.null(legendtext)){
             for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
         }
         barplot(t(pos.budgets), space = 0, ylab = "", xlim = c(xmin, xmax),
-            ylim = c(ymin, ymax), col = col, border = "grey")
+            ylim = c(ymin, ymax), col = col, border = "grey", ...)
         legend("topright", legend = legendtext, bty = "n", cex = 0.7,
             fill = col)
     }
-    barplot(t(neg.budgets), space = 0, add = TRUE, col = col, border = "grey")
+    barplot(t(neg.budgets), space = 0, add = TRUE, col = col,
+            border = "grey", ...)
 
     # Add Tailored Labels -  6 may be a good Number ...
     targetRisk = getTargetRisk(object)[, 1]
