@@ -62,8 +62,8 @@
     
     # Example:
     #   x = time(as.timeSeries(data(smallcap.ts)))
-    #   rollingPeriods(x, "12m", "1m")
-    #   rollingPeriods(x, "52w", "4w")
+    #   periods(x, "12m", "1m")
+    #   periods(x, "52w", "4w")
      
     # FUNCTION:
     
