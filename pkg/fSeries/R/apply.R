@@ -60,9 +60,11 @@ applySeries <-
     # FUNCTION:
 
     # Check object:
-    if (class(x) != "timeSeries") stop("s is not a timeSeries object")
+    if (class(x) != "timeSeries")
+        stop("s is not a timeSeries object")
     if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
     # Monthly and Quarterly from and to:
     if (is.null(from) & is.null(to)) {
@@ -91,18 +93,21 @@ applySeries <-
     j.to = as.POSIXct(to)
 
     # Iterate:
-    y = x@Data
     pos = time(x)
-    rowNames = rownames(x@Data)
+    rowNames = rownames(x)
     rowBind = NULL
     for (i in seq_len(length(from))) {
         test = (j.pos >= j.from[i] & j.pos <= j.to[i])
         # make sure that cutted is a matrix ...
-        cutted = as.matrix(y[test, ])
+        cutted = as.matrix(x[test, ])
+        # YC : *AND* make sure the matrix is not subbsetted to a vector!!!
+        # YC : here it is fine because as.matrix of a timeSeries checks it
+        # YC : but prefer to check it one more time at the end of the loop...
         ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
         ans = fun(cutted, ...)
         rowBind = rbind(rowBind, ans)
     }
+    stopifnot(NCOL(rowBind) == NCOL(x)) # YC : see above
     rownames(rowBind) = as.character(to)
     if (is.null(colNames)) {
         units = x@units
