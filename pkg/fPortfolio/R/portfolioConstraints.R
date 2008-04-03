@@ -110,6 +110,12 @@ portfolioConstraints <-
     # Short Selling:
     if (any(constraints == "Short")) constraints = NULL
 
+    # check if user want to use Risk Budget with wrong solver
+    # currently only Rdonlp2 supports Risk Budget constraints
+    if (length(grep("minB|maxB", constraints)) &&
+        getSolver(spec) != "solveRdonlp2")
+        warning("Risk budget used with wrong solver")
+
     # Constraints:
     if (type == "BoxGroup") {
             ans = .setBoxGroupConstraints(data, spec, constraints)
