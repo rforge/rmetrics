@@ -108,10 +108,7 @@ portfolioConstraints <-
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
 
     # Short Selling:
-    if (length(constraints) > 0) {
-        # 'constraints' must be at least of length 1, to be checked ...
-        if (constraints[1] == "Short") constraints = NULL
-    }
+    if (any(constraints == "Short")) constraints = NULL
 
     # Constraints:
     if (type == "BoxGroup") {
