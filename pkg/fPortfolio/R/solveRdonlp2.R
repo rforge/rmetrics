@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION: 
+# FUNCTION:                    DESCRIPTION:
 #  solveRdonlp2                 Calls Spelucci's donlp2 solver via Rdonp2
 ################################################################################
 
@@ -37,67 +37,69 @@
 # ------------------------------------------------------------------------------
 
 
-solveRdonlp2 <- 
+solveRdonlp2 <-
     function(data, spec, constraints)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Calls Spelucci's donlp2 solver for MV Portfolio Optimization
-    
+
     # Note:
     #   This function is thought to minimize MV risk for a fixed return
     #   and additional quadratic covariance risk budget constraints.
-    #   So the function can in principle also handle the case of 
+    #   So the function can in principle also handle the case of
     #   quadratic tail risk budget constraints.
-    
+
     # Details:
     #   Code comes from R package Rdonlop2, this package is required.
     #   Rdonlp2 can be downloaded from "http://arumat.net/Rdonlp2/"
     #   Author: Ryuichi Tamura, ry.tamura@gmail.com
-    
+
     # Arguments:
     #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
-    
+
     # FUNCTION:
-    
+    if (!require(Rdonlp2))
+        stop("Rdonlp2 is not installed")
+
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    
+
     # Trace:
     trace = getTrace(spec)
     if(trace) cat("\nPortfolio Optimiziation:\n Using Rdonlp2 ...\n\n")
-    
+
     # Get Specifications:
-    mu = getMu(data) 
+    mu = getMu(data)
     Sigma = getSigma(data)
     nAssets = getNAssets(data)
 
     # Extracting data from spec:
-    targetReturn = getTargetReturn(spec)  
+    targetReturn = getTargetReturn(spec)
     stopifnot(is.numeric(targetReturn))
-    
+
     # Optimize:
-        
+
     # Donlp2 Settings - Start Weights:
     if (is.null(getWeights(spec))) {
         par = rep(1/nAssets, nAssets)
     } else {
         par = getWeights(spec)
-    } 
-    
+    }
+
     # Donlp2 Settings - Function to be optimized:
-    fn = function(x) { x %*% Sigma %*% x } 
-    
+    fn = function(x) { x %*% Sigma %*% x }
+
     # Donlp2 Settings - Box/Group Constraints:
     A.mat = .setConstraints(data, spec, constraints, type = "BoxGroup")
     upperNames = paste("maxW", 1:nAssets, sep = "")
     par.upper = -A.mat[upperNames, "Exposure"]
     lowerNames = paste("minW", 1:nAssets, sep = "")
     par.lower = A.mat[lowerNames, "Exposure"]
-    
+
     # Linear Constraints Donlp2 Settings - Group Constraints:
     Rows = (1:nrow(A.mat))
     names(Rows) = rownames(A.mat)
@@ -109,8 +111,8 @@ solveRdonlp2 <-
     # All weights must sum up to one ...
     lin.upper[1] = lin.lower[1] = A[1, nAssets+1]
     # All assets must sum up to the target return ...
-    lin.upper[2] = lin.lower[2] = A[2, nAssets+1] 
-    
+    lin.upper[2] = lin.lower[2] = A[2, nAssets+1]
+
     # Further Group Constraints:
     if (M > 2) {
         for (i in 3:M) {
@@ -125,23 +127,23 @@ solveRdonlp2 <-
         }
     }
     A = A[, -(nAssets+1)]
-    
+
     # Trace Solver ?
-    solver.trace = getTrace(spec) 
-     
+    solver.trace = getTrace(spec)
+
     # Check Constraint Strings for Risk Budgets:
     validStrings = c("minB", "maxB")
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
     checkStrings = sum(usedStrings %in% validStrings)
     if (checkStrings > 0) {
-        includeRiskBudgeting = TRUE 
+        includeRiskBudgeting = TRUE
     } else {
         includeRiskBudgeting = FALSE
     }
-    
-    if (solver.trace) cat("Include Risk Budgeting:", 
+
+    if (solver.trace) cat("Include Risk Budgeting:",
         includeRiskBudgeting, "\n")
-        
+
     if (includeRiskBudgeting) {
         # Non-Linear Constraints Functions:
         nlcon <- function(x) {
@@ -150,42 +152,42 @@ solveRdonlp2 <-
             B = B2/B1
             B
         }
-          
+
         # Compose non-linear functions:
-        for (I in 1:nAssets) 
+        for (I in 1:nAssets)
         eval( parse(text = paste(
             "nlcon", I, " = function(x) { nlcon(x)[", I, "] }", sep = "")) )
         nlinFunctions = paste("nlcon", 1:nAssets, sep = "", collapse = ",")
         nlinFunctions = paste("list(", nlinFunctions, ")")
         nlin = eval( parse(text = nlinFunctions) )
-        
+
         # Constraints Vectors:
         B = .setConstraints(data, spec, constraints, type = "RiskBudget")
         nlin.lower = B[1, ]
         nlin.upper = B[2, ]
-        
+
         # Optimize:
         ans = rdonlp2(
-            par, fn, 
+            par, fn,
             par.l = par.lower, par.u = par.upper,
-            A = A, lin.l = lin.lower, lin.u = lin.upper,  
-            nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,  
+            A = A, lin.l = lin.lower, lin.u = lin.upper,
+            nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,
             control = rdonlp2Control(
-                iterma = 400, 
+                iterma = 400,
                 silent = !solver.trace),
             name = "portfolio")
     } else {
         # Optimize:
         ans = rdonlp2(
-            par, fn, 
+            par, fn,
             par.l = par.lower, par.u = par.upper,
-            A = A, lin.l = lin.lower, lin.u = lin.upper,  
+            A = A, lin.l = lin.lower, lin.u = lin.upper,
             control = rdonlp2Control(
-                iterma = 400, 
+                iterma = 400,
                 silent = !solver.trace),
             name = "portfolio")
     }
-    
+
     # Add:
     if (solver.trace) cat("Rdonlp2 Message:", ans$message, "\n")
     ans$solver = "RDonlp2"
@@ -193,8 +195,8 @@ solveRdonlp2 <-
     message = "KT-conditions satisfied, no further correction computed"
     if (ans$message == message) ans$status = 0 else ans$status = 1
     ans$targetReturn = targetReturn
-    ans$targetRisk = sqrt((ans$weights %*% Sigma %*% ans$weights)[[1]])  
-   
+    ans$targetRisk = sqrt((ans$weights %*% Sigma %*% ans$weights)[[1]])
+
     # Return Value:
     ans
 }
