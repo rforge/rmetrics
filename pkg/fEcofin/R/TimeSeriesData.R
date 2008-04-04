@@ -27,29 +27,29 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DEM98NYC 
-#  DEM98ZRH 
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTIONS:           DESCRIPTION:                
+#  CPI.dat              Zivot-Wang
+#  dem2gbp              Rmetrics
+#  DEM98NYC             Rmetrics
+#  DEM98ZRH             Rmetrics
+#  DowJones30           Zivot-Wang
+#  ford.s               Zivot-Wang
+#  hp.s                 Zivot-Wang
+#  IP.dat               Zivot-Wang
+#  klein                Rmetrics
+#  kmenta               Rmetrics
+#  msft.dat             Zivot-Wang
+#  nelsonplosser        Zivot-Wang [nelson.dat]
+#  nyse                 Zivot-Wang [nyse]{nyse.s]
+#  recession            Rmetrics
+#  shiller.dat          Zivot-Wang
+#  shiller.annual       Zivot-Wang
+#  singleIndex.dat      Zivot-Wang
+#  sp500dge             Zivot-Wang [sp.raw][sp500][sp500.s]
+#  sp500index           Rmetrics
+#  surex1.ts            Zivot-Wang
+#  usdchf               Rmetrics
+#  usdthb               Rmetrics
+#  yhoo.df              Zivot-Wang
 ################################################################################
 
