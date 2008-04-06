@@ -22,6 +22,10 @@
 #  colCummaxs                Computes cumulated maximum values
 #  colCummaxs.default        S3 default method (for matrix objects)
 #  colCummaxs.timeSeries     S3 method for timeSeries objects
+# FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
+#  colCummins                Computes cumulated maximum values
+#  colCummins.default        S3 default method (for matrix objects)
+#  colCummins.timeSeries     S3 method for timeSeries objects
 # FUNCTION:                 COLUMN CUMULATIVE MINIMA:
 #  colCumprods               Computes cumulated product values
 #  colCumprods.default       S3 default method (for matrix objects)
@@ -30,20 +34,6 @@
 #  colCumreturns             Computes cumulated product values
 #  colCumreturns.default     S3 default method (for matrix objects)
 #  colCumreturns.timeSeries  S3 method for timeSeries objects
-# FUNCTION:                 NO LONGER SUPPORTED:
-#  cumsum.timeSeries         use colCumsums()
-################################################################################
-
-
-################################################################################
-# @comments
-#   DW 2007-09-20           further col* functions added, see ADDONS
-################################################################################
-
-
-################################################################################
-# @todo
-#
 ################################################################################
 
 
@@ -368,5 +358,4 @@ colCumreturns.timeSeries <-
 
 
 ################################################################################
-
 

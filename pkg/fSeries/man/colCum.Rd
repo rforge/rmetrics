@@ -40,6 +40,9 @@
 \method{colCummaxs}{default}(x, na.rm = FALSE, \dots)
 \method{colCummaxs}{timeSeries}(x, na.rm = FALSE, \dots)
 
+\method{colCummins}{default}(x, na.rm = FALSE, \dots)
+\method{colCummins}{timeSeries}(x, na.rm = FALSE, \dots)
+
 \method{colCumprods}{default}(x, na.rm = FALSE, \dots)
 \method{colCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
 
