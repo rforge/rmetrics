@@ -188,6 +188,7 @@ test.efficientPortfolio.BoxConstraints.RDonlp2 =
 {
     if (FALSE) {
 
+        # This requires the Rdonlp2 Package:
         require(Rdonlp2)
 
         # Data:
