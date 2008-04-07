@@ -28,19 +28,28 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation for WEB download
+#  swxCategories         Lists categories of symbols from www.swx.ch 
 ################################################################################
 
 
-setClass("fWEBDATA", 
-    representation(
-        call = "call",
-        data = "data.frame",
-        param = "character",
-        title = "character",
-        description = "character")  
-)
+.swxCategories <-
+    function()
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Lists categories of symbols from www.swx.ch 
+    
+    # FUNCTION:
+    
+    # Categories and Description:
+    Categories = "Not Yet Implemented"
+    
+    # Return Value:
+    Categories
+}
 
 
 ################################################################################
 
+     

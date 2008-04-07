@@ -28,19 +28,28 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation for WEB download
+#  fredCategories        Lists categories of symbols from finance.google.com 
 ################################################################################
 
 
-setClass("fWEBDATA", 
-    representation(
-        call = "call",
-        data = "data.frame",
-        param = "character",
-        title = "character",
-        description = "character")  
-)
+.googleCategories <-
+    function()
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Lists categories of symbols from finance.google.com 
+    
+    # FUNCTION:
+    
+    # Categories and Description:
+    Categories = "Not Yet Implemented"
+    
+    # Return Value:
+    Categories
+}
 
 
 ################################################################################
 
+     

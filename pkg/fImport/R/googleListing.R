@@ -27,19 +27,21 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation for WEB download
+# FUNCTION:             DESCRIPTION: 
+#  googleListing         Lists symbols from finance.google.com
 ################################################################################
 
 
-setClass("fWEBDATA", 
-    representation(
-        call = "call",
-        data = "data.frame",
-        param = "character",
-        title = "character",
-        description = "character")  
-)
+# *** DW: UNDER CONSTRUCTION ***
+
+
+.googleListing <-
+    function()
+{
+    # Description:
+  
+    NA
+}  
 
 
 ################################################################################

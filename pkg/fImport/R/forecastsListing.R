@@ -27,19 +27,21 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation for WEB download
+# FUNCTION:             DESCRIPTION: 
+#  forecastsListing      Lists symbols from www.forecasts.org 
 ################################################################################
 
 
-setClass("fWEBDATA", 
-    representation(
-        call = "call",
-        data = "data.frame",
-        param = "character",
-        title = "character",
-        description = "character")  
-)
+# *** DW: UNDER CONSTRUCTION ***
+
+
+.forecastsListing <-
+    function()
+{
+    # Description:
+  
+    NA
+}  
 
 
 ################################################################################

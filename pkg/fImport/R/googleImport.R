@@ -18,7 +18,6 @@
 # for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -29,8 +28,8 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  googleImport          Downloads market data from Google's web site
-#  googleSeries          Easy to use download from Google
+#  googleImport          Downloads market data from finance.google.com
+#  googleSeries          Easy to use download from finance.google.com
 ################################################################################
 
 
@@ -107,7 +106,7 @@ googleImport <-
             call = match.call(),
             param = c("Instrument Query" = query),
             data = z,
-            title = "Web Data Import from Yahoo",
+            title = "Web Data Import from finance.google.com",
             description = as.character(date()) )
         return(ans)
     }
@@ -121,11 +120,7 @@ googleImport <-
 
 
 googleSeries <-
-    function(symbols = c("IBM", "MSFT"), from = NULL, to = NULL,
-    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"),
-    aggregation = c("d", "m"),
-    returnClass = c("timeSeries", "ts", "matrix", "data.frame"),
-    getReturns = FALSE, ...)
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -162,14 +157,12 @@ googleSeries <-
 
     # FUNCTION:
 
-    # Match Arguments:
-    returnClass = match.arg(returnClass)
+    # Check:
     aggregation = match.arg(aggregation)
 
     # Internal Univariate Download Function:
     # symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365,
-    # quote = "Close", aggregation = c("d", "w", "m"),
-    # returnClass = c("timeSeries", "ts", "matrix", "data.frame")
+    # quote = "Close", aggregation = c("d", "w", "m"))
 
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {
@@ -209,20 +202,6 @@ googleSeries <-
         Y@units = UNITS
         colnames(Y@Data) = UNITS
         if (i == 1) X = Y else X = merge(X, Y)
-    }
-
-    # Compute Return Series ?
-    if (getReturns) X = returns(X, ...)
-
-    # Return as Object ?
-    if (returnClass == "matrix") {
-        X = X@data
-    }
-    if (returnClass == "data.frame") {
-        X = data.frame(X@Data)
-    }
-    if (returnClass == "ts") {
-        X = as.ts(X@Data)
     }
 
     # Return Value:

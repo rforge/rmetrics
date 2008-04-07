@@ -18,7 +18,6 @@
 # for this R-port: 
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,16 +27,10 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:  
-#  fredImport            Downloads market data from St. Louis FED web site 
-#  fredSeries            Easy to use download from St. Louis FED  
+# FUNCTION:             DESCRIPTION:   
+#  fredImport            Downloads market data from research.stlouisfed.org
+#  fredSeries            Easy to use download from research.stlouisfed.org
 ################################################################################
-
-
-################################################################################
-# FUNCTION:             DESCRIPTION:  
-#  fredImport            Downloads market data from St. Louis FED web site 
-#  fredSeries            Easy to use download from St. Louis FED 
 
 
 fredImport <-  
@@ -132,7 +125,7 @@ fredImport <-
                 "Instrument Query" = query,
                 "Frequency" = frequency),
             data = X, 
-            title = "Web Data Import from FED St. Louis", 
+            title = "Web Data Import from research.stlouisfed.org", 
             description = as.character(date()) )
         return(ans)
     }
@@ -146,8 +139,7 @@ fredImport <-
 
 
 fredSeries <-  
-    function(query = "DPRIME", frequency = "daily", returnClass = 
-    c("timeSeries", "ts", "matrix", "data.frame"), getReturns = FALSE, ...)
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -155,7 +147,7 @@ fredSeries <-
     #   Downloads easily time series data from St. Louis FRED
     
     # Arguments:
-    #   query - a character string value, the St. Louis FRED 
+    #   symbols - a character string value, the St. Louis FRED 
     #       symbol name.
     #   frequency - a character string value, the frquency of the
     #       data records.
@@ -165,33 +157,31 @@ fredSeries <-
     #   fredSeries("DPRIME")
     
     # FUNCTION:
-
-    # Match Arguments:
-    returnClass = match.arg(returnClass)
+    
+    # Settings:
+    query = symbols
     
     # Download:
-    Y = fredImport(query = query, frequency = frequency)@data
+    Y = fredImport(query = query, ...)@data
     X = as.timeSeries(Y)
-    colnames(X)<-colnames(Y)[-1]
+    N = length(query)
+    if (N > 1) {
+        for (i in 2:N) {
+            Y = fredImport(query = query[i], ...)@data   
+            X = merge(X, as.timeSeries(Y))
+        }
+    }    
+    colnames(X)<-query
     
-    # Compute Return Series ?
-    if (getReturns) X = returns(X, ...)  
-    
-    # Return as Object ?
-    if (returnClass == "matrix") {
-        X = X@data 
-    }
-    if (returnClass == "data.frame") {
-        X = data.frame(X@Data) 
-    }
-    if (returnClass == "ts") {
-        X = as.ts(X@Data)
-    }
-    
+    # Time Window:
+    if (is.null(from)) from = to - nDaysBack*24*3600
+    X = window(X, from, to)
+     
     # Return Value:
     X  
 }
-
+   
 
 ################################################################################
 
+     

@@ -18,7 +18,6 @@
 # for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -29,24 +28,15 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  yahooImport           Downloads market data from Yahoo's web site
-#  yahooSeries           Easy to use download from Yahoo
-# FUNCTION:             IMPORT STATISTICS - EXPERIMENTAL:
-#  keystatsImport        Downloads key statistics from Yahoo's web site
-#  briefingImport        Downloads briefings from Yahoo's Internet site
+#  yahooImport           Downloads market data from chart.yahoo.com
+#  yahooSeries           Easy to use download from chart.yahoo.com
 ################################################################################
-
-
-################################################################################
-# FUNCTION:             IMPORT DATA FUNCTIONS:
-#  yahooImport           Downloads market data from Yahoo's web site
-#  yahooSeries           Easy to use download from Yahoo
 
 
 yahooImport <-
     function (query, file = "tempfile",
-    source = "http://chart.yahoo.com/table.csv?", save = FALSE, sep = ";",
-    swap = 20, try = TRUE)
+    source = "http://chart.yahoo.com/table.csv?", 
+    save = FALSE, sep = ";", try = TRUE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -123,7 +113,7 @@ yahooImport <-
             call = match.call(),
             param = c("Instrument Query" = query),
             data = z,
-            title = "Web Data Import from Yahoo",
+            title = "Web Data Import from chart.yahoo.com",
             description = as.character(date()) )
         return(ans)
     }
@@ -137,10 +127,7 @@ yahooImport <-
 
 
 yahooSeries <-
-    function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL,
-    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"),
-    aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
-    "matrix", "data.frame"), getReturns = FALSE, ...)
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -174,12 +161,10 @@ yahooSeries <-
     #   yahooSeries(symbols = c("^DJI", "IBM"))
     #   yahooSeries(symbols = c("^DJI", "IBM"), aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
-    #   yahooSeries(returnSeries = TRUE)
 
     # FUNCTION:
 
     # Match Arguments:
-    returnClass = match.arg(returnClass)
     aggregation = match.arg(aggregation)
 
     # Internal Univariate Download Function:
@@ -217,208 +202,6 @@ yahooSeries <-
         Y@units = UNITS
         colnames(Y@Data) = UNITS
         if (i == 1) X = Y else X = merge(X, Y)
-    }
-
-    # Compute Return Series ?
-    if (getReturns) X = returns(X, ...)
-
-    # Return as Object ?
-    if (returnClass == "matrix") {
-        X = X@data
-    } else if (returnClass == "data.frame") {
-        X = data.frame(X@Data)
-    } else if (returnClass == "ts") {
-        X = as.ts(X@Data)
-    }
-
-    # Return Value:
-    X
-}
-
-
-################################################################################
-# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
-#  keystatsImport       Downloads key statistics from Yahoo's web site
-
-
-keystatsImport <-
-    function (query, file = "tempfile", source =
-    "http://finance.yahoo.com/q/ks?s=", save = FALSE, try = TRUE)
-{
-    # A function implemented by Diethelm Wuertz and Matthew C.Keller
-
-    # Description:
-    #   Downloads Key Statistics on shares from Yahoo's Internet site
-
-    # Example:
-    #   keystatsImport("YHOO")
-    #   keystatsImport("IBM")
-    #   DEBUG:
-    #       query = "IBM"
-    #       file = "tempfile"; source = "http://finance.yahoo.com/q/ks?s="
-    #       save = FALSE; try = TRUE; method = NULL
-
-    # Changes:
-    #   2006-08-26 update by MCK
-
-    # FUNCTION:
-
-    # Download:
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(keystatsImport(file = file, source = source,
-            query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
-            return("No Internet Access")
-        }
-        else {
-            return(z)
-        }
-    } else {
-        # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            method = NULL
-        } else {
-            method = "wget"
-        }
-
-        # Download and Scan:
-        url = paste(source, query, sep = "")
-        download.file(url = url, destfile = file, method = method)
-        x = scan(file, what = "", sep = "\n")
-
-        # Extract Data Records:
-        x = x[grep("datamodoutline1", x)]
-
-        # Clean up HTML:
-        x = gsub("/", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_datamodoutline1.", "", x, perl = TRUE)
-        x = gsub(" colspan=.2.", "", x, perl = TRUE)
-        x = gsub(" cell.......=...", "", x, perl = TRUE)
-        x = gsub(" border=...", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tablehead1.", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
-        x = gsub(" width=.75%.>", "", x, perl = TRUE)
-        x = gsub(" width=.100%.", "", x, perl = TRUE)
-        x = gsub(" size=.-1.", "", x, perl = TRUE)
-        x = gsub("<.>", "", x, perl = TRUE)
-        x = gsub("<..>", "", x, perl = TRUE)
-        x = gsub("<....>", "", x, perl = TRUE)
-        x = gsub("<table>", "", x, perl = TRUE)
-        x = gsub("<sup>.<sup>", "", x, perl = TRUE)
-        x = gsub("&amp;", "&", x, perl = TRUE)
-        x = gsub("<td", " @ ", x, perl = TRUE)
-        x = gsub(",", "", x, perl = TRUE)
-
-        # Create Matrix:
-        x = unlist(strsplit(x, "@" ))
-        x = x[ grep(":", x) ]
-        x = gsub("^ ", "", x, perl = TRUE)
-        Index = grep("^ ", x)
-        if (length(Index) > 0) x = x[-Index]
-        x = gsub(" $", "", x, perl = TRUE)
-        x = gsub(":$", ":NA", x, perl = TRUE)
-
-        # If there are two ":" in a line ...
-        x = sub(":", "@", x)
-        x = sub(":", "/", x)
-
-        # Convert to matrix:
-        x = matrix(unlist(strsplit(x, "@" )), byrow = TRUE, ncol = 2)
-
-        # Add Current Date:
-        stats = as.character(Sys.Date())
-        x = rbind(c("Symbol", query), c("Date", stats), x)
-        X = as.data.frame(x[, 2])
-        rownames(X) = x[, 1]
-        colnames(X) = "Value"
-    }
-
-    # Return Value:
-    X
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-briefingImport <-
-    function (query, file = "tempfile", source =
-    "http://finance.yahoo.com/q/ud?s=", save = FALSE, try = TRUE)
-{
-    # A function implemented by Diethelm Wuertz and Matthew C.Keller
-
-    # Description:
-    #   Downloads Key Statistics on shares from Yahoo's Internet site
-
-    # Example:
-    #   briefingImport("YHOO")
-    #   briefingImport("IBM")
-    #   DEBUG:
-    #       query = "IBM"
-    #       file = "tempfile"; source = "http://finance.yahoo.com/q/ks?s="
-    #       save = FALSE; try = TRUE; method = NULL
-
-    # FUNCTION:
-
-    # Download:
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(briefingImport(file = file, source = source,
-            query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
-            return("No Internet Access")
-        }
-        else {
-            return(z)
-        }
-    } else {
-        # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            method = NULL
-        } else {
-            method = "wget"
-        }
-
-        # Download:
-        url = paste(source, query, sep = "")
-        download.file(url = url, destfile = file, method = method)
-        x = scan(file, what = "", sep = "\n")
-
-        # Extract Data Records:
-        x = x[grep("Briefing.com", x)]
-
-        x = gsub("</", "<", x, perl = TRUE)
-        x = gsub("/", " / ", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
-        x = gsub(" align=.center.", "", x, perl = TRUE)
-        x = gsub(" cell.......=...", "", x, perl = TRUE)
-        x = gsub(" border=...", "", x, perl = TRUE)
-        x = gsub(" color=.red.", "", x, perl = TRUE)
-        x = gsub(" color=.green.", "", x, perl = TRUE)
-        x = gsub("<.>", "", x, perl = TRUE)
-        x = gsub("<td>", "@", x, perl = TRUE)
-        x = gsub("<..>", "", x, perl = TRUE)
-        x = gsub("<...>", "", x, perl = TRUE)
-        x = gsub("<....>", "", x, perl = TRUE)
-        x = gsub("<table>", "", x, perl = TRUE)
-        x = gsub("<td nowrap", "", x, perl = TRUE)
-        x = gsub("<td height=....", "", x, perl = TRUE)
-        x = gsub("&amp;", "&", x, perl = TRUE)
-
-        x = unlist(strsplit(x, ">"))
-
-        x = x[ grep("-...-[90]", x, perl = TRUE) ]
-        nX = length(x)
-        # The last record has an additional @, remove it ...
-        x[nX] = gsub("@$", "", x[nX], perl = TRUE)
-        x = unlist(strsplit(x, "@"))
-        x[x == ""] = "NA"
-        x = matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
-        x[, 1] = as.character(strptime(x[, 1], format = "%d-%b-%y"))
-        colnames(x) = c("Date", "ResearchFirm", "Action", "From", "To")
-        x = x[nrow(x):1, ]
-        X = as.data.frame(x)
     }
 
     # Return Value:
