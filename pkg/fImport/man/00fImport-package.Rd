@@ -47,6 +47,13 @@
     4. Data from finance.google.com\cr
     5. Data from chart.yahoo.com
     
+    Functions for the following functionalities are available:
+    
+    1. *Series\cr
+    2. *Import\cr
+    3. *Categories\cr
+    4. *Listing\cr
+    
 }    
          
    

@@ -14,15 +14,6 @@
 }
 
 
-\usage{ 
-economagicListing(category = c(
-    "fedbog", "frbg17", "frbz1", "frbg19", "frbfor", "frbsls", "fedstl",   
-    "feddal", "fedny", "fedphl", "blslf", "blsint", "cbo", "treas",    
-    "doeme", "doewkly", "libor", "aus", "japan", "ecb", "crb", "ism",      
-    "sp"), abbreviate = 60)
-}
-
-
 \arguments{
 
     \item{category}{
@@ -36,10 +27,7 @@ economagicListing(category = c(
 
 
 \examples{
-\dontrun{
 ## economagicListing -
-   economagicListing()
-}
 }
 
 
