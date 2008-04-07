@@ -24,18 +24,18 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  maxddStats                Expectation of Drawdowns for BM with drift
-# FUNCTION:                 DISTRIBUTION AND RANDOM VARIATES:
-#  dmaxdd                    Density function of mean Max-Drawdowns
-#  pmaxdd                    Probability function of mean Max-Drawdowns
-#  rmaxdd                    Random Variates of mean Max-Drawdowns                    
+# FUNCTION:  
+#  test.maxddStats
+#  test.maxdd                  
 ################################################################################
 
 
 test.maxddStats =
 function()
 { 
+    # maxddStats                
+    #   Expectation of Drawdowns for BM with drift
+    
     # Return Value:
     return()
 }
@@ -47,7 +47,12 @@ function()
 test.maxdd =
 function()
 { 
-    # Return Value:
+    # FUNCTION:    DISTRIBUTION AND RANDOM VARIATES:
+    #  dmaxdd       Density function of mean Max-Drawdowns
+    #  pmaxdd       Probability function of mean Max-Drawdowns
+    #  rmaxdd       Random Variates of mean Max-Drawdowns 
+
+# Return Value:
     return()
 }
  

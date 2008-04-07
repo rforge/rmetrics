@@ -119,11 +119,11 @@ plot.fPORTFOLIO <-
 
     # Plot:
     frontierPlot(object = x, xlim = con$xlim, ylim = con$ylim, pch =
-                 19, cex = 0.75, title = FALSE,
-                 las = ifelse(is.null(con$las), 0, con$las))
+        19, cex = 0.75, title = FALSE,
+        las = ifelse(is.null(con$las), 0, con$las))
     title(main = ifelse(is.null(con$main), "Efficient Frontier", con$main),
-          xlab = ifelse(is.null(con$xlab), xLab, con$xlab),
-          ylab = ifelse(is.null(con$ylab), "Target Return", con$ylab))
+        xlab = ifelse(is.null(con$xlab), xLab, con$xlab),
+        ylab = ifelse(is.null(con$ylab), "Target Return", con$ylab))
 
 }
 

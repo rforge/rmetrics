@@ -25,10 +25,10 @@
 
 ################################################################################
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
-#  weightsPie                   Plots weights
-#  weightedReturnsPie           Plots weighted means
-#  covRiskBudgetsPie            Plots covariance risk budgets
-#  tailRiskBudgetsPie           Plots copulae tail risk budgets
+#  weightsPie                   Pie Plots weights
+#  weightedReturnsPie           Pie Plots weighted means
+#  covRiskBudgetsPie            Pie Plots covariance risk budgets
+#  tailRiskBudgetsPie           Pie Plots copulae tail risk budgets
 ################################################################################
 
 
@@ -36,7 +36,7 @@ weightsPie <-
     function(object, pos = NULL, labels = TRUE, col = NULL,
     box = TRUE, legend = TRUE, radius = 0.8, ...)
 {
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Description:
     #   Plots a Pie Chart of Weigths
@@ -137,7 +137,7 @@ weightedReturnsPie <-
     function(object, pos = NULL, labels = TRUE, col = NULL,
     box = TRUE, legend = TRUE, radius = 0.8, ...)
 {
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Description:
     #   Adds a pie plot of the weights
@@ -240,7 +240,7 @@ covRiskBudgetsPie <-
     function(object, pos = NULL, labels = TRUE, col = NULL,
     box = TRUE, legend = TRUE, radius = 0.8, ...)
 {
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'.
@@ -345,7 +345,7 @@ tailRiskBudgetsPie <-
     function(object, pos = NULL, labels = TRUE, col = NULL,
     box = TRUE, legend = TRUE, radius = 0.8, ...)
 {
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'.

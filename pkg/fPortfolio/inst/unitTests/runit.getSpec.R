@@ -24,6 +24,109 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:  
+#  test.getSpec.getModel  
+#  test.getSpec.getPortfolio
+#  test.getSpec.getOptim
+################################################################################
+
+
+test.getSpec.getModel <-  
+    function()
+{  
+    # FUNCTION:            PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
+    #  getModel             Extract model slot
+    #   getType             Extract portfolio type from specification 
+    #   getOptimize         Extract what to optimize from specification
+    #   getEstimator        Extract type of covariance estimator
+    #   getTailRisk         Extract list of tail dependency risk matrixes
+    #   getParams           Extract parameters from specification
+    #   getAlpha            Extracts target VaR-alpha specification
+
+    # Specification:
+    spec = portfolioSpec()
+    
+    # Get Slot:
+    print(getModel(spec))
+    print(names(getModel(spec)))
+    
+    # Get Model Entries:
+    print(getType(spec))
+    print(getOptimize(spec))
+    print(getEstimator(spec))
+    print(getTailRisk(spec))
+    print(getParams(spec))
+        
+    # Model$Params:
+    print(getAlpha(spec))
+    # print(getA(spec)) ... is not yet implemented
+ 
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.getSpec.getPortfolio <-  
+    function()
+{  
+    # FUNCTION:            PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
+    #  getPortfolio         Extract portfolio slot
+    #   getWeights          Extracts weights from a portfolio object
+    #   getTargetReturn     Extracts target return from specification
+    #   getTargetRisk       Extracts target riks from specification
+    #   getRiskFreeRate     Extracts risk free rate from specification 
+    #   getNFrontierPoints  Extracts number of frontier points 
+    #   getStatus           Extracts portfolio status information
+
+    # Specification:
+    spec = portfolioSpec()
+    
+    # Get Slot:
+    print(getPortfolio(spec))
+    print(names(getPortfolio(spec)))
+    
+    # Get Portfolio Entries:                                
+    print(getWeights(spec))            
+    print(getTargetReturn(spec))       
+    print(getTargetRisk(spec))      
+    print(getRiskFreeRate(spec))       
+    print(getNFrontierPoints(spec))    
+    print(getStatus(spec))
+ 
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.getSpec.getOptim <-  
+    function()
+{  
+    # FUNCTION:            PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
+    #  getOptim             Extract optim slot
+    #   getSolver           Extracts solver from specification
+    #   getTrace            Extracts solver's trace flag
+
+    # Specification:
+    spec = portfolioSpec()
+    
+    # Get Slot:
+    print(getOptim(spec))
+    print(names(getOptim(spec)))
+                                    
+    # Get Optim Entries:
+    print(getSolver(spec))            
+    print(getTrace(spec))       
+ 
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 

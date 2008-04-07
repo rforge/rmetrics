@@ -25,37 +25,39 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:   
-#  solveRQuadprog               Calls Goldfarb and Idnani's QP solver                  
+# FUNCTION:
+#  test.solveRquadprog.MV.LongOnly.MinRisk                 
 ################################################################################
 
     
-test.solveRquadprog <- 
+test.solveRquadprog.MV.LongOnly.MinRisk <- 
     function()
 { 
     # Quadratic Programmming - Mean-Variance Portfolio:
     #   The target return is fixed, we minimize the risk!
 
-    # Direct Access:
+    # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
     
     # Specification:
     spec = portfolioSpec()
     setTargetReturn(spec) = mean(as.matrix(data))
-    spec
+    print(spec)
     
     # Default Constraints:
     constraints = "LongOnly"
     constraints
     
     # Quadprog:
-    solveRquadprog(data, spec, constraints)
+    ans = solveRquadprog(data, spec, constraints)
+    print(ans)
     
     # Should give the same results ...
     setTargetReturn(spec) = 10*getTargetReturn(spec)
-    solveRquadprog(10*data, spec, constraints)
+    ans = solveRquadprog(10*data, spec, constraints)
+    print(ans)
     
     # Return Value:
     return()
@@ -65,28 +67,29 @@ test.solveRquadprog <-
 # ------------------------------------------------------------------------------
 
 
-test.solveRquadprog.twoAssets <- 
+test.solveRquadprog.MV.MinRisk.twoAssets <- 
     function()
 { 
     # Solved Analytically
     #   Speeds up the two-assets forntier significantly!
 
-    # Direct Access:
+    # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
-    head(data)
+    print(head(data))
     
     # Specification:
     spec = portfolioSpec()
     setTargetReturn(spec) = mean(as.matrix(data))   
-    spec
+    print(spec)
     
     # Default Constraints:
     constraints = "LongOnly"
-    constraints
+    print(constraints)
     
     # Quadprog:
-    solveRquadprog(data, spec, constraints) 
+    ans = solveRquadprog(data, spec, constraints) 
+    print(ans)
     
     # Return Value:
     return()

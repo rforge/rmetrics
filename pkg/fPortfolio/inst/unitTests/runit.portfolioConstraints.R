@@ -24,67 +24,73 @@
 
 
 ################################################################################
-# FUNCTION:                    CONSTRAINTS:
-#  portfolioConstraints         Checks Consistency of Constraints Strings               
+# FUNCTION: 
+#  test.portfolioConstraints.LongOnly
+#  test.portfolioConstraints.Short   
+#  test.portfolioConstraints.boxConstraints   
+#  test.portfolioConstraints.boxgroupConstraints 
+#  test.portfolioConstraints.riskBudgetsConstraints 
+#  test.portfolioConstraints.allTypes   
 ################################################################################
 
 
-test.portfolioConstraints.LongOnly =
-function()
+test.portfolioConstraints.LongOnly <- 
+    function()
 { 
-   # Load Data:
-   data = as.timeSeries(data(smallcap.ts))
-   data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   head(data)
-   
-   # Set Default Specifications:
-   spec = portfolioSpec() 
-   spec
-   
-   # Constraints:
-   constraints = "LongOnly"
-   constraints
-   
-   # Set Portfolio Constraints:
-   portfolioConstraints(data, spec, constraints)
-   
-   # Return Value:
-   return()
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Set Default Specifications:
+    spec = portfolioSpec() 
+    print(spec)
+    
+    # Constraints:
+    constraints = "LongOnly"
+    print(constraints)
+    
+    # Set Portfolio Constraints:
+    portfolio = portfolioConstraints(data, spec, constraints)
+    print(portfolio)
+    
+    # Return Value:
+    return()
 }
      
    
 # ------------------------------------------------------------------------------
 
 
-test.portfolioConstraints.Short =
-function()
+test.portfolioConstraints.Short <- 
+    function()
 {    
-   # Load Data:
-   data = as.timeSeries(data(smallcap.ts))
-   data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   head(data)
-   
-   # Set Default Specifications:
-   spec = portfolioSpec() 
-   spec
-   
-   # Constraints:
-   constraints = "Short"
-   constraints
-   
-   # Set Portfolio Constraints:
-   portfolioConstraints(data, spec, constraints)
-   
-   # Return Value:
-   return()
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Set Default Specifications:
+    spec = portfolioSpec() 
+    spec
+    
+    # Constraints:
+    constraints = "Short"
+    constraints
+    
+    # Set Portfolio Constraints:
+    portfolioConstraints(data, spec, constraints)
+    
+    # Return Value:
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.portfolioConstraints.boxConstraints =
-function()
+test.portfolioConstraints.boxConstraints <- 
+    function()
 {    
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))

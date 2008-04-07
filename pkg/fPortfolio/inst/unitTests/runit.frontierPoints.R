@@ -24,6 +24,99 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:                     
+#  test.frontierPoints.feasiblePortfolio 
+#  test.frontierPoints.portfolioFrontier               
+################################################################################
+
+
+test.frontierPoints.feasiblePortfolio <- 
+    function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    #   ... use defaults, Mean-Variance with Equal Weights
+    spec = portfolioSpec()
+    print(spec)
+    
+    # Constraints:
+    #   ... use defaults, Long Only
+    constraints = "LongOnly"
+    print(constraints)
+    
+    # Feasible Portfolio:
+    #   ... use defaults for spec and constraints 
+    portfolio = feasiblePortfolio(data)
+    print(portfolio)
+    
+    # Frontier Points:
+    #   ... returns target risk and target return
+    points = frontierPoints(portfolio)
+    print(points)
+    
+    # Frontier Points:
+    #   ... returns target risk and target return
+    points = frontierPoints(portfolio)
+    print(points)
+    
+    # Specify Return/Risk Measures, explicitely:
+    print(frontierPoints(portfolio, return = "mean"))
+    print(frontierPoints(portfolio, risk = "cov"))
+    print(frontierPoints(portfolio, risk = "sigma"))
+    print(frontierPoints(portfolio, risk = "CVaR"))
+    print(frontierPoints(portfolio, risk = "VaR"))
+  
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.frontierPoints.portfolioFrontier <- 
+    function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    #   ... use defaults, Mean-Variance with Equal Weights
+    spec = portfolioSpec()
+    print(spec)
+    
+    # Constraints:
+    #   ... use defaults, Long Only
+    constraints = "LongOnly"
+    print(constraints)
+    
+    # Feasible Portfolio:
+    #   ... use defaults for spec and constraints 
+    portfolio = portfolioFrontier(data)
+    print(portfolio)
+    
+    # Frontier Points:
+    #   ... returns target risk and target return
+    points = frontierPoints(portfolio)
+    print(points)
+    
+    # Specify Return/Risk Measures, explicitely:
+    print(frontierPoints(portfolio, return = "mean"))
+    print(frontierPoints(portfolio, risk = "cov"))
+    print(frontierPoints(portfolio, risk = "sigma"))
+    print(frontierPoints(portfolio, risk = "CVaR"))
+    print(frontierPoints(portfolio, risk = "VaR"))
+    
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 

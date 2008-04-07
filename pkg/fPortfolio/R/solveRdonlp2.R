@@ -62,38 +62,56 @@ solveRdonlp2 <-
     #   constraints - string of constraints
 
     # FUNCTION:
-    if (!require(Rdonlp2))
+      
+    # Load Rdonlp2:
+    if(!require(Rdonlp2))
         stop("Rdonlp2 is not installed")
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if(!inherits(data, "fPFOLIODATA")) 
+        data = portfolioData(data, spec)
 
     # Trace:
     trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Using Rdonlp2 ...\n\n")
+    if(trace) 
+        cat("\nPortfolio Optimiziation:\n Using Rdonlp2 ...\n\n")
 
-    # Get Specifications:
+    # Get Mean-Variance Specifications:
+    #   ... modify for Mean-LPM Portfolios 
     mu = getMu(data)
     Sigma = getSigma(data)
+    
+    # Number of Assets:
     nAssets = getNAssets(data)
 
-    # Extracting data from spec:
+    # Extract Target Return from Specification:
     targetReturn = getTargetReturn(spec)
-    stopifnot(is.numeric(targetReturn))
+    stopifnot(is.numeric(targetReturn))  
 
-    # Optimize:
-
-    # Donlp2 Settings - Start Weights:
+    # Start Values for Weights:
     if (is.null(getWeights(spec))) {
         par = rep(1/nAssets, nAssets)
     } else {
         par = getWeights(spec)
     }
+    
+    # Now Optimize ...
 
     # Donlp2 Settings - Function to be optimized:
-    fn = function(x) { x %*% Sigma %*% x }
+    optimize = getOptimize(spec)
+    if (optimize == "minRisk") {
+        fn = function(x) { x %*% Sigma %*% x }
+    } else if (optimize == "maxReturn") {
+        fn = function(x) { x %*% mu }
+    }  
+    
+    # minRisk - Constraints:
+    #   Target Return:              mu*x = b
+    
+    # maxReturn - Constraints:    
+    #   Target Risk:                x*Sigma*x = s
 
-    # Donlp2 Settings - Box/Group Constraints:
+    # Add Box/Group Constraints:
     A.mat = .setConstraints(data, spec, constraints, type = "BoxGroup")
     upperNames = paste("maxW", 1:nAssets, sep = "")
     par.upper = -A.mat[upperNames, "Exposure"]
@@ -128,7 +146,7 @@ solveRdonlp2 <-
     }
     A = A[, -(nAssets+1)]
 
-    # Trace Solver ?
+    # Trace Optimization Path ?
     solver.trace = getTrace(spec)
 
     # Check Constraint Strings for Risk Budgets:
@@ -143,7 +161,24 @@ solveRdonlp2 <-
 
     if (solver.trace) cat("Include Risk Budgeting:",
         includeRiskBudgeting, "\n")
+        
+    # Control:
+    CONTROL = rdonlp2Control(            
+        # Setup:
+        iterma = 4000, nstep = 200, fnscale = 1, 
+        report = FALSE, rep.freq = 1,
+        # Perfomance and Tunings:
+        tau0 = 1.0, tau = 0.1, del0 = 1.0,
+        # Termination Criteria:
+        epsx = 1e-8, delmin = 0.01 * 1.0, # del0, 
+        epsdif = 1e-12, nreset.multiplier = 1,
+        # Numerical Differentiation:
+        difftype = 3, epsfcn = 1e-16, taubnd = 1.0, hessian = FALSE,
+        # Information:
+        te0 = TRUE, te1 = FALSE, te2 = FALSE, te3 = FALSE,
+        silent = !solver.trace, intakt = TRUE )
 
+    # Covariance Risk Budgets:
     if (includeRiskBudgeting) {
         # Non-Linear Constraints Functions:
         nlcon <- function(x) {
@@ -172,9 +207,7 @@ solveRdonlp2 <-
             par.l = par.lower, par.u = par.upper,
             A = A, lin.l = lin.lower, lin.u = lin.upper,
             nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,
-            control = rdonlp2Control(
-                iterma = 400,
-                silent = !solver.trace),
+            control = CONTROL,
             name = "portfolio")
     } else {
         # Optimize:
@@ -182,18 +215,18 @@ solveRdonlp2 <-
             par, fn,
             par.l = par.lower, par.u = par.upper,
             A = A, lin.l = lin.lower, lin.u = lin.upper,
-            control = rdonlp2Control(
-                iterma = 400,
-                silent = !solver.trace),
+            control = CONTROL,
             name = "portfolio")
     }
 
-    # Add:
+    # Add to List:
     if (solver.trace) cat("Rdonlp2 Message:", ans$message, "\n")
     ans$solver = "RDonlp2"
     ans$weights = ans$par
     message = "KT-conditions satisfied, no further correction computed"
     if (ans$message == message) ans$status = 0 else ans$status = 1
+    
+    # Target Return and Risk:
     ans$targetReturn = targetReturn
     ans$targetRisk = sqrt((ans$weights %*% Sigma %*% ans$weights)[[1]])
 

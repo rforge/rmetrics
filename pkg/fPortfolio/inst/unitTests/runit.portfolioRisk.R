@@ -27,3 +27,13 @@
 # FUNCTION:
 ################################################################################
 
+
+#  .covRisk                    Computes Covariance Risk
+#  .varRisk                    Computes Value at Risk
+#  .cvarRisk                   Computes Conditional Value at Risk
+#  .cfgFit                     Fits bivariate tail dependency parameter lambda
+#  .lambdaTailRisk             Fits tail lambda for multivariate data
+
+
+################################################################################
+

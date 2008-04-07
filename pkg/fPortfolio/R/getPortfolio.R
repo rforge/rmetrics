@@ -45,7 +45,7 @@
 #  *getWeights                    Extracts weights from a portfolio object
 #  *getTargetReturn               Extracts target return from specification
 #  *getTargetRisk                 Extracts target riks from specification
-#  *getAlpha                Extracts target VaR-alpha specification
+#  *getAlpha                      Extracts target VaR-alpha specification
 #  *getRiskFreeRate               Extracts risk free rate from specification 
 #  *getNFrontierPoints            Extracts number of frontier points 
 #  *getStatus                     Extracts portfolio status information

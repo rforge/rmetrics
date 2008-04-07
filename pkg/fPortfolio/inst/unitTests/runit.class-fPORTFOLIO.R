@@ -25,11 +25,13 @@
 
 ################################################################################
 # FUNCTION:
+#  test.fPORTFOLIO
+#  test.portfolioFrontier
 ################################################################################
 
 
-test.fPORTFOLIO =
-function()
+test.fPORTFOLIO <- 
+    function()
 {
     # Class:
     getClass("fPORTFOLIO")
@@ -42,8 +44,8 @@ function()
 ################################################################################
 
 
-test.portfolioFrontier =
-function()
+test.portfolioFrontier <- 
+    function()
 {
     # Arguments:
     # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL,
@@ -71,8 +73,8 @@ function()
 ################################################################################
 
 
-test.feasiblePortfolio =
-function()
+test.feasiblePortfolio <- 
+    function()
 {
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -99,15 +101,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.feasiblePortfolio.RDonlp2 =
-function()
+test.feasiblePortfolio.RDonlp2 <- 
+    function()
 {
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
-    if (FALSE) {
-
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
 
         # Get Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -138,8 +138,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.feasiblePortfolio.lpsolve =
-function()
+test.feasiblePortfolio.lpsolve <- 
+    function()
 {
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -171,8 +171,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.efficientPortfolio =
-function()
+test.efficientPortfolio <- 
+    function()
 {
     # Arguments:
     # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -203,8 +203,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.cmlPortfolio =
-function()
+test.cmlPortfolio <- 
+    function()
 {
     # Arguments:
     # cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -230,8 +230,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.tangencyPortfolio =
-function()
+test.tangencyPortfolio <- 
+    function()
 {
     # Arguments:
     # tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -257,8 +257,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.minvariancePortfolio =
-function()
+test.minvariancePortfolio <- 
+    function()
 {
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
@@ -284,15 +284,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.minvariancePortfolio.RDonlp2 =
-function()
+test.minvariancePortfolio.RDonlp2 <- 
+    function()
 {
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
-    if (FALSE) {
-
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
 
         # Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -318,8 +316,8 @@ function()
 ################################################################################
 
 
-test.show =
-function()
+test.show <- 
+    function()
 {
     # Load Data::
     data = as.timeSeries(data(smallcap.ts))
@@ -343,8 +341,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.RQuadprog =
-function()
+test.plot.RQuadprog <- 
+    function()
 {
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -382,12 +380,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.Rdonlp2 =
-function()
+test.plot.Rdonlp2 <- 
+    function()
 {
-    if (FALSE) {
-
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
 
         # Data:
         Data = as.timeSeries(data(smallcap.ts))
@@ -428,8 +424,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.RlpSolve =
-function()
+test.plot.RlpSolve <- 
+    function()
 {
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -468,8 +464,8 @@ function()
 ################################################################################
 
 
-test.weightsSlider =
-function()
+test.weightsSlider <- 
+    function()
 {
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -497,8 +493,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.frontierSlider =
-function()
+test.frontierSlider <- 
+    function()
 {
     # Data:
     data = as.timeSeries(data(smallcap.ts))

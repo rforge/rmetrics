@@ -39,17 +39,20 @@
 ################################################################################
 
 
-    # fPFOLIODATA: 
+    # fPFOLIODATA:
+     
     # data = list(
     #   series
     #   nAssets
     #   names)
+    
     # statistics = list(
     #   mean,
     #   Cov,
     #   mu,
     #   Sigma,
     #   estimator) 
+    
     # tailRisk = list()  
     
 

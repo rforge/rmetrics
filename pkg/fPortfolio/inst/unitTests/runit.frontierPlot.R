@@ -68,7 +68,8 @@ test.frontierPlot.MV.LongOnly <-
 #   monteCarloPoints              Adds randomly produced feasible portfolios
 
 
-frontierPlot(portfolio, pch = 19)
-minvariancePoints(portfolio)
+#   frontierPlot(portfolio, pch = 19)
+#   minvariancePoints(portfolio)
+
 
 ################################################################################

@@ -17,7 +17,7 @@
 
 \usage{
 frontierPoints(object, frontier = c("both", "lower", "upper"), 
-    return = "mean", risk = "cov")
+    return = "mean", risk = c("cov", "sigma", "CVaR", "VaR"))
 }
 
 
@@ -31,11 +31,16 @@ frontierPoints(object, frontier = c("both", "lower", "upper"),
         a character string denoting which part of the
         efficient portfolio should be extractacted.
         }
-    \item{return, risk}{
-        character strings denoting which return and risk 
-        has to be plotted. Allowed values are for the
-        return "mean", and for the risk either "cov,"
-        "VaR", or "CVaR".
+    \item{return}{
+        character strings denoting which return measure
+        should be plotted. The only value allowed for the
+        return is \code{"mean"}.
+        }
+    \item{risk}{
+        character strings denoting which risk measure
+        should be plotted. Allowed values are for the
+        risk measure are either \code{"cov"}, \code{"sigma"},  
+        \code{"VaR"}, or \code{"CVaR"}.
         }
 
 }

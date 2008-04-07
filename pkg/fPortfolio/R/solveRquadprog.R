@@ -73,22 +73,26 @@ solveRquadprog <-
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if(!inherits(data, "fPFOLIODATA")) 
+        data = portfolioData(data, spec)
     
     # Trace:
     trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
+    if(trace) 
+        cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
     
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
+    
+    # Number of Assets:
     nAssets = getNAssets(data)
 
-    # Extracting data from spec:
+    # Extracting data from Specification:
     targetReturn = getTargetReturn(spec)  
     stopifnot(is.numeric(targetReturn)) 
     
-    # Optimize:
+    # Optimize Portfolio:
     if (nAssets == 2) {
         # Two Assets Portfolio:
         stopifnot(targetReturn >= min(mu))

@@ -24,8 +24,8 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  covEllipsesPlot              Plots covariance ellipses
+# FUNCTION:                
+#  test.covEllipsesPlot 
 ################################################################################
 
 

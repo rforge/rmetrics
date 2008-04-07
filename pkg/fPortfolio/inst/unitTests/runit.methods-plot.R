@@ -24,6 +24,43 @@
 
 
 ################################################################################
+# FUNCTION:                    
+#  test.plot.fPORTFOLIO  
+################################################################################
+
+
+test.plot.fPORTFOLIO <- 
+    function()
+{    
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    print(spec)
+    
+    # Set Constraints:
+    constraints = "Short"
+    print(constraints)
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    frontier = portfolioFrontier(data, spec, constraints)
+    print(frontier)
+    
+    # Plot:
+    plot(frontier)
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
 #  frontierPlot                 Plots efficient Frontier
 #   .minvariancePlot             Adds Minimum Variance point
@@ -50,8 +87,8 @@
 ################################################################################
 
 
-test.frontierPlot.ShortMV =
-function()
+test.frontierPlot.ShortMV <- 
+    function()
 {    
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))

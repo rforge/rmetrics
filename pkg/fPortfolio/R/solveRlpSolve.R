@@ -64,11 +64,13 @@ solveRlpSolve <-
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if(!inherits(data, "fPFOLIODATA")) 
+        data = portfolioData(data, spec)
 
     # Trace:
     trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Using RlpSolve ...\n\n")
+    if(trace) 
+        cat("\nPortfolio Optimiziation:\n Using RlpSolve ...\n\n")
 
     # Get Specifications:
     mu = getMu(data)

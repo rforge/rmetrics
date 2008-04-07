@@ -24,28 +24,31 @@
 
 
 ################################################################################
+# FUNCTION:
+#  rdonlp2
+################################################################################
 
 
 rdonlp2 <- 
     function(
     
-    par, fn,
-    par.upper = rep(+Inf, length(par)),
-    par.lower = rep(-Inf, length(par)),
-    
-    A = NULL,
-    lin.upper = rep(+Inf, length(par)),
-    lin.lower = rep(-Inf, length(par)),
-    
-    nlin = list(),
-    nlin.upper = rep(+Inf, length(nlin)),
-    nlin.lower = rep(-Inf, length(nlin)),
-    
-    control = rdonlp2Control(),
-    control.fun = function(lst){return(TRUE)},
-    env = .GlobalEnv, name = NULL)
+        par, fn,
+        par.upper = rep(+Inf, length(par)),
+        par.lower = rep(-Inf, length(par)),
+        
+        A = NULL,
+        lin.upper = rep(+Inf, length(par)),
+        lin.lower = rep(-Inf, length(par)),
+        
+        nlin = list(),
+        nlin.upper = rep(+Inf, length(nlin)),
+        nlin.lower = rep(-Inf, length(nlin)),
+        
+        control = rdonlp2Control(),
+        control.fun = function(lst){return(TRUE)},
+        env = .GlobalEnv, name = NULL)
 {    
-    # NOte:
+    # Note:
     #   DW
     #   onLoad <- function(libname, pkgname){
     #       verbose <- .Options$Hverbose
@@ -143,15 +146,16 @@ rdonlp2 <-
             fsilent,
             name,
             nchar(name),
-            as.double(lbd), as.double(ubd),
+            as.double(lbd), 
+            as.double(ubd),
             as.double(conmat),
             control,
             accfun,
             confun, environment(confun), 
             PACKAGE = "Rdonlp2"),
             # ensure to free memory and close .mes .pro files if opened
-            finally=.Call("teardown", 0, 
-            PACKAGE = "Rdonlp2"))
+            finally = .Call("teardown", 0, PACKAGE = "Rdonlp2")
+            )
     ans$nr.update <- matrix(ans$nr.update, nr = length(par))
     if (control$hessian) {
         ans$hessian = matrix(ans$hessian, nr = length(par))

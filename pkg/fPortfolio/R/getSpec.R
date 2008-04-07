@@ -47,13 +47,15 @@
 ################################################################################
 
 
-    # fPFOLIOSPEC
+    # fPFOLIOSPEC:
+    
     # model = list(
     #   type = "MV",
     #   optimize = "minRisk",
     #   estimator = "covEstimator",
     #   tailRisk = NULL,
     #   params = list())
+    
     # portfolio = list(
     #   weights = NULL, 
     #   targetReturn = NULL, 
@@ -61,7 +63,8 @@
     #   targetAlpha = NULL,
     #   riskFreeRate = 0, 
     #   nFrontierPoints = 50,
-    #   status = 0),
+    #   status = 0)
+    
     # optim = list(
     #   solver = "solveRquadprog",
     #   trace = FALSE)
@@ -82,7 +85,7 @@ getModel.fPFOLIOSPEC <- function(object) object@model
 # ------------------------------------------------------------------------------
 
 
-getPortfolio.fPFOLIOSPEC <- function(object) object@model
+getPortfolio.fPFOLIOSPEC <- function(object) object@portfolio
   getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
   getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
   getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk

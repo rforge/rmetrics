@@ -133,15 +133,15 @@ setMethod("show", "fPFOLIOCON", show.fPFOLIOCON <-
     
     # Print Title:
     cat("\nTitle:\n ")
-    cat("Constraints:\n")
+    cat("Constraints\n")
     
-    cat("Constraint String:\n")
-    print(object@stringConstraints)
+    cat("\nConstraint String:\n")
+    cat(" ",object@stringConstraints[[1]], "\n")
     
-    cat("Box Group Constraints:\n")
+    cat("\nBox Group Constraints:\n")
     print(object@boxgroupConstraints)
     
-    cat("Cov Risk Budget Constraints:\n")
+    cat("\nCov Risk Budget Constraints:\n")
     print(object@riskbudgetConstraints)
        
     # Return Value: 

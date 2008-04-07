@@ -25,13 +25,13 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
-#  frontierPoints                Extracts frontier line
+#  frontierPoints                Extracts frontier points
 ################################################################################
 
 
 frontierPoints <-
     function(object, frontier = c("both", "lower", "upper"),
-        return = "mean", risk = "cov")
+        return = "mean", risk = c("cov", "sigma", "CVaR", "VaR"))
 {
     # A function implemented by Rmetrics
 
@@ -46,6 +46,10 @@ frontierPoints <-
 
     # Settings:
     frontier = match.arg(frontier)
+    
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
 
     # Get Efficient Frontier:
     Type = getType(object)
@@ -75,6 +79,7 @@ frontierPoints <-
 
     # Add colnames:
     colnames(ans) = c("targetRisk", "targetReturn")
+    rownames(ans) = as.character(1:NROW(ans))
 
     # Return Value:
     ans

@@ -24,33 +24,35 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  solveRlpSolve                Calls linear programming solver
+# FUNCTION: 
+#  test.solveRlpSolve.CVaR.LongOnly.MinRisk
 ################################################################################
 
 
-test.solveRlpSolve =
-function()
+test.solveRlpSolve.CVaR.LongOnly.MinRisk <- 
+    function()
 {
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
-    # CVaR Specification:
+    # Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
     setTargetReturn(spec) = mean(colMeans(data))
     setTargetAlpha(spec) = 0.05
     setSolver(spec) <- "lpSolve"
-    spec
+    print(spec)
 
     # Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
+    print(constraints)
 
-    # CVaR Portfolio Optimization:
+    # Portfolio:
     ans = solveRlpSolve(data, spec, constraints)
-    ans$weights
+    print(ans)
+    print(ans$weights)
 
     # Return Value:
     return()

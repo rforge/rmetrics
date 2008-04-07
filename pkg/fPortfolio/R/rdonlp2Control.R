@@ -24,6 +24,9 @@
 
 
 ################################################################################
+# FUNCTION:
+#  rdonlp2Control
+################################################################################
 
 
 rdonlp2Control <- 
@@ -32,6 +35,7 @@ rdonlp2Control <-
     # Setup:
     iterma = 4000, nstep = 20,fnscale = 1,
     report = FALSE, rep.freq = 1,
+    
     # perfomance and tunings
     tau0 = 1.0, tau = 0.1, del0 = 1.0,
     

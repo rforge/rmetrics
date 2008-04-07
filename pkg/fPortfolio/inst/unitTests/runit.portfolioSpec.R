@@ -44,8 +44,8 @@
 ################################################################################
 
 
-test.portfolioSpec =
-function()
+test.portfolioSpec <- 
+    function()
 { 
     # Arguments:
     # portfolioSpec(model = list(type = "MV", estimator = c("mean", "cov"), 
@@ -67,8 +67,8 @@ function()
 ################################################################################
 
 
-test.setType =
-function()
+test.setType <- 
+    function()
 { 
     # Modify Model Type:
     Spec = portfolioSpec()
@@ -83,8 +83,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.setEstimator =
-function()
+test.setEstimator <- 
+    function()
 { 
     # Modify Model Estimator:
     Spec = portfolioSpec()
@@ -99,8 +99,8 @@ function()
 ################################################################################
 
 
-test.setWeights =
-function()
+test.setWeights <- 
+    function()
 { 
     # Modify portfolio weights:
     Spec = portfolioSpec()
@@ -115,8 +115,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.setTargetReturn =
-function()
+test.setTargetReturn <- 
+    function()
 { 
     # Modify portfolio target return:
     Spec = portfolioSpec()
@@ -131,8 +131,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.setRiskFreeRate =
-function()
+test.setRiskFreeRate <- 
+    function()
 { 
     # Modify portfolio target return:
     Spec = portfolioSpec()
@@ -147,8 +147,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.setNFrontierPoints =
-function()
+test.setNFrontierPoints <- 
+    function()
 { 
     # Modify portfolio number of frontier points:
     Spec = portfolioSpec()
@@ -163,8 +163,8 @@ function()
 ################################################################################
 
 
-test.setSolver =
-function()
+test.setSolver <- 
+    function()
 { 
     # Modify Solver:
     Spec = portfolioSpec()
@@ -180,8 +180,8 @@ function()
 
 
 
-test.portfolioStatistics =
-function()
+test.portfolioStatistics <- 
+    function()
 { 
     # Arguments:
     # portfolioStatistics = (data, spec = portfolioSpec())

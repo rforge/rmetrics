@@ -38,22 +38,22 @@ test.solveRshortExact.MV.Short.MinRisk <-
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
     
     # Specification:
     spec = portfolioSpec()
     setTargetReturn(spec) = mean(as.matrix(data))
     setSolver(spec) = "solveRshortExact"
     setTrace(spec) = TRUE
-    spec
+    print(spec)
     
     # Default Constraints:
     constraints = "Short"
-    constraints
+    print(constraints)
  
     # Optimization:
     portfolio = solveRshortExact(data, spec, constraints)
-    portfolio
+    print(portfolio)
     
     # Return Value:
     return()

@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO CLASS:
+# FUNCTION:                     DESCRIPTION:
 #  efficientPortfolio            Returns a frontier portfolio
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio

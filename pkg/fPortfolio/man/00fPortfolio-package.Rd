@@ -67,7 +67,8 @@
         4. \tab How to Optimize a Portfolio ?\cr
         5. \tab Implemented Portfolios \cr
         6. \tab How to Analyze an Optimized Portfolio ?\cr
-        7. \tab How to Backtest a Rolling Portfolio ?
+        7. \tab How to Analyze the Efficient Frontier ?\cr
+        8. \tab How to Backtest a Rolling Portfolio ?
     }
     
 }
@@ -341,49 +342,140 @@
 \section{5. Implemented Portfolios}{
 
 
-    \emph{Optimize a Mean-Variance Short Selling Portfolio:}
+    \bold{Optimize a Mean-Variance Portfolio:}
     
+    By default the portfolio functions minimize the risk given the
+    return of a mean-variance portfolio with long-only constraints. 
+    Optinonally we can maximize the return given the risk, constraints
+    are allowed for short selling if specified. Furthermore box,
+    group, and covariance risk budget constraints can be added.
     
-    \emph{Optimize a Mean-Variance Long-Only Portfolio:}
-    
-    
-    \emph{Optimize a Mean-Variance Portfolio with Box/Group Constraints:}
-    
-    
-    \emph{Optimize a Mean-Variance Portfolio with Risk Budget Constraints:}
-    
-    
-    \emph{Optimize a Mean-LPM Long Only Portfolio:}
-    
-    
-    \emph{Optimize a Mean-LPM Portfolio with linear Constraints:}
-    
-    
-    \emph{Optimize a Mean-CVaR Long-Only Portfolio:}
-    
-    
-    \emph{Optimize a Mean-CVaR Portfolio with linear Constraints:}
-    
+        \emph{Optimize a Mean-Variance Long-Only Portfolio:}
         
+        This is the default case: 
+        
+        spec = portfolioSpec()\cr
+        constraints = "Short"
+        
+        
+        \emph{Optimize a Mean-Variance Short Selling Portfolio:}
+        
+        spec = portfolioSpec()\cr
+        constraints = "LongOnly"
+        
+        
+        \emph{Optimize a Mean-Variance Portfolio with Box Constraints:}
+        
+        spec = portfolioSpec()\cr
+        constraints = c(minW, maxW)
+        
+        
+        \emph{Optimize a Mean-Variance Portfolio with Group Constraints:}
+        
+        spec = portfolioSpec()\cr
+        constraints = 
+        
+        
+        \emph{Optimize a Mean-Variance Portfolio with Risk Budget Constraints:}
+        
+        spec = portfolioSpec()\cr
+        constraints = 
+    
+    
+    \bold{Optimize a Robust Mean-Variance Portfolio:}
+    
+    Mean-Variance portfolios can be robustified by replace the man
+    and/or covariance matrix by robust estimators. Not only everal 
+    choices are implemented, the user can also add his own estimator
+    for the mean and covariance. In any case the use has tpo specify
+    the name of the function which estimates mean /and or covaraince.
+        
+    spec = portfolioSpec()
+    setEstimator <- "robEstimator"
+    
+    
+    \bold{Optimize a Mean-LPM Portfolio:}
+    
+    The optimization of a "Mean - Lower Partial Moment" portfolio is done
+    mapping the Mean-LPM portfolio on a quadratic form which looks formally
+    identical to a Mean-Variance portfolio.
+    
+    \emph{Type:}
+    We set the portfolio type to "LPM", and automatically the default
+    LPM estimator "lpmEstimator" will be chosen. Note you can overwrite
+    this choice using a robust LPM estimator for the portfolios "mu"
+    and Sigma".
+    
+    setType <- "LPM"
+    setEstimator <- "lpmEstimator"
+    
+    \emph{Constraints:}
+    Concerning the constraints, they can be set in the same way as for
+    a Mean-Variance portfolio. This includes box, group and LPM risk
+    budget constraints.
+    
+    \emph{Optimize:}
+    By default the "LPM" risk will be minimized for a given "Mean" return.
+    Optionally one can maximize the target return for a predetermined
+    value of the risk.
+    For risk minimization the solver "solveRquadprog" is used, the 
+    default, for return maximization the solver "solverRdonlp2" is 
+    used.
+    
+    
+    \bold{Optimize a Mean-CVaR Portfolio:}
+    
+    The optimization of a "Mean - CVaR" portfolio is done using the 
+    approach of Uryasev and Rockafeller. The portfolio is mapped to
+    a linear programming problem.
+    
+    \emph{Type:}
+    We set the portfolio type to "CVaR",
+    
+    setType <- "CVaR"
+    
+    \emph{Constraints:}
+    Concerning the constraints, they can be set in the same way as for
+    a Mean-Variance portfolio. This includes box, group and LPM risk
+    budget constraints.
+    
+    \emph{Optimize:}
+    By default the "CVaR" risk will be minimized for a given "Mean" return.
+    Optionally one can maximize the target return for a predetermined
+    value of the risk.
+    For risk minimization the solver "solveRlpSolve" is used, the 
+    default, for return maximization the solver "solverRsocp" is 
+    used.
+    
 }
-
 
 
 \section{6. How to Analyze an Optimized Portfolio ?}{
 
+    There exist several printouts and plots to display the results of an 
+    optimized portfolio. For an individual portfolio ...
+    
+    \emph{Print}
+    
+    \emph{Plot}
+    \code{weightsPie}
+    
+    \emph{Plot}
+     
+}
+
+
+\section{7. How to Analyze the Efficient Frontier ?}{
+    
     There exist several plots to display the results of an optimized
     portfolio or to display the portfolio frontier.
-    
-    For an individual portfolio ...
-    
-    \code{weightsPie}
-     
     
     For the efficient frontier ...
     
     \code{plot}\cr
     \code{frontierPlot}\cr
-    \code{weightsPlot}\cr
+    \code{weightsPlot} 
+    
     \code{frontierSlider}\cr
     \code{weightsSlider}
     
@@ -391,7 +483,7 @@
 
 
 
-\section{7. How to Backtest a Rolling Portfolio ?}{
+\section{8. How to Backtest a Rolling Portfolio ?}{
 
     Rmetrics offers functions for a rolling backtesting of 
     historical portfolios:\cr

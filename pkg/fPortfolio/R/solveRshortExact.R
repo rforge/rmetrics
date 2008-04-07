@@ -45,7 +45,8 @@ solveRshortExact <-
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if(!inherits(data, "fPFOLIODATA")) 
+        data = portfolioData(data, spec)
     
     # Trace:
     trace = getTrace(spec)

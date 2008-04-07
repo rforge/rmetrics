@@ -25,6 +25,12 @@
 
 ################################################################################
 # FUNCTION:
+#  test.portfolioFrontier.MV.Short
+#  test.portfolioFrontier.MV.LonglOnly
+#  test.portfolioFrontier.MV.LongOnly.RDonlp2
+#  test.portfolioFrontier.MV.LongOnly.boxGroupConstraints
+#  test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints
+#  ...
 ################################################################################
 
 
@@ -86,12 +92,10 @@ test.portfolioFrontier.MV.LonglOnly <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioFrontier.MV.LongOnly.RDonlp2 =
-function()
+test.portfolioFrontier.MV.LongOnly.RDonlp2 <- 
+    function()
 {   
-    if (FALSE) {
-        
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
         
         # Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -122,7 +126,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioFrontier.LongOnly.boxGroupConstraints <-
+test.portfolioFrontier.MV.LongOnly.boxGroupConstraints <-
     function()
 {
     # Load Data:
@@ -162,12 +166,10 @@ test.portfolioFrontier.LongOnly.boxGroupConstraints <-
 # ------------------------------------------------------------------------------
 
 
-test.portfoliFrontier.MV.LongOnly.covRiskBudgetConstraints <- 
+test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <- 
     function()
 {    
-    if (FALSE) {
-        
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
         
         # Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -198,12 +200,10 @@ test.portfoliFrontier.MV.LongOnly.covRiskBudgetConstraints <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioVrontier.MV.LongOnly.covRiskBudgetConstraints <- 
+test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <- 
     function()
 {
-    if (FALSE) {
-        
-        require(Rdonlp2)
+    if (require(Rdonlp2)) {
         
         # Load Data:
         Data = as.timeSeries(data(smallcap.ts))
@@ -257,8 +257,8 @@ test.portfolioVrontier.MV.LongOnly.covRiskBudgetConstraints <-
 ################################################################################
 
 
-test.portfolioFrontier.CVaR.LongOnly = 
-function()
+test.portfolioFrontier.CVaR.LongOnly <-  
+    function()
 {  
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -287,8 +287,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioFrontier.CVaR.LongOnly.TwoAssets =
-function()
+test.portfolioFrontier.CVaR.LongOnly.TwoAssets <- 
+    function()
 {
     # Data:
     data = as.timeSeries(data(smallcap.ts))

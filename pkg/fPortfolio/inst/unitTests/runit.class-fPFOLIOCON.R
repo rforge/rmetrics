@@ -32,14 +32,14 @@
 
 
 ## DW
-## Note, there is no print function in show-methods.R
+## Note, there is not yet a print function in the show-methods.R
 
 
 # ------------------------------------------------------------------------------
 
 
-test.fPFOLIOCON = 
-function()
+test.fPFOLIOCON <- 
+    function()
 {  
     # Class:
     getClass("fPFOLIOCON")
@@ -55,8 +55,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.show.fPFOLIOCON.Short = 
-function()
+test.show.fPFOLIOCON.Short <- 
+    function()
 {  
     # Constraints:
     constraints = "Short"
@@ -81,8 +81,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.show.fPFOLIOCON.LongOnly = 
-function()
+test.show.fPFOLIOCON.LongOnly <-  
+    function()
 {  
     # Constraints:
     constraints = "LongOnly"

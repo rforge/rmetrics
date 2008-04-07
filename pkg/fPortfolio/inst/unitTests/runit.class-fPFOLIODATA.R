@@ -31,7 +31,7 @@
 
 
 ## DW
-## Note, there is no print function in show-methods.R
+## Note, there is not yet a print function in the show-methods.R
 
 
 # ------------------------------------------------------------------------------
