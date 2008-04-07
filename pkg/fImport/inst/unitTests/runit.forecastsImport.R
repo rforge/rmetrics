@@ -34,20 +34,50 @@
 ################################################################################
        
         
-test.forecasts = 
+test.forecastsImport = 
 function()
 {     
     if (FALSE) {
         
-        # fredImport -
-        X = forecastsImport("GOLD")
-        print(X) 
-        class(X)
+        X = forecastsImport("MPRIME")
+        print(X)
+        print(head(X@data)) 
+        print(class(X@data))
         
-        # fredSeries -     
+        X = forecastsImport("GOLD")
+        print(X)
+        print(head(X@data)) 
+        print(class(X@data))
+        
+    }
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.forecastsSeries = 
+function()
+{     
+    if (FALSE) {
+        
+        X = forecastsSeries("MPRIME")
+        print(head(X)) 
+        print(tail(X))
+        print(class(X))
+        
         X = forecastsSeries("GOLD")
-        head(X)
-        class(X)
+        print(head(X))
+        print(tail(X)) 
+        print(class(X))
+        
+        X = forecastsSeries(c("MPRIME", "GOLD"))
+        print(head(X)) 
+        print(tail(X)) 
+        print(class(X))
         
     }
     
@@ -56,5 +86,36 @@ function()
 }
 
     
+# ------------------------------------------------------------------------------
+
+
+test.forecastsListing = 
+function()
+{     
+    if (FALSE) {
+        
+        list = c(
+            "business", "banking", "cpi", "interest", "exchange", "price", 
+            "employment", "monetary", "reserves", "gdp", "government", "ppi",
+            "regional", "bop")
+        
+        for (List in list) print(forecastsListing(List))
+    
+    }
+ 
+    
+    # Return Value:
+    return()
+}
+
+
 ################################################################################
 
+
+
+
+
+forecastsImport <-  
+    function(query, file = "tempfile", 
+    source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE) 
+{   

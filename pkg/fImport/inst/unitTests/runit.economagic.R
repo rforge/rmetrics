@@ -29,13 +29,103 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  economagicImport      Downloads market data from EconoMagic's web site
-#  economagicSeries      Easy to use download from EconoMagic
+#  economagicCategories  Lists categries of symbols from www.economagic.com
+#  economagicListing     Lists symbols from www.economagic.com
+#  economagicImport      Downloads market data from www.economagic.com
+#  economagicSeries      Easy to use download from www.economagic.com
 ################################################################################
 
-   
-test.economagic = 
-function()
+
+test.economagicCategories <- 
+    function()
+{  
+    Categories = economagicCategories()   
+    print(Categories)
+    print(attr(Categories, "control"))
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.economagicListing <- 
+    function()
+{  
+    categories = as.vector(economagicCategories()[,1])
+    print(categories)
+
+    for (category in categories) {
+        cat("\nCategory:", category, "\n\n")
+        cat(category, "\n")
+        list = economagicListing(category, abbreviate = 60)
+        print(list)
+    }
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+    
+       
+test.economagicImport <- 
+    function()
+{  
+    if (FALSE) {
+        
+        # economagicImport() - 
+        # Daily Rates:
+        X = economagicImport(query = "fedny/day-fxus2eu", 
+            frequency = "daily", colname = "USDEUR")
+        checkIdentical(
+            target = X@data[6, 1], 
+            current = "1999-01-13")
+        checkIdentical(
+            target = X@data[6, 2], 
+            current = 1.1698)
+    
+        # economagicImport() - 
+        # Monthly Rates:
+        X = economagicImport(query = "fedstl/fedfunds+2", 
+             frequency = "monthly", colname = "USFEDFUNDS")
+        checkIdentical(
+            target = X@data[6, 1], 
+            current = "1955-02-01")
+        checkIdentical(
+            target = X@data[6, 2], 
+            current = 1.29)
+        
+        # economagicImport() - 
+        # Quarterly Rates:
+        X = economagicImport(query = "fedstl/gnp", 
+            frequency = "quarterly", colname = "USGNP")
+        checkIdentical(
+            target = X@data[6, 1], 
+            current = "1948-12-01")
+        checkIdentical(
+            target = X@data[6, 2], 
+            current = 276.6)
+            
+        # economagicSeries() - 
+        # USDEUR Foreign Exchange Rate:
+        economagicSeries("fedny/day-fxus2eu", frequency = "daily")
+        
+    }
+         
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+      
+test.economagicSeries <- 
+    function()
 {  
     if (FALSE) {
         
