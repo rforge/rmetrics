@@ -4,8 +4,8 @@
 
 \alias{yahooImport}
 \alias{yahooSeries}
-\alias{keystatsImport}
-\alias{briefingImport}
+\alias{yahooKeystats}
+\alias{yahooBriefing}
 
 
 \title{Import Market Data from Yahoo}
@@ -23,8 +23,8 @@
     \tabular{ll}{
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
     \code{yahooSeries} \tab easy to use download from Yahoo, \cr 
-    \code{keystatsImport} \tab key statistics from Yahoo's Web site. \cr
-    \code{briefingImport} \tab more key statistics from Yahoo's Web site. }
+    \code{yahooKeystats} \tab key statistics from Yahoo's Web site. \cr
+    \code{yahooBriefing} \tab more key statistics from Yahoo's Web site. }
    
 }
 
@@ -32,18 +32,16 @@
 \usage{ 
 yahooImport(query, file = "tempfile", 
     source = "http://chart.yahoo.com/table.csv?", save = FALSE,
-    sep = ";", swap = 20, try = TRUE)
+    sep = ";", try = TRUE)
    
-yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
-    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
-    aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
-    "matrix", "data.frame"), getReturns = FALSE, \dots)
+yahooSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots) 
     
-keystatsImport(query, file = "tempfile", 
+yahooKeystats(query, file = "tempfile", 
     source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
     try = TRUE) 
     
-briefingImport(query, file = "tempfile", 
+yahooBriefing(query, file = "tempfile", 
     source = "http://finance.yahoo.com/q/ud?s=", 
     save = FALSE, try = TRUE) 
 }
@@ -51,11 +49,6 @@ briefingImport(query, file = "tempfile",
 
 \arguments{
 
-    \item{aggregation}{
-        a character string denoting the aggregation level of the 
-        downloaded data records, \code{d} for daily, \code{w} for
-        weekly and \code{m} for monthly data records.
-        }
     \item{file}{
         a character string with filename, usually
         having extension ".csv", where to save the downloaded data.
@@ -63,10 +56,6 @@ briefingImport(query, file = "tempfile",
     \item{from, to}{
         an ISO-8601 formatted character string of the starting (end) 
         date, e.g. "2005-01-01".
-        }
-    \item{getReturns}{
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
         }
     \item{nDaysBack}{
         an integer giving the length of the download period in number 
@@ -82,17 +71,6 @@ briefingImport(query, file = "tempfile",
         be stored under the path and file name specified by the
         string \code{file}. By default FALSE.
         }
-    \item{quote}{
-        [yahooSeries] - \cr
-        a character value or vector of strings giving the column name(s) 
-        of those instruments to be extracted from the download. 
-        }
-    \item{returnClass}{
-        a character string naming the class of the object to be 
-        returned. By default the function returns 
-        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
-        \code{"matrix"}, or \code{"data.frame"}.
-        }
     \item{sep}{
         a character value, defining the field separator for the 
         destination file which saves the downloaded data records.
@@ -103,12 +81,6 @@ briefingImport(query, file = "tempfile",
         }
     \item{symbols}{
         a character string value or vector, the Yahoo symbol name(s).
-        }
-    \item{swap}{
-        an integer value which determines when we swap from the
-        19th to 20th century, by default 20, i.e. we swap 1920.
-        This is necessary since Yahoo does not list the century in
-        its dates, e.g. "15-Aug-02".
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be
@@ -200,15 +172,21 @@ briefingImport(query, file = "tempfile",
 \note{
   
     \bold{Internet Download Functions:}
-    \cr\cr
+    
     IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
-    \cr
     
     The R package \code{tseries} from Adrian Trapletti offers an 
     alternative function to download stock market data and indexes 
     from Yahoo's Internet site.
-  
+    
+    \bold{Keystats and Briefing Reports:}
+    
+    The functions \code{keystatsImport} and \code{briefingImport} has
+    been renamed with version 2.7 to \code{yahooKeystats} and 
+    \code{yahooBriefing} allowing to distinguish for keystats and
+    briefing reports downloaded from other providers.
+     
 }
 
 

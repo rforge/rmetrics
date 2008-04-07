@@ -30,31 +30,27 @@ forecastsImport(query, file = "tempfile",
     source = "http://www.forecasts.org/data/data/", save = FALSE, 
     try = TRUE) 
       
-forecastsSeries(query, returnClass = c("timeSeries", "ts", "matrix", 
-    "data.frame"), getReturns = FALSE, \dots)    
+forecastsSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots)   
     
 }
 
 
 \arguments{
 
-    \item{getReturns}{
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
-        }
     \item{file}{
         a character string with filename, usually
         having extension ".csv", where to save the downloaded data.
+        }
+    \item{from} {
+        ...
         }
     \item{query}{
         a character string, denoting the location of the data at the 
         web site.
         }
-    \item{returnClass}{
-        a character string naming the class of the object to be 
-        returned. By default the function returns 
-        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
-        \code{"matrix"}, or \code{"data.frame"}.
+    \item{nDaysBack}{
+        ...
         }
     \item{save}{
         a logical value, if set to TRUE the downloaded data file will 
@@ -63,6 +59,12 @@ forecastsSeries(query, returnClass = c("timeSeries", "ts", "matrix",
         }
     \item{source}{
         a character string with the download URL.
+        }
+    \item{symbols} {
+        ...
+        }
+    \item{to} {
+        ...
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be

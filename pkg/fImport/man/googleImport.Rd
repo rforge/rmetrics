@@ -30,21 +30,13 @@ googleImport(query, file = "tempfile",
     source = "http://finance.google.com/finance/historical?", 
     save = FALSE, sep = ";", try = TRUE)
    
-googleSeries(symbols = c("IBM", "MSFT"), from = NULL, to = NULL, 
-    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
-    aggregation = c("d", "m"), returnClass = c("timeSeries", "ts", 
-    "matrix", "data.frame"), getReturns = FALSE, \dots) 
+googleSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots) 
 }
 
 
 \arguments{
 
-    \item{aggregation}{
-        a character string denoting the aggregation level of the 
-        downloaded data records, \code{d} for daily, \code{w} for
-        weekly (not yet implemented), and \code{m} for monthly data 
-        records.
-        }
     \item{file}{
         a character string with filename, usually
         having extension ".csv", where to save the downloaded data.
@@ -52,10 +44,6 @@ googleSeries(symbols = c("IBM", "MSFT"), from = NULL, to = NULL,
     \item{from, to}{
         an ISO-8601 formatted character string of the starting (end) 
         date, e.g. "2005-01-01".
-        }
-    \item{getReturns}{
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
         }
     \item{nDaysBack}{
         an integer giving the length of the download period in number 
@@ -70,17 +58,6 @@ googleSeries(symbols = c("IBM", "MSFT"), from = NULL, to = NULL,
         a logical value, if set to TRUE the downloaded data file will 
         be stored under the path and file name specified by the
         string \code{file}. By default FALSE.
-        }
-    \item{quote}{
-        [googleSeries] - \cr
-        a character value or vector of strings giving the column name(s) 
-        of those instruments to be extracted from the download. 
-        }
-    \item{returnClass}{
-        a character string naming the class of the object to be 
-        returned. By default the function returns 
-        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
-        \code{"matrix"}, or \code{"data.frame"}.
         }
     \item{sep}{
         a character value, defining the field separator for the 

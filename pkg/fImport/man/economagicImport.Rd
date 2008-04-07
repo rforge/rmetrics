@@ -1,12 +1,11 @@
-\name{Economagic}
+\name{economagicImport}
 
-\alias{Economagic}
 
 \alias{economagicImport}
 \alias{economagicSeries}
 
 
-\title{Import Market Data from Economagic}
+\title{Import Market Data from www.economagic.com}
 
 
 \description{
@@ -27,21 +26,16 @@
 \usage{
 economagicImport(query, file = "tempfile", 
     source = "http://www.economagic.com/em-cgi/data.exe/",  
-    frequency = c("quarterly", "monthly", "daily"), save = FALSE, 
-    colname = "VALUE", try = TRUE)  
+    frequency = c("auto", "quarterly", "monthly", "daily"), 
+    save = FALSE, colname = "VALUE", try = TRUE)  
 
-economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
-    returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
-    getReturns = FALSE, \dots)   
+economagicSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots)   
 }
 
 
 \arguments{
 
-    \item{getReturns}{
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
-        }
     \item{colname}{
         a character string which defines the name of the value
         column. By default "VALUE".
@@ -54,15 +48,15 @@ economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
         a character string, one of "quarterly", "monthly", or "daily",
         defining the frequency of the data records.
         }
+    \item{from} {
+        ...
+        }
+    \item{nDaysBack}{
+        ...
+        }
     \item{query}{
         a character string, denoting the location of the data at the 
         web site.
-        }
-    \item{returnClass}{
-        a character string naming the class of the object to be 
-        returned. By default the function returns 
-        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
-        \code{"matrix"}, or \code{"data.frame"}.
         }
     \item{save}{
         a logical value, if set to TRUE the downloaded data file will 
@@ -71,6 +65,12 @@ economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
         }
     \item{source}{
         a character string with the download URL.
+        }
+    \item{symbols} {
+        ...
+        }
+    \item{to} {
+        ...
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be

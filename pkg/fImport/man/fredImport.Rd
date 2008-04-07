@@ -31,17 +31,13 @@ fredImport(query, file = "tempfile",
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
   
-fredSeries(query = "DPRIME", frequency = "daily", returnClass = 
-    c("timeSeries", "ts", "matrix", "data.frame"), getReturns = FALSE, \dots)    
+fredSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots)  
 }
 
 
 \arguments{
 
-    \item{getReturns}{
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
-        }
     \item{file}{
         a character string with filename, usually
         having extension ".csv", where to save the downloaded data.
@@ -50,15 +46,15 @@ fredSeries(query = "DPRIME", frequency = "daily", returnClass =
         a character string, one of "quarterly", "monthly", or "daily",
         defining the frequency of the data records.
         }
+    \item{from} {
+        ...
+        }
+    \item{nDaysBack}{
+        ...
+        }
     \item{query}{
         a character string, denoting the location of the data at the 
         web site.
-        }
-    \item{returnClass}{
-        a character string naming the class of the object to be 
-        returned. By default the function returns 
-        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
-        \code{"matrix"}, or \code{"data.frame"}.
         }
     \item{save}{
         a logical value, if set to TRUE the downloaded data file will 
@@ -72,6 +68,12 @@ fredSeries(query = "DPRIME", frequency = "daily", returnClass =
         }
     \item{source}{
         a character string with the download URL.
+        }
+    \item{symbols} {
+        ...
+        }
+    \item{to} {
+        ...
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be
