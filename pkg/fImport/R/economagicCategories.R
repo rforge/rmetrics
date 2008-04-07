@@ -28,7 +28,7 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  economagicCategories  Lists categries of symbols from www.economagic.com
+#  economagicCategories  Lists categories of symbols from www.economagic.com
 ################################################################################
 
 
