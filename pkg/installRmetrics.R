@@ -79,7 +79,7 @@ installRmetrics  <-
     pkgs <- pkgsRmetrics[sort(match(pkgs, pkgsRmetrics))]
 
     ## install Rmetrics packages
-    type <- if (is.null(repos)) type = "source" else getOption("pkgType")
+    type <- if (is.null(repos)) "source" else getOption("pkgType")
     # important for windows OS
     install.packages(pkgs, repos = repos, type, ...)
 
