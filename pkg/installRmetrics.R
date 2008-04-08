@@ -37,15 +37,15 @@ installRmetrics  <-
         type <- "source" # install from local directory
     } else {
         address <- contrib.url(repos, type)
-        z <- try(available <- available.packages(address, method = "auto"),
+        try(available <- available.packages(address, method = "auto"),
                  silent = TRUE)
-        if (inherits(z, "try-error")) {
+        if (!NROW(available)) {
             type <- "source" # try to retrieve  source package
             address <- contrib.url(repos, type)
-            z <- try(available <- available.packages(address, method = "auto"),
-                     silent = TRUE)
+            try(available <- available.packages(address, method = "auto"),
+                silent = TRUE)
         }
-        if (inherits(z, "try-error"))
+        if (!NROW(available))
             warning(gettextf("unable to access index for repository %s", repos),
                     call. = FALSE, immediate. = TRUE, domain = NA)
     }
