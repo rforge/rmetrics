@@ -79,7 +79,8 @@ installRmetrics  <-
     pkgs <- pkgsRmetrics[sort(match(pkgs, pkgsRmetrics))]
 
     ## install Rmetrics packages
-    install.packages(pkgs, repos = repos, ...)
+    install.packages(pkgs, repos = repos,
+                     if (is.null(repos)) type = "source", ...)
 
     ## Return
     return(TRUE)
