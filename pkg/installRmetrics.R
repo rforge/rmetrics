@@ -1,45 +1,72 @@
 ################################################################################
-## Install Rmetrics packages
+## **Install Rmetrics packages**
 ##
-## Install Rmetrics packages using the installRmetrics.R script. Open an
-## R process and set its working directory to this directory.
+## This script installs Rmetrics packages either from source or from
+## remote server (i.e. R-Forge). It ensures that all dependent
+## Rmetrics packages are installed from the same location, i.e. remote
+## server. This is important to avoid compatibility problem between
+## development packages and packages available on CRAN.
+##
+## *An Example with fSeries*
+##
+## _Local packages_
+##
+## Open an R process and set its working directory to this directory.
 ## Then type the following :
 ##
 ## > source("installRmetrics.R")
-## > installRmetrics()
+## > installRmetrics("fSeries")
 ##
-## This installs all Rmetrics packages from source and installs dependent
-## packages from CRAN server if they are not already installed.
-## Suggested packages are installed if "suggests = TRUE"
+## _Packages at R-Forge_
+##
+## > source("installRmetrics.R")
+## > installRmetrics("fSeries", repos="http://R-Forge.R-project.org")
+##
 ################################################################################
 
 installRmetrics  <-
-    function(repoCRAN = "http://stat.ethz.ch/CRAN/", suggests = TRUE, ...)
+    function(pkgs = "Rmetrics", repos = NULL,
+             CRAN = "http://stat.ethz.ch/CRAN/",
+             suggests = TRUE, ...)
 {
-    pkgs <- getDepends("Rmetrics")# from current directory tree
 
-    ## extract dependencies of third packages
-    pkgsDepends <- NULL
-    for (i in seq_along(pkgs)) {
-        pkgsDepends <- c(pkgsDepends, getDepends(pkgs[i]),
-                         if (suggests) getSuggests(pkgs[i]))
-    }
+    stopifnot(is.character(pkgs))
+
+    infokind <- c("Depends", "Imports", if (suggests) "Suggests")
+
+    if (!is.null(repos))
+        available <- available.packages(contrib.url(repos), method = "auto")
+
+    # list of Rmetrics packages
+    pkgsRmetrics <- getDESCR("Rmetrics", infokind,
+                             if (!is.null(repos)) available)
+    pkgsRmetrics <- c(pkgsRmetrics, "Rmetrics")
+
+    # test if requested package is part of Rmetrics
+    if (!(pkgs %in% c(pkgsRmetrics, "Rmetrics")))
+        stop(gettextf("'%s' is not part of Rmetrics",
+                      deparse(substitute(pkgs))))
+
+    pkgsDepends <- getDepends(pkgs, pkgsRmetrics, infokind,
+                              if (!is.null(repos)) available)
 
     ## remove Rmetrics packages and duplicate entries
     ## --> only "outside dependencies"
-    pkgsDepends <- unique(pkgsDepends[!(pkgsDepends %in% pkgs)])
+    all <- c(pkgsDepends, pkgs)
+    depends <- unique(all[!(all %in% pkgsRmetrics)])
+    pkgs <- unique(all[(all %in% pkgsRmetrics)])
 
-    ## Remove Rdonlp2 from list because it is installed from local directory
-    pkgsDepends <- pkgsDepends[pkgsDepends != "Rdonlp2"]
+    ## Remove Rdonlp2 and Rsocp because they are not available at CRAN server
+    depends <- depends[depends != c("Rdonlp2", "Rsocp")]
 
     ## disable unnecessary warning message when package is not installed
     ow <- options(warn = -1)
-    ## install third packages if not already installed
-    for (i in seq_along(pkgsDepends)) {
-        if (!require(pkgsDepends[i], character.only = TRUE, quietly = TRUE)) {
-            message("installing package", pkgsDepends[i],
-                    " from CRAN ", repoCRAN, " ...")
-            install.packages(pkgsDepends[i], repos = repoCRAN, ...)
+    ## install third party packages if not already installed
+    for (i in seq_along(depends)) {
+        if (!require(depends[i], character.only = TRUE, quietly = TRUE)) {
+            message("installing package ", depends[i],
+                    " from CRAN ", CRAN, " ...")
+            install.packages(depends[i], repos = CRAN, ...)
         }
     }
     ### # Note Rdonlp2 is not part of Rmetrics !!
@@ -48,30 +75,49 @@ installRmetrics  <-
     ### }
     options(ow) # set default warning option
 
-    ## install Rmetrics packages from local files
-    install.packages(pkgs, repos = NULL, type = "source", ...)
+    # pkgs in good order for install
+    pkgs <- pkgsRmetrics[sort(match(pkgs, pkgsRmetrics))]
 
-    ## install Rmetrics package
-    install.packages("Rmetrics", repos = NULL, type = "source", ...)
-
-    OK <- require("Rmetrics")
+    ## install Rmetrics packages
+    install.packages(pkgs, repos = repos, ...)
 
     ## Return
-    return(OK)
+    return(TRUE)
 }
 
-
-getDESCR <- function(package, infokind)
+getDESCR <- function(package, infokind, available = NULL)
 {
     stopifnot(is.character(package))
-    unlist(lapply(package, function(pkg)
-              {
-                  file <- file.path(pkg, "DESCRIPTION")
-                  descr <- tools:::.read_description(file)
-                  tools:::.split_description(descr)[[ infokind ]]
-              }), recursive = FALSE)
+    ans <- unlist(lapply(package, function(pkg)
+                     {
+                         if (is.null(available)) {
+                             # if available NULL try to read from
+                             # local directroy
+                             descr <- file.path(pkg, "DESCRIPTION")
+                             descr <- tools:::.read_description(descr)
+                         } else {
+                             descr <- available[pkg, ]
+                         }
+                         tools:::.split_description(na.omit(descr))[ infokind ]
+                         # na.omit important when reading files obtain from
+                         # available.packages
+                     }), recursive = TRUE)
+    as.character(ans)
 }
 
-getDepends <- function(package)  names(getDESCR(package, "Depends"))
-
-getSuggests <- function(package) names(getDESCR(package, "Suggests"))
+getDepends <- function(package, group, infokind, available = NULL)
+{
+    # extract recursively dependencies of a package which belongs to a
+    # specific group of packages
+    getDESCR <- match.fun(getDESCR)
+    pkgsDepends <- NULL
+    pkgsTested <- NULL
+    while (length(package)) {
+        pkgsDepends <-  c(pkgsDepends,
+                          unlist(getDESCR(package, infokind, available)))
+        pkgsTested <- c(pkgsTested, package)
+        test <- pkgsDepends[pkgsDepends %in% group]
+        package <- test[!(test %in% pkgsTested)]
+    }
+    unique(as.character(pkgsDepends))
+}
