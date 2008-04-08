@@ -24,7 +24,34 @@
 
 
 ################################################################################
-# FUNCTION:
-#  socp
+# FUNCTION:                 DESCRIPTION:
+#  rsocp                     Inerface to second order cone programming
+################################################################################
+
+
+rsocp  <-
+    function(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
+    control = list())
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Second order cone programming
+    
+    # FUNCTION:
+    
+    if (require(Rsocp)) {
+        ans = socp(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
+            control = list())
+        return(ans)
+    } else {
+        cat("\n\nRsocp Package missing")
+        cat("\nPlease contact: wuertz@phys.ethz.ch\n")
+        return(invisible())
+    }
+    
+}
+
+
 ################################################################################
 

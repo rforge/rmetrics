@@ -2,12 +2,11 @@
 
 
 \alias{Rdonlp2}
-
 \alias{donlp2}
 \alias{rdonlp2}
 
 
-\title{Solve constrained nonlinear minimization problem}
+\title{Constrained Nonlinear Programming Solver}
 
 
 \description{
@@ -105,18 +104,17 @@ rdonlp2(par, fn,
 
 \note{
 
-    IMPORTANT: Due to license reasons the R package \code{Rdonlp2} is
-    not part of the Rmetrics distribution. You can download and install
-    the package from\cr
-    https://svn.r-project.org/Rmetrics/trunk/Rdonlp2/
+    IMPORTANT NOTE: Due to copyright and license reasons the R 
+    package \code{Rdonlp2} is not part of the Rmetrics distribution. 
+    
+    Please contact "wuertz@phys.ethz.ch".
     
 }
 
 
 \value{
 
-    For \code{n=length(par)} parameters, \code{lin} linear constraints,
-    and \code{nlin} nonlinear constraints, a list with following elements:
+    A list with the following elements:
     
     \item{par}{
         parameters returned by DONLP2.
@@ -267,8 +265,10 @@ rdonlp2(par, fn,
 
 \author{ 
 
-    Rdonlp2(R port) is copyrighted by Ryuichi Tamura. Original
-    DONLP2 is copyrighted software written by Peter Sperucci.  
+    Rdonlp2(R port) is copyrighted by Ryuichi Tamura. 
+    
+    Original DONLP2 is copyrighted software written by Peter 
+    Sperucci.  
     
 }
 
@@ -277,12 +277,6 @@ rdonlp2(par, fn,
   
     \url{http://plato.la.asu.edu/donlp2.html}(original DONLP2),\cr
     \url{http://arumat.net/Rdonlp2/}(Rdonlp2)
-    
-}
-
-\seealso{
-
-    \code{\link{rdonlp2Control}}
     
 }
 

@@ -24,40 +24,70 @@
 
 
 ################################################################################
-# FUNCTION:
-#  rdonlp2
+# FUNCTION:                    DESCRIPTION:
+#  rdonlp2                      Interface to rdonlp2 Solver
 ################################################################################
 
 
-rdonlp2 <- 
+rdonlp2  <-
     function(
-    
-        par, fn,
-        par.upper = rep(+Inf, length(par)),
-        par.lower = rep(-Inf, length(par)),
-        
-        A = NULL,
-        lin.upper = rep(+Inf, length(par)),
-        lin.lower = rep(-Inf, length(par)),
-        
-        nlin = list(),
-        nlin.upper = rep(+Inf, length(nlin)),
-        nlin.lower = rep(-Inf, length(nlin)),
-        
-        control = rdonlp2Control(),
-        control.fun = function(lst){return(TRUE)},
-        env = .GlobalEnv, name = NULL)
+    par, fn,
+    par.upper = rep(+Inf, length(par)),
+    par.lower = rep(-Inf, length(par)),
+    A = NULL,
+    lin.upper = rep(+Inf, length(par)),
+    lin.lower = rep(-Inf, length(par)),
+    nlin = list(),
+    nlin.upper = rep(+Inf, length(nlin)),
+    nlin.lower = rep(-Inf, length(nlin)), 
+    control = rdonlp2Control(),
+    control.fun = function(lst){return(TRUE)},
+    env = .GlobalEnv, name = NULL)
 {    
-    # Note:
-    #   DW
-    #   onLoad <- function(libname, pkgname){
-    #       verbose <- .Options$Hverbose
-    #       if(!length(verbose) || verbose){
-    #           cat("Rdonlp2 - a wrapper library for \"DONLP2 (C) Peter Spellucci\"\n\n")
-    #       }
-    #       library.dynam("Rdonlp2", pkgname, libname)
-    #       invisible()
-    #   }
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Interface to rdonlp2 Solver
+    
+    # FUNCTION:
+    
+    if (require(Rdonlp2)) {
+        ans = .rdonlp2(
+            par, fn, par.upper, par.lower,
+            A, lin.upper, lin.lower, nlin, nlin.upper, nlin.lower, 
+            control, control.fun, env, name)
+        return(ans)
+    } else {
+        cat("\n\nRdonlp2 Package missing")
+        cat("\nPlease contact: wuertz@phys.ethz.ch\n")
+        return(invisible())
+    }
+    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rdonlp2 <- 
+    function(
+    par, fn,
+    par.upper = rep(+Inf, length(par)),
+    par.lower = rep(-Inf, length(par)),
+    A = NULL,
+    lin.upper = rep(+Inf, length(par)),
+    lin.lower = rep(-Inf, length(par)),
+    nlin = list(),
+    nlin.upper = rep(+Inf, length(nlin)),
+    nlin.lower = rep(-Inf, length(nlin)), 
+    control = rdonlp2Control(),
+    control.fun = function(lst){return(TRUE)},
+    env = .GlobalEnv, name = NULL)
+{    
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Interface to rdonlp2 Solver
     
     # FUNCTION:
     
@@ -136,7 +166,7 @@ rdonlp2 <-
         name = "dummy"
     }
     
-    # start donlp2
+    # Start donlp2:
     tryCatch(
         # start donlp2
         ans <- .Call("call_donlp2",

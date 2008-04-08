@@ -24,43 +24,23 @@
 
 
 ################################################################################
-# FUNCTION:
-#  rdonlp2Control
+# FUNCTION:                 DESCRIPTION:
+#  rdonlp2Control            Control list for "rdnlp2" Solver
 ################################################################################
 
 
 rdonlp2Control <- 
     function(            
-    
-    # Setup:
-    iterma = 4000, nstep = 20,fnscale = 1,
-    report = FALSE, rep.freq = 1,
-    
-    # perfomance and tunings
-    tau0 = 1.0, tau = 0.1, del0 = 1.0,
-    
-    # Termination Criteria:
-    epsx = 1e-5, delmin = 0.1*del0,
-    epsdif = 1e-8, nreset.multiplier = 1,
-    
-    # Numerical Differentiation:
-    difftype = 3, epsfcn = 1e-16, taubnd = 1.0,
-    hessian = FALSE,
-    
-    # Information:
-    te0 = TRUE, te1 = FALSE, te2 = FALSE, te3 = FALSE,
-    silent = FALSE, intakt = TRUE )
+    iterma = 4000, nstep = 20,fnscale = 1, report = FALSE, rep.freq = 1,
+    tau0 = 1.0, tau = 0.1, del0 = 1.0, epsx = 1e-5, delmin = 0.1*del0,
+    epsdif = 1e-8, nreset.multiplier = 1, difftype = 3, epsfcn = 1e-16, 
+    taubnd = 1.0, hessian = FALSE, te0 = TRUE, te1 = FALSE, te2 = FALSE, 
+    te3 = FALSE, silent = FALSE, intakt = TRUE )
 {
-    # NOte:
-    #   DW
-    #   onLoad <- function(libname, pkgname){
-    #       verbose <- .Options$Hverbose
-    #       if(!length(verbose) || verbose){
-    #           cat("Rdonlp2 - a wrapper library for \"DONLP2 (C) Peter Spellucci\"\n\n")
-    #       }
-    #       library.dynam("Rdonlp2", pkgname, libname)
-    #       invisible()
-    #   }
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Control list for "rdnlp2" Solver
     
     # FUNCTION:
     

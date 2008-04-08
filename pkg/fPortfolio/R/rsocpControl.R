@@ -24,7 +24,40 @@
 
 
 ################################################################################
-# FUNCTION:
-#  socpControl
+# FUNCTION:                 DESCRIPTION:
+#  rsocpControl              Control list for "rsocp" Solver
+################################################################################
+
+        
+rsocpControl <- 
+    function(abs.tol = 1e-18, rel.tol = 1e-16, target = 0, 
+    max.iter = 500, Nu = 10, out.mode = 0, BigM.K = 2, BigM.iter = 5, 
+    scale = 1, penalty = 0)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   A copy of function socpControl from package Rsocp
+    
+    # Note:
+    #   Here we have added the entries scale and penealty
+    
+    # FUNCTION:
+    
+    # Return Value:
+    list(
+        abs.tol = abs.tol, 
+        rel.tol = rel.tol,
+        target = target,
+        max.iter = max.iter,
+        Nu = Nu,
+        out.mode = out.mode,
+        BigM.K = BigM.K,
+        BigM.iter = BigM.iter,
+        scale = scale,
+        penalty = penalty)
+}
+
+
 ################################################################################
 

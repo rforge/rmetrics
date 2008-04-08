@@ -5,10 +5,14 @@
 \alias{rdonlp2Control}
 
 
-\title{Control variables for Rdonlp2}
+\title{Control List for Rdonlp2 Solver}
 
 
-\description{Collection of Control Variables}
+\description{
+
+    List of control parameters for "Rdonlp2" solver.
+
+}
 
 
 \usage{
