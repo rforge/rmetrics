@@ -27,17 +27,31 @@
 installRmetrics  <-
     function(pkgs = "Rmetrics", repos = NULL,
              CRAN = "http://stat.ethz.ch/CRAN/",
-             suggests = TRUE, ...)
+             type = getOption("pkgType"), suggests = TRUE, ...)
 {
 
     stopifnot(is.character(pkgs))
 
-    infokind <- c("Depends", "Imports", if (suggests) "Suggests")
-
-    if (!is.null(repos))
-        available <- available.packages(contrib.url(repos), method = "auto")
+    # get description of packages
+    if (is.null(repos)) {
+        type <- "source" # install from local directory
+    } else {
+        address <- contrib.url(repos, type)
+        z <- try(available <- available.packages(address, method = "auto"),
+                 silent = TRUE)
+        if (inherits(z, "try-error")) {
+            type <- "source" # try to retrieve  source package
+            address <- contrib.url(repos, type)
+            z <- try(available <- available.packages(address, method = "auto"),
+                     silent = TRUE)
+        }
+        if (inherits(z, "try-error"))
+            warning(gettextf("unable to access index for repository %s", repos),
+                    call. = FALSE, immediate. = TRUE, domain = NA)
+    }
 
     # list of Rmetrics packages
+    infokind <- c("Depends", "Imports", if (suggests) "Suggests")
     pkgsRmetrics <- getDESCR("Rmetrics", infokind,
                              if (!is.null(repos)) available)
     pkgsRmetrics <- c(pkgsRmetrics, "Rmetrics")
@@ -66,7 +80,7 @@ installRmetrics  <-
         if (!require(depends[i], character.only = TRUE, quietly = TRUE)) {
             message("installing package ", depends[i],
                     " from CRAN ", CRAN, " ...")
-            install.packages(depends[i], repos = CRAN, ...)
+            install.packages(depends[i], repos = CRAN, type = type, ...)
         }
     }
     ### # Note Rdonlp2 is not part of Rmetrics !!
@@ -79,8 +93,6 @@ installRmetrics  <-
     pkgs <- pkgsRmetrics[sort(match(pkgs, pkgsRmetrics))]
 
     ## install Rmetrics packages
-    type <- if (is.null(repos)) "source" else getOption("pkgType")
-    # important for windows OS
     install.packages(pkgs, repos = repos, type = type, ...)
 
     ## Return
