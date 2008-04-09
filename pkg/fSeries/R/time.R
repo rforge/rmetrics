@@ -20,6 +20,8 @@
 #  time<-                    Modifies positions of a 'timeSeries' object
 # METHOD:                   POSITION HANDLING:
 #  time.timeSeries           extracs time positions from a 'timeSeries'
+#  index.timeSeries          extracs index positions from a 'timeSeries'
+#  index<-.timeSeries        modifies index positions from a 'timeSeries'
 #  sample.timeSeries         Resamples a 'timeSeries' object in time
 #  sort.timeSeries           Sorts reverts a 'timeSeries' object in time
 #  rev.timeSeries            Reverts a 'timeSeries' object in time
@@ -140,6 +142,15 @@ function(x, ...)
 
 
 # ------------------------------------------------------------------------------
+
+index <- function(x, value) UseMethod("index")
+"index<-" <- function(x, value) UseMethod("index<-")
+index.timeSeries <- time.timeSeries
+"index<-.timeSeries" <- "time<-.timeSeries"
+
+# ------------------------------------------------------------------------------
+
+
 
 sample.timeSeries =
 function(x, ...)
