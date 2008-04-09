@@ -1,7 +1,7 @@
 checkBeforeCommit  <-
-    function(package = "Rmetrics", lib = NULL, outdir = NULL, ...)
+    function(pkgs = "Rmetrics", lib = NULL, outdir = NULL, ...)
 {
-    stopifnot(is.character(package))
+    stopifnot(is.character(pkgs))
 
     installFile <- "installRmetrics.R"
     if(!file.exists(installFile)) {
@@ -35,22 +35,22 @@ checkBeforeCommit  <-
     if (!file.exists(outdir)) dir.create(outdir)
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- getDepends("Rmetrics")
-    if (package == "Rmetrics") ## 'Rmetrics' is virtual: check all of them:
-        package <- pkgsRmetrics
-    stopifnot(package %in% pkgsRmetrics)
+    pkgsRmetrics <- getDESCR("Rmetrics", "Depends")
+    stopifnot(pkgs %in% c(pkgsRmetrics, "Rmetrics"))
 
-    ## remove package which do not depend on the package we want to test
-    ## # 1 possibility (to be discussed)
-    idx <- min(match(package, pkgsRmetrics))
-    pkgsToCheck <- pkgsRmetrics[seq(idx, length(pkgsRmetrics))]
-    ## 2 possibility (to be discussed)
-###     pkgsToCheck <- package
-###     for (i in seq(pkgsRmetrics)) {
-###         if (package %in% getDepends(pkgsRmetrics[i]))
-###             pkgsToCheck <- c(pkgsToCheck, pkgsRmetrics[i])
-###     }
+    ## search for packages which depends on the package we want to check
+    listDepends <- lapply(pkgsRmetrics, getDepends,
+                          group = pkgsRmetrics, "Depends")
+    names(listDepends) <- pkgsRmetrics
+    tocheck <- sapply(lapply(listDepends, "%in%", pkgs), any)
+    pkgsToCheck <-
+        if (pkgs == "Rmetrics") # Rmetrics virtual package -> check all
+            pkgsRmetrics
+        else
+            c(pkgs, names(tocheck)[tocheck])
 
+    # pkgs in good order for install
+    pkgsToCheck <- pkgsRmetrics[sort(match(pkgsToCheck, pkgsRmetrics))]
 
     ## Run R CMD check ...
     Rbin <- file.path(R.home(), "bin", "R")
