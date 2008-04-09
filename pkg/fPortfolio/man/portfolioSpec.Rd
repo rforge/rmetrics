@@ -63,10 +63,12 @@ portfolioSpec(
     }
         
     An object of class \code{fPFOLIOSPEC} has three slots, named
-    \code{@model}, \code{@portfolio}, and \code{@optim}.
-    The first slot \code{@model} holds the model information, the second
-    slot \code{@portfolio} the portfolio information, and the last slot
-    \code{@optim} the information about the solver used for optimization.
+    \code{@model}, \code{@portfolio}, and \code{@optim}. The first 
+    slot \code{@model} holds the model information, the second
+    slot \code{@portfolio} the portfolio information, and the last 
+    slot \code{@optim} the information about the solver used for 
+    optimization.
+    
     The default settings are as follows:
         
     \preformatted{
@@ -92,65 +94,107 @@ portfolioSpec(
     \bold{Model Slot:}
     
     
+    \emph{Type of Model:}\cr
     The list entry \code{type} from the \code{@model} slot describes 
     the type of the desired portfolio. The current implementation 
-    supports three type of portfolios. This may be 
+    supports three types of portfolios. This may be 
     a Markowitz mean -- variance portfolio named \code{"MV"}, 
-    a mean -- lower partial moment portfolio named \code{"LPM"}, or a 
-    mean -- CVaR condititional value-at-risk portfolio named 
-    \code{"CVaR"}. Note, it is possible that an experienced user can
-    add his own portfolio models, so the validity of the input is not
-    spell checked.
+    a mean -- lower partial moment portfolio named \code{"LPM"}, or 
+    a mean -- CVaR condititional value-at-risk portfolio named \code{"CVaR"}. 
     One can use the function \code{getType} to retrieve the current
     setting and the function \code{setType} to modify this selection.
      
     
+    \emph{What to optimize?}\cr
     The list entry \code{optimize} from the \code{@model} slot describes 
     what should be optimized. Two choices are psssible. Either
-    \code{"minRisk"} which minimizes the risk if the target returns is
-    given, or \code{"maxReturn"} which maximizes the return if the target 
-    risk is given.
+    
+    \preformatted{
+        \code{"minRisk"}
+        } 
+        
+    which minimizes the risk if the target returns is given, or 
+    
+    \preformatted{
+        \code{"maxReturn"}
+        } 
+        
+    which maximizes the return if the target risk is given.
     One can use the function \code{getOptimize} to retrieve the current
-    setting and the function \code{getOptimize} to modify this selection.
+    setting and the function \code{setOptimize} to modify this selection.
     
     
+    \emph{How to estimate mean and covariance?}\cr
     The list entry \code{estimator} from the \code{@model} slot requests 
     for a string that denotes the function name of the covariance 
-    estimator which should be used for the estimation of risk in 
-    Markowitz' mean-variance portfolio model. By default the function 
-    \code{covEstimator} is used which computes the standard column means 
+    estimator which should be used for the estimation of risk. 
+    
+    In Markowitz' mean-variance portfolio model, \code{type="MV"}, the 
+    default function 
+    
+    \preformatted{
+        \code{"covEstimator"} 
+        }
+        
+    is used which computes the standard column means 
     of the multivariate assets data series and the standard covariance 
     matrix. Alternative robust estimators include 
-        \code{covMcdEstimator}, 
-        \code{covOGKEstimator},
-        \code{mveEstimator},
-        \code{nnveEstimator}, or
-        \code{mcdEstimator}.
+    
+    \preformatted{
+        \code{"covMcdEstimator"}
+        \code{"covOGKEstimator"}
+        \code{"mveEstimator"}
+        \code{"nnveEstimator"}
+        \code{"mcdEstimator"}
+        }
+        
     In addition a shrinkage covariance estimator named
-        \code{shrinkEstimator},
+        
+    \preformatted{
+        \code{"shrinkEstimator"},
+        }
+        
     and a bagged covariance estimator named
-        \code{baggedEstimator} are also available.
-    Note the experienced user can add his own function to estimate in any
+     
+    \preformatted{   
+        \code{"baggedEstimator"} 
+        }
+    
+    are also available.
+    Note, the experienced user can add his own function to estimate in any
     alternative way the mean and the covariance of the multivariate assets
-    data series. In this case he has to write a function, e.g. named
-        \code{myEstimator=function(x,spec=NULL,...)},
+    data series. In this case (s)he has to write a function, e.g. named
+     
+    \preformatted{   
+        \code{myEstimator=function(x,spec=NULL,...)}
+        }
+        
     where \code{x} is a multivariate time series, \code{spec} optionally 
     the portfolio specification, if rquired, and \code{...} additional
     arguments passed to the users code. Note, \code{myEstimator} must
     a return a named list, with at least the following two entries
     \code{\$mu} and \code{\$Sigma}, which represent estimators for the
-    mean and covariance, respectively. The LPM portfolio is just a
-    Markowitz mean-variance portfolio with a modified covariance 
-    estimator. In this case the setting of the \code{@model\$type} 
-    changes the covariance estimator function name \code{"covEstimator"} 
-    or any other selection pfreviously made to the function automatically
-    to \code{"assetsLPM"} which returns the LPM mean and covariance 
+    mean and covariance, respectively. 
+    
+    In the case of the Mean -- Lower-Partial-Moment portfolio, 
+    \code{type="LPM"} we make use of the equivalence to Markowitz' 
+    mean-variance portfolio with a modified covariance estimator, i.e. 
+    
+    \preformatted{
+        \code{"lpmEstimator"},
+        }
+        
+    Note, in this case the setting of \code{type="LPM"} 
+    changes the covariance estimator function name 
+    from any selection previously made to the function automatically
+    to \code{"lpmEstimator"} which returns the LPM mean and covariance 
     estimates.   
-    Be aware, that the validity of the input name of the estimator
-    function is not spell checked.
-    Use the function \code{setEstimator} to modify this selection.
+
+    One can use the function \code{getEstimator} to retrieve the current
+    setting and the function \code{setEstimator} to modify this selection.
      
      
+    \emph{Tail Risk List:}\cr
     The list entry \code{tailRisk} from the \code{@model} slot is an empty 
     list. It can be used to add tail risk budget constrains to the 
     optimization. In this case a square matrix of the size of the 
