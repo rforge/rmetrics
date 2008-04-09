@@ -51,7 +51,9 @@ portfolioFrontier <-
     # Optimize portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
     mu = getMu(data)
-    targetReturns = seq(min(mu), max(mu), length = nFrontierPoints)
+    eps = 1e-8
+    targetReturns <- 
+        seq(min(mu)*(1+eps), max(mu)*(1-eps), length = nFrontierPoints)
     weights = targetReturn = targetRisk = covRiskBudgets = status = NULL
     for (i in 1:nFrontierPoints) {
         setTargetReturn(spec) = targetReturns[i]
