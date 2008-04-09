@@ -47,7 +47,7 @@ installRmetrics  <-
         }
         if (!NROW(available))
             stop(gettextf("unable to access index for repository %s", repos),
-                 call. = FALSE, immediate. = TRUE, domain = NA)
+                 call. = FALSE)
     }
 
     # list of Rmetrics packages
@@ -96,7 +96,7 @@ installRmetrics  <-
     install.packages(pkgs, repos = repos, type = type, ...)
 
     ## Return
-    invisible()
+    return(TRUE)
 }
 
 getDESCR <- function(package, infokind, available = NULL)
