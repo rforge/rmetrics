@@ -46,37 +46,30 @@ setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC <-
     # FUNCTION:
     
     # Model:
-    cat("\nPortfolio Type:\n ")
-    cat(object@model$optimize, object@model$type, "\n")
-    
-    cat("\nCovariance Estimator:\n ")
-    cat(object@model$estimator, "\n")
+    cat("\nPortfolio Specification:\t"
+    cat("\nPortfolio Type:\t", object@model$type)
+    cat("\nOptimize:\t", object@model$optimize)
+    cat("\nCovariance Estimator:\t", object@model$estimator)
     
     # Portfolio:
     if (!is.null(object@portfolio$weights)) {
-        cat("\nPortfolio Weights:\n")
-        print(object@portfolio$weights) 
+        cat("\nPortfolio Weights:\t", object@portfolio$weights) 
     }
     if (!is.null(object@portfolio$targetReturn)) {
-        cat("\nTarget Return:\n")
-        print(object@portfolio$targetReturn)
+        cat("\nTarget Return:\t", object@portfolio$targetReturn)
     }
     if (!is.null(object@portfolio$targetAlpha)) {
-        cat("\nTarget Alpha:\n ")
-        cat(object@portfolio$targetAlpha, "\n")
+        cat("\nTarget Alpha:\t", object@portfolio$targetAlpha)
     }
     if (!is.null(object@portfolio$riskFreeRate)) {
-        cat("\nPortfolio Risk-Free Rate:\n ")
-        cat(object@portfolio$riskFreeRate, "\n")
+        cat("\nPortfolio Risk-Free Rate:\t", object@portfolio$riskFreeRate)
     }
     if (!is.null(object@portfolio$nFrontierPoints)) {
-        cat("\nNumber of Frontier Points:\n ")
-        cat(object@portfolio$nFrontierPoints, "\n")
+        cat("\nNumber of Frontier Points:\t", object@portfolio$nFrontierPoints)
     }
     
     # Optimization:
-    cat("\nOptimizer:\n ")
-    cat(object@optim$solver, "\n")
+    cat("\nOptimizer:\t", object@optim$solver, "\n")
         
     # Return Value: 
     invisible(object)
@@ -167,7 +160,7 @@ setMethod("show", "fPORTFOLIO", show.fPORTFOLIO <-
      
     # Print Title:
     cat("\nTitle:\n ")
-    cat(getTitle(object), "\n")
+    cat(getType(object), getTitle(object), "\n")
     
     # Print Call:
     # cat("\nCall:\n ")
