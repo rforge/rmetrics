@@ -17,7 +17,7 @@
 
 \usage{
 frontierPoints(object, frontier = c("both", "lower", "upper"), 
-    return = "mean", risk = c("cov", "sigma", "CVaR", "VaR"))
+    return = c("mean", "mu"), risk = c("cov", "sigma", "CVaR", "VaR"))
 }
 
 
@@ -33,12 +33,12 @@ frontierPoints(object, frontier = c("both", "lower", "upper"),
         }
     \item{return}{
         character strings denoting which return measure
-        should be plotted. The only value allowed for the
-        return is \code{"mean"}.
+        should be plotted. Allowed values for the
+        return are either \code{"mean"}, or \code{"mu"}.
         }
     \item{risk}{
         character strings denoting which risk measure
-        should be plotted. Allowed values are for the
+        should be plotted. Allowed values for the
         risk measure are either \code{"cov"}, \code{"sigma"},  
         \code{"VaR"}, or \code{"CVaR"}.
         }
