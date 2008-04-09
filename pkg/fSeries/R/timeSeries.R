@@ -28,6 +28,9 @@ timeSeries <-
     if (missing(data)) data <- numeric()
     if (missing(charvec)) charvec <- NULL
 
-    new("timeSeries", data, charvec, units, format, zone,
-        FinCenter, recordIDs, title, documentation, ...)
+    ans <- new("timeSeries", data, charvec, units, format, zone,
+               FinCenter, recordIDs, title, documentation, ...)
+
+    # YC: sort import for an ordered data set
+    sort(ans)
 }
