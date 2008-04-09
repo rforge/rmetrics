@@ -32,5 +32,10 @@ timeSeries <-
                FinCenter, recordIDs, title, documentation, ...)
 
     # YC: sort import for an ordered data set
-    sort(ans)
+    # YC: for a non empty time series
+    if ( NROW(ans) && ans@format != "counts" )
+        ans <- sort(ans)
+
+    # Return
+    ans
 }
