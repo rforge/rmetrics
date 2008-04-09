@@ -31,7 +31,7 @@
 
 frontierPoints <-
     function(object, frontier = c("both", "lower", "upper"),
-        return = "mean", risk = c("cov", "sigma", "CVaR", "VaR"))
+        return = c("mean", "mu"), risk = c("cov", "sigma", "CVaR", "VaR"))
 {
     # A function implemented by Rmetrics
 
