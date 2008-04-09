@@ -38,7 +38,7 @@ installRmetrics  <-
     } else {
         address <- contrib.url(repos, type)
         try(available <- available.packages(address, method = "auto"),
-                 silent = TRUE)
+            silent = TRUE)
         if (!NROW(available)) {
             type <- "source" # try to retrieve  source package
             address <- contrib.url(repos, type)
@@ -46,8 +46,8 @@ installRmetrics  <-
                 silent = TRUE)
         }
         if (!NROW(available))
-            warning(gettextf("unable to access index for repository %s", repos),
-                    call. = FALSE, immediate. = TRUE, domain = NA)
+            stop(gettextf("unable to access index for repository %s", repos),
+                 call. = FALSE)
     }
 
     # list of Rmetrics packages
