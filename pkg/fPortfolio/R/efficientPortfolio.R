@@ -139,7 +139,7 @@ tangencyPortfolio <-
     # Compose Portfolio:
     portfolio = feasiblePortfolio(data, spec, constraints)
     portfolio@call = match.call()
-    portfolio@title = "Capital Market Line Portfolio"
+    portfolio@title = "Tangency Portfolio"
 
     # Return Value:
     portfolio
