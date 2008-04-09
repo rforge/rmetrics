@@ -22,6 +22,6 @@ setGeneric("series", function(x) standardGeneric("series"), package = "fSeries")
 setGeneric("series<-",
            function(x, value) standardGeneric("series<-"), package = "fSeries")
 
-setGeneric("index", function(x) standardGeneric("index"), package = "fSeries")
-setGeneric("index<-",
-           function(x, value) standardGeneric("index<-"), package = "fSeries")
+## setGeneric("index", function(x) standardGeneric("index"), package = "fSeries")
+## setGeneric("index<-",
+##            function(x, value) standardGeneric("index<-"), package = "fSeries")

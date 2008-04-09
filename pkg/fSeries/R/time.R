@@ -139,18 +139,14 @@ function(x, ...)
     ans
 }
 
-
-
 # ------------------------------------------------------------------------------
 
-index <- function(x, value) UseMethod("index")
-"index<-" <- function(x, value) UseMethod("index<-")
-index.timeSeries <- time.timeSeries
-"index<-.timeSeries" <- "time<-.timeSeries"
+## setMethod("index", "timeSeries",
+##           function(x) time.timeSeries(x))
+## setMethod("index<-", "timeSeries",
+##           function(x,value) "time<-.timeSeries"(x, value))
 
 # ------------------------------------------------------------------------------
-
-
 
 sample.timeSeries =
 function(x, ...)
