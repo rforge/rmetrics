@@ -78,7 +78,7 @@ installRmetrics  <-
     ## install third party packages if not already installed
     for (i in seq_along(depends)) {
         if (!require(depends[i], character.only = TRUE, quietly = TRUE)) {
-            message("installing package ", depends[i],
+            message("\ninstalling package ", depends[i],
                     " from CRAN ", CRAN, " ...")
             install.packages(depends[i], repos = CRAN, type = type, ...)
         }
