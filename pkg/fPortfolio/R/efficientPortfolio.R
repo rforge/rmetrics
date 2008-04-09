@@ -69,7 +69,6 @@ efficientPortfolio <-
         if(is.null(getTargetRisk)) {
             stop("Missing target risk for maximum return optimization.")
         } else {
-            stop("SCOP solver not yet implemented.")
             # Optimize Portfolio:
             Solver = match.fun(getSolver(spec))
             portfolio = Solver(data, spec, constraints)

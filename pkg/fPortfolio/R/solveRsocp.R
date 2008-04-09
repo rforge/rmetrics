@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION: 
+# FUNCTION:                    DESCRIPTION:
 #  solveRsocp                   Seconde order cone programming solver
 ################################################################################
 
@@ -35,106 +35,107 @@
 # ------------------------------------------------------------------------------
 
 
-solveRsocp <- 
+solveRsocp <-
     function(data, spec, constraints)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Second Order Cone Programming
-    
+
     # Arguments:
     #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
-    
+
     # Note:
     #   This function is thought to maximize MV return for a fixed risk
-    
+
     # FUNCTION:
-    
+
     # Test Implementation for "LongOnly" MV Portfolio
     stopifnot(constraints == "LongOnly")
-    
+
     # Get Statistics:
-    if(!inherits(data, "fPFOLIODATA")) 
+    if(!inherits(data, "fPFOLIODATA"))
         data = portfolioData(data, spec)
-    
+
     # Scale Data:
-    Data = data@data$series 
+    Data = data@data$series
     Scale = 1e6 * sd(Data)
-    
+
     # Trace:
     trace = getTrace(spec)
-    if(trace) 
-        cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
-    
+    if(trace)
+        cat("\nPortfolio Optimiziation:\n Using Rsocp ...\n\n")
+
     # Get Specifications:
-    mu = getMu(data) /Scale 
+    mu = getMu(data) /Scale
     Sigma = getSigma(data) / Scale^2
-    
+
     # Number of Assets:
     nAssets = getNAssets(data)
 
     # Extracting Target Risk from Specification:
     targetRisk = getTargetRisk(spec) / Scale
-    stopifnot(is.numeric(targetRisk)) 
-    
+    stopifnot(is.numeric(targetRisk))
+
     # Optimize Portfolio:
     #if (nAssets == 2) {
-        # Two Assets Portfolio:
-        # ...
-    #} else { 
-        
-        # Objective Function:
-        lambda = 10
-        f <- -mu - lambda * length(mu) * max(abs(mu))
-        
-        # Long Only Constraints:
-        A = rbind(
-            .SqrtMatrix(Sigma),                        
-            matrix(rep(0, times = nAssets), ncol = nAssets),
-            matrix(rep(0, times = nAssets^2), ncol = nAssets))
-        b = c(
-            rep(0, nAssets),      # xCx
-            0,                    # sum(x)
-            rep(0, nAssets))      # x[i]>0
-        C = rbind(
-            rep(0, nAssets),      # xCx
-            rep(-1, nAssets),     # sum(x)
-            diag(nAssets))        # x[i]>0
-        d = c(
-            targetRisk,           # xCx = risk
-            +1,                   # sum(x) <= 1
-            rep(0, nAssets))      # x[i] > 0
-        N <- c(
-            nAssets,              # dim(C)
-            1,                    # Full Investment
-            rep(1, nAssets))      # Long
-            
-        # Control List:
-        #   abs_tol = 1e-8, rel_tol = 1e-6, target = 0,
-        #   max_iter = 500, Nu = 10, out_mode = 0,
-        #   BigM_K = 2, BigM_iter = 5
-        
-        # Optimize:  
-        fit = rsocp(f, A, b, C, d, N, control =
-            list(
-                abs_tol = 1e-16, 
-                rel_tol = 1e-14, 
-                target = 0,
-                max_iter = 500, 
-                Nu = 10, 
-                out_mode = 0,
-                BigM_K = 2, 
-                BigM_iter = 5
-            ))
+    # Two Assets Portfolio:
+    # ...
+    #} else {
 
-        # Prepare Output List:
-        ans = list(
-            fit = fit,
-            weights = fit$x, 
-            solver = "socp")
+    # Objective Function:
+    lambda = 10
+    f <- -mu - lambda * length(mu) * max(abs(mu))
+
+        # Long Only Constraints:
+    A <- rbind(
+               .SqrtMatrix(Sigma),
+               matrix(rep(0, times = nAssets), ncol = nAssets),
+               matrix(rep(0, times = nAssets^2), ncol = nAssets))
+    b <- c(
+           rep(0, nAssets),      # xCx
+           0,                    # sum(x)
+           rep(0, nAssets))      # x[i]>0
+    C <- rbind(
+               rep(0, nAssets),      # xCx
+               rep(-1, nAssets),     # sum(x)
+               diag(nAssets))        # x[i]>0
+    d <- c(
+           targetRisk,           # xCx = risk
+           +1,                   # sum(x) <= 1
+           rep(0, nAssets))      # x[i] > 0
+    N <- c(
+           nAssets,              # dim(C)
+           1,                    # Full Investment
+           rep(1, nAssets))      # Long
+
+    # Control List:
+    #   abs_tol = 1e-8, rel_tol = 1e-6, target = 0,
+    #   max_iter = 500, Nu = 10, out_mode = 0,
+    #   BigM_K = 2, BigM_iter = 5
+
+    # Optimize:
+    fit <- rsocp(f, A, b, C, d, N, control =
+                 list(
+                      abs.tol = 1e-12,
+                      rel.tol = 1e-12,
+                      target = 0,
+                      max.iter = 1000,
+                      Nu = 10,
+                      out.mode = 0,
+                      BigM.K = 2,
+                      BigM.iter = 5
+                      ))
+
+    # Prepare Output List:
+    ans <- list(fit = fit,
+                # YC: status slot required by efficientPortfolio
+                status = as.integer(fit$convergence),
+                weights = fit$x,
+                solver = "socp")
     #}
 
     # Return Value:
@@ -145,31 +146,31 @@ solveRsocp <-
 # ------------------------------------------------------------------------------
 
 
-.SqrtMatrix <- 
+.SqrtMatrix <-
 function(x)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Square Root of a quadratic Matrix:
-    
+
     # Example:
     #   A = matrix(c(1,.2,.2,.2,1,.2,.2,.2,1), ncol = 3)
     #   round(Sqrt(A) %*% Sqrt(A) - A, digits = 12)
-    
+
     # FUNCTION:
-    
+
     # Check if matrix is square:
     stopifnot(NCOL(x) == NROW(x))
-    
+
     # One-dimensional ?
     if (NCOL(x) == 1) return(sqrt(as.vector(x)))
-    
+
     # Square Root of a matrix:
     e <- eigen(x)
     V <- e$vectors
     ans <- V %*% diag(sqrt(e$values)) %*% t(V)
-    
+
     # Return Value:
     ans
 }

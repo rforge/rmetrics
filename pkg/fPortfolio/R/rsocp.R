@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -30,26 +30,26 @@
 
 
 rsocp  <-
-    function(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
+    function(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL,
     control = list())
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Second order cone programming
-    
+
     # FUNCTION:
-    
+
     if (require(Rsocp)) {
-        ans = socp(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
-            control = list())
+        ans = socp(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL,
+            control = control)
         return(ans)
     } else {
         cat("\n\nRsocp Package missing")
         cat("\nPlease contact: wuertz@phys.ethz.ch\n")
         return(invisible())
     }
-    
+
 }
 
 
