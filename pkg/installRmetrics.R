@@ -37,21 +37,17 @@ installRmetrics  <-
         type <- "source" # install from local directory
     } else {
         address <- contrib.url(repos, type)
-        ow <- options(warn = -1) # remove any warning
         try(available <- available.packages(address, method = "auto"),
-                 silent = TRUE)
-        options(ow) # set default warning option
+            silent = TRUE)
         if (!NROW(available)) {
             type <- "source" # try to retrieve  source package
             address <- contrib.url(repos, type)
-            ow <- options(warn = -1) # remove any warning
             try(available <- available.packages(address, method = "auto"),
                 silent = TRUE)
-            options(ow) # set default warning option
         }
         if (!NROW(available))
             stop(gettextf("unable to access index for repository %s", repos),
-                    call. = FALSE, immediate. = TRUE, domain = NA)
+                 call. = FALSE, immediate. = TRUE, domain = NA)
     }
 
     # list of Rmetrics packages
@@ -100,7 +96,7 @@ installRmetrics  <-
     install.packages(pkgs, repos = repos, type = type, ...)
 
     ## Return
-    return(TRUE)
+    invisible()
 }
 
 getDESCR <- function(package, infokind, available = NULL)
