@@ -481,7 +481,7 @@ sharpeRatioLines <-
 
     # Tangency Portfolio:
     tangencyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    x.tg = getTargetReturn(tangencyPortfolio)
+    x.tg = getTargetReturn(tangencyPortfolio)[1, "mean"]
 
     # Normalization to fit in EF Plot:
     norm = x.tg / max(y/x)

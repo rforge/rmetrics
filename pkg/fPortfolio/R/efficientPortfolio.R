@@ -28,6 +28,7 @@
 #  efficientPortfolio            Returns a frontier portfolio
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
+#  maxreturnPortfolio            Returns the maximum return portfolio
 ################################################################################
 
 
@@ -51,33 +52,16 @@ efficientPortfolio <-
     if (is.null(constraints)) constraints = "LongOnly"
     if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
 
-    optimize = NA
-    if (getOptimize(spec) == "minRisk") {
-        optimize = getOptimize(spec)
-        if(is.null(getTargetReturn)) {
-            stop("Missing target return for minimum risk optimization.")
-        } else {
-            # Optimize Portfolio:
-            Solver = match.fun(getSolver(spec))
-            portfolio = Solver(data, spec, constraints)
-            setWeights(spec) = portfolio$weights
-            setStatus(spec) = portfolio$status
-            Title = paste(getType(spec), "Risk Minimized Efficient Portfolio")
-        }
-    } else if (getOptimize(spec) == "maxReturn") {
-        optimize = getOptimize(spec)
-        if(is.null(getTargetRisk)) {
-            stop("Missing target risk for maximum return optimization.")
-        } else {
-            # Optimize Portfolio:
-            Solver = match.fun(getSolver(spec))
-            portfolio = Solver(data, spec, constraints)
-            setWeights(spec) = portfolio$weights
-            setStatus(spec) = portfolio$status
-            Title = paste(getType(spec), "Return Maximized Efficient Portfolio")
-        }
-    } else if (is.na(optimize)) {
-        stop("Neither target return nor target risk specified.")
+    # Minimize Risk:   
+    if(is.null(getTargetReturn)) {
+        stop("Missing target return for minimum risk optimization.")
+    } else {
+        # Optimize Portfolio:
+        Solver = match.fun(getSolver(spec))
+        portfolio = Solver(data, spec, constraints)
+        setWeights(spec) = portfolio$weights
+        setStatus(spec) = portfolio$status
+        Title = paste(getType(spec), "Risk Minimized Efficient Portfolio")
     }
 
     # Compose Portfolio:
@@ -189,6 +173,51 @@ minvariancePortfolio <-
     portfolio = feasiblePortfolio(data, spec, constraints)
     portfolio@call = match.call()
     portfolio@title = "Minimum Variance Portfolio"
+
+    # Return Value:
+    portfolio
+}
+
+
+################################################################################
+
+
+maxreturnPortfolio <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes target risk and weights for an efficient portfolio
+
+    # Arguments:
+    #   data - a rectangular object of assets
+    #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
+
+    # FUNCTION:
+
+    # Check Arguments:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
+    if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
+
+    # Maximize Return:
+    if(is.null(getTargetRisk)) {
+        stop("Missing target risk for maximum return optimization.")
+    } else {
+        # Optimize Portfolio:
+        Solver = match.fun(getSolver(spec))
+        portfolio = Solver(data, spec, constraints)
+        setWeights(spec) = portfolio$weights
+        setStatus(spec) = portfolio$status
+        Title = paste(getType(spec), "Return Maximized Efficient Portfolio")
+    }
+
+    # Compose Portfolio:
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio@call = match.call()
+    portfolio@title = Title
 
     # Return Value:
     portfolio
