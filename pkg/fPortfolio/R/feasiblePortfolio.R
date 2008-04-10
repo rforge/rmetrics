@@ -58,7 +58,9 @@ feasiblePortfolio <-
     names(weights) = colnames(data@data$series)
 
     # Compute Return:
-    targetReturn = c(mean = (data@statistics$mean %*% weights)[[1]])
+    targetReturn = c(
+        mean = (data@statistics$mean %*% weights)[[1]],
+        mu = (data@statistics$mu %*% weights)[[1]])
 
     # Compute Covariance Risk:
     Cov = data@statistics$Cov
