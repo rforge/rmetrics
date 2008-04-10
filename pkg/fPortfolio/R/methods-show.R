@@ -46,30 +46,39 @@ setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC <-
     # FUNCTION:
     
     # Model:
-    cat("\nPortfolio Specification:\t"
-    cat("\nPortfolio Type:\t", object@model$type)
-    cat("\nOptimize:\t", object@model$optimize)
-    cat("\nCovariance Estimator:\t", object@model$estimator)
+        cat("\nPortfolio Specification:\t")
+        cat("\n Portfolio Type:           ", 
+            object@model$type)
+        cat("\n Optimize:                 ", 
+            object@model$optimize)
+        cat("\n Covariance Estimator:     ", 
+            object@model$estimator)
     
     # Portfolio:
     if (!is.null(object@portfolio$weights)) {
-        cat("\nPortfolio Weights:\t", object@portfolio$weights) 
+        cat("\n Portfolio Weights:    ", 
+            object@portfolio$weights) 
     }
     if (!is.null(object@portfolio$targetReturn)) {
-        cat("\nTarget Return:\t", object@portfolio$targetReturn)
+        cat("\n Target Return:            ", 
+            object@portfolio$targetReturn)
     }
     if (!is.null(object@portfolio$targetAlpha)) {
-        cat("\nTarget Alpha:\t", object@portfolio$targetAlpha)
+        cat("\n Target Alpha:             ", 
+        as.character(object@portfolio$targetAlpha))
     }
     if (!is.null(object@portfolio$riskFreeRate)) {
-        cat("\nPortfolio Risk-Free Rate:\t", object@portfolio$riskFreeRate)
+        cat("\n Portfolio Risk-Free Rate: ", 
+        as.character(object@portfolio$riskFreeRate))
     }
     if (!is.null(object@portfolio$nFrontierPoints)) {
-        cat("\nNumber of Frontier Points:\t", object@portfolio$nFrontierPoints)
+        cat("\n Number of Frontier Points:", 
+        as.character(object@portfolio$nFrontierPoints))
     }
     
     # Optimization:
-    cat("\nOptimizer:\t", object@optim$solver, "\n")
+        cat("\n Optimizer:                ", 
+            object@optim$solver, "\n")
         
     # Return Value: 
     invisible(object)
