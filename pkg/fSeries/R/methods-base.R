@@ -15,7 +15,7 @@
 
 # experimental
 
-.members <- c("summary")
+.members <- c("mean", "summary")
 
 # TODO : list functions in base package to be used
 # TODO : candidates : "mean", "colSums", "rowSums", "colMeans", "rowMeans"

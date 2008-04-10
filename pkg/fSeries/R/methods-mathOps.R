@@ -29,11 +29,21 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
           function(e1, e2)
       {
 
-          # check if FinCenter are identical
-          if (finCenter(e1) != finCenter(e2)) {
-              finCenter(e2) <- finCenter(e1)
-              warning("FinCenter changed to ", finCenter(e2), call. = FALSE)
-          }
+          test = as.integer((e1@format == "counts") + (e2@format == "counts"))
+          switch(as.character(test),
+                 # convert series y to FinCenter of series x
+                 "0" = {
+                     if (finCenter(e1) != finCenter(e2)) {
+                         finCenter(e2) <- finCenter(e1)
+                         warning("FinCenter changed to ",
+                                 finCenter(e2), call. = FALSE)}
+                 },
+                 # if one of the two series is  signal series, the other
+                 # series is converted to a signal series
+                 "1" = {
+                     e1 <- timeSeries(e1, format = "counts");
+                     e2 <- timeSeries(e2, format = "counts")
+                 })
 
           # check if positions are identical
           if (!identical(time(e1), time(e2)))
@@ -77,6 +87,9 @@ setMethod("Ops", c("vector", "timeSeries"),
 # important for +/- timeSeries()
 setMethod("+", c("timeSeries", "missing"), function(e1, e2) e1)
 setMethod("-", c("timeSeries", "missing"), function(e1, e2) 0-e1)
+
+# ------------------------------------------------------------------------------
+
 
 # ------------------------------------------------------------------------------
 #

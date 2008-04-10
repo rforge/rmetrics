@@ -91,14 +91,17 @@ setMethod("series<-", c("timeSeries", "vector"),
 
           # FUNCTION:
 
-          zone <- finCenter(x)
-          FinCenter <- finCenter(x)
+          data <- value
+          charvec <- time(x)
+          format = x@format
+          zone <- FinCenter <- finCenter(x)
           recordIDs <- if (NROW(x) == NROW(value)) x@recordIDs else data.frame()
           title <- x@title
           documentation <- x@documentation
 
-          new("timeSeries", data = value, zone = zone, FinCenter =
-              FinCenter, recordIDs = recordIDs, title = title)
+          new("timeSeries", data = value, charvec = charvec, format =
+              format, zone = zone, FinCenter = FinCenter, recordIDs =
+              recordIDs, title = title)
 
       })
 

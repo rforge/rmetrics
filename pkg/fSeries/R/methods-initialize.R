@@ -113,7 +113,13 @@ setMethod("initialize", "timeSeries",
                       format <- whichFormat(charvec, silent = TRUE)
                   }
               }
-          }
+          } else {
+              # if format is provided but there is no charvec
+              # try to extract from data
+              if (missing(charvec) || is.null(charvec))
+                  charvec <- rownames(data)
+              }
+
 
           # Construct Time Series:
           if (format == "counts" || format == "unknown") {
