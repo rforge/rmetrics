@@ -4,7 +4,7 @@
 \alias{efficientPortfolio}
 \alias{tangencyPortfolio}
 \alias{minvariancePortfolio}
-
+\alias{maxreturnPortfolio}
 
 \title{Efficient Portfolios}
 
@@ -22,6 +22,8 @@ efficientPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 tangencyPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
+
+maxreturnPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
@@ -116,6 +118,12 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     with the minimal risk on the efficient frontier. To find the 
     minimal risk point the target risk returned by the function
     \code{efficientPortfolio} is minimized.
+    
+    
+    \bold{Maximum Return Portfolio:}
+    
+    The function \code{maxreturnPortfolio} returns the portfolio 
+    with the maximal return for a fixed target risk.
 
 }
 
