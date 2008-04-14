@@ -1,27 +1,36 @@
-\name{cor-method}
-
+\name{timeSeries-method-stats}
 
 \docType{methods}
 
 \alias{cor-methods}
 \alias{cov-methods}
+
+\alias{dcauchy-methods}
+\alias{dnorm-methods}
+\alias{dt-methods}
+
 \alias{cor,timeSeries-method}
 \alias{cov,timeSeries-method}
-
+\alias{dcauchy,timeSeries-method}
+\alias{dnorm,timeSeries-method}
+\alias{dt,timeSeries-method}
 
 \title{Time Series Correlations}
 
 
 \description{
-    
-    Functions and methods dealing with correlations between
-    'timeSeries' objects. 
+    S4 methods of stats package for \code{timeSeries} objects.
     \cr
     
     \tabular{ll}{
     \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
-    \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
-      
+    \code{cor} \tab Computes Correlations from a 'timeSeries' object. \cr
+    \code{dcauchy} \tab  ... \cr
+    \code{dnorm} \tab ... \cr
+    \code{dt} \tab ... \cr
+  }
+  
+  
 }
 
 
@@ -35,27 +44,27 @@
 
 
 \arguments{
-        
-    \item{method}{ 
-        a character string indicating which correlation coefficient (or 
-        covariance) is to be computed. One of \code{"pearson"} (default), 
-        \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
-        }
-    \item{use}{
-        an optional character string giving a method for computing
-        covariances in the presence of missing values. This must 
-        be (an abbreviation of) one of the strings \code{"all.obs"},
-        \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
-        }
-    \item{x}{
-        an univariate object of class \code{timeSeries}.
-        }
-    \item{y}{
-        NULL (default) or a \code{timeSeries} object with compatible 
-        dimensions to \code{x}. The default is equivalent to y = x (but 
-        more efficient).
-        }  
-       
+  
+  \item{method}{ 
+    a character string indicating which correlation coefficient (or 
+    covariance) is to be computed. One of \code{"pearson"} (default), 
+    \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
+  }
+  \item{use}{
+    an optional character string giving a method for computing
+    covariances in the presence of missing values. This must 
+    be (an abbreviation of) one of the strings \code{"all.obs"},
+    \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
+  }
+  \item{x}{
+    an univariate object of class \code{timeSeries}.
+  }
+  \item{y}{
+    NULL (default) or a \code{timeSeries} object with compatible 
+    dimensions to \code{x}. The default is equivalent to y = x (but 
+    more efficient).
+  }  
+  
 }
 
 

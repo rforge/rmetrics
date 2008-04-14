@@ -3,19 +3,31 @@
 
 \alias{TimeSeriesSubsettings}
 
-\alias{[,timeSeries,missing,missing,ANY-method} 
-\alias{[,timeSeries,missing,index,missing-method} 
-\alias{[,timeSeries,missing,index,logical-method} 
-\alias{[,timeSeries,index,missing,missing-method} 
-\alias{[,timeSeries,index,missing,logical-method} 
-\alias{[,timeSeries,index,index,missing-method} 
-\alias{[,timeSeries,index,index,logical-method} 
-\alias{[,timeSeries,ANY,ANY,ANY-method} 
-\alias{[,timeSeries,timeSeries,missing,missing-method} 
-\alias{[,timeSeries,timeSeries,missing,logical-method} 
-\alias{[,timeSeries,timeDate,missing,missing-method} 
-\alias{[,timeSeries,timeDate,index,missing-method} 
-\alias{[,timeSeries,timeDate,index,logical-method} 
+% \alias{[,timeSeries,missing,missing,ANY-method} 
+% \alias{[,timeSeries,missing,index,missing-method} 
+% \alias{[,timeSeries,missing,index,logical-method} 
+% \alias{[,timeSeries,index,missing,missing-method} 
+% \alias{[,timeSeries,index,missing,logical-method} 
+% \alias{[,timeSeries,index,index,missing-method} 
+% \alias{[,timeSeries,index,index,logical-method} 
+% \alias{[,timeSeries,ANY,ANY,ANY-method} 
+% \alias{[,timeSeries,timeSeries,missing,missing-method} 
+% \alias{[,timeSeries,timeSeries,missing,logical-method} 
+% \alias{[,timeSeries,timeDate,missing,missing-method} 
+% \alias{[,timeSeries,timeDate,index,missing-method} 
+% \alias{[,timeSeries,timeDate,index,logical-method} 
+
+\alias{[,timeSeries,ANY,ANY-method}
+\alias{[,timeSeries,index_timeSeries,index_timeSeries-method}
+\alias{[,timeSeries,index_timeSeries,missing-method}
+\alias{[,timeSeries,matrix,index_timeSeries-method}
+\alias{[,timeSeries,matrix,missing-method}
+\alias{[,timeSeries,missing,index_timeSeries-method}
+\alias{[,timeSeries,timeDate,index_timeSeries-method}
+\alias{[,timeSeries,timeDate,missing-method}
+\alias{[,timeSeries,timeSeries,index_timeSeries-method}
+\alias{[,timeSeries,timeSeries,missing-method}
+
 
 \alias{[<-.timeSeries}
 \alias{cut.timeSeries} 

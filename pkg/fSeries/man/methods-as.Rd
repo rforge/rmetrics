@@ -20,6 +20,7 @@
 \alias{as.matrix.timeSeries}
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
+\alias{as.logical.timeSeries}
 
 
 \description{
@@ -37,19 +38,26 @@
     \code{as.timeSeries.numeric} \tab Converts from a numeric vector, \cr 
     \code{as.timeSseries.data.frame} \tab Converts from a numeric vector, \cr 
     \code{as.timeSeries.matrix} \tab Converts from a matrix, \cr 
-    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts',
- \cr
-    \code{as.timeSeries.character} \tab Converts from a named demo file, \cr 
+    \code{as.timeSeries.ts} \tab Converts from an object of class 'ts', \cr
+    \code{as.timeSeries.character} \tab Converts from a named demo file,
+      \cr  
     \code{as.timeSeries.zoo} \tab Converts an object of class zoo. }
     
-    Functions to transform 'timeSeries' objects into other objects:
+    Functions to transform 'timeSeries' objects into other objects: 
     
     \tabular{ll}{
-    \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector, \cr
-    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric, \cr
-    \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix, \cr
-    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a data.frame, \cr 
-    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts' object. }
+    \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector,
+    \cr 
+    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric,
+    \cr 
+    \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix,
+    \cr 
+    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a 
+    data.frame, \cr  
+    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts'
+    object. \cr
+      \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'logical'
+    object. } 
   
 }
 
@@ -67,6 +75,7 @@
 \method{as.matrix}{timeSeries}(x, \dots)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
+\method{as.logical}{timeSeries}(x, \dots)
 }
 
 
