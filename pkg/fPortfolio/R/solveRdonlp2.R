@@ -100,10 +100,18 @@ solveRdonlp2 <-
     # Donlp2 Settings - Function to be optimized:
     optimize = getOptimize(spec)
     if (optimize == "minRisk") {
-        fn = function(x) { x %*% Sigma %*% x }
+        fn = function(x) { 
+            x %*% Sigma %*% x 
+        }
     } else if (optimize == "maxReturn") {
-        fn = function(x) { x %*% mu }
-    }  
+        fn = function(x) { 
+            x %*% mu 
+        }
+    } else {
+        fn = function(x) {
+            .rdonlp2Objective(x, data, spec)
+        }
+    }
     
     # minRisk - Constraints:
     #   Target Return:              mu*x = b
@@ -232,6 +240,16 @@ solveRdonlp2 <-
 
     # Return Value:
     ans
+}
+
+
+################################################################################
+
+
+.rdonlp2Objective <-
+function(x, data, spec)
+{
+    x
 }
 
 
