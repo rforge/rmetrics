@@ -61,7 +61,7 @@ efficientPortfolio <-
         portfolio = Solver(data, spec, constraints)
         setWeights(spec) = portfolio$weights
         setStatus(spec) = portfolio$status
-        Title = paste(getType(spec), "Risk Minimized Efficient Portfolio")
+        Title = "Risk Minimized Efficient Portfolio"
     }
 
     # Compose Portfolio:
@@ -211,7 +211,7 @@ maxreturnPortfolio <-
         portfolio = Solver(data, spec, constraints)
         setWeights(spec) = portfolio$weights
         setStatus(spec) = portfolio$status
-        Title = paste(getType(spec), "Return Maximized Efficient Portfolio")
+        Title = "Return Maximized Efficient Portfolio"
     }
 
     # Compose Portfolio:

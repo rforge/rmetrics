@@ -80,7 +80,7 @@ feasiblePortfolio <-
 
     # Compose Risks:
     targetRisk = c(cov, rcov, -CVaR, -VaR)
-    names(targetRisk) = c("cov", "sigma", "CVaR", "VaR")
+    names(targetRisk) = c("cov", "Sigma", "CVaR", "VaR")
 
     # Compute Risk Budgets:
     covRiskBudgets = (weights * Cov %*% weights)[,1] / cov^2
@@ -101,8 +101,8 @@ feasiblePortfolio <-
         spec = list(spec = spec),
         constraints = constraints,
         portfolio = portfolio,
-        title = paste("Feasible Portfolio"),
-        description = .description() )
+        title = "Feasible Portfolio",
+        description = description() )
 }
 
 
