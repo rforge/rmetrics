@@ -107,7 +107,7 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
 
     \bold{Frontier Plot:}\cr
     
-    The \code{frontierPlot} functions allows to plot the efficient.
+    The \code{frontierPlot} function allows to plot the efficient
     frontier. 
     
     \emph{Selecting the upper and/or lower part of the frontier:}
