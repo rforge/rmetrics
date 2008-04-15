@@ -165,7 +165,9 @@
     spec@portfolio$targetReturn = value
     spec@portfolio$weights = NULL
     spec@portfolio$targetRisk = NULL
-    spec@model$optimize = "minRisk"
+    
+    # DW:
+    # spec@model$optimize = "minRisk"
     
     # Return Value:
     spec
