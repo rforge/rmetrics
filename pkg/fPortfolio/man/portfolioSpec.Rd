@@ -22,8 +22,8 @@ portfolioSpec(
     portfolio = list(weights = NULL, targetReturn = NULL, 
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
         status = 0),
-    optim = list(solver = "solveRquadprog", trace = FALSE))
-
+    optim = list(solver = "solveRquadprog", params = list(),
+        control = list(), trace = FALSE))
 }
 
 
@@ -40,8 +40,10 @@ portfolioSpec(
         arguments for further explanation.
         }
     \item{optim}{
-        a list with two entries, a character string \code{solver} denoting 
-        the type of the solver to be used, and a logical flag, \code{trace}
+        a list with four entries, a character string \code{solver} denoting 
+        the type of the solver to be used, a \code{params} list to pass further
+        arguments to the objective function to optimize, a \code{control} list
+        for all control settings of the solver, and a logical flag, \code{trace}
         denoting if the optimization should be traced.
         }
 
