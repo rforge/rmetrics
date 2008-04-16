@@ -54,7 +54,7 @@ solveRsocp <-
     # FUNCTION:
 
     # Test Implementation for "LongOnly" MV Portfolio
-    stopifnot(constraints == "LongOnly")
+    # stopifnot(constraints == "LongOnly")
 
     # Get Statistics:
     if(!inherits(data, "fPFOLIODATA"))
@@ -90,27 +90,52 @@ solveRsocp <-
     lambda = 10
     f <- -mu - lambda * length(mu) * max(abs(mu))
 
-        # Long Only Constraints:
-    A <- rbind(
-               .SqrtMatrix(Sigma),
-               matrix(rep(0, times = nAssets), ncol = nAssets),
-               matrix(rep(0, times = nAssets^2), ncol = nAssets))
-    b <- c(
-           rep(0, nAssets),      # xCx
-           0,                    # sum(x)
-           rep(0, nAssets))      # x[i]>0
-    C <- rbind(
-               rep(0, nAssets),      # xCx
-               rep(-1, nAssets),     # sum(x)
-               diag(nAssets))        # x[i]>0
-    d <- c(
-           targetRisk,           # xCx = risk
-           +1,                   # sum(x) <= 1
-           rep(0, nAssets))      # x[i] > 0
-    N <- c(
-           nAssets,              # dim(C)
-           1,                    # Full Investment
-           rep(1, nAssets))      # Long
+    # Setting the constraints matrix and vector:
+    tmpConstraints <- .setConstraints(data = data, spec = spec,
+                                      constraints = constraints)
+
+    # NOTE : tmpConstraints[1, ] "Budget"
+    # NOTE : tmpConstraints[2, ] "Return"
+
+    C1 <- rep(0, nAssets)                                       # xCx
+    C2 <- tmpConstraints[1, -(nAssets + 1)]                     # sum(x)
+    C3 <- tmpConstraints[- c(1,2), -(nAssets + 1)]              # x[i]>0
+
+    d1 <- targetRisk                                            # xCx = risk
+    d2 <- tmpConstraints[1, (nAssets + 1)]                      # sum(x) <= 1
+    d3 <- tmpConstraints[- c(1,2), (nAssets + 1)]               # x[i] > 0
+
+    A1 <- .SqrtMatrix(Sigma)
+    A2 <- matrix(0, ncol = nAssets)
+    A3 <- matrix(0, nrow = nrow(C3), ncol = nAssets)
+
+    b1 <- rep(0, nAssets)                                       # xCx
+    b2 <- 0                                                     # sum(x)
+    b3 <- rep(0, nrow(C3))                                      # x[i]>0
+
+    N1 <- nAssets
+    N2 <- 1
+    N3 <- rep(1, nrow(C3))
+
+    # Combine constraints for socp
+    A <- rbind(A1,
+               A2,
+               A3)
+
+    b <- c(b1,      # xCx
+           b2,      # sum(x)
+           b3)      # x[i]>0
+
+    C <- rbind(C1,  # xCx
+              -C2,  # sum(x)
+               C3)  # x[i]>0
+    d <- c(d1,      # xCx = risk
+           d2,      # sum(x) <= 1
+          -d3)      # x[i] > 0
+
+    N <- c(N1,      # dim(C)
+           N2,      # Full Investment
+           N3)      # Long
 
     # Control List:
     #   abs_tol = 1e-8, rel_tol = 1e-6, target = 0,
