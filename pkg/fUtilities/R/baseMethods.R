@@ -25,41 +25,41 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-                                                
+
 ################################################################################
-# FUNCTION:                 BASIC EXTENSIONS:                                   
-#  align                     aligns time series objects by approximation        
-#  align.default             align default method                               
-#  atoms                     Extracts atoms from 'timeSeries' object           
+# FUNCTION:                 BASIC EXTENSIONS:
+#  align                     aligns time series objects by approximation
+#  align.default             align default method
+#  atoms                     Extracts atoms from 'timeSeries' object
 #  atoms.default             atoms default method
-#  attach                    attach a database to the R path                    
-#  attach.default            attach default method 
-#  colnames<-                colnames<- has become a generic function          
-#  colnames<-.default        colnames<- default method 
-#  cor                       cor has become a generic function                  
-#  cor.default               cor default method    
-#  cov                       var has become a generic function                  
-#  cov.default               var default method                          
-#  log                       log has become a generic function                  
-#  log.default               log default method 
-#  outlier                   outlier added generic function                  
-#  outlier.default           outlier default method    
-#  rownames<-                rownames<- has become a generic function          
+#  attach                    attach a database to the R path
+#  attach.default            attach default method
+#  colnames<-                colnames<- has become a generic function
+#  colnames<-.default        colnames<- default method
+#  cor                       cor has become a generic function
+#  cor.default               cor default method
+#  cov                       var has become a generic function
+#  cov.default               var default method
+#  log                       log has become a generic function
+#  log.default               log default method
+#  outlier                   outlier added generic function
+#  outlier.default           outlier default method
+#  rownames<-                rownames<- has become a generic function
 #  rownames<-.default        rownames<- default method
-#  rank                      rank has become a generic function 
-#  rank.default              rank default method                                                       
-#  sample                    sample has become a generic function               
-#  sample.default            sample default method                              
-#  sort                      sort has become a generic function                 
-#  sort.default              sort default method   
-#  stdev                     stdev added generic function                 
+#  rank                      rank has become a generic function
+#  rank.default              rank default method
+#  sample                    sample has become a generic function
+#  sample.default            sample default method
+#  sort                      sort has become a generic function
+#  sort.default              sort default method
+#  stdev                     stdev added generic function
 #  stdev.default             stdev default method
-#  termPlot                  termPlot has become a generic function                  
-#  termPlot.default          termPlot default method                              
-#  var                       var has become a generic function                  
-#  var.default               var default method 
-#  volatility                volatility has become a generic function                  
-#  volatility.default        volatility default method                                                                                                                                                                                                         
+#  termPlot                  termPlot has become a generic function
+#  termPlot.default          termPlot default method
+#  var                       var has become a generic function
+#  var.default               var default method
+#  volatility                volatility has become a generic function
+#  volatility.default        volatility default method
 ################################################################################
 
 
@@ -69,9 +69,9 @@
 # ------------------------------------------------------------------------------
 
 
-align <- 
+align <-
     function(x, y, xout, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -84,10 +84,10 @@ align <-
 # ------------------------------------------------------------------------------
 
 
-align.default <- 
+align.default <-
     function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
     ties = mean, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -104,9 +104,9 @@ align.default <-
 # ------------------------------------------------------------------------------
 
 
-atoms <- 
+atoms <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm WUertz
 
     # FUNCTION:
@@ -119,9 +119,9 @@ atoms <-
 # ------------------------------------------------------------------------------
 
 
-atoms.default <- 
+atoms.default <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm WUertz
 
     # FUNCTION:
@@ -134,10 +134,10 @@ atoms.default <-
 # ------------------------------------------------------------------------------
 
 
-attach <- 
+attach <-
     function(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -158,7 +158,7 @@ attach.default <- base::attach
 
 "colnames<-" =
     function(x, value)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -177,10 +177,10 @@ attach.default <- base::attach
 # ------------------------------------------------------------------------------
 
 
-cor <- 
+cor <-
     function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -202,7 +202,7 @@ cor.default <- stats::cor
 cov <-
     function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -221,7 +221,7 @@ cov.default <- stats::cov
 # ------------------------------------------------------------------------------
 
 
-log <- 
+log <-
     function(x, base = exp(1))
 {   # A function implemented by Diethelm Wuertz
 
@@ -235,8 +235,8 @@ log <-
 # ------------------------------------------------------------------------------
 
 
-log.default <-  
-    function(x, base = exp(1)) 
+log.default <-
+    function(x, base = exp(1))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -250,25 +250,25 @@ log.default <-
 # ------------------------------------------------------------------------------
 
 
-rank <- 
-    function(x, na.last = TRUE, 
-    ties.method = c("average", "first", "random", "max", "min")) 
-{   
+rank <-
+    function(x, na.last = TRUE,
+    ties.method = c("average", "first", "random", "max", "min"))
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # Return Value:
-    UseMethod("log")
+    UseMethod("rank")
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rank.default <-  
-    function(x, na.last = TRUE, 
-    ties.method = c("average", "first", "random", "max", "min")) 
+rank.default <-
+    function(x, na.last = TRUE,
+    ties.method = c("average", "first", "random", "max", "min"))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -296,11 +296,11 @@ sample <-
 # ------------------------------------------------------------------------------
 
 
-sample.default <-  
+sample.default <-
     function (x, size, replace = FALSE, prob = NULL, ...)
 {
     # FUNCTION:
-    
+
     base::sample(x, size, replace = replace, prob = prob)
 }
 
@@ -320,7 +320,7 @@ if(getRversion() < "2.4.0") {
             stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
         UseMethod("sort")
     }
-    
+
     sort.default <- function(x, decreasing = FALSE, ...) {
         if (is.object(x))
         x[order(x, decreasing = decreasing)]
@@ -333,9 +333,9 @@ if(getRversion() < "2.4.0") {
 # ------------------------------------------------------------------------------
 
 
-outlier <- 
+outlier <-
     function(x, sd = 5, complement = TRUE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -347,9 +347,9 @@ outlier <-
 # ------------------------------------------------------------------------------
 
 
-outlier.default <- 
+outlier.default <-
     function(x, sd = 5, complement = TRUE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -363,7 +363,7 @@ outlier.default <-
     #       be detected.
     #   complement - a logical flag, should the outlier series
     #       or its complements be returned.
-    
+
     # Note:
     #   This function is thought to find splits in financial
     #   price or index data. If a price or index is splitted we
@@ -411,11 +411,11 @@ outlier.default <-
 
 stdev.default <-
     function(x, na.rm = FALSE)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Return Value:
     stats::sd(x = x, na.rm = na.rm)
 }
@@ -431,13 +431,13 @@ stdev <- stats::sd
 
 
 termPlot <-
-    function(model, ...) 
+    function(model, ...)
 {
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
-    # Return Value:   
+    # Return Value:
     UseMethod("termPlot")
 }
 
@@ -460,9 +460,9 @@ function(model, ...)
 # ------------------------------------------------------------------------------
 
 
-var <- 
+var <-
     function(x, y = NULL, na.rm = FALSE, use)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -481,9 +481,9 @@ var.default <- stats::var
 # ------------------------------------------------------------------------------
 
 
-volatility <- 
+volatility <-
     function(object, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -496,9 +496,9 @@ volatility <-
 # ------------------------------------------------------------------------------
 
 
-volatility.default <- 
+volatility.default <-
     function(object, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
