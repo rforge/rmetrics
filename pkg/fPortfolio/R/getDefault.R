@@ -35,6 +35,7 @@
 #  getNAssets 
 #  getNames
 #  getNFrontierPoints
+#  getObjective
 #  getOptim
 #  getOptimize
 #  getPortfolio
@@ -174,6 +175,17 @@ getNFrontierPoints <-
     UseMethod("getNFrontierPoints")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+getObjective <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getObjective")
+}
 
 # ------------------------------------------------------------------------------
 

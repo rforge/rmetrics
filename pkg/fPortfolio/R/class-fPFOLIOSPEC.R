@@ -30,12 +30,12 @@
 
 
 setClass("fPFOLIOSPEC",
-         representation(
-                        model = "list",
-                        portfolio = "list",
-                        optim = "list",
-                        messages = "list")
-         )
+    representation(
+        model = "list",
+        portfolio = "list",
+        optim = "list",
+        messages = "list")
+    )
 
 
 ################################################################################

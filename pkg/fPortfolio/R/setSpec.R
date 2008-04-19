@@ -39,6 +39,7 @@
 #  setStatus<-                   Sets portfolio status information
 # FUNCTION:                     OPTIMIZATION SLOT:
 #  setSolver<-                   Sets name of desired solver
+#  setObjective<-                Sets objective function name
 #  setTrace<-                    Sets solver's trace flag
 ################################################################################
 
@@ -339,6 +340,27 @@
       
     # Set Solver:
     spec@optim$solver = value
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setObjective<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
+
+    # Description:
+    #   Sets the solver value for a portfolio structure
+    
+    # FUNCTION:
+      
+    # Set Solver:
+    spec@optim$objective = value
     
     # Return Value:
     spec

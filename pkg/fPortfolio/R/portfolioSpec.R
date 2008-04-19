@@ -49,6 +49,7 @@ portfolioSpec <-
              solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
                                             #      "solveRlpSolve", 
                                             #      "solveRsocp"
+             objective = NULL,
              params = list(),
              control = list(),
              trace = FALSE)

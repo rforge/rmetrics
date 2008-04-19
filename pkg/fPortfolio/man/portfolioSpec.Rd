@@ -22,8 +22,8 @@ portfolioSpec(
     portfolio = list(weights = NULL, targetReturn = NULL, 
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
         status = 0),
-    optim = list(solver = "solveRquadprog", params = list(),
-        control = list(), trace = FALSE))
+    optim = list(solver = "solveRquadprog", objective = NULL,
+        params = list(), control = list(), trace = FALSE))
 }
 
 
@@ -88,7 +88,10 @@ portfolioSpec(
         nFrontierPoints = 50,
         status = NA),
     optim = list(
-        solver = NULL,         
+        solver = "solveRquadprog",    
+        objective = NULL,  
+        parames = list(),
+        control = list(),   
         trace = FALSE)
     }
         

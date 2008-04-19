@@ -18,6 +18,7 @@
 \alias{setStatus<-}
 
 \alias{setSolver<-}
+\alias{setObjective<-}
 \alias{setTrace<-}
 
 
@@ -46,6 +47,7 @@
     \code{setStatus} \tab Sets status value, \cr
     
     \code{setSolver} \tab Sets the type of solver to be used, \cr
+    \code{setObjective} \tab Sets objective function name to be used, \cr
     \code{setTrace} \tab Sets the logical trace flag. }
     
 }
@@ -67,6 +69,7 @@ setNFrontierPoints(spec) <- value
 setStatus(spec) <- value
 
 setSolver(spec) <- value
+setObjective(spec) <- value
 setTrace(spec) <- value
 }
 
@@ -121,6 +124,7 @@ setTrace(spec) <- value
     \cr
     
     \code{setSolver}\cr
+    \code{setObjective}\cr
     \code{setTrace}\cr
     \cr
     \emph{Optim Settings:} just modifies the solver setting, i.e. the type 

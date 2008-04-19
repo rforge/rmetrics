@@ -13,6 +13,7 @@
 \alias{getNames}
 \alias{getNAssets}
 \alias{getNFrontierPoints}
+\alias{getObjective}
 \alias{getOptim}
 \alias{getOptimize}
 \alias{getPortfolio}
@@ -61,6 +62,7 @@ getMu(object)
 getNames(object)
 getNAssets(object)
 getNFrontierPoints(object)
+getObjective(object)
 getOptim(object)
 getOptimize(object)
 getPortfolio(object)

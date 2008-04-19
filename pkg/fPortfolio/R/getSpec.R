@@ -43,6 +43,7 @@
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getOptim                       Extract optim slot
 #   getSolver                     Extracts solver from specification
+#   getObjective                  Extracs name of objective function
 #   getTrace                      Extracts solver's trace flag
 ################################################################################
 
@@ -100,6 +101,7 @@ getPortfolio.fPFOLIOSPEC <- function(object) object@portfolio
 
 getOptim.fPFOLIOSPEC <- function(object) object@optim
   getSolver.fPFOLIOSPEC <- function(object) object@optim$solver 
+  getObjective.fPFOLIOSPEC <- function(object) object@optim$objective 
   getTrace.fPFOLIOSPEC <- function(object) object@optim$trace
 
 

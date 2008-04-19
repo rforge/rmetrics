@@ -20,7 +20,8 @@
 \alias{getStatus.fPFOLIOSPEC}
 
 \alias{getOptim.fPFOLIOSPEC}
-\alias{getSolver.fPFOLIOSPEC}         
+\alias{getSolver.fPFOLIOSPEC}   
+\alias{getObjective.fPFOLIOSPEC}      
 \alias{getTrace.fPFOLIOSPEC}           
 
 
@@ -50,6 +51,7 @@
     \code{getNFrontierPoints} \tab Extracts number of frontier points, \cr 
     \code{getStatus} \tab Extracts the status of optimization, \cr 
     \code{getSolver} \tab Extracts solver from specification, \cr
+    \code{getobjective} \tab Extracts name of objective function, \cr
     \code{getTrace} \tab Extracts solver's trace flag. }
     
 }
@@ -74,6 +76,7 @@
 
 \method{getOptim}{fPFOLIOSPEC}(object)
 \method{getSolver}{fPFOLIOSPEC}(object)
+\method{getObjective}{fPFOLIOSPEC}(object)
 \method{getTrace}{fPFOLIOSPEC}(object)
 }
 

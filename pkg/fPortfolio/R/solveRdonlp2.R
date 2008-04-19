@@ -108,7 +108,7 @@ solveRdonlp2 <-
             x %*% mu 
         }
     } else if (optimize == "objRisk") {
-        fn = match.fun("objRisk")
+        fn = match.fun(getObjective(spec))
     } else {
         stop("Check spec@model$optimize Slot!")
     }
