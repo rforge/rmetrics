@@ -43,6 +43,13 @@ portfolioFrontier <-
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
     
+    # Example:
+    #   data = as.timeSeries(data(smallcap.ts))
+    #   data = data[, c("BKE", "GG", "GYMB", "KRON")] 
+    #   spec = portfolioSpec(); setNFrontierPoints(spec) = 20
+    #   portfolioFrontier(data, spec)
+    #   setSolver(spec) = "solveRdonlp2"; portfolioFrontier(data, spec)
+    
     # FUNCTION:
     
     # Create Data Object:
@@ -51,10 +58,15 @@ portfolioFrontier <-
     # Optimize portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
     mu = getMu(data)
-    eps = 1e-8
-    targetReturns <- 
-        seq(min(mu)*(1+eps), max(mu)*(1-eps), length = nFrontierPoints)
-    weights = targetReturn = targetRisk = covRiskBudgets = status = NULL
+    eps = 1e-6
+    minMu = min(mu)*(1+eps)
+    maxMu = max(mu)*(1-eps)
+    targetReturns <- seq(minMu, maxMu, length = nFrontierPoints)
+    
+    # OLD Version:
+    #   start from the lowest return values and moves up to the
+    #   highest value ...
+    if (FALSE) { 
     for (i in 1:nFrontierPoints) {
         setTargetReturn(spec) = targetReturns[i]
         portfolio = efficientPortfolio(data, spec, constraints)
@@ -65,6 +77,64 @@ portfolioFrontier <-
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
         }
     }
+    }
+    
+    # NEW Version:
+    #   The Idea is to start from the minvariance portfolio and to explore
+    #   the efficient frontier and the minimum variance locus starting from
+    #   this point ...
+    #   Then we stop when the status flag fails ...
+    
+    # Compute minvariancePortfolio:
+    mvPortfolio = minvariancePortfolio(data, spec, constraints)
+    mvReturn = getTargetReturn(mvPortfolio)[, "mean"]
+    minIndex = which.min(abs(mvReturn-targetReturns))
+    
+    # Upper Frontier Part:
+    Status = 0
+    IDX = minIndex
+    weights = targetReturn = targetRisk = covRiskBudgets = NULL
+    while (Status == 0 & IDX <= nFrontierPoints) {
+        setTargetReturn(spec) = targetReturns[IDX]
+        portfolio = efficientPortfolio(data, spec, constraints)
+        Status = getStatus(portfolio)
+        if (Status == 0) {
+            weights = rbind(weights, getWeights(portfolio))
+            targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
+            targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
+            covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
+        }
+        IDX = IDX + 1
+    }
+    
+    # Lower Min Variance Locus:
+    if (minIndex > 1) {
+        weights2 = targetReturn2 = targetRisk2 = covRiskBudgets2 = NULL
+        Status = 0
+        IDX = minIndex - 1
+        while (Status == 0 & IDX > 0) {
+            setTargetReturn(spec) = targetReturns[IDX]
+            portfolio = efficientPortfolio(data, spec, constraints)
+            Status = getStatus(portfolio)
+            if (Status == 0) {
+                weights2 = 
+                    rbind(getWeights(portfolio), weights2)
+                targetReturn2 = 
+                    rbind(getTargetReturn(portfolio), targetReturn2)
+                targetRisk2 = 
+                    rbind(getTargetRisk(portfolio), targetRisk2)
+                covRiskBudgets2 = 
+                    rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
+            }
+            IDX = IDX - 1
+        }
+        weights = rbind(weights2, weights)
+        targetReturn = rbind(targetReturn2, targetReturn)
+        targetRisk = rbind(targetRisk2, targetRisk)
+        covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
+    }    
+    
+    # Reset Target Return:  
     setTargetReturn(spec) <- NULL
   
     # Compose Frontier:

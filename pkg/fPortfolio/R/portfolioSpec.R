@@ -31,25 +31,28 @@
 
 portfolioSpec <-
     function(
-             model = list(
-             type = "MV", # Alternatives: "LPM", "CVaR"
-             optimize = "minRisk", # Alternatives: "maxReturn"
-             estimator = "covEstimator", # Alt: "shrinkEstimator", "lpmEstimator"
+        model = list(
+             type = "MV",                   # Alt: "LPM", "CVaR"
+             optimize = "minRisk",          # Alt: "maxReturn"
+             estimator = "covEstimator",    # Alt: "shrinkEstimator", 
+                                            #      "lpmEstimator"
              tailRisk = list(),
              params = list(alpha = 0.05, a = 1)),
-             portfolio = list(
+        portfolio = list(
              weights = NULL,
              targetReturn = NULL,
              targetRisk = NULL,
              riskFreeRate = 0,
              nFrontierPoints = 50,
              status = 0),
-             optim = list(
-             solver = "solveRquadprog",
-             # Alt: "solveRdonlp2" "solveRlpSolve", "solveRsocp"
+        optim = list(
+             solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
+                                            #      "solveRlpSolve", 
+                                            #      "solveRsocp"
              params = list(),
              control = list(),
-             trace = FALSE))
+             trace = FALSE)
+        )
 {
     # A function implemented by Rmetrics
 
