@@ -107,10 +107,10 @@ solveRdonlp2 <-
         fn = function(x) { 
             x %*% mu 
         }
+    } else if (optimize == "objRisk") {
+        fn = match.fun("objRisk")
     } else {
-        fn = function(x) {
-            .rdonlp2Objective(x, data, spec)
-        }
+        stop("Check spec@model$optimize Slot!")
     }
     
     # minRisk - Constraints:
@@ -240,16 +240,6 @@ solveRdonlp2 <-
 
     # Return Value:
     ans
-}
-
-
-################################################################################
-
-
-.rdonlp2Objective <-
-function(x, data, spec)
-{
-    x
 }
 
 
