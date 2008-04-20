@@ -99,16 +99,18 @@ solveRlpSolve <-
         names(targetReturn) <- spec@model$estimator[1]
         weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
         weights = c(weights, 1- weights)
+        CVaR = -.cvarRisk(Data, weights, targetAlpha)
         ans = list(
             weights = weights,
             VaR = .varRisk(Data, weights, targetAlpha),
             solution = .varRisk(Data, weights, targetAlpha),
-            CVaR = -.cvarRisk(Data, weights, targetAlpha),
+            CVaR = CVaR,
             objval = .cvarRisk(Data, weights, targetAlpha),
             ierr = 0,
             status = 0,
             solver = "twoAssetsCVaR",
-            targetAlpha = targetAlpha)
+            targetAlpha = targetAlpha,
+            objective = CVaR)
     } else {
         # Compose objective function:
         Names = c("VaR", paste("e", 1:m, sep = ""), colNames)
@@ -179,6 +181,7 @@ solveRlpSolve <-
         ans$ierr = ans$status
         ans$solver = "lpSolve"
         ans$targetAlpha = targetAlpha
+        ans$objective = -ans$objval
     }
 
     # Return Value:
