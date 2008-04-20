@@ -238,24 +238,13 @@ frontierSlider(object, control = list(), \dots)
 
 
 \examples{
-## minvariancePortfolio -
-   # Load Data and Convert to timeSeries Object:
-   Data = as.timeSeries(data(smallcap.ts))
-   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
-   # Set Default Specifications:
-   Spec = portfolioSpec()
-   Spec
-   # Allow for unlimited Short Selling:
-   Constraints = "Short"
-   # Compute Short Selling Minimum Variance Portfolio
-   minvariancePortfolio(Data, Spec, Constraints)
+## Load Data and Convert to timeSeries Object:
+   data = as.timeSeries(data(smallcap.ts))
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(data)
     
 ## portfolioFrontier -
-   # Modify Constraints - Now Long Only Constraints:
-   Constraint = c("minW[1:nAssets]=0")
-   # Calculation of the Efficient Frontier
-   frontier = portfolioFrontier(Data, Spec, Constraint)
+   frontier = portfolioFrontier(data)
    print(frontier)
     
 ## frontierSlider -
