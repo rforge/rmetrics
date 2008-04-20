@@ -33,8 +33,6 @@
 test.solveRshortExact.MV.Short.MinRisk <- 
     function()
 { 
-    # Given Target Return Minimize Risk
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -53,6 +51,116 @@ test.solveRshortExact.MV.Short.MinRisk <-
  
     # Optimization:
     portfolio = solveRshortExact(data, spec, constraints)
+    print(portfolio)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.feasiblePortfolio.MV.Short <- 
+    function()
+{ 
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    spec = portfolioSpec()
+    setWeights(spec) = rep(1/4, 4)
+    setSolver(spec) = "solveRshortExact"
+    print(spec)
+    
+    # Default Constraints:
+    constraints = "Short"
+    print(constraints)
+ 
+    # Optimization:
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    print(portfolio)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.tangencyPortfolio.MV.Short <- 
+    function()
+{  
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
+    print(spec)
+    
+    # Default Constraints:
+    constraints = "Short"
+    print(constraints)
+ 
+    # Optimization:
+    portfolio = tangencyPortfolio(data, spec, constraints)
+    print(portfolio)
+    
+    
+    # TWO ASSETS TEST:
+    
+    
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
+    print(spec)
+    
+    # Default Constraints:
+    constraints = "Short"
+    print(constraints)
+ 
+    # Optimization:
+    portfolio = tangencyPortfolio(data, spec, constraints)
+    print(portfolio)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.minvariancePortfolio.MV.Short <- 
+    function()
+{    
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    print(head(data))
+    
+    # Specification:
+    spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
+    print(spec)
+    
+    # Default Constraints:
+    constraints = "Short"
+    print(constraints)
+ 
+    # Optimization:
+    portfolio = minvariancePortfolio(data, spec, constraints)
     print(portfolio)
     
     # Return Value:
