@@ -2,7 +2,9 @@
 
 
 \alias{efficientPortfolio}
+\alias{maxratioPortfolio}
 \alias{tangencyPortfolio}
+\alias{minriskPortfolio}
 \alias{minvariancePortfolio}
 \alias{maxreturnPortfolio}
 
@@ -19,8 +21,10 @@
 \usage{
 efficientPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
+maxratioPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 tangencyPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
+minriskPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 maxreturnPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
