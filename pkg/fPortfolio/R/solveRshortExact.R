@@ -94,10 +94,15 @@ solveRshortExact <-
         # Compute Target Risk:
         targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
         
+        # Objective:
+        # DW: added 2008-04-20
+        objective = targetRisk
+        
         # trace:
         if (trace) {
             cat("\nTarget Return:\n ", targetReturn, "\n")    
             cat("\nTarget Risk:\n ", targetRisk, "\n") 
+            cat("\nobjective:\n ", objective, "\n") 
         }   
     
     } else if (optimize == "target return")  {
@@ -113,10 +118,15 @@ solveRshortExact <-
         cq = a*C0^2 - d*targetRisk^2
         targetReturn = ( -bq + sqrt(bq^2 - 4*aq*cq) ) / (2*aq)
         
+        # Objective:
+        # DW: added 2008-04-20
+        objective = targetReturn
+        
         # trace:
         if (trace) {
             cat("\nTarget Return:\n ", targetReturn, "\n")    
             cat("\nTarget Risk:\n ", targetRisk, "\n") 
+            cat("\nobjective:\n ", objective, "\n") 
         }   
     }
     
@@ -130,11 +140,12 @@ solveRshortExact <-
     # Prepare Output List:
     ans = list(
         solver = "solveRshortExact",
+        optim = NA,
         weights = weights, 
         targetReturn = targetReturn, 
         targetRisk = targetRisk,
         status = 0, 
-        objective = NA)
+        objective = objective)
 
     # Return Value:
     ans
