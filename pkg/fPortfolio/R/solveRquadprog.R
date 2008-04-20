@@ -111,19 +111,24 @@ solveRquadprog <-
             weights = weights, 
             targetReturn = targetReturn,
             targetRisk = NA,
-            objective = NA,
+            objective = weights %*% getSigma(data) %*% weights,
+            # Take care of Value ...
+            value = NA, 
             status = 0)
     } else { 
         # Dmat, dvec, Amat, bvec, meq = 0
         # Setting the constraints matrix and vector:   
-        tmpConstraints = .setConstraints(data, spec, constraints)
-        tmpConstraints[1, ] = tmpConstraints[1, ]
-        tmpConstraints = tmpConstraints[c(2,1,3:NROW(tmpConstraints)), ]
+        tmpConstraints = .setConstraints(
+            data = data, spec = spec, constraints = constraints)
+        meq = 2
+        ## DW dont remove
+        ## tmpConstraints[1, ] = tmpConstraints[1, ]
+        ## tmpConstraints = tmpConstraints[c(2,1,3:NROW(tmpConstraints)), ]
+        ## meq = 1
         Dmat = Sigma
         dvec = rep(0, nAssets)
         Amat = t(tmpConstraints[, -(nAssets+1)])
         bvec = t(tmpConstraints[, (nAssets+1)])
-        meq = 1
         res1 = .rquadprog(Dmat, dvec, Amat, bvec, meq)   
         weights = res1$sol 
         for(i in 1:nAssets) {
@@ -142,6 +147,8 @@ solveRquadprog <-
             weights = weights, 
             targetReturn = targetReturn,
             targetRisk = NA,
+            # Take care of Value ...
+            value = res1$crval,
             status = res1$ierr, 
             objective = res1$crval)
     }

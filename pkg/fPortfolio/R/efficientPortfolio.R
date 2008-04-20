@@ -47,6 +47,12 @@ efficientPortfolio <-
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
     
+    # Example:
+    #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
+    #   spec = portfolioSpec(); setTargetReturn(spec) <- mean(colMeans(data))
+    #   efficientPortfolio(data, spec)
+    
+    
     # FUNCTION:
 
     # Check Arguments:
@@ -92,6 +98,11 @@ maxratioPortfolio <-
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
     
+    # Example:
+    #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
+    #   spec = portfolioSpec()
+    #   maxratioPortfolio(data, spec)
+    
     # FUNCTION:
 
     # Check Arguments:
@@ -107,7 +118,7 @@ maxratioPortfolio <-
         ans = Solver(data, spec, constraints)
         ratio = (x - getRiskFreeRate(spec)) / ans$objective
         attr(ratio, "weights") <- ans$weights
-        attr(ratio, "status") <- ans$weights
+        attr(ratio, "status") <- ans$status
         return(ratio)
     }
 
@@ -126,7 +137,7 @@ maxratioPortfolio <-
     # Compose Portfolio:
     portfolio = feasiblePortfolio(data, spec, constraints)
     portfolio@call = match.call()
-    portfolio@title = "Tangency Portfolio"
+    portfolio@title = "Max Return/Risk Ratio Portfolio"
 
     # Return Value:
     portfolio
@@ -139,7 +150,12 @@ maxratioPortfolio <-
 tangencyPortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
-    maxratioPortfolio(data, spec, constraints)
+    # Portfolio:
+    portfolio = maxratioPortfolio(data, spec, constraints)
+    portfolio@title = "Tangency Portfolio"
+    
+    # Return Value:
+    portfolio
 }
 
 
@@ -161,7 +177,7 @@ minriskPortfolio <-
     
     # Example:
     #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
-    #   minvariancePortfolio(data)
+    #   minriskPortfolio(data)
     
     # FUNCTION:
 
@@ -190,7 +206,7 @@ minriskPortfolio <-
     # Compose Portfolio:
     portfolio = feasiblePortfolio(data, spec, constraints)
     portfolio@call = match.call()
-    portfolio@title = "Minimum Variance Portfolio"
+    portfolio@title = "Minimum Risk Portfolio"
 
     # Return Value:
     portfolio
@@ -203,7 +219,12 @@ minriskPortfolio <-
 minvariancePortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
-    minriskPortfolio(data, spec, constraints)
+    # Portfolio:
+    portfolio = minriskPortfolio(data, spec, constraints)
+    portfolio@title = "Minimum Variance Portfolio"
+    
+    # Return Value:
+    portfolio
 }
 
 
