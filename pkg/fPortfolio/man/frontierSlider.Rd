@@ -250,10 +250,6 @@ frontierSlider(object, control = list(), \dots)
 ## frontierSlider -
    # Try Frontier Slider:
    # frontierSlider(frontier)
-
-## weightsSlider -
-   # Try Weights Slider:
-   # weightsSlider(frontier)
 }
 
 
