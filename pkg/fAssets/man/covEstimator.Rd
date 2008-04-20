@@ -11,12 +11,12 @@
 \alias{nnveEstimator}
 
 
-\title{Mean and Covariance Estimators}
+\title{Covariance Estimators}
 
 
 \description{
   
-    Functions to estimate the mean and covariance of
+    Functions to estimate the sample mean and covariance of
     rectangular objects.
     
 }

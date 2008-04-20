@@ -16,9 +16,8 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,7 +27,7 @@
 
 
 ################################################################################
-# FUNCTION:                 MEAN-COVARIANCE ESTIMATION:
+# FUNCTION:                 COVARIANCE ESTIMATION:
 #  covEstimator              uses standard covariance estimation
 #  mveEstimator              uses "cov.mve" from [MASS]
 #  mcdEstimator              uses "cov.mcd" from [MASS]
@@ -77,9 +76,8 @@ covMcdEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-    estimate = robustbase::covMcd(x.mat, alpha = 1/2, ...)
-    mu = estimate$center
-    Sigma = estimate$cov
+    mu = colMeans(x.mat)
+    Sigma = robustbase::covMcd(x.mat, alpha = 1/2, ...)$cov
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -102,9 +100,8 @@ covOGKEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-    estimate = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
-    mu = estimate$center
-    Sigma = estimate$cov  
+    mu = colMeans(x.mat)
+    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov  
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -127,9 +124,8 @@ mveEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate: {
-    estimate = MASS::cov.rob(x = x.mat, method = "mve")
-    mu = estimate$center
-    Sigma = estimate$cov
+    mu = colMeans(x.mat)
+    Sigma = MASS::cov.rob(x = x.mat, method = "mve")$cov
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -152,9 +148,8 @@ mcdEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-    ans = MASS::cov.rob(x = x.mat, method = "mcd") 
-    mu = ans$center
-    Sigma = ans$cov
+    mu = colMeans(x.mat)
+    Sigma = MASS::cov.rob(x = x.mat, method = "mcd")$cov
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -177,9 +172,8 @@ shrinkEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-    estimate = .cov.shrink(x = x.mat, ...)
     mu = colMeans(x.mat)
-    Sigma = estimate
+    Sigma = .cov.shrink(x = x.mat, ...)
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -202,9 +196,8 @@ baggedEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-    estimate = .cov.bagged(x = x.mat, R = 100, ...)
     mu = colMeans(x.mat)
-    Sigma = estimate 
+    Sigma = .cov.bagged(x = x.mat, R = 100, ...) 
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
@@ -227,9 +220,8 @@ nnveEstimator <-
     x.mat = as.matrix(x)
     
     # Estimate:
-        estimate = .cov.nnve(datamat = x.mat, ...)
     mu = colMeans(x.mat)
-    Sigma = estimate$cov 
+    Sigma = .cov.nnve(datamat = x.mat, ...)$cov 
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
