@@ -144,24 +144,30 @@ solveRsocp <-
 
     # Optimize:
     fit <- rsocp(f, A, b, C, d, N, control =
-                 list(
-                      abs.tol = 1e-12,
-                      rel.tol = 1e-12,
-                      target = 0,
-                      max.iter = 1000,
-                      Nu = 10,
-                      out.mode = 0,
-                      BigM.K = 2,
-                      BigM.iter = 5
-                      ))
+        list(
+            abs.tol = 1e-12,
+            rel.tol = 1e-12,
+            target = 0,
+            max.iter = 1000,
+            Nu = 10,
+            out.mode = 0,
+            BigM.K = 2,
+            BigM.iter = 5
+    ))
 
     # Prepare Output List:
-    ans <- list(fit = fit,
-                # YC: status slot required by efficientPortfolio
-                status = as.integer(fit$convergence),
-                weights = fit$x,
-                solver = "socp")
-    #}
+    #   YC: status slot required by efficientPortfolio
+    #   DW: solver = "socp" replaced
+    ans <- list(
+        # Obligatory Entries ...
+        solver = "solveRsocp",
+        weights = fit$x,
+        status = as.integer(fit$convergence),
+        targetReturn = NA,
+        targetRisk = targetRisk * Scale,
+        objective = NA,
+        # Optional entries ...
+        fit = fit)
 
     # Return Value:
     ans

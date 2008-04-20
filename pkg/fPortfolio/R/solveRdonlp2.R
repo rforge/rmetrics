@@ -237,7 +237,8 @@ solveRdonlp2 <-
     # Target Return and Risk:
     ans$targetReturn = targetReturn
     ans$targetRisk = sqrt((ans$weights %*% Sigma %*% ans$weights)[[1]])
-
+    ans$objective = ans$fx
+    
     # Return Value:
     ans
 }

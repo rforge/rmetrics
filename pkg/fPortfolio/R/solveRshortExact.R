@@ -126,14 +126,15 @@ solveRshortExact <-
     if (trace) {
         cat("\nWeights:\n", weights, "\n\n")    
     }   
-        
-    
+            
     # Prepare Output List:
     ans = list(
+        solver = "solveRshortExact",
         weights = weights, 
-        status = 0, 
         targetReturn = targetReturn, 
-        targetRisk = targetRisk)
+        targetRisk = targetRisk,
+        status = 0, 
+        objective = NA)
 
     # Return Value:
     ans
