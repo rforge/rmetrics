@@ -26,7 +26,9 @@
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
 #  efficientPortfolio            Returns a frontier portfolio
+#  maxratioPortfolio             Returns the max return/risk ratio portfolio
 #  tangencyPortfolio             Returns the tangency portfolio
+#  minriskPortfolio              Returns the minimum risk portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
 #  maxreturnPortfolio            Returns the maximum return portfolio
 ################################################################################
@@ -44,7 +46,7 @@ efficientPortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-
+    
     # FUNCTION:
 
     # Check Arguments:
@@ -77,7 +79,7 @@ efficientPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-tangencyPortfolio <-
+maxratioPortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Diethelm Wuertz
@@ -89,7 +91,7 @@ tangencyPortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-
+    
     # FUNCTION:
 
     # Check Arguments:
@@ -97,15 +99,16 @@ tangencyPortfolio <-
     if (is.null(constraints)) constraints = "LongOnly"
 
     # Compute Sharpe ratio to be minimized:
-    sharpeRatio = function(x, data, spec, constraints)
+    ratioFun = function(x, data, spec, constraints)
     {
         # x is the target return ...
         setTargetReturn(spec) = x
-        ans = efficientPortfolio(data, spec, constraints)
-        sharpeRatio = (x - getRiskFreeRate(spec)) / getTargetRisk(ans)[, "cov"]
-        attr(sharpeRatio, "weights") <- getWeights(ans)
-        attr(sharpeRatio, "status") <- getStatus(ans)
-        return(sharpeRatio)
+        Solver = match.fun(getSolver(spec))
+        ans = Solver(data, spec, constraints)
+        ratio = (x - getRiskFreeRate(spec)) / ans$objective
+        attr(ratio, "weights") <- ans$weights
+        attr(ratio, "status") <- ans$weights
+        return(ratio)
     }
 
     # Start Solution - Equal Weights Portfolio:
@@ -115,7 +118,7 @@ tangencyPortfolio <-
         getTargetReturn(feasiblePortfolio(data, spec, constraints))
 
     # Minimize Sharp Ratio:
-    portfolio = optimize(sharpeRatio, interval = range(getMu(data)),
+    portfolio = optimize(ratioFun, interval = range(getMu(data)),
         maximum = TRUE, data = data, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
@@ -133,7 +136,17 @@ tangencyPortfolio <-
 # ------------------------------------------------------------------------------
 
 
-minvariancePortfolio <-
+tangencyPortfolio <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
+{
+    maxratioPortfolio(data, spec, constraints)
+}
+
+
+################################################################################
+
+
+minriskPortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Diethelm Wuertz
@@ -145,7 +158,11 @@ minvariancePortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-
+    
+    # Example:
+    #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
+    #   minvariancePortfolio(data)
+    
     # FUNCTION:
 
     # Check Arguments:
@@ -154,17 +171,18 @@ minvariancePortfolio <-
     if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
 
     # Compute target risk to be minimized:
-    targetRisk = function(x, data, spec, constraints) {
+    targetRiskFun = function(x, data, spec, constraints) {
         # x is the target return ...
         setTargetReturn(spec) = x
-        ans = efficientPortfolio(data, spec, constraints)
-        targetRisk = getTargetRisk(ans)[, "cov"]
-        attr(targetRisk, "weights") <- getWeights(ans)
-        attr(targetRisk, "status") <- getStatus(ans)
+        Solver = match.fun(getSolver(spec))
+        ans = Solver(data, spec, constraints)
+        targetRisk = ans$objective
+        attr(targetRisk, "weights") <- ans$weights
+        attr(targetRisk, "status") <- ans$status
         return(targetRisk) }
 
     # Minimize target risk:
-    portfolio = optimize(targetRisk, interval = range(getMu(data)),
+    portfolio = optimize(targetRiskFun, interval = range(getMu(data)),
         data = data, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
@@ -176,6 +194,16 @@ minvariancePortfolio <-
 
     # Return Value:
     portfolio
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+minvariancePortfolio <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
+{
+    minriskPortfolio(data, spec, constraints)
 }
 
 
