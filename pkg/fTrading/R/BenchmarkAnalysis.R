@@ -96,6 +96,13 @@ function(x, r = 0, scale = sqrt(250))
 
     # Notes:
     #   A copy from A. Traplettis "tseries" package
+    #
+    # YC 2008-04-14 : changed to Sharpe's 1994 revision
+    # the risk free rate changes with time.
+    # from
+    #     return(scale * (mean(y)-r)/sd(y))
+    # to
+    #     return(scale * mean(y-r)/sd(y))
 
     # FUNCTION:
 
@@ -112,8 +119,8 @@ function(x, r = 0, scale = sqrt(250))
     if (NROW(x) == 1) {
         return(NA)
     } else {
-        y = diff(x)
-        return(scale * (mean(y)-r)/sd(y))
+        y = diff(x) # YC : ok if x is given to function as x = log(price)
+        return(scale * mean(y-r)/sd(y))
     }
 
     # Return Value:
