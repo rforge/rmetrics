@@ -14,9 +14,10 @@
 \alias{Summary,timeSeries-method}
 \alias{trunc,timeSeries-method}
 \alias{log,timeSeries-method}
-\alias{"%*%",timeSeries,vector-method}
-\alias{"%*%",timeSeries,ANY-method}
-\alias{"%*%",ANY,timeSeries-method}
+
+\alias{\%*\%,timeSeries,vector-method}
+\alias{\%*\%,timeSeries,ANY-method}
+\alias{\%*\%,ANY,timeSeries-method}
 
 \alias{diff,timeSeries-method}
 \alias{scale,timeSeries-method}
