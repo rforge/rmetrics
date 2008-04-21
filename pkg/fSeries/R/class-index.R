@@ -1,1 +1,1 @@
-setClassUnion("index", members =  c("numeric", "logical", "character"))
+setClassUnion("index_timeSeries", members =  c("numeric", "logical", "character"))

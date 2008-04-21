@@ -20,20 +20,20 @@
 ################################################################################
 
 
-setMethod("show", "timeSeries", 
+setMethod("show", "timeSeries",
     function(object)
-{   
+{
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Print method for an S4 object of class "timeSeries"
-    
+
     # FUNCTION:
-    
+
     # Unlike print the argument for show is 'object'.
     x = object
     recordIDs = FALSE
-    
+
     # Series:
     cat(x@FinCenter, "\n", sep = "")
     if (recordIDs) {
@@ -45,16 +45,16 @@ setMethod("show", "timeSeries",
     } else {
         print(x@Data)
     }
-    
-    # Control:
-    control = attr(x, "control")
-    if (!is.null(control)) print(control)
-    
+
+###     # Control:
+###     control = attr(x, "control")
+###     if (!is.null(control)) print(control)
+
     # Return Value:
     invisible(NULL)
 })
 
-      
+
 # ------------------------------------------------------------------------------
 
 
@@ -63,10 +63,10 @@ setMethod("show", "timeSeries",
     style = c("tS", "h", "ts"), by = c("month", "quarter"))
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     # Description:
     #   Allows for horizontal and ts like print output.
-    
+
     # Arguments:
     #   x - an object of class timeSeries
     #   FinCenter - print with time stamps according to FinCenter
@@ -77,25 +77,25 @@ setMethod("show", "timeSeries",
     #       "ts" R's base style for regular time series
     #   by - specifies the period for a regular time serie,
     #       note only active for style="ts".
-    
+
     # Example:
     #   x = timeSeries(); print(x, format = "%d %b %Y"); x
-    
+
     # FUNCTION:
-    
+
     # Change Financial Center:
     if (!is.null(FinCenter)) finCenter(x) <- FinCenter
-    
+
     # Match Arguments:
     style = match.arg(style)
     by = match.arg(by)
-    
+
     # Print:
     if (style == "tS") {
         # Change Format:
         if (!is.null(format)) {
             charvec = rownames(series(x))
-            charvec = format(as.POSIXct(charvec, tz = "GMT"), 
+            charvec = format(as.POSIXct(charvec, tz = "GMT"),
                 format = format, tz = "GMT")
             rownames(x@Data) <- charvec
         }
@@ -111,7 +111,7 @@ setMethod("show", "timeSeries",
         ts = ts(as.vector(x@Data), start[1:2], end[1:2], freq[by])
         print(ts)
     }
-    
+
     # Return Value:
     return(invisible(x))
 }

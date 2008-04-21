@@ -218,9 +218,10 @@ as.vector.timeSeries <-
 
     ans <- as.vector(as.matrix(x))
 
-    # add row names to the vector if the time series is univariate
-    if (isUnivariate(x))
-        names(ans) = rownames(x)
+    ### # add row names to the vector if the time series is univariate
+    ### # YC: removed row names of vector because too time consuming !!
+    ### if (isUnivariate(x))
+    ### names(ans) = rownames(x)
 
     # Return Value:
     ans

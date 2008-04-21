@@ -79,15 +79,10 @@ function(object, value)
 
 # ------------------------------------------------------------------------------
 
-"time<-" <-
-    function(x, value)
-{
-
-    UseMethod("time<-")
-}
+if (!exists("time<-", mode = "function"))
+    "time<-" <- function(x, value) UseMethod("time<-")
 
 # ------------------------------------------------------------------------------
-
 "time<-.timeSeries" <-
     function(x, value)
 {
@@ -111,8 +106,8 @@ function(object, value)
 #  end.timeSeries            Extracts end date of a 'timeSeries' object
 
 
-time.timeSeries =
-function(x, ...)
+time.timeSeries <-
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -141,8 +136,21 @@ function(x, ...)
 
 # ------------------------------------------------------------------------------
 
+# temporary fix until we have a name space and avoid problems with
+# function index in package "zoo"
+
+if (!exists("index", mode = "function"))
+    index <- function(x, ...) UseMethod("index")
+
+index.timeSeries <- function(x, ...) time.timeSeries(x, ...)
+
+if (!exists("index<-", mode = "function"))
+    "index<-" <- function(x, value) UseMethod("index<-")
+
+"index<-.timeSeries" <- function(x, value) time.timeSeries(x, value)
+
 ## setMethod("index", "timeSeries",
-##           function(x) time.timeSeries(x))
+##           function(x, ...) time.timeSeries(x, ...))
 ## setMethod("index<-", "timeSeries",
 ##           function(x,value) "time<-.timeSeries"(x, value))
 

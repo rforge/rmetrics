@@ -50,7 +50,6 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
               stop("positions slot do not match")
 
           series(e1) <- callGeneric(as(e1, "matrix"), as(e2, "matrix"))
-
           e1@recordIDs <- data.frame(e1@recordIDs, e2@recordIDs)
 
           e1
@@ -87,9 +86,6 @@ setMethod("Ops", c("vector", "timeSeries"),
 # important for +/- timeSeries()
 setMethod("+", c("timeSeries", "missing"), function(e1, e2) e1)
 setMethod("-", c("timeSeries", "missing"), function(e1, e2) 0-e1)
-
-# ------------------------------------------------------------------------------
-
 
 # ------------------------------------------------------------------------------
 #
@@ -144,6 +140,22 @@ setMethod("trunc",
                                 FinCenter = FinCenter)
               ans
           })
+
+# ------------------------------------------------------------------------------
+
+setMethod("%*%", signature(x = "timeSeries", y = "vector"),
+          function(x, y) {
+              series(x) <- callGeneric(as(x, "matrix"), y)
+              x
+          })
+
+setMethod("%*%", signature(x = "timeSeries", y = "ANY"),
+          function(x, y)
+          stop("invalid or not-yet-implemented %*% method for 'timeSeries'"))
+
+setMethod("%*%", signature(x = "ANY", y = "timeSeries"),
+          function(x, y)
+          stop("invalid or not-yet-implemented '%*%' method for 'timeSeries'"))
 
 # ------------------------------------------------------------------------------
 

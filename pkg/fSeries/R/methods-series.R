@@ -75,7 +75,13 @@ setMethod("series", "timeSeries",
 
 # ------------------------------------------------------------------------------
 
-setMethod("series<-", c("timeSeries", "vector"),
+setMethod("series<-", c("timeSeries","data.frame"),
+          function(x, value) callGeneric(x, as(value, "matrix")))
+
+setMethod("series<-", c("timeSeries","vector"),
+          function(x, value) callGeneric(x, as(value, "matrix")))
+
+setMethod("series<-", c("timeSeries","matrix"),
           function(x, value)
       {
           # A function implemented by Diethelm Wuertz and Yohan Chalabi
@@ -91,18 +97,28 @@ setMethod("series<-", c("timeSeries", "vector"),
 
           # FUNCTION:
 
-          data <- value
-          charvec <- time(x)
-          format = x@format
-          zone <- FinCenter <- finCenter(x)
-          recordIDs <- if (NROW(x) == NROW(value)) x@recordIDs else data.frame()
-          title <- x@title
-          documentation <- x@documentation
+          if (NROW(value) == NROW(x) && NCOL(value) == NCOL(x)) {
+              # if value same dimension as time series
+              # we we can assign the value directly to @Data
+              # This can speed up math Ops significantly
+              x@Data <- value
+          } else {
+              data <- value
+              charvec <- time(x)
+              format = x@format
+              zone <- FinCenter <- finCenter(x)
+              recordIDs <-
+                  if (NROW(x) == NROW(value)) x@recordIDs else data.frame()
+              title <- x@title
+              documentation <- x@documentation
 
-          new("timeSeries", data = value, charvec = charvec, format =
-              format, zone = zone, FinCenter = FinCenter, recordIDs =
-              recordIDs, title = title)
+              x <- new("timeSeries", data = data, charvec = charvec, format =
+                       format, zone = zone, FinCenter = FinCenter, recordIDs =
+                       recordIDs, title = title)
+          }
 
+          # Return
+          x
       })
 
 ################################################################################

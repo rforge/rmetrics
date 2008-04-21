@@ -27,7 +27,7 @@
 # ------------------------------------------------------------------------------
 # index
 
-setMethod("[", signature(x = "timeSeries", i = "index", j = "index"),
+setMethod("[", signature(x = "timeSeries", i = "index_timeSeries", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
           # series settings
@@ -53,7 +53,7 @@ setMethod("[", signature(x = "timeSeries", i = "index", j = "index"),
               recordIDs = recordIDs)
       })
 
-setMethod("[", signature(x = "timeSeries", i = "index", j = "missing"),
+setMethod("[", signature(x = "timeSeries", i = "index_timeSeries", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
           if(nargs() == 2) {
@@ -65,21 +65,21 @@ setMethod("[", signature(x = "timeSeries", i = "index", j = "missing"),
           }
       })
 
-setMethod("[", signature(x = "timeSeries", i = "missing", j = "index"),
+setMethod("[", signature(x = "timeSeries", i = "missing", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
           callGeneric(x, i = min(1, NROW(x)):NROW(x), j = j, drop = drop, ...))
 
 # ------------------------------------------------------------------------------
 # timeDate
 
-setMethod("[", signature(x = "timeSeries", i = "timeDate", j = "index"),
+setMethod("[", signature(x = "timeSeries", i = "timeDate", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
           # series settings
           format = x@format
           if (format != "counts") {
               FinCenter <- finCenter(x)
-              # convert FinCenter of index to FinCenter of timeSeries
+              # convert FinCenter of index_timeSeries to FinCenter of timeSeries
               i <- timeDate(i, zone = i@FinCenter, FinCenter = FinCenter)
           }
           i <- as(i, "character")
@@ -93,7 +93,7 @@ setMethod("[", signature(x = "timeSeries", i = "timeDate", j = "missing"),
 # ------------------------------------------------------------------------------
 # matrix
 
-setMethod("[", signature(x = "timeSeries", i = "matrix", j = "index"),
+setMethod("[", signature(x = "timeSeries", i = "matrix", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
           callGeneric(x, i = as.vector(i), j = j, drop = drop, ...))
 
@@ -112,7 +112,7 @@ setMethod("[", signature(x = "timeSeries", i = "matrix", j = "missing"),
 # ------------------------------------------------------------------------------
 # timeSeries
 
-setMethod("[", signature(x = "timeSeries", i = "timeSeries", j = "index"),
+setMethod("[", signature(x = "timeSeries", i = "timeSeries", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
           if (x@format != "counts" &&
