@@ -60,7 +60,7 @@ setMethod("show", "timeSeries",
 
 .print.timeSeries <-
     function(x, FinCenter = NULL, format = NULL,
-    style = c("tS", "h", "ts"), by = c("month", "quarter"))
+    style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
