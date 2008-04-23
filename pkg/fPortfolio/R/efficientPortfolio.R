@@ -46,13 +46,13 @@ efficientPortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # Example:
     #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
     #   spec = portfolioSpec(); setTargetReturn(spec) <- mean(colMeans(data))
     #   efficientPortfolio(data, spec)
-    
-    
+
+
     # FUNCTION:
 
     # Check Arguments:
@@ -60,7 +60,7 @@ efficientPortfolio <-
     if (is.null(constraints)) constraints = "LongOnly"
     if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
 
-    # Minimize Risk:   
+    # Minimize Risk:
     if(is.null(getTargetReturn)) {
         stop("Missing target return for minimum risk optimization.")
     } else {
@@ -97,12 +97,12 @@ maxratioPortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # Example:
     #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
     #   spec = portfolioSpec()
     #   maxratioPortfolio(data, spec)
-    
+
     # FUNCTION:
 
     # Check Arguments:
@@ -153,7 +153,7 @@ tangencyPortfolio <-
     # Portfolio:
     portfolio = maxratioPortfolio(data, spec, constraints)
     portfolio@title = "Tangency Portfolio"
-    
+
     # Return Value:
     portfolio
 }
@@ -174,11 +174,11 @@ minriskPortfolio <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # Example:
     #   data = as.timeSeries(data(smallcap.ts))[,c("BKE","GG","GYMB","KRON")]
     #   minriskPortfolio(data)
-    
+
     # FUNCTION:
 
     # Check Arguments:
@@ -198,8 +198,12 @@ minriskPortfolio <-
         return(targetRisk) }
 
     # Minimize target risk:
-    portfolio = optimize(targetRiskFun, interval = range(getMu(data)),
-        data = data, spec = spec, constraints = constraints)
+    # YC: scale data to avoid numerical errors in optimize
+    scale <- 1000
+    optData <- portfolioData(scale * getData(data)$series, spec)
+    portfolio <- optimize(targetRiskFun, interval = range(getMu(optData)),
+                          data = optData, spec = spec,
+                          constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
@@ -222,7 +226,7 @@ minvariancePortfolio <-
     # Portfolio:
     portfolio = minriskPortfolio(data, spec, constraints)
     portfolio@title = "Minimum Variance Portfolio"
-    
+
     # Return Value:
     portfolio
 }
