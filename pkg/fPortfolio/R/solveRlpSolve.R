@@ -64,12 +64,12 @@ solveRlpSolve <-
     # FUNCTION:
 
     # Get Statistics:
-    if(!inherits(data, "fPFOLIODATA")) 
+    if(!inherits(data, "fPFOLIODATA"))
         data = portfolioData(data, spec)
 
     # Trace:
     trace = getTrace(spec)
-    if(trace) 
+    if(trace)
         cat("\nPortfolio Optimiziation:\n Using RlpSolve ...\n\n")
 
     # Get Specifications:
@@ -94,8 +94,9 @@ solveRlpSolve <-
 
     if (nAssets == 2) {
         # Two Assets Portfolio:
-        stopifnot(targetReturn >= min(mu))
-        stopifnot(targetReturn <= max(mu))
+        # YC: test might failed because of numerical errors, hence 'round'
+        stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
+        stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
         names(targetReturn) <- spec@model$estimator[1]
         weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
         weights = c(weights, 1- weights)
