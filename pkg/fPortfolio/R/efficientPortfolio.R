@@ -129,8 +129,11 @@ maxratioPortfolio <-
         getTargetReturn(feasiblePortfolio(data, spec, constraints))
 
     # Minimize Sharp Ratio:
-    portfolio = optimize(ratioFun, interval = range(getMu(data)),
-        maximum = TRUE, data = data, spec = spec, constraints = constraints)
+    # YC: scale data to avoid numerical errors in optimize
+    scale <- 1000
+    optData <- portfolioData(scale * getData(data)$series, spec)
+    portfolio = optimize(ratioFun, interval = range(getMu(optData)),
+        maximum = TRUE, data = optData, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
