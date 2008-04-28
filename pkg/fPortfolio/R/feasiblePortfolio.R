@@ -67,8 +67,13 @@ feasiblePortfolio <-
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
 
     # Compute Alternative/Robust Covariance Risk:
-    Sigma = data@statistics$Sigma
-    rcov = sqrt((weights %*% Sigma %*% weights)[[1]])
+    if (getType(spec) == "SPS") {
+        funSigma = match.fun(getObjective(spec))
+        rcov = funSigma(as.vector(weights))
+    } else {
+        Sigma = data@statistics$Sigma
+        rcov = sqrt((weights %*% Sigma %*% weights)[[1]])
+    }
 
     # Compute VaR:
     alpha = getAlpha(spec)
