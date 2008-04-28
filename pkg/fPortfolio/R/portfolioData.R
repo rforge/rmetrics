@@ -45,6 +45,7 @@ portfolioData <-
     # FUNCTION:
     
     # Check and Sort Data: 
+    if (class(data) == "fPFOLIODATA") return(data)  
     stopifnot(class(data) == "timeSeries") 
     
     # Data:
