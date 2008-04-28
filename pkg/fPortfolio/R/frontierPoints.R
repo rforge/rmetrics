@@ -31,7 +31,8 @@
 
 frontierPoints <-
     function(object, frontier = c("both", "lower", "upper"),
-        return = c("mean", "mu"), risk = c("cov", "sigma", "CVaR", "VaR"))
+        return = c("mean", "mu"), risk = c("cov", "Sigma", "CVaR", "VaR"),
+        auto = TRUE)
 {
     # A function implemented by Rmetrics
 
@@ -52,8 +53,14 @@ frontierPoints <-
     risk = match.arg(risk)
 
     # Get Efficient Frontier:
-    Type = getType(object)
-    if (Type != "MV") risk = Type
+    if (auto) {
+        Type = getType(object)
+        Estimator = getEstimator(object)
+        if (Type == "MV") risk = "cov"
+        if (Type == "MV" & Estimator != "covEstimator") risk = "sigma"
+        if (Type == "QLPM") risk = "sigma"
+        if (Type == "CVaR") risk = "CVaR" 
+    }
     targetRisk = getTargetRisk(object)[, risk]
     targetReturn = getTargetReturn(object)[, return]
 

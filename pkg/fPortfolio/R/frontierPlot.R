@@ -48,7 +48,7 @@
 frontierPlot <-
     function(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, labels = TRUE,
-    title = TRUE, ...)
+    risk = NULL, title = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -64,9 +64,18 @@ frontierPlot <-
     frontier = match.arg(frontier)
 
     # Frontier:
-    fullFrontier = frontierPoints(object, frontier = "both")
-    upperFrontier = frontierPoints(object, frontier = "upper")
-    lowerFrontier = frontierPoints(object, frontier = "lower")
+    if (is.null(risk)) {
+        risk = "cov"
+        auto = TRUE 
+    } else {
+        auto = FALSE
+    }
+    fullFrontier = frontierPoints(object, frontier = "both", 
+        risk = risk, auto = auto)
+    upperFrontier = frontierPoints(object, frontier = "upper", 
+        risk = risk, auto = auto)
+    lowerFrontier = frontierPoints(object, frontier = "lower", 
+        risk = risk, auto = auto)
 
     # Check for 'xlim' Argument:
     Arg <- match.call(expand.dots = TRUE)
