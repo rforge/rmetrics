@@ -43,7 +43,7 @@ frontierPoints(object, frontier = c("both", "lower", "upper"),
         risk measure are either \code{"cov"}, \code{"sigma"},  
         \code{"VaR"}, or \code{"CVaR"}.
         }
-    \item{aut}{
+    \item{auto}{
         a logical flag. If \code{auto} is \code{TRUE}, the 
         default setting, then the risk willbe identified
         automatically from the object.
