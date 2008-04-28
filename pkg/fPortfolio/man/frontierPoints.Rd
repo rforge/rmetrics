@@ -17,7 +17,8 @@
 
 \usage{
 frontierPoints(object, frontier = c("both", "lower", "upper"), 
-    return = c("mean", "mu"), risk = c("cov", "sigma", "CVaR", "VaR"))
+    return = c("mean", "mu"), risk = c("cov", "sigma", "CVaR", "VaR"),
+    auto = TRUE)
 }
 
 
@@ -42,25 +43,48 @@ frontierPoints(object, frontier = c("both", "lower", "upper"),
         risk measure are either \code{"cov"}, \code{"sigma"},  
         \code{"VaR"}, or \code{"CVaR"}.
         }
+    \item{aut}{
+        a logical flag. If \code{auto} is \code{TRUE}, the 
+        default setting, then the risk willbe identified
+        automatically from the object.
+        }
 
 }
 
 
+\details{
+
+    The automated risk detection, \code{auto=TRUE} takes the 
+    following decision:
+
+    \preformatted{
+    if (auto) {
+        Type = getType(object)
+        Estimator = getEstimator(object)
+        if (Type == "MV") risk = "cov"
+        if (Type == "MV" & Estimator != "covEstimator") risk = "sigma"
+        if (Type == "QLPM") risk = "sigma"
+        if (Type == "CVaR") risk = "CVaR" 
+    }
+    }
+    
+}
+
+
 \examples{
-## portfolioFrontier -
-   
+## data -
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   
+
+## portfolioFrontier -  
    # Compute Efficient Frontier:
    Frontier = portfolioFrontier(Data) 
    
 ## frontierPoints:
-
    # Extract Points and Plot:
-   x = frontierPoints(Frontier, risk = "VaR")
-   x = frontierPoints(Frontier, risk = "CVaR")
+   x = frontierPoints(Frontier, risk = "VaR", auto = FALSE)
+   x = frontierPoints(Frontier, risk = "CVaR", auto = FALSE)
 
 }
 

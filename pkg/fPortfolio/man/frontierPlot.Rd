@@ -46,7 +46,7 @@
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, labels = TRUE, 
-    title = TRUE, \dots)
+    risk = NULL, title = TRUE, \dots)
 
 minvariancePoints(object, \dots)
 cmlPoints(object, \dots)
@@ -64,16 +64,9 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
 
 \arguments{
 
-    \item{add}{
-        a logical value, determining whether the frontier should be added to 
-        an existing plot, by default FALSE.
-        }
-    \item{col}{
-        a character string vector, setting the color. For \code{frontierPlot} 
-        it is a two dimensional a vector; first entry is the upper part of the
-        frontier,\cr second entry the lower, by default "black" and "grey".\cr
-        For the other functions the argument defines the color representation,
-        by default sets the default color is the rainbow palette.
+    \item{object}{
+        an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
+        specification, constraints, portfolio, title, description.
         }
     \item{frontier}{
         a character string, determining which part of the frontier should be
@@ -81,23 +74,36 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
         for all points below the minimum variance return and \code{"upper"}
         for the actual efficient frontier, by default "both".
         }
+    \item{col}{
+        a character string vector, setting the color. For \code{frontierPlot} 
+        it is a two dimensional a vector; first entry is the upper part of the
+        frontier,\cr second entry the lower, by default "black" and "grey".\cr
+        For the other functions the argument defines the color representation,
+        by default sets the default color is the rainbow palette.
+        }          
+    \item{add}{
+        a logical value, determining whether the frontier should be added to 
+        an existing plot, by default FALSE.
+        }
     \item{labels}{
         a logical flag, should the plot be automatically labeled and
         decorated? By default \code{TRUE}.
         }
-    \item{mcSteps}{
-        an integer value, the number of Monte Carlo steps.
-        }
-    \item{object}{
-        an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
-        specification, constraints, portfolio, title, description.
+    \item{risk} {
+        \code{NULL}, or a character value one of:
+        \code{"cov"}, \code{"sigma"}, \code{"CVaR"}, or \code{"VaR"}. If
+        \code{NULL} then the value for \code{risk} is automatically selected 
+        from the portfolio specification.
         }
     \item{title}{
         a logical flag, should the plot obtain a default main title and
         x- and y-labels? By default \code{TRUE}.
         }
+    \item{mcSteps}{
+        an integer value, the number of Monte Carlo steps.
+        }
     \item{\dots}{
-        optional arguments to be passed.\cr
+        optional arguments to be passed.
         }
 
 }
