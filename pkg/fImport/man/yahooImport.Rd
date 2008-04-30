@@ -35,7 +35,8 @@ yahooImport(query, file = "tempfile",
     sep = ";", try = TRUE)
    
 yahooSeries(symbols, from = NULL, to = Sys.timeDate(), 
-    nDaysBack = 366, \dots) 
+    nDaysBack = 366, quote = c("Open", "High", "Low", "Close", 
+    "Volume"), aggregation = c("d", "w", "m"), \dots)  
     
 yahooKeystats(query, file = "tempfile", 
     source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
@@ -48,50 +49,58 @@ yahooBriefing(query, file = "tempfile",
 
 
 \arguments{
-
-    \item{file}{
-        a character string with filename, usually
-        having extension ".csv", where to save the downloaded data.
-        }
-    \item{from, to}{
-        an ISO-8601 formatted character string of the starting (end) 
-        date, e.g. "2005-01-01".
-        }
-    \item{nDaysBack}{
-        an integer giving the length of the download period in number 
-        of days starting n days back from today. Only in use if 
-        \code{from} and \code{to} are not specified.
-        }
-    \item{query}{
-        a character string, denoting the location of the data at the 
-        web site.
-        }
-    \item{save}{
-        a logical value, if set to TRUE the downloaded data file will 
-        be stored under the path and file name specified by the
-        string \code{file}. By default FALSE.
-        }
-    \item{sep}{
-        a character value, defining the field separator for the 
-        destination file which saves the downloaded data records.
-        By default a semicolon.
-        }
-    \item{source}{
-        a character string with the download URL.
-        }
-    \item{symbols}{
-        a character string value or vector, the Yahoo symbol name(s).
-        }
-    \item{try}{
-        a logical value, if set to TRUE the Internet access will be
-        checked.
-        }
+  \item{aggregation}{
+    a character string denoting the aggregation
+    level of the downloaded data records, 'd' for daily, 'w'
+    for weekly and 'm' for monthly data records.}
+  \item{file}{
+    a character string with filename, usually
+    having extension ".csv", where to save the downloaded data.
+  }
+  \item{from, to}{
+    an ISO-8601 formatted character string of the starting (end) 
+    date, e.g. "2005-01-01".
+  }
+  \item{nDaysBack}{
+    an integer giving the length of the download period in number 
+    of days starting n days back from today. Only in use if 
+    \code{from} and \code{to} are not specified.
+  }
+  \item{query}{
+    a character string, denoting the location of the data at the 
+    web site.
+  }
+  \item{quote}{
+    a character value or vector of strings giving the
+    column names of those instruments to be extracted from
+    the download.
+  }
+  \item{save}{
+    a logical value, if set to TRUE the downloaded data file will 
+    be stored under the path and file name specified by the
+    string \code{file}. By default FALSE.
+  }
+  \item{sep}{
+    a character value, defining the field separator for the 
+    destination file which saves the downloaded data records.
+    By default a semicolon.
+  }
+  \item{source}{
+    a character string with the download URL.
+  }
+  \item{symbols}{
+    a character string value or vector, the Yahoo symbol name(s).
+  }
+  \item{try}{
+    a logical value, if set to TRUE the Internet access will be
+    checked.
+  }
     \item{\dots}{
-        optional arguments to be passed.
-        }        
-}
-
-
+      optional arguments to be passed.
+    }        
+  }
+  
+  
 \value{
 
     The function \code{yahooImport} returns an S4 object of class 
