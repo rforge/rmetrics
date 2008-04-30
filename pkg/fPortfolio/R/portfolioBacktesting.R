@@ -193,9 +193,12 @@ portfolioBacktesting <-
 
     # Compute Offset Return of Rolling Portfolio compared to Benchmark:
     cumX = colCumsums(ans$data[, ans$benchmark])
-    lastX = as.vector(
-        window(cumX, from = start(cumX), to = rownames(ans$weights)[1] ) )
-    ans$offsetReturn = rev(lastX)[1]
+    # lastX = as.vector(
+    #     window(cumX, from = start(cumX), to = rownames(ans$weights)[1] ) )
+    #ans$offsetReturn = rev(lastX)[1]
+    lastX <- window(cumX, from = start(cumX), to = rownames(ans$weights)[1] )
+    ans$offsetReturn = as.vector(lastX[end(lastX),])
+    names(ans$offsetReturn) <- as.character(end(lastX))
 
     # Backtest Return Series:
     Datum = as.vector(rownames(emaWeights))
@@ -493,8 +496,10 @@ plot.portfolioBacktest <-
     cumP = portfolioReturns + offsetReturn
     cumB = benchmarkReturns + offsetReturn
     # we want to start from the benchmark offsetReturn
-    cumP <- rbind(timeSeries(offsetReturn, charvec = names(offsetReturn)), cumP)
-    cumB <- rbind(timeSeries(offsetReturn, charvec = names(offsetReturn)), cumB)
+    offsetTS <- timeSeries(offsetReturn, charvec = names(offsetReturn),
+                           units = "offsetReturn")
+    cumP <- rbind(offsetTS, cumP)
+    cumB <- rbind(offsetTS, cumB)
 
     # Plot:
     MAX = max(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
