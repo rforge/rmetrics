@@ -450,6 +450,7 @@ twoAssetsLines <-
     # Add Frontiers for all Two-Assets Portfolios:
     N = getNAssets(object)
     Data = getSeries(object)
+    setWeights(Spec) = NULL
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j)

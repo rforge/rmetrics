@@ -93,7 +93,9 @@ rdonlp2  <-
     
     # Use analytical gradients?
     if (is.function(attr(fn, "gr")) &
-        all(lapply(nlin, function(e)is.function(attr(e,"gr"))))){
+        # DW:
+        # all(lapply(nlin, function(e)is.function(attr(e,"gr"))))){
+        all(unlist(lapply(nlin, function(e)is.function(attr(e,"gr")))))) {
         control["analyt"] = TRUE
     } else {
         control["analyt"] = FALSE
@@ -147,13 +149,17 @@ rdonlp2  <-
             return(as.double(eval(nlin[[fun.id]](p), env)))
         } else if (mode == 1) { # evaluate gradient values
             if (fun.id == 0){
-                return(as.double(eval(fn@gr(p), env)))
+                # Modified by DW:
+                # return(as.double(eval( fn@gr(p),               env)))
+                  return(as.double(eval( (attributes(fn)$gr)(p), env)))
             }
-            return(as.double(eval((nlin[[fun.id]]@gr)(p), env)))
+            # Modified by DW:
+            # return(as.double(eval( (nlin[[fun.id]]@gr)            (p), env)))
+              return(as.double(eval( (attributes(nlin[[fun.id]])$gr)(p), env)))
         } else {
             stop("unknown evaluation mode: %d", mode)
         }
-    } 
+    }        
 
     # accfun
     accfun <- function(lst){

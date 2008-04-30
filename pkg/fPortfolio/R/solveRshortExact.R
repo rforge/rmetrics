@@ -44,14 +44,14 @@ solveRshortExact <-
     
     # FUNCTION:
     
-    # Get Statistics:
-    if(!inherits(data, "fPFOLIODATA")) 
-        data = portfolioData(data, spec)
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    if (class(constraints) == "fPFOLIOCON") 
+        constraints = constraints@stringConstraints
     
     # Trace:
     trace = getTrace(spec)
-    if(trace) 
-        cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n")
+    if(trace) cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n")
     
     # What to optimize target risk or target return ?
     optimize = NA

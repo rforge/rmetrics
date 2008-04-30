@@ -44,10 +44,13 @@ feasiblePortfolio <-
 
     # FUNCTION:
 
-    # Check Arguments:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
-    if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Get Weights:
     if(is.null(getWeights(spec))) {
@@ -104,7 +107,7 @@ feasiblePortfolio <-
         call = match.call(),
         data = list(data = data),
         spec = list(spec = spec),
-        constraints = constraints,
+        constraints = constraints@stringConstraints,
         portfolio = portfolio,
         title = "Feasible Portfolio",
         description = description() )

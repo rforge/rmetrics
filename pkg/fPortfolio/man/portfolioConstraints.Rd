@@ -9,13 +9,12 @@
 
 \description{
   
-    Computes portfolio constraints given by a constraints
-    string.
+    Computes portfolio constraints given by a constraints string.
     
 }    
 
 \usage{
-portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly", \dots)
 }
 
 
@@ -32,6 +31,10 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC} as returned by the function
         \code{portfolioSpec}.
+        }
+    \item{\dots}{
+        arguments passed to the function \code{.setRdonlp2Constraints}.
+        For internal use only.
         }
 
 }

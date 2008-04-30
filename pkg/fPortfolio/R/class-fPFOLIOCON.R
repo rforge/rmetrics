@@ -33,7 +33,8 @@ setClass("fPFOLIOCON",
     representation(
         stringConstraints = "character",
         boxgroupConstraints = "matrix",
-        riskbudgetConstraints = "matrix")  
+        riskbudgetConstraints = "matrix",
+        altConstraints = "list")  
 )
 
 

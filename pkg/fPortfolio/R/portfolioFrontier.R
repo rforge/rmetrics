@@ -52,8 +52,13 @@ portfolioFrontier <-
     
     # FUNCTION:
     
-    # Create Data Object:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Optimize portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
@@ -63,26 +68,6 @@ portfolioFrontier <-
     maxMu = max(mu)*(1-eps)
     targetReturns <- seq(minMu, maxMu, length = nFrontierPoints)
     
-    OLD = FALSE
-    
-    if (OLD) {
-    # OLD Version:
-    #   start from the lowest return values and moves up to the
-    #   highest value ...
-    weights = targetReturn = targetRisk = covRiskBudgets = NULL
-    for (i in 1:nFrontierPoints) {
-        setTargetReturn(spec) = targetReturns[i]
-        portfolio = efficientPortfolio(data, spec, constraints)
-        if (getStatus(portfolio) == 0) {
-            weights = rbind(weights, getWeights(portfolio))
-            targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
-            targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
-            covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
-        }
-    }
-    
-    } else {
-        
     # NEW Version:
     #   The Idea is to start from the minvariance portfolio and to explore
     #   the efficient frontier and the minimum variance locus starting from
@@ -136,7 +121,6 @@ portfolioFrontier <-
         targetReturn = rbind(targetReturn2, targetReturn)
         targetRisk = rbind(targetRisk2, targetRisk)
         covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
-    }  
     }  
     
     # Reset Target Return:  

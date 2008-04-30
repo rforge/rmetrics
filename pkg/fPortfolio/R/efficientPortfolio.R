@@ -55,14 +55,17 @@ efficientPortfolio <-
 
     # FUNCTION:
 
-    # Check Arguments:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
-    if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Minimize Risk:
-    if(is.null(getTargetReturn)) {
-        stop("Missing target return for minimum risk optimization.")
+    if(is.null(getTargetReturn(spec))) {
+        stop("Missing target return for efficient portfolio optimization.")
     } else {
         # Optimize Portfolio:
         Solver = match.fun(getSolver(spec))
@@ -105,9 +108,13 @@ maxratioPortfolio <-
 
     # FUNCTION:
 
-    # Check Arguments:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Compute Sharpe ratio to be minimized:
     ratioFun = function(x, data, spec, constraints)
@@ -184,10 +191,13 @@ minriskPortfolio <-
 
     # FUNCTION:
 
-    # Check Arguments:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
-    if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Compute target risk to be minimized:
     targetRiskFun = function(x, data, spec, constraints) {
@@ -253,13 +263,16 @@ maxreturnPortfolio <-
 
     # FUNCTION:
 
-    # Check Arguments:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
-    if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short"))
+        setSolver(spec) = "solveRshortExact"
 
     # Maximize Return:
-    if(is.null(getTargetRisk)) {
+    if(is.null(getTargetRisk(spec))) {
         stop("Missing target risk for maximum return optimization.")
     } else {
         # Optimize Portfolio:

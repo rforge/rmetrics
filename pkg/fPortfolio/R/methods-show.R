@@ -170,6 +170,10 @@ setMethod("show", "fPORTFOLIO", show.fPORTFOLIO <-
     # Print Title:
     cat("\nTitle:\n ")
     cat(getType(object), getTitle(object), "\n")
+    cat(" Estimator:", getEstimator(object), "\n")
+    cat(" Solver:   ", getSolver(object), "\n")
+    #at(" Optimize: ", getOptimize(object), "\n")
+    #at(" Objective:", getObjective(object), "\n")
     
     # Print Call:
     # cat("\nCall:\n ")

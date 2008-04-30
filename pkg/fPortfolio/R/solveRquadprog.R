@@ -79,14 +79,14 @@ solveRquadprog <-
 
     # FUNCTION:
 
-    # Get Statistics:
-    if(!inherits(data, "fPFOLIODATA"))
-        data = portfolioData(data, spec)
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    if (class(constraints) == "fPFOLIOCON") 
+        constraints = constraints@stringConstraints
 
     # Trace:
     trace = getTrace(spec)
-    if(trace)
-        cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
+    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
 
     # Get Specifications:
     mu = getMu(data)

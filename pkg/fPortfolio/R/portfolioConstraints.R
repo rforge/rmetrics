@@ -31,53 +31,76 @@
 #  .setBoxGroupConstraints       Utility function called by .setConstraints()
 #  .setRiskBudgetsConstraints    Utility function called by .setConstraints()
 #  .getConstraints              Transforms a constraint list value into strings
+#  .setRdonlp2Constraints       Adds Rdonlp2 conform constraints
 ################################################################################
 
 
 portfolioConstraints <-
-    function(data, spec = portfolioSpec(), constraints = "LongOnly")
+    function(data, spec = portfolioSpec(), constraints = "LongOnly", ...)
 {
     # A function implemented by Rmetrics
 
     # Description:
     #   Checks Consistency of Constraints Strings
 
-    # Arguments
+    # Arguments:
     #   data - a portfolio data object
     #   spec - a portfolio specification object
     #   constraints - a constraints string
 
     # FUNCTION:
 
+    # Handle NULL:
+    if (is.null(constraints)) constraints = "LongOnly"
+    
+    # Already done ...
+    if (class(constraints) == "fPFOLIOCON") return(constraints)
+    
+    # Constraints is a string (vector) ...
+    
     # Vector of Valid Strings:
     validStrings = c(
         "LongOnly", "Short",    # LongOnly and Short Notification
         "minW", "maxW",         # Box Constraints
         "minsumW", "maxsumW",   # Group Constraints:
-        "minB", "maxB")         # Covariance Risk Budgets
-                                # ... Tail Risk Budgets
+        "minB", "maxB",         # Covariance Risk Budgets
+        "rdonlp2")              # alt Rdonlp2 Constraints
 
     # Check Constraints Strings:
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
     checkStrings = usedStrings %in% validStrings
     check = (sum(!checkStrings) == 0)
-    if (check) check = "valid"
+    if (check) {
+        check = "valid"
+    } else {
+        stop("Unvalid Constraints String(s)")
+    }
     stringConstraints = constraints
     attr(stringConstraints, "control") = check
 
-    # Set BoxGroup Constraints
+    # Set BoxGroup Constraints:
     boxgroupConstraints =
         .setConstraints(data, spec, constraints, type = "BoxGroup")
 
-    # Set RiskBudget Constraints
+    # Set RiskBudget Constraints:
     riskbudgetConstraints =
         .setConstraints(data, spec, constraints, type = "RiskBudget")
+        
+    # Alternative Constraints Settings:
+    #   This allows to set directly constraints for the rdonlp2 solver.
+    #   Note, arguments are passed through the dots argument.
+    if (constraints[1] == "rdonlp2") {
+        rdonlp2Constraints = .setRdonlp2Constraints(data, spec, ...)
+    } else {
+        rdonlp2Constraints = list()
+    }
 
     # Return Value:
     new("fPFOLIOCON",
         stringConstraints = stringConstraints,
         boxgroupConstraints = boxgroupConstraints,
-        riskbudgetConstraints = riskbudgetConstraints)
+        riskbudgetConstraints = riskbudgetConstraints,
+        altConstraints = rdonlp2Constraints)
 }
 
 
@@ -94,10 +117,10 @@ portfolioConstraints <-
     #   Transforms constraint strings into a list value
 
     # Arguments:
-    #   data -
-    #   spec -
-    #   constraints -
-    #   type -
+    #   data - a portfolio data object
+    #   spec - a portfolio specification object
+    #   constraints - a constraints string
+    #   type - type of constraints
 
     # FUNCTION:
 
@@ -105,10 +128,11 @@ portfolioConstraints <-
     type = match.arg(type)
 
     # Check Data:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    data = portfolioData(data, spec)
 
     # Short Selling:
-    if (any(constraints == "Short")) constraints = NULL
+    ## DW: I'm not sure if we need this
+    ## if (any(constraints == "Short")) constraints = NULL
 
     # check if user want to use Risk Budget with wrong solver
     # currently only Rdonlp2 supports Risk Budget constraints
@@ -140,15 +164,15 @@ portfolioConstraints <-
     #   Transforms constraint strings into a list value
 
     # Arguments:
-    #   data -
-    #   spec -
-    #   constraints -
-    #   type -
+    #   data - a portfolio data object
+    #   spec - a portfolio specification object
+    #   constraints - a constraints string
+    #   type - type of constraints
 
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    data = portfolioData(data, spec)
 
     # Get Specifications:
     mu = getMu(data)
@@ -244,7 +268,7 @@ portfolioConstraints <-
     # FUNCTION:
 
     # Create Data Object:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    data = portfolioData(data, spec)
 
     # Get Specifications:
     mu = getMu(data)
@@ -324,6 +348,37 @@ portfolioConstraints <-
 
     # Return Value:
     constraints
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.setRdonlp2Constraints <- 
+    function(data, spec, 
+    par.lower = NULL, par.upper = NULL,
+    A = NULL, lin.lower = NULL, lin.upper = NULL,
+    nlin = list(), nlin.lower = NULL, nlin.upper = NULL)
+{
+    # A function implemented by Rmetrics
+
+    # Description:
+    #   Adds Rdonlp2 conform constraints
+    
+    # Arguments:
+    #   Here we use the same arguments as in the original Rdonlp2
+    #   package ...
+   
+    # Defaults for "LongOnly" 
+    if (is.null(par.lower)) par.lower = rep(0, times = NCOL(data))
+    if (is.null(par.upper)) par.upper = rep(1, times = NCOL(data))
+    
+    # Return Value:
+    list(
+        name = "solveRdonlp2",
+        par.lower = par.lower, par.upper = par.upper,
+        A = A, lin.lower = lin.lower, lin.upper = lin.upper,
+        nlin = nlin, nlin.lower = nlin.lower, nlin.upper = nlin.upper)
 }
 
 

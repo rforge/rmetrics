@@ -56,9 +56,10 @@ solveRsocp <-
     # Test Implementation for "LongOnly" MV Portfolio
     # stopifnot(constraints == "LongOnly")
 
-    # Get Statistics:
-    if(!inherits(data, "fPFOLIODATA"))
-        data = portfolioData(data, spec)
+    # Transform Data and Constraints:
+    data = portfolioData(data, spec)
+    if (class(constraints) == "fPFOLIOCON") 
+        constraints = constraints@stringConstraints
 
     # Scale Data:
     Data = data@data$series
@@ -66,8 +67,7 @@ solveRsocp <-
 
     # Trace:
     trace = getTrace(spec)
-    if(trace)
-        cat("\nPortfolio Optimiziation:\n Using Rsocp ...\n\n")
+    if(trace) cat("\nPortfolio Optimiziation:\n Using Rsocp ...\n\n")
 
     # Get Specifications:
     mu = getMu(data) /Scale
