@@ -35,7 +35,7 @@
 
 yahooImport <-
     function (query, file = "tempfile",
-    source = "http://chart.yahoo.com/table.csv?", 
+    source = "http://chart.yahoo.com/table.csv?",
     save = FALSE, sep = ";", try = TRUE)
 {
     # A function implemented by Diethelm Wuertz
@@ -127,7 +127,7 @@ yahooImport <-
 
 
 yahooSeries <-
-    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, quote=c("Open","High","Low","Close","Volume"), aggregation = c("d","w","m"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
