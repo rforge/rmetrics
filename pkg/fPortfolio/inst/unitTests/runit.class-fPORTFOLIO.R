@@ -54,16 +54,16 @@ test.portfolioFrontier <-
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setNFrontierPoints(spec) = 10
-    spec
+    print(spec)
 
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(data, spec)
-    Frontier
+    print(Frontier)
 
     # Return Value:
     return()
@@ -82,16 +82,16 @@ test.feasiblePortfolio <-
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setWeights(spec) = rep(1/4, times = 4)
-    spec
+    print(spec)
 
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(data, spec)
-    Portfolio
+    ewPortfolio = feasiblePortfolio(data, spec)
+    print(ewPortfolio)
 
     # Return Value:
     return()
@@ -112,21 +112,21 @@ test.feasiblePortfolio.RDonlp2 <-
         # Get Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
-        head(data)
+        print(head(data))
 
         # Set Default Specifications - Long Only MV Portfolio
         spec = portfolioSpec()
         setWeights(spec) = rep(1/4, times = 4)
         setSolver(spec)<-"Rdonlp2"
-        spec
+        print(spec)
 
         # Constraints:
         constraints = NULL
-        constraints
+        print(constraints)
 
         # Optimize Long Only Minimum Variance Portfolio:
-        Portfolio = feasiblePortfolio(data, spec, constraints)
-        Portfolio
+        ewPortfolio = feasiblePortfolio(data, spec, constraints)
+        print(ewPortfolio)
 
     }
 
@@ -147,21 +147,21 @@ test.feasiblePortfolio.lpsolve <-
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setWeights(spec) = rep(1/4, times = 4)
     setSolver(spec) = "lpSolve"
-    spec
+    print(spec)
 
     # Constraints:
     constraints = NULL
-    constraints
+    print(constraints)
 
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)
-    Portfolio
+    ewPortfolio = feasiblePortfolio(data, spec, constraints)
+    print(ewPortfolio)
 
     # Return Value:
     return()
@@ -180,47 +180,20 @@ test.efficientPortfolio <-
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
-    setTargetReturn(spec) = mean(series(data))
-    spec
+    setTargetReturn(spec) = mean(colMeans(data))
+    print(spec)
 
     # Constraints:
     constraints = NULL
-    constraints
+    print(constraints)
 
     # Calculation of Long Only Minimum Variance Portfolio
-    Portfolio = efficientPortfolio(data, spec, constraints)
-    Portfolio
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.cmlPortfolio <- 
-    function()
-{
-    # Arguments:
-    # cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
-
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specifications:
-    spec = portfolioSpec()
-    spec
-
-    # Portfolio:
-    Portfolio = cmlPortfolio(data, spec)
-    Portfolio
+    meanPortfolio = efficientPortfolio(data, spec, constraints)
+    print(meanPortfolio)
 
     # Return Value:
     return()
@@ -239,15 +212,15 @@ test.tangencyPortfolio <-
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Specifications:
     spec = portfolioSpec()
-    spec
+    print(spec)
 
     # Portfolio:
-    Portfolio = tangencyPortfolio(data, spec)
-    Portfolio
+    tgPortfolio = tangencyPortfolio(data, spec)
+    print(tgPortfolio)
 
     # Return Value:
     return()
@@ -266,15 +239,15 @@ test.minvariancePortfolio <-
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
 
     # Specifications:
     spec = portfolioSpec()
-    spec
+    print(spec)
 
     # Portfolio:
-    Portfolio = minvariancePortfolio(data, spec)
-    Portfolio
+    mvPortfolio = minvariancePortfolio(data, spec)
+    print(mvPortfolio)
 
     # Return Value:
     return()
@@ -295,16 +268,16 @@ test.minvariancePortfolio.RDonlp2 <-
         # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
-        head(data)
+        print(head(data))
 
         # Specifications:
         spec = portfolioSpec()
-        setSolver(spec) = "Rdonlp2"
-        spec
+        setSolver(spec) = "solveRdonlp2"
+        print(spec)
 
         # Portfolio:
-        Portfolio = minvariancePortfolio(data, spec)
-        Portfolio
+        mvPortfolio = minvariancePortfolio(data, spec)
+        print(mvPortfolio)
 
     }
 
@@ -360,14 +333,15 @@ test.plot.RQuadprog <-
     # Plot:
     par(mfrow = c(1, 1))
     frontierPlot(Frontier, pch = 19)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
-    .tangencyPlot(Frontier, col = "green")
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, col = "green")
+    tangencyLines(Frontier, col = "green")
+    singleAssetPoints(Frontier, col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+    twoAssetsLines(Frontier, col = "grey")
+    # .weightsWheel(Frontier)
+    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
     # Plot Ask:
     # plot(Frontier, which = "ask")
@@ -391,7 +365,7 @@ test.plot.Rdonlp2 <-
 
         # Specifications:
         Spec = portfolioSpec()
-        setSolver(Spec)<-"Rdonlp2"
+        setSolver(Spec) <- "solveRdonlp2"
 
         # Constraints:
         Constraints = "LongOnly"
@@ -401,15 +375,16 @@ test.plot.Rdonlp2 <-
 
         # Plot:
         par(mfrow = c(1, 1))
-        frontierPlot(Frontier)
-        .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
-        .tangencyPlot(Frontier, col = "green")
-        .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-        .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-        .twoAssetsPlot(Frontier, col = "grey")
-        .weightsWheel(Frontier)
-        .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
-        .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+        frontierPlot(Frontier, pch = 19)
+        minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+        tangencyPoints(Frontier, col = "green")
+        tangencyLines(Frontier, col = "green")
+        singleAssetPoints(Frontier, col = "red", cex = 1.5)
+        equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+        twoAssetsLines(Frontier, col = "grey")
+        # .weightsWheel(Frontier)
+        monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+        sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
         # Plot Ask:
         # plot(Frontier, which = "ask")
@@ -443,15 +418,16 @@ test.plot.RlpSolve <-
 
     # Plot:
     par(mfrow = c(1, 1))
-    frontierPlot(Frontier)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)
-    .tangencyPlot(Frontier, col = "green")
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue")
+    frontierPlot(Frontier, pch = 19)
+    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, col = "green")
+    tangencyLines(Frontier, col = "green")
+    singleAssetPoints(Frontier, col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+    twoAssetsLines(Frontier, col = "grey")
+    # .weightsWheel(Frontier)
+    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
     # Plot Ask:
     # plot(Frontier, which = "ask")

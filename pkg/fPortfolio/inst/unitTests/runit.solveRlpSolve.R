@@ -25,11 +25,11 @@
 
 ################################################################################
 # FUNCTION: 
-#  test.solveRlpSolve.CVaR.LongOnly.MinRisk
+#  test.solveRlpSolve.CVaR.LongOnly
 ################################################################################
 
 
-test.solveRlpSolve.CVaR.LongOnly.MinRisk <- 
+test.solveRlpSolve.CVaR.LongOnly <- 
     function()
 {
     # Load Data:
@@ -41,8 +41,8 @@ test.solveRlpSolve.CVaR.LongOnly.MinRisk <-
     spec = portfolioSpec()
     setType(spec) = "CVaR"
     setTargetReturn(spec) = mean(colMeans(data))
-    setTargetAlpha(spec) = 0.05
-    setSolver(spec) <- "lpSolve"
+    setAlpha(spec) = 0.05
+    setSolver(spec) <- "solveRlpSolve"
     print(spec)
 
     # Constraints:

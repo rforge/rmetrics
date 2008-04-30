@@ -26,8 +26,8 @@
 ################################################################################
 # FUNCTION:
 #  test.portfolioFrontier.MV.Short
-#  test.portfolioFrontier.MV.LonglOnly
-#  test.portfolioFrontier.MV.LongOnly.RDonlp2
+#  test.portfolioFrontier.MV.LongOnly
+#  test.portfolioFrontier.MV.LongOnly.Rdonlp2
 #  test.portfolioFrontier.MV.LongOnly.boxGroupConstraints
 #  test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints
 #  ...
@@ -63,7 +63,7 @@ test.portfolioFrontier.MV.Short <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioFrontier.MV.LonglOnly <- 
+test.portfolioFrontier.MV.LongOnly <- 
     function()
 {
     # Data:
@@ -92,7 +92,7 @@ test.portfolioFrontier.MV.LonglOnly <-
 # ------------------------------------------------------------------------------
 
 
-test.portfolioFrontier.MV.LongOnly.RDonlp2 <- 
+test.portfolioFrontier.MV.LongOnly.Rdonlp2 <- 
     function()
 {   
     if (require(Rdonlp2)) {
@@ -104,7 +104,7 @@ test.portfolioFrontier.MV.LongOnly.RDonlp2 <-
         
         # Specification:
         spec = portfolioSpec()
-        setSolver(spec) = "Rdonlp2"
+        setSolver(spec) = "solveRdonlp2"
         setNFrontierPoints(spec) = 5
         spec
         
@@ -149,7 +149,7 @@ test.portfolioFrontier.MV.LongOnly.boxGroupConstraints <-
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(ans)
-    attributesPlot(ans)
+    weightedReturnsPlot(ans)
     covRiskBudgetsPlot(ans)
 
     # Get Weights:
@@ -178,7 +178,7 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <-
         
         # Specification:
         spec = portfolioSpec()
-        setSolver(spec) = "Rdonlp2"
+        setSolver(spec) = "solveRdonlp2"
         setNFrontierPoints(spec) = 10
         spec
         
@@ -212,7 +212,7 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
        
         # Set Specifications:
         Spec = portfolioSpec() 
-        setSolver(Spec) = "Rdonlp2"
+        setSolver(Spec) = "solveRdonlp2"
         setNFrontierPoints(Spec) <- 10
         
         # Set Constraints:
@@ -227,7 +227,7 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
         # still to be done ...
             
         ## setTargetReturn(Spec) <- mean(Data@Data)   
-        ## solveRDonlp2(Data, Spec, Constraints)
+        ## solveRdonlp2(Data, Spec, Constraints)
         
         ## ans = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
         

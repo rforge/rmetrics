@@ -50,7 +50,8 @@ test.plot.fPORTFOLIO <-
     print(frontier)
     
     # Plot:
-    plot(frontier)
+    # plot(frontier, which = "all")
+    plot(frontier, which = c(1:6,8:9))
 
     # Return Value:
     return()
@@ -76,11 +77,11 @@ test.plot.fPORTFOLIO <-
 #   .addlegend                   Adds legend to sliders
 # FUNCTION:                    FRONTIER BAR PLOTS:                  
 #  weightsPlot                  Plots staggered weights
-#  attributesPlot               Plots weighted means
+#  weightedReturnsPlot          Plots weighted means
 #  covRiskBudgetsPlot           Plots weighted risks
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
 #  weightsPie                   Plots staggered weights
-#  attributesPie                Plots weighted means
+#  weightedReturnsPie           Plots weighted means
 #  covRiskBudgetsPie            Plots weighted risks
 # FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses                
@@ -111,14 +112,15 @@ test.frontierPlot.ShortMV <-
     par(mfrow = c(1, 1))
     object = Frontier
     frontierPlot(Frontier, pch = 19)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, col = "green")
+    tangencyLines(Frontier, col = "green")
+    singleAssetPoints(Frontier, col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+    twoAssetsLines(Frontier, col = "grey")
+    # .weightsWheel(Frontier)
+    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
     # Return Value:
     return()
@@ -151,14 +153,15 @@ function()
     # Plot:
     par(mfrow = c(1, 1))
     frontierPlot(Frontier, pch = 19)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, col = "green")
+    tangencyLines(Frontier, col = "green")
+    singleAssetPoints(Frontier, col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+    twoAssetsLines(Frontier, col = "grey")
+    # .weightsWheel(Frontier)
+    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
     # Return Value:
     return()
@@ -192,14 +195,15 @@ function()
     # Plot:
     par(mfrow = c(1, 1))
     frontierPlot(Frontier, pch = 19)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, col = "green")
+    tangencyLines(Frontier, col = "green")
+    singleAssetPoints(Frontier, col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
+    twoAssetsLines(Frontier, col = "grey")
+    # .weightsWheel(Frontier)
+    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, pch = 19, col = "blue")
 
     # Return Value:
     return()
@@ -228,7 +232,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
-    attributesPlot(Frontier)
+    weightedReturnsPlot(Frontier)
     covRiskBudgetsPlot(Frontier)
     
     # Return Value:
@@ -258,7 +262,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
-    attributesPlot(Frontier)
+    weightedReturnsPlot(Frontier)
     covRiskBudgetsPlot(Frontier)
     
     # Return Value:
@@ -289,7 +293,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
-    attributesPlot(Frontier)
+    weightedReturnsPlot(Frontier)
     covRiskBudgetsPlot(Frontier)
     
     # Return Value:
@@ -319,7 +323,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
-    attributesPie(Portfolio)
+    weightedReturnsPie(Portfolio)
     covRiskBudgetsPie(Portfolio)
     
     # Return Value:
@@ -349,7 +353,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
-    attributesPie(Portfolio)
+    weightedReturnsPie(Portfolio)
     covRiskBudgetsPie(Portfolio)
     
     # Return Value:
@@ -380,7 +384,7 @@ function()
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
-    attributesPie(Portfolio)
+    weightedReturnsPie(Portfolio)
     covRiskBudgetsPie(Portfolio)
     
     # Return Value:

@@ -25,13 +25,14 @@
 
 ################################################################################
 # FUNCTION: 
-#  test.solveRdonlp2.MV.LongOnly.MinRisk  
-#  test.solveRdonlp2.CovRiskBudgets.MinRisk   
-#  test.solveRdonlp2.twoAssets    
+#  test.solveRdonlp2.LongOnly  
+#  test.solveRdonlp2.CovRiskBudgets 
+#  test.solveRdonlp2.twoAssets  
+#  test.solveRdonlp2.boxConstraints 
 ################################################################################
 
 
-test.solveRdonlp2.MV.LongOnly.MinRisk <- 
+test.solveRdonlp2.LongOnly <- 
     function()
 { 
     # Given Target Return Minimize Risk
@@ -46,9 +47,10 @@ test.solveRdonlp2.MV.LongOnly.MinRisk <-
         
         # Specification:
         spec = portfolioSpec()
-        setTargetReturn(spec) = mean(as.matrix(data))
+        setType(spec) = "MV"
+        setOptimize(spec) = "minRisk"
+        setTargetReturn(spec) = mean(colMeans(data))
         setSolver(spec) = "solveRdonlp2"
-        setTrace(spec) = TRUE
         print(spec)
         
         # Default Constraints:
@@ -69,7 +71,7 @@ test.solveRdonlp2.MV.LongOnly.MinRisk <-
 # ------------------------------------------------------------------------------
     
  
-test.solveRdonlp2.CovRiskBudgets.MinRisk <- 
+test.solveRdonlp2.CovRiskBudgets <- 
     function()
 {     
     # Given Target Return Minimize Risk
@@ -85,12 +87,13 @@ test.solveRdonlp2.CovRiskBudgets.MinRisk <-
         
         # Specification:
         spec = portfolioSpec()
-        setTargetReturn(spec) = mean(as.matrix(data))
+        setType(spec) = "MV"
+        setOptimize(spec) = "minRisk"
         setSolver(spec) = "solveRdonlp2"
-        setTrace(spec) = FALSE
         print(spec)
         
-        # Add Large Covariance Budget Constraints:
+        # Add Covariance Budget Constraints:
+        setTargetReturn(spec) = mean(colMeans(data))
         constraints = c("minW[1:4]=0", "maxB[1:4]=1")
         ans = solveRdonlp2(data, spec, constraints)
         setWeights(spec) = ans$weights
@@ -98,7 +101,7 @@ test.solveRdonlp2.CovRiskBudgets.MinRisk <-
         print(portfolio)
         
         # Make Covariance Risk Budget Constraints active:
-        setTargetReturn(spec) = mean(as.matrix(data))
+        setTargetReturn(spec) = mean(colMeans(data))
         constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
         ans = solveRdonlp2(data, spec, constraints)
         setWeights(spec) = ans$weights
@@ -128,7 +131,7 @@ test.solveRdonlp2.twoAssets =
         
         # Specification:
         spec = portfolioSpec()
-        setTargetReturn(spec) = mean(as.matrix(data))
+        setTargetReturn(spec) = mean(colMeans(data))
         print(spec)
         
         # Default Constraints:
@@ -136,7 +139,7 @@ test.solveRdonlp2.twoAssets =
         print(constraints)
         
         # RDonlp2:
-        ans = solveRDonlp2(data, spec, constraints) 
+        ans = solveRdonlp2(data, spec, constraints) 
         print(ans) 
         print(ans$weights)
         
@@ -150,48 +153,29 @@ test.solveRdonlp2.twoAssets =
 ################################################################################
 
 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.solveRDonlp2 =
+test.solveRdonlp2.boxConstraints =
 function()
 {
     if (require(Rdonlp2)) {
   
         # Load Data:
-        Data = as.timeSeries(data(smallcap.ts))
-        Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-        head(Data)
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
        
         # Set Specifications:
-        Spec = portfolioSpec() 
-        setSolver(Spec) = "Rdonlp2"
-        setTargetReturn(Spec) = mean(Data@Data)
+        spec = portfolioSpec() 
+        setSolver(spec) = "solveRdonlp2"
+        setTargetReturn(spec) = mean(colMeans(data))
         
         # Set Constraints:
-        Constraints = c(
+        constraints = c(
             "minB[1:4]=0.15",
             "maxB[1:4]=0.35")
-            
-        ## still to be checked ...
         
         # Solve:
-        ## ans = solveRDonlp2(Data, Spec, Constraints)
-        ## ans = efficientPortfolio(Data, Spec, Constraints)  # Does not work !!
-        
-        # Plot:
-        ## par(mfrow = c(2, 2), cex = 0.7)
-        ## weightsPlot(ans)
-        ## attributesPlot(ans)
-        ## covRiskBudgetsPlot(ans)
-    
-        # Get Weights:
-        ## getWeights(ans)
-        
-        # Get Risk Budgets:
-        # getRiskBudgets(ans)                               # Does not work !!!!
+        ans = solveRdonlp2(data, spec, constraints)
+        print(ans)
         
     }
 

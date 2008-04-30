@@ -25,45 +25,15 @@
 
 ################################################################################
 # FUNCTION:
-#  test.efficientPortfolio
 #  test.efficientPortfolio.MV.Short
 #  test.efficientPortfolio.MV.LongOnly
 #  test.efficientPortfolio.MV.LongOnly.Rdonlp2
-#  test.efficientPortfolio.BoxConstraints.RDonlp2
+#  test.efficientPortfolio.MV.BoxConstraints.RDonlp2
 #  test.efficientPortfolio.MV.LongOnly.twoAssets
+#  test.efficientPortfolio.LPP.LongOnly
+#  test.efficientPortfolio.CVaR.LongOnly
+#  test.efficientPortfolio.CVaR.LongOnly.TwoAssets
 ################################################################################
-
-
-test.efficientPortfolio.Default <-
-    function()
-{
-    # The default returns the MV long only tangency portfolio ...
-
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    print(head(data))
-    
-    # Specification
-    #   ... use default
-    spec = portfolioSpec()
-    print(spec)
-    
-    # Constraints:
-    #   ... use default, long only
-    constraints = "LongOnly"
-    print(constraints)
-
-    # Optimization:
-    portfolio = efficientPortfolio(data)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.efficientPortfolio.MV.Short <-
@@ -75,40 +45,25 @@ test.efficientPortfolio.MV.Short <-
     print(head(data))
 
     # Specification:
-    #   ... use default, long only
     spec = portfolioSpec()
+    setTargetReturn(spec) = mean(colMeans(data))
     print(spec)
 
     # Constraints:
-    #   ... allow for unlimited short selling
     constraints = "Short"
     print(constraints)
 
-    # Optimization:
-    getWeights(spec)
-    getTargetReturn(spec)
-    getTargetRisk(spec)
-    # ... since all three are NULL, the tangency portfolio will be returned:
-    try(efficientPortfolio(data, spec, constraints))
-    # Fails since ...
-    #   Either target return or target risk must be specified!
-
     # Specify Target Return to minimize risk ...
-    setTargetReturn(spec) = mean(as.matrix(data))
-    getWeights(spec)
-    getTargetReturn(spec)
-    getTargetRisk(spec)
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
-
+    print(getSolver(portfolio))
+    
     # Specify Target Risk to maximize the return ...
-    setTargetRisk(spec) = getTargetRisk(portfolio)[,"cov"]
+    setTargetRisk(spec) <- getTargetRisk(portfolio)[,"cov"]
     setOptimize(spec) = "maxReturn"
-    getWeights(spec)
-    getTargetReturn(spec)
-    getTargetRisk(spec)
-    portfolio = efficientPortfolio(data, spec, constraints)
-    print(portfolio)
+    ## portfolio = efficientPortfolio(data, spec, constraints)
+    ## print(portfolio)
+    ## print(getSolver(portfolio))
     
     # Return Value:
     return()
@@ -136,16 +91,17 @@ test.efficientPortfolio.MV.LongOnly <-
     print(constraints)
 
     # Risk Minimized Optimization:
-    setTargetReturn(spec) <- mean(as.matrix(data))
+    setTargetReturn(spec) <- mean(colMeans(data))
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
-    getSolver(portfolio)
+    print(getSolver(portfolio))
 
     # Return Maximized Optimization:
     setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
-    portfolio = efficientPortfolio(data, spec, constraints)
-    print(portfolio)
-    getSolver(portfolio)
+    setOptimize(spec) = "maxReturn"
+    ## portfolio = efficientPortfolio(data, spec, constraints)
+    ## print(portfolio)
+    ## print(getSolver(portfolio))
 
     # Return Value:
     return()
@@ -176,17 +132,18 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
         print(constraints)
 
         # Risk Minimized Optimization:
-        setSolver = "solveRdonlp2"
-        setTargetReturn(spec) <- mean(as.matrix(data))
+        setSolver(spec) = "solveRdonlp2"
+        setTargetReturn(spec) <- mean(colMeans(data))
         portfolio = efficientPortfolio(data, spec, constraints)
         print(portfolio)
-        getSolver(portfolio)
+        print(getSolver(portfolio))
 
         # Return Maximized Optimization:
         setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
-        portfolio = efficientPortfolio(data, spec, constraints)
-        print(portfolio)
-        getSolver(portfolio)
+        setOptimize(spec) = "maxReturn"
+        ## portfolio = efficientPortfolio(data, spec, constraints)
+        ## print(portfolio)
+        ## print(getSolver(portfolio))
 
     }
 
@@ -198,11 +155,11 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
 # ------------------------------------------------------------------------------
 
 
-test.efficientPortfolio.BoxConstraints.RDonlp2 =
+test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
     function()
 {
     # This requires the Rdonlp2 Package:
-    if (require(Rdonlp2)) 
+    if (require(Rdonlp2)) {
 
         # Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -212,7 +169,7 @@ test.efficientPortfolio.BoxConstraints.RDonlp2 =
         # Specification:
         spec = portfolioSpec()
         setTargetReturn(spec) = mean(series(data))
-        setSolver(spec) = "Rdonlp2"
+        setSolver(spec) = "solveRdonlp2"
         print(spec)
         
         # Constraints:
@@ -220,8 +177,8 @@ test.efficientPortfolio.BoxConstraints.RDonlp2 =
         print(constraints)
         
         # Optimization:
-        portfolio = efficientPortfolio(data, spec, constraints)
-        print(portfolio)
+        ## portfolio = efficientPortfolio(data, spec, constraints)
+        ## print(portfolio)
     }
 
     # Return Value:
@@ -261,35 +218,6 @@ test.efficientPortfolio.MV.LongOnly.twoAssets <-
 # ------------------------------------------------------------------------------
 
 
-test.efficientPortfolio.MV.Short <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    print(head(data))
-
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) = 0.15
-    print(spec)
-
-    # Constraints - Efficient Portfolio:
-    constraints = "Short"
-    print(constraints)
-
-    # Portfolio:
-    portfolio = efficientPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.efficientPortfolio.MV.BoxConstraints <-
     function()
 {
@@ -317,30 +245,42 @@ test.efficientPortfolio.MV.BoxConstraints <-
 
 
 ################################################################################
-
+# LPP
 
 test.efficientPortfolio.LPP.LongOnly <-
     function()
 {
-    # Second Example:
+    # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
-
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "LPP"
-    setEstimator(spec) <- "assetsLPM"
-    setTargetReturn(spec) = mean(data@Data)
-    print(spec)
-
-    # Constraints:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # Optimization:
-    portfolio = efficientPortfolio(data, spec, constraints)
-    print(portfolio)
+    
+    if (FALSE) {
+        
+        # Estimator:
+        lpmEstimator <-
+        function(data, spec) {
+            mu <- colMeans(data)
+            Sigma <- assetsLPM(data, tau = colMeans(data), a = 1.5)$Sigma
+            list(mu = mu, Sigma = Sigma)
+        }
+    
+        # CVaR Specification:
+        spec = portfolioSpec()
+        setType(spec) = "LPP"
+        setEstimator(spec) <- "lpmEstimator"
+        setTargetReturn(spec) = mean(data@Data)
+        print(spec)
+    
+        # Constraints:
+        constraints = "LongOnly"
+        print(constraints)
+    
+        # Optimization:
+        portfolio = efficientPortfolio(data, spec, constraints)
+        print(portfolio)
+        
+    }
 
     # Return Value:
     return()
@@ -348,6 +288,7 @@ test.efficientPortfolio.LPP.LongOnly <-
 
 
 ################################################################################
+# CVAR
 
 
 test.efficientPortfolio.CVaR.LongOnly <- 
@@ -432,241 +373,6 @@ test.efficientPortfolio.CVaR.LongOnly.Alpha <-
 
     # CVaR Portfolio Optimization:
     portfolio = efficientPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-################################################################################
-# Tangency Portfolio:
-
-
-test.tangencyPortfolio.MV.Short <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    setRiskFreeRate(spec) = 0.01
-    print(spec)
-
-    # Constraints - Capital Market Line:
-    constraints = "Short"
-    print(constraints)
-
-    # Portfolio:
-    portfolio = cmlPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyPortfolio.MV.LongOnly <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    print(spec)
-
-    # Constraints:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # Optimization:
-    portfolio = cmlPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyPortfolio.MV.LongOnly <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    print(spec)
-
-    # CML Portfolio - Equals Tangency Portfolio:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # Portfolio - Equals tangency Portfolio:
-    portfolio = cmlPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyPortfolio.CVaR.LongOnly <-
-    function()
-{
-    # Linear Programming - CVaR Portfolio:
-    #   the return is fixed, we minimie the CVaR
-
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(data@Data)
-    setAlpha(spec) = 0.05
-    print(spec)
-
-    # Constraints:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # CVaR Portfolio:
-    portfolio = cmlPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-################################################################################
-# Minvariance Portfolio
-
-
-test.minvariancePortfolio.MV.Short <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    print(spec)
-
-    # Constraints - Minimum Variance Portfolio:
-    constraints = "Short"
-    print(constraints)
-
-    # Portfolio:
-    portfolio = minvariancePortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.minvariancePortfolio.MV.LongOnly <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    print(spec)
-
-    # Constraints:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # Minimum Variance Portfolio:
-    portfolio = minvariancePortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.minvariancePortfolio.MV.BoxConstrained <- 
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    print(spec)
-
-    # Constraints:
-    constraints = "maxW[1:nAssets]=0.6"
-    print(constraints)
-
-    # Minimum Variance Portfolio:
-    portfolio = minvariancePortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.minvariancePortfolio.CVaR.LongOnly <- 
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setAlpha(spec) = 0.05
-    print(spec)
-
-    # Constraints:
-    constraints = "LongOnly"
-    print(constraints)
-
-    # CVaR Portfolio Optimization:
-    portfolio = minvariancePortfolio(data, spec, constraints)
     print(portfolio)
 
     # Return Value:

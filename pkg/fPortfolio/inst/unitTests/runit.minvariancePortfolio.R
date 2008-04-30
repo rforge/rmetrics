@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -24,52 +24,34 @@
 
 
 ################################################################################
-# FUNCTION:                     
-#  test.frontierPoints.feasiblePortfolio 
-#  test.frontierPoints.portfolioFrontier               
+# FUNCTION:
+#  test.minvariancePortfolio.MV.Short
+#  test.minvariancePortfolio.MV.LongOnly
+#  test.minvariancePortfolio.MV.BoxConstrained
+#  test.minvariancePortfolio.CVaR.LongOnly
 ################################################################################
 
 
-test.frontierPoints.feasiblePortfolio <- 
+test.minvariancePortfolio.MV.Short <-
     function()
-{  
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    print(head(data))
-    
+    head(data)
+
     # Specification:
-    #   ... use defaults, Mean-Variance with Equal Weights
     spec = portfolioSpec()
     print(spec)
-    
-    # Constraints:
-    #   ... use defaults, Long Only
-    constraints = "LongOnly"
+
+    # Constraints - Minimum Variance Portfolio:
+    constraints = "Short"
     print(constraints)
-    
-    # Feasible Portfolio:
-    #   ... use defaults for spec and constraints 
-    portfolio = feasiblePortfolio(data)
+
+    # Portfolio:
+    portfolio = minvariancePortfolio(data, spec, constraints)
     print(portfolio)
-    
-    # Frontier Points:
-    #   ... returns target risk and target return
-    points = frontierPoints(portfolio)
-    print(points)
-    
-    # Frontier Points:
-    #   ... returns target risk and target return
-    points = frontierPoints(portfolio)
-    print(points)
-    
-    # Specify Return/Risk Measures, explicitely:
-    print(frontierPoints(portfolio, return = "mean"))
-    print(frontierPoints(portfolio, risk = "cov"))
-    print(frontierPoints(portfolio, risk = "Sigma"))
-    print(frontierPoints(portfolio, risk = "CVaR"))
-    print(frontierPoints(portfolio, risk = "VaR"))
-  
+
     # Return Value:
     return()
 }
@@ -78,41 +60,84 @@ test.frontierPoints.feasiblePortfolio <-
 # ------------------------------------------------------------------------------
 
 
-test.frontierPoints.portfolioFrontier <- 
+test.minvariancePortfolio.MV.LongOnly <-
     function()
-{  
+{
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    print(head(data))
-    
+    head(data)
+
     # Specification:
-    #   ... use defaults, Mean-Variance with Equal Weights
     spec = portfolioSpec()
     print(spec)
-    
+
     # Constraints:
-    #   ... use defaults, Long Only
     constraints = "LongOnly"
     print(constraints)
-    
-    # Feasible Portfolio:
-    #   ... use defaults for spec and constraints 
-    portfolio = portfolioFrontier(data)
+
+    # Minimum Variance Portfolio:
+    portfolio = minvariancePortfolio(data, spec, constraints)
     print(portfolio)
-    
-    # Frontier Points:
-    #   ... returns target risk and target return
-    points = frontierPoints(portfolio)
-    print(points)
-    
-    # Specify Return/Risk Measures, explicitely:
-    print(frontierPoints(portfolio, return = "mean"))
-    print(frontierPoints(portfolio, risk = "cov"))
-    print(frontierPoints(portfolio, risk = "Sigma"))
-    print(frontierPoints(portfolio, risk = "CVaR"))
-    print(frontierPoints(portfolio, risk = "VaR"))
-    
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.minvariancePortfolio.MV.BoxConstrained <- 
+    function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+
+    # Specification:
+    spec = portfolioSpec()
+    print(spec)
+
+    # Constraints:
+    constraints = "maxW[1:nAssets]=0.6"
+    print(constraints)
+
+    # Minimum Variance Portfolio:
+    portfolio = minvariancePortfolio(data, spec, constraints)
+    print(portfolio)
+
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.minvariancePortfolio.CVaR.LongOnly <- 
+    function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+
+    # CVaR Specification:
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setAlpha(spec) = 0.05
+    print(spec)
+
+    # Constraints:
+    constraints = "LongOnly"
+    print(constraints)
+
+    # CVaR Portfolio Optimization:
+    portfolio = minvariancePortfolio(data, spec, constraints)
+    print(portfolio)
+
     # Return Value:
     return()
 }

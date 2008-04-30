@@ -26,15 +26,14 @@
 
 ################################################################################
 # FUNCTION:
-#  test.solveRquadprog.MV.LongOnly.MinRisk                 
+#  test.solveRquadprog.LongOnly           
 ################################################################################
 
     
-test.solveRquadprog.MV.LongOnly.MinRisk <- 
+test.solveRquadprog.LongOnly <- 
     function()
 { 
     # Quadratic Programmming - Mean-Variance Portfolio:
-    #   The target return is fixed, we minimize the risk!
 
     # Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -43,7 +42,9 @@ test.solveRquadprog.MV.LongOnly.MinRisk <-
     
     # Specification:
     spec = portfolioSpec()
-    setTargetReturn(spec) = mean(as.matrix(data))
+    setType(spec) = "MV"
+    setOptimize(spec) = "minRisk"
+    setTargetReturn(spec) = mean(colMeans(data))
     print(spec)
     
     # Default Constraints:
@@ -54,11 +55,6 @@ test.solveRquadprog.MV.LongOnly.MinRisk <-
     ans = solveRquadprog(data, spec, constraints)
     print(ans)
     
-    # Should give the same results ...
-    setTargetReturn(spec) = 10*getTargetReturn(spec)
-    ans = solveRquadprog(10*data, spec, constraints)
-    print(ans)
-    
     # Return Value:
     return()
 }
@@ -67,7 +63,7 @@ test.solveRquadprog.MV.LongOnly.MinRisk <-
 # ------------------------------------------------------------------------------
 
 
-test.solveRquadprog.MV.MinRisk.twoAssets <- 
+test.solveRquadprog.twoAssets <- 
     function()
 { 
     # Solved Analytically
@@ -80,7 +76,9 @@ test.solveRquadprog.MV.MinRisk.twoAssets <-
     
     # Specification:
     spec = portfolioSpec()
-    setTargetReturn(spec) = mean(as.matrix(data))   
+    setType(spec) = "MV"
+    setOptimize(spec) = "minRisk"
+    setTargetReturn(spec) = mean(colMeans(data))   
     print(spec)
     
     # Default Constraints:

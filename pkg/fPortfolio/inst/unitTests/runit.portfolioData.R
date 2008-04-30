@@ -44,39 +44,16 @@ test.portfolioData <-
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
    
     # Set Default Specifications:
     spec = portfolioSpec()
-    spec
+    print(spec)
     
     # PortfolioData:
-    portfolioData(data, spec)
+    pfolioData = portfolioData(data, spec)
+    print(pfolioData)
     
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.portfolioStatistics <- 
-    function()
-{
-    # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-   
-    # Set Default Specifications:
-    spec = portfolioSpec()
-    spec
-    
-    # PortfolioStatistics:
-    
-    portfolioStatistics(data, spec)
-         
     # Return Value:
     return()
 }
@@ -95,7 +72,6 @@ test.Extractors <-
      
     getData(data)
     getSeries(data)
-    getNumberOfAssets(data)
      
     getStatistics(data) 
     getMu(data)

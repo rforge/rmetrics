@@ -178,38 +178,3 @@ test.setSolver <-
 
 ################################################################################
 
-
-
-test.portfolioStatistics <- 
-    function()
-{ 
-    # Arguments:
-    # portfolioStatistics = (data, spec = portfolioSpec())
-    
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
-    
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Portfolio Statistics:
-    portfolioStatistics(Data, Spec)
-    
-    # mean-mcd Portfolio Statistics:
-    setEstimator(Spec) <- c("mean", "mcd")
-    portfolioStatistics(Data, Spec)
-    
-    # mean-shrink Portfolio Statistics:
-    setEstimator(Spec) <- c("mean", "shrink")
-    portfolioStatistics(Data, Spec)
-    
-    # Return Value:
-    return()
-}
-
-
-################################################################################
-
