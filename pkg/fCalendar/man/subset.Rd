@@ -3,7 +3,7 @@
 
 \alias{subset}
 \alias{[.timeDate}
-
+\alias{[<-.timeDate}
 
 \title{Subsetting a 'timeDate' Object}
 
