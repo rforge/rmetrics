@@ -71,7 +71,7 @@ drawdownsStats(x, \dots)
 \author{
 
     Peter Carl and Sankalp Upadhyay for code from the contributed 
-    R package PortfolioAnalytics.
+    R package PerformanceAnalytics.
     
 }
 
