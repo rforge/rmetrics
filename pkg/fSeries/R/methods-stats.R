@@ -19,7 +19,6 @@
 
 # template definition
 .templateXY <-  c("{",
-               "finCenter <- finCenter(x)",
                "x <- as.matrix(x)",
                "if (!is.null(y)) y <- as.matrix(y)",
                "ans <- callNextMethod()",
@@ -38,16 +37,30 @@ for (.f in .members) {
 
 .members <- c("quantile", "dnorm", "dcauchy", "dt")
 
+## # template definition
+## .templateANY <-  c("{",
+##                   "finCenter <- finCenter(ANY)",
+##                   "ANY <- as.matrix(ANY)",
+##                   "ans <- callNextMethod()",
+##                   "if (is.matrix(ans))",
+##                   "    ans <- timeSeries(ans, zone = finCenter,",
+##                   "                      FinCenter = finCenter)",
+##                   "ans",
+##                   "}")
+
 # template definition
+# The use of function 'series' should improve performance...
+# still experimental
 .templateANY <-  c("{",
-                  "finCenter <- finCenter(ANY)",
-                  "ANY <- as.matrix(ANY)",
-                  "ans <- callNextMethod()",
-                  "if (is.matrix(ans))",
-                  "    ans <- timeSeries(ans, zone = finCenter,",
-                  "                      FinCenter = finCenter)",
-                  "ans",
-                  "}")
+                   "TSANY <- ANY",
+                   "ANY <- as.matrix(ANY)",
+                   "ans <- callNextMethod()",
+                   "if (is.matrix(ans)) {",
+                   "    series(TSANY) <- ans",
+                   "    ans <- TSANY",
+                   "    }",
+                   "ans",
+                   "}")
 
 # set the Methods in a loop
 for (.f in .members) {
