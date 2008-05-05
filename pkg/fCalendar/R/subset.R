@@ -55,6 +55,7 @@
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")
     Sys.setenv(TZ = "GMT")
+    on.exit(Sys.setenv(TZ = myTZ))
 
     # Subsets:
     z = as.POSIXlt(x@Data)
@@ -63,7 +64,49 @@
     val = as.POSIXct(val)
 
     # Return Value:
-    Sys.setenv(TZ = myTZ)
+    new("timeDate",
+        Data = val,
+        format = x@format,
+        FinCenter = x@FinCenter)
+}
+
+
+#-------------------------------------------------------------------------------
+
+"[<-.timeDate" <-
+    function(x, ..., value)
+{
+    # A function implemented by Yohan Chalabi
+
+    # Description:
+    #   Extracts or replaces subsets from 'timeDate' objects
+
+    # Arguments:
+    #   x - a 'timeDate' object
+
+    # Value:
+    #   Returns a subset from a 'timeDate' object.
+
+    # Changes:
+    #
+
+    # FUNCTION:
+
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")
+    Sys.setenv(TZ = "GMT")
+    on.exit(Sys.setenv(TZ = myTZ))
+
+    if (!inherits(value, "timeDate"))
+        value <- as.timeDate(value)
+
+    # Subsets:
+    z = as.POSIXlt(x@Data)
+    value <- as.POSIXlt(value@Data)
+    val <- "[<-"(z, ..., value)
+    val = as.POSIXct(val)
+
+    # Return Value:
     new("timeDate",
         Data = val,
         format = x@format,
