@@ -93,22 +93,36 @@ setMethod("-", c("timeSeries", "missing"), function(e1, e2) 0-e1)
 
 .members <- c("Math", "Math2", "Summary")
 
+## # template definition
+## .template <-  c("{",
+##                 "finCenter <- finCenter(ANY)",
+##                 "ANY <- as.matrix(ANY)",
+##                 "ans <- callNextMethod()",
+##                 "if (is.matrix(ans))",
+##                 "    ans <- timeSeries(ans, zone = finCenter,",
+##                 "                      FinCenter = finCenter)",
+##                 "ans",
+##                 "}")
+
 # template definition
-.template <-  c("{",
-                "finCenter <- finCenter(ANY)",
-                "ANY <- as.matrix(ANY)",
-                "ans <- callNextMethod()",
-                "if (is.matrix(ans))",
-                "    ans <- timeSeries(ans, zone = finCenter,",
-                "                      FinCenter = finCenter)",
-                "ans",
-                "}")
+# The use of function 'series' should improve performance...
+# still experimental
+.templateANY <-  c("{",
+                   "TSANY <- ANY",
+                   "ANY <- as.matrix(ANY)",
+                   "ans <- callNextMethod()",
+                   "if (is.matrix(ans)) {",
+                   "    series(TSANY) <- ans",
+                   "    ans <- TSANY",
+                   "    }",
+                   "ans",
+                   "}")
 
 # set the Methods in a loop
 for (.f in .members) {
     .def <- function()NULL
     formals(.def) <- formals(.f)
-    .bodyText <- gsub("ANY", names(formals(.f))[1], .template)
+    .bodyText <- gsub("ANY", names(formals(.f))[1], .templateANY)
     body(.def) <- parse(text = .bodyText)
     setMethod(.f, "timeSeries", .def)
 }
@@ -123,22 +137,15 @@ for (.f in .members) {
 setMethod("log",
           "timeSeries",
           function(x, base = exp(1)) {
-              FinCenter <- finCenter(x)
-              x <- as.matrix(x)
-              ans <- log(x, base = base)
-              ans <- timeSeries(ans, zone = FinCenter,
-                                FinCenter = FinCenter)
-              ans
+              series(x) <- log(as.matrix(x), base = base)
+              x
           })
+
 setMethod("trunc",
           "timeSeries",
           function(x, ...) {
-              FinCenter <- finCenter(x)
-              x <- as.matrix(x)
-              ans <- trunc(x, ...)
-              ans <- timeSeries(ans, zone = FinCenter,
-                                FinCenter = FinCenter)
-              ans
+              series(x) <- trunc(as.matrix(x), ...)
+              x
           })
 
 # ------------------------------------------------------------------------------
