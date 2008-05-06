@@ -17,7 +17,7 @@
 
 \usage{
 frontierPoints(object, frontier = c("both", "lower", "upper"), 
-    return = c("mean", "mu"), risk = c("cov", "Sigma", "CVaR", "VaR"),
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE)
 }
 

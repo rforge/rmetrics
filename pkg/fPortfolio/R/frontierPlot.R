@@ -48,7 +48,8 @@
 frontierPlot <-
     function(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, labels = TRUE,
-    risk = NULL, title = TRUE, ...)
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
+    auto = TRUE, title = TRUE, ...)    
 {
     # A function implemented by Rmetrics
 
@@ -62,20 +63,12 @@ frontierPlot <-
 
     # Settings:
     frontier = match.arg(frontier)
-
-    # Frontier:
-    if (is.null(risk)) {
-        risk = "cov"
-        auto = TRUE 
-    } else {
-        auto = FALSE
-    }
     fullFrontier = frontierPoints(object, frontier = "both", 
-        risk = risk, auto = auto)
+        return = return, risk = risk, auto = auto)
     upperFrontier = frontierPoints(object, frontier = "upper", 
-        risk = risk, auto = auto)
+        return = return, risk = risk, auto = auto)
     lowerFrontier = frontierPoints(object, frontier = "lower", 
-        risk = risk, auto = auto)
+        return = return, risk = risk, auto = auto)
 
     # Check for 'xlim' Argument:
     Arg <- match.call(expand.dots = TRUE)
@@ -194,14 +187,15 @@ frontierPlot <-
 
     # Add Info:
     if (title) {
+        labs = attr(fullFrontier, "control")
         title(
             main = "Efficient Frontier",
-            xlab = "Target Risk",
-            ylab = "Target Return")
+            xlab = paste("Target Risk[", labs[1], "]", sep = ""),
+            ylab = paste("Target Return[", labs[2], "]", sep = ""))
     }
 
     # Return Value:
-    invisible()
+    invisible(fullFrontier)
 }
 
 
@@ -209,7 +203,9 @@ frontierPlot <-
 
 
 minvariancePoints <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -225,7 +221,8 @@ minvariancePoints <-
 
     # Add Minimum Variance Point:
     mvPortfolio = minvariancePortfolio(Data, Spec, Constraints)
-    assets = frontierPoints(mvPortfolio)
+    assets = frontierPoints(mvPortfolio, return = return, risk = risk,
+        auto = auto)
     points(assets, ...)
 
     # Return Value:
@@ -237,7 +234,9 @@ minvariancePoints <-
 
 
 cmlPoints <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -254,7 +253,8 @@ cmlPoints <-
 
     # Add Capital Market Line Tangency Point:
     cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    assets = frontierPoints(cmlPortfolio)
+    assets = frontierPoints(cmlPortfolio, return = return, risk = risk,
+        auto = auto)
     points(assets, ...)
 
     # Return Value:
@@ -266,7 +266,9 @@ cmlPoints <-
 
 
 cmlLines <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -285,7 +287,7 @@ cmlLines <-
     cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
     riskFreeRate = getRiskFreeRate(Spec)
     slope = ((getTargetReturn(cmlPortfolio)[, "mean"] - riskFreeRate) /
-        getTargetRisk(cmlPortfolio)[, "cov"])
+        getTargetRisk(cmlPortfolio)[, "Cov"])
     if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
 
     # Return Value:
@@ -297,7 +299,9 @@ cmlLines <-
 
 
 tangencyPoints <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -315,10 +319,12 @@ tangencyPoints <-
     tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
 
     # Add Tangency Point:
-    points(frontierPoints(tgPortfolio), ...)
+    assets = frontierPoints(tgPortfolio, return = return, risk = risk,
+        auto = auto)
+    points(assets, ...)
 
     # Return Value:
-    invisible()
+    invisible(assets)
 }
 
 
@@ -326,7 +332,9 @@ tangencyPoints <-
 
 
 tangencyLines <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -344,7 +352,9 @@ tangencyLines <-
     tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
 
     # Add Tangency Line:
-    slope = getTargetReturn(tgPortfolio) / getTargetRisk(tgPortfolio)[1]
+    assets = frontierPoints(tgPortfolio, return = return, risk = risk,
+        auto = auto) 
+    slope = assets[2] / assets[1]
     abline(0, slope, ...)
 
     # Return Value:
@@ -356,7 +366,9 @@ tangencyLines <-
 
 
 equalWeightsPoints =
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -369,7 +381,6 @@ equalWeightsPoints =
     Data = getData(object)
     Spec = getSpec(object)
     Constraints = getConstraints(object)
-    Type = getType(object)
     NumberOfAssets = getNAssets(object)
 
     # Set Equal Weights:
@@ -377,15 +388,12 @@ equalWeightsPoints =
 
     # Add Equal Weights Portfolio:
     ewPortfolio = feasiblePortfolio(Data, Spec, Constraints)
-    if (Type == "MV") {
-        assets = frontierPoints(ewPortfolio)
-    } else if (Type == "CVaR") {
-        assets = frontierPoints(ewPortfolio) * c(-1, 1)
-    }
+    assets = frontierPoints(ewPortfolio, return = return, risk = risk,
+        auto = auto) 
     points(assets, ...)
 
     # Return Value:
-    invisible()
+    invisible(assets)
 }
 
 
@@ -393,8 +401,11 @@ equalWeightsPoints =
 
 
 singleAssetPoints <-
-    function(object, ...)
-{   # A function implemented by Rmetrics
+    function(object,
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds all single assets returns and risks to a portfolio plot
@@ -404,18 +415,53 @@ singleAssetPoints <-
     # Add Single Assets:
     Statistics = getStatistics(object)
     Type = getType(object)
+    
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
+    # Get auto Risk:
+    if (auto) {
+        return = "mu"
+        Type = getType(object)
+        Estimator = getEstimator(object)
+        if (Type == "MV") risk = "Cov"
+        if (Type == "MV" & Estimator != "covEstimator") risk = "Sigma"
+        if (Type == "QLPM") risk = "Sigma"
+        if (Type == "CVaR") risk = "CVaR" 
+    }
 
-    Return = Statistics$mu
-    if (Type == "MV") {
+    # Return:
+    if (return == "mean") {
+        Return = Statistics$mean
+    } else if (return == "mu") {
+        Return = Statistics$mean
+    }
+    
+    # Risk:
+    if (risk == "Cov") {
+        Risk = sqrt(diag(Statistics$Cov)) 
+    } else if (risk == "Sigma") {
         Risk = sqrt(diag(Statistics$Sigma))
-    } else if (Type == "CVaR") {
+    } else if (risk == "CVaR") {
         nAssets = getNAssets(object)
         Data = getSeries(object)
         alpha = getAlpha(object)
         Risk = NULL
         for (i in 1:nAssets) Risk = c(Risk, -.cvarRisk(Data[ ,i], 1, alpha))
+    } else if (risk == "VaR") {
+        nAssets = getNAssets(object)
+        Data = getSeries(object)
+        alpha = getAlpha(object)
+        Risk = NULL
+        for (i in 1:nAssets) Risk = c(Risk, -.varRisk(Data[ ,i], 1, alpha))
     }
-    assets = cbind(Risk = Risk, Return = Return)
+    Risk = as.vector(Risk)
+    
+    # Add Points:
+    assets = cbind(targetRisk = Risk, targetReturn = Return)
+    attr(assets, "control") <- 
+        c(targetRisk = risk, targetReturn = return, auto = as.character(auto))
     points(assets, ...)
 
     # Return Value:
@@ -427,8 +473,11 @@ singleAssetPoints <-
 
 
 twoAssetsLines <-
-    function(object, ...)
-{   # A function implemented by Rmetrics
+    function(object,
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds efficient long-only frontier of all portfolio pairs
@@ -457,7 +506,8 @@ twoAssetsLines <-
             Data2 = Data[, index]
             # Zero-One Constraints2 ?
             ans = portfolioFrontier(data = Data2, spec = Spec)
-            lines(frontierPoints(ans), ...)
+            lines(frontierPoints(ans, 
+                return = return, risk = risk, auto = auto), ...)
         }
     }
 
@@ -470,7 +520,9 @@ twoAssetsLines <-
 
 
 sharpeRatioLines <-
-    function(object, ...)
+    function(object, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -486,12 +538,16 @@ sharpeRatioLines <-
     Type = getType(object)
 
     # Efficient Frontier:
-    x = getTargetRisk(object)[, "cov"]
-    y = getTargetReturn(object)[, "mean"]
+    frontPoints = frontierPoints(object, frontier = "upper",
+        return = return, risk = risk, auto = auto)
+    x = frontPoints[, 1]
+    y = frontPoints[, 2]
 
     # Tangency Portfolio:
     tangencyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    x.tg = getTargetReturn(tangencyPortfolio)[1, "mean"]
+    # x.tg = getTargetReturn(tangencyPortfolio)[1, "mean"]
+    x.tg = frontierPoints(tangencyPortfolio, 
+        return = return, risk = risk, auto = auto)[, 2]
 
     # Normalization to fit in EF Plot:
     norm = x.tg / max(y/x)
@@ -527,7 +583,9 @@ sharpeRatioLines <-
 
 
 monteCarloPoints <-
-    function(object, mcSteps = 5000, ...)
+    function(object, mcSteps = 5000, 
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
 

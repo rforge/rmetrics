@@ -45,20 +45,31 @@
 
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
-    col = c("black", "grey"), add = FALSE, labels = TRUE, 
-    risk = NULL, title = TRUE, \dots)
+    col = c("black", "grey"), add = FALSE, labels = TRUE,
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
+    auto = TRUE, title = TRUE, \dots) 
 
-minvariancePoints(object, \dots)
-cmlPoints(object, \dots)
-cmlLines(object, \dots)
-tangencyPoints(object, \dots)
-tangencyLines(object, \dots)
-equalWeightsPoints(object, \dots)
-singleAssetPoints(object, \dots)
-twoAssetsLines(object, \dots)
-sharpeRatioLines(object, \dots)
+minvariancePoints(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+cmlPoints(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+cmlLines(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+tangencyPoints(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+tangencyLines(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+equalWeightsPoints(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+singleAssetPoints(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+twoAssetsLines(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+sharpeRatioLines(object, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
 
-monteCarloPoints(object, mcSteps = 5000, \dots)
+monteCarloPoints(object, mcSteps = 5000, return = c("mean", "mu"), 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
 }
 
 
@@ -85,15 +96,24 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
         a logical value, determining whether the frontier should be added to 
         an existing plot, by default FALSE.
         }
+    \item{return}{
+        a character string denoting which type of return should be
+        plotted. Allowed values for the
+        return are either \code{"mean"}, or \code{"mu"}.
+        }
+    \item{risk}{
+        a character string denoting which type of risk should be
+        plotted. Allowed values for the
+        risk measure are either \code{"cov"}, \code{"sigma"},  
+        \code{"VaR"}, or \code{"CVaR"}.
+        }
+    \item{auto}{
+        a logical flag denoting if the type of return and risk to be
+        plotted should be selected automatically, by default TRUE.
+        }
     \item{labels}{
         a logical flag, should the plot be automatically labeled and
         decorated? By default \code{TRUE}.
-        }
-    \item{risk} {
-        \code{NULL}, or a character value one of:
-        \code{"cov"}, \code{"sigma"}, \code{"CVaR"}, or \code{"VaR"}. If
-        \code{NULL} then the value for \code{risk} is automatically selected 
-        from the portfolio specification.
         }
     \item{title}{
         a logical flag, should the plot obtain a default main title and

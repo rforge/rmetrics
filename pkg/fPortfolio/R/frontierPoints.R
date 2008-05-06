@@ -31,7 +31,7 @@
 
 frontierPoints <-
     function(object, frontier = c("both", "lower", "upper"),
-        return = c("mean", "mu"), risk = c("cov", "Sigma", "CVaR", "VaR"),
+        return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
         auto = TRUE)
 {
     # A function implemented by Rmetrics
@@ -56,9 +56,9 @@ frontierPoints <-
     if (auto) {
         Type = getType(object)
         Estimator = getEstimator(object)
-        if (Type == "MV") risk = "cov"
-        if (Type == "MV" & Estimator != "covEstimator") risk = "sigma"
-        if (Type == "QLPM") risk = "sigma"
+        if (Type == "MV") risk = "Cov"
+        if (Type == "MV" & Estimator != "covEstimator") risk = "Sigma"
+        if (Type == "QLPM") risk = "Sigma"
         if (Type == "CVaR") risk = "CVaR" 
     }
     targetRisk = getTargetRisk(object)[, risk]
@@ -87,6 +87,8 @@ frontierPoints <-
     # Add colnames:
     colnames(ans) = c("targetRisk", "targetReturn")
     rownames(ans) = as.character(1:NROW(ans))
+    attr(ans, "control") <- 
+        c(targetRisk = risk, targetReturn = return, auto = as.character(auto)) 
 
     # Return Value:
     ans

@@ -58,17 +58,18 @@ test.frontierPoints.feasiblePortfolio <-
     points = frontierPoints(portfolio)
     print(points)
     
-    # Frontier Points:
-    #   ... returns target risk and target return
-    points = frontierPoints(portfolio)
-    print(points)
-    
     # Specify Return/Risk Measures, explicitely:
-    print(frontierPoints(portfolio, return = "mean"))
-    print(frontierPoints(portfolio, risk = "cov"))
-    print(frontierPoints(portfolio, risk = "Sigma"))
-    print(frontierPoints(portfolio, risk = "CVaR"))
-    print(frontierPoints(portfolio, risk = "VaR"))
+    print(frontierPoints(portfolio, auto = TRUE))
+    print(frontierPoints(portfolio, 
+        risk = "Cov", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        risk = "Sigma", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        risk = "CVaR", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        risk = "VaR", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        return = "mu", risk = "CVaR", auto = FALSE))
   
     # Return Value:
     return()
@@ -107,11 +108,15 @@ test.frontierPoints.portfolioFrontier <-
     print(points)
     
     # Specify Return/Risk Measures, explicitely:
-    print(frontierPoints(portfolio, return = "mean"))
-    print(frontierPoints(portfolio, risk = "cov"))
-    print(frontierPoints(portfolio, risk = "Sigma"))
-    print(frontierPoints(portfolio, risk = "CVaR"))
-    print(frontierPoints(portfolio, risk = "VaR"))
+    print(frontierPoints(portfolio, auto = TRUE))
+    print(frontierPoints(portfolio, 
+        return = "mean", risk = "Cov", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        return = "mean", risk = "Sigma", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        return = "mean", risk = "CVaR", auto = FALSE))
+    print(frontierPoints(portfolio, 
+        return = "mean", risk = "VaR", auto = FALSE))
     
     # Return Value:
     return()
