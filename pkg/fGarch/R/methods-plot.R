@@ -418,8 +418,18 @@ function(x, ...)
     cond.dist = x@fit$params$cond.dist
     cond.dist = paste("q", cond.dist, sep = "")
     nc = nchar(x@fit$params$cond.dist)
-    skew = x@fit$params$skew
-    shape = x@fit$params$shape
+
+    parNames <- names(x@fit$par)
+    skew <-
+        if ("skew" %in% parNames)
+            fit@fit$par["skew"]
+        else
+            x@fit$params$skew
+    shape <-
+        if ("shape" %in% parNames)
+            fit@fit$par["shape"]
+        else
+            x@fit$params$shape
 
     if (cond.dist == "qnorm")
         .qqDist(sres, dist = cond.dist)
