@@ -36,13 +36,14 @@
 #  nnveEstimator             uses builtin from [covRobust]
 #  shrinkEstimator           uses builtin from [corpcor]
 #  baggedEstimator           uses builtin from [corpcor]
+#  lpmEstimator              lower partial momenten Estimator
 ################################################################################
 
 
 covEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -66,7 +67,7 @@ covEstimator <-
 covMcdEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -90,7 +91,7 @@ covMcdEstimator <-
 covOGKEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -114,7 +115,7 @@ covOGKEstimator <-
 mveEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -138,7 +139,7 @@ mveEstimator <-
 mcdEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -162,7 +163,7 @@ mcdEstimator <-
 shrinkEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -186,7 +187,7 @@ shrinkEstimator <-
 baggedEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -210,7 +211,7 @@ baggedEstimator <-
 nnveEstimator <- 
     function(x, spec = NULL, ...)
 {
-    # A function imolemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
     
     # Description
     
@@ -222,6 +223,33 @@ nnveEstimator <-
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = .cov.nnve(datamat = x.mat, ...)$cov 
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+################################################################################
+
+
+lpmEstimator <- 
+function(x, spec = NULL, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description
+    #   Returns lower partial moment estimator
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu <- colMeans(x)
+    FUN = match.fun(spec@model$param$tau)
+    a = spec@model$param$a
+    Sigma <- assetsLPM(x, tau = FUN(x), a = a)$Sigma
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)

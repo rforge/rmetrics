@@ -11,6 +11,9 @@
 \alias{nnveEstimator}
 
 
+\alias{lpmEstimator}
+
+
 \title{Covariance Estimators}
 
 
@@ -31,6 +34,8 @@ mcdEstimator(x, spec = NULL, ...)
 shrinkEstimator(x, spec = NULL, ...)
 baggedEstimator(x, spec = NULL, ...)
 nnveEstimator(x, spec = NULL, ...)
+
+lpmEstimator(x, spec = NULL, ...)
 }
 
 \arguments{
@@ -73,7 +78,8 @@ nnveEstimator(x, spec = NULL, ...)
     \code{covOGKEstimator} requires "covOGK" from package robustbase,\cr
     \code{nnveEstimator} uses builtin from package covRobust,\cr
     \code{shrinkEstimator} uses builtin from package corpcor,\cr
-    \code{baggedEstimator} uses builtin from package corpcor.
+    \code{baggedEstimator} uses builtin from package corpcor, \cr
+    \code{lpmEstimator} returns lower partial moment estimator.
 
 }
     
