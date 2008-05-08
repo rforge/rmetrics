@@ -81,7 +81,7 @@ solveRquadprog <-
 
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
-    if (class(constraints) == "fPFOLIOCON") 
+    if (class(constraints) == "fPFOLIOCON")
         constraints = constraints@stringConstraints
 
     # Trace:
@@ -101,10 +101,14 @@ solveRquadprog <-
 
     # Optimize Portfolio:
     if (nAssets == 2) {
-        # Two Assets Portfolio:
-        # YC: test might failed because of numerical errors, hence 'round'
-        stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
-        stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
+
+###         # Two Assets Portfolio:
+###         # YC: test might failed because of numerical errors, hence 'round'
+###         stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
+###         stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
+
+        stopifnot(targetReturn >= min(mu))
+        stopifnot(targetReturn <= max(mu))
         weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
         weights = c(weights, 1- weights)
         optim = list(

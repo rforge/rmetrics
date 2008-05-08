@@ -58,7 +58,7 @@ efficientPortfolio <-
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     constraints = portfolioConstraints(data, spec, constraints)
-    
+
     # Check Solver:
     if (any(constraints@stringConstraints == "Short"))
         setSolver(spec) = "solveRshortExact"
@@ -111,7 +111,7 @@ maxratioPortfolio <-
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     constraints = portfolioConstraints(data, spec, constraints)
-    
+
     # Check Solver:
     if (any(constraints@stringConstraints == "Short"))
         setSolver(spec) = "solveRshortExact"
@@ -135,10 +135,11 @@ maxratioPortfolio <-
     setTargetReturn(spec) =
         getTargetReturn(feasiblePortfolio(data, spec, constraints))
 
-    # Minimize Sharp Ratio:
-    # YC: scale data to avoid numerical errors in optimize
-    scale <- 1000
-    optData <- portfolioData(scale * getData(data)$series, spec)
+###     # Minimize Sharp Ratio:
+###     # YC: scale data to avoid numerical errors in optimize
+###     scale <- 1000
+###     optData <- portfolioData(scale * getData(data)$series, spec)
+    optData <- data
     portfolio = optimize(ratioFun, interval = range(getMu(optData)),
         maximum = TRUE, data = optData, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
@@ -194,7 +195,7 @@ minriskPortfolio <-
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     constraints = portfolioConstraints(data, spec, constraints)
-    
+
     # Check Solver:
     if (any(constraints@stringConstraints == "Short"))
         setSolver(spec) = "solveRshortExact"
@@ -210,10 +211,11 @@ minriskPortfolio <-
         attr(targetRisk, "status") <- ans$status
         return(targetRisk) }
 
-    # Minimize target risk:
-    # YC: scale data to avoid numerical errors in optimize
-    scale <- 1000
-    optData <- portfolioData(scale * getData(data)$series, spec)
+###     # Minimize target risk:
+###     # YC: scale data to avoid numerical errors in optimize
+###     scale <- 1000
+###     optData <- portfolioData(scale * getData(data)$series, spec)
+    optData <- data
     portfolio <- optimize(targetRiskFun, interval = range(getMu(optData)),
                           data = optData, spec = spec,
                           constraints = constraints)
@@ -266,7 +268,7 @@ maxreturnPortfolio <-
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     constraints = portfolioConstraints(data, spec, constraints)
-    
+
     # Check Solver:
     if (any(constraints@stringConstraints == "Short"))
         setSolver(spec) = "solveRshortExact"
