@@ -422,12 +422,12 @@ function(x, ...)
     parNames <- names(x@fit$par)
     skew <-
         if ("skew" %in% parNames)
-            fit@fit$par["skew"]
+            x@fit$par["skew"]
         else
             x@fit$params$skew
     shape <-
         if ("shape" %in% parNames)
-            fit@fit$par["shape"]
+            x@fit$par["shape"]
         else
             x@fit$params$shape
 
