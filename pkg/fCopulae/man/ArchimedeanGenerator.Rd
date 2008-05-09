@@ -123,6 +123,10 @@ KfuncSlider(B = 5)
 }
 
 
+\references{
+RB Nelson - An Introduction to Copulas
+  }
+
 \examples{  
 ## archmList -
    # Return list of implemented copulae:
