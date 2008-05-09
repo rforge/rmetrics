@@ -7,7 +7,7 @@
 
 \description{
 
-    Simulates an univariate GARCH/APARCH time series model.
+    Simulates a univariate GARCH/APARCH time series model.
 
 }
 
@@ -18,6 +18,12 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE)
 
 
 \arguments{
+  \item{extended}{
+    logical parameter if the output series should be a 3 columns
+  \code{timeSeries} object with \code{garch}, \code{sigma} and
+  \code{eps} data (\code{extended = TRUE}) or a univariate GARCH\\APARCH time
+  series (\code{extended = FALSE}
+    }
   \item{spec}{
     a specification object of class \code{"fGARCHSPEC"} as
       returned by the function \code{garchSpec}. The model parameters
