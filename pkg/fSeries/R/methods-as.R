@@ -170,11 +170,8 @@ as.timeSeries.zoo <-
 
     # as. timeSeries:
 
-    # Seperate x in numeric and non-numeric parts
-    data <- as.matrix(x)
-    charvec <- time(x)
-
-    ans <- timeSeries(data = data, charvec = charvec, ...)
+    ans <- timeSeries(data = as.matrix(x),
+                      charvec = as.character(attr(x, "index")), ...)
 
     # Return Value:
     ans
