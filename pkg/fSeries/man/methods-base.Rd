@@ -3,7 +3,6 @@
 
 \alias{mean,timeSeries-method}
 \alias{summary,timeSeries-method}
-\alias{var,timeSeries-method}
 
 
 \title{Methods for 'timeSeries' object}

@@ -2,15 +2,19 @@
 
 \docType{methods}
 
-\alias{cor-methods}
+\alias{sd-methods}
+\alias{var-methods}
 \alias{cov-methods}
+\alias{cor-methods}
 
 \alias{dcauchy-methods}
 \alias{dnorm-methods}
 \alias{dt-methods}
 
-\alias{cor,timeSeries-method}
+\alias{sd,timeSeries-method}
+\alias{var,timeSeries-method}
 \alias{cov,timeSeries-method}
+\alias{cor,timeSeries-method}
 \alias{dcauchy,timeSeries-method}
 \alias{dnorm,timeSeries-method}
 \alias{dt,timeSeries-method}
