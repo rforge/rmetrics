@@ -20,10 +20,10 @@
 ################################################################################
 
 
-plot.timeSeries <- 
-    function(x, y = NULL, FinCenter = NULL, 
-    plot.type = c("multiple", "single"), 
-    format = "auto", at = "auto", 
+plot.timeSeries <-
+    function(x, y = NULL, FinCenter = NULL,
+    plot.type = c("multiple", "single"),
+    format = "auto", at = "auto",
     widths = 1, heights = 1,
     xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
     mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
@@ -56,7 +56,7 @@ plot.timeSeries <-
     # Labels:
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
-      
+
     # Take care of FinCenter:
     if (!is.null(FinCenter)) {
         finCenter(x) <- FinCenter
@@ -68,7 +68,7 @@ plot.timeSeries <-
     .plotTimeSeries(x = x, y = y, plot.type = plot.type, xy.labels =
         xy.labels, xy.lines = xy.lines, panel = panel, nc = nc, xlabel =
         xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
-        oma.multi = oma.multi, yax.flip = yax.flip, 
+        oma.multi = oma.multi, yax.flip = yax.flip,
         format = format, at = at, widths = widths, heights = heights, ...)
 }
 
@@ -83,7 +83,7 @@ plot.timeSeries <-
     type = "l", xlim = NULL, ylim = NULL, xlab = "Time", ylab, log =
     "", col = par("col"), bg = NA, pch = par("pch"), cex = par("cex"),
     lty = par("lty"), lwd = par("lwd"), axes = TRUE, frame.plot =
-    axes, ann = par("ann"), main = NULL, mar.multi, oma.multi, yax.flip, 
+    axes, ann = par("ann"), main = NULL, mar.multi, oma.multi, yax.flip,
     format, at, widths, heights, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
@@ -100,14 +100,14 @@ plot.timeSeries <-
     # Utility Function:
     plot.type <- match.arg(plot.type)
     nser <- NCOL(x)
-    if (format == "auto") format = whichFormat(time(x)) 
-    X <- if (x@format == "counts") index(x) else as.POSIXct(time(x))
+    if (format == "auto") format = whichFormat(time(x))
+    X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
     if (is.character(at) && at == "auto") {
         Index = round(seq(1, length(time(x)), length = 6))
         at = X[Index] }
     if(is(at, "timeDate")) at = as.POSIXct(at)
-    
-    
+
+
     # Multiple Plots, each one Curve, on one Page:
     if (plot.type == "multiple" && nser > 1) {
         ngraph = nser
@@ -153,7 +153,7 @@ plot.timeSeries <-
             font.main = par("font.main")
             col.main = par("col.main")
             mtext(main, side = 3, line = 3, cex = cex.main,
-                font = font.main, col = col.main, ...) 
+                font = font.main, col = col.main, ...)
         }
         return(invisible())
     }
@@ -203,7 +203,7 @@ plot.timeSeries <-
     }
     if (is.null(ylim)) ylim <- range(x)
     i = 1
-    X <- if (x@format == "counts") index(x) else as.POSIXct(time(x))
+    X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
     plot(X, x@Data[, i], ylim = ylim,
          col = col[(i - 1)%%length(col) + 1],
          lty = lty[(i - 1)%%length(lty) + 1],
@@ -232,7 +232,7 @@ plot.timeSeries <-
     if (frame.plot) box(...)
     return(invisible())
 }
- 
+
 
 # ------------------------------------------------------------------------------
 
@@ -241,21 +241,21 @@ setMethod("lines", "timeSeries",
     function(x, FinCenter = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     # Description:
     #   NEW Lines method for an object of class "timeSeries"
-    
+
     # Arguments:
     #   x - a "timeSeries" object
-    
+
     # Example:
     #   plot(MSFT[, 1]); lines(MSFT[, 1], col = "red")
-    
+
     # FUNCTION:
-    
+
     # Change FinCenter:
     if (!is.null(FinCenter)) finCenter(x) <- FinCenter
-    
+
     # Lines:
     positions <- time(x)
     if (x@format == "counts") {
@@ -263,7 +263,7 @@ setMethod("lines", "timeSeries",
     } else {
         lines(x = as.POSIXct(positions), y = x@Data, ...)
     }
-    
+
     # Return Value:
     invisible(x)
 })
@@ -276,21 +276,21 @@ setMethod("points", "timeSeries",
     function(x, FinCenter = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     # Description:
     #   Plot method for an object of class "timeSeries"
-    
+
     # Arguments:
     #   x - a "timeSeries" object
-    
+
     # Value:
     #   Plots a 'timeSeries' object.
-    
+
     # FUNCTION:
 
     # Change FinCenter:
     if (!is.null(FinCenter)) finCenter(x) <- FinCenter
-    
+
     # Points:
     positions <- time(x)
     if (x@format == "counts") {
@@ -298,7 +298,7 @@ setMethod("points", "timeSeries",
     } else {
       points(x = as.POSIXct(positions), y = x@Data, ...)
     }
-    
+
     # Return Value:
     invisible(x)
 })
