@@ -74,7 +74,7 @@ colCumsums.default <-
     } else {
         result = apply(X, MARGIN = 2, FUN = cumsum, ...)
     }
-    colnames(result) = paste(1:ncol(x))
+    colnames(result) = paste(1:NCOL(x))
 
     # Statistics:
     result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
