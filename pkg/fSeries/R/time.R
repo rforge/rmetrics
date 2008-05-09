@@ -79,8 +79,8 @@ function(object, value)
 
 # ------------------------------------------------------------------------------
 
-if (!exists("time<-", mode = "function"))
-    "time<-" <- function(x, value) UseMethod("time<-")
+## if (!exists("time<-", mode = "function"))
+"time<-" <- function(x, value) UseMethod("time<-")
 
 # ------------------------------------------------------------------------------
 "time<-.timeSeries" <-
@@ -139,15 +139,15 @@ time.timeSeries <-
 # temporary fix until we have a name space and avoid problems with
 # function index in package "zoo"
 
-if (!exists("index", mode = "function"))
-    index <- function(x, ...) UseMethod("index")
+## if (!exists("index", mode = "function"))
+##     index <- function(x, ...) UseMethod("index")
 
-index.timeSeries <- function(x, ...) time.timeSeries(x, ...)
+## index.timeSeries <- function(x, ...) time.timeSeries(x, ...)
 
-if (!exists("index<-", mode = "function"))
-    "index<-" <- function(x, value) UseMethod("index<-")
+## if (!exists("index<-", mode = "function"))
+##     "index<-" <- function(x, value) UseMethod("index<-")
 
-"index<-.timeSeries" <- function(x, value) time.timeSeries(x, value)
+## "index<-.timeSeries" <- function(x, value) time.timeSeries(x, value)
 
 ## setMethod("index", "timeSeries",
 ##           function(x, ...) time.timeSeries(x, ...))
