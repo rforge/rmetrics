@@ -78,23 +78,26 @@ checkBeforeCommit  <-
             stop(msg)
         }
         if (length(WARNING)) {
-            logWarning <- c(logWarning,
-            "\n ####################### WARNING #######################\n",
-            paste(" In package", pkg, "\n"),
-            paste(paste(log[seq(WARNING, WARNING+5)], collapse = "\n "), "\n"),
-            paste("\n More details in", logFile, "\n"),
-            paste(" ####################### WARNING #######################\n"))
+            for (line in WARNING) {
+                logWarning <- c(logWarning,
+                 "\n ####################### WARNING #######################\n",
+                 paste(" In package", pkg, "\n"),
+                 paste(paste(log[seq(line, line+5)], collapse = "\n "), "\n"),
+                 paste("\n More details in", logFile, "\n"),
+                 paste(" ####################### WARNING #######################\n"))
+            }
         }
         if (length(NOTE)) {
-            logNOTE <- c(logNOTE,
-            "\n #######################  NOTE  #######################\n",
-            paste(" In package", pkg, "\n"),
-            paste(paste(log[seq(NOTE, NOTE+8)], collapse = "\n "), "\n"),
-            paste("\n More details in", logFile, "\n"),
-            paste(" #######################  NOTE  #######################\n"))
+            for (line in NOTE) {
+                logNOTE <- c(logNOTE,
+                 "\n #######################  NOTE  #######################\n",
+                 paste(" In package", pkg, "\n"),
+                 paste(paste(log[seq(line, line+8)], collapse = "\n "), "\n"),
+                 paste("\n More details in", logFile, "\n"),
+                 paste(" #######################  NOTE  #######################\n"))
+            }
         }
     }
-
     ## print Notes and Warnings:
     message(logNOTE)
     message(logWarning)
