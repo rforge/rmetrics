@@ -6,15 +6,15 @@
 
 \alias{time}
 \alias{time<-}
-
-\alias{index}
-\alias{index<-}
+ 
+% % \alias{index}
+% % \alias{index<-}
 
 \alias{time.timeSeries}
 \alias{time<-.timeSeries}
 
-\alias{index.timeSeries}
-\alias{index<-.timeSeries}
+% \alias{index.timeSeries}
+% \alias{index<-.timeSeries}
 
 \alias{sample.timeSeries}
 \alias{sort.timeSeries}
@@ -31,18 +31,18 @@
     \cr
     
     The functions and methods for the Generation of 'timeSeries' Objects
-are:
+    are: 
 
     \tabular{ll}{   
     \code{time.timeSeries} \tab Extracts time positions from a
     'timeSeries', \cr 
     \code{time<-.timeSeries} \tab Assign time positions to a
     'timeSeries', \cr 
-
-    \code{index.timeSeries} \tab Extracts index positions from a
-    'timeSeries', \cr 
-    \code{index<-.timeSeries} \tab Assign index positions to a
-    'timeSeries', \cr 
+ 
+%     \code{index.timeSeries} \tab Extracts index positions from a
+%     'timeSeries', \cr 
+%     \code{index<-.timeSeries} \tab Assign index positions to a
+%     'timeSeries', \cr 
 
     \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in
     time, \cr 
@@ -63,8 +63,8 @@ are:
 \method{time}{timeSeries}(x, \dots)
 \method{time}{timeSeries}(x) <- value
 
-\method{index}{timeSeries}(x, \dots)
-\method{index}{timeSeries}(x) <- value
+% \method{index}{timeSeries}(x, \dots)
+% \method{index}{timeSeries}(x) <- value
 
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
