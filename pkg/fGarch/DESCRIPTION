@@ -3,7 +3,7 @@ Version: 270.73
 Date: 1997 - 2008
 Title: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), fUtilities, fEcofin, fCalendar, fSeries, fImport, fBasics, fArma
+Depends: R (>= 2.4.0), methods, fUtilities, fEcofin, fCalendar, fSeries, fImport, fBasics, fArma
 Suggests: Rdonlp2
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
