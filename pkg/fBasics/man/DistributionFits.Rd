@@ -187,6 +187,16 @@ show.fDISTFIT(object)
     The function \code{\link{nlm}} is used to minimize the "negative" 
     maximum log-likelihood function. \code{nlm} carries out a minimization 
     using a Newton-type algorithm.
+    
+    \bold{Stable Parameter Estimation:}
+    
+    Estimation techniques based on the quantiles of an empirical sample 
+    were first suggested by Fama and Roll [1971]. However their technique 
+    was limited to symmetric distributions and suffered from a small 
+    asymptotic bias. McCulloch [1986] developed a technique that uses 
+    five quantiles from a sample to estimate \code{alpha} and \code{beta}
+    without asymptotic bias. Unfortunately, the estimators provided by
+    McCulloch have restriction \code{alpha>0.6}.
        
 }
 
