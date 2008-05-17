@@ -25,11 +25,11 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  rdonlp2                      Interface to rdonlp2 Solver
+#  rdonlp2                      Interface to rdonlp2 solver
 ################################################################################
 
 
-rdonlp2  <-
+rdonlp2 <- 
     function(
     par, fn,
     par.upper = rep(+Inf, length(par)),
@@ -51,45 +51,8 @@ rdonlp2  <-
     
     # FUNCTION:
     
-    if (require(Rdonlp2)) {
-        ans = .rdonlp2(
-            par, fn, par.upper, par.lower,
-            A, lin.upper, lin.lower, nlin, nlin.upper, nlin.lower, 
-            control, control.fun, env, name)
-        return(ans)
-    } else {
-        cat("\n\nRdonlp2 Package missing")
-        cat("\nPlease contact: wuertz@phys.ethz.ch\n")
-        return(invisible())
-    }
-    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rdonlp2 <- 
-    function(
-    par, fn,
-    par.upper = rep(+Inf, length(par)),
-    par.lower = rep(-Inf, length(par)),
-    A = NULL,
-    lin.upper = rep(+Inf, length(par)),
-    lin.lower = rep(-Inf, length(par)),
-    nlin = list(),
-    nlin.upper = rep(+Inf, length(nlin)),
-    nlin.lower = rep(-Inf, length(nlin)), 
-    control = rdonlp2Control(),
-    control.fun = function(lst){return(TRUE)},
-    env = .GlobalEnv, name = NULL)
-{    
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Interface to rdonlp2 Solver
-    
-    # FUNCTION:
+    # Running ...
+    # print("Running rdonlp2 ...")
     
     # Use analytical gradients?
     if (is.function(attr(fn, "gr")) &

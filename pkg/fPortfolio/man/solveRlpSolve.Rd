@@ -2,6 +2,7 @@
 
 
 \alias{solveRlpSolve}
+\alias{solveRlp}
 
 
 \title{Linear Programming Solver}
@@ -16,9 +17,9 @@
 
 
 \usage{
+solveRlp(data, spec, constraints)
 solveRlpSolve(data, spec, constraints)
 }
-
 
 
 \arguments{
@@ -36,6 +37,16 @@ solveRlpSolve(data, spec, constraints)
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
         \code{"maxsumW[assets]=percentage} for sector constraints.
         }
+}
+
+
+\note{
+
+    The function \code{solveRlp} uses the R function interface from 
+    the CRAN contributed R package \code{lpSolve} and the function 
+    \code{solveRlp} uses the R function interface from the R-Forge 
+    contributed R package \code{lpSolveAPI}.
+    
 }
 
 

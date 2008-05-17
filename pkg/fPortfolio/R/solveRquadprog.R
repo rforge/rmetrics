@@ -27,13 +27,7 @@
 # FUNCTION:                    DESCRIPTION:
 #  solveRquadprog               Calls Goldfarb and Idnani's QP solver
 #  .solveRquadprog              Calls Goldfarb and Idnani's QP solver
-#  .rquadprog
-
 ################################################################################
-
-
-################################################################################
-# Original Version:
 
 
 solveRquadprog <-
@@ -77,7 +71,18 @@ solveRquadprog <-
     #       becoming active first. vector with the indices of the
     #       active constraints at the solution.
 
+    # Example:
+    #   Data = 100*as.timeSeries(data(LPP2005REC))[,1:6]
+    #   tangencyPortfolio(Data)
+    #   minvariancePortfolio(Data)
+    
     # FUNCTION:
+    
+    # Load quadprog:
+    if (!require(quadprog)) {
+        cat("\n\nquadprog Package missing")
+        cat("\nPlease install quadprog from CRAN Server\n")
+    }    
 
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
@@ -102,10 +107,10 @@ solveRquadprog <-
     # Optimize Portfolio:
     if (nAssets == 2) {
 
-###         # Two Assets Portfolio:
-###         # YC: test might failed because of numerical errors, hence 'round'
-###         stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
-###         stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
+        ### # Two Assets Portfolio:
+        ### # YC: test might failed because of numerical errors, hence 'round'
+        ### stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
+        ### stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
 
         stopifnot(targetReturn >= min(mu))
         stopifnot(targetReturn <= max(mu))
@@ -136,33 +141,8 @@ solveRquadprog <-
         bvec = t(b0)
         meq = 2
 
-        res1 = .rquadprog(Dmat, dvec, Amat, bvec, meq)
-        if (FALSE) {
-            # .rquadprog:
-            n = nrow(Dmat)
-            q = ncol(Amat)
-            r = min(n, q)
-            work = rep(0, 2 * n + r * (r + 5)/2 + 2 * q + 1)
-            res1 = .Fortran("qpgen2",
-                as.double(Dmat),
-                dvec = as.double(dvec),
-                as.integer(n),
-                as.integer(n),
-                sol = as.double(rep(0, n)),
-                crval = as.double(0),
-                as.double(Amat),
-                as.double(bvec),
-                as.integer(n),
-                as.integer(q),
-                as.integer(meq),
-                iact = as.integer(rep(0, q)),
-                nact = as.integer(0),
-                iter = as.integer(rep(0, 2)),
-                work = as.double(work),
-                ierr = as.integer(0),
-                PACKAGE = "quadprog")
-            # ... end of .rquadprog
-        }
+        # Solve:
+        res1 = rquadprog(Dmat, dvec, Amat, bvec, meq)
 
         # Handle when failed ...
         weights = res1$sol
@@ -194,43 +174,6 @@ solveRquadprog <-
 
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rquadprog <-
-function(Dmat, dvec, Amat, bvec, meq)
-{
-    # Settings:
-    n = nrow(Dmat)
-    q = ncol(Amat)
-    r = min(n, q)
-    work = rep(0, 2 * n + r * (r + 5)/2 + 2 * q + 1)
-
-    # Optimize:
-    res1 = .Fortran("qpgen2",
-        as.double(Dmat),
-        dvec = as.double(dvec),
-        as.integer(n),
-        as.integer(n),
-        sol = as.double(rep(0, n)),
-        crval = as.double(0),
-        as.double(Amat),
-        as.double(bvec),
-        as.integer(n),
-        as.integer(q),
-        as.integer(meq),
-        iact = as.integer(rep(0, q)),
-        nact = as.integer(0),
-        iter = as.integer(rep(0, 2)),
-        work = as.double(work),
-        ierr = as.integer(0),
-        PACKAGE = "quadprog")
-
-    # Return Value:
-    res1
 }
 
 

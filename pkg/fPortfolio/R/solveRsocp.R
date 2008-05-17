@@ -55,6 +55,12 @@ solveRsocp <-
 
     # Test Implementation for "LongOnly" MV Portfolio
     # stopifnot(constraints == "LongOnly")
+    
+    # Load Rsocp:
+    if (!require(Rsocp)) {
+        cat("\n\nRsocp Package missing")
+        cat("\nPlease download package from Rmetrics Server\n")
+    }
 
     # Transform Data and Constraints:
     data = portfolioData(data, spec)

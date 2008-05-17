@@ -66,11 +66,19 @@ solveRdonlp2 <-
     #   Code comes from R package Rdonlop2, this package is required.
     #   Rdonlp2 can be downloaded from "http://arumat.net/Rdonlp2/"
     #   Author: Ryuichi Tamura, ry.tamura@gmail.com
+    
+    # Example:
+    #   Data = 100*as.timeSeries(data(LPP2005REC))[,1:6]
+    #   Spec = portfolioSpec(); setSolver(Spec) = "solveRdonlp2"
+    #   tangencyPortfolio(Data, Spec)
 
     # FUNCTION:
       
     # Load Rdonlp2:
-    if(!require(Rdonlp2)) stop("Rdonlp2 is not installed")
+    if (!require(Rdonlp2)) {
+        cat("\n\nRdonlp2 Package missing")
+        cat("\nPlease download package from Rmetrics Server\n")
+    } 
     
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
@@ -205,7 +213,7 @@ solveRdonlp2 <-
         nlin.lower = B[1, ]
         nlin.upper = B[2, ]
 
-        # Optimize:
+        # Optimize - Call rdonlp2:
         ans = rdonlp2(
             par, fn,
             par.l = par.lower, par.u = par.upper,
@@ -214,7 +222,7 @@ solveRdonlp2 <-
             control = CONTROL,
             name = "portfolio")
     } else {
-        # Optimize:
+        # Optimize - Call rdonlp2:
         ans = rdonlp2(
             par, fn,
             par.l = par.lower, par.u = par.upper,

@@ -36,20 +36,16 @@ rsocp  <-
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Second order cone programming
+    #   Second order cone programming solver
 
     # FUNCTION:
 
-    if (require(Rsocp)) {
-        ans = socp(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL,
-            control = control)
-        return(ans)
-    } else {
-        cat("\n\nRsocp Package missing")
-        cat("\nPlease contact: wuertz@phys.ethz.ch\n")
-        return(invisible())
-    }
+    # Solve:
+    ans = socp(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
+        control = control)
 
+    # Return Value:
+    ans
 }
 
 

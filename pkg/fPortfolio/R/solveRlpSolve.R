@@ -25,11 +25,12 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
+#  solveRlp                     Calls linear programming solver
 #  solveRlpSolve                Calls linear programming solver
 ################################################################################
 
 
-solveRlpSolve <-
+solveRlp <-
     function(data, spec, constraints)
 {
     # A function implemented by Rmetrics
@@ -42,27 +43,36 @@ solveRlpSolve <-
     #   spec - specification of the portfolio
     #   constraints - string of constraints
 
-    # Value of lp():
+    # Value:
     #   direction - optimization direction, as entered
     #   x.count - number of variables in objective function
-    #   objective - vector of objective function coefficients,
-    #       as entered
+    #   objective - vector of objective function coefficients, as entered
     #   const.count - number of constraints entered
-    #   constraints - constraint matrix, as entered (not
-    #       returned by lp.assign or lp.transport)
+    #   constraints - constraint matrix, as entered (not returned by 
+    #       lp.assign or lp.transport)
     #   int.count - number of integer variables
     #   int.vec - vector of integer variables' indices, as entered
     #   objval - value of objective function at optimum}
     #   solution - vector of optimal coefficients
-    #   status - numeric indicator: 0 = success, 2 = no feasible
-    #       solution
+    #   status - numeric indicator: 0 = success, 2 = no feasible solution
 
     # Note:
     #   This function requires to load the contributed R package
     #   lpSolve explicitely!
 
+    # Example:
+    #   Data = 100*as.timeSeries(data(LPP2005REC))[,1:6]
+    #   Spec = portfolioSpec();setType(Spec)="CVaR"; setSolver(Spec)="solveRlp"
+    #   tangencyPortfolio(Data, Spec)
+    
     # FUNCTION:
 
+    # Load lpSolve from CRAN Server:
+    if (!require(lpSolve)) {
+        cat("\n\nlpSolve Package missing")
+        cat("\nPlease install Package 'lpSolve' from CRAN Server\n")
+    }
+    
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     if (class(constraints) == "fPFOLIOCON")
@@ -94,10 +104,10 @@ solveRlpSolve <-
 
     if (nAssets == 2) {
 
-###         # Two Assets Portfolio:
-###         # YC: test might failed because of numerical errors, hence 'round'
-###         stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
-###         stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
+        ### # Two Assets Portfolio:
+        ### # YC: test might failed because of numerical errors, hence 'round'
+        ### stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
+        ### stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
 
         stopifnot(targetReturn >= min(mu))
         stopifnot(targetReturn <= max(mu))
@@ -171,7 +181,7 @@ solveRlpSolve <-
         names(f.rhs) = rownames(f.con)
 
         # Optimize Portfolio:
-        ans = lp("max", f.obj, f.con, f.dir, f.rhs)
+        ans = rlp("max", f.obj, f.con, f.dir, f.rhs)
         class(ans) <- "list"
 
         # Prepare Output List:
@@ -190,6 +200,60 @@ solveRlpSolve <-
         ans$objective = -ans$objval
     }
 
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+solveRlpSolve <-
+    function(data, spec, constraints)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Linear Solver from R package RlpSolve for Scenario Optimization
+
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+
+    # Value:
+
+    # Note:
+    #   This function requires to load the R package RlpSolve explicitely!
+
+    # FUNCTION:
+    
+    # Load RlpSolve:
+    if (!require(RlpSolve)) {
+        cat("\n\nRlpSolve Package missing")
+        cat("\nPlease install Package 'RlpSolve' from Rmetrics Server\n")
+    }
+    
+    # Get Portfolio Type:
+    type = getType(spec)
+    FUN = paste(".", tolower(type), "Solver", sep = "")
+    funSolver = match.fun(FUN)
+    
+    # Set Arguments:
+    scenario <- NA
+    forecasts <- NA
+    targetReturn <- NA 
+    alpha <- NA 
+    group <- NA 
+    maxGroup <- NA 
+    minGroup <- NA 
+    maxAsset <- NA 
+    minAsset <- NA 
+    
+    # Solve:
+    ans = funSolver(scenario, forecasts, targetReturn, alpha,
+        group, maxGroup, minGroup, maxAsset, minAsset)
+    
     # Return Value:
     ans
 }

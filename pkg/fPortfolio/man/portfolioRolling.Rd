@@ -21,7 +21,6 @@
     A collection and description of functions 
     allowing to roll a portfolio optimization
     over time.
-    \cr
     
     The functions are:
     
@@ -79,7 +78,6 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
         and ending dates for the investigation.
         }
     \item{period}{
-        [rollingWindows] - \cr
         a character string, by default \code{"12m"}, which denotes 12
         months. The period over which the portfolio is rolled.
         }
