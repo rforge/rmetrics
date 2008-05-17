@@ -1,6 +1,7 @@
-\name{rollingPortfolio}
+\name{portfolioRolling}
 
 
+\alias{portfolioRolling}
 \alias{rollingPortfolio}
 
 \alias{rollingWindows}
@@ -53,33 +54,27 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
 \arguments{
 
     \item{action}{
-        [*Portfolio][*Frontier] - \cr
         a  character string naming a user defined function. This function
         is optionally applied after each rolling step.
         }
     \item{by}{
-        [rollingWindows] - \cr
         a character string, by default \code{"1m"}, which denotes 1
         month. The shift by which the portfolio is rolled.
         }
     \item{constraints}{
-        [*Portfolio][*Frontier] - \cr
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
         \code{"maxsumW[assets]=percentage"} for sector constraints.
         }
     \item{data}{
-        [*Portfolio][*Frontier] - \cr
         a list, having a statistics named list, having named entries 'mu' and 
         'Sigma', containing the information of the statistics.
         }
     \item{description}{
-        [*Portfolio][*Frontier] - \cr
         a character string, allowing for a brief project description,
         by default NULL, i.e. Date and User.
         }
     \item{from, to}{
-        [*Portfolio][*Frontier] - \cr
         a vector of S4 \code{timeDate} objects which denote the starting
         and ending dates for the investigation.
         }
@@ -89,16 +84,13 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
         months. The period over which the portfolio is rolled.
         }
     \item{spec}{
-        [*Portfolio][*Frontier] - \cr
         an S4 object of class \code{fPFOLIOSPEC}.
         }
     \item{title}{
-        [*Portfolio][*Frontier] - \cr
         a character string, containing the title for the object, by 
         default NULL.
         }
     \item{x}{
-        [rollingWindows] - \cr
         an S4 object of class \code{timeSeries} from which the rolling
         window frames will be created. The length of these frames is given
         by the argument \code{period} and they are shifted by the value
