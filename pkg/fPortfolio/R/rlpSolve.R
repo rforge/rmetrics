@@ -234,4 +234,18 @@ function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
 
 ################################################################################
 
-    
+
+rlp <-
+    function (direction = "min", objective.in, const.mat, const.dir, 
+    const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0, 
+    compute.sens = 0) 
+{
+    ans = lp(direction, objective.in, const.mat, const.dir, const.rhs, 
+        transpose.constraints, int.vec, presolve, compute.sens)
+    ans
+}
+
+
+################################################################################
+
+  

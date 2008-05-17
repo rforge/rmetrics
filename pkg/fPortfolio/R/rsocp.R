@@ -74,7 +74,7 @@ rsocp  <-
     #   x <- c(0, 0.5)
     #   z <- c(1, 0, 0)
     #   w <- c(2,1)
-    #   fit <- socp(f, A, b, C, d, N, x, z, w)
+    #   fit <- rsocp(f, A, b, C, d, N, x, z, w)
 
     # FUNCTION:
 
@@ -221,7 +221,7 @@ rsocp  <-
 
     # DIAGNOSTICS:
     if (ans$info == 1 | ans$info == 2) {
-        e2 <- sum((t(A)%*%socp[[8]] - f)^2)^0.5 / (sum(socp[[8]]^2))^0.5
+        e2 <- sum((t(A) %*% socp[[8]] - f)^2)^0.5 / (sum(socp[[8]]^2))^0.5
         if (e2 > 1.0e-6)
     warning("Dual is not in the feasible hyperplane, solution may be wrong.")
     }
@@ -295,7 +295,7 @@ rsocp  <-
             x1 <- c(x, alpha)
             f1 <- c(rep(0,n), 1)
             A1 <- cbind(A,T)
-            fit <- socp(f1, A1, b, NULL, NULL, N, x1, NULL, NULL,
+            fit <- rsocp(f1, A1, b, NULL, NULL, N, x1, NULL, NULL,
                 control = list(target = 0, rel.tol = -1))
             if (fit$x[n+1] >= 0)
                 stop("Phase 1 failed, alpha>=0")
@@ -380,7 +380,7 @@ rsocp  <-
     info <- 4
     while (info == 4 & i < BigM.repeat) {
         i <- i + 1
-        fit <- socp(f, A1, b1, NULL, NULL, N1, x, z1, NULL, control)
+        fit <- rsocp(f, A1, b1, NULL, NULL, N1, x, z1, NULL, control)
         info <- fit$info
         u <- A %*% fit$x + b
         t <- T %*% u

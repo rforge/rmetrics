@@ -75,7 +75,7 @@ solveRdonlp2 <-
     # FUNCTION:
       
     # Load Rdonlp2:
-    if (!require(Rdonlp2)) {
+    if (!require(Cdonlp2)) {
         cat("\n\nRdonlp2 Package missing")
         cat("\nPlease download package from Rmetrics Server\n")
     } 
@@ -278,7 +278,7 @@ solveRdonlp2 <-
     # FUNCTION:
     
     # Load Rdonlp2:
-    if(!require(Rdonlp2)) stop("Rdonlp2 is not installed")
+    if(!require(Cdonlp2)) stop("Rdonlp2 is not installed")
     
     # Trace:
     trace = getTrace(spec)

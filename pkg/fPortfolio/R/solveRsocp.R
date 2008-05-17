@@ -57,7 +57,7 @@ solveRsocp <-
     # stopifnot(constraints == "LongOnly")
     
     # Load Rsocp:
-    if (!require(Rsocp)) {
+    if (!require(Csocp)) {
         cat("\n\nRsocp Package missing")
         cat("\nPlease download package from Rmetrics Server\n")
     }

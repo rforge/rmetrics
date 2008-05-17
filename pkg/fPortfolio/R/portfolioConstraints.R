@@ -423,6 +423,7 @@ portfolioConstraints <-
         }
         for (i in 1:nC) {
             if (what4[i] == "sumW")  {
+                MinMax = NULL
                 count = count + 1
                 sumW = rep(0, times = N)
                 names(sumW) <- nameAssets

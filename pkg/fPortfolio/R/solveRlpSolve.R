@@ -230,14 +230,14 @@ solveRlpSolve <-
     # FUNCTION:
     
     # Load RlpSolve:
-    if (!require(RlpSolve)) {
+    if (!require(ClpSolve)) {
         cat("\n\nRlpSolve Package missing")
         cat("\nPlease install Package 'RlpSolve' from Rmetrics Server\n")
     }
      
     # Transform Data and Constraints to S4 Objects:
     data = portfolioData(data, spec)
-    constraints = PortfolioConstraints(data, spec, constraints)
+    constraints = portfolioConstraints(data, spec, constraints)
 
     # Get Portfolio Type and Solver:
     type = getType(spec)
@@ -318,7 +318,7 @@ solveRlpSolve <-
     scenario <- as.matrix(getSeries(data))
     forecasts <- colMeans(scenario)
     targetReturn <- getTargetReturn(spec)
-    alpha <- getAlpha(Spec)
+    alpha <- getAlpha(spec)
     group <- NA
     maxGroup <- NA
     minGroup <- NA
@@ -360,14 +360,14 @@ solveRlpSolve <-
     beq <- c(1, targetReturn)
     
     # Solve - use lpSolve from KK:
-    optim <- RlpsSolve::lpSolve(obj = objL,  A = Amat,  b = bvec,  
+    optim <- rlpSolve(obj = objL,  A = Amat,  b = bvec,  
         Aeq = Aeq, beq = beq,  lb = lb,  ub = ub) 
         
     # Result:
     ans <- list(
         solver = "RlpSolve",
         optim = optim,
-        weights = .checkWeights(ret$x[2:(n+1)]), 
+        weights = .checkWeights(optim$x[2:(n+1)]), 
         targetReturn = NA,
         targetRisk = NA,
         objective = optim$objective, 
@@ -447,12 +447,12 @@ solveRlpSolve <-
     forecasts = getMu(data)
     targetReturn = getTargetReturn(spec)
     alpha = getAlpha(spec)
-    group = 
-    maxGroup =
-    minGroup = 
-    boxConstrains = .setBoxConstraints(data, constraints)
-    maxAsset = boxConstraints$minW
-    minAsset = boxConstraints$maxW
+    group = NA
+    maxGroup = NA
+    minGroup = NA
+    # boxConstrains = .setBoxConstraints(data, constraints)
+    maxAsset = NA # boxConstraints$minW
+    minAsset = NA # boxConstraints$maxW
     
     # Settings:
     n <- dim(scenario)[2]
@@ -464,17 +464,17 @@ solveRlpSolve <-
     g <- dim(group)[1]
     colnames(group) <- NULL
     rownames(group) <- NULL
-    maxg <- matrix(maxGroup,ncol=1)
-    ming <- matrix(minGroup,ncol=1)   
+    maxg <- matrix(maxGroup,ncol = 1)
+    ming <- matrix(minGroup,ncol = 1)   
     minw <- as.numeric(minAsset)
     maxw <- as.numeric(maxAsset)
     forecasts<-as.numeric(forecasts)
     targetReturn <- as.numeric(targetReturn)
     alpha <- as.numeric(alpha)
-    gbGroup <- rbind(group,-1*group)
-    gbCons <- rbind(maxg,-1*ming)
+    gbGroup <- rbind(group, -1*group)
+    gbCons <- rbind(maxg, -1*ming)
     xm <- as.matrix(-diag(s))
-    idx <- which(xm==(-1), arr.ind = TRUE)
+    idx <- which(xm == (-1), arr.ind = TRUE)
     myrow <- idx[, 1]
     mycol <- idx[, 2]
     mycol[2:length(mycol)] <- mycol[2:length(mycol)]-1
@@ -500,16 +500,16 @@ solveRlpSolve <-
     beq = c(1, targetReturn)
     
     # Solve:
-    ret <- RlpSolve::lpSolve(obj = objL, A = Amat, b = bvec, Aeq = Aeq, 
+    optim <- rlpSolve(obj = objL, A = Amat, b = bvec, Aeq = Aeq, 
         beq = beq, lb = lb, ub = ub) 
     
     # Result:
     ans <- list(
-        weights=ret$x[2:(n+1)],
-        objective = ret$objective,
-        status = ret$status, 
-        message = ret$message, 
-        sol = ret)
+        weights=optim$x[2:(n+1)],
+        objective = optim$objective,
+        status = optim$status, 
+        message = optim$message, 
+        sol = optim)
     
     # Return Value:
     ans
