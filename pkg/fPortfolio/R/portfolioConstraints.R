@@ -253,7 +253,7 @@ portfolioConstraints <-
                 b = strsplit(constraints[i], "=")[[1]][2]
                 b0 = rbind(b0, -as.numeric(b))
             }
-        }
+        }   
     }
     rownames(b0) = rownames(A)
 
@@ -598,6 +598,8 @@ portfolioConstraints <-
     data = portfolioData(data, spec)
     if (class(constraints) == "fPFOLIOCON")
         constraints = constraints@stringConstraints
+        
+    # Constraints:
     tmpConstraints = .setConstraints(data, spec, constraints)
     nAssets = getNAssets(data)
     Sigma = getSigma(data)
@@ -614,4 +616,5 @@ portfolioConstraints <-
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+

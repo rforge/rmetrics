@@ -30,7 +30,7 @@
 ################################################################################
 
 
-solveRlp <-
+solveRlpSolve <-
     function(data, spec, constraints)
 {
     # A function implemented by Rmetrics
@@ -207,9 +207,10 @@ solveRlp <-
 
 
 ################################################################################
+# The new implementation ...
 
 
-solveRlpSolve <-
+solveRlp <-
     function(data, spec, constraints)
 {
     # A function implemented by Diethelm Wuertz
