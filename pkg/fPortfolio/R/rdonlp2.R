@@ -26,7 +26,26 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
 #  rdonlp2                      Interface to rdonlp2 solver
+#  rdonlp2Control               Control list for "rdnlp2" Solver
 ################################################################################
+
+
+################################################################################
+# Package: Rdonlp2
+# Version: 0.3-1
+# Date: 2007-03-18
+# Title: C library to use Peter Spelluci's DONLP2 from R.
+# Author: Ryuichi Tamura(ry.tamura@gmail.com)
+# Depends: R (>= 2.4.0)
+# License: Free for research purpose.
+# URL: http://arumat.net/Rdonlp2/
+# Description: DONLP2(http://plato.la.asu.edu/donlp2.html) is a general 
+#   purpose nonlinear constrained programming problem solver written 
+#   by Peter Spelluci. Rdonlp2 is a wrapper library to use it from R.
+################################################################################
+
+
+# Builtin: Requires Rmetrics Package: Cdonlp2
 
 
 rdonlp2 <- 
@@ -151,9 +170,10 @@ rdonlp2 <-
             control,
             accfun,
             confun, environment(confun), 
-            PACKAGE = "Rdonlp2"),
+            PACKAGE = "Cdonlp2"),
             # ensure to free memory and close .mes .pro files if opened
-            finally = .Call("teardown", 0, PACKAGE = "Rdonlp2")
+            finally = .Call("teardown", 0, 
+            PACKAGE = "Cdonlp2")
             )
     ans$nr.update <- matrix(ans$nr.update, nr = length(par))
     if (control$hessian) {
@@ -164,6 +184,51 @@ rdonlp2 <-
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rdonlp2Control <- 
+    function(            
+    iterma = 4000, nstep = 20,fnscale = 1, report = FALSE, rep.freq = 1,
+    tau0 = 1.0, tau = 0.1, del0 = 1.0, epsx = 1e-5, delmin = 0.1*del0,
+    epsdif = 1e-8, nreset.multiplier = 1, difftype = 3, epsfcn = 1e-16, 
+    taubnd = 1.0, hessian = FALSE, te0 = TRUE, te1 = FALSE, te2 = FALSE, 
+    te3 = FALSE, silent = FALSE, intakt = TRUE )
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Control list for "rdnlp2" Solver
+    
+    # FUNCTION:
+    
+    # Return Value:
+    list(
+        iterma = as.integer(iterma), 
+        nstep = as.integer(nstep),
+        fnscale = fnscale,
+        report = report,
+        rep.freq = as.integer(ifelse(rep.freq<1, 1, rep.freq)),
+        tau0 = tau0, 
+        tau = tau, 
+        del0 = del0,
+        epsx = epsx, 
+        delmin = delmin, 
+        epsdif = epsdif,
+        nreset.multiplier = nreset.multiplier,
+        difftype = as.integer(ifelse(!difftype%in%c(1,2,3), 3, difftype)),
+        epsfcn = epsfcn, 
+        taubnd = taubnd, 
+        hessian = hessian,
+        te0 = te0, 
+        te1 = te1, 
+        te2 = te2, 
+        te3 = te3,
+        silent = silent, 
+        intakt = intakt)
 }
 
 

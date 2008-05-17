@@ -29,6 +29,21 @@
 ################################################################################
 
 
+.checkWeights <-
+    function(weights, eps = sqrt(.Machine$double.eps))
+{    
+    for(i in 1:length(weights)) {
+        if(abs(weights[i]) < eps) weights[i] = 0
+    }
+    
+    # Return Value:
+    weights
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
 portfolioSpec <-
     function(
         model = list(

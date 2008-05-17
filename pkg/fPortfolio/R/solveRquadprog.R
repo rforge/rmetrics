@@ -87,24 +87,18 @@ solveRquadprog <-
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
     if (class(constraints) == "fPFOLIOCON")
-        constraints = constraints@stringConstraints
-
-    # Trace:
-    trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
+        constraints = constraints@stringConstraints 
 
     # Get Specifications:
     mu = getMu(data)
     Sigma = getSigma(data)
-
-    # Number of Assets:
     nAssets = getNAssets(data)
-
-    # Extracting data from Specification:
     targetReturn = getTargetReturn(spec)
     stopifnot(is.numeric(targetReturn))
+    trace = getTrace(spec)
 
     # Optimize Portfolio:
+    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
     if (nAssets == 2) {
 
         ### # Two Assets Portfolio:
@@ -112,16 +106,13 @@ solveRquadprog <-
         ### stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
         ### stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
 
+        # Solve:
         stopifnot(targetReturn >= min(mu))
         stopifnot(targetReturn <= max(mu))
         weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
-        weights = c(weights, 1- weights)
-        optim = list(
-            # Further list elements ...
-            value = NA,
-            unconstrainted.solution = c(NA, NA),
-            iterations = c(NA, NA),
-            iact = c(NA, NA))
+        weights = c(weights, 1 - weights)
+        
+        # Output List:
         ans = list(
             solver = "twoAssetsMV",
             optim = optim,
@@ -129,39 +120,15 @@ solveRquadprog <-
             targetReturn = targetReturn,
             targetRisk = NA,
             objective = sqrt(weights %*% Sigma %*% weights),
-            status = 0)
+            status = 0,
+            message = NA)
     } else {
-        # Setting the constraints matrix and vector:
-        tmpConstraints = .setConstraints(data, spec, constraints)
-        Dmat = Sigma
-        dvec = rep(0, nAssets)
-        A = tmpConstraints[, -(nAssets+1)]
-        Amat = t(A)
-        b0 = tmpConstraints[, (nAssets+1)]
-        bvec = t(b0)
-        meq = 2
-
         # Solve:
-        res1 = rquadprog(Dmat, dvec, Amat, bvec, meq)
+        args = .setRquadprogConstraints(data, spec, constraints)
+        optim = rquadprog(args$Dmat, args$dvec, args$Amat, args$bvec, args$meq)
+        weights = .checkWeights(optim$sol)
 
-        # Handle when failed ...
-        weights = res1$sol
-        for(i in 1:nAssets) {
-            if(abs(weights[i]) < sqrt(.Machine$double.eps)) weights[i] = 0
-        }
-
-        optim = list(
-            # Further list elements ...
-            value = res1$crval,
-            unconstrainted.solution = res1$dvec,
-            iterations = res1$iter,
-            iact = res1$iact[1:res1$nact])
-
-        #print(res1$crval)
-        #print(weights %*% Sigma %*% weights)
-        #print(sqrt(weights %*% Sigma %*% weights))
-
-        # Prepare Output List:
+        # Output List:
         ans = list(
             solver = "quadprog",
             optim = optim,
@@ -169,7 +136,8 @@ solveRquadprog <-
             targetReturn = targetReturn,
             targetRisk = NA,
             objective = sqrt(weights %*% Sigma %*% weights),
-            status = res1$ierr)
+            status = optim$ierr
+            message = NA)
     }
 
     # Return Value:

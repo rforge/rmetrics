@@ -135,12 +135,21 @@ setMethod("show", "fPFOLIOCON", show.fPFOLIOCON <-
     
     # Print Title:
     cat("\nTitle:\n ")
-    cat("Constraints\n")
+    cat("Portfolio Constraints\n")
     
     cat("\nConstraint String:\n")
-    cat(" ",object@stringConstraints[[1]], "\n")
+    print(object@stringConstraints)
     
-    cat("\nBox Group Constraints:\n")
+    cat("\nBox Constraints:\n")
+    print(object@boxConstraints)
+    
+    cat("\nGroup-Equal Constraints:\n")
+    print(object@groupEqConstraints)
+    
+    cat("\nGroup-Matrix Constraints:\n")
+    print(object@groupMatConstraints)
+    
+    cat("\nBox-Group Constraints:\n")
     print(object@boxgroupConstraints)
     
     cat("\nCov Risk Budget Constraints:\n")

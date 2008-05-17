@@ -25,55 +25,35 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  rlp                          Interface to CRAN's "lpSolve" solver
 #  rlpSolve                     Interface to CRAN's lpSolve solver
+#  rlpSolveControl              NYI
+#  rlp                          Interface to CRAN's "lpSolve" solver
 ################################################################################
 
 
-rlp <-
-function(
-    direction = "min", 
-    objective.in, 
-    const.mat, 
-    const.dir, 
-    const.rhs, 
-    transpose.constraints = TRUE, 
-    int.vec, 
-    presolve = 0, 
-    compute.sens = 0)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Call to function lp() from "lpSolve" package
-    
-    # FUNCTION:
-
-    # Solve:   
-    ans = lp(direction, objective.in, const.mat, const.dir, 
-        const.rhs, transpose.constraints, int.vec, presolve, 
-        compute.sens) 
-        
-    # Return Value:
-    ans
-}
-
-
+################################################################################
+# Package: lpSolveAPI
+# Version: 5.5.0.12
+# Date: 2008-05-08
+# Title: Interface to lp_solve v. 5.5
+# Author: lp_solve <http://lpsolve.sourceforge.net/>,
+#   Kjell Konis <kjell.konis@epfl.ch>.
+# Maintainer: Kjell Konis <kjell.konis@epfl.ch>
+# Depends: R (>= 2.6.2)
+# Description: The lpSolveAPI package provides an R interface to the lp_solve
+#   library - lp_solve is a Mixed Integer Linear Programming (MILP) solver
+#   with support for pure linear, (mixed) integer/binary, semi-continuous
+#   and special ordered sets (SOS) models.
+# License: LGPL version 2
 ################################################################################
 
 
 rlpSolve <- 
-    function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
+function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
     intvec = integer(0), control = list())
 {
-    # A function originally written by Kjell Konis
-    
-    # Description:
-    
-    # FUNCTION:
-    
-    # Solve:
-    n <- length(obj)
+    p <- length(obj)
+
     if(!is.null(A) && !is.null(Aeq)) {
         dimnames(A) <- dimnames(Aeq) <- names(b) <- names(beq) <- NULL
         ldAeq <- dim(A)[1] + 1
@@ -91,80 +71,111 @@ rlpSolve <-
         ldAeq <- dim(A)[1] + 1
         ldA <- dim(A)[1]
         b <- c(0.0, b)
-    } else {
+    } else
         stop("no constraints provided")
-    }
+
     if(length(lb) == 1)
-        lb <- rep(lb, n)
-    if(length(lb) != n)
+        lb <- rep(lb, p)
+
+    if(length(lb) != p)
         stop("Number of lower bounds must match number of decision variables")
+
     if(length(ub) == 1)
-        ub <- rep(ub, n)
-    if(length(ub) != n)
-        stop("Number of upper bounds must match number of decision variables")
+        ub <- rep(ub, p)
+
+    if(length(ub) != p)
+        stop("Nnumber of upper bounds must match number of decision variables")
+
     n.ints <- length(intvec)
 
-    # Process control arguments 
+    # Process control arguments
     pivoting.rule <- -1
     if(!is.null(control$pivoting)) {
-        pricer <- match(control$pivoting[1], 
-            c("firstindex", "dantzig", "devex", "steepestedge")) - 1
+        pricer <- match(control$pivoting[1], c("firstindex", "dantzig", 
+            "devex", "steepestedge")) - 1
+
         if(length(control$pivoting[-1])) {
-            price <- match(control$pivoting[-1], 
-            c("primalfallback", "multiple", "partial", "adaptive",
-                "NOTUSED", "randomized", "NOTUSED", "autopartial", 
-                "loopleft", "loopalternate",
-                "harristwopass", "NOTUSED", "truenorminit"))
-            price <- 2^(price + 1)
-        } else {
-            price <- numeric(0)
-        }  
+        price <- match(control$pivoting[-1], c("primalfallback", 
+            "multiple", "partial", "adaptive",
+            "NOTUSED", "randomized", "NOTUSED", "autopartial", "loopleft", 
+            "loopalternate", "harristwopass", "NOTUSED", "truenorminit"))
+        price <- 2^(price + 1)
+    } else
+        price <- numeric(0)
+
         pivoting.rule <- sum(c(pricer, price))
     }
+
     simplex.type <- -1
     if(!is.null(control$simplex.type)) {
         phase1 <- control$simplex.type[1]
         phase2 <- control$simplex.type[2]
-        if(phase1 == "primal" && phase2 == "primal") simplex.type <- 5
-        else if(phase1 == "primal" && phase2 == "dual") simplex.type <- 9
-        else if(phase1 == "dual" && phase2 == "primal") simplex.type <- 6
-        else if(phase1 == "dual" && phase2 == "dual") simplex.type <- 10
+
+    if(phase1 == "primal" && phase2 == "primal")
+        simplex.type <- 5
+
+    else if(phase1 == "primal" && phase2 == "dual")
+        simplex.type <- 9
+
+    else if(phase1 == "dual" && phase2 == "primal")
+        simplex.type <- 6
+
+    else if(phase1 == "dual" && phase2 == "dual")
+      simplex.type <- 10
     }
+
     basis <- -1
-    if(!is.null(control$basis)) basis <- c(0, control$basis)
+    if(!is.null(control$basis))
+        basis <- c(0, control$basis)
+
     epslevel <- -1
     eps <- c(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)
     if(!is.null(control$eps)) {
-        if(is.character(control$eps)) {
-            epslevel <- match(control$eps[1],
-                c("tight", "medium", "loose", "baggy"), nomatch = 0) - 1
+      if(is.character(control$eps)) {
+        epslevel <- match(control$eps[1],
+            c("tight", "medium", "loose", "baggy"),
+            nomatch = 0) - 1
     } else {
-        if(!is.na(control$eps["epsb"])) eps[1] <- control$eps["epsb"]
-        if(!is.na(control$eps["epsd"])) eps[2] <- control$eps["epsd"]
-        if(!is.na(control$eps["epsel"])) eps[3] <- control$eps["epsel"]
-        if(!is.na(control$eps["epsint"])) eps[4] <- control$eps["epsint"]
-        if(!is.na(control$eps["epsperturb"])) eps[5] <- control$eps["epsperturb"]
-        if(!is.na(control$eps["epspivot"])) eps[6] <- control$eps["epspivot"]
+        if(!is.na(control$eps["epsb"]))
+            eps[1] <- control$eps["epsb"]
+
+        if(!is.na(control$eps["epsd"]))
+            eps[2] <- control$eps["epsd"]
+
+        if(!is.na(control$eps["epsel"]))
+            eps[3] <- control$eps["epsel"]
+
+        if(!is.na(control$eps["epsint"]))
+            eps[4] <- control$eps["epsint"]
+
+        if(!is.na(control$eps["epsperturb"]))
+            eps[5] <- control$eps["epsperturb"]
+
+        if(!is.na(control$eps["epspivot"]))
+            eps[6] <- control$eps["epspivot"]
         }
     }
+  
     presolve <- -1
     if(!is.null(control$presolve)) {
         presolve <- unique(control$presolve)
         presolve.choices <- c(none = 0, rows = 1, cols = 2, lindep = 4,
-            sos = 32, reducemip = 64, knapsack = 128, elimeq2 = 256,
-            impliedfree = 512, reducegcd = 1024, probefix = 2048,
-            probereduce = 4096, rowdominate = 8192, coldominate = 16384,
-            mergerows = 32768, impliedslk = 65536, colfixdual = 131072,
-            bounds = 262144, duals = 524288, sensduals = 1048576)
-            presolve <- presolve.choices[presolve]
-            presolve <- sum(presolve)
+        sos = 32, reducemip = 64, knapsack = 128, elimeq2 = 256,
+        impliedfree = 512, reducegcd = 1024, probefix = 2048,
+        probereduce = 4096, rowdominate = 8192, coldominate = 16384,
+        mergerows = 32768, impliedslk = 65536, colfixdual = 131072,
+        bounds = 262144, duals = 524288, sensduals = 1048576)
+        presolve <- presolve.choices[presolve]
+        presolve <- sum(presolve)
     }
+
     storage.mode(A) <- "double"
+
     lps <- .C("linprog",
         obj = as.double(obj),
         A = A,
         ldA = as.integer(ldA),
-        n = as.integer(n),
+        p = as.integer(p),
         ldAeq = as.integer(ldAeq),
         b = as.double(b),
         lb = as.double(lb),
@@ -178,14 +189,15 @@ rlpSolve <-
         eps = as.double(eps),
         presolve = as.integer(presolve),
         objective = double(1),
-        x = double(n),
+        x = double(p),
         status = integer(1),
         NAOK = TRUE,
-        PACKAGE = "RlpSolve")
+        PACKAGE = "ClpSolve")
+
     if(lps$status == -2)
-        message <- "out of memory"
+        status.message = "out of memory"
     else
-        message <- c(
+        message = c(
             "optimal solution found",
             "the model is sub-optimal",
             "the model is infeasible",
@@ -200,12 +212,13 @@ rlpSolve <-
             "the branch and bound was stopped because of a break-at-first or break-at-value",
             "a feasible branch and bound solution was found",
             "no feasible branch and bound solution was found")[lps$status+1]
+
     control$eps <- lps$eps
     names(control$eps) <- 
         c("epsb", "epsd", "epsel", "epsint", "epsperturb", "epspivot")
-    
-    # Return Value:
-    list(objective = lps$objective,
+
+    list(
+        objective = lps$objective,
         x = lps$x,
         status = lps$status,
         message = message,
@@ -215,4 +228,10 @@ rlpSolve <-
 
 ################################################################################
     
+
+# rlpSolveControl
+
+
+################################################################################
+
     

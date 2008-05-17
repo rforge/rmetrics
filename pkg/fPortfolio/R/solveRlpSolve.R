@@ -61,8 +61,9 @@ solveRlp <-
     #   lpSolve explicitely!
 
     # Example:
-    #   Data = 100*as.timeSeries(data(LPP2005REC))[,1:6]
+    #   Data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
     #   Spec = portfolioSpec();setType(Spec)="CVaR"; setSolver(Spec)="solveRlp"
+    #   Constraints = portfolioConstraints(Data, Spec)
     #   tangencyPortfolio(Data, Spec)
     
     # FUNCTION:
@@ -181,7 +182,7 @@ solveRlp <-
         names(f.rhs) = rownames(f.con)
 
         # Optimize Portfolio:
-        ans = rlp("max", f.obj, f.con, f.dir, f.rhs)
+        ans = lpSolve::lp("max", f.obj, f.con, f.dir, f.rhs)
         class(ans) <- "list"
 
         # Prepare Output List:
@@ -233,26 +234,18 @@ solveRlpSolve <-
         cat("\n\nRlpSolve Package missing")
         cat("\nPlease install Package 'RlpSolve' from Rmetrics Server\n")
     }
-    
-    # Get Portfolio Type:
+     
+    # Transform Data and Constraints to S4 Objects:
+    data = portfolioData(data, spec)
+    constraints = PortfolioConstraints(data, spec, constraints)
+
+    # Get Portfolio Type and Solver:
     type = getType(spec)
     FUN = paste(".", tolower(type), "Solver", sep = "")
     funSolver = match.fun(FUN)
-    
-    # Set Arguments:
-    scenario <- NA
-    forecasts <- NA
-    targetReturn <- NA 
-    alpha <- NA 
-    group <- NA 
-    maxGroup <- NA 
-    minGroup <- NA 
-    maxAsset <- NA 
-    minAsset <- NA 
-    
+
     # Solve:
-    ans = funSolver(scenario, forecasts, targetReturn, alpha,
-        group, maxGroup, minGroup, maxAsset, minAsset)
+    ans = funSolver(data, spec, constraints)
     
     # Return Value:
     ans
@@ -270,24 +263,69 @@ solveRlpSolve <-
 
 
 .cvarSolver <- 
-    function(
-        scenario, 
-        forecasts, 
-        targetReturn, 
-        alpha, 
-        group, 
-        maxGroup, 
-        minGroup, 
-        maxAsset, 
-        minAsset)
+    function(data, spec, contsraints)
+    # Modified by DW from:
+    #   function(scenario, forecasts, targetReturn, alpha, group, 
+    #   maxGroup, minGroup, maxAsset, minAsset)
 {
-    # A function implemented by Alexios Ghalanos
+    # A function implemented by Alexios Ghalanos and adapted by Diethelm Wuertz
     
     # Description:
-    #   Conditional Value at Risk solver
+    #   Conditional Value-at-Risk solver
+    
+    # Arguments:
+    
+    # Previous Function Arguments:
+    #   Scenario - s x n matrix of returns representing the expected 
+    #       realization of future path, or alternatively a historical 
+    #       returns matrix
+    #   forecasts - n x 1 vector of forecast returns
+    #   targetReturn - 1 x 1 vector of portfolio target return
+    #   alpha - 1 x 1 vector of alpha coefficient representing % of worst 
+    #       drawdown to minimize over
+    #   group - g x n matrix of group level constraints
+    #   maxGroup - g x 1 vector of maximum group weight constraint
+    #   minGroup - g x 1 vector of minimum group weight constraint
+    #   maxAsset - n x 1 vector of maximum asset weights constraint
+    #   minAsset - n x 1 vector of minimum asset weight constraint
+    
+    # Value:
+    #   ans = list()
+    #   What is returned from the solver, a list named
+    #       ans$optim
+    #   What we also definitely need: 
+    #       ans$solver 
+    #       ans$weights 
+    #       ans$objective
+    #       ans$status
+    #       ans$message
+    #       ans$targetReturn 
+    #       ans$targetRisk  
+    
+    # Details:
+    #   
+    
+    # Notes:
+    #   Custom lpSolve uses:
+    #       min: objL * x
+    #       subject to: A x <= b
+    #       Aeq x == beq
+    #       lb[j] <= x[j] <= ub[j] 
     
     # FUNCTION:
     
+    # Wrapper - added by DW:
+    scenario <- as.matrix(getSeries(data))
+    forecasts <- colMeans(scenario)
+    targetReturn <- getTargetReturn(spec)
+    alpha <- getAlpha(Spec)
+    group <- NA
+    maxGroup <- NA
+    minGroup <- NA
+    maxAsset <- NA
+    minAsset <- NA
+    
+    # Settings - what follows from AG:
     n <- dim(scenario)[2]
     s <- dim(scenario)[1]
     S <- as.matrix(scenario)
@@ -302,42 +340,42 @@ solveRlpSolve <-
     minw <- as.numeric(minAsset)
     maxw <- as.numeric(maxAsset)
     forecasts <- as.numeric(forecasts)
-
     alpha <- as.numeric(alpha)
-    
     gbGroup = rbind(group, -1*group)
     gbCons = rbind(maxg, -1*ming)
-    
     objL <- c(1, rep(0, n), rep(1/((alpha)*s), s))
-    
     Amat <- cbind(matrix(-1, nrow = s, ncol = 1), -S, -diag(s))
     Amat <- rbind(Amat, cbind(matrix(0, nrow = 2*g, ncol = 1), 
         gbGroup, matrix(0, nrow = 2*g, ncol = s)))
-    
     bvec <- matrix(0, nrow = s, ncol = 1)
     bvec <- rbind(bvec, gbCons)
-    
-    
     lb <- rbind(-100, matrix(minw, ncol = 1))
-    lb <- rbind(lb, matrix(0, ncol = 1, nrow = s))
-    
+    lb <- rbind(lb, matrix(0, ncol = 1, nrow = s)) 
     ub <- rbind(100, matrix(maxw, ncol = 1))
-    ub <- rbind(ub, matrix(1, nrow = s, ncol = 1))
-    
+    ub <- rbind(ub, matrix(1, nrow = s, ncol = 1))  
     Aeq <- cbind(0, matrix(1, ncol = n, nrow = 1), matrix(0, 
         ncol = s, nrow = 1))
     Aeq <- rbind(Aeq, cbind(0, matrix(forecasts, ncol = n, nrow = 1), 
         matrix(0, ncol = s, nrow = 1)))
     beq <- c(1, targetReturn)
     
-    # Solve:
-    ret <- rlpSolve(obj = objL,  A = Amat,  b = bvec,  Aeq = Aeq,  
-        beq = beq,  lb = lb,  ub = ub) 
-    solution <- list(weights = ret$x[2:(n+1)], objective = ret$objective, 
-        status = ret$status, mess = ret$message, sol = ret)
+    # Solve - use lpSolve from KK:
+    optim <- RlpsSolve::lpSolve(obj = objL,  A = Amat,  b = bvec,  
+        Aeq = Aeq, beq = beq,  lb = lb,  ub = ub) 
+        
+    # Result:
+    ans <- list(
+        solver = "RlpSolve",
+        optim = optim,
+        weights = .checkWeights(ret$x[2:(n+1)]), 
+        targetReturn = NA,
+        targetRisk = NA,
+        objective = optim$objective, 
+        status = optim$status, 
+        message = optim$message)          
         
     # Return Value:
-    return(solution)
+    ans
 }
 
 
@@ -352,18 +390,11 @@ solveRlpSolve <-
 
 
 .cdarSolver <-
-function(
-    scenario, 
-    forecasts, 
-    targetReturn, 
-    alpha, 
-    group, 
-    maxGroup, 
-    minGroup, 
-    maxAsset, 
-    minAsset)
+    function(data, spec, contsraints)
+    # function(scenario, forecasts, targetReturn, alpha, group, 
+    # maxGroup, minGroup, maxAsset, minAsset)
 {
-    # A function implemented by Alexios Ghalanos
+    # A function implemented by Alexios Ghalanos adapted by DW
     
     # Description:
     #   Conditional Drawdown-at-Risk solver
@@ -382,6 +413,19 @@ function(
     #   maxAsset - n x 1 vector of maximum asset weights constraint
     #   minAsset - n x 1 vector of minimum asset weight constraint
     
+    # Value:
+    #   ans = list()
+    #   What is returned from the solver, a list named
+    #       ans$optim
+    #   What we also definitely need: 
+    #       ans$solver 
+    #       ans$weights 
+    #       ans$objective
+    #       ans$status
+    #       ans$message
+    #       ans$targetReturn 
+    #       ans$targetRisk  
+    
     # Details:
     #   P.31 of Chekhlov, Uryasev & Zabarankin, 
     #   "DRAWDOWN MEASURE IN PORTFOLIO OPTIMIZATION"
@@ -389,80 +433,86 @@ function(
     #   using appropriate auxiliary variables
     
     # Notes:
-    #   custom lpsolve uses:
+    #   Custom lpSolve uses:
     #       min: objL * x
     #       subject to: A x <= b
     #       Aeq x == beq
     #       lb[j] <= x[j] <= ub[j] 
     
     # FUNCTION:
-
+    
+    # Wrapper:
+    data = portfolioData(data)
+    scenario = as.matrix(getData(data))
+    forecasts = getMu(data)
+    targetReturn = getTargetReturn(spec)
+    alpha = getAlpha(spec)
+    group = 
+    maxGroup =
+    minGroup = 
+    boxConstrains = .setBoxConstraints(data, constraints)
+    maxAsset = boxConstraints$minW
+    minAsset = boxConstraints$maxW
+    
+    # Settings:
     n <- dim(scenario)[2]
     s <- dim(scenario)[1]
-    S <-scenario
+    S <- scenario
     colnames(S) <- NULL
     rownames(S) <- NULL
-    
     group <- as.matrix(group)
     g <- dim(group)[1]
     colnames(group) <- NULL
     rownames(group) <- NULL
     maxg <- matrix(maxGroup,ncol=1)
-    ming <- matrix(minGroup,ncol=1)
-    
+    ming <- matrix(minGroup,ncol=1)   
     minw <- as.numeric(minAsset)
     maxw <- as.numeric(maxAsset)
-    
     forecasts<-as.numeric(forecasts)
-    
     targetReturn <- as.numeric(targetReturn)
-    
     alpha <- as.numeric(alpha)
-    
     gbGroup <- rbind(group,-1*group)
     gbCons <- rbind(maxg,-1*ming)
-    
     xm <- as.matrix(-diag(s))
     idx <- which(xm==(-1), arr.ind = TRUE)
     myrow <- idx[, 1]
     mycol <- idx[, 2]
     mycol[2:length(mycol)] <- mycol[2:length(mycol)]-1
     diag(xm[myrow[2:length(myrow)], mycol[2:length(mycol)]]) <- 1
-    
     Amat = cbind(matrix(-1, nrow = s, ncol = 1),
         matrix(0,ncol = n, nrow = s), -diag(s), diag(s))
     Amat = rbind(Amat,cbind(matrix(0, nrow = s, ncol = 1), -S,
         matrix(0,ncol = s, nrow = s), as.matrix(xm)))
-    
     Amat = rbind(Amat,cbind(matrix(0, nrow = 2*g,ncol = 1),
-        gbGroup, matrix(0, nrow = 2*g, ncol = 2*s)))
-        
-    bvec = matrix(0,nrow=2*s,ncol=1)
-    bvec = rbind(bvec,gbCons)
-    
+        gbGroup, matrix(0, nrow = 2*g, ncol = 2*s)))  
+    bvec = matrix(0,nrow = 2*s, ncol = 1)
+    bvec = rbind(bvec, gbCons)
     objL = c(1, rep(0, n), rep(1/((1-alpha)*s), s), rep(0, s))
-    
-    lb = rbind(0,matrix(minw,ncol=1))
-    lb = rbind(lb,matrix(0,ncol=1,nrow=2*s))
-    
+    lb = rbind(0,matrix(minw, ncol = 1))
+    lb = rbind(lb,matrix(0, ncol = 1, nrow = 2*s))
     ub = rbind(1, matrix(maxw, ncol = 1))
     ub = rbind(ub, matrix(100, nrow = 2*s, ncol = 1))
     ub[2+n+s] <- 0
-    
     Aeq = cbind(0,matrix(1, ncol = n, nrow = 1),
         matrix(0, ncol = 2*s, nrow = 1))
     Aeq = rbind(Aeq, cbind(0, matrix(forecasts, ncol = n, nrow = 1),
         matrix(0, ncol = 2*s, nrow = 1)))
     beq = c(1, targetReturn)
     
-    ret <- rlpSolve(obj = objL, A = Amat, b = bvec, Aeq = Aeq, beq = beq, 
-        lb = lb, ub = ub) 
+    # Solve:
+    ret <- RlpSolve::lpSolve(obj = objL, A = Amat, b = bvec, Aeq = Aeq, 
+        beq = beq, lb = lb, ub = ub) 
     
-    solution <- list(weights=ret$x[2:(n+1)],objective = ret$objective,
-        status = ret$status, mess = ret$message, sol = ret)
+    # Result:
+    ans <- list(
+        weights=ret$x[2:(n+1)],
+        objective = ret$objective,
+        status = ret$status, 
+        message = ret$message, 
+        sol = ret)
     
     # Return Value:
-    return(solution)
+    ans
 }
 
 
@@ -471,27 +521,50 @@ function(
 
 if (FALSE) {
        
+    
+    
+    Data <- returns(as.timeSeries(read.csv("indices.csv")), method = "discrete")
+    colnames(Data) <- abbreviate(colnames(Data))
+    
+    Spec = portfolioSpec()
+    setType(Spec) = "CVaR"
+    #setSolver(Spec) =
+    
+    Constraints = c(
+        "sumW[1:6]   = c(-0.9, 0.9)", # asia
+        "sumW[7:25]  = c(-0.9, 0.9)", # greater europe
+        "sumW[26:29] = c(-0.9, 0.9)") # americas
+        
+    Groups = .setGroupMatConstraints(Data, Spec, Constraints)
+    group = Groups$Amat
+    minGroup = Groups$avec
+    maxGroup = Groups$bvec
+    
+    Box = .setBoxConstraints(Data, Spec, Constraints)
+    minAssets = Box$minW
+    maxAssets = Box$MaxW
+    
     # Dataset contains daily price data on 29 countries for the 
     # period 12/02/96-12/31/98 (m/d/y)
-    indices.ts <- as.timeSeries(read.csv("indices.csv"))
-    indices.r.ts <- returns(indices.ts, method = "discrete")
-    nAssets <- NCOL(indices.r.ts)
+    Data <- returns(as.timeSeries(read.csv("indices.csv")), method = "discrete")
+    colnames(Data) <- abbreviate(colnames(Data)) 
+    nAssets <- NCOL(Data)
 
     # Create some sample grouping
     group <- matrix(0, nrow = 3, ncol = nAssets)
-    group[1,1:6] <- 1     #asia
-    group[2,7:25] <- 1    #greater europe
-    group[3,26:29] <- 1   #americas
+    group[1, 1:6] <- 1     # asia
+    group[2, 7:25] <- 1    # greater europe
+    group[3, 26:29] <- 1   # americas
 
     # Prepare Inputs and constraints
-    scenario <- as.matrix(indices.r.ts)
+    scenario <- as.matrix(Data)
     rownames(scenario) <- NULL
     scenario <- as.matrix(scenario[,])
     forecasts <- apply(scenario,2, FUN = function(x) mean(x))
-    minAsset <- rep(-0.15,nAssets)
-    maxAsset <- rep(0.15,nAssets)
-    minGroup <- c(-0.9,-0.9,-0.9)
-    maxGroup <- c(0.9,0.9,0.9)
+    minAsset <- rep(-0.15, nAssets)
+    maxAsset <- rep(0.15, nAssets)
+    minGroup <- c(-0.9, -0.9, -0.9)
+    maxGroup <- c(0.9, 0.9, 0.9)
     targetReturn <- 0.1/252
     alpha = 0.9
     lambda = 4
@@ -500,7 +573,7 @@ if (FALSE) {
     ## V <- giniVmatrix(scenario, method = "fast")
     
     # Run Optimizers
-    cvar.test <- .CVaR.solver(scenario, forecasts, targetReturn, alpha,
+    cvar.test <- .cvarSolver(scenario, forecasts, targetReturn, alpha,
         group, maxGroup, minGroup, maxAsset, minAsset)
     cdar.test <- .CDaR.solver(scenario, forecasts, targetReturn, alpha,
         group, maxGroup, minGroup, maxAsset, minAsset)
