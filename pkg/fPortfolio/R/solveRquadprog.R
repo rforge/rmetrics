@@ -136,7 +136,7 @@ solveRquadprog <-
             targetReturn = targetReturn,
             targetRisk = NA,
             objective = sqrt(weights %*% Sigma %*% weights),
-            status = optim$ierr
+            status = optim$ierr,
             message = NA)
     }
 
