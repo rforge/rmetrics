@@ -48,10 +48,38 @@
 ################################################################################
 
 
-rlpSolve <- 
+rlpSolve <-
+    function (direction = "min", objective.in, const.mat, const.dir, 
+    const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0, 
+    compute.sens = 0) 
+{
+    # lpSolve Package from CRAN:
+    ans = lpSolve::lp(direction, objective.in, const.mat, const.dir, 
+        const.rhs, transpose.constraints, int.vec, presolve, compute.sens)
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+# rlpSolveControl
+
+    # Not yet implemented
+
+
+################################################################################
+# From KK alternative implementation
+
+
+rlp <- 
 function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
     intvec = integer(0), control = list())
 {
+    # KK:
+    
     p <- length(obj)
 
     if(!is.null(A) && !is.null(Aeq)) {
@@ -223,26 +251,6 @@ function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
         status = lps$status,
         message = message,
         control = control)
-}
-
-
-################################################################################
-    
-
-# rlpSolveControl
-
-
-################################################################################
-
-
-rlp <-
-    function (direction = "min", objective.in, const.mat, const.dir, 
-    const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0, 
-    compute.sens = 0) 
-{
-    ans = lp(direction, objective.in, const.mat, const.dir, const.rhs, 
-        transpose.constraints, int.vec, presolve, compute.sens)
-    ans
 }
 
 

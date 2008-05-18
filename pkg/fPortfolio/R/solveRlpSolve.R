@@ -308,10 +308,11 @@ solveRlp <-
     
     # Notes:
     #   Custom lpSolve uses:
-    #       min: objL * x
-    #       subject to: A x <= b
-    #       Aeq x == beq
-    #       lb[j] <= x[j] <= ub[j] 
+    #           min: objL * x
+    #       subject to: 
+    #           Aeq x == beq
+    #           A x   <= b
+    #           lb[j] <= x[j] <= ub[j] 
     
     # FUNCTION:
     
@@ -320,9 +321,15 @@ solveRlp <-
     forecasts <- colMeans(scenario)
     targetReturn <- getTargetReturn(spec)
     alpha <- getAlpha(spec)
+    
+    # forecasts <- as.numeric(forecasts)
+    # alpha <- as.numeric(alpha)
+    
     group <- NA
     maxGroup <- NA
     minGroup <- NA
+    
+    asset = NA
     maxAsset <- NA
     minAsset <- NA
     
@@ -332,36 +339,54 @@ solveRlp <-
     S <- as.matrix(scenario)
     colnames(S) <- NULL
     rownames(S) <- NULL
-    group <- as.matrix(group)
-    g <- dim(group)[1]
-    colnames(group) <- NULL
-    rownames(group) <- NULL
-    maxg <- matrix(maxGroup, ncol = 1)
-    ming <- matrix(minGroup, ncol = 1)
-    minw <- as.numeric(minAsset)
-    maxw <- as.numeric(maxAsset)
-    forecasts <- as.numeric(forecasts)
-    alpha <- as.numeric(alpha)
-    gbGroup = rbind(group, -1*group)
-    gbCons = rbind(maxg, -1*ming)
+    
+    if (!is.na(group)) {
+        group <- as.matrix(group)
+        g <- dim(group)[1]
+        colnames(group) <- NULL
+        rownames(group) <- NULL
+        maxg <- matrix(maxGroup, ncol = 1)
+        ming <- matrix(minGroup, ncol = 1)
+        gbGroup = rbind(group, -1*group)
+        gbCons = rbind(maxg, -1*ming)
+    }
+    
+    if (!is.na(asset)) {
+        minw <- as.numeric(minAsset)
+        maxw <- as.numeric(maxAsset)
+    }
+    
+    # Objective Function:
     objL <- c(1, rep(0, n), rep(1/((alpha)*s), s))
+    
+    # "<="
     Amat <- cbind(matrix(-1, nrow = s, ncol = 1), -S, -diag(s))
-    Amat <- rbind(Amat, cbind(matrix(0, nrow = 2*g, ncol = 1), 
+    if (!is.na(group)) Amat <- 
+        rbind(Amat, cbind(matrix(0, nrow = 2*g, ncol = 1), 
         gbGroup, matrix(0, nrow = 2*g, ncol = s)))
     bvec <- matrix(0, nrow = s, ncol = 1)
-    bvec <- rbind(bvec, gbCons)
+    if (!is.na(group)) bvec <- rbind(bvec, gbCons)
+    
+    # Lower Box:
     lb <- rbind(-100, matrix(minw, ncol = 1))
     lb <- rbind(lb, matrix(0, ncol = 1, nrow = s)) 
+    
+    # Upper Box:
     ub <- rbind(100, matrix(maxw, ncol = 1))
-    ub <- rbind(ub, matrix(1, nrow = s, ncol = 1))  
-    Aeq <- cbind(0, matrix(1, ncol = n, nrow = 1), matrix(0, 
-        ncol = s, nrow = 1))
-    Aeq <- rbind(Aeq, cbind(0, matrix(forecasts, ncol = n, nrow = 1), 
-        matrix(0, ncol = s, nrow = 1)))
+    ub <- rbind(ub, matrix(1, nrow = s, ncol = 1)) 
+     
+    # "=="
+    Aeq <- 
+        cbind(0, matrix(1, ncol = n, nrow = 1), 
+        matrix(0, ncol = s, nrow = 1))
+    Aeq <- 
+        rbind(Aeq, 
+        cbind(0, matrix(forecasts, ncol = n, nrow = 1), 
+        matrix(0, ncol = s, nrow = 1))) 
     beq <- c(1, targetReturn)
     
     # Solve - use lpSolve from KK:
-    optim <- rlpSolve(obj = objL,  A = Amat,  b = bvec,  
+    optim <- rlp(obj = objL,  A = Amat,  b = bvec,  
         Aeq = Aeq, beq = beq,  lb = lb,  ub = ub) 
         
     # Result:
@@ -501,7 +526,7 @@ solveRlp <-
     beq = c(1, targetReturn)
     
     # Solve:
-    optim <- rlpSolve(obj = objL, A = Amat, b = bvec, Aeq = Aeq, 
+    optim <- rlp(obj = objL, A = Amat, b = bvec, Aeq = Aeq, 
         beq = beq, lb = lb, ub = ub) 
     
     # Result:
@@ -514,81 +539,6 @@ solveRlp <-
     
     # Return Value:
     ans
-}
-
-
-################################################################################
-
-
-if (FALSE) {
-       
-    
-    
-    Data <- returns(as.timeSeries(read.csv("indices.csv")), method = "discrete")
-    colnames(Data) <- abbreviate(colnames(Data))
-    
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    #setSolver(Spec) =
-    
-    Constraints = c(
-        "sumW[1:6]   = c(-0.9, 0.9)", # asia
-        "sumW[7:25]  = c(-0.9, 0.9)", # greater europe
-        "sumW[26:29] = c(-0.9, 0.9)") # americas
-        
-    Groups = .setGroupMatConstraints(Data, Spec, Constraints)
-    group = Groups$Amat
-    minGroup = Groups$avec
-    maxGroup = Groups$bvec
-    
-    Box = .setBoxConstraints(Data, Spec, Constraints)
-    minAssets = Box$minW
-    maxAssets = Box$MaxW
-    
-    # Dataset contains daily price data on 29 countries for the 
-    # period 12/02/96-12/31/98 (m/d/y)
-    Data <- returns(as.timeSeries(read.csv("indices.csv")), method = "discrete")
-    colnames(Data) <- abbreviate(colnames(Data)) 
-    nAssets <- NCOL(Data)
-
-    # Create some sample grouping
-    group <- matrix(0, nrow = 3, ncol = nAssets)
-    group[1, 1:6] <- 1     # asia
-    group[2, 7:25] <- 1    # greater europe
-    group[3, 26:29] <- 1   # americas
-
-    # Prepare Inputs and constraints
-    scenario <- as.matrix(Data)
-    rownames(scenario) <- NULL
-    scenario <- as.matrix(scenario[,])
-    forecasts <- apply(scenario,2, FUN = function(x) mean(x))
-    minAsset <- rep(-0.15, nAssets)
-    maxAsset <- rep(0.15, nAssets)
-    minGroup <- c(-0.9, -0.9, -0.9)
-    maxGroup <- c(0.9, 0.9, 0.9)
-    targetReturn <- 0.1/252
-    alpha = 0.9
-    lambda = 4
-    threshold <- 0
-    moment = 1
-    ## V <- giniVmatrix(scenario, method = "fast")
-    
-    # Run Optimizers
-    cvar.test <- .cvarSolver(scenario, forecasts, targetReturn, alpha,
-        group, maxGroup, minGroup, maxAsset, minAsset)
-    cdar.test <- .CDaR.solver(scenario, forecasts, targetReturn, alpha,
-        group, maxGroup, minGroup, maxAsset, minAsset)
-    mad.test <- .MAD.solver(scenario,as.numeric(forecasts),targetReturn,
-        group, maxGroup, minGroup, maxAsset, minAsset)
-    minimax.test <- .MiniMax.solver(scenario, forecasts, targetReturn,
-        group, maxGroup, minGroup, maxAsset, minAsset)
-    hmu.test <- .HMU.solver(scenario,forecasts,lambda,targetReturn,
-        group, maxGroup, minGroup, maxAsset, minAsset, w0 = NULL)
-    lpm.test <- .LPM.solver(scenario, forecasts, threshold, moment, 
-        targetReturn, group, maxGroup, minGroup, maxAsset, minAsset)
-    gini.test <- .MG.solver(V,forecasts, targetReturn,
-        group, maxGroup, minGroup, minAsset, maxAsset)
-
 }
 
 

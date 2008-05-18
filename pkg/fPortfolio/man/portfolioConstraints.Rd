@@ -2,6 +2,9 @@
 
 
 \alias{portfolioConstraints}
+\alias{setBoxConstraints}
+\alias{setGroupEqConstraints}
+\alias{setGroupMatConstraints}
 
 
 \title{Portfolio Constraints}

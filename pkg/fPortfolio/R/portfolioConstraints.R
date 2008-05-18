@@ -86,13 +86,13 @@ portfolioConstraints <-
     attr(stringConstraints, "control") = check
 
     # Set Box Constraints:
-    boxConstraints = .setBoxConstraints(data, spec, constraints)
+    boxConstraints = setBoxConstraints(data, spec, constraints)
         
     # Set Group Equal Constraints:
-    groupEqConstraints = .setGroupEqConstraints(data, spec, constraints)
+    groupEqConstraints = setGroupEqConstraints(data, spec, constraints)
         
     # Set Group Matrix Constraints:
-    groupMatConstraints = .setGroupMatConstraints(data, spec, constraints)
+    groupMatConstraints = setGroupMatConstraints(data, spec, constraints)
             
     # Set BoxGroup Constraints:
     boxgroupConstraints =
@@ -161,9 +161,9 @@ portfolioConstraints <-
 
     # Constraints:
     if (type == "BoxGroup") {
-            ans = .setBoxGroupConstraints(data, spec, constraints)
+        ans = .setBoxGroupConstraints(data, spec, constraints)
     } else if (type == "RiskBudget") {
-            ans = .setRiskBudgetsConstraints(data, spec, constraints)
+        ans = .setRiskBudgetsConstraints(data, spec, constraints)
     }
 
     # Return Value:
@@ -270,7 +270,7 @@ portfolioConstraints <-
 # ------------------------------------------------------------------------------
 
 
-.setBoxConstraints <-
+setBoxConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Rmetrics
@@ -291,12 +291,28 @@ portfolioConstraints <-
 
     # Get Specifications:
     N = nAssets = getNAssets(data)
-    nameAssets <- getNames(data)
+    Assets <- getNames(data)
+    
+    # LongOnly:
+    if("LongOnly" %in% constraints) {
+        minW = rep(0, nAssets)
+        maxW = rep(1, nAssets)
+        names(minW) = names(maxW) = Assets
+        return(list(minW = minW, maxW = maxW))
+    }
+    
+    # Unlimited Short:
+    if("Short" %in% constraints) {
+        minW = rep(-Inf, nAssets)
+        maxW = rep( Inf, nAssets)
+        names(minW) = names(maxW) = Assets
+        return(list(minW = minW, maxW = maxW))
+    }
 
     # Compose vectors avec and bvec:
-    minW = rep(0, N)
-    maxW = rep(1, N)
-    names(minW) <- names(maxW) <- nameAssets
+    minW = rep(0, nAssets)
+    maxW = rep(1, nAssets)
+    names(minW) <- names(maxW) <- Assets
     if (!is.null(constraints)) {
         nC = length(constraints)
         what = substr(constraints, 1, 4)
@@ -312,10 +328,13 @@ portfolioConstraints <-
 }
 
 
+.setBoxConstraints <- setBoxConstraints
+
+
 # ------------------------------------------------------------------------------
 
 
-.setGroupEqConstraints <-
+setGroupEqConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Rmetrics
@@ -333,33 +352,52 @@ portfolioConstraints <-
 
     # Get Statistics:
     data = portfolioData(data, spec)
-    targetReturn = 
+    targetReturn = NA
     if(is.null(getTargetReturn(spec))) targetReturn = NA
     else targetReturn = getTargetReturn(spec)
        
     # Get Specifications:
     mu = getMu(data)
-    N = nAssets = getNAssets(data)
-    nameAssets <- getNames(data)  
+    nAssets = getNAssets(data)
+    Assets <- getNames(data)  
     
     # Target Return: 
-    Aeq = matrix(mu, byrow = TRUE, ncol = N)
+    Aeq = matrix(mu, byrow = TRUE, ncol = nAssets)
     # Full Investment:
-    Aeq = rbind(Aeq, rep(1, N))
+    Aeq = rbind(Aeq, rep(1, nAssets))
     # Dimension Names:
-    colnames(Aeq) <- nameAssets
+    colnames(Aeq) <- Assets
     rownames(Aeq) = c("Return", "Budget")
     ceq = c(Return = targetReturn, Budget = 1)
+    
+    # Compose matrix Amat and vectors avec and bvec:
+    what6 = substr(constraints, 1, 6)
+    if (!is.null(constraints)) {
+        nC = length(constraints)
+        for (i in 1:nC) {
+            if (what6[i] == "eqsumW")  {
+                eqsumW = rep(0, times = nAssets)
+                names(eqsumW) <- Assets
+                eval(parse(text = constraints[i]))
+                Aeq = rbind(Aeq, eqsumW = sign(eqsumW))
+                a = strsplit(constraints[i], "=")[[1]][2]
+                ceq = c(ceq, eqsumW = as.numeric(a))
+            }
+        }
+    }
     
     # Return Value:
     list(Aeq = Aeq, ceq = ceq)
 }
 
 
+.setGroupEqConstraints <- setGroupEqConstraints
+
+
 # ------------------------------------------------------------------------------
     
     
-.setGroupMatConstraints <-
+setGroupMatConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Rmetrics
@@ -450,6 +488,9 @@ portfolioConstraints <-
     # Return Value:
     list(Amat = Amat, avec = avec, bvec = bvec)
 }
+
+
+.setGroupMatConstraints <- setGroupMatConstraints
 
 
 # ------------------------------------------------------------------------------
