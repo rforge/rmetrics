@@ -15,6 +15,10 @@
 
 \usage{
 portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly", \dots)
+
+setBoxConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+setGroupEqConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 

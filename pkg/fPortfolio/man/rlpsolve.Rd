@@ -21,52 +21,19 @@
 
 
 \usage{
-rlpSolve(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
-    intvec = integer(0), control = list())
-    
-rlp(direction = "min", objective.in, const.mat, const.dir, const.rhs, 
+rlpSolve(direction = "min", objective.in, const.mat, const.dir, const.rhs, 
     transpose.constraints = TRUE, int.vec, presolve = 0, compute.sens = 0)
+    
+rlp(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
+    intvec = integer(0), control = list())
 }
 
 
 \arguments{
     
-    For \code{RlpSolve} Interface calling function \code{rlpSolve}:
-    
-    % rlpSolve(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
-    % intvec = integer(0), control = list())
-    
-    \item{obj}{
-        ...
-        }
-    \item{A}{
-        ...
-        }
-    \item{b}{
-        ...
-        }
-    \item{Aeq}{
-        ...
-        }
-    \item{beq}{
-        ...
-        }
-    \item{lb}{
-        ...
-        }
-    \item{ub}{
-        ...
-        }
-    \item{intvec}{
-        ...
-        }
-    \item{control}{
-        ...
-        }
-        
     For \code{lpSolve} Interface calling function \code{rlp}:
     
-    % rlp(direction = "min", objective.in, const.mat, const.dir, const.rhs, 
+    % rlpSolve(direction = "min", objective.in, const.mat, const.dir, const.rhs, 
     % transpose.constraints = TRUE, int.vec, presolve = 0, compute.sens = 0)
     
     \item{direction}{
@@ -94,6 +61,39 @@ rlp(direction = "min", objective.in, const.mat, const.dir, const.rhs,
         ...
         }
     \item{compute.sens}{
+        ...
+        }
+        
+    For \code{Rlp} Interface calling function \code{rlpSolve}:
+    
+    % rlp(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
+    % intvec = integer(0), control = list())
+    
+    \item{obj}{
+        ...
+        }
+    \item{A}{
+        ...
+        }
+    \item{b}{
+        ...
+        }
+    \item{Aeq}{
+        ...
+        }
+    \item{beq}{
+        ...
+        }
+    \item{lb}{
+        ...
+        }
+    \item{ub}{
+        ...
+        }
+    \item{intvec}{
+        ...
+        }
+    \item{control}{
         ...
         }
  
