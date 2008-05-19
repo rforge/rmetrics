@@ -281,7 +281,7 @@ covRiskBudgetsLinePlot <-
     range = ymax - ymin
     ymax = ymax + 0.005 * range
     ymin = ymin - 0.005 * range
-    dim = dim(weights)
+    dim = dim(X)
     range = dim[1]
     xmin = 0
     xmax = range + 0.2 * range
