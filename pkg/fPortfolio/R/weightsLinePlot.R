@@ -56,11 +56,11 @@ weightsLinePlot <-
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
     
     # Compute Weights:
-    X = getWeights(object)
+    X = weights = getWeights(object)
     
     # Define Plot Range:
-    ymax = max(colMaxs(X))
-    ymin = min(colMins(X))
+    ymax = max(colMaxs(weights))
+    ymin = min(colMins(weights))
     range = ymax - ymin
     ymax = ymax + 0.005 * range
     ymin = ymin - 0.005 * range
@@ -89,8 +89,8 @@ weightsLinePlot <-
     }
     
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object) 
-    targetReturn = getTargetReturn(object) 
+    targetRisk = getTargetRisk(object)[, 1]
+    targetReturn = getTargetReturn(object)[, 1]
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
@@ -110,8 +110,8 @@ weightsLinePlot <-
     # lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
     
     # Add vertical Line at minimum risk:
-    minIndex = which.min(targetRisk[, 1])
-    minRisk = signif(min(targetRisk[, 1]), 3)
+    minIndex = which.min(targetRisk)
+    minRisk = signif(min(targetRisk), 3)
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
     
     # Add Info:
@@ -202,8 +202,8 @@ weightedReturnsLinePlot <-
     }
     
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object) 
-    targetReturn = getTargetReturn(object) 
+    targetRisk = getTargetRisk(object)[, 1]
+    targetReturn = getTargetReturn(object)[, 1]
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
@@ -223,8 +223,8 @@ weightedReturnsLinePlot <-
     # lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
     
     # Add vertical Line at minimum risk:
-    minIndex = which.min(targetRisk[, 1])
-    minRisk = signif(min(targetRisk[, 1]), 3)
+    minIndex = which.min(targetRisk)
+    minRisk = signif(min(targetRisk), 3)
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
     
     # Add Info:
@@ -353,7 +353,7 @@ covRiskBudgetsLinePlot <-
 # ------------------------------------------------------------------------------
 
 
-covRiskBudgetsLinePlot <- 
+tailRiskBudgetsLinePlot <- 
     function(object, labels = TRUE, col = NULL, title = TRUE, 
     box = TRUE, legend = TRUE, ...)
 {   

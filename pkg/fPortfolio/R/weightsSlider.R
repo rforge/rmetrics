@@ -106,7 +106,7 @@ weightsSlider <-
         fPoint = frontier[N, ]
         
         frontierPlot(object, xlim = con$xlim, ylim = con$ylim,
-            xlab = "", ylab = "", title = FALSE)
+            xlab = "", ylab = "", pch = 19, cex = 0.7, title = FALSE)
                     
         mtext("Target Risk", side = 1, line = 2, adj = 1, cex = 0.7)
         mtext("Target Return", side = 2, line = 2, adj = 1, cex = 0.7)
