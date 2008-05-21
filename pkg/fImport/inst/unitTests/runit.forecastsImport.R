@@ -29,27 +29,30 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
+#  forecastsCategories   Lists categries of symbols www.forecasts.org
+#  forecastsListing      Lists symbols from www.forecasts.org
 #  forecastsImport       Downloads monthly data from www.forecasts.org 
 #  forecastsSeries       Easy to use download from www.forecasts.org   
 ################################################################################
        
         
-test.forecastsImport = 
+test.forecastsCategories <- 
+    function()
+{     
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.forecastsListing = 
 function()
 {     
-    if (FALSE) {
-        
-        X = forecastsImport("MPRIME")
-        print(X)
-        print(head(X@data)) 
-        print(class(X@data))
-        
-        X = forecastsImport("GOLD")
-        print(X)
-        print(head(X@data)) 
-        print(class(X@data))
-        
-    }
+    NA
     
     # Return Value:
     return()
@@ -66,18 +69,12 @@ function()
         
         X = forecastsSeries("MPRIME")
         print(head(X)) 
-        print(tail(X))
-        print(class(X))
         
         X = forecastsSeries("GOLD")
         print(head(X))
-        print(tail(X)) 
-        print(class(X))
         
         X = forecastsSeries(c("MPRIME", "GOLD"))
         print(head(X)) 
-        print(tail(X)) 
-        print(class(X))
         
     }
     
@@ -85,24 +82,22 @@ function()
     return()
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-test.forecastsListing = 
+test.forecastsImport = 
 function()
 {     
     if (FALSE) {
         
-        list = c(
-            "business", "banking", "cpi", "interest", "exchange", "price", 
-            "employment", "monetary", "reserves", "gdp", "government", "ppi",
-            "regional", "bop")
+        X = forecastsImport("MPRIME")
+        print(X)
         
-        for (List in list) print(forecastsListing(List))
-    
+        X = forecastsImport("GOLD")
+        print(X)
+        
     }
- 
     
     # Return Value:
     return()
@@ -111,11 +106,4 @@ function()
 
 ################################################################################
 
-
-
-
-
-forecastsImport <-  
-    function(query, file = "tempfile", 
-    source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE) 
-{   
+  

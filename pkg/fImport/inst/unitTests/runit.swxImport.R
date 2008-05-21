@@ -28,32 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fredCategories        Lists categories of symbols from research.stlouisfed.org
-#  fredListing           Lists symbols from research.stlouisfed.org
-#  fredImport            Downloads monthly data from research.stlouisfed.org
-#  fredSeries            Easy to use download from research.stlouisfed.org 
+# FUNCTION:          
+#  test.swxCategories  
+#  test.swxListing 
+#  test.swxSeries  
+#  test.swxImport           
 ################################################################################
-       
-        
-test.fredCategories <- 
+
+
+test.swxCategories <- 
     function()
 {  
-    Categories = fredCategories()   
-    print(Categories)
-    print(attr(Categories, "control"))
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.fredListing = 
-function()
-{     
     NA
     
     # Return Value:
@@ -64,14 +49,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.fredSeries = 
-function()
-{     
-    if (FALSE) {
-        
-        NA
-        
-    }
+test.swxListing <- 
+    function()
+{  
+    NA
     
     # Return Value:
     return()
@@ -80,20 +61,51 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.fredImport = 
-function()
-{     
+      
+test.swxSeries <- 
+    function()
+{  
     if (FALSE) {
         
-        NA
-        
+        # SWX:
+        X = .swxSeries(symbol = "CH0009980894")
+        print(head(X))
+        print(class(X))
+
     }
-    
+         
     # Return Value:
     return()
 }
 
-   
-################################################################################
+
+# ------------------------------------------------------------------------------
+    
+       
+test.swxImport <- 
+    function()
+{  
+    if (FALSE) {
+        
+        # SWX:
+        X = .swxImport(
+            query = "CH0009980894", 
+            file = "tempfile",
+            frequency = "daily", 
+            save = FALSE, 
+            sep = ";", 
+            try = TRUE )
+            
+        print(X)
+        print(head(X@data))
+        print(class(X@data))
+    
+    }
+         
+    # Return Value:
+    return()
+}
+
+    
+################################################################################\
 

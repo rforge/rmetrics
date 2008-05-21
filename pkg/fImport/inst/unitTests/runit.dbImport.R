@@ -28,20 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fredCategories        Lists categories of symbols from research.stlouisfed.org
-#  fredListing           Lists symbols from research.stlouisfed.org
-#  fredImport            Downloads monthly data from research.stlouisfed.org
-#  fredSeries            Easy to use download from research.stlouisfed.org 
+# FUNCTION:          
+#  test.dbCategories  
+#  test.dbListing 
+#  test.dbSeries  
+#  test.dbImport           
 ################################################################################
-       
-        
-test.fredCategories <- 
+
+
+test.dbCategories <- 
     function()
 {  
-    Categories = fredCategories()   
-    print(Categories)
-    print(attr(Categories, "control"))
+    print("Not yet implemented")
     
     # Return Value:
     return()
@@ -51,10 +49,10 @@ test.fredCategories <-
 # ------------------------------------------------------------------------------
 
 
-test.fredListing = 
-function()
-{     
-    NA
+test.dbListing <- 
+    function()
+{  
+    print("Not yet implemented")
     
     # Return Value:
     return()
@@ -63,37 +61,60 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.fredSeries = 
-function()
-{     
+      
+test.dbSeries <- 
+    function()
+{  
+    print("Implemented as Hidden Function")
+    
     if (FALSE) {
         
-        NA
+        # db:
+        X = .dbSeries(symbols = "DE0009769554")
+        print(head(X))
+        print(class(X))
         
+        # db:
+        X = .dbSeries(symbols = c("DE0009769554", "LU0130729220"))
+        print(head(X))
+        print(class(X))
+
     }
-    
+         
     # Return Value:
     return()
 }
 
 
 # ------------------------------------------------------------------------------
-
-
-test.fredImport = 
-function()
-{     
+    
+       
+test.dbImport <- 
+    function()
+{  
+    print("Implemented as Hidden Function")
+    
     if (FALSE) {
         
-        NA
-        
-    }
+        # db:
+        X = .dbImport(
+            query = "DE0009769554", 
+            file = "tempfile",
+            frequency = "daily", 
+            save = FALSE, 
+            sep = ";", 
+            try = TRUE )
+            
+        print(X)
+        print(head(X@data))
+        print(class(X@data))
     
+    }
+         
     # Return Value:
     return()
 }
 
-   
-################################################################################
+    
+################################################################################\
 

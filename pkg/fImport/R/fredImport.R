@@ -34,9 +34,9 @@
 
 
 fredImport <-  
-    function(query, file = "tempfile", 
-    source = "http://research.stlouisfed.org/fred2/series/", 
-    frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
+    function(query, file = "tempfile", frequency = "daily", 
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep = ";", try = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -62,6 +62,13 @@ fredImport <-
     #      
   
     # FUNCTION:
+    
+    # Settings:
+    stopifnot(length(query) == 1)
+    
+    # Source"
+    if(is.null(source)) 
+        source = "http://research.stlouisfed.org/fred2/series/"
     
     # Check:
     if (frequency != "daily")
@@ -103,35 +110,34 @@ fredImport <-
         # rowNames = paste(substring(x1, 1, 4), substring(x1, 6, 7), 
         #    substring(x1, 9, 10), sep = "")
         rowNames = substring(x1, 1, 10)
-        
-        # Save download ?
-        if (save) {
-            write.table(paste("%Y%m%d", query, sep = ";"), file, 
-                quote = FALSE, row.names = FALSE, col.names = FALSE)
-            write.table(z, file, quote = FALSE, append = TRUE, 
-                col.names = FALSE, sep = ";") 
-        } else {
-            unlink(file) 
-        } 
-               
-        # Return Value:
         X = data.frame(rowNames, z)
         colnames(X) = c("DATE", query)
-        
-        # Return Value:
-        ans = new("fWEBDATA",     
-            call = match.call(),
-            param = c(
-                "Instrument Query" = query,
-                "Frequency" = frequency),
-            data = X, 
-            title = "Web Data Import from research.stlouisfed.org", 
-            description = as.character(date()) )
-        return(ans)
     }
     
+    # Save download ?
+    if (save) {
+        #Header:
+        write.table(paste("%Y%m%d", query, sep = sep), file, 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+        # Data:
+        write.table(z, file, quote = FALSE, append = TRUE, 
+            col.names = FALSE, sep = sep) 
+    } else {
+        unlink(file) 
+    } 
+           
+    # Result:
+    ans = new("fWEBDATA",     
+        call = match.call(),
+        param = c(
+            "Symbol" = query,
+            "Frequency" = frequency),
+        data = X, 
+        title = "Data Import from research.stlouisfed.org", 
+        description = description() )
+    
     # Return Value:
-    invisible()
+    ans
 }
 
 

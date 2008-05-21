@@ -28,32 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fredCategories        Lists categories of symbols from research.stlouisfed.org
-#  fredListing           Lists symbols from research.stlouisfed.org
-#  fredImport            Downloads monthly data from research.stlouisfed.org
-#  fredSeries            Easy to use download from research.stlouisfed.org 
+# FUNCTION:          
+#  test.googleCategories  
+#  test.googleListing 
+#  test.googleSeries  
+#  test.googleImport           
 ################################################################################
-       
-        
-test.fredCategories <- 
+
+
+test.googleCategories <- 
     function()
 {  
-    Categories = fredCategories()   
-    print(Categories)
-    print(attr(Categories, "control"))
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.fredListing = 
-function()
-{     
     NA
     
     # Return Value:
@@ -64,14 +49,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.fredSeries = 
-function()
-{     
-    if (FALSE) {
-        
-        NA
-        
-    }
+test.googleListing <- 
+    function()
+{  
+    NA
     
     # Return Value:
     return()
@@ -80,20 +61,45 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.fredImport = 
-function()
-{     
+      
+test.googleSeries <- 
+    function()
+{  
     if (FALSE) {
         
-        NA
-        
+        # Daily Rates:
+        #   X = googleSeries(symbols = "IBM")
+
     }
-    
+         
     # Return Value:
     return()
 }
 
-   
-################################################################################
+
+# ------------------------------------------------------------------------------
+    
+       
+test.googleImport <- 
+    function()
+{  
+    if (FALSE) {
+        
+        # Daily Rates:
+        #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
+        X = googleImport(query = 
+            "q=IBM&startdate=Dec+01+1999&enddate=Jan+31+2000&output=csv")
+        
+        print(X)
+        print(X@data)
+        print(class(X@data))
+    
+    }
+         
+    # Return Value:
+    return()
+}
+
+    
+################################################################################\
 

@@ -43,7 +43,7 @@ setMethod("show", signature(object = "fWEBDATA"), definition =
     x = object
     
     # Title:
-    cat("\nTitle:\n", object@title, "\n", sep = "")
+    cat("\nTitle:\n ", object@title, "\n", sep = "")
     
     # Parameter:
     cat("\nParameter:\n")
@@ -52,7 +52,7 @@ setMethod("show", signature(object = "fWEBDATA"), definition =
     print(param, quotes = FALSE) 
     
     # Description:
-    cat("\nDescription:\n", object@description, sep = "")   
+    cat("\nDescription:\n ", object@description, sep = "")   
     cat("\n\n")
     
     # Return Value:

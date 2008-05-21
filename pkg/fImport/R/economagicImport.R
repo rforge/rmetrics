@@ -34,10 +34,10 @@
 
 
 economagicImport <-
-    function (query, file = "tempfile", 
-    source = "http://www.economagic.com/em-cgi/data.exe/", 
-    frequency = c("auto", "quarterly", "monthly", "daily"), 
-    save = FALSE, colname = "VALUE", try = TRUE)
+    function(query, file = "tempfile",
+    frequency = c("auto", "quarterly", "monthly", "daily"),
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep =";", try = TRUE)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -51,11 +51,17 @@ economagicImport <-
     # Examples:
     #    economagicImport("fedny/day-fxus2eu")              # daily
     #    economagicImport("fedny/day-fxch2us")
-    #    economagicImport(c("fedny/day-fxus2eu", "fedny/day-fxch2us"))
     #    economagicImport("fedstl/fedfunds+2")              # monthly
     #    economagicImport("fedstl/gnp")                     # quarterly
     
     # FUNCTION:
+    
+    # Settings:
+    stopifnot(length(query) == 1)
+    
+    # Source:
+    if (is.null(source)) 
+        source = "http://www.economagic.com/em-cgi/data.exe/"
     
     # Frequency:
     freq = match.arg(frequency)
@@ -136,25 +142,31 @@ economagicImport <-
                 substring(rowNames, 5, 6), "-01", sep = "")
         }
         z[, 1] = rowNames   
-        
-        # Save to file:
-        if (save) {
-            write.table(z, file, quote = FALSE, sep = ";", row.names = FALSE) 
-        } else {
-            unlink(file) 
-        }
-        
-        # Return Value:
-        new("fWEBDATA",     
-            call = match.call(),
-            param = c(
-                "Instrument Query" = query, 
-                "Frequency" = frequency, 
-                "Instrument Name" = colname),
-            data = z, 
-            title = "Web Data Import from www.economagic.com", 
-            description = as.character(date()) )
     }
+    
+    # Save to file:
+    if (save) {
+        # Header:
+        # ?
+        # Data:
+        write.table(z, file, quote = FALSE, sep = ";", row.names = FALSE) 
+    } else {
+        unlink(file) 
+    }
+    
+    # Result:
+    new("fWEBDATA",     
+        call = match.call(),
+        param = c(
+            "Instrument Query" = query, 
+            "Frequency" = frequency, 
+            "Instrument Name" = colname),
+        data = z, 
+        title = "Web Data Import from www.economagic.com", 
+        description = description() )
+        
+    # Return Value:
+    ans
 }
 
 
@@ -171,9 +183,9 @@ economagicSeries <-
     
     # Arguments:
     #   query - a character vector of symbol names
-    #   from - 
-    #   to -
-    #   nDaysBack - 
+    #   from - from date
+    #   to - to date
+    #   nDaysBack - number of n-days back
     #   ... - arguments passed to the economagicImport
     
     # Examples:

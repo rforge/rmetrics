@@ -29,25 +29,32 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  yahooImport           Downloads market data from Yahoo's web site  
-#  yahooSeries           Easy to use download from Yahoo  
-#  keystatsImport        Downloads key statistics from Yahoo's web site
-#  briefingImport        Downloads briefings from Yahoo's Internet site
+#  yahooCategories       Lists categories of symbols from chart.yahoo.com  
+#  yahooListing          Lists symbols from chart.yahoo.com  
+#  yahooImport           Downloads market data from chart.yahoo.com  
+#  yahooSeries           Easy to use download from chart.yahoo.com  
+#  yahooKeystats         Downloads key statistics from chart.yahoo.com  
+#  yahooBriefing         Downloads briefings from chart.yahoo.com  
 ################################################################################
 
         
-test.yahooImport = 
-function()
+test.yahooCategories <- 
+    function()
 {       
-    if (FALSE) {
-    
-        # yahooImport() -
-        # [test 19/20 century change 01-12-1999 -- 31-01-2000]
+    NA
         
-        query = "s=IBM&a=11&b=29&c=1999&d=0&e=5&f=2000&z=IBM&x=.csv"
-        X = yahooImport(query)  
-        
-    }
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.yahooListing <- 
+    function()
+{       
+    NA
         
     # Return Value:
     return()
@@ -81,14 +88,17 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.keyStatsImport = 
+test.yahooImport = 
 function()
 {       
     if (FALSE) {
+    
+        # yahooImport() -
+        # [test 19/20 century change 01-12-1999 -- 31-01-2000]
         
-        # keystatsImport 
-        briefing = keystatsImport("IBM")  
-        print(keystats)
+        query = "s=IBM&a=11&b=29&c=1999&d=0&e=5&f=2000&z=IBM&x=.csv"
+        X = yahooImport(query)  
+        
     }
         
     # Return Value:
@@ -99,16 +109,23 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.briefingImport = 
-function()
+test.yahooKeyStats <- 
+    function()
 {       
-    if (FALSE) {
-    
-        # briefingImport 
-        briefing = briefingImport("IBM")  
-        print(briefing)
+    NA
         
-    }
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.yahooBriefing <- 
+    function()
+{       
+    NA
         
     # Return Value:
     return()

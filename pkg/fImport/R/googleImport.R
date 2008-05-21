@@ -34,14 +34,14 @@
 
 
 googleImport <-
-    function (query, file = "tempfile",
-    source = "http://finance.google.com/finance/historical?",
+    function (query, file = "tempfile", frequency = "daily",
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep = ";", try = TRUE)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Downloads market data from Google's web site
+    #   Downloads market data from finance.google.com
 
     # Example:
     #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
@@ -49,6 +49,10 @@ googleImport <-
 
     # FUNCTION:
 
+    # Source:
+    if(is.null(source)) 
+        source = "http://finance.google.com/finance/historical?"
+        
     # Settings:
     stopifnot(length(query) == 1)
 
@@ -65,19 +69,15 @@ googleImport <-
     } else {
         # For S-Plus Compatibility:
         method <- if(is.R()) NULL else "wget"
-
         # Download:
         google.URL <- "http://finance.google.com/finance/historical?"
         fr <- read.csv(paste(google.URL, query, sep = ""))
-
         # Note, google data is backwards
         fr <- fr[nrow(fr):1, ]
-
         # Fix google bug:
         # bad.dates <- c('29-Dec-04','30-Dec-04','31-Dec-04')
         # dup.dates <- which(fr[, 1] %in% bad.dates)[(1:3)]
         # fr <- fr[-dup.dates, ]
-
         # Convert to timeSeries:
         quote = c("Open", "High", "Low", "Close", "Volume")
         charvec = as.Date(fr[, 1], format = "%d-%B-%y")
@@ -85,34 +85,32 @@ googleImport <-
             ncol = length(quote))
         z = cbind.data.frame(charvec, data)
         colnames(z) = c("%Y-%m-%d", quote)
-
-        # Save Download ?
         colNames = colnames(z)[-1]
-        if (save) {
-            # Header:
-            write.table(t(c("%Y-%m-%d", colNames)), file, quote = FALSE,
-                row.names = FALSE, col.names = FALSE, sep = ";")
-            # Data:
-            write.table(z, file, quote = FALSE, append = TRUE,
-                col.names = FALSE, row.names = FALSE, sep = ";")
-            # Check:
-            # read.table(file, header = TRUE, sep = ";")
-        } else {
-            unlink(file)
-        }
-
-        # Return Value:
-        ans = new("fWEBDATA",
-            call = match.call(),
-            param = c("Instrument Query" = query),
-            data = z,
-            title = "Web Data Import from finance.google.com",
-            description = as.character(date()) )
-        return(ans)
+    }
+    
+    # Save Download ?
+    if (save) {
+        # Header:
+        write.table(t(c("%Y-%m-%d", colNames)), file, quote = FALSE,
+            row.names = FALSE, col.names = FALSE, sep = sep)
+        # Data:
+        write.table(z, file, quote = FALSE, append = TRUE,
+            col.names = FALSE, row.names = FALSE, sep = sep)
+    } else {
+        unlink(file)
     }
 
+    # Result:
+    ans = new("fWEBDATA",
+        call = match.call(),
+        param = c(
+            "Instrument Query" = query),
+        data = z,
+        title = "Data Import from finance.google.com",
+        description = description() )
+
     # Return Value:
-    invisible()
+    ans
 }
 
 
@@ -140,29 +138,14 @@ googleSeries <-
     #   quote - a character value or vector of strings giving the
     #       column names of those instruments to be extracted from
     #       the download.
-    #   aggregation - a character string denoting the aggregation
-    #       level of the downloaded data records, 'd' for daily, 'w'
-    #       for weekly and 'm' for monthly data records.
-    #   returns - a logical flag. Should return values be computed
-    #       using the function 'returnSeries'?
-    #   returnClass = a character string which decides how the downloaded
-    #       time series will be returned. By default an object of
-    #       class 'timeSeries' will be returned .
 
     # Examples:
     #   googleSeries(symbols = "IBM")
-    #   googleSeries(symbols = "IBM", aggregation = "m")
-    #   googleSeries(symbols = c("MSFT", "IBM"), quote = "Close")
-    #   googleSeries("IBM", aggregation = "m", nDaysBack = 10*366)
 
     # FUNCTION:
 
-    # Check:
-    aggregation = match.arg(aggregation)
-
     # Internal Univariate Download Function:
     # symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365,
-    # quote = "Close", aggregation = c("d", "w", "m"))
 
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {

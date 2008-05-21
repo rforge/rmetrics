@@ -34,8 +34,9 @@
 
 
 .swxImport <-
-    function(query = "CH0009980894", file = "tempfile",
-    frequency = "daily", save = FALSE, sep = ";", try = TRUE )
+    function(query, file = "tempfile", frequency = "daily", 
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep = ";", try = TRUE )
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -57,10 +58,19 @@
     # Require:
     require(gdata)
 
+    # Settings:
+    stopifnot(length(query) == 1)
+    
     # Check:
     if (frequency != "daily")
         stop("Only daily dat records are supported!")
 
+    # Source:
+    source = "http://www.swx.com/market/chart_data.csv?id=" 
+    
+    # URL:
+    URL = paste(source, query, "CHF9&domain=max", sep = "")
+    
     # Download:
     if (try) {
         # Try for Internet Connection:
@@ -72,14 +82,6 @@
             return(z)
         }
     } else {
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "wget"
-
-        # Paste URL:
-        URL = paste(
-            "http://www.swx.com/market/chart_data.csv?id=" ,
-            query, "CHF9&domain=max", sep = "")
-
         # Download and temporarily store:
         download.file(url = URL, destfile = file, method = method)
 
@@ -104,20 +106,23 @@
 
         # Return Value:
         X = data.frame(charvec, z)
-        colnames(X) = c("DATE", query)
+        colnames(X) = c("%Y-%m-%d", query)
+    }
 
-        # Save download ?
-        if (save) {
-            write.table(paste("%Y%m%d", query, sep = sep), file,
-                        quote = FALSE, row.names = FALSE, col.names = FALSE)
-            write.table(X, file, quote = FALSE, append = TRUE,
-                        col.names = FALSE, sep = ";")
-        } else {
-            unlink(file)
-        }
+    # Save download ?
+    if (save) {
+        # Header:
+        write.table(paste("%Y%m%d", query, sep = sep), file,
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+        # Data
+        write.table(X, file, quote = FALSE, append = TRUE,
+            col.names = FALSE, sep = ";")
+    } else {
+        unlink(file)
+    }
 
-        # Return Value:
-        ans = new("fWEBDATA",
+    # Result:
+    ans = new("fWEBDATA",
         call = match.call(),
         param = c(
             "Instrument" = query,
@@ -125,29 +130,17 @@
         data = X,
         title = "Web Data Import from SWX web site",
         description = description() )
-        return(ans)
-    }
-
+        
     # Return Value:
-    invisible()
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-################################################################################
-# FUNCTION:         LPP/SWX DATA IMPORT:
-
-################################################################################
-
-
 .swxSeries <-
-    function(
-        symbols, 
-        from = NULL, 
-        to = Sys.timeDate(), 
-        nDaysBack = 366, ...)
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
     

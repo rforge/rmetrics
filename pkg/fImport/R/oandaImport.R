@@ -34,14 +34,17 @@
 
 
 .oandaImport <-  
-    function(query, file = "tempfile", 
-    source = "http://www.oanda.com/convert/fxhistory?lang=en&", 
-    frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
+    function(query, file = "tempfile", frequency = "daily", 
+    from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
+    save = FALSE, sep = ";", try = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads market data from www.oanda.com
+    
+    # Example:
+    #   .oandaImport("USD/EUR") 
     
     # Value:
     #   An One Column data frame with row names denoting the dates
@@ -50,70 +53,79 @@
   
     # FUNCTION:
     
+    # Settings:
+    stopifnot(length(query) == 1)
+    
     # Check:
     stopifnot (frequency == "daily")
+    
+    # Source:
+    source = "http://www.oanda.com/convert/fxhistory?lang=en&"
     
     # Download:
     if (try) {
         # Try for Internet Connection:
-        z = try(.oandaImport(query = query, file = file, source = source, 
-            save = save, try = FALSE))
+        z = try(.oandaImport(query = query, file = file, 
+            frequency = frequency, from = from, to = to, 
+            nDaysBack = nDaysBack, save = save, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         } 
     } else { 
-        # Loop over all Queries:
-        for(i in 1:length(query)) {
-            to = trunc(to, "days")
-            if (is.null(from)) from = to - 1000*24*3600
-            from.date <- format(timeDate(from),
-                "date1=%m%%2F%d%%2F%y&")
-            to.date <- format(timeDate(to),
-                "date=%m%%2F%d%%2F%y&date_fmt=us&")
-            ccy.pair <- strsplit(toupper(query[[i]]),"/")[[1]]
-            download.file(
-                paste(source, from.date, to.date, "exch=", ccy.pair[1], 
-                    "&expr2=", ccy.pair[2], "&margin_fixed=0&SUBMIT=Get+Table&",
-                    "format=CSV&redirected=1", sep = ""), 
-                destfile = file)
-            ### fx <- readLines(tmp)   
-            fx <- unlist(strsplit(
-                gsub("<PRE>|</PRE>", "", 
-                fx[(grep("PRE",fx)[1]):(grep("PRE",fx)[2])]),","))
-            fx = matrix(fx, byrow = TRUE, ncol = 2)
-            fx <- timeSeries(data = as.numeric(fx[, 2]), charvec = fx[, 1],
-                format = "%m/%d/%Y")
-            if (i == 1) {
-                FX = fx  
-            } else {
-                FX = merge(FX, fx)
-            }
-        }
-        colnames(FX) = query
+        to = trunc(to, "days")
+        from = to - nDaysBack*24*3600
+        from.date <- format(timeDate(from),
+            "date1=%m%%2F%d%%2F%y&")
+        to.date <- format(timeDate(to),
+            "date=%m%%2F%d%%2F%y&date_fmt=us&")
+        ccy.pair <- strsplit(toupper(query),"/")[[1]]
+        tmp <- tempfile()
+        download.file(
+            paste(source, from.date, to.date, "exch=", ccy.pair[1], 
+                "&expr2=", ccy.pair[2], "&margin_fixed=0&SUBMIT=Get+Table&",
+                "format=CSV&redirected=1", sep = ""), 
+            destfile = tmp)
+        fx <- readLines(tmp)       
+        fx <- unlist(strsplit(
+            gsub("<PRE>|</PRE>", "", 
+            fx[(grep("PRE", fx)[1]):(grep("PRE",fx)[2])]), ","))
+        fx = matrix(fx, byrow = TRUE, ncol = 2)
+        data = as.numeric(fx[, 2])
+        time = fx[, 1]
+        charvec = paste(substr(time, 7, 10), substr(time, 1, 2),
+            substr(time, 4, 5), sep = "-")
+        fx = data.frame(charvec, data)
+        colnames(fx) = c("%Y-%m-%d", query)
     }
     
     # Save in file?
     if (save) {
-            write.table(paste("%Y%m%d", query, sep = ";"), file, 
-                quote = FALSE, row.names = FALSE, col.names = FALSE)
-            write.table(z, file, quote = FALSE, append = TRUE, 
-                col.names = FALSE, sep = ";")
+        write.table(paste("%Y%m%d", query, sep = sep), file, 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+        write.table(z, file, quote = FALSE, append = TRUE, 
+            col.names = FALSE, sep = sep)
     }
     else {
         unlink(file)
     }
     
-    # Return Value:
+    # Result:
     ans = new("fWEBDATA",     
         call = match.call(),
         param = c(
             "Instrument Query" = query,
-            "Frequency" = frequency),
-        data = FX, 
-        title = "Web Data Import from www.oanda.com", 
-        description = description())
+            "Frequency" = frequency,
+            "Start" = as.character(from),
+            "End" = as.character(to),
+            "Format" = "%Y-%m-%d"),
+        data = fx, 
+        title = "ata Import from www.oanda.com", 
+        description = description() )
+        
+    # Return Value:
+    ans
 }
 
 
@@ -128,6 +140,9 @@
     # Description:
     #   Easy to use download from www.oanda.com
     
+    # Example:
+    #   .oandaSeries("USD/EUR") 
+    
     # FUNCTION:
     
     # Settings:
@@ -135,47 +150,25 @@
     
     # URL:
     oanda.URL <- "http://www.oanda.com/convert/fxhistory?lang=en&"
-    
-    # Loop over all Queries:
-    to = trunc(to, "days")
-    if (is.null(from)) from = to - nDaysBack*24*3600
-    for(i in 1:length(query)) {
-          
-        from.date <- format(timeDate(from),
-            "date1=%m%%2F%d%%2F%y&")
-        to.date <- format(timeDate(to),
-            "date=%m%%2F%d%%2F%y&date_fmt=us&")
         
-        ccy.pair <- strsplit(toupper(query[[i]]),"/")[[1]]
-        tmp <- tempfile()
-        download.file(
-            paste(oanda.URL, from.date, to.date, "exch=", ccy.pair[1], 
-                "&expr2=", ccy.pair[2], "&margin_fixed=0&SUBMIT=Get+Table&",
-                "format=CSV&redirected=1", sep = ""), 
-            destfile = tmp)
-        fx <- readLines(tmp)  
-             
-        fx <- unlist(strsplit(
-            gsub("<PRE>|</PRE>", "", 
-            fx[(grep("PRE",fx)[1]):(grep("PRE",fx)[2])]),","))
-        fx = matrix(fx, byrow = TRUE, ncol = 2)
-        fx <- timeSeries(data = as.numeric(fx[, 2]), charvec = fx[, 1],
-            format = "%m/%d/%Y")
-        
-        if (i == 1) {
-            FX = fx  
-        } else {
-            FX = merge(FX, fx)
+    # Download:
+    Y = .oandaImport(query = symbols[1], ...)@data
+    X = as.timeSeries(Y)
+    N = length(symbols)
+    if (N > 1) {
+        for (i in 2:N) {
+            Y = .oandaImport(query = symbols[i], ...)@data   
+            X = merge(X, as.timeSeries(Y))
         }
-    }
-    colnames(FX) = query
+    }    
+    colnames(X)<-symbols
     
     # Time Window:
     if (is.null(from)) from = to - nDaysBack*24*3600
-    FX = window(FX, from, to)  
+    X = window(X, from, to)
     
     # Return Value:
-    FX
+    X  
 }
 
          

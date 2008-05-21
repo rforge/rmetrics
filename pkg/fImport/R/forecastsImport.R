@@ -34,9 +34,9 @@
 
 
 forecastsImport <-  
-    function(query, file = "tempfile", 
-    source = "http://www.forecasts.org/data/data/", 
-    save = FALSE, try = TRUE) 
+    function(query, file = "tempfile", frequency = "auto",
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep = ";", try = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -51,6 +51,13 @@ forecastsImport <-
     #   forecastsImport(query = "FEDFUNDS")
 
     # FUNCTION:
+    
+    # Settings:
+    stopifnot(length(query) == 1)
+    
+    # Source:
+    if (is.null(source)) 
+        source = "http://www.forecasts.org/data/data/"
     
     # Download:
     if (try) {
@@ -90,29 +97,30 @@ forecastsImport <-
         rowNames = as.character(timeLastDayInMonth(charvec, format = "%Y%m%d"))
         x = data.frame(cbind(rowNames, as.numeric(x[, -1])))
         colnames(x) = c("DATE", query)
-        
-        # Save Download ?
-        if (save) {
-            write.table(paste("%Y%m%d;", query, sep = ""), file, 
-                quote = FALSE, row.names = FALSE, col.names = FALSE)
-            write.table(x, file, quote = FALSE, append = TRUE, 
-                col.names = FALSE, sep=";") 
-        } else {
-            unlink(file) 
-        }  
-        
-        # Return Value:
-        ans = new("fWEBDATA",     
-            call = match.call(),
-            param = c("Instrument Query" = query),
-            data = x,
-            title = "Web Data Import from www.forecasts.org", 
-            description = .description() )
-        return(ans)
     }
     
+    # Save Download ?
+    if (save) {
+        # Header:
+        write.table(paste("%Y-%m-%d;", query, sep = sep), file, 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+        # Data:
+        write.table(x, file, quote = FALSE, append = TRUE, 
+            col.names = FALSE, sep = sep) 
+    } else {
+        unlink(file) 
+    }  
+    
+    # Result:
+    ans = new("fWEBDATA",     
+        call = match.call(),
+        param = c("Instrument Query" = query),
+        data = x,
+        title = "Data Import from www.forecasts.org", 
+        description = description() )
+    
     # Return Value:
-    invisible()
+    ans
 }
 
 

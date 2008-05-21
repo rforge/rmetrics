@@ -10,27 +10,20 @@
 
 \description{
     
-    A collection and description of functions to import 
-    financial and economic market data from Economagic.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{economagicImport} \tab Economic series from Economagic's Web site, \cr
-    \code{economagicSeries} \tab easy to use download from Economagic.}
+    Functions to import financial and economic market data
+    from www.economagic.com.
    
 }
 
 
 \usage{
+economagicSeries(symbols, from = NULL, to = Sys.timeDate(), 
+    nDaysBack = 366, \dots)
+    
 economagicImport(query, file = "tempfile", 
     source = "http://www.economagic.com/em-cgi/data.exe/",  
     frequency = c("auto", "quarterly", "monthly", "daily"), 
-    save = FALSE, colname = "VALUE", try = TRUE)  
-
-economagicSeries(symbols, from = NULL, to = Sys.timeDate(), 
-    nDaysBack = 366, \dots)   
+    save = FALSE, colname = "VALUE", try = TRUE)     
 }
 
 
@@ -41,18 +34,21 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
         column. By default "VALUE".
         }
     \item{file}{
-        a character string with filename, usually
-        having extension ".csv", where to save the downloaded data.
+        a character string with filename, usually having extension 
+        ".csv", where to save the downloaded data.
         }
     \item{frequency}{
-        a character string, one of "quarterly", "monthly", or "daily",
-        defining the frequency of the data records.
+        a character string, one of "auto", "quarterly", "monthly", 
+        or "daily", defining the frequency of the data records.
+        Note, the import function tries autodetect the frequency
+        of the time series to be dowwnloaded. This may fail, in
+        such case specify the frequency explicitely.
         }
     \item{from} {
-        ...
+        the date from when to extract the time series.
         }
     \item{nDaysBack}{
-        ...
+        the number of days back.
         }
     \item{query}{
         a character string, denoting the location of the data at the 
@@ -67,10 +63,11 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
         a character string with the download URL.
         }
     \item{symbols} {
-        ...
+        a character string with the symbols to be downloaded.
         }
     \item{to} {
-        ...
+        the end date of the data download, by default the current 
+        date.
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be
@@ -107,9 +104,7 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
         be returned.}
         
     The function \code{economagicSeries} returns an S4 object of 
-    class  \code{timeSeries} or alternatively an object specified by
-    the function argument \code{returnClass}.
-    \cr
+    class  \code{timeSeries}.
     
 }
 
@@ -121,24 +116,24 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
     Frequently requested data files from Economagic for the US economy include:
 
     \tabular{ll}{
-    \code{[query]}                    \tab Description: \cr
-                                      \tab \cr
-    \code{var/leading-ind-long}       \tab Index of Leading Economic Indicators  \cr
-    \code{beana/t102l01}              \tab Real Gross Domestic Product  \cr
-    \code{fedstl/trsp500}             \tab SP 500 Total Return \cr
-    \code{fedstl/gnp}                 \tab Gross National Product in Current Dollars \cr
-    \code{var/cpiu-long}              \tab Consumer Price Index - All Urban Consumers \cr
-    \code{feddal/ru}                  \tab Unemployment Rate \cr
-    \code{fedstl/indpro}              \tab Total Industrial Production Index \cr
-    \code{fedstl/exjpus+2}            \tab FX Rate: Japanese Yen to one US Dollar \cr
-    \code{fedstl/fedfunds+2}          \tab Federal Funds Rate \cr
-    \code{fedstl/mdiscrt+2}           \tab Discount Rate \cr
-    \code{fedbog/tcm30y+2}            \tab 30-Year Treasury Constant Maturity Rate \cr
-    \code{fedstl/mprime+2}            \tab Bank Prime Loan Rate \cr
-    \code{fedstl/tb3ms+2}             \tab 3-Month Treasury Bills - Secondary Market \cr
-    \code{fedstl/tb6ms+2}             \tab 6-Month Treasury Bills - Secondary Market \cr
-    \code{fedbog/cm+2}                \tab 30 Year Federal Home Loan Mortgages \cr
-    \code{var/west-texas-crude-long}  \tab Price of West Texas Intermediate Crude }
+    \code{[query]}                   \tab Description: \cr
+                                     \tab \cr
+    \code{var/leading-ind-long}      \tab Index of Leading Economic Indicators  \cr
+    \code{beana/t102l01}             \tab Real Gross Domestic Product  \cr
+    \code{fedstl/trsp500}            \tab SP 500 Total Return \cr
+    \code{fedstl/gnp}                \tab Gross National Product in Current Dollars \cr
+    \code{var/cpiu-long}             \tab Consumer Price Index - All Urban Consumers \cr
+    \code{feddal/ru}                 \tab Unemployment Rate \cr
+    \code{fedstl/indpro}             \tab Total Industrial Production Index \cr
+    \code{fedstl/exjpus+2}           \tab FX Rate: Japanese Yen to one US Dollar \cr
+    \code{fedstl/fedfunds+2}         \tab Federal Funds Rate \cr
+    \code{fedstl/mdiscrt+2}          \tab Discount Rate \cr
+    \code{fedbog/tcm30y+2}           \tab 30-Year Treasury Constant Maturity Rate \cr
+    \code{fedstl/mprime+2}           \tab Bank Prime Loan Rate \cr
+    \code{fedstl/tb3ms+2}            \tab 3-Month Treasury Bills - Secondary Market \cr
+    \code{fedstl/tb6ms+2}            \tab 6-Month Treasury Bills - Secondary Market \cr
+    \code{fedbog/cm+2}               \tab 30 Year Federal Home Loan Mortgages \cr
+    \code{var/west-texas-crude-long} \tab Price of West Texas Intermediate Crude }
       
 }
 
@@ -146,9 +141,10 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
 \note{
   
     \bold{Internet Download Functions:}
-    \cr\cr
+
     IMPORTANT NOTE: If the service provider changes the data file format 
-    it may become necessary to modify and update the functions. 
+    the download may fail and then it becomes necessary to modify and 
+    update the functions. 
   
 }
 
@@ -162,12 +158,15 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
 \examples{
 \dontrun{
 ## economagicSeries -
+   
    # USDEUR Foreign Exchange Rate:
    economagicSeries("fedny/day-fxus2eu", frequency = "daily")
+   
    # USFEDFUNDS US FedFunds Rate:
    economagicSeries("fedstl/fedfunds+2", frequency = "monthly")
 }
 }
+
 
 \keyword{data}
 

@@ -38,7 +38,9 @@
 .yahooSplits <-
 function(symbol, start, end) 
 {
-    # Descriptions
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # Example:
     #   yahooSplits("IBM", timeDate("1962-10-01"), "2007-10-30")
