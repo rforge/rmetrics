@@ -1,8 +1,8 @@
-\name{economagicImport}
+\name{Economagic}
 
 
-\alias{economagicImport}
 \alias{economagicSeries}
+\alias{economagicImport}
 
 
 \title{Import Market Data from www.economagic.com}
@@ -10,8 +10,7 @@
 
 \description{
     
-    Functions to import financial and economic market data
-    from www.economagic.com.
+    Imports financial time series data from www.economagic.com.
    
 }
 
@@ -21,18 +20,14 @@ economagicSeries(symbols, from = NULL, to = Sys.timeDate(),
     nDaysBack = 366, \dots)
     
 economagicImport(query, file = "tempfile", 
-    source = "http://www.economagic.com/em-cgi/data.exe/",  
-    frequency = c("auto", "quarterly", "monthly", "daily"), 
-    save = FALSE, colname = "VALUE", try = TRUE)     
+    frequency = c("auto", "quarterly", "monthly", "daily"),
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep =";", try = TRUE)
 }
 
 
 \arguments{
 
-    \item{colname}{
-        a character string which defines the name of the value
-        column. By default "VALUE".
-        }
     \item{file}{
         a character string with filename, usually having extension 
         ".csv", where to save the downloaded data.
@@ -59,8 +54,8 @@ economagicImport(query, file = "tempfile",
         be stored under the path and file name specified by the
         string \code{file}. By default FALSE.
         }
-    \item{source}{
-        a character string with the download URL.
+    \item{sep}{
+        a charcter value specifying the column separator.
         }
     \item{symbols} {
         a character string with the symbols to be downloaded.

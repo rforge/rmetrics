@@ -12,45 +12,39 @@
 
 \description{
     
-    A collection and description of functions to import 
-    financial and economic market data from the Fred
-    Website.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
-    \code{fredSeries} \tab easy to use download from St. Louis FRED}
+    Imports financial time series data from research.stlouisfed.org.
    
 }
 
 
 \usage{
-fredImport(query, file = "tempfile", 
-    source = "http://research.stlouisfed.org/fred2/series/", 
-    frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
-  
 fredSeries(symbols, from = NULL, to = Sys.timeDate(), 
-    nDaysBack = 366, \dots)  
+    nDaysBack = 366, \dots)
+    
+fredImport(query, file = "tempfile", frequency = "daily", 
+    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+    save = FALSE, sep = ";", try = TRUE)    
 }
 
 
 \arguments{
 
     \item{file}{
-        a character string with filename, usually
-        having extension ".csv", where to save the downloaded data.
+        a character string with filename, usually having extension 
+        ".csv", where to save the downloaded data.
         }
     \item{frequency}{
-        a character string, one of "quarterly", "monthly", or "daily",
-        defining the frequency of the data records.
+        a character string, one of "auto", "quarterly", "monthly", 
+        or "daily", defining the frequency of the data records.
+        Note, the import function tries autodetect the frequency
+        of the time series to be dowwnloaded. This may fail, in
+        such case specify the frequency explicitely.
         }
     \item{from} {
-        ...
+        the date from when to extract the time series.
         }
     \item{nDaysBack}{
-        ...
+        the number of days back.
         }
     \item{query}{
         a character string, denoting the location of the data at the 
@@ -62,18 +56,14 @@ fredSeries(symbols, from = NULL, to = Sys.timeDate(),
         string \code{file}. By default FALSE.
         }
     \item{sep}{
-        a character value, defining the field separator for the 
-        destination file which saves the downloaded data records.
-        By default a semicolon.
-        }
-    \item{source}{
-        a character string with the download URL.
+        a charcter value specifying the column separator.
         }
     \item{symbols} {
-        ...
+        a character string with the symbols to be downloaded.
         }
     \item{to} {
-        ...
+        the end date of the data download, by default the current 
+        date.
         }
     \item{try}{
         a logical value, if set to TRUE the Internet access will be
@@ -81,7 +71,8 @@ fredSeries(symbols, from = NULL, to = Sys.timeDate(),
         }
     \item{\dots}{
         optional arguments to be passed.
-        }        
+        }
+        
 }
 
 

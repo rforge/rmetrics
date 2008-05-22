@@ -19,11 +19,6 @@
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -58,8 +53,7 @@ fredImport <-
     #     DEXUSEU   U.S. / Euro Foreign Exchange Rate 
     #     DEXSZUS   Switzerland / U.S. Foreign Exchange Rate 
     #     DGS1      1-Year Treasury Constant Maturity Rate 
-    #     DPRIME    Bank Prime Loan Rate
-    #      
+    #     DPRIME    Bank Prime Loan Rate     
   
     # FUNCTION:
     
@@ -67,71 +61,56 @@ fredImport <-
     stopifnot(length(query) == 1)
     
     # Source"
-    if(is.null(source)) 
-        source = "http://research.stlouisfed.org/fred2/series/"
+    source = "http://research.stlouisfed.org/fred2/series/"
     
     # Check:
     if (frequency != "daily")
-        stop("Only daily dat records are supported!")
+        stop("Only daily data records are supported!")
     
     # Download:
     if (try) {
         # Try for Internet Connection:
-        z = try(fredImport(query = query, file = file, source = source, 
-            save = save, try = FALSE))
+        z = try(fredImport(query, file, frequency, from, to, 
+            nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         } 
     } else { 
-        # File name:
+        # Download File:
         queryFile = paste(query, "/downloaddata/", query, ".txt", sep = "")
-        
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "wget"
-    
-        # Download and temporarily store:
-        download.file(url = paste(source, queryFile, sep = ""), 
-            destfile = file, method = method) 
+        url = paste(source, queryFile, sep = "")
+        tmp = tempfile()
+        download.file(url = url, destfile = tmp) 
         
         # Scan the file:
-        x1 = scan(file, what = "", sep = "\n")
+        x1 = scan(tmp, what = "", sep = "\n")
+        
         # Extract dates ^19XX and ^20XX:
         x2 = x1[regexpr("^[12][90]", x1) > 0]
         x1 = x2[regexpr(" .$", x2) < 0]
         
-        # Transform to one-column matrix:
-        z = matrix(as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
-        
-        # Add column names:
-        colNames = query
-        # DW: Change to ISO-8601
-        # rowNames = paste(substring(x1, 1, 4), substring(x1, 6, 7), 
-        #    substring(x1, 9, 10), sep = "")
-        rowNames = substring(x1, 1, 10)
-        X = data.frame(rowNames, z)
-        colnames(X) = c("DATE", query)
+        # Compose Time Series:
+        data = matrix(
+            as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
+        charvec = substring(x1, 1, 10)
+        X = timeSeries(data, charvec, units = query)
     }
     
-    # Save download ?
+    # Save to file:
     if (save) {
-        #Header:
-        write.table(paste("%Y%m%d", query, sep = sep), file, 
-            quote = FALSE, row.names = FALSE, col.names = FALSE)
-        # Data:
-        write.table(z, file, quote = FALSE, append = TRUE, 
-            col.names = FALSE, sep = sep) 
+        write.table(as.data.frame(X)) 
     } else {
         unlink(file) 
-    } 
-           
+    }
+    
     # Result:
     ans = new("fWEBDATA",     
         call = match.call(),
         param = c(
-            "Symbol" = query,
-            "Frequency" = frequency),
+            "Instrument" = query, 
+            "Frequency " = frequency),
         data = X, 
         title = "Data Import from research.stlouisfed.org", 
         description = description() )
@@ -153,31 +132,25 @@ fredSeries <-
     #   Downloads easily time series data from St. Louis FRED
     
     # Arguments:
-    #   symbols - a character string value, the St. Louis FRED 
-    #       symbol name.
-    #   frequency - a character string value, the frquency of the
-    #       data records.
-    #   ... - arguments passed to the function returns
+    #   symbols - a character vector of symbol names
+    #   from - from date
+    #   to - to date
+    #   nDaysBack - number of n-days back
+    #   ... - arguments passed to the *Import()
     
     # Examples:
-    #   fredSeries("DPRIME")
+    #   fredSeries("DPRIME")[1:10, ]
     
     # FUNCTION:
     
-    # Settings:
-    query = symbols
-    
     # Download:
-    Y = fredImport(query = query, ...)@data
-    X = as.timeSeries(Y)
-    N = length(query)
+    X = fredImport(query = symbols[1], ...)@data
+    N = length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            Y = fredImport(query = query[i], ...)@data   
-            X = merge(X, as.timeSeries(Y))
+            X = merge(X, fredImport(query = symbols[i], ...)@data) 
         }
     }    
-    colnames(X)<-query
     
     # Time Window:
     if (is.null(from)) from = to - nDaysBack*24*3600

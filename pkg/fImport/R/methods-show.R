@@ -19,11 +19,6 @@
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -46,7 +41,7 @@ setMethod("show", signature(object = "fWEBDATA"), definition =
     cat("\nTitle:\n ", object@title, "\n", sep = "")
     
     # Parameter:
-    cat("\nParameter:\n")
+    cat("\nParameter:\n ")
     param = cbind(object@param)
     colnames(param) = "Value:"
     print(param, quotes = FALSE) 

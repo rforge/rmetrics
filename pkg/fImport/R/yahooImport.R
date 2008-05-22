@@ -34,9 +34,10 @@
 
 
 yahooImport <-
-    function (query, file = "tempfile",
-    source = "http://chart.yahoo.com/table.csv?",
-    save = FALSE, sep = ";", try = TRUE)
+    function (query, file = "tempfile", 
+    frequency = c("daily", "weekly", "monthly"), 
+    from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
+    save = FALSE, sep = ";", try = TRUE) 
 {
     # A function implemented by Diethelm Wuertz
 
@@ -60,117 +61,20 @@ yahooImport <-
     #   r     Aggregation Level
     #   z     Selected Ticker-Symbol [optional]
 
-    # Changes:
-    #   2007-02-18 DW: Update to new %Y-%m-%d format
-
-    # FUNCTION:
-
-    # Download:
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(yahooImport(file = file, source = source,
-            query = query, save = save, try = FALSE))
-        if (inherits(z, "try-error") || inherits(z, "Error")) {
-            return("No Internet Access")
-        } else {
-            return(z)
-        }
-    } else {
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "wget"
-
-        # Download the file:
-        url = paste(source, query, sep = "")
-        download.file(url = url, destfile = file, method = method)
-
-        # Read data and revert:
-        x = X = read.table(file, header = TRUE, sep = ",")
-        n = dim(x)[1]
-        x = x[n:1, ]
-
-        # Result:
-        colnames(x)[1] <- "%Y-%m-%d"
-        ### rownames(x) = 1:n
-        z = data.frame(x)
-
-        # Save Download ?
-        colNames = colnames(z)[-1]
-        if (save) {
-            # Header:
-            write.table(t(c("%Y-%m-%d", colNames)), file, quote = FALSE,
-                row.names = FALSE, col.names = FALSE, sep = ";")
-            # Data:
-            write.table(z, file, quote = FALSE, append = TRUE,
-                col.names = FALSE, row.names = FALSE, sep = ";")
-            # Check:
-            # read.table(file, header = TRUE, sep = ";")
-        } else {
-            unlink(file)
-        }
-
-        # Return Value:
-        ans = new("fWEBDATA",
-            call = match.call(),
-            param = c("Instrument Query" = query),
-            data = z,
-            title = "Web Data Import from chart.yahoo.com",
-            description = as.character(date()) )
-        return(ans)
-    }
-
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-yahooSeries <-
-    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, quote=c("Open","High","Low","Close","Volume"), aggregation = c("d","w","m"), ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Downloads easily time series data from Yahoo
-
-    # Arguments:
-    #   symbols - a character string value or vector, the Yahoo
-    #       symbol name(s).
-    #   from - an ISO-8601 formatted character string of the starting
-    #       date, e.g. "2005-01-01".
-    #   to - ISO formatted character string of the end date,
-    #       e.g. "2005-12-31".
-    #   ndaysBack - an integer giving the length of the download
-    #       period in number of days starting n days back from today.
-    #       Only in use if 'from' and 'to' are not specified.
-    #   quote - a character value or vector of strings giving the
-    #       column names of those instruments to be extracted from
-    #       the download.
-    #   aggregation - a character string denoting the aggregation
-    #       level of the downloaded data records, 'd' for daily, 'w'
-    #       for weekly and 'm' for monthly data records.
-    #   returns - a logical flag. Should return values be computed
-    #       using the function 'returnSeries'?
-    #   returnClass = a character string which decides how the downloaded
-    #       time series will be returned. By default an object of
-    #       class 'timeSeries' will be returned .
-
     # Examples:
-    #   yahooSeries(symbols = "IBM", aggregation = "w")
-    #   yahooSeries(symbols = c("^DJI", "IBM"))
-    #   yahooSeries(symbols = c("^DJI", "IBM"), aggregation = "w")
-    #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
+    #   yahooImport("IBM", nDaysBack = 10)
+    #   yahooImport(symbols = c("^DJI", "IBM"))
+    #   yahooImport(symbols = c("^DJI", "IBM"), frequency = "weekly")
+    #   yahooImport(frequency = "monthly", nDaysBack = 366)
 
     # FUNCTION:
+    
+    # Check:
+    stopifnot(length(query) == 1)
 
     # Match Arguments:
-    aggregation = match.arg(aggregation)
-
-    # Internal Univariate Download Function:
-    # symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365,
-    # quote = "Close", aggregation = c("d", "w", "m"),
-    # returnClass = c("timeSeries", "ts", "matrix", "data.frame")
+    freq = match.arg(frequency)
+    aggregation = substr(freq, 1, 1)
 
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {
@@ -188,24 +92,101 @@ yahooSeries <-
     monthTo = as.character(as.integer(substring(to, 6,7))-1)
     dayTo = substring(to, 9, 10)
 
-    # Download:
-    for (i in 1:length(symbols)) {
-        query = paste("s=", symbols[i], "&a=", monthFrom, "&b=", dayFrom,
-            "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
-            "&g=", aggregation[1], "&x=.csv", sep = "")
-        imported = yahooImport(query)@data
-        charvec = as.character(imported[, 1])
-        data = imported[, quote]
-        Y = timeSeries(data, charvec)
-        UNITS = paste(symbols[i], ".", quote, sep = "")
-        if (aggregation == "d") Y = alignDailySeries(Y, ...)
-        Y@units = UNITS
-        colnames(Y@Data) = UNITS
-        if (i == 1) X = Y else X = merge(X, Y)
-    }
+    # Compose Query:
+    Query = paste("s=", query, "&a=", monthFrom, "&b=", dayFrom,
+        "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
+        "&g=", aggregation, "&x=.csv", sep = "")
+    
+    # Source:
+    source = "http://chart.yahoo.com/table.csv?"
 
+    # Download:
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(yahooImport(query, file, frequency, from, to, 
+            nDaysBack, save, sep, try = FALSE))
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
+            return("No Internet Access")
+        } else {
+            return(z)
+        }
+    } else {
+        # Download File:
+        frequency = freq
+        url = paste(source, Query, sep = "")
+        tmp <- tempfile()
+        download.file(url = url, destfile = tmp)
+
+        # Read data and revert:
+        X = as.timeSeries(read.table(tmp, header = TRUE, sep = ","))    
+    }
+    
+    # Save to file:
+    if (save) {
+        write.table(as.data.frame(X)) 
+    } else {
+        unlink(file) 
+    }
+    
+    # Result:
+    ans = new("fWEBDATA",     
+        call = match.call(),
+        param = c(
+            "Instrument" = query, 
+            "Frequency " = frequency),
+        data = X, 
+        title = "Data Import from www.yahoo.com", 
+        description = description() )
+        
     # Return Value:
-    X
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+yahooSeries <-
+    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Downloads easily time series data from Yahoo
+    
+    # Arguments:
+    #   symbols - a character vector of symbol names
+    #   from - from date
+    #   to - to date
+    #   nDaysBack - number of n-days back
+    #   ... - arguments passed to the *Import()
+
+    # Examples:
+    #   yahooSeries("IBM", nDaysBack = 10)
+    #   yahooSeries("IBM", frequency = "weekly")
+    #   yahooSeries(c("^DJI", "IBM"))
+    #   yahooSeries(c("^DJI", "IBM"), frequency = "monthly")
+
+    # FUNCTION:
+        
+    # Download:
+    X = yahooImport(query = symbols[1], ...)@data
+    colnames(X) <- paste(symbols[1], colnames(X), sep = ".")
+    N = length(symbols)
+    if (N > 1) {
+        for (i in 2:N) {
+            Y = yahooImport(query = symbols[i], ...)@data   
+            colnames(Y) <- paste(symbols[i], colnames(Y), sep = ".")
+            X = merge(X, Y)
+        }
+    }    
+    
+    # Time Window:
+    if (is.null(from)) from = to - nDaysBack*24*3600
+    X = window(X, from, to)
+    
+    # Return Value:
+    X  
 }
 
 

@@ -19,11 +19,6 @@
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -34,8 +29,8 @@
 
 
 economagicImport <-
-    function(query, file = "tempfile",
-    frequency = c("auto", "quarterly", "monthly", "daily"),
+    function(query, 
+    file = "tempfile", frequency = c("auto", "quarterly", "monthly", "daily"),
     from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep =";", try = TRUE)
 {   
@@ -50,7 +45,6 @@ economagicImport <-
 
     # Examples:
     #    economagicImport("fedny/day-fxus2eu")              # daily
-    #    economagicImport("fedny/day-fxch2us")
     #    economagicImport("fedstl/fedfunds+2")              # monthly
     #    economagicImport("fedstl/gnp")                     # quarterly
     
@@ -60,8 +54,7 @@ economagicImport <-
     stopifnot(length(query) == 1)
     
     # Source:
-    if (is.null(source)) 
-        source = "http://www.economagic.com/em-cgi/data.exe/"
+    source = "http://www.economagic.com/em-cgi/data.exe/"
     
     # Frequency:
     freq = match.arg(frequency)
@@ -69,28 +62,23 @@ economagicImport <-
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(economagicImport(query = query, 
-            file = file, source = source, frequency = freq, 
-            save = save, colname = colname, try = FALSE)) 
+        z = try(economagicImport(query, file, frequency, from, to,
+            nDaysBack, save, sep, try = FALSE)) 
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         }
     } else {  
-        # Settings:
-        # n <- switch(freq, "quarterly" =, "monthly" = 2, "daily" = 3)
-       
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "lynx"
-    
-        # Download the file:
+        # Download File:
         url = paste(source, query, sep = "")
-        download.file(url = url, destfile = file, method = method)
-        SCAN = scan(file, what = "", sep = "\n")
+        tmp = tempfile()
+        download.file(url = url, destfile = tmp)
+        SCAN = scan(tmp, what = "", sep = "\n")
         
         # Extract all the data records and build the table:
         lines = grep("font color=white", SCAN)
+        
         # Skipping of the first three lines should be improved ... 
         z1 <<- SCAN[lines][-(1:3)]  
         
@@ -121,47 +109,42 @@ economagicImport <-
         n <- switch(freq, "quarterly" =, "monthly" = 2, "daily" = 3)
         if (n == 2) z = cbind(z[,1]*100+z[,2], z[,3])
         if (n == 3) z = cbind(z[,1]*10000+z[,2]*100+z[,3], z[,4])
+        
         # Create the dates in ISO-8601 format:
         # For quarterly data multiplay quarters by 3 to get monthly base
-        if (freq == "quarterly") z[,1] = 100*(z[,1]%/%100)+3*z[,1]%%100
-        z = data.frame(cbind(z[, 1], z[, 2]))
-        
-        ## znames = as.character(1:(length(names(z)) - 1))
-        names(z) = c("DATE", colname)   
-        
+        if (freq == "quarterly") z[, 1] = 100*(z[, 1]%/%100)+3*z[,1]%%100
+                
         # DW - add hyphens:
-        rowNames = as.character(z[, 1])
+        data = as.numeric(z[, 2])
+        charvec = as.character(z[, 1])
         if (freq == "daily") {
-            rowNames = paste(
-                substring(rowNames, 1, 4), "-",
-                substring(rowNames, 5, 6), "-",
-                substring(rowNames, 7, 8), sep = "")
+            charvec = paste(
+                substring(charvec, 1, 4), "-",
+                substring(charvec, 5, 6), "-",
+                substring(charvec, 7, 8), sep = "")
         } else {
-            rowNames = paste(
-                substring(rowNames, 1, 4), "-",
-                substring(rowNames, 5, 6), "-01", sep = "")
+            charvec = paste(
+                substring(charvec, 1, 4), "-",
+                substring(charvec, 5, 6), "-01", sep = "")
         }
-        z[, 1] = rowNames   
+        frequency = freq
+        X = timeSeries(data, charvec, units = query)
     }
     
     # Save to file:
     if (save) {
-        # Header:
-        # ?
-        # Data:
-        write.table(z, file, quote = FALSE, sep = ";", row.names = FALSE) 
+        write.table(as.data.frame(X)) 
     } else {
         unlink(file) 
     }
     
     # Result:
-    new("fWEBDATA",     
+    ans = new("fWEBDATA",     
         call = match.call(),
         param = c(
-            "Instrument Query" = query, 
-            "Frequency" = frequency, 
-            "Instrument Name" = colname),
-        data = z, 
+            "Instrument" = query, 
+            "Frequency " = frequency),
+        data = X, 
         title = "Web Data Import from www.economagic.com", 
         description = description() )
         
@@ -182,36 +165,28 @@ economagicSeries <-
     #   Downloads easily data www.economagic.com
     
     # Arguments:
-    #   query - a character vector of symbol names
+    #   symbols - a character vector of symbol names
     #   from - from date
     #   to - to date
     #   nDaysBack - number of n-days back
-    #   ... - arguments passed to the economagicImport
+    #   ... - arguments passed to the *Import()
     
     # Examples:
-    #    economagicSeries("fedny/day-fxus2eu")                  # daily
-    #    economagicSeries("fedny/day-fxch2us")
-    #    economagicSeries(c("fedny/day-fxus2eu", "fedny/day-fxch2us"))
+    #    economagicSeries("fedny/day-fxus2eu")[1:10,]           # daily
     #    economagicSeries("fedstl/fedfunds+2")                  # monthly
     #    economagicSeries("fedstl/gnp")                         # quarterly
-    #    economagicSeries("fedstl/gnp", nDaysBack = 10*366)     # yearsBack
+    #    economagicSeries(c("fedny/day-fxus2eu", "fedny/day-fxch2us"))[1:10, ]
     
     # FUNCTION:
     
-    # Settings:
-    query = symbols
-    
     # Download:
-    Y = economagicImport(query = query[1], ...)@data
-    X = as.timeSeries(Y)
-    N = length(query)
+    X = economagicImport(query = symbols[1], ...)@data
+    N = length(symbols)
     if (N > 1) {
         for (i in 2:N){
-            Y = economagicImport(query = query[i], ...)@data
-            X = merge(X, as.timeSeries(Y))
+            X = merge(X, economagicImport(query = symbols[i], ...)@data)
         }
     }    
-    colnames(X)<-query
     
     # Time Window:
     if (is.null(from)) from = to - nDaysBack*24*3600

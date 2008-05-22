@@ -19,11 +19,6 @@
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -33,7 +28,7 @@
 ################################################################################
 
 
-.oandaImport <-  
+oandaImport <-  
     function(query, file = "tempfile", frequency = "daily", 
     from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
     save = FALSE, sep = ";", try = TRUE) 
@@ -44,7 +39,7 @@
     #   Downloads market data from www.oanda.com
     
     # Example:
-    #   .oandaImport("USD/EUR") 
+    #   oandaImport("USD/EUR") 
     
     # Value:
     #   An One Column data frame with row names denoting the dates
@@ -65,15 +60,15 @@
     # Download:
     if (try) {
         # Try for Internet Connection:
-        z = try(.oandaImport(query = query, file = file, 
-            frequency = frequency, from = from, to = to, 
-            nDaysBack = nDaysBack, save = save, try = FALSE))
+        z = try(oandaImport(query, file, frequency, from, to, 
+            nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         } 
     } else { 
+        # Download File:
         to = trunc(to, "days")
         from = to - nDaysBack*24*3600
         from.date <- format(timeDate(from),
@@ -87,6 +82,8 @@
                 "&expr2=", ccy.pair[2], "&margin_fixed=0&SUBMIT=Get+Table&",
                 "format=CSV&redirected=1", sep = ""), 
             destfile = tmp)
+            
+        # Compose Time Series:
         fx <- readLines(tmp)       
         fx <- unlist(strsplit(
             gsub("<PRE>|</PRE>", "", 
@@ -96,32 +93,24 @@
         time = fx[, 1]
         charvec = paste(substr(time, 7, 10), substr(time, 1, 2),
             substr(time, 4, 5), sep = "-")
-        fx = data.frame(charvec, data)
-        colnames(fx) = c("%Y-%m-%d", query)
+        X = timeSeries(data, charvec, units = query)
     }
     
-    # Save in file?
+    # Save to file:
     if (save) {
-        write.table(paste("%Y%m%d", query, sep = sep), file, 
-            quote = FALSE, row.names = FALSE, col.names = FALSE)
-        write.table(z, file, quote = FALSE, append = TRUE, 
-            col.names = FALSE, sep = sep)
-    }
-    else {
-        unlink(file)
+        write.table(as.data.frame(X)) 
+    } else {
+        unlink(file) 
     }
     
     # Result:
     ans = new("fWEBDATA",     
         call = match.call(),
         param = c(
-            "Instrument Query" = query,
-            "Frequency" = frequency,
-            "Start" = as.character(from),
-            "End" = as.character(to),
-            "Format" = "%Y-%m-%d"),
-        data = fx, 
-        title = "ata Import from www.oanda.com", 
+            "Instrument" = query, 
+            "Frequency " = frequency),
+        data = X, 
+        title = "Data Import from www.oanda.com", 
         description = description() )
         
     # Return Value:
@@ -132,7 +121,7 @@
 # ------------------------------------------------------------------------------
 
 
-.oandaSeries <-
+oandaSeries <-
     function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366,  ...) 
 { 
     # A function implemented by Diethelm Wuertz
@@ -140,28 +129,27 @@
     # Description:
     #   Easy to use download from www.oanda.com
     
+    # Arguments:
+    #   symbols - a character vector of symbol names
+    #   from - from date
+    #   to - to date
+    #   nDaysBack - number of n-days back
+    #   ... - arguments passed to the *Import()
+    
     # Example:
-    #   .oandaSeries("USD/EUR") 
+    #   oandaSeries("USD/EUR") 
+    #   oandaSeries(c("USD/EUR", "USD/JPY"), nDaysBack = 10) 
     
     # FUNCTION:
-    
-    # Settings:
-    query = symbols
-    
-    # URL:
-    oanda.URL <- "http://www.oanda.com/convert/fxhistory?lang=en&"
         
     # Download:
-    Y = .oandaImport(query = symbols[1], ...)@data
-    X = as.timeSeries(Y)
+    X = oandaImport(query = symbols[1], ...)@data
     N = length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            Y = .oandaImport(query = symbols[i], ...)@data   
-            X = merge(X, as.timeSeries(Y))
+            X = merge(X, oandaImport(query = symbols[i], ...)@data)  
         }
     }    
-    colnames(X)<-symbols
     
     # Time Window:
     if (is.null(from)) from = to - nDaysBack*24*3600
