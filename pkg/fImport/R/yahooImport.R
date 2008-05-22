@@ -78,22 +78,22 @@ yahooImport <-
 
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {
-        to = Sys.Date()
+        to = Sys.timDate()
         from = as.character(to - nDaysBack)
         to = as.character(to) }
 
     # Extract Atoms - From:
     yearFrom = substring(from, 1, 4)
-    monthFrom = as.character(as.integer(substring(from, 6,7))-1)
+    monthFrom = as.character(as.integer(substring(from, 6, 7))-1)
     dayFrom = substring(from, 9, 10)
 
     # Extract Atoms - To:
     yearTo = substring(to, 1, 4)
-    monthTo = as.character(as.integer(substring(to, 6,7))-1)
+    monthTo = as.character(as.integer(substring(to, 6, 7))-1)
     dayTo = substring(to, 9, 10)
 
     # Compose Query:
-    Query = paste("se=", query, "&a=", monthFrom, "&b=", dayFrom,
+    Query = paste("s=", query, "&a=", monthFrom, "&b=", dayFrom,
         "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
         "&g=", aggregation, "&x=.csv", sep = "")
     

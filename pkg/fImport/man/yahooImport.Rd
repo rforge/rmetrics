@@ -37,7 +37,7 @@ yahooBriefing(query, file = "tempfile", save = FALSE, try = TRUE)
 
 \arguments{
 
-        \item{file}{
+    \item{file}{
         a character string with filename, usually having extension 
         ".csv", where to save the downloaded data.
         }
