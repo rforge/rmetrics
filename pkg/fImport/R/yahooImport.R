@@ -93,7 +93,7 @@ yahooImport <-
     dayTo = substring(to, 9, 10)
 
     # Compose Query:
-    Query = paste("s=", query, "&a=", monthFrom, "&b=", dayFrom,
+    Query = paste("se=", query, "&a=", monthFrom, "&b=", dayFrom,
         "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
         "&g=", aggregation, "&x=.csv", sep = "")
     
