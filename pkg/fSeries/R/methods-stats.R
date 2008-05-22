@@ -15,7 +15,7 @@
 
 # experimental
 
-.members <- c("sd", "var", "cov", "cor")
+.members <- c("var", "cov", "cor")
 
 # template definition
 .templateXY <-  c("{",
@@ -35,7 +35,7 @@ for (.f in .members) {
 
 # ------------------------------------------------------------------------------
 
-.members <- c("quantile", "dnorm", "dcauchy", "dt")
+.members <- c("sd", "quantile", "dnorm", "dcauchy", "dt")
 
 ## # template definition
 ## .templateANY <-  c("{",
