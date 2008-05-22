@@ -38,21 +38,18 @@
 \section{Overview:}{
 
     The package makes functions available to download financial market
-    data from the internet. Currently functions are availalbe for the 
+    data from the internet. Functions are availalbe for the 
     follwing web sites:
     
     1. Data from www.economagic.com\cr
-    2. Data from www.forecasts.org\cr
-    3. Data from research.stlouisfed.org\cr
-    4. Data from finance.google.com\cr
-    5. Data from chart.yahoo.com
+    2. Data from research.stlouisfed.org\cr
+    3. Data from chart.yahoo.com
+    4. Data from www.oanda.com
     
     Functions for the following functionalities are available:
     
     1. *Series\cr
     2. *Import\cr
-    3. *Categories\cr
-    4. *Listing\cr
     
 }    
          
