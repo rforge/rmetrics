@@ -55,7 +55,7 @@ solveRsocp <-
 
     # Test Implementation for "LongOnly" MV Portfolio
     # stopifnot(constraints == "LongOnly")
-    
+
     # Load Rsocp:
     if (!require(Csocp)) {
         cat("\n\nRsocp Package missing")
@@ -64,12 +64,12 @@ solveRsocp <-
 
     # Transform Data and Constraints:
     data = portfolioData(data, spec)
-    if (class(constraints) == "fPFOLIOCON") 
+    if (class(constraints) == "fPFOLIOCON")
         constraints = constraints@stringConstraints
 
     # Scale Data:
     Data = data@data$series
-    Scale = 1e6 * sd(Data)
+    Scale = 1e6 * sd(as.vector(Data))
 
     # Trace:
     trace = getTrace(spec)
