@@ -31,7 +31,7 @@ function(x)
 
     # Example:
     #   x = as.timeSeries(data(msft.dat)); countMonthlyRecords(x)
-    #   x = as.timeSeries(data(edhec)); countMonthlyRecords(x)
+    #   x = as.timeSeries(data(edhec.tS)); countMonthlyRecords(x)
 
     # FUNCTION:
     stopifnot(is(x, "timeSeries"))
@@ -61,7 +61,7 @@ isMonthly <-
 
     # Example:
     #   x = as.timeSeries(data(msft.dat)); isMonthly(x)
-    #   x = as.timeSeries(data(edhec)); isMonthly(x)
+    #   x = as.timeSeries(data(edhec.tS)); isMonthly(x)
 
     # FUNCTION:
     stopifnot(is(x, "timeSeries"))

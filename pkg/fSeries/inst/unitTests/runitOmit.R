@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -37,24 +37,24 @@
 test.naOmitMatrix =
 function()
 {
-    x = as.timeSeries(data(edhec))[1:20, 1:4]  
+    x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)
-    
+
     x@Data[1, 1] = NA
     x@Data[3:4, 2] = NA
     x@Data[18:20, 4] = NA
     print(x)
-    
+
     .naOmitMatrix(as.matrix(x))
     .naOmitMatrix(as.matrix(x), "s")
     .naOmitMatrix(as.matrix(x), "z")
     .naOmitMatrix(as.matrix(x), "ir")
     .naOmitMatrix(as.matrix(x), "iz")
     .naOmitMatrix(as.matrix(x), "ie")
-  
+
     # Return Value:
-    return()    
-    
+    return()
+
 }
 
 
@@ -64,23 +64,23 @@ function()
 test.na.omit =
 function()
 {
-    x = as.timeSeries(data(edhec))[1:20, 1:4]  
+    x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)
-    
+
     x@Data[1, 1] = NA
     x@Data[3:4, 2] = NA
     x@Data[18:20, 4] = NA
     print(x)
-    
+
     na.omit(x)
     na.omit(x, "s")
     na.omit(x, "z")
     na.omit(x, "ir")
     na.omit(x, "iz")
     na.omit(x, "ie")
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
