@@ -205,8 +205,8 @@ assetsCorImagePlot <-
     #   correlation.
 
     # Examples:
-    #   R = as.timeSeries(data(edhec))
-    #   palette(.rgPalette(NCOL(edhec)))
+    #   R = as.timeSeries(data(edhec.tS))
+    #   palette(.rgPalette(NCOL(edhec.tS)))
     #   correlationImage(edhec)
 
     # FUNCTION:
