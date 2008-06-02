@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -36,7 +36,7 @@
 
 listFinCenter <-
     function(pattern = ".*")
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -61,7 +61,7 @@ listFinCenter <-
     # FUNCTION:
 
     # FinCenter Names:
-    FinCenterList = c( 
+    FinCenterList = c(
         "Europe/Andorra",
         "Asia/Dubai",
         "Asia/Kabul",
@@ -177,7 +177,7 @@ listFinCenter <-
         "Africa/Abidjan",
         "Pacific/Rarotonga",
         "America/Santiago",
-        "Pacific/Easter",
+        "Pacific/Eastern",
         "Africa/Douala",
         "Asia/Shanghai",
         "Asia/Harbin",
@@ -461,7 +461,7 @@ listFinCenter <-
         "Africa/Lusaka",
         "Africa/Harare")
 
-    
+
     # Financial Centers:
     if (pattern == "*") pattern = "\\\\*"
 
@@ -475,7 +475,7 @@ listFinCenter <-
 
 # Keep for compatibility of older Rmetrics versions ...
 .FinCenterList <- listFinCenter()
- 
+
 
 ################################################################################
 

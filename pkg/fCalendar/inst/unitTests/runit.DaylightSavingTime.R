@@ -42,5 +42,35 @@ function()
 }
 
 
-################################################################################
+if (!try(system("zdump"))) {
+    test.DST <- function()
+    {
+        # works only if OS is well configured !!!
 
+        finCenter <- listFinCenter()
+
+        for (k in seq_along(finCenter)) {
+
+            zdump <- try(system(paste("zdump ", finCenter[k], sep=" "), intern=TRUE))
+            zdump <- strsplit(zdump, " +" )
+            zdump <- unlist(zdump)
+
+
+            dts <- paste(zdump[c(3, 4, 6)], collapse = " ")
+            tms <- zdump[5]
+            timeSys <- timeDate(paste(dts, tms), format =  "%b %d %Y %H:%M:%S",
+                                zone = finCenter[k], FinCenter = finCenter[k])
+
+            timeTest <- Sys.timeDate(finCenter[k])
+
+            # round and compare
+            cat("\nSimple DST test for", finCenter[k], "\n")
+            cat("System\t\t", as.character(timeSys), "\n")
+            cat("fCalendar\t", as.character(timeTest), "\n")
+            checkTrue(abs(as.numeric(timeSys - timeTest)) < 5)
+        }
+    }
+
+}
+
+################################################################################

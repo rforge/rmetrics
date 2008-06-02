@@ -102,7 +102,7 @@
 
         # run zdump linux command
         zdump <- try(system(paste("zdump -v", finCenter[k], sep=" "), intern=TRUE))
-        zdump <- strsplit(zdump, " |  " )
+        zdump <- strsplit(zdump, " +" )
         zdump <- matrix(unlist(zdump), nrow = length(zdump), byrow = TRUE)
 
         # extract data
@@ -150,6 +150,9 @@
                     j <- j+1
                 }
             }
+            # YC: add last entry; important for short DST table like
+            # Tokyo(), Singapore, ... !
+            index[length(index) + 1] <- index[length(index)] + 2
         }
 
         # construct table rule for the given fin center
