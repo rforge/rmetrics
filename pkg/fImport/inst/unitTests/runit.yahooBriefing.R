@@ -28,46 +28,19 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION: 
-#  yahooSeries           Easy to use download from chart.yahoo.com
-#  yahooImport           Downloads market data from chart.yahoo.com    
+# FUNCTION:             DESCRIPTION:
+#  yahooBriefing         Downloads briefings from chart.yahoo.com  
 ################################################################################
 
 
-test.yahooSeries = 
-function()
+test.yahooBriefing <- 
+    function()
 {       
     if (FALSE) {
-    
-        # yahooImport() -
-        # [test 19/20 century change 01-12-1999 -- 31-01-2000]
         
-        
-        # yahooSeries() -
-        args(yahooSeries)
-        tS = yahooSeries()
-        print(head(tS))
-        
-    }
-        
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.yahooImport = 
-function()
-{       
-    if (FALSE) {
-    
-        # yahooImport() -
-        # [test 19/20 century change 01-12-1999 -- 31-01-2000]
-        
-        query = "s=IBM&a=11&b=29&c=1999&d=0&e=5&f=2000&z=IBM&x=.csv"
-        X = yahooImport(query)  
+        # Yahoo Key Briefing:
+        ans = yahooBriefing("IBM")
+        print(ans)
         
     }
         

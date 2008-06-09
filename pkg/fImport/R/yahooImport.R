@@ -34,7 +34,7 @@
 
 
 yahooImport <-
-    function (query, file = "tempfile", 
+    function (query, file = "tempfile", source = NULL, 
     frequency = c("daily", "weekly", "monthly"), 
     from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
     save = FALSE, sep = ";", try = TRUE) 
@@ -43,10 +43,6 @@ yahooImport <-
 
     # Description:
     #   Downloads market data from Yahoo's web site
-
-    # Example:
-    #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
-    #   yahooImport("s=IBM&a=11&b=1&c=1999&d=0&e=31&f=2000&g=d&x=.csv")
 
     # Notes:
     #   Requires: fields() cuts a string in fields
@@ -60,6 +56,8 @@ yahooImport <-
     #   f     Last Quote ends with Year (yy): as CCYY
     #   r     Aggregation Level
     #   z     Selected Ticker-Symbol [optional]
+    #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
+    #   "s=IBM&a=11&b=1&c=1999&d=0&e=31&f=2000&g=d&x=.csv"
 
     # Examples:
     #   yahooImport("IBM", nDaysBack = 10)
@@ -78,7 +76,7 @@ yahooImport <-
 
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {
-        to = Sys.timDate()
+        to = Sys.timeDate()
         from = as.character(to - nDaysBack)
         to = as.character(to) }
 
@@ -98,12 +96,13 @@ yahooImport <-
         "&g=", aggregation, "&x=.csv", sep = "")
     
     # Source:
-    source = "http://chart.yahoo.com/table.csv?"
+    if (is.null(source)) 
+        source = "http://chart.yahoo.com/table.csv?"
 
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooImport(query, file, frequency, from, to, 
+        z = try(yahooImport(query, file, source, frequency, from, to, 
             nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access")

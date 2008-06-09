@@ -21,7 +21,7 @@
 oandaSeries(symbols, from = NULL, to = Sys.timeDate(), 
     nDaysBack = 366, \dots) 
     
-oandaImport(query, file = "tempfile", frequency = "daily", 
+oandaImport(query, file = "tempfile", source = NULL, frequency = "daily", 
     from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
     save = FALSE, sep = ";", try = TRUE) 
 }
@@ -57,6 +57,10 @@ oandaImport(query, file = "tempfile", frequency = "daily",
         }
     \item{sep}{
         a charcter value specifying the column separator.
+        }
+    \item{source}{a character string setting the URL of the source.
+        If \code{NULL}, then the URL will be set automatically to its
+        default value.
         }
     \item{symbols} {
         a character string with the symbols to be downloaded.
@@ -112,6 +116,7 @@ oandaImport(query, file = "tempfile", frequency = "daily",
   
     \bold{Internet Download Functions:}
     \cr\cr
+    
     IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
   
@@ -126,9 +131,8 @@ oandaImport(query, file = "tempfile", frequency = "daily",
 
 \examples{
 \dontrun{
-## fredImport -
-   DPRIME = fredImport("DPRIME")
-   if (!is.null(DPRIME)) print(DPRIME@data[1:20, ])       
+## oandaImport -
+   oandaSeries("USD/EUR")      
 }
 }
 

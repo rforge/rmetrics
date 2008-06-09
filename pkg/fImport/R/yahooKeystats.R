@@ -33,7 +33,8 @@
 
 
 yahooKeystats <-
-    function (query, file = "tempfile", save = FALSE, try = TRUE)
+    function (query, file = "tempfile", source = NULL, 
+    save = FALSE, try = TRUE)
 {
     # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
@@ -50,10 +51,11 @@ yahooKeystats <-
     # FUNCTION:
 
     # Download:
-    source = "http://finance.yahoo.com/q/ks?s="
+    if (is.null(source))
+        source = "http://finance.yahoo.com/q/ks?s="
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooKeystats(query, file, save, try = FALSE))
+        z = try(yahooKeystats(query, file, source, save, try = FALSE))
         if (class(z) == "try-error" || class(z) == "Error") {
             return("No Internet Access")
         }

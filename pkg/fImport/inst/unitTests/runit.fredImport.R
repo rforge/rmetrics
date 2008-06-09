@@ -29,48 +29,44 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fredCategories        Lists categories of symbols from research.stlouisfed.org
-#  fredListing           Lists symbols from research.stlouisfed.org
 #  fredImport            Downloads monthly data from research.stlouisfed.org
 #  fredSeries            Easy to use download from research.stlouisfed.org 
 ################################################################################
        
-        
-test.fredCategories <- 
-    function()
-{  
-    Categories = fredCategories()   
-    print(Categories)
-    print(attr(Categories, "control"))
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.fredListing = 
-function()
-{     
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 test.fredSeries = 
 function()
 {     
+    # http://research.stlouisfed.org/fred2/series/
+    
+    args(fredSeries)
+    # function (symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...) 
+    
     if (FALSE) {
-        
-        NA
-        
+
+         # Daily Series:
+         fredSeries("DPRIME")[1:10, ]
+         fredSeries("DAAA")[1:10, ]
+         
+         # Monthly:
+         fredSeries("AAA")[1:10, ]
+         
+         # Weekly:
+         head(fredSeries("WAAA"))
+         
+         # Daily + Daily Series:
+         fredSeries(c("DPRIME", "DAAA"))[1:10, ]
+         
+         # Mixing Weekly and Monthly:
+         fredSeries(c("WAAA", "AAA"))[1:20, ]
+         
+         # nDaysBack:
+         fredSeries("DPRIME", to = Sys.timeDate(), nDaysBack = 20)
+         
+         # from, to:
+         #  Note express last 20 days as 20*24*3600 ...
+         fredSeries("DPRIME", 
+            from = Sys.timeDate() - 20*24*3600, to = Sys.timeDate())
     }
     
     # Return Value:
@@ -84,10 +80,23 @@ function()
 test.fredImport = 
 function()
 {     
+    
+    # http://research.stlouisfed.org/fred2/series/
+    
+    args(fredImport)
+    # function (query, file = "tempfile", frequency = "daily", from = NULL, 
+    #   to = Sys.timeDate(), nDaysBack = NULL, save = FALSE, sep = ";", 
+    #   try = TRUE) 
+
     if (FALSE) {
         
-        NA
-        
+        # Daily Series:
+        fredImport("DPRIME") 
+        fredImport("DAAA") 
+         
+        # Monthly:
+        fredImport("AAA")
+          
     }
     
     # Return Value:

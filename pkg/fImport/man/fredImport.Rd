@@ -21,7 +21,7 @@
 fredSeries(symbols, from = NULL, to = Sys.timeDate(), 
     nDaysBack = 366, \dots)
     
-fredImport(query, file = "tempfile", frequency = "daily", 
+fredImport(query, file = "tempfile", source = NULL, frequency = "daily", 
     from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep = ";", try = TRUE)    
 }
@@ -57,6 +57,10 @@ fredImport(query, file = "tempfile", frequency = "daily",
         }
     \item{sep}{
         a charcter value specifying the column separator.
+        }
+    \item{source}{a character string setting the URL of the source.
+        If \code{NULL}, then the URL will be set automatically to its
+        default value.
         }
     \item{symbols} {
         a character string with the symbols to be downloaded.
@@ -111,7 +115,7 @@ fredImport(query, file = "tempfile", frequency = "daily",
 \note{
   
     \bold{Internet Download Functions:}
-    \cr\cr
+    
     IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
   
@@ -127,8 +131,8 @@ fredImport(query, file = "tempfile", frequency = "daily",
 \examples{
 \dontrun{
 ## fredImport -
-   DPRIME = fredImport("DPRIME")
-   if (!is.null(DPRIME)) print(DPRIME@data[1:20, ])       
+   DPRIME = fredSeries("DPRIME") 
+   tail(DPRIME)     
 }
 }
 

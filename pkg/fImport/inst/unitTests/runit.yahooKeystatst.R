@@ -28,21 +28,26 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation for WEB download
-#  show.fWEBDATA         S4 Show Method for WEB downloaded data 
+# FUNCTION:             DESCRIPTION: 
+#  yahooKeystats         Downloads key statistics from chart.yahoo.com  
 ################################################################################
 
 
-test.fWEBDATA = 
-function()
+test.yahooKeyStats <- 
+    function()
 {       
-    NA
+    if (FALSE) {
+        
+        # Yahoo Key Statistics:
+        ans = yahooKeystats("IBM")
+        print(ans)
+        
+    }
         
     # Return Value:
     return()
 }
 
-   
+    
 ################################################################################
 

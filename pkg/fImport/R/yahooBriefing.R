@@ -33,7 +33,8 @@
 
 
 yahooBriefing <-
-    function (query, file = "tempfile", save = FALSE, try = TRUE)
+    function (query, file = "tempfile", source = NULL,
+    save = FALSE, try = TRUE)
 {
     # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
@@ -47,10 +48,11 @@ yahooBriefing <-
     # FUNCTION:
 
     # Download:
-    source = "http://finance.yahoo.com/q/ud?s="
+    if (is.null(source))
+        source = "http://finance.yahoo.com/q/ud?s="
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooBriefing(query, file, save, try = FALSE))
+        z = try(yahooBriefing(query, file, source, save, try = FALSE))
         if (class(z) == "try-error" || class(z) == "Error") {
             return("No Internet Access")
         }

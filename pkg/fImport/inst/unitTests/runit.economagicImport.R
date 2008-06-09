@@ -29,39 +29,9 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  economagicCategories  Lists categries of symbols from www.economagic.com
-#  economagicListing     Lists symbols from www.economagic.com
 #  economagicImport      Downloads market data from www.economagic.com
 #  economagicSeries      Easy to use download from www.economagic.com
 ################################################################################
-
-
-test.economagicCategories <- 
-    function()
-{  
-    Categories = economagicCategories()   
-    print(Categories)
-    print(attr(Categories, "control"))
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.economagicListing <- 
-    function()
-{  
-    print("Under Construction")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
       
 test.economagicSeries <- 
@@ -81,7 +51,7 @@ test.economagicSeries <-
         X = economagicSeries(symbols = "fedstl/gnp")
         print(head(X))
         
-        # USDEUR Foreign Exchange Rate:
+        # USDEUR Daily Foreign Exchange Rate:
         X = economagicSeries(symbols = "fedny/day-fxus2eu")
         print(head(X))
     }
@@ -111,8 +81,8 @@ test.economagicImport <-
         X = economagicImport(query = "fedstl/gnp")
         print(X)
             
-        # USDEUR Foreign Exchange Rate:
-        X = economagicSeries("fedny/day-fxus2eu")
+        # USDEUR Daily Foreign Exchange Rate:
+        X = economagicImport("fedny/day-fxus2eu")
         print(X)
         
     }

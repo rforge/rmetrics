@@ -28,38 +28,10 @@
 
 
 ################################################################################
-# FUNCTION:          
-#  test.oandaCategories  
-#  test.oandaListing 
+# FUNCTION:           
 #  test.oandaSeries  
 #  test.oandaImport           
 ################################################################################
-
-
-test.oandaCategories <- 
-    function()
-{  
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.oandaListing <- 
-    function()
-{  
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
       
 test.oandaSeries <- 
@@ -67,8 +39,8 @@ test.oandaSeries <-
 {  
     if (FALSE) {
         
-        # oanda:
-        X = .oandaSeries(symbol = c("USD/EUR", "EUR/GBP"))
+        # Oanda:
+        X = oandaSeries(symbol = c("USD/EUR", "EUR/GBP"))
         print(head(X))
         print(class(X))
 
@@ -88,19 +60,9 @@ test.oandaImport <-
     if (FALSE) {
         
         # oanda:
-        X = .oandaImport(
-            query = "USD/EUR", 
-            file = "tempfile",
-            from = NULL, to = Sys.timeDate(), nDaysBack = 366,
-            source = "http://www.oanda.com/convert/fxhistory?lang=en&", 
-            frequency = "daily", 
-            save = FALSE, 
-            sep = ";", 
-            try = TRUE )
-            
+        X = oandaImport("USD/EUR")  
         print(X)
         print(head(X@data))
-        print(class(X@data))
     
     }
          

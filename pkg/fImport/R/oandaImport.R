@@ -29,7 +29,8 @@
 
 
 oandaImport <-  
-    function(query, file = "tempfile", frequency = "daily", 
+    function(query, file = "tempfile", source = NULL,
+    frequency = "daily", 
     from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
     save = FALSE, sep = ";", try = TRUE) 
 {   
@@ -55,12 +56,13 @@ oandaImport <-
     stopifnot (frequency == "daily")
     
     # Source:
-    source = "http://www.oanda.com/convert/fxhistory?lang=en&"
+    if (is.null(source))
+        source = "http://www.oanda.com/convert/fxhistory?lang=en&"
     
     # Download:
     if (try) {
         # Try for Internet Connection:
-        z = try(oandaImport(query, file, frequency, from, to, 
+        z = try(oandaImport(query, file, source, frequency, from, to, 
             nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 

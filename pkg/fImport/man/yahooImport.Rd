@@ -5,17 +5,13 @@
 \alias{yahooImport}
 \alias{yahooSeries}
 
-\alias{yahooKeystats}
-\alias{yahooBriefing}
-
 
 \title{Import Market Data from Yahoo}
 
 
 \description{
     
-    Imports financial time series data, key statistics, and
-    briefing data from chart.yahoo.com.
+    Imports financial time series data from chart.yahoo.com.
    
 }
 
@@ -24,14 +20,10 @@
 yahooSeries(symbols, from = NULL, to = Sys.timeDate(), 
     nDaysBack = 366, \dots) 
     
-yahooImport(query, file = "tempfile", 
+yahooImport(query, file = "tempfile", source = NULL,
     frequency = c("daily", "weekly", "monthly"), 
     from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
     save = FALSE, sep = ";", try = TRUE) 
-    
-yahooKeystats(query, file = "tempfile", save = FALSE, try = TRUE) 
-    
-yahooBriefing(query, file = "tempfile", save = FALSE, try = TRUE) 
 }
 
 
@@ -65,6 +57,10 @@ yahooBriefing(query, file = "tempfile", save = FALSE, try = TRUE)
         }
     \item{sep}{
         a charcter value specifying the column separator.
+        }
+    \item{source}{a character string setting the URL of the source.
+        If \code{NULL}, then the URL will be set automatically to its
+        default value.
         }
     \item{symbols} {
         a character string with the symbols to be downloaded.
@@ -123,6 +119,7 @@ yahooBriefing(query, file = "tempfile", save = FALSE, try = TRUE)
   
     \bold{Import data from chart.yahoo.com:}
     \cr\cr
+    
     The query string is given as 
     \cr\cr
             \code{s=SYMBOL&a=DD&b=MM&c=CCYY&g=d&q=q&z=SYMBOL&x=.csv} 
@@ -167,17 +164,6 @@ yahooBriefing(query, file = "tempfile", save = FALSE, try = TRUE)
     
     IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
-    
-    The R package \code{tseries} from Adrian Trapletti offers an 
-    alternative function to download stock market data and indexes 
-    from Yahoo's Internet site.
-    
-    \bold{Keystats and Briefing Reports:}
-    
-    The functions \code{keystatsImport} and \code{briefingImport} has
-    been renamed with version 2.7 to \code{yahooKeystats} and 
-    \code{yahooBriefing} allowing to distinguish for keystats and
-    briefing reports downloaded from other providers.
      
 }
 

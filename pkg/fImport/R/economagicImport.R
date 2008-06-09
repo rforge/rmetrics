@@ -29,8 +29,8 @@
 
 
 economagicImport <-
-    function(query, 
-    file = "tempfile", frequency = c("auto", "quarterly", "monthly", "daily"),
+    function(query, file = "tempfile", source = NULL, 
+    frequency = c("auto", "quarterly", "monthly", "daily"),
     from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep =";", try = TRUE)
 {   
@@ -54,7 +54,8 @@ economagicImport <-
     stopifnot(length(query) == 1)
     
     # Source:
-    source = "http://www.economagic.com/em-cgi/data.exe/"
+    if (is.null(source))
+        source = "http://www.economagic.com/em-cgi/data.exe/"
     
     # Frequency:
     freq = match.arg(frequency)
@@ -62,7 +63,7 @@ economagicImport <-
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(economagicImport(query, file, frequency, from, to,
+        z = try(economagicImport(query, file, source, frequency, from, to,
             nDaysBack, save, sep, try = FALSE)) 
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 

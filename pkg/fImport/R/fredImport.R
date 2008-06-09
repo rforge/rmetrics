@@ -29,7 +29,8 @@
 
 
 fredImport <-  
-    function(query, file = "tempfile", frequency = "daily", 
+    function(query, file = "tempfile", source = NULL,
+    frequency = "daily", 
     from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep = ";", try = TRUE) 
 {   
@@ -61,7 +62,8 @@ fredImport <-
     stopifnot(length(query) == 1)
     
     # Source"
-    source = "http://research.stlouisfed.org/fred2/series/"
+    if (is.null(source))
+        source = "http://research.stlouisfed.org/fred2/series/"
     
     # Check:
     if (frequency != "daily")
@@ -70,7 +72,7 @@ fredImport <-
     # Download:
     if (try) {
         # Try for Internet Connection:
-        z = try(fredImport(query, file, frequency, from, to, 
+        z = try(fredImport(query, file, source, frequency, from, to, 
             nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 

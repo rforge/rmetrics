@@ -33,9 +33,13 @@
 }
 
 
-%\examples{
-%## 
-%}
+\examples{
+\dontrun{
+## print --
+   IBM = yahooImport("IBM")
+   print(IBM)
+}
+}
 
 
 \keyword{data}

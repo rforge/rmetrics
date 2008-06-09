@@ -43,16 +43,98 @@
     
     1. Data from www.economagic.com\cr
     2. Data from research.stlouisfed.org\cr
-    3. Data from chart.yahoo.com
-    4. Data from www.oanda.com
+    3. Data from www.oanda.com\cr
+    4. Data from chart.yahoo.com
     
-    Functions for the following functionalities are available:
+    There are two kinds of functions available, the first kind is called 
+    \code{*Series} which downloads a \code{"timeSeries"} object from a
+    web site wher the star \code{*} is a placeholder for the web site
+    (economagic, fred, oanda, and yahoo), and the second kind is called
+    \code{*Import} which downloads an S4 object of class \code{fWEBDATA"}
+    wit a \code{@Data} slot which keeps the \code{"timeSeries"} object
+    and further slots which keep additional download information.
     
-    1. *Series\cr
-    2. *Import\cr
+    We recommend the first kind of functions for easy download of economic
+    and financial time series, whereas we recommend to use the second kind
+    of functions when additional information is required for example for
+    the storage of the data in a data base management system.
+    
+    IMPORTANT NOTE: The download from the web site www.forecasts.org has
+    been withdrawn since the time series are no longer updated. Note, all 
+    the series offered by the "forecasts.org" web site are also available
+    from the FRED St. Louis database.
+    
+}
+
+
+\section{Downloading a 'timeSeries' Object:}{
+
+    The following functions 
+    
+    1. economagicSeries\cr
+    2. fredSeries\cr
+    4. oandaSeries\cr
+    3. yahooSeries
+    
+    allow for an easy download of economic and financial time series data 
+    as objects of class \code{"timeSeries"}.   
+    
+    Note, with version 280.73 major changes were made in the argument list of 
+    the downloading functions. We apologize for any inconveniences caused
+    by these changes. The reason was that now all functions have the same
+    arguments which makes their usage much easier. For details we refer to 
+    the help pages of the functions mentioned above.
     
 }    
-         
+
+
+\section{Importing a 'fWEBDATA' Object:}{
+
+    If you like to keep additional download information, use the functions
+    
+    1. economagicImport\cr
+    2. fredImport\cr
+    4. oandaImport\cr
+    3. yahooImport
+    
+    which return objects of class \code{"fWEBDATA"}.
+    
+}    
+
+
+\section{Key Statistics:}{
+
+    The function \code{yahooKeystats} allows to download kyy statistics
+    from Yahoo's web site.
+    
+}  
+
+
+\section{Briefing:}{
+
+    The function \code{yahooBriefings} allows to download a briefing
+    from Yahoo's web site.
+    
+}   
+
+
+\section{Examples:}{
+
+    Simple examples for downloading time series objects are given in the
+    help pages, more elaborated examples can be found in the unit testing
+    directory.
+    
+}
+
+
+\section{License:}{
+
+    This Rmetrics package is written for educational usage teaching
+    "Computational Finance and Financial Engineering" and licensed
+    under GPL.
+    
+}
+
    
 \keyword{data} 
        

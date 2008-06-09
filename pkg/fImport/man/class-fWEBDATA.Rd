@@ -62,5 +62,11 @@
 }
 
 
+\examples{
+## getClass -
+   getClass("fWEBDATA")
+}
+
+
 \keyword{data}
 

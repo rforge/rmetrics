@@ -19,7 +19,7 @@
 economagicSeries(symbols, from = NULL, to = Sys.timeDate(), 
     nDaysBack = 366, \dots)
     
-economagicImport(query, file = "tempfile", 
+economagicImport(query, file = "tempfile", source = NULL,
     frequency = c("auto", "quarterly", "monthly", "daily"),
     from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
     save = FALSE, sep =";", try = TRUE)
@@ -56,6 +56,10 @@ economagicImport(query, file = "tempfile",
         }
     \item{sep}{
         a charcter value specifying the column separator.
+        }
+    \item{source}{a character string setting the URL of the source.
+        If \code{NULL}, then the URL will be set automatically to its
+        default value.
         }
     \item{symbols} {
         a character string with the symbols to be downloaded.
