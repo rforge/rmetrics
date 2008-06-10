@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #  1999 - 2007, Diethelm Wuertz, GPL
 #  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #  info@rmetrics.org
@@ -42,17 +42,17 @@ function()
 {
     # Period:
     n = 3
-        
+
     # TRIM = TRUE | na.rm = TRUE
     trim = TRUE
     na.rm = TRUE
     x = 1:10
     x[6] = NA
-    cat("\ntrim: ", trim, "\n")  
+    cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-    print(ans) 
+    print(ans)
     # Mean:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
     print(ans)
@@ -61,17 +61,17 @@ function()
     print(ans)
     # Min:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-    print(ans)   
+    print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-    print(ans)   
-        
+    print(ans)
+
     # TRIM = TRUE | na.rm = FALSE
     trim = TRUE
     na.rm = FALSE
     x = 1:10
     x[6] = NA
-    cat("\ntrim: ", trim, "\n")  
+    cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
@@ -84,11 +84,11 @@ function()
     # print(ans)
     # Min:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-    print(ans)   
+    print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
-         
+
     # TRIM = FALSE | na.rm = TRUE
     trim = FALSE
     na.rm = TRUE
@@ -98,7 +98,7 @@ function()
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-    print(ans) 
+    print(ans)
     # Mean:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
     print(ans)
@@ -110,8 +110,8 @@ function()
     print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-    print(ans)  
-       
+    print(ans)
+
     # TRIM = FALSE | na.rm = FALSE
     trim = FALSE
     na.rm = FALSE
@@ -134,9 +134,9 @@ function()
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
-       
+
     # Return Value:
-    return()    
+    return()
 }
 
 
@@ -145,14 +145,14 @@ function()
 
 test.rollingTimeSeries =
 function()
-{  
+{
     # Time Series:
     charvec = paste("1999", 10, 11:20, sep = "-")
     print(charvec)
     ts = timeSeries(data = 1:10, charvec, units = "SERIES", zone = "GMT",
-        FinCenter = "GMT") 
+        FinCenter = "GMT")
     print(ts)
-    
+
     # Period:
     n = 3
 
@@ -160,12 +160,12 @@ function()
     trim = TRUE
     na.rm = TRUE
     x = ts
-    x@Data[6] = NA
-    cat("\ntrim: ", trim, "\n")  
+    series(x)[6] = NA
+    cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-    print(ans) 
+    print(ans)
     # Mean:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
     print(ans)
@@ -174,17 +174,17 @@ function()
     print(ans)
     # Min:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-    print(ans)   
+    print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-    print(ans)   
-        
+    print(ans)
+
     # TRIM = TRUE | na.rm = FALSE
     trim = TRUE
     na.rm = FALSE
     x = ts
-    x@Data[6] = NA
-    cat("\ntrim: ", trim, "\n")  
+    series(x)[6] = NA
+    cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
@@ -197,21 +197,21 @@ function()
     # print(ans)
     # Min:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-    print(ans)   
+    print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
-        
+
     # TRIM = FALSE | na.rm = TRUE
     trim = FALSE
     na.rm = TRUE
     x = ts
-    x@Data[6] = NA
+    series(x)[6] = NA
     cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-    print(ans) 
+    print(ans)
     # Mean:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
     print(ans)
@@ -223,13 +223,13 @@ function()
     print(ans)
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-    print(ans)  
-        
+    print(ans)
+
     # TRIM = FALSE | na.rm = FALSE
     trim = FALSE
     na.rm = FALSE
     x = ts
-    x@Data[6] = NA
+    series(x)[6] = NA
     cat("\ntrim: ", trim, "\n")
     cat("\n\nna.rm: ", na.rm, "\n")
     # Sum:
@@ -247,11 +247,11 @@ function()
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
-           
+
     # Return Value:
-    return()  
+    return()
 }
 
 
 ################################################################################
-    
+
