@@ -77,10 +77,10 @@ function()
     mu.vec = colMeans(myAssets)
     mu.vec
     # or ...
-    mu.vec = colMeans(myAssets@Data)
+    mu.vec = colMeans(series(myAssets))
     mu.vec
     # Print the Covariance Matrix:
-    cov.mat = cov(myAssets@Data)
+    cov.mat = cov(series(myAssets))
     cov.mat
 
     # Plot Cumulated Returns of the Assets:
