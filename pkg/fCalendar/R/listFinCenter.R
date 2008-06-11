@@ -177,7 +177,7 @@ listFinCenter <-
         "Africa/Abidjan",
         "Pacific/Rarotonga",
         "America/Santiago",
-        "Pacific/Eastern",
+        "Pacific/Easter",
         "Africa/Douala",
         "Asia/Shanghai",
         "Asia/Harbin",

@@ -190,7 +190,6 @@ NewYork <- New_York
 HongKong <- Hong_Kong
 KualaLumpur <- Kuala_Lumpur
 Frankfurt <- Berlin
-Eastern <- NewYork
 Pacific <- LosAngeles
 ",
         file = filename, append = TRUE)
