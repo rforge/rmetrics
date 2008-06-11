@@ -92,10 +92,10 @@ function()
     # timeSeries: Simulate ARMA(2,1):
     # Note, if "positions" is a timeDate object,
     #   then a 'timeSeries' object will be returned ...
-    tS = armaSim(n = 12, positions = timeCalendar())
+    tS = armaSim(n = 12)
     class(tS)
     print(tS)
-    tS = armaSim(n = 12, positions = timeCalendar(), addControl = TRUE)
+    tS = armaSim(n = 12, addControl = TRUE)
     print(tS)
 
     # ts: Simulate t4-ARMA(2,1):
@@ -626,7 +626,7 @@ function()
     TS.RET = returns(TS)
     colnames(TS.RET)
     # attach(TS.RET)                    # CHECK doesn't work under RUnit ...
-    attach.timeSeries(TS.RET)
+    attach(TS.RET)
     head(Close)
     armaFit(Close ~ ar(5))
 

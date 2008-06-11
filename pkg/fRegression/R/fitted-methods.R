@@ -56,7 +56,7 @@ setMethod(f = "fitted", signature(object = "fREG"), definition =
         data.mat = matrix(fitted)
         rownames(data.mat) = rownames(data)
         colnames(data.mat) = object@data$unit
-        ans@Data = data.mat
+        series(ans) = data.mat
         colnames(ans) = as.character(object@formula[2])
     } else {
         ans = data

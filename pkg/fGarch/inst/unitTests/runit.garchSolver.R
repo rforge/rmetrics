@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:               SOLVER:    
+# FUNCTION:               SOLVER:
 #  .garchRnlminb           R coded solver nlmin
 #  .garchRlbgfsb           R coded solver optim using method lbgfsb
 #  .garchRnm               R coded solver nm as hybrid addon
@@ -38,220 +38,283 @@
 ################################################################################
 
 
-test.garchSolver.dem2gbp <- 
+## test.garchSolver.dem2gbp <-
+## function()
+## {
+##     # Note, Default has changed: "cda" -> "fda"
+
+##     # Loda Data
+##     data(dem2gbp)
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "fda", algorithm = "nlminb")
+##     # Time difference of 2.969 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006190    0.008464   -0.731 0.464545
+##     # omega   0.010761    0.003081    3.492 0.000479 ***
+##     # alpha1  0.153134    0.027720    5.524 3.31e-08 ***
+##     # beta1   0.805974    0.035761   22.537  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 *** 0.001 ** 0.01 * 0.05 . 0.1   1
+##     #
+##     # Log Likelihood:
+##     #  1106.608    normalized:  0.5605916
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "nlminb")
+
+##     garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")
+##     # Time difference of 4.75 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006187    0.008462   -0.731 0.464720
+##     # omega   0.010785    0.002860    3.771 0.000163 ***
+##     # alpha1  0.153306    0.026556    5.773 7.79e-09 ***
+##     # beta1   0.805706    0.033612   23.971  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  1106.608    normalized:  0.5605916
+
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "nlminb+nm")
+##     # Time difference of 6.094 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006190    0.008462   -0.732 0.464447
+##     # omega   0.010761    0.002853    3.772 0.000162 ***
+##     # alpha1  0.153134    0.026523    5.774 7.76e-09 ***
+##     # beta1   0.805974    0.033553   24.021  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  1106.608    normalized:  0.5605916
+##     #
+
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "lbfgsb+nm")
+
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "donlp2")
+##     # Time difference of 7.094 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006190    0.008462   -0.732 0.464447
+##     # omega   0.010761    0.002853    3.772 0.000162 ***
+##     # alpha1  0.153134    0.026523    5.774 7.76e-09 ***
+##     # beta1   0.805973    0.033553   24.021  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  1106.608    normalized:  0.5605916
+##     #
+
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "sqp")
+##     # Time difference of 1.906 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006190    0.008462   -0.732 0.464437
+##     # omega   0.010761    0.002853    3.772 0.000162 ***
+##     # alpha1  0.153134    0.026523    5.774 7.76e-09 ***
+##     # beta1   0.805974    0.033553   24.021  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  0.5605916    normalized:  0.0002839877
+##     #
+
+##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "mnfb")
+##     # Time difference of 1.344 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu     -0.006190    0.008461   -0.732 0.464384
+##     # omega   0.010761    0.002853    3.772 0.000162 ***
+##     # alpha1  0.153134    0.026523    5.774 7.75e-09 ***
+##     # beta1   0.805974    0.033552   24.021  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  0.5605916    normalized:  0.0002839877
+
+##     # Return Value:
+##     return()
+## }
+
+# ------------------------------------------------------------------------------
+
+test.garchSolver2.dem2gbp <-
 function()
 {
     # Note, Default has changed: "cda" -> "fda"
-    
-    # Loda Data 
-    data(dem2gbp)
-    
-    garchFit(~ garch(1,1), dem2gbp, hessian = "fda", algorithm = "nlminb")
-    # Time difference of 2.969 secs
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu     -0.006190    0.008464   -0.731 0.464545    
-    # omega   0.010761    0.003081    3.492 0.000479 ***
-    # alpha1  0.153134    0.027720    5.524 3.31e-08 ***
-    # beta1   0.805974    0.035761   22.537  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1  
-    #     
-    # Log Likelihood:
-    #  1106.608    normalized:  0.5605916
- 
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "nlminb")
- 
-    garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")
-    # Time difference of 4.75 secs
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu     -0.006187    0.008462   -0.731 0.464720    
-    # omega   0.010785    0.002860    3.771 0.000163 ***
-    # alpha1  0.153306    0.026556    5.773 7.79e-09 ***
-    # beta1   0.805706    0.033612   23.971  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    # 
-    # Log Likelihood:
-    #  1106.608    normalized:  0.5605916 
 
-    
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "nlminb+nm")
-    # Time difference of 6.094 secs
-    # Error Analysis:                                                
-    #         Estimate  Std. Error  t value Pr(>|t|)                 
-    # mu     -0.006190    0.008462   -0.732 0.464447                 
-    # omega   0.010761    0.002853    3.772 0.000162 ***             
-    # alpha1  0.153134    0.026523    5.774 7.76e-09 ***             
-    # beta1   0.805974    0.033553   24.021  < 2e-16 ***             
-    # ---                                                            
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    #                                                                
-    # Log Likelihood:                                                
-    #  1106.608    normalized:  0.5605916                            
-    #                                                                
-    
-    
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "lbfgsb+nm")
-    
-    
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "donlp2")
-    # Time difference of 7.094 secs
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu     -0.006190    0.008462   -0.732 0.464447    
-    # omega   0.010761    0.002853    3.772 0.000162 ***
-    # alpha1  0.153134    0.026523    5.774 7.76e-09 ***
-    # beta1   0.805973    0.033553   24.021  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    # 
-    # Log Likelihood:
-    #  1106.608    normalized:  0.5605916 
-    # 
-  
-      
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "sqp")
-    # Time difference of 1.906 secs
-    # Error Analysis:                                                
-    #         Estimate  Std. Error  t value Pr(>|t|)                 
-    # mu     -0.006190    0.008462   -0.732 0.464437                 
-    # omega   0.010761    0.002853    3.772 0.000162 ***             
-    # alpha1  0.153134    0.026523    5.774 7.76e-09 ***             
-    # beta1   0.805974    0.033553   24.021  < 2e-16 ***             
-    # ---                                                            
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    #                                                                
-    # Log Likelihood:                                                
-    #  0.5605916    normalized:  0.0002839877                        
-    # 
-    
-    garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "mnfb")                                                               
-    # Time difference of 1.344 secs
-    # Error Analysis:                                                
-    #         Estimate  Std. Error  t value Pr(>|t|)                 
-    # mu     -0.006190    0.008461   -0.732 0.464384                 
-    # omega   0.010761    0.002853    3.772 0.000162 ***             
-    # alpha1  0.153134    0.026523    5.774 7.75e-09 ***             
-    # beta1   0.805974    0.033552   24.021  < 2e-16 ***             
-    # ---                                                            
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    #                                                                
-    # Log Likelihood:                                                
-    #  0.5605916    normalized:  0.0002839877                        
+    # Loda Data
+    data(dem2gbp)
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb")
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "nlminb")
+
+    garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb+nm")
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "lbfgsb+nm")
+
+    # garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "donlp2")
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "sqp")
+
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "mnfb")
 
     # Return Value:
-    return()   
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchSolver.sp500dge <- 
+## test.garchSolver.sp500dge <-
+## function()
+## {
+##     # Loda Data:
+##     data(sp500dge)
+##     sp500dge = 100 * sp500dge
+
+
+##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
+##         algorithm = "lbfgsb")
+
+
+##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
+##         algorithm = "sqp")
+##     # Time difference of 48.954 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu      0.020646    0.006350    3.251  0.00115 **
+##     # ma1     0.144745    0.008358   17.319  < 2e-16 ***
+##     # omega   0.009988    0.001085    9.201  < 2e-16 ***
+##     # alpha1  0.083803    0.004471   18.742  < 2e-16 ***
+##     # gamma1  0.373092    0.027997   13.326  < 2e-16 ***
+##     # beta1   0.919401    0.004093  224.614  < 2e-16 ***
+##     # delta   1.435124    0.067203   21.355  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     # 1.264345    normalized:  7.413338e-05
+##     #
+
+##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
+##         algorithm = "sqp")
+
+
+##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
+##         algorithm = "mnfb")
+##     # Time difference of 35.156 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu      0.020646    0.006351    3.251  0.00115 **
+##     # ma1     0.144745    0.008358   17.319  < 2e-16 ***
+##     # omega   0.009988    0.001086    9.201  < 2e-16 ***
+##     # alpha1  0.083803    0.004472   18.741  < 2e-16 ***
+##     # gamma1  0.373092    0.027997   13.326  < 2e-16 ***
+##     # beta1   0.919401    0.004093  224.606  < 2e-16 ***
+##     # delta   1.435124    0.067204   21.355  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  1.264345    normalized:  7.413338e-05
+##     #
+
+
+##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
+##         algorithm = "mnfb")
+##     # Time difference of 31.516 secs
+##     # Error Analysis:
+##     #         Estimate  Std. Error  t value Pr(>|t|)
+##     # mu      0.020646    0.006342    3.255  0.00113 **
+##     # ma1     0.144745    0.008363   17.307  < 2e-16 ***
+##     # omega   0.009988    0.001113    8.975  < 2e-16 ***
+##     # alpha1  0.083803    0.004534   18.485  < 2e-16 ***
+##     # gamma1  0.373092    0.027798   13.422  < 2e-16 ***
+##     # beta1   0.919401    0.004102  224.141  < 2e-16 ***
+##     # delta   1.435124    0.066283   21.652  < 2e-16 ***
+##     # ---
+##     # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+##     #
+##     # Log Likelihood:
+##     #  1.264345    normalized:  7.413338e-05
+##     #
+
+
+##     # Return Value:
+##     return()
+## }
+
+# ------------------------------------------------------------------------------
+
+test.garchSolver.sp500dge <-
 function()
 {
     # Loda Data:
     data(sp500dge)
-    sp500dge = 100 * sp500dge 
-    
-       
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda", 
-        algorithm = "lbfgsb")
-    
-    
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
-        algorithm = "sqp")
-    # Time difference of 48.954 secs
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu      0.020646    0.006350    3.251  0.00115 ** 
-    # ma1     0.144745    0.008358   17.319  < 2e-16 ***
-    # omega   0.009988    0.001085    9.201  < 2e-16 ***
-    # alpha1  0.083803    0.004471   18.742  < 2e-16 ***
-    # gamma1  0.373092    0.027997   13.326  < 2e-16 ***
-    # beta1   0.919401    0.004093  224.614  < 2e-16 ***
-    # delta   1.435124    0.067203   21.355  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    # 
-    # Log Likelihood:
-    # 1.264345    normalized:  7.413338e-05 
-    #
- 
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
-        algorithm = "sqp")                
+    sp500dge = 100 * sp500dge
 
-       
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
-        algorithm = "mnfb")                                                               
-    # Time difference of 35.156 secs
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu      0.020646    0.006351    3.251  0.00115 ** 
-    # ma1     0.144745    0.008358   17.319  < 2e-16 ***
-    # omega   0.009988    0.001086    9.201  < 2e-16 ***
-    # alpha1  0.083803    0.004472   18.741  < 2e-16 ***
-    # gamma1  0.373092    0.027997   13.326  < 2e-16 ***
-    # beta1   0.919401    0.004093  224.606  < 2e-16 ***
-    # delta   1.435124    0.067204   21.355  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    # 
-    # Log Likelihood:
-    #  1.264345    normalized:  7.413338e-05 
-    # 
-    
-    
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
-        algorithm = "mnfb") 
-    # Time difference of 31.516 secs               
-    # Error Analysis:
-    #         Estimate  Std. Error  t value Pr(>|t|)    
-    # mu      0.020646    0.006342    3.255  0.00113 ** 
-    # ma1     0.144745    0.008363   17.307  < 2e-16 ***
-    # omega   0.009988    0.001113    8.975  < 2e-16 ***
-    # alpha1  0.083803    0.004534   18.485  < 2e-16 ***
-    # gamma1  0.373092    0.027798   13.422  < 2e-16 ***
-    # beta1   0.919401    0.004102  224.141  < 2e-16 ***
-    # delta   1.435124    0.066283   21.652  < 2e-16 ***
-    # ---
-    # Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
-    # 
-    # Log Likelihood:
-    #  1.264345    normalized:  7.413338e-05
-    # 
-    
-    
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+        algorithm = "lbfgsb")
+
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+        algorithm = "sqp")
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
+        algorithm = "sqp")
+
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+        algorithm = "mnfb")
+
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
+        algorithm = "mnfb")
+
+
     # Return Value:
-    return()   
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.hessian.rosenbrock <- 
+test.hessian.rosenbrock <-
 function()
 {
     # Example for Internal R code optimhess:
-    
+
     # Objective:
-    fn <- function(x) {   
+    fn <- function(x) {
         # Rosenbrock Banana function
         x1 <- x[1]
         x2 <- x[2]
         100 * (x2 - x1 * x1)^2 + (1 - x1)^2
     }
-    
+
     # Optimum:
     par = c(1, 1)
 
-    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, 
-        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100, 
-        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1, 
-        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5, 
+    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1,
+        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100,
+        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1,
+        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5,
         factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
 
     # Hessian:
@@ -259,7 +322,7 @@ function()
     hess <- 0.5 * (hess + t(hess))
     hess
 }
- 
+
 
 ################################################################################
-    
+

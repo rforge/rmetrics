@@ -34,8 +34,8 @@
 #  teffectPlot           Estimates and plots the Taylor effect
 #  lmacfPlot             Estimates and plots the long memory ACF
 #  lacfPlot              Plots lagged autocorrelations
-#  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
-#  qqgaussPlot           Returns a Gaussian quantile-quantile plot
+#  .logpdfPlot           Returns a pdf plot on logarithmic scale(s)
+#  .qqgaussPlot          Returns a Gaussian quantile-quantile plot
 #  scalinglawPlot        Evaluates and plots scaling law behavior
 ################################################################################
 
@@ -187,14 +187,14 @@ function()
     par(mfrow = c(1, 1))
 
     # logpdfPlot -
-    logpdfPlot(x = msft.ret, labels = FALSE)
-    logpdfPlot(x = msft.ret, type = "log-log")
+    .logpdfPlot(x = msft.ret, labels = FALSE)
+    .logpdfPlot(x = msft.ret, type = "log-log")
     # ... CHECK WARNINGS
     # ... CHECK COLORS
 
     # logpdfPlot -
-    logpdfPlot(x = msft.ret, labels = FALSE)
-    logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
+    .logpdfPlot(x = msft.ret, labels = FALSE)
+    .logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
     # ... CHECK WARNINGS
     # ... CHECK COLORS
 
@@ -219,10 +219,10 @@ function()
     par(mfrow = c(1, 1))
 
     # qqgaussPlot -
-    qqgaussPlot(x = msft.ret)
+    .qqgaussPlot(x = msft.ret)
 
     # qqgaussPlot -
-    qqgaussPlot(x = msft.ret, labels = FALSE)
+    .qqgaussPlot(x = msft.ret, labels = FALSE)
 
     # Return Value:
     return()

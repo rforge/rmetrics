@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,108 +28,108 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION: 
-#  'fGARCH'                S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION:
+#  'fGARCH'                S4: fGARCH Class representation
 #  garchFit                Fits GARCH and APARCH processes
 ################################################################################
 
 
 # garchFit(
-    #   formula, 
-    #   data, 
-    #   init.rec = c("mci", "uev"), 
-    #   delta = 2, 
-    #   skew = 1, 
-    #   shape = 4, 
-    #   cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
-    #   include.mean = TRUE, 
-    #   include.delta = NULL, 
-    #   include.skew = NULL, 
-    #   include.shape = NULL, 
-    #   leverage = NULL, 
-    #   trace = TRUE, 
-    #   algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    #   control = list(), 
-    #   title = NULL, 
-    #   description = NULL, 
+    #   formula,
+    #   data,
+    #   init.rec = c("mci", "uev"),
+    #   delta = 2,
+    #   skew = 1,
+    #   shape = 4,
+    #   cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"),
+    #   include.mean = TRUE,
+    #   include.delta = NULL,
+    #   include.skew = NULL,
+    #   include.shape = NULL,
+    #   leverage = NULL,
+    #   trace = TRUE,
+    #   algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
+    #   control = list(),
+    #   title = NULL,
+    #   description = NULL,
     #   ...)
 
-      
+
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.garch11 <- 
+test.garchFit.garch11 <-
     function()
-{       
+{
     # Use Simulated Series - an Object of class 'ts' ...
-    
+
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Normal GARCH(1, 1)
-    x = garchSim(n = 250, returnClass = "numeric")
-    
+    x = garchSim(n = 250)
+
     # Fit:
     fit = garchFit( ~ garch(1,1), data = x, trace = FALSE)
-    print(coef(fit)) 
+    print(coef(fit))
 
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.garch21 <- 
+test.garchFit.garch21 <-
     function()
-{       
+{
     # Use Simulated Series - an Object of class 'ts' ...
-    
+
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Normal-GARCH(2, 1)
     model = list(omega = 1e-06, alpha = c(0.1, 0.2), beta = 0.6)
     spec = garchSpec(model)
-    x = garchSim(spec = spec, n = 250, returnClass = "numeric")
-    
+    x = garchSim(spec = spec, n = 250)
+
     # Fit
     fit = garchFit( ~ garch(2,1), data = x, trace = FALSE)
     print(coef(fit))
-    
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.ar1garch11 <- 
+test.garchFit.ar1garch11 <-
     function()
-{       
+{
     # Use Simulated Series - an Object of class 'ts' ...
-    
+
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Normal AR(1)-GARCH(1,1):
     model = list(omega = 1e-06, ar = -0.1, alpha = c(0.1, 0.2), beta = 0.6)
     spec = garchSpec(model)
-    x = garchSim(spec = spec, n = 250, returnClass = "numeric")
-    
+    x = garchSim(spec = spec, n = 250)
+
     # Fit:
-    fit = garchFit(~ ar(1) + garch(1,1), data = x, trace = FALSE)
+    fit = garchFit(~ arma(1,0) + garch(1,1), data = x, trace = FALSE)
     print(coef(fit))
-    
+
     # Return Value:
-    return()    
-} 
-  
+    return()
+}
+
 
 ################################################################################
-    
+

@@ -33,6 +33,7 @@
 test.formula.methods.univariate <-
     function()
 {
+
     # Numeric Vector RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -42,7 +43,7 @@ test.formula.methods.univariate <-
     N = 250
 
     # Univariate Data Simulation:
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -97,13 +98,14 @@ test.formula.methods.multivariate <-
     N = 250
 
     # Univariate Data Simulation:
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
 
     # Multivariate Data Simulation:
     X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
+    colnames(X.mat) <- c("GARCH11", "R")
     print(head(X.mat))
     X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
     print(head(X.tS))

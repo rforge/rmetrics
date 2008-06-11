@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -37,49 +37,49 @@
 ################################################################################
 
 
-rollFun = 
-function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...) 
+rollFun =
+function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute rolling function value
-    
+
     # Arguments:
     #   x - an univariate "timeSeries" object or a numeric vector.
-    #   n - an integer specifying the number of periods or 
+    #   n - an integer specifying the number of periods or
     #       terms to use in each rolling/moving sample.
-    #   trim - a logical flag: if TRUE, the first n-1 missing values in 
-    #       the returned object will be removed; if FALSE, they will 
+    #   trim - a logical flag: if TRUE, the first n-1 missing values in
+    #       the returned object will be removed; if FALSE, they will
     #       be saved in the returned object. The default is TRUE.
-    #   na.rm - a logical flag: if TRUE, missing values in x will be  
+    #   na.rm - a logical flag: if TRUE, missing values in x will be
     #       removed before computation. The default is FALSE.
     #   FUN - the rolling function, arguments to this function can be
     #       passed through the \code{\dots} argument.
-    
+
     # FUNCTION:
-    
+
     # Transform:
     x.orig = x
     if (is.timeSeries(x)) {
         stopifnot(isUnivariate(x))
-        TS = TRUE 
+        TS = TRUE
     } else {
         TS = FALSE
     }
     if (TS) {
         positions = x.orig@positions
-        x = x.orig@Data[, 1]
+        x = series(x.orig)[, 1]
     } else {
         x = as.vector(x.orig)
         names(x) = NULL
     }
-    
+
     # Remove NAs:
-    if (na.rm) { 
+    if (na.rm) {
         if (TS) positions = positions[!is.na(x)]
         x = as.vector(na.omit(x))
     }
-    
+
     # Roll FUN:
     start = 1
     end = length(x)-n+1
@@ -93,32 +93,32 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
     } else {
         m = matrix(m)
     }
-    
+
     # Result:
     ans = apply(m, MARGIN = 1, FUN = FUN, ...)
-    
+
     # Trim:
-    if (!trim) 
+    if (!trim)
         ans = c(rep(NA, (n-1)), ans)
     if (trim & TS)
         positions = positions[-(1:(n-1))]
-        
+
     # Back to timeSeries:
     if (TS) {
         ans = timeSeries(as.matrix(ans), positions, recordIDs = data.frame(),
             units = x.orig@units, FinCenter = x.orig@FinCenter)
     }
-    
+
     # Return Value:
     ans
 }
 
 
 # ------------------------------------------------------------------------------
-    
 
-rollMean = 
-function(x, n = 9, trim = TRUE, na.rm = FALSE) 
+
+rollMean =
+function(x, n = 9, trim = TRUE, na.rm = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -126,95 +126,95 @@ function(x, n = 9, trim = TRUE, na.rm = FALSE)
 
     # Examples:
     #
-    #   x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(), 
+    #   x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(),
     #       units = "rnorm",FinCenter = "GMT")
     #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
     #   rollMean(x, n = 4, trim = TRUE, na.rm = FALSE)
     #
-    #   x@Data[8, ] = NA
+    #   series(x)[8, ] = NA
     #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
     #   rollMean(x, n = 4, trim = FALSE, na.rm = TRUE)
     #   rollMean(x, n = 4, trim = TRUE, na.rm = TRUE)
-    
+
     # FUNCTION:
-    
+
     # Roll Mean:
-    rmean = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = mean) 
-    
+    rmean = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+
     # Return Value:
     rmean
 }
-    
-    
+
+
 # ------------------------------------------------------------------------------
 
 
-rollVar  = 
-function(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE) 
+rollVar  =
+function(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute rolling variance
 
     # FUNCTION:
-    
+
     # Handle Time Series:
-    if (is.timeSeries(x)) TS = TRUE else TS = FALSE 
-   
+    if (is.timeSeries(x)) TS = TRUE else TS = FALSE
+
     # Roll Var:
-    rvar = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = var) 
-    
+    rvar = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+
     # Unbiased ?
     if (!unbiased) {
         if (TS) {
-            rvar@Data = (rvar@Data * (n-1))/n
+            series(rvar) = (series(rvar) * (n-1))/n
         } else {
             rvar = (rvar * (n-1))/n
         }
     }
 
     # Return Value:
-    rvar 
+    rvar
 }
-    
+
 
 # ------------------------------------------------------------------------------
 
 
-rollMax  = 
-function(x, n = 9, trim = TRUE, na.rm = FALSE) 
+rollMax  =
+function(x, n = 9, trim = TRUE, na.rm = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute rolling maximum
 
     # FUNCTION:
-    
+
     # Roll Max:
     rmax = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = max)
-    
+
     # Return Value:
-    rmax 
+    rmax
 }
-    
+
 
 # ------------------------------------------------------------------------------
 
 
-rollMin  = 
-function(x, n = 9, trim = TRUE, na.rm = FALSE) 
+rollMin  =
+function(x, n = 9, trim = TRUE, na.rm = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute rolling function minimum
 
     # FUNCTION:
- 
+
     # Roll Min:
-    rmin = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = min) 
-    
+    rmin = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = min)
+
     # Return Value:
-    rmin 
+    rmin
 }
 
 

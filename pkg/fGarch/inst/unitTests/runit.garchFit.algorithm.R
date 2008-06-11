@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,148 +28,148 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION: 
-#  'fGARCH'                S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION:
+#  'fGARCH'                S4: fGARCH Class representation
 #  garchFit                Fits GARCH and APARCH processes
 ################################################################################
 
 
-test.garchFit.nlminb <- 
+test.garchFit.nlminb <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Load Data:
-    x = garchSim(n = 100, returnClass = "numeric")
-    
+    x = garchSim(n = 100)
+
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
-           
+
     # nlminb:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "nlminb", trace = FALSE)
     print(coef(fit))
-    
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.sqp <-  
+test.garchFit.sqp <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Load Data:
-    x = garchSim(n = 100, returnClass = "numeric")
-    
+    x = garchSim(n = 100)
+
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
-           
+
     # sqp:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "lbfgsb", trace = FALSE)
     print(coef(fit))
-    
-        
+
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.lbfgsb <- 
+test.garchFit.lbfgsb <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Load Data:
-    x = garchSim(n = 100, returnClass = "numeric")
-    
+    x = garchSim(n = 100)
+
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
-           
+
     # lbfgsb:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "lbfgsb", trace = FALSE)
     coef(fit)
-   
+
     # nlminb+nm:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "nlminb+nm", trace = FALSE)
     coef(fit)
-    
+
     # lbfgsb+nm:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "lbfgsb+nm", trace = FALSE)
     coef(fit)
-        
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.nlmin.nm <- 
+test.garchFit.nlmin.nm <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Load Data:
-    x = garchSim(n = 100, returnClass = "numeric")
-    
+    x = garchSim(n = 100)
+
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
-           
+
     # nlminb+nm:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "nlminb+nm", trace = FALSE)
     coef(fit)
-        
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-test.garchFit.lbfgsb.nm <- 
+test.garchFit.lbfgsb.nm <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Load Data:
-    x = garchSim(n = 100, returnClass = "numeric")
-    
+    x = garchSim(n = 100)
+
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
-           
+
     # lbfgsb+nm:
-    fit = garchFit( ~ garch(1,1), data = x, 
+    fit = garchFit( ~ garch(1,1), data = x,
         algorithm = "lbfgsb+nm", trace = FALSE)
     coef(fit)
-        
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 ################################################################################
-    
+

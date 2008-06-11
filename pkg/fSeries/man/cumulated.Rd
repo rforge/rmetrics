@@ -61,7 +61,7 @@ cumulated(x, \dots)
 
 ## cumulated -  
    # Index series to 100:
-   MSFT = 100 * MSFT/MSFT@Data[1,1]
+   MSFT = 100 * MSFT/as.matrix(MSFT)[1,1]
    MSFT
    MSFT.RET = returns(MSFT, method = "discrete")
    cumulated(MSFT.RET, method = "discrete")  

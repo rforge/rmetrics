@@ -134,8 +134,8 @@ portfolioBacktesting <-
         # Optimize the Portfolio:
         pfSeries = window(data[, ans$assets], from = from[i], to = to[i])
         bmSeries = window(data[, ans$benchmark], from = from[i], to = to[i])
-        attr(spec, "bmReturn") <- mean(bmSeries@Data)
-        attr(spec, "bmRisk") <- sd(bmSeries@Data)
+        attr(spec, "bmReturn") <- mean(series(bmSeries))
+        attr(spec, "bmRisk") <- sd(series(bmSeries))
         portfolio = portfolioFun(data = pfSeries, spec, constraints)
         tg[i] = portfolio
 
@@ -147,7 +147,7 @@ portfolioBacktesting <-
             tgReturn = as.vector(getTargetReturn(portfolio))
             cat("\t", round(tgReturn, digits = 3))
 
-            bmReturn = mean(bmSeries@Data)
+            bmReturn = mean(series(bmSeries))
             cat("\t", round(bmReturn, digits = 3))
 
             whichPortfolio = attr(portfolio, "whichPortfolio")
@@ -206,7 +206,7 @@ portfolioBacktesting <-
     Portfolio = Benchmark = NULL
     for (i in 1:(nDatum-1)) {
         Portfolio = rbind(Portfolio,
-            as.vector((ans$monthlyAssets[Datum[i+1], ]@Data %*%
+            as.vector((as.matrix(ans$monthlyAssets[Datum[i+1], ]) %*%
                 emaWeights[Datum[i], ])))
         Benchmark = rbind(Benchmark,
             as.vector(ans$monthlyBenchmark[Datum[i+1], ]))
@@ -298,11 +298,11 @@ plot.portfolioBacktest <-
     # Plot Range:
     nAssets = length(assets)
     MAX = -1e99
-    for (i in 1:nAssets) MAX = max(c(MAX, cumsum(x[, assets[i]]@Data)) )
-    MAX = max(MAX, cumsum(x[, benchmark]@Data))
+    for (i in 1:nAssets) MAX = max(c(MAX, cumsum(x[, assets[i]])) )
+    MAX = max(MAX, cumsum(x[, benchmark]))
     MIN = 1e99
-    for (i in 1:nAssets) MIN = min(MIN, cumsum(x[, assets[i]]@Data))
-    MIN = min(MIN, cumsum(x[, benchmark]@Data))
+    for (i in 1:nAssets) MIN = min(MIN, cumsum(x[, assets[i]]))
+    MIN = min(MIN, cumsum(x[, benchmark]))
     ylim = c(MIN, MAX)
 
     # Plot:
@@ -502,8 +502,8 @@ plot.portfolioBacktest <-
     cumB <- rbind(offsetTS, cumB)
 
     # Plot:
-    MAX = max(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
-    MIN = min(as.vector(cumP@Data), as.vector(cumB@Data), as.vector(cumX@Data))
+    MAX = max(as.vector(series(cumP)), as.vector(series(cumB)), as.vector(series(cumX)))
+    MIN = min(as.vector(series(cumP)), as.vector(series(cumB)), as.vector(series(cumX)))
     plot(cumX, type = "l", col = "black", ylim = c(MIN, MAX), ann = FALSE, ...)
     lines(cumP, col = "red", lwd = 2)
     lines(cumB, col = "blue", lwd = 2)

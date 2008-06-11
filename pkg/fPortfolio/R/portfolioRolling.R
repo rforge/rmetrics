@@ -71,10 +71,10 @@ rollingWindows <-
     positions = time(x)
     startPositions = unique(timeFirstDayInMonth(positions))
     # for non monthly data
-    # startPositions@Data[1] <- start(x)@Data
+    # series(startPositions)[1] <- as.vector(start(x))
     endPositions = unique(timeLastDayInMonth(positions))
     # for non monthly data
-    # endPositions@Data[length(endPositions)] <- end(x)@Data
+    # series(endPositions)[length(endPositions)] <- as.vector(end(x))
     numberOfPositions = length(startPositions)
     startSeq <- seq(from = 1,
                     to = (numberOfPositions-periodLength + 1),

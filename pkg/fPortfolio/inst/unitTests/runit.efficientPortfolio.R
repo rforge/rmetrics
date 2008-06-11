@@ -57,14 +57,14 @@ test.efficientPortfolio.MV.Short <-
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
     print(getSolver(portfolio))
-    
+
     # Specify Target Risk to maximize the return ...
-    setTargetRisk(spec) <- getTargetRisk(portfolio)[,"cov"]
+    setTargetRisk(spec) <- getTargetRisk(portfolio)[,"Cov"]
     setOptimize(spec) = "maxReturn"
     ## portfolio = efficientPortfolio(data, spec, constraints)
     ## print(portfolio)
     ## print(getSolver(portfolio))
-    
+
     # Return Value:
     return()
 }
@@ -97,7 +97,7 @@ test.efficientPortfolio.MV.LongOnly <-
     print(getSolver(portfolio))
 
     # Return Maximized Optimization:
-    setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
+    setTargetRisk(spec) <- getTargetRisk(portfolio)[, "Cov"]
     setOptimize(spec) = "maxReturn"
     ## portfolio = efficientPortfolio(data, spec, constraints)
     ## print(portfolio)
@@ -139,7 +139,7 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
         print(getSolver(portfolio))
 
         # Return Maximized Optimization:
-        setTargetRisk(spec) <- getTargetRisk(portfolio)[, "cov"]
+        setTargetRisk(spec) <- getTargetRisk(portfolio)[, "Cov"]
         setOptimize(spec) = "maxReturn"
         ## portfolio = efficientPortfolio(data, spec, constraints)
         ## print(portfolio)
@@ -171,11 +171,11 @@ test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
         setTargetReturn(spec) = mean(series(data))
         setSolver(spec) = "solveRdonlp2"
         print(spec)
-        
+
         # Constraints:
         constraints = "maxW[1:nAssets]=0.6"
         print(constraints)
-        
+
         # Optimization:
         ## portfolio = efficientPortfolio(data, spec, constraints)
         ## print(portfolio)
@@ -199,7 +199,7 @@ test.efficientPortfolio.MV.LongOnly.twoAssets <-
 
     # Specification:
     spec = portfolioSpec()
-    setTargetReturn(spec) = mean(data@Data)
+    setTargetReturn(spec) = mean(series(data))
     print(spec)
 
     # Constraints:
@@ -254,9 +254,9 @@ test.efficientPortfolio.LPP.LongOnly <-
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
-    
+
     if (FALSE) {
-        
+
         # Estimator:
         lpmEstimator <-
         function(data, spec) {
@@ -264,22 +264,22 @@ test.efficientPortfolio.LPP.LongOnly <-
             Sigma <- assetsLPM(data, tau = colMeans(data), a = 1.5)$Sigma
             list(mu = mu, Sigma = Sigma)
         }
-    
+
         # CVaR Specification:
         spec = portfolioSpec()
         setType(spec) = "LPP"
         setEstimator(spec) <- "lpmEstimator"
-        setTargetReturn(spec) = mean(data@Data)
+        setTargetReturn(spec) = mean(series(data))
         print(spec)
-    
+
         # Constraints:
         constraints = "LongOnly"
         print(constraints)
-    
+
         # Optimization:
         portfolio = efficientPortfolio(data, spec, constraints)
         print(portfolio)
-        
+
     }
 
     # Return Value:
@@ -291,7 +291,7 @@ test.efficientPortfolio.LPP.LongOnly <-
 # CVAR
 
 
-test.efficientPortfolio.CVaR.LongOnly <- 
+test.efficientPortfolio.CVaR.LongOnly <-
     function()
 {
     # Data:
@@ -302,7 +302,7 @@ test.efficientPortfolio.CVaR.LongOnly <-
     # Specification:
     spec = portfolioSpec()
     setType(spec) <- "CVaR"
-    setTargetReturn(spec) <- mean(data@Data)
+    setTargetReturn(spec) <- mean(series(data))
     setTrace(spec) <- TRUE
     print(spec)
 
@@ -333,7 +333,7 @@ test.efficientPortfolio.CVaR.LongOnly.TwoAssets <-
     # CVaR Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(data@Data)
+    setTargetReturn(spec) = mean(series(data))
     print(spec)
 
     # Constraints:
@@ -363,7 +363,7 @@ test.efficientPortfolio.CVaR.LongOnly.Alpha <-
     # CVaR Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(data@Data)
+    setTargetReturn(spec) = mean(series(data))
     setAlpha(spec) = 0.10
     print(spec)
 

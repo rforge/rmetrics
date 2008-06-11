@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -42,346 +42,347 @@
 ################################################################################
 
 
-test.gevSim = 
+test.gevSim =
 function()
 {
-    # gevSim(model = list(xi=-0.25, mu=0, beta=1), n = 1000, seed = NULL) 
+    # gevSim(model = list(xi=-0.25, mu=0, beta=1), n = 1000, seed = NULL)
 
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Artificial Data Set:
     model = list(xi = -0.25, mu = 0, beta = 1)
-    x.ts = gevSim(model, n = 50, seed = 4711) 
-    class(x.ts)  
-    print(x.ts) 
-    
+    x.ts = gevSim(model, n = 50, seed = 4711)
+    class(x.ts)
+    print(x.ts)
+
     # Create a daily timeSeries object with dummy dates:
     as.timeSeries(x.ts)
-    
+
     # Create a daily timeSeries object starting 2007-01-01
     Calendar = timeSequence(from = "2007-01-01", length.out = length(x.ts))
     x.tS = timeSeries(data = x.ts, charvec = Calendar, units = "x")
     print(x.tS)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.gumbelSim = 
+test.gumbelSim =
 function()
 {
-    # gumbelSim(model = list(mu=0, beta=1), n = 1000, seed = NULL) 
+    # gumbelSim(model = list(mu=0, beta=1), n = 1000, seed = NULL)
 
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Artificial Data Set:
     model = list(mu = 0, beta = 1)
-    x.ts = gumbelSim(model, n = 50, seed = 4711) 
-    class(x.ts)  
-    print(x.ts) 
-    
+    x.ts = gumbelSim(model, n = 50, seed = 4711)
+    class(x.ts)
+    print(x.ts)
+
     # Create a daily timeSeries object with dummy dates:
     x.tS = as.timeSeries(x.ts)
     print(x.tS)
-    
+
     # Create a daily timeSeries object starting 2007-01-01
     Calendar = timeSequence(from = "2007-01-01", length.out = length(x.ts))
     x.tS = timeSeries(data = x.ts, charvec = Calendar, units = "x")
     print(x.tS)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.numericVectorBlocks = 
+test.numericVectorBlocks =
 function()
 {
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Check numeric vector as input:
     X = rt(5000, df = 4)
     x.vec = blockMaxima(X, 20)
     class(x.vec)
     head(x.vec)
-    
+
     # Internal Fit - GEV PWM:
     fit = .gevpwmFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - GEV MLE:
     fit = .gevmleFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - Gumbel PWM:
     fit = .gumpwmFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - Gumbel MLE:
     fit = .gummleFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
-    
-    
-test.timeSeriesBlocks = 
+
+
+test.timeSeriesBlocks =
 function()
-{   
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Create an artificial timeSeries with dummy positions:
-    X = as.timeSeries(rt(5000, df = 4))
-    
+    xx <- rt(5000, df = 4)
+    X = timeSeries(xx, charvec = timeSequence(length.out = NROW(xx)))
+
     # Compute Block Maxima:
     x.tS = blockMaxima(X, "monthly")
     class(x.tS)
     head(x.tS)
-    
+
     # Convert to Vector:
     x.vec = as.vector(x.tS)
-    
+
     # Internal Fit - GEV PWM:
     fit = .gevpwmFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - GEV MLE:
     fit = .gevmleFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - Gumbel PWM:
     fit = .gumpwmFit(x.vec)
     fit
     fit$par.ests
-    
+
     # Internal Fit - Gumbel MLE:
     fit = .gummleFit(x.vec)
     fit
     fit$par.ests
-     
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.gevFit = 
+test.gevFit =
 function()
 {
-    # gevFit(x, block = 1, type = c("mle", "pwm"), 
-    #   title = NULL, description = NULL, ...) 
+    # gevFit(x, block = 1, type = c("mle", "pwm"),
+    #   title = NULL, description = NULL, ...)
 
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Simulate Series:
     model = list(xi = -0.25, mu = 0, beta = 1)
-    x.ts = gevSim(model = model, n = 5000, seed = 4711) 
+    x.ts = gevSim(model = model, n = 5000, seed = 4711)
     class(x.ts)
-      
+
     # Check time series input:
-    fit = gevFit(x.ts, block = 1, type = "pwm") 
-    class(fit)
-    print(fit)     
-    fit = gevFit(x.ts, block = 1, type = "mle") 
+    fit = gevFit(x.ts, block = 1, type = "pwm")
     class(fit)
     print(fit)
-    
+    fit = gevFit(x.ts, block = 1, type = "mle")
+    class(fit)
+    print(fit)
+
     # Check numeric vector input:
-    fit = gevFit(as.vector(x.ts), block = 1, type = "pwm") 
+    fit = gevFit(as.vector(x.ts), block = 1, type = "pwm")
     class(fit)
     print(fit)
-    fit = gevFit(as.vector(x.ts), block = 1, type = "mle") 
+    fit = gevFit(as.vector(x.ts), block = 1, type = "mle")
     class(fit)
     print(fit)
-    
+
     # Check timeSeries objerct input:
-    fit = gevFit(as.timeSeries(x.ts), block = 1, type = "pwm") 
+    fit = gevFit(as.timeSeries(x.ts), block = 1, type = "pwm")
     class(fit)
     print(fit)
-    fit = gevFit(as.timeSeries(x.ts), block = 1, type = "mle") 
+    fit = gevFit(as.timeSeries(x.ts), block = 1, type = "mle")
     class(fit)
     print(fit)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.gumbelFit = 
+test.gumbelFit =
 function()
 {
-    # gevFit(x, block = 1, type = c("mle", "pwm"), 
-    #   title = NULL, description = NULL, ...) 
+    # gevFit(x, block = 1, type = c("mle", "pwm"),
+    #   title = NULL, description = NULL, ...)
 
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Simulate Series:
     model = list(mu = 0, beta = 1)
-    x.ts = gumbelSim(model = model, n = 5000, seed = 4711) 
+    x.ts = gumbelSim(model = model, n = 5000, seed = 4711)
     class(x.ts)
-      
+
     # Check time series input:
-    fit = gumbelFit(x.ts, block = 1, type = "pwm") 
-    class(fit)
-    print(fit)     
-    fit = gumbelFit(x.ts, block = 1, type = "mle") 
+    fit = gumbelFit(x.ts, block = 1, type = "pwm")
     class(fit)
     print(fit)
-    
+    fit = gumbelFit(x.ts, block = 1, type = "mle")
+    class(fit)
+    print(fit)
+
     # Check numeric vector input:
-    fit = gumbelFit(as.vector(x.ts), block = 1, type = "pwm") 
+    fit = gumbelFit(as.vector(x.ts), block = 1, type = "pwm")
     class(fit)
     print(fit)
-    fit = gumbelFit(as.vector(x.ts), block = 1, type = "mle") 
+    fit = gumbelFit(as.vector(x.ts), block = 1, type = "mle")
     class(fit)
     print(fit)
-    
+
     # Check timeSeries objerct input:
-    fit = gumbelFit(as.timeSeries(x.ts), block = 1, type = "pwm") 
+    fit = gumbelFit(as.timeSeries(x.ts), block = 1, type = "pwm")
     class(fit)
     print(fit)
-    fit = gumbelFit(as.timeSeries(x.ts), block = 1, type = "mle") 
+    fit = gumbelFit(as.timeSeries(x.ts), block = 1, type = "mle")
     class(fit)
     print(fit)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.gevFitByBlocks = 
+test.gevFitByBlocks <-
 function()
 {
-    # gevFit(x, block = 1, type = c("mle", "pwm"), 
-    #   title = NULL, description = NULL, ...) 
-   
+    # gevFit(x, block = 1, type = c("mle", "pwm"),
+    #   title = NULL, description = NULL, ...)
+
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Simulate Series:
     model = list(xi = -0.25, mu = 0, beta = 1)
-    x.ts = gevSim(model = model, n = 5000, seed = 4711) 
+    x.ts = gevSim(model = model, n = 5000, seed = 4711)
     class(x.ts)
     x.vec = as.vector(x.ts)
     class(x.vec)
-    x.tS = as.timeSeries(x.vec)
-      
+    x.tS = timeSeries(x.vec, timeSequence(length.out = NROW(x.vec)))
+
     # ts as input & 20 Days Blocks:
-    fit = gevFit(x.ts, block = 20, type = "pwm") 
+    fit = gevFit(x.ts, block = 20, type = "pwm")
     fit
-    fit = gevFit(x.ts, block = 20, type = "mle")    
+    fit = gevFit(x.ts, block = 20, type = "mle")
     fit
-    
+
     # Numeric Vector as input & 20 Days Blocks:
-    fit = gevFit(x.vec, block = 20, type = "pwm") 
+    fit = gevFit(x.vec, block = 20, type = "pwm")
     fit
-    fit = gevFit(x.vec, block = 20, type = "mle")    
+    fit = gevFit(x.vec, block = 20, type = "mle")
     fit
-    
+
     # timeSeries o bject as input & Monthly Blocks:
-    fit = gevFit(x.tS, block = "monthly", type = "pwm")   
+    fit = gevFit(x.tS, block = "monthly", type = "pwm")
     fit
-    fit = gevFit(x.tS, block = "monthly", type = "mle")   
+    fit = gevFit(x.tS, block = "monthly", type = "mle")
     fit
-    
+
     # timeSeries object as input & 20 Days Blocks:
-    fit = gevFit(x.tS, block = 20, type = "pwm")   
+    fit = gevFit(x.tS, block = 20, type = "pwm")
     fit
-    fit = gevFit(x.tS, block = 20, type = "mle")   
+    fit = gevFit(x.tS, block = 20, type = "mle")
     fit
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.plot = 
+test.plot =
 function()
 {
     # Load Data:
     x = as.timeSeries(data(danishClaims))
-    
+
     # Parameter Estimation with Declustering:
-    # gevFit(x, block = 1, type = c("mle", "pwm"), 
-    #   title = NULL, description = NULL, ...) 
+    # gevFit(x, block = 1, type = c("mle", "pwm"),
+    #   title = NULL, description = NULL, ...)
     fit = gevFit(x, block = "month")
     print(fit)
-    
+
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     par(ask = FALSE)
     plot(fit, which = 1:4)
-    
+
     # Try Interactive:
     # plot(fit)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.summary = 
+test.summary =
 function()
 {
     # Summary Report:
     # summary(object, doplot = TRUE, which = "all", ...)
-    
+
     # Load Data:
     x = as.timeSeries(data(danishClaims))
-    
+
     # Parameter Estimation with Declustering:
     fit = gevFit(x, block = "month")
     print(fit)
-    
+
     # Summary:
     summary(fit, doplot = FALSE)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 

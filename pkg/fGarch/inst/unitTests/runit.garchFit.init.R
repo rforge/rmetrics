@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,36 +28,36 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION: 
-#  'fGARCH'                S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION:
+#  'fGARCH'                S4: fGARCH Class representation
 #  garchFit                Fits GARCH and APARCH processes
 ################################################################################
 
 
-test.garchFit.init <- 
+test.garchFit.init <-
     function()
-{  
+{
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
+
     # Simulate Garch(1,1) Series:
-    x = garchSim(n = 250, returnClass = "numeric")
-    
+    x = garchSim(n = 250)
+
     # Modify Start Values - mci default:
     fit = garchFit( ~ garch(1,1), x, init.rec = "mci", trace = FALSE) # default
     print(coef(fit))
-    
+
     # Modify Start Values - uev alternative:
     # fit = garchFit( ~ garch(1,1), x, init.rec = "uev", trace = FALSE)
-    # Error in .garchFit(formula.mean = args$formula.mean, formula.var = args$formula.var,  : 
+    # Error in .garchFit(formula.mean = args$formula.mean, formula.var = args$formula.var,  :
     #   Algorithm only supported for mci Recursion
     # coef(fit)
-    
+
     # Return Value:
-    return()    
-} 
+    return()
+}
 
 
 ################################################################################
-    
+

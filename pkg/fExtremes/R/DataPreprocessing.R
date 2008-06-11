@@ -36,8 +36,8 @@
 ################################################################################
 
 
-blockMaxima =
-function (x, block = c("monthly", "quarterly"), doplot = FALSE)
+blockMaxima <-
+    function (x, block = c("monthly", "quarterly"), doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -75,7 +75,7 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     } else {
         block = match.arg(block)
     }
-    if (class(x) == "timeSeries") {
+    if (is(x, "timeSeries")) {
         if (is.numeric(block)) {
             from = blockStart(time(x), block = block)
             to = blockEnd(time(x), block = block)
@@ -89,17 +89,17 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
             stop("Unknown block size for timeSeries Object")
         }
         maxValue = applySeries(x, from, to, FUN = max)
-        maxIndex = applySeries(x, from, to, FUN = which.max)@Data
-        toIndex = applySeries(x, from, to, FUN = length)@Data
-        # maxPosition = rownames(x@Data)[cumsum(toIndex)-toIndex+maxIndex-1]
-        maxPosition = rownames(x@Data)[cumsum(toIndex)-toIndex+maxIndex]
+        maxIndex = as.matrix(applySeries(x, from, to, FUN = which.max))
+        toIndex = as.matrix(applySeries(x, from, to, FUN = length))
+        # maxPosition = rownames(series(x))[cumsum(toIndex)-toIndex+maxIndex-1]
+        maxPosition = rownames(series(x))[cumsum(toIndex)-toIndex+maxIndex]
         # Add Attributes: Update rownames, colnames and recordIDs
         rownames(maxValue) <- as.character(maxPosition)
         colnames(maxValue) <- paste("max.", x@units, sep = "")
         maxValue@recordIDs = data.frame(
-            from = as.character(from),
-            to = as.character(to),
-            cumsum(toIndex)-toIndex+maxIndex )
+        from = as.character(from),
+        to = as.character(to),
+        cumsum(toIndex)-toIndex+maxIndex )
     } else {
         if (is.numeric(block)) {
             data = as.vector(x)
@@ -261,14 +261,14 @@ function(x, run = 20, doplot = TRUE)
 
     # Maximum Values:
     maxValue = applySeries(x, from, to, FUN = max)
-    maxIndex = applySeries(x, from, to, FUN = which.max)@Data
-    lengthIndex = applySeries(x, from, to, FUN = length)@Data
-    maxPosition = rownames(x@Data)[cumsum(lengthIndex)-lengthIndex+maxIndex]
+    maxIndex = as.matrix(applySeries(x, from, to, FUN = which.max))
+    lengthIndex = as.matrix(applySeries(x, from, to, FUN = length))
+    maxPosition = rownames(series(x))[cumsum(lengthIndex)-lengthIndex+maxIndex]
 
     # Add Attributes: Update rownames, colnames and recordIDs
-    maxValue@positions = rownames(maxValue@Data) =
+    rownames(maxValue) = rownames(maxValue) =
         as.character(maxPosition)
-    maxValue@units = colnames(maxValue@Data) =
+    colnames(maxValue) = colnames(maxValue) =
         paste("max.", x@units, sep = "")
     maxValue@recordIDs = data.frame(
         from = as.character(from),

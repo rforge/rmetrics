@@ -2,8 +2,8 @@ Package: fGarch
 Version: 270.73
 Date: 1997 - 2008
 Title: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
-Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, fUtilities, fEcofin, fCalendar, fSeries, fImport, fBasics, fArma
+Author: Diethelm Wuertz, Yohan Chalabi
+Depends: R (>= 2.4.0), methods, fUtilities, fEcofin, fCalendar, timeSeries, fImport, fBasics, fArma
 Suggests: Rdonlp2
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"

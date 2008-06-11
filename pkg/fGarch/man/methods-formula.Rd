@@ -112,16 +112,15 @@
    #   Column names of data are not unique.
 
 ## Missing column names in data set - formula can't fit:
-   colnames(z) <- NULL
-   z[1:6,]
+   z.mat <- as.matrix(z)
+   colnames(z.mat) <- NULL
+   z.mat[1:6,]
    \dontrun{
-   garchFit(x ~ garch(1, 1), data = z, trace = FALSE)
+   garchFit(x ~ garch(1, 1), data = z.mat, trace = FALSE)
    }
    # Again the error will be noticed:
    # Error in .garchArgsParser(formula = formula, data = data, trace = FALSE) : 
    #   Formula and data units do not match
-   # Note, you can use default columnames, the following call would work ...
-  garchFit(TS.1 ~garch(1, 1), data = z, trace = FALSE)
 }
 
 

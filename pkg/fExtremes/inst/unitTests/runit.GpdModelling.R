@@ -50,7 +50,7 @@ function()
     # Plot Series:
     par(mfrow = c(2, 1), cex = 0.7)
     par(ask = FALSE)
-    seriesPlot(x)
+    seriesPlot(as.timeSeries(x))
 
     # Return Value:
     return()

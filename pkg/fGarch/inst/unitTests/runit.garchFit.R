@@ -75,7 +75,7 @@ function()
     # UNIVARIATE:
 
     # A numeric Vector:
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))

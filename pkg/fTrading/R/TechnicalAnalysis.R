@@ -123,7 +123,7 @@ function(x, lambda = 0.1, startup = 0)
         ema = matrix(ema)
         colnames(ema) = "EMA"
         rownames(ema) = rownames(x)
-        x@Data = ema
+        series(x) = ema
     } else {
         x = ema
     }
@@ -562,9 +562,9 @@ function(close, high, low, lag = 5)
     # to timeSeries:
     if (TS) {
         fpk = matrix(fpk)
-        rownames(fpk) = rownames(X@Data)
+        rownames(fpk) = rownames(series(X))
         colnames(fpk) = "FPK"
-        X@Data = fpk
+        series(X) = fpk
     } else {
         X = fpk
     }
@@ -706,9 +706,9 @@ function(close, high, low, lag = 50)
     # to timeSeries:
     if (TS) {
         wpr = matrix(wpr)
-        rownames(wpr) = rownames(X@Data)
+        rownames(wpr) = rownames(series(X))
         colnames(wpr) = "WPR"
-        X@Data = wpr
+        series(X) = wpr
     } else {
         X = wpr
     }
@@ -758,9 +758,9 @@ function(close, lag = 14)
     # to timeSeries:
     if (TS) {
         rsi = matrix(rsi)
-        rownames(rsi) = rownames(X@Data)
+        rownames(rsi) = rownames(series(X))
         colnames(rsi) = "RSI"
-        X@Data = rsi
+        series(X) = rsi
     } else {
         X = rsi
     }
@@ -796,9 +796,9 @@ function(x, n = 12)
     accel = c(rep(NA, n+1), accel)
     if (TS) {
         accel = matrix(accel)
-        rownames(accel) = rownames(X@Data)
+        rownames(accel) = rownames(series(X))
         colnames(accel) = "ACCEL"
-        X@Data = accel
+        series(X) = accel
     } else {
         X = accel
     }
@@ -828,9 +828,9 @@ function(high, low, close, volume)
     if (is.timeSeries(adi)) {
         ADI = matrix(ADI)
         colnames(ADI) = "ADI"
-        rownames(ADI) = rownames(high@Data)
+        rownames(ADI) = rownames(series(high))
         X = high
-        X@Data = ADI
+        series(X) = ADI
     } else {
         X = ADI
     }
@@ -890,8 +890,8 @@ function(x, lag = 20, n.sd = 2)
     bollinger = cbind(UPPER = mean+std, BOLLINGER = x, LOWER = mean-std)
 
     if (TS) {
-        rownames(bollinger) = rownames(X@Data)
-        X@Data = bollinger
+        rownames(bollinger) = rownames(series(X))
+        series(X) = bollinger
     } else {
         rownames(bollinger) = as.character(1:length(x))
         X = bollinger
@@ -952,7 +952,7 @@ function(high, low, lag1 = 10, lag2 = 10)
 
     if (is.timeSeries(RT)) {
         x = matrix(chaikinv)
-        rownames(x) = rownames(RT@Data)
+        rownames(x) = rownames(series(RT))
         colnames(x) = "CHAIKINV"
     } else {
         x = chaikinv
@@ -1001,8 +1001,8 @@ function(open, high, low, close)
     if (TS) {
         garmanklass = matrix(garmanklass)
         colnames(garmanklass) = "GK"
-        rownames(garmanklass) = rownames(x@Data)
-        x@Data = garmanklass
+        rownames(garmanklass) = rownames(series(x))
+        series(x) = garmanklass
     } else {
         x = garmanklass
     }
@@ -1042,8 +1042,8 @@ function(close, volume)
     if (TS) {
         nvi = matrix(nvi)
         colnames(nvi) = "NVI"
-        rownames(nvi) = rownames(x@Data)
-        x@Data = nvi
+        rownames(nvi) = rownames(series(x))
+        series(x) = nvi
     } else {
         x = nvi
     }
@@ -1081,8 +1081,8 @@ function(close, volume)
     if (TS) {
         obv = matrix(obv)
         colnames(obv) = "OBV"
-        rownames(obv) = rownames(x@Data)
-        x@Data = obv
+        rownames(obv) = rownames(series(x))
+        series(x) = obv
     } else {
         x = obv
     }
@@ -1123,8 +1123,8 @@ function(close, volume)
     if (TS) {
         pvi = matrix(pvi)
         colnames(pvi) = "PVI"
-        rownames(pvi) = rownames(x@Data)
-        x@Data = pvi
+        rownames(pvi) = rownames(series(x))
+        series(x) = pvi
     } else {
         x = pvi
     }
@@ -1162,8 +1162,8 @@ function(close, volume)
     if (TS) {
         ch = matrix(ch)
         colnames(ch) = "PVTREND"
-        rownames(ch) = rownames(x@Data)
-        x@Data = ch
+        rownames(ch) = rownames(series(x))
+        series(x) = ch
     } else {
         x = ch
     }
@@ -1208,8 +1208,8 @@ function(high, low, close)
     if (TS) {
         williamsad = matrix(williamsad)
         colnames(williamsad) = "WAD"
-        rownames(williamsad) = rownames(x@Data)
-        x@Data = williamsad
+        rownames(williamsad) = rownames(series(x))
+        series(x) = williamsad
     } else {
         x = williamsad
     }
@@ -1252,8 +1252,8 @@ function(high, low, close, lag = 20)
     if (TS) {
         williamsr = matrix(williamsr)
         colnames(williamsr) = "WR"
-        rownames(williamsr) = rownames(x@Data)
-        x@Data = williamsr
+        rownames(williamsr) = rownames(series(x))
+        series(x) = williamsr
     } else {
         x = williamsr
     }
@@ -1327,7 +1327,7 @@ function(X, indicator = "ema", select = "Close", lag = 9)
     # FUNCTION:
 
     if (is.timeSeries(X)) {
-        x = X@Data
+        x = series(X)
     } else {
         stop("X must be a timeSeries object!")
     }
@@ -1455,7 +1455,7 @@ function(Positions)
     # Get Signals from Positions:
     stopifnot(is.timeSeries(Positions))
     Signals = diff(Positions, pad = 0)/2
-    Signals = Signals[abs(Signals@Data) == 1]
+    Signals = Signals[abs(series(Signals)) == 1,]
 
     # Return Value:
     Signals

@@ -161,7 +161,7 @@ function(x, col = "steelblue", skipZeros = FALSE, ...)
     # Plot:
     for (i in 1:n) {
         X = x[, i]
-        if (skipZeros) X = X[X@Data != 0]
+        if (skipZeros) X = X[series(X) != 0]
         histPlot(X, ylab = "Cumulated Returns", col = col[i], ...)
     }
 
@@ -303,7 +303,7 @@ function(x, col = "steelblue", skipZeros = FALSE, ...)
     # Plot:
     for (i in 1:n) {
         X = x[, i]
-        if (skipZeros) X = X[X@Data != 0]
+        if (skipZeros) X = X[series(X) != 0]
         qqnormPlot(X, col = col[i], ...)
     }
 

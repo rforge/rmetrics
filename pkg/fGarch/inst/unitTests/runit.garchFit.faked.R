@@ -49,7 +49,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -105,7 +105,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -173,7 +173,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    x.vec = 100*garchSim(spec, N)
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -198,9 +198,9 @@ function()
     fit = garchFit(GARCH11 + R ~ garch(1,1), data = X.tS, trace = FALSE)
     print(fit)
     formula(fit)
-    head(fit@data$data)
-    head(fit@data$Data)
-    head(rowSums(fit@data$Data))
+###     head(fit@data$data)
+###     head(fit@data$Data)
+###     head(rowSums(fit@data$Data))
 
     # LEFT HAND SIDE FORMULA FAKED AND DATA FAKED FIT:
 
@@ -208,9 +208,9 @@ function()
         trace = FALSE)
     print(fit)
     formula(fit)
-    head(fit@data$data)
-    head(fit@data$Data)
-    head(rowSums(fit@data$Data))
+###     head(fit@data$data)
+###     head(fit@data$Data)
+###     head(rowSums(fit@data$Data))
 
     # Return Value:
     return()
