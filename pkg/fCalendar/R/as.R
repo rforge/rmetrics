@@ -171,7 +171,8 @@ as.list.timeDate <-
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
-    #   Returns a 'timeDate' object as data frame
+    #   Returns a 'timeDate' object as list
+    # important for functions like sapply and lapply
 
     # Arguments:
     #   x - a 'timeDate' object
