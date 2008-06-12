@@ -59,6 +59,13 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
 
 # ------------------------------------------------------------------------------
 
+setMethod("cummax", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+setMethod("cummin", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+setMethod("cumprod", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+setMethod("cumsum", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+
+# ------------------------------------------------------------------------------
+
 setMethod("diff", "timeSeries",
           function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
       {   # A function implemented by Diethelm Wuertz
