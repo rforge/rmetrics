@@ -28,7 +28,7 @@
 
 
 test.colCum =
-function()
+    function()
 {
     # RUnit Test:
 
@@ -47,6 +47,9 @@ function()
     colCummins(tS)
     colCumprods(tS)
     colCumreturns(tS)
+    
+    # Return Value:
+    return()
 }
 
 

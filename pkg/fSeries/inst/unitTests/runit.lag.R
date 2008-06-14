@@ -28,7 +28,7 @@
 
 
 test.lag <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -43,6 +43,9 @@ function()
     lag(tS)
     lag(tS, k = -2:2)
     lag(tS, k = -2:2, trim = TRUE)
+    
+    # Return Value:
+    return()
 }
 
 

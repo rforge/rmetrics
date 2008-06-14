@@ -29,7 +29,7 @@
 
 
 test.durations <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -46,6 +46,9 @@ function()
     # BUG !!!
     # durations(tS)
     # durations(tS, trim = TRUE)
+    
+    # Return Value:
+    return()
 }
 
 

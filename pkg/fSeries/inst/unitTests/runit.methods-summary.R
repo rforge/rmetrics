@@ -28,9 +28,12 @@
 
 
 test.summary <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

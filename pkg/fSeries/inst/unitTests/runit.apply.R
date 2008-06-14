@@ -39,6 +39,9 @@ function()
     documentation = x@documentation, ...)
 
     applySeries(x, from = start(x), to = end(x))
+    
+    # Return Value:
+    return()
 }
 
 

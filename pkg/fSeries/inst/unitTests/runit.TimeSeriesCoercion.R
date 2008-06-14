@@ -46,8 +46,8 @@
 ################################################################################
 
 
-test.asTimeSeries =
-function()
+test.asTimeSeries <- 
+    function()
 {
     # as.timeSeries.default - Returns the input
     # as.timeSeries.numeric - Transforms a numeric vector into a 'timeSeries'
@@ -125,8 +125,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.asTimeSeriesDJ1 =
-function()
+test.asTimeSeriesDJ1 <- 
+    function()
 {
     # Load Data:
     # data(DowJones30)
@@ -184,50 +184,54 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.fromTimeSeriesUV =
-function()
+test.fromTimeSeriesUV <- 
+    function()
 {
-    # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
-    # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
-    # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
-    # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
-
-    # Univariate Case:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    data = round(rnorm(12), 3)
-    charvec = timeCalendar(2006)
-    uTS = timeSeries(data, charvec, units = "uTS")
-    uTS
-
-    # Vector:
-    VEC = as.vector(uTS)
-    head(VEC)
-    class(VEC)
-    checkIdentical(class(VEC), "numeric")
-
-    # Numeric:
-    # VEC = as.numeric(uTS)                         # Not implemented !
-    # head(VEC)
-    # class(VEC)
-    # checkIdentical(class(VEC), "numeric")
-
-    # Matrix:
-    MAT = as.matrix(uTS)
-    head(MAT)
-    class(MAT)
-    checkIdentical(class(MAT), "matrix")
-
-    # Data Frame:
-    DF = as.data.frame(uTS)
-    head(DF)
-    checkIdentical(class(DF), "data.frame")
-
-    # Time Series:
-    TS = as.ts(uTS)
-    head(TS)
-    class(TS)
-    checkIdentical(class(TS), "ts")
+    if (FALSE) {
+        
+        # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
+        # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
+        # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
+        # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
+    
+        # Univariate Case:
+        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+        set.seed(4711, kind = "Marsaglia-Multicarry")
+        data = round(rnorm(12), 3)
+        charvec = timeCalendar(2006)
+        uTS = timeSeries(data, charvec, units = "uTS")
+        uTS
+    
+        # Vector:
+        VEC = as.vector(uTS)
+        head(VEC)
+        class(VEC)
+        checkIdentical(class(VEC), "numeric")
+    
+        # Numeric:
+        # VEC = as.numeric(uTS)                         
+        # head(VEC)
+        # class(VEC)
+        # checkIdentical(class(VEC), "numeric")
+    
+        # Matrix:
+        MAT = as.matrix(uTS)
+        head(MAT)
+        class(MAT)
+        checkIdentical(class(MAT), "matrix")
+    
+        # Data Frame:
+        DF = as.data.frame(uTS)
+        head(DF)
+        checkIdentical(class(DF), "data.frame")
+    
+        # Time Series:
+        TS = as.ts(uTS)
+        head(TS)
+        class(TS)
+        checkIdentical(class(TS), "ts")
+        
+    }
 
     # Return Value:
     return()
@@ -237,8 +241,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.fromTimeSeriesMV =
-function()
+test.fromTimeSeriesMV <- 
+    function()
 {
     # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
     # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'

@@ -28,9 +28,12 @@
 
 
 test.bind <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

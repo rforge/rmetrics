@@ -34,8 +34,8 @@
 ################################################################################
 
 
-test.naOmitMatrix =
-function()
+test.naOmitMatrix <- 
+    function()
 {
     x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)
@@ -61,8 +61,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.na.omit =
-function()
+test.na.omit <- 
+    function()
 {
     x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)

@@ -46,6 +46,9 @@ function()
 
     # Aggregate Returns Quarterly:
     aggregate(x, by = "quarterly", FUN = colSums, units = "QrtReturns")
+    
+    # Return Value:
+    return()
 }
 
 ################################################################################

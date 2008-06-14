@@ -28,9 +28,12 @@
 
 
 test.monthly <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

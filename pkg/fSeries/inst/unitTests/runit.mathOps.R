@@ -28,7 +28,7 @@
 
 
 test.mathOps <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -45,6 +45,9 @@ function()
     log(abs(tS))
     diff(tS)
     scale(tS)
+    
+    # Return Value:
+    return()
 }
 
 

@@ -28,7 +28,7 @@
 
 
 test.order <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -52,6 +52,9 @@ function()
     statsColnames(tS, FUN = colMeans)
     pcaColnames(tS)
     hclustColnames(tS)
+    
+    # Return Value:
+    return()
 }
 
 

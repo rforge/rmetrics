@@ -35,8 +35,8 @@
 ################################################################################
 
 
-test.removeNA =
-function()
+test.removeNA <- 
+    function()
 {  
     # Create matrix object:
     set.seed(1985)
@@ -76,8 +76,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.substituteNA =
-function()
+test.substituteNA <- 
+    function()
 {
     # Create matrix object:
     set.seed(1985)
@@ -135,8 +135,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.interpNA =
-function()
+test.interpNA <- 
+    function()
 {
     # Interpolate Column-by-Column
     

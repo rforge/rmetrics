@@ -51,8 +51,8 @@
 ################################################################################
 
 
-test.timeSeries =
-function()
+test.timeSeries <- 
+    function()
 {
     #  timeSeries - Creates a 'timeSeries' object from scratch
 
@@ -92,8 +92,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.readSeries =
-function()
+test.readSeries <- 
+    function()
 {
     #  readSeries - Reads from a spreadsheet and creates a 'timeSeries'
 
@@ -123,8 +123,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.returns =
-function()
+test.returns <- 
+    function()
 {
     #  returns - Computes returns from a 'timeSeries' object
 
@@ -146,8 +146,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.applySeries =
-function()
+test.applySeries <- 
+    function()
 {
     #  applySeries - Applies a function to blocks of a 'timeSeries'
 
@@ -161,8 +161,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.orderStatistics =
-function()
+test.orderStatistics <- 
+    function()
 {
     #  orderStatistics - Compute order statistic of a 'timeSeries'
 
@@ -187,8 +187,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.series =
-function()
+test.series <- 
+    function()
 {
     #  series - Extracts data slot from 'timeSeries' object
 
@@ -229,8 +229,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.isUnivariate =
-function()
+test.isUnivariate <- 
+    function()
 {
     #  isUnivariate     Tests if an object of class 'timeSeries' is univariate
 
@@ -255,7 +255,7 @@ function()
 
 
 test.isMultivariate =
-function()
+    function()
 {
     #  isMultivariate - Tests if an object of class 'timeSeries' is multivariate
 
@@ -275,15 +275,16 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.displayMethods =
-function()
+test.displayMethods <- 
+    function()
 {
     #  print.timeSeries     Print method for a 'timeSeries' object
     #  plot.timeSeries      Plot method for a 'timeSeries' object
     #  lines.timeSeries     Lines method for a 'timeSeries' object
     #  points.timeSeries    Points method for a 'timeSeries' object
 
-### FIXME(MM) - if we store this -- make it a package data set!
+    ### FIXME(MM) - if we store this -- make it a package data set!
+    
     # Microsoft Data:
     MSFT.df = data.frame(matrix(c(
     20010326, 57.1250, 57.5000, 55.5625, 56.0625,  31559300,
@@ -360,8 +361,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dummyDailySeries =
-function()
+test.dummyDailySeries <- 
+    function()
 {
     #  dummyDailySeries - Creates a dummy daily 'timeSeries' object
 
@@ -378,8 +379,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.alignDailySeries =
-function()
+test.alignDailySeries <- 
+    function()
 {
     # alignDailySeries - Aligns a 'timeSeries' object to new positions
 
@@ -406,8 +407,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.ohlcDailyPlot =
-function()
+test.ohlcDailyPlot <- 
+    function()
 {
     # ohlcDailyPlot - Plots open–high–low–close bar chart
 
@@ -430,8 +431,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.modelSeries =
-function()
+test.modelSeries <- 
+    function()
 {
     if (FALSE) {
 

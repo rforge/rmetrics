@@ -28,9 +28,12 @@
 
 
 test.daily <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

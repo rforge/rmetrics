@@ -28,9 +28,12 @@
 
 
 test.rank <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

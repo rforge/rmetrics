@@ -28,7 +28,7 @@
 
 
 test.spreads <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -37,6 +37,9 @@ function()
     head(tS)
     midquotes(tS)
     spreads(tS)
+    
+    # Return Value:
+    return()
 }
 
 

@@ -28,7 +28,7 @@
 
 
 test.signalSeries.Internal <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -36,13 +36,22 @@ function()
     y = rnorm(12)
     .signalSeries(timeSeries(NULL), x, 1:12)
     .signalSeries(timeSeries(NULL), cbind(x,y), 1:12)
+    
+    # Return Value:
+    return()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 test.timeSeries <-
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

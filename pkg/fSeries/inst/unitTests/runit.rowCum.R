@@ -28,9 +28,12 @@
 
 
 test.rowCum <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

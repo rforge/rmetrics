@@ -27,7 +27,7 @@
 ################################################################################
 
 test.colStats =
-function()
+    function()
 {
     # RUnit Test:
 
@@ -60,6 +60,9 @@ function()
     colMins(tS)
     colProds(tS)
     colQuantiles(tS)
+    
+    # Return Value:
+    return()
 }
 
 

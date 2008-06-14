@@ -29,7 +29,7 @@
 
 
 test.drawdowns <-
-function()
+    function()
 {
     # RUnit Test:
 
@@ -46,6 +46,9 @@ function()
         )
     tS
     drawdowns(tS)
+    
+    # Return Value:
+    return()
 }
 
 

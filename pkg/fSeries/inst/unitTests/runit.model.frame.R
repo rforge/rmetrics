@@ -28,9 +28,12 @@
 
 
 test.model.frame <- 
-function()
+    function()
 {
     NA
+    
+    # Return Value:
+    return()
 }
 
 

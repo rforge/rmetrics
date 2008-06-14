@@ -27,8 +27,8 @@
 ################################################################################
 
 
-test.cor.timeSeries =
-function()
+test.cor.timeSeries <- 
+    function()
 {
     # RUnit Test:
 
@@ -43,6 +43,9 @@ function()
     tS
     cor(tS)
     cov(tS)
+    
+    # Return Value:
+    return()
 }
 
 ################################################################################

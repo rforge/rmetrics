@@ -27,8 +27,8 @@
 ################################################################################
 
 
-test.cumulated =
-function()
+test.cumulated <- 
+    function()
 {
     # RUnit Test:
 
@@ -39,6 +39,9 @@ function()
     # timeDate Series:
     tS = timeSeries()
     cumulated(tS)
+    
+    # Return Value:
+    return()
 }
 
 

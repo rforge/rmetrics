@@ -41,8 +41,8 @@
 ################################################################################
 
 
-test.time =
-function()
+test.time <- 
+    function()
 {
     # Generate nivariate daily random sequence
     set.seed(4711)
@@ -67,8 +67,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-"test.time<-" =
-function()
+"test.time<-" <- 
+    function()
 {
     # Generate nivariate daily random sequence
     set.seed(4711)
@@ -90,8 +90,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.timeSeriesOrdering =
-function()
+test.timeSeriesOrdering <- 
+    function()
 {
     #  sample.timeSeries - Resamples a 'timeSeries' object in time
     #  sort.timeSeries - Sorts reverts a 'timeSeries' object in time

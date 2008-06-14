@@ -27,8 +27,8 @@
 ################################################################################
 
 
-test.dim.timeSeries =
-function()
+test.dim.timeSeries <- 
+    function()
 {
     # RUnit Test:
 
@@ -87,6 +87,9 @@ function()
     # colnames<-
     # rownames<-
     is.array(tS)
+    
+    # Return Value:
+    return()
 }
 
 
