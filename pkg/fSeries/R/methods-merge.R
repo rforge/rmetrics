@@ -15,20 +15,23 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  merge.timeSeries          Merges two 'timeSeries' objects
+################################################################################
 
-setMethod("merge", c("timeSeries", "timeSeries"),
+
+setMethod("merge", 
+    c("timeSeries", "timeSeries"),
     function(x, y, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     test = as.integer((x@format == "counts") + (y@format == "counts"))
     switch(as.character(test),
-           # convert series y to FinCenter of series x
-           "0" = { FinCenter <- finCenter(y) <- finCenter(x) },
-           # if one of the two series are signal series, the other
-           # series is converted to a signal series
-           "1" = { x <- timeSeries(x, format = "counts");
-                       y <- timeSeries(y, format = "counts") })
+        # convert series y to FinCenter of series x
+        "0" = { FinCenter <- finCenter(y) <- finCenter(x) },
+        # if one of the two series are signal series, the other
+        # series is converted to a signal series
+        "1" = { x <- timeSeries(x, format = "counts");
+            y <- timeSeries(y, format = "counts") })
 
     # check if x and y have same date format,
     # if not convert to the most extended one
@@ -40,7 +43,7 @@ setMethod("merge", c("timeSeries", "timeSeries"),
         } else {
             y@positions <- format(time(y), format = x@format)
             rownames(y@Data) <- y@positions
-                  y@format <- x@format
+                y@format <- x@format
         }
     }
 
@@ -58,7 +61,7 @@ setMethod("merge", c("timeSeries", "timeSeries"),
 
     # Compose and sort the timeSeries:
     ans <- new("timeSeries", data = data, charvec = as.character(df[,1]),
-               zone = finCenter(x), FinCenter = finCenter(x), ...)
+        zone = finCenter(x), FinCenter = finCenter(x), ...)
     ans <- sort(ans)
 
     # Return Value:
@@ -68,11 +71,21 @@ setMethod("merge", c("timeSeries", "timeSeries"),
 
 # ------------------------------------------------------------------------------
 
-setMethod("merge", c("timeSeries", "ANY"),
-          function(x,y, ...) callGeneric(x, as(y, "timeSeries"), ...))
-setMethod("merge", c("ANY", "timeSeries"),
-          function(x,y, ...) callGeneric(as(x, "timeSeries"), y, ...))
-setMethod("merge", c("timeSeries", "missing"), function(x,y, ...) x)
+
+setMethod("merge", 
+    c("timeSeries", "ANY"),
+    function(x,y, ...) callGeneric(x, as(y, "timeSeries"), ...))
+    
+    
+setMethod("merge", 
+    c("ANY", "timeSeries"),
+    function(x,y, ...) callGeneric(as(x, "timeSeries"), y, ...))
+    
+    
+setMethod("merge", 
+    c("timeSeries", "missing"), 
+    function(x,y, ...) x)
+    
 
 ################################################################################
 
