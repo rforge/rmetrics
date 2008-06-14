@@ -32,11 +32,16 @@
 ################################################################################
 
 
-hypSlider = 
-function()
-{   # A function implemented by Diethelm Wuertz
+hypSlider <-  
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
-    # Hyperbolic Distribution:
+    # Description:
+    #   Displays interactively Hyperbolic Function
+    
+    # Details:
+    #   Hyperbolic Distribution:
     #   dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
         
     # FUNCTION:

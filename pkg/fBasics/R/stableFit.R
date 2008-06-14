@@ -36,11 +36,12 @@
 ################################################################################
 
 
-stableFit = 
-function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-type = c("q", "mle"), doplot = TRUE, trace = FALSE, 
-title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz 
+stableFit <-  
+    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
+    type = c("q", "mle"), doplot = TRUE, trace = FALSE, 
+    title = NULL, description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description 
     #   Stable Parameter Estimation
@@ -73,8 +74,9 @@ title = NULL, description = NULL)
 
 
 .phiStable =
-function()
-{   # A function implemented by Diethelm Wuertz
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates contour table for McCulloch estimators
@@ -135,8 +137,9 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.PhiStable =
-structure(
+.PhiStable <- 
+    structure(
+    
     #  Contour table created by .phiStable()
     list(
     
@@ -367,9 +370,10 @@ structure(
 # ------------------------------------------------------------------------------
 
 
-.qStableFit =
-function(x, doplot = TRUE, title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz
+.qStableFit <- 
+    function(x, doplot = TRUE, title = NULL, description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Estimates stable parameters by McCulloch's approach
@@ -470,10 +474,11 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-.mleStableFit = 
-function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE, 
-trace = FALSE, title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz
+.mleStableFit <-  
+    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE, 
+    trace = FALSE, title = NULL, description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Estimates stable parameters by MLE approach

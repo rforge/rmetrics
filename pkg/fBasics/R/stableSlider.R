@@ -32,9 +32,10 @@
 ################################################################################
 
 
-stableSlider =  
-function()
-{   # A function implemented by Diethelm Wuertz
+stableSlider <-   
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays the stable distribution

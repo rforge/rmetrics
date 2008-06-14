@@ -32,10 +32,11 @@
 ################################################################################
 
 
-scalinglawPlot =
-function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
-labels = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+scalinglawPlot <- 
+    function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
+    labels = TRUE, trace = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Investigates the scaling law.

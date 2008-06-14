@@ -35,9 +35,10 @@
 ################################################################################
 
 
-dgh = 
+dgh <-  
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns density for the generalized hyperbolic distribution
@@ -73,9 +74,10 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 # ------------------------------------------------------------------------------
 
     
-pgh = 
+pgh <-  
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns probability for the generalized hyperbolic distribution
@@ -104,9 +106,10 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 # ------------------------------------------------------------------------------
 
     
-qgh = 
+qgh <-  
 function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles for the generalized hyperbolic distribution
@@ -152,9 +155,10 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 # ------------------------------------------------------------------------------
 
 
-rgh = 
+rgh <-  
 function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random variates for the generalized hyperbolic distribution

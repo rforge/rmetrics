@@ -32,17 +32,20 @@
 ################################################################################
 
 
-.x.save = NA
+.x.save <-  NA
 
 
-tFit = 
-function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+# ------------------------------------------------------------------------------
+
+
+tFit <-  
+    function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Return Maximum log-likelihood estimated
-    #   Paramters for Student-t Distribution:
       
     # Note:
     #   Function Calls: nlminb(), density() 

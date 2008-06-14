@@ -32,9 +32,10 @@
 ################################################################################
 
 
-nigSlider = 
-function()
-{   # A function implemented by Diethelm Wuertz
+nigSlider <-  
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Normal Inverse Gaussian Distribution:
     #   dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0) 

@@ -34,9 +34,10 @@
 ################################################################################
 
 
-hypMode =
-function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
+hypMode <- 
+    function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the mode of the Hyperbolic PDF
@@ -58,9 +59,10 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 # ------------------------------------------------------------------------------
 
 
-.hyp1Mode =
-function(alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.hyp1Mode <- 
+    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the mode of the Hyperbolic PDF
@@ -78,9 +80,10 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.hyp2Mode =
-function(zeta = 1, rho = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.hyp2Mode <- 
+    function(zeta = 1, rho = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the hyperbolic mode in the 2nd parameterization
@@ -100,9 +103,10 @@ function(zeta = 1, rho = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.hyp3Mode = 
-function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.hyp3Mode <-  
+    function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the hyperbolic mode in the 3rd parameterization
@@ -114,9 +118,9 @@ function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     zeta = 1/xi^2 - 1   
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
+    ans = hypMode(alpha, beta, delta, mu)
     
     # Return Value:
-    ans = hypMode(alpha, beta, delta, mu)
     ans
 }
 
@@ -124,9 +128,10 @@ function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.hyp4Mode = 
-function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.hyp4Mode <-  
+    function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the hyperbolic mode in the 4th parameterization
@@ -136,9 +141,9 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     # Parameter Change:
     alpha = a.bar / delta
     beta = b.bar / delta
+    ans = hypMode(alpha, beta, delta, mu)
     
     # Return Value:
-    ans = hypMode(alpha, beta, delta, mu)
     ans
 }   
 

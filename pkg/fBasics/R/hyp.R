@@ -37,9 +37,10 @@
 ################################################################################
 
 
-dhyp = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
+dhyp <-  
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns Hyperbolic Density Function PDF
@@ -66,9 +67,10 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 # ------------------------------------------------------------------------------
 
 
-phyp = 
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   # A function implemented by Diethelm Wuertz
+phyp <-  
+    function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Return cumulative probability of Hyperbolic PDF
@@ -95,9 +97,10 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 # ------------------------------------------------------------------------------
 
 
-qhyp = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   # A function implemented by Diethelm Wuertz
+qhyp <-  
+    function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles of Hyperbolic PDF
@@ -127,9 +130,10 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 # ------------------------------------------------------------------------------
 
 
-rhyp = 
-function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
+rhyp <-  
+    function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random deviates of Hyperbolic PDF
@@ -170,9 +174,10 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 # ------------------------------------------------------------------------------
 
 
-.rghyp = 
-function(n, theta)
-{   # A function implemented by Diethelm Wuertz
+.rghyp <-  
+    function(n, theta)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Author:
     #   Original Version by David Scott
@@ -213,9 +218,10 @@ function(n, theta)
 # ------------------------------------------------------------------------------
 
 
-.rgigjd = 
-function(n, theta)
-{   # A function implemented by Diethelm Wuertz
+.rgigjd <-  
+    function(n, theta)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Author:
     #   Original Version by David Scott
@@ -279,9 +285,10 @@ function(n, theta)
 # ------------------------------------------------------------------------------
 
 
-.rgigjd1 = 
-function(n, theta)
-{   # A function implemented by Diethelm Wuertz
+.rgigjd1 <-  
+    function(n, theta)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Modified version of rgigjd to generate random observations
@@ -348,9 +355,10 @@ function(n, theta)
 # ------------------------------------------------------------------------------
 
 
-.dhyp1 = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.dhyp1 <-  
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns Hyperbolic Density Function PDF
@@ -377,9 +385,10 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.dhyp2 =
-function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.dhyp2 <- 
+    function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
@@ -404,9 +413,10 @@ function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.dhyp3 = 
-function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.dhyp3 <-  
+    function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
@@ -433,8 +443,8 @@ function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
  
-.dhyp4 = 
-function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
+.dhyp4 <-  
+    function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -461,9 +471,10 @@ function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.phyp1 = 
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.phyp1 <-  
+    function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Return cumulative probability of Hyperbolic PDF
@@ -492,9 +503,10 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.phyp2 =
-function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.phyp2 <- 
+    function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns cumulative probability in the 2nd parameterization
@@ -519,9 +531,10 @@ function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.phyp3 = 
-function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.phyp3 <-  
+    function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns cumulative probability in the 3rd parameterization
@@ -548,9 +561,10 @@ function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
  
-.phyp4 = 
-function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.phyp4 <-  
+    function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns cumulative probability in the 4th parameterization
@@ -575,9 +589,10 @@ function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.qhyp1 = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.qhyp1 <- 
+    function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles of Hyperbolic PDF
@@ -625,9 +640,10 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.qhyp2 =
-function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.qhyp2 <- 
+    function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 2nd parameterization
@@ -652,9 +668,10 @@ function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.qhyp3 = 
-function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.qhyp3 <-  
+    function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 3rd parameterization
@@ -681,9 +698,10 @@ function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.qhyp4 = 
-function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
-{   # A function implemented by Diethelm Wuertz
+.qhyp4 <-  
+    function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 4th parameterization
@@ -708,9 +726,10 @@ function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
 # ------------------------------------------------------------------------------
 
 
-.rhyp1 = 
-function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.rhyp1 <-  
+    function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random deviates of Hyperbolic PDF
@@ -744,10 +763,11 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
  
 
 .rhyperb <- 
-function (n, theta) 
+    function (n, theta) 
 {
-    # Internal Function:
+    # FUNCTION:
     
+    # Internal Function: 
     hyp.pi = theta[1]
     zeta = theta[2]
     delta = theta[3]
@@ -791,6 +811,8 @@ function (n, theta)
         output[i] = delta * x + mu
         need.value = TRUE 
     }
+    
+    # Return Value:
     output 
 }
     
@@ -799,10 +821,11 @@ function (n, theta)
  
 
 .hyperb.change.pars <-
-function (from, to, theta) 
+    function (from, to, theta) 
 {
-    # Internal Function:
+    # FUNCTION:
     
+    # Internal Function:
     delta <- theta[3]
     mu <- theta[4]
     hyperb.pi <- theta[1]
@@ -817,6 +840,8 @@ function (from, to, theta)
         gamma <- zeta/delta * (sqrt(1 + hyperb.pi^2) - hyperb.pi)
         output = c(phi = phi, gamma = gamma, delta = delta, mu = mu)
     }
+    
+    # Return Value:
     output 
 }
 
@@ -824,9 +849,10 @@ function (from, to, theta)
 # ------------------------------------------------------------------------------
 
 
-.rhyp2 =
-function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.rhyp2 <- 
+    function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 2nd parameterization
@@ -841,9 +867,9 @@ function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
     # Parameter Change:
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
+    ans = rhyp(n, alpha, beta, delta, mu)
     
     # Return Value:
-    ans = rhyp(n, alpha, beta, delta, mu)
     ans
 }
 
@@ -851,9 +877,10 @@ function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.rhyp3 = 
-function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.rhyp3 <-  
+    function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 3rd parameterization
@@ -870,9 +897,9 @@ function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     zeta = 1/xi^2 - 1   
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
+    ans = rhyp(n, alpha, beta, delta, mu)
     
     # Return Value:
-    ans = rhyp(n, alpha, beta, delta, mu)
     ans
 }
 
@@ -880,9 +907,10 @@ function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.rhyp4 = 
-function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+.rhyp4 <-  
+    function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 4th parameterization
@@ -897,9 +925,9 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     # Parameter Change:
     alpha = a.bar / delta
     beta = b.bar / delta
+    ans = rhyp(n, alpha, beta, delta, mu)
     
     # Return Value:
-    ans = rhyp(n, alpha, beta, delta, mu)
     ans
 }   
 

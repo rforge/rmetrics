@@ -26,7 +26,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::4B-JarqueBeraPValues
 ################################################################################
 # DATA:                     DESCRIPTION:
 # .jbLM                      Jarque-Bera Lagrange Multiplier Data

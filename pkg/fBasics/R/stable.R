@@ -38,8 +38,9 @@
 
 
 dstable = 
-function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
-{   # A function implemented by Diethelm Wuertz
+    function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns density for stable DF
@@ -163,7 +164,7 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
 
 .g1 <- 
-function(x, xarg, alpha, beta) 
+    function(x, xarg, alpha, beta) 
 {
     # Function to Integrate:
     varzeta = -beta * tan(pi*alpha/2)
@@ -181,7 +182,7 @@ function(x, xarg, alpha, beta)
 
   
 .fct1 <-
-function(xarg, alpha, beta, tol, subdivisions) 
+    function(xarg, alpha, beta, tol, subdivisions) 
 { 
     # Integration:
     varzeta = -beta * tan(pi*alpha/2)
@@ -206,7 +207,7 @@ function(xarg, alpha, beta, tol, subdivisions)
 
 
 .g2 <- 
-function(x, xarg, alpha, beta) 
+    function(x, xarg, alpha, beta) 
 {
     # Function to Integrate:
     # x is a non-sorted vector!
@@ -224,7 +225,7 @@ function(x, xarg, alpha, beta)
 
  
 .fct2 <-
-function(xarg, alpha, beta, tol, subdivisions) 
+    function(xarg, alpha, beta, tol, subdivisions) 
 { 
     # Integration:
     theta2 = optimize(f = .g2, lower = -pi/2, upper = pi/2, 
@@ -247,8 +248,9 @@ function(xarg, alpha, beta, tol, subdivisions)
 
 
 pstable = 
-function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
-{   # A function implemented by Diethelm Wuertz
+    function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns probability for stable DF
@@ -343,9 +345,8 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
 
 .G1 <- 
-function(x, xarg, alpha, beta) 
-{
-    
+    function(x, xarg, alpha, beta) 
+{ 
     # Function to Integrate:
     varzeta = -beta * tan(pi*alpha/2)
     theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
@@ -362,7 +363,7 @@ function(x, xarg, alpha, beta)
 
   
 .FCT1 <-
-function(xarg, alpha, beta, tol, subdivisions) 
+    function(xarg, alpha, beta, tol, subdivisions) 
 { 
     # Integration:
     varzeta = -beta * tan(pi*alpha/2)
@@ -389,7 +390,7 @@ function(xarg, alpha, beta, tol, subdivisions)
 
 
 .G2 <- 
-function(x, xarg, alpha, beta) 
+    function(x, xarg, alpha, beta) 
 {
     # Function to Integrate:
     # x is a non-sorted vector!
@@ -407,7 +408,7 @@ function(x, xarg, alpha, beta)
 
   
 .FCT2 <-
-function(xarg, alpha, beta, tol, subdivisions) 
+    function(xarg, alpha, beta, tol, subdivisions) 
 { 
     # Integration:
     theta2 = optimize(f = .G2, lower = -pi/2, upper = pi/2, 
@@ -432,7 +433,8 @@ function(xarg, alpha, beta, tol, subdivisions)
         
 qstable = 
 function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles for stable DF
@@ -542,9 +544,10 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 # ------------------------------------------------------------------------------
 
 
-rstable = 
-function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
-{   # A function implemented by Diethelm Wuertz
+rstable <-  
+    function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns random variates for stable DF
@@ -605,9 +608,10 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 # ------------------------------------------------------------------------------
 
 
-stableMode = 
-function(alpha, beta) 
-{   # A function implemented by Diethelm Wuertz
+stableMode <-  
+    function(alpha, beta) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the mode of the stable DF
@@ -666,8 +670,9 @@ function(alpha, beta)
 
 
 .integrateStable = 
-function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
-{   # A function implemented by Diethelm Wuertz
+    function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal Function

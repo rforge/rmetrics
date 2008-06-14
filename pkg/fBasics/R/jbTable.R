@@ -26,7 +26,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::4B-JarqueBeraPValues
 ################################################################################
 # FUNCTION:                 JARQUE-BERA DATA TABLES:
 # .jbTable                   Finite sample p values for the Jarque Bera test

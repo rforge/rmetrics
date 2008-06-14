@@ -47,17 +47,6 @@
 ################################################################################
 
 
-################################################################################
-# FUNCTION:             NORMALITY TESTS:
-#  ksnormTest            One sample Kolmogorov-Smirnov normality test
-#  shapiroTest           Shapiro-Wilk normality test
-#  jarqueberaTest        Jarque-Bera normality test
-#  dagoTest              D'Agostino normality test
-#   .skewness.test        ... internal function called by dagoTest
-#   .kurtosis.test        ... internal function called by dagoTest
-#   .omnibus.test         ... internal function called by dagoTest
-
-
 ksnormTest <- 
     function(x, title = NULL, description = NULL)
 {   
@@ -501,12 +490,7 @@ dagoTest =
 
 
 ################################################################################
-# FUNCTION:             FROM NORTEST PACKAGE:
-#  adTest                Anderson-Darling normality test
-#  cvmTest               Cramer-von Mises normality test
-#  lillieTest            Lilliefors (Kolmogorov-Smirnov) normality test 
-#  pchiTest              Pearson chi-square normality test 
-#  sfTest                Shapiro-Francia normality test     
+# FROM NORTEST PACKAGE:    
 
 
 adTest <- 
@@ -957,9 +941,7 @@ sfTest <-
 
 
 ################################################################################    
-# FUNCTION ADDON:       AUGMENTED FINITE SAMPLE JB TEST:
-#  jbTest                Performs finite sample adjusted JB LM and ALM test
-#  .jb.test               S3 version type finite sample adjusted JB test
+# AUGMENTED FINITE SAMPLE JB TEST:
 
 
 .jb.test <- 

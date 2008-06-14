@@ -423,14 +423,16 @@ doplot = TRUE, labels = TRUE, ...)
 
 .stylizedFactsGUI <-
     function(x, mfrow = c(3, 3))
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Opens a GUI for stylized facts
 
     # FUNCTION:
 
-    stylizedFactsRefreshCode =
+    # Refresh Code:
+    stylizedFactsRefreshCode <-
     function(...)
     {
         # Settings:
