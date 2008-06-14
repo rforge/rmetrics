@@ -37,3 +37,7 @@ setClass("timeSeries",
         title = "character",
         documentation = "character")
 )
+
+
+################################################################################
+

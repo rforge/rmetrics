@@ -23,8 +23,8 @@
 ################################################################################
 
 
-midquotes =
-function(x, which = c("Bid", "Ask"))
+midquotes <- 
+    function(x, which = c("Bid", "Ask"))
 {
     # Compute Mid Quotes:
     midQuotes = 0.5 * ( x[, which[1]] + x[, which[2]] )
@@ -37,8 +37,8 @@ function(x, which = c("Bid", "Ask"))
 # ------------------------------------------------------------------------------
 
 
-midquoteSeries =
-function(...)
+midquoteSeries <- 
+    function(...)
 {
     midquotes(...)
 }
@@ -47,8 +47,8 @@ function(...)
 # ------------------------------------------------------------------------------
 
 
-spreads =
-function(x, which = c("Bid", "Ask"), tickSize = NULL)
+spreads <- 
+    function(x, which = c("Bid", "Ask"), tickSize = NULL)
 {
     # Compute Spread:
     Spread = x[, which[2]] - x[, which[1]]
@@ -62,8 +62,8 @@ function(x, which = c("Bid", "Ask"), tickSize = NULL)
 # ------------------------------------------------------------------------------
 
 
-spreadSeries =
-function(...)
+spreadSeries <- 
+    function(...)
 {
     spreads(...)
 }

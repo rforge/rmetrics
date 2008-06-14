@@ -21,139 +21,142 @@
 #  .signalSeries
 ################################################################################
 
+
 setMethod("initialize", "timeSeries",
-          function (.Object,
-                    data, charvec, units = NULL, format = NULL,
-                    zone = myFinCenter, FinCenter = myFinCenter,
-                    recordIDs = data.frame(), title = NULL,
-                    documentation = NULL, ...)
-      {
-          # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    function (.Object,
+    data, charvec, units = NULL, format = NULL,
+    zone = myFinCenter, FinCenter = myFinCenter,
+    recordIDs = data.frame(), title = NULL,
+    documentation = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-          # Description:
-          #   Creates a 'timeSeries' object from scratch.
+    # Description:
+    #   Creates a 'timeSeries' object from scratch.
 
-          # Arguments:
-          #   data -a numeric 'matrix' object or any other object which
-          #       can be transformed by the function as.matrix.
-          #   charvec - a character vector of dates and times.
-          #   units - an optional units string, NULL defaults an empty
-          #       string.
-          #   format - the format specification of the input character
-          #       vector.
-          #   zone - the time zone or financial center where the data were
-          #       recorded.
-          #   FinCenter - a character with the the location of the
-          #       financial center named as "continent/city".
-          #   recordIDS - stores record IDs in form of a data frame
-          #   title - an optional title string, if not specified the inputs
-          #       data name is deparsed.
-          #   documentation - optional documentation string.
+    # Arguments:
+    #   data -a numeric 'matrix' object or any other object which
+    #       can be transformed by the function as.matrix.
+    #   charvec - a character vector of dates and times.
+    #   units - an optional units string, NULL defaults an empty
+    #       string.
+    #   format - the format specification of the input character
+    #       vector.
+    #   zone - the time zone or financial center where the data were
+    #       recorded.
+    #   FinCenter - a character with the the location of the
+    #       financial center named as "continent/city".
+    #   recordIDS - stores record IDs in form of a data frame
+    #   title - an optional title string, if not specified the inputs
+    #       data name is deparsed.
+    #   documentation - optional documentation string.
 
-          # Value:
-          #   Returns a S4 object of class 'timeSeries'.
-          #   positions - these are the POSIX date/time strings created
-          #       by default from the dimnames of the data matrix, or
-          #       alternatively if the data are read from a CSV file,
-          #       the first column is expected to hold the positions,
-          #       and the column name the "format" string.
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    #   positions - these are the POSIX date/time strings created
+    #       by default from the dimnames of the data matrix, or
+    #       alternatively if the data are read from a CSV file,
+    #       the first column is expected to hold the positions,
+    #       and the column name the "format" string.
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Convert data to data.frame:
-          if (!missing(data) && is.null(data)) {
-              # timeSeries(NULL) returns an empty S4 timeSeries
-              return(callNextMethod())
-          } else if (missing(data) || !NROW(data)) {
-              data = matrix(runif(24), ncol = 2)
-              charvec <-
-                  if (missing(charvec) ||    # new("timeSeries")
-                      is.null(charvec) ||       # timeSeries()
-                      length(charvec) != 12) {
-                      as.character(timeCalendar())
-                  } else {
-                      as.character(charvec)[seq(12)]
-                      # take 12 first entries of charvec if charvec is provided
-                  }
-              # YC : important to have as.character ->
-              # YC : charvec will be properly converted to FinCenter in
-              # YC : function .timeSeries()
-          } else {
-              data <- as.matrix(data)
-              stopifnot(is.numeric(data) || is.logical(data))
-              # YC : we can have a logical timeSeries eg: ts > 1
-          }
+    # Convert data to data.frame:
+    if (!missing(data) && is.null(data)) {
+        # timeSeries(NULL) returns an empty S4 timeSeries
+        return(callNextMethod())
+    } else if (missing(data) || !NROW(data)) {
+        data = matrix(runif(24), ncol = 2)
+        charvec <-
+            if (missing(charvec) ||    # new("timeSeries")
+                is.null(charvec) ||       # timeSeries()
+                length(charvec) != 12) {
+                as.character(timeCalendar())
+            } else {
+                as.character(charvec)[seq(12)]
+                # take 12 first entries of charvec if charvec is provided
+            }
+        # YC : important to have as.character ->
+        # YC : charvec will be properly converted to FinCenter in
+        # YC : function .timeSeries()
+    } else {
+        data <- as.matrix(data)
+        stopifnot(is.numeric(data) || is.logical(data))
+        # YC : we can have a logical timeSeries eg: ts > 1
+    }
 
-          # Determine format
-          if (missing(format) || is.null(format)) {
-              if (missing(charvec) || is.null(charvec)) {
-                  format <- "unknown"
-              } else {
-                  format <- whichFormat(charvec, silent = TRUE)
-              }
-              if (format == "unknown") {
-                  charvec <- rownames(data)
-                  if (identical(charvec, .signalCounts(NROW(data)))) {
-                      # check if rownames are not already a signal
-                      # important for large signal series
-                      format <- "counts"
-                  } else {
-                      format <- whichFormat(charvec, silent = TRUE)
-                  }
-              }
-              if (format == "unknown" &&
-                  !(is.numeric(data[,1])) &&
-                  !(is.logical(data[,1]))) { # YC : to handle timeSeries(TRUE)
-                  charvec <- data[,1]
-                  if (identical(charvec, .signalCounts(NROW(data)))) {
-                      # check if rownames are not already a signal
-                      # important for large signal series
-                      format <- "counts"
-                  } else {
-                      format <- whichFormat(charvec, silent = TRUE)
-                  }
-              }
-          } else {
-              # if format is provided but there is no charvec
-              # try to extract from data
-              if (missing(charvec) || is.null(charvec))
-                  charvec <- rownames(data)
-              }
+    # Determine format
+    if (missing(format) || is.null(format)) {
+        if (missing(charvec) || is.null(charvec)) {
+            format <- "unknown"
+        } else {
+            format <- whichFormat(charvec, silent = TRUE)
+        }
+        if (format == "unknown") {
+            charvec <- rownames(data)
+            if (identical(charvec, .signalCounts(NROW(data)))) {
+                # check if rownames are not already a signal
+                # important for large signal series
+                format <- "counts"
+            } else {
+                format <- whichFormat(charvec, silent = TRUE)
+            }
+        }
+        if (format == "unknown" &&
+            !(is.numeric(data[,1])) &&
+            !(is.logical(data[,1]))) { # YC : to handle timeSeries(TRUE)
+            charvec <- data[,1]
+            if (identical(charvec, .signalCounts(NROW(data)))) {
+                # check if rownames are not already a signal
+                # important for large signal series
+                format <- "counts"
+            } else {
+                format <- whichFormat(charvec, silent = TRUE)
+            }
+        }
+    } else {
+        # if format is provided but there is no charvec
+        # try to extract from data
+        if (missing(charvec) || is.null(charvec))
+            charvec <- rownames(data)
+        }
 
 
-          # Construct Time Series:
-          if (format == "counts" || format == "unknown") {
+    # Construct Time Series:
+    if (format == "counts" || format == "unknown") {
 
-              # Signal Counts:
-              charvec <- .signalCounts(1:NROW(data))
-              ans <- .signalSeries(.Object, data, charvec, units, title,
-                                   documentation)
-          } else {
+        # Signal Counts:
+        charvec <- .signalCounts(1:NROW(data))
+        ans <- .signalSeries(.Object, data, charvec, units, title,
+                             documentation)
+    } else {
 
-              # Time Stamps:
-              ans <- .timeSeries(.Object, data, charvec, units, format, zone,
-                                 FinCenter, recordIDs, title,
-                                 documentation, ...)
+        # Time Stamps:
+        ans <- .timeSeries(.Object, data, charvec, units, format, zone,
+                           FinCenter, recordIDs, title,
+                           documentation, ...)
 
-              # check if there was a problem with format
-              if (any(is.na(ans@positions))) {
-                  ans <- timeSeries(data, charvec, units, "counts", zone,
-                                    FinCenter, recordIDs, title,
-                                    documentation, ...)
-                  warning("format provided not valid")
-              }
-          }
+        # check if there was a problem with format
+        if (any(is.na(ans@positions))) {
+            ans <- timeSeries(data, charvec, units, "counts", zone,
+                              FinCenter, recordIDs, title,
+                              documentation, ...)
+            warning("format provided not valid")
+        }
+    }
 
-          # Return Value:
-          ans
-      })
+    # Return Value:
+    ans
+})
+
 
 # ------------------------------------------------------------------------------
 
+
 .timeSeries <-
-    function (.Object, data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
-              documentation = NULL, ...)
+function (.Object, data, charvec, units = NULL, format = NULL, zone = myFinCenter,
+    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+    documentation = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -239,11 +242,13 @@ setMethod("initialize", "timeSeries",
     .Object
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 .signalSeries <-
     function (.Object, data, charvec, units = NULL, title = NULL,
-              documentation = NULL, ...)
+    documentation = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -287,4 +292,6 @@ setMethod("initialize", "timeSeries",
     .Object
 }
 
+
 ################################################################################
+

@@ -21,7 +21,8 @@
 
 durations <-
     function(x, trim = FALSE, units = c("secs", "mins", "hours"))
-{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+{   
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Computes durations from a financial price series
@@ -59,7 +60,8 @@ durations <-
 # ------------------------------------------------------------------------------
 
 
-durationSeries <- function(...)
+durationSeries <- 
+function(...)
 {
     durations(...)
 }

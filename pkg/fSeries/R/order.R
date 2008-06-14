@@ -24,14 +24,15 @@
 ################################################################################
 
 
-orderColnames =
-function(x, ...)
+orderColnames <- 
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns ordered column names of a time Series
 
     # Arguments:
+    #   x - an rectangular object which can be converted into a matrix
 
     # FUNCTION:
 
@@ -46,15 +47,17 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sortColnames =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sortColnames <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns sorted column names of a time Series
 
     # Arguments:
-
+    #   x - an rectangular object which can be converted into a matrix
+    
     # FUNCTION:
 
     # Sort:
@@ -68,15 +71,17 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sampleColnames =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sampleColnames <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns sampled column names of a time Series
 
     # Arguments:
-
+    #   x - an rectangular object which can be converted into a matrix
+    
     # FUNCTION:
 
     # Sample:
@@ -90,9 +95,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-statsColnames =
-function(x, FUN = colMeans, ...)
-{   # A function implemented by Diethelm Wuertz
+statsColnames <- 
+    function(x, FUN = colMeans, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns statistically rearranged column names
@@ -130,9 +136,10 @@ function(x, FUN = colMeans, ...)
 # ------------------------------------------------------------------------------
 
 
-pcaColnames =
-function(x, robust = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+pcaColnames <- 
+    function(x, robust = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns PCA correlation ordered column names
@@ -162,8 +169,9 @@ function(x, robust = FALSE, ...)
 
 
 hclustColnames =
-function(x, method = c("euclidean", "complete"), ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, method = c("euclidean", "complete"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns hierarchical clustered column names

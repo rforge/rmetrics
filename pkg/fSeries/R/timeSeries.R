@@ -21,15 +21,18 @@
 
 timeSeries <-
     function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
-              documentation = NULL, ...)
+    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+    documentation = NULL, ...)
 {
-
+    # Description:
+    
+    # FUNCTION:
+    
     if (missing(data)) data <- numeric()
     if (missing(charvec)) charvec <- NULL
 
     ans <- new("timeSeries", data, charvec, units, format, zone,
-               FinCenter, recordIDs, title, documentation, ...)
+    FinCenter, recordIDs, title, documentation, ...)
 
     # YC: sort import for an ordered data set
     # YC: for a non empty time series
@@ -39,3 +42,7 @@ timeSeries <-
     # Return
     ans
 }
+
+
+################################################################################
+

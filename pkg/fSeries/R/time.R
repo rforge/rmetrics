@@ -29,9 +29,11 @@
 #  end.timeSeries            Extracts end date of a 'timeSeries' object
 ################################################################################
 
-seriesPositions =
-function(object)
-{   # A function implemented by Diethelm Wuertz
+
+seriesPositions <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Extracts the positions of a 'timeSeries' objects and
@@ -64,9 +66,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-"newPositions<-" =
-function(object, value)
-{   # A function implemented by Diethelm Wuertz
+"newPositions<-" <- 
+    function(object, value)
+{   
+    # A function implemented by Diethelm Wuertz
 
     .Deprecated("time<-", "fSeries")
 
@@ -77,12 +80,17 @@ function(object, value)
     ans
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 ## if (!exists("time<-", mode = "function"))
 "time<-" <- function(x, value) UseMethod("time<-")
 
+
 # ------------------------------------------------------------------------------
+
+
 "time<-.timeSeries" <-
     function(x, value)
 {
@@ -95,6 +103,7 @@ function(object, value)
     ans
 
 }
+
 
 ################################################################################
 # METHOD:                   POSITION HANDLING:
@@ -136,29 +145,33 @@ time.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
-# temporary fix until we have a name space and avoid problems with
-# function index in package "zoo"
 
-## if (!exists("index", mode = "function"))
-##     index <- function(x, ...) UseMethod("index")
+    # temporary fix until we have a name space and avoid problems with
+    # function index in package "zoo"
+    
+    ## if (!exists("index", mode = "function"))
+    ##     index <- function(x, ...) UseMethod("index")
+    
+    ## index.timeSeries <- function(x, ...) time.timeSeries(x, ...)
+    
+    ## if (!exists("index<-", mode = "function"))
+    ##     "index<-" <- function(x, value) UseMethod("index<-")
+    
+    ## "index<-.timeSeries" <- function(x, value) time.timeSeries(x, value)
+    
+    ## setMethod("index", "timeSeries",
+    ##           function(x, ...) time.timeSeries(x, ...))
+    ## setMethod("index<-", "timeSeries",
+    ##           function(x,value) "time<-.timeSeries"(x, value))
 
-## index.timeSeries <- function(x, ...) time.timeSeries(x, ...)
-
-## if (!exists("index<-", mode = "function"))
-##     "index<-" <- function(x, value) UseMethod("index<-")
-
-## "index<-.timeSeries" <- function(x, value) time.timeSeries(x, value)
-
-## setMethod("index", "timeSeries",
-##           function(x, ...) time.timeSeries(x, ...))
-## setMethod("index<-", "timeSeries",
-##           function(x,value) "time<-.timeSeries"(x, value))
-
+    
 # ------------------------------------------------------------------------------
 
-sample.timeSeries =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+
+sample.timeSeries <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Time sorts a 'timeSeries' object
@@ -211,11 +224,14 @@ sort.timeSeries <-
     x
 }
 
+
 # ------------------------------------------------------------------------------
 
-rev.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
+rev.timeSeries <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Time reverts a 'timeSeries' object
@@ -241,9 +257,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-start.timeSeries =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+start.timeSeries <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Extracts the first position as a character string
@@ -269,9 +286,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-end.timeSeries =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+end.timeSeries <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Extracts the last position as a character string

@@ -14,7 +14,7 @@
 
 
 ################################################################################
-# S4 METHOD:                   DATABASE ATTACHEMENT:
+# S4 METHOD:                DATABASE ATTACHEMENT:
 #  attach.timeSeries         Attaches a 'timeSeries' object
 ################################################################################
 

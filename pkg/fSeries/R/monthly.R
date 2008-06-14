@@ -23,8 +23,9 @@
 
 
 countMonthlyRecords <-
-function(x)
-{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a series with monthly counts of records
@@ -54,7 +55,8 @@ function(x)
 
 isMonthly <-
     function(x)
-{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
+{   
+    # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Decides if the series consists of monthly records
@@ -73,7 +75,6 @@ isMonthly <-
     Counts <- colSums(countMonthlyRecords(x))[[1]]
     Months <- NROW(x) - 1
 
-
     # Return Value:
     Counts == Months
 }
@@ -84,7 +85,8 @@ isMonthly <-
 
 rollMonthlyWindows <-
     function(x, period = "12m", by = "1m")
-{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
+{   
+    # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns start and end dates for rolling time windows
@@ -139,8 +141,9 @@ rollMonthlyWindows <-
 
 
 rollMonthlySeries <-
-function(x, period = "12m", by = "1m", FUN, ...)
-{   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
+    function(x, period = "12m", by = "1m", FUN, ...)
+{   
+    # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Rolls monthly a 'timeSeries' on a given period
@@ -164,7 +167,7 @@ function(x, period = "12m", by = "1m", FUN, ...)
 
     # Apply Function:
     ans <- applySeries(x = x, from = windows$from, to = windows$to,
-                       FUN = FUN, ...)
+        FUN = FUN, ...)
 
     # Return Value:
     ans

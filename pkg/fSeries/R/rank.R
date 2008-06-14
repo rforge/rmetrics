@@ -20,9 +20,12 @@
 
 
 rank.timeSeries <-
-function(x, ...)
+    function(x, ...)
 {
-    # rank, timeSeries method ...
+    # Description:
+    #   rank, timeSeries method ...
+    
+    # FUNCTION:
 
     x = apply(x, 2, rank, ...)
 

@@ -18,6 +18,7 @@
 #  aggregate                 Aggregates a 'timeSeries' object
 ################################################################################
 
+
 setMethod("aggregate",
           "timeSeries",
           function(x, by = c("monthly", "quarterly"),

@@ -68,7 +68,9 @@ as.timeSeries.default <-
 
 setAs("ANY", "timeSeries", function(from) as.timeSeries.default(from))
 
+
 # ------------------------------------------------------------------------------
+
 
 as.timeSeries.data.frame <-
     function(x, ...)
@@ -131,7 +133,9 @@ as.timeSeries.data.frame <-
     ans
 }
 
+
 setAs("data.frame", "timeSeries", function(from) as.timeSeries.data.frame(from))
+
 
 # ------------------------------------------------------------------------------
 
@@ -156,7 +160,9 @@ function(x, ...)
     ans
 }
 
+
 setAs("character", "timeSeries", function(from) as.timeSeries.character(from))
+
 
 # ------------------------------------------------------------------------------
 
@@ -188,6 +194,7 @@ as.timeSeries.zoo <-
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
 #  as.ts.logical             Converts a 'timeSeries' to 'logical'
 
+
 as.vector.timeSeries <-
     function(x, mode = "any")
 {   # A function implemented by Diethelm Wuertz
@@ -203,15 +210,15 @@ as.vector.timeSeries <-
 
     # FUNCTION:
 
-###     # Check:
-###     stopifnot(isUnivariate(x))
-
-###     # Convert:
-###     rownames = dimnames(x)[[1]]
-###     x = x@Data
-###     class(x) = "numeric"
-###     x = as.vector(x)
-###     names(x) = rownames
+    ###     # Check:
+    ###     stopifnot(isUnivariate(x))
+    
+    ###     # Convert:
+    ###     rownames = dimnames(x)[[1]]
+    ###     x = x@Data
+    ###     class(x) = "numeric"
+    ###     x = as.vector(x)
+    ###     names(x) = rownames
 
     ans <- as.vector(as.matrix(x))
 
@@ -256,6 +263,7 @@ as.matrix.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
+
 as.numeric.timeSeries <-
     function(x, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -281,7 +289,9 @@ as.numeric.timeSeries <-
     ans
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 as.data.frame.timeSeries <-
     function(x, row.names = NULL, optional = NULL, ...)
@@ -312,7 +322,9 @@ as.data.frame.timeSeries <-
     ans
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 as.ts.timeSeries <-
     function(x, ...)
@@ -344,9 +356,13 @@ as.ts.timeSeries <-
     ans
 }
 
+
 # ------------------------------------------------------------------------------
 
-as.logical.timeSeries <- function(x, ...) as.logical(series(x), ...)
+
+as.logical.timeSeries <- 
+function(x, ...) as.logical(series(x), ...)
+
 
 ################################################################################
 

@@ -97,33 +97,42 @@
 # NCOL
 # NROW
 
+
 setMethod("dim", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+
 
 setMethod("dimnames", "timeSeries", function(x) callGeneric(as(x, "matrix")))
 
+
 setMethod("dimnames<-", "timeSeries",
-          function(x, value)
-      {
-          data <- callGeneric(as(x, "matrix"), value)
+function(x, value)
+{
+    data <- callGeneric(as(x, "matrix"), value)
 
-          new("timeSeries", data = data, zone = finCenter(x),
-              FinCenter = finCenter(x), recordIDs = x@recordIDs, title
-              = x@title, documentation = x@documentation)
-      })
+    new("timeSeries", data = data, zone = finCenter(x),
+        FinCenter = finCenter(x), recordIDs = x@recordIDs, 
+        title = x@title, documentation = x@documentation)
+})
 
+      
 # ------------------------------------------------------------------------------
+
 
 # colnames # default methods works fine
 # rownames # default methods works fine
 # colnames<- # default methods works fine because it uses dimnames defined above
 # rownmaes<- # default methods works fine because it uses dimnames defined above
 
+
 # ------------------------------------------------------------------------------
+
 
 setMethod("rownames<-", c("timeSeries", "timeDate"),
-          function(x, value) callGeneric(x, as.character(value)))
+function(x, value) callGeneric(x, as.character(value)))
 
+          
 # ------------------------------------------------------------------------------
+
 
 is.array.timeSeries <-
     function(x)

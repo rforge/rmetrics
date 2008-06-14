@@ -12,6 +12,10 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
+
+################################################################################
+
+
 setGeneric("returns",
            function(x, ...) standardGeneric("returns"), package = "fSeries")
 
@@ -25,3 +29,7 @@ setGeneric("series<-",
 ## setGeneric("index", function(x, ...) standardGeneric("index"), package = "fSeries")
 ## setGeneric("index<-",
 ##            function(x, value) standardGeneric("index<-"), package = "fSeries")
+
+
+################################################################################
+

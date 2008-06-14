@@ -19,9 +19,10 @@
 ################################################################################
 
 
-lag.timeSeries =
-function(x, k = 1, trim = FALSE, units = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+lag.timeSeries <- 
+    function(x, k = 1, trim = FALSE, units = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Lags 'timeSeries' objects.

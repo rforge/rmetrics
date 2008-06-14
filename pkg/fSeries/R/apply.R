@@ -125,7 +125,7 @@ applySeries <-
 
 
 fapply <-
-function(x, from, to, FUN, ...)
+    function(x, from, to, FUN, ...)
 {
     # Check x:
     stopifnot(is(x, "timeSeries"))
@@ -209,7 +209,7 @@ function(x, from, to, FUN, ...)
 
 
 .fapply <-
-function(x, from, to, FUN, ...)
+    function(x, from, to, FUN, ...)
 {
     # A function implemented by Diethelm Wuertz
 

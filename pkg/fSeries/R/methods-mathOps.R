@@ -25,6 +25,7 @@
 #  quantile,timeSeries       Returns quantiles of an univariate 'timeSeries'
 ################################################################################
 
+
 setMethod("Ops", c("timeSeries", "timeSeries"),
           function(e1, e2)
       {
@@ -86,6 +87,7 @@ setMethod("Ops", c("vector", "timeSeries"),
 # important for +/- timeSeries()
 setMethod("+", c("timeSeries", "missing"), function(e1, e2) e1)
 setMethod("-", c("timeSeries", "missing"), function(e1, e2) 0-e1)
+
 
 # ------------------------------------------------------------------------------
 #
@@ -150,20 +152,24 @@ setMethod("trunc",
 
 # ------------------------------------------------------------------------------
 
+
 setMethod("%*%", signature(x = "timeSeries", y = "vector"),
           function(x, y) {
               series(x) <- callGeneric(as(x, "matrix"), y)
               x
           })
 
+          
 setMethod("%*%", signature(x = "timeSeries", y = "ANY"),
           function(x, y)
           stop("invalid or not-yet-implemented %*% method for 'timeSeries'"))
 
+          
 setMethod("%*%", signature(x = "ANY", y = "timeSeries"),
           function(x, y)
           stop("invalid or not-yet-implemented '%*%' method for 'timeSeries'"))
 
+          
 # ------------------------------------------------------------------------------
 
 setMethod("diff", "timeSeries",
