@@ -50,7 +50,7 @@ assetsTest <-
     # FUNCTION:
 
     # Test:
-    FUN = match.fun(FUN)
+    fun = match.fun(FUN)
     test = fun(x, ...)
 
     # Return Value:
