@@ -36,8 +36,8 @@
 test.assetsLPM =
 function()
 {
-    tS = .usPortfolioData()
-    # assetsLPM(x = tS, tau = colMeans(tS), a = 1)                 # CHECK error
+    tS = as.timeSeries(data(LPP2005REC))[, 1:6]
+    assetsLPM(x = tS, tau = colMeans(tS), a = 1)
 
 
 # Return Value:

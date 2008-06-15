@@ -42,10 +42,13 @@
 #  assetsCorTestPlot         Displays and tests pairwise correlations         
 # FUNCTION:                 BIVARIATE CORRELATION PLOTS:                      
 #  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues                    
-#  assetsTreePlot            Displays minimum spanning tree of assets         
+#  *assetsTreePlot            Displays minimum spanning tree of assets         
 #  assetsDendogramPlot       Displays hierarchical clustering dendogram       
 #  .assetsStarPlot           Draws segment diagrams of a multivariate data set
 ################################################################################
+
+
+# *moved to Rmetrics addon Package
 
 
 test.assetsSeriesPlot =
@@ -236,17 +239,21 @@ function()
 test.assetsTreePlot =
 function()
 { 
+    # moved to Rmetrics Addon package 
+    if (FALSE) {
+        
+        # Load Data:
+        DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
+        LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
     
-    # Load Data:
-    DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
-    LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
-
-    # Graph Frame:
-    par(mfrow = c(1, 1))
-
-    # Plot:
-    assetsTreePlot(DJ30)
-    assetsTreePlot(LPP2005)
+        # Graph Frame:
+        par(mfrow = c(1, 1))
+    
+        # Plot:
+        assetsTreePlot(DJ30)
+        assetsTreePlot(LPP2005)
+        
+    }
     
     # Return Value:
     return()
@@ -268,7 +275,7 @@ function()
 
     # Plot:   
     assetsDendrogramPlot(DJ30)
-    assetsDendrogramPlot(LPP2005)                        ### CHECK side text !!!
+    assetsDendrogramPlot(LPP2005)                      
     
     # Return Value:
     return()

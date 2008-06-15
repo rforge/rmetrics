@@ -29,7 +29,8 @@
 
 ################################################################################
 # FUNCTION:             ASSETS NORMALITY TESTS:
-#  assetsTest            TestSuite for multivariate Normal Assets                     
+#  assetsTest            TestSuite for multivariate Normal Assets    
+#  mvshapiroTest         Multivariate Shapiro Test               
 ################################################################################
 
 
@@ -39,6 +40,20 @@ test.assetsTest <-
     # default Method:
     x = assetsSim(100)
     assetsTest(x)
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.mvshapiroTest <- 
+    function()
+{ 
+    # default Method:
+    x = assetsSim(100)
     mvshapiroTest(x)
 
     # Return Value:
