@@ -163,11 +163,9 @@ function(x)
     x.mat = as.matrix(x)
     
     # Require [MASS]: "mve"
-    if (method == "mve") {
-        # require(MASS)
-        ans = MASS::cov.rob(x = x.mat, method = "mve")
-        mu = ans$center
-        Sigma = ans$cov
+    ans = MASS::cov.rob(x = x.mat, method = "mve")
+    mu = ans$center
+    Sigma = ans$cov
     
     # Return Value:
     list(mu = mu, Sigma = Sigma, control = "mveEstimate")
