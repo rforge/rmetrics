@@ -19,7 +19,7 @@
     The functions are:
     
     \tabular{ll}{
-    \code{assetsTest} \tab Test Suite for multivariate Normal distribution, cr
+    \code{assetsTest} \tab Test Suite for multivariate Normal distribution, \cr
     \code{mvshapiroTest} \tab multivaraite Shapiro Test. }
     
 }
