@@ -4,7 +4,6 @@
 
 \alias{assetsDendrogramPlot}
 \alias{assetsCorEigenPlot}
-\alias{assetsTreePlot} 
 
 
 \title{Assets Similarity Plots}
@@ -23,8 +22,7 @@
    
     % SIMILARITY PLOTS:
     \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram, \cr
-    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
-    \code{assetsTreePlot} \tab Displays minimum spanning tree of assets. }
+    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues. }
 }
 
 
@@ -35,8 +33,9 @@ assetsDendrogramPlot(x, labels = TRUE, title = TRUE, box = TRUE,
 assetsCorEigenPlot(x, labels = TRUE, title = TRUE, box = TRUE,
     method = c("pearson", "kendall", "spearman"), \dots)
     
-assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
-    method = "euclidian", seed = NULL, \dots)
+% moved to Rmetrics Addon:
+%assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
+%    method = "euclidian", seed = NULL, \dots)
 }
 
 
@@ -53,22 +52,22 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
         }
     \item{method}{
         [assetsCorgramPlot] - \cr
-        a character string, the type of graph used in the lower panel.\cr
-        [assetsCorEigenPlot] - \cr
-        a character string, the method used to compute the correlation
-        matrixs, ee function \code{cor}.\cr
-        [assetsTreePlot] - \cr
-        a character string, the method used to compute the distance
-        matrix, see function \code{dist}.
+        for the function \code{assetsCorgramPlot} a character string, 
+        the type of graph used in the lower panel, for the function
+        \code{assetsCorEigenPlot} a character string, the method used 
+        to compute the correlation matrix.
+        % [assetsTreePlot] - \cr
+        % a character string, the method used to compute the distance
+        % matrix, see function \code{dist}.
         }   
     \item{title}{
         a logical flag, should a default title be added? By default 
         \code{TRUE}.
         }
-    \item{seed}{
-        an integer value setting the seed in the computation of the 
-        sample ranks.
-        }
+    %item{seed}{
+        % an integer value setting the seed in the computation of the 
+        % sample ranks.
+        % }
     \item{x}{
         any rectangular time series object which can be converted by the 
         function \code{as.matrix()} into a matrix object, e.g. like an 
@@ -78,6 +77,14 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
         optional arguments to be passed.
         }
         
+}
+
+
+\note{
+
+    The function \code{assetsTreePlot} displaying a minimum spanning tree
+    plot has bee moved to the Rmetrics addon package.
+    
 }
 
         
@@ -105,9 +112,6 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
 
 ## assetsCorEigenPlot -
    assetsCorEigenPlot(x)
-
-## assetsTreePlot - 
-   assetsTreePlot(x)
 }
 
 

@@ -3,6 +3,10 @@
 
 \alias{assetsMeanCov}
 
+\alias{covEstimate}
+\alias{mcdEstimate}
+\alias{mveEstimate}
+
 
 \title{Estimation of Mean and Covariances of Asset Sets}
 
@@ -18,6 +22,10 @@
 
 \usage{
 assetsMeanCov(x, FUN = "covEstimate", check = TRUE, force = TRUE, ...)
+
+covEstimate(x)
+mcdEstimate(x)
+mveEstimate(x)
 }
 
 \arguments{
@@ -112,7 +120,8 @@ assetsMeanCov(x, FUN = "covEstimate", check = TRUE, force = TRUE, ...)
     package \code{robustbase}, or "shrink" based on the shrinkage estimator
     from the contributed package \code{corpcor} among others.
     
-    \bold{how to add your own estimator?}
+    
+    \bold{How to add your own estimator?}
     
     You can add your alternative function to compute mean and covariance.
     This is is a function of the kind \code{myEstimator(x, ...)} which

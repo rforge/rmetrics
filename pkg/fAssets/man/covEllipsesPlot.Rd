@@ -50,7 +50,7 @@ covEllipsesPlot(x = list(), \dots)
    
 ## cov - 
    Cov = cov(LPP)
-   robustCov = covMcdEstimator(LPP)$Sigma
+   robustCov = mcdEstimate(LPP)$Sigma
    
 ## covEllipsesPlot -
    covEllipsesPlot(list(Cov, robustCov))  

@@ -26,7 +26,7 @@
     
 
 \usage{
-assetsTest(x, FUN = "mvshapiroTest", title = NULL, description = NULL)
+assetsTest(x, FUN = "mvshapiroTest", title = NULL, description = NULL, \dots)
 
 mvshapiroTest(x, title = NULL, description = NULL)
 }
@@ -62,6 +62,9 @@ mvshapiroTest(x, title = NULL, description = NULL)
         function \code{as.matrix()} into a matrix object, e.g. like an 
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }   
+    \item{\dots}{
+        optional arguments passed to the function \code{FUN}.
+        }
         
 }
 
