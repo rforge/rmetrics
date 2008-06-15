@@ -30,22 +30,27 @@
 ################################################################################
 # FUNCTION:                 MEAN-COVARIANCE ESTIMATION:
 #  assetsMeanCov             Estimates mean and variance for a set of assets
-#   method = "cov"            uses standard covariance estimation
-#   method = "mve"            uses "cov.mve" from [MASS]
-#   method = "mcd"            uses "cov.mcd" from [MASS]
-#   method = "Mcd"            requires "covMcd" from [robustbase]  
-#   method = "OGK"            requires "covOGK" from [robustbase] 
-#   method = "nnve"           uses builtin from [covRobust]
-#   method = "shrink"         uses builtin from [corpcor]
-#   method = "bagged"         uses builtin from [corpcor]
+#  covEstimator              Sample mean/covariance Estimator
+#  mcdEstimator              uses "cov.mve" from [MASS]
+#  mveEstimator              uses "cov.mcd" from [MASS]
 ################################################################################
 
 
+# COMMENTS On PREVIOUS VERSION:
+# RENAMED:                  MEAN-COVARIANCE ESTIMATION:
+#   method = "cov"           covEstimate: uses standard covariance estimation
+#   method = "mve"           mveEstimate: uses "cov.mve" from [MASS]
+#   method = "mcd"           mcdEstimate: uses "cov.mcd" from [MASS]
+# RENAMED AND MOVED TO RMETRICS ADDON PACKAGE:
+#   method = "Mcd"           mcdbaseEstimate: "covMcd" from [robustbase]  
+#   method = "OGK"           ogkbaseEstimate: "covOGK" from [robustbase] 
+#   method = "nnve"          nnveEstimate:    uses builtin from [covRobust]
+#   method = "shrink"        shrinkEstimate:  uses builtin from [corpcor]
+#   method = "bagged"        baggedEstimate:  uses builtin from [corpcor]
+
+
 assetsMeanCov <- 
-    function(x, 
-    method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
-    check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, 
-    alpha = 1/2, ...)
+    function(x, FUN = "covEstimate", check = TRUE, force = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -57,15 +62,9 @@ assetsMeanCov <-
     #       rectangular object of assets which can be converted into
     #       a matrix by the function 'as.matrix'. Optional Dates are 
     #       rownames, instrument names are column names.
-    #   method - Which method should be used to compute the covarinace?
-    #       method = "cov"        standard covariance computation
-    #       method = "shrink"     uses "shrinkage" from [corpcor]
-    #       method = "MCD"        uses "MCD" from [robustbase]
-    #       method = "OGK"        uses "OGK" from [robustbase]
-    #       method = "mve"        uses "mve" from [MASS]
-    #       method = "mcd"        uses "mcd" from [MASS]
-    #       method = "nnve"       uses "nnve" from [covRobust]
-    #       method = "bagged"     uses "bagging" [corpcor]
+    #   FUN - Which estimator should be used to compute the covarinace?
+    #   check - 
+    #   force - 
     #   alpha - MCD: numeric parameter controlling the size of the subsets 
     #       over which the determinant is minimized, i.e., alpha*n observations 
     #       are used for computing the determinant. Allowed values are between 
@@ -77,14 +76,16 @@ assetsMeanCov <-
     #       length 2 containing robust location and scale estimates. See 
     #       scaleTau2, s_Qn, s_Sn, s_mad or s_IQR for examples to be used as 
     #       sigmamu argument.
-    
-    
+       
     # Note:
     #   The output of this function can be used for portfolio
     #   optimization.
     
     # FUNCTION:
     
+    # Settings:
+    fun = match.fun(FUN)
+      
     # Transform Input:
     x.mat = as.matrix(x)
     # method = match.arg(method)
@@ -95,58 +96,11 @@ assetsMeanCov <-
     # Attribute Control List:
     control = c(method = method[1])
     
-    # Compute Classical Covariance:
-    if (method == "cov") {
-        # Classical Covariance Estimation:
-        mu = colMeans(x.mat)
-        Sigma = cov(x.mat)
-    }
-        
-    # From R Package "robustbase":
-    if (method == "MCD" | method == "Mcd") {
-        estimate = robustbase::covMcd(x.mat, alpha = alpha, ...)
-        mu = estimate$center
-        Sigma = estimate$cov
-    }   
-    if (method == "OGK" | method == "Ogk") {
-        estimate = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
-        mu = estimate$center
-        Sigma = estimate$cov     
-    }
-    
-    # [MASS] mve and mcd Routines:
-    if (method == "mve") {
-        # require(MASS)
-        ans = MASS::cov.rob(x = x.mat, method = "mve")
-        mu = ans$center
-        Sigma = ans$cov
-    }
-    if (method == "mcd") {
-        # require(MASS)
-        ans = MASS::cov.rob(x = x.mat, method = "mcd") 
-        mu = ans$center
-        Sigma = ans$cov
-    }    
-        
-    # [corpcor] Shrinkage and Bagging Routines 
-    if (method == "shrink") {
-        fit = .cov.shrink(x = x.mat, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit 
-    } 
-    if (method == "bagged") {
-        fit = .cov.bagged(x = x.mat, R = baggedR, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit 
-        control = c(control, R = as.character(baggedR))
-    }
-        
-    # Nearest Neighbour Variance Estimation:
-    if (method == "nnve") {
-        fit = .cov.nnve(datamat = x.mat, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit$cov
-    }
+    # Compute Mean / Covariance:  
+    estimate = fun(x, ...)
+    mu = estimate$mu
+    Sigma = estimate$Sigma
+    control = estimate$control
        
     # Add Size to Control List:
     control = c(control, size = as.character(N))
@@ -179,6 +133,64 @@ assetsMeanCov <-
     # Return Value:
     ans
 }
+
+
+################################################################################
+
+
+covEstimate <-
+function(x)
+{
+    # Transform to matrix:
+    x.mat = as.matrix(x)
+    
+    # Classical Covariance Estimation:
+    mu = colMeans(x.mat)
+    Sigma = cov(x.mat)
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma, control = "covEstimate")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+mveEstimate <-
+function(x)
+{
+    # Transform to matrix: 
+    x.mat = as.matrix(x)
+    
+    # Require [MASS]: "mve"
+    if (method == "mve") {
+        # require(MASS)
+        ans = MASS::cov.rob(x = x.mat, method = "mve")
+        mu = ans$center
+        Sigma = ans$cov
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma, control = "mveEstimate")
+} 
+       
+    
+# ------------------------------------------------------------------------------
+
+        
+mcdEstimate <-
+function(x)
+{
+    # Transform to matrix: 
+    x.mat = as.matrix(x)
+    
+    # Require(MASS): "mcd"
+    ans = MASS::cov.rob(x = x.mat, method = "mcd") 
+    mu = ans$center
+    Sigma = ans$cov
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma, control = "mcdEstimate")
+} 
 
 
 ################################################################################
