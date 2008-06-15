@@ -30,9 +30,9 @@
 ################################################################################
 # FUNCTION:                 MEAN-COVARIANCE ESTIMATION:
 #  assetsMeanCov             Estimates mean and variance for a set of assets
-#  covEstimator              Sample mean/covariance Estimator
-#  mcdEstimator              uses "cov.mve" from [MASS]
-#  mveEstimator              uses "cov.mcd" from [MASS]
+#  covEstimate               Sample mean/covariance Estimator
+#  mcdEstimate               uses "cov.mve" from [MASS]
+#  mveEstimate               uses "cov.mcd" from [MASS]
 ################################################################################
 
 
@@ -63,8 +63,10 @@ assetsMeanCov <-
     #       a matrix by the function 'as.matrix'. Optional Dates are 
     #       rownames, instrument names are column names.
     #   FUN - Which estimator should be used to compute the covarinace?
-    #   check - 
-    #   force - 
+    #   check - a logical. Should be checked if the covariance matrix
+    #       is positive definite ?
+    #   force - a logical. Should the covariance matrix be forced to be 
+    #       positive definite ?
     #   alpha - MCD: numeric parameter controlling the size of the subsets 
     #       over which the determinant is minimized, i.e., alpha*n observations 
     #       are used for computing the determinant. Allowed values are between 
@@ -78,8 +80,7 @@ assetsMeanCov <-
     #       sigmamu argument.
        
     # Note:
-    #   The output of this function can be used for portfolio
-    #   optimization.
+    #   The output of this function can be used for portfolio optimization.
     
     # FUNCTION:
     
@@ -88,13 +89,8 @@ assetsMeanCov <-
       
     # Transform Input:
     x.mat = as.matrix(x)
-    # method = match.arg(method)
-    method = method[1]
     N = ncol(x)
     assetNames = colnames(x.mat)
-       
-    # Attribute Control List:
-    control = c(method = method[1])
     
     # Compute Mean / Covariance:  
     estimate = fun(x, ...)
