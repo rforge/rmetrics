@@ -31,8 +31,10 @@
 # FUNCTION:                   SIMILARITY PLOTS:
 #  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
 #  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
-#  assetsTreePlot              Displays a minimum spanning tree of assets
 ################################################################################
+
+
+#  assetsTreePlot moved to Rmetrics Addon Package
 
 
 assetsDendrogramPlot <-
@@ -140,55 +142,6 @@ assetsCorEigenPlot <-
 
     # Return Value:
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-assetsTreePlot <-
-    function(x, labels = TRUE, title = TRUE, box = TRUE,
-    method = "euclidian", seed = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays a minimum spanning tree of assets
-
-    # FUNCTION:
-
-    # Settings:
-    if (title) {
-        Main = substitute(x)
-    } else {
-        Main = ""
-    }
-
-    # Compute Distance Matrix:
-    Order = NULL
-    if (class(x) == "dist") {
-        DIST = x
-    } else {
-        # Rank Seed:
-        x = series(x)
-        if (is.null(seed)) {
-            Order = sample(1:ncol(x))
-            x = x[, Order]
-        }
-        DIST = dist(t(x), method[1])
-    }
-    method = attr(DIST, "method")
-
-    # Compute Minimum Spanning Tree"
-    MST = .mst(DIST)
-
-    # Plot Tree:
-    .mstPlot(MST, ".nsca", main = Main, ...)
-    mtext(paste("Distance Method:", method),
-        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)
-
-    # Return Value:
-    invisible(list(mst = MST, dist = DIST, order = Order))
 }
 
 
