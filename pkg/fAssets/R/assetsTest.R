@@ -30,131 +30,32 @@
 ################################################################################
 # FUNCTION:                 ASSETS NORMALITY TESTS:
 #  assetsTest                Tests for multivariate Normal Assets
-#   method = "shapiro"       ... calling Shapiro test
-#   method = "energy"        ... calling E-Statistic (energy) test
-# FUNCTION:                 INTERNAL UTILITY FUNCTIONS:
-#  .mvenergyTest             Multivariate Energy Test
-#  .mvshapiroTest            Multivariate Shapiro Test
-# REQUIREMENTS:             DESCRIPTION:
-#  energy                    Contributed R-package "energy"
-#  boot                      Contributed R-package "boot"
+#  mvshapiroTest             Multivariate Shapiro Test
 ################################################################################
 
 
-assetsTest =
-function(x, method = c("shapiro", "energy"), Replicates = 100,
-title = NULL, description = NULL)
+assetsTest <- 
+    function(x, FUN = "mvshapiroTest", title = NULL, description = NULL, ...)
 {
     # Description:
     #   Tests for multivariate Normal Assets
 
     # Example:
-    #   .mvnormTest(x = assetsSim(100))
-    #   .mvnormTest(x = assetsSim(100), method = "e", Replicates = 99)
+    #   assetsTest(x = assetsSim(100))
+    
+    # Notes old Function call:
+    #   assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
+    #       title = NULL, description = NULL)
 
     # FUNCTION:
 
     # Test:
-    method = match.arg(method)
-    if (method == "shapiro") {
-        test = .mvshapiroTest(x)
-    }
-    if (method == "energy") {
-        test = .mvenergyTest(x, Replicates = Replicates)
-    }
+    FUN = match.fun(FUN)
+    test = fun(x, ...)
 
     # Return Value:
     test
 }
-
-
-################################################################################
-
-
-.mvenergyTest =
-function(x, Replicates = 99, title = NULL, description = NULL)
-{
-    # Description:
-    #   Computes E-statistics test for multivariate variables
-
-    # Note:
-    #   Reimplemented function, doesn't require the contributed
-    #   R package energy, we only use the C Program here.
-
-    # Source:
-    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and
-    #   Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
-    #   License: GPL 2.0 or later
-
-    # Example:
-    #   .mvenergyTest(x = assetsSim(100), 99)
-
-    # FUNCTION:
-
-    # Transform:
-    if (class(x) == "timeSeries") x = series(x)
-    x = as.matrix(x)
-
-    # Test:
-    R = Replicates
-
-    # RVs:
-    n <- nrow(x)
-    d <- ncol(x)
-    ran.gen = function(x, y) return(matrix(rnorm(n * d), nrow = n, ncol = d))
-
-    # Parametric Mini Boot:
-    strata = rep(1, n)
-    n <- nrow(x)
-    temp.str <- strata
-    strata <- tapply(1:n, as.numeric(strata))
-    t0 <- .mvnorm.e(x)
-    lt0 <- length(t0)
-    t.star <- matrix(NA, sum(R), lt0)
-    pred.i <- NULL
-    for(r in 1:R) t.star[r, ] <- .mvnorm.e(ran.gen(x, NULL))
-
-    # Result:
-    test <- list(
-        statistic = c("E-Statistic" = t0),
-        p.value = 1 - mean(t.star < t0),
-        method = "Energy Test",
-        data.name = paste("x, obs ", n, ", dim ", d, ", reps ", R, sep = ""))
-    names(test$p.value) = ""
-    class(test) = "list"
-
-    # Add:
-    if (is.null(title)) title = test$method
-    if (is.null(description)) description = .description()
-
-    # Return Value:
-    new("fHTEST",
-        call = match.call(),
-        data = list(x = x),
-        test = test,
-        title = title,
-        description = description)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mvnorm.e <-
-function(x)
-{
-    z <- scale(x, scale = FALSE)
-    ev <- eigen(var(x), symmetric = TRUE)
-    P <- ev$vectors
-    y <- z %*% (P %*% diag(1 / sqrt(ev$values)) %*% t(P))
-    e <- .C("mvnEstat", y = as.double(t(y)), byrow = as.integer(TRUE),
-        nobs = as.integer(nrow(x)), dim = as.integer(ncol(x)),
-        stat = as.double(0), PACKAGE = "fAssets")$stat
-
-    # Return Value:
-    e
-}
-
 
 
 ################################################################################
@@ -169,8 +70,8 @@ function(x)
 # Depends: stats
 
 
-.mvshapiroTest =
-function(x, title = NULL, description = NULL)
+mvshapiroTest <- 
+    function(x, title = NULL, description = NULL)
 {
     # Description:
     #   Computes Shapiro's normality test for multivariate variables

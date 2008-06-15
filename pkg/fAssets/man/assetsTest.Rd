@@ -3,6 +3,7 @@
 \alias{AssetsTests}
 
 \alias{assetsTest}
+\alias{mvshapiroTest}
 
 
 \title{Testing Multivariate Asset Sets}
@@ -18,14 +19,16 @@
     The functions are:
     
     \tabular{ll}{
-    \code{assetsTest} \tab Test for multivariate Normal distribution. }
+    \code{assetsTest} \tab Test Suite for multivariate Normal distribution, cr
+    \code{mvshapiroTest} \tab multivaraite Shapiro Test. }
     
 }
     
 
 \usage{
-assetsTest(x, method = c("shapiro", "energy"), Replicates = 100, 
-    title = NULL, description = NULL)
+assetsTest(x, FUN = "mvshapiroTest", title = NULL, description = NULL)
+
+mvshapiroTest(x, title = NULL, description = NULL)
 }
 
 
@@ -36,19 +39,20 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
         a character string, assigning a brief description to the
         returned object.
         }
-    \item{method}{
+    \item{FUN}{
         a character string, which allows to select the test.
-        If \code{method="shapiro"} then Shapiro's multivariate Normality 
+        If \code{FUN="mvshapiroTest"} then Shapiro's multivariate Normality 
         test will be applied as implemented in R's contributed package
-        \code{mvnormtest}. If \code{method="energy"} then the E-statistic 
-        (energy) for testing multivariate Normality will be used as proposed 
-        and implemented by Szekely and Rizzo [2005] using parametric 
-        bootstrap.
+        \code{mvnormtest}. 
+        % If \code{method="energy"} then the E-statistic (energy) for 
+        % testing multivariate Normality will be used as proposed 
+        % and implemented by Szekely and Rizzo [2005] using parametric 
+        % bootstrap.
         } 
-    \item{Replicates}{
-        an integer value, the number of bootstrap replicates, by
-        default 100. This value is only used if \code{method="energy"}.
-        }
+    %item{Replicates}{
+        % an integer value, the number of bootstrap replicates, by
+        % default 100. This value is only used if \code{method="energy"}.
+        % }
     \item{title}{
         a character string, assigning a title to an 
         \code{"fASSETS"} object.
@@ -64,11 +68,12 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 
 \note{
     
-    The usage of the alternative \code{method="energy"} requires to
-    load the contributed R package \code{energy}. This is done by the
-    function \code{assetsTest} itself, but it is important to know, 
-    that the packages can only loaded if they are installed.
-    
+    The contributed package \code{energy} contains an alternative function
+    for testing multivariate normality, see the references given below.
+     
+    An implementation of the \code{mvenergyTest} which was previously 
+    available through this package as an alternative to the Shapiro test 
+    has been moved to the Rmetrics Addon package. 
 }
 
 
@@ -78,16 +83,6 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
     \cr
     returns an object of class \code{fHTEST}.     
   
-}
-
-
-\details{
-  
-    \bold{Assets Tests:}
-    \cr\cr   
-    The function \code{assetsTest} performs two tests for multivariate
-    Normality of an assets Set.
-
 }
 
 
@@ -117,8 +112,7 @@ Szekely G.J. (1989);
 
 \author{
 
-    Maria Rizzoand Gabor Szekely for R's \code{energy} package, \cr
-    Diethelm Wuertz for the Rmetrics port.
+    Diethelm Wuertz for this Rmetrics port.
     
 }
 

@@ -29,41 +29,18 @@
 
 ################################################################################
 # FUNCTION:             ASSETS NORMALITY TESTS:
-#  assetsTest            Tests for multivariate Normal Assets
-#   method = "shapiro"    ... calling Shapiro test
-#   method = "energy"     ... calling E-Statistic (energy) test                       
+#  assetsTest            TestSuite for multivariate Normal Assets                     
 ################################################################################
 
 
-test.assetsTestShapiro =
-function()
+test.assetsTest <- 
+    function()
 { 
     # default Method:
     x = assetsSim(100)
     assetsTest(x)
-    assetsTest(x, method = "shapiro")
+    mvshapiroTest(x)
 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.assetsTestEnergy =
-function()
-{ 
-    # Load "energy" Package:
-    # require(energy)
-    
-    # Bivariate Data:
-    x = assetsSim(100)
-    head(x)
-    
-    # Energy Test: 
-    assetsTest(x, method = "energy")
-    
     # Return Value:
     return()
 }
