@@ -64,6 +64,7 @@ covEstimator <-
 # ------------------------------------------------------------------------------
 
 
+if (FALSE) {
 covMcdEstimator <- 
     function(x, spec = NULL, ...)
 {
@@ -83,11 +84,13 @@ covMcdEstimator <-
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
+}
 
 
 # ------------------------------------------------------------------------------
 
 
+if (FALSE) {
 covOGKEstimator <- 
     function(x, spec = NULL, ...)
 {
@@ -106,6 +109,7 @@ covOGKEstimator <-
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
+}
 }
 
 
@@ -160,6 +164,7 @@ mcdEstimator <-
 # ------------------------------------------------------------------------------
 
 
+if (FALSE) {
 shrinkEstimator <- 
     function(x, spec = NULL, ...)
 {
@@ -179,11 +184,14 @@ shrinkEstimator <-
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
+}
 
 
 # ------------------------------------------------------------------------------
 
 
+
+if (FALSE) {
 baggedEstimator <- 
     function(x, spec = NULL, ...)
 {
@@ -203,11 +211,13 @@ baggedEstimator <-
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
+}
 
 
 # ------------------------------------------------------------------------------
 
 
+if (FALSE) {
 nnveEstimator <- 
     function(x, spec = NULL, ...)
 {
@@ -226,6 +236,7 @@ nnveEstimator <-
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)
+}
 }
 
 

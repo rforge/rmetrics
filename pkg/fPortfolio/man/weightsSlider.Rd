@@ -69,17 +69,14 @@ weightsSlider(object, control = list(), \dots)
 
     \describe{
     \item{sliderResolution}{
-        [weightsSlider, frontierSlider] - 
         a numeric, determining the numbers of slider points, by default 
         nFrontierPoints/10.
         } 
     \item{sliderFlag}{
-        [weightsSlider, frontierSlider] - 
         a character string, denoting the slidertype, by default "frontier"
         for \code{frontierSlider} and "weights" for \code{weightsSlider}.
         } 
-    \item{sharpeRatio.col}{
-        [plot, frontierSlider] - 
+    \item{sharpeRatio.col}{ 
         a character string, defining color of the Sharpe
         ratio plot, by default "black".
         }
@@ -92,17 +89,14 @@ weightsSlider(object, control = list(), \dots)
         portfolio, by default "steelblue".
         }
     \item{cml.col}{
-        [plot, frontierSlider] - 
         a character string, defining  color of the market
         portfolio and the capital market line, by default "green".
         }
     \item{equalWeights.col}{
-        [plot, frontierSlider] - 
         a character string, defining the color of the
         equal weights portfolio, by default "blue".
         }
     \item{runningPoint.col}{
-        [weightsSlider] - 
         a character string, defining color of the
         point indicating the current portfolio, by default "red".
         }
@@ -112,12 +106,10 @@ weightsSlider(object, control = list(), \dots)
         of assets, by default \code{rainbow}.
          }
     \item{twoAssets.col}{
-        [plot, frontierSlider] - 
         a character string, defining color of the
          two assets efficient frontier, by default "grey".
          }
     \item{monteCarlo.col}{
-        [plot, frontierSlider] - 
         a character string, defining color of the
         Monte Carlo portfolios, by default "black".
          }     
@@ -132,13 +124,11 @@ weightsSlider(object, control = list(), \dots)
         Default symbol is 17.
         }
     \item{cml.pch}{
-        [plot, frontierSlider] - 
         a number, defining symbol used for the market portfolio.
         See \code{\link{points}} for description.
         Default symbol is 17.
         }
     \item{equalWeights.pch}{
-        [plot, frontierSlider] - 
         a number, defining symbol used for the equal weights portfolio.
         See \code{\link{points}} for description.
         Default symbol is 15.
@@ -149,7 +139,6 @@ weightsSlider(object, control = list(), \dots)
         Default symbol is 18.
         }           
     \item{sharpeRatio.cex}{
-        [plot, frontierSlider] - 
         a number, determining size (percentage) of the
         Sharpe ratio plot, by default 0.1.
         }
@@ -162,17 +151,14 @@ weightsSlider(object, control = list(), \dots)
         tangency portfolio symbol, by default 1.25.
         }
     \item{cml.cex}{
-        [plot, frontierSlider] - 
         a number, determining size (percentage) of the
         market portfolio symbol, by default 1.25.
         }
     \item{equalWeights.cex}{
-        [plot, frontierSlider] - 
         a number, determining size (percentage) of the
         equal weights portfolio symbol, by default 0.8.
         }
     \item{runningPoint.cex}{
-        [weightsSlider] - 
         a number, determining size (percentage) of the
         point indicating the current portfolio
         equal weights portfolio symbol, by default 0.8.
@@ -181,50 +167,42 @@ weightsSlider(object, control = list(), \dots)
         a number, determining size (percentage) of the
         singel asset portfolio symbols, by default 0.8.
         }
-    \item{twoAssets.cex}{
-        [plot, frontierSlider] - 
+    \item{twoAssets.cex}{ 
         a number, determining size (percentage) of the
         two assets efficient frontier plot, by default 0.01.
         }
-    \item{monteCarlo.cex}{
-        [plot, frontierSlider] - 
+    \item{monteCarlo.cex}{ 
         a number, determining size (percentage) of the
         Monte Carol portfolio symbols, by default 0.01.
         }         
     \item{monteCarlo.cex}{
-        [plot, frontierSlider] - 
         a number, determining size (percentage) of the
         Monte Carol portfolio symbols, by default 0.01.
         }
     \item{mcSteps}{
-        [plot] - 
-        a number, determining number of Monte Carol portfolio, by default 5000.
+        a number, determining number of Monte Carol portfolio, 
+        by default 5000.
         }
     \item{pieR}{
-        [plot, frontierSlider] - 
         a vector, containing factors for shrinking and stretching the x- and
         y-axis, by default NULL, i.e. c(1, 1) is used. Default pie size is 
         1/15 of the plot range.
         }
     \item{piePos}{
-        [plot, frontierSlider] - 
         a number, determining the weight on the efficient frontier,
         which is illustrated by the pie. Default is tangency portfolio
         }
     \item{pieOffset}{
-        [plot, frontierSlider] - 
         a vector, containing the pie's x- and y-axis offset from the efficient
         frontier. Default is NULL, i.e. the pie is set one default radius left
         of the efficient frontier.
         }
     \item{xlim}{
-        [weightsSlider, frontierSlider] - 
         a vector, containing x-axis plot limits of the efficient frontier.
         Default setting is maximum of frontier range or single assets 
         portfolios.
         }
     \item{ylim}{
-        [weightsSlider, frontierSlider] - 
         a vector, containing y-axis plot limits of the efficient frontier.
         Default setting is maximum of frontier range or single assets 
         portfolios. 

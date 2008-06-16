@@ -353,7 +353,7 @@ covRiskBudgetsLinePlot <-
 # ------------------------------------------------------------------------------
 
 
-tailRiskBudgetsLinePlot <- 
+.tailRiskBudgetsLinePlot <- 
     function(object, labels = TRUE, col = NULL, title = TRUE, 
     box = TRUE, legend = TRUE, ...)
 {   
