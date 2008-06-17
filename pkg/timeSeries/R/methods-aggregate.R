@@ -21,7 +21,7 @@
 setMethod("aggregate",
           "timeSeries",
           function(x, by, FUN, ...)
-      {   # A function implemented by  Diethelm Wuertz and Yohan Chalabi
+      {   # A function implemented by Yohan Chalabi and  Diethelm Wuertz
 
           # Description:
           #   Aggregates a 'timeSeries' object

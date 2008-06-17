@@ -130,7 +130,7 @@ as.double.timeDate <-
 as.data.frame.timeDate <-
     function(x, ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'timeDate' object as data frame

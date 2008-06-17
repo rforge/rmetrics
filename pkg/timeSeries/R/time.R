@@ -124,7 +124,7 @@ setMethod("time" ,
           # Get Positions:
           ans <-
               if (x@format == "counts") {
-                  as.integer(x@positions)
+                  as.numeric(x@positions)
               } else {
                   timeDate(charvec = x@positions, format = x@format,
                            zone = x@FinCenter, FinCenter = x@FinCenter)
