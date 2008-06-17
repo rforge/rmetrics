@@ -52,16 +52,16 @@
 # ------------------------------------------------------------------------------
 
 
-colStats <- 
+colStats <-
     function(x, FUN, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample statistics by column
 
     # FUNCTION:
-    
+
     # Statistics:
     apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
 }
@@ -70,27 +70,27 @@ colStats <-
 # ------------------------------------------------------------------------------
 
 
-colSums <- 
-    function(x, ...) 
+colSums <-
+    function(x, ...)
 {
     # FUNCTION:
-    
+
     if (class(x) == "timeSeries") {
         return(colStats(x, "sum", ...))
     } else {
         return(base::colSums(x, ...))
     }
 }
-    
+
 
 # ------------------------------------------------------------------------------
 
 
-colMeans <- 
+colMeans <-
     function(x, ...)
 {
     # FUNCTION:
-    
+
     if (class(x) == "timeSeries") {
         return(colStats(x, "mean", ...))
     } else {
@@ -102,26 +102,26 @@ colMeans <-
 # ------------------------------------------------------------------------------
 
 
-colSds <- function(x, ...) { colStats(x, "sd", ...) }       
-colVars <- function(x, ...) { colStats(x, "var", ...) }      
-colSkewness <- function(x, ...) { colStats(x, "skewness", ...) }   
-colKurtosis <- function(x, ...) { colStats(x, "kurtosis", ...) } 
-colMaxs <- function(x, ...) { colStats(x, "max", ...) } 
-colMins <- function(x, ...) { colStats(x, "min", ...) }      
-colProds <- function(x, ...) { colStats(x, "prod", ...) } 
+colSds <- function(x, ...) { colStats(x, "sd", ...) }
+colVars <- function(x, ...) { colStats(x, "var", ...) }
+colSkewness <- function(x, ...) { colStats(x, "skewness", ...) }
+colKurtosis <- function(x, ...) { colStats(x, "kurtosis", ...) }
+colMaxs <- function(x, ...) { colStats(x, "max", ...) }
+colMins <- function(x, ...) { colStats(x, "min", ...) }
+colProds <- function(x, ...) { colStats(x, "prod", ...) }
 
 
 # ------------------------------------------------------------------------------
 
 
-colQuantiles <-  
-function(x, prob = 0.05, ...) 
-{ 
+colQuantiles <-
+function(x, prob = 0.05, ...)
+{
     # FUNCTION:
-    
+
     stopifnot(length(prob) == 1)
-    colStats(x, "quantile", probs = prob, ...) 
-} 
+    colStats(x, "quantile", probs = prob, ...)
+}
 
 
 # ------------------------------------------------------------------------------
@@ -134,10 +134,10 @@ colStdevs <- colSds
 # ------------------------------------------------------------------------------
 
 
-mean.timeSeries <- colMeans
-var.timeSeries <- colVars
+# mean.timeSeries <- colMeans
+# var.timeSeries <- colVars
 
 
 ################################################################################
 
-    
+

@@ -61,6 +61,7 @@ if (!try(system("zdump"))) {
             timeSys <- timeDate(paste(dts, tms), format =  "%b %d %Y %H:%M:%S",
                                 zone = finCenter[k], FinCenter = finCenter[k])
 
+
             timeTest <- Sys.timeDate(finCenter[k])
 
             # round and compare

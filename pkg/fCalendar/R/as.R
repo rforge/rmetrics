@@ -151,9 +151,10 @@ as.data.frame.timeDate <-
     stopifnot(inherits(x, "timeDate"))
 
     # Data Frame:
-    ans = as.data.frame.POSIXlt(x@Data, ...)
-    colnames(ans) = paste(x@FinCenter, ":", substitute(x), sep = "")
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    ans <- as.data.frame.POSIXlt(x@Data, ...)
+    nm <- paste(deparse(substitute(x), width.cutoff = 500), collapse = " ")
+    colnames(ans) <- paste(x@FinCenter, ":", nm, sep = "")
+    attr(ans, "control") <- c(FinCenter = x@FinCenter)
 
     # Reset Time Zone:
     Sys.setenv(TZ = myTZ)

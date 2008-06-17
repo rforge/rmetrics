@@ -156,7 +156,9 @@ setMethod("time" ,
 
 # ------------------------------------------------------------------------------
 
-setMethod("sample" , "timeSeries",  function(x, ...) x[sample(seq(NROW(x))), ])
+setMethod("sample" , "timeSeries",
+          function(x, size, replace = FALSE, prob = NULL)
+          x[sample(seq(NROW(x)), size, replace, prob), ])
 
 # ------------------------------------------------------------------------------
 

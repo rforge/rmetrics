@@ -35,6 +35,7 @@ function(lib, pkg)
     methods:::bind_activation(TRUE)
 }
 
+.onLoad <- function(libname, pkgname) methods:::bind_activation(TRUE)
 .onUnload <- function(libpath) methods:::bind_activation(FALSE)
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
