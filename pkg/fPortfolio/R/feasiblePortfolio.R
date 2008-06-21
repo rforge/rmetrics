@@ -92,6 +92,7 @@ feasiblePortfolio <-
 
     # Compute Risk Budgets:
     covRiskBudgets = (weights * Cov %*% weights)[,1] / cov^2
+    names(covRiskBudgets) = names(weights)
 
     # Compose Portfolio:
     portfolio = list(
