@@ -121,8 +121,6 @@ Schaefer J., Strimmer K. (2005);
 \examples{
 ## berndtInvest -
    X = as.timeSeries(data(berndtInvest))
-   
-   # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
    select = c("CONTIL", "DATGEN", "TANDY", "DEC")
    
    # Convert into a timeSeries object:
@@ -130,10 +128,7 @@ Schaefer J., Strimmer K. (2005);
    head(berndtAssets.tS)
    
 ## Classical Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "cov")
-   
-## shrinkage Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "mcd")
+   mcdEstimator(berndtAssets.tS)
 }
 
 
