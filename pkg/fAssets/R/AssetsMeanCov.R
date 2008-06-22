@@ -67,17 +67,6 @@ assetsMeanCov <-
     #       is positive definite ?
     #   force - a logical. Should the covariance matrix be forced to be 
     #       positive definite ?
-    #   alpha - MCD: numeric parameter controlling the size of the subsets 
-    #       over which the determinant is minimized, i.e., alpha*n observations 
-    #       are used for computing the determinant. Allowed values are between 
-    #       0.5 and 1 and the default is 0.5.
-    #   sigma.mu - OGK: a function that computes univariate robust location 
-    #       and scale estimates. By default it should return a single numeric 
-    #       value containing the robust scale (standard deviation) estimate. 
-    #       When mu.too is true, sigmamu() should return a numeric vector of 
-    #       length 2 containing robust location and scale estimates. See 
-    #       scaleTau2, s_Qn, s_Sn, s_mad or s_IQR for examples to be used as 
-    #       sigmamu argument.
        
     # Note:
     #   The output of this function can be used for portfolio optimization.
