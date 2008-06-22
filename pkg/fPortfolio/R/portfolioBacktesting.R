@@ -145,7 +145,7 @@ portfolioBacktesting <-
             cat(as.character(from[i]), as.character(to[i]))
 
             tgReturn = as.vector(getTargetReturn(portfolio))
-            cat("\t", round(tgReturn, digits = 3))
+            cat("\t", round(tgReturn[1], digits = 3))
 
             bmReturn = mean(series(bmSeries))
             cat("\t", round(bmReturn, digits = 3))
@@ -263,7 +263,7 @@ plot.portfolioBacktest <-
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 .backtestAssetsPlot <-
@@ -295,7 +295,7 @@ plot.portfolioBacktest <-
         ylab = ""
     }
 
-    # Plot Range:
+    # ylim - Plot Range:
     nAssets = length(assets)
     MAX = -1e99
     for (i in 1:nAssets) MAX = max(c(MAX, cumsum(x[, assets[i]])) )
@@ -304,18 +304,33 @@ plot.portfolioBacktest <-
     for (i in 1:nAssets) MIN = min(MIN, cumsum(x[, assets[i]]))
     MIN = min(MIN, cumsum(x[, benchmark]))
     ylim = c(MIN, MAX)
-
+    
+    # xlim - Plot Range:
+    xlim = range(time(colCumsums(x[, benchmark])))
+    shift = round(0.20 *as.integer(diff(xlim)), 0) * 24 * 60 * 60
+    xlim = c(round(xlim[1]-shift), xlim[2])
+    Days = 1:as.integer(diff(xlim))
+    Time = as.character(xlim[1] + Days*24*60*60)
+    range.tS = timeSeries(data = matrix(rep(0, length(Time))), as.character(Time))
+    
     # Plot:
-    plot(colCumsums(x[, benchmark]), type = "l", ylab = ylab, col = "black",
-        ylim = ylim, ...)
+    plot(range.tS, xlab = "", ylab = ylab, col = 0, ylim = ylim, ...)
+    lines(colCumsums(x[, benchmark]), col = "black")
+    lines(colCumsums(x[, benchmark]), col = "black")
     for (i in 1:nAssets)
-        lines( colCumsums(x[, assets[i]]), type = "l", col = i+1)
+        lines( colCumsums(x[, assets[i]]), col = i+1)
     if (labels) {
-        assetsTitle = paste(assets, collapse = " - ", sep = "")
-        title(main = paste(benchmark, "~", assetsTitle))
-        grid()
-        legend("topleft", legend = c(benchmark, assets), bty = "n",
-            text.col = 1:(nAssets+1))
+        Benchmark = abbreviate(benchmark, 4)
+        Assets = abbreviate(assets, 4)
+        assetsTitle = paste(Assets, collapse = " - ", sep = "")
+        title(main = "Time Series")
+        mtext(assetsTitle, line = 0.5, cex = 0.7)
+        grid(NA, ny = NULL)
+        legend("topleft", 
+            legend = c(Benchmark, Assets),
+            bty = "n",
+            text.col = 1:(nAssets+1), 
+            cex = 0.8)
     }
 
     # Return Value:
@@ -354,7 +369,7 @@ plot.portfolioBacktest <-
     # Labels ?
     if (labels) {
         xlab = ""
-        ylab = "Weights Factor"
+        ylab = "Weights %"
         main = "Weights Recommendation"
     } else {
         xlab = ""
@@ -369,18 +384,19 @@ plot.portfolioBacktest <-
 
     # Plot:
     ### ts.plot(rbind(naWeights, weights), xlim = c(horizonLength,
-    ### horizonLength - 1 + NROW(weights)), ylim = c(0, 1), col =
-    ### 2:(nAssets+1), gpars = gpars)
+    ###     horizonLength - 1 + NROW(weights)), ylim = c(0, 1), 
+    ###     col = 2:(nAssets+1), gpars = gpars)
 
-    plot(timeSeries(weights), ylim = c(0, 1), ann = FALSE,
+    plot(100*timeSeries(weights), ylim = c(0, 100), ann = FALSE,
          col = 2:(nAssets+1), plot.type = "single", ...)
 
     # Labels ?
     if (labels) {
         title(main = main, xlab = xlab, ylab = ylab)
-        text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
+        text = paste(
+            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
-        grid()
+        grid(NA, ny = NULL)
     }
 
     # Return Value:
@@ -418,7 +434,7 @@ plot.portfolioBacktest <-
     # labels ?
     if (labels) {
         xlab = ""
-        ylab = "Weights Changes"
+        ylab = "Weights Changes %"
         main = "Weights Rearrangement"
     } else {
         xlab = ""
@@ -437,19 +453,24 @@ plot.portfolioBacktest <-
 
     ### # Plot:
     ### ts.plot(diffWeights,
-    ### xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
-    ### col = 1:(nAssets+1), gpars = gpars)
+    ###     xlim = c(horizonLength, horizonLength - 1 + NROW(weights)),
+    ###     col = 1:(nAssets+1), gpars = gpars)
 
-    ts <- timeSeries(diffWeights[-seq(horizon + 1),],
-                     charvec = rownames(diffWeights)[-seq(horizon + 1)])
-    plot(ts, col = 1:(nAssets+1), ann = FALSE, plot.type = "single", ...)
-
+    tS <- 100 * timeSeries(diffWeights[-seq(horizon + 1),],
+        charvec = rownames(diffWeights)[-seq(horizon + 1)])
+    plot(tS[, 1], type = "h", lwd = 1, col = "darkgrey",
+        ylim = range(as.matrix(tS)), xlab = "", ylab = "")
+    for (i in 2:NCOL(tS)) lines(tS[, i], col = i)
+    
+    #lines(tS, col = 1:(nAssets+1), ann = FALSE, plot.type = "single", ...)
+    
     # Add Labels"
     if(labels) {
         title(main = main, xlab = xlab, ylab = ylab)
-        text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
+        text = paste(
+            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
-        grid()
+        grid(NA, ny = NULL)
     }
 
     # Return Value:
@@ -469,6 +490,8 @@ plot.portfolioBacktest <-
     #   Backtest Portfolio Plot:
 
     # Arguments:
+    #   object
+    #   labels
 
     # FUNCTION:
 
@@ -483,7 +506,7 @@ plot.portfolioBacktest <-
 
     # Labels ?
     if (labels) {
-        ylab = "Total Percentage Return"
+        ylab = "Cumulated"
         main = "Portfolio versus Benchmark"
     } else {
         ylab = ""
@@ -502,28 +525,36 @@ plot.portfolioBacktest <-
     cumB <- rbind(offsetTS, cumB)
 
     # Plot:
-    MAX = max(as.vector(series(cumP)), as.vector(series(cumB)), as.vector(series(cumX)))
-    MIN = min(as.vector(series(cumP)), as.vector(series(cumB)), as.vector(series(cumX)))
+    MAX = max(as.vector(series(cumP)), as.vector(series(cumB)), 
+            as.vector(series(cumX)))
+    MIN = min(as.vector(series(cumP)), as.vector(series(cumB)), 
+            as.vector(series(cumX)))
     plot(cumX, type = "l", col = "black", ylim = c(MIN, MAX), ann = FALSE, ...)
+    lines(cumP-cumB, type = "h", col = "grey")
     lines(cumP, col = "red", lwd = 2)
     lines(cumB, col = "blue", lwd = 2)
-
-    lines(cumP-cumB, col = "green", lwd = 2)
 
     # Add Labels"
     if(labels) {
         title(main = main, ylab = ylab)
-        text = paste("Horizon = ", horizon, "| Smoothing:", smoothing)
+        text = paste(
+            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
-        grid()
+        grid(NA, ny = NULL)
     }
+    
+    # mText:
+    mText = Type = getType(object$spec)
+    Estimator = getEstimator(object$spec)
+    if (Type == "MV") mText = paste(mText, "|", Estimator)
+    mtext(mText, side = 4, line = 0, adj = 0, col = "darkgrey", cex = 0.7)
 
     # Return Value:
     invisible()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 print.portfolioBacktest <-
