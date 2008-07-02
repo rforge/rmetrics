@@ -134,8 +134,11 @@ setMethod("[",
           signature(x = "timeSeries", i = "missing", j = "character"),
           function(x, i, j, ..., drop = FALSE)
       {
-          j <- (x@units %in% j)
-
+          # j <- (x@units %in% j)
+          ## DW & MB:
+          ##    Must be !!!
+          j <- match(j, x@units)
+          
           if (!any(j))
               stop("subscript out of bounds")
 
