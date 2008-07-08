@@ -40,7 +40,7 @@
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets date of the current year
+    #   Returns current year
     
     # FUNCTION:
     
@@ -64,3 +64,33 @@ currentYear <- .currentYear()
 
 ################################################################################
 
+
+.currentMonth <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns current month
+    
+    # FUNCTION:
+    
+    # Check Time Zone:
+    TZ <- Sys.getenv("TZ")
+    if(TZ[[1]] != "GMT") {
+        Sys.setenv(TZ = "GMT")
+        on.exit(Sys.setenv(TZ = TZ))
+    }
+
+    # Return current year:
+    as.POSIXlt(Sys.time())$mon + 1
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+currentMonth <- .currentMonth()
+
+
+################################################################################

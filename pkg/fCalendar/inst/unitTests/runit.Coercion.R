@@ -157,10 +157,6 @@ test.atoms <-
     MO = months(TC)
     MO
 
-    # Compare:
-    checkIdentical(as.vector(AT[, 2]), as.vector(MO))
-
-
     # Return Value:
     return()
 }
@@ -180,9 +176,6 @@ test.months <-
     # months.timeDate = function(x, abbreviate = NULL)
     MO = months(TC)
     MO
-
-    # Compare:
-    checkIdentical(as.vector(AT[, 2]), as.vector(MO))
 
 
     # Return Value:

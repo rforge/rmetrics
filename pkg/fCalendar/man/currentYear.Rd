@@ -5,23 +5,25 @@
 
 
 \alias{currentYear}
+\alias{currentMonth}
 
 
 \description{
 
-    A variable with the current year.
+    Returns the current year and/or month.
 
 }
 
 
 \usage{
 currentYear
+currentMonth
 }
 
 
 \value{
 
-    returns the current year, a numeric variable.
+    returns the current year or month, a numeric variable.
 
 }
 
@@ -36,6 +38,9 @@ currentYear
 \examples{
 ## currentYear -
    currentYear
+   
+## currentMonth -
+   currentMonth
 }
 
 

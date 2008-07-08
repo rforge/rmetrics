@@ -177,7 +177,7 @@ function(x = timeCalendar(), subset = "::")
     date = strsplit(subset, "::")[[1]]
       
     # 1. DATE
-    if(code == "00000") ans = x[grep(date, format(tC))]
+    if(code == "00000") ans = x[grep(date, format(x))]
     
     # 2. ::
     if(code == "00010") ans = x

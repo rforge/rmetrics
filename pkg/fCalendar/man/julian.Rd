@@ -1,30 +1,34 @@
-\name{julian}
+\name{weekdays}
 
 
-\title{Julian Counts and Calendar Atoms}
+\title{Extract Parts of a 'timeDate' Object}
 
 
-\alias{julian.timeDate}
-\alias{atoms.timeDate}
+\alias{weekdays.timeDate}
 \alias{months.timeDate}
+\alias{quarters.timeDate}
+\alias{julian.timeDate}
+
+
+\alias{atoms.timeDate}
 
 
 \description{
     
-    Returns Julian day counts, date/time atoms from a 'timeDate' object, 
-    and extracts month atoms from a 'timeDate' object.  
+    Extract the weekday, month or quarter, or the Julian 
+    time (days since some origin). 
        
 }
 
 
 \usage{
-\method{julian}{timeDate}(x, origin = timeDate("1970-01-01"), 
-    units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
-    zone = NULL, FinCenter = NULL, \dots)
+\method{weekdays}{timeDate}(x, abbreviate = FALSE) 
+\method{months}{timeDate}(x, abbreviate = FALSE) 
+\method{quarters}{timeDate}(x, \dots) 
+\method{julian}{timeDate}(x, 
+   origin = timeDate("1970-01-01", zone = "GMT", FinCenter = "GMT"), \dots) 
 
 \method{atoms}{timeDate}(x, \dots)
-
-\method{months}{timeDate}(x, abbreviate = NULL)
 }
 
 
@@ -33,24 +37,12 @@
     \item{x}{
         an object of class \code{timeDate}.
         }
-    \item{origin}{
-        a length-one object inheriting from class \code{"timeDate"}
-        setting the origin for the julian counter.
-        }
-    \item{units}{
-        a character string denoting the date/time units in which the 
-        results are desired.
-        }
-    \item{zone}{
-        the time zone or financial center where the data were recorded.
-        }
-    \item{FinCenter}{
-        a character with the the location of the  
-        financial center named as "continent/city". 
-        }   
     \item{abbreviate}{
-        currently not used.
-        }   
+        a logical value. Should the names be abbreviated?
+        }
+    \item{origin}{
+        an length-one object of class \code{timeDate}.
+        }  
     \item{\dots}{
         arguments passed to other methods.
         }
@@ -60,11 +52,17 @@
 
 \value{
   
-    \code{julian} 
-    returns a \code{timeDate} object as a Julian count.
-    
-    \code{atoms} and \code{months}
-    extrac from a \code{timeDate} object the calendar atoms, i.e.
+    \code{weekdays} and \code{months} return a character vector of 
+    names in the locale in use. 
+
+    \code{quarters} returns a character vector of \code{"Q1"} to 
+    \code{"Q4"}. 
+
+    \code{julian} returns the number of days (possibly fractional) 
+    since the origin, with the origin as a \code{origin} attribute.
+
+    \code{atoms}
+    extracs from a \code{timeDate} object the calendar atoms, i.e.
     the year, month, day, and optionally hour, minute and second.
     
 }
@@ -72,15 +70,26 @@
 
 
 \examples{
-## julian -
-   tC = timeCalendar()
-   julian(tC)[1:3]
+## timeDate -
+   # Create Dates:
+   charvec = "2008-03-31 22:00:00"
+   print(charvec)
+   NYC = timeDate(charvec, zone = "NewYork", FinCenter = "NewYork")
+   ZRH = timeDate(charvec, zone = "NewYork", FinCenter = "Zurich")
+    
+   NYC
+   weekdays(NYC, TRUE)
+   months(NYC, TRUE)
+   quarters(NYC)
+   julian(NYC)
    
-## atoms -
-   atoms(tC)
-   
-## months -
-   months(tC)
+   ZRH
+   weekdays(ZRH, TRUE)
+   months(ZRH, TRUE)
+   quarters(ZRH)
+   julian(ZRH)
+
+   julian(ZRH)-julian(NYC)
 }
 
 

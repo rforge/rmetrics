@@ -29,13 +29,144 @@
 
 ################################################################################
 # METHOD:                   DESCRIPTION:
-#  julian.timeDate           Returns Julian day counts since 1970-01-01
-#  atoms.timeDate            Returns date/time atoms from a 'timeDate' object
+#  weekdays.timeDate
 #  months.timeDate           Extracts months atom from a 'timeDate' object
+#  quarters.timeDate
+#  julian.timeDate           Returns Julian day counts since 1970-01-01
+# FUNCTION:
+#  atoms.timeDate            Returns date/time atoms from a 'timeDate' object
 ################################################################################
 
+
+## DW:
+## R(base) has S3 weekdays(), months(), quarters(), and julian()
+## for POSIXt and Date objects, see help weekdays(base)
+
+
+# ------------------------------------------------------------------------------
  
+
+weekdays.timeDate <- 
+function(x, abbreviate = FALSE) {
+    ans = weekdays(as.POSIXlt(x), abbreviate)
+    attr(ans, "control") <- x@FinCenter
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+months.timeDate <- 
+function(x, abbreviate = FALSE) 
+{
+    ans = months(as.POSIXlt(x), abbreviate)
+    attr(ans, "control") <- x@FinCenter 
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+quarters.timeDate <- 
+function(x, ...) 
+{
+    ans = quarters(as.POSIXlt(x), ...)
+    attr(ans, "control") <- x@FinCenter
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 julian.timeDate <- 
+function(x, 
+    origin = timeDate("1970-01-01", zone = "GMT", FinCenter = "GMT"), ...) 
+{
+    # origin ignored always using 1970-01-01 GMT
+    ans = julian(as.POSIXlt(x), origin = as.POSIXct(origin), ...)
+    attr(ans, "control") <- x@FinCenter
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+# move to unit tests ...
+
+
+.test.weekdays <- 
+function() 
+{
+    charvec = "2008-03-31 22:00:00"
+    print(charvec)
+    NYC = timeDate(charvec, zone = "NewYork", FinCenter = "NewYork")
+    ZRH = timeDate(charvec, zone = "NewYork", FinCenter = "Zurich")
+    print(NYC)
+    print(weekdays(NYC, TRUE))
+    print(months(NYC, TRUE))
+    print(quarters(NYC))
+    print(julian(NYC))
+    print(ZRH)
+    print(weekdays(ZRH, TRUE))
+    print(months(ZRH, TRUE))
+    print(quarters(ZRH))
+    print(julian(ZRH))
+    print(julian(ZRH)-julian(NYC))
+    # Example: .test.weekdays()
+    invisible()
+}
+
+
+
+################################################################################
+# OLD VERSION
+
+
+.months.timeDate <- 
+    function(x, abbreviate = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts months atom from a timeDate object
+
+    # Arguments:
+    #   x - a 'timeDate' object from which to extract the
+    #       month "atom".
+    
+    # Value:
+    #   Returns the month from a 'timeDate' object as an integer
+    #   value or vector with elements ranging between 1 and 12,
+    #   numbering the months from January to December.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.setenv(TZ = "GMT")
+    
+    # Check Class Type:
+    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    
+    # Month:
+    ans = as.POSIXlt(x@Data)$mon+1
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    
+    # Reset Time Zone: 
+    Sys.setenv(TZ = myTZ)
+    
+    # Return Value: 
+    ans
+}
+    
+
+# ------------------------------------------------------------------------------
+# OLD VERSION:
+
+
+.julian.timeDate <- 
     function(x, origin = timeDate("1970-01-01"), 
     units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
     zone = NULL, FinCenter = NULL, ...)
@@ -83,7 +214,8 @@ julian.timeDate <-
 }
     
 
-# ------------------------------------------------------------------------------
+################################################################################
+# Do we need this function ?
 
 
 atoms.timeDate <- 
@@ -112,7 +244,7 @@ atoms.timeDate <-
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # mdy:
-    X = as.POSIXlt(x@Data)
+    X = as.POSIXlt(x)
     Y = X$year + 1900
     m = X$mon + 1
     d = X$mday
@@ -131,47 +263,6 @@ atoms.timeDate <-
     ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-months.timeDate <- 
-    function(x, abbreviate = NULL)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts months atom from a timeDate object
-
-    # Arguments:
-    #   x - a 'timeDate' object from which to extract the
-    #       month "atom".
-    
-    # Value:
-    #   Returns the month from a 'timeDate' object as an integer
-    #   value or vector with elements ranging between 1 and 12,
-    #   numbering the months from January to December.
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Month:
-    ans = as.POSIXlt(x@Data)$mon+1
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
-    
-    # Reset Time Zone: 
-    Sys.setenv(TZ = myTZ)
-    
-    # Return Value: 
-    ans
-}
-    
 
 ################################################################################
 
