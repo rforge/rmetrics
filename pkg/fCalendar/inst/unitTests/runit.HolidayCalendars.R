@@ -112,10 +112,14 @@ test.holidayNYSE <-
         "2009-07-03", # Independence Day (observed)
         "2009-09-07", # Labor Day
         "2009-11-26", # Thanksgiving Day
-        "2009-12-25" ) # Christmas+
+        "2009-12-25") # Christmas
+    
     publishedHolidays <- timeDate( publishedHolidays, zone="NewYork",
         FinCenter="NewYork" )
-    checkTrue(all.equal(publishedHolidays, holidayNYSE(2007:2009)))
+    
+    checkTrue(all.equal(
+        format(publishedHolidays), 
+        format(holidayNYSE(2007:2009))))
 
     # Return Value:
     return()

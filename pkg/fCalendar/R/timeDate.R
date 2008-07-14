@@ -28,9 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  timeDate                  Creates a 'timeDate' object from given dates
-#  .formatFinCenter          Internal called by timeDate
+# FUNCTION:              DESCRIPTION:
+#  timeDate               Creates a 'timeDate' object from given dates
+#  .formatFinCenter       Internal called by timeDate
+#  strptimeDate           Creates for local time stamps a 'timeDate' object
+#  timeNow                Returns the date/time just now as a 'timeDate' object
 ################################################################################
 
 
@@ -154,12 +156,18 @@ timeDate <-
         print(charvec)
         cat("\n")
     }
-    lt <- strptime(charvec, isoFormat)
+    lt <- strptime(charvec, isoFormat, tz = "")
     noTime <- lt$sec == 0 & lt$min == 0 & lt$hour == 0
     noTime <- all(noTime | is.na(noTime))
 
+    # Attach FinCenter to @Data slot
+    Data = as.POSIXct(lt)
+    attr(Data, "FinCenter") <- useFinCenter
+    attr(Data, "usetz") <- FALSE
+    
+    # Return Value:
     new("timeDate",
-        Data = as.POSIXct(lt),
+        Data = Data,
         format = if(noTime) isoDate else isoFormat,
         FinCenter = useFinCenter)
 }
@@ -176,6 +184,8 @@ timeDate <-
     # Description:
     #   Internal function used by function timeDate()
 
+    # FUNCTION:
+    
     if (FinCenter == "GMT")
         return(charvec)
 
@@ -231,10 +241,53 @@ timeDate <-
         offSets = yout[idx]
         dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")
 
-    ## Return Value:
+    # Return Value:
     format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+strptimeDate <- 
+function(x, format = whichFormat(x), tz = myFinCenter)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Creates for local time stamps a 'timeDate' object
+    
+    # Example:
+    #   timeDate(); strptimeDate(as.character(Sys.timeDate()))
+    
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(is.character(x))
+    
+    # Create 'timeDate':
+    ans = timeDate(x, format, zone = tz, FinCenter = tz)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+timeNow <-
+function(FinCenter = myFinCenter) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns the date/time just now as a 'timeDate' object
+    
+    # FUNCTION:
+    
+    timeDate(, , "GMT", FinCenter)
+}
 
 
 ################################################################################
