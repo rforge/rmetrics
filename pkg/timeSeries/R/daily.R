@@ -15,47 +15,10 @@
 
 ################################################################################
 # FUNCTION:                 FOR DAILY OPERATIONS:
-#  dummyDailySeries          Creates a dummy daily 'timeSeries' object
 #  alignDailySeries          Aligns a 'timeSeries' object to new positions
 #  rollDailySeries           Rolls daily a 'timeSeries' on a given period
 #  ohlcDailyPlot             Plots open high low close bar chart
 ################################################################################
-
-
-dummyDailySeries <-
-    function(x = rnorm(365), units = NULL,
-             zone = myFinCenter, FinCenter = myFinCenter)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Creates a dummy daily time Series
-
-    # Arguments:
-    #   x - a numeric vector
-    #   origin - the first date in the series
-
-    # FUNCTION:
-
-    # Check:
-    stopifnot(is.numeric(x))
-    if (is.null(units)) units <- paste("X", 1:NCOL(x), sep = "")
-    stopifnot(length(units)==NCOL(x))
-
-    # Time Series:
-    if (is.vector(x)) data = matrix(x, ncol = 1)
-    if (is.matrix(x)) data = x
-    positions = timeSequence(from = "1970-01-01", length.out =
-        NROW(data), zone = zone, FinCenter = FinCenter)
-    ans = timeSeries(data = data, charvec = positions, units = units,
-        zone = zone, FinCenter = FinCenter)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 alignDailySeries <-
     function (x, method = c("before", "after", "interp", "fillNA"),

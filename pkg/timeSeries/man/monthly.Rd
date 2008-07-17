@@ -75,12 +75,14 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
 \examples{
 ## data - 
    # Microsoft Daily Data Set:
+   require(fEcofin)
    x = as.timeSeries(data(msft.dat))
    countMonthlyRecords(x)
    isMonthly(x)
    
 ## data -   
    # EDHEC Hedge Funds Monthly Data Set
+   require(fEcofin)
    x = as.timeSeries(data(edhec.tS))
    isMonthly(x)   
 }

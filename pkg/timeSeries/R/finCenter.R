@@ -12,7 +12,7 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-finCenter  <-
+finCenter.timeSeries  <-
     function(x)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
@@ -34,7 +34,7 @@ finCenter  <-
 }
 
 
-"finCenter<-" <-
+"finCenter<-.timeSeries" <-
     function(x, value)
 {
     # A function implemented by  Yohan Chalabi and Diethelm Wuertz

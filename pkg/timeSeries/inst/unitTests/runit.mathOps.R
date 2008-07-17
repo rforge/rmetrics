@@ -32,14 +32,14 @@ function()
 {
     # RUnit Test:
 
-    tS = timeSeries(format = "counts")
+    tS = dummySeries(format = "counts")
     tS
     tS - 2
     log(abs(tS))
     diff(tS)
     scale(tS)
 
-    tS = timeSeries()
+    tS = dummySeries()
     tS
     tS - 2
     log(abs(tS))

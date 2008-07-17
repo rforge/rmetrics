@@ -60,21 +60,11 @@ setMethod("aggregate",
 
     x <- sort(x)
 
-    ### INDEX <- sapply(as.POSIXct(time(x)),
-    ###     function(x) which(x <= as.POSIXct(by))[1])
-
     INDEX <- sapply(time(x), function(x) which(x <= by)[1])
-
-    # DW: fixed now you can pass arguments ...
-    #   e.g. take the last
-    #   aggregate(x, from = start(x), to = end(x),
-    #       by = timeSequence(start(x), end(x), by = "month"), tail, n = 1)
-    data <- apply(x, 2, tapply, INDEX, FUN, ...)
-    # Note, maybe now the ... may conflict with dots in timeSeries() 
+    data <- apply(getDataPart(x), 2, tapply, INDEX, FUN)
 
     # Return Value:
-    timeSeries(data, charvec = by[unique(na.omit(INDEX))],
-        FinCenter = by@FinCenter, ...)
+    timeSeries(data, charvec = by[unique(na.omit(INDEX))], ...)
 })
 
 

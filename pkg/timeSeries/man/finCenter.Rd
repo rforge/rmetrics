@@ -28,7 +28,9 @@ finCenter(x) <- value
 
 \examples{
 # A timeSeries object
-ts <- timeSeries(FinCenter = "NewYork")
+data <- matrix(rnorm(24), ncol = 2)
+charvec <- as.character(timeCalendar())
+ts <- timeSeries(data, charvec, FinCenter = "NewYork")
 ts
 
 # print financial center

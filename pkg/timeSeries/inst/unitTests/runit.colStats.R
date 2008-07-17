@@ -32,7 +32,7 @@ function()
     # RUnit Test:
 
     # Signal Series:
-    tS = timeSeries(format = "counts")
+    tS = dummySeries(format = "counts")
     tS
     colStats(tS, mean)
     colSums(tS)
@@ -47,7 +47,7 @@ function()
     colQuantiles(tS)
 
     # timDate Series:
-    tS = timeSeries()
+    tS = dummySeries()
     tS
     colStats(tS, mean)
     colSums(tS)

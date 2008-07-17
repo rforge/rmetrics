@@ -111,7 +111,8 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 
 
 \examples{
-## data - 
+## data -
+   require(fEcofin)
    edhec.tS = as.timeSeries(data(edhec.tS))
    colnames(edhec.tS) = abbreviate(colnames(edhec.tS), 6)
 

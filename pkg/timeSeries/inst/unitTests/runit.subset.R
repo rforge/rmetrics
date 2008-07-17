@@ -31,7 +31,7 @@ test.subset <-
 function()
 {
 
-ts <- timeSeries()
+ts <- dummySeries()
 mat <- as.matrix(ts)
 
 # we want the same subset-ting rules as for a matrix

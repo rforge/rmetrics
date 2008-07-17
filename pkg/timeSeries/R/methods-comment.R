@@ -14,25 +14,23 @@
 
 
 ################################################################################
-# S4 METHOD:                   DATABASE ATTACHEMENT:
-#  attach.timeSeries         Attaches a 'timeSeries' object
+# FUNCTION:                 DESCRIPTION:
+#  comment, timeSeries
+#  comment<-,timeSeries
 ################################################################################
 
+# A function implemented by Yohan Chalabi and Diethelm Wuertz
 
-setMethod("attach", "timeSeries",
-          function(what, pos = 2, name = deparse(substitute(what)),
-                   warn.conflicts = TRUE)
-      {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
+setMethod("comment", "timeSeries", function(x) x@documentation)
 
-          # Description:
-          #   Attaches a 'timeSeries' object
+setMethod("comment<-", "timeSeries",
+          function(x, value)
+          {
+              x@documentation <- paste(value, collapse = " ")
 
-          # FUNCTION:
-
-          callGeneric(as.data.frame(what), pos, name, warn.conflicts)
-
-      })
-
+              # Results
+              x
+          })
 
 ################################################################################
 

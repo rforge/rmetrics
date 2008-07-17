@@ -33,11 +33,11 @@ function()
     # RUnit Test:
 
     # Signal Series:
-    tS = timeSeries(format = "counts")   # problem with Fincenter
+    tS = dummySeries(format = "counts")   # problem with Fincenter
     cumulated(tS)
 
     # timeDate Series:
-    tS = timeSeries()
+    tS = dummySeries()
     cumulated(tS)
 }
 

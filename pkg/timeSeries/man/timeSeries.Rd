@@ -168,7 +168,8 @@ seriesData(object)
 
 
 \examples{
-## data -  
+## data -
+   require(fEcofin)
    # Microsoft Data: 
    myFinCenter <<- "GMT"
    MSFT = as.timeSeries(data(msft.dat))

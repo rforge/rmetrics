@@ -143,7 +143,10 @@ function(x, robust = FALSE, ...)
 
     # Order:
     if (robust) {
-        x.cor = robustbase::covMcd(as.matrix(x), cor = TRUE, ...)$cor
+        if (require(robustbase))
+            x.cor = covMcd(as.matrix(x), cor = TRUE, ...)$cor
+        else
+            stop("package \"robustbase\" cannot be loaded")
     } else {
         x.cor = cor(as.matrix(x), ...)
     }

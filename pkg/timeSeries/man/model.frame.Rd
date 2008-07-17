@@ -70,7 +70,8 @@
 
 \examples{
 ## data -  
-   # Microsoft Data: 
+   # Microsoft Data:
+   require(fEcofin)
    myFinCenter <<- "GMT"
    MSFT = as.timeSeries(data(msft.dat))[1:12, ]
 

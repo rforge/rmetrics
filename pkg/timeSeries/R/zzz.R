@@ -35,7 +35,14 @@ function(lib, pkg)
     methods:::bind_activation(TRUE)
 }
 
-.onLoad <- function(libname, pkgname) methods:::bind_activation(TRUE)
+.onLoad <- function(libname, pkgname) {
+    methods:::bind_activation(TRUE)
+
+    #-> show() of large timeSeries
+    if(is.null(getRmetricsOptions("max.print")))
+        setRmetricsOptions(max.print = 10000)
+}
+
 .onUnload <- function(libpath) methods:::bind_activation(FALSE)
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"

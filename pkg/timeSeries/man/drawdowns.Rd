@@ -77,13 +77,15 @@ drawdownsStats(x, \dots)
 
 
 \examples{
-## data -  
+## data -
+   require(fEcofin)
    # Microsoft Data: 
    myFinCenter <<- "GMT"
    MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
    head(MSFT)
 
-## drawdownsStats -  
+## drawdownsStats -
+   require(fEcofin)
    drawdownsStats(as.timeSeries(data(LPP2005REC))[, "SPI"])
 }
 

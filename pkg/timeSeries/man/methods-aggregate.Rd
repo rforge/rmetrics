@@ -53,7 +53,8 @@
 
 
 \examples{
-## data - 
+## data -
+   require(fEcofin)
    x <- as.timeSeries(data(msft.dat))
 
 ## aggregate by weeks

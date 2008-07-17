@@ -85,6 +85,9 @@ setMethod("returns", "timeSeries",
 
     # FUNCTION:
 
+    # make sure that series is ordered
+    x <- sort(x)
+
     # Get Returns:
     if (na.rm) x <- na.omit(x, ...)
     series(x) <- returns(as(x, "matrix"), method, percentage)

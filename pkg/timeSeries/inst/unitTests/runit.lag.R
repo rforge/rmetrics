@@ -32,13 +32,13 @@ function()
 {
     # RUnit Test:
 
-    tS = round(timeSeries(flormat = "counts"), 3)[, 1]
+    tS = round(dummySeries(flormat = "counts"), 3)[, 1]
     tS
     lag(tS)
     lag(tS, k = -2:2)
     lag(tS, k = -2:2, trim = TRUE)
 
-    tS = round(timeSeries(), 3)[, 1]
+    tS = round(dummySeries(), 3)[, 1]
     tS
     lag(tS)
     lag(tS, k = -2:2)

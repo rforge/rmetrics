@@ -39,7 +39,8 @@
 
 
 \examples{
-## data -  
+## data -
+   require(fEcofin)
    EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 4)
     

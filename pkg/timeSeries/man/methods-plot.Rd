@@ -96,7 +96,8 @@
 
 
 \examples{
-## data -  
+## data -
+   require(fEcofin)
    EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
    colnames(EDHEC) <- abbreviate(colnames(EDHEC), 6)
    finCenter(EDHEC) <- "GMT"
@@ -110,6 +111,7 @@
      main = "EDHEC", xlab = "Return 1", ylab = "Return 2")
      
 ## plot -
+   require(fEcofin)
    # Example 1 - The wrong way to do it!
    ZRH = as.timeSeries(data(DEM98ZRH), zone = "Zurich", FinCenter = "Zurich")
    NYC = as.timeSeries(data(DEM98NYC), zone = "NewYork", FinCenter = "NewYork")
