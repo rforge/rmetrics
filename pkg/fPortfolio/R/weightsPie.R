@@ -25,7 +25,7 @@
 
 ################################################################################
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
-#  weightsPie                   Pie Plots weights
+#  weightsPie                   Pie Plots portfolio weights
 #  weightedReturnsPie           Pie Plots weighted means
 #  covRiskBudgetsPie            Pie Plots covariance risk budgets
 #  tailRiskBudgetsPie           Pie Plots copulae tail risk budgets

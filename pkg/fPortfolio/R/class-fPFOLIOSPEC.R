@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO SPECIFICATION CLASS:
+# FUNCTION:                     DESCRIPTION:
 #  'fPFOLIOSPEC'                 S4 Portfolio Specification Class
 ################################################################################
 

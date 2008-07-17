@@ -25,12 +25,11 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  rdonlp2                      Interface to rdonlp2 solver
+#  rdonlp2                      Portfolio interface to rdonlp2 solver
 #  rdonlp2Control               Control list for "rdnlp2" Solver
 ################################################################################
 
 
-################################################################################
 # Package: Rdonlp2
 # Version: 0.3-1
 # Date: 2007-03-18
@@ -42,7 +41,6 @@
 # Description: DONLP2(http://plato.la.asu.edu/donlp2.html) is a general 
 #   purpose nonlinear constrained programming problem solver written 
 #   by Peter Spelluci. Rdonlp2 is a wrapper library to use it from R.
-################################################################################
 
 
 # Builtin: Requires Rmetrics Package: Cdonlp2
@@ -66,7 +64,7 @@ rdonlp2 <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Interface to rdonlp2 Solver
+    #   Portfolio interface to rdonlp2 Solver
     
     # FUNCTION:
     

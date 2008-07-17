@@ -26,8 +26,9 @@
 ################################################################################
 # FUNCTION:                DESCRIPTION:
 #  solveRdonlp2             Calls Spelucci's donlp2 solver via Rdonp2
-#  .rdonlp2Status           Extracts status from a list returned by solveRdonlp2
-#  .rdonlp2StringsToS4      Converts String Constraints into a fPFOLIOCON object
+#  .solveRdonlp2alt         Alternative Implementation
+#  .rdonlp2Status           Extracts status from solveRdonlp2
+#  .rdonlp2StringsToS4      Converts String to S4 Constraints
 ################################################################################
 
 

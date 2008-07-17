@@ -52,6 +52,8 @@
     # Description:                
     #   Sets the portfolio type for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Type ?
@@ -73,6 +75,8 @@
 
     # Description:                
     #   Sets the portfolio type for a portfolio structure
+     
+    # Arguments:
     
     # FUNCTION:
     
@@ -95,6 +99,8 @@
     # Description:                  
     #   Sets the type of mean-cov estimator for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Estimator ?
@@ -116,6 +122,8 @@
     # Description:                  
     #   Sets optional parameters for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
 
     # Estimator ?
@@ -136,6 +144,8 @@
 
     # Description:                    
     #   Sets the weights vector for a portfolio structure
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -159,6 +169,8 @@
 
     # Description:                                   
     #   Sets the target return value for a portfolio structure
+    
+    # Arguments:
     
     # FUNCTION:
 
@@ -186,6 +198,8 @@
     # Description:                                   
     #   Sets the target return value for a portfolio structure
   
+    # Arguments:
+    
     # FUNCTION:
  
     # Target Return ?
@@ -210,6 +224,8 @@
     # Description:                  
     #   Sets the CVaR alpha significance value for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
  
     # Estimator ?
@@ -230,6 +246,8 @@
 
     # Description:                                   
     #   Sets the risk free rate for a portfolio structure
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -256,6 +274,8 @@
     # Description:                                   
     #   Sets the number of frontier points for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Check Validity:
@@ -281,6 +301,8 @@
 
     # Description:                                   
     #   Sets portfolio status information
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -315,6 +337,8 @@
     #   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
     #   setTailRisk <- .nigDependencyFit(LPP)
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Tail Risk ?
@@ -335,6 +359,8 @@
 
     # Description:
     #   Sets the solver value for a portfolio structure
+    
+    # Arguments:
     
     # FUNCTION:
       
@@ -357,6 +383,8 @@
     # Description:
     #   Sets the solver value for a portfolio structure
     
+    # Arguments:
+    
     # FUNCTION:
       
     # Set Solver:
@@ -377,6 +405,8 @@
 
     # Description:
     #   Sets the trace value for a portfolio structure
+    
+    # Arguments:
     
     # FUNCTION:
     

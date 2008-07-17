@@ -25,7 +25,8 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  solveRsocp                   Seconde order cone programming solver
+#  solveRsocp                   Second order cone programming solver
+#  .SqrtMatrix                  Returns square Root of a quadratic matrix
 ################################################################################
 
 

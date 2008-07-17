@@ -28,7 +28,7 @@
 #  weightsLinePlot                  Plots staggered weights
 #  weightedReturnsLinePlot          Plots staggered weighted returns
 #  covRiskBudgetsLinePlot           Plots covariance risk budgets
-#  NYI tailRiskBudgetsLinePlot          Plots copulae tail risk budgets
+#  NYI tailRiskBudgetsLinePlot      Plots copulae tail risk budgets
 ################################################################################
 
 

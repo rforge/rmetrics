@@ -67,7 +67,7 @@ rollingWindows <-
     stopifnot(periodUnit == "m")
     stopifnot(byUnit == "m")
 
-    # Make Windows - expand series x to a monthly series
+    # Make Windows - expand series x to a monthly series:
     positions = time(x)
     startPositions = unique(timeFirstDayInMonth(positions))
     # for non monthly data

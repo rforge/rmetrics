@@ -29,7 +29,6 @@
 ################################################################################
 
 
-################################################################################
 # Package: quadprog
 # Version: <CRAN>
 # Date: <CRAN>
@@ -40,7 +39,6 @@
 # Description: This package contains routines and documentation for
 #   solving quadratic programming problems.
 # License: GPL-2
-################################################################################
 
 
 # Requires to load contributed R package quadprog

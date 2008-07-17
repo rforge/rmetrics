@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
+# FUNCTION:                     DESCRIPTION:
 #  getData                       Extracts data slot
 #   getSeries                     Extracts assets series data 
 #   getNAssets                    Extracts number of assets from data

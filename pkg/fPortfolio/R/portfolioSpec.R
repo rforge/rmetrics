@@ -24,53 +24,39 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO SPECIFICATION CLASS:
-#  portfolioSpec                 Specifies a portfolio
+# FUNCTION:                     DESCRIPTION:
+#  portfolioSpec                 Specifies a portfolio to be optimized
+#  .checkWeights                 Sets extremely small weights to zero
 ################################################################################
 
 
-.checkWeights <-
-    function(weights, eps = sqrt(.Machine$double.eps))
-{    
-    for(i in 1:length(weights)) {
-        if(abs(weights[i]) < eps) weights[i] = 0
-    }
-    
-    # Return Value:
-    weights
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
 portfolioSpec <-
-    function(
-        model = list(
-             type = "MV",                   # Alt: "LPM", "CVaR"
-             optimize = "minRisk",          # Alt: "maxReturn"
-             estimator = "covEstimator",    # Alt: "shrinkEstimator", 
-                                            #      "lpmEstimator"
-             tailRisk = list(),
-             params = list(alpha = 0.05, a = 1)),
-        portfolio = list(
-             weights = NULL,
-             targetReturn = NULL,
-             targetRisk = NULL,
-             riskFreeRate = 0,
-             nFrontierPoints = 50,
-             status = 0),
-        optim = list(
-             solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
-                                            #      "solveRlpSolve", 
-                                            #      "solveRsocp"
-             objective = NULL,
-             params = list(),
-             control = list(),
-             trace = FALSE)
-        )
+function(
+    model = list(
+         type = "MV",                   # Alt: "LPM", "CVaR"
+         optimize = "minRisk",          # Alt: "maxReturn"
+         estimator = "covEstimator",    # Alt: "shrinkEstimator", 
+                                        #      "lpmEstimator"
+         tailRisk = list(),
+         params = list(alpha = 0.05, a = 1)),
+    portfolio = list(
+         weights = NULL,
+         targetReturn = NULL,
+         targetRisk = NULL,
+         riskFreeRate = 0,
+         nFrontierPoints = 50,
+         status = 0),
+    optim = list(
+         solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
+                                        #      "solveRlpSolve", 
+                                        #      "solveRsocp"
+         objective = NULL,
+         params = list(),
+         control = list(),
+         trace = FALSE)
+    )
 {
-    # A function implemented by Rmetrics
+    # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Description:
     #   Specifies a portfolio to be optimized
@@ -131,6 +117,33 @@ portfolioSpec <-
         model = Model,
         portfolio = Portfolio,
         optim = Optim)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.checkWeights <-
+    function(weights, eps = sqrt(.Machine$double.eps))
+{    
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Sets extremely small weights to zero
+    
+    # Arguments:
+    #   weights - a numeric vector of portfolio weights
+    #   eps - a numeric value, lower bounds of weigths
+    
+    # FUNCTOION:
+    
+    # Check:
+    for(i in 1:length(weights)) {
+        if(abs(weights[i]) < eps) weights[i] = 0
+    }
+    
+    # Return Value:
+    weights
 }
 
 

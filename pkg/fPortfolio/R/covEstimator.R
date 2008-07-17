@@ -27,16 +27,17 @@
 
 
 ################################################################################
-# FUNCTION:                 COVARIANCE ESTIMATION:
+# FUNCTION:                 DESCRIPTION:
 #  covEstimator              uses standard covariance estimation
 #  mveEstimator              uses "cov.mve" from [MASS]
 #  mcdEstimator              uses "cov.mcd" from [MASS]
+# FUNCTION:                 DESCRIPTION:
+# lpmEstimator               Returns lower partial moment estimator
+# FUNCTION:                 DESCRIPTION:
 #  covMcdEstimator           requires "covMcd" from [robustbase]  
 #  covOGKEstimator           requires "covOGK" from [robustbase] 
-#  nnveEstimator             uses builtin from [covRobust]
-#  shrinkEstimator           uses builtin from [corpcor]
-#  baggedEstimator           uses builtin from [corpcor]
-#  lpmEstimator              lower partial momenten Estimator
+#  shrinkEstimator           requires "cov.shrink" from [corpcor]
+#  nnveEstimator             requires "cov.nnve" from [covRobust]
 ################################################################################
 
 
@@ -45,7 +46,10 @@ covEstimator <-
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
     
     # FUNCTION:
     
@@ -64,64 +68,15 @@ covEstimator <-
 # ------------------------------------------------------------------------------
 
 
-if (FALSE) {
-covMcdEstimator <- 
-    function(x, spec = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description
-    
-    # FUNCTION:
-    
-    # Extract Matrix:
-    x.mat = as.matrix(x)
-    
-    # Estimate:
-    mu = colMeans(x.mat)
-    Sigma = robustbase::covMcd(x.mat, alpha = 1/2, ...)$cov
-    
-    # Return Value:
-    list(mu = mu, Sigma = Sigma)
-}
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-covOGKEstimator <- 
-    function(x, spec = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description
-    
-    # FUNCTION:
-    
-    # Extract Matrix:
-    x.mat = as.matrix(x)
-    
-    # Estimate:
-    mu = colMeans(x.mat)
-    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov  
-    
-    # Return Value:
-    list(mu = mu, Sigma = Sigma)
-}
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 mveEstimator <- 
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mveEstimator(x)
     
     # FUNCTION:
     
@@ -145,7 +100,10 @@ mcdEstimator <-
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mcdEstimator(x)
     
     # FUNCTION:
     
@@ -161,85 +119,6 @@ mcdEstimator <-
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-shrinkEstimator <- 
-    function(x, spec = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description
-    
-    # FUNCTION:
-    
-    # Extract Matrix:
-    x.mat = as.matrix(x)
-    
-    # Estimate:
-    mu = colMeans(x.mat)
-    Sigma = .cov.shrink(x = x.mat, ...)
-    
-    # Return Value:
-    list(mu = mu, Sigma = Sigma)
-}
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-
-if (FALSE) {
-baggedEstimator <- 
-    function(x, spec = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description
-    
-    # FUNCTION:
-    
-    # Extract Matrix:
-    x.mat = as.matrix(x)
-    
-    # Estimate:
-    mu = colMeans(x.mat)
-    Sigma = .cov.bagged(x = x.mat, R = 100, ...) 
-    
-    # Return Value:
-    list(mu = mu, Sigma = Sigma)
-}
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-nnveEstimator <- 
-    function(x, spec = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description
-    
-    # FUNCTION:
-    
-    # Extract Matrix:
-    x.mat = as.matrix(x)
-    
-    # Estimate:
-    mu = colMeans(x.mat)
-    Sigma = .cov.nnve(datamat = x.mat, ...)$cov 
-    
-    # Return Value:
-    list(mu = mu, Sigma = Sigma)
-}
-}
-
-
 ################################################################################
 
 
@@ -248,8 +127,11 @@ function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
     #   Returns lower partial moment estimator
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; lpmEstimator(x)
     
     # FUNCTION:
     
@@ -258,9 +140,131 @@ function(x, spec = NULL, ...)
     
     # Estimate:
     mu <- colMeans(x)
-    FUN = match.fun(spec@model$param$tau)
-    a = spec@model$param$a
+    if (is.null(spec)) {
+        FUN = colMeans
+        a = 2
+    } else {
+        FUN = match.fun(spec@model$param$tau)
+        a = spec@model$param$a
+    }
     Sigma <- assetsLPM(x, tau = FUN(x), a = a)$Sigma
+    colnames(Sigma) <- rownames(Sigma) <- names(mu)
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+################################################################################
+
+
+covMcdEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covMcdEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = robustbase::covMcd(x.mat, alpha = 1/2, ...)$cov
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+covOGKEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covOGKEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov  
+    colnames(Sigma) <- rownames(Sigma) <- names(mu)
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+shrinkEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; shrinkEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = corpcor::cov.shrink(x = x.mat, verbose = FALSE, ...)
+    attr(Sigma, "lambda.var") <- NULL
+    attr(Sigma, "lambda.var.estimated") <- NULL
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+nnveEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # Eample:
+    #   x  = as.timeSeries(data(LPP2005REC))[, 1:6]; nnveEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = covRobust::cov.nnve(datamat = x.mat, ...)$cov 
+    colnames(Sigma) <- rownames(Sigma) <- names(mu)
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)

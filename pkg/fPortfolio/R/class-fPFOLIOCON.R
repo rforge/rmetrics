@@ -24,8 +24,8 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO CLASS:
-#  'fPORTFOLIO'                  S4 Portfolio Class
+# FUNCTION:                     DESCRIPTION:
+#  'fPORTFOLIOCON'               S4 Portfolio Constraints Class
 ################################################################################
 
 

@@ -31,7 +31,6 @@
 ################################################################################
 
 
-################################################################################
 # Package: lpSolveAPI
 # Version: 5.5.0.12
 # Date: 2008-05-08
@@ -45,7 +44,6 @@
 #   with support for pure linear, (mixed) integer/binary, semi-continuous
 #   and special ordered sets (SOS) models.
 # License: LGPL version 2
-################################################################################
 
 
 rlpSolve <-
@@ -62,7 +60,7 @@ rlpSolve <-
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 # rlpSolveControl
@@ -70,15 +68,14 @@ rlpSolve <-
     # Not yet implemented
 
 
-################################################################################
-# From KK alternative implementation
+# ------------------------------------------------------------------------------
 
 
 rlp <- 
 function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
     intvec = integer(0), control = list())
 {
-    # KK:
+    # From KK alternative implementation
     
     p <- length(obj)
 

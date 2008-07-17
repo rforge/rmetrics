@@ -2,16 +2,15 @@
 
 
 \alias{covEstimator}
-%\alias{covMcdEstimator}
-%\alias{covOGKEstimator}
 \alias{mveEstimator}
 \alias{mcdEstimator}
-%\alias{shrinkEstimator}
-%\alias{baggedEstimator}
-%\alias{nnveEstimator}
-
 
 \alias{lpmEstimator}
+
+\alias{covMcdEstimator}
+\alias{covOGKEstimator}
+\alias{shrinkEstimator}
+\alias{nnveEstimator}
 
 
 \title{Covariance Estimators}
@@ -27,15 +26,17 @@
 
 \usage{
 covEstimator(x, spec = NULL, ...)
-%covMcdEstimator(x, spec = NULL, ...)
-%covOGKEstimator(x, spec = NULL, ...)
 mveEstimator(x, spec = NULL, ...)
 mcdEstimator(x, spec = NULL, ...)
-%shrinkEstimator(x, spec = NULL, ...)
-%baggedEstimator(x, spec = NULL, ...)
-%nnveEstimator(x, spec = NULL, ...)
+
 
 lpmEstimator(x, spec = NULL, ...)
+
+covMcdEstimator(x, spec = NULL, ...)
+covOGKEstimator(x, spec = NULL, ...)
+shrinkEstimator(x, spec = NULL, ...)
+nnveEstimator(x, spec = NULL, ...)
+
 }
 
 \arguments{
@@ -74,11 +75,10 @@ lpmEstimator(x, spec = NULL, ...)
     \code{covEstimator} uses standard covariance estimation,\cr
     \code{mveEstimator} uses the function "cov.mve" from the MASS package,\cr
     \code{mcdEstimator} uses the function "cov.mcd" from the MASS package,\cr
-    %\code{covMcdEstimator} requires "covMcd" from package robustbase,\cr
-    %\code{covOGKEstimator} requires "covOGK" from package robustbase,\cr
-    %\code{nnveEstimator} uses builtin from package covRobust,\cr
-    %\code{shrinkEstimator} uses builtin from package corpcor,\cr
-    %\code{baggedEstimator} uses builtin from package corpcor, \cr
+    \code{covMcdEstimator} requires "covMcd" from package robustbase,\cr
+    \code{covOGKEstimator} requires "covOGK" from package robustbase,\cr
+    \code{nnveEstimator} uses builtin from package covRobust,\cr
+    \code{shrinkEstimator} uses builtin from package corpcor,\cr
     \code{lpmEstimator} returns lower partial moment estimator.
 
 }

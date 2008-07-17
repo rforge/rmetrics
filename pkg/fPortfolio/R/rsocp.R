@@ -32,8 +32,7 @@
 ################################################################################
 
 
-################################################################################
-# Package: Rsocp
+# Package: Csocp
 # Title: An R extenstion library to use SOCP from R.
 # Version: 0.1
 # Date: 2008-31-01
@@ -43,9 +42,7 @@
 # Description: Second-order cone programming solver 
 #   written by M. Lobo, L. Vandenberghe, and S. Boyd. 
 #   Rsocp is a wrapper library to use it from R.
-# License: Rsocp - GPL | SOCP - (C) see file License
-################################################################################
-
+# License: Rsocp - GPL |
 
 # Requires Rmetrics Package: Csocp
 
@@ -58,9 +55,11 @@ rsocp  <-
 
     # Description:
     #   Second order cone programming
+    
+    # Arguments:
+    #
 
     # Example:
-    #
     #   min x + y
     #   s.t. x^2 + y^2 <= 1
     #       y >= 0

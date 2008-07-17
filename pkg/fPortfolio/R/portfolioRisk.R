@@ -32,7 +32,7 @@
 #  .covRisk                    Computes Covariance Risk
 #  .varRisk                    Computes Value at Risk
 #  .cvarRisk                   Computes Conditional Value at Risk
-# FUNCTION:                   PORTFOLIO UTILITIES:
+# FUNCTION:                   DESCRIPTION:
 #  .cfgFit                     Fits bivariate tail dependency parameter lambda
 #  .lambdaTailRisk             Fits tail lambda for multivariate data
 ################################################################################
@@ -46,13 +46,18 @@ covRisk <-
     # Description:
     #   Computes Covariance Risk for assets given weights
 
+    # Arguments:
+    #   data - any univariate or multivariate object which can
+    #       be transformed into a matrix
+    #   weights - a numeric vector, the weights vector
+    
     # FUNCTION:
 
     # Data:
     Data = as.matrix(data)
     nAssets = dim(Data)[2]
 
-    # Covariance Matrix
+    # Covariance Matrix:
     Sigma = cov(Data)
 
     # Risk:
@@ -78,7 +83,7 @@ varRisk <-
     #   Computes VaR for assets given weights and alpha
 
     # Arguments:
-    #   x - any univariate or multivariate object which can
+    #   data - any univariate or multivariate object which can
     #       be transformed into a matrix
     #   weights - a numeric vector, the weights vector
     #   alpha - a numeric value, the quantile
@@ -108,7 +113,7 @@ cvarRisk <-
     #   Computes CVaR for assets given weights and alpha
 
     # Arguments:
-    #   x - any univariate or multivariate object which can
+    #   data - any univariate or multivariate object which can
     #       be transformed into a matrix
     #   weights - a numeric vector, the weights vector
     #   alpha - a numeric value, the quantile
