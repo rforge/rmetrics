@@ -34,10 +34,10 @@
 
 
 yahooImport <-
-    function (query, file = "tempfile", source = NULL, 
-    frequency = c("daily", "weekly", "monthly"), 
-    from = NULL, to = Sys.timeDate(), nDaysBack = 366, 
-    save = FALSE, sep = ";", try = TRUE) 
+    function (query, file = "tempfile", source = NULL,
+    frequency = c("daily", "weekly", "monthly"),
+    from = NULL, to = Sys.timeDate(), nDaysBack = 366,
+    save = FALSE, sep = ";", try = TRUE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -66,7 +66,7 @@ yahooImport <-
     #   yahooImport(frequency = "monthly", nDaysBack = 366)
 
     # FUNCTION:
-    
+
     # Check:
     stopifnot(length(query) == 1)
 
@@ -94,15 +94,15 @@ yahooImport <-
     Query = paste("s=", query, "&a=", monthFrom, "&b=", dayFrom,
         "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
         "&g=", aggregation, "&x=.csv", sep = "")
-    
+
     # Source:
-    if (is.null(source)) 
+    if (is.null(source))
         source = "http://chart.yahoo.com/table.csv?"
 
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooImport(query, file, source, frequency, from, to, 
+        z = try(yahooImport(query, file, source, frequency, from, to,
             nDaysBack, save, sep, try = FALSE))
         if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access")
@@ -117,26 +117,26 @@ yahooImport <-
         download.file(url = url, destfile = tmp)
 
         # Read data and revert:
-        X = as.timeSeries(read.table(tmp, header = TRUE, sep = ","))    
+        X = as.timeSeries(read.table(tmp, header = TRUE, sep = ","))
     }
-    
+
     # Save to file:
     if (save) {
-        write.table(as.data.frame(X)) 
+        write.table(as.data.frame(X), file = file)
     } else {
-        unlink(file) 
+        unlink(file)
     }
-    
+
     # Result:
-    ans = new("fWEBDATA",     
+    ans = new("fWEBDATA",
         call = match.call(),
         param = c(
-            "Instrument" = query, 
+            "Instrument" = query,
             "Frequency " = frequency),
-        data = X, 
-        title = "Data Import from www.yahoo.com", 
+        data = X,
+        title = "Data Import from www.yahoo.com",
         description = description() )
-        
+
     # Return Value:
     ans
 }
@@ -152,7 +152,7 @@ yahooSeries <-
 
     # Description:
     #   Downloads easily time series data from Yahoo
-    
+
     # Arguments:
     #   symbols - a character vector of symbol names
     #   from - from date
@@ -167,25 +167,25 @@ yahooSeries <-
     #   yahooSeries(c("^DJI", "IBM"), frequency = "monthly")
 
     # FUNCTION:
-        
+
     # Download:
     X = yahooImport(query = symbols[1], ...)@data
     colnames(X) <- paste(symbols[1], colnames(X), sep = ".")
     N = length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            Y = yahooImport(query = symbols[i], ...)@data   
+            Y = yahooImport(query = symbols[i], ...)@data
             colnames(Y) <- paste(symbols[i], colnames(Y), sep = ".")
             X = merge(X, Y)
         }
-    }    
-    
+    }
+
     # Time Window:
     if (is.null(from)) from = to - nDaysBack*24*3600
     X = window(X, from, to)
-    
+
     # Return Value:
-    X  
+    X
 }
 
 
