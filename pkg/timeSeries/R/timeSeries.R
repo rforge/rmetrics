@@ -273,7 +273,6 @@ timeSeries <-
     # get units
     if (is.null(units)) units <- colnames(data)
     if (is.null(units)) units <- paste("SS", 1:nCol, sep = ".")
-    colnames(data) <- units
 
     # get title and description
     if(is.null(title)) title = "Signal Series"
