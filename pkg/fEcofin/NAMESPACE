@@ -1,0 +1,26 @@
+import("fUtilities")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    "ciaByCountry",
+    "ciaByIndicator",
+    "ciaCountries",
+    "ciaIndicators",
+    ".createFactbook",
+    ".createIndicators",
+    "print.ciaCountries",
+    "print.ciaIndicators" 
+)
