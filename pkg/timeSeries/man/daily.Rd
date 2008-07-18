@@ -25,11 +25,11 @@
 
 
 \usage{
-dummyDailySeries(x = rnorm(365), units = NULL, zone = myFinCenter, 
-    FinCenter = myFinCenter)
+dummyDailySeries(x = rnorm(365), units = NULL, zone = "", 
+    FinCenter = "")
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
-    include.weekends = FALSE, units = NULL, zone = myFinCenter, 
-    FinCenter = myFinCenter)
+    include.weekends = FALSE, units = NULL, zone = "", 
+    FinCenter = "")
 rollDailySeries(x, period = "7d", FUN, \dots)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
     xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
@@ -135,7 +135,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \code{rollDailySeries}\cr
     \cr
     returns an object of class \code{timeSeries} with rolling values, 
-    computed from the function \code{FUN"}.
+    computed from the function \code{FUN}.
     \cr
     
     \code{ohlcDailyPlot} 
@@ -148,7 +148,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 ## data - Data Frame:
    require(fEcofin)
    # To work with daily data, the best choice is "GMT"
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))
    head(MSFT)   
    

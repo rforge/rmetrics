@@ -80,7 +80,7 @@ drawdownsStats(x, \dots)
 ## data -
    require(fEcofin)
    # Microsoft Data: 
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
    head(MSFT)
 

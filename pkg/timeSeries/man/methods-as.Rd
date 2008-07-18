@@ -126,7 +126,7 @@
 \examples{
 ## data - timeSeries:
    # Create an artificial timeSeries object:
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    charvec = timeCalendar()
    data = matrix(rnorm(12))
    TS = timeSeries(data, charvec, units = "RAND")

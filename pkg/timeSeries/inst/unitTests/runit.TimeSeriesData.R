@@ -295,7 +295,7 @@ function()
     # quantile.timeSeries - produces sample quantiles of a 'timeSeries' object
 
     # Univariate Series:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     data = matrix(round(rnorm(12), 2))
     charvec = format(timeCalendar(2006))
     uTS = timeSeries(data, charvec, units = "RNORM")
@@ -348,7 +348,7 @@ function()
     # outlier.timeSeries - Removes outliers from a 'timeSeries' object
 
     # Univariate Series:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     data = matrix(round(rnorm(12), 2))
     charvec = format(timeCalendar(2006))
     uTS = timeSeries(data, charvec, units = "RNORM")
@@ -393,7 +393,7 @@ function()
     # is.array.timeSeries - Allows that NCOL and NROW work properly
 
     # Univariate Series:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     data = matrix(round(rnorm(12), 2))
     charvec = format(timeCalendar(2006))
     uTS = timeSeries(data, charvec, units = "RNORM")

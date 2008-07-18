@@ -57,7 +57,7 @@ function()
     #  timeSeries - Creates a 'timeSeries' object from scratch
 
     # Settings:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     set.seed(4711)
     data = matrix(round(rnorm(12), 3))
     data
@@ -67,7 +67,7 @@ function()
     class(charvec)
 
     # Compose Univariate daily random sequence
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     uTS = timeSeries(data, charvec, units = "uTS")
     series(uTS)
     print(uTS)
@@ -373,7 +373,7 @@ function()
     #  dummyDailySeries - Creates a dummy daily 'timeSeries' object
 
     # Create Dummy Time Series:
-    myFinCenter = "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = dummyDailySeries(matrix(rnorm(12)))
     print(tS)
 
@@ -391,7 +391,7 @@ function()
     # alignDailySeries - Aligns a 'timeSeries' object to new positions
 
     # Time Series:
-    myFinCenter = "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     stopifnot(require(fEcofin))
     tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
@@ -420,7 +420,7 @@ function()
     # ohlcDailyPlot - Plots open–high–low–close bar chart
 
     # Price or Incdex Series:
-    myFinCenter = "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     stopifnot(require(fEcofin))
     tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)

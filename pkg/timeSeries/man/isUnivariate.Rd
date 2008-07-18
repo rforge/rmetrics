@@ -54,7 +54,7 @@ isMultivariate(x)
 ## data -  
    # Microsoft Data:
    require(fEcofin)
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))
    Open = MSFT[, "Open"]
    

@@ -38,12 +38,12 @@
 
 
 \usage{
-timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter, 
-    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
+timeSeries(data, charvec, units = NULL, format = NULL, zone = "", 
+    FinCenter = "", recordIDs = data.frame(), title = NULL, 
     documentation = NULL, \dots)
        
-readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
-    FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
+readSeries(file, header = TRUE, sep = ";", zone = "", 
+    FinCenter = "", title = NULL, documentation = NULL, \dots)
 
 seriesData(object)
 }
@@ -171,7 +171,7 @@ seriesData(object)
 ## data -
    require(fEcofin)
    # Microsoft Data: 
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))
    head(MSFT)
 

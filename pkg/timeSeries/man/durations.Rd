@@ -55,7 +55,7 @@ durationSeries(\dots)
 ## data -  
    # Microsoft Data:
    require(fEcofin)
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))[1:20, "Open"]
    head(MSFT)
 

@@ -118,7 +118,7 @@
 \examples{
 ## data - 
    # Create an artificial timeSeries object:
-   myFinCenter <<- "GMT"
+   setRmetricsOptions(myFinCenter = "GMT")
    charvec = timeCalendar()
    set.seed(4711)
    data = matrix(exp(cumsum(rnorm(12, sd = 0.1))))
