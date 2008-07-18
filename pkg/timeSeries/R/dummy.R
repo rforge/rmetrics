@@ -27,7 +27,7 @@ dummySeries <- function(...)
 
 dummyDailySeries <-
     function(x = rnorm(365), units = NULL,
-             zone = myFinCenter, FinCenter = myFinCenter)
+             zone = "", FinCenter = "")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -38,6 +38,10 @@ dummyDailySeries <-
     #   origin - the first date in the series
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Check:
     stopifnot(is.numeric(x))

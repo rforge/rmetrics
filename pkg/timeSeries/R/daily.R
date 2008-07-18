@@ -22,8 +22,8 @@
 
 alignDailySeries <-
     function (x, method = c("before", "after", "interp", "fillNA"),
-              include.weekends = FALSE, units = NULL, zone = myFinCenter,
-              FinCenter = myFinCenter)
+              include.weekends = FALSE, units = NULL, zone = "",
+              FinCenter = "")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -46,6 +46,11 @@ alignDailySeries <-
 
     # Settings:
     stopifnot(is.timeSeries(x))
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+
     if (x@format == "counts")
         stop(as.character(match.call())[1], " is for time series and not for signal series.")
 

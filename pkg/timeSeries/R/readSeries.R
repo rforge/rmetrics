@@ -18,8 +18,8 @@
 ################################################################################
 
 readSeries <-
-    function(file, header = TRUE, sep = ";", zone = myFinCenter,
-    FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
+    function(file, header = TRUE, sep = ";", zone = "",
+    FinCenter = "", title = NULL, documentation = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -49,6 +49,10 @@ readSeries <-
     #   the first cell holds the time/date format specification!
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Read Data:
     df = read.table(file = file, header = header, sep = sep, ...)

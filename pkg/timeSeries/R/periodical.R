@@ -63,6 +63,7 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
     else if (nYearsBack == "5y") yearsBack = 5
     else if (nYearsBack == "10y") yearsBack = 10
 
+    currentYear <- getRmetricsOptions("currentYear")
     Year = currentYear - yearsBack
     fromDate = timeDate(paste(Year, "-01-01", sep = ""))
     if (yearsBack == 0) {

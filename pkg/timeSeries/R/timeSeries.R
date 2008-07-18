@@ -20,8 +20,8 @@
 
 
 timeSeries <-
-    function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+    function (data, charvec, units = NULL, format = NULL, zone = "",
+              FinCenter = "", recordIDs = data.frame(), title = NULL,
               documentation = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
@@ -58,6 +58,11 @@ timeSeries <-
 
     if (missing(data)) data = NA
     data <- as.matrix(data)
+
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # YC : we can have a logical timeSeries eg: ts > 1
     stopifnot(is.numeric(data) || is.logical(data))
@@ -143,8 +148,8 @@ timeSeries <-
 # ------------------------------------------------------------------------------
 
 .timeSeries <-
-    function (data, charvec, units = NULL, format = NULL, zone = myFinCenter,
-              FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL,
+    function (data, charvec, units = NULL, format = NULL, zone = "",
+              FinCenter = "", recordIDs = data.frame(), title = NULL,
               documentation = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -162,6 +167,11 @@ timeSeries <-
         data = matrix(rnorm(24), 12)
         charvec = as.character(timeCalendar())
     }
+
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # This allows data to be a vector as input ...
     if (is.vector(data)) data = matrix(data)
