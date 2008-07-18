@@ -46,7 +46,7 @@
 ################################################################################
 
 
-.conflicts.OK = TRUE
+# .conflicts.OK = TRUE
 
 
 # ------------------------------------------------------------------------------
@@ -70,33 +70,33 @@ colStats <-
 # ------------------------------------------------------------------------------
 
 
-colSums <-
-    function(x, ...)
-{
-    # FUNCTION:
+## colSums <-
+##     function(x, ...)
+## {
+##     # FUNCTION:
 
-    if (class(x) == "timeSeries") {
-        return(colStats(x, "sum", ...))
-    } else {
-        return(base::colSums(x, ...))
-    }
-}
+##     if (class(x) == "timeSeries") {
+##         return(colStats(x, "sum", ...))
+##     } else {
+##         return(base::colSums(x, ...))
+##     }
+## }
 
 
 # ------------------------------------------------------------------------------
 
 
-colMeans <-
-    function(x, ...)
-{
-    # FUNCTION:
+## colMeans <-
+##     function(x, ...)
+## {
+##     # FUNCTION:
 
-    if (class(x) == "timeSeries") {
-        return(colStats(x, "mean", ...))
-    } else {
-        return(base::colMeans(x, ...))
-    }
-}
+##     if (class(x) == "timeSeries") {
+##         return(colStats(x, "mean", ...))
+##     } else {
+##         return(base::colMeans(x, ...))
+##     }
+## }
 
 
 # ------------------------------------------------------------------------------

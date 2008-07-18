@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -42,118 +42,120 @@
 #  get.lcgseed               Gets the current valus of the random seed
 
 
-.lcg.seed = 4711
+# .lcg.seed = 4711
 
 
 # ------------------------------------------------------------------------------
 
-   
-set.lcgseed <-  
-    function(seed = 4711) 
-{   
+
+set.lcgseed <-
+    function(seed = 4711)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Sets the random seed for the linear congruential 
+    #   Sets the random seed for the linear congruential
     #   random number generator
-    
+
     # Notes:
     #   A Simple Portable Random Number Generator for Use in R and Splus
     #   Use this generator only for comparisons of Programs in R and Splus !!!
     #   Method: A linear congruential generator with
     #       LCG(a=13445, c=0, m=2^31-1, X0)
-    #       Note, this is a random number generator which passes the bitwise 
+    #       Note, this is a random number generator which passes the bitwise
     #       randomness test.
-    #   Reference: 
-    #       http://csep1.phy.ornl.gov/rn/node13.html 
-    #       N. S. Altman. ``Bitwise Behavior of Random Number Generators,'' 
+    #   Reference:
+    #       http://csep1.phy.ornl.gov/rn/node13.html
+    #       N. S. Altman. ``Bitwise Behavior of Random Number Generators,''
     #       SIAM J. Sci. Stat. Comput., 9(5), September, pps. 941-949, 1988
-    
+
     #   Example:
     #       set.lcgseed(4711)
     #       cbind(runif.lcg(100), rnorm.lcg(100), rt.lcg(100, df=4))
 
     # FUNCTION:
-    
+
     # Return Value:
-    .lcg.seed <<- seed
+    # .lcg.seed <<- seed
+    setRmetricsOptions(lcg.seed = seed)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-get.lcgseed <-  
-    function() 
-{   
+get.lcgseed <-
+    function()
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns the random seed for the linear congruential 
+    #   Returns the random seed for the linear congruential
     #   random number generator
-    
+
     # FUNCTION
-    
+
     # Return Value:
-    .lcg.seed
+    getRmetricsOptions("lcg.seed")
 }
-     
+
 
 ################################################################################
 #  runif.lcg                 Uniform linear congruational generator
 #  rnorm.lcg                 Normal linear congruational generator
 #  rt.lcg                    Student-t linear congruational generator
 
-     
-runif.lcg <-  
+
+runif.lcg <-
     function(n, min = 0, max = 1)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #    A linear congruential generator for uniform distributed
     #    random numbers
-    
-    # Notes: 
-    #    Important - Use this generator only for comparisons of 
+
+    # Notes:
+    #    Important - Use this generator only for comparisons of
     #      Programs in R and SPlus (and not for production) !!!
     #    Portable Random Numbers:
     #      A linear congruential generator
     #      LCG(a=13445, c=0, m=2^31-1, X0)
-    #      This is a random number generator which 
+    #      This is a random number generator which
     #      passes the bitwise randomness test
-    
-    # References: 
-    #    http://csep1.phy.ornl.gov/rn/node13.html 
-    #    N. S. Altman. ``Bitwise Behavior of Random Number Generators,'' 
+
+    # References:
+    #    http://csep1.phy.ornl.gov/rn/node13.html
+    #    N. S. Altman. ``Bitwise Behavior of Random Number Generators,''
     #    SIAM J. Sci. Stat. Comput., 9(5), September, pps. 941-949, 1988
 
     # FUNCTION:
-    
+
     # Initialize:
-    if(!exists(".lcg.seed")) .lcg.seed <<- 4711
-    
+    # if(!exists(".lcg.seed")) .lcg.seed <<- 4711
+
     # Generate:
     r.lcg = rep(0, times = n)
     a = 13445
     c = 0
     m = 2^31-1
     for (i in 1:n) {
-        .lcg.seed <<- (a * .lcg.seed + c) %% m 
-        r.lcg[i] = .lcg.seed / m }
+        lcg.seed <- getRmetricsOptions("lcg.seed")
+        setRmetricsOptions(lcg.seed = (a * lcg.seed + c) %% m)
+        r.lcg[i] = getRmetricsOptions("lcg.seed") / m }
     r.lcg = (max-min)*r.lcg + min
-     
+
     # Return Value:
     r.lcg
 }
-  
+
 
 # ------------------------------------------------------------------------------
 
 
-rnorm.lcg <-  
+rnorm.lcg <-
     function(n, mean = 0, sd = 1)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -161,7 +163,7 @@ rnorm.lcg <-
     #    random numbers
 
     # FUNCTION:
-    
+
     # This is slow, but portable between R and SPlus
     (qnorm(runif.lcg(n = n, min = 0, max = 1)) - mean)/sd^2
 }
@@ -170,17 +172,17 @@ rnorm.lcg <-
 # ------------------------------------------------------------------------------
 
 
-rt.lcg <-  
+rt.lcg <-
     function(n, df)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #    A linear congruential generator for Sudent-t distributed
     #    random numbers
- 
+
     # FUNCTION:
-    
+
     # This is slow, but portable between R and SPlus
     qt(runif.lcg(n = n, min = 0, max = 1), df = df)
 }

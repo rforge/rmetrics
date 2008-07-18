@@ -44,13 +44,13 @@
 ################################################################################
 
 
-.conflicts.OK = TRUE
+# .conflicts.OK = TRUE
 
 
 # ------------------------------------------------------------------------------
 
 
-rowStats <- 
+rowStats <-
 function(x, FUN, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -58,7 +58,7 @@ function(x, FUN, ...)
     #   Computes sample statistics by row
 
     # FUNCTION:
-    
+
     # Statistics:
     apply(na.omit(as.matrix(x), ...), 1, FUN, ...)
 }
@@ -67,58 +67,58 @@ function(x, FUN, ...)
 # ------------------------------------------------------------------------------
 
 
-rowSums <- 
-function(x, ...) 
+## rowSums <-
+## function(x, ...)
+## {
+##     # FUNCTION:
+
+##     if (class(x) == "timeSeries") {
+##         return(rowStats(x, "sum", ...))
+##     } else {
+##         return(base::rowSums(x, ...))
+##     }
+## }
+
+
+# ------------------------------------------------------------------------------
+
+
+## rowMeans <-
+##     function(x, ...)
+## {
+##     # FUNCTION:
+
+##     if (class(x) == "timeSeries") {
+##         return(rowStats(x, "mean", ...))
+##     } else {
+##         return(base::rowMeans(x, ...))
+##     }
+## }
+
+
+# ------------------------------------------------------------------------------
+
+
+rowSds <- function(x, ...) { rowStats(x, "sd", ...) }
+rowVars <- function(x, ...) { rowStats(x, "var", ...) }
+rowSkewness <- function(x, ...) { rowStats(x, "skewness", ...) }
+rowKurtosis <- function(x, ...) { rowStats(x, "kurtosis", ...) }
+rowMaxs <- function(x, ...) { rowStats(x, "max", ...) }
+rowMins <- function(x, ...) { rowStats(x, "min", ...) }
+rowProds <- function(x, ...) { rowStats(x, "prod", ...) }
+
+
+# ------------------------------------------------------------------------------
+
+
+rowQuantiles <-
+    function(x, prob = 0.05, ...)
 {
     # FUNCTION:
-    
-    if (class(x) == "timeSeries") {
-        return(rowStats(x, "sum", ...))
-    } else {
-        return(base::rowSums(x, ...))
-    }
-}
-    
 
-# ------------------------------------------------------------------------------
-
-
-rowMeans <-  
-    function(x, ...)
-{
-    # FUNCTION:
-    
-    if (class(x) == "timeSeries") {
-        return(rowStats(x, "mean", ...))
-    } else {
-        return(base::rowMeans(x, ...))
-    }
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowSds <- function(x, ...) { rowStats(x, "sd", ...) }       
-rowVars <- function(x, ...) { rowStats(x, "var", ...) }      
-rowSkewness <- function(x, ...) { rowStats(x, "skewness", ...) }   
-rowKurtosis <- function(x, ...) { rowStats(x, "kurtosis", ...) } 
-rowMaxs <- function(x, ...) { rowStats(x, "max", ...) } 
-rowMins <- function(x, ...) { rowStats(x, "min", ...) }      
-rowProds <- function(x, ...) { rowStats(x, "prod", ...) } 
-
-
-# ------------------------------------------------------------------------------
-
-
-rowQuantiles <-  
-    function(x, prob = 0.05, ...) 
-{ 
-    # FUNCTION:
-    
     stopifnot(length(prob) == 1)
-    rowStats(x, "quantile", probs = prob, ...) 
-} 
+    rowStats(x, "quantile", probs = prob, ...)
+}
 
 
 # ------------------------------------------------------------------------------
@@ -130,4 +130,4 @@ rowStdevs <- rowSds
 
 ################################################################################
 
-    
+

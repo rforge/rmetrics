@@ -33,49 +33,49 @@
 ################################################################################
 
 
-as.matrix.ts <-
-    function(x, ...)
-{
-    # A function implemented by Diethelm Wuertz
+## as.matrix.ts <-
+##     function(x, ...)
+## {
+##     # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Coerces a "ts" object into a matrix
+##     # Description:
+##     #   Coerces a "ts" object into a matrix
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
+##     # Transform:
+##     ans = as.matrix.default(unclass(x))
+##     attr(ans, "tsp")<-NULL
+##     rownames(ans)<-NULL
+##     colnames(ans)<-NULL
 
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
+##     # Return Value:
+##     ans
+## }
 
 
-as.matrix.mts <-
-    function(x, ...)
-{
-    # A function implemented by Diethelm Wuertz
+## # ------------------------------------------------------------------------------
 
-    # Description:
-    #   Coerces a multivariate "ts" object into a matrix
 
-    # FUNCTION:
+## as.matrix.mts <-
+##     function(x, ...)
+## {
+##     # A function implemented by Diethelm Wuertz
 
-    # Transform:
-    ans = as.matrix.default(unclass(x))
-    attr(ans, "tsp")<-NULL
-    rownames(ans)<-NULL
-    colnames(ans)<-NULL
+##     # Description:
+##     #   Coerces a multivariate "ts" object into a matrix
 
-    # Return Value:
-    ans
-}
+##     # FUNCTION:
+
+##     # Transform:
+##     ans = as.matrix.default(unclass(x))
+##     attr(ans, "tsp")<-NULL
+##     rownames(ans)<-NULL
+##     colnames(ans)<-NULL
+
+##     # Return Value:
+##     ans
+## }
 
 
 ################################################################################

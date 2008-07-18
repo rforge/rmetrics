@@ -25,44 +25,44 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-                                                
-################################################################################                                                                                                                                                          
-# FUNCTION:                 DESCRIPTION:                                                                                          
-#  as.POSIXlt                Converts objects of class POSIXlt                 
-#  as.POSIXlt.default        Default Method                                                            
+
+################################################################################
+# FUNCTION:                 DESCRIPTION:
+#  as.POSIXlt                Converts objects of class POSIXlt
+#  as.POSIXlt.default        Default Method
 ################################################################################
 
 
 # IMPORTANT NOTE:
 #   as.POSIXlt was introduced as generic function in R 2.7.0
-#   Preliminarily, keep the function here to ne downward 
+#   Preliminarily, keep the function here to ne downward
 #   compatible with previous R Versions. DW
 
 
-.conflicts.OK = TRUE
+## .conflicts.OK = TRUE
+
+
+## # ------------------------------------------------------------------------------
+
+
+## as.POSIXlt <-
+##     function(x, tz = "")
+## {
+##     # A function implemented by Diethelm Wuertz
+
+##     # FUNCTION:
+
+##     # Return Value:
+##     UseMethod("as.POSIXlt")
+## }
 
 
 # ------------------------------------------------------------------------------
 
 
-as.POSIXlt <- 
-    function(x, tz = "")
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("as.POSIXlt")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-as.POSIXlt.default <- 
+as.POSIXlt.default <-
     function (x, tz = "")
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
