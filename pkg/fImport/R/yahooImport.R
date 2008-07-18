@@ -77,7 +77,7 @@ yahooImport <-
     # Automatic Selection of From / To:
     if (is.null(from) & is.null(to)) {
         to = Sys.timeDate()
-        from = as.character(to - nDaysBack)
+        from = as.character(to - nDaysBack*24*3600)
         to = as.character(to) }
 
     # Extract Atoms - From:
@@ -122,7 +122,7 @@ yahooImport <-
 
     # Save to file:
     if (save) {
-        write.table(as.data.frame(X), file = file)
+        write.table(as.data.frame(X), file = file, sep = sep)
     } else {
         unlink(file)
     }
