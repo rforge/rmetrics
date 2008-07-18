@@ -60,7 +60,7 @@ setMethod("aggregate",
 
     x <- sort(x)
 
-    INDEX <- sapply(time(x), function(x) which(x <= by)[1])
+    INDEX <- findInterval(as.numeric(time(x)), as.numeric(by))
     data <- apply(getDataPart(x), 2, tapply, INDEX, FUN)
 
     # Return Value:
