@@ -1,0 +1,168 @@
+import("fUtilities")
+import("graphics")
+import("methods")
+import("stats")
+import("timeDate")
+import("utils")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses(
+    "index_timeSeries",
+     "timeSeries" 
+)
+export(
+    "returns",
+    "rowCumsums",
+    "series<-",
+    "series" 
+)
+exportMethods(
+    "aggregate",
+    "attach",
+    "[<-",
+    "[",
+    "cbind2",
+    "coerce",
+    "comment<-",
+    "comment",
+    "cummax",
+    "cummin",
+    "cumprod",
+    "cumsum",
+    "diff",
+    "dim",
+    "dimnames<-",
+    "dimnames",
+    "end",
+    "head",
+    "lag",
+    "lines",
+    "merge",
+    "na.omit",
+    "Ops",
+    "points",
+    "print",
+    "rbind2",
+    "rev",
+    "rownames<-",
+    "sample",
+    "scale",
+    "show",
+    "sort",
+    "start",
+    "str",
+    "tail",
+    "time",
+    "window" 
+)
+
+################################################
+## S3 classes
+################################################
+
+S3method("as.data.frame", "timeSeries")
+S3method("as.matrix", "timeSeries")
+S3method("as.timeSeries", "character")
+S3method("as.timeSeries", "data.frame")
+S3method("as.timeSeries", "default")
+S3method("as.timeSeries", "zoo")
+S3method("as.ts", "timeSeries")
+S3method("colCummaxs", "default")
+S3method("colCummaxs", "timeSeries")
+S3method("colCummins", "default")
+S3method("colCummins", "timeSeries")
+S3method("colCumprods", "default")
+S3method("colCumprods", "timeSeries")
+S3method("colCumreturns", "default")
+S3method("colCumreturns", "timeSeries")
+S3method("colCumsums", "default")
+S3method("colCumsums", "timeSeries")
+S3method("cumulated", "default")
+S3method("cut", "timeSeries")
+S3method("finCenter<-", "timeSeries")
+S3method("finCenter", "timeSeries")
+S3method("model.frame", "timeSeries")
+S3method("outlier", "timeSeries")
+S3method("plot", "timeSeries")
+S3method("time<-", "timeSeries")
+
+################################################
+## functions
+################################################
+
+export(
+    "alignDailySeries",
+    ".align.timeSeries",
+    ".align.timeSeries.old",
+    "applySeries",
+    ".applySeries",
+    ".assign_timeSeries",
+    "as.timeSeries",
+    "colCummaxs",
+    "colCummins",
+    "colCumprods",
+    "colCumreturns",
+    "colCumsums",
+    "countMonthlyRecords",
+    "cumulated",
+    "drawdowns",
+    "drawdownsStats",
+    "dummyDailySeries",
+    "dummySeries",
+    "durations",
+    "durationSeries",
+    ".endOfPeriodBenchmarks",
+    ".endOfPeriodSeries",
+    ".endOfPeriodStats",
+    ".extract.turnpointsPastecs",
+    "fapply",
+    ".fapply",
+    "getReturns",
+    "hclustColnames",
+    "interpNA",
+    "isMonthly",
+    "isMultivariate",
+    "is.timeSeries",
+    "isUnivariate",
+    "midquotes",
+    "midquoteSeries",
+    ".naOmitMatrix",
+    "newPositions<-",
+    "ohlcDailyPlot",
+    "orderColnames",
+    "orderStatistics",
+    "pcaColnames",
+    ".plotOHLC",
+    ".plotTimeSeries",
+    ".plot.turnpointsPastecs",
+    ".print.timeSeries",
+    "rank.timeSeries",
+    "readSeries",
+    "removeNA",
+    "returnSeries",
+    "rollDailySeries",
+    "rollMonthlySeries",
+    "rollMonthlyWindows",
+    "sampleColnames",
+    "seriesData",
+    "seriesPositions",
+    ".signalCounts",
+    ".signalSeries",
+    "sortColnames",
+    "spreads",
+    "spreadSeries",
+    "statsColnames",
+    ".subset_timeSeries",
+    "substituteNA",
+    ".summary.turnpointsPastecs",
+    "time<-",
+    "timeSeries",
+    ".timeSeries",
+    ".turnpoints",
+    ".turnpointsPastecs",
+    ".turnpointsSeries",
+    ".turnpointsStats" 
+)
