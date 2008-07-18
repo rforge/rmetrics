@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -34,16 +34,16 @@
 ################################################################################
 
 
-listHolidays <- 
-    function(pattern = ".*") 
-{   
+listHolidays <-
+    function(pattern = ".*")
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Prints all public and ecclestical holidays
-    
+
     # FUNCTION:
-    
+
     # List:
     holidayList = c(
         "Septuagesima",
@@ -161,12 +161,12 @@ listHolidays <-
         "JPEmperorsBirthday",
         "JPTennouTanjyouBi",
         "JPBankHolidayDec31")
-        
+
     # Financial Centers:
     if (pattern == "*") pattern = "\\\\*"
 
     # Return Value:
-    as.character(holidayList[grep(pattern = pattern, x = holidayList)])
+    sort(as.character(holidayList[grep(pattern = pattern, x = holidayList)]))
 }
 
 

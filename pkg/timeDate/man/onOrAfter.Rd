@@ -21,10 +21,10 @@
 
 \usage{
 timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", 
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
     
 timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d", 
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 }
 
 

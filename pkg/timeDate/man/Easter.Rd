@@ -15,7 +15,7 @@
 
 
 \usage{
-Easter(year = currentYear, shift = 0)
+Easter(year = getRmetricsOptions("currentYear"), shift = 0)
 }
 
 

@@ -15,10 +15,6 @@
 }
 
 
-\usage{
-myFinCenter
-}
-
 
 \note{
 
@@ -27,13 +23,6 @@ myFinCenter
     To list all supported financial center use the
     function \code{listFinCenter}.
    
-}
-
-
-\value{
-
-    returns the name of myFinCenter.
-
 }
 
 
@@ -46,13 +35,13 @@ myFinCenter
 
 \examples{
 ## myFinCenter - the global setting currently used:
-   myFinCenter
+   getRmetricsOptions("myFinCenter")
    
 ## Change to another Financiel Center:
-   # myFinCenter = "Zurich"
+   # setRmetricsOptions(myFinCenter = "Zurich")
    
 ## Do not take care about DST ...
-   # myFinCenter = "GMT" 
+   # setRmetricsOptions(myFinCenter = "GMT") 
 }
 
 

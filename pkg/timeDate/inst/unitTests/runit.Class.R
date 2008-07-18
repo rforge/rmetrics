@@ -53,8 +53,8 @@ test.timeDate =
 function()
 {
     # Set Financial Center to GMT:
-    myFinCenter = "GMT"
-    print(myFinCenter)
+    setRmetricsOptions(myFinCenter = "GMT")
+    print(getRmetricsOptions("myFinCenter"))
 
     # timeDate() Function:
     charvec = paste("2006-01-", c(10, 20, 30), sep = "")
@@ -416,15 +416,15 @@ test.timeCalendar =
 function()
 {
     # timeCalendar() Function, Check FinCenter:
-    myFinCenter <<- "Zurich"
-    target = myFinCenter
+    setRmetricsOptions(myFinCenter = "Zurich")
+    target = as.character(getRmetricsOptions("myFinCenter"))
     target
     current = "Zurich"
     current
     checkIdentical(target, current)
 
     # timeCalendar() Function, Check CurrentYear:
-    target = as.character(currentYear)
+    target = as.character(getRmetricsOptions("currentYear"))
     target
     current = substr(as.character(Sys.Date()), 1, 4)
     current
@@ -432,7 +432,7 @@ function()
 
     # timeCalendar() | timeSequence() Functions:
     # Generate timDate from timeCalendar, compare with timeSequence
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     target = timeCalendar(y = 2006, m = 1:12, d = 1)
     target
     current = timeSequence(from = "2006-01-01", by = "month", length.out = 12)
@@ -441,7 +441,7 @@ function()
 
     # timeCalendar() | timeSequence() Functions:
     # Generate timDate from timeCalendar, compare with timeSequence:
-    myFinCenter <<- "Zurich"
+    setRmetricsOptions(myFinCenter = "Zurich")
     target = timeCalendar(y = 2006, m = 1:12, d = 1)
     target
     current = timeSequence(from = "2006-01-01", by = "month", length.out = 12)
@@ -450,7 +450,7 @@ function()
 
     # timeCalendar() Function:
     # Date/Time:
-    myFinCenter <<- "Zurich"
+    setRmetricsOptions(myFinCenter = "Zurich")
     ZRH.ZRH = timeCalendar(h = 16)
     GMT.ZRH = timeCalendar(h = 16, zone = "GMT")
     GMT.NYC = timeCalendar(h = 16, zone = "GMT", FinCenter = "NewYork")
@@ -471,7 +471,7 @@ function()
 {
     # timeCalendar -
     # Generate timDate Objects from Sequences:
-    myFinCenter
+    getRmetricsOptions("myFinCenter")
     target = timeSequence(from = "2006-01-01", to = "2006-01-31", by = "day")
     target
     current = timeCalendar(y = 2006, m = 1, d = 1:31)
@@ -527,8 +527,8 @@ test.sysTimeDate =
 function()
 {
     # Check Financieal Center:
-    myFinCenter = "Zurich"
-    checkIdentical(myFinCenter, "Zurich")
+    setRmetricsOptions(myFinCenter = "Zurich")
+    checkIdentical(as.character(getRmetricsOptions("myFinCenter")), "Zurich")
 
     # Zurich:
     ZRH = Sys.timeDate()
@@ -578,9 +578,9 @@ function()
     #  format.timeDate        Formats 'timeDate' as ISO conform character string
 
     # Check Financieal Center:
-    myFinCenter <<- "NewYork"
-    print(myFinCenter)
-    checkIdentical(myFinCenter, "NewYork")
+    setRmetricsOptions(myFinCenter = "NewYork")
+    print(getRmetricsOptions("myFinCenter"))
+    checkIdentical(as.character(getRmetricsOptions("myFinCenter")), "NewYork")
 
     # print() Function
     DT = timeCalendar()

@@ -34,7 +34,7 @@
 
 
 holiday <-
-    function(year = currentYear, Holiday = "Easter")
+    function(year = getRmetricsOptions("currentYear"), Holiday = "Easter")
 {
     # A function implemented by Diethelm Wuertz
 

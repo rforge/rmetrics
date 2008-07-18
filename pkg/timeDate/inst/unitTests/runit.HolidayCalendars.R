@@ -76,7 +76,7 @@ test.holidayNYSE <-
     function()
 {
     # Holiday NYSE -
-    HD = holidayNYSE(currentYear)
+    HD = holidayNYSE(getRmetricsOptions("currentYear"))
     print(HD)
     checkTrue(inherits(HD, "timeDate"))
 
@@ -129,7 +129,7 @@ test.holidayZURICH =
 function()
 {
     # Holiday Zurich -
-    holidayZURICH(currentYear)
+    holidayZURICH(getRmetricsOptions("currentYear"))
 
     # Return Value:
     return()

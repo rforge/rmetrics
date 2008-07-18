@@ -35,8 +35,8 @@
 
 
 timeNdayOnOrAfter <-
-    function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
-    FinCenter = myFinCenter)
+    function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
+    FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -67,8 +67,11 @@ timeNdayOnOrAfter <-
     #
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
-    if (FinCenter == "") FinCenter = "GMT"
 
     # timeDate:
     lt = strptime(charvec, format)
@@ -86,8 +89,8 @@ timeNdayOnOrAfter <-
 
 
 timeNdayOnOrBefore <-
-    function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
-    FinCenter = myFinCenter)
+    function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
+    FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -111,8 +114,10 @@ timeNdayOnOrBefore <-
     #   What date has Friday on or before April 22, 1977?
 
     # FUNCTION:
-
-    if (FinCenter == "") FinCenter = "GMT"
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # timeDate:
     lt = strptime(charvec, format)

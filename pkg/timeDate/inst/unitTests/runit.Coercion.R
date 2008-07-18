@@ -42,7 +42,7 @@ test.as <-
 
 
     # Monthly calendarical sequence for the current year:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     TC = timeCalendar(2006)
     TC
     checkIdentical(TC@format, "%Y-%m-%d")
@@ -111,9 +111,10 @@ test.asTimeDate =
     as.timeDate(Sys.time())
 
     # Coerce:
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     Sys.Date()
     as.timeDate(Sys.Date())
+    myFinCenter <- getRmetricsOptions("myFinCenter")
     as.timeDate(Sys.Date(), zone = myFinCenter, FinCenter = myFinCenter)
     as.timeDate(Sys.Date(), zone = "Zurich", FinCenter = "Zurich")
 
@@ -129,7 +130,7 @@ test.julian <-
     function()
 {
     # julian.timeDate = function(x, FinCenter = myFinCenter, ...)
-    myFinCenter <<- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     GD = timeDate("1970-01-01 00:00:00", zone = "GMT", FinCenter = "GMT")
     GD
     J = julian(GD, FinCenter = "GMT")

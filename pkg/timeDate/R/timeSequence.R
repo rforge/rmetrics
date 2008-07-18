@@ -38,7 +38,7 @@ timeSequence <-
     function(from, to = Sys.timeDate(),
     by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
     length.out = NULL, format = NULL,
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -75,6 +75,10 @@ timeSequence <-
     #   x = timeSequence("2004-01-28 18:00:00", by = "hour", length.out = 12)
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     to <- timeDate(to, format = format, zone = zone, FinCenter = FinCenter)
     # Missing from:

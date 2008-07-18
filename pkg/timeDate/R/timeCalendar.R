@@ -34,8 +34,8 @@
 
 
 timeCalendar <-
-    function(y = currentYear, m = 1:12, d = 1, h = 0, min = 0, s = 0,
-    zone = myFinCenter, FinCenter = myFinCenter)
+    function(y = getRmetricsOptions("currentYear"), m = 1:12, d = 1, h = 0, min = 0, s = 0,
+    zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -75,7 +75,11 @@ timeCalendar <-
 
     # Settings and Check:
     trace = FALSE
-    if (FinCenter == "") FinCenter = "GMT"
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+
     if (is.null(h) & is.null(min) & is.null(s)) zone = FinCenter
 
     # Check Input:

@@ -34,7 +34,7 @@
 
 
 holidayTSX <-
-    function (year = currentYear)
+    function (year = getRmetricsOptions("currentYear"))
 {
     # A function implemented by Diethelm Wuertz
 

@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -33,7 +33,7 @@
 ################################################################################
 
 
-myFinCenter = "GMT"
+## myFinCenter = "GMT"
 
 
 ################################################################################

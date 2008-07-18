@@ -15,7 +15,7 @@
 
 
 \usage{
-holidayTSX(year = currentYear)
+holidayTSX(year = getRmetricsOptions("currentYear"))
 }
 
 

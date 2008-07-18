@@ -19,7 +19,7 @@
 timeSequence(from, to = format(Sys.time(), "\%Y-\%m-\%d"),
     by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
     length.out = NULL, format = NULL,
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 
 \method{seq}{timeDate}(from, to, by = c("day", "year", "quarter", "month",
     "week", "hour", "min", "sec"), length.out = NULL, \dots)

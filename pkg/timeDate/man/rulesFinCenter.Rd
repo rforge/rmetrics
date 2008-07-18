@@ -15,7 +15,7 @@
 
 
 \usage{
-rulesFinCenter(FinCenter = myFinCenter)
+rulesFinCenter(FinCenter = getRmetricsOptions("myFinCenter"))
 }
 
 

@@ -116,7 +116,7 @@
   Examples:
   \preformatted{
     # Show My local Financial Center - Note, by Default this is "GMT"
-    print(myFinCenter)
+    getRmetricsOptions("myFinCenter")
     
     # Compose Character Vectors of Dates and Times:
     Dates <- c("1989-09-28","2001-01-15","2004-08-30","1990-02-09")
@@ -164,7 +164,7 @@
   Examples:
   \preformatted{
     # Lets work in an international environment:
-    myFinCenter <- "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     
     # Your 'timeDate' is now in the Financial Center "GMT"
     timeDate(charvec)
@@ -191,7 +191,7 @@
   Examples:
   \preformatted{
     # Monthly calendar for Current Year
-    currentYear
+    getRmetricsOptions("currentYear")
     timeCalendar() 
     
     # Daily 'timeDate' for January data from Tokyo local time 16:00
@@ -292,7 +292,7 @@
   Examples:
   \preformatted{
     # Create Monthly Calendar for next year
-    tC = timeCalendar(currentYear + 1)
+    tC = timeCalendar(getRmetricsOptions("currentYear") + 1)
     tC
 
     # Start, end and length of 'timeDate' objects
@@ -470,11 +470,11 @@
   Examples:
   \preformatted{
     # What is my current Financial Center ?
-    print(myFinCenter)
+    getRmetricsOptions("myFinCenter")
 
     # Change to Zurich:
-    myFinCenter = "Zurich"
-    print(myFinCenter)
+    setRmetricsOptions(myFinCenter = "Zurich")
+    getRmetricsOptions("myFinCenter")
     
   }
   
@@ -594,6 +594,7 @@
     listHolidays()
     
     # The date of Easter for the next 5 years:
+    currentYear <- getRmetricsOptions("currentYear")
     Easter(currentYear:(currentYear+5))
     
   }

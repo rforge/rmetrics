@@ -34,7 +34,7 @@
 
 
 Sys.timeDate <-
-    function(FinCenter = myFinCenter)
+    function(FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -48,7 +48,8 @@ Sys.timeDate <-
     # Value:
     #   Returns the system time as an object of class 'timeDate'.
 
-    if (FinCenter == "") FinCenter = "GMT"
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # only time at "GMT" is reliable on most systems
     # charvec <- format(Sys.time(), tz = "GMT", usetz = FALSE)

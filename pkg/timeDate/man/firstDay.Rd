@@ -22,15 +22,15 @@
 
 
 \usage{
-timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
+timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = "", 
+    FinCenter = "")
+timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = "", 
+    FinCenter = "")
 
-timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
-    FinCenter = myFinCenter)
+timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = "", 
+    FinCenter = "")
+timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = "", 
+    FinCenter = "")
 }
 
 
@@ -69,7 +69,8 @@ timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter,
 \examples{
 ## Date as character String:
    charvec = "2006-04-16"
-    
+   myFinCenter = getRmetricsOptions("myFinCenter")
+
 ## timeLastDayInMonth-
    # What date has the last day in a month for a given date ?
    timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 

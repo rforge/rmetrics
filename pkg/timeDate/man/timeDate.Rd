@@ -16,7 +16,7 @@
 
 \usage{
 timeDate(charvec = Sys.timeDate(), format = NULL,
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 }
 
 

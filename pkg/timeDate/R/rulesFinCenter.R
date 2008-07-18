@@ -34,7 +34,7 @@
 
 
 rulesFinCenter <-
-    function(FinCenter = myFinCenter)
+    function(FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -46,6 +46,8 @@ rulesFinCenter <-
     #       financial center named as "continent/city".
 
     # FUNCTION:
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Check:
     if (any(FinCenter %in% c("GMT", "UTC", " ")))

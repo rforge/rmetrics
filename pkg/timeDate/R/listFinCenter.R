@@ -466,7 +466,8 @@ listFinCenter <-
     if (pattern == "*") pattern = "\\\\*"
 
     # Return Value:
-    as.character(FinCenterList[grep(pattern = pattern, x = FinCenterList)])
+    sort(as.character(FinCenterList[grep(pattern = pattern,
+                                         x = FinCenterList)]))
 }
 
 

@@ -14,17 +14,6 @@
 }
 
 
-\usage{
-currentYear
-}
-
-
-\value{
-
-    returns the current year, a numeric variable.
-
-}
-
 
 \note{
 
@@ -35,7 +24,7 @@ currentYear
 
 \examples{
 ## currentYear -
-   currentYear
+   getRmetricsOptions("currentYear")
 }
 
 

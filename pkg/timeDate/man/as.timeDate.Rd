@@ -18,16 +18,16 @@
 
 
 \usage{
-\method{as.timeDate}{default}(x, zone = myFinCenter, FinCenter =
-myFinCenter)  
+\method{as.timeDate}{default}(x, zone = "", FinCenter =
+"")  
 
-\method{as.timeDate}{POSIXt}(x, zone = myFinCenter, FinCenter =
-myFinCenter)
+\method{as.timeDate}{POSIXt}(x, zone = "", FinCenter =
+"")
 
-\method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter =
-myFinCenter)
+\method{as.timeDate}{Date}(x, zone = "", FinCenter =
+"")
 \method{as.timeDate}{timeDate}(x, zone = x@FinCenter, FinCenter =
-myFinCenter)  
+"")  
 }
 
 

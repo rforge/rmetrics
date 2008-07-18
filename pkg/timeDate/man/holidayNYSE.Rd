@@ -15,7 +15,7 @@
 
 
 \usage{
-holidayNYSE(year = currentYear)
+holidayNYSE(year = getRmetricsOptions("currentYear"))
 }
 
 

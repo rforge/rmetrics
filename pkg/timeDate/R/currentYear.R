@@ -34,25 +34,25 @@
 ################################################################################
 
 
-.currentYear <-
-    function()
-{
-    # A function implemented by Diethelm Wuertz
+## .currentYear <-
+##     function()
+## {
+##     # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Sets date of the current year
+##     # Description:
+##     #   Sets date of the current year
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    # Return current year:
-    as.POSIXlt(Sys.time())$year + 1900
-}
-
-
-# ------------------------------------------------------------------------------
+##     # Return current year:
+##     as.POSIXlt(Sys.time())$year + 1900
+## }
 
 
-currentYear <- .currentYear()
+## # ------------------------------------------------------------------------------
+
+
+## currentYear <- .currentYear()
 
 
 ################################################################################

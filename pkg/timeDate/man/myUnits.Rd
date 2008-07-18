@@ -14,10 +14,6 @@
 }
 
 
-\usage{
-myUnits
-}
-
 
 \value{
 
@@ -30,7 +26,7 @@ myUnits
 
 \examples{
 ## myUnits -
-   myUnits
+   getRmetricsOptions("myUnits")
 }
 
 

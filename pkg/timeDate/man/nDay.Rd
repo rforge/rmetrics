@@ -19,10 +19,10 @@
 
 \usage{
 timeNthNdayInMonth(charvec, nday = 1, nth = 1, format = "\%Y-\%m-\%d", 
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
     
 timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", 
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 }
 
 

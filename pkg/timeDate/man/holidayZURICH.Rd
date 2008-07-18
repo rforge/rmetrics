@@ -15,7 +15,7 @@
 
 
 \usage{
-holidayZURICH(year = currentYear)
+holidayZURICH(year = getRmetricsOptions("currentYear"))
 }
 
 

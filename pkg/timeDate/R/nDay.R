@@ -36,7 +36,7 @@
 
 timeNthNdayInMonth <-
     function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -63,7 +63,10 @@ timeNthNdayInMonth <-
     #   timeNthNdayInMonth("2004-04-01", 1, 2)
 
     # FUNCTION:
-    if (FinCenter == "") FinCenter = "GMT"
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # timeDate:
     lt = strptime(charvec, format)
@@ -85,8 +88,8 @@ timeNthNdayInMonth <-
 
 
 timeLastNdayInMonth <-
-    function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
-             FinCenter = myFinCenter)
+    function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
+             FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -114,7 +117,10 @@ timeLastNdayInMonth <-
     #
 
     # FUNCTION:
-    if (FinCenter == "") FinCenter = "GMT"
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Last Day:
     last.day = c(31,28,31, 30,31,30, 31,31,30, 31,30,31)

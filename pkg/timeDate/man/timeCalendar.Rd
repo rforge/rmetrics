@@ -15,9 +15,9 @@
 
 
 \usage{
-timeCalendar(y = currentYear, m = 1:12, d = 1,
+timeCalendar(y = getRmetricsOptions("currentYear"), m = 1:12, d = 1,
     h = 0, min = 0, s = 0,
-    zone = myFinCenter, FinCenter = myFinCenter)
+    zone = "", FinCenter = "")
 }
 
 
@@ -56,7 +56,7 @@ timeCalendar(y = currentYear, m = 1:12, d = 1,
 ## timeCalendar -
    
    # Current Year:
-   currentYear
+   getRmetricsOptions("currentYear")
    
    # 12 months of current year
    timeCalendar() 

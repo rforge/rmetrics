@@ -47,7 +47,7 @@ as.timeDate <-
 
 
 as.timeDate.default <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter)
+    function(x, zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -63,6 +63,11 @@ as.timeDate.default <-
     # FUNCTION:
 
     # as timeDate:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+
     ans = timeDate(charvec = as.character(x),
         zone = zone, FinCenter = FinCenter)
 
@@ -74,7 +79,7 @@ as.timeDate.default <-
 # ------------------------------------------------------------------------------
 
 as.timeDate.timeDate <-
-    function(x, zone = x@FinCenter, FinCenter = myFinCenter)
+    function(x, zone =  x@FinCenter, FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -89,6 +94,9 @@ as.timeDate.timeDate <-
 
     # FUNCTION:
     stopifnot(class(x) == "timeDate")
+
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
     if (zone != x@FinCenter)
         warning("argument zone is ignored and FinCenter\n of timeDate is used as zone")
 
@@ -105,7 +113,7 @@ as.timeDate.timeDate <-
 
 
 as.timeDate.POSIXt <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter)
+    function(x, zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -119,6 +127,10 @@ as.timeDate.POSIXt <-
     #   Returns 'x' as a 'timeDate' object.
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # as timeDate:
     ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)
@@ -133,7 +145,7 @@ as.timeDate.POSIXt <-
 
 
 as.timeDate.Date <-
-    function(x, zone = myFinCenter, FinCenter = myFinCenter)
+    function(x, zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -148,6 +160,10 @@ as.timeDate.Date <-
     #   Returns 'x' as a character vector.
 
     # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # as timeDate:
     ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)

@@ -51,7 +51,7 @@ listFinCenter(pattern = ".*")
 
 \examples{
 ## myFinCenter - the global setting currently used:
-   myFinCenter
+   getRmetricsOptions("myFinCenter")
 
 ## Other Financial Centers:
    listFinCenter("Asia/")

@@ -13,7 +13,7 @@
 
 
 \usage{
-holiday(year = currentYear, Holiday = "Easter")
+holiday(year = getRmetricsOptions("currentYear"), Holiday = "Easter")
 }
 
 

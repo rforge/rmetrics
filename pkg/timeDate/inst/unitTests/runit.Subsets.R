@@ -45,11 +45,11 @@
 ################################################################################
 
 
-test.Easter <- 
+test.Easter <-
     function()
 {
     # Easter() Function:
-    myFinCenter = "Zurich"
+    setRmetricsOptions(myFinCenter = "Zurich")
     target = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     print(target)
     charvec = c(
@@ -58,7 +58,7 @@ test.Easter <-
     current = timeDate(charvec)
     print(current)
     checkIdentical(target, current)
-    
+
     # Return Value:
     return()
 }
@@ -67,15 +67,16 @@ test.Easter <-
 # ------------------------------------------------------------------------------
 
 
-test.isWeekday <- 
+test.isWeekday <-
     function()
 {
     # Weekdays:
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WD = isWeekday(tS)
     current = c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     checkIdentical(as.logical(WD), current)
-    
+
     # Return Value:
     return()
 }
@@ -84,15 +85,16 @@ test.isWeekday <-
 # ------------------------------------------------------------------------------
 
 
-test.isWeekend <- 
+test.isWeekend <-
     function()
 {
     # Weekends:
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WE = isWeekend(tS)
     current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
     checkIdentical(as.logical(WE), current)
-    
+
     # Return Value:
     return()
 }
@@ -101,7 +103,7 @@ test.isWeekend <-
 # ------------------------------------------------------------------------------
 
 
-test.dayOfWeek <- 
+test.dayOfWeek <-
     function()
 {
     # Day of Week:
@@ -109,7 +111,7 @@ test.dayOfWeek <-
     DOW = dayOfWeek(tS)
     current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     checkIdentical(as.character(DOW), current)
-    
+
     # Return Value:
     return()
 }
@@ -118,7 +120,7 @@ test.dayOfWeek <-
 # ------------------------------------------------------------------------------
 
 
-test.holidayNYSE <- 
+test.holidayNYSE <-
     function()
 {
     # NYSE Business Days - Dates:
@@ -136,7 +138,7 @@ test.holidayNYSE <-
     # Holidays:
     TD = Easter(2006)
     checkIdentical(format(TD), "2006-04-16")
-    
+
     # Return Value:
     return()
 }
@@ -145,16 +147,17 @@ test.holidayNYSE <-
 # ------------------------------------------------------------------------------
 
 
-test.isBizday <- 
+test.isBizday <-
     function()
 {
     # Bizdays:
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     target = isBizday(tS, holidayNYSE(2006))
     current = c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
     names(current) = names(target)
     checkIdentical(target, current)
-    
+
     # Return Value:
     return()
 }
@@ -163,10 +166,11 @@ test.isBizday <-
 # ------------------------------------------------------------------------------
 
 
-test.isHoliday<- 
+test.isHoliday<-
     function()
 {
     # Holidays:
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     target = isHoliday(tS, holidayNYSE(2006))
     current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
@@ -181,7 +185,7 @@ test.isHoliday<-
 # ------------------------------------------------------------------------------
 
 
-test.subset <- 
+test.subset <-
     function()
 {
     # Holidays:
@@ -199,12 +203,12 @@ test.subset <-
 # ------------------------------------------------------------------------------
 
 
-test.cut <- 
+test.cut <-
     function()
 {
     # Holidays:
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
-    
+
     # cut -
     GF = GoodFriday(2006)
     print(GF)
@@ -227,23 +231,23 @@ test.cut <-
 # ------------------------------------------------------------------------------
 
 
-test.start <- 
+test.start <-
     function()
 {
     # start -
-    tS = timeCalendar(currentYear)
+    tS = timeCalendar(getRmetricsOptions("currentYear"))
     target = start(tS)
     print(target)
-    currentDate = paste(currentYear, "-01-01", sep ="")
+    currentDate = paste(getRmetricsOptions("currentYear"), "-01-01", sep ="")
     checkIdentical(
         format(target),
         current = format(timeDate(currentDate)))
 
     # end -
-    tS = timeCalendar(currentYear)
+    tS = timeCalendar(getRmetricsOptions("currentYear"))
     target = end(tS)
     print(target)
-    currentDate = paste(currentYear, "-12-01", sep ="")
+    currentDate = paste(getRmetricsOptions("currentYear"), "-12-01", sep ="")
     checkIdentical(
         format(target),
         current = format(timeDate(currentDate)))
@@ -256,7 +260,7 @@ test.start <-
 # ------------------------------------------------------------------------------
 
 
-test.blockStart <- 
+test.blockStart <-
     function()
 {
     # blockStart -

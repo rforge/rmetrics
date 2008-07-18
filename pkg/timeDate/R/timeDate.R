@@ -35,8 +35,8 @@
 
 
 timeDate <-
-    function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
-    FinCenter = myFinCenter)
+    function(charvec = Sys.timeDate(), format = NULL, zone = "",
+    FinCenter = "")
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
@@ -77,8 +77,10 @@ timeDate <-
     # FUNCTION:
 
     # Settings and Checks:
-    if (FinCenter == "" || is.null(FinCenter)) FinCenter = "GMT"
-    if (is.null(zone)) zone = "GMT"
+    if (zone == "")
+        zone = getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter = getRmetricsOptions("myFinCenter")
 
     # ISO Date/Time Format:
     isoDate   <- "%Y-%m-%d"
@@ -129,7 +131,7 @@ timeDate <-
     new("timeDate",
         Data = as.POSIXct(Data),
         format = format,
-        FinCenter = FinCenter)
+        FinCenter = as.character(FinCenter))
 }
 
 # ------------------------------------------------------------------------------

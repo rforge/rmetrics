@@ -58,11 +58,11 @@ function()
     #  trunc.timeDate         Truncates objects of class 'timeDate'
 
     # New York:
-    myFinCenter = "NewYork"
+    setRmetricsOptions(myFinCenter = "NewYork")
     NY = timeCalendar(h = 10)
 
     # Back to Zurich:
-    myFinCenter = "Zurich"
+    setRmetricsOptions(myFinCenter = "Zurich")
     ZH = timeCalendar(h = 16)
 
     # Group Ops:
@@ -89,7 +89,7 @@ function()
 
     # round() Function:
     set.seed(4711)
-    myFinCenter = "GMT"
+    setRmetricsOptions(myFinCenter = "GMT")
     tC = timeCalendar(
         m = 1:12,
         d = rep(1, 12),
