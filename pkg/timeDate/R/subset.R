@@ -47,11 +47,20 @@
     # Value:
     #   Returns a subset from a 'timeDate' object.
 
-    # Changes:
-    #
-
     # FUNCTION:
 
+    # Character Type Subsetting:
+    subset = I(...)
+    if (is.character(subset)){
+        if (.subsetCode(subset) == "SPAN") {
+            # Subsetting by Span Indexing: 
+            return(.subsetBySpan(x, subset))
+        } else { 
+            # Subsetting by Python Indexing: 
+            return(.subsetByPython(x, subset))
+        }
+    }
+    
     # Subsets:
     z = as.POSIXlt(x@Data)
     val <- lapply(z, "[", ..., drop = drop)
@@ -68,6 +77,7 @@
 
 #-------------------------------------------------------------------------------
 
+
 "[<-.timeDate" <-
     function(x, ..., value)
 {
@@ -81,9 +91,6 @@
 
     # Value:
     #   Returns a subset from a 'timeDate' object.
-
-    # Changes:
-    #
 
     # FUNCTION:
 
@@ -101,6 +108,171 @@
         Data = val,
         format = x@format,
         FinCenter = x@FinCenter)
+}
+
+
+################################################################################
+
+
+.subsetCode <-
+function(subset)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Defines codes for different types of subsettings
+    
+    # Details:
+    
+    # Python Like Indexing:
+    #   Subset:             Code:
+    #   ISO8601             00000
+    #   ::                  00010
+    #   ISO8601::ISO8601    00100
+    #   ISO8601::           01000
+    #   ::ISO8601           10000
+    
+    # Indexing by Spans:
+    #   subsets = tolower(c(
+    #     "last 1 Month(s)",
+    #     "last 1 Week(s)",
+    #     "last 1 Day(s)",
+    #     "last 1 hour(s)",
+    #     "last 1 minute(s)",
+    #     "last 1 second(s)"))
+    
+    # Example:
+    #   .subsetCode("2008-03::")
+    #   .subsetCode("last 2 Weeks")
+    
+    # Code String:
+    if (length(grep("last", subset)) > 0 ) {
+        code = "SPAN"
+    } else {
+        code = paste(
+            sign(regexpr("^::[0-9]", subset)[1]+1),
+            sign(regexpr("[0-9]::$", subset)[1]+1),  
+            sign(regexpr("[0-9]::[0-9]", subset)[1]+1),
+            as.integer(subset == "::"),
+            length(grep("[a-Z]", subset)), sep = "")
+    }
+
+    # Return Value:
+    code      
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+
+.subsetByPython <-  
+function(x = timeCalendar(), subset = "::")
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Subsets a timeDate object by python like indexing
+    
+    # Arguments:
+    #   x - a timeDate object
+    #   subset - a python like subset string
+    
+    # Example:
+    #   .subsetByPython(subset = "2008")
+    #   .subsetByPython(subset = "2008-07")
+    #   .subsetByPython(subset = "::")
+    #   .subsetByPython(subset = "2008-07::2008-09")
+    #   .subsetByPython(subset = "2008-07::")
+    #   .subsetByPython(subset = "::2008-06")
+
+    # FUNCTION:
+    
+    # Subset Code:
+    code = .subsetCode(subset)
+    
+    # Full Vector:
+    ans = x
+    
+    # Date String:
+    date = strsplit(subset, "::")[[1]]
+      
+    # 1. DATE
+    if(code == "00000") ans = x[grep(date, format(x))]
+    
+    # 2. ::
+    if(code == "00010") ans = x
+    
+    # Internal Functions:
+    .completeStart = function(date) {
+        substr(paste(date, "-01-01", sep = ""), 1, 10) }  
+    .completeEnd = function(date) {
+        if (nchar(date) == 4) 
+            paste(date, "-12-31", sep = "") else
+        if (nchar(date) == 7) 
+            format(timeLastDayInMonth(paste(date, "-01", sep = ""))) else 
+        if (nchar(date) == 10) 
+            date }
+    
+    # 3. DATE::DATE:
+    if(code == "00100") 
+        ans = window(x, .completeStart(date[1]), .completeEnd(date[2]))
+   
+    # 4. DATE::
+    if(code == "01000")
+        ans = window(x, .completeStart(date[1]), end(x))
+        
+    # 5. ::DATE
+    if(code == "10000")
+        ans = window(x, start(x), .completeEnd(date[2]))
+        
+    # Return Value
+    ans     
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.subsetBySpan  <-
+function(x = timeCalendar(), subset = "last 3 Months")
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Subsets a timeDate object by span indexing
+    
+    # Arguments:
+    #   x - a timeDate object
+    #   subset - a span like subset string
+    
+    # Note:
+    #   ye[ars]
+    #   mo[nths]
+    #   da[ys]
+    #   ho[urs]
+    #   mi[nutes]
+    #   se[conds]
+    #       ... only "last" spans are implemented
+    
+    # Example:
+    #   .subsetBySpan(timeCalendar(), "last 2 months")
+    #   .subsetBySpan(timeCalendar(), "last 62 days")
+    
+    # FUNCTION:
+    
+    # Get Code:
+    code = .subsetCode(subset)
+    stopifnot(code == "SPAN")
+    
+    # Settings:
+    duration = as.numeric(strsplit(subset, " ")[[1]][2])
+    len = c(ye = 31622400, mo = 2678400, da = 86400, ho = 3600, mi = 60, se = 1)
+    unit = tolower(substr(strsplit(subset, " ")[[1]][3], 1, 2))
+    offset = len[unit]*duration
+    
+    # Return Value:
+    window(x, start = end(x) - offset, end(x))
 }
 
 

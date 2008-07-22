@@ -5,6 +5,7 @@
 
 
 \alias{timeDate}
+\alias{strptimeDate}
 
 
 \description{
@@ -17,6 +18,8 @@
 \usage{
 timeDate(charvec = Sys.timeDate(), format = NULL,
     zone = "", FinCenter = "")
+    
+strptimeDate(x, format = whichFormat(x), tz = myFinCenter)
 }
 
 
@@ -28,8 +31,15 @@ timeDate(charvec = Sys.timeDate(), format = NULL,
     \item{format}{
         the format specification of the input character vector.
         }
+    \item{tz}{
+        a character with the the location of the financial center 
+        named as \code{"continent/city"}, or short \code{"city"}.
+        }
     \item{zone}{
         the time zone or financial center where the data were recorded.
+        }
+    \item{x}{
+        a character string or vector of dates and times.
         }
     \item{FinCenter}{
         a character with the the location of the
@@ -63,12 +73,13 @@ timeDate(charvec = Sys.timeDate(), format = NULL,
    timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich")
    
    timeDate(paste(dts, tms), format = "\%Y-\%m-\%d \%H:\%M:\%S",
-            zone = "GMT", FinCenter = "GMT")
+        zone = "GMT", FinCenter = "GMT")
    
-   timeDate(paste(dts, tms), zone = "Europe/Zurich", FinCenter = "Europe/Zurich")
+   timeDate(paste(dts, tms), 
+        zone = "Europe/Zurich", FinCenter = "Europe/Zurich")
    
    timeDate(paste(dts, tms), format = "\%Y-\%m-\%d \%H:\%M:\%S",
-            zone = "GMT", FinCenter = "Europe/Zurich")
+        zone = "GMT", FinCenter = "Europe/Zurich")
 
    ## non standard format:
    timeDate(paste(20:31, "03.2005", sep="."), format = "\%d.\%m.\%Y")

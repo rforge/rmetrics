@@ -28,9 +28,10 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  timeDate                  Creates a 'timeDate' object from given dates
-#  .formatFinCenter          Internal called by timeDate
+# FUNCTION:              DESCRIPTION:
+#  timeDate               Creates a 'timeDate' object from given dates
+#  .formatFinCenter       Internal called by timeDate
+#  strptimeDate           Creates for character time stamps a 'timeDate' object
 ################################################################################
 
 
@@ -205,6 +206,37 @@ timeDate <-
     ## Return Value:
     format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+strptimeDate <- 
+    function(x, format = whichFormat(x), tz = myFinCenter)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Creates for character time stamps a 'timeDate' object
+    
+    # Example:
+    #   timeDate(); strptimeDate(as.character(Sys.timeDate()))
+    
+    # Note:
+    #   This function works like strptime.
+    
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(is.character(x))
+    
+    # Create 'timeDate':
+    ans = timeDate(x, format, zone = tz, FinCenter = tz)
+    
+    # Return Value:
+    ans
+}
+
 
 ################################################################################
 
