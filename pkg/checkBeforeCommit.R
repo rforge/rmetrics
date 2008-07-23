@@ -44,7 +44,7 @@ checkBeforeCommit  <-
     names(listDepends) <- pkgsRmetrics
     tocheck <- sapply(lapply(listDepends, "%in%", pkgs), any)
     pkgsToCheck <-
-        if (pkgs == "Rmetrics") # Rmetrics virtual package -> check all
+        if ("Rmetrics" %in% pkgs) # Rmetrics virtual package -> check all
             pkgsRmetrics
         else
             c(pkgs, names(tocheck)[tocheck])

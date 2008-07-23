@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -27,65 +27,65 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:    
+# FUNCTION:            DESCRIPTION:
 #  tFit                 Fits parameters of a Student-t density
 ################################################################################
 
 
-.x.save <-  NA
+# .x.save <-  NA
 
 
 # ------------------------------------------------------------------------------
 
 
-tFit <-  
-    function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, 
+tFit <-
+    function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE,
     title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Return Maximum log-likelihood estimated
-      
+
     # Note:
-    #   Function Calls: nlminb(), density() 
-    
+    #   Function Calls: nlminb(), density()
+
     # Example:
     #   tFit(rt(1000, df=4))
-    
+
     # FUNCTION:
-    
+
     # Transform:
     x.orig = x
     x = as.vector(x)
-    
+
     # Settings:
     CALL = match.call()
-    
+
     # Log-likelihood Function:
-    etmle = function(x, y = x, trace) { 
+    etmle = function(x, y = x, trace) {
         # Prevent from negative df's
-        if (x[1] <= 0) x[1] = .x.save
+        if (x[1] <= 0) x[1] = getRmetricsOptions(".x.save")
         f = -sum(log(dt(y, x[1])))
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Students df Estimate:      ", x[1], "\n") 
+            cat("\n Students df Estimate:      ", x[1], "\n")
         }
-        .x.save <<- x[1]
-        f 
+        setRmetricsOptions(.x.save = x[1])
+        f
     }
-        
+
     # Minimization:
     r = nlm(f = etmle, p = c(df), y = x, trace = trace)
-    
+
     # Optional Plot:
     if (doplot) {
         if (span == "auto") {
             df = r$estimate[1]
             span.min = qt(0.001, df)
             span.max = qt(0.999, df)
-            span = seq(span.min, span.max, length = 100)  
+            span = seq(span.min, span.max, length = 100)
         }
         par(err = -1)
         z = density(x, n = 100, ...)
@@ -93,29 +93,29 @@ tFit <-
         y = z$y[z$y > 0]
         y.points = dt(span, df = r$estimate[1])
         ylim = log(c(min(y.points), max(y.points)))
-        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
+        plot(x, log(y), xlim = c(span[1], span[length(span)]),
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
         title("STUDENT-T: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue") 
-        if (exists("grid")) grid()  
+        lines(x = span, y = log(y.points), col = "steelblue")
+        if (exists("grid")) grid()
     }
-    
+
     # Add Title and Description:
     if (is.null(title)) title = "Student-t Parameter Estimation"
-    if (is.null(description)) description = .description()
-        
+    if (is.null(description)) description = fUtilities:::.description()
+
     # Fit:
-    fit = list(estimate = c(df = r$estimate), minimum = -r$minimum, 
-        code = r$code, gradient = r$gradient) 
-        
+    fit = list(estimate = c(df = r$estimate), minimum = -r$minimum,
+        code = r$code, gradient = r$gradient)
+
     # Return Value:
-    new("fDISTFIT",     
+    new("fDISTFIT",
         call = as.call(CALL),
         model = "Student-t Distribution",
         data = as.data.frame(x.orig),
         fit = fit,
-        title = as.character(title), 
-        description = .description() )
+        title = as.character(title),
+        description = fUtilities:::.description() )
 }
 
 

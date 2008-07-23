@@ -1,22 +1,43 @@
-import("fUtilities")
-import("utils")
-import("methods")
-import("stats")
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           "atoms",
+           "finCenter<-",
+           "finCenter",
+           "getRmetricsOptions",
+           "setRmetricsOptions")
+importFrom("graphics",
+           "lines",
+           "plot",
+           "points",
+           "axis.POSIXct")
+importFrom("methods",
+           "coerce",
+           "show",
+           "is",
+           "@<-",
+           "new")
+importFrom("stats",
+           "end",
+           "start",
+           "window",
+           "approx")
+importFrom("utils",
+           "packageDescription")
 
 ################################################
 ## S4 classes
 ################################################
 
-exportClasses(
-    "timeDate"
-)
-exportMethods(
-    "-",
-    "+",
-    "coerce",
-    "Ops",
-    "show"
-)
+exportClasses("timeDate" )
+exportMethods("-",
+              "+",
+              "coerce",
+              "Ops",
+              "show" )
 
 ################################################
 ## S3 classes
@@ -645,5 +666,4 @@ export(
     "Yerevan",
     "Zagreb",
     "Zaporozhye",
-    "Zurich"
-)
+    "Zurich" )

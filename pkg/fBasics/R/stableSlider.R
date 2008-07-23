@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -32,34 +32,34 @@
 ################################################################################
 
 
-stableSlider <-   
+stableSlider <-
     function()
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays the stable distribution
 
     # FUNCTION:
-    
+
     # Internal Function:
     refresh.code = function(...)
     {
         # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        beta  = .sliderMenu(no = 3)
-        gamma = .sliderMenu(no = 4)
-        delta = .sliderMenu(no = 5)
-        pm    = .sliderMenu(no = 6)
-         
-        # Compute Data:  
+        N     = fUtilities:::.sliderMenu(no = 1)
+        alpha = fUtilities:::.sliderMenu(no = 2)
+        beta  = fUtilities:::.sliderMenu(no = 3)
+        gamma = fUtilities:::.sliderMenu(no = 4)
+        delta = fUtilities:::.sliderMenu(no = 5)
+        pm    = fUtilities:::.sliderMenu(no = 6)
+
+        # Compute Data:
         xmin = round(qstable(0.01, alpha, beta, gamma, delta, pm), digits = 2)
         xmax = round(qstable(0.99, alpha, beta, gamma, delta, pm), digits = 2)
         s = seq(xmin, xmax, length = N)
         y1 = dstable(s, alpha, beta, gamma, delta, pm)
         y2 = pstable(s, alpha, beta, gamma, delta, pm)
-        main1 = paste("Stable Density\n", 
+        main1 = paste("Stable Density\n",
             "alpha = ", as.character(alpha), " | ",
             "beta = ", as.character(beta), " | ",
             "gamma = ", as.character(gamma), " | ",
@@ -67,16 +67,16 @@ stableSlider <-
         main2 = paste("Stable Probability\n",
             "xmin 0.01% = ", as.character(xmin), " | ",
             "xmax 0.99% = ", as.character(xmax), " | ",
-            "pm = ", as.character(pm))        
-        
+            "pm = ", as.character(pm))
+
         # Frame:
-        par(mfrow = c(2, 1), cex = 0.7)   
-        
+        par(mfrow = c(2, 1), cex = 0.7)
+
         # Density:
         plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
         abline (h = 0, lty = 3)
-        title(main = main1)       
-        
+        title(main = main1)
+
         # Probability:
         plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
             col = "steelblue" )
@@ -84,12 +84,12 @@ stableSlider <-
         abline(h = 1.0, lty = 3)
         abline(h = 0.5, lty = 3)
         abline(v = delta, lty = 3, col = "red")
-        title(main = main2)      
-        
+        title(main = main2)
+
         # Reset Frame:
         par(mfrow = c(1, 1), cex = 0.7)
     }
-  
+
     # Open Slider Menu:
     .sliderMenu(refresh.code,
        names =       c(  "N", "alpha", "beta", "gamma", "delta", "pm"),

@@ -12,10 +12,10 @@
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA. 
+# Suite 330, Boston, MA  02111-1307  USA.
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -40,49 +40,49 @@
 ################################################################################
 
 
-fbmSim = 
+fbmSim =
 function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
 waveJ = 7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Simulation of fractional Brownian motion by five different methods
-    
-    # Arguments: 
-    #   n : length of the desired sample 
-    #   H : self-similarity parameter          
+
+    # Arguments:
+    #   n : length of the desired sample
+    #   H : self-similarity parameter
     #   doplot : = TRUE ----> plot path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
-    
+
     # Details:
     #   The underlying functions were ported from SPlus code written
     #   by J.F. Couerjolly. They are documented in the reference given
     #   below.
-    
+
     # Reference:
     #   Couerjolly J.F.,
-    #       Simulation and Identification of the Fractional Brownian 
+    #       Simulation and Identification of the Fractional Brownian
     #       Motion: A Bibliographical and Comparative Study,
     #       Journal of Statistical Software 5, 2000
-    
+
     # FUNCTION:
-    
+
     # Initialization:
     method = match.arg(method)
-    
+
     # Match Function:
     fun = paste(".fbmSim.", method, sep = "")
     funFBM = match.fun(fun)
-    
+
     # Simulate:
     if (method == "wave") {
         ans = funFBM(n, H, waveJ, doplot, fgn)
     } else {
         ans = funFBM(n, H, doplot, fgn)
     }
-        
+
     # Return Value:
     ans
 }
@@ -91,34 +91,34 @@ waveJ = 7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.mvn = 
+.fbmSim.mvn =
 function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
-    #   n : length of the desired sample 
-    #   H : self-similarity parameter          
+    # Arguments:
+    #   n : length of the desired sample
+    #   H : self-similarity parameter
     #   doplot : = TRUE ----> plot path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
     #   at times { 0, 1/n,..., n-1/n }
     #   by numerical approximation of stochastic integral
 
-    # Author: 
+    # Author:
     #    Coeurjolly 06/2000 of the original SPlus port
 
     # Reference:
-    #   Mandelbrot B. and Van Ness, 
-    #       Fractional brownian motions, 
+    #   Mandelbrot B. and Van Ness,
+    #       Fractional brownian motions,
     #       fractional noises and applications, SIAM Review, 10, n.4, 1968.
     #   Couerjolly J.F.,
     #       Simulation and Identification of the Fractional Brownian motion:
     #       A Bibliographical and Comparative Study,
     #       Journal of Statistical Software 5, 2000
-    
+
     # FUNCTION:
-    
+
     # Initialization:
     dB1 = rnorm(n)
     borne = trunc(n^1.5)
@@ -136,7 +136,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
     }
     fBm = fBm * n^( - H) * CH
     fBm[1] = 0
-    
+
     # Result:
     ans = drop(fBm)
     Title = "mvnFBM Path"
@@ -144,8 +144,8 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
         ans = c(fBm[1], diff(fBm))
         Title = "mvnFGN Path"
     }
-    
-    # Plot of fBm   
+
+    # Plot of fBm
     if (doplot) {
         time = 1:n
         Nchar = as.character(n)
@@ -157,7 +157,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
         plot(time, ans, type = "l", main = leg, col = "steelblue")
         grid()
     }
-    
+
     # Return Value:
     ans = as.ts(ans)
     attr(ans, "control") <- c(method = "mvn", H = H)
@@ -168,33 +168,33 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.wave = 
+.fbmSim.wave =
 function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
+    # Arguments:
     #   n : length of the desired sample
-    #   H : self-similarity parameter          
+    #   H : self-similarity parameter
     #   J : resolution
     #   doplot : = TRUE ----> plot of path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
     #   at times { 0, 1/n,..., n-1/n } by wavelet synthesis
 
-    # Author: 
+    # Author:
     #    Coeurjolly 06/2000 of the original SPlus port
 
-    # Reference:  
-    #   Abry P. and Sellan F., 
+    # Reference:
+    #   Abry P. and Sellan F.,
     #       The wavelet-based synthesis
     #       for fractional Brownian motion, Applied and computational
-    #       harmonic analysis, 1996 + Matlab scripts from P. Abry 
+    #       harmonic analysis, 1996 + Matlab scripts from P. Abry
     #   Couerjolly J.F.,
     #       Simulation and Identification of the Fractional Brownian motion:
     #       A Bibliographical and Comparative Study,
     #       Journal of Statistical Software 5, 2000
-    
+
     # FUNCTION:
 
     # Daubechies filter of length 20
@@ -208,13 +208,13 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
     Db20 = c(Db20, 0.001395351747, 0.0019924052950000002)
     Db20 = c(Db20, -0.00068585669500000003, -0.000116466855)
     Db20 = c(Db20, 9.3588670000000005e-05, -1.3264203000000001e-05)
-    secu = 2 * length(Db20) 
+    secu = 2 * length(Db20)
 
     # Quadrature mirror filters of Db20
     Db20qmf = (-1)^(0:19) * Db20
     Db20qmf = Db20qmf[20:1]
-    nqmf = -18  
-    
+    nqmf = -18
+
     # Truncated fractional coefficients appearing in fractional integration
     # of the multiresolution analysis
     prec = 0.0060000000000000001
@@ -256,7 +256,7 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
     fs1 = .convol(ckalpha, Db20)
     fs1 = .convol(fs1, hmoy)
     fs1 = 2^( - s) * fs1
-    fs1 = fs1 * sqrt(2) # 
+    fs1 = fs1 * sqrt(2) #
 
     # Sequence gs1:
     gs12 = .convol(ckbeta, Db20qmf)
@@ -274,7 +274,7 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
     tappro = length(appro)  ##
 
     # Useful function:
-    dilatation = function(vect) {   
+    dilatation = function(vect) {
         # dilates one time vector vect
         ldil = 2 * length(vect) - 1
         dil = rep(0, ldil)
@@ -300,8 +300,8 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
     fGn = c(fBm[1], diff(fBm))
     fGn = fGn * 2^(J * H) * n^( - H)    # path on [0,1]
     fBm = cumsum(fGn)
-    fBm[1] = 0  
-    
+    fBm[1] = 0
+
     # Result:
     ans = drop(fBm)
     Title = "waveFBM Path"
@@ -309,7 +309,7 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
         ans = c(fBm[1], diff(fBm))
         Title = "waveFGN Path"
     }
-    
+
     # Plot of fBM/FGN:
     if (doplot) {
         time = 1:n
@@ -322,7 +322,7 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
         plot(time, ans, type = "l", main = leg, col = "steelblue")
         grid()
     }
-    
+
     # Return Value:
     ans = as.ts(ans)
     attr(ans, "control") <- c(method = "wave", H = H)
@@ -333,24 +333,24 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.convol = 
+.convol =
 function(x, y)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
+    # Arguments:
     #   x,y : vectors
-    
-    # Value: 
+
+    # Value:
     #   convolution of vectors x and y
 
-    # Author: 
+    # Author:
     #    Coeurjolly 06/2000 of the original SPlus port
 
     # FUNCTION:
-    
+
     # Convolution:
     if (missing(x) | missing(y)) {
-        break 
+        break
     } else {
         a = c(x, rep(0, (length(y) - 1)))
         b = c(y, rep(0, (length(x) - 1)))
@@ -367,32 +367,32 @@ function(x, y)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.chol = 
+.fbmSim.chol =
 function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
+    # Arguments:
     #   n : length of the desired sample
-    #   H : self-similarity parameter          
+    #   H : self-similarity parameter
     #   doplot : = TRUE ----> plot path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
     #   at times { 0, 1/n,..., n-1/n }
     #   by Choleki's decomposition of the covariance matrix of the fBm
 
-    # Author: 
+    # Author:
     #   Coeurjolly 06/2000 of the original SPlus port
-    
+
     # Reference:
     #   Couerjolly J.F.,
     #       Simulation and Identification of the Fractional Brownian motion:
     #       A Bibliographical and Comparative Study,
     #       Journal of Statistical Software 5, 2000
-      
+
     # FUNCTION:
-    
-    # Construction of covariance matrix of fBm  
+
+    # Construction of covariance matrix of fBm
     H2 = 2 * H
     matcov = matrix(0, n - 1, n - 1)
     for(i in (1:(n - 1))) {
@@ -406,7 +406,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
     Z = rnorm(n - 1)
     fBm = t(L) %*% Z
     fBm = c(0, fBm)
-    
+
     # Result:
     ans = drop(fBm)
     Title = "cholFBM Path"
@@ -427,7 +427,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
         plot(time, ans, type = "l", main = leg, col = "steelblue")
         grid()
     }
-    
+
     # Return Value:
     ans = as.ts(ans)
     attr(ans, "control") <- c(method = "chol", H = H)
@@ -438,33 +438,33 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.lev = 
+.fbmSim.lev =
 function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
-    #   n : length of the desired sample 
-    #   H : self-similarity parameter          
+    # Arguments:
+    #   n : length of the desired sample
+    #   H : self-similarity parameter
     #   plotfBm :  =1 ---> plot path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
     #   at times { 0, 1/n,..., n-1/n } by Levinson's method
-    
-    # Author: 
+
+    # Author:
     #   Coeurjolly 06/2000 of the original SPlus port
 
     # Reference:
-    #   Peltier R.F., 
+    #   Peltier R.F.,
     #       Processus stochastiques fractals avec
     #       applications en finance, these de doctorat, p.42, 28.12.1997
     #   Couerjolly J.F.,
     #       Simulation and Identification of the Fractional Brownian motion:
     #       A Bibliographical and Comparative Study,
     #       Journal of Statistical Software 5, 2000
-    
+
     # FUNCTION:
-    
+
     # Covariances of fGn:
     k = 0:(n - 1)
     H2 = 2 * H
@@ -476,7 +476,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
     v1 = r
     v2 = c(0, r[c(2:n)], 0)
     k =  - v2[2]
-    aa = sqrt(r[1]) # 
+    aa = sqrt(r[1]) #
 
     # Levinson's algorithm:
     for(j in (2:n)) {
@@ -489,8 +489,8 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
         k =  - v2[j + 1]/(aa * aa)
     }
     fBm = cumsum(fGn)
-    fBm[1] = 0  
-    
+    fBm[1] = 0
+
     # Result:
     ans = drop(fBm)
     Title = "levFBM Path"
@@ -511,7 +511,7 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
         plot(time, ans, type = "l", main = leg, col = "steelblue")
         grid()
     }
-    
+
     # Return Value:
     ans = as.ts(ans)
     attr(ans, "control") <- c(method = "lev", H = H)
@@ -522,36 +522,36 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.circ = 
+.fbmSim.circ =
 function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Arguments: 
+    # Arguments:
     #   n : length of the desired sample
-    #   H : self-similarity parameter          
+    #   H : self-similarity parameter
     #   doplot : = TRUE ---> plot path of fBm
 
-    # Value: 
+    # Value:
     #   Simulation of a standard fractional Brownian motion
     #   at times { 0, 1/n,..., n-1/n } by Wood-Chan's method
 
-    # Author: 
+    # Author:
     #    Coeurjolly 06/2000 of the original SPlus port
 
     # Reference:
-    #   Wood A. and Chan G., 
-    #       Simulation of stationnary Gaussian processes, 
-    #       Journal of computational and grahical statistics, Vol.3, 1994. 
+    #   Wood A. and Chan G.,
+    #       Simulation of stationnary Gaussian processes,
+    #       Journal of computational and grahical statistics, Vol.3, 1994.
     #   Couerjolly J.F.,
     #       Simulation and Identification of the Fractional Brownian motion:
     #       A Bibliographical and Comparative Study,
-    #       Journal of Statistical Software 5, 2000   
+    #       Journal of Statistical Software 5, 2000
 
     # FUNCTION:
 
-    # First line of the circulant matrix, C, built via covariances of fGn 
-    lineC = 
-    function(n, H, m) 
+    # First line of the circulant matrix, C, built via covariances of fGn
+    lineC =
+    function(n, H, m)
     {
         k = 0:(m - 1)
         H2 = 2 * H
@@ -603,8 +603,8 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
         fGn = (1/(sqrt(2 * m))) * fGn
         fGn = Re(fGn[c(1:n)])
         fBm = cumsum(fGn)
-        fBm[1] = 0  
-        
+        fBm[1] = 0
+
         # Result:
         ans = drop(fBm)
         Title = "circFBM Path"
@@ -612,7 +612,7 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
             ans = c(fBm[1], diff(fBm))
             Title = "circFGN Path"
         }
-    
+
         # Plot of fBm:
         if (doplot) {
             time = 1:n
@@ -626,7 +626,7 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
             grid()
         }
     }
-    
+
     # Return Value:
     ans = as.ts(ans)
     attr(ans, "control") <- c(method = "circ", H = H)
@@ -645,34 +645,34 @@ function()
     #   Displays fbm simulated time Series
 
     # FUNCTION:
-    
+
     # Internal Function:
     refresh.code = function(...)
     {
         # Sliders:
-        n      = .sliderMenu(no = 1)
-        H      = .sliderMenu(no = 2)
-        method = .sliderMenu(no = 3)
-        
+        n      = fUtilities:::.sliderMenu(no = 1)
+        H      = fUtilities:::.sliderMenu(no = 2)
+        method = fUtilities:::.sliderMenu(no = 3)
+
         # Select Method:
         Method = c("mvn", "chol", "lev", "circ", "wave")
         Method = Method[method]
-        
+
         # Frame:
         par(mfrow = c(2, 1))
-        
+
         # FBM TimeSeries:
         fbmSim(n = n, H = H, method = Method, doplot = TRUE)
-        
+
         # FGN TimeSeries:
         fbmSim(n = n, H = H, method = Method, doplot = TRUE, fgn = TRUE)
-        
+
         # Reset Frame:
         par(mfrow = c(1, 1))
     }
-  
+
     # Open Slider Menu:
-    .sliderMenu(refresh.code,
+    fUtilities:::.sliderMenu(refresh.code,
        names =       c(  "n",    "H", "method"),
        minima =      c(   10,   0.01,       1),
        maxima =      c(  200,   0.99,       5),

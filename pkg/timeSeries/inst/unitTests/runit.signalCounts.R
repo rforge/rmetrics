@@ -4,9 +4,9 @@ function()
     # RUnit Test:
 
     int = c(1, 10, 100, 21, 135)
-    print(.signalCounts(sample(int)))
+    print(timeSeries:::.signalCounts(sample(int)))
 
-    nc = .signalCounts(int)
+    nc = timeSeries:::.signalCounts(int)
     nc
 
     ns = sample(nc)
@@ -22,7 +22,7 @@ function()
     ns[ordered]
     as.integer(ns[ordered])
 
-    .signalCounts(1:12)
-    .signalCounts(sample(1:12))
-    .signalCounts(.signalCounts(1:12))
+    timeSeries:::.signalCounts(1:12)
+    timeSeries:::.signalCounts(sample(1:12))
+    timeSeries:::.signalCounts(timeSeries:::.signalCounts(1:12))
 }

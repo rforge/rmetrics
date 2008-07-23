@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -27,7 +27,7 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION: 
+# FUNCTION:             DESCRIPTION:
 #  dhyp                  Returns density for hyperbolic DF
 #  phyp                  Returns probability for hyperbolic DF
 #  qhyp                  Returns quantiles for hyperbolic DF
@@ -37,24 +37,24 @@
 ################################################################################
 
 
-dhyp <-  
+dhyp <-
     function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns Hyperbolic Density Function PDF
-       
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
- 
+
     # FUNCTION:
-    
+
     # Settings:
     pm = pm[1]
-    
+
     # Return Value:
     ans = NA
     if (pm == 1) return(.dhyp1(x, alpha, beta, delta, mu))
@@ -67,24 +67,24 @@ dhyp <-
 # ------------------------------------------------------------------------------
 
 
-phyp <-  
+phyp <-
     function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Return cumulative probability of Hyperbolic PDF
-     
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Settings:
     pm = pm[1]
-    
+
     # Return Value:
     ans = NA
     if (pm == 1) return(.phyp1(q, alpha, beta, delta, mu, ...))
@@ -97,14 +97,14 @@ phyp <-
 # ------------------------------------------------------------------------------
 
 
-qhyp <-  
+qhyp <-
     function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles of Hyperbolic PDF
-    
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
@@ -112,38 +112,38 @@ qhyp <-
 
     # Note:
     #   This procedure will not run under Splus.
-   
+
     # FUNCTION:
-    
+
     # Settings:
     pm = pm[1]
-    
+
     # Return Value:
     ans = NA
     if (pm == 1) return(.qhyp1(p, alpha, beta, delta, mu, ...))
     if (pm == 2) return(.qhyp2(p, alpha, beta, delta, mu, ...))
     if (pm == 3) return(.qhyp3(p, alpha, beta, delta, mu, ...))
-    if (pm == 4) return(.qhyp4(p, alpha, beta, delta, mu, ...))   
+    if (pm == 4) return(.qhyp4(p, alpha, beta, delta, mu, ...))
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rhyp <-  
+rhyp <-
     function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns random deviates of Hyperbolic PDF
-    
+
     # Arguments:
     #   n - number of random deviates to be generated
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
+
     # Notes:
     #   I have removed my original Fortran program and replaced it by
     #   the dhyperb() function from the HyperbolicDist Package, written
@@ -151,39 +151,39 @@ rhyp <-
     #   License: GPL
 
     # FUNCTION:
-    
+
     # Settings:
     pm = pm[1]
-    
+
     # Result:
     ans = NA
     if (pm == 1) ans = .rhyp1(n, alpha, beta, delta, mu)
     if (pm == 2) ans = .rhyp2(n, alpha, beta, delta, mu)
     if (pm == 3) ans = .rhyp3(n, alpha, beta, delta, mu)
     if (pm == 4) ans = .rhyp4(n, alpha, beta, delta, mu)
-    
+
     # Attributes:
-    attr(ans, "control") = c(dist = "hyp", alpha = alpha, beta = beta, 
+    attr(ans, "control") = c(dist = "hyp", alpha = alpha, beta = beta,
     delta = delta, mu = mu)
-    
+
     # Return Value:
     ans
-}   
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-.rghyp <-  
+.rghyp <-
     function(n, theta)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Author:
     #   Original Version by David Scott
 
     # FUNCTION:
-    
+
     # Settings:
     lambda = theta[1]
     alpha = theta[2]
@@ -194,22 +194,22 @@ rhyp <-
     psi = alpha^2 - beta^2
 
     # Ckecks:
-    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (alpha <= 0) stop("alpha must be greater than zero")
     if (delta <= 0) stop("delta must be greater than zero")
     if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
-    
+
     # Random Numbers:
     if (lambda == 1){
         X = .rgigjd1(n, c(lambda, chi, psi))
     } else{
         X = .rgigjd(n, c(lambda, chi, psi))
     }
-    
+
     # Result:
     sigma = sqrt(X)
     Z = rnorm(n)
     Y = mu + beta*sigma^2 + sigma*Z
-    
+
     # Return Value:
     Y
 }
@@ -218,21 +218,21 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.rgigjd <-  
+.rgigjd <-
     function(n, theta)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Author:
     #   Original Version by David Scott
 
     # FUNCTION:
-    
+
     # Settings:
     lambda = theta[1]
     chi = theta[2]
     psi = theta[3]
-    
+
     # Checks:
     if (chi < 0) stop("chi can not be negative")
     if (psi < 0) stop("psi can not be negative")
@@ -240,28 +240,28 @@ rhyp <-
     if ((lambda <= 0)&(chi==0)) stop("When lambda <= 0, chi must be > 0")
     if (chi == 0) stop("chi = 0, use rgamma")
     if (psi == 0) stop("algorithm only valid for psi > 0")
-    
+
     alpha = sqrt(psi/chi)
     beta = sqrt(psi*chi)
-    
+
     m = (lambda-1+sqrt((lambda-1)^2+beta^2))/beta
-    
+
     g = function(y){
         0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
             y*((lambda-1)*m-0.5*beta) + 0.5*beta*m
     }
-    
+
     upper = m
     while (g(upper) <= 0) upper = 2*upper
     yM = uniroot(g, interval=c(0,m))$root
     yP = uniroot(g, interval=c(m,upper))$root
-    
+
     a = (yP-m)*(yP/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yP+1/yP-m-1/m))
     b = (yM-m)*(yM/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yM+1/yM-m-1/m))
     c = -0.25*beta*(m+1/m) + 0.5*(lambda-1)*log(m)
-    
+
     output = numeric(n)
-    
+
     for(i in 1:n){
         need.value = TRUE
         while(need.value==TRUE){
@@ -276,7 +276,7 @@ rhyp <-
         }
         output[i] = Y
     }
-    
+
     # Return Value:
     output/alpha
 }
@@ -285,34 +285,34 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.rgigjd1 <-  
+.rgigjd1 <-
     function(n, theta)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Modified version of rgigjd to generate random observations
     #   from a generalised inverse Gaussian distribution in the
     #   special case where lambda = 1.
-    
+
     # Author:
     #   Original Version by David Scott
- 
+
     # FUNCTION:
-    
+
     if (length(theta) == 2) theta = c(1, theta)
-    
+
     # Settings:
     lambda = 1
     chi = theta[2]
     psi = theta[3]
-    
+
     # Checks:
     if (chi < 0) stop("chi can not be negative")
-    if (psi < 0) stop("psi can not be negative")    
+    if (psi < 0) stop("psi can not be negative")
     if (chi == 0) stop("chi = 0, use rgamma")
     if (psi == 0) stop("When lambda >= 0, psi must be > 0")
-    
+
     alpha = sqrt(psi/chi)
     beta = sqrt(psi*chi)
     m = abs(beta)/beta
@@ -320,18 +320,18 @@ rhyp <-
         0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
             y*(-0.5*beta) + 0.5*beta*m
     }
-    
+
     upper = m
     while (g(upper)<=0) upper = 2*upper
     yM = uniroot(g,interval=c(0,m))$root
     yP = uniroot(g,interval=c(m,upper))$root
-    
+
     a = (yP-m)*exp(-0.25*beta*(yP+1/yP-m-1/m))
     b = (yM-m)*exp(-0.25*beta*(yM+1/yM-m-1/m))
     c = -0.25*beta*(m+1/m)
-    
+
     output = numeric(n)
-    
+
     for(i in 1:n){
         need.value = TRUE
         while(need.value==TRUE){
@@ -346,7 +346,7 @@ rhyp <-
         }
         output[i] = Y
     }
-    
+
     # Return Value:
     output/alpha
 }
@@ -355,25 +355,25 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.dhyp1 <-  
+.dhyp1 <-
     function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns Hyperbolic Density Function PDF
-       
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Density:
     efun = exp( -alpha*sqrt(delta^2 + (x-mu)^2) + beta*(x-mu) )
     sqr = sqrt(alpha^2-beta^2)
-    bK1 = besselK(delta*sqr, nu = 1) 
+    bK1 = besselK(delta*sqr, nu = 1)
     prefac = sqr / ( 2 * alpha * delta * bK1)
     ans = prefac * efun
 
@@ -385,25 +385,25 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.dhyp2 <- 
+.dhyp2 <-
     function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
 
     # FUNCTION:
-    
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
+
     # Parameter Change:
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
     ans
@@ -413,86 +413,86 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.dhyp3 <-  
+.dhyp3 <-
     function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
-    
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     rho = chi / xi
-    zeta = 1/xi^2 - 1   
+    zeta = 1/xi^2 - 1
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
-    ans 
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
- 
-.dhyp4 <-  
+
+.dhyp4 <-
     function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
-    
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = a.bar / delta
     beta = b.bar / delta
-    
+
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
     ans
 }
 
-  
+
 # ------------------------------------------------------------------------------
 
 
-.phyp1 <-  
+.phyp1 <-
     function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Return cumulative probability of Hyperbolic PDF
-     
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Cumulative Probability:
     ans = NULL
     for (Q in q) {
-        Integral = integrate(dhyp, -Inf, Q, stop.on.error = FALSE, 
+        Integral = integrate(dhyp, -Inf, Q, stop.on.error = FALSE,
             alpha = alpha, beta = beta, delta = delta, mu = mu, ...)
         # Works in both, R and SPlus:
-        ans = c(ans, as.numeric(unlist(Integral)[1]) ) 
+        ans = c(ans, as.numeric(unlist(Integral)[1]) )
     }
 
     # Return Value:
@@ -503,25 +503,25 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.phyp2 <- 
+.phyp2 <-
     function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns cumulative probability in the 2nd parameterization
-    
+
     # Arguments:
     #   zeta, rho - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
     ans
@@ -531,27 +531,27 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.phyp3 <-  
+.phyp3 <-
     function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns cumulative probability in the 3rd parameterization
-    
+
     # Arguments:
     #   xi, xhi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     rho = chi / xi
-    zeta = 1/xi^2 - 1   
+    zeta = 1/xi^2 - 1
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
     ans
@@ -560,26 +560,26 @@ rhyp <-
 
 # ------------------------------------------------------------------------------
 
- 
-.phyp4 <-  
+
+.phyp4 <-
     function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns cumulative probability in the 4th parameterization
-    
+
     # Arguments:
     #   a.bar, b.bar - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = a.bar / delta
     beta = b.bar / delta
-    
+
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
     ans
@@ -589,14 +589,14 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.qhyp1 <- 
+.qhyp1 <-
     function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles of Hyperbolic PDF
-    
+
     # Arguments:
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
@@ -604,33 +604,33 @@ rhyp <-
 
     # Note:
     #   This procedure will not run under Splus.
-  
+
     # FUNCTION:
-    
+
     # Internal Functions:
-    .froot <- 
-    function(x, alpha, beta, delta, p) 
+    .froot <-
+    function(x, alpha, beta, delta, p)
     {
-        phyp(q = x, alpha = alpha, beta = beta, delta = delta, mu = 0) - p 
+        phyp(q = x, alpha = alpha, beta = beta, delta = delta, mu = 0) - p
     }
-    
-    # Loop over all p's:            
-    result = NULL   
+
+    # Loop over all p's:
+    result = NULL
     for (pp in p) {
         lower = -1
-        upper = +1          
+        upper = +1
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA(f = .froot, interval = c(lower, upper), 
+            iteration = fUtilities:::.unirootNA(f = .froot, interval = c(lower, upper),
                 alpha = alpha, beta = beta, delta = delta, p = pp)
             counter = counter + 1
             lower = lower-2^counter
             upper = upper+2^counter
-        }       
-        result = c(result, iteration) 
+        }
+        result = c(result, iteration)
     }
-            
+
     # Return Value:
     ans = result + mu
     ans
@@ -640,25 +640,25 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.qhyp2 <- 
+.qhyp2 <-
     function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 2nd parameterization
-    
+
     # Arguments:
     #   zeta, rho - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
+
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
     ans
@@ -668,78 +668,78 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.qhyp3 <-  
+.qhyp3 <-
     function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 3rd parameterization
-    
+
     # Arguments:
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-  
+
     # FUNCTION:
-    
+
     # Parameter Change:
     rho = chi / xi
-    zeta = 1/xi^2 - 1   
+    zeta = 1/xi^2 - 1
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
-    
+
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
     ans
 }
 
- 
+
 # ------------------------------------------------------------------------------
 
 
-.qhyp4 <-  
+.qhyp4 <-
     function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns quantiles of Hyperbolic PDF in the 4th parameterization
-    
+
     # Arguments:
     #   a.bar, b.bar - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = NA
     beta = NA
-    
+
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
     ans
-}   
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-.rhyp1 <-  
+.rhyp1 <-
     function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns random deviates of Hyperbolic PDF
-    
+
     # Arguments:
     #   n - number of random deviates to be generated
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
+
     # Notes:
     #   I have removed my original Fortran program and replaced it by
     #   the dhyperb() function from the HyperbolicDist Package, written
@@ -747,7 +747,7 @@ rhyp <-
     #   License: GPL
 
     # FUNCTION:
-    
+
     # Result - Use Standard Parameterization:
     Zeta = delta * sqrt(alpha^2 - beta^2)
     hyp.Pi = beta / sqrt(alpha^2 - beta^2)
@@ -760,14 +760,14 @@ rhyp <-
 
 
 # ------------------------------------------------------------------------------
- 
 
-.rhyperb <- 
-    function (n, theta) 
+
+.rhyperb <-
+    function (n, theta)
 {
     # FUNCTION:
-    
-    # Internal Function: 
+
+    # Internal Function:
     hyp.pi = theta[1]
     zeta = theta[2]
     delta = theta[3]
@@ -799,76 +799,76 @@ rhyp <-
                 x = t - 1/phi + U * exp(-theta.start)/k
                 if (E >= alpha * sqrt(1 + x^2) - beta * x + theta.start) {
                     need.value = FALSE
-                } 
+                }
             }
             if (U > v) {
                 x = 1/gamma * log(k/gamma) - 1/gamma * log(1 - U)
                 if (E >= alpha * (sqrt(1 + x^2) - x)) {
-                    need.value = FALSE 
-                } 
-            } 
+                    need.value = FALSE
+                }
+            }
         }
         output[i] = delta * x + mu
-        need.value = TRUE 
+        need.value = TRUE
     }
-    
+
     # Return Value:
-    output 
+    output
 }
-    
-    
-# ------------------------------------------------------------------------------  
- 
+
+
+# ------------------------------------------------------------------------------
+
 
 .hyperb.change.pars <-
-    function (from, to, theta) 
+    function (from, to, theta)
 {
     # FUNCTION:
-    
+
     # Internal Function:
     delta <- theta[3]
     mu <- theta[4]
     hyperb.pi <- theta[1]
-    zeta <- theta[2] 
+    zeta <- theta[2]
     if (from == 1 && to == 2) {
         alpha <- zeta * sqrt(1 + hyperb.pi^2)/delta
         beta <- zeta * hyperb.pi/delta
-        output = c(alpha = alpha, beta = beta, delta = delta, mu = mu) 
+        output = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     }
     if (from == 1 && to == 3) {
         phi <- zeta/delta * (sqrt(1 + hyperb.pi^2) + hyperb.pi)
         gamma <- zeta/delta * (sqrt(1 + hyperb.pi^2) - hyperb.pi)
         output = c(phi = phi, gamma = gamma, delta = delta, mu = mu)
     }
-    
+
     # Return Value:
-    output 
+    output
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.rhyp2 <- 
+.rhyp2 <-
     function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 2nd parameterization
-    
+
     # Arguments:
     #   zeta, rho - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
     ans = rhyp(n, alpha, beta, delta, mu)
-    
+
     # Return Value:
     ans
 }
@@ -877,59 +877,59 @@ rhyp <-
 # ------------------------------------------------------------------------------
 
 
-.rhyp3 <-  
+.rhyp3 <-
     function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 3rd parameterization
-    
+
     # Arguments:
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
     # FUNCTION:
-    
+
     # Parameter Change:
     rho = chi / xi
-    zeta = 1/xi^2 - 1   
+    zeta = 1/xi^2 - 1
     alpha = zeta / ( delta * sqrt(1 - rho*rho) )
     beta = alpha * rho
     ans = rhyp(n, alpha, beta, delta, mu)
-    
+
     # Return Value:
     ans
 }
 
- 
+
 # ------------------------------------------------------------------------------
 
 
-.rhyp4 <-  
+.rhyp4 <-
     function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns random deviates of Hyperbolic PDF in the 4th parameterization
-    
+
     # Arguments:
     #   a.bar, b.bar - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
+
     # FUNCTION:
-    
+
     # Parameter Change:
     alpha = a.bar / delta
     beta = b.bar / delta
     ans = rhyp(n, alpha, beta, delta, mu)
-    
+
     # Return Value:
     ans
-}   
+}
 
 
 ################################################################################

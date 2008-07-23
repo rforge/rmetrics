@@ -1,17 +1,69 @@
-import("MASS")
-import("methods")
-import("utils")
+
+################################################
+## import name space
+################################################
+
+importFrom("graphics",
+           "box",
+           "par",
+           "plot",
+           "text",
+           "grid",
+           "symbols",
+           "axis",
+           "matplot",
+           "points",
+           "contour",
+           "mtext",
+           "abline",
+           "barplot",
+           "hist",
+           "layout",
+           "panel.smooth",
+           "rug",
+           "title",
+           "lines",
+           "persp",
+           "locator",
+           "polygon")
+importFrom("grDevices",
+           "rgb",
+           "cm.colors",
+           "xy.coords",
+           "colors",
+           "col2rgb",
+           "gray.colors",
+           "heat.colors",
+           "rainbow",
+           "terrain.colors",
+           "topo.colors")
+importFrom("methods",
+           "show",
+           "slotNames")
+importFrom("stats",
+           "acf",
+           "approx",
+           "na.omit",
+           "integrate",
+           "sd",
+           "var",
+           "spline",
+           "median",
+           "qnorm",
+           "pacf",
+           "qt",
+           "uniroot")
+importFrom("utils",
+           "packageDescription",
+           "menu",
+           "str")
 
 ################################################
 ## S4 classes
 ################################################
 
-exportClasses(
-    "fHTEST" 
-)
-exportMethods(
-    "show" 
-)
+exportClasses("fHTEST" )
+exportMethods("show" )
 
 ################################################
 ## S3 classes
@@ -195,5 +247,4 @@ export(
     "vgrid",
     "volatility",
     ".xrug",
-    ".yrug" 
-)
+    ".yrug" )

@@ -86,12 +86,12 @@ function()
     Y = rt(50, df = 3)
 
     # Location t-Test:
-    TEST = .tTest(X, Y)
+    TEST = fBasics:::.tTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
     # Location kw2-Test:
-    TEST = .kw2Test(X, Y)
+    TEST = fBasics:::.kw2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
@@ -113,17 +113,17 @@ function()
     Y = rt(50, df = 3)
 
     # Variance F-Test:
-    TEST = .varfTest(X, Y)
+    TEST = fBasics:::.varfTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
     # Variance Bartlett-Test:
-    TEST = .bartlett2Test(X, Y)
+    TEST = fBasics:::.bartlett2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
     # Variance Fligner-Test:
-    TEST = .fligner2Test(X, Y)
+    TEST = fBasics:::.fligner2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
@@ -145,12 +145,12 @@ function()
     Y = rt(50, df = 3)
 
     # Scale Ansari-Test:
-    TEST = .ansariTest(X, Y)
+    TEST = fBasics:::.ansariTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 
     # Scale Mood-Test:
-    TEST = .moodTest(X, Y)
+    TEST = fBasics:::.moodTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
 

@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -24,7 +24,7 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file 
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -32,54 +32,54 @@
 # .jbTable             Finite sample p values for the Jarque Bera test
 # .jbPlot              Plots probability
 # .pjb                 Returns probabilities for the JB Test given quantiles
-# .qjb                 Returns quantiles for the ADF Test given probabilities               
+# .qjb                 Returns quantiles for the ADF Test given probabilities
 # DATA:               Description:
 # .jbLM                Jarque-Bera Lagrange Multiplier Test Data
 # .jbALM               Jarque Bera Augmented Lagrange Multiplier Test Data
 ################################################################################
 
 
-test.jbTable = 
+test.jbTable =
 function()
 {
     if (FALSE) {
-        
+
         require(akima)
-        
+
         # Jarque-Bera Table:
-        #   .jbTable(type = c("LM", "ALM"), size = c("mini", "small", "all")) 
+        #   .jbTable(type = c("LM", "ALM"), size = c("mini", "small", "all"))
         table = .jbTable()
         table
-        
+
         # Perspective Plot:
         #   .jbPlot(type = c("LM", "ALM"))
         .jbPlot()
-        
+
     }
-        
+
     # Return Value:
-    return() 
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.jbData = 
+test.jbData =
 function()
 {
     # Jarque-Bera LM Data:
-    class(.jbLM)
-    class(.jbLM())
-    head(.jbLM())
-    
+    class(fBasics:::.jbLM)
+    class(fBasics:::.jbLM())
+    head(fBasics:::.jbLM())
+
     # Jarque-Bera ALM Data:
-    class(.jbALM)
-    class(.jbALM())
-    head(.jbALM())
-      
+    class(fBasics:::.jbALM)
+    class(fBasics:::.jbALM())
+    head(fBasics:::.jbALM())
+
     # Return Value:
-    return() 
+    return()
 }
 
 

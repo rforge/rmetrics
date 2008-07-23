@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -27,13 +27,13 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:    
+# FUNCTION:            DESCRIPTION:
 #  'fDISTFIT'           S4 Class representation
 #  show.fDISTFIT        Prints Results from a Fitted Distribution
 ################################################################################
 
 
-setClass("fDISTFIT", 
+setClass("fDISTFIT",
     representation(
         call = "call",
         model = "character",
@@ -41,51 +41,50 @@ setClass("fDISTFIT",
         fit = "list",
         title = "character",
         description = "character"
-    )  
+    )
 )
 
 
 # ------------------------------------------------------------------------------
 
-
-show.fDISTFIT = 
-function(object)
+setMethod("show", "fDISTFIT",
+          function(object)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Prints Results from a Fitted Distribution
-    
+
     # FUNCTION:
-    
+
     # Title:
     cat("\nTitle:\n ")
     cat(object@title, "\n")
-    
+
     # Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), 
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"),
         "\n", sep = "")
-      
-    # Model: 
+
+    # Model:
     cat("\nModel:\n ", object@model, "\n", sep = "")
-    
+
     # Estimate:
     cat("\nEstimated Parameter(s):\n")
     print(object@fit$estimate)
-        
+
     # Description:
     cat("\nDescription:\n ")
     cat(object@description, "\n\n")
-    
+
     # Return Value:
     invisible()
-}
+})
 
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("show", "fDISTFIT", show.fDISTFIT)
+
 
 
 ################################################################################

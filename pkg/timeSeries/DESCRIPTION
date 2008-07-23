@@ -3,7 +3,7 @@ Version: 270.73
 Date: 1997 - 2008
 Title: Rmetrics - Financial Time Series Objects
 Author: Diethelm Wuertz and Yohan Chalabi
-Depends: R (>= 2.6.0), methods, fUtilities, timeDate
+Depends: R (>= 2.6.0), utils, methods, fUtilities, timeDate
 Suggests: robustbase, fEcofin
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"

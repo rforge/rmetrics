@@ -70,7 +70,7 @@ setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
                          j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
-          .subset_timeSeries(x, i, j))
+              .subset_timeSeries(x, i, j))
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",

@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,7 +33,7 @@
 ################################################################################
 
 
-.modelSeries = 
+.modelSeries <-
 function(formula, data, fake = FALSE, lhs = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -42,14 +42,14 @@ function(formula, data, fake = FALSE, lhs = FALSE)
     #   data - a timeSeries, a data.frame or a numeric vector
     #   fake -
     #   lhs -
-    
+
     # Details:
     #   Time Series Modelling
     #   Regression Modelling
     #   Data Management
-    
+
     # FUNCTION:
-    
+
     # If no respnonse is pecified:
     if (length(formula) == 2) {
         formula = as.formula(paste("x", formula[1], formula[2], collapse = ""))
@@ -60,13 +60,13 @@ function(formula, data, fake = FALSE, lhs = FALSE)
     if (missing(data)) {
         data = eval(parse(text = search()[2]), parent.frame())
     }
-    
+
     if (is.numeric(data)) {
         data = data.frame(data)
         colnames(data) = all.vars(formula)[1]
         lhs = TRUE
     }
-    
+
     # If we consider a faked formula:
     if (fake) {
         response = as.character(formula)[2]
@@ -75,25 +75,24 @@ function(formula, data, fake = FALSE, lhs = FALSE)
         predictors = Call[2]
         formula = as.formula(paste(response, "~", predictors))
     }
-    
+
     # If only left hand side is required:
     if (lhs) {
         response = as.character(formula)[2]
         formula = as.formula(paste(response, "~", 1))
-    } 
-    
+    }
+
     # Create Model Data:
     x = model.frame(formula, data)
-    
+
     # Convert:
     if (class(data) == "timeSeries") x = timeSeries(x)
     if (fake) attr(x, "control") <- method
-    
+
     # Return value:
     x
-    
+
 }
 
 
 ################################################################################
-

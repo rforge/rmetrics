@@ -49,7 +49,7 @@ function(lib, pkg)
 {
     # Startup Mesage and Desription:
     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkgname)
+    dsc <- utils::packageDescription(pkgname)
     if(interactive() || getOption("verbose")) {
         # not in test scripts
         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkgname, dsc$Version))

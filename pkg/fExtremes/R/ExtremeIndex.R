@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -43,51 +43,45 @@
 ################################################################################
 
 
-setClass("fTHETA", 
+setClass("fTHETA",
     representation(
         call = "call",
         data = "list",
         theta = "data.frame",
         title = "character",
-        description = "character")  
+        description = "character")
 )
 
 
 # ------------------------------------------------------------------------------
 
 
-show.fTHETA = 
-function(object)
+setMethod("show", "fTHETA",
+    function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-       
+
     # Unlike print the argument for show is 'object'.
     x = object
-    
+
     # Title:
     cat("\nTitle:\n ", x@title, "\n", sep = "")
-    
+
     # Call:
-    cat("\nCall:\n ", deparse(x@call), "\n", sep = "") 
-    
+    cat("\nCall:\n ", deparse(x@call), "\n", sep = "")
+
     # Extremal Index:
     cat("\nExtremal Index:\n")
     print(object@theta)
-    
+
     # Description:
-    cat("\nDescription:\n ", x@description, sep = "")   
+    cat("\nDescription:\n ", x@description, sep = "")
     cat("\n\n")
-    
+
     # Return Value:
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fTHETA", show.fTHETA)
+})
 
 
 # ------------------------------------------------------------------------------
@@ -99,22 +93,22 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
 
     # Description:
     #   Simulates a time series with known theta
-    
+
     # Arguments:
     #   model - a character string denoting the model
     #       "max"  - Max Frechet Series
     #       "pair" - Paired Exponential Series
-    
+
     # FUNCTION:
-    
+
     # Model Argument:
     model = match.arg(model)
-    
+
     # Simulate:
     model = model[1]
     X = rep(0, n)
     if (model == "max") {
-        # Frechet rvs: 
+        # Frechet rvs:
         eps = 1/(-log(runif(n)))
         X[1] = theta*eps[1]
         for ( i in 2:n ) X[i] = max( (1-theta)*X[i-1], theta*eps[i] )
@@ -123,11 +117,11 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
         eps = rexp(n+1)
         for ( i in 1:n ) X[i] = max(eps[i], eps[i+1])
     }
-    
+
     # As time series:
     X = as.ts(X)
     attr(X, "control") = c(model = model, theta = as.character(theta))
-    
+
     # Return Value:
     X
 }
@@ -136,40 +130,40 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
 ################################################################################
 
 
-blockTheta = 
+blockTheta =
 function (x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Calculates theta from Block method, i.e. theta1.
-    
+
     # Example:
     #   blockTheta(thetaSim(n=10000))
-    
+
     # FUNCTION:
-    
+
     # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
-    X = as.vector(x) 
+    X = as.vector(x)
     ordered = sort(X)
-    k = floor(length(X)/block) 
+    k = floor(length(X)/block)
     n = k*block
-    
+
     # Now organize your X:
     # 1) truncate the rest of the time series,
     # 2) arrange them in matrix form,
     # 3) sort them in reverse order, ie. from high (pos) to low (neg)
     X = matrix(X[1:(k*block)], ncol = block, byrow = TRUE)
-    
+
     # Threshold values associated to quantiles:
     thresholds = ordered[floor(quantiles*length(X))]
-    
+
     # Presettings:
     theta1 = rep(0, times = length(quantiles))
-    
+
     # Calculate Extremal Imdex:
     run = 0
     keepK = keepN = NULL
@@ -181,67 +175,67 @@ title = NULL, description = NULL)
         if (K/k < 1) {
             theta1[run] = (k/n) * log(1-K/k) / log(1-N/n)
         } else {
-            theta1[run] = NA 
+            theta1[run] = NA
         }
         keepK = c(keepK, K)
         keepN = c(keepN, N)
     }
 
     # Theta Values:
-    ans = data.frame(quantiles = quantiles, thresholds = thresholds, 
+    ans = data.frame(quantiles = quantiles, thresholds = thresholds,
         N = keepN, K = keepK, theta = theta1)
-        
+
     # Add title and description:
     if (is.null(title)) title = "Extremal Index from Block Method"
     if (is.null(description)) description = .description()
-        
+
     # Return Value:
     new("fTHETA",
         call = match.call(),
         data = list(x = x, block = block),
         theta = ans,
         title = title,
-        description = description)  
+        description = description)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-clusterTheta = 
+clusterTheta =
 function (x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Calculates theta from Reciprocal Mean Cluster Size method, i.e. theta2.
-    
+
     # Example:
     #   clusterTheta(thetaSim(n=10000))
-    
+
     # FUNCTION:
-    
+
     # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
-    X = as.vector(x) 
+    X = as.vector(x)
     ordered = sort(X)
-    k = floor(length(X)/block) 
+    k = floor(length(X)/block)
     n = k*block
-    
+
     # Now organize your X:
     # 1) truncate the rest of the time series,
     # 2) arrange them in matrix form,
     # 3) sort them in reverse order, ie. from high (pos) to low (neg)
     X = matrix(X[1:(k*block)], ncol = block, byrow = TRUE)
-    
+
     # Threshold values associated to quantiles:
     thresholds = ordered[floor(quantiles*length(X))]
-    
+
     # Presettings:
     theta2 = rep(0, times = length(quantiles))
-    
+
     # Calculate Extremal Imdex:
     run = 0
     keepK = keepN = NULL
@@ -256,62 +250,62 @@ title = NULL, description = NULL)
     }
 
     # Theta Values:
-    ans = data.frame(quantiles = quantiles, thresholds = thresholds, 
+    ans = data.frame(quantiles = quantiles, thresholds = thresholds,
         N = keepN, K = keepK, theta = theta2)
-        
+
     # Add title and description:
-    if (is.null(title)) 
+    if (is.null(title))
         title = "Extremal Index from Reciprocal Cluster Method"
     if (is.null(description)) description = .description()
-        
+
     # Return Value:
     new("fTHETA",
         call = match.call(),
         data = list(x = x, block = block),
         theta = ans,
         title = title,
-        description = description)  
+        description = description)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-runTheta = 
+runTheta =
 function (x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Calculates theta from Run method, i.e. theta3.
-    
+
     # Example:
     #   runTheta(thetaSim(n=10000))
-    
+
     # FUNCTION:
-    
+
     # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
-    X = as.vector(x) 
+    X = as.vector(x)
     ordered = sort(X)
-    k = floor(length(X)/block) 
+    k = floor(length(X)/block)
     n = k*block
     Count = 1:n
-    
+
     # Now organize your X:
     # 1) truncate the rest of the time series,
     # 2) arrange them in matrix form,
     # 3) sort them in reverse order, ie. from high (pos) to low (neg)
     X = matrix(X[1:(k*block)], ncol = block, byrow = TRUE)
-    
+
     # Threshold values associated to quantiles:
     thresholds = ordered[floor(quantiles*length(X))]
-    
+
     # Presettings:
     theta3 = rep(0, times = length(quantiles))
-    
+
     # Calculate Extremal Imdex:
     run = 0
     keepN = NULL
@@ -326,49 +320,49 @@ title = NULL, description = NULL)
     }
 
     # Theta Values:
-    ans = data.frame(quantiles = quantiles, thresholds = thresholds, 
+    ans = data.frame(quantiles = quantiles, thresholds = thresholds,
         N = keepN, theta = theta3)
-        
+
     # Add title and description:
-    if (is.null(title)) 
+    if (is.null(title))
         title = "Extremal Index from Run Method"
     if (is.null(description)) description = .description()
-        
+
     # Return Value:
     new("fTHETA",
         call = match.call(),
         data = list(x = x, block = block),
         theta = ans,
         title = title,
-        description = description)  
+        description = description)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-ferrosegersTheta = 
+ferrosegersTheta =
 function (x, quantiles = seq(0.950, 0.995, length= 10),
 title = NULL, description = NULL)
 {
     # Description:
-    #   Estimates the extremal index based on the intervals estimator 
+    #   Estimates the extremal index based on the intervals estimator
     #   due to Ferro and Segers (2003).
-    
+
     # Note:
     #   Adapted from function 'extremalindex' in contributed R-package
     #   'extRemes' written and maintained by ...
-    
+
     # FUNCTION:
-    
+
     # Settings:
     x = as.vector(x)
     n = length(x)
     N = floor(quantiles*n)
     sorted = sort(x)
-    U = sorted[N]  
+    U = sorted[N]
     ans = NULL
-    
+
     # Extremal Index:
     for ( u in U ) {
         msg = 0
@@ -382,12 +376,12 @@ title = NULL, description = NULL)
             msg = msg + 1
             if (theta > 1) {
                 theta = 1
-                # msg = paste(msg, "Using theta = 1 because theta.hat > 1.", 
+                # msg = paste(msg, "Using theta = 1 because theta.hat > 1.",
                 #   sep = "\n")
                 msg = msg + 10
             }
         } else {
-            theta = 2 * sum(TT-1, na.rm = TRUE)^2/((N-1) * sum((TT-1) * 
+            theta = 2 * sum(TT-1, na.rm = TRUE)^2/((N-1) * sum((TT-1) *
                 (TT-2), na.rm = TRUE))
             # msg = paste("theta.tilde used because a value(s) exists of T>2.")
             msg = msg + 100
@@ -414,64 +408,64 @@ title = NULL, description = NULL)
         }
         ans = rbind(ans, c(T.K, K, msg, theta))
     }
-    
+
     # Result:
     ans = data.frame(quantiles, U, ans)
-    colnames(ans) = c("Threshold", "Quantiles", 
+    colnames(ans) = c("Threshold", "Quantiles",
         "RunLength", "Clusters", "messageNo", "theta")
-    
+
     # Add title and description:
-    if (is.null(title)) 
+    if (is.null(title))
         title = "Extremal Index from Ferro-Segers Method"
     if (is.null(description)) description = .description()
-        
+
     # Return Value:
     new("fTHETA",
         call = match.call(),
         data = list(x = x),
         theta = ans,
         title = title,
-        description = description)  
+        description = description)
 }
 
 
 ################################################################################
 
 
-exindexesPlot = 
-function (x, block = 22, quantiles = seq(0.950, 0.995, length = 10), 
+exindexesPlot =
+function (x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Calculates and Plots Theta(1,2,3) for numeric block lengths
-    
+
     # Areguments:
-    #   x - an univariate time series, or any other object which can be 
+    #   x - an univariate time series, or any other object which can be
     #       transformed by the function as.vector into a numeric vector.
     #   block - an integer value which denotes the length of the blocks.
     #   quantiles - a numeric vector of quantile values.
     #   doplot - alogical flag. Should a plot be produced?
-    
+
     # Example:
     #   exindexesPlot(as.timeSeries(data(bmwRet)), 20)
-    
+
     # FUNCTION:
-    
+
     # Settings:
-    if (!is.numeric(block)) stop("Argument block must be an integer value.") 
+    if (!is.numeric(block)) stop("Argument block must be an integer value.")
     doprint = FALSE
-    
+
     # Block Size:
     blocklength = block # argument renamed
-    
+
     # Note, in finance the x's should be residuals
-    resid = as.vector(x) 
-    
+    resid = as.vector(x)
+
     # Extremal Index - Theta_1, Theta_2 and Theta_3
     k = floor(length(resid)/blocklength) # Number of blocks
-    n = k*blocklength # Number of data points 
-    
+    n = k*blocklength # Number of data points
+
     # Now organize your residuels:
     # 1) truncate the rest of the time series,
     # 2) arrange them in matrix form,
@@ -479,13 +473,13 @@ doplot = TRUE, labels = TRUE, ...)
     resid1 = resid[1:(k*blocklength)]
     resid1 = matrix(resid1, ncol = blocklength, byrow = TRUE)
     ordered1 = sort(resid1)
-    
+
     # Threshold values associated to quantiles:
     z0 = ordered1[floor(quantiles*length(resid1))]
-    
+
     # Presettings:
     theta1 = theta2 = theta3 = rep(0, times = length(quantiles))
-    
+
     # Calculate Extremal Imdex:
     run = 0
     for ( z in z0 ) {
@@ -498,42 +492,42 @@ doplot = TRUE, labels = TRUE, ...)
         if (K/k < 1) {
             theta1[run] = (k/n) * log(1-K/k) / log(1-N/n)
         } else {
-            theta1[run] = NA 
+            theta1[run] = NA
         }
         theta2[run] = K/N
         x = 1:n
         xx = diff(x[resid1 > z])
         xx = xx[xx > blocklength]
         theta3[run] = length(xx)/N
-        # Printing: 
+        # Printing:
         if (doprint) {
-            print(c(N, K, quantiles[run], z)) 
+            print(c(N, K, quantiles[run], z))
             print(c(theta1[run], theta2[run], theta3[run]))
-        } 
+        }
     }
-    
+
     # Plotting:
     if (doplot) {
-        plot(quantiles, theta1, 
+        plot(quantiles, theta1,
             xlim = c(quantiles[1], quantiles[length(quantiles)]),
             ylim = c(0, 1.2), type = "b", pch = 1,
             xlab = "", ylab = "", main = "", ...)
         points(quantiles, theta2, pch = 2, col = 3)
-        points(quantiles, theta3, pch = 4, col = 4) 
+        points(quantiles, theta3, pch = 4, col = 4)
         if (labels) {
             title(main = "Extremal Index")
             title(xlab = "Quantile", ylab = "Theta 1,2,3")
             mtext("Threshold", side = 3, line = 3)
             grid()
-            mtext(text = paste("Blocklength: ", as.character(block)), 
+            mtext(text = paste("Blocklength: ", as.character(block)),
                 adj = 0, side = 4, cex = 0.7)
         }
-    }     
-    
+    }
+
     # Theta Values:
-    ans = data.frame(quantiles = quantiles, thresholds = z0, 
+    ans = data.frame(quantiles = quantiles, thresholds = z0,
         theta1 = theta1, theta2 = theta2, theta3 = theta3)
-        
+
     # Return Value:
     ans
 }
@@ -542,20 +536,20 @@ doplot = TRUE, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-exindexPlot =  
-function(x, block = c("monthly", "quarterly"), start = 5, end = NA, 
+exindexPlot =
+function(x, block = c("monthly", "quarterly"), start = 5, end = NA,
 doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
 {
     # Example:
     #   exindexPlot(as.timeSeries(data(bmwRet)), 20)
     #   exindexPlot(as.timeSeries(data(bmwRet)), "monthly")
     #   exindexPlot(as.vector(as.timeSeries(data(bmwRet))), 20)
-    
+
     # Settings:
     plottype = match.arg(plottype)
     reverse = FALSE
     if (plottype == "K") reverse = TRUE
-    
+
     # Extremal Index - following A. McNeil:
     b.maxima = rev(sort(as.vector(blockMaxima(x, block))))
     data = as.vector(x)
@@ -577,7 +571,7 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
     yrange = range(theta)
     index = K
     if (reverse) index = - K
-    
+
     # Plot:
     if (doplot) {
         plot(index, theta, ylim = yrange, type = "b", xlab = "", ylab = "",
@@ -588,17 +582,17 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
         axis(3, at = index[IDX], lab = paste(format(signif(un, 3)))[IDX])
         box()
         if (labels) {
-            ylabel = 
+            ylabel =
                 paste("theta (", k, " blocks of size ", block, ")", sep = "")
             title(xlab = "K", ylab = ylabel)
             mtext("Threshold", side = 3, line = 3)
             lines(index, theta, col = "steelblue")
             grid()
-            mtext(text = paste("Blocklength: ", as.character(block)), 
+            mtext(text = paste("Blocklength: ", as.character(block)),
                 adj = 0, side = 4, cex = 0.7)
         }
     }
-    
+
     # Return Value:
     ans
 }

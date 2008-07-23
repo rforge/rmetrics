@@ -61,7 +61,7 @@ model.frame.timeSeries <- function(formula, data, ...)
                       FinCenter = FinCenter,
                       recordIDs = recordIDs,
                       title = title,
-                      documentation = .description()
+                      documentation = fUtilities:::.description()
                       )
 
     # Return value:

@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -31,7 +31,7 @@
 # METHODS:              PRINT, PLOT, AND SUMMARY:
 #  show.fGEVFIT          S4 Show method for object of class "fGEVFIT"
 #  plot.fGEVFIT          S3 Plot method for object of class "fGEVFIT"
-#   .gev1Plot             Block Maxima Plot            
+#   .gev1Plot             Block Maxima Plot
 #   .gev2Plot             Scatterplot of Residuals
 #   .gev3Plot             Histogram of Residuals
 #   .gev4Plot             Quantile-Quantile Plot
@@ -39,41 +39,41 @@
 ################################################################################
 
 
-show.fGEVFIT = 
-function(object) 
+setMethod("show", "fGEVFIT",
+    function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print Method for an object of class "gevFit".
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Title:
     cat("\nTitle:\n" , object@title, "\n")
-    
+
     # Function Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", 
+    cat(paste(deparse(object@call), sep = "\n",
         collapse = "\n"), "\n", sep = "")
-            
+
     # Estimation Type:
-    cat("\nEstimation Type:\n ", object@method, "\n") 
-    
+    cat("\nEstimation Type:\n ", object@method, "\n")
+
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(object@fit$par.ests)
-    
+
     # Desription:
     cat("\nDescription\n ", object@description, "\n\n")
-    
+
     # Return Value:
     invisible(object)
-}
-    
+})
 
-setMethod("show", "fGEVFIT", show.fGEVFIT)
+
+
 
 
 ################################################################################
@@ -85,16 +85,16 @@ function(x, which = "ask", ...)
 
     # Description:
     #   Plot method for an object of class "gevFit".
-    
+
     # Arguments:
-    
+
     # Details:
     #   plot.gev:
     #   Data are converted to unit exponentially distributed residuals
     #   under null hypothesis that GEV fits. Two diagnostics for iid
     #   exponential data are offered:
     #   "Scatterplot of Residuals" and "QQplot of Residuals"
-    
+
     # Example:
     #   fit = gevFit(gevSim(), type = "mle", gumbel = FALSE)
     #   par(mfrow = c(2, 2)); plot(fit)
@@ -109,23 +109,23 @@ function(x, which = "ask", ...)
     #   fit = gevFit(gevSim(), type = "pwm", gumbel = TRUE)
     #   par(mfrow = c(1, 1)); plot(fit, which = "ask")
 
-    # FUNCTION: 
-          
+    # FUNCTION:
+
     # Plot:
     interactivePlot(
         x = x,
         choices = c(
-            "Block Maxima Plot", 
-            "Scatterplot of Residuals", 
+            "Block Maxima Plot",
+            "Scatterplot of Residuals",
             "Histogram of Residuals",
             "Quantile Quantile Plot"),
         plotFUN = c(
-            ".gev1Plot", 
+            ".gev1Plot",
             ".gev2Plot",
-            ".gev3Plot", 
+            ".gev3Plot",
             ".gev4Plot"),
         which = which)
-                    
+
     # Return Value:
     invisible(x)
 }
@@ -140,14 +140,14 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Time Series Plot of Block Maxima
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Data:
     data = x@data$blockmaxima
-    
+
     # Labels:
     if (labels) {
         main = "Block Maxima"
@@ -156,15 +156,15 @@ function(x, labels = TRUE, ...)
     } else {
         main = xlab = ylab = ""
     }
-        
+
     # Plot:
-    plot(data, type = "h", 
+    plot(data, type = "h",
         main = main, xlab = xlab, ylab = ylab,
-        col = "steelblue", ...) 
-        
+        col = "steelblue", ...)
+
     # Add Grid:
     if (labels) grid()
-        
+
     # Return Value:
     invisible()
 }
@@ -179,14 +179,14 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Scatterplot of Residuals:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Data:
     residuals = x@residuals
-    
+
     # Labels:
     if (labels) {
         main = "Scatterplot of Residuals"
@@ -195,16 +195,16 @@ function(x, labels = TRUE, ...)
     } else {
         main = xlab = ylab = ""
     }
-        
+
     # Plot:
-    plot(residuals, 
+    plot(residuals,
         main = main, xlab = xlab, ylab = ylab,
-        pch = 19, col = "steelblue", ...) 
+        pch = 19, col = "steelblue", ...)
     lines(lowess(1:length(residuals), residuals), col = "brown")
-    
+
     # Add Grid:
     if (labels) grid()
-    
+
     # Return Value:
     invisible()
 }
@@ -219,18 +219,18 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Histogram Plot of Residuals with Gaussian Fit:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Data:
     residuals = x@residuals
-    
+
     # Labels:
     if (labels) {
         if (x@method[1] == "gev") {
-            dist = "GEV" 
+            dist = "GEV"
         } else if (x@method[1] == "gum") {
             dist = "Gumbel"
         }
@@ -240,12 +240,12 @@ function(x, labels = TRUE, ...)
     } else {
         main = xlab = ylab = ""
     }
-        
+
     # Plot:
     hist(residuals, probability = TRUE, breaks = "FD",
         main = main, xlab = xlab, ylab = ylab,
         col = "steelblue", border = "white", ...)
-    
+
     # Return Value:
     invisible()
 }
@@ -260,16 +260,16 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Quantile-Quantile Plot:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Data:
     data = x@residuals
     sorted = sort(data)
     y <- qexp(ppoints(data))
-    
+
     # Labels:
     if (labels) {
         main = "QQ Plot of Residuals"
@@ -278,26 +278,26 @@ function(x, labels = TRUE, ...)
     } else {
         main = xlab = ylab = ""
     }
-        
-    # Plot:ata, type = "h", 
-    plot(sorted, y, 
+
+    # Plot:ata, type = "h",
+    plot(sorted, y,
         main = main, xlab = xlab, ylab = ylab,
-        pch = 19, col = "steelblue", ...) 
-    abline(lsfit(sorted, y))  
-    
+        pch = 19, col = "steelblue", ...)
+    abline(lsfit(sorted, y))
+
     # Add Grid:
     if (labels) grid()
-    
+
     # Return Value:
     invisible()
-}    
+}
 
 
 ################################################################################
-  
+
 
 summary.fGEVFIT =
-function(object, doplot = TRUE, which = "all", ...) 
+function(object, doplot = TRUE, which = "all", ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -305,43 +305,43 @@ function(object, doplot = TRUE, which = "all", ...)
     #   Summary method for an object of class "gevFit".
 
     # Arguments:
-    
+
     # Example:
     #   fit = gevFit(gevSim(), type = "mle", gumbel = FALSE)
     #   par(mfrow = c(2, 2)); summary(fit)
-    
+
     # FUNCTION:
-    
+
     # Title:
     cat("\nTitle:\n", object@title, "\n")
-    
+
     # Function Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", 
+    cat(paste(deparse(object@call), sep = "\n",
         collapse = "\n"), "\n", sep = "")
-            
+
     # Estimation Type:
-    cat("\nEstimation Type:\n ", object@method, "\n") 
-    
+    cat("\nEstimation Type:\n ", object@method, "\n")
+
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(object@fit$par.ests)
-    
+
     # Summary:
     if (object@method[2] == "mle") {
-        cat("\nStandard Deviations:\n "); 
+        cat("\nStandard Deviations:\n ");
         print(object@fit$par.ses)
         cat("\nLog-Likelihood Value:\n ", object@fit$llh, "\n")
-        cat("\nType of Convergence:\n ", object@fit$converged, "\n") } 
-    
+        cat("\nType of Convergence:\n ", object@fit$converged, "\n") }
+
     # Desription:
     cat("\nDescription\n ", object@description, "\n\n")
-    
+
     # Plot:
     if (doplot) {
         plot(object, which = which, ...)
     }
-    
+
     # Return Value:
     invisible(object)
 }

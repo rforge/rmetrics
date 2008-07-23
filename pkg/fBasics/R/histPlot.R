@@ -68,11 +68,11 @@ histPlot <-
         # Plot:
         if (labels) {
             H = hist(x = X, , breaks = "FD", plot = FALSE)
-            .plot(H, col = col[i], freq = FALSE, ...)
+            .plot.histogram(H, col = col[i], freq = FALSE, ...)
             box()
         } else {
             H = hist(x = X, plot = FALSE, ...)
-            .plot(H, col = col[i], freq = FALSE, ...)
+            .plot.histogram(H, col = col[i], freq = FALSE, ...)
         }
 
         # Add Title:

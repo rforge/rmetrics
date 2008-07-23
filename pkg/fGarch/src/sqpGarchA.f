@@ -339,7 +339,7 @@ C STANDARDIZED SKEW STUDENT T:
       Z = X*SIGMA+MU
       IF (Z.LT.0.0D0) XI = 1/XI 
       G = TWO/(XI+ONE/XI)
-      DSSTD = G*DSTD(Z/XI,NU)*SIGMA   
+      DSSTD = G*DSTD(Z/XI,NU)*SIGMA 
       RETURN
       END
  
@@ -362,7 +362,7 @@ C        SKEW NORMAL:
       END IF 
       IF (NDIST.EQ.20) THEN
 C        STUDENT-T:
-         DIST = DSTD(-Z/HH, SHAPE)/HH 
+ 9999    DIST = DSTD(-Z/HH, SHAPE)/HH 
          RETURN
       END IF 
       IF (NDIST.EQ.21) THEN

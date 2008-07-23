@@ -27,15 +27,23 @@ function(lib, pkg)
         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
     }
 
-    # Load dll:
-    # library.dynam("timeSeries", pkg, lib)
-
     # see ?cbind2
     # Currently, a call 'methods:::bind_activation(TRUE)'
     methods:::bind_activation(TRUE)
 }
 
 .onLoad <- function(libname, pkgname) {
+
+    # Startup Mesage and Desription:
+    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+    dsc <- utils::packageDescription(pkgname)
+    if(interactive() || getOption("verbose")) {
+        # not in test scripts
+        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkgname, dsc$Version))
+    }
+
+    # see ?cbind2
+    # Currently, a call 'methods:::bind_activation(TRUE)'
     methods:::bind_activation(TRUE)
 
     #-> show() of large timeSeries

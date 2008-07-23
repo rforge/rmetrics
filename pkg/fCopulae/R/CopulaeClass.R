@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                 COPULA SPECIFICATION:
-#  fCOPULA                   S4 class representation          
+#  fCOPULA                   S4 class representation
 #  show                      S4 print method for copula specification
 # FUNCTION:                 FRECHET COPULA:
 #  pfrechetCopula            Computes Frechet copula probability
@@ -37,72 +37,66 @@
 #  .copulaRho                Spearman's rho by integration for "ANY" copula
 ################################################################################
 
-
-.counter = NA
+# moved to zzz.R
+# setRmetricsOptions(.counter = NA)
 
 
 ################################################################################
 # Specifying and creating copula objects
 
 
-setClass("fCOPULA", 
+setClass("fCOPULA",
     # Copula Representation:
     representation(
         call = "call",
-        copula = "character",       
+        copula = "character",
         param = "list",
         title = "character",
-        description = "character")  
+        description = "character")
 )
-    
- 
+
+
 # ------------------------------------------------------------------------------
 
 
-show.fCOPULA = 
-function(object)
+setMethod("show", "fCOPULA",
+    function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print and Summary method for fCOPULA
-    
+
     # Source:
     #   This function copies code from base:print.htest
-    
+
     # FUNCTION:
-       
+
     # Unlike print the argument for show is 'object'.
     x = object
-    
+
     # Title:
     cat("\nTitle:\n ", x@title, "\n", sep = "")
-    
+
     # Call:
     cat("\nCall:\n ")
     cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
 
     # Copula Type:
     cat("\nCopula:\n ", x@copula, "\n", sep = "")
-    
+
     # Model Parameter:
     if (length(x@param) != 0) {
         cat("\nModel Parameter(s):\n ")
         print(unlist(x@param), quote = FALSE)
     }
-     
+
     # Description:
-    cat("\nDescription:\n ", x@description, sep = "")   
+    cat("\nDescription:\n ", x@description, sep = "")
     cat("\n\n")
-    
+
     # Return Value:
     invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fCOPULA", show.fCOPULA)
+})
 
 
 ################################################################################
@@ -110,13 +104,13 @@ setMethod("show", "fCOPULA", show.fCOPULA)
 
 
 pfrechetCopula =
-function(u = 0.5, v = u, type = c("m", "pi", "w"), 
+function(u = 0.5, v = u, type = c("m", "pi", "w"),
 output = c("vector", "list"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Frechet copula probability
-    
+
     # Arguments:
     #   u, v - two numeric values or vectors of the same length at
     #       which the copula will be computed. If 'u' is a list then the
@@ -126,25 +120,25 @@ output = c("vector", "list"))
     #   type - the type of the Frechet copula. A character
     #       string selected from: "m", "pi", or "w".
     #   output - a character string specifying how the output should
-    #       be formatted. By default a vector of the same length as 
+    #       be formatted. By default a vector of the same length as
     #       'u' and 'v'. If specified as "list" then 'u' and 'v' are
-    #       expected to span a two-dimensional grid as outputted by the 
+    #       expected to span a two-dimensional grid as outputted by the
     #       function 'grid2d' and the function returns a list with
-    #       elements '$x', 'y', and 'z' which can be directly used 
+    #       elements '$x', 'y', and 'z' which can be directly used
     #       for example by 2D plotting functions.
-    
+
     # Examples:
     #   persp(pfrechetCopula(u=grid2d(), output="list", type = "m"))
     #   persp(pfrechetCopula(u=grid2d(), output="list", type = "pi"))
     #   persp(pfrechetCopula(u=grid2d(), output="list", type = "w"))
-    
+
     # FUNCTION:
-    
+
     # Match Arguments:
     type = type[1] # Allow for "psp" ... # type = match.arg(type)
     output = match.arg(output)
 
-    # Settings:  
+    # Settings:
     if (is.list(u)) {
         v = u[[2]]
         u = u[[1]]
@@ -153,28 +147,28 @@ output = c("vector", "list"))
         v = u[, 1]
         u = u[, 2]
     }
-    
+
     # Compute Copula Probability:
-    if (type == "m") {  
+    if (type == "m") {
         # C(u,v) = min(u,v)
         C.uv = apply(cbind(u, v), 1, min)
     }
-    if (type == "pi") { 
+    if (type == "pi") {
         # C(u, v) = u * v
         C.uv = u * v
     }
-    if (type == "w") {   
+    if (type == "w") {
         # C(u,v) = max(u+v-1, 0)
-        C.uv = apply(cbind(X = u+v-1, Y = rep(0, length = length(u))), 1, max) 
+        C.uv = apply(cbind(X = u+v-1, Y = rep(0, length = length(u))), 1, max)
     }
     if (type == "psp") {
         # C(u,v) = u*v/(u+v-u*v)
         C.uv = u*v/(u+v-u*v)
     }
-    
+
     # Add Control:
     attr(C.uv, "control") <- unlist(list(type = type))
-    
+
     # As List ?
     if (output == "list") {
         N = sqrt(length(u))
@@ -182,7 +176,7 @@ output = c("vector", "list"))
         y = matrix(v, ncol = N)[1, ]
         C.uv = list(x = x, y = y,  z = matrix(C.uv, ncol = N))
     }
-    
+
     # Return Value:
     C.uv
 }
@@ -192,38 +186,38 @@ output = c("vector", "list"))
 
 
 .copulaRho =
-function(rho = NULL, alpha = NULL, param = NULL, 
-family = c("elliptical", "archm", "ev", "archmax"), 
+function(rho = NULL, alpha = NULL, param = NULL,
+family = c("elliptical", "archm", "ev", "archmax"),
 type = NULL, error = 1e-3, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Spearman's rho by integration for "ANY" copula
-    
+
     # Notes:
     #   pellipticalCopula(u, v, rho,   param, type, output, border)
     #   parchmCopula     (u, v, alpha,        type, output, alternative)
     #   pevCopula        (u, v,        param, type, output, alternative)
     #   parchmaxCopula   (u, v,        param, type, output )
-    
+
     # Examples:
     #   .copulaRho(rho = 0.5, family = "elliptical", type = "norm")
     #   .copulaRho(alpha = 1, family = "archm", type = "1")
     #   .copulaRho(param = 2, family = "ev", type = "galambos")
-    
+
     # FUNCTION:
-    
+
     # Match Arguments:
     family = match.arg(family)
-    
+
     # Type:
     if (is.null(type)) {
-        family = "elliptical" 
+        family = "elliptical"
         type = "norm"
     } else {
         type = as.character(type)
     }
-    
+
     # 2D Function to be integrated:
     rho <<- rho
     alpha <<- alpha
@@ -244,26 +238,26 @@ type = NULL, error = 1e-3, ...)
     } else if (family == "ev") {
         dCopulaRho <- function(x, y) {
             C = pevCopula(x, y, param = param, type = type)
-            12 * (C - x*y ) 
+            12 * (C - x*y )
         }
-    } 
+    }
     # else if (family == "archmax") {
     #     dCopulaRho <- function(x, y) {
     #         C = parchmaxCopula(x, y, param = param, type = type)
     #         12 * (C - x*y )
     #     }
     # }
-        
+
     # Integrate:
-    ans = integrate2d(dCopulaRho, error = error) 
+    ans = integrate2d(dCopulaRho, error = error)
     Rho = ans$value
     error = ans$error
-    
+
     # Result:
-    control = list(rho = rho, alpha = alpha, param = param, 
+    control = list(rho = rho, alpha = alpha, param = param,
         family = family, type = type, error = signif(error, 3))
     attr(Rho, "control") <- unlist(control)
-    
+
     # Return Value:
     Rho
 }

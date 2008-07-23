@@ -1,63 +1,135 @@
-import("fUtilities")
-import("graphics")
-import("methods")
-import("stats")
-import("timeDate")
-import("utils")
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           "finCenter<-",
+           "finCenter",
+           "outlier",
+           "getRmetricsOptions",
+           "kurtosis",
+           "skewness",
+           "setRmetricsOptions",
+           "atoms",
+           "description")
+importFrom("graphics",
+           "plot",
+           "lines",
+           "points",
+           "grid",
+           "title",
+           "axis",
+           "box",
+           "par",
+           "plot.new",
+           "plot.window",
+           "segments",
+           "axis.POSIXct",
+           "layout",
+           "mtext",
+           "plot.default",
+           "text",
+           "abline")
+importFrom("grDevices",
+           "xy.coords")
+importFrom("methods",
+           "cbind2",
+           "coerce",
+           "rbind2",
+           "show",
+           "@<-",
+           "is",
+           "slot",
+           "new",
+           "slot<-")
+importFrom("stats",
+           "as.ts",
+           "model.frame",
+           "aggregate",
+           "end",
+           "lag",
+           "na.omit",
+           "start",
+           "time",
+           "window",
+           "approx",
+           "rnorm",
+           "runif",
+           "median",
+           "qt",
+           "quantile",
+           "var",
+           "dist",
+           "hclust",
+           "ts",
+           "cor",
+           "is.mts")
+importFrom("timeDate",
+           "timeSequence",
+           "isWeekday",
+           "timeDate",
+           "as.timeDate",
+           "timeFirstDayInMonth",
+           "timeFirstDayInQuarter",
+           "timeLastDayInMonth",
+           "timeLastDayInQuarter",
+           "whichFormat",
+           "timeCalendar")
+importFrom("utils",
+           "head",
+           "str",
+           "tail",
+           "packageDescription",
+           "read.table")
 
 ################################################
 ## S4 classes
 ################################################
 
-exportClasses(
-    "index_timeSeries",
-     "timeSeries" 
-)
-export(
-    "returns",
-    "rowCumsums",
-    "series<-",
-    "series" 
-)
-exportMethods(
-    "aggregate",
-    "attach",
-    "[<-",
-    "[",
-    "cbind2",
-    "coerce",
-    "comment<-",
-    "comment",
-    "cummax",
-    "cummin",
-    "cumprod",
-    "cumsum",
-    "diff",
-    "dim",
-    "dimnames<-",
-    "dimnames",
-    "end",
-    "head",
-    "lag",
-    "lines",
-    "merge",
-    "na.omit",
-    "Ops",
-    "points",
-    "print",
-    "rbind2",
-    "rev",
-    "rownames<-",
-    "sample",
-    "scale",
-    "show",
-    "sort",
-    "start",
-    "str",
-    "tail",
-    "time",
-    "window" 
-)
+exportClasses("index_timeSeries",
+              "timeSeries" )
+export("returns",
+        "rowCumsums",
+        "series<-",
+        "series" )
+exportMethods("aggregate",
+              "attach",
+              "[<-",
+              "[",
+              "cbind2",
+              "coerce",
+              "comment<-",
+              "comment",
+              "cummax",
+              "cummin",
+              "cumprod",
+              "cumsum",
+              "diff",
+              "dim",
+              "dimnames<-",
+              "dimnames",
+              "end",
+              "head",
+              "lag",
+              "lines",
+              "merge",
+              "na.omit",
+              "Ops",
+              "points",
+              "print",
+              "rbind2",
+              "rev",
+              "rownames<-",
+              "sample",
+              "scale",
+              "show",
+              "sort",
+              "start",
+              "str",
+              "tail",
+              "time",
+              "window" )
 
 ################################################
 ## S3 classes
@@ -164,5 +236,4 @@ export(
     ".turnpoints",
     ".turnpointsPastecs",
     ".turnpointsSeries",
-    ".turnpointsStats" 
-)
+    ".turnpointsStats" )

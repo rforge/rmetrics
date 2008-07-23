@@ -254,7 +254,8 @@ function()
     # getFitted
 
     # Predict Method:
-    args(predict.fARMA)
+    # predict.fARMA is now in namespace as an hidden method
+    # args(predict.fARMA)
     predict(object)
 
     # Return Value:

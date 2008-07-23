@@ -39,8 +39,8 @@ function()
         y = rep(2008, times = 6), m = rep(4, times = 6), d = rep(10:11, each = 3),
         h = sample(1:23)[1:6], min = sample(1:59)[1:6], s = sample(1:59)[1:6])
     tS = timeSeries(rnorm(6), tD)
-    .align.timeSeries(tS)
-    .align.timeSeries(tS, method="interp")
+    timeSeries:::.align.timeSeries(tS)
+    timeSeries:::.align.timeSeries(tS, method="interp")
 
     # Note, we should als add an argument to trim NAs
 }

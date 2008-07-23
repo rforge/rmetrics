@@ -46,12 +46,12 @@ function()
     x[18:20, 4] = NA
     print(x)
 
-    .naOmitMatrix(as.matrix(x))
-    .naOmitMatrix(as.matrix(x), "s")
-    .naOmitMatrix(as.matrix(x), "z")
-    .naOmitMatrix(as.matrix(x), "ir")
-    .naOmitMatrix(as.matrix(x), "iz")
-    .naOmitMatrix(as.matrix(x), "ie")
+    timeSeries:::.naOmitMatrix(as.matrix(x))
+    timeSeries:::.naOmitMatrix(as.matrix(x), "s")
+    timeSeries:::.naOmitMatrix(as.matrix(x), "z")
+    timeSeries:::.naOmitMatrix(as.matrix(x), "ir")
+    timeSeries:::.naOmitMatrix(as.matrix(x), "iz")
+    timeSeries:::.naOmitMatrix(as.matrix(x), "ie")
 
     # Return Value:
     return()

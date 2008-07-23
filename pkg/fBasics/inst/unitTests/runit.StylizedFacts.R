@@ -187,14 +187,14 @@ function()
     par(mfrow = c(1, 1))
 
     # logpdfPlot -
-    .logpdfPlot(x = msft.ret, labels = FALSE)
-    .logpdfPlot(x = msft.ret, type = "log-log")
+    fBasics:::.logpdfPlot(x = msft.ret, labels = FALSE)
+    fBasics:::.logpdfPlot(x = msft.ret, type = "log-log")
     # ... CHECK WARNINGS
     # ... CHECK COLORS
 
     # logpdfPlot -
-    .logpdfPlot(x = msft.ret, labels = FALSE)
-    .logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
+    fBasics:::.logpdfPlot(x = msft.ret, labels = FALSE)
+    fBasics:::.logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
     # ... CHECK WARNINGS
     # ... CHECK COLORS
 
@@ -219,10 +219,10 @@ function()
     par(mfrow = c(1, 1))
 
     # qqgaussPlot -
-    .qqgaussPlot(x = msft.ret)
+    fBasics:::.qqgaussPlot(x = msft.ret)
 
     # qqgaussPlot -
-    .qqgaussPlot(x = msft.ret, labels = FALSE)
+    fBasics:::.qqgaussPlot(x = msft.ret, labels = FALSE)
 
     # Return Value:
     return()

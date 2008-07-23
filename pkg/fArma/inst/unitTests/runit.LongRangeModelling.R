@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -53,23 +53,23 @@
 ################################################################################
 
 
-test.fbmSim = 
+test.fbmSim =
 function()
-{  
+{
     # Simulation:
-    
-    # Try: 
+
+    # Try:
     #   .fbmSimSlider()
-    
+
     # fbmSim(
-    #   n = 100, H = 0.7, 
-    #   method = c("mvn", "chol", "lev", "circ", "wave"), 
-    #   waveJ = 7, 
-    #   doplot = TRUE, fgn = FALSE) 
+    #   n = 100, H = 0.7,
+    #   method = c("mvn", "chol", "lev", "circ", "wave"),
+    #   waveJ = 7,
+    #   doplot = TRUE, fgn = FALSE)
 
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "mvn")
@@ -78,7 +78,7 @@ function()
     print(target)
     current = +0.05
     checkEquals(target, current)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "chol")
@@ -87,7 +87,7 @@ function()
     print(target)
     current = +0.45
     checkEquals(target, current)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "lev")
@@ -96,7 +96,7 @@ function()
     print(target)
     current = 0.66
     checkEquals(target, current)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "circ")
@@ -105,7 +105,7 @@ function()
     print(target)
     current = -0.45
     checkEquals(target, current)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "wave")
@@ -114,56 +114,56 @@ function()
     print(target)
     current = 0.09
     checkEquals(target, current)
-    
+
     # Return Value:
-    return()    
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.fgnSim = 
+test.fgnSim =
 function()
-{  
+{
     # Simulation:
-    
-    # Try: 
+
+    # Try:
     #   .fgnSimSlider()
-    
+
     # fbmSim(
-    #   n = 100, H = 0.7, 
-    #   method = c("mvn", "chol", "lev", "circ", "wave"), 
-    #   waveJ = 7, doplot = TRUE, fgn = FALSE) 
+    #   n = 100, H = 0.7,
+    #   method = c("mvn", "chol", "lev", "circ", "wave"),
+    #   waveJ = 7, doplot = TRUE, fgn = FALSE)
 
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
-    
+
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
-    
+
+
     # Return Value:
-    return()       
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.farimaSim = 
+test.farimaSim =
 function()
-{  
+{
     # Simulation:
-    
-    # Try: 
+
+    # Try:
     #   .farimaSimSlider()
-    
+
     # farimaSim(
-    #   n = 1000, 
-    #   model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1), 
-    #   method = c("freq", "time"), 
-    #   ...) 
+    #   n = 1000,
+    #   model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1),
+    #   method = c("freq", "time"),
+    #   ...)
 
     # Frequency Method:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -175,7 +175,7 @@ function()
     current = 1.6
     print(current)
     checkEquals(target, current)
-    
+
     # Time Methhod:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -186,29 +186,29 @@ function()
     current = 1.6
     print(current)
     checkEquals(target, current)
-    
+
     # Return Value:
-    return()   
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.whittleFit = 
+test.whittleFit =
 function()
 {
     # whittleFit(
-    #   x, order = c(1, 1), subseries = 1, 
-    #   method = c("fgn", "farma"), 
-    #   trace = FALSE, spec = FALSE, title = NULL, description = NULL) 
+    #   x, order = c(1, 1), subseries = 1,
+    #   method = c("fgn", "farma"),
+    #   trace = FALSE, spec = FALSE, title = NULL, description = NULL)
 
 
     # Beran - Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7)
-    
+
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
@@ -216,12 +216,12 @@ function()
     print(target)
     current = 0.701
     checkEquals(target, current)
-    
+
     # Durbin - Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7, method = "durbin")
-    
+
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
@@ -229,12 +229,12 @@ function()
     print(target)
     current = 0.679
     checkEquals(target, current)
-    
+
     # Paxson - Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7, method = "paxson")
-    
+
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
@@ -242,107 +242,107 @@ function()
     print(target)
     current = 0.728
     checkEquals(target, current)
-    
+
     # Return Value:
-    return()   
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.hurstFit = 
+test.hurstFit =
 function()
-{  
+{
     # Try:
     #   hurstSlider(x = fbmSim(n = 1000, H = 0.7, fgn = TRUE))
-    
+
     # Methods:
-    #   method = 1: aggvarFit      
-    #   method = 2: diffvarFit 
-    #   method = 3: absvalFit 
-    #   method = 4: higuchiFit 
-    #   method = 5: pengFit 
-    #   method = 6: rsFit 
-    #   method = 7: perFit 
-    
+    #   method = 1: aggvarFit
+    #   method = 2: diffvarFit
+    #   method = 3: absvalFit
+    #   method = 4: higuchiFit
+    #   method = 5: pengFit
+    #   method = 6: rsFit
+    #   method = 7: perFit
+
     # Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7)
-    
+
     Hurst = aggvarFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.731
     checkEqualsNumeric(target, current)
-    
+
     Hurst = diffvarFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.869
     checkEqualsNumeric(target, current)
-    
+
     Hurst = absvalFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.787
     checkEqualsNumeric(target, current)
-    
+
     Hurst = higuchiFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.714
     checkEqualsNumeric(target, current)
-    
+
     Hurst = pengFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.620
     checkEqualsNumeric(target, current)
-    
+
     Hurst = rsFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.594
     checkEqualsNumeric(target, current)
-    
+
     Hurst = perFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 3)
     print(target)
     current = 0.602
     checkEqualsNumeric(target, current)
-    
+
     # More Estimators:
     # ...
-    
+
     # Return Value:
-    return()   
+    return()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.waveletFit = 
+test.waveletFit =
 function()
 {
     # waveletFit(
-    #   x, length = NULL, order = 2, octave = c(2, 8), 
-    #   doplot = FALSE, title = NULL, description = NULL) 
+    #   x, length = NULL, order = 2, octave = c(2, 8),
+    #   doplot = FALSE, title = NULL, description = NULL)
 
     # Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7)
-    
+
     # Fit:
     Hurst = waveletFit(x)@hurst$H
     print(Hurst)
@@ -350,11 +350,11 @@ function()
     print(target)
     current = 0.696
     checkEquals(target, current)
-    
+
     # Return Value:
-    return()   
+    return()
 }
- 
+
 
 ################################################################################
-    
+

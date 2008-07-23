@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -48,7 +48,7 @@
 # PARAMETER FIT:
 
 
-setClass("fMV", 
+setClass("fMV",
     representation(
         call = "call",
         method = "character",
@@ -56,22 +56,22 @@ setClass("fMV",
         data = "data.frame",
         fit = "list",
         title = "character",
-        description = "character")  
+        description = "character")
 )
 
 
 # ------------------------------------------------------------------------------
 
 
-mvFit = 
+mvFit =
 function(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
-description = NULL, trace = FALSE, ...) 
+description = NULL, trace = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    
+
     # FUNCTION:
-    
+
     # Fit:
     if (method[1] == "snorm") {
         # Normal Fit:
@@ -82,34 +82,34 @@ description = NULL, trace = FALSE, ...)
        # Student-t Fit:
        fit = .mvstFit(x = x, fixed.df = fixed.df, trace = trace, ...)
     }
-        
+
     # Add to fit:
     fit$method = method[1]
     class(fit) = "list"
-       
-    # Model Slot: 
-    model = list(beta = fit$beta, Omega = fit$Omega, 
+
+    # Model Slot:
+    model = list(beta = fit$beta, Omega = fit$Omega,
         alpha = fit$alpha, df = fit$df)
-    
+
     # Title Slot:
     if (is.null(title)) {
-        if (method[1] == "snorm") 
+        if (method[1] == "snorm")
             title = "Multivariate Normal Distribution"
-        if (method[1] == "st") 
-            title = "Multivariate Student-t Distribution" 
+        if (method[1] == "st")
+            title = "Multivariate Student-t Distribution"
     }
-    
+
     # Description Slot:
     if (is.null(description)) description = .description()
-    
+
     # Return Value:
-    new("fMV",     
+    new("fMV",
         call = as.call(match.call()),
         method = as.character(method[1]),
         model = model,
-        data = as.data.frame(x), 
+        data = as.data.frame(x),
         fit = fit,
-        title = as.character(title), 
+        title = as.character(title),
         description = as.character(description) )
 }
 
@@ -117,38 +117,33 @@ description = NULL, trace = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-show.fMV =
-function(object)
+
+setMethod("show", "fMV",
+    function(object)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Extract fit:
     fit = object@fit
-    
+
     # Print:
     cat("\nCall:\n ")
     print.default(fit$call)
-    
+
     cat("\nParameter Sstimates:\n")
     print.default(fit$dp)
-    
+
     cat("\nParameter Errors:\n")
-    print.default(fit$se) 
-    
+    print.default(fit$se)
+
     # cat("\nOptimization:\n")
-    # print.default(fit$optim)   
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fMV", show.fMV)
+    # print.default(fit$optim)
+})
 
 
 # ------------------------------------------------------------------------------
@@ -159,11 +154,11 @@ function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Plot:
     if (x@fit$method == "snorm") {
         # Multivariate Skew Normal Distribution:
@@ -184,17 +179,17 @@ function(object, which = "ask", doplot = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Print:
     print(x = object, ...)
-    
+
     # Plot:
     if (doplot) plot(x = object, which = which, doplot, ...)
-    
+
     # Return Value:
     invisible(object)
 }
@@ -204,17 +199,17 @@ function(object, which = "ask", doplot = TRUE, ...)
 # INERNAL FUNCTIONS:
 
 
-.mvsnormFit = 
-function(x, trace = FALSE, ...) 
+.mvsnormFit =
+function(x, trace = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal Function
-    
+
     # Arguments:
 
     # FUNCTION:
-    
+
     # Settings:
     y = x
     y.name = deparse(substitute(y))
@@ -230,13 +225,13 @@ function(x, trace = FALSE, ...)
     dimnames(y) = list(NULL, outer("V", as.character(1:k), paste, sep = ""))
     y.names = as.vector(dimnames(y)[[2]])
     qrX = qr(X)
-    
+
     # Fit:
-    mle = msn.mle(X = X, y = y, freq = freq, trace = trace, ...) 
+    mle = msn.mle(X = X, y = y, freq = freq, trace = trace, ...)
     mle$call = match.call()
     mle$y = y
     mle$y.names = y.names
-    
+
     # Parameters:
     mle$beta = beta = mle$dp$beta
     mle$xi = xi = X %*% beta
@@ -246,9 +241,9 @@ function(x, trace = FALSE, ...)
     # Test:
     # dev.norm = msn.dev(c(qr.coef(qrX, y), rep(0, k)), X, y, freq)
     # test = dev.norm + 2 * mle$logL
-    # p.value = 1 - pchisq(test, k)    
+    # p.value = 1 - pchisq(test, k)
     # mle$test.normality = list(LRT = test, p.value = p.value)
-    
+
     # Save for Plot:
     Xb = qr.fitted(qrX, y)
     res = qr.resid(qrX, y)
@@ -257,7 +252,7 @@ function(x, trace = FALSE, ...)
     mle$pp = qchisq((1:n)/(n + 1), k)
     mle$rad.n = apply((y - Xb) * ((y - Xb) %*% solve(var(res))), 1, sum)
     mle$rad.sn = apply((y - xi) * ((y - xi) %*% solve(Omega)), 1, sum)
-    
+
     # Return Value:
     class(mle) = "snFit"
     mle
@@ -268,44 +263,44 @@ function(x, trace = FALSE, ...)
 
 
 .mvstFit =
-function(x, fixed.df = NA, trace = FALSE, ...) 
+function(x, fixed.df = NA, trace = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal Function
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Settings:
     y = as.matrix(x)
     k = ncol(y)
     y.name = deparse(substitute(y))
     dimnames(y) = list(NULL, outer("V", as.character(1:k), paste, sep = ""))
     y.names = dimnames(y)[[2]]
-    
+
     freq = rep(1, nrow(y))
     n = sum(freq)
-    
+
     X = as.matrix(rep(1, nrow(y)))
     qrX = qr(X)
     m = ncol(X)
-    
+
     # Fit:
-    mle = mst.mle(X = X, y = y, freq = freq, fixed.df = fixed.df, 
+    mle = mst.mle(X = X, y = y, freq = freq, fixed.df = fixed.df,
         trace = trace, ...)
     mle$call = match.call()
     mle$y = y
     mle$y.names = y.names
-    
+
     # Parameters:
     mle$beta = beta = mle$dp$beta
     mle$xi = xi = X %*% beta
     mle$Omega = Omega = mle$dp$Omega
-    mle$alpha = alpha = mle$dp$alpha 
+    mle$alpha = alpha = mle$dp$alpha
     mle$df = df = mle$dp$df
-       
+
     # Save for Plot:
     Xb = qr.fitted(qrX, y)
     res = qr.resid(qrX, y)
@@ -317,7 +312,7 @@ function(x, fixed.df = NA, trace = FALSE, ...)
 
     # Return Value:
     class(mle) = "stFit"
-    mle 
+    mle
 }
 
 
@@ -330,36 +325,36 @@ function(x, which = "ask", ...)
 
     # Description:
     #   Internal Plot Function
-    
+
     # Arguments:
     #   x - the slot @fit from an object of class "fMV"
-    
-    # FUNCTION: 
-            
+
+    # FUNCTION:
+
     # Settings:
     dim = ncol(x$y)
-    
+
     # Plot Title:
     plot1Title = "Scatterplots"
-    if (dim == 1) plot1Title = "Histogram Plot" 
-    
+    if (dim == 1) plot1Title = "Histogram Plot"
+
     # Plot:
     interactivePlot(
         x = x,
         choices = c(
-            plot1Title, 
-            "Normal QQ-Plot", 
+            plot1Title,
+            "Normal QQ-Plot",
             "Skew-Normal QQ-Plot",
             "Normal PP-Plot",
             "Skew-Normal PP-Plot"),
         plotFUN = c(
-            ".mvsnorm.plot.1", 
-            ".mvsnorm.plot.2", 
+            ".mvsnorm.plot.1",
+            ".mvsnorm.plot.2",
             ".mvsnorm.plot.3",
             ".mvsnorm.plot.4",
             ".mvsnorm.plot.5"),
         which = which)
-                    
+
     # Return Value:
     invisible(x)
 }
@@ -380,8 +375,8 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-.mvsnorm.plot.1A <- 
-function(x) 
+.mvsnorm.plot.1A <-
+function(x)
 {
     # Plot:
     z = x
@@ -392,32 +387,32 @@ function(x)
     omega <- sqrt(diag(z$Omega))
     dp0 <- c(xi0, omega, z$alpha)
     xlab <- z$y.name
-    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
-        ylab = "density", border = "white", col = "steelblue4", 
+    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab,
+        ylab = "density", border = "white", col = "steelblue4",
         main = z$y.name)
     lines(x, dsn(x, dp0[1], dp0[2], dp0[3]))
-    if (length(y0) < 201) 
-        points(y0, rep(0, z$n), pch = 1) 
+    if (length(y0) < 201)
+        points(y0, rep(0, z$n), pch = 1)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvsnorm.plot.1B <- 
-function(x) 
+.mvsnorm.plot.1B <-
+function(x)
 {
     # Plot:
     opt = options()
     options(warn = -1)
     pairs(
-        x$y, 
-        labels = x$y.names, 
+        x$y,
+        labels = x$y.names,
         panel = function(x, y, Y, y.names, xi, Omega, alpha) {
             for (i in 1:length(alpha)) {
-                if (all(Y[, i] == x)) 
+                if (all(Y[, i] == x))
                     Ix = i
-                if (all(Y[, i] == y)) 
+                if (all(Y[, i] == y))
                     Iy = i }
             points(x, y)
             marg = msn.marginal(xi, Omega, alpha, c(Ix, Iy))
@@ -426,72 +421,72 @@ function(x)
             alpha.marg = marg$alpha
             x1 = seq(min(x), max(x), length = 30)
             x2 = seq(min(y), max(y), length = 30)
-            dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
-                add = TRUE, col = "steelblue4")}, 
-        Y = x$y, 
-        y.names = dimnames(x$y)[[2]], 
-        xi = apply(x$xi, 2, mean),  
-        Omega = x$Omega, 
-        alpha = x$alpha) 
-    options(opt) 
-} 
+            dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg,
+                add = TRUE, col = "steelblue4")},
+        Y = x$y,
+        y.names = dimnames(x$y)[[2]],
+        xi = apply(x$xi, 2, mean),
+        Omega = x$Omega,
+        alpha = x$alpha)
+    options(opt)
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvsnorm.plot.2 <- 
-function(x) 
+.mvsnorm.plot.2 <-
+function(x)
 {
     # Plot:
-    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-        xlab = "Chi-square Percentiles", 
+    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)),
+        xlab = "Chi-square Percentiles",
         ylab = "Mahalanobis Distances")
     abline(0, 1, lty = 3)
-    title(main = "Normal QQ-Plot", sub = x$y.name) 
+    title(main = "Normal QQ-Plot", sub = x$y.name)
 }
 
 
 # ------------------------------------------------------------------------------
 
-    
-.mvsnorm.plot.3 <- 
-function(x) 
-{            
-    # Plot:
-    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-        xlab = "Percentiles of chi-square distribution", 
-        ylab = "Mahalanobis distances")
-    abline(0, 1, lty = 3)
-    title(main = "Skew-Normal QQ-Plot", sub = x$y.name) 
-}
 
-
-# ------------------------------------------------------------------------------
-
-    
-.mvsnorm.plot.4 <- 
-function(x) 
+.mvsnorm.plot.3 <-
+function(x)
 {
     # Plot:
-    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
-        xlab = "",  ylab = "")
+    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)),
+        xlab = "Percentiles of chi-square distribution",
+        ylab = "Mahalanobis distances")
     abline(0, 1, lty = 3)
-    title(main = "Normal PP-Plot", sub = x$y.name) 
+    title(main = "Skew-Normal QQ-Plot", sub = x$y.name)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvsnorm.plot.5 <- 
-function(x) 
-{            
+.mvsnorm.plot.4 <-
+function(x)
+{
     # Plot:
-    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)),
+        xlab = "",  ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Normal PP-Plot", sub = x$y.name)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.mvsnorm.plot.5 <-
+function(x)
+{
+    # Plot:
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)),
         xlab = "", ylab = "")
     abline(0, 1, lty = 3)
-    title(main = "Skew-Normal PP-Plot", sub = x$y.name) 
+    title(main = "Skew-Normal PP-Plot", sub = x$y.name)
 }
 
 
@@ -504,38 +499,38 @@ function(x, which = "ask", ...)
 
     # Description:
     #   Internal Plot Function
-    
+
     # Arguments:
     #   x - the slot @fit from an object of class "fMV"
-    
-    # FUNCTION: 
-            
+
+    # FUNCTION:
+
     # Settings:
     dim = ncol(x$y)
-    
+
     # Plot Title:
     plot1Title = "Scatterplots"
-    if (dim == 1) plot1Title = "Histogram Plot" 
-     
+    if (dim == 1) plot1Title = "Histogram Plot"
+
     # Plot:
     plot1Title = "Scatterplots"
-    if (dim == 1) plot1Title = "Histogram Plot" 
+    if (dim == 1) plot1Title = "Histogram Plot"
     interactivePlot(
         x = x,
         choices = c(
-            plot1Title, 
-            "Normal QQ-Plot", 
+            plot1Title,
+            "Normal QQ-Plot",
             "Skew-Normal QQ-Plot",
             "Normal PP-Plot",
             "Skew-Normal PP-Plot"),
         plotFUN = c(
-            ".mvst.plot.1", 
-            ".mvst.plot.2", 
+            ".mvst.plot.1",
+            ".mvst.plot.2",
             ".mvst.plot.3",
             ".mvst.plot.4",
             ".mvst.plot.5"),
         which = which)
-                    
+
     # Return Value:
     invisible(x)
 }
@@ -556,8 +551,8 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-.mvst.plot.1A <- 
-function(x) 
+.mvst.plot.1A <-
+function(x)
 {
     # Plot:
     z = x
@@ -568,32 +563,32 @@ function(x)
     omega <- sqrt(diag(z$Omega))
     dp0 <- c(xi0, omega, z$alpha, z$df)
     xlab <- z$y.name
-    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
-        ylab = "density", border = "white", col = "steelblue4", 
+    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab,
+        ylab = "density", border = "white", col = "steelblue4",
         main = z$y.name)
     lines(x, dst(x, dp0[1], dp0[2], dp0[3], dp0[4]))
-    if (length(y0) < 201) 
-        points(y0, rep(0, z$n), pch = 1) 
+    if (length(y0) < 201)
+        points(y0, rep(0, z$n), pch = 1)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvst.plot.1B <- 
-function(x) 
+.mvst.plot.1B <-
+function(x)
 {
     # Plot:
     opt = options()
     options(warn = -1)
     pairs(
-        x$y, 
-        labels = x$y.names, 
+        x$y,
+        labels = x$y.names,
         panel = function(x, y, Y, y.names, xi, Omega, alpha, df) {
             for (i in 1:length(alpha)) {
-                if (all(Y[, i] == x)) 
+                if (all(Y[, i] == x))
                     Ix = i
-                if (all(Y[, i] == y)) 
+                if (all(Y[, i] == y))
                     Iy = i }
             points(x, y)
             marg = msn.marginal(xi, Omega, alpha, c(Ix, Iy))
@@ -602,75 +597,75 @@ function(x)
             alpha.marg = marg$alpha
             x1 = seq(min(x), max(x), length = 30)
             x2 = seq(min(y), max(y), length = 30)
-            dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
-                df, add = TRUE, col = "steelblue4")} , 
-        Y = x$y, 
-        y.names = dimnames(x$y)[[2]], 
-        xi = apply(x$xi, 2, mean),  
-        Omega = x$Omega, 
+            dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg,
+                df, add = TRUE, col = "steelblue4")} ,
+        Y = x$y,
+        y.names = dimnames(x$y)[[2]],
+        xi = apply(x$xi, 2, mean),
+        Omega = x$Omega,
         alpha = x$alpha,
-        df = x$df) 
-    options(opt) 
-} 
+        df = x$df)
+    options(opt)
+}
 
- 
+
 # ------------------------------------------------------------------------------
 
-      
-.mvst.plot.2 <- 
-function(x) 
+
+.mvst.plot.2 <-
+function(x)
 {
     # Plot:
-    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-        xlab = "Chi-square Percentiles", 
+    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)),
+        xlab = "Chi-square Percentiles",
         ylab = "Mahalanobis Distances")
     abline(0, 1, lty = 3)
-    title(main = "Normal QQ-Plot", sub = x$y.name) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-    
-.mvst.plot.3 <- 
-function(x) 
-{            
-    # Plot:
-    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-        xlab = "Percentiles of chi-square distribution", 
-        ylab = "Mahalanobis distances")
-    abline(0, 1, lty = 3)
-    title(main = "Skew-Normal QQ-Plot", sub = x$y.name) 
+    title(main = "Normal QQ-Plot", sub = x$y.name)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvst.plot.4 <- 
-function(x) 
+.mvst.plot.3 <-
+function(x)
 {
     # Plot:
-    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
-        xlab = "",  ylab = "")
+    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)),
+        xlab = "Percentiles of chi-square distribution",
+        ylab = "Mahalanobis distances")
     abline(0, 1, lty = 3)
-    title(main = "Normal PP-Plot", sub = x$y.name) 
+    title(main = "Skew-Normal QQ-Plot", sub = x$y.name)
 }
 
- 
+
 # ------------------------------------------------------------------------------
 
-   
-.mvst.plot.5 <- 
-function(x) 
-{            
+
+.mvst.plot.4 <-
+function(x)
+{
     # Plot:
-    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)),
+        xlab = "",  ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Normal PP-Plot", sub = x$y.name)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.mvst.plot.5 <-
+function(x)
+{
+    # Plot:
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)),
         xlab = "", ylab = "")
     abline(0, 1, lty = 3)
-    title(main = "Skew-Normal PP-Plot", sub = x$y.name) 
+    title(main = "Skew-Normal PP-Plot", sub = x$y.name)
 }
-        
+
 
 ################################################################################
 

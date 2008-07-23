@@ -135,6 +135,12 @@ setMethod("[", signature(x = "timeSeries", i = "timeSeries", j = "missing"),
       })
 
 # ------------------------------------------------------------------------------
+
+setMethod("[",
+          signature(x = "timeSeries", i = "missing", j = "missing"),
+          function(x, i, j, ..., drop = FALSE) x)
+
+# ------------------------------------------------------------------------------
 # ANY
 
 setMethod("[", signature(x = "timeSeries", i = "ANY", j = "ANY"),
