@@ -1,0 +1,81 @@
+
+################################################
+## import name space
+################################################
+
+# importFrom("fOptions",
+#           "BSAmericanApproxOption",
+#           "CND",
+#           "CBND",
+#           "GBSGreeks",
+#           "GBSOption")
+importFrom("fUtilities",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("methods",
+           "new")
+importFrom("timeSeries",
+           "print",
+           "time")
+importFrom("utils",
+           "packageDescription")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    "AmericanExchangeOption",
+    "AssetOrNothingOption",
+    "BinaryBarrierOption",
+    "CashOrNothingOption",
+    "ComplexChooserOption",
+    "DiscreteBarrierOption",
+    "DoubleBarrierOption",
+    ".EOnEOption.CriticalPart2",
+    ".EOnEOption.CriticalPart3",
+    ".EOnEOption.CriticalPrice",
+    "EquityLinkedFXOption",
+    "EuropeanExchangeOption",
+    "ExchangeOnExchangeOption",
+    "ExecutiveStockOption",
+    "ExtremeSpreadOption",
+    "FEInDomesticFXOption",
+    "FixedStrikeLookbackOption",
+    "FloatingStrikeLookbackOption",
+    "ForwardStartOption",
+    "GapOption",
+    "GeometricAverageRateOption",
+    "HolderExtendibleOption",
+    "LevyAsianApproxOption",
+    "LookBarrierOption",
+    "OptionOnOption",
+    "PTFixedStrikeLookbackOption",
+    "PTFloatingStrikeLookbackOption",
+    "PTSingleAssetBarrierOption",
+    "PTTwoAssetBarrierOption",
+    "QuantoOption",
+    "RatchetOption",
+    "SimpleChooserOption",
+    "SoftBarrierOption",
+    "SpreadApproxOption",
+    "StandardBarrierOption",
+    "SuperShareOption",
+    "TakeoverFXOption",
+    "TimeSwitchOption",
+    "TurnbullWakemanAsianApproxOption",
+    "TwoAssetBarrierOption",
+    "TwoAssetCashOrNothingOption",
+    "TwoAssetCorrelationOption",
+    "TwoRiskyAssetsOption",
+    "WriterExtendibleOption" )

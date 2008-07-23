@@ -1,0 +1,193 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           "volatility",
+           ".description",
+           "Heaviside",
+           ".sliderMenu",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("graphics",
+           "plot",
+           "abline",
+           "grid",
+           "hist",
+           "par",
+           "title")
+importFrom("methods",
+           "show",
+           "@<-",
+           "new",
+           "slotNames")
+importFrom("stats",
+           "coef",
+           "fitted",
+           "formula",
+           "predict",
+           "residuals",
+           "integrate",
+           "dnorm",
+           "dt",
+           "as.formula",
+           "terms",
+           "pnorm",
+           "sd",
+           "arima",
+           "var",
+           "filter",
+           "model.frame",
+           "optim",
+           "nlminb",
+           "rnorm",
+           "pgamma",
+           "acf",
+           "ccf",
+           "pt",
+           "qgamma",
+           "ppoints",
+           "quantile",
+           "qnorm",
+           "qt",
+           "rgamma",
+           "runif",
+           "rt")
+importFrom("timeDate",
+           "timeDate",
+           "timeSequence")
+importFrom("timeSeries",
+           "print",
+           "sort",
+           "rownames<-",
+           "isUnivariate",
+           "rev",
+           "timeSeries",
+           "lines",
+           "diff")
+importFrom("utils",
+           "packageDescription",
+           "capture.output",
+           "menu")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fGarch")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fGARCH",
+              "fGARCHSPEC" )
+exportMethods("coef",
+              "fitted",
+              "formula",
+              "plot",
+              "predict",
+              "residuals",
+              "show",
+              "summary",
+              "volatility" )
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    "absMoments",
+    "dged",
+    "dsged",
+    ".dsged",
+    "dsnorm",
+    ".dsnorm",
+    "dsstd",
+    ".dsstd",
+    "dstd",
+    ".garchArgsParser",
+    ".garchFCDAHessian",
+    ".garchFFDAHessian",
+    "garchFit",
+    ".garchFit",
+    "garchFitControl",
+    ".garchFmnfb",
+    ".garchFsqp",
+    ".garchInitParameters",
+    ".garchInitSeries",
+    "garchKappa",
+    ".garchKappaFun",
+    ".garchLLH",
+    ".garchModelSeries",
+    ".garchNames",
+    ".garchOptimizeLLH",
+    ".garchOptimizerControl",
+    "garchOxFit",
+    ".garchRCDAHessian",
+    ".garchRdonlp2",
+    ".garchRlbfgsb",
+    ".garchRnlminb",
+    ".garchRnm",
+    ".garchSetCondDist",
+    "garchSim",
+    "garchSpec",
+    "gedFit",
+    "getfGarchEnv",
+    ".interactiveGarchPlot",
+    ".multGarchPlot",
+    "normFit",
+    "pged",
+    ".plot.garch.1",
+    ".plot.garch.10",
+    ".plot.garch.11",
+    ".plot.garch.12",
+    ".plot.garch.13",
+    ".plot.garch.2",
+    ".plot.garch.3",
+    ".plot.garch.4",
+    ".plot.garch.5",
+    ".plot.garch.6",
+    ".plot.garch.7",
+    ".plot.garch.8",
+    ".plot.garch.9",
+    "psged",
+    ".psged",
+    "psnorm",
+    ".psnorm",
+    "psstd",
+    ".psstd",
+    "pstd",
+    "qged",
+    ".qqDist",
+    ".qqLine",
+    "qsged",
+    ".qsged",
+    "qsnorm",
+    ".qsnorm",
+    "qsstd",
+    ".qsstd",
+    "qstd",
+    "rged",
+    "rsged",
+    ".rsged",
+    "rsnorm",
+    ".rsnorm",
+    "rsstd",
+    ".rsstd",
+    "rstd",
+    "setfGarchEnv",
+    "sgedFit",
+    "sgedSlider",
+    "snormFit",
+    "snormSlider",
+    "sstdFit",
+    "sstdSlider",
+    "stdFit",
+    ".truePersistence" )

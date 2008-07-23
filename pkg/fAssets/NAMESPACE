@@ -1,0 +1,165 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fBasics",
+           "basicStats",
+           "seriesPlot",
+           "histPlot",
+           "nigFit",
+           "nigShapeTriangle",
+           "qqnormPlot",
+           "pnig")
+importFrom("fMultivar",
+           "grid2d",
+           "mvFit",
+           "hexBinning",
+           "squareBinning")
+importFrom("fUtilities",
+           ".description",
+           "isPositiveDefinite",
+           "makePositiveDefinite",
+           "kurtosis",
+           "skewness",
+           "colStdevs",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("graphics",
+           "plot",
+           "text",
+           "abline",
+           "axis",
+           "polygon",
+           "boxplot",
+           "arrows",
+           "mtext",
+           "box",
+           "image",
+           "title",
+           "pairs",
+           "par",
+           "grid",
+           "hist",
+           "stars",
+           "Axis",
+           "strwidth",
+           "plot.xy",
+           "rect")
+importFrom("grDevices",
+           "palette",
+           "rainbow",
+           "cm.colors",
+           "xy.coords")
+importFrom("methods",
+           "show",
+           "new")
+importFrom("sn",
+           "msn.quantities")
+importFrom("stats",
+           "approx",
+           "median",
+           "cor",
+           "cor.test",
+           "lowess",
+           "symnum",
+           "dist",
+           "hclust",
+           "cov",
+           "density",
+           "dnorm",
+           "sd",
+           "kmeans",
+           "rchisq",
+           "rnorm",
+           "var",
+           "shapiro.test",
+           "qf")
+importFrom("timeSeries",
+           "lines",
+           "sort",
+           "rownames<-",
+           "is.timeSeries",
+           "series",
+           "na.omit",
+           "points",
+           "colCumsums",
+           "as.timeSeries",
+           "diff",
+           "series<-",
+           "print")
+importFrom("utils",
+           "packageDescription")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fASSETS" )
+exportMethods("show" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("plot", "fASSETS")
+S3method("summary", "fASSETS")
+
+################################################
+## functions
+################################################
+
+export(
+    "assetsBasicStatsPlot",
+    "assetsBoxPercentilePlot",
+    "assetsBoxPlot",
+    "assetsBoxStatsPlot",
+    "assetsCorEigenPlot",
+    "assetsCorgramPlot",
+    "assetsCorImagePlot",
+    "assetsCorTestPlot",
+    "assetsCumulatedPlot",
+    "assetsDendrogramPlot",
+    "assetsFit",
+    "assetsHistPairsPlot",
+    "assetsHistPlot",
+    "assetsLogDensityPlot",
+    "assetsLPM",
+    "assetsMeanCov",
+    "assetsMomentsPlot",
+    "assetsNIGFitPlot",
+    "assetsNIGShapeTrianglePlot",
+    "assetsPairsPlot",
+    "assetsQQNormPlot",
+    "assetsReturnPlot",
+    "assetsRiskReturnPlot",
+    "assetsSelect",
+    "assetsSeriesPlot",
+    "assetsSim",
+    "assetsStarsPlot",
+    "assetsStats",
+    "assetsTest",
+    ".col.corrgram",
+    ".corrgram",
+    "covEstimate",
+    ".hist",
+    "lambdaCVaR",
+    "mcdEstimate",
+    "mveEstimate",
+    "mvshapiroTest",
+    ".panel.copula",
+    ".panel.ellipse",
+    ".panel.hist",
+    ".panel.minmax",
+    ".panel.pie",
+    ".panel.pts",
+    ".panel.shade",
+    ".panel.txt",
+    "pfolioCVaR",
+    "pfolioCVaRplus",
+    "pfolioHist",
+    "pfolioMaxLoss",
+    "pfolioReturn",
+    "pfolioTargetReturn",
+    "pfolioTargetRisk",
+    "pfolioVaR" )

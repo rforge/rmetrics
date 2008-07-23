@@ -1,0 +1,55 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           "description",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("methods",
+           "show",
+           "new")
+importFrom("timeDate",
+           "Sys.timeDate",
+           "timeDate")
+importFrom("timeSeries",
+           "sort",
+           "timeSeries",
+           "merge",
+           "window",
+           "as.timeSeries",
+           "rownames<-")
+importFrom("utils",
+           "download.file",
+           "write.table",
+           "packageDescription",
+           "read.table")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fWEBDATA" )
+exportMethods("show" )
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    "economagicImport",
+    "economagicSeries",
+    "fredImport",
+    "fredSeries",
+    "oandaImport",
+    "oandaSeries",
+    "yahooBriefing",
+    "yahooImport",
+    "yahooKeystats",
+    "yahooSeries" )

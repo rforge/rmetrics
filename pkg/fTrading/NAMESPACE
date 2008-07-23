@@ -1,0 +1,100 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("graphics",
+           "axis",
+           "box",
+           "par",
+           "plot.new",
+           "plot.window",
+           "segments",
+           "title")
+importFrom("stats",
+           "filter",
+           "is.mts",
+           "var",
+           "sd")
+importFrom("timeSeries",
+           "diff",
+           "is.timeSeries",
+           "isUnivariate",
+           "rownames<-",
+           "series",
+           "series<-",
+           "timeSeries",
+           "removeNA",
+           "lag",
+           "time",
+           "na.omit",
+           "merge")
+importFrom("utils",
+           "packageDescription")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    "accelTA",
+    "adiTA",
+    "adoscillatorTA",
+    "apdTA",
+    "biasTA",
+    "bollingerTA",
+    "cdoTA",
+    "cdsTA",
+    "chaikinoTA",
+    "chaikinvTA",
+    ".dailyTA",
+    "emaTA",
+    "EWMA",
+    "fpdTA",
+    "fpkTA",
+    "garmanklassTA",
+    ".hitRate",
+    "macdTA",
+    "maxDrawDown",
+    "medpriceTA",
+    "momTA",
+    "nviTA",
+    "obvTA",
+    "ohlcPlot",
+    "oscTA",
+    "pviTA",
+    "pvtrendTA",
+    "rocTA",
+    "rollFun",
+    "rollMax",
+    "rollMean",
+    "rollMin",
+    "rollVar",
+    "rsiTA",
+    "sharpeRatio",
+    "SMA",
+    "spdTA",
+    "sterlingRatio",
+    "stochasticTA",
+    ".tradeLengths",
+    ".tradeSignals",
+    "typicalpriceTA",
+    "vohlTA",
+    "vorTA",
+    "wcloseTA",
+    "williamsadTA",
+    "williamsrTA",
+    "wprTA" )
