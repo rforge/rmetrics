@@ -1,0 +1,109 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fUtilities",
+           ".description",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("graphics",
+           "plot",
+           "text")
+importFrom("methods",
+           "show",
+           "new")
+importFrom("stats",
+           "uniroot",
+           "nlm",
+           "var",
+           "rnorm",
+           "integrate",
+           "dnorm",
+           "runif")
+importFrom("timeSeries",
+           "rev",
+           "lines",
+           "points",
+           "print")
+importFrom("utils",
+           "packageDescription")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fOptions")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fOPTION" )
+exportMethods("show" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("summary", "fOPTION")
+S3method("summary", "hngarch")
+S3method("summary", "option")
+
+################################################
+## functions
+################################################
+
+export(
+    ".BAWAmCallApproxOption",
+    "BAWAmericanApproxOption",
+    ".BAWAmPutApproxOption",
+    ".bawKc",
+    ".bawKp",
+    "BinomialTreeOption",
+    "BinomialTreePlot",
+    "Black76Option",
+    "BlackScholesOption",
+    "BSAmericanApproxOption",
+    ".BSAmericanCallApprox",
+    ".bsPhi",
+    "CBND",
+    "CND",
+    "CRRBinomialTreeOption",
+    ".fdeltaHN",
+    ".fgammaHN",
+    ".fGBSVolatility",
+    ".fHN",
+    ".fstarHN",
+    "GBSCharacteristics",
+    ".GBSCofC",
+    ".GBSDelta",
+    ".GBSGamma",
+    "GBSGreeks",
+    ".GBSLambda",
+    "GBSOption",
+    ".GBSRho",
+    ".GBSTheta",
+    ".GBSVega",
+    "GBSVolatility",
+    "hngarchFit",
+    "hngarchSim",
+    "hngarchStats",
+    "HNGCharacteristics",
+    "HNGGreeks",
+    "HNGOption",
+    "JRBinomialTreeOption",
+    ".llhHNGarch",
+    "MiltersenSchwartzOption",
+    "MonteCarloOption",
+    "NDF",
+    "print.hngarch",
+    "print.option",
+    "rnorm.halton",
+    "rnorm.pseudo",
+    "rnorm.sobol",
+    "RollGeskeWhaleyOption",
+    "runif.halton",
+    "runif.pseudo",
+    "runif.sobol",
+    "TIANBinomialTreeOption" )
