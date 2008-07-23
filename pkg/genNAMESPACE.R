@@ -251,29 +251,29 @@ genNAMESPACE <-
     options(op)
 }
 
-###
-# What to do now ?
-##
+## ###
+## # What to do now ?
+## ##
 
-# remove any existing namespace
-# search for global variables and use global env
-# generate NAMESPACE
-# adapt zzz.R file with .onLoad function
-# check manually NAMESPACE
+## # remove any existing namespace
+## # search for global variables and use global env
+## # generate NAMESPACE
+## # adapt zzz.R file with .onLoad function
+## # check manually NAMESPACE
 
-## before starting install packages without namespace
+## ## before starting install packages without namespace
 
-RmetricsPkgs <- c("fUtilities", "fEcofin", "timeDate", "timeSeries",
-                  "fImport", "fBasics", "fArma", "fGarch",
-                  "fNonlinear", "fUnitRoots", "fTrading", "fMultivar",
+## RmetricsPkgs <- c("fUtilities", "fEcofin", "timeDate", "timeSeries",
+##                   "fImport", "fBasics", "fArma", "fGarch",
+##                   "fNonlinear", "fUnitRoots", "fTrading", "fMultivar",
 
-                  "fRegression", "fExtremes", "fCopulae", "fOptions",
-                  "fExoticOptions", "fAsianOptions", "fAssets",
-                  "fPortfolio")
+##                   "fRegression", "fExtremes", "fCopulae", "fOptions",
+##                   "fExoticOptions", "fAsianOptions", "fAssets",
+##                   "fPortfolio")
 
-## R CMD INSTALL fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae  fOptions fExoticOptions fAsianOptions fAssets fPortfolio
+## ## R CMD INSTALL fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae  fOptions fExoticOptions fAsianOptions fAssets fPortfolio
 
-# problem with pkg urca in dependencies
+## # problem with pkg urca in dependencies
 
-for (pkg in RmetricsPkgs)
-    genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
+## for (pkg in RmetricsPkgs)
+##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
