@@ -27,7 +27,7 @@
 installRmetrics  <-
     function(pkgs = "Rmetrics", repos = NULL,
              CRAN = "http://stat.ethz.ch/CRAN/",
-             type = getOption("pkgType"), suggests = TRUE, ...)
+             type = "source", suggests = TRUE, ...)
 {
 
     stopifnot(is.character(pkgs))
