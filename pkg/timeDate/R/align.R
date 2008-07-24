@@ -42,7 +42,7 @@ align.timeDate <-
     
     # Example:
     #   align.timeDate(timeCalendar(), "1w")        # Weekly
-    #   align.timeDate(timeCalendar(), "2w", "3d")  #  Bi-Weekly with offset
+    #   align.timeDate(timeCalendar(), "2w", "3d")  # Bi-Weekly with offset
 
     # FUNCTION:
     

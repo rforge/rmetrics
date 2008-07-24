@@ -4,9 +4,9 @@
 \alias{timeDateMathOps}
 
 
-\alias{Ops.timeDate}
-\alias{+.timeDate}
-\alias{-.timeDate}
+%%\alias{Ops.timeDate}
+%%\alias{+.timeDate}
+%%\alias{-.timeDate}
 
 
 \title{timeDate Mathematical Operations}
@@ -28,24 +28,24 @@
 }
 
 
-\usage{
-\method{Ops}{timeDate}(e1, e2)
+%%\usage{
+%%\method{Ops}{timeDate}(e1, e2)
 
-\method{+}{timeDate}(e1, e2)
+%%\method{+}{timeDate}(e1, e2)
 
-\method{-}{timeDate}(e1, e2)    
-}
+%%\method{-}{timeDate}(e1, e2)    
+%%}
 
 
-\arguments{
-  
-    \item{e1, e2}{
-        usually objects of class \code{timeDate}, in the case of
-        addition and subtraction \code{e2} may be of class
-        \code{numeric}.
-        }    
-       
-}
+%%\arguments{
+%%  
+%%    \item{e1, e2}{
+%%        usually objects of class \code{timeDate}, in the case of
+%%        addition and subtraction \code{e2} may be of class
+%%        \code{numeric}.
+%%        }    
+%%       
+%%}
 
 
 \value{

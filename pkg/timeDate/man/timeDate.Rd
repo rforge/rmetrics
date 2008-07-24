@@ -19,7 +19,7 @@
 timeDate(charvec = Sys.timeDate(), format = NULL,
     zone = "", FinCenter = "")
     
-strptimeDate(x, format = whichFormat(x), tz = myFinCenter)
+strptimeDate(x, format = whichFormat(x), tz = "")
 }
 
 

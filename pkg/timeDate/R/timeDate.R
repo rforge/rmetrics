@@ -212,7 +212,7 @@ timeDate <-
 
 
 strptimeDate <- 
-    function(x, format = whichFormat(x), tz = myFinCenter)
+    function(x, format = whichFormat(x), tz = "")
 {
     # A function implemented by Diethelm Wuertz
     
@@ -229,6 +229,10 @@ strptimeDate <-
     
     # Check Arguments:
     stopifnot(is.character(x))
+    
+    # Settings and Checks:
+    if (tz == "")
+        tz = getRmetricsOptions("myFinCenter")
     
     # Create 'timeDate':
     ans = timeDate(x, format, zone = tz, FinCenter = tz)

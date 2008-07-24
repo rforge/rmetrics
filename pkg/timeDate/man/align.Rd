@@ -54,7 +54,7 @@
    # Align Bi-Weekly with a 3 Days Offset
    tC = timeCalendar()
    tC
-   align(tC, "2w", "3d")  
+   # align(tC, by = "2w", offset = "3d")  
 }
 
 
