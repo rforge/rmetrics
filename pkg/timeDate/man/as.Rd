@@ -30,7 +30,7 @@
 
 \method{as.POSIXct}{timeDate}(x, tz = "", \dots)
 
-\method{as.POSIXlt}{timeDate}(x, tz = "")
+\method{as.POSIXlt}{timeDate}(x, tz = "", \dots)
 
 \method{as.Date}{timeDate}(x, method = c("trunc", "round", "next"), \dots)
 }
@@ -38,24 +38,24 @@
 
 \arguments{
   
-  \item{x}{
-    an object of class \code{timeDate}.
-  }
-  \item{units}{
-    a character string denoting the date/time units in which the 
-    results are desired.
-  }
-  \item{tz}{
-    inputs the time zone to POSIX objects, i.e. the time zone, 
-    \code{zone}, or financial center string, \code{FinCenter}, 
-    as used by \code{timeDate} objects.
-  }    
-  \item{method}{
-    a character string denoting the method how to determine the
-    dates.
-  }    
-  \item{\dots}{
-    arguments passed to other methods.
+    \item{x}{
+        an object of class \code{timeDate}.
+    }
+    \item{units}{
+        a character string denoting the date/time units in which the 
+        results are desired.
+    }
+    \item{tz}{
+        inputs the time zone to POSIX objects, i.e. the time zone, 
+        \code{zone}, or financial center string, \code{FinCenter}, 
+        as used by \code{timeDate} objects.
+    }    
+    \item{method}{
+        a character string denoting the method how to determine the
+        dates.
+    }    
+    \item{\dots}{
+        arguments passed to other methods.
   }
   
 }

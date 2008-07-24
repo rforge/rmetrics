@@ -78,6 +78,7 @@ as.timeDate.default <-
 
 # ------------------------------------------------------------------------------
 
+
 as.timeDate.timeDate <-
     function(x, zone =  x@FinCenter, FinCenter = "")
 {

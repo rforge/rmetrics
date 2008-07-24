@@ -16,25 +16,20 @@
 
 
 \usage{
-timeSequence(from, to = format(Sys.time(), "\%Y-\%m-\%d"),
+timeSequence(from, to = Sys.timeDate(), 
     by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
     length.out = NULL, format = NULL,
     zone = "", FinCenter = "")
 
-\method{seq}{timeDate}(from, to, by = c("day", "year", "quarter", "month",
-    "week", "hour", "min", "sec"), length.out = NULL, \dots)
+\method{seq}{timeDate}(from, to, by, length.out = NULL, \dots)
 }
 
 
 \arguments{
 
     \item{from, to}{
-        [timeSequence] - \cr
         starting date, required, and end date, optional. If supplied
-        \code{to} must be after \code{from}, \cr
-        [seq] - cr
-        in this case the \code{from} and \code{to} dates must be objects
-        of class \code{timeDate}.
+        \code{to} must be after \code{from}.
         }
     \item{by}{
         a character string, containing one of "sec", "min",

@@ -18,31 +18,27 @@
 
 
 \usage{
-\method{as.timeDate}{default}(x, zone = "", FinCenter =
-"")  
+\method{as.timeDate}{default}(x, zone = "", FinCenter = "")  
 
-\method{as.timeDate}{POSIXt}(x, zone = "", FinCenter =
-"")
+\method{as.timeDate}{POSIXt}(x, zone = "", FinCenter = "")
 
-\method{as.timeDate}{Date}(x, zone = "", FinCenter =
-"")
-\method{as.timeDate}{timeDate}(x, zone = x@FinCenter, FinCenter =
-"")  
+\method{as.timeDate}{Date}(x, zone = "", FinCenter = "")
+\method{as.timeDate}{timeDate}(x, zone = x@FinCenter, FinCenter = "")  
 }
 
 
 \arguments{
   
-  \item{x}{
-    an object of class \code{timeDate}.
-  }
-  \item{zone}{
-    the time zone or financial center where the data were recorded.
-  }
-  \item{FinCenter}{
-    a character with the the location of the  
-    financial center named as "continent/city". 
-  }
+    \item{x}{
+        an object of class \code{timeDate}.
+    }
+    \item{zone}{
+        the time zone or financial center where the data were recorded.
+    }
+    \item{FinCenter}{
+        a character with the the location of the  
+        financial center named as "continent/city". 
+    }
   
 }
 

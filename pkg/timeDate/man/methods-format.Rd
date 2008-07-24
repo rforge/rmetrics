@@ -15,12 +15,21 @@
 
 
 \usage{
-\method{format}{timeDate}(x, \dots)
+\method{format}{timeDate}(x, format = "", tz = "", usetz = FALSE, \dots)
 }
 
 
 \arguments{
 
+    \item{format}{
+        a character string describing the format.
+        }
+    \item{tz}{
+        a timezone specification to be used for the conversion. 
+        }    
+    \item{usetz}{
+        a logical.
+        }   
     \item{x}{
         an object of class \code{timeDate}.
         }

@@ -15,7 +15,7 @@
 
 
 \usage{
-Sys.timeDate(FinCenter = getRmetricsOptions("myFinCenter"))
+Sys.timeDate(FinCenter = "")
 }
 
 
