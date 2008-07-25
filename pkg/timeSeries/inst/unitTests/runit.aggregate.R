@@ -49,6 +49,28 @@ function()
     # Aggregate Returns Quarterly:
     by <- unique(timeLastDayInQuarter(charvec))
     aggregate(x, by, sum, units = "QrtReturns")
+
+    # Another example
+    if (require(fEcofin)) {
+        x <- as.timeSeries(data(LPP2005REC))[,1:4]
+        by <- timeSequence(from = "2006-01-01",
+                           to = "2008-01-01",
+                           by = "quarter")
+        aggregate(x, by, mean)
+    }
+
+    x <- timeSeries(seq(12), timeCalendar())
+    by <- timeSequence(from = "2008-01-01",
+                       to = "2009-01-01",
+                       by = "quarter")
+    x
+    a <- aggregate(x, by, sum)
+    a
+    checkEquals(sum(x[1]), a[1])
+    checkEquals(sum(x[2:4]), a[2])
+    checkEquals(sum(x[5:7]), a[3])
+    checkEquals(sum(x[8:10]), a[4])
+    checkEquals(sum(x[11:12]), a[5])
 }
 
 ################################################################################
