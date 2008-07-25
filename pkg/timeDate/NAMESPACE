@@ -4,6 +4,7 @@
 ################################################
 
 importFrom("fUtilities",
+           "align",
            "atoms",
            "finCenter<-",
            "finCenter",
@@ -43,6 +44,7 @@ exportMethods("-",
 ## S3 classes
 ################################################
 
+S3method("align", "timeDate")
 S3method("as.character", "timeDate")
 S3method("as.data.frame", "timeDate")
 S3method("as.Date", "timeDate")
@@ -89,6 +91,7 @@ S3method("window", "timeDate")
 ################################################
 
 export(
+    "strptimeDate",
     "Abidjan",
     "Accra",
     "Adak",
