@@ -136,10 +136,10 @@ timeSeries <-
         }
     }
 
-    # YC: sort import for an ordered data set
-    # YC: for a non empty time series
-    if ( NROW(ans) && ans@format != "counts" )
-        ans <- sort(ans)
+###     # YC: sort important for an ordered data set
+###     # YC: for a non empty time series
+###     if ( NROW(ans) && ans@format != "counts" )
+###         ans <- sort(ans)
 
     # Return
     ans
