@@ -44,3 +44,16 @@ is.timeSeries <-
     # Return Value:
     ans
 }
+
+# ------------------------------------------------------------------------------
+
+# YC : Note if is.na returns a timeSeries objects then we have problem
+# with the function quantile...
+setMethod("is.na", "timeSeries", function(x) {
+    x@.Data <- is.na(x@.Data)
+    x })
+
+setMethod("quantile", "timeSeries", function(x, ...)
+          callGeneric(as(x, "matrix"), ...))
+
+################################################################################
