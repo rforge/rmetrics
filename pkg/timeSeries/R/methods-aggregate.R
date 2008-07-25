@@ -63,7 +63,7 @@ setMethod("aggregate",
 
     INDEX <- findInterval(as.numeric(time(x), "sec"), as.numeric(by, "sec") + 1)
     INDEX <- INDEX + 1
-    INDEX[!(INDEX <= length(by))] <- NA
+    is.na(INDEX) <- !(INDEX <= length(by))
 
     data <- as.matrix(apply(getDataPart(x), 2, tapply, INDEX, FUN))
 
