@@ -44,9 +44,9 @@ setMethod("aggregate",
     #   Returns a S4 object of class 'timeSeries'.
 
     # Examples:
-    #  ts = timeSeries(charvec = timeCalendar(2008))
+    #  ts = dummySeries()
     #  by = timeSequence(from = "2008-04-01",  to = "2009-01-01", by = "quarter")
-    #  aggregate(ts, by, mean)
+    # aggregate(ts, by, mean)
     #
     #  dates = timeSequence(from = "2008-01-01",  to = "2008-02-01", by = "day")
     #  ts = timeSeries(matrix(rnorm(2*length(dates)), ncol = 2), charvec = dates)
@@ -59,12 +59,19 @@ setMethod("aggregate",
     stopifnot(class(time(x)) == class(by))
 
     x <- sort(x)
+    by <- sort(by)
 
-    INDEX <- findInterval(as.numeric(time(x)), as.numeric(by))
-    data <- apply(getDataPart(x), 2, tapply, INDEX, FUN)
+    INDEX <- findInterval(as.numeric(time(x), "sec"), as.numeric(by, "sec") + 1)
+    INDEX <- INDEX + 1
+    INDEX[!(INDEX <= length(by))] <- NA
+
+    data <- as.matrix(apply(getDataPart(x), 2, tapply, INDEX, FUN))
+
+    colnames(data) <- colnames(x)
+    rownames(data) <- as.character(by[unique(na.omit(INDEX))])
 
     # Return Value:
-    timeSeries(data, charvec = by[unique(na.omit(INDEX))], ...)
+    timeSeries(data, ...)
 })
 
 
