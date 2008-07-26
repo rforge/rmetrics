@@ -70,6 +70,7 @@ export(
     "CBND",
     "CND",
     "CRRBinomialTreeOption",
+    "fOptionsEnv",
     ".fdeltaHN",
     ".fgammaHN",
     ".fGBSVolatility",
@@ -106,4 +107,6 @@ export(
     "runif.halton",
     "runif.pseudo",
     "runif.sobol",
+    "setfOptionsEnv",
+    "getfOptionsEnv",
     "TIANBinomialTreeOption" )

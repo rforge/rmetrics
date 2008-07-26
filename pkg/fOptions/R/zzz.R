@@ -57,6 +57,10 @@ function(lib, pkg)
         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkgname, dsc$Version))
     }
 
+    setfOptionsEnv(.runif.halton.seed = list())
+    setfOptionsEnv(.rnorm.halton.seed = list())
+    setfOptionsEnv(.runif.sobol.seed = list())
+    setfOptionsEnv(.rnorm.sobol.seed = list())
 }
 
 
