@@ -19,7 +19,9 @@
     02.  fEcofin            fUtilities
     
     03.  fCalendar          methods, MASS, fEcofin, fUtilities
+          timeDate
     04.  fSeries            MASS, robustbase, fCalendar
+          timeSeries
     05.  fImport            fSeries
     06.  fBasics            fImport
     
