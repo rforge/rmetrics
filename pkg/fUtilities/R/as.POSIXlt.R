@@ -45,16 +45,16 @@
 ## # ------------------------------------------------------------------------------
 
 
-## as.POSIXlt <-
-##     function(x, tz = "")
-## {
-##     # A function implemented by Diethelm Wuertz
+as.POSIXlt <-
+    function(x, tz = "")
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("as.POSIXlt")
-## }
+    # Return Value:
+    UseMethod("as.POSIXlt")
+}
 
 
 # ------------------------------------------------------------------------------

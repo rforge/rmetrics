@@ -2,8 +2,8 @@
 
 
 \alias{colStats} 
-\alias{colSums}
-\alias{colMeans}
+% \alias{colSums}
+% \alias{colMeans}
 \alias{colSds}
 \alias{colVars}
 \alias{colSkewness}
@@ -16,8 +16,8 @@
 \alias{colAvgs}           
 \alias{colStdevs}
 
-\alias{mean.timeSeries}           
-\alias{var.timeSeries}
+% \alias{mean.timeSeries}           
+% \alias{var.timeSeries}
 
 
 \title{Column Statistics}
@@ -35,8 +35,8 @@
     \tabular{ll}{  
     \code{colStats}\tab calculates column statistics, \cr
     
-    \code{colSums} \tab calculates column sums, \cr
-    \code{colMeans} \tab calculates column means, \cr
+%    \code{colSums} \tab calculates column sums, \cr
+%    \code{colMeans} \tab calculates column means, \cr
     \code{colSds} \tab calculates column standard deviations, \cr
     \code{colVars} \tab calculates column variances, \cr 
     \code{colSkewness} \tab calculates column skewness, \cr
@@ -52,8 +52,8 @@
 \usage{
 colStats(x, FUN, \dots) 
 
-colSums(x, \dots)
-colMeans(x, \dots)
+% colSums(x, \dots)
+% colMeans(x, \dots)
 
 colSds(x, \dots)
 colVars(x, \dots)
@@ -65,10 +65,11 @@ colProds(x, \dots)
 colQuantiles(x, prob = 0.05, \dots)
 
 colStdevs(x, \dots)
-colAvgs(x, \dots)
+colAvgs(x,  \dots)
 
-\method{mean}{timeSeries}(x, \dots)
-\method{var}{timeSeries}(x, \dots)
+% \method{mean}{timeSeries}(x, \dots)
+% \method{var}{timeSeries}(x, \dots)
+
 }
 
 

@@ -4,7 +4,7 @@
 \alias{fHTEST}
 \alias{fHTEST-class}
 
-\alias{show.fHTEST}
+% \alias{show.fHTEST}
 \alias{show,fHTEST-method}
 
 
@@ -27,7 +27,7 @@
 
 
 \usage{
-show.fHTEST(object)
+\S4method{show}{fHTEST}(object)
 }
 
 

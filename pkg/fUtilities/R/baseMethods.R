@@ -63,7 +63,7 @@
 ################################################################################
 
 
-# .conflicts.OK = TRUE
+.conflicts.OK = TRUE
 
 
 # ------------------------------------------------------------------------------
@@ -134,44 +134,44 @@ atoms.default <-
 # ------------------------------------------------------------------------------
 
 
-## attach <-
-##     function(what, pos = 2, name = deparse(substitute(what)),
-##     warn.conflicts = TRUE)
-## {
-##     # A function implemented by Diethelm Wuertz
+attach <-
+    function(what, pos = 2, name = deparse(substitute(what)),
+    warn.conflicts = TRUE)
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("attach")
-## }
-
-
-# ------------------------------------------------------------------------------
-
-
-## attach.default <- base::attach
+    # Return Value:
+    UseMethod("attach")
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-## "colnames<-" =
-##     function(x, value)
-## {
-##     # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("colnames<-")
-## }
+attach.default <- base::attach
 
 
 # ------------------------------------------------------------------------------
 
 
-# `colnames<-.default` <- base::`colnames<-`
+"colnames<-" =
+    function(x, value)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("colnames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+`colnames<-.default` <- base::`colnames<-`
 
 
 # ------------------------------------------------------------------------------
@@ -279,30 +279,30 @@ atoms.default <-
 ## }
 
 
-## # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
-## sample <-
-##     function(x, ...)
-## {   # A function implemented by Diethelm Wuertz
+sample <-
+    function(x, ...)
+{   # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("sample")
-## }
-
-
-## # ------------------------------------------------------------------------------
+    # Return Value:
+    UseMethod("sample")
+}
 
 
-## sample.default <-
-##     function (x, size, replace = FALSE, prob = NULL, ...)
-## {
-##     # FUNCTION:
+# ------------------------------------------------------------------------------
 
-##     base::sample(x, size, replace = replace, prob = prob)
-## }
+
+sample.default <-
+    function (x, size, replace = FALSE, prob = NULL, ...)
+{
+    # FUNCTION:
+
+    base::sample(x, size, replace = replace, prob = prob)
+}
 
 
 # ------------------------------------------------------------------------------
@@ -389,21 +389,21 @@ outlier.default <-
 # ------------------------------------------------------------------------------
 
 
-## "rownames<-" =
-##     function(x, value)
-## {   # A function implemented by Diethelm Wuertz
+"rownames<-" =
+    function(x, value)
+{   # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("rownames<-")
-## }
-
-
-## # ------------------------------------------------------------------------------
+    # Return Value:
+    UseMethod("rownames<-")
+}
 
 
-## `rownames<-.default` <- base::`rownames<-`
+# ------------------------------------------------------------------------------
+
+
+`rownames<-.default` <- base::`rownames<-`
 
 
 # ------------------------------------------------------------------------------

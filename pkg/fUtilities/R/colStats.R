@@ -127,7 +127,7 @@ function(x, prob = 0.05, ...)
 # ------------------------------------------------------------------------------
 
 
-colAvgs <- colMeans
+colAvgs <- function(x, ...) colMeans(x, ...)
 colStdevs <- colSds
 
 

@@ -124,7 +124,7 @@ rowQuantiles <-
 # ------------------------------------------------------------------------------
 
 
-rowAvgs <- rowMeans
+rowAvgs <- function(x, ...) rowMeans(x, ...)
 rowStdevs <- rowSds
 
 

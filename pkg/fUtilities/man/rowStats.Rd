@@ -2,8 +2,8 @@
 
 
 \alias{rowStats} 
-\alias{rowSums}
-\alias{rowMeans}
+% \alias{rowSums}
+% \alias{rowMeans}
 \alias{rowSds}
 \alias{rowVars}
 \alias{rowSkewness}
@@ -30,8 +30,8 @@
     
     \tabular{ll}{  
     \code{rowStats}\tab calculates row statistics, \cr
-    \code{rowSums} \tab calculates row sums, \cr
-    \code{rowMeans} \tab calculates row means, \cr
+%    \code{rowSums} \tab calculates row sums, \cr
+%    \code{rowMeans} \tab calculates row means, \cr
     \code{rowSds} \tab calculates row standard deviations, \cr
     \code{rowVars} \tab calculates row variances, \cr 
     \code{rowSkewness} \tab calculates row skewness, \cr
@@ -47,8 +47,8 @@
 \usage{
 rowStats(x, FUN, \dots) 
 
-rowSums(x, \dots)
-rowMeans(x, \dots)
+% rowSums(x, \dots)
+% rowMeans(x, \dots)
 
 rowSds(x, \dots)
 rowVars(x, \dots)
