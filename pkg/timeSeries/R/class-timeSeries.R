@@ -19,6 +19,20 @@
 ################################################################################
 
 
+.timeSeriesValidity <-
+    function(object)
+{
+
+    if (NROW(object@.Data) != length(object@positions))
+        stop("@positions and rows of @.Data are not equal")
+    if (NCOL(object@.Data) != length(object@units))
+        stop("@units and columns of @.Data are not equal")
+
+}
+
+
+# ------------------------------------------------------------------------------
+
 setClass("timeSeries",
          # A class implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -37,4 +51,5 @@ setClass("timeSeries",
                         title = "character",
                         documentation = "character"),
          contains = "structure",
+         validity = .timeSeriesValidity
          )
