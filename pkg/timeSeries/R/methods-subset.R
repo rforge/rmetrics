@@ -34,9 +34,16 @@ setClassUnion("index_timeSeries",
 {
 
     if (is(i, "character")) {
-        # i <- match(i, x@positions)
-        # not sure if better to use pmatch
-        i <- pmatch(i, slot(x, "positions"), duplicates.ok = TRUE)
+        pos <- time(x)
+        i <-
+            if (timeDate:::.subsetCode(i) == "SPAN")
+                # Subsetting by Span Indexing:
+                timeDate:::.subsetBySpan(pos, i)
+            else
+                # Subsetting by Python Indexing:
+                timeDate:::.subsetByPython(pos, i)
+        i <- pmatch(as.character(i),
+                    slot(x, "positions"), duplicates.ok = TRUE)
         if (any(is.na(i)))
             stop("subscript out of bounds", call. = FALSE)
     }
@@ -50,10 +57,6 @@ setClassUnion("index_timeSeries",
     slot(x, ".Data") <- .subset(slot(x, ".Data"), i, j, drop = FALSE)
     slot(x, "positions") <- .subset(slot(x, "positions"), i, drop = FALSE)
     slot(x, "units") <- .subset(slot(x, "units"), j, drop = FALSE)
-
-    # to handle special case when
-    # series(x)[i, j, drop = drop] returns numeric(0)
-    #  if (!NROW(data) || !NCOL(data)) data <- NULL
 
     # Record IDs:
     df <- slot(x, "recordIDs")
@@ -71,6 +74,7 @@ setMethod("[",
                          j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
               .subset_timeSeries(x, i, j))
+
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
