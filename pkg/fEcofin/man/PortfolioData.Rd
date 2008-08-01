@@ -19,6 +19,7 @@
 
 \alias{SWXLP}
 \alias{LPP2005REC}
+\alias{SPISECTOR}
 
 \alias{equityFunds}
 
@@ -49,7 +50,8 @@
     \code{returns.three.ts} \tab Returns, \cr
     %
     \code{SWXLP} \tab Swiss Pension Fund LPP-2000, \cr
-    \code{LPP2005REC} \tab Swiss Pension Fund LPP-2005. \cr
+    \code{LPP2005REC} \tab Swiss Pension Fund LPP-2005, \cr
+    \code{SPISECTOR} \tab SPI Sector Indices. \cr
     %
     \code{equityFunds} \tab Equity Funds. }
 
@@ -204,8 +206,19 @@
     \code{LPP2005REC} 
     is a daily data set of the Swiss pension fund benchmark LPP-2005.\cr
     The data set ranges from 2005-11-01 to 2007-04-11.\cr
-    The columns are named: SBI, SPI, SII, LMI, MPI, ALT, LPP25, LPP40, 
-        LPP60. \cr
+    The columns are named: 
+        SBI, SPI, SII, LMI, MPI, ALT, LPP25, LPP40, LPP60. \cr
+    Source:\cr
+    
+    
+    \bold{Swiss Performance Index Subsectors:}\cr
+    \cr
+    \code{SPISECTOR} 
+    is a daily data set of the Swiss performance index subsectors.\cr
+    The data set ranges from 1999-12-31 to 2008-06-18.\cr
+    The columns are named: 
+        SPI, BASICMAT, INDUSTRY, CONGOODS, HLTHCARE, CONSERV, TELECOM,
+        UTILITIES, FINANCE, TECH. \cr
     Source:\cr
     
     
