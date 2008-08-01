@@ -27,6 +27,8 @@
 # FUNCTION:                    DESCRIPTION:
 #  solveRquadprog               Calls Goldfarb and Idnani's QP solver
 #  .solveRquadprog              Calls Goldfarb and Idnani's QP solver
+# FUNCTION:                    DESCRIPTION:
+#  rquadprog                    Interface to quadprog solver
 ################################################################################
 
 
@@ -143,6 +145,70 @@ solveRquadprog <-
     # Return Value:
     ans
 }
+
+
+################################################################################
+# FUNCTION:                    DESCRIPTION:
+#  rquadprog                    Interface to quadprog solver
+################################################################################
+
+
+# Package: quadprog
+# Version: <CRAN>
+# Date: <CRAN>
+# Title: Functions to solve Quadratic Programming Problems.
+# Author: S original by Berwin A. Turlach <berwin.turlach@anu.edu.au>
+#   R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+# Maintainer: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+# Description: This package contains routines and documentation for
+#   solving quadratic programming problems.
+# License: GPL-2
+
+
+# Requires to load contributed R package quadprog
+
+
+rquadprog <-
+    function(Dmat, dvec, Amat, bvec, meq)
+{
+    # Running ...
+    # print("Running rquadprog ...")
+    
+    # Settings:
+    n = nrow(Dmat)
+    q = ncol(Amat)
+    r = min(n, q)
+    work = rep(0, 2 * n + r * (r + 5)/2 + 2 * q + 1)
+
+    # Optimize:
+    ans = .Fortran("qpgen2",
+        as.double(Dmat),
+        dvec = as.double(dvec),
+        as.integer(n),
+        as.integer(n),
+        sol = as.double(rep(0, n)),
+        crval = as.double(0),
+        as.double(Amat),
+        as.double(bvec),
+        as.integer(n),
+        as.integer(q),
+        as.integer(meq),
+        iact = as.integer(rep(0, q)),
+        nact = as.integer(0),
+        iter = as.integer(rep(0, 2)),
+        work = as.double(work),
+        ierr = as.integer(0),
+        PACKAGE = "quadprog")
+
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+# rquadprogControl
 
 
 ################################################################################
