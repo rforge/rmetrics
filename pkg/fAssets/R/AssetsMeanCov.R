@@ -33,20 +33,28 @@
 #  covEstimate               Sample mean/covariance Estimator
 #  mcdEstimate               uses "cov.mve" from [MASS]
 #  mveEstimate               uses "cov.mcd" from [MASS]
+#  kendallEstimate           Kendall's Covariance Estimate
+#  spearmanEstimate          Spearman's Covariance Estimate
 ################################################################################
 
 
 # COMMENTS On PREVIOUS VERSION:
-# RENAMED:                  MEAN-COVARIANCE ESTIMATION:
-#   method = "cov"           covEstimate: uses standard covariance estimation
-#   method = "mve"           mveEstimate: uses "cov.mve" from [MASS]
-#   method = "mcd"           mcdEstimate: uses "cov.mcd" from [MASS]
-# RENAMED AND MOVED TO RMETRICS ADDON PACKAGE:
-#   method = "Mcd"           mcdbaseEstimate: "covMcd" from [robustbase]  
-#   method = "OGK"           ogkbaseEstimate: "covOGK" from [robustbase] 
-#   method = "nnve"          nnveEstimate:    uses builtin from [covRobust]
-#   method = "shrink"        shrinkEstimate:  uses builtin from [corpcor]
-#   method = "bagged"        baggedEstimate:  uses builtin from [corpcor]
+# RENAMED:                     MEAN-COVARIANCE ESTIMATION:
+#   FUN = "covEstimate"         covEstimate: uses sample covariance estimation
+#   FUN = "mcdEstimate"         mveEstimate: uses "cov.mcd" from [MASS]
+#   FUN = "mveEstimate"         mcdEstimate: uses "cov.mve" from [MASS]
+# RANKED MEAN/COV ESTIMATES:
+#   FUN = "kendallEstimate"     kendallEstimate:  Kendall's Covariance Estimate
+#   FUN = "spearmanEstimate"    spearmanEstimate: Spearman's Covariance Estimate
+# RENAMED/MOVED TO RMETRICS ADDON PACKAGE:
+#   FUN = "rmcdEstimate"        rmcdbaseEstimate: "covMcd" from [robustbase]  
+#   FUN = "rogkEstimate"        rogkbaseEstimate: "covOGK" from [robustbase] 
+#   FUN = "nnveEstimate"        nnveEstimate:     uses builtin from [covRobust]
+#   FUN = "shrinkEstimate"      shrinkEstimate:   uses builtin from [corpcor]
+#   FUN = "baggedEstimate"      baggedEstimate:   uses builtin from [corpcor]
+
+
+# ------------------------------------------------------------------------------
 
 
 assetsMeanCov <- 
@@ -174,6 +182,42 @@ function(x)
     # Return Value:
     list(mu = mu, Sigma = Sigma, control = "mcdEstimate")
 } 
+
+
+################################################################################
+
+
+kendallEstimate <-
+function(x)
+{
+    # Transform to matrix:
+    x.mat = as.matrix(x)
+    
+    # Kendall's Rank Covariance Estimation:
+    mu = colMeans(x.mat)
+    Sigma = cov(x.mat, method = "kendall")
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma, control = "kendallEstimate")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+spearmanEstimate <-
+function(x)
+{
+    # Transform to matrix:
+    x.mat = as.matrix(x)
+    
+    # Spearman's Rank Covariance Estimation:
+    mu = colMeans(x.mat)
+    Sigma = cov(x.mat, method = "spearman")
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma, control = "spearmanEstimate")
+}
 
 
 ################################################################################

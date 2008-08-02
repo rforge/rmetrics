@@ -143,6 +143,7 @@ export(
     ".corrgram",
     "covEstimate",
     ".hist",
+    "kendallEstimate",
     "lambdaCVaR",
     "mcdEstimate",
     "mveEstimate",
@@ -162,4 +163,5 @@ export(
     "pfolioReturn",
     "pfolioTargetReturn",
     "pfolioTargetRisk",
-    "pfolioVaR" )
+    "pfolioVaR",
+    "spearmanEstimate" )

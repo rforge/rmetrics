@@ -7,6 +7,9 @@
 \alias{mcdEstimate}
 \alias{mveEstimate}
 
+\alias{kendallEstimate}
+\alias{spearmanEstimate}
+
 
 \title{Estimation of Mean and Covariances of Asset Sets}
 
@@ -26,6 +29,9 @@ assetsMeanCov(x, FUN = "covEstimate", check = TRUE, force = TRUE, ...)
 covEstimate(x)
 mcdEstimate(x)
 mveEstimate(x)
+
+kendallEstimate(x)
+spearmanEstimate(x)
 }
 
 \arguments{
