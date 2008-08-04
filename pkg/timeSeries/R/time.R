@@ -126,7 +126,10 @@ setMethod("time" ,
               if (x@format == "counts") {
                   as.numeric(x@positions)
               } else {
-                  timeDate(charvec = x@positions, format = x@format,
+                  ## YC : do not use x@format because it is the input
+                  ## format and not output format. Should it be
+                  ## changed?
+                  timeDate(charvec = x@positions, # format = x@format,
                            zone = x@FinCenter, FinCenter = x@FinCenter)
               }
 
