@@ -76,7 +76,7 @@ timeSeries <-
         }
         if (format == "unknown") {
             charvec <- rownames(data)
-            if (identical(charvec, .signalCounts(NROW(data)))) {
+            if (identical(charvec, .signalCounts(seq(NROW(data))))) {
                 # check if rownames are not already a signal
                 # important for large signal series
                 format <- "counts"
@@ -88,7 +88,7 @@ timeSeries <-
             !(is.numeric(data[,1])) &&
             !(is.logical(data[,1]))) { # YC : to handle timeSeries(TRUE)
             charvec <- data[,1]
-            if (identical(charvec, .signalCounts(NROW(data)))) {
+            if (identical(charvec, .signalCounts(seq(NROW(data))))) {
                 # check if rownames are not already a signal
                 # important for large signal series
                 format <- "counts"
@@ -114,7 +114,7 @@ timeSeries <-
         }
 
     # Construct Time Series:
-    if (format == "counts" || format == "unknown") {
+    if (format %in% c("counts", "unknown")) {
 
         # Signal Counts:
         charvec <- .signalCounts(1:NROW(data))
