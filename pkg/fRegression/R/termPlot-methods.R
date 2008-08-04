@@ -12,10 +12,10 @@
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA. 
+# Suite 330, Boston, MA  02111-1307  USA.
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -29,30 +29,31 @@
 
 ################################################################################
 # FUNCTIONS:                REGRESSION TERMS:
-#  termPlot.fREG             Displays 'fREG' Model Term Plots        
+#  termPlot.fREG             Displays 'fREG' Model Term Plots
 ################################################################################
 
-
-setMethod(f = "termPlot", signature(model = "fREG"), definition = 
-    function(model, ...) 
-{   
+termPlot.fREG <-
+## setMethod(f = "termPlot", signature(model = "fREG"), definition =
+    function(model, ...)
+{
     # A function implemented by Diethelm Wuertz
-    
-    # Description:  
+
+    # Description:
     #   Displays 'fREG' Model Term Plots
-    
+
     # Arguments:
     #   model - an object of class fREG as returned by the function
     #       regFit
-    
+
     # FUNCTION:
-    
+
     # Formula:
-    ans = termplot(slot(model, "fit"), ...) 
-    
+    ans = termplot(slot(model, "fit"), ...)
+
     # Return Value:
     ans
-})
+}
+#)
 
 
 

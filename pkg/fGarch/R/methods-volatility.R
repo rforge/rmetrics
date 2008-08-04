@@ -33,9 +33,12 @@
 ################################################################################
 
 
-setMethod(f = "volatility", signature(object = "fGARCH"), definition =
+volatility.fGARCH <-
+    ## better to use S3 style because volatility is defined as a S3 generic
+    ## setMethod(f = "volatility", signature(object = "fGARCH"), definition =
     function(object, type = c("sigma", "h"), ...)
 {
+
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -69,7 +72,8 @@ setMethod(f = "volatility", signature(object = "fGARCH"), definition =
     # Return Value:
     volatility
 
-})
+}
+##)
 
 
 ################################################################################
