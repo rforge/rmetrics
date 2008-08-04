@@ -49,7 +49,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N)
+    x.vec = as.vector(100*garchSim(spec, N))
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -105,7 +105,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N)
+    x.vec = as.vector(100*garchSim(spec, N))
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
@@ -173,7 +173,7 @@ function()
 
     # UNIVARIATE:
 
-    x.vec = 100*garchSim(spec, N)
+    x.vec = as.vector(100*garchSim(spec, N))
     print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
     print(head(x.tS))
