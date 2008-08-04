@@ -97,17 +97,95 @@
 # NCOL
 # NROW
 
+# ------------------------------------------------------------------------------
+
 setMethod("dim", "timeSeries", function(x) callGeneric(as(x, "matrix")))
 
+# ------------------------------------------------------------------------------
+
 setMethod("dimnames", "timeSeries", function(x) list(x@positions, x@units))
+
+# ------------------------------------------------------------------------------
+
+setMethod("colnames<-", "timeSeries",
+          function(x, value)
+      {
+          units <- as.character(value)
+
+          if(!length(units))
+              if (x@format == "counts")
+                  units <- paste("SS", seq(NCOL(x)), sep = ".")
+              else
+                  units <- paste("TS", seq(NCOL(x)), sep = ".")
+
+          if (length(units) != NCOL(x))
+              stop("length of 'colnames' not equal to array extent",
+                   call. = FALSE)
+          x@units <- units
+
+          x
+      })
+
+# ------------------------------------------------------------------------------
+
+setMethod("rownames<-", c("timeSeries", "timeDate"),
+          function (x, value)
+      {
+          positions <- value
+          if (length(positions) != NROW(x))
+              stop("length of 'rownames' not equal to array extent",
+                   call. = FALSE)
+          x@FinCenter <- finCenter(positions)
+          x@positions <- as.character(positions)
+          x@format <- positions@format
+          x
+      })
+
+# ------------------------------------------------------------------------------
+
+setMethod("rownames<-", "timeSeries",
+          function (x, value)
+      {
+
+          positions <- as.character(value)
+
+          if(!length(positions))
+              positions <- .signalCounts(seq(NROW(x)))
+
+          if (length(positions) != NROW(x))
+              stop("length of 'rownames' not equal to array extent",
+                   call. = FALSE)
+
+          if (identical(positions, .signalCounts(seq(NROW(x))))) {
+              x@positions <- as.character(positions)
+              x@format <- "counts"
+              x@FinCenter <- ""
+          }
+          else {
+              format <- whichFormat(positions, silent = TRUE)
+              if (format %in% c("unknown", "%Y")) {
+                  x@positions <- .signalCounts(seq(NROW(x)))
+                  x@format <- "counts"
+                  x@FinCenter <- ""
+              }
+              else {
+                  positions <- timeDate(positions, format = format)
+                  x@format <- positions@format
+                  x@positions <- as.character(positions)
+              }
+          }
+
+          x
+      })
+
+# ------------------------------------------------------------------------------
 
 setMethod("dimnames<-", c("timeSeries", "list"),
           function(x, value)
       {
-          timeSeries(data = x, charvec = value[[1]], units = value[[2]],
-              format = x@format, zone = finCenter(x), FinCenter = finCenter(x),
-              recordIDs = x@recordIDs, title= x@title,
-              documentation = x@documentation)
+          rownames(x) <- value[[1]]
+          colnames(x) <- value[[2]]
+          x
       })
 
 # ------------------------------------------------------------------------------
