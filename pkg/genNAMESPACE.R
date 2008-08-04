@@ -99,14 +99,15 @@ genNAMESPACE <-
     for (i in names(S3method))
         for (j in S3method[[i]])
             S3names[idx <- idx + 1] <- paste(i, j, sep = ".")
-    # take care of function defined in .GlobalEnv and take the second entry of find
-    S3pkg <- sapply(names(S3method), function(x) {
-        ans <- sub("package:", "", find(x)[1])
-        if(ans == ".GlobalEnv")
-            ans <- sub("package:", "", find(x)[2])
-        ans})
+    # take care of function defined in .GlobalEnv
+    S3pkg <- sapply(names(S3method), function(x)
+                    sub("package:", "", find(x)[1]))
     S3pkg <- data.frame(pkg = S3pkg, func = names(S3pkg))
     rownames(S3pkg) <- NULL
+    if (any(test <- (S3pkg[,1] %in% ".GlobalEnv"))){
+        print(S3pkg)
+        stop("S3pkg")
+    }
 
     ##
     S4class <- getClasses(where = paste("package:", pkg, sep = ""))
@@ -114,16 +115,16 @@ genNAMESPACE <-
     S4methods <- genericsList[!(genericsList@package %in% pkg)]
     S4generics <- genericsList[(genericsList@package %in% pkg)]
     S4names <- unique(genericsList)
-    # take care of function defined in .GlobalEnv and take the second entry of find
-    if (any(test <- (genericsList@package %in% ".GlobalEnv")))
-        genericsList@package[test] <-
-            sapply(genericsList@.Data[test], function(x)
-                   sub("package:", "", find(as.character(x))[2]))
+    # take care of function defined in .GlobalEnv
     S4pkg <- data.frame(pkg = genericsList@package, func = genericsList@.Data)
+    if (any(test <- (S4pkg[,1] %in% ".GlobalEnv"))){
+        print(S4pkg)
+        stop("S4pkg")
+    }
 
     ##
     # new functions
-    new <- all[!(all %in% unique(c(S3names, S4names)))] # ???
+    new <- all[!(all %in% unique(c(S3names, S4names)))]
 
     #####
     #### remove all hidden functions from new
