@@ -120,8 +120,8 @@ alignDailySeries <-
                 return(!(wday == 0 | wday == 6)) }
             # Test:
             test = is.weekday(time(td))
-            series(td) = series(td)[test, 1]
-            td@positions = td@positions[test] }
+            td <- td[test, 1]
+        }
         # Units:
         td@units = units
         colnames(td) = units
