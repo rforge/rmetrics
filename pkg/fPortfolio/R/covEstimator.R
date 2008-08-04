@@ -28,16 +28,19 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  covEstimator              uses standard covariance estimation
-#  mveEstimator              uses "cov.mve" from [MASS]
-#  mcdEstimator              uses "cov.mcd" from [MASS]
-# FUNCTION:                 DESCRIPTION:
-# lpmEstimator               Returns lower partial moment estimator
-# FUNCTION:                 DESCRIPTION:
-#  covMcdEstimator           requires "covMcd" from [robustbase]  
-#  covOGKEstimator           requires "covOGK" from [robustbase] 
-#  shrinkEstimator           requires "cov.shrink" from [corpcor]
-#  nnveEstimator             requires "cov.nnve" from [covRobust]
+#  covEstimator              Uses sample covariance estimation
+#  mveEstimator              Uses robust estimation "cov.mve" from [MASS]
+#  mcdEstimator              Uses robust estimation "cov.mcd" from [MASS]
+# FUNCTION:                 RANK ESTIMATORS:
+#  lpmEstimator              Returns Lower Partial Moment Estimator      
+# FUNCTION:                 LPM ESTIMATOR: 
+#  kendallEstimator          Returns Kendall's Covariance Estimator
+#  spearmanEstimator         Returns Spearman's Covariance Estimator
+# FUNCTION:                 REQUIRE OTHER PACKAGES:
+#  covMcdEstimator           Requires "covMcd" from [robustbase]  
+#  covOGKEstimator           Requires "covOGK" from [robustbase] 
+#  shrinkEstimator           Requires "cov.shrink" from [corpcor]
+#  nnveEstimator             Requires "cov.nnve" from [covRobust]
 ################################################################################
 
 
@@ -47,7 +50,8 @@ covEstimator <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    
+    #   Uses sample covariance estimation
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
     
@@ -74,6 +78,7 @@ mveEstimator <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Uses robust estimation "cov.mve" from [MASS]
     
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mveEstimator(x)
@@ -101,6 +106,7 @@ mcdEstimator <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Uses robust estimation "cov.mve" from [MASS]
     
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mcdEstimator(x)
@@ -149,6 +155,62 @@ function(x, spec = NULL, ...)
     }
     Sigma <- assetsLPM(x, tau = FUN(x), a = a)$Sigma
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+################################################################################
+
+
+kendallEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Uses Kendall's rank covariance estimation
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = cov(x.mat, method = "kendall")
+    
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+spearmanEstimator <- 
+    function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Uses Spearman's rank covariance estimation
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
+    
+    # FUNCTION:
+    
+    # Extract Matrix:
+    x.mat = as.matrix(x)
+    
+    # Estimate:
+    mu = colMeans(x.mat)
+    Sigma = cov(x.mat, method = "spearman")
     
     # Return Value:
     list(mu = mu, Sigma = Sigma)

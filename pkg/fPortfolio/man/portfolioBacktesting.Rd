@@ -21,7 +21,8 @@
 \usage{  
 portfolioBacktesting(formula, data, spec = portfolioSpec(), 
     constraints = "LongOnly", portfolio = "minvariancePortfolio", 
-    horizon = "12m", smoothing = "6m", trace = TRUE)
+    horizon = "12m", smoothing = "6m", warmup = FALSE, 
+    trace = TRUE, title = "Backtesting")
 
 \method{print}{portfolioBacktest}(x, \dots)    
 \method{plot}{portfolioBacktest}(x, which = "all", labels = TRUE, \dots)
@@ -76,6 +77,11 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(),
     \item{x}{
         an object of class \code{portfolioBacktest} as returned by
         the function \code{portfolioBacktesting}.
+        }
+    \item{warmup}{
+        a logical flag. If TRUE, then the portfolio is "warmed up" with
+        increasing portfolios starting from length "1m" to the length
+        specified by the argument \code{horizon}. 
         }
     \item{which}{
         a character string, which graphs should be dsiplayed?

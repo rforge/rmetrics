@@ -23,7 +23,7 @@ portfolioSpec(
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
         status = 0),
     optim = list(solver = "solveRquadprog", objective = NULL,
-        params = list(), control = list(), trace = FALSE))
+        params = list(meq = 2), control = list(), trace = FALSE))
 }
 
 
@@ -79,7 +79,7 @@ portfolioSpec(
         optimize = "minRisk",    
         estimator = "covEstimator",     
         tailRisk = list(),               
-        params = list(alpha=0.05, a=2)),
+        params = list(alpha = 0.05, a = 2)),
     portfolio = list(
         weights = NULL, 
         targetReturn = NULL, 
@@ -91,7 +91,7 @@ portfolioSpec(
         solver = "solveRquadprog",    
         objective = NULL,  
         parames = list(),
-        control = list(),   
+        control = list(meq = 2),   
         trace = FALSE)
     }
         

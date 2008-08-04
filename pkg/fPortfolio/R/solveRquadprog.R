@@ -26,7 +26,6 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
 #  solveRquadprog               Calls Goldfarb and Idnani's QP solver
-#  .solveRquadprog              Calls Goldfarb and Idnani's QP solver
 # FUNCTION:                    DESCRIPTION:
 #  rquadprog                    Interface to quadprog solver
 ################################################################################
@@ -125,8 +124,9 @@ solveRquadprog <-
             status = 0,
             message = NA)
     } else {
-        # Solve:
+        # Add Rquadprog conform constraints [portfolioConstraints.R]
         args = .setRquadprogConstraints(data, spec, constraints)
+        # Solve:
         optim = rquadprog(args$Dmat, args$dvec, args$Amat, args$bvec, args$meq)
         weights = .checkWeights(optim$sol)
 

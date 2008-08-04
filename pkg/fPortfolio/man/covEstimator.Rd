@@ -7,6 +7,9 @@
 
 \alias{lpmEstimator}
 
+\alias{kendallEstimator}
+\alias{spearmanEstimator}
+
 \alias{covMcdEstimator}
 \alias{covOGKEstimator}
 \alias{shrinkEstimator}
@@ -29,8 +32,10 @@ covEstimator(x, spec = NULL, ...)
 mveEstimator(x, spec = NULL, ...)
 mcdEstimator(x, spec = NULL, ...)
 
-
 lpmEstimator(x, spec = NULL, ...)
+
+kendallEstimator(x, spec = NULL, ...)
+spearmanEstimator(x, spec = NULL, ...)
 
 covMcdEstimator(x, spec = NULL, ...)
 covOGKEstimator(x, spec = NULL, ...)
@@ -75,11 +80,13 @@ nnveEstimator(x, spec = NULL, ...)
     \code{covEstimator} uses standard covariance estimation,\cr
     \code{mveEstimator} uses the function "cov.mve" from the MASS package,\cr
     \code{mcdEstimator} uses the function "cov.mcd" from the MASS package,\cr
+    \code{lpmEstimator} returns lower partial moment estimator,\cr
+    \code{kendallEstimator} returns Kendall's rank estimator,\cr
+    \code{spearmanEstimator} returns Spearman's rankestimator,\cr
     \code{covMcdEstimator} requires "covMcd" from package robustbase,\cr
     \code{covOGKEstimator} requires "covOGK" from package robustbase,\cr
     \code{nnveEstimator} uses builtin from package covRobust,\cr
-    \code{shrinkEstimator} uses builtin from package corpcor,\cr
-    \code{lpmEstimator} returns lower partial moment estimator.
+    \code{shrinkEstimator} uses builtin from package corpcor.
 
 }
     
@@ -128,7 +135,7 @@ Schaefer J., Strimmer K. (2005);
    head(berndtAssets.tS)
    
 ## Classical Covariance Estimation:
-   mcdEstimator(berndtAssets.tS)
+   covEstimator(berndtAssets.tS)
 }
 
 

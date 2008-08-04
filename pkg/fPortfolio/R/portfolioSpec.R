@@ -51,7 +51,7 @@ function(
                                         #      "solveRlpSolve", 
                                         #      "solveRsocp"
          objective = NULL,
-         params = list(),
+         params = list(meq = 2),
          control = list(),
          trace = FALSE)
     )

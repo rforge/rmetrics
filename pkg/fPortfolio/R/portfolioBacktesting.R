@@ -24,7 +24,8 @@
 
 
 ################################################################################
-#  portfolioBacktesting              Does portfolio backtesting
+# FUNCTION:                          DESCRIPTION:
+#  portfolioBacktesting               Does portfolio backtesting
 #  plot.portfolioBacktest             S3 Plot Method
 #  print.portfolioBacktes             S3 Print Method
 #  summary.portfolioBacktest          S3 Summary Method
@@ -34,7 +35,7 @@
 portfolioBacktesting <-
     function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
-    trace = TRUE)
+    warmup = FALSE, trace = TRUE, title = "Backtesting")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -73,13 +74,14 @@ portfolioBacktesting <-
 
     # FUNCTION:
 
-    #settings:
+    # Settings:
     ans = list()
     ans$formula = formula
     ans$data = data
     ans$spec = spec
     ans$constraints = constraints
     ans$portfolio = portfolio
+    ans$title = title
 
     # Get Horizon Window Parameter:
     ans$horizon = horizon
@@ -125,6 +127,13 @@ portfolioBacktesting <-
     rW = rollingWindows(data, ans$horizon, "1m")
     from = rW$from
     to = rW$to
+    if (warmup) {
+        rV = rollingWindows(data, "1m", "1m")
+        rV$from = rep(rV$from[1], (horizonLength-1))
+        rV$to = rV$to[1:(horizonLength-1)]
+        from = c(rV$from, from)
+        to = c(rV$to, to)
+    }
 
     # Roll the Portfolio:
     portfolioFun = match.fun(portfolio)
@@ -323,7 +332,7 @@ plot.portfolioBacktest <-
         Benchmark = abbreviate(benchmark, 4)
         Assets = abbreviate(assets, 4)
         assetsTitle = paste(Assets, collapse = " - ", sep = "")
-        title(main = "Time Series")
+        title(main = object$title)
         mtext(assetsTitle, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
         legend("topleft", 

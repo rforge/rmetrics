@@ -29,9 +29,13 @@
 # FUNCTION:                    INTERNAL USAGE ONLY:
 #  .setConstraints              Transforms constraint strings into a list value
 #  .setBoxGroupConstraints       Utility function called by .setConstraints()
+#  setBoxConstraints
+#  setGroupEqConstraints
+#  setGroupMatConstraints
 #  .setRiskBudgetsConstraints    Utility function called by .setConstraints()
 #  .getConstraints              Transforms a constraint list value into strings
 #  .setRdonlp2Constraints       Adds Rdonlp2 conform constraints
+#  .setRquadprogConstraints     Adds Rquadprog conform constraints
 ################################################################################
 
 
@@ -211,18 +215,20 @@ portfolioConstraints <-
     }
 
     # Compose Matrix A:
-    A = matrix(c(rep(1, times = N), mu), byrow = TRUE, ncol = N)
+    A = matrix(c(mu, rep(1, times = N)), byrow = TRUE, ncol = N)
+    ## A = matrix(c(rep(1, times = N), mu), byrow = TRUE, ncol = N)
     A = rbind(A, diag(1, N), diag(-1, N))
     # colnames(A) = paste("A", 1:N, sep = "")
     colnames(A) <- nameAssets
-    rownames(A) = c("Budget", "Return", paste("minW", 1:N, sep = ""),
+    rownames(A) = c("Return", "Budget", paste("minW", 1:N, sep = ""),
         paste("maxW", 1:N, sep = ""))
 
     # Compose vector b0:
     minW = rep(0, N)
     maxW = rep(1, N)
     names(minW) <- names(maxW) <- nameAssets
-    b0 = matrix(c(1, targetReturn, minW, -maxW), ncol = 1)
+    ## b0 = matrix(c(1, targetReturn, minW, -maxW), ncol = 1)
+    b0 = matrix(c(targetReturn, 1, minW, -maxW), ncol = 1)
     colnames(b0) = "b0"
     if (!is.null(constraints)) {
         nC = length(constraints)
@@ -232,7 +238,7 @@ portfolioConstraints <-
                 eval(parse(text = constraints[i]))
             }
         }
-        b0 = matrix(c(1, targetReturn, minW, -maxW), ncol = 1)
+        b0 = matrix(c(targetReturn, 1, minW, -maxW), ncol = 1)
         what = substr(constraints, 1, 7)
         for (i in 1:nC) {
             if (what[i] == "minsumW")  {
@@ -649,8 +655,12 @@ setGroupMatConstraints <-
     Dmat = Sigma
     dvec = rep(0, nAssets)
     Amat = t(tmpConstraints[, -(nAssets+1)])
+    Amat[, 2] = -Amat[, 2]
     bvec = tmpConstraints[, (nAssets+1)]
-    meq = 2
+    bvec[2] = -bvec[2]
+    
+    # Part (1) or Full (2) Investment ?
+    meq = spec@optim$params$meq
     
     # Return Value"
     list(Dmat = Dmat, dvec = dvec, Amat = Amat, bvec = bvec, meq = meq)
