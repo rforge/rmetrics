@@ -26,6 +26,7 @@ importFrom("stats",
            "pf",
            "prcomp")
 importFrom("timeSeries",
+           "colnames<-",
            "diff",
            "lines",
            "rownames<-",

@@ -70,7 +70,6 @@ export(
     "CBND",
     "CND",
     "CRRBinomialTreeOption",
-    "fOptionsEnv",
     ".fdeltaHN",
     ".fgammaHN",
     ".fGBSVolatility",
@@ -87,6 +86,7 @@ export(
     ".GBSTheta",
     ".GBSVega",
     "GBSVolatility",
+    "getfOptionsEnv",
     "hngarchFit",
     "hngarchSim",
     "hngarchStats",
@@ -108,5 +108,4 @@ export(
     "runif.pseudo",
     "runif.sobol",
     "setfOptionsEnv",
-    "getfOptionsEnv",
     "TIANBinomialTreeOption" )

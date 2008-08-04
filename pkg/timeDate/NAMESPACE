@@ -34,10 +34,12 @@ importFrom("utils",
 ################################################
 
 exportClasses("timeDate" )
-exportMethods("-",
+exportMethods("as.POSIXlt",
+              "-",
               "+",
               "coerce",
               "Ops",
+              "sample",
               "show" )
 
 ################################################
@@ -51,7 +53,6 @@ S3method("as.Date", "timeDate")
 S3method("as.double", "timeDate")
 S3method("as.list", "timeDate")
 S3method("as.POSIXct", "timeDate")
-S3method("as.POSIXlt", "timeDate")
 S3method("as.timeDate", "Date")
 S3method("as.timeDate", "default")
 S3method("as.timeDate", "POSIXt")
@@ -91,7 +92,6 @@ S3method("window", "timeDate")
 ################################################
 
 export(
-    "strptimeDate",
     "Abidjan",
     "Accra",
     "Adak",
@@ -547,7 +547,6 @@ export(
     "Sakhalin",
     "Samara",
     "Samarkand",
-    "sample.timeDate",
     "San_Juan",
     "San_Marino",
     "Santiago",
@@ -578,8 +577,12 @@ export(
     "St_Kitts",
     "St_Lucia",
     "Stockholm",
+    "strptimeDate",
     "St_Thomas",
     "St_Vincent",
+    ".subsetByPython",
+    ".subsetBySpan",
+    ".subsetCode",
     "Swift_Current",
     "Sydney",
     "Syowa",
@@ -600,7 +603,6 @@ export(
     "timeCalendar",
     "timeDate",
     ".timeDateData2charvec",
-    ".timeDateValidity",
     "timeFirstDayInMonth",
     "timeFirstDayInQuarter",
     "timeLastDayInMonth",

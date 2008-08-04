@@ -3,9 +3,6 @@
 ## import name space
 ################################################
 
-importFrom("fUtilities",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
 
 ################################################
 ## S4 classes
@@ -97,6 +94,7 @@ export(
     "evTailCoeff",
     "evTailCoeffSlider",
     "evTau",
+    "getfCopulaeEnv",
     "gfunc",
     "gfuncSlider",
     ".ghtDependencyFit",
@@ -159,4 +157,5 @@ export(
     ".rNo1Copula",
     ".rNo2Copula",
     ".rnormCopula",
-    ".rtCopula" )
+    ".rtCopula",
+    "setfCopulaeEnv" )

@@ -70,7 +70,6 @@ exportMethods("show" )
 ################################################
 
 S3method("align", "default")
-S3method("as.POSIXlt", "default")
 S3method("atoms", "default")
 S3method("kurtosis", "data.frame")
 S3method("kurtosis", "default")

@@ -4,8 +4,8 @@
 ################################################
 
 importFrom("fUtilities",
-           "volatility",
            ".description",
+           "volatility",
            "Heaviside",
            ".sliderMenu",
            "setRmetricsOptions",
@@ -21,7 +21,8 @@ importFrom("methods",
            "show",
            "@<-",
            "new",
-           "slotNames")
+           "slotNames",
+           "slot")
 importFrom("stats",
            "coef",
            "fitted",
@@ -48,7 +49,6 @@ importFrom("stats",
            "pt",
            "qgamma",
            "ppoints",
-           "quantile",
            "qnorm",
            "qt",
            "rgamma",
@@ -60,12 +60,14 @@ importFrom("timeDate",
 importFrom("timeSeries",
            "print",
            "sort",
+           "colnames<-",
            "rownames<-",
            "isUnivariate",
            "rev",
            "timeSeries",
            "lines",
-           "diff")
+           "diff",
+           "quantile")
 importFrom("utils",
            "packageDescription",
            "capture.output",
@@ -90,13 +92,13 @@ exportMethods("coef",
               "predict",
               "residuals",
               "show",
-              "summary",
-              "volatility" )
+              "summary" )
 
 ################################################
 ## S3 classes
 ################################################
 
+S3method("volatility", "fGARCH")
 
 ################################################
 ## functions
@@ -190,4 +192,4 @@ export(
     "sstdFit",
     "sstdSlider",
     "stdFit",
-    ".truePersistence" )
+    ".truePersistence")

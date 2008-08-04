@@ -24,7 +24,8 @@ importFrom("graphics",
            "abline")
 importFrom("methods",
            "show",
-           "new")
+           "new",
+           "slot")
 importFrom("mgcv",
            "gam.control",
            "gam.method",
@@ -70,15 +71,17 @@ importFrom("stats",
            "predict.lm",
            "qt",
            "mahalanobis",
-           "quantile",
            "as.formula",
-           "cov")
+           "cov",
+           "termplot")
 importFrom("timeSeries",
            "diff",
+           "colnames<-",
            "head",
            "print",
            "scale",
            "rownames<-",
+           "quantile",
            "as.timeSeries")
 importFrom("utils",
            "packageDescription",
@@ -103,7 +106,6 @@ exportMethods("coef",
               "residuals",
               "show",
               "summary",
-              "termPlot",
               "terms",
               "vcov" )
 
@@ -111,6 +113,7 @@ exportMethods("coef",
 ## S3 classes
 ################################################
 
+S3method("termPlot", "fREG")
 
 ################################################
 ## functions

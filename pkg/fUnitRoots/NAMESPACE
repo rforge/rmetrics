@@ -19,6 +19,7 @@ importFrom("stats",
            "embed",
            "lm")
 importFrom("timeSeries",
+           "colnames<-",
            "rownames<-",
            "diff",
            "print",

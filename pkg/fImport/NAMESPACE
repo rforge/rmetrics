@@ -18,6 +18,7 @@ importFrom("timeSeries",
            "timeSeries",
            "merge",
            "window",
+           "colnames<-",
            "as.timeSeries",
            "rownames<-")
 importFrom("utils",

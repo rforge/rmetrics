@@ -3,12 +3,12 @@
 ## import name space
 ################################################
 
-# importFrom("fOptions",
-#           "BSAmericanApproxOption",
-#           "CND",
-#           "CBND",
-#           "GBSGreeks",
-#           "GBSOption")
+importFrom("fOptions",
+           "BSAmericanApproxOption",
+           "CND",
+           "CBND",
+           "GBSGreeks",
+           "GBSOption")
 importFrom("fUtilities",
            "setRmetricsOptions",
            "getRmetricsOptions")
