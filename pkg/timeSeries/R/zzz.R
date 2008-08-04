@@ -46,9 +46,8 @@ function(lib, pkg)
     # Currently, a call 'methods:::bind_activation(TRUE)'
     methods:::bind_activation(TRUE)
 
-    #-> show() of large timeSeries
-    if(is.null(getRmetricsOptions("max.print")))
-        setRmetricsOptions(max.print = 10000)
+    if(is.null(getOption("max.print")))
+	options(max.print = 10000)#-> show() of large matrices
 }
 
 .onUnload <- function(libpath) methods:::bind_activation(FALSE)
