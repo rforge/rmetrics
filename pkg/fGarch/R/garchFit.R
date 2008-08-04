@@ -56,11 +56,11 @@
 # Globally needed Variables:
 
 
-    setfGarchEnv(.llh = 1e99)
-    setfGarchEnv(.garchDist = NA)
-    setfGarchEnv(.params = NA)
-    setfGarchEnv(.series = NA)
-    setfGarchEnv(.trace = NA) # to be added for donlp2 which has no "..." argument
+setfGarchEnv(.llh = 1e99)
+setfGarchEnv(.garchDist = NA)
+setfGarchEnv(.params = NA)
+setfGarchEnv(.series = NA)
+setfGarchEnv(.trace = NA) # to be added for donlp2 which has no "..." argument
 
 
 # ------------------------------------------------------------------------------
