@@ -41,7 +41,7 @@ garchOxFit <-
 {
 
     cat("garchOxFit is no more available in fGarch package.\n")
-    cat("If you are interested to use, please contact us directly.")
+    cat("If you are interested to use it, please contact us directly.")
 
 
 }
