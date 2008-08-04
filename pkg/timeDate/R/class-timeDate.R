@@ -32,17 +32,6 @@
 #  'timeDate'                S4 Class representation for timeDate objects
 ################################################################################
 
-.timeDateValidity <-
-    function(object)
-{
-    if(identical(attr(object@Data, "tzone"), "GMT"))
-        TRUE
-    else
-        stop("@Data must be in \"GMT\" timezone.")
-}
-
-# ------------------------------------------------------------------------------
-
 setClass("timeDate",
          # A class implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -55,8 +44,12 @@ setClass("timeDate",
                         format = "character",
                         FinCenter = "character"
                         ),
-         validity = .timeDateValidity
-         )
+         validity = function(object) {
+             if(!identical(attr(object@Data, "tzone"), "GMT"))
+                 return("@Data must be in \"GMT\" timezone.")
+             ## else TRUE
+             TRUE
+         })
 
 ################################################################################
 
