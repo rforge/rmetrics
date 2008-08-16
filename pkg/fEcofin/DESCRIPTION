@@ -1,7 +1,8 @@
+Keyword: ORPHANED
 Package: fEcofin
 Version: 270.74
 Date: 1997 - 2008
-Title: Rmetrics - Economic and Financial Data Sets 
+Title: Economic and Financial Data Sets 
 Author: Diethelm Wuertz and many others. See the SOURCE file
 Depends: R (>= 2.4.0), fUtilities
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
