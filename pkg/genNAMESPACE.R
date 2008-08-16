@@ -44,8 +44,12 @@ genNAMESPACE <-
     stopifnot(suppressPackageStartupMessages(require(codetools)))
     stopifnot(suppressPackageStartupMessages(require(pkg, character.only = TRUE)))
 
-    ##
-    all <- listFunctions(pkg, character.only = TRUE)
+    ## all functions
+    env <- paste("package", pkg, sep = ":")
+    nm <- ls(env, all.name = TRUE)
+    all <- nm[unlist(lapply(nm, function(n)
+                            exists(n, where = env,  mode = "function",
+                                   inherits = FALSE)))]
 
     ##
     # remove all unneeded functions
@@ -148,8 +152,8 @@ genNAMESPACE <-
     ##
     # list of function to import
     imp <- unique(rbind(S3pkg, S4pkg, globalsPkg,
-                        data.frame(pkg ="fUtilities", func ="setRmetricsOptions"),
-                        data.frame(pkg ="fUtilities", func ="getRmetricsOptions")))
+                        data.frame(pkg ="timeDate", func ="setRmetricsOptions"),
+                        data.frame(pkg ="timeDate", func ="getRmetricsOptions")))
     if (any(is.na(imp))) {
         print(pkg)
         print(imp[is.na(imp),])
@@ -272,9 +276,12 @@ genNAMESPACE <-
 ##                   "fExoticOptions", "fAsianOptions", "fAssets",
 ##                   "fPortfolio")
 
+RmetricsPkgs <- c("timeDate", "timeSeries", "fBasics", "fGarch",
+                   "fExtremes", "fCopulae", "fAssets", "fPortfolio")
+
 ## ## R CMD INSTALL fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae  fOptions fExoticOptions fAsianOptions fAssets fPortfolio
 
 ## # problem with pkg urca in dependencies
 
-## for (pkg in RmetricsPkgs)
-##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
+for (pkg in RmetricsPkgs)
+    genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)

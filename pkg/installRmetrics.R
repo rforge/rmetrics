@@ -72,7 +72,7 @@ installRmetrics  <-
 
     ## Remove Rdonlp2 and Rsocp because they are not available at CRAN server
     depends <- depends[!(depends %in% c("Rdonlp2", "Rsocp", "Cdonlp2",
-                                        "ClpSolve", "Csocp"))]
+                                        "ClpSolve", "Csocp", "ClpSolveAPI"))]
 
     ## disable unnecessary warning message when package is not installed
     ow <- options(warn = -1)
