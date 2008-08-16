@@ -650,9 +650,9 @@ function()
     refresh.code = function(...)
     {
         # Sliders:
-        n      = fUtilities:::.sliderMenu(no = 1)
-        H      = fUtilities:::.sliderMenu(no = 2)
-        method = fUtilities:::.sliderMenu(no = 3)
+        n      = fBasics:::.sliderMenu(no = 1)
+        H      = fBasics:::.sliderMenu(no = 2)
+        method = fBasics:::.sliderMenu(no = 3)
 
         # Select Method:
         Method = c("mvn", "chol", "lev", "circ", "wave")
@@ -672,7 +672,7 @@ function()
     }
 
     # Open Slider Menu:
-    fUtilities:::.sliderMenu(refresh.code,
+    fBasics:::.sliderMenu(refresh.code,
        names =       c(  "n",    "H", "method"),
        minima =      c(   10,   0.01,       1),
        maxima =      c(  200,   0.99,       5),

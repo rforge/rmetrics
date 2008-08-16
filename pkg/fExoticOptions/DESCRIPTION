@@ -1,9 +1,10 @@
+Keyword: ORPHANED
 Package: fExoticOptions
 Version: 270.73
 Date: 1997 - 2008
-Title: Rmetrics - Exotic Option Valuation
+Title: Exotic Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, fUtilities, fEcofin, timeDate, timeSeries, fImport, fBasics, fOptions
+Depends: R (>= 2.4.0), methods, fBasics, fOptions
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.

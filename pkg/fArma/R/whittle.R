@@ -108,7 +108,7 @@ trace = FALSE, spec = FALSE, title = NULL, description = NULL)
 
     # Add:
     if(is.null(title)) title = "Hurst Exponent from Whittle Estimator"
-    if(is.null(description)) description = fUtilities:::.description()
+    if(is.null(description)) description = description()
 
     # Return Value:
     new("fHURST",

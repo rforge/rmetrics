@@ -137,7 +137,7 @@ doplot = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Wavelet Estimator"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -698,17 +698,17 @@ function(x = fgnSim())
     refresh.code = function(...)
     {
         # Sliders:
-        method = fUtilities:::.sliderMenu(no = 1)
-        levels = fUtilities:::.sliderMenu(no = 2)
-        minnpts = fUtilities:::.sliderMenu(no = 3)
-        lower  = fUtilities:::.sliderMenu(no = 4)
-        range = fUtilities:::.sliderMenu(no = 5)
+        method = fBasics:::.sliderMenu(no = 1)
+        levels = fBasics:::.sliderMenu(no = 2)
+        minnpts = fBasics:::.sliderMenu(no = 3)
+        lower  = fBasics:::.sliderMenu(no = 4)
+        range = fBasics:::.sliderMenu(no = 5)
 
         # Graph Frame:
         par(mfrow = c(1, 1))
 
         # Plot:
-        description = paste("Method", method, fUtilities:::.description())
+        description = paste("Method", method, description())
         if (method == 1) ans = aggvarFit(x = .xHurst, levels = levels,
             minnpts = minnpts, cut.off = 10^c(lower, lower+range),
             doplot = TRUE, description = description)
@@ -759,7 +759,7 @@ function(x = fgnSim())
     }
 
     # Open Slider Menu:
-    fUtilities:::.sliderMenu(refresh.code,
+    fBasics:::.sliderMenu(refresh.code,
         names       = c("method", "levels", "minnpts", "lower", "range"),
         minima      = c(       1,       10,         1,     0.1,     0.1),
         maxima      = c(       7,      200,        10,     1.5,     3.0),

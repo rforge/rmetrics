@@ -229,7 +229,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Aggregated Variances"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -320,7 +320,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Differenced Aggregated Variances"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -405,7 +405,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Absolute Values"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -495,7 +495,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Higuchi Method"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -603,7 +603,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Peng Method"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -688,7 +688,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from R/S Method"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -783,7 +783,7 @@ method = c("per", "cumper"), doplot = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Periodgram Method"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",
@@ -871,7 +871,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title))
         title = "Hurst Exponent from Boxed Periodgram Method"
     if (is.null(description))
-        description = fUtilities:::.description()
+        description = description()
 
     # Return Value:
     new("fHURST",

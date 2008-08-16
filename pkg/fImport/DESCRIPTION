@@ -3,8 +3,7 @@ Version: 270.74
 Date: 1997 - 2008
 Title: Rmetrics - Economic and Financial Data Import
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.6.0), methods, fUtilities, timeDate, timeSeries
-Suggests: fEcofin
+Depends: R (>= 2.6.0), methods, timeSeries
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.

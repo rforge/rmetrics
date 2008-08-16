@@ -45,21 +45,6 @@ function(lib, pkg)
     # library.dynam("fExoticOptions", pkg, lib)
 }
 
-.onLoad <-
-    function(libname, pkgname)
-{
-
-   # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- utils::packageDescription(pkgname)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkgname, dsc$Version))
-    }
-
-}
-
-
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
     Sys.setenv <- Sys.putenv
 

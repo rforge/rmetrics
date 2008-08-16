@@ -151,8 +151,8 @@ function()
     refresh.code = function(...)
     {
         # Sliders:
-        n = fUtilities:::.sliderMenu(no = 1)
-        H = fUtilities:::.sliderMenu(no = 2)
+        n = fBasics:::.sliderMenu(no = 1)
+        H = fBasics:::.sliderMenu(no = 2)
 
         # Frame:
         par(mfrow = c(2, 1), cex = 0.7)
@@ -176,7 +176,7 @@ function()
     }
 
     # Open Slider Menu:
-    fUtilities:::.sliderMenu(refresh.code,
+    fBasics:::.sliderMenu(refresh.code,
        names =       c(  "n",    "H"),
        minima =      c(   10,   0.01),
        maxima =      c(  200,   0.99),
