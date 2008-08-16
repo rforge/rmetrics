@@ -160,17 +160,11 @@ Ops.timeDate <-
     if (test1 + test2 != 0) stop("Wrong class types")
 
     # First Object:
-    ## DW:
-    ## e1GMT = timeDate(e1, zone = e1@FinCenter, FinCenter = "GMT")@Data
-    e1GMT = timeDate(e1, zone = "GMT", FinCenter = "GMT")@Data
-    
-    # Second Object:
+    e1GMT = timeDate(e1, zone = e1@FinCenter, FinCenter = "GMT")@Data
     if (inherits(e2, "timeDate")) {
-        ## DW:
-        ## e2 = timeDate(e2, zone = e2@FinCenter, FinCenter = "GMT")@Data
-        e2 = timeDate(e2, zone = "GMT", FinCenter = "GMT")@Data
+        e2 = timeDate(e2, zone = e2@FinCenter, FinCenter = "GMT")@Data
         # Returns difftime:
-        return(e1GMT-e2) }      
+        return(e1GMT-e2) }
     if (inherits(e2, "numeric")) {
         # Returns timeDate:
         return(timeDate(e1GMT-e2, zone = "GMT", FinCenter = e1@FinCenter)) }

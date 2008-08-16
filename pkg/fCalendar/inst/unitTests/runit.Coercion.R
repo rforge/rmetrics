@@ -6,16 +6,16 @@
 #
 # Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -30,7 +30,7 @@
 ################################################################################
 
 
-test.as <-
+test.as  
     function()
 {
     #  as.character.timeDate  Returns a 'timeDate' object as 'character' string
@@ -40,14 +40,14 @@ test.as <-
     #  as.POSIXlt.timeDate    Returns a 'timeDate' object as 'POSIXlt' object
     #  as.Date.timeDate       Returns a 'timeDate' object as 'Date' object
 
-
+    
     # Monthly calendarical sequence for the current year:
     myFinCenter <<- "GMT"
     TC = timeCalendar(2006)
     TC
-    checkIdentical(TC@format, "%Y-%m-%d")
+    checkIdentical(TC@format, "%Y-%m-%d")                
     checkIdentical(TC@FinCenter, "GMT")
-
+    
     # Transform into a vector of character strings:
     month = c(paste("0", 1:9, sep = ""), 10:12)
     month
@@ -57,7 +57,7 @@ test.as <-
     attr(CHAR, "control")<-NULL
     CHAR
     checkIdentical(CHAR, charvec)
-
+     
     # Transform into a numeric vector:
     DAYS = c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30)
     NUM = as.double(TC)
@@ -66,122 +66,129 @@ test.as <-
     NUM = as.numeric(TC)
     NUM
     checkIdentical(diff(NUM), DAYS)
-
+    
     # Transform into a data frame:
     DF = as.data.frame(TC)
     DF
-    attr(DF, "control")
-    DIFF = diff(as.numeric(DF[,1])/3600/24)
-    checkIdentical(DIFF, DAYS)
+    attr(DF, "control") 
+    DIFF = diff(as.numeric(DF[,1])/3600/24) 
+    checkIdentical(DIFF, DAYS) 
 
     # Transform into a POSIX object:
     CT = as.POSIXct(TC)
     CT
-    # LT = as.POSIXlt(TC)
+    # LT = as.POSIXlt(TC) 
     # LT
     # checkIdentical(format(CT), format(LT))
-
+    
     # Transform into a POSIX object:
     as.Date(TC)
     TC2 = TC + 16*3600
     TC2
-    as.Date(TC2)
-    as.Date(TC2, "round")
-    as.Date(TC2, "next")
+    as.Date(TC2) 
+    as.Date(TC2, "round") 
+    as.Date(TC2, "next")   
     target = as.numeric(as.Date(TC))
     current = as.numeric(as.Date(TC2, "round")-1)
     checkIdentical(target, current)
-
+    
     # Return Value:
-    return()
-}
+    return()     
+} 
 
 
 # ------------------------------------------------------------------------------
 
 
-test.asTimeDate =
+test.asTimeDate = 
     function()
 {
     #  as.timeDate            Use Method
     #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
     #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
-
+    
     # Current Time:
     as.timeDate(Sys.time())
-
+    
     # Coerce:
     myFinCenter <<- "GMT"
     Sys.Date()
     as.timeDate(Sys.Date())
     as.timeDate(Sys.Date(), zone = myFinCenter, FinCenter = myFinCenter)
     as.timeDate(Sys.Date(), zone = "Zurich", FinCenter = "Zurich")
-
+    
     # Return Value:
-    return()
-}
+    return()     
+} 
 
 
 # ------------------------------------------------------------------------------
 
 
-test.julian <-
+test.julian <-  
     function()
-{
+{    
     # julian.timeDate = function(x, FinCenter = myFinCenter, ...)
     myFinCenter <<- "GMT"
     GD = timeDate("1970-01-01 00:00:00", zone = "GMT", FinCenter = "GMT")
     GD
     J = julian(GD, FinCenter = "GMT")
     J
-    class(J)
+    class(J)  
     checkIdentical(as.numeric(J), 0)
-
+        
     # Return Value:
-    return()
-}
+    return()             
+} 
 
 
 # ------------------------------------------------------------------------------
 
 
-test.atoms <-
+test.atoms <- 
     function()
-{
+{    
     # atoms.timeDate = function(x, ...)
     TC = timeCalendar()
-    AT = atoms(TC)
-    AT
-
+    AT = atoms(TC)  
+    AT 
+                
     # months.timeDate = function(x, abbreviate = NULL)
-    MO = months(TC)
+    MO = months(TC) 
     MO
+    
+    # Compare:
+    checkIdentical(as.vector(AT[, 2]), as.vector(MO))    
 
+        
     # Return Value:
-    return()
-}
+    return()             
+} 
 
 
 # ------------------------------------------------------------------------------
 
 
-test.months <-
+test.months <- 
     function()
-{
+{                         
     # atoms.timeDate = function(x, ...)
     TC = timeCalendar()
-    AT = atoms(TC)
+    AT = atoms(TC)  
     AT
-
+                 
     # months.timeDate = function(x, abbreviate = NULL)
-    MO = months(TC)
+    MO = months(TC) 
     MO
+    
+    # Compare:
+    checkIdentical(as.vector(AT[, 2]), as.vector(MO))    
 
-
+        
     # Return Value:
-    return()
-}
-
+    return()             
+} 
+  
 
 ################################################################################
-
+    

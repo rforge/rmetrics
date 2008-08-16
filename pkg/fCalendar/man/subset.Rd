@@ -2,7 +2,6 @@
 
 
 \alias{subset}
-
 \alias{[.timeDate}
 \alias{[<-.timeDate}
 
@@ -44,16 +43,11 @@
 
 \examples{  
 ## timeCalendar -
-   tC = timeCalendar(2008)
+   tS = timeCalendar()
  
-## [ Subsetting by Integer Indexes ... 
-   tC[9:12] 
-   
-## [ Subsetting by Python Like Indexing ... 
-   tC["2008-09::"]
-   
-## [ Subsetting by Spans ... 
-   tC["2008-09::"]
+## [ - 
+   # Subsetting Second Quarter:
+   tS[4:6] 
    
 ## [<-
    # Replacing:  

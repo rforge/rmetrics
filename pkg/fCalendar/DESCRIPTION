@@ -1,7 +1,8 @@
+Keyword: ORPHANED
 Package: fCalendar
 Version: 270.76
 Date: 1997 - 2008
-Title: Rmetrics - Chronological and Calendarical Objects
+Title: Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi
 Depends: R (>= 2.4.0), methods, MASS, fUtilities, fEcofin
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>

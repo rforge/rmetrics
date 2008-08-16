@@ -187,10 +187,10 @@ BuenosAires <- Buenos_Aires
 LosAngeles <- Los_Angeles
 MexicoCity <- Mexico_City
 NewYork <- New_York
-Eastern <- New_York
 HongKong <- Hong_Kong
 KualaLumpur <- Kuala_Lumpur
 Frankfurt <- Berlin
+Eastern <- NewYork
 Pacific <- LosAngeles
 ",
         file = filename, append = TRUE)

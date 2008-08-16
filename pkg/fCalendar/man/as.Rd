@@ -5,7 +5,6 @@
 \alias{as.character.timeDate}
 \alias{as.double.timeDate}
 \alias{as.data.frame.timeDate}
-\alias{as.list.timeDate}
 \alias{as.POSIXct.timeDate}
 \alias{as.POSIXlt.timeDate}
 \alias{as.Date.timeDate}
@@ -27,10 +26,7 @@
 
 \method{as.double}{timeDate}(x, 
     units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
-    
 \method{as.data.frame}{timeDate}(x, \dots)
-
-\method{as.list}{timeDate}(x, \dots)
 
 \method{as.POSIXct}{timeDate}(x, tz = "", \dots)
 

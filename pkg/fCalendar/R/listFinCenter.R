@@ -177,7 +177,7 @@ listFinCenter <-
         "Africa/Abidjan",
         "Pacific/Rarotonga",
         "America/Santiago",
-#        "Pacific/Easter", # in conflict with the feast Easter
+        "Pacific/Eastern",
         "Africa/Douala",
         "Asia/Shanghai",
         "Asia/Harbin",

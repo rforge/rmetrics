@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port:
+# for this R-port: 
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -33,35 +33,35 @@
 ################################################################################
 
 
-setMethod("show", "timeDate",
-          function(object)
-      {
+setMethod("show", "timeDate", show.timeDate <-
+    function(object)
+{   
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print method for an S4 object of class "timeDate"
-
+ 
     # FUNCTION:
-
+       
     # Unlike print the argument for show is 'object'.
     x = object
-
+    
     # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")
+    myTZ = Sys.getenv("TZ")  
     Sys.setenv(TZ = "GMT")
-
+    
     # Print:
     cat(x@FinCenter, "\n", sep = "")
     layout = paste("[", as.character(x@Data), "]", sep = "")
-
+    
     # timeDate:
     Sys.setenv(TZ = myTZ)
     print(layout, quote = FALSE)
-
+    
     # Control:
     control = attr(x, "control")
     if (!is.null(control)) print(control)
-
+    
     # Return Value:
     invisible(x)
 })
