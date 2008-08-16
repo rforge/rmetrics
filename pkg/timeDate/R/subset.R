@@ -52,12 +52,12 @@
     # Character Type Subsetting:
     subset = I(...)
     if (is.character(subset)){
-        if (timeDate:::.subsetCode(subset) == "SPAN") {
+        if (.subsetCode(subset) == "SPAN") {
             # Subsetting by Span Indexing:
-            return(timeDate:::.subsetBySpan(x, subset))
+            return(.subsetBySpan(x, subset))
         } else {
             # Subsetting by Python Indexing:
-            return(timeDate:::.subsetByPython(x, subset))
+            return(.subsetByPython(x, subset))
         }
     }
 

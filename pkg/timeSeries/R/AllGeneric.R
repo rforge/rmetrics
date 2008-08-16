@@ -25,3 +25,5 @@ setGeneric("series<-",
 ## setGeneric("index", function(x, ...) standardGeneric("index"), package = "timeSeries")
 ## setGeneric("index<-",
 ##            function(x, value) standardGeneric("index<-"), package = "timeSeries")
+
+setGeneric("outlier",  function(x, sd = 5, complement = TRUE, ...) standardGeneric("outlier"))

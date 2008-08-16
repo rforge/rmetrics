@@ -46,11 +46,11 @@ nigSlider <-
     refresh.code = function(...)
     {
         # Sliders:
-        N     = fUtilities:::.sliderMenu(no = 1)
-        alpha = fUtilities:::.sliderMenu(no = 2)
-        beta  = fUtilities:::.sliderMenu(no = 3)
-        delta = fUtilities:::.sliderMenu(no = 4)
-        mu    = fUtilities:::.sliderMenu(no = 5)
+        N     = fBasics:::.sliderMenu(no = 1)
+        alpha = fBasics:::.sliderMenu(no = 2)
+        beta  = fBasics:::.sliderMenu(no = 3)
+        delta = fBasics:::.sliderMenu(no = 4)
+        mu    = fBasics:::.sliderMenu(no = 5)
 
         # Plot Data:
         xmin = round(qnig(0.01, alpha, beta, delta, mu), digits = 2)
@@ -89,7 +89,7 @@ nigSlider <-
     }
 
     # Open Slider Menu:
-    fUtilities:::.sliderMenu(refresh.code,
+    fBasics:::.sliderMenu(refresh.code,
        names =       c( "N", "alpha", "beta", "delta", "mu"),
        minima =      c(  50,   0.00,   -2.00,    0.00, -5.0),
        maxima =      c(1000,   2.00,   +2.00,   10.00, +5.0),

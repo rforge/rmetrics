@@ -64,9 +64,6 @@ timeSeries <-
     if (FinCenter == "")
         FinCenter <- getRmetricsOptions("myFinCenter")
 
-    # YC : we can have a logical timeSeries eg: ts > 1
-    stopifnot(is.numeric(data) || is.logical(data))
-
     # Determine format
     if (missing(format) || is.null(format)) {
         if (missing(charvec) || is.null(charvec)) {
@@ -135,11 +132,6 @@ timeSeries <-
             warning("format provided not valid")
         }
     }
-
-###     # YC: sort important for an ordered data set
-###     # YC: for a non empty time series
-###     if ( NROW(ans) && ans@format != "counts" )
-###         ans <- sort(ans)
 
     # Return
     ans

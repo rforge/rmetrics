@@ -1,3 +1,4 @@
+
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,10 +16,13 @@
 
 ################################################################################
 # METHOD:                   SUBSETTING METHODS ON DATA:
-#  outlier.timeSeries        Removes outliers from a 'timeSeries' object
+#  outlier,timeSeries        Removes outliers from a 'timeSeries' object
 ################################################################################
 
-outlier.timeSeries =
+# ------------------------------------------------------------------------------
+
+
+setMethod("outlier", "timeSeries",
     function(x, sd = 10, complement = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -50,4 +54,4 @@ outlier.timeSeries =
 
     # Return Value:
     x
-}
+})

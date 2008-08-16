@@ -169,7 +169,6 @@ seriesData(object)
 
 \examples{
 ## data -
-   require(fEcofin)
    # Microsoft Data: 
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))

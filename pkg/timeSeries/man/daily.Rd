@@ -146,7 +146,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 \examples{
 ## data - Data Frame:
-   require(fEcofin)
    # To work with daily data, the best choice is "GMT"
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))

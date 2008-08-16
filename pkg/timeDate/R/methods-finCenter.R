@@ -1,4 +1,3 @@
-
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -14,7 +13,5 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-finCenter.timeDate <- function(x) x@FinCenter
-"finCenter<-.timeDate" <- function(x, value) {x@FinCenter <- value; x}
-
-
+setMethod("finCenter", "timeDate", function(x) x@FinCenter)
+setMethod("finCenter<-", "timeDate", function(x, value) {x@FinCenter <- value; x})

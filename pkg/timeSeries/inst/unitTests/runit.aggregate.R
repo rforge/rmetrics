@@ -51,13 +51,11 @@ function()
     aggregate(x, by, sum, units = "QrtReturns")
 
     # Another example
-    if (require(fEcofin)) {
-        x <- as.timeSeries(data(LPP2005REC))[,1:4]
-        by <- timeSequence(from = "2006-01-01",
-                           to = "2008-01-01",
-                           by = "quarter")
-        aggregate(x, by, mean)
-    }
+    x <- as.timeSeries(data(LPP2005REC))[,1:4]
+    by <- timeSequence(from = "2006-01-01",
+                       to = "2008-01-01",
+                       by = "quarter")
+    aggregate(x, by, mean)
 
     x <- timeSeries(seq(12), timeCalendar())
     by <- timeSequence(from = "2008-01-01",

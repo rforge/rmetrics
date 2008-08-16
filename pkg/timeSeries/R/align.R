@@ -116,7 +116,7 @@ by = "30 m")
     numberOfColumns = dim(x)[2]
     typeMethod = c(interp = "linear", before = "constant", after = "constant")
     fMethod = c(interp = 0.5, before = 0, after = 1)
-    by = fUtilities:::.by2seconds(by)
+    by = .by2seconds(by)
 
     # Convert to GMT:
     tD = timeDate(x@positions, zone = x@FinCenter, FinCenter = "GMT")

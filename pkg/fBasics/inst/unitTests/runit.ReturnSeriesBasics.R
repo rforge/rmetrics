@@ -171,7 +171,7 @@ function()
     #   .distCheck(fun = "norm", n = 1000, seed = 4711, ...)
 
     # Normal Distribution Check:
-    fUtilities:::.distCheck()
+    fBasics:::.distCheck()
 
     # Return Value:
     return()

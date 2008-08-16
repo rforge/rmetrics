@@ -56,7 +56,6 @@
 
 \examples{
 ## data -
-   require(fEcofin)
    x = as.timeSeries(data(msft.dat))[1:20, "Open"]
    
 ## lag -

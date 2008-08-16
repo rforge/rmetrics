@@ -46,21 +46,21 @@ function()
         # stable - Parameterization S0:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.8, beta = 0.3)
+        test = fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S0:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.2, beta = -0.3)
+        test = fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S0:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 0.6, beta = 0)
+        test = fBasics:::.distCheck("stable", alpha = 0.6, beta = 0)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }
@@ -80,21 +80,21 @@ function()
         # stable - Parameterization S1:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
+        test = fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S1:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
+        test = fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S1:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
+        test = fBasics:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }
@@ -114,21 +114,21 @@ function()
         # stable - Parameterization S2:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
+        test = fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S2:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
+        test = fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S2:
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        test = fUtilities:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
+        test = fBasics:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }

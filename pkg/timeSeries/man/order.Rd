@@ -112,16 +112,15 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 
 \examples{
 ## data -
-   require(fEcofin)
-   edhec.tS = as.timeSeries(data(edhec.tS))
-   colnames(edhec.tS) = abbreviate(colnames(edhec.tS), 6)
+   MSFT = as.timeSeries(data(msft.dat))
+   colnames(MSFT) = abbreviate(colnames(MSFT), 2)
 
 ## sortColnames -
    # Sort alphabetically
-   sortColnames(edhec.tS)
+   sortColnames(MSFT)
   
 ## hclustColnames -
-   head(edhec.tS[, hclustColnames(edhec.tS)])  
+   head(MSFT[, hclustColnames(MSFT)])  
 }
 
 

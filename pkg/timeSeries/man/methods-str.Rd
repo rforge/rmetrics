@@ -40,12 +40,11 @@
 
 \examples{
 ## data -
-   require(fEcofin)
-   EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
-   colnames(EDHEC) <- abbreviate(colnames(EDHEC), 4)
+   MSFT = as.timeSeries(data(msft.dat))[1:12, 1:4]
+   colnames(MSFT) <- abbreviate(colnames(MSFT), 4)
     
 ## str -
-   str(EDHEC)
+   str(MSFT)
 }
 
 

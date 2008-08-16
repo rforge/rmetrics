@@ -89,7 +89,6 @@ function()
     head(tS)
 
     # Data Inpiut is a data.frame:
-    stopifnot(require(fEcofin))
     data(msft.dat)
     x.df = msft.dat
     head(x.df)
@@ -103,7 +102,6 @@ function()
     head(tS)
 
     # Data Input is a Matrix:
-    stopifnot(require(fEcofin))
     data(msft.dat)
     x.mat = as.matrix(msft.dat)
     # tS = as.timeSeries(x.mat)
@@ -131,8 +129,6 @@ test.asTimeSeriesDJ1 =
 function()
 {
     # Load Data:
-    # stopifnot(require(fEcofin))
-    # data(DowJones30)
     # use instead dummy data set just for testing ...
     Data = matrix(exp(cumsum(rnorm(30*100, sd = 0.1))), ncol = 30)
     Positions = format(timeSequence("2006-01-01", length.out = 100))

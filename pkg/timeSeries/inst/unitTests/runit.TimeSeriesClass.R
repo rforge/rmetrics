@@ -79,7 +79,6 @@ function()
     timeSeries(data, charvec, units = "uTS", zone = "Zurich", FinCenter = "GMT")
 
     # Load Microsoft Data:
-    stopifnot(require(fEcofin))
     data(msft.dat)
     MSFT.df = msft.dat
     X = as.timeSeries(MSFT.df)
@@ -99,7 +98,6 @@ function()
     #  readSeries - Reads from a spreadsheet and creates a 'timeSeries'
 
     # Microsoft Data:
-    stopifnot(require(fEcofin))
     data(msft.dat)
     MSFT.df = msft.dat
 
@@ -131,7 +129,6 @@ function()
     #  returns - Computes returns from a 'timeSeries' object
 
     # Load Time Series:
-    stopifnot(require(fEcofin))
     X = as.timeSeries(data(msft.dat))
     head(X)
 
@@ -170,7 +167,6 @@ function()
     #  orderStatistics - Compute order statistic of a 'timeSeries'
 
     # Load Data:
-    stopifnot(require(fEcofin))
     X = as.timeSeries(data(msft.dat))
     head(X)
 
@@ -197,7 +193,6 @@ function()
     #  series - Extracts data slot from 'timeSeries' object
 
     # Load Microsoft Data:
-    stopifnot(require(fEcofin))
     X = as.timeSeries(data(msft.dat))
     X = X[1:12, ]
     class(X)
@@ -240,7 +235,6 @@ function()
     #  isUnivariate     Tests if an object of class 'timeSeries' is univariate
 
     # Load Microsoft Data:
-    stopifnot(require(fEcofin))
     X = as.timeSeries(data(msft.dat))
     OPEN = X[, 1]
 
@@ -266,7 +260,6 @@ function()
     #  isMultivariate - Tests if an object of class 'timeSeries' is multivariate
 
     # Load Microsoft Data:
-    stopifnot(require(fEcofin))
     X = as.timeSeries(data(msft.dat))
     OPEN = X[, 1]
 
@@ -392,7 +385,6 @@ function()
 
     # Time Series:
     setRmetricsOptions(myFinCenter = "GMT")
-    stopifnot(require(fEcofin))
     tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
     dim(tS)
@@ -421,7 +413,6 @@ function()
 
     # Price or Incdex Series:
     setRmetricsOptions(myFinCenter = "GMT")
-    stopifnot(require(fEcofin))
     tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
     dim(tS)

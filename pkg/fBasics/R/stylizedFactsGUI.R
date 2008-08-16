@@ -436,8 +436,8 @@ doplot = TRUE, labels = TRUE, ...)
     function(...)
     {
         # Settings:
-        selectedAsset  = fUtilities:::.tdSliderMenu(no = 1)
-        type = as.integer(fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType"))
+        selectedAsset  = fBasics:::.tdSliderMenu(no = 1)
+        type = as.integer(fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType"))
         Unit = colnames(x)
 
         # ACF Plot:
@@ -554,7 +554,7 @@ doplot = TRUE, labels = TRUE, ...)
 
     nAssets = dim(x)[2]
 
-    fUtilities:::.tdSliderMenu(
+    fBasics:::.tdSliderMenu(
         stylizedFactsRefreshCode,
 
         names       = c("Selected Asset"),
@@ -565,34 +565,34 @@ doplot = TRUE, labels = TRUE, ...)
 
         but.functions = list(
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "1")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "1")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "2")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "2")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "3")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "3")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "4")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "4")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "5")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "5")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "6")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "6")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "7")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "7")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "8")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "8")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "9")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "9")
                 stylizedFactsRefreshCode()},
             function(...){
-                fUtilities:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "10")
+                fBasics:::.tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "10")
                 stylizedFactsRefreshCode()}
         ),
 
@@ -611,7 +611,7 @@ doplot = TRUE, labels = TRUE, ...)
         title = "Stylized Facts GUI"
         )
 
-   fUtilities:::.tdSliderMenu(obj.name = "type", obj.value = "1", no = 1)
+   fBasics:::.tdSliderMenu(obj.name = "type", obj.value = "1", no = 1)
 
    # return Value:
    invisible()

@@ -14,38 +14,25 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  align.timeDate          Aligns a 'timeDate' object to regular time stamps
+#  align,timeDate          Aligns a 'timeDate' object to regular time stamps
 ################################################################################
 
-
-align.timeDate <-
+setMethod("align", "timeDate",
     function(x, by = "1d", offset = "0s")
     # , include.weekends = TRUE)
-{    
+{
     # Description:
     #   Aligns a 'timeDate' object to regular time stamps
-    
+
     # Example:
     #   align.timeDate(timeCalendar(), "1w")        # Weekly
     #   align.timeDate(timeCalendar(), "2w", "3d")  # Bi-Weekly with offset
 
     # FUNCTION:
-    
+
     # Settings:
     periods = c(7*24*3600, 24*3600, 3600, 60, 1)
     names(periods) = c("w", "d", "h", "m", "s")
@@ -57,22 +44,22 @@ align.timeDate <-
     # Convert timeDate to GMT-POSIX
     posixGMT = as.POSIXct(
         timeDate(x, zone = x@FinCenter, FinCenter = "GMT"), tz = "GMT")
-    
+
     # Compute Julian counts (x) and series values (y)
     Origin = as.POSIXct("1970-01-01", tz = "GMT")
     u <- as.integer(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
     xout = seq(u[1] + offset, u[length(u)], by = by)
     posixGMT = Origin + as.integer(xout)
-    
+
     x = timeDate(as.character(posixGMT), zone = "GMT", FinCenter = x@FinCenter)
-       
+
     # Remove Weekends:
     # if(!include.weekends) x = x[isWeekday(x), ]
-    
-    # Return Value:
-    x 
-}
 
+    # Return Value:
+    x
+})
 
 ################################################################################
+
 

@@ -151,7 +151,7 @@
         MYPAR = as.integer(MYPAR),
         E0 = as.double(eps),
         HESS = as.double(rep(0, times = NF*NF)),
-        PACKAGE = "fGarch")
+        PACKAGE = "fGarch2")
     H = matrix(ans[["HESS"]], ncol = NF)
     colnames(H) = rownames(H) = names(par)
     time = Sys.time() - .StartHessian
@@ -231,7 +231,7 @@
         SCL = as.double(rep(1, times = NF)),
         STPSZ = as.double(rep(0, times = NF)),
         FNBR = as.double(rep(0, times = NF)),
-        PACKAGE = "fGarch")
+        PACKAGE = "fGarch2")
     H = matrix(ans[["HESS"]], ncol = NF)
     colnames(H) = rownames(H) = names(par)
     time = Sys.time() - .StartHessian

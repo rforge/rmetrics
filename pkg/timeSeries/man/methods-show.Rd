@@ -37,11 +37,10 @@
 
 \examples{
 ## print -
-   require(fEcofin)
    setRmetricsOptions(myFinCenter = "GMT")
-   EDHEC = as.timeSeries(data(edhec.tS))[1:12, 1:4]
-   colnames(EDHEC) <- abbreviate(colnames(EDHEC), 6)
-   print(EDHEC)
+   LPP = as.timeSeries(data(LPP2005REC))[1:12, 1:4]
+   colnames(LPP) <- abbreviate(colnames(LPP), 6)
+   print(LPP)
 }
 
 

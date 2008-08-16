@@ -155,21 +155,21 @@ function()
     # Loda Data
     data(dem2gbp)
 
-    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb")
+    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb")
 
     garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "nlminb")
 
     garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")
 
-    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb+nm")
+    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb+nm")
 
     garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "lbfgsb+nm")
 
     # garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "donlp2")
 
-    garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "sqp")
+    # garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "sqp")
 
-    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "mnfb")
+    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "mnfb")
 
     # Return Value:
     return()
@@ -268,24 +268,26 @@ function()
     sp500dge = 100 * sp500dge
 
 
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-        algorithm = "lbfgsb")
+###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+###         algorithm = "lbfgsb")
 
 
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-        algorithm = "sqp")
+###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+###         algorithm = "sqp")
 
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
-        algorithm = "sqp")
-
-
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-        algorithm = "mnfb")
+###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
+###         algorithm = "sqp")
 
 
-    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
-        algorithm = "mnfb")
+###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+###         algorithm = "mnfb")
 
+
+###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
+###         algorithm = "mnfb")
+
+
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge)
 
     # Return Value:
     return()

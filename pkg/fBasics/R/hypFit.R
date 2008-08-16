@@ -76,7 +76,7 @@ hypFit <-
 
     # Add Title and Description:
     if (is.null(title)) title = "Hyperbolic Parameter Estimation"
-    if (is.null(description)) description = fUtilities:::.description()
+    if (is.null(description)) description = description()
 
     # Result:
     if (scale) {

@@ -102,7 +102,7 @@ tFit <-
 
     # Add Title and Description:
     if (is.null(title)) title = "Student-t Parameter Estimation"
-    if (is.null(description)) description = fUtilities:::.description()
+    if (is.null(description)) description = description()
 
     # Fit:
     fit = list(estimate = c(df = r$estimate), minimum = -r$minimum,
@@ -115,7 +115,7 @@ tFit <-
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title),
-        description = fUtilities:::.description() )
+        description = description() )
 }
 
 

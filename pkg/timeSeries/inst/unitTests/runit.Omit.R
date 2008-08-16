@@ -37,8 +37,7 @@
 test.naOmitMatrix =
 function()
 {
-    stopifnot(require(fEcofin))
-    x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
+    x = as.timeSeries(data(LPP2005REC))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)
 
     x[1, 1] = NA
@@ -65,8 +64,7 @@ function()
 test.na.omit =
 function()
 {
-    stopifnot(require(fEcofin))
-    x = as.timeSeries(data(edhec.tS))[1:20, 1:4]
+    x = as.timeSeries(data(LPP2005REC))[1:20, 1:4]
     colnames(x) = abbreviate(colnames(x), 6)
 
     x[1, 1] = NA

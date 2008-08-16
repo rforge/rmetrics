@@ -3,13 +3,10 @@
 ## import name space
 ################################################
 
-importFrom("fUtilities",
-           ".description",
+importFrom("fBasics",
            "volatility",
            "Heaviside",
-           ".sliderMenu",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
+           ".sliderMenu")
 importFrom("graphics",
            "plot",
            "abline",
@@ -56,13 +53,16 @@ importFrom("stats",
            "rt")
 importFrom("timeDate",
            "timeDate",
-           "timeSequence")
+           "timeSequence",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
 importFrom("timeSeries",
            "print",
            "sort",
            "colnames<-",
            "rownames<-",
            "isUnivariate",
+           ".description",
            "rev",
            "timeSeries",
            "lines",
@@ -72,12 +72,6 @@ importFrom("utils",
            "packageDescription",
            "capture.output",
            "menu")
-
-################################################
-## useDynLib
-################################################
-
-useDynLib("fGarch")
 
 ################################################
 ## S4 classes
@@ -192,4 +186,4 @@ export(
     "sstdFit",
     "sstdSlider",
     "stdFit",
-    ".truePersistence")
+    ".truePersistence" )

@@ -41,7 +41,6 @@
 
 \examples{
 ## data -
-   require(fEcofin)
    x = as.timeSeries(data(msft.dat))[, 1:4]
    x = 100*returns(x)
 

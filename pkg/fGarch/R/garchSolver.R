@@ -282,7 +282,7 @@
                     IPRNT = as.integer(trace),
                     MYPAR = as.integer(MYPAR),
                     F = as.double(FALSE),
-                    PACKAGE = "fGarch")
+                    PACKAGE = "fGarch2")
     if(IPAR[1] == 0) {
         sink()
         unlink("@sink@")
@@ -417,7 +417,7 @@
         RPAR = as.double(RPAR),
         MYPAR = as.integer(MYPAR),
         F = as.double(0),
-        PACKAGE = "fGarch")
+        PACKAGE = "fGarch2")
     if(IPAR[1] == 0) {
         sink()
         unlink("@sink@")

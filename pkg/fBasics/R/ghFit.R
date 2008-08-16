@@ -101,7 +101,7 @@ ghFit <-
 
     # Add Title and Description:
     if (is.null(title)) title = "Generalized Hyperbolic Parameter Estimation"
-    if (is.null(description)) description = fUtilities:::.description()
+    if (is.null(description)) description = description()
 
     # Fit:
     fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
@@ -113,7 +113,7 @@ ghFit <-
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title),
-        description = fUtilities:::.description() )
+        description = description() )
 }
 
 

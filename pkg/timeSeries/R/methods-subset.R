@@ -34,14 +34,14 @@ setClassUnion("index_timeSeries",
 {
 
     if (is(i, "character")) {
-        pos <- time(x)
-        i <-
-            if (timeDate:::.subsetCode(i) == "SPAN")
-                # Subsetting by Span Indexing:
-                timeDate:::.subsetBySpan(pos, i)
-            else
-                # Subsetting by Python Indexing:
-                timeDate:::.subsetByPython(pos, i)
+###         pos <- time(x)
+###         i <-
+###             if (.subsetCode(i) == "SPAN")
+###                 # Subsetting by Span Indexing:
+###                 .subsetBySpan(pos, i)
+###             else
+###                 # Subsetting by Python Indexing:
+###                 .subsetByPython(pos, i)
         i <- pmatch(as.character(i),
                     slot(x, "positions"), duplicates.ok = TRUE)
         if (any(is.na(i)))

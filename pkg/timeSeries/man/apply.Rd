@@ -115,7 +115,6 @@ applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
 \examples{
 ## data - 
    # Percentual Returns of Swiss Bond Index and Performance Index
-   require(fEcofin)
    LPP = 100 * as.timeSeries(data(LPP2005REC))[,c("SBI", "SPI")]
    head(LPP, 20)
    

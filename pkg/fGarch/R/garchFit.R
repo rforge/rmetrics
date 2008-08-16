@@ -92,8 +92,8 @@ garchFit <-
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL,
     trace = TRUE,
-    algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("fcd", "rcd"),
+    algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), ## "mnfb", "sqp",
+    hessian = "rcd", ## "fcd", "ffd"
     control = list(),
     title = NULL, description = NULL, ...)
 {
@@ -1108,7 +1108,7 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
         h = .Fortran("garchllh", as.double(z), as.double(h), as.integer(N),
             as.double(omega), as.double(alpha), as.double(gamma),
             as.integer(p), as.double(beta), as.integer(q), as.double(delta),
-            as.integer(h.start), PACKAGE = "fGarch")[[2]]
+            as.integer(h.start), PACKAGE = "fGarch2")[[2]]
     }
 
     # Save h and z:
@@ -1129,8 +1129,8 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     if(llh < .llh) {
         diff = (.llh - llh)/llh
         if(trace & diff > 1e-2) {
-            cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
-            print(params)
+            # cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
+            # print(params)
             if(persistence > 1)
                 cat("Warning - Persistence:", persistence, "\n")
         }
@@ -1249,10 +1249,12 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
 
     # Print LLH if we trace:
     if(trace) {
-        # Note, that .garchLLH() will print the final estimate ...
         setfGarchEnv(.llh = 1.0e99)
         cat("\nFinal Estimate of the Negative LLH:\n")
-        setfGarchEnv(.llh = .garchLLH(fit$par, trace))
+        .llh =  .garchLLH(fit$par, trace = FALSE)
+        cat(" LLH: ", .llh, "   norm LLH: ", .llh/N, "\n")
+        print(fit$par)
+        setfGarchEnv(.llh = .llh)
     }
 
     # Print Hessian Matrix if we trace:

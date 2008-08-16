@@ -55,7 +55,6 @@ cumulated(x, \dots)
 \examples{
 ## data -  
    # Microsoft Data:
-   require(fEcofin)
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))[1:10, "Close"]
    MSFT

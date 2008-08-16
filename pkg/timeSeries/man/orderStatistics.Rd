@@ -38,7 +38,6 @@ orderStatistics(x)
 \examples{
 ## data -  
    # Microsoft Data:
-   require(fEcofin)
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))
    head(MSFT)

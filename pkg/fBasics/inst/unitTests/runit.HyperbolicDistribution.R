@@ -56,7 +56,7 @@ function()
     # gh() Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = fUtilities:::.distCheck("gh",
+    test = fBasics:::.distCheck("gh",
         alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.2, lambda = 0.8,
         n = 2000, robust = FALSE)
     print(test)
@@ -76,7 +76,7 @@ function()
     # hyp() Distribution - Parameterization 1:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = fUtilities:::.distCheck("hyp",
+    test = fBasics:::.distCheck("hyp",
         alpha = 1.2, beta = 0.2, delta = 1.9, mu = 0.1, pm = 1,
         n = 1000, robust = FALSE)
     print(test)
@@ -85,7 +85,7 @@ function()
     # hyp() Distribution - Parameterization 2:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = fUtilities:::.distCheck("hyp",
+    test = fBasics:::.distCheck("hyp",
         alpha = 0.9, beta = -0.3, delta = 1.4, mu = -0.1, pm = 2,
         n = 1000, robust = FALSE)
     print(test)
@@ -94,7 +94,7 @@ function()
     # hyp() Distribution - Parameterization 3:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    fUtilities:::.distCheck("hyp",
+    fBasics:::.distCheck("hyp",
         alpha = 0.9, beta = -0.3, delta = 1.4, mu = -0.1, pm = 3,
         n = 1000, robust = FALSE)
     print(test)
@@ -104,7 +104,7 @@ function()
     if (FALSE) {
         RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
         set.seed(4711, kind = "Marsaglia-Multicarry")
-        fUtilities:::.distCheck("hyp",
+        fBasics:::.distCheck("hyp",
             alpha = 1.6, beta = -0.3, delta = 1.4, mu = 0.1, pm = 4,
             n = 1000, robust = FALSE)                                    # CHECK
         print(test)
@@ -125,7 +125,7 @@ function()
     # nig() Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = fUtilities:::.distCheck("nig",
+    test = fBasics:::.distCheck("nig",
         alpha = 2.1, beta = 0.1, delta = 1.5, mu = -0.1,
         n = 1000, robust = FALSE)
     print(test)

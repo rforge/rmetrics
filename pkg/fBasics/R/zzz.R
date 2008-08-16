@@ -41,25 +41,10 @@ function(lib, pkg)
         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
     }
 
-    # Load dll:
-    # library.dynam("fBasics", pkg, lib)
 }
 
 
-.onLoad <-
-    function(libname, pkgname)
-{
-
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- utils::packageDescription(pkgname)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkgname, dsc$Version))
-    }
-
-    setRmetricsOptions(.x.save = NA)
-}
+.onLoad <- function(libname, pkgname) setRmetricsOptions(.x.save = NA)
 
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"

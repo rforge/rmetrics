@@ -9,16 +9,15 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
+# You should have received A copy of the GNU Library General
 # Public License along with this library; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -28,92 +27,80 @@
 
 
 ################################################################################
-# METHOD:                   DESCRIPTION:
-#  julian.timeDate           Returns Julian day counts since 1970-01-01
-#  atoms.timeDate            Returns date/time atoms from a 'timeDate' object
-#  months.timeDate           Extracts months atom from a 'timeDate' object
+# FUNCTION:                 DATE FUNCTIONS:
+#  .fjulian                  Transforms formatted dates to julian day numbers
+#  .julian                   Implements SPlus like 'julian'
+#  .isPOSIX                  Checks for an object of class POSIX
+#  .by2seconds               Converts 'by' string into numeric value of seconds
 ################################################################################
 
 
-julian.timeDate <-
-    function(x, origin = timeDate("1970-01-01"),
-    units = c("auto", "secs", "mins", "hours", "days", "weeks"),
-    zone = NULL, FinCenter = NULL, ...)
-{
+.fjulian <- 
+    function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
+{   
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Extracts Julian time in days since 1970-01-01
+    #   Transforms formatted dates (fdates) from several formats
+    #   as 8/11/73 11Aug1973, ... into ISO-8601 Gregorian dates
+    #   ... makes use of C-Program char_date.c implemented by
+    #   Terry Therneau
 
-    # Arguments:
-    #   x - a 'timeDate' object
-    #   units - a character string, one of the units listed,
-    #       by default "secs".
+    # Notes:
+    #   cc - Century, becoming obsolete with the introduction of swap.
 
-    # Value:
-    #   Returns the number of days (possibly fractional) since
-    #   the origin.
+    # Example:
+    #   require(date)
+    #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
+    #   .fjulian(fdates)
+    #   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
+    #   .fjulian(fdates, order = 'dmy')
 
-    # Details:
-    #   The origin is "1970-01-01 00:00:00 GMT"
-
-    # Set Timezone to GMT:
-
-    # Check Class Type:
-    stopifnot(is(x, "timeDate"))
-    units = match.arg(units)
-
-    # POSIX:
-    if (is.null(zone)) zone = x@FinCenter
-    if (is.null(FinCenter)) FinCenter = x@FinCenter
-    ct = timeDate(x, zone = zone, FinCenter = FinCenter)
-
-    # Difftime:
-    if (is.null(origin))
-        origin = timeDate("1970-01-01", zone = "GMT", FinCenter = "GMT")
-    res = difftimeDate(ct, origin, units = units)
-
-    # Return Value:
-    structure(res, origin = origin)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-atoms.timeDate <-
-    function(x, ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts atoms from a 'timeDate' object.
-
-    # Arguments:
-    #   x - a 'timeDate' object from which to extract the
-    #       calendar "atoms".
-
-    # Value:
-    #   Returns a data.frame with the following calendar atoms:
-    #   Y(ear), m(onth), d(ay), H(our), M(inutes), S(econds).
+    # Note:
+    #   Requires R-package "date"
 
     # FUNCTION:
 
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    # Requires
+    # require(date)
 
-    # mdy:
-    X = as.POSIXlt(x@Data)
-    Y = X$year + 1900
-    m = X$mon + 1
-    d = X$mday
-    H = X$hour
-    M = X$min
-    S = X$sec
+    # Formats:
+    order.vec = switch(order,
+        'ymd'= c(1,2,3),
+        'ydm'= c(1,3,2),
+        'mdy'= c(2,3,1),
+        'myd'= c(2,1,3),
+        'dym'= c(3,1,2),
+        'dmy'= c(3,2,1),
+        stop("Invalid value for 'order' option"),
+        PACKAGE = "date")
+    nn = length(fdates)
+    temp = .C("char_date",
+        as.integer(nn),
+        as.integer(order.vec),
+        as.character(fdates),
+        month = integer(nn),
+        day = integer(nn),
+        year = integer(nn),
+        PACKAGE = "date")
+    month = temp[[4]]
+    day = temp[[5]]
+    year = temp[[6]]
+    yy = year - 100 * floor (year/100)
 
-    # Data Frame:
-    ans = data.frame(Y = Y, m = m, d = d, H = H, M = M, S = S)
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    # Swap:
+    cc = 19 + trunc(sign(swap-yy)+1)/2
+    year = cc*100 + yy
+
+    # Origin:
+    cc0 = origin %/% 1000000
+    yymmdd0 = origin - cc0*1000000
+    yy0 = yymmdd0 %/% 10000
+    mm0 = yymmdd0 %/% 100 - yy0*100
+    dd0 = yymmdd0 - yy0*10000 - mm0*100
+
+    # Result:
+    ans = .julian(month, day, year, origin = c(mm0, dd0, cc0*100+yy0))
 
     # Return Value:
     ans
@@ -123,34 +110,101 @@ atoms.timeDate <-
 # ------------------------------------------------------------------------------
 
 
-months.timeDate <-
-    function(x, abbreviate = NULL)
-{
+.julian <- 
+    function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
+{   
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Extracts months atom from a timeDate object
+    #   This function is a synonyme for Splus' "julian()" with the
+    #   same list of arguments.
 
-    # Arguments:
-    #   x - a 'timeDate' object from which to extract the
-    #       month "atom".
-
-    # Value:
-    #   Returns the month from a 'timeDate' object as an integer
-    #   value or vector with elements ranging between 1 and 12,
-    #   numbering the months from January to December.
+    # Note:
+    #   SPlus like function.
 
     # FUNCTION:
 
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    # Selection:
+    .R = TRUE
+    .S = FALSE
 
-    # Month:
-    ans = as.POSIXlt(x@Data)$mon+1
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    # Implementation under R:
+    if(.R) {
+        only.origin = all(missing(m), missing(d), missing(y))
+        if(only.origin) m = d = y = NULL    # return days since origin
+        nms = names(d)
+        max.len = max(length(m), length(d), length(y))
+        # prepend new origin value and rep out to common max. length:
+        m = c(origin[1], rep(m, length = max.len))
+        d = c(origin[2], rep(d, length = max.len))
+        y = c(origin[3], rep(y, length = max.len))
+        # code from julian date in the S book (p.269)
+        y = y + ifelse(m > 2, 0, -1)
+        m = m + ifelse(m > 2, -3, 9)
+        c = y %/% 100
+        ya = y - 100 * c
+        out = (146097 * c) %/% 4 + (1461 * ya) %/% 4 +
+            (153 * m + 2) %/% 5 + d + 1721119
+        # now subtract the new origin from all dates
+        if(!only.origin) {
+            if(all(origin == 0)) out = out[-1] else out = out[-1] - out[1] }
+        names(out) = nms
+        result = out }
+
+    # Synonyme for S:
+    if(.S) {
+        result = julian(m = m, d = d, y = y, origin. = origin)}
+
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.isPOSIX <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks for an object of class POSIX
+
+    # FUNCTION:
+
+    # Check:
+    ans = inherits(x, "POSIXt")
 
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.by2seconds <- 
+    function(by = "1 h")
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Convert 'by' string into numeric value of seconds
+
+    # FUNCTION:
+
+    # Convert:
+    by = strsplit(by, " ")[[1]]
+    byTime = as.integer(by[1])
+    byUnits = substr(by[2], 1, 1)
+    timeUnits = c(1, 60, 3600)
+    names(timeUnits) = c("s", "m", "h")
+    bySeconds = byTime * timeUnits[byUnits]
+    names(bySeconds) = "secs"
+
+    # Return Value:
+    bySeconds
 }
 
 

@@ -137,7 +137,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = fUtilities:::.unirootNA(f = .froot, interval = c(lower,
+            iteration = fBasics:::.unirootNA(f = .froot, interval = c(lower,
                 upper), alpha = alpha, beta = beta, delta = delta,
                 mu = mu, lambda = lambda, p = pp)
             counter = counter + 1

@@ -71,7 +71,6 @@
 \examples{
 ## data -  
    # Microsoft Data:
-   require(fEcofin)
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))[1:12, ]
 

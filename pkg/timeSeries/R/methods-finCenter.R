@@ -1,3 +1,4 @@
+
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -12,7 +13,7 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-finCenter.timeSeries  <-
+setMethod("finCenter", "timeSeries",
     function(x)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
@@ -31,10 +32,10 @@ finCenter.timeSeries  <-
     ans <-  x@FinCenter
 
     ans
-}
+})
 
 
-"finCenter<-.timeSeries" <-
+setMethod("finCenter<-", "timeSeries",
     function(x, value)
 {
     # A function implemented by  Yohan Chalabi and Diethelm Wuertz
@@ -61,5 +62,5 @@ finCenter.timeSeries  <-
 
     # Return Value:
     x
-}
+})
 

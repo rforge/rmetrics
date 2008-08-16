@@ -78,14 +78,12 @@ drawdownsStats(x, \dots)
 
 \examples{
 ## data -
-   require(fEcofin)
    # Microsoft Data: 
    setRmetricsOptions(myFinCenter = "GMT")
    MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
    head(MSFT)
 
 ## drawdownsStats -
-   require(fEcofin)
    drawdownsStats(as.timeSeries(data(LPP2005REC))[, "SPI"])
 }
 

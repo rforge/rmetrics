@@ -3,16 +3,6 @@
 ## import name space
 ################################################
 
-importFrom("fUtilities",
-           "finCenter<-",
-           "finCenter",
-           "outlier",
-           "getRmetricsOptions",
-           "kurtosis",
-           "skewness",
-           "atoms",
-           "description",
-           "setRmetricsOptions")
 importFrom("graphics",
            "plot",
            "lines",
@@ -66,10 +56,15 @@ importFrom("stats",
            "cor",
            "is.mts")
 importFrom("timeDate",
+           "finCenter<-",
+           "finCenter",
            "as.POSIXlt",
+           "getRmetricsOptions",
+           "julian",
            "timeSequence",
            "isWeekday",
            "timeDate",
+           ".by2seconds",
            "as.timeDate",
            "timeFirstDayInMonth",
            "timeFirstDayInQuarter",
@@ -77,7 +72,11 @@ importFrom("timeDate",
            "timeLastDayInQuarter",
            "whichFormat",
            "timeCalendar",
-           "sample")
+           "kurtosis",
+           "skewness",
+           "atoms",
+           "sample",
+           "setRmetricsOptions")
 importFrom("utils",
            "head",
            "str",
@@ -91,7 +90,8 @@ importFrom("utils",
 
 exportClasses("index_timeSeries",
               "timeSeries" )
-export("returns",
+export("outlier",
+        "returns",
         "rowCumsums",
         "series<-",
         "series" )
@@ -113,6 +113,8 @@ exportMethods("aggregate",
               "dimnames<-",
               "dimnames",
               "end",
+              "finCenter<-",
+              "finCenter",
               "head",
               "is.na",
               "lag",
@@ -159,10 +161,7 @@ S3method("colCumsums", "default")
 S3method("colCumsums", "timeSeries")
 S3method("cumulated", "default")
 S3method("cut", "timeSeries")
-S3method("finCenter<-", "timeSeries")
-S3method("finCenter", "timeSeries")
 S3method("model.frame", "timeSeries")
-S3method("outlier", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("time<-", "timeSeries")
 
@@ -178,13 +177,26 @@ export(
     ".applySeries",
     ".assign_timeSeries",
     "as.timeSeries",
+    "colAvgs",
     "colCummaxs",
     "colCummins",
     "colCumprods",
     "colCumreturns",
     "colCumsums",
+    "colKurtosis",
+    "colMaxs",
+    "colMins",
+    "colProds",
+    "colQuantiles",
+    "colSds",
+    "colSkewness",
+    "colStats",
+    "colStdevs",
+    "colVars",
     "countMonthlyRecords",
     "cumulated",
+    "description",
+    ".description",
     "drawdowns",
     "drawdownsStats",
     "dummyDailySeries",

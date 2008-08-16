@@ -83,7 +83,7 @@ nFit <-
 
     # Add Title and Description:
     if (is.null(title)) title = "Normal Parameter Estimation"
-    if (is.null(description)) description = fUtilities:::.description()
+    if (is.null(description)) description = description()
 
     # Fit:
     fit = list(
@@ -98,7 +98,7 @@ nFit <-
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title),
-        description = fUtilities:::.description() )
+        description = description() )
 }
 
 
