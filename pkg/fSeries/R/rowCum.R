@@ -51,7 +51,7 @@
 rowCumsums =
 function(x, na.rm = FALSE, ...)
 {
-    UseMethod("rowCumsums") 
+    UseMethod("rowCumsums")
 }
 
 
@@ -66,7 +66,7 @@ function(x, na.rm = FALSE, ...)
     #   Computes sample cumulated sums by row (for matrix objects)
 
     # Arguments:
-    
+
     # FUNCTION:
 
     # Transform:
@@ -99,7 +99,7 @@ function(x, na.rm = FALSE, ...)
     #   Computes sample cumulated sums by row for timeSeries objects
 
     # Arguments:
-    
+
     # FUNCTION:
 
     # Cumulative Sums:
@@ -119,30 +119,30 @@ function(x, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-rowCumsums.zoo =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+## rowCumsums.zoo =
+## function(x, na.rm = FALSE, ...)
+## {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Computes sample cumulated sums by row for zoo objects
+##     # Description:
+##     #   Computes sample cumulated sums by row for zoo objects
 
-    # Arguments:
-    
-    # FUNCTION:
+##     # Arguments:
 
-    # Cumulative Sums:
-    x = rowCumsums(as.matrix(x, ...))
- 
-    # Zoo Input ?
-    if (class(x) == "zoo") {
-        index = attr(x, "index")
-        frequency = attr(x, "frequency")
-        result = zoo(result, index, frequency)
-    }
+##     # FUNCTION:
 
-    # Return Value:
-    result
-}
+##     # Cumulative Sums:
+##     x = rowCumsums(as.matrix(x, ...))
+
+##     # Zoo Input ?
+##     if (class(x) == "zoo") {
+##         index = attr(x, "index")
+##         frequency = attr(x, "frequency")
+##         result = zoo(result, index, frequency)
+##     }
+
+##     # Return Value:
+##     result
+## }
 
 
 ################################################################################

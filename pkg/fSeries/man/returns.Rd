@@ -7,7 +7,7 @@
 \alias{returns}
 \alias{returns.default}
 \alias{returns.timeSeries}
-\alias{returns.zoo}
+% \alias{returns.zoo}
 
 \alias{returnSeries}
 \alias{getReturns}
@@ -27,8 +27,9 @@ returns(x, \dots)
     percentage = FALSE, \dots)
 \method{returns}{timeSeries}(x, method = c("continuous", "discrete", "compound", "simple"), 
     percentage = FALSE, na.rm = TRUE, trim = TRUE, \dots)
-\method{returns}{zoo}(x, method = c("continuous", "discrete", "compound", "simple"), 
-    percentage = FALSE, na.rm = TRUE, trim = TRUE, \dots)
+
+% \method{returns}{zoo}(x, method = c("continuous", "discrete", "compound", "simple"), 
+%    percentage = FALSE, na.rm = TRUE, trim = TRUE, \dots)
     
 getReturns(\dots)
 returnSeries(\dots)

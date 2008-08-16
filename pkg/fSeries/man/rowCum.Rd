@@ -8,7 +8,7 @@
 \alias{rowCumsums} 
 \alias{rowCumsums.default}
 \alias{rowCumsums.timeSeries}
-\alias{rowCumsums.zoo}
+% \alias{rowCumsums.zoo}
 
 
 \description{
@@ -21,7 +21,7 @@
 \usage{
 \method{rowCumsums}{default}(x, na.rm = FALSE, \dots)
 \method{rowCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
-\method{rowCumsums}{zoo}(x, na.rm = FALSE, \dots)
+% \method{rowCumsums}{zoo}(x, na.rm = FALSE, \dots)
 }
 
 
