@@ -9,26 +9,26 @@
 \alias{attach}
 \alias{attach.default}
 
-% \alias{log}
-% \alias{log.default}
+\alias{log}
+\alias{log.default}
 
 \alias{outlier}
 \alias{outlier.default}
 
-% \alias{rank}
-% \alias{rank.default}
+\alias{rank}
+\alias{rank.default}
 
 \alias{sample}
 \alias{sample.default}
 
-% \alias{var}
-% \alias{var.default}
+\alias{var}
+\alias{var.default}
 
-% \alias{cov}
-% \alias{cov.default}
+\alias{cov}
+\alias{cov.default}
 
-% \alias{cor}
-% \alias{cor.default}
+\alias{cor}
+\alias{cor.default}
 
 \alias{volatility}
 \alias{volatility.default}
@@ -69,16 +69,16 @@
     \code{atoms} \tab adds atoms function, \cr
     \code{attach} \tab extends attach function, \cr
     \code{colnames<-} \tab adds colnames assignment, \cr
-%    \code{cor} \tab extends cor function, \cr
-%    \code{cov} \tab extends cov function, \cr
-%    \code{log} \tab extends log function, \cr
+    \code{cor} \tab extends cor function, \cr
+    \code{cov} \tab extends cov function, \cr
+    \code{log} \tab extends log function, \cr
     \code{outlier} \tab adds outlier function, \cr
     \code{rank} \tab extends rank function, \cr
     \code{rownames<-} \tab adds rownames assigment, \cr
     \code{sample} \tab extends sample function, \cr
     \code{stdev} \tab adds stdev function, \cr
     \code{termPlot} \tab adds term plot function, \cr
-%    \code{var} \tab extends var function, \cr
+    \code{var} \tab extends var function, \cr
     \code{volatility} \tab adds volatility function. }
 
 }
@@ -93,18 +93,18 @@
 \method{attach}{default}(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
 
-% \method{cor}{default}(x, y = NULL, use = "all.obs", 
-%     method = c("pearson", "kendall", "spearman"))
+\method{cor}{default}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
     
-% \method{cov}{default}(x, y = NULL, use = "all.obs", 
-%     method = c("pearson", "kendall", "spearman"))
+\method{cov}{default}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
 
-% \method{log}{default}(x, base = exp(1))
+\method{log}{default}(x, base = exp(1))
 
 \method{outlier}{default}(x, sd = 5, complement = TRUE, \dots)
 
-% \method{rank}{default}(x, na.last = TRUE, 
-%     ties.method = c("average", "first", "random", "max", "min"))
+\method{rank}{default}(x, na.last = TRUE, 
+    ties.method = c("average", "first", "random", "max", "min"))
 
 \method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
 
@@ -112,7 +112,7 @@
 
 \method{termPlot}{default}(model, \dots)
 
-% \method{var}{default}(x, y = NULL, na.rm = FALSE, use)
+\method{var}{default}(x, y = NULL, na.rm = FALSE, use)
    
 \method{volatility}{default}(object, \dots)
     
@@ -124,11 +124,11 @@ colnames(x) <- value
 
 \arguments{
 
-%     \item{base}{
-%         [log] - \cr
-%         additional argument to the \code{log} function.
-%         See for details \code{help(log,package=base)}.
-%         }
+    \item{base}{
+        [log] - \cr
+        additional argument to the \code{log} function.
+        See for details \code{help(log,package=base)}.
+        }
     \item{f}{
         [align] - \cr
         for \code{method="constant"} the value of \code{f} takes a
@@ -154,13 +154,13 @@ colnames(x) <- value
         %% [head] - \cr
         %% a single integer, the length of the head.
         }
-%     \item{na.last}{
-%         [rank] - \cr
-%         for controlling the treatment of NAs. If \code{TRUE}, missing 
-%         values in the data are put last; if \code{FALSE}, they are put 
-%         first; if \code{NA}, they are removed; if \code{"keep"} they are 
-%         kept with rank \code{NA}.
-%         }
+    \item{na.last}{
+        [rank] - \cr
+        for controlling the treatment of NAs. If \code{TRUE}, missing 
+        values in the data are put last; if \code{FALSE}, they are put 
+        first; if \code{NA}, they are removed; if \code{"keep"} they are 
+        kept with rank \code{NA}.
+        }
     \item{name}{
         [attach] - \cr
         alternative way to specify the database to be attached.
@@ -210,12 +210,12 @@ colnames(x) <- value
         vector argument returning a single number result or the
         string \code{"ordered"}.
         }
-%     \item{ties.method}{ 
-%         [rank] - \cr
-%         a character string, one of \code{"average"}, \code{"first"}, 
-%         \code{"random"}, \code{"max"}, \code{"min"} specifying how 
-%         ties are treated, can be abbreviated, see \code{rank}.
-%         }
+    \item{ties.method}{ 
+        [rank] - \cr
+        a character string, one of \code{"average"}, \code{"first"}, 
+        \code{"random"}, \code{"max"}, \code{"min"} specifying how 
+        ties are treated, can be abbreviated, see \code{rank}.
+        }
     \item{value}{
         [colnames][rownames] - \cr
         additional arguments to the \code{colnames} and \code{rownames}
@@ -255,19 +255,14 @@ colnames(x) <- value
     \item{xout}{
         [align] - \cr
         a set of values specifying where interpolation is to take place.}
-
-%       \item{y, na.rm, use}{
-%         [align] - \cr
-%         y-coordinates of the points to be aligned.\cr
-%         [var] - \cr
-%         additional arguments to the \code{var} function.\cr
-%         [cov] - \cr
-%         additional arguments to the \code{cov} function.
-%       }
-      \item{y, na.rm}{
+    \item{y, na.rm, use}{
         [align] - \cr
         y-coordinates of the points to be aligned.\cr
-      }
+        [var] - \cr
+        additional arguments to the \code{var} function.\cr
+        [cov] - \cr
+        additional arguments to the \code{cov} function.
+        }
     \item{\dots}{
         arguments to be passed.
     }

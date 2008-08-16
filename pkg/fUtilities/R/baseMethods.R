@@ -62,11 +62,8 @@
 #  volatility.default        volatility default method
 ################################################################################
 
-## It is bad practice to create S3 generic from function especially
-## when one wants to use S4 methods -> this can lead to tricky dispatch
-## problems.
 
-## .conflicts.OK = TRUE
+.conflicts.OK = TRUE
 
 
 # ------------------------------------------------------------------------------
@@ -137,200 +134,200 @@ atoms.default <-
 # ------------------------------------------------------------------------------
 
 
-## attach <-
-##     function(what, pos = 2, name = deparse(substitute(what)),
-##     warn.conflicts = TRUE)
-## {
-##     # A function implemented by Diethelm Wuertz
+attach <-
+    function(what, pos = 2, name = deparse(substitute(what)),
+    warn.conflicts = TRUE)
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("attach")
-## }
-
-
-## # ------------------------------------------------------------------------------
-
-
-## attach.default <- base::attach
+    # Return Value:
+    UseMethod("attach")
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-## "colnames<-" =
-##     function(x, value)
-## {
-##     # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("colnames<-")
-## }
-
-
-## # ------------------------------------------------------------------------------
-
-
-## `colnames<-.default` <- base::`colnames<-`
+attach.default <- base::attach
 
 
 # ------------------------------------------------------------------------------
 
 
-## cor <-
-##     function(x, y = NULL, use = "all.obs",
-##     method = c("pearson", "kendall", "spearman"))
-## {
-##     # A function implemented by Diethelm Wuertz
+"colnames<-" =
+    function(x, value)
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("cor")
-## }
-
-
-# ------------------------------------------------------------------------------
-
-
-## cor.default <- stats::cor
-
-
-## # ------------------------------------------------------------------------------
-
-
-## cov <-
-##     function(x, y = NULL, use = "all.obs",
-##     method = c("pearson", "kendall", "spearman"))
-## {
-##     # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("cov")
-## }
-
-
-## # ------------------------------------------------------------------------------
-
-
-## cov.default <- stats::cov
-
-
-## # ------------------------------------------------------------------------------
-
-
-## log <-
-##     function(x, base = exp(1))
-## {   # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("log")
-## }
-
-
-## # ------------------------------------------------------------------------------
-
-
-## log.default <-
-##     function(x, base = exp(1))
-## {
-##     # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     base::log(x, base)
-## }
+    # Return Value:
+    UseMethod("colnames<-")
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-## rank <-
-##     function(x, na.last = TRUE,
-##     ties.method = c("average", "first", "random", "max", "min"))
-## {
-##     # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("rank")
-## }
+`colnames<-.default` <- base::`colnames<-`
 
 
 # ------------------------------------------------------------------------------
 
 
-## rank.default <-
-##     function(x, na.last = TRUE,
-##     ties.method = c("average", "first", "random", "max", "min"))
-## {
-##     # A function implemented by Diethelm Wuertz
+cor <-
+    function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     base::rank(x, na.last = na.last, ties.method = ties.method)
-## }
-
-
-# ------------------------------------------------------------------------------
-
-
-## sample <-
-##     function(x, ...)
-## {   # A function implemented by Diethelm Wuertz
-
-##     # FUNCTION:
-
-##     # Return Value:
-##     UseMethod("sample")
-## }
-
-
-## # ------------------------------------------------------------------------------
-
-
-## sample.default <-
-##     function (x, size, replace = FALSE, prob = NULL, ...)
-## {
-##     # FUNCTION:
-
-##     base::sample(x, size, replace = replace, prob = prob)
-## }
+    # Return Value:
+    UseMethod("cor")
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-## if(getRversion() < "2.4.0") {
+cor.default <- stats::cor
 
-##     # Note:
-##     # sort() has been S3 generic in 'base' since 2.4.0
-##     # Otherwise use something that works here
 
-##     sort <- function (x, decreasing = FALSE, ...)
-##     {
-##         if (!is.logical(decreasing) || length(decreasing) != 1)
-##             stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
-##         UseMethod("sort")
-##     }
+# ------------------------------------------------------------------------------
 
-##     sort.default <- function(x, decreasing = FALSE, ...) {
-##         if (is.object(x))
-##         x[order(x, decreasing = decreasing)]
-##         else base::sort(x, decreasing = decreasing, ...)
-##     }
 
-## }# endif {only for outdated R}
+cov <-
+    function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("cov")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cov.default <- stats::cov
+
+
+# ------------------------------------------------------------------------------
+
+
+log <-
+    function(x, base = exp(1))
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("log")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+log.default <-
+    function(x, base = exp(1))
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    base::log(x, base)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rank <-
+    function(x, na.last = TRUE,
+    ties.method = c("average", "first", "random", "max", "min"))
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("rank")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rank.default <-
+    function(x, na.last = TRUE,
+    ties.method = c("average", "first", "random", "max", "min"))
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    base::rank(x, na.last = na.last, ties.method = ties.method)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+sample <-
+    function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("sample")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+sample.default <-
+    function (x, size, replace = FALSE, prob = NULL, ...)
+{
+    # FUNCTION:
+
+    base::sample(x, size, replace = replace, prob = prob)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+if(getRversion() < "2.4.0") {
+
+    # Note:
+    # sort() has been S3 generic in 'base' since 2.4.0
+    # Otherwise use something that works here
+
+    sort <- function (x, decreasing = FALSE, ...)
+    {
+        if (!is.logical(decreasing) || length(decreasing) != 1)
+            stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
+        UseMethod("sort")
+    }
+
+    sort.default <- function(x, decreasing = FALSE, ...) {
+        if (is.object(x))
+        x[order(x, decreasing = decreasing)]
+        else base::sort(x, decreasing = decreasing, ...)
+    }
+
+}# endif {only for outdated R}
 
 
 # ------------------------------------------------------------------------------
@@ -392,21 +389,21 @@ outlier.default <-
 # ------------------------------------------------------------------------------
 
 
-## "rownames<-" =
-##     function(x, value)
-## {   # A function implemented by Diethelm Wuertz
+"rownames<-" =
+    function(x, value)
+{   # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("rownames<-")
-## }
-
-
-## # ------------------------------------------------------------------------------
+    # Return Value:
+    UseMethod("rownames<-")
+}
 
 
-## `rownames<-.default` <- base::`rownames<-`
+# ------------------------------------------------------------------------------
+
+
+`rownames<-.default` <- base::`rownames<-`
 
 
 # ------------------------------------------------------------------------------
@@ -427,8 +424,8 @@ stdev.default <-
 # ------------------------------------------------------------------------------
 
 
-stdev <- function(x, na.rm = FALSE)
-    UseMethod("stdev")
+stdev <- stats::sd
+
 
 # ------------------------------------------------------------------------------
 
@@ -463,22 +460,22 @@ function(model, ...)
 # ------------------------------------------------------------------------------
 
 
-## var <-
-##     function(x, y = NULL, na.rm = FALSE, use)
-## {
-##     # A function implemented by Diethelm Wuertz
+var <-
+    function(x, y = NULL, na.rm = FALSE, use)
+{
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("var")
-## }
-
-
-## # ------------------------------------------------------------------------------
+    # Return Value:
+    UseMethod("var")
+}
 
 
-## var.default <- stats::var
+# ------------------------------------------------------------------------------
+
+
+var.default <- stats::var
 
 
 # ------------------------------------------------------------------------------

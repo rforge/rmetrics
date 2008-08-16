@@ -25,92 +25,89 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-
-################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  as.POSIXlt                Converts objects of class POSIXlt
-#  as.POSIXlt.default        Default Method
+                                                
+################################################################################                                                                                                                                                          
+# FUNCTION:                 DESCRIPTION:                                                                                          
+#  as.POSIXlt                Converts objects of class POSIXlt                 
+#  as.POSIXlt.default        Default Method                                                            
 ################################################################################
 
 
 # IMPORTANT NOTE:
 #   as.POSIXlt was introduced as generic function in R 2.7.0
-#   Preliminarily, keep the function here to ne downward
+#   Preliminarily, keep the function here to ne downward 
 #   compatible with previous R Versions. DW
 
-## YC : Actually we should not use S3 style methods because we are
-## using only S4 classes. Generic will be implicitly created
-## thanks to setMethod
 
-## .conflicts.OK = TRUE
+.conflicts.OK = TRUE
 
 
-## # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
-## as.POSIXlt <-
-##     function(x, tz = "")
-## {
-##     # A function implemented by Diethelm Wuertz
+as.POSIXlt <- 
+    function(x, tz = "")
+{   
+    # A function implemented by Diethelm Wuertz
 
-##     # FUNCTION:
+    # FUNCTION:
 
-##     # Return Value:
-##     UseMethod("as.POSIXlt")
-## }
-
-
-## # ------------------------------------------------------------------------------
+    # Return Value:
+    UseMethod("as.POSIXlt")
+}
 
 
-## as.POSIXlt.default <-
-##     function (x, tz = "")
-## {
-##     # A function implemented by Diethelm Wuertz
+# ------------------------------------------------------------------------------
 
-##     # FUNCTION:
 
-##     # As Posix:
-##     fromchar <- function(x) {
-##         xx <- x[1]
-##         if (is.na(xx)) {
-##             j <- 1
-##             while (is.na(xx) && (j <- j + 1) <= length(x)) xx <- x[j]
-##             if (is.na(xx))
-##                 f <- "%Y-%m-%d"
-##         }
-##         if (is.na(xx) || !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
-##             !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
-##             !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) || !is.na(strptime(xx,
-##             f <- "%Y/%m/%d %H:%M")) || !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
-##             !is.na(strptime(xx, f <- "%Y/%m/%d"))) {
-##             res <- strptime(x, f)
-##             if (nchar(tz))
-##                 attr(res, "tzone") <- tz
-##             return(res)
-##         }
-##         stop("character string is not in a standard unambiguous format")
-##     }
-##     if (inherits(x, "POSIXlt"))
-##         return(x)
-##     if (inherits(x, "Date"))
-##         return(.Internal(Date2POSIXlt(x)))
-##     tzone <- attr(x, "tzone")
-##     if (inherits(x, "date") || inherits(x, "dates"))
-##         x <- as.POSIXct(x)
-##     if (is.character(x))
-##         return(fromchar(unclass(x)))
-##     if (is.factor(x))
-##         return(fromchar(as.character(x)))
-##     if (is.logical(x) && all(is.na(x)))
-##         x <- as.POSIXct.default(x)
-##     if (!inherits(x, "POSIXct"))
-##         stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
-##             deparse(substitute(x))))
-##     if (missing(tz) && !is.null(tzone))
-##         tz <- tzone[1]
-##     .Internal(as.POSIXlt(x, tz))
-## }
+as.POSIXlt.default <- 
+    function (x, tz = "")
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # As Posix:
+    fromchar <- function(x) {
+        xx <- x[1]
+        if (is.na(xx)) {
+            j <- 1
+            while (is.na(xx) && (j <- j + 1) <= length(x)) xx <- x[j]
+            if (is.na(xx))
+                f <- "%Y-%m-%d"
+        }
+        if (is.na(xx) || !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M:%S")) ||
+            !is.na(strptime(xx, f <- "%Y/%m/%d %H:%M:%S")) ||
+            !is.na(strptime(xx, f <- "%Y-%m-%d %H:%M")) || !is.na(strptime(xx,
+            f <- "%Y/%m/%d %H:%M")) || !is.na(strptime(xx, f <- "%Y-%m-%d")) ||
+            !is.na(strptime(xx, f <- "%Y/%m/%d"))) {
+            res <- strptime(x, f)
+            if (nchar(tz))
+                attr(res, "tzone") <- tz
+            return(res)
+        }
+        stop("character string is not in a standard unambiguous format")
+    }
+    if (inherits(x, "POSIXlt"))
+        return(x)
+    if (inherits(x, "Date"))
+        return(.Internal(Date2POSIXlt(x)))
+    tzone <- attr(x, "tzone")
+    if (inherits(x, "date") || inherits(x, "dates"))
+        x <- as.POSIXct(x)
+    if (is.character(x))
+        return(fromchar(unclass(x)))
+    if (is.factor(x))
+        return(fromchar(as.character(x)))
+    if (is.logical(x) && all(is.na(x)))
+        x <- as.POSIXct.default(x)
+    if (!inherits(x, "POSIXct"))
+        stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
+            deparse(substitute(x))))
+    if (missing(tz) && !is.null(tzone))
+        tz <- tzone[1]
+    .Internal(as.POSIXlt(x, tz))
+}
 
 
 ################################################################################

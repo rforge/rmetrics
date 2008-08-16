@@ -2,7 +2,7 @@
 
 \alias{getS4}
 
-% \alias{isS4}
+\alias{isS4}
 
 \alias{getCall}
 \alias{getModel}
@@ -23,7 +23,7 @@
     The extractor functions are:
     
     \tabular{ll}{
-%    \code{isS4} \tab Checks if an object is a S4 object, \cr
+    \code{isS4} \tab Checks if an object is a S4 object, \cr
     \code{getCall} \tab Extracts the call slot from a S4 object, \cr
     \code{getModel} \tab Extracts the model slot from a S4 object, \cr
     \code{getTitle} \tab Extracts the title slot from a S4 object, \cr
@@ -34,7 +34,7 @@
 
 
 \usage{
-% isS4(object)
+isS4(object)
 
 getCall(object)
 getModel(object)
@@ -59,10 +59,10 @@ getSlot(object, slotName)
 
 \value{
 
-%     \code{isS4}\cr
+    \code{isS4}\cr
     
-%     returns either TRUR or FALSE depending if the argument is
-%     an object of class S4 or not.
+    returns either TRUR or FALSE depending if the argument is
+    an object of class S4 or not.
     
     \code{getCall}\cr
     \code{getModel}\cr

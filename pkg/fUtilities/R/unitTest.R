@@ -130,7 +130,7 @@
         "fUtilities",
         "fEcofin",
         "fCalendar",
-        "timeSeries",
+        "fSeries",
         "fImport",
         "fBasics",
         "fArma",
