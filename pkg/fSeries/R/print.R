@@ -28,52 +28,73 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
-#  durations                 Computes durations from a 'timeSeries' object
+# CLASS:                    REPRESENTATION:
+#  'timeSeries'              S4 Class representation
+# METHODS:                  PRINT AND PLOT FUNCTIONS:
+#  show.timeSeries           Prints a 'timeSeries' object
 ################################################################################
 
 
-durations = 
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
-{   # A function implemented by Diethelm Wuertz
-
+setClass("timeSeries", 
+    # A class implemented by Diethelm Wuertz
+    
     # Description:
-    #   Computes durations from a financial price series
+    #   Class representatation for 'timeSeries' Objects.
+   
+    # CLASS:
     
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
-    #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
-    #       units in which the durations are measured
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-  
-    # FUNCTION:
-    
-    # Positions and Durations:
-    pos = seriesPositions(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
-    
-    # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
-    
-    # Return Series:
-    x
-}
-
+    representation(
+        Data = "matrix",
+        positions = "character",
+        format = "character",
+        FinCenter = "character",      
+        units = "character",
+        recordIDs = "data.frame",
+        title = "character",
+        documentation = "character")    
+)
+   
 
 # ------------------------------------------------------------------------------
 
 
-durationSeries = 
-function(...)
-{
-    durations(...)
-}
+show.timeSeries = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print method for an S4 object of class "timeSeries"
+ 
+    # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
+    recordIDs = FALSE
+    
+    # Series:
+    if (recordIDs) {
+        if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
+            print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE)
+        } else {
+            print(x@Data)
+        }  
+    } else {
+        print(x@Data)
+    }
+    
+    # Control:
+    control = attr(x, "control")
+    if (!is.null(control)) print(control)
+    
+    # Return Value:
+    invisible(x)
+}  
+    
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "timeSeries", show.timeSeries) 
 
 
 ################################################################################

@@ -1,7 +1,7 @@
 \name{orderColnames}
 
 
-\title{Reorder Column Names of a Time Series}
+\title{Reorders column names of a time series}
 
 
 \alias{orderColnames}
@@ -14,7 +14,8 @@
 
 \description{
     
-    Functions and methods dealing with the rearrangement
+    A collection and description of functions 
+    and methods dealing with the rearrangement
     of column names of 'timeSeries' objects. 
     \cr
     
@@ -110,17 +111,24 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## data - 
-   edhec.tS = as.timeSeries(data(edhec.tS))
-   colnames(edhec.tS) = abbreviate(colnames(edhec.tS), 6)
+   edhec = as.timeSeries(data(edhec.tS))
+   colnames(edhec) = abbreviate(colnames(edhec), 6)
 
 ## sortColnames -
    # Sort alphabetically
-   sortColnames(edhec.tS)
+   sortColnames(edhec)
   
 ## hclustColnames -
-   head(edhec.tS[, hclustColnames(edhec.tS)])  
+   head(edhec[, hclustColnames(edhec)])  
 }
 
 

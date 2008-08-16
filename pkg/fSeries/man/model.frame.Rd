@@ -1,7 +1,7 @@
 \name{model.fram}
 
 
-\title{Model Frames for Time Series Objects}
+\title{Model Frames for timeSeries Objects}
 
 
 \alias{model.frame}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Allow to work with model frames for 'timeSeries' objects.               
+    Allows to work with model frames for 'timeSeries' objects.               
 }
 
 
@@ -67,6 +67,13 @@
     
 }
     
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
 
 \examples{
 ## data -  

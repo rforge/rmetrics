@@ -28,52 +28,51 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
-#  durations                 Computes durations from a 'timeSeries' object
+# METHODS:                  PRINT AND PLOT FUNCTIONS:
+#  summary.timeSeries        Summarizes a 'timeSeries' object
 ################################################################################
 
 
-durations = 
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+summary.timeSeries = 
+function(object, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes durations from a financial price series
+    #   S3 Summary method for objects of class "timeDate"
     
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
-    #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
-    #       units in which the durations are measured
+    # Arguments
+    #   x - an object of class "timeDate"
+    
+    # FUNCTION: 
 
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-  
-    # FUNCTION:
-    
-    # Positions and Durations:
-    pos = seriesPositions(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
-    
+    # Series Name:
+    cat("Time Series:          ")
+    cat("\n Name:              ", substitute(object))    
     # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
+    Dim = dim(object@Data)
+    cat("\nData Matrix:        ")
+    cat("\n Dimension:         ", Dim)
+    cat("\n Column Names:      ", colnames(object@Data) )
+    firstName = rownames(object@Data)[1]
+    lastName = rownames(object@Data)[Dim[1]]
+    cat("\n Row Names:         ", firstName, " ... ", lastName)
+    # Date/Time Positions:
+    positions = seriesPositions(object)
+    cat("\nPositions:          ")
+    cat("\n Start:             ", as.character(start(positions)))
+    cat("\n End:               ", as.character(end(positions)))
+    # Other Attributes:
+    cat("\nAttributes:         ")
+    cat("\n Format:            ", object@format)
+    cat("\n FinCenter:         ", object@FinCenter)
+    cat("\n Units:             ", object@units)
+    cat("\n Title:             ", object@title)
+    cat("\n Documentation:     ", object@documentation)
+    cat("\n") 
     
-    # Return Series:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-durationSeries = 
-function(...)
-{
-    durations(...)
-}
+    # Return Value:
+    invisible()
+}  
 
 
 ################################################################################

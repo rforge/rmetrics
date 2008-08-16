@@ -1,7 +1,7 @@
 \name{durations}
 
 
-\title{Durations from a Time Series}
+\title{Computes durations from a timeSeries}
 
 
 \alias{durations}
@@ -11,7 +11,7 @@
 
 \description{
     
-    Compute durations from an object of class 'timeSeries'.  
+    Computes durations from an object of class 'timeSeries'.  
        
 }
 
@@ -48,6 +48,13 @@ durationSeries(\dots)
 
     returns an object of class \code{timeSeries}.
         
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 

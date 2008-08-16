@@ -1,16 +1,30 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
-#  (at your option) any later version.
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Library General Public License for more details.
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  A copy of the GNU General Public License is available at
-#  ../../COPYING
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port:
+#   1999 - 2007, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -18,22 +32,36 @@
 #  colCumsums                Computes sample cumulated sums by column
 #  colCumsums.default        S3 default method (for matrix objects)
 #  colCumsums.timeSeries     S3 method for timeSeries objects
+#  colCumsums.zoo            S3 method for zoo objects
 # FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
 #  colCummaxs                Computes cumulated maximum values
 #  colCummaxs.default        S3 default method (for matrix objects)
 #  colCummaxs.timeSeries     S3 method for timeSeries objects
-# FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
-#  colCummins                Computes cumulated maximum values
-#  colCummins.default        S3 default method (for matrix objects)
-#  colCummins.timeSeries     S3 method for timeSeries objects
+#  colCummaxs.zoo            S3 method for zoo objects
 # FUNCTION:                 COLUMN CUMULATIVE MINIMA:
 #  colCumprods               Computes cumulated product values
 #  colCumprods.default       S3 default method (for matrix objects)
 #  colCumprods.timeSeries    S3 method for timeSeries objects
+#  colCumprods.zoo           S3 method for zoo objects
 # FUNCTION:                 COLUMN CUMULATIVE RETURNS:
 #  colCumreturns             Computes cumulated product values
 #  colCumreturns.default     S3 default method (for matrix objects)
 #  colCumreturns.timeSeries  S3 method for timeSeries objects
+#  colCumreturns.zoo         S3 method for zoo objects
+# FUNCTION:                 NO LONGER SUPPORTED:
+#  cumsum.timeSeries         use colCumsums()
+################################################################################
+
+
+################################################################################
+# @comments
+#   DW 2007-09-20           further col* functions added, see ADDONS
+################################################################################
+
+
+################################################################################
+# @todo
+#
 ################################################################################
 
 
@@ -43,26 +71,25 @@
 # ------------------------------------------------------------------------------
 
 
-colCumsums <-
-    function(x, na.rm = FALSE, ...)
+colCumsums =
+function(x, na.rm = FALSE, ...)
 {
-    UseMethod("colCumsums")
+    UseMethod("colCumsums") 
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-colCumsums.default <-
-    function(x, na.rm = FALSE, ...)
-{
-    # A function implemented by Diethelm Wuertz
+colCumsums.default =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample cumulated sums by column (for matrix objects)
 
     # Arguments:
-
+    
     # FUNCTION:
 
     # Transform:
@@ -74,7 +101,7 @@ colCumsums.default <-
     } else {
         result = apply(X, MARGIN = 2, FUN = cumsum, ...)
     }
-    colnames(result) = paste(1:NCOL(x))
+    colnames(result) = paste(1:ncol(x))
 
     # Statistics:
     result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
@@ -87,16 +114,15 @@ colCumsums.default <-
 # ------------------------------------------------------------------------------
 
 
-colCumsums.timeSeries <-
-    function(x, na.rm = FALSE, ...)
-{
-    # A function implemented by Diethelm Wuertz
+colCumsums.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample cumulated sums by column for timeSeries objects
 
     # Arguments:
-
+    
     # FUNCTION:
 
     # Cumulative Sums:
@@ -113,59 +139,117 @@ colCumsums.timeSeries <-
 
 
 # ------------------------------------------------------------------------------
+
+
+colCumsums.zoo =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes sample cumulated sums by column for zoo objects
+
+    # Arguments:
+    
+    # FUNCTION:
+
+    # Cumulative Sums:
+    x = rowCumsums(as.matrix(x, ...))
+ 
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        result = zoo(result, index, frequency)
+    }
+
+    # Return Value:
+    result
+}
+
+
+
+# ------------------------------------------------------------------------------
 # DW: moved from BasicExtensions ...
 
 
-colCummaxs <-
-    function(x, na.rm = FALSE, ...)
-{
+colCummaxs =
+function(x, na.rm = FALSE, ...)
+{   
     UseMethod("colCummaxs")
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCummaxs.default <-
-    function(x, na.rm = FALSE, ...)
-{
+colCummaxs.default =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated Maxima:
-    ans = apply(as.matrix(x), 2, cummax, ...)
+    ans = apply(as.matrix(x), 2, cummax, ...) 
     colnames(ans) = colnames(x)
-
-    # Return Value:
+    
+    # Return Value: 
     ans
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCummaxs.timeSeries <-
-    function(x, na.rm = FALSE, ...)
-{
+colCummaxs.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated Maxima:
     ans = colCummaxs(as.matrix(x, ...), ...)
-
+    
     # Time Series Input ?
     if (class(x) == "timeSeries") {
         x@Data = ans
         ans = x
     }
+    
+    
+    # Return Value: 
+    ans
+}
 
-    # Return Value:
+    
+# ------------------------------------------------------------------------------
+
+
+colCummaxs.zoo =
+function(x, na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated Maxima:
+    ans = colCummaxs(as.matrix(x, ...), na.rm, ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
     ans
 }
 
@@ -173,187 +257,277 @@ colCummaxs.timeSeries <-
 ################################################################################
 
 
-colCummins <-
-    function(x, na.rm = FALSE, ...)
-{
-    UseMethod("colCummins")
+colCummins =
+function(x, na.rm = FALSE, ...)
+{   
+    UseMethod("colCummmins")
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCummins.default <-
-    function(x, na.rm = FALSE, ...)
-{
+colCummins.default =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated minima:
-    ans = apply(as.matrix(x), 2, cummin, ...)
+    ans = apply(as.matrix(x), 2, cummin, ...) 
     colnames(ans) = colnames(x)
-
-    # Return Value:
+    
+    # Return Value: 
     ans
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCummins.timeSeries <-
-    function(x, na.rm = FALSE, ...)
-{
+colCummins.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated minima:
     ans = colCummins(as.matrix(x, ...), ...)
-
+    
     # Time Series Input ?
     if (class(x) == "timeSeries") {
         x@Data = ans
         ans = x
     }
+    
+    
+    # Return Value: 
+    ans
+}
+
+    
+# ------------------------------------------------------------------------------
 
 
-    # Return Value:
+colCummins.zoo =
+function(x, na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated minima:
+    ans = colCummins(as.matrix(x, ...), na.rm, ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
     ans
 }
 
 
 ################################################################################
 
-
-colCumprods <-
-    function(x, na.rm = FALSE, ...)
-{
+  
+colCumprods =
+function(x, na.rm = FALSE, ...)
+{   
     UseMethod("colCumprods")
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCumprods.default <-
-    function(x, na.rm = FALSE, ...)
-{
+colCumprods.default =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated Maxima:
-    ans = apply(as.matrix(x, ...), 2, cumprod, ...)
+    ans = apply(as.matrix(x, ...), 2, cumprod, ...) 
     colnames(ans) = colnames(x)
-
-    # Return Value:
+    
+    # Return Value: 
     ans
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCumprods.timeSeries <-
-    function(x, na.rm = FALSE, ...)
-{
+colCumprods.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated Maxima:
     ans = colCumprods(as.matrix(x, ...), na.rm, ...)
-
+    
     # Time Series Input ?
     if (class(x) == "timeSeries") {
         x@Data = ans
         ans = x
     }
-
-    # Return Value:
+        
+    # Return Value: 
     ans
 }
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCumprods.zoo =
+function(x, na.rm = FALSE, ...)
+{   
+    # Cumulated Maxima:
+    ans = colCummaxs(as.matrix(x, ...), ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
+    ans
+}  
 
 
 ################################################################################
 
-
-colCumreturns <-
-    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-{
+  
+colCumreturns =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
     UseMethod("colCumreturns")
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCumreturns.default <-
-    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-{
-    # A function implemented by Diethelm Wuertz
+colCumreturns.default =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Cumulates Returns from a stream of returns
-
+    
     # Arguments:
-    #   x - a vector, matrix, data frame and timeSeries.
+    #   x - a vector, matrix, data frame, timeSeries or zoo object of 
     #       asset returns.}
-    #   method - generate geometric (TRUE) or simple (FALSE) returns,
+    #   method - generate geometric (TRUE) or simple (FALSE) returns, 
     #       default "geometric".
 
     # FUNCTION:
-
+    
     # Handle Missing Values:
-    if (na.rm) x = na.omit(x, ...)
-    method <- match.arg(method)
-
+    if (na.rm) R = na.omit(R, ...) 
+    
     # Cumulative Returns:
     if (method == "geometric") {
-        ans = colCumsums(x)
+        ans = cumsum(R)
     } else if (method == "simple") {
-        ans = colCumprods(1+x) - 1
+        ans = cumprod(1+R) - 1
     }
-    colnames(ans) = colnames(x)
+    names(ans) = colnames(R)
 
+    
     # Return Value:
     ans
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-colCumreturns.timeSeries <-
-    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-{
+colCumreturns.timeSeries =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
     # Description:
-
+    
     # Arguments:
-
+    
     # FUNCTION:
-
+    
     # Cumulated Maxima:
-    ans = colCumreturns(as.matrix(x), method = method, na.rm = na.rm, ...)
-
+    ans = colCumreturns(as.matrix(x, ...), na.rm, ...)
+    
     # Time Series Input ?
     if (class(x) == "timeSeries") {
         x@Data = ans
         ans = x
     }
-
-    # Return Value:
+        
+    # Return Value: 
     ans
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCumreturns.zoo =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
+    # Cumulated Maxima:
+    ans = colCummaxs(as.matrix(x, ...), ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
+    ans
+}  
+
+
+################################################################################
+
+# NO LONGER IN USE
+
+
+cumsum.timeSeries = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   No longer in use, use colCumsums()
+
+    # FUNCTION:
+    
+    # Cumulate:
+    x@Data = colCumsums(x@Data)
+    
+    # Return Value:
+    x    
 }
 
 

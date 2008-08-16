@@ -28,53 +28,61 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
-#  durations                 Computes durations from a 'timeSeries' object
+# FUNCTION:                 DESCRIPTION:
+#  merge.timeSeries          Merges two 'timeSeries' objects 
 ################################################################################
 
 
-durations = 
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+merge.timeSeries =
+function(x, y, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes durations from a financial price series
     
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
-    #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
-    #       units in which the durations are measured
-
+    # Description:
+    #   Merges two 'timeSeries' objects 
+    
+    # Arguments:
+    #   x, y - 'timeSeries' objects
+    #   units - Optional user specified units
+ 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-  
+ 
     # FUNCTION:
     
-    # Positions and Durations:
-    pos = seriesPositions(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
+    # Manipulate in matrix form:
+    positions = as.character(c(x@positions, y@positions))
+    LENGTH = length(as.character(seriesPositions(x)))
+    DUP = duplicated(positions)[1:LENGTH]
+    DUP2 = duplicated(positions)[-(1:LENGTH)]
+    M1 = as.matrix(x)
+    M2 = as.matrix(y)
+    dim1 = dim(M1) 
+    dim2 = dim(M2) 
+    X1 = matrix(rep(NA, times = dim1[1]*dim2[2]), ncol = dim2[2])
+    X2 = matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
+    colnames(X1) = colnames(M2) 
+    NC = (dim1 + dim2)[2]+1
+    Z = rbind(cbind(M1, X1, DUP), cbind(X2, M2, DUP2))
+    Z = Z[order(rownames(Z)), ]
+    NC1 = dim1[2]+1
+    IDX = (1:(dim1+dim2)[1])[Z[, NC] == 1]
+    Z[IDX-1, NC1:(NC-1)] = Z[IDX, NC1:(NC-1)]
+    Z = Z[!Z[, NC], -NC]
     
-    # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
+    # Create time series:
+    ans = timeSeries(data = Z, charvec = rownames(Z), zone =
+        x@FinCenter, FinCenter = x@FinCenter, units = c(x@units, y@units))
     
-    # Return Series:
-    x
+    # Optionally add user specified units:
+    if (!is.null(units)) {
+        ans@units = units
+        colnames(ans@Data) <- units
+    }
+    
+    # Return Value:
+    ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-durationSeries = 
-function(...)
-{
-    durations(...)
-}
-
-
+   
 ################################################################################
 

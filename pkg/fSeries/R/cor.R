@@ -28,53 +28,70 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
-#  durations                 Computes durations from a 'timeSeries' object
+# FUNCTION:                 COLUMN STATISTICS IN FUTILITIES:
+#  cov.timeSeries            Returns  covariance for a 'timeSeries' object
+#  cor.timeSeries            Returns correlations for a 'timeSeries' object
 ################################################################################
 
 
-durations = 
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+# Defined in fUtilites/BasicExtensions.R
+# cov = function() UseMethod("cov")
+# cov.default <- stats::cov
+# cor = function() UseMethod("cor")
+# cov.default <- stats::cov
+
+
+# Add robust methods ...
+
+
+cov.timeSeries =
+function(x, y = NULL, 
+use = "all.obs", 
+method = c("pearson", "kendall", "spearman"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes durations from a financial price series
+    #   Returns variance/covariance for a 'timeSeries' object
     
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
-    #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
-    #       units in which the durations are measured
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-  
     # FUNCTION:
     
-    # Positions and Durations:
-    pos = seriesPositions(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
+    # Settings:
+    x = x@Data
+    if (!is.null(y)) y = y@Data
     
-    # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
+    # CoVariance:
+    ans = cov.default(x, y, use = use, method = method) 
     
-    # Return Series:
-    x
+    # Return Value:
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-durationSeries = 
-function(...)
-{
-    durations(...)
+cor.timeSeries =
+function(x, y = NULL, 
+use = "all.obs", 
+method = c("pearson", "kendall", "spearman"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns correlations for a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = x@Data
+    if (!is.null(y)) y = y@Data
+    
+    # CoVariance:
+    ans = cor.default(x, y, use = use, method = method) 
+    
+    # Return Value:
+    ans
 }
 
-
+   
 ################################################################################
 

@@ -1,6 +1,9 @@
 \name{monthly}
 
 
+\title{Special Monthly Series}
+
+
 \alias{monthly}
 
 \alias{countMonthlyRecords}
@@ -10,12 +13,10 @@
 \alias{rollMonthlySeries}
 
 
-\title{Special Monthly Series}
-
-
 \description{
     
-    Functions and methods dealing with special monthly 
+    A collection and description of functions 
+    and methods dealing with special monthly 
     'timeSeries' objects.      
     \cr  
     
@@ -69,6 +70,12 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
 
     NA
         
+}
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 

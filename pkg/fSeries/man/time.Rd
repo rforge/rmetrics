@@ -5,17 +5,10 @@
 
 
 \alias{time}
-\alias{time<-}
- 
-% % \alias{index}
-% % \alias{index<-}
+\alias{seriesPositions}
+\alias{newPositions<-}
 
 \alias{time.timeSeries}
-\alias{time<-.timeSeries}
-
-% \alias{index.timeSeries}
-% \alias{index<-.timeSeries}
-
 \alias{sample.timeSeries}
 \alias{sort.timeSeries}
 \alias{rev.timeSeries}
@@ -26,45 +19,31 @@
 
 \description{
     
-    Functions and methods extracting and modifying positions 
-    of 'timeSeries' objects.       
+    A collection and description of functions 
+    and methods extracting and modifying positions 
+    on 'timeSeries' objects.       
     \cr
     
-    The functions and methods for the Generation of 'timeSeries' Objects
-    are: 
+    The functions and methods for the Generation of 'timeSeries' Objects are:         
 
     \tabular{ll}{   
-    \code{time.timeSeries} \tab Extracts time positions from a
-    'timeSeries', \cr 
-    \code{time<-.timeSeries} \tab Assign time positions to a
-    'timeSeries', \cr 
- 
-%     \code{index.timeSeries} \tab Extracts index positions from a
-%     'timeSeries', \cr 
-%     \code{index<-.timeSeries} \tab Assign index positions to a
-%     'timeSeries', \cr 
-
-    \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in
-    time, \cr 
-    \code{sort.timeSeries} \tab Sorts reverts a 'timeSeries' object in
-    time, \cr 
-    \code{rev.timeSeries} \tab Reverts a 'timeSeries' object in time,
-    \cr  
-    \code{start.timeSeries} \tab Extracts start date of a 'timeSeries' 
-    object, \cr  
-    \code{end.timeSeries} \tab Extracts end date of a 'timeSeries'
-    object. } 
+    \code{seriesPositions} \tab Extracts positions slot from a 'timeSeries', \cr
+    \code{newPositions<-} \tab Modifies positions of a 'timeSeries' object, \cr
+    \code{time.timeSeries} \tab Extracts time positions from a 'timeSeries', \cr
+    \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in time, \cr
+    \code{sort.timeSeries} \tab Sorts reverts a 'timeSeries' object in time, \cr
+    \code{rev.timeSeries} \tab Reverts a 'timeSeries' object in time, \cr 
+    \code{start.timeSeries} \tab Extracts start date of a 'timeSeries' object, \cr 
+    \code{end.timeSeries} \tab Extracts end date of a 'timeSeries' object. }
         
 }
 
 
 \usage{
+seriesPositions(object)
+newPositions(object) <- value
 
 \method{time}{timeSeries}(x, \dots)
-\method{time}{timeSeries}(x) <- value
-
-% \method{index}{timeSeries}(x, \dots)
-% \method{index}{timeSeries}(x) <- value
 
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
@@ -86,8 +65,13 @@
         position, or \code{"linear"}, interpolate linearly between 
         \code{"before"} and \code{"after"}. 
         }      
+    \item{object}{
+        [is][seriesData][seriesPositions][summary] -    
+        an object of class \code{timeSeries}.
+        }
     \item{value}{
-        a valid value for the component of \code{time(x)}.
+        a valid value for that component of \code{newPositions(x)}, i.e.
+        an object of class \code{"timeDate"} with appropriate length.
         }
     \item{x}{
         [as] - \cr   
@@ -165,12 +149,19 @@
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{   
 ## Create dummy timeSeries:     
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
-## series positions -
-   time(X)
+## seriesPositions -
+   seriesPositions(X)
 }
 
 

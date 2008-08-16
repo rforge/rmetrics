@@ -1,7 +1,7 @@
 \name{lag}
 
 
-\title{Lag a Time Series}
+\title{Lag a timeSeries Object}
 
 
 \alias{lag}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Compute a lagged version of a 'timeSeries' object.        
+    Computes a lagged version of a timeSeries object.        
    
 }
 
@@ -51,6 +51,13 @@
 
     returns a lagged S4 object of class \code{timeSeries}.
         
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 

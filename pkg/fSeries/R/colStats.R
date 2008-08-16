@@ -24,32 +24,30 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file 
+#   see Rmetrics's copyright file
 
 
 ################################################################################
- 
-    
-.First.lib =  
-function(lib, pkg)
-{   
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) { 
-        # not in test scripts
-        MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
-            pkg, dsc$Version, dsc$Title),
-            "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
-    }
-
-    # Load dll:
-    # library.dynam("fSeries", pkg, lib) 
-}
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
-
-    
+# FUNCTION:                 COLUMN STATISTICS IN FUTILITIES:
+#  colStats                  Computes sample statistics by column
+#  colSums                   Computes sums of all values in each column
+#  colMeans                  Computes means of all values in each column
+#  colSds                    Computes standardard deviation of each column
+#  colVars                   Computes sample variance by column
+#  colSkewness               Computes sample skewness by column
+#  colKurtosis               Computes sample kurtosis by column
+#  colMaxs                   Computes maximum values in each colum
+#  colMins                   Computes minimum values in each colum
+#  colProds                  Computes product of all values in each colum
+#  colQuantiles              Computes quantiles of each column
+# FUNCTION
 ################################################################################
+
+
+# No longer in use ...
+
+# mean.timeSeries <- colMeans
+# var.timeSeries <- colVars
+
+# currently still in fUtilities
 

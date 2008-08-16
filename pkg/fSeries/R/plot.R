@@ -28,51 +28,81 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES: 
-#  durations                 Computes durations from a 'timeSeries' object
+#  plot.timeSeries           Plots a 'timeSeries' object
+#  points.timeSeries         Adds points to a 'timeSeries' plot
+#  lines.timeSeries          Adds lines to a 'timeSeries' plot
 ################################################################################
 
 
-durations = 
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+plot.timeSeries =
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes durations from a financial price series
+    #   NEW Plot method for an object of class "timeSeries"
+   
+    # Arguments:
+    #   x - a "timeSeries" object 
     
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object or a  
-    #       numeric vector or matrix.
-    #   trim - a logical flag, by default TRUE, the first missing 
-    #       observation in the return series will be removed. 
-    #   units - a character value or vector which allows to set the 
-    #       units in which the durations are measured
-
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-  
     # FUNCTION:
     
-    # Positions and Durations:
-    pos = seriesPositions(x)
-    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
+    # Plot:
+    plot(x = as.POSIXct(x@positions), y = x@Data, ...)
     
-    # Data Matrix:
-    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x = x[-1, ]
-    
-    # Return Series:
-    x
+    # Return Value:
+    invisible(x)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-durationSeries = 
-function(...)
-{
-    durations(...)
+lines.timeSeries =
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   NEW Lines method for an object of class "timeSeries"
+   
+    # Arguments:
+    #   x - a "timeSeries" object 
+    
+    # Example:
+    #   plot(MSFT[,1]); lines(MSFT[,1], col = "red")
+    
+    # FUNCTION:
+    
+    # Plot:
+    lines(x = as.POSIXct(x@positions), y = x@Data, ...)
+    
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+points.timeSeries =
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "timeSeries"
+        
+    # Arguments:
+    #   x - a "timeSeries" object
+        
+    # Value:
+    #   Plots a 'timeSeries' object.
+
+    # FUNCTION:
+   
+    # Add to Plot:
+    points(x = as.POSIXct(x@positions), y = x@Data, ...)
+            
+    # Return Value:
+    invisible(x)
 }
 
 

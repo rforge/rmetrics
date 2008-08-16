@@ -6,14 +6,18 @@
 \alias{TimeSeriesClass}
 
 \alias{timeSeries}
-\alias{index_timeSeries}
 \alias{timeSeries-class}
-\alias{index_timeSeries-class}
-\alias{initialize,timeSeries-method}
 
 \alias{readSeries}
 
+\alias{applySeries}
+
+\alias{orderStatistics}
+
 \alias{seriesData}
+
+\alias{isUnivariate}
+\alias{isMultivariate}
 
 
 \description{
@@ -21,36 +25,59 @@
     A collection and description of functions 
     and methods dealing with regular and irregular 
     'timeSeries' objects. Dates and times are 
-    implemented as 'timeDate' objects. 
+    implemented as 'timeDate' objects. Included 
+    are functions and methods for the generation 
+    and representation of 'timeSeries' objects, 
+    and for mathematical operations.          
     \cr
     
     Functions to generate and modify 'timeSeries' objects:         
 
     \tabular{ll}{   
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
-    \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file. }
+    \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
+    \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
+    \code{orderStatistics} \tab Computes order statistic of a 'timeSeries'. }
     
     Data Slot and classification of 'timeSeries' objects: 
     
     \tabular{ll}{        
-    \code{seriesData} \tab Extracts data slot from a 'timeSeries'. }          
+    \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
+    \code{isUnivariate} \tab Tests if a 'timeSeries' object is univariate, \cr
+    \code{isMultivariate} \tab Tests if a 'timeSeries' object is multivariate. }          
 }
 
 
 \usage{
 timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter, 
     FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
-    documentation = NULL, \dots)
-       
+    documentation = NULL, ...)   
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
+ 
+applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
+    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
+    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
+    documentation = x@documentation, \dots)
+    
+orderStatistics(x)
 
 seriesData(object)
+isUnivariate(x)
+isMultivariate(x)
 }
 
 
 \arguments{
 
+    \item{by}{
+        [applySeries] - \cr
+        a character either \code{"monthly"} or \code{"quarterly"}. The
+        default value is \code{"monthly"}. Only operative when both arguments
+        \code{from} and \code{to} have ther default values \code{NULL}.
+        In this case the function \code{FUN} will be applied to monthly or
+        quarterly periods.
+        }
     \item{charvec}{
         a character vector of dates and times.
         }
@@ -82,6 +109,14 @@ seriesData(object)
         a character string with the format in POSIX notation to be passed 
         to the time series object.
         }  
+    \item{from, to}{
+        starting date and end date, \code{to} must be after \code{from}.
+        }
+    \item{FUN}{ 
+        the function to be applied.\cr
+        [applySeries] - \cr
+        a function to use for aggregation, by default \code{colAvgs}.
+        }
     \item{object}{
         [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
@@ -103,11 +138,25 @@ seriesData(object)
         name is deparsed.
         }
     \item{units}{
+        [applySeries][lag][returnSeries][mergeSeries] - \cr
         an optional character string, which allows to overwrite the 
         current column names of a \code{timeSeries} object. By default 
         \code{NULL} which means that the column names are selected
-        automatically. 
-        }     
+        automatically.
+        \cr
+        [durationSeries] - \cr
+        a character value or vector which allows to set the 
+        units in which the durations are measured. By default durations
+        are measured in seconds. 
+        } 
+    \item{x}{
+        [as] - \cr   
+        a \code{matrix} type object to be converted.\cr
+        [as.vector][as.matrix][as.data.frame] -\cr
+        [applySeries] - \cr
+        [cut][end][mergeSeries][plot][print][rev][start] - \cr
+        an object of class \code{timeSeries}.
+        }
     \item{zone}{
         the time zone or financial center where the data were recorded.
         }  
@@ -123,6 +172,7 @@ seriesData(object)
     \code{timeSeries}\cr
     \code{readSeries}\cr
     \code{returnSeries}\cr
+    \code{applySeries}
     \cr
     return a S4 object of class \code{timeSeries}.
     \cr
@@ -136,6 +186,21 @@ seriesData(object)
     \cr
     extracts the \code{@Data} slot from a \code{timeSeries} object. 
     Thus, \code{seriesData} returns an object of class \code{matrix}.
+    \cr
+    
+    \code{isUnivariate}\cr
+    \code{isMultivariate}\cr
+    \cr
+    returns a logical depending if the test is true or not.
+    \cr
+    
+    \code{plot}\cr
+    \code{lines}\cr
+    \code{points}\cr
+    \code{print}
+    \cr
+    plot and print methods for an object of class \code{timeSeries}.
+    \cr
         
 }
 
@@ -168,6 +233,13 @@ seriesData(object)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## data -  
    # Microsoft Data: 
@@ -191,15 +263,17 @@ seriesData(object)
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
-## returns -  
+## returnSeries -  
+   # Compute Returns:
+   args(returnSeries)
    # Continuous Returns:
-   returns(tsApril01)
+   returnSeries(tsApril01)
    # Discrete Returns:
-   returns(tsApril01, type = "discrete")
+   returnSeries(tsApril01, type = "discrete")
    # Don't trim:
-   returns(tsApril01, trim = FALSE)
+   returnSeries(tsApril01, trim = FALSE)
    # Use Percentage Values:
-   tsRet = returns(tsApril01, percentage = TRUE, trim = FALSE)
+   tsRet = returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
    tsRet
      
 ## applySeries -   

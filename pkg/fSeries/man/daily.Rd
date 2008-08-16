@@ -1,7 +1,7 @@
 \name{SpecialDailySeries}
 
 
-\title{Special Daily Time Series}
+\title{SpecialDailySeries}
 
 
 \alias{dummyDailySeries}
@@ -13,19 +13,20 @@
 
 \description{
     
-    Special daily 'timeSeries' functions.  
+    A collection and description of special
+    daily timeSeries functions.  
     \cr
     
     \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr  
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr        
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr 
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr    
     \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }  
 }
 
 
 \usage{
-dummyDailySeries(x = rnorm(365), units = NULL, zone = myFinCenter, 
+dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter, 
     FinCenter = myFinCenter)
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL, zone = myFinCenter, 
@@ -144,6 +145,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## data - Data Frame:
    # To work with daily data, the best choice is "GMT"
@@ -158,7 +166,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01    
    # Align with NA:
-   tsRet = returns(tsApril01, trim = TRUE)
+   tsRet = returnSeries(tsApril01, trim = TRUE)
    GoodFriday(2001)   
    EasterMonday(2001) 
    alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)

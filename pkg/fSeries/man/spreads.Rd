@@ -1,7 +1,7 @@
 \name{spreads}
 
 
-\title{Spreads and Mid Quotes}
+\title{Calculations of spreads and mid quotes}
 
 
 \alias{spreads}
@@ -13,7 +13,7 @@
 
 \description{
     
-    Compute spreads and midquotes from price streams.
+    Functions to calculate spreds and midquotes from price streams.
        
 }
 
@@ -65,7 +65,14 @@ spreadSeries(\dots)
     for \code{returns}, \code{midquotes}, and \code{spreads}.
 
 }
-   
+    
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
 
 \examples{
 ## data -  
