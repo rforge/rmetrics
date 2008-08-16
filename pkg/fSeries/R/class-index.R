@@ -18,8 +18,5 @@
 setClassUnion("index_timeSeries",
               members =  c("numeric", "logical", "character"))
 
-setClassUnion("replValue_timeSeries",
-              members = c("logical", "numeric", "character","complex", "integer", "raw"))
-
 ################################################################################
 
