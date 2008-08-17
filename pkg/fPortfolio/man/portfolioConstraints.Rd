@@ -2,9 +2,14 @@
 
 
 \alias{portfolioConstraints}
+
 \alias{setBoxConstraints}
 \alias{setGroupEqConstraints}
 \alias{setGroupMatConstraints}
+
+\alias{setRiskBudgetConstraints}
+
+\alias{setBoxGroupConstraints}
 
 
 \title{Portfolio Constraints}
@@ -12,7 +17,7 @@
 
 \description{
   
-    Computes portfolio constraints given by a constraints string.
+    Computes portfolio constraints given constraints strings.
     
 }    
 
@@ -22,6 +27,10 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly", \do
 setBoxConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 setGroupEqConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
+setRiskBudgetConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
+setBoxGroupConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
@@ -118,7 +127,6 @@ setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     a numeric value or vector with numbers ranging between zero and one,
     assigning the desired risk budgets. 
     
-    
     Note, risk budget constraints will enforce diversification at the 
     expense of return generation. The resulting portfolios will thus lie 
     below the unconstrained efficient frontier.
@@ -126,10 +134,30 @@ setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
-%\value{}
+\value{
+    
+    an object of class S4.
+
+}
 
 
-%\details{}
+\details{
+
+    The function \code{portfolioConstraints} delivers an object of class
+    S4 with four slots named 
+    \code{boxConstraints},
+    \code{groupEqConstraints},
+    \code{groupMatConstraints},
+    \code{riskBudgetConstraints}, and
+    \code{boxGroupConstraints}.
+    The slots contain the obects as rweturned by the functions
+    \code{setBoxConstraints},
+    \code{setGroupEqConstraints},
+    \code{setGroupMatConstraints},
+    \code{setRiskBudgetConstraints}, and
+    \code{setBoxGroupConstraints}.
+    
+}
 
 
 %\references{}

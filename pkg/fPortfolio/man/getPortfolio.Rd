@@ -15,6 +15,7 @@
 \alias{getSpec.fPORTFOLIO}
 \alias{getModel.fPORTFOLIO}
 \alias{getType.fPORTFOLIO}
+\alias{getOptimize.fPORTFOLIO}
 \alias{getEstimator.fPORTFOLIO}
 \alias{getTailRisk.fPORTFOLIO}
 \alias{getParams.fPORTFOLIO}
@@ -90,6 +91,7 @@
 \method{getSpec}{fPORTFOLIO}(object)
 \method{getModel}{fPORTFOLIO}(object)
 \method{getType}{fPORTFOLIO}(object)
+\method{getOptimize}{fPORTFOLIO}(object)
 \method{getEstimator}{fPORTFOLIO}(object)
 \method{getTailRisk}{fPORTFOLIO}(object)
 \method{getParams}{fPORTFOLIO}(object)
