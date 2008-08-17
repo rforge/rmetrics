@@ -14,29 +14,115 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
+#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 #  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects
 #  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 #  show.fPFOLIOCON               Print method for 'fPFOLIOCON' objects
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
+
 ################################################################################
+
+
+setMethod("show", "fPORTFOLIO",
+    function(object)
+{
+    # Description:
+    #   S4 Print Method for an object of class "fPORTFOLIO"
+
+    # Arguments:
+    #   object - an object of class "fPORTFOLIO"
+
+    # FUNCTION:
+
+    # Print Title:
+    cat("\nTitle:\n ")
+    cat(getType(object),  getTitle(object),     "\n")
+    cat(" Estimator:   ", getEstimator(object), "\n")
+    cat(" Solver:      ", getSolver(object),    "\n")
+    cat(" Optimize:    ", getOptimize(object),  "\n")
+    cat(" Constraints: ", getConstraintsTypes(object), "\n")
+    #at(" Objective:   ", getObjective(object), "\n")
+
+    # Print Call:
+    # cat("\nCall:\n ")
+    # print.default(getCall(object))
+
+    # Print Target Weights:
+    cat("\nPortfolio Weights:\n")
+    weights = data.frame(round(getWeights(object), digits = 4))
+    if (NROW(weights) == 1) rownames(weights) = ""
+    print(weights)
+
+    # Print Covariance Risk Budgets:
+    cat("\nCovariance Risk Budgets:\n")
+    covRiskBudgets = data.frame(round(getCovRiskBudgets(object), digits = 4))
+    if (NROW(covRiskBudgets) == 1) rownames(covRiskBudgets) = ""
+    print(covRiskBudgets)
+
+    # Print Tail Risk Budgets:
+    if (FALSE) {
+        if (!is.na(getTailRiskBudgets(object))) {
+            cat("\nRiskBudget(s):\n")
+            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
+            print.table(riskBudgets)
+        }
+    }
+
+    # Print Target Return and Risks:
+    cat("\nTarget Return and Risks:\n")
+    targetReturn = getTargetReturn(object)
+    targetRisk = getTargetRisk(object)
+    target = data.frame(targetReturn, targetRisk)
+    if (NROW(target) == 1) rownames(target) = ""
+    print(round(target, digits = 4))
+
+    # Print Description:
+    cat("\nDescription:\n ")
+    cat(getDescription(object), "\n")
+
+    # Return Value:
+    invisible(object)
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPFOLIODATA",
+    function(object)
+{
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIODATA"
+
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+
+    # FUNCTION:
+
+    # Series:
+    cat("\nSeries Data:\n\n")
+    print(object@data$series)
+
+    # Statistics:
+    cat("\nStatistics:\n\n")
+    print(object@statistics)
+
+    # Tailrisk:
+    # NYI
+
+    # Return Value:
+    invisible(object)
+})
+
+
+# ------------------------------------------------------------------------------
 
 
 setMethod("show", "fPFOLIOSPEC",
     function(object)
 {
-    # A function implemented by Rmetrics
-
     # Description:
     #   S4 Print Method for an object of class "fPFOLIOSPEC"
 
@@ -88,43 +174,9 @@ setMethod("show", "fPFOLIOSPEC",
 # ------------------------------------------------------------------------------
 
 
-setMethod("show", "fPFOLIODATA",
-    function(object)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   S4 Print Method for an object of class "fPFOLIODATA"
-
-    # Arguments:
-    #   object - an object of class "fPFOLIOSPEC"
-
-    # FUNCTION:
-
-    # Series:
-    cat("\nSeries Data:\n\n")
-    print(object@data$series)
-
-    # Statistics:
-    cat("\nStatistics:\n\n")
-    print(object@statistics)
-
-    # Tailrisk:
-    # NYI
-
-    # Return Value:
-    invisible(object)
-})
-
-
-# ------------------------------------------------------------------------------
-
-
 setMethod("show", "fPFOLIOCON",
     function(object)
 {
-    # A function implemented by Diethelm Wuertz
-
     # Description:
     #   S4 Print Method for an object of class "fPFOLIODATA"
 
@@ -143,83 +195,17 @@ setMethod("show", "fPFOLIOCON",
     cat("\nBox Constraints:\n")
     print(object@boxConstraints)
 
-    cat("\nGroup-Equal Constraints:\n")
+    cat("Group-Equal Constraints:\n")
     print(object@groupEqConstraints)
 
-    cat("\nGroup-Matrix Constraints:\n")
+    cat("Group-Matrix Constraints:\n")
     print(object@groupMatConstraints)
 
-    cat("\nBox-Group Constraints:\n")
-    print(object@boxgroupConstraints)
-
-    cat("\nCov Risk Budget Constraints:\n")
-    print(object@riskbudgetConstraints)
-
-    # Return Value:
-    invisible(object)
-})
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPORTFOLIO",
-    function(object)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   S4 Print Method for an object of class "fPORTFOLIO"
-
-    # Arguments:
-    #   object - an object of class "fPORTFOLIO"
-
-    # FUNCTION:
-
-    # Print Title:
-    cat("\nTitle:\n ")
-    cat(getType(object), getTitle(object), "\n")
-    cat(" Estimator:", getEstimator(object), "\n")
-    cat(" Solver:   ", getSolver(object), "\n")
-    #at(" Optimize: ", getOptimize(object), "\n")
-    #at(" Objective:", getObjective(object), "\n")
-
-    # Print Call:
-    # cat("\nCall:\n ")
-    # print.default(getCall(object))
-
-    # Print Target Weights:
-    cat("\nPortfolio Weights:\n")
-    weights = data.frame(round(getWeights(object), digits = 4))
-    if (NROW(weights) == 1) rownames(weights) = ""
-    print(weights)
-
-    # Print Covariance Risk Budgets:
-    cat("\nCovariance Risk Budgets:\n")
-    covRiskBudgets = data.frame(round(getCovRiskBudgets(object), digits = 4))
-    if (NROW(covRiskBudgets) == 1) rownames(covRiskBudgets) = ""
-    print(covRiskBudgets)
-
-    # Print Tail Risk Budgets:
-    if (FALSE) {
-        if (!is.na(getTailRiskBudgets(object))) {
-            cat("\nRiskBudget(s):\n")
-            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-            print.table(riskBudgets)
-        }
-    }
-
-    # Print Target Return and Risks:
-    cat("\nTarget Return and Risks:\n")
-    targetReturn = getTargetReturn(object)
-    targetRisk = getTargetRisk(object)
-    target = data.frame(targetReturn, targetRisk)
-    if (NROW(target) == 1) rownames(target) = ""
-    print(target)
-
-    # Print Description:
-    cat("\nDescription:\n ")
-    cat(getDescription(object), "\n")
+    cat("Cov Risk Budget Constraints:\n")
+    print(object@riskBudgetConstraints)
+    
+    cat("Box/Group Constraints:\n")
+    print(object@boxGroupConstraints)
 
     # Return Value:
     invisible(object)
