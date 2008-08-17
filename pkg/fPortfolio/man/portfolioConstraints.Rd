@@ -6,10 +6,17 @@
 \alias{setBoxConstraints}
 \alias{setGroupEqConstraints}
 \alias{setGroupMatConstraints}
-
 \alias{setRiskBudgetConstraints}
-
 \alias{setBoxGroupConstraints}
+
+
+\alias{minWConstraints}
+\alias{maxWConstraints}
+\alias{eqsumWConstraints}
+\alias{minsumWConstraints}
+\alias{maxsumWConstraints}
+\alias{minBConstraints}
+\alias{maxBConstraints}
 
 
 \title{Portfolio Constraints}
@@ -23,14 +30,19 @@
 
 \usage{
 portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly", \dots)
-
 setBoxConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 setGroupEqConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-
 setRiskBudgetConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-
 setBoxGroupConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
+minWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+maxWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+eqsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+minsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+maxsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+minBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
@@ -141,7 +153,7 @@ setBoxGroupConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
-\details{
+\note{
 
     The function \code{portfolioConstraints} delivers an object of class
     S4 with four slots named 

@@ -1,23 +1,24 @@
-\name{solveRlpSolve}
+\name{solveRipop}
 
 
-\alias{solveRlpSolve}
+\alias{solveRipop}
 
 
-\title{Linear Programming Solver}
+\title{Quadratic Programming Solver}
 
 
 \description{
 
-    Optimizes a portfolio with a the linear
-    programming solver lpSolve.
+    Optimizes a portfolio with a the quadratic
+    programming solver IPOP.
 
 }
 
 
 \usage{
-solveRlpSolve(data, spec, constraints)
+solveRipop(data, spec, constraints)
 }
+
 
 
 \arguments{
@@ -38,16 +39,6 @@ solveRlpSolve(data, spec, constraints)
 }
 
 
-\note{
-
-    The function \code{solveRlp} uses the R function interface from 
-    the CRAN contributed R package \code{lpSolve} and the function 
-    \code{solveRlp} uses the R function interface from the R-Forge 
-    contributed R package \code{lpSolveAPI}.
-    
-}
-
-
 %\references{}
 
 
@@ -57,8 +48,8 @@ solveRlpSolve(data, spec, constraints)
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
-    
-## solveRlpSolve -
+   
+## solveRipop -
    # ...
 }
 

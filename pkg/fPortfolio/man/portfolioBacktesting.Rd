@@ -71,6 +71,9 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(),
         an S4 object of class \code{fPFOLIOSPEC} as returned by the function
         \code{portfolioSpec}.
         }    
+    \item{title}{
+        a character string used as title.
+        } 
     \item{trace}{
         a logical value. Should the calculation be traced?
         } 

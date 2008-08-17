@@ -5,7 +5,6 @@
 \alias{class-fPFOLIOSPEC}
 
 \alias{fPFOLIOSPEC-class}
-\alias{fPfoliospec}
 
 \alias{show.fPFOLIOSPEC}
 \alias{show,fPFOLIOSPEC-method}
