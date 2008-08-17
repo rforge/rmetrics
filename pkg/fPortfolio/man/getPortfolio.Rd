@@ -24,7 +24,7 @@
 \alias{getTrace.fPORTFOLIO}
 
 \alias{getConstraints.fPORTFOLIO}
-\alias{getConstraintsTypes.fPORTFOLIO}
+\alias{getConstraintsTypes}
 
 \alias{getPortfolio.fPORTFOLIO}
 \alias{getWeights.fPORTFOLIO}
