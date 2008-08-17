@@ -14,51 +14,132 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  solveRquadprog               Calls Goldfarb and Idnani's QP solver
-# FUNCTION:                    DESCRIPTION:
-#  rquadprog                    Interface to quadprog solver
+#  solveRquadprog               Portfolio interface to solver Rquadprog
+#  .rquadprogArguments          Returns arguments for solver
+#  .rquadprog                   Wrapper to solver function
+#  .rquadprogControl            Returns default controls for solver
 ################################################################################
 
 
 solveRquadprog <-
     function(data, spec, constraints)
 {
-    # A function implemented by Rmetrics
-
     # Description:
-    #   Calls Goldfarb and Idnani's QP solver for Mean-Variance Problems
+    #   Portfolio interface to solver Rquadprog
 
-    # Arguments:
-    #   data - portfolio of assets
-    #   spec - specification of the portfolio
-    #   constraints - string of constraints
+    # Example:
+    #   solveRquadprog(.lppData, .mvSpec, "LongOnly")[-3]
+    #   solveRquadprog(.lppData, .mvSpec, .BoxGroups)[-3]
+    #   portfolioTest("MV", "minRisk", "solveRquadprog", "LongOnly")
+    #   portfolioTest("MV", "minRisk", "solveRquadprog", .BoxGroups)
+    
+    # FUNCTION:   
 
+    # Transform Data:
+    Data = portfolioData(data, spec)
+    nAssets = getNAssets(Data)
+    
+    # Solve:
+    if(nAssets == 2) {
+
+        # Solve two Assets Portfolio Analytically:
+        ans = .mvSolveTwoAssets(data, spec, constraints)
+        # ... this is only  for 'unlimited' LongOnly constraints,
+        # box and group constraints are discarded here.
+            
+    } else {
+        
+        # Compile Arguments for Solver:
+        args = .rquadprogArguments(data, spec, constraints)
+        
+        # Solve Multiassets Portfolio:
+        ans = .rquadprog(
+            Dmat = args$Dmat, 
+            dvec = args$dvec, 
+            Amat = args$Amat, 
+            bvec = args$bvec, 
+            meq = args$meq)
+            
+    }
+
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+.rquadprogArguments <-
+    function(data, spec, constraints)
+{
+    # Description:
+    #   Returns quadprog conform arguments for the solver
+    
+    # Example:
+    #   .rquadprogArguments(.lppData, .mvSpec, "LongOnly")
+    #   .rquadprogArguments(.lppData, .mvSpec, .BoxGroups)
+    
+    # FUNCTION:
+    
+    # Data and Constraints as S4 Objects:
+    Data = portfolioData(data, spec)
+    Sigma = getSigma(Data)
+    nAssets = getNAssets(Data)
+       
+    # Settings:
+    nAssets = getNAssets(Data)
+    
+    # Set up A_mat of Constraints:
+    eqsumW = eqsumWConstraints(data, spec, constraints)
+    minsumW = minsumWConstraints(data, spec, constraints)
+    maxsumW = maxsumWConstraints(data, spec, constraints)
+    Amat = rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
+    if(!is.null(minsumW)) Amat = rbind(Amat, minsumW[, -1])
+    if(!is.null(maxsumW)) Amat = rbind(Amat, -maxsumW[, -1])
+
+    # Set up Vector A_mat >= bvec of Constraints:
+    minW = minWConstraints(data, spec, constraints)
+    maxW = maxWConstraints(data, spec, constraints)
+    bvec = c(eqsumW[, 1], minW, -maxW)
+    if(!is.null(minsumW)) bvec = c(bvec, minsumW[, 1])
+    if(!is.null(maxsumW)) bvec = c(bvec, -maxsumW[, 1])
+
+    # Part (meq=1) or Full (meq=2) Investment, the Default ?
+    meq = nrow(eqsumW)
+    
+    # Return Value:
+    list(
+        Dmat = Sigma, dvec = rep(0, nAssets), 
+        Amat = t(Amat), bvec = bvec, meq = meq)
+}
+
+
+################################################################################
+
+
+.rquadprog <-
+    function(Dmat, dvec, Amat, bvec, meq)
+{
+    # Description:
+    #   Goldfarb and Idnani's quadprog solver function
+    
     # Note:
-    #   This function is thought to minimize MV risk for a fixed return
-    #   and additional box and group constraints.
-    #   The function can in principle handle any case of linear constraints.
-
-    # Details:
-    #   The fortran function "qpgen2" is builtin from the contributed
-    #   R package quadprog:
-    #   quadprog:   Functions to solve Quadratic Programming Problems.
-    #   Version:    1.4-11
-    #   Date:       2007-07-12
-    #   Author:     S original by Berwin A. Turlach R port by A. Weingessel
-    #   Maintainer: Andreas Weingessel
-    #   License:    GPL-2
-
+    #   Requires to load contributed R package quadprog from which we use
+    #   the Fortran subroutine of the quadratic solver.
+    
+    # Package: quadprog
+    #   Title: Functions to solve Quadratic Programming Problems.
+    #   Author: S original by Berwin A. Turlach <berwin.turlach@anu.edu.au>
+    #       R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+    #   Maintainer: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+    #   Description: This package contains routines and documentation for
+    #       solving quadratic programming problems.
+    #   License: GPL-2
+    
     # Value of slove.QP():
     #   solution - vector containing the solution of the quadratic
     #       programming problem.
@@ -72,107 +153,7 @@ solveRquadprog <-
     #       becoming active first. vector with the indices of the
     #       active constraints at the solution.
 
-    # Example:
-    #   Data = 100*as.timeSeries(data(LPP2005REC))[,1:6]
-    #   tangencyPortfolio(Data)
-    #   minvariancePortfolio(Data)
-    
-    # FUNCTION:
-    
-    # Load quadprog:
-    if (!require(quadprog)) {
-        cat("\n\nquadprog Package missing")
-        cat("\nPlease install quadprog from CRAN Server\n")
-    }    
-
-    # Transform Data and Constraints:
-    data = portfolioData(data, spec)
-    if (class(constraints) == "fPFOLIOCON")
-        constraints = constraints@stringConstraints 
-
-    # Get Specifications:
-    mu = getMu(data)
-    Sigma = getSigma(data)
-    nAssets = getNAssets(data)
-    targetReturn = getTargetReturn(spec)
-    stopifnot(is.numeric(targetReturn))
-    trace = getTrace(spec)
-
-    # Optimize Portfolio:
-    if(trace) cat("\nPortfolio Optimiziation:\n Using Rquadprog ...\n\n")
-    if (nAssets == 2) {
-
-        ### # Two Assets Portfolio:
-        ### # YC: test might failed because of numerical errors, hence 'round'
-        ### stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
-        ### stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
-
-        # Solve:
-        stopifnot(targetReturn >= min(mu))
-        stopifnot(targetReturn <= max(mu))
-        weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
-        weights = c(weights, 1 - weights)
-        
-        # Output List:
-        ans = list(
-            solver = "twoAssetsMV",
-            optim = optim,
-            weights = weights,
-            targetReturn = targetReturn,
-            targetRisk = NA,
-            objective = sqrt(weights %*% Sigma %*% weights),
-            status = 0,
-            message = NA)
-    } else {
-        # Add Rquadprog conform constraints [portfolioConstraints.R]
-        args = .setRquadprogConstraints(data, spec, constraints)
-        # Solve:
-        optim = rquadprog(args$Dmat, args$dvec, args$Amat, args$bvec, args$meq)
-        weights = .checkWeights(optim$sol)
-
-        # Output List:
-        ans = list(
-            solver = "quadprog",
-            optim = optim,
-            weights = weights,
-            targetReturn = targetReturn,
-            targetRisk = NA,
-            objective = sqrt(weights %*% Sigma %*% weights),
-            status = optim$ierr,
-            message = NA)
-    }
-
-    # Return Value:
-    ans
-}
-
-
-################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  rquadprog                    Interface to quadprog solver
-################################################################################
-
-
-# Package: quadprog
-# Version: <CRAN>
-# Date: <CRAN>
-# Title: Functions to solve Quadratic Programming Problems.
-# Author: S original by Berwin A. Turlach <berwin.turlach@anu.edu.au>
-#   R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-# Maintainer: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-# Description: This package contains routines and documentation for
-#   solving quadratic programming problems.
-# License: GPL-2
-
-
-# Requires to load contributed R package quadprog
-
-
-rquadprog <-
-    function(Dmat, dvec, Amat, bvec, meq)
-{
-    # Running ...
-    # print("Running rquadprog ...")
+    # FUNCION:
     
     # Settings:
     n = nrow(Dmat)
@@ -181,7 +162,7 @@ rquadprog <-
     work = rep(0, 2 * n + r * (r + 5)/2 + 2 * q + 1)
 
     # Optimize:
-    ans = .Fortran("qpgen2",
+    optim = .Fortran("qpgen2",
         as.double(Dmat),
         dvec = as.double(dvec),
         as.integer(n),
@@ -199,7 +180,23 @@ rquadprog <-
         work = as.double(work),
         ierr = as.integer(0),
         PACKAGE = "quadprog")
-
+          
+    # Set Tiny Weights to Zero:
+    weights = .checkWeights(optim$sol)
+    attr(weights, "invest") = sum(weights) 
+    
+    # Compose Output List:
+    ans = list(
+        type = "MV",
+        solver = "solveRquadprog",
+        optim = optim,
+        weights = weights,
+        targetReturn = bvec[1],
+        targetRisk = sqrt(optim$sol %*% Dmat %*% optim$sol)[[1,1]],
+        objective = sqrt(optim$sol %*% Dmat %*% optim$sol)[[1,1]],
+        status = optim$ierr,
+        message = NA)
+            
     # Return Value:
     ans
 }
@@ -208,7 +205,21 @@ rquadprog <-
 ################################################################################
 
 
-# rquadprogControl
+.rquadprogControl <-
+    function()
+{
+    # Description:
+    #   Returns default quadprog control settings
+    
+    # Arguments:
+    #   none
+    
+    # FUNCTION:
+    
+    # This algorithm comes with no control parameter list
+    
+    NA
+}
 
 
 ################################################################################

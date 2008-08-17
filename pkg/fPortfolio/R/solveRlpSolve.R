@@ -14,233 +14,62 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  solveRlpSolve                Calls linear programming solver
-# FUNCTION:                    DESCRIPTION:
-#  rlpSolve                     Interface to CRAN's lpSolve solver
-#  rlpSolveControl              NYI
-#  rlp                          Interface to CRAN's "lpSolve" solver
+#  solveRlpSolve                Portfolio interface to solver RlpSolve
+#  .rlpSolveArguments           Returns arguments for LP solver
+#  .rlpSolve                    Wrapper to solver function
+#  .rlpSolveControl             Returns default controls for solver
 ################################################################################
 
 
 solveRlpSolve <-
     function(data, spec, constraints)
 {
-    # A function implemented by Rmetrics
-
     # Description:
-    #   Linear Solver from R package lpSolve for Mean-CVaR Problems
-
-    # Arguments:
-    #   data - portfolio of assets
-    #   spec - specification of the portfolio
-    #   constraints - string of constraints
-
-    # Value:
-    #   direction - optimization direction, as entered
-    #   x.count - number of variables in objective function
-    #   objective - vector of objective function coefficients, as entered
-    #   const.count - number of constraints entered
-    #   constraints - constraint matrix, as entered (not returned by 
-    #       lp.assign or lp.transport)
-    #   int.count - number of integer variables
-    #   int.vec - vector of integer variables' indices, as entered
-    #   objval - value of objective function at optimum}
-    #   solution - vector of optimal coefficients
-    #   status - numeric indicator: 0 = success, 2 = no feasible solution
-
-    # Note:
-    #   This function requires to load the contributed R package
-    #   lpSolve explicitely!
+    #   Portfolio interface to solver RlpSolve
 
     # Example:
-    #   Data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   Spec = portfolioSpec();setType(Spec)="CVaR"; setSolver(Spec)="solveRlp"
-    #   Constraints = portfolioConstraints(Data, Spec)
-    #   tangencyPortfolio(Data, Spec)
+    #   solveRlpSolve(.lppData, .cvarSpec, "LongOnly")[-3]
+    #   solveRlpSolve(.lppData, .cvarSpec, .BoxGroups)[-3]
+    #   portfolioTest("CVaR", "minRisk", "solveRlpSolve", "LongOnly")
+    #   portfolioTest("CVaR", "minRisk", "solveRlpSolve", .BoxGroups)
     
     # FUNCTION:
-
-    # Load lpSolve from CRAN Server:
-    if (!require(lpSolve)) {
-        cat("\n\nlpSolve Package missing")
-        cat("\nPlease install Package 'lpSolve' from CRAN Server\n")
-    }
     
-    # Transform Data and Constraints:
-    data = portfolioData(data, spec)
-    if (class(constraints) == "fPFOLIOCON")
-        constraints = constraints@stringConstraints
+    # Settings:
+    Data = portfolioData(data, spec)
+    nAssets = getNAssets(Data)
+    
+    # Solve:
+    if(nAssets == 2) {
 
-    # Trace:
-    trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Using RlpSolve ...\n\n")
-
-    # Get Specifications:
-    mu = getMu(data)
-    Sigma = getSigma(data)
-    nAssets = getNAssets(data)
-
-    # Extracting data from spec:
-    targetReturn = getTargetReturn(spec)
-    stopifnot(is.numeric(targetReturn))
-
-    # Get quantile measure alpha:
-    targetAlpha = getAlpha(spec)
-
-    # Scenarios:
-    Data = getSeries(data)
-    colNames = colnames(Data)
-    rowNames = rownames(Data)
-    assets = dim(Data)
-    m = assets[1]
-    w = assets[2]
-
-    if (nAssets == 2) {
-
-        ### # Two Assets Portfolio:
-        ### # YC: test might failed because of numerical errors, hence 'round'
-        ### stopifnot(round(targetReturn, 6) >= round(min(mu), 6))
-        ### stopifnot(round(targetReturn, 6) <= round(max(mu), 6))
-
-        stopifnot(targetReturn >= min(mu))
-        stopifnot(targetReturn <= max(mu))
-
-        names(targetReturn) <- spec@model$estimator[1]
-        weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
-        weights = c(weights, 1- weights)
-        CVaR = -.cvarRisk(Data, weights, targetAlpha)
-        ans = list(
-            weights = weights,
-            VaR = .varRisk(Data, weights, targetAlpha),
-            solution = .varRisk(Data, weights, targetAlpha),
-            CVaR = CVaR,
-            objval = .cvarRisk(Data, weights, targetAlpha),
-            ierr = 0,
-            status = 0,
-            solver = "twoAssetsCVaR",
-            targetAlpha = targetAlpha,
-            objective = CVaR)
+        # Solve two Assets Portfolio Analytically:
+        # ... this is only thhought for 'unlimited' LongOnly Constraints
+        # box and group constraints are discarded here.
+        ans = .cvarSolveTwoAssets(data, spec, constraints)    
+          
     } else {
-        # Compose objective function:
-        Names = c("VaR", paste("e", 1:m, sep = ""), colNames)
-        f.obj = c(-1, rep(-1/(targetAlpha*m), m), rep(0, w))
-        names(f.obj) = Names
-
-        # Info on constraints - Constraint matrix:
-        #   Example m=8 Data Records, and w=4 Assets
-        #
-        #   VaR  es            weights          exposure
-        #   x1   x2  ...  x9   x10 ... x13
-        #
-        #    0    0       0    mu1     mu4      >= Mu
-        #    0    0       0    1       1        == 1
-        #
-        #   -1    1       0    r1.1    r4.1     >= 0
-        #   -1    0  1    0    r1.2    r4.2     >= 0
-        #
-        #   -1    0    1  0    r1.8    r4.8     >= 0
-        #   -1    0       1    r1.9    r4.9     >= 0
-        #
-        #   x2   >= 0    ...   x9   >= 0
-        #   x10  >= 0    ...   x13  >= 0
-
-        # Compose Constraint Matrix:
-        nX = 1 + m + w
-        nY = 2 + m
-        f.con = matrix(rep(0, nX*nY), ncol = nX)
-        rownames(f.con) = c("Budget", "Return", rowNames)
-        colnames(f.con) = c("VaR", paste("e", 1:m, sep = ""), colNames)
-        f.con[1, (2+m):(2+m+w-1)] = as.numeric(mu)
-        f.con[2, (2+m):(2+m+w-1)] = 1
-        f.con[3:(m+2), 1] = 1
-        f.con[3:(m+2), 2:(m+1)] = diag(m)
-        f.con[3:(m+2), (2+m):(2+m+w-1)] = series(Data)
-
-        # Box and Group Constraints:
-        tmpConstraints = .setConstraints(data, spec, constraints)
-        nConstraints = dim(tmpConstraints)
-        append = cbind(matrix(0, ncol = 1+m, nrow = (nConstraints[1]-2)),
-            tmpConstraints[3:nConstraints[1], 1:(nConstraints[2]-1)])
-        f.con = rbind(f.con, append)
-
-        # Set Directions:
-        f.dir = c("==", "==", rep(">=", m))
-        f.dir = c(f.dir, rep(">=", (nConstraints[1]-2)))
-        names(f.dir) = rownames(f.con)
-
-        # Compose Right Hand Side Vector:
-        f.rhs = c(targetReturn, 1, rep(0, m))
-        f.rhs = c(f.rhs, tmpConstraints[3:(nConstraints[1]), nConstraints[2]])
-        names(f.rhs) = rownames(f.con)
-
-        # Optimize Portfolio:
-        ans = lpSolve::lp("max", f.obj, f.con, f.dir, f.rhs)
-        class(ans) <- "list"
-
-        # Prepare Output List:
-        ans$weights = ans$solution[(m+2):(m+1+w)]
-        for(i in 1:w) {
-            if(abs(ans$weights[i]) < sqrt(.Machine$double.eps))
-                ans$weights[i] = 0
-        }
-        attr(ans$weights, "error") <- ans$ierr
-        ans$weights[as.logical(ans$ierr)] = NA
-        ans$VaR = ans$solution[1]
-        ans$CVaR = -ans$objval
-        ans$ierr = ans$status
-        ans$solver = "lpSolve"
-        ans$targetAlpha = targetAlpha
-        ans$objective = -ans$objval
+    
+        # Compute the Arguments from data, spec and constraints
+        #   which are required by the linear solver function 'lpSolve':
+        args = .rlpSolveArguments(data, spec, constraints)
+        
+        # Now Optimize the Portfolio:
+        ans = .rlpSolve( 
+            direction = args$direction, 
+            objective.in = args$objective.in, 
+            const.mat = args$const.mat, 
+            const.dir = args$const.dir, 
+            const.rhs = args$const.rhs,
+            nScenarios = args$nScenarios, 
+            nAssets = args$nAssets,
+            targetReturn = args$targetReturn,
+            Alpha = args$Alpha)
+                
     }
 
-    # Return Value:
-    ans
-}
-
-
-################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  rlpSolve                     Interface to CRAN's lpSolve solver
-#  rlpSolveControl              NYI
-#  rlp                          Interface to CRAN's "lpSolve" solver
-################################################################################
-
-
-# Package: lpSolveAPI
-# Version: 5.5.0.12
-# Date: 2008-05-08
-# Title: Interface to lp_solve v. 5.5
-# Author: lp_solve <http://lpsolve.sourceforge.net/>,
-#   Kjell Konis <kjell.konis@epfl.ch>.
-# Maintainer: Kjell Konis <kjell.konis@epfl.ch>
-# Depends: R (>= 2.6.2)
-# Description: The lpSolveAPI package provides an R interface to the lp_solve
-#   library - lp_solve is a Mixed Integer Linear Programming (MILP) solver
-#   with support for pure linear, (mixed) integer/binary, semi-continuous
-#   and special ordered sets (SOS) models.
-# License: LGPL version 2
-
-
-rlpSolve <-
-    function (direction = "min", objective.in, const.mat, const.dir, 
-    const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0, 
-    compute.sens = 0) 
-{
-    # lpSolve Package from CRAN:
-    ans = lpSolve::lp(direction, objective.in, const.mat, const.dir, 
-        const.rhs, transpose.constraints, int.vec, presolve, compute.sens)
-    
     # Return Value:
     ans
 }
@@ -249,191 +78,213 @@ rlpSolve <-
 # ------------------------------------------------------------------------------
 
 
-# rlpSolveControl
-
-    # Not yet implemented
-
-
-# ------------------------------------------------------------------------------
-
-
-rlp <- 
-function(obj, A, b, Aeq = NULL, beq = NULL, lb = 0.0, ub = Inf,
-    intvec = integer(0), control = list())
+.rlpSolveArguments <-
+function(data, spec, constraints)
 {
-    # From KK alternative implementation
+    # Description:
+    #   Returns lpSolve conform arguments for the solver
     
-    p <- length(obj)
+    # Details:
+    #       max/min:             objective.in %*% x
+    #       subject to: 
+    #                        const.mast %*%x  ?=  const.rhs                           
+    #                               const.dir  =  "?=" 
+    #
+    #   lp(direction = "min", objective.in, const.mat, const.dir, 
+    #       const.rhs, transpose.constraints = TRUE, int.vec, presolve = 0, 
+    #       compute.sens = 0, binary.vec, all.int = FALSE, all.bin = FALSE, 
+    #       scale = 196, dense.const, num.bin.solns = 1, use.rw = FALSE)
+   
+    # Example:
+    #   data = 100*as.timeSeries(data(LPP2005REC))[1:8, 1:3]
+    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
+    #       setType(spec) = "CVaR"; setSolver(spec) = "solveRlpSolve"
+    #   constraints = c("minW[1:2]=0.1", "maxW[2:3]=0.9","minsumW[1:2]=0.2","maxsumW[c(2,3)]=0.8")
+    #
+    #   constraints = "LongOnly" 
+    #   .rlpSolveArguments(data, spec, constraints)
+    
+    # FUNCTION:
+    
+    # Settings:
+    Data = portfolioData(data, spec)
+    nScenarios = nrow(getSeries(Data))
+    nAssets = getNAssets(Data)
+    targetReturn = getTargetReturn(spec)[1]
+    Alpha = getAlpha(spec)
+    
+    # Objective Function:
+    objNames = c("VaR", paste("e", 1:nScenarios, sep = ""), colnames(data))
+    objective.in = 
+        -c(1, -rep(1/(Alpha*nScenarios), nScenarios), rep(0, nAssets))
+    names(objective.in) = objNames
 
-    if(!is.null(A) && !is.null(Aeq)) {
-        dimnames(A) <- dimnames(Aeq) <- names(b) <- names(beq) <- NULL
-        ldAeq <- dim(A)[1] + 1
-        A <- rbind(A, Aeq)
-        ldA <- dim(A)[1]
-        b <- c(0.0, b, beq)
-    } else if(is.null(A) && !is.null(Aeq)) {
-        dimnames(Aeq) <- names(b) <- NULL
-        ldAeq <- 1
-        A <- Aeq
-        ldA <- dim(A)[1]
-        b <- c(0.0, beq)
-    } else if(!is.null(A) && is.null(Aeq)) {
-        dimnames(A) <- names(b) <- NULL
-        ldAeq <- dim(A)[1] + 1
-        ldA <- dim(A)[1]
-        b <- c(0.0, b)
-    } else
-        stop("no constraints provided")
-
-    if(length(lb) == 1)
-        lb <- rep(lb, p)
-
-    if(length(lb) != p)
-        stop("Number of lower bounds must match number of decision variables")
-
-    if(length(ub) == 1)
-        ub <- rep(ub, p)
-
-    if(length(ub) != p)
-        stop("Nnumber of upper bounds must match number of decision variables")
-
-    n.ints <- length(intvec)
-
-    # Process control arguments
-    pivoting.rule <- -1
-    if(!is.null(control$pivoting)) {
-        pricer <- match(control$pivoting[1], c("firstindex", "dantzig", 
-            "devex", "steepestedge")) - 1
-
-        if(length(control$pivoting[-1])) {
-        price <- match(control$pivoting[-1], c("primalfallback", 
-            "multiple", "partial", "adaptive",
-            "NOTUSED", "randomized", "NOTUSED", "autopartial", "loopleft", 
-            "loopalternate", "harristwopass", "NOTUSED", "truenorminit"))
-        price <- 2^(price + 1)
-    } else
-        price <- numeric(0)
-
-        pivoting.rule <- sum(c(pricer, price))
-    }
-
-    simplex.type <- -1
-    if(!is.null(control$simplex.type)) {
-        phase1 <- control$simplex.type[1]
-        phase2 <- control$simplex.type[2]
-
-    if(phase1 == "primal" && phase2 == "primal")
-        simplex.type <- 5
-
-    else if(phase1 == "primal" && phase2 == "dual")
-        simplex.type <- 9
-
-    else if(phase1 == "dual" && phase2 == "primal")
-        simplex.type <- 6
-
-    else if(phase1 == "dual" && phase2 == "dual")
-      simplex.type <- 10
-    }
-
-    basis <- -1
-    if(!is.null(control$basis))
-        basis <- c(0, control$basis)
-
-    epslevel <- -1
-    eps <- c(-1.0, -1.0, -1.0, -1.0, -1.0, -1.0)
-    if(!is.null(control$eps)) {
-      if(is.character(control$eps)) {
-        epslevel <- match(control$eps[1],
-            c("tight", "medium", "loose", "baggy"),
-            nomatch = 0) - 1
-    } else {
-        if(!is.na(control$eps["epsb"]))
-            eps[1] <- control$eps["epsb"]
-
-        if(!is.na(control$eps["epsd"]))
-            eps[2] <- control$eps["epsd"]
-
-        if(!is.na(control$eps["epsel"]))
-            eps[3] <- control$eps["epsel"]
-
-        if(!is.na(control$eps["epsint"]))
-            eps[4] <- control$eps["epsint"]
-
-        if(!is.na(control$eps["epsperturb"]))
-            eps[5] <- control$eps["epsperturb"]
-
-        if(!is.na(control$eps["epspivot"]))
-            eps[6] <- control$eps["epspivot"]
-        }
-    }
+    # Info on CVaR constraints - Constraint matrix:
+    #   Example m=8 Data Records, and w=4 Assets
+    #
+    #   VaR  es            weights          exposure
+    #   x1   x2  ...  x9   x10 ... x13
+    #   
+    #    0    0       0    mu1     mu4      == Mu       target Return
+    #    0    0       0    1       1        == 1        full Investment
+    #
+    #   -1    1       0    r1.1    r4.1     >= 0        -Var + e_s -Wr >= 0
+    #   -1    0  1    0    r1.2    r4.2     >= 0
+    #   -1    0    1  0    r1.8    r4.8     >= 0
+    #   -1    0       1    r1.9    r4.9     >= 0
+    #
+    #    0    1       0     0       0       >= 0        e_s  >= 0
+    #    0    0  1    0     0       0       >= 0
+    #    0    0    1  0     0       0       >= 0
+    #    0    0       1     0       0       >= 0
+    #                                    
+    #                                       >= 0        A W >= 0
+    #                                       >= 0        W >= 0
+   
+    # The A_equal Equation Constraints: A_eq %*% x == a_eq
+    eqsumW = eqsumWConstraints(data, spec, constraints)
+    Aeq = cbind(matrix(0, ncol = 1+nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+    aeq = eqsumW[, 1]
+    deq = rep("==", nrow(eqsumW))
+    
+    # The VaR Equation Constraints:  (1 + diag + Returns) %*% (VaR,es,W)  >= 0
+    Avar = cbind(
+        matrix(rep(-1, nScenarios), ncol = 1),
+        diag(nScenarios),
+        as.matrix(getSeries(Data)) )
+    avar = rep(0, nrow(Avar))
+    dvar = rep(">=", nrow(Avar))
   
-    presolve <- -1
-    if(!is.null(control$presolve)) {
-        presolve <- unique(control$presolve)
-        presolve.choices <- c(none = 0, rows = 1, cols = 2, lindep = 4,
-        sos = 32, reducemip = 64, knapsack = 128, elimeq2 = 256,
-        impliedfree = 512, reducegcd = 1024, probefix = 2048,
-        probereduce = 4096, rowdominate = 8192, coldominate = 16384,
-        mergerows = 32768, impliedslk = 65536, colfixdual = 131072,
-        bounds = 262144, duals = 524288, sensduals = 1048576)
-        presolve <- presolve.choices[presolve]
-        presolve <- sum(presolve)
+    # The e_s > = 0 Equation Constraints:
+    Aes = cbind(
+        matrix(rep(0, nScenarios), ncol = 1),
+        diag(nScenarios),
+        matrix(0, nrow = nScenarios, ncol = nAssets) )
+    aes = rep(0, nrow(Aes))
+    des = rep(">=", nrow(Aes))
+    
+    # Group Constraints: A W >= a
+    minsumW = minsumWConstraints(data, spec, constraints)
+    if (is.null(minsumW)){    
+        Aminsum = aminsum = dminsum = NULL
+    } else {
+        Aminsum = cbind(
+            matrix(0, nrow = nrow(minsumW), ncol = 1+nScenarios), 
+            minsumW[, -1, drop = FALSE] )
+        aminsum = minsumW[, 1]
+        dminsum  = rep(">=", nrow(minsumW))
     }
-
-    storage.mode(A) <- "double"
-
-    lps <- .C("linprog",
-        obj = as.double(obj),
-        A = A,
-        ldA = as.integer(ldA),
-        p = as.integer(p),
-        ldAeq = as.integer(ldAeq),
-        b = as.double(b),
-        lb = as.double(lb),
-        ub = as.double(ub),
-        n.ints = as.integer(n.ints),
-        intvec = as.integer(intvec),
-        pivoting.rule = as.integer(pivoting.rule),
-        simplex.type = as.integer(simplex.type),
-        basis = as.integer(basis),
-        epslevel = as.integer(epslevel),
-        eps = as.double(eps),
-        presolve = as.integer(presolve),
-        objective = double(1),
-        x = double(p),
-        status = integer(1),
-        NAOK = TRUE,
-        PACKAGE = "ClpSolve")
-
-    if(lps$status == -2)
-        status.message = "out of memory"
-    else
-        message = c(
-            "optimal solution found",
-            "the model is sub-optimal",
-            "the model is infeasible",
-            "the model is unbounded",
-            "the model is degenerate",
-            "numerical failure encountered",
-            "process aborted",
-            "timeout",
-            "NOT USED",
-            "the model was solved by presolve",
-            "the branch and bound routine failed",
-            "the branch and bound was stopped because of a break-at-first or break-at-value",
-            "a feasible branch and bound solution was found",
-            "no feasible branch and bound solution was found")[lps$status+1]
-
-    control$eps <- lps$eps
-    names(control$eps) <- 
-        c("epsb", "epsd", "epsel", "epsint", "epsperturb", "epspivot")
-
+    
+    # Group Constraints: A W <= b
+    maxsumW = maxsumWConstraints(data, spec, constraints)
+    if (is.null(maxsumW)){    
+        Amaxsum = amaxsum = dmaxsum = NULL
+    } else {
+        Amaxsum = cbind(
+            matrix(0, nrow = nrow(maxsumW), ncol = 1+nScenarios), 
+            maxsumW[, -1, drop = FALSE] )
+        amaxsum = maxsumW[, 1]
+        dmaxsum  = rep("<=", nrow(maxsumW))
+    }
+       
+    # The W > a Equation Constraints:
+    minW = minWConstraints(data, spec, constraints)
+    if (is.null(minW)){    
+        Amin = amin = dmin = NULL
+    } else {
+        Amin = cbind(
+            matrix(0, nrow = nAssets, ncol = 1+nScenarios), 
+            diag(nAssets))
+        amin = minW
+        dmin  = rep(">=", nAssets)
+    }
+    
+    # The W < a Equation Constraints:
+    maxW = maxWConstraints(data, spec, constraints)
+    if (is.null(maxW)){    
+        Amax = amax = dmax = NULL
+    } else {
+        Amax = cbind(
+            matrix(0, nrow = nAssets, ncol = 1+nScenarios), 
+            diag(nAssets))
+        amax = maxW
+        dmax  = rep("<=", nAssets)
+    }
+    
+    const.mat = rbind(Aeq, Avar, Aes, Aminsum, Amaxsum, Amin, Amax)
+    const.rhs = c(aeq, avar, aes, aminsum, amaxsum, amin, amax)
+    const.dir = c(deq, dvar, des, dminsum, dmaxsum, dmin, dmax)
+    
+    # Return Value:
     list(
-        objective = lps$objective,
-        x = lps$x,
-        status = lps$status,
-        message = message,
-        control = control)
+        direction = "min", 
+        objective.in = objective.in, 
+        const.mat = const.mat, 
+        const.dir = const.dir, 
+        const.rhs = const.rhs, 
+        nScenarios = nScenarios, 
+        nAssets = nAssets,
+        targetReturn = targetReturn,
+        Alpha = Alpha)      
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rlpSolve <- 
+    function(direction, 
+    objective.in, const.mat, const.dir, const.rhs,
+    nScenarios, nAssets, targetReturn, Alpha)
+{
+	# Description:
+	#   Linear programming solver function for solver lpSolve
+	
+	# FUNCTION:
+	
+	# Optimize:
+	optim = R.lpSolve::lpSolve(
+	    direction, objective.in, const.mat, const.dir, const.rhs,
+	    presolve = 0, scale = 0)
+	
+	# Extract Weights:
+    weights = .checkWeights(optim$solution[-(1:(nScenarios+1))])
+    attr(weights, "invest") = sum(weights)
+    
+    # Prepare Output List:
+    ans = list(
+        type = "CVaR",
+        solver = "RlpSolve",
+        optim = optim,
+        weights = weights,
+        targetReturn = targetReturn,
+        targetRisk = optim$objval,
+        objective = optim$objval, 
+        status = optim$status, 
+        message = "")  
+    
+    # Return Value:
+    ans	
+}
+
+
+################################################################################
+
+
+.rlpSolveControl <-
+    function()
+{
+    # Description:
+    #   Returns default quadprog control settings
+    
+    # Arguments:
+    #   none
+    
+    # FUNCTION:
+    
+    # Not yet implemented ...
+    
+    NA
 }
 
 

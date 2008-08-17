@@ -14,68 +14,77 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION: 
-#  solveRshortExact              Solves Analytically Unlimited Short Portfolio 
+#  solveRshortExact             Portfolio interface to solver RshortExact
+#  .rshortExactArguments        Returns arguments for solver
+#  .rshortExact                 Wrapper to solver function
+#  .rshortExactControl          Returns default controls for solver 
 ################################################################################
 
 
 solveRshortExact <- 
     function(data, spec, constraints)
 {   
-    # A function implemented by Diethelm Wuertz
-
     # Description:
-    #   Solves Analyticallu Unlimited Short Portfolio 
+    #   SPortfolio interface to solver RshortExact
     
-    # Arguments:
-    #   data - portfolio of assets
-    #   spec - specification of the portfolio
-    #   constraints - string of constraints
+    # Details:
+    #   If getTargetReturn() is specified we minimze the risk,
+    #   if getTargetRisk() is pecified we maximize the risk.
+    
+    # Example:
+    #   solveRshortExact(.lppData, .mvSpec, "Short")[-3]
+    #   portfolioTest("MV", "minRisk", "solveRshortExact", "Short")
     
     # FUNCTION:
     
-    # Transform Data and Constraints:
-    data = portfolioData(data, spec)
-    if (class(constraints) == "fPFOLIOCON") 
-        constraints = constraints@stringConstraints
-    
-    # Trace:
-    trace = getTrace(spec)
-    if(trace) cat("\nPortfolio Optimiziation:\n Unlimited Short Exact ...\n")
-    
-    # What to optimize target risk or target return ?
-    optimize = NA
-    if (is.null(getWeights(spec)) & is.null(getTargetReturn(spec)))
-    {
-        optimize = "target return"
-        if (is.null(getTargetRisk(spec))) 
-            stop("Either target return or target risk must be specified")
-    }
-    if (is.null(getWeights(spec)) & is.null(getTargetRisk(spec)))
-    {
-        optimize = "target risk"
-        if (is.null(getTargetReturn(spec))) 
-            stop("Either target return or target risk must be specified")
-    }
-    if (is.na(optimize))
-        stop("Weights, target return and target risk are inconsistent!")
-    if (trace)
-        cat("\nProblem:\n Optimize", optimize, "\n")
+    # Convert Data and Constraints to S4 Objects:
+    Data = portfolioData(data, spec)
+    Constraints = portfolioConstraints(data, spec, constraints)
         
-    # Covariance:
-    mu = getMu(data)
-    Sigma = getSigma(data)
+    # Stop if the Target Return is not Defined!
+    optimize = getOptimize(spec)
+    targetReturn = getTargetReturn(spec)
+    targetRisk = getTargetRisk(spec)
+    stopifnot(is.numeric(targetReturn))
     
+    # Get '.rshortexact' conform arguments:
+    args = .rshortExactArguments(Data, spec, Constraints)
+    
+    # Solve Portfolio:
+    ans = .rshortExact(optimize = optimize, 
+        C0 = args$C0, a = args$a, b = args$b, c = args$c, d = args$d, 
+        invSigma = args$invSigma, mu = args$mu, 
+        targetReturn, targetRisk)   
+
+    # Return Value:
+    ans
+}
+
+            
+# ------------------------------------------------------------------------------
+
+
+.rshortExactArguments <-
+function(data, spec, constraints)
+{
+    # Description:
+    #   Returns 'shortexact' conform arguments for the solver
+    
+    # FUNCTION:
+    
+    # Data as S4 Objects:
+    Data = portfolioData(data, spec)
+    
+    # Get Specifications:
+    mu = getMu(Data)
+    Sigma = getSigma(Data)
+    weights = getWeights(spec)
+    targetReturn = getTargetReturn(spec)
+    targetRisk = getTargetRisk(spec)
+
     # Parameter Settings:
     C0 = 1
     one = rep(1, times = length(mu))
@@ -83,74 +92,69 @@ solveRshortExact <-
     a = as.numeric(mu %*% invSigma %*% mu)
     b = as.numeric(mu %*% invSigma %*% one)
     c = as.numeric(one %*% invSigma %*% one)
-    d = as.numeric(a*c - b^2)
-
-    if (optimize == "target risk") 
-    {
-        # Get Target Return:
-        # Note: for the Tangency Portfolio we have targetReturn = (a/b)*C0     
-        targetReturn = getTargetReturn(spec) 
+    d = as.numeric(a*c - b^2)  
     
-        # Compute Target Risk:
-        targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
-        
-        # Objective:
-        # DW: added 2008-04-20
-        objective = targetRisk
-        
-        # trace:
-        if (trace) {
-            cat("\nTarget Return:\n ", targetReturn, "\n")    
-            cat("\nTarget Risk:\n ", targetRisk, "\n") 
-            cat("\nobjective:\n ", objective, "\n") 
-        }   
-    
-    } else if (optimize == "target return")  {
-        
-        # DW 2008-02-12 added
-        
-        # Get Target Risk:
-        targetRisk = getTargetRisk(spec)    
-    
-        # Compute Target Return:
-        aq = c
-        bq = -2*b*C0
-        cq = a*C0^2 - d*targetRisk^2
-        targetReturn = ( -bq + sqrt(bq^2 - 4*aq*cq) ) / (2*aq)
-        
-        # Objective:
-        # DW: added 2008-04-20
-        objective = targetReturn
-        
-        # trace:
-        if (trace) {
-            cat("\nTarget Return:\n ", targetReturn, "\n")    
-            cat("\nTarget Risk:\n ", targetRisk, "\n") 
-            cat("\nobjective:\n ", objective, "\n") 
-        }   
-    }
-    
-    # Compute Weights:
-    weights = 
-        as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
-    if (trace) {
-        cat("\nWeights:\n", weights, "\n\n")    
-    }   
-            
-    # Prepare Output List:
-    ans = list(
-        solver = "solveRshortExact",
-        optim = NA,
-        weights = weights, 
-        targetReturn = targetReturn, 
-        targetRisk = targetRisk,
-        status = 0, 
-        objective = objective)
-
     # Return Value:
-    ans
+    list(C0 = C0, a = a, b = b, c = c, d = d, mu = mu, invSigma = invSigma)         
 }
 
 
 ################################################################################
 
+
+.rshortExact <-
+    function(optimize, C0, a, b, c, d, invSigma, mu, 
+    targetReturn, targetRisk)
+{
+    # Description:
+    #   Analytical 'shortexact' solver function
+    
+    # FUNCTION:
+
+    # Optimize:
+    if (optimize == "minRisk") {  
+        # Compute Target Risk:
+        objective = targetRisk = 
+            sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)  
+    } else if (optimize == "maxReturn")  {  
+        # Compute Target Return:
+        aq = c
+        bq = -2*b*C0
+        cq = a*C0^2 - d*targetRisk^2
+        objective = targetReturn = 
+            (-bq + sqrt(bq^2 - 4*aq*cq)) / (2*aq)
+    }
+    
+    # Compute Weights:
+    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    weights = .checkWeights(weights)
+    
+    # Return Value:
+    list(
+        solver = "solveRshortExact",
+        optim = NA,
+        weights = weights, 
+        targetReturn = targetReturn, 
+        targetRisk = targetRisk,
+        objective = objective,
+        status = 0, 
+        message = optimize)     
+}
+       
+
+# ------------------------------------------------------------------------------
+
+
+.rshortExactControl <-
+    function()
+{
+    # Description:
+    #   Returns default 'shortexact' control settings
+    
+    # FUNCTION:
+    
+    NA
+}
+
+
+################################################################################
