@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
@@ -39,6 +31,7 @@
 # FUNCTION:                     DESCRIPTION:
 #  getSpec                       Extracs specification Slot
 #   getType                       Extracts type of portfolio
+#   getOptimize                   Extracts what to optimize of portfolio
 #   getEstimator                  Extracts mean-covariance estimator
 #   getParams                     Extracts optional parameter list
 # *getPortfolio                  Extract portfolio slot
@@ -87,6 +80,7 @@ getData.fPORTFOLIO = function(object) object@data$data
 getSpec.fPORTFOLIO <- function(object) object@spec$spec
  getModel.fPORTFOLIO <- function(object) getModel(getSpec(object))
   getType.fPORTFOLIO <- function(object) getType(getSpec(object))
+  getOptimize.fPORTFOLIO <- function(object) getOptimize(getSpec(object))
   getEstimator.fPORTFOLIO <- function(object) getEstimator(getSpec(object))
   getTailRisk.fPORTFOLIO <- function(object) getTailRisk(getSpec(object))
   getParams.fPORTFOLIO <- function(object) getParams(getSpec(object))
@@ -107,6 +101,19 @@ getSpec.fPORTFOLIO <- function(object) object@spec$spec
 
 
 getConstraints.fPORTFOLIO <- function(object) object@constraints
+getConstraintsTypes <- function(object) {
+    Constraints = getConstraints(object)
+    Types = NULL
+    if(!is.na(pmatch("LongOnly", Constraints))) Types = c(Types, "LongOnly") 
+    if(!is.na(pmatch("Short", Constraints))) Types = c(Types, "Short") 
+    if(!is.na(pmatch("minW", Constraints))) Types = c(Types, "minW") 
+    if(!is.na(pmatch("maxW", Constraints))) Types = c(Types, "maxW") 
+    if(!is.na(pmatch("minsumW", Constraints))) Types = c(Types, "minsumW") 
+    if(!is.na(pmatch("maxsumW", Constraints))) Types = c(Types, "maxsumW") 
+    if(!is.na(pmatch("minB", Constraints))) Types = c(Types, "minB") 
+    if(!is.na(pmatch("maxB", Constraints))) Types = c(Types, "maxB") 
+    Types
+}
 
 
 # ------------------------------------------------------------------------------
