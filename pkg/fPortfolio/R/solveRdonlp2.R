@@ -257,7 +257,7 @@ function(data, spec, constraints)
 ################################################################################
 
 
-donlp2Control <- 
+.rdonlp2Control <- 
     function()         
 {
     list(

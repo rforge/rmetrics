@@ -24,6 +24,14 @@
 #  setGroupMatConstraints        Returns a list with group matrix constraints
 #  setRiskBudgetConstraints      Returns a list with risk-budget constraints
 #  setBoxGroupConstraints        Returns a matrix of box/group constraints
+# FUNCTION:
+#  minWConstraints
+#  maxWConstraints
+#  eqsumWConstraints
+#  minsumWConstraints
+#  maxsumWConstraints
+#  minBConstraints
+#  maxBConstraints
 ################################################################################
 
 
@@ -351,7 +359,7 @@ setGroupMatConstraints <-
  
 
 setRiskBudgetConstraints <-
-    function(data, spec = NULL, constraints = "LongOnly")
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Rmetrics
 
@@ -718,7 +726,7 @@ minsumWConstraints <-
     #   spec = portfolioSpec()
     #   constraints = c("minsumW[2:3]=0.2", "minsumW[c(1,4:6)]=0.2")
     #   minsumWConstraints(data, spec, constraints)   
-    #   maxsumWConstraints(data, spec)
+    #   minsumWConstraints(data, spec)
     
     # FUNCTION:
         

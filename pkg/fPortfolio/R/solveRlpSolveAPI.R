@@ -80,7 +80,7 @@ solveRlpSolveAPI <-
 
 
 .RlpSolveAPIArguments <-
-    function(data, spec, contsraints)
+    function(data, spec, constraints)
 {
     # Description:
     #   Create Argument List for Linear Solver lpSolveAPI
