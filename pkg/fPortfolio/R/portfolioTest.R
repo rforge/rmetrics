@@ -26,7 +26,7 @@ function(
     type = "MV", 
     optimize = "minRisk",
     solver = "solveRquadprog", 
-    constraints = c("LongOnly", "Short", "BoxGroup"),
+    constraints = c("LongOnly", "Short", "BoxGroup", "CovBudget"),
     NFrontierPoints = 25)
 {
     # Example:
@@ -41,6 +41,7 @@ function(
     
     #   portfolioTest("MV",   "minRisk",   "solveRdonlp2",     "LongOnly")
     #   portfolioTest("MV",   "minRisk",   "solveRdonlp2",     "BoxGroup")
+    #   portfolioTest("MV",   "minRisk",   "solveRdonlp2",     "CovBudget")
     
     #   portfolioTest("MV",   "maxReturn", "solveRsocp",       "LongOnly")
     
@@ -56,22 +57,19 @@ function(
     #   portfolioTest("CVaR", "minRisk",   "solveRglpk",       "LongOnly")
     #   portfolioTest("CVaR", "minRisk",   "solveRglpk",       "BoxGroup")
     
-    #   type="VaR"; optimize="minRisk"; solver="solveRlpSolveAPI";constraints="LongOnly";NFrontierPoints=25
+    #   type="MV"; optimize="minRisk"; solver="solveRdonlp2";constraints="BoxGroup";NFrontierPoints=25
     
     # FUNCTION:
     
-    Start =  Sys.time()
+    Start = Sys.time()
+    Constraints = match.arg(constraints)
+    if(Constraints == "BoxGroup") constraints = .BoxGroup
+    if(Constraints == "CovBudget") constraints = .CovBudget
+    Subtitle = paste(type, "|", optimize, "|", Constraints)
     
     # Data - Take care of proper scaling:
     data = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    Data = portfolioData(data) 
-    
-    # Constraints:
-    if(constraints == "BoxGroup") {
-        constraints = c(
-            "minW[3:4]=0.1",    "maxW[5:6]=0.9", 
-            "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8") 
-    }
+    Data = portfolioData(data)     
     
     # Settings:
     spec <- portfolioSpec()
@@ -94,6 +92,7 @@ function(
     # Equal Weights Feasible Portfolio:
     fp = feasiblePortfolio(data, spec, constraints)
     out = capture.output(fp)
+    fp.Risk = getTargetRisk(fp)[,c(1,3)]
     cat("\n")
     print(out[c(3:7, 11, 15, 19)], quote = FALSE)
        
@@ -108,48 +107,74 @@ function(
     out = capture.output(ep)
     cat("\n")
     print(out[c(3:7, 11, 15, 19)], quote = FALSE)
-    
+    ep.Risk = getTargetRisk(ep)[,c(1,3)]
+    if (type == "MV") epPoint = c(ep.Risk[1], mean(data)) 
+    if (type == "CVaR") epPoint = c(ep.Risk[2], mean(data)) 
+       
     # Max Reward/Risk Ratio Portfolio:
     tg = maxratioPortfolio(data, spec, constraints)
     out = capture.output(tg)
     cat("\n")
     print(out[c(3:7, 11, 15, 19)], quote = FALSE)
+    tg.Risk = getTargetRisk(tg)[,c(1,3)]
        
     # Minimum Risk Portfolio:
     mv = minriskPortfolio(data, spec, constraints)
     out = capture.output(mv)
     cat("\n")
     print(out[c(3:7, 11, 15, 19)], quote = FALSE)
+    mv.Risk = getTargetRisk(mv)[,c(1,3)]
+    
+    Risk = round(rbind(fp.Risk, ep.Risk, tg.Risk, mv.Risk), 4)
+    rownames(Risk) = c("Equal Wts", "Grand Mean", "R/R Ratio", "Min Risk")
+    riskText = capture.output(Risk)
     
     # Efficient Frontier:
     pf = portfolioFrontier(data, spec, constraints)
     cat("\n")
     print(pf) 
-    
-    
+      
     # Efficient Frontier Plot: 
     print("Plot ...")
-    if (type == "MV") x.max = 0.08
-    if (type == "CVaR") x.max = 0.0175
-    frontierPlot(pf) #, xlim = c(0, x.max))
+    if (type == "MV") {
+        xlim = c(0, 0.8)
+        offset = 0.03
+    }
+    if (type == "CVaR") {
+        xlim = c(0, 2)
+        offset = 0.075
+    }
+    frontierPlot(pf, ylim = c(-0.01, 0.09), xlim = xlim)
+    mtext(Subtitle, 3, 0.5, font = 2, cex = 0.8)
+    grid()
     minvariancePoints(pf, pch = 19, col = "red")
     tangencyPoints(pf, pch = 19)
     tangencyLines(pf, col = "blue")
     points(0, 0, pch = 19, col = "blue")
-    equalWeightsPoints(pf, col = "blue")
-    singleAssetPoints(pf, col = rainbow(6), pch = 15)
+    coord = equalWeightsPoints(pf, pch = 22, col = "darkgrey")
+    text(coord[,1]+offset, coord[,2], "EW", font = 2, cex = 0.7)
+    points(epPoint[1], epPoint[2], pch = 19, col = "magenta", cex = 0.8)
+    coord = singleAssetPoints(pf, col = rainbow(6), pch = 15)
+    text(coord[,1]+offset, coord[,2], rownames(coord), font = 2, cex = 0.7)
     # twoAssetsLines(pf, col = "grey")
-    sharpeRatioLines(pf)
+    sharpeRatioLines(pf, col = "brown")
     # monteCarloPoints(pf, 10000, cex = 0.25)
+    
+    # Risk Text:
+    text(offset, seq(0.088, 0.072, length=5), riskText, adj = 0, 
+        cex = 0.7, font = 11)
     
     # LongOnly Interactive Plot:
     # plot(pf)
     
     cat("\n")
-    print(Sys.time()-Start)
+    Elapsed = capture.output(Sys.time()-Start)
+    print(Elapsed)
+    mtext(Elapsed, 1, 4, adj = 1, cex = 0.7)
     cat("\n")
    
-    invisible()
+    ans = list(fp = fp, ep = ep, tg = tg, mv = mv, pf = pf)
+    invisible(ans)
 } 
 
 

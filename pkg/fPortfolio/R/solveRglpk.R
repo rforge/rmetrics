@@ -34,7 +34,7 @@ solveRglpk <-
     #   solveRglpk(.lppData, .cvarSpec, "LongOnly")[-3]
     #   solveRglpk(.lppData, .cvarSpec, .BoxGroups)[-3]
     #   portfolioTest("CVaR", "minRisk", "solveRglpk", "LongOnly")
-    #   portfolioTest("CVaR", "minRisk", "solveRglpk", .BoxGroups)
+    #   portfolioTest("CVaR", "minRisk", "solveRglpk", "BoxGroup")
     
     # FUNCTION:   
 

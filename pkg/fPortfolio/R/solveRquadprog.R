@@ -34,7 +34,7 @@ solveRquadprog <-
     #   solveRquadprog(.lppData, .mvSpec, "LongOnly")[-3]
     #   solveRquadprog(.lppData, .mvSpec, .BoxGroups)[-3]
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "LongOnly")
-    #   portfolioTest("MV", "minRisk", "solveRquadprog", .BoxGroups)
+    #   portfolioTest("MV", "minRisk", "solveRquadprog", "BoxGroup")
     
     # FUNCTION:   
 

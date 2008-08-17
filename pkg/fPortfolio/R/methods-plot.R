@@ -75,13 +75,14 @@ plot.fPORTFOLIO <-
             "Add Risk/Return of Single Assets",
             "Add Equal Weights Portfolio",
             "Add Two Asset Frontiers [LongOnly Only]",
-            "Add Wheel Pie of Weights",
+           #"Add Wheel Pie of Weights",
             "Add Monte Carlo Portfolios",
             "Add Sharpe Ratio [Markowitz PF Only]"),
         plotFUN = c(
             ".fportfolio.plot.1", ".fportfolio.plot.2", ".fportfolio.plot.3",
             ".fportfolio.plot.4", ".fportfolio.plot.5", ".fportfolio.plot.6",
-            ".fportfolio.plot.7", ".fportfolio.plot.8", ".fportfolio.plot.9"),
+           #".fportfolio.plot.7", 
+            ".fportfolio.plot.8", ".fportfolio.plot.9"),
         which = which)
 
     # Return Value:

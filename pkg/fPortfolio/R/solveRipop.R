@@ -34,7 +34,7 @@ solveRipop <-
     #   solveRipop(.lppData, .mvSpec, "LongOnly")[-3]
     #   solveRipop(.lppData, .mvSpec, .BoxGroups)[-3]
     #   portfolioTest("MV", "minRisk", "solveRipop", "LongOnly")
-    #   portfolioTest("MV", "minRisk", "solveRipop", .BoxGroups)
+    #   portfolioTest("MV", "minRisk", "solveRipop", "BoxGroup")
     
     # FUNCTION:   
 

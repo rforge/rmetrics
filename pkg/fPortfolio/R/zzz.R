@@ -59,10 +59,10 @@ setType(.cvarSpec) = "CVaR"
 setTargetReturn(.cvarSpec) = mean(.lppData)
 setSolver(.cvarSpec) = "solveRfoo"
 
-.Boxes = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
-.Groups = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
-.BoxGroups = c(.Boxes, .Groups)
-.CovBudgets = c("minB[3:4]=0.1", "maxB[5:6]=0.9")
+.Box = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
+.Group = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
+.BoxGroup = c(.Box, .Group)
+.CovBudget = c("minB[3:4]=0.1", "maxB[5:6]=0.9")
 
 
 ################################################################################

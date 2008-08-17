@@ -31,12 +31,16 @@ solveRdonlp2 <-
     #   Portfolio interface to solver Rdonlp2
 
     # Example:
+    #   data = .lppData; spec = .mvSpec; constraints = "LongOnly"
+    #       minRisk <- function(x) { x %*% Sigma %*% x }
+    #       Sigma = cov(data)
+    #       fn = match.fun(getOptimize(spec))
     #   solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
     #   solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
     #   solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3] 
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", .BoxGroups) 
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", .CovBudgets)
+    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
+    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")
     
     # FUNCTION:   
 
@@ -81,13 +85,6 @@ solveRdonlp2 <-
 ################################################################################
 # Here we solve the quadprog problem with box/group and optional
 # risk budget constraints ...
-
-
-# maxReturn <- function(x) { x %*% mu }
-# minRisk <- function(x) { x %*% Sigma %*% x }
-# fn = match.fun(getOptimize(spec))
-# mu = colMeans(data)
-# Sigma = cov(data)
   
     
 .rdonlp2Arguments <-
@@ -105,9 +102,13 @@ function(data, spec, constraints)
     
     # Example:
     #   .rdonlp2Arguments(.lppData, .mvSpec, "LongOnly") 
-    #   .rdonlp2Arguments(.lppData, .mvSpec, .BoxGroups)
+    #   .rdonlp2Arguments(.lppData, .mvSpec, .BoxGroup)
+    #   .rdonlp2Arguments(.lppData, .mvSpec, .CovBudgets)
     #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=0.1", "maxB[3:5]=0.9"))  
-    
+    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
+    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
+    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")   
+
     DEBUG = FALSE
     
     # Settings:
@@ -146,8 +147,8 @@ function(data, spec, constraints)
         amaxsum = maxsumW[, 1]
     }      
     A = rbind(Aeqsum, Aminsum, Amaxsum)
-    lin.lower = c(aeqsum, aminsum, rep(1, length(amaxsum)))
-    lin.upper = c(aeqsum, rep(0, length(aminsum)), amaxsum)
+    lin.lower = c(aeqsum, aminsum, rep(-Inf, length(amaxsum)))
+    lin.upper = c(aeqsum, rep(Inf, length(aminsum)), amaxsum)
     if(DEBUG) print(cbind(lin.lower, A, lin.upper))
    
     # Nonlinear Constraints - Here Covariance Risk Budgets:
@@ -236,7 +237,7 @@ function(data, spec, constraints)
     if (substr(optim$message, 1, 25) == message11) Status = 0 
     if (substr(optim$message, 1, 25) == message12) Status = 0 
     if (substr(optim$message, 1, 25) == message13) Status = 0 
-          
+    
     # Result:
     ans <- list(
         type = "MV",
@@ -244,8 +245,8 @@ function(data, spec, constraints)
         optim = optim,
         weights = weights, 
         targetReturn = targetReturn,
-        targetRisk = sqrt((weights %*% Sigma %*% weights)[[1]]), 
-        objective = sqrt((weights %*% Sigma %*% weights)[[1]]), 
+        targetRisk = sqrt(optim$fx), 
+        objective = sqrt(optim$fx), 
         status = Status, 
         message = optim$message)    
         

@@ -34,7 +34,7 @@ solveRlpSolve <-
     #   solveRlpSolve(.lppData, .cvarSpec, "LongOnly")[-3]
     #   solveRlpSolve(.lppData, .cvarSpec, .BoxGroups)[-3]
     #   portfolioTest("CVaR", "minRisk", "solveRlpSolve", "LongOnly")
-    #   portfolioTest("CVaR", "minRisk", "solveRlpSolve", .BoxGroups)
+    #   portfolioTest("CVaR", "minRisk", "solveRlpSolve", "BoxGroup")
     
     # FUNCTION:
     
@@ -212,8 +212,8 @@ function(data, spec, constraints)
     }
     
     const.mat = rbind(Aeq, Avar, Aes, Aminsum, Amaxsum, Amin, Amax)
-    const.rhs = c(aeq, avar, aes, aminsum, amaxsum, amin, amax)
-    const.dir = c(deq, dvar, des, dminsum, dmaxsum, dmin, dmax)
+    const.rhs =     c(aeq, avar, aes, aminsum, amaxsum, amin, amax)
+    const.dir =     c(deq, dvar, des, dminsum, dmaxsum, dmin, dmax)
     
     # Return Value:
     list(

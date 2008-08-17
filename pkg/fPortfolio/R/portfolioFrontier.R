@@ -43,6 +43,8 @@ portfolioFrontier <-
     
     # FUNCTION:
     
+    DEBUG = TRUE
+    
     # Match Spec Versus Constraints?
     .checkSpecVsConstraints(spec, constraints)
     

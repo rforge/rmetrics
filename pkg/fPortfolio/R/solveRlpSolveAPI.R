@@ -34,7 +34,7 @@ solveRlpSolveAPI <-
     #   solveRlpSolveAPI(.lppData, .cvarSpec, "LongOnly")[-3]
     #   solveRlpSolveAPI(.lppData, .cvarSpec, .BoxGroups)[-3]
     #   portfolioTest("CVaR", "minRisk", "solveRlpSolveAPI", "LongOnly")
-    #   portfolioTest("CVaR", "minRisk", "solveRlpSolveAPI", .BoxGroups)
+    #   portfolioTest("CVaR", "minRisk", "solveRlpSolveAPI", "BoxGroup")
 
     # FUNCTION:
     
