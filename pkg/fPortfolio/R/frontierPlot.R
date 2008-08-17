@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:
@@ -214,13 +206,17 @@ minvariancePoints <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Slots:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Add Minimum Variance Point:
-    mvPortfolio = minvariancePortfolio(Data, Spec, Constraints)
+    mvPortfolio = minvariancePortfolio(data, spec, constraints)
     assets = frontierPoints(mvPortfolio, return = return, risk = risk,
         auto = auto)
     points(assets, ...)
@@ -244,15 +240,18 @@ cmlPoints <-
     #   Adds the capital market line to a portfolio plot
 
     # FUNCTION:
+    
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
 
     # Get Portfolio Statistics:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
-    Type = getType(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Add Capital Market Line Tangency Point:
-    cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
+    cmlPortfolio = tangencyPortfolio(data, spec, constraints)
     assets = frontierPoints(cmlPortfolio, return = return, risk = risk,
         auto = auto)
     points(assets, ...)
@@ -277,15 +276,18 @@ cmlLines <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Statistics:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
-    Type = getType(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Add Capital Market Line:
-    cmlPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    riskFreeRate = getRiskFreeRate(Spec)
+    cmlPortfolio = tangencyPortfolio(data, spec, constraints)
+    riskFreeRate = getRiskFreeRate(spec)
     slope = ((getTargetReturn(cmlPortfolio)[, "mean"] - riskFreeRate) /
         getTargetRisk(cmlPortfolio)[, "Cov"])
     if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
@@ -310,13 +312,17 @@ tangencyPoints <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Slots:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Compute Tangency Portfolio:
-    tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
+    tgPortfolio = tangencyPortfolio(data, spec, constraints)
 
     # Add Tangency Point:
     assets = frontierPoints(tgPortfolio, return = return, risk = risk,
@@ -343,13 +349,17 @@ tangencyLines <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Slots:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Compute Tangency Portfolio:
-    tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
+    tgPortfolio = tangencyPortfolio(data, spec, constraints)
 
     # Add Tangency Line:
     assets = frontierPoints(tgPortfolio, return = return, risk = risk,
@@ -358,7 +368,7 @@ tangencyLines <-
     abline(0, slope, ...)
 
     # Return Value:
-    invisible()
+    invisible(list(slope = slope, assets = assets))
 }
 
 
@@ -377,17 +387,21 @@ equalWeightsPoints =
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Statistics:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
-    NumberOfAssets = getNAssets(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
+    numberOfAssets = getNAssets(object)
 
     # Set Equal Weights:
-    setWeights(Spec) = rep(1/NumberOfAssets, times = NumberOfAssets)
+    setWeights(spec) = rep(1/numberOfAssets, times = numberOfAssets)
 
     # Add Equal Weights Portfolio:
-    ewPortfolio = feasiblePortfolio(Data, Spec, Constraints)
+    ewPortfolio = feasiblePortfolio(data, spec, constraints)
     assets = frontierPoints(ewPortfolio, return = return, risk = risk,
         auto = auto) 
     points(assets, ...)
@@ -490,22 +504,24 @@ twoAssetsLines <-
     # Supported ?
     check = rev(attr(object@constraints, "model"))[1]
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Statistics:
-    Data = getData(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
-    Type = getType(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
 
     # Add Frontiers for all Two-Assets Portfolios:
     N = getNAssets(object)
-    Data = getSeries(object)
-    setWeights(Spec) = NULL
+    setWeights(spec) = NULL
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j)
-            Data2 = Data[, index]
+            data2 = data[, index]
             # Zero-One Constraints2 ?
-            ans = portfolioFrontier(data = Data2, spec = Spec)
+            ans = portfolioFrontier(data = data2, spec = spec)
             lines(frontierPoints(ans, 
                 return = return, risk = risk, auto = auto), ...)
         }
@@ -531,10 +547,14 @@ sharpeRatioLines <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Slots:
-    Data = getSeries(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
+    data = getSeries(object)
+    spec = getSpec(object)
+    constraints = getConstraints(object)
     Type = getType(object)
 
     # Efficient Frontier:
@@ -544,7 +564,7 @@ sharpeRatioLines <-
     y = frontPoints[, 2]
 
     # Tangency Portfolio:
-    tangencyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
+    tangencyPortfolio = tangencyPortfolio(data, spec, constraints)
     # x.tg = getTargetReturn(tangencyPortfolio)[1, "mean"]
     x.tg = frontierPoints(tangencyPortfolio, 
         return = return, risk = risk, auto = auto)[, 2]
@@ -594,6 +614,10 @@ monteCarloPoints <-
 
     # FUNCTION:
 
+    # Match Arguments:
+    return = match.arg(return)
+    risk = match.arg(risk)
+    
     # Get Portfolio Statistics:
     Statistics = getStatistics(object)
     Type = getType(object)
