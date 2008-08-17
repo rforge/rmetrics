@@ -35,9 +35,8 @@ setClass("fPFOLIOCON",
         boxConstraints = "list",
         groupEqConstraints = "list",
         groupMatConstraints = "list",
-        boxgroupConstraints = "matrix",
-        riskbudgetConstraints = "matrix",
-        altConstraints = "list")  
+        riskBudgetConstraints = "list",
+        boxGroupConstraints = "matrix")  
 )
 
 

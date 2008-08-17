@@ -14,19 +14,12 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
 #  portfolioSpec                 Specifies a portfolio to be optimized
-#  .checkWeights                 Sets extremely small weights to zero
+#  .checkWeights                 Forces tiny weights to zero
+#  .checkSpecVsConstraints       Stops if spec and constraints do not match
 ################################################################################
 
 
@@ -56,8 +49,6 @@ function(
          trace = FALSE)
     )
 {
-    # A function implemented by Diethelm Wuertz and Oliver Greshake
-
     # Description:
     #   Specifies a portfolio to be optimized
 
@@ -129,7 +120,7 @@ function(
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Sets extremely small weights to zero
+    #   Sets tiny weights to zero
     
     # Arguments:
     #   weights - a numeric vector of portfolio weights
@@ -145,6 +136,60 @@ function(
     # Return Value:
     weights
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.checkSpecVsConstraints <-
+    function(spec, constraints)
+{    
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Stops if spec versus constraints do mot match
+    
+    # Arguments:
+    #   spec - portfolio specification as fPFOLIOSPEC object
+    #   constraints - as charvec or as fPFOLIOSPEC object
+    
+    # FUNCTOION:
+    
+    # Check:
+    if(class(constraints) == "fPFOLIOCON")
+        constraints = constraints@stringConstraints
+    if(any(constraints == "Short")) {
+        stopifnot(getSolver(spec) == "solveRshortExact")
+    }
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.checkTargetReturn <-
+    function(spec)
+{    
+    # Description:
+    #   Check if target Return is defined
+    
+    # Arguments:
+    #   spec - specification object
+    
+    # FUNCTOION:
+    
+    # Check:
+    targetReturn = getTargetReturn(spec)
+    if(is.null(targetReturn))
+        stop("The target return is not available")
+    
+    # Return Value:
+    invisible(targetReturn)
+}
+
 
 
 ################################################################################

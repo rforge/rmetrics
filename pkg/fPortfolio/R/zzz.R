@@ -13,16 +13,6 @@
 # Public License along with this library; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
-
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
-
 ################################################################################
 
 
@@ -52,6 +42,27 @@ function(lib, pkg)
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
     Sys.setenv <- Sys.putenv
 
+
+################################################################################
+# some useful functions added
+   
+ 
+.lppData = 100* as.timeSeries(data(LPP2005REC))[, 1:6]
+
+.mvSpec = portfolioSpec()
+setType(.mvSpec) = "MV"
+setTargetReturn(.mvSpec) = mean(.lppData)
+setSolver(.mvSpec) = "solveRfoo"
+
+.cvarSpec = portfolioSpec()
+setType(.cvarSpec) = "CVaR"
+setTargetReturn(.cvarSpec) = mean(.lppData)
+setSolver(.cvarSpec) = "solveRfoo"
+
+.Boxes = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
+.Groups = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
+.BoxGroups = c(.Boxes, .Groups)
+.CovBudgets = c("minB[3:4]=0.1", "maxB[5:6]=0.9")
 
 
 ################################################################################
