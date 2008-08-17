@@ -243,7 +243,7 @@ function(data, spec, constraints)
 	# FUNCTION:
 	
 	# Optimize:
-	optim = R.lpSolve::lpSolve(
+	optim = lpSolve::lp(
 	    direction, objective.in, const.mat, const.dir, const.rhs,
 	    presolve = 0, scale = 0)
 	
