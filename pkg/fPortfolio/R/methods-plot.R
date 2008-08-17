@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     PRINT AND PLOT METHODS:
@@ -82,10 +74,10 @@ plot.fPORTFOLIO <-
             "Add Tangency Portfolio",
             "Add Risk/Return of Single Assets",
             "Add Equal Weights Portfolio",
-            "Add Two Asset Frontiers [0-1 PF Only]",
+            "Add Two Asset Frontiers [LongOnly Only]",
             "Add Wheel Pie of Weights",
             "Add Monte Carlo Portfolios",
-            "Add Sharpe Ratio [MV PF Only]"),
+            "Add Sharpe Ratio [Markowitz PF Only]"),
         plotFUN = c(
             ".fportfolio.plot.1", ".fportfolio.plot.2", ".fportfolio.plot.3",
             ".fportfolio.plot.4", ".fportfolio.plot.5", ".fportfolio.plot.6",
@@ -118,10 +110,12 @@ plot.fPORTFOLIO <-
     }
 
     # Plot:
-    frontierPlot(object = x, xlim = con$xlim, ylim = con$ylim, pch =
-        19, cex = 0.75, title = FALSE,
+    frontierPlot(
+        object = x, xlim = con$xlim, ylim = con$ylim, 
+        pch = 19, cex = 0.75, title = FALSE,
         las = ifelse(is.null(con$las), 0, con$las))
-    title(main = ifelse(is.null(con$main), "Efficient Frontier", con$main),
+    title(
+        main = ifelse(is.null(con$main), "Efficient Frontier", con$main),
         xlab = ifelse(is.null(con$xlab), xLab, con$xlab),
         ylab = ifelse(is.null(con$ylab), "Target Return", con$ylab))
 
