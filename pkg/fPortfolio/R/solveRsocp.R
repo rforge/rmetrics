@@ -31,7 +31,11 @@ solveRsocp <-
     #   Portfolio interface to solver Rsocp
 
     # Example:
-    #   
+    #   ans = solveRquadprog(.lppData, .mvSpec, "LongOnly")[-3]
+    #   .mvSpec2 = .mvSpec; setTargetRisk(.mvSpec2) = ans$targetRisk
+    #   solveRsocp(.lppData, .mvSpec2, "LongOnly")[-3]; ans
+    
+    #   efficientortfolio
 
     # FUNCTION:
 
@@ -65,6 +69,7 @@ solveRsocp <-
             d = args$d, 
             N = args$N, 
             targetRisk = args$targetRisk, 
+            mu = args$mu,
             Scale = args$Scale)
     # }
 
@@ -83,17 +88,12 @@ solveRsocp <-
     #   Returns socp conform arguments for the solver
     
     # Example:
-    #   data = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
-    #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8", "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
     #   .rsocpArguments(data, spec, constraints)
     
     # FUNCTION:
     
-    # Data and Constraints as S4 Objects:
+    # Settings:
     Data = portfolioData(data, spec)
-       
-    # Get Specifications:
     nAssets = getNAssets(Data)
     Scale = 1.0e6 * sd(as.vector(data))
     mu = getMu(Data) /Scale
@@ -103,20 +103,16 @@ solveRsocp <-
     # Objective Function:
     lambda = 10
     f <- -mu - lambda * length(mu) * max(abs(mu))
-
-    # Setting the constraints matrix and vector:
-    tmpConstraints <- setBoxGroupConstraints(data, spec, constraints)
-
-    # NOTE : tmpConstraints[1, ] "Budget"
-    # NOTE : tmpConstraints[2, ] "Return"
+     
+    eqsumW = eqsumWConstraints(data, spec, constraints)
 
     C1 <- rep(0, nAssets)                                     # xCx
-    C2 <- tmpConstraints[1, -(nAssets + 1)]                   # sum(x)
-    C3 <- tmpConstraints[- c(1,2), -(nAssets + 1)]            # x[i]>0
+    C2 <- eqsumW[2,-1]                                        # sum(x)
+    C3 <- rbind(diag(nAssets), -diag(nAssets) )               # x[i]>0
 
     d1 <- targetRisk                                          # xCx = risk
-    d2 <- tmpConstraints[1, (nAssets + 1)]                    # sum(x) <= 1
-    d3 <- tmpConstraints[- c(1,2), (nAssets + 1)]             # x[i] > 0
+    d2 <- eqsumW[2, 1]                                        # sum(x) <= 1
+    d3 <- c(rep(0, nAssets), rep(-1, nAssets))                # x[i] > 0
 
     A1 <- R.socp::.SqrtMatrix(Sigma)
     A2 <- matrix(0, ncol = nAssets)
@@ -139,7 +135,7 @@ solveRsocp <-
 
     # Return Value:
     list(f = f, A = A, b = b, C = C, d = d, N = N, 
-        targetRisk = targetRisk, Scale = Scale)
+        targetRisk = targetRisk * Scale, mu = mu * Scale, Scale = Scale)
 }
     
 
@@ -148,7 +144,7 @@ solveRsocp <-
 
 .rsocp  <-
     function(f, A, b, C, d, N, x = NULL, z = NULL, w = NULL, 
-    targetRisk, Scale = Scale, control = .rsocpControl())
+    targetRisk, mu = mu, Scale = Scale, control = .rsocpControl())
 {
     # Description:
     #   SOCP solver function for portfolios
@@ -168,16 +164,24 @@ solveRsocp <-
     # Solve Portfolio:
     optim <- R.socp::socp(f, A, b, C, d, N, x, z, w, control)
     
+    # Extract Weights:
+    weights = .checkWeights(optim$x)
+    attr(weights, "invest") = sum(weights)
+  
     # Prepare Output List: 
     ans <- list(
+        type = "MV",
         solver = "solveRsocp",
         optim = optim,
-        weights = optim$x,
-        targetReturn = NA,
-        targetRisk = targetRisk * Scale,
-        objective = NA,
-        status = as.integer(optim$convergence),
-        message = "R.socp")
+        weights = weights,
+        targetReturn = (weights %*% mu)[[1]],
+        targetRisk = targetRisk,
+        objective = (weights %*% mu)[[1]],
+        status = as.integer(!optim$convergence),
+        message = optim$message)
+        
+    # Return Value: 
+    ans
 }
 
 
@@ -207,3 +211,4 @@ solveRsocp <-
 
 
 ################################################################################
+

@@ -99,7 +99,7 @@ solveRlpSolveAPI <-
     
     # Example:
     #   solveRlpSolveAPI(.lppData, .cvarSpec, "LongOnly")[-2]
-    #   solveRlpSolveAPI(.lppData, .cvarSpec, .BoxGroups)[-2]
+    #   solveRlpSolveAPI(.lppData, .cvarSpec, .BoxGroup)[-2]
     
     # FUNCTION:
     
