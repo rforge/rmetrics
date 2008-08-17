@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
@@ -44,31 +36,31 @@ portfolioFrontier <-
     #   constraints - a character vector or NULL
     
     # Example:
-    #   data = as.timeSeries(data(smallcap.ts))
-    #   data = data[, c("BKE", "GG", "GYMB", "KRON")] 
-    #   spec = portfolioSpec(); setNFrontierPoints(spec) = 20
-    #   portfolioFrontier(data, spec)
-    #   setSolver(spec) = "solveRdonlp2"; portfolioFrontier(data, spec)
+    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   spec = portfolioSpec()
+    #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8", "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
+    #   portfolioFrontier(data, spec, constraints)
     
     # FUNCTION:
     
+    # Match Spec Versus Constraints?
+    .checkSpecVsConstraints(spec, constraints)
+    
     # Transform Data and Constraints:
-    data = portfolioData(data, spec)
-    constraints = portfolioConstraints(data, spec, constraints)
-    
-    # Check Solver:
-    if (any(constraints@stringConstraints == "Short"))
-        setSolver(spec) = "solveRshortExact"
+    Data = portfolioData(data, spec)
 
-    # Optimize portfolios along the frontier:
+    # Optimize in N Points the Portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
-    mu = getMu(data)
-    eps = 1e-6
-    minMu = min(mu)*(1+eps)
-    maxMu = max(mu)*(1-eps)
-    targetReturns <- seq(minMu, maxMu, length = nFrontierPoints)
     
-    # NEW Version:
+    # The Target Return - get problems in the first and last point for
+    #   long only portfolios, just move a little bit aside ...
+    mu = getMu(Data)
+    targetReturns <- seq(min(mu), max(mu), length = nFrontierPoints)
+    eps = .Machine$double.eps^0.5
+    targetReturns[1] = targetReturns[1]*(1+eps)
+    targetReturns[nFrontierPoints] = targetReturns[nFrontierPoints]*(1-eps)
+    
+    # How to Go Along the Frontier ? 
     #   The Idea is to start from the minvariance portfolio and to explore
     #   the efficient frontier and the minimum variance locus starting from
     #   this point ...
@@ -84,9 +76,16 @@ portfolioFrontier <-
     IDX = minIndex
     weights = targetReturn = targetRisk = covRiskBudgets = NULL
     while (Status == 0 & IDX <= nFrontierPoints) {
+        # Add Target Return to Specification:
         setTargetReturn(spec) = targetReturns[IDX]
-        portfolio = efficientPortfolio(data, spec, constraints)
-        Status = getStatus(portfolio)
+        # Optimize Efficient Portfolio:
+        ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+        if (class(ans) == "try-error") {
+            Status = 1
+        } else {
+            portfolio = ans
+            Status = getStatus(portfolio)
+        }
         if (Status == 0) {
             weights = rbind(weights, getWeights(portfolio))
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
@@ -102,9 +101,16 @@ portfolioFrontier <-
         Status = 0
         IDX = minIndex - 1
         while (Status == 0 & IDX > 0) {
+            # Add Target Return to Specification:
             setTargetReturn(spec) = targetReturns[IDX]
-            portfolio = efficientPortfolio(data, spec, constraints)
-            Status = getStatus(portfolio)
+            # Optimize Efficient Portfolio:
+            ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+            if (class(ans) == "try-error") {
+                Status = 1
+            } else {
+                portfolio = ans
+                Status = getStatus(portfolio)
+            }
             if (Status == 0) {
                 weights2 = 
                     rbind(getWeights(portfolio), weights2)
