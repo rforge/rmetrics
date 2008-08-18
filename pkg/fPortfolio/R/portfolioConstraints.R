@@ -98,6 +98,7 @@ portfolioConstraints <-
 
     # Return Value:
     new("fPFOLIOCON",
+        stringConstraints = stringConstraints,
         minWConstraints = minW,
         maxWConstraints = maxW,
         eqsumWConstraints = eqsumW,

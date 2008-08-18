@@ -47,6 +47,7 @@ setClass("fPFOLIOCON",
 
 setClass("fPFOLIOCON", 
     representation(
+        stringConstraints = "character",
         minWConstraints = "numeric",
         maxWConstraints = "numeric",
         eqsumWConstraints = "matrix",

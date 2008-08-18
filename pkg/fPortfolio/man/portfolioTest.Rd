@@ -16,7 +16,8 @@
 
 \usage{  
 portfolioTest(type = "MV", optimize = "minRisk", solver = "solveRquadprog", 
-    constraints = c("LongOnly", "Short", "BoxGroup"), NFrontierPoints = 25)
+    constraints = c("LongOnly", "Short", "BoxGroup", "CovBudget"), 
+    NFrontierPoints = 25)
 }
 
 
