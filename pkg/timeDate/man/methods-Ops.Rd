@@ -23,9 +23,9 @@
     The functions are:
     
     \tabular{ll}{
-    \code{Ops.timeDate} \tab Group 'Ops' generic functions for 'timeDate' objects, \cr
-    \code{+.timeDate} \tab Performs arithmetic + operation on 'timeDate' objects, \cr
-    \code{-.timeDate} \tab Performs arithmetic - operation on 'timeDate' objects. }
+    \code{Ops,timeDate} \tab Group 'Ops' generic functions for 'timeDate' objects, \cr
+    \code{+,timeDate} \tab Performs arithmetic + operation on 'timeDate' objects, \cr
+    \code{-,timeDate} \tab Performs arithmetic - operation on 'timeDate' objects. }
        
 }
 
@@ -33,10 +33,11 @@
 \usage{
 \S4method{Ops}{timeDate,timeDate}(e1, e2)
 
-\S4method{+}{timeDate,timeDate}(e1, e2)
-\S4method{+}{timeDate,numeric}(e1, e2)
-\S4method{-}{timeDate,timeDate}(e1, e2)
-\S4method{-}{timeDate,numeric}(e1, e2)    
+% \S4method{+}{timeDate,timeDate}(e1, e2)
+% \S4method{+}{timeDate,numeric}(e1, e2)
+% \S4method{-}{timeDate,timeDate}(e1, e2)
+% \S4method{-}{timeDate,numeric}(e1, e2)    
+
 }
 
 

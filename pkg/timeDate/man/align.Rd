@@ -4,7 +4,7 @@
 \title{Making a 'timeDate' object unique}
 
 
-\alias{align-generic}
+\alias{align}
 \alias{align,timeDate-method}
 
 

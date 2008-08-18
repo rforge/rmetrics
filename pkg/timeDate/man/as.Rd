@@ -6,7 +6,7 @@
 \alias{as.double.timeDate}
 \alias{as.data.frame.timeDate}
 \alias{as.POSIXct.timeDate}
-\alias{as.POSIXlt.timeDate}
+\alias{as.POSIXlt,timeDate-method}
 \alias{as.Date.timeDate}
 
 
@@ -30,7 +30,7 @@
 
 \method{as.POSIXct}{timeDate}(x, tz = "", \dots)
 
-\method{as.POSIXlt}{timeDate}(x, tz = "", \dots)
+\S4method{as.POSIXlt}{timeDate}(x, tz = "", \dots)
 
 \method{as.Date}{timeDate}(x, method = c("trunc", "round", "next"), \dots)
 }

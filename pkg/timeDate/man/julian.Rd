@@ -5,7 +5,10 @@
 
 
 \alias{julian,timeDate-method}
+
+\alias{atoms}
 \alias{atoms,timeDate-method}
+
 \alias{months,timeDate-method}
 
 
