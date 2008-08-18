@@ -173,7 +173,7 @@ setMethod("show", "fPFOLIOSPEC",
 
 # ------------------------------------------------------------------------------
 
-
+if(FALSE) {
 setMethod("show", "fPFOLIOCON",
     function(object)
 {
@@ -207,6 +207,61 @@ setMethod("show", "fPFOLIOCON",
     cat("Box/Group Constraints:\n")
     print(object@boxGroupConstraints)
 
+    # Return Value:
+    invisible(object)
+})
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPFOLIOCON",
+    function(object)
+{
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIODATA"
+
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+
+    # FUNCTION:
+
+    # Print Title:
+    cat("\nTitle:\n ")
+    cat("Portfolio Constraints\n")
+
+    minmaxW = rbind(object@minWConstraints, object@maxWConstraints)
+    if (length(minmaxW)) {
+        cat("\nLower/Upper Bounds:\n")
+        print(minmaxW)
+    }
+
+    eqsumW = object@eqsumWConstraints
+    if (sum(dim(eqsumW)) > 2) {
+        cat("\nEqual Matrix Constraints:\n")
+        print(eqsumW)
+    }
+    
+    minsumW = object@minsumWConstraints
+    if (sum(dim(minsumW)) > 2) {
+        cat("\nLower Matrix Constraints:\n")
+        print(minsumW)
+    }
+    
+    maxsumW = object@maxsumWConstraints
+    if (sum(dim(minsumW)) > 2) {
+        cat("\nUpper Matrix Constraints:\n")
+        print(maxsumW)
+    }
+    
+    minmaxB = rbind(object@minBConstraints, object@maxBConstraints)
+    if (length(minmaxB) > 0) {
+        cat("\nLower/Upper Cov Risk Budget Bounds:\n")
+        rownames(minmaxB) = c("Lower", "Upper")
+        print(minmaxB)
+    }
+    
     # Return Value:
     invisible(object)
 })

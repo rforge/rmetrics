@@ -16,17 +16,23 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  minWConstraints         Returns vector with min box constraints
-#  maxWConstraints         Returns vector with max box constraints
-#  eqsumWConstraints       Returns list with group equal vec/matrix constraints
-#  minsumWConstraints      Returns list with group min vec/matrix constraints
-#  maxsumWConstraints      Returns list with group max vec/matrix constraints
-#  minBConstraints         Returns vector with min cov risk budget constraints
-#  maxBConstraints         Returns vector with max cov risk budget constraints
+# FUNCTION:                     DESCRIPTION:
+#  portfolioConstraints          Returns an object of class fPFOLIOCON
+# FUNCTION:                     DESCRIPTION:
+#  setBoxConstraints             Returns a list with box constraints
+#  setGroupEqConstraints         Returns a list with group equal constraints
+#  setGroupMatConstraints        Returns a list with group matrix constraints
+#  setRiskBudgetConstraints      Returns a list with risk-budget constraints
+#  setBoxGroupConstraints        Returns a matrix of box/group constraints
 ################################################################################
 
 
+# DW: Thes functions are made to convert constraint strings into matrixes
+# and vectors to simplify the input for the many different portfolio 
+# solvers.
+
+
+if(FALSE) {
 portfolioConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly", ...)
 {
@@ -49,11 +55,11 @@ portfolioConstraints <-
     #   1. boxConstraints           W_min <= W <= W_max
     #   2. groupEqConstraints       A_eq W = c_eq
     #   3. groupMatConstraints      a_vec <= A_mat W <= b_vec
-    #   4. riskBudgetConstraints    a <= RiskBudget <= b
+    #   4. riskBudgetConstraints    a <= RisBudget <= b
     #   These values are returned as list in four slots.
     
     # Example:
-    #   data = .lppData; spec = .mvSpec 
+    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]; spec = portfolioSpec() 
     #   portfolioConstraints(data, spec, "LongOnly")
     #   constraints = c("minW[1:3]=0.1", "maxW[4:6]=0.9", "minsumW[c(2,5)]=0.2", "maxsumW[c(1,4)]=0.9")
     #   portfolioConstraints(data, spec, constraints)
@@ -61,10 +67,12 @@ portfolioConstraints <-
     # FUNCTION:
 
     # Already done ...
-    if (class(constraints) == "fPFOLIOCON") return(constraints)
+    if (class(constraints) == "fPFOLIOCON") 
+        constraints = constraints@stringConstraints
     
     # Handle NULL - A NULL  :
-    if (is.null(constraints)) constraints = "LongOnly"
+    if (is.null(constraints)) 
+        constraints = "LongOnly"
     
     # Chweck Vector of Valid Strings - these are strings ...
     validStrings = c(
@@ -79,163 +87,113 @@ portfolioConstraints <-
     if (check) check = "valid" else stop("Invalid Constraints String(s)")
     stringConstraints = constraints
     attr(stringConstraints, "control") = check
-    
-    minW = minWConstraints(data, spec, constraints)
-    maxW = maxWConstraints(data, spec, constraints)
-    eqsumW = eqsumWConstraints(data, spec, constraints)
-    minsumW = minsumWConstraints(data, spec, constraints)
-    maxsumW = maxsumWConstraints(data, spec, constraints)
-    minB = minBConstraints(data, spec, constraints)
-    maxB = maxBConstraints(data, spec, constraints)
-    
-    if(is.null(minW)) minW = numeric()
-    if(is.null(maxW)) maxW = numeric()
-    if(is.null(eqsumW)) eqsumW = matrix(NA)
-    if(is.null(minsumW)) minsumW = matrix(NA)
-    if(is.null(maxsumW)) maxsumW = matrix(NA)
-    if(is.null(minB)) minB = numeric()
-    if(is.null(maxB)) maxB = numeric()
+
+    # Set Box Constraints:
+    boxConstraints <-
+        setBoxConstraints(data, spec, constraints)
+        
+    # Set Group Equal Constraints:
+    groupEqConstraints <- 
+        setGroupEqConstraints(data, spec, constraints)
+        
+    # Set Group Matrix Constraints:
+    groupMatConstraints <- 
+        setGroupMatConstraints(data, spec, constraints)
+          
+    # Set RiskBudget Constraints:
+    riskBudgetConstraints <- 
+        setRiskBudgetConstraints(data, spec, constraints)
+        
+    # Set Box/Group Constraints:
+    boxGroupConstraints <- 
+        setBoxGroupConstraints(data, spec, constraints)
 
     # Return Value:
     new("fPFOLIOCON",
-        minWConstraints = minW,
-        maxWConstraints = maxW,
-        eqsumWConstraints = eqsumW,
-        minsumWConstraints = minsumW,
-        maxsumWConstraints = maxsumW,
-        minBConstraints = minB, 
-        maxBConstraints = maxB)
+        stringConstraints = stringConstraints,
+        boxConstraints = boxConstraints,
+        groupEqConstraints = groupEqConstraints,
+        groupMatConstraints = groupMatConstraints,
+        riskBudgetConstraints = riskBudgetConstraints,
+        boxGroupConstraints = boxGroupConstraints)
 }
-            
+}
 
 ################################################################################
-    
- 
-minWConstraints <-
+
+
+setBoxConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # Description:
-    #   Returns a vector with min box constraints
-
-    # Details:
-    #   Takes care of "minW" strings, i.e. lower blounds
-    #   W >= c
+    #   Returns a list with box constraints vectors
     
+    # Details:
+    #   Takes care of "minW" and "maxW" strings
+    #   W_min <= W <= W_max
+
     # Arguments:
     #   data - a timeSeries or a fPFOLIODATA object
     #   spec - a fPFOLIOSPEC object
     #   constraints - a constraints string
     
     # Example:
-    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
-    #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
-    #   minWConstraints(data, spec, constraints)
-    
+    #   setBoxConstraints(as.timeSeries(data(LPP2005REC))[,1:6])
+    #   $minW
+    #   SBI SPI SII LMI MPI ALT 
+    #     0   0   0   0   0   0 
+    #   $maxW
+    #   SBI SPI SII LMI MPI ALT 
+    #     1   1   1   1   1   1 
+
     # FUNCTION:
-    
-    # Settings:
-    Data = portfolioData(data, spec)
-    nAssets = getNAssets(Data)
-    assetNames <- getNames(Data)
+
+    # Get Statistics:
+    data = portfolioData(data, spec)
+
+    # Get Specifications:
+    N = nAssets = getNAssets(data)
+    Assets <- getNames(data)
     
     # Consider LongOnly:
     if("LongOnly" %in% constraints) {
         minW = rep(0, nAssets)
-        names(minW) = assetNames
-        return(minW)
+        maxW = rep(1, nAssets)
+        names(minW) = names(maxW) = Assets
+        return(list(minW = minW, maxW = maxW))
     }
     
     # Consider Unlimited Short:
     if("Short" %in% constraints) {
         minW = rep(-Inf, nAssets)
-        names(minW) = assetNames
-        return(minW)
+        maxW = rep( Inf, nAssets)
+        names(minW) = names(maxW) = Assets
+        return(list(minW = minW, maxW = maxW))
     }
 
     # Extract and Compose Vectors a_vec and b_vec:
     minW = rep(0, nAssets)
-    if (!is.null(constraints)) {
-        nC = length(constraints)
-        what = substr(constraints, 1, 4)
-        for (i in 1:nC) {
-            if (what[i] == "minW") eval(parse(text = constraints[i]))
-        }
-    }
-    names(minW) = assetNames
-    return(minW)
-
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-maxWConstraints <-
-    function(data, spec = portfolioSpec(), constraints = "LongOnly")
-{
-    # Description:
-    #   Returns a vector with max box constraints
-
-    # Details:
-    #   Takes care of "maxW" strings, i.e. upper bounds
-    #   W >= c
-    
-    # Arguments:
-    #   data - a timeSeries or a fPFOLIODATA object
-    #   spec - a fPFOLIOSPEC object
-    #   constraints - a constraints string
-    
-    # Example:
-    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
-    #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
-    #   maxWConstraints(data, spec, constraints)
-    
-    # FUNCTION:
-    
-    # Settings:
-    Data = portfolioData(data, spec)
-    nAssets = getNAssets(Data)
-    assetNames <- getNames(Data)
-    
-    # Consider LongOnly:
-    if("LongOnly" %in% constraints) {
-        maxW = rep(1, nAssets)
-        names(maxW) = assetNames
-        return(maxW)
-    }
-    
-    # Consider Unlimited Short:
-    if("Short" %in% constraints) {
-        maxW = rep(Inf, nAssets)
-        names(maxW) = assetNames
-        return(maxW)
-    }
-
-    # Extract and Compose Vectors a_vec and b_vec:
     maxW = rep(1, nAssets)
+    names(minW) <- names(maxW) <- Assets
     if (!is.null(constraints)) {
         nC = length(constraints)
         what = substr(constraints, 1, 4)
         for (i in 1:nC) {
-            if (what[i] == "maxW") eval(parse(text = constraints[i]))
+            if (what[i] == "minW" | what[i] == "maxW") {
+                eval(parse(text = constraints[i]))
+            }
         }
     }
-    names(maxW) = assetNames
-    return(maxW)
 
     # Return Value:
-    invisible()
+    list(minW = minW, maxW = maxW)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-eqsumWConstraints <-
+setGroupEqConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # Description:
@@ -252,9 +210,14 @@ eqsumWConstraints <-
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = PportfolioSpec()
-    #   constraints = "eqsumW[1:6]=1"
-    #   eqsumWConstraints(data, spec, constraints)
+    #   setGroupEqConstraints(data)
+    #   $Aeq
+    #                   SBI          SPI          SII 
+    #   Return 4.066340e-07 0.0008417544 0.0002389356 
+    #   Budget 1.000000e+00 1.0000000000 1.0000000000 
+    #   $ceq
+    #   Return Budget 
+    #       NA      1
 
     # FUNCTION:
 
@@ -296,14 +259,14 @@ eqsumWConstraints <-
     }
     
     # Return Value:
-    cbind(ceq, Aeq)
+    list(Aeq = Aeq, ceq = ceq)
 }
 
 
 # ------------------------------------------------------------------------------
-
    
-minsumWConstraints <-
+    
+setGroupMatConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # Description:
@@ -315,16 +278,17 @@ minsumWConstraints <-
     #   constraints - a constraints string$
     
     # Details:
-    #   Takes care of "minsumW" strings
-    #   a_vec <= A_mat W
+    #   Takes care of "minsumW" and "maxsumW" strings
+    #   a_vec <= A_mat W <= b_vec
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
     #   spec = portfolioSpec()
-    #   constraints = c("minsumW[2:3]=0.2", "minsumW[c(1,4:6)]=0.2")
-    #   minsumWConstraints(data, spec, constraints)   
-    #   minsumWConstraints(data, spec)
-    
+    #   constraints = "LongOnly"
+    #   setGroupMatConstraints(data, spec, constraints)
+    #   constraints = c("minsumW[3:5]=0.1", "maxsumW[c(1,4)]=0.7", "maxsumW[1:3]=0.8", "maxsumW[c(2,5)]=0.8")
+    #   setGroupMatConstraints(data, spec, constraints)
+     
     # FUNCTION:
         
     # Get Statistics:
@@ -359,169 +323,187 @@ minsumWConstraints <-
             names(avec) = rep("lower", count)
         }
         
-    }
-
-    # Return Value:
-    cbind(avec = avec, Amat = Amat)
-}
-
-
-# ------------------------------------------------------------------------------
-
-   
-maxsumWConstraints <-
-    function(data, spec = portfolioSpec(), constraints = "LongOnly")
-{
-    # Description:
-    #   Returns a list with group matrix and vectors constraints
-
-    # Arguments:
-    #   data - a timeSeries or a fPFOLIODATA object
-    #   spec - a fPFOLIOSPEC object
-    #   constraints - a constraints string$
-    
-    # Details:
-    #   Takes care of "minsumW" and "maxsumW" strings
-    #   a_vec <= A_mat W <= b_vec
-    
-    # Example:
-    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
-    #   constraints = c("maxsumW[2:3]=0.7", "maxsumW[c(1,4:6)]=0.8")
-    #   maxsumWConstraints(data, spec, constraints) 
-    #   maxsumWConstraints(data, spec)      
-    
-    # FUNCTION:
-        
-    # Get Statistics:
-    data = portfolioData(data, spec)     
-    
-    # Get Specifications:
-    nAssets = getNAssets(data)
-    assetNames <- getNames(data)          
-
-    # Extrac and Compose Matrix and Vectors:
-    what7 = substr(constraints, 1, 7)
-    
-    if (!is.null(constraints)) {
-        nC = length(constraints)
-        
         count = 0
-        Amat = NULL
-        avec = NULL
+        Bmat = NULL
+        bvec = NULL
         for (i in 1:nC) {
             if (what7[i] == "maxsumW")  {
                 count = count + 1
                 maxsumW = rep(0, times = nAssets)
                 names(maxsumW) <- assetNames
                 eval(parse(text = constraints[i]))
-                Amat = rbind(Amat, maxsumW = sign(maxsumW))
-                a = strsplit(constraints[i], "=")[[1]][2]
-                avec = c(avec, as.numeric(a))
+                Bmat = rbind(Bmat, maxsumW = sign(maxsumW))
+                b = strsplit(constraints[i], "=")[[1]][2]
+                bvec = c(bvec, as.numeric(b))
             }
         }
-        if (!is.null(Amat)) {
-            colnames(Amat) = assetNames
-            names(avec) = rep("upper", count)
+        if (!is.null(Bmat)) {
+            colnames(Bmat) = assetNames
+            names(bvec) = rep("upper", count)
         }
     }
 
     # Return Value:
-    cbind(avec = avec, Amat = Amat)
+    list(Amat = Amat, Bmat = Bmat, avec = avec, bvec = bvec)
 }
 
 
 # ------------------------------------------------------------------------------
+ 
 
-
-minBConstraints <-
+setRiskBudgetConstraints <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Rmetrics
 
     # Description:
-    #   Returns a list with min risk budget constraints vectors
+    #   Returns a list with risk budget constraints vectors
 
     # Arguments:
+    #   data - a timeSeries or a fPFOLIODATA object
+    #   spec - a fPFOLIOSPEC object
     #   constraints - a constraints string
+    
+    # Details:
+    #   Takes care of "minB" and "maxB" strings
+    #   minB <= RiskBudget <= maxB
 
     # Example:
-    #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
-    #   constraints = c("minB[3:4]=0.1","maxB[1:3]=0.3","maxB[c(4,6)]=0.4")
-    #   minBConstraints(data, spec, constraints)
-    #   minBConstraints(data, spec)
+    #   Constraints = c("minB[3:4]=0.1","maxB[1:3]=0.3","maxB[c(4,6)]=0.4")
+    #   setRiskBudgetConstraints(8,  constraints = Constraints)
 
     # FUNCTION:
 
     # Create Data Object:
-    Data = portfolioData(data, spec)
+    data = portfolioData(data, spec)
 
     # Get Specifications:
-    nAssets = getNAssets(Data)
-    assetsNames <- getNames(Data)
+    mu = getMu(data)
+    Sigma = getSigma(data)
+    N = nAssets = getNAssets(data)
+    nameAssets <- getNames(data)
 
     # Extract and Compose Risk Budgets:
-    minB = rep(-Inf, nAssets)
-    names(minB) <- assetsNames
-    if (!is.null(constraints)) {
-        nC = length(constraints)
-        what = substr(constraints, 1, 4)
-        for (i in 1:nC) {
-            if (what[i] == "minB") eval(parse(text = constraints[i]))
-        }
-    }
-    
-    # Return Value:
-    minB
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-maxBConstraints <-
-    function(data, spec = portfolioSpec(), constraints = "LongOnly")
-{
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Returns a list with max risk budget constraints vectors
-
-    # Arguments:
-    #   constraints - a constraints string
-
-    # Example:
-    #   data = as.timeSeries(data(LPP2005REC))[,1:6]
-    #   spec = portfolioSpec()
-    #   constraints = c("minB[3:4]=0.1","maxB[1:3]=0.3","maxB[c(4,6)]=0.4")
-    #   maxBConstraints(data, spec, constraints)
-    #   maxBConstraints(data, spec)
-    
-    # FUNCTION:
-
-    # Create Data Object:
-    Data = portfolioData(data, spec)
-
-    # Get Specifications:
-    N = nAssets = getNAssets(Data)
-    assetsNames <- getNames(Data)
-
-    # Extract and Compose Risk Budgets:
+    minB = rep(0, N)
     maxB = rep(1, N)
-    names(maxB) = assetsNames
+    names(minB) <- names(maxB) <- nameAssets
     if (!is.null(constraints)) {
         nC = length(constraints)
         what = substr(constraints, 1, 4)
         for (i in 1:nC) {
-            if (what[i] == "maxB") eval(parse(text = constraints[i]))
+            if (what[i] == "minB" | what[i] == "maxB") {
+                eval(parse(text = constraints[i]))
+            }
         }
     }
-    
+    ans = list(minB = minB, maxB = maxB)
     # Return Value:
-    maxB
+    ans
 }
 
 
 ################################################################################
 
+
+setBoxGroupConstraints <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
+{
+    # Description:
+    #   Returns a matrix of box/group constraints
+
+    # Arguments:
+    #   data - a portfolio data object
+    #   spec - a portfolio specification object
+    #   constraints - a constraints string
+    
+    # Details:
+    #   A W >= b0 such that cbind(A,b0) will be returned
+    
+    # Example:
+    #   data = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
+    #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8", "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
+    #   setBoxGroupConstraints(data, spec, constraints)
+
+    # FUNCTION:
+
+    # Get Statistics:
+    Data = portfolioData(data, spec)
+
+    # Get Specifications:
+    mu = getMu(Data)
+    Sigma = getSigma(Data)
+    N = nAssets = getNAssets(Data)
+    nameAssets <- getNames(Data)
+
+    # Target Return:
+    targetReturn = getTargetReturn(spec)[1]
+    weights = getWeights(spec)
+    if(is.null(targetReturn) & is.null(weights)) {
+        weights = rep(1/N, N)
+        # warning("Equal Weights Portfolio in use")
+    }
+    if(is.null(targetReturn)) {
+        targetReturn = (weights %*% Sigma %*% weights)[1, 1]
+    }
+
+    # Compose Matrix A:
+    A = matrix(c(mu, rep(1, times = N)), byrow = TRUE, ncol = N)
+    ## A = matrix(c(rep(1, times = N), mu), byrow = TRUE, ncol = N)
+    A = rbind(A, diag(1, N), diag(-1, N))
+    # colnames(A) = paste("A", 1:N, sep = "")
+    colnames(A) <- nameAssets
+    rownames(A) = c("Return", "Budget", paste("minW", 1:N, sep = ""),
+        paste("maxW", 1:N, sep = ""))
+
+    # Compose vector b0:
+    minW = rep(0, N)
+    maxW = rep(1, N)
+    names(minW) <- names(maxW) <- nameAssets
+    b0 = matrix(c(targetReturn, 1, minW, -maxW), ncol = 1)
+    colnames(b0) = "b0"
+    if (!is.null(constraints)) {
+        nC = length(constraints)
+        what = substr(constraints, 1, 4)
+        for (i in 1:nC) {
+            if (what[i] == "minW" | what[i] == "maxW") {
+                eval(parse(text = constraints[i]))
+            }
+        }
+        what = substr(constraints, 1, 7)
+        for (i in 1:nC) {
+            if (what[i] == "minsumW")  {
+                minsumW = rep(0, times = N)
+                names(minsumW) <- nameAssets
+                eval(parse(text = constraints[i]))
+                A = rbind(A, minsumW = sign(minsumW))
+                b = strsplit(constraints[i], "=")[[1]][2]
+                b0 = rbind(b0, as.numeric(b))
+            }
+        }
+        for (i in 1:nC) {
+            if (what[i] == "maxsumW")  {
+                maxsumW = rep(0, times = N)
+                names(maxsumW) <- nameAssets
+                eval(parse(text = constraints[i]))
+                A = rbind(A, maxsumW = -sign(maxsumW))
+                b = strsplit(constraints[i], "=")[[1]][2]
+                b0 = rbind(b0, -as.numeric(b))
+            }
+        }   
+    }
+    rownames(b0) = rownames(A)
+
+    # Bind Results:
+    ans = cbind(A = A, b = b0)
+    colnames(ans) = c(colnames(A), "Exposure")
+    class(ans) = "matrix"
+
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+ 

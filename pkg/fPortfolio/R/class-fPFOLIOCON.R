@@ -29,6 +29,7 @@
 ################################################################################
 
 
+if(FALSE) {
 setClass("fPFOLIOCON", 
     representation(
         stringConstraints = "character",
@@ -38,7 +39,23 @@ setClass("fPFOLIOCON",
         riskBudgetConstraints = "list",
         boxGroupConstraints = "matrix")  
 )
+}
 
+
+# ------------------------------------------------------------------------------
+
+
+setClass("fPFOLIOCON", 
+    representation(
+        minWConstraints = "numeric",
+        maxWConstraints = "numeric",
+        eqsumWConstraints = "matrix",
+        minsumWConstraints = "matrix",
+        maxsumWConstraints = "matrix",
+        minBConstraints = "numeric", 
+        maxBConstraints = "numeric")
+) 
+        
 
 ################################################################################
 
