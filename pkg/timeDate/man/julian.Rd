@@ -4,9 +4,9 @@
 \title{Julian Counts and Calendar Atoms}
 
 
-\alias{julian.timeDate}
-\alias{atoms.timeDate}
-\alias{months.timeDate}
+\alias{julian,timeDate-method}
+\alias{atoms,timeDate-method}
+\alias{months,timeDate-method}
 
 
 \description{
@@ -18,13 +18,13 @@
 
 
 \usage{
-\method{julian}{timeDate}(x, origin = timeDate("1970-01-01"), 
+\S4method{julian}{timeDate}(x, origin = timeDate("1970-01-01"), 
     units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
     zone = NULL, FinCenter = NULL, \dots)
 
-\method{atoms}{timeDate}(x, \dots)
+\S4method{atoms}{timeDate}(x, \dots)
 
-\method{months}{timeDate}(x, abbreviate = NULL)
+\S4method{months}{timeDate}(x, abbreviate = NULL)
 }
 
 

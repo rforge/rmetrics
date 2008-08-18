@@ -31,11 +31,12 @@
 
 
 \usage{
-\S4method{Ops}{timeDate}(e1, e2)
+\S4method{Ops}{timeDate,timeDate}(e1, e2)
 
-\S4method{+}{timeDate}(e1, e2)
-
-\S4method{-}{timeDate}(e1, e2)    
+\S4method{+}{timeDate,timeDate}(e1, e2)
+\S4method{+}{timeDate,numeric}(e1, e2)
+\S4method{-}{timeDate,timeDate}(e1, e2)
+\S4method{-}{timeDate,numeric}(e1, e2)    
 }
 
 

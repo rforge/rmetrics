@@ -4,8 +4,8 @@
 \title{Making a 'timeDate' object unique}
 
 
-\alias{align}
-\alias{align.timeDate}
+\alias{align-generic}
+\alias{align,timeDate-method}
 
 
 \description{
@@ -16,7 +16,7 @@
 
 
 \usage{
-\method{align}{timeDate}(x, by = "1d", offset = "0s")
+\S4method{align}{timeDate}(x, by = "1d", offset = "0s")
 }
 
 

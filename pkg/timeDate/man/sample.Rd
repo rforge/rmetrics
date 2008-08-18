@@ -5,7 +5,7 @@
 
 
 \alias{sample}
-\alias{sample.timeDate}
+\alias{sample,timeDate-method}
 
 
 \description{
@@ -15,7 +15,7 @@
 
 
 \usage{
-\method{sample}{timeDate}(x, \dots)
+\S4method{sample}{timeDate}(x, \dots)
 }
 
 
