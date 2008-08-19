@@ -24,8 +24,8 @@
 ################################################################################
 
 
-portfolioBacktesting <-
-    function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
+portfolioBacktesting <- 
+function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
     warmup = FALSE, trace = TRUE, title = "Backtesting")
 {
