@@ -32,12 +32,15 @@ solveRdonlp2 <-
 
     # Example:
     #   data = .lppData; spec = .mvSpec; constraints = "LongOnly"
-    #       minRisk <- function(x) { x %*% Sigma %*% x }
-    #       Sigma = cov(data)
-    #       fn = match.fun(getOptimize(spec))
+    #   minRisk <- function(x) { .solveRfooPlot(data, x); x %*% cov(data) %*% x }
+    #   fn = match.fun(getOptimize(spec))
+    #   .counter = 0
     #   solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
     #   solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
-    #   solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3] 
+    #   solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3]
+    #   solveRdonlp2(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))[-3]  
+    #   solveRdonlp2(.lppData, .mvSpec, c("minF=-0.04", "maxF=0", "listF(.conMaxDD)"))[-3] 
+    #   solveRdonlp2(.lppData, .mvSpec, c("minW[1:6]=-0.3", "maxW[1:6]=1.3", "minF=c(-0.3,0)", "maxF=c(0, 1.30)", "listF(.con13030Lower, .con13030Upper)"))[-3] 
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")
@@ -86,7 +89,63 @@ solveRdonlp2 <-
 # Here we solve the quadprog problem with box/group and optional
 # risk budget constraints ...
   
+
+# Examples:
+
+
+# Solver Plot:
+.solveRfooPlot =
+function(data, weights)
+{    
+    Returns = data/100
+    totalReturn = getTargetReturn(spec)*nrow(data)/100
+    X = pfolioReturn(Returns, weights)
+    profit = rev(cumsum(X))[1]
     
+    if (totalReturn*0.98 < profit && totalReturn*1.02 > profit) {
+    
+        # par(mfrow = c(2, 2))
+        ts.plot(cumsum(X), ylim = c(0, totalReturn), main = "Cumulated Returns")
+        abline (h = totalReturn, col = "grey")
+        grid()
+        
+        ts.plot(drawdowns(X), ylim = c(-0.05, 0), main = "Portfolio Drawdowns")
+        abline (h = 0, col = "grey")
+        grid()
+        
+        barplot(weights, col=rainbow(6), horiz = TRUE, main = "Weights", 
+            names.arg = colnames(data), las = 1)
+        box()
+        vgrid(col = "darkgrey", lty = 1)
+        
+        hist(X, breaks =  "FD", main = "Portfolio Returns", 
+            probability = TRUE, col = "steelblue", border = "white",
+            xlim = c(-0.015, 0.015), ylim = c(0, 200)) 
+        abline(v = quantile(X, 0.05), lwd = 2, col = "red")
+        abline(v = mean(X), lwd = 2, col = "blue")
+        box()
+        grid()
+        sw = paste("SW P Value:", round(shapiroTest(X)@test$p.value[[1]], 6))
+        mtext(sw, side = 4, cex = 0.8, adj = 0)
+        u = seq(-0.015, 0.015, length = 201)
+        v = dnorm(u, mean(X), sd(X))
+        lines(u,v, col = "orange")
+        
+    }
+    
+    invisible()
+}
+       
+
+# 130/30 Portfolio Constraints:
+.con13030Lower = function(x) sum(x[x<0]) 
+.con13030Upper = function(x) sum(x[x>0]) 
+
+
+# MaxDrawDown Portfolio Constraints:
+.conMaxDD = function(x) min(drawdowns(pfolioReturn(data/100, x)))
+ 
+   
 .rdonlp2Arguments <-
 function(data, spec, constraints)
 {
@@ -98,13 +157,13 @@ function(data, spec, constraints)
     #       subject to: 
     #                     par.lower <= x <= par.upper
     #                  lin.lower <= A %*% x <= lin.upper
-    #                   in.lower <= nlin(x) <= lin.upper  
+    #                 nlin.lower <= nlin(x) <= nlin.upper  
     
     # Example:
     #   .rdonlp2Arguments(.lppData, .mvSpec, "LongOnly") 
     #   .rdonlp2Arguments(.lppData, .mvSpec, .BoxGroup)
     #   .rdonlp2Arguments(.lppData, .mvSpec, .CovBudgets)
-    #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=0.1", "maxB[3:5]=0.9"))  
+    #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))  
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
     #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")   
@@ -155,7 +214,6 @@ function(data, spec, constraints)
     nlin = list()
     nlin.lower = NULL
     nlin.upper = NULL
-    
     # Check Constraints Strings for Risk Budgets:
     # Example: constraints = c("minB[2:3]=0.1", "maxB[3:5]=0.9")
     validStrings = c("minB", "maxB")
@@ -163,7 +221,6 @@ function(data, spec, constraints)
     checkStrings = sum(usedStrings %in% validStrings)
     includeRiskBudgeting = as.logical(checkStrings)
     if (DEBUG) print(includeRiskBudgeting)
-    
     if (includeRiskBudgeting) {
         # Compose Non-Linear (Cov Risk Budget) Constraints Functions:
         nlcon <- function(x) {
@@ -173,7 +230,6 @@ function(data, spec, constraints)
             B
         }
         if(DEBUG) print(nlcon)
-        
         # Compose non-linear functions now for each asset ...
         for (I in 1:nAssets)
             eval( parse(text = paste(
@@ -182,12 +238,19 @@ function(data, spec, constraints)
         nlinFunctions = paste("list(", nlinFunctions, ")")
         nlin = eval( parse(text = nlinFunctions) )
         if(DEBUG) print(nlin)
-
         # ... and finally Compose Constraints Vectors:
         nlin.lower = minBConstraints(data, spec, constraints)
         nlin.upper = maxBConstraints(data, spec, constraints)
         if(DEBUG) print(rbind(nlin.lower, nlin.upper))
     }
+    
+    # General non-lin Portfolio Constraints:
+    # ... todo: currently overwrites previous selection
+    nlin = listFConstraints(data, spec, constraints)
+    if(DEBUG) print(nlin)
+    nlin.lower = minFConstraints(data, spec, constraints)
+    nlin.upper = maxFConstraints(data, spec, constraints)
+    if(DEBUG) print(cbind(nlin.lower, nlin.upper))
  
     # Return Value:
     list(

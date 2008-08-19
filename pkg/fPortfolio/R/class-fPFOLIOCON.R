@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
@@ -47,14 +39,23 @@ setClass("fPFOLIOCON",
 
 setClass("fPFOLIOCON", 
     representation(
+    
         stringConstraints = "character",
+        
         minWConstraints = "numeric",
         maxWConstraints = "numeric",
+        
         eqsumWConstraints = "matrix",
         minsumWConstraints = "matrix",
         maxsumWConstraints = "matrix",
+        
         minBConstraints = "numeric", 
-        maxBConstraints = "numeric")
+        maxBConstraints = "numeric",
+        
+        listFConstraints = "list",
+        minFConstraints = "numeric", 
+        maxFConstraints = "numeric")
+        
 ) 
         
 

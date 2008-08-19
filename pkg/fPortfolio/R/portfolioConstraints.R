@@ -17,6 +17,7 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
+#  portfolioConstraints    Returns an object of class fPFOLIOCON
 #  minWConstraints         Returns vector with min box constraints
 #  maxWConstraints         Returns vector with max box constraints
 #  eqsumWConstraints       Returns list with group equal vec/matrix constraints
@@ -24,6 +25,8 @@
 #  maxsumWConstraints      Returns list with group max vec/matrix constraints
 #  minBConstraints         Returns vector with min cov risk budget constraints
 #  maxBConstraints         Returns vector with max cov risk budget constraints
+#  minFConstraints         Returns vector with min nonlin functions constraints
+#  maxFConstraints         Returns vector with max nonlin functions constraints
 ################################################################################
 
 
@@ -38,10 +41,11 @@ portfolioConstraints <-
     #   spec - a fPFOLIOSPEC object
     #   constraints - a constraints string
     #       validStrings = c(
-    #           "LongOnly", "Short",    # LongOnly and Short Notification
-    #           "minW", "maxW",         # Box Constraints
-    #           "minsumW", "maxsumW",   # left and right Sided Group Constraints
-    #           "minB", "maxB")         # Covariance Risk Budgets
+    #           "LongOnly", "Short",      # LongOnly and Short Notification
+    #           "minW", "maxW",           # Box Constraints
+    #           "minsumW", "maxsumW",     # left/right Sided Group Constraints
+    #           "minB", "maxB",           # Covariance Risk Budgets
+    #           "listF", "minF", "maxF")  # Nonlinear Functions Constraints
     
     # Details:
     #   This function takes the constraints strings and converts them to
@@ -68,10 +72,11 @@ portfolioConstraints <-
     
     # Chweck Vector of Valid Strings - these are strings ...
     validStrings = c(
-        "LongOnly", "Short",    # LongOnly and Short Notification
-        "minW", "maxW",         # Box Constraints
-        "minsumW", "maxsumW",   # left and right Sided Group Constraints
-        "minB", "maxB")         # Covariance Risk Budgets
+        "LongOnly", "Short",      # LongOnly and Short Notification
+        "minW", "maxW",           # Box Constraints
+        "minsumW", "maxsumW",     # left and right Sided Group Constraints
+        "minB", "maxB",           # Covariance Risk Budgets
+        "listF", "minF", "maxF")  # Nonlinear Functions Constraints
     if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
     checkStrings = usedStrings %in% validStrings
@@ -87,6 +92,9 @@ portfolioConstraints <-
     maxsumW = maxsumWConstraints(data, spec, constraints)
     minB = minBConstraints(data, spec, constraints)
     maxB = maxBConstraints(data, spec, constraints)
+    listF = listFConstraints(data, spec, constraints)
+    minF = minFConstraints(data, spec, constraints)
+    maxF = maxFConstraints(data, spec, constraints)
     
     if(is.null(minW)) minW = numeric()
     if(is.null(maxW)) maxW = numeric()
@@ -95,6 +103,9 @@ portfolioConstraints <-
     if(is.null(maxsumW)) maxsumW = matrix(NA)
     if(is.null(minB)) minB = numeric()
     if(is.null(maxB)) maxB = numeric()
+    if(is.null(maxsumW)) maxsumW = matrix(NA)
+    if(is.null(minF)) minF = numeric()
+    if(is.null(maxF)) maxF = numeric()
 
     # Return Value:
     new("fPFOLIOCON",
@@ -105,7 +116,10 @@ portfolioConstraints <-
         minsumWConstraints = minsumW,
         maxsumWConstraints = maxsumW,
         minBConstraints = minB, 
-        maxBConstraints = maxB)
+        maxBConstraints = maxB,
+        listFConstraints = listF,
+        minFConstraints = minF, 
+        maxFConstraints = maxF)
 }
             
 
@@ -521,6 +535,63 @@ maxBConstraints <-
     
     # Return Value:
     maxB
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+listFConstraints <-  
+function(data, spec, constraints = NULL) 
+{
+    # Description:
+    #   Nonlinear Constraints
+    
+    # Example: listFConstraints(c("minF=-0.04", "listF(maxdd)"))
+    
+    # FUNCTION:
+    
+    nlin = list()
+    matched = pmatch("listF" , constraints)
+    if(!is.na(matched)) {
+        Constraints = paste("nlin = ", constraints[matched])
+        Constraints = sub("listF", "list", Constraints)
+        eval(parse(text = Constraints))
+    }
+    return(nlin)
+}   
+        
+
+minFConstraints <-  
+function(data, spec, constraints = NULL) 
+{
+    # Description:
+    #   Nonlinear Constraints
+    
+    # Example: minFConstraints("minF=-0.04")
+    
+    # FUNCTION:
+    
+    minF = NULL
+    matched = pmatch("minF" , constraints)
+    if(!is.na(matched)) eval(parse(text = constraints[matched]))
+    return(minF)
+}
+
+maxFConstraints <- 
+function(data, spec, constraints = NULL) 
+{
+    # Description:
+    #   Nonlinear Constraints
+    
+    # Example: maxFConstraints(c("LongOnly", "maxF=0")
+    
+    # FUNCTION:
+    
+    maxF = NULL
+    matched = pmatch("maxF" , constraints)
+    if(!is.na(matched)) eval(parse(text = constraints[matched]))
+    return(maxF)
 }
 
 

@@ -89,9 +89,6 @@ solveRquadprog <-
     Data = portfolioData(data, spec)
     Sigma = getSigma(Data)
     nAssets = getNAssets(Data)
-       
-    # Settings:
-    nAssets = getNAssets(Data)
     
     # Set up A_mat of Constraints:
     eqsumW = eqsumWConstraints(data, spec, constraints)

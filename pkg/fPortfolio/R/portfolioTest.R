@@ -26,7 +26,7 @@ function(
     type = "MV", 
     optimize = "minRisk",
     solver = "solveRquadprog", 
-    constraints = c("LongOnly", "Short", "BoxGroup", "CovBudget"),
+    constraints = c("LongOnly", "Short", "BoxGroup", "CovBudget", "130/30"),
     NFrontierPoints = 25)
 {
     # Example:
