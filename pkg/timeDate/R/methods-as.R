@@ -190,7 +190,7 @@ setAs("timeDate", "POSIXct", function(from) as.POSIXct.timeDate(from))
 # ------------------------------------------------------------------------------
 
 
-setMethod("as.POSIXlt", "timeDate",
+as.POSIXlt.timeDate  <-
     function(x, tz = "", ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -213,9 +213,9 @@ setMethod("as.POSIXlt", "timeDate",
 
     # Return Value:
     ans
-})
+}
 
-setAs("timeDate", "POSIXlt", function(from) as.POSIXlt(from))
+setAs("timeDate", "POSIXlt", function(from) as.POSIXlt.timeDate(from))
 
 # ------------------------------------------------------------------------------
 
