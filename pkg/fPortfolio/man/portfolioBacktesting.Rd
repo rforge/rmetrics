@@ -8,7 +8,7 @@
 \alias{summary.portfolioBacktest}
 
 
-\title{Portfolio Backtestesting}
+\title{Portfolio Backtesting}
 
 
 \description{
