@@ -189,7 +189,8 @@ setAs("timeDate", "POSIXct", function(from) as.POSIXct.timeDate(from))
 
 # ------------------------------------------------------------------------------
 
-
+### be careful if S4 method are defined because arguments of generic
+### function has changed for as.POSIXlt since R-2.6
 as.POSIXlt.timeDate  <-
     function(x, tz = "", ...)
 {
