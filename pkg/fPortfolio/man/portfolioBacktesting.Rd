@@ -1,4 +1,4 @@
-\name{portfolioBacktestesting}
+\name{portfolioBacktesting}
 
 
 \alias{portfolioBacktesting}
