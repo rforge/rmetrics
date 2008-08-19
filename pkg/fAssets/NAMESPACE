@@ -13,6 +13,11 @@ importFrom("fBasics",
            "nigShapeTriangle",
            "qqnormPlot",
            "pnig")
+importFrom("fCopulae",
+           "grid2d",
+           "mvFit",
+           "hexBinning",
+           "squareBinning")
 importFrom("graphics",
            "plot",
            "text",

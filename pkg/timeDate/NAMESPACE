@@ -45,14 +45,13 @@ exportMethods("-",
 ## S3 classes
 ################################################
 
-
 S3method("as.character", "timeDate")
 S3method("as.data.frame", "timeDate")
 S3method("as.Date", "timeDate")
 S3method("as.double", "timeDate")
 S3method("as.list", "timeDate")
-S3method("as.POSIXlt","timeDate")
 S3method("as.POSIXct", "timeDate")
+S3method("as.POSIXlt", "timeDate")
 S3method("as.timeDate", "Date")
 S3method("as.timeDate", "default")
 S3method("as.timeDate", "POSIXt")
