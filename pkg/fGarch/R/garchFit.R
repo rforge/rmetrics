@@ -1119,11 +1119,7 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     # Calculate Log Likelihood:
     hh = (abs(h[(llh.start):N]))^deltainv
     zz = z[(llh.start):N]
-
-    ## llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
-    dd <- .garchDist(z = zz, hh = hh, skew = skew, shape = shape)
-    llh = convolve(log(dd), rep(-1, length(dd)), type = "f")
-
+    llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
     if(.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
     names(params) = names(.params$params[.params$index])
     if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
