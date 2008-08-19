@@ -3,20 +3,19 @@
 
 \alias{portfolioConstraints}
 
-\alias{setBoxConstraints}
-\alias{setGroupEqConstraints}
-\alias{setGroupMatConstraints}
-\alias{setRiskBudgetConstraints}
-\alias{setBoxGroupConstraints}
-
-
 \alias{minWConstraints}
 \alias{maxWConstraints}
+
 \alias{eqsumWConstraints}
 \alias{minsumWConstraints}
 \alias{maxsumWConstraints}
+
 \alias{minBConstraints}
 \alias{maxBConstraints}
+
+\alias{listFConstraints}
+\alias{minFConstraints}
+\alias{maxFConstraints}
 
 
 \title{Portfolio Constraints}
@@ -30,19 +29,20 @@
 
 \usage{
 portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly", \dots)
-setBoxConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-setGroupEqConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-setGroupMatConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-setRiskBudgetConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
-setBoxGroupConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 minWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 maxWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
 eqsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 minsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 maxsumWConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
 minBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+
+listFConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+minFConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
+maxFConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
@@ -76,7 +76,7 @@ maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     strings.
     
     
-    \emph{Special Constraint Settings:}
+    \emph{Summary Constraints: NULL, "LongOnly", "Short"}
     
     There are three special cases, the settings \code{constraints=NULL},
     \code{constraints="Short"}, and \code{constraints="LongOnly"}. Note,
@@ -97,9 +97,11 @@ maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     portfolio optimization.
     
     
-    \emph{Tailored Weight Constrained Portfolios:}
+    \emph{Lower and Upper Bounds: minW and maxW}
     
-    Weight constrained portfolios may be specified by a vector of
+    \emph{Group Constraints: eqsumW, minsumW and maxsumW}
+    
+    Lower and upper bounded portfolios may be specified by a vector of
     character strings which describe executable code, setting values to
     to vectors \code{minW}, \code{maxW}, \code{minsumW}, and \code{maxsumW}.
     The individual string elements of the vector have the following form:
@@ -122,7 +124,8 @@ maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     the values are set to negative values, and values larger than one, 
     then (constrained) short selling will be allowed. 
     
-    \emph{Tailored Risk Budget Constrained Portfolios:}
+    
+    \emph{Risk Budget Constrained Portfolios:}
     
     By default, risk budgets are not included in the portfolio optimization.
     Covariance risk budgets have to be added explicitely, and have the 
@@ -142,6 +145,8 @@ maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
     Note, risk budget constraints will enforce diversification at the 
     expense of return generation. The resulting portfolios will thus lie 
     below the unconstrained efficient frontier.
+    
+    \emph{Non-Linear Constraints: listF, minF, maxF}
 
 }
 
@@ -153,43 +158,12 @@ maxBConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
-\note{
-
-    The function \code{portfolioConstraints} delivers an object of class
-    S4 with four slots named 
-    \code{boxConstraints},
-    \code{groupEqConstraints},
-    \code{groupMatConstraints},
-    \code{riskBudgetConstraints}, and
-    \code{boxGroupConstraints}.
-    The slots contain the obects as rweturned by the functions
-    \code{setBoxConstraints},
-    \code{setGroupEqConstraints},
-    \code{setGroupMatConstraints},
-    \code{setRiskBudgetConstraints}, and
-    \code{setBoxGroupConstraints}.
-    
-}
-
-
 %\references{}
 
 
 \examples{
 ## portfolioConstraints -
-   # Load Data, i.e. a List of Returns:
-   Data = as.timeSeries(data(smallcap.ts))
-   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
-   
-## portfolioSpec -
-   # Specification:
-   Spec = portfolioSpec() 
-   
-## portfolioConstraints -
-   # Portfolio Constraints:
-   Constraints = c("minW[1:4] = 0.1", "maxsumW[c(\"GG\",\"GYMB\")] = 0.8")
-   portfolioConstraints(Data, Spec, Constraints)
+   # 
 }
 
 
