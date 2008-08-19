@@ -195,10 +195,5 @@ setMethod("dimnames<-", c("timeSeries", "list"),
 # colnames<- # default methods works fine because it uses dimnames defined above
 # rownmaes<- # default methods works fine because it uses dimnames defined above
 
-# ------------------------------------------------------------------------------
-
-setMethod("rownames<-", c("timeSeries", "timeDate"),
-          function(x, value) callGeneric(x, as.character(value)))
-
 ################################################################################
 

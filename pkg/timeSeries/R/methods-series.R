@@ -38,7 +38,7 @@ seriesData <-
     if (class(object) != "timeSeries")
         stop("Object is not a time Series")
 
-    .Deprecated("series", "timeSeries")
+    # .Deprecated("series", "timeSeries")
 
     # Get Data Slot:
     ans = as.matrix(object)

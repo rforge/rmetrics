@@ -17,25 +17,38 @@
 % \alias{[,timeSeries,timeDate,index,missing-method} 
 % \alias{[,timeSeries,timeDate,index,logical-method} 
 
-\alias{[,timeSeries,ANY,ANY-method}
 \alias{[,timeSeries,index_timeSeries,index_timeSeries-method}
 \alias{[,timeSeries,index_timeSeries,missing-method}
-\alias{[,timeSeries,matrix,index_timeSeries-method}
-\alias{[,timeSeries,matrix,missing-method}
 \alias{[,timeSeries,missing,index_timeSeries-method}
 \alias{[,timeSeries,timeDate,index_timeSeries-method}
 \alias{[,timeSeries,timeDate,missing-method}
+\alias{[,timeSeries,matrix,index_timeSeries-method}
+\alias{[,timeSeries,matrix,missing-method}
 \alias{[,timeSeries,timeSeries,index_timeSeries-method}
 \alias{[,timeSeries,timeSeries,missing-method}
+\alias{[,timeSeries,missing,missing-method}
+\alias{[,timeSeries,ANY,ANY-method}
+
+\alias{[<-,timeSeries,index_timeSeries,index_timeSeries-method}
+\alias{[<-,timeSeries,index_timeSeries,missing-method}
+\alias{[<-,timeSeries,missing,index_timeSeries-method}
+\alias{[<-,timeSeries,timeDate,index_timeSeries-method}
+\alias{[<-,timeSeries,timeDate,missing-method}
+\alias{[<-,timeSeries,matrix,index_timeSeries-method}
+\alias{[<-,timeSeries,matrix,missing-method}
+\alias{[<-,timeSeries,timeSeries,index_timeSeries-method}
+\alias{[<-,timeSeries,timeSeries,missing-method}
+\alias{[<-,timeSeries,missing,missing-method}
+\alias{[<-,timeSeries,ANY,ANY-method}
 
 
-\alias{[<-.timeSeries}
-\alias{cut.timeSeries} 
 \alias{window.timeSeries}
-\alias{head.timeSeries}
-\alias{tail.timeSeries}
-\alias{outlier.timeSeries}
+\alias{cut.timeSeries}
+\alias{head,timeSeries-method}
+\alias{tail,timeSeries-method}
 
+\alias{outlier}
+\alias{outlier,timeSeries-method}
 
 \title{Subsettig Time Series}
 
@@ -60,14 +73,14 @@
 \usage{
 
 % \method{[}{timeSeries}(x, i, j, drop)
-\method{[}{timeSeries}(x, i, j) <- value
+% \method{[}{timeSeries}(x, i, j) <- value
 
-\method{window}{timeSeries}(x, from, to, \dots)
+\method{window}{timeSeries}(x, start, end, \dots)
 
-\method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
-\method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
+\S4method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
+\S4method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 
-\method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
+\S4method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
 
 \method{cut}{timeSeries}(x, from, to, \dots)
 }
@@ -84,10 +97,13 @@
      \item{from, to}{
         starting date and end date, \code{to} must be after \code{from}.
         }
-     \item{i, j}{
-        ["["] - \cr 
-        index arguments used for subsettings.
-        }        
+     \item{start, end}{
+        starting date and end date, \code{end} must be after \code{start}.
+        }
+%      \item{i, j}{
+%         ["["] - \cr 
+%         index arguments used for subsettings.
+%         }       
      \item{n}{
         [head][tail] - \cr
         an integer specifying the number of lines to be returned. 
@@ -105,10 +121,10 @@
         times the standard deviation will be removed from
         the series.
         }
-      \item{value}{
-        a numeric value to use as a replacement. It will be repeated a
-        whole number of times if necessary. 
-     }
+%       \item{value}{
+%         a numeric value to use as a replacement. It will be repeated a
+%         whole number of times if necessary. 
+%      }
      \item{x}{
         an object of class \code{timeSeries}.
         }

@@ -4,18 +4,16 @@
 \title{Time Series Columns and Rows}
 
 
-\alias{dim}
 \alias{dim,timeSeries-method}
-\alias{dimnames}
-\alias{dimnames<-}
 \alias{dimnames,timeSeries-method}
-\alias{dimnames<-,timeSeries-method}
-\alias{colnames}
-\alias{colnames<-}
-\alias{rownames}
-\alias{rownames<-}
+
+\alias{colnames<-,timeSeries-method}
 \alias{rownames<-,timeSeries,timeDate-method}
-\alias{is.array.timeSeries}
+\alias{rownames<-,timeSeries,ANY-method}
+
+\alias{dimnames<-,timeSeries,list-method}
+
+% \alias{is.array.timeSeries}
 
 
 \description{
@@ -29,7 +27,8 @@
     \code{dimnames} \tab Returns the dimension names of a 'timeSeries' object, \cr
     \code{colnames<-} \tab Assigns column names to a 'timeSeries' object, \cr
     \code{rownames<-} \tab Assigns row names to a 'timeSeries' object, \cr
-    \code{is.array} \tab Allows that NCOL and NROW work properly. }
+    %    \code{is.array} \tab Allows that NCOL and NROW work properly.
+  }
     
 }
 

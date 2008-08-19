@@ -68,7 +68,7 @@ applySeries <-
 
     # FUNCTION:
 
-    .Deprecated("aggregate", "timeSeries")
+    # .Deprecated("aggregate", "timeSeries")
 
     # Check object:
     if (class(x) != "timeSeries")
@@ -154,7 +154,7 @@ fapply <-
 function(x, from, to, FUN, ...)
 {
 
-    .Deprecated("aggregate", "timeSeries")
+    # .Deprecated("aggregate", "timeSeries")
 
     # Check x:
     stopifnot(is(x, "timeSeries"))

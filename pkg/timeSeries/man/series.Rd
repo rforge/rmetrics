@@ -5,6 +5,7 @@
 \alias{series<-}
 \alias{series,timeSeries-method}
 \alias{series<-,timeSeries,matrix-method}
+\alias{series<-,timeSeries,ANY-method}
 \alias{series<-,timeSeries,data.frame-method}
 \alias{series<-,timeSeries,vector-method}
 

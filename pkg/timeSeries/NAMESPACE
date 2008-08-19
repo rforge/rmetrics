@@ -36,6 +36,7 @@ importFrom("methods",
 importFrom("stats",
            "as.ts",
            "model.frame",
+           "window",
            "aggregate",
            "end",
            "lag",
@@ -43,7 +44,6 @@ importFrom("stats",
            "quantile",
            "start",
            "time",
-           "window",
            "approx",
            "rnorm",
            "runif",
@@ -135,8 +135,7 @@ exportMethods("aggregate",
               "start",
               "str",
               "tail",
-              "time",
-              "window" )
+              "time" )
 
 ################################################
 ## S3 classes
@@ -164,6 +163,7 @@ S3method("cut", "timeSeries")
 S3method("model.frame", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("time<-", "timeSeries")
+S3method("window", "timeSeries")
 
 ################################################
 ## functions

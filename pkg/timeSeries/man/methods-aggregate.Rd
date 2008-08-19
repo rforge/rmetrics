@@ -29,12 +29,12 @@
     \item{FUN}{
         the function to be applied.
         }               
-    \item{units}{
-        an optional character string, which allows to overwrite the 
-        current column names of a \code{timeSeries} object. By default 
-        \code{NULL} which means that the column names are selected
-        automatically.
-        }
+%    \item{units}{
+%        an optional character string, which allows to overwrite the 
+%        current column names of a \code{timeSeries} object. By default 
+%        \code{NULL} which means that the column names are selected
+%        automatically.
+%        }
     \item{x}{
         an object of class \code{timeSeries}.
         }  

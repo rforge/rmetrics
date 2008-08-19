@@ -15,12 +15,12 @@
 \alias{coerce,character,timeSeries-method}
 \alias{coerce,ANY,timeSeries-method}
 
-\alias{as.vector.timeSeries}
-\alias{as.numeric.timeSeries}
+% \alias{as.vector.timeSeries}
+% \alias{as.numeric.timeSeries}
 \alias{as.matrix.timeSeries}
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
-\alias{as.logical.timeSeries}
+% \alias{as.logical.timeSeries}
 
 
 \description{
@@ -46,10 +46,10 @@
     Functions to transform 'timeSeries' objects into other objects: 
     
     \tabular{ll}{
-    \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector,
-    \cr 
-    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric,
-    \cr 
+    % \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector,
+%    \cr 
+%    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric,
+%    \cr 
     \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix,
     \cr 
     \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a 
@@ -70,22 +70,22 @@
 
 % \S4method{coerce}{ANY,timeSeries}(from, to)
 
-\method{as.vector}{timeSeries}(x, mode = "any")
-\method{as.numeric}{timeSeries}(x, \dots)
+% \method{as.vector}{timeSeries}(x, mode = "any")
+% \method{as.numeric}{timeSeries}(x, \dots)
 \method{as.matrix}{timeSeries}(x, \dots)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
-\method{as.logical}{timeSeries}(x, \dots)
+% \method{as.logical}{timeSeries}(x, \dots)
 }
 
 
 \arguments{
   
 
-    \item{mode}{ 
-        a character string giving an atomic mode or \code{"list"},
-        or (not for 'vector') \code{"any"}.
-    }
+%     \item{mode}{ 
+%         a character string giving an atomic mode or \code{"list"},
+%         or (not for 'vector') \code{"any"}.
+%     }
     \item{optional}{
         A logical value. If \code{TRUE}, setting row names and converting
         column names (to syntactic names) is optional.
@@ -111,7 +111,7 @@
     returns a S4 object of class \code{timeSeries}.
     \cr
     
-    \code{as.vector}\cr
+%    \code{as.vector}\cr
     \code{as.numeric}\cr
     \code{as.data.frame}\cr
     \code{as.matrix}\cr

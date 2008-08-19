@@ -5,6 +5,7 @@
 
 
 \alias{dummyDailySeries}
+\alias{dummySeries}
 \alias{alignDailySeries}
 \alias{rollDailySeries}
 
@@ -16,11 +17,16 @@
     Special daily 'timeSeries' functions.  
     \cr
     
-    \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr  
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
-    \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }  
+    \tabular{ll}{
+      \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries'
+      object, \cr 
+      \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new
+      positions,\cr   
+      \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given
+      period, \cr 
+      \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr 
+      \code{dummySeries} \tab Creates a dummy monthly 'timeSeries'
+      object}
 }
 
 

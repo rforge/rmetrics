@@ -5,7 +5,7 @@
 
 
 \alias{lag}
-\alias{lag.timeSeries} 
+\alias{lag,timeSeries-method} 
 
 
 \description{
@@ -16,7 +16,7 @@
 
 
 \usage{
-\method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
+\S4method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 }
 
 

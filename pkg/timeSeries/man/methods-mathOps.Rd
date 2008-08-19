@@ -9,6 +9,10 @@
 \alias{Ops,vector,timeSeries-method}
 \alias{-,timeSeries,missing-method}
 \alias{+,timeSeries,missing-method}
+\alias{cummax,timeSeries-method}
+\alias{cummin,timeSeries-method}
+\alias{cumprod,timeSeries-method}
+\alias{cumsum,timeSeries-method}
 \alias{Math,timeSeries-method}
 \alias{Math2,timeSeries-method}
 \alias{Summary,timeSeries-method}

@@ -45,7 +45,7 @@ function(object)
 
     # FUNCTION:
 
-    .Deprecated("time", package = "timeSeries")
+    # .Deprecated("time", package = "timeSeries")
 
     # Create 'timeDate' Object:
     ans <-
@@ -68,7 +68,7 @@ function(object)
 function(object, value)
 {   # A function implemented by Diethelm Wuertz
 
-    .Deprecated("time<-", "timeSeries")
+    # .Deprecated("time<-", "timeSeries")
 
     # FUNCTION:
     ans = timeSeries(object, value)

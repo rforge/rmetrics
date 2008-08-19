@@ -19,9 +19,8 @@
 #  cut,timeSeries            Cuts a block from a 'timeSeries' object
 ################################################################################
 
-setMethod("window",
-          "timeSeries",
-          function(x, start, end, ...)
+window.timeSeries <-
+    function(x, start, end, ...)
 {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
@@ -60,12 +59,11 @@ setMethod("window",
 
     # Return value:
     x[test,]
-})
+}
 
 # ------------------------------------------------------------------------------
 
-cut.timeSeries =
-    function (x, from, to, ...)
+cut.timeSeries <- function (x, from, to, ...)
 {   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
@@ -81,7 +79,7 @@ cut.timeSeries =
 
     # FUNCTION:
 
-    .Deprecated("window", "timeSeries")
+    # .Deprecated("window", "timeSeries")
 
     stopifnot(is.timeSeries(x))
     if (x@format == "counts")

@@ -1,6 +1,7 @@
 \name{finCenter}
-\alias{finCenter}
-\alias{finCenter<-}
+
+\alias{finCenter,timeSeries-method}
+\alias{finCenter<-,timeSeries-method}
 
 \title{Financial Center of to a timeSeries}
 
@@ -9,8 +10,9 @@
 }
 
 \usage{
-finCenter(x)
-finCenter(x) <- value
+\S4method{finCenter}{timeSeries}(x)
+\S4method{finCenter}{timeSeries}(x) <- value
+
 }
 
 

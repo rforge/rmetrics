@@ -112,7 +112,7 @@ returnSeries <-
     # Arguments:
 
     # FUNCTION:
-    .Deprecated("returns", "timeSeries")
+    # .Deprecated("returns", "timeSeries")
 
     returns(...)
 }
@@ -130,7 +130,7 @@ getReturns <-  function(...)
     # Arguments:
 
     # FUNCTION:
-    .Deprecated("returns", "timeSeries")
+    # .Deprecated("returns", "timeSeries")
     returns(...)
 }
 
