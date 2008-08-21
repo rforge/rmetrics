@@ -46,12 +46,12 @@ stableSlider <-
     refresh.code = function(...)
     {
         # Sliders:
-        N     = fBasics:::.sliderMenu(no = 1)
-        alpha = fBasics:::.sliderMenu(no = 2)
-        beta  = fBasics:::.sliderMenu(no = 3)
-        gamma = fBasics:::.sliderMenu(no = 4)
-        delta = fBasics:::.sliderMenu(no = 5)
-        pm    = fBasics:::.sliderMenu(no = 6)
+        N     = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        beta  = .sliderMenu(no = 3)
+        gamma = .sliderMenu(no = 4)
+        delta = .sliderMenu(no = 5)
+        pm    = .sliderMenu(no = 6)
 
         # Compute Data:
         xmin = round(qstable(0.01, alpha, beta, gamma, delta, pm), digits = 2)

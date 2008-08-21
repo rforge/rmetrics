@@ -5,7 +5,6 @@
 \alias{fDISTFIT}
 \alias{fDISTFIT-class}
 
-\alias{show.fDISTFIT}
 \alias{show,fDISTFIT-method}
 
 \alias{nFit}
@@ -53,7 +52,7 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
     
-show.fDISTFIT(object)
+\S4method{show}{fDISTFIT}(object)
 }
 
 

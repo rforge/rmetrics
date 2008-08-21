@@ -56,8 +56,8 @@ returnSeriesGUI <-
     function(...)
     {
         # Settings:
-        selectedAsset  = fBasics:::.tdSliderMenu(no = 1)
-        type = as.integer(fBasics:::.tdSliderMenu(obj.name = "returnSeriesType"))
+        selectedAsset  = .tdSliderMenu(no = 1)
+        type = as.integer(.tdSliderMenu(obj.name = "returnSeriesType"))
         Unit = colnames(x)
 
         # Print Basic Return Statistics:
@@ -129,7 +129,7 @@ returnSeriesGUI <-
 
     nAssets = dim(x)[2]
 
-    fBasics:::.tdSliderMenu(
+    .tdSliderMenu(
         returnSeriesRefreshCode,
 
         names       = c("Selected Asset"),
@@ -140,22 +140,22 @@ returnSeriesGUI <-
 
         but.functions = list(
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "1")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "1")
                 returnSeriesRefreshCode()},
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "2")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "2")
                 returnSeriesRefreshCode()},
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "3")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "3")
                 returnSeriesRefreshCode()},
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "4")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "4")
                 returnSeriesRefreshCode()},
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "5")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "5")
                 returnSeriesRefreshCode()},
             function(...){
-                fBasics:::.tdSliderMenu(obj.name = "returnSeriesType", obj.value = "6")
+                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "6")
                 returnSeriesRefreshCode()}
         ),
 
@@ -170,7 +170,7 @@ returnSeriesGUI <-
         title = "Return Series GUI"
         )
 
-   fBasics:::.tdSliderMenu(obj.name = "type", obj.value = "1", no = 1)
+   .tdSliderMenu(obj.name = "type", obj.value = "1", no = 1)
 
    # Return Value()
    invisible()

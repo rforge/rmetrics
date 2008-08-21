@@ -86,14 +86,11 @@ importFrom("stats",
            "pf",
            "qf")
 importFrom("timeDate",
-           "align",
-           "atoms",
            "kurtosis",
            "skewness",
            "getRmetricsOptions",
            "setRmetricsOptions")
 importFrom("timeSeries",
-           "outlier",
            "as.timeSeries",
            "is.timeSeries",
            "rev",
@@ -121,10 +118,7 @@ importFrom("utils",
 
 exportClasses("fDISTFIT",
               "fHTEST" )
-exportMethods("align",
-              "atoms",
-              "outlier",
-              "show" )
+exportMethods("show" )
 
 ################################################
 ## S3 classes

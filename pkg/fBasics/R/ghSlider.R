@@ -46,12 +46,12 @@ function()
     refresh.code = function(...)
     {
         # Sliders:
-        N      = fBasics:::.sliderMenu(no = 1)
-        alpha  = fBasics:::.sliderMenu(no = 2)
-        beta   = fBasics:::.sliderMenu(no = 3)
-        delta  = fBasics:::.sliderMenu(no = 4)
-        mu     = fBasics:::.sliderMenu(no = 5)
-        lambda = fBasics:::.sliderMenu(no = 6)
+        N      = .sliderMenu(no = 1)
+        alpha  = .sliderMenu(no = 2)
+        beta   = .sliderMenu(no = 3)
+        delta  = .sliderMenu(no = 4)
+        mu     = .sliderMenu(no = 5)
+        lambda = .sliderMenu(no = 6)
 
         # Plot Data:
         xmin = round(qgh(0.01, alpha, beta, delta, mu, lambda), digits = 2)
@@ -91,7 +91,7 @@ function()
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
        names =       c( "N","alpha","beta","delta", "mu","lambda"),
        minima =      c(  50,  0.00, -2.00,   0.00, -5.0,  -4),
        maxima =      c(1000,  2.00, +2.00,   5.00, +5.0,   4),

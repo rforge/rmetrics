@@ -517,7 +517,7 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
             iteration = NA
             counter = 0
             while (is.na(iteration)) {
-                iteration = fBasics:::.unirootNA(f = .froot, interval = c(xmin, xmax),
+                iteration = .unirootNA(f = .froot, interval = c(xmin, xmax),
                     alpha = alpha, beta = beta,  p = pp, subdivisions =
                     subdivisions)
                 counter = counter + 1

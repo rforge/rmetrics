@@ -622,7 +622,7 @@ rhyp <-
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = fBasics:::.unirootNA(f = .froot, interval = c(lower, upper),
+            iteration = .unirootNA(f = .froot, interval = c(lower, upper),
                 alpha = alpha, beta = beta, delta = delta, p = pp)
             counter = counter + 1
             lower = lower-2^counter

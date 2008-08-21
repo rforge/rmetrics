@@ -126,7 +126,7 @@ qght <-
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = fBasics:::.unirootNA(f = .froot, interval = c(lower, upper),
+            iteration = .unirootNA(f = .froot, interval = c(lower, upper),
                 beta = beta, delta = delta, mu = mu, nu = nu,, p = pp, ...)
             counter = counter + 1
             lower = lower-2^counter
