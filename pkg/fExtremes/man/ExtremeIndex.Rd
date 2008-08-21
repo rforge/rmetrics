@@ -5,7 +5,6 @@
 \alias{fTHETA}
 \alias{fTHETA-class}
 
-\alias{show.fTHETA}
 \alias{show,fTHETA-method}
 
 \alias{thetaSim}
@@ -46,7 +45,7 @@
 
 
 \usage{
-show.fTHETA(object)
+\S4method{show}{fTHETA}(object)
 
 thetaSim(model = c("max", "pair"), n = 1000, theta = 0.5)
 
