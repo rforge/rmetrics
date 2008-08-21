@@ -1,7 +1,7 @@
 
 fGarchEnv <- new.env(hash = TRUE)
 
-setfGarchEnv <-
+.setfGarchEnv <-
     function(...)
 {
     x <- list(...)
@@ -13,7 +13,7 @@ setfGarchEnv <-
     invisible()
 }
 
-getfGarchEnv <-
+.getfGarchEnv <-
     function(x = NULL, unset = "")
 {
     if (is.null(x))

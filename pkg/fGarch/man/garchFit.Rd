@@ -20,8 +20,8 @@ garchFit(formula, data, init.rec = c("mci", "uev"),
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
         include.shape = NULL, leverage = NULL, trace = TRUE, 
-    algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    hessian = c("fcd", "rcd"), control = list(), 
+    algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    hessian = "rcd", control = list(), 
     title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
@@ -36,7 +36,8 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
     likelihood estimation. Allowed values are \code{"nmfb"}, \code{"sqp"}, 
     \code{"nlminb"}, and \code{"bfgs"} where the third is the default
     setting. \code{"mnfb"} is a fully Fortran implemented and extremely
-    fast version of the R-coded \code{"nlminb"} algorithm. 
+    fast version of the R-coded \code{"nlminb"} algorithm. Note
+    \code{"nmfb"} and \code{sqp} are no more availabe in this version. 
   }
   \item{cond.dist}{
     a character string naming the desired conditional distribution.
@@ -84,9 +85,10 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
   % }
   \item{hessian}{
     a string denoting how the Hessian matrix should be evaluated,
-    either \code{hessian ="fcd"}, the default, or \code{"rcd"}.
+    either \code{hessian ="fcd"}, or \code{"rcd"}, the default,
     This is a central difference approximation implemented
-    respectivly in Fortran and in R.
+    respectivly in Fortran and in R. Note \code{"fcd"} is no more
+    availabe in this version.
   }
   \item{include.delta}{
     a logical flag which determines if the parameter for the recursion

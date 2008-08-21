@@ -56,11 +56,11 @@
 # Globally needed Variables:
 
 
-setfGarchEnv(.llh = 1e99)
-setfGarchEnv(.garchDist = NA)
-setfGarchEnv(.params = NA)
-setfGarchEnv(.series = NA)
-setfGarchEnv(.trace = NA) # to be added for donlp2 which has no "..." argument
+.setfGarchEnv(.llh = 1e99)
+.setfGarchEnv(.garchDist = NA)
+.setfGarchEnv(.params = NA)
+.setfGarchEnv(.series = NA)
+.setfGarchEnv(.trace = NA) # to be added for donlp2 which has no "..." argument
 
 
 # ------------------------------------------------------------------------------
@@ -466,7 +466,7 @@ garchFit <-
         formula.var = formula.var, series = series, scale = sd(series),
         init.rec = init.rec[1], h.start = NULL, llh.start = NULL,
         trace = trace)
-    setfGarchEnv(.series = .series)
+    .setfGarchEnv(.series = .series)
 
     # Initialize Model Parameters - Save Globally:
     .params <- .garchInitParameters(formula.mean = formula.mean,
@@ -476,20 +476,20 @@ garchFit <-
         include.skew = include.skew, include.shape = include.shape,
         leverage = leverage, algorithm = algorithm[1], control = con,
         trace = trace)
-    setfGarchEnv(.params = .params)
+    .setfGarchEnv(.params = .params)
 
     # Select Conditional Distribution Function:
-    setfGarchEnv(.garchDist = .garchSetCondDist(cond.dist[1]))
+    .setfGarchEnv(.garchDist = .garchSetCondDist(cond.dist[1]))
 
     # Estimate Model Parameters - Minimize llh, start from big value:
-    setfGarchEnv(.llh = 1.0e99)
-    .llh <- getfGarchEnv(".llh")
+    .setfGarchEnv(.llh = 1.0e99)
+    .llh <- .getfGarchEnv(".llh")
     fit = .garchOptimizeLLH(hessian, trace)
     fit$llh = .llh
 
     # Add to Fit:
-    .series <- getfGarchEnv(".series")
-    .params <- getfGarchEnv(".params")
+    .series <- .getfGarchEnv(".series")
+    .params <- .getfGarchEnv(".params")
     names(.series$h) <- NULL
     fit$series = .series
     fit$params = .params
@@ -664,7 +664,7 @@ garchFit <-
     .DEBUG = FALSE
 
     # global variables
-    .series <- getfGarchEnv(".series")
+    .series <- .getfGarchEnv(".series")
 
     # Determine Mean Order from ARMA Formula:
     model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
@@ -922,7 +922,7 @@ garchFit <-
 # ------------------------------------------------------------------------------
 
 
-setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
+.setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
 
 
 # ------------------------------------------------------------------------------
@@ -952,10 +952,10 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     .DEBUG = FALSE
 
     # get global variables
-    .series <- getfGarchEnv(".series")
-    .params <- getfGarchEnv(".params")
-    .garchDist <- getfGarchEnv(".garchDist")
-    .llh <- getfGarchEnv(".llh")
+    .series <- .getfGarchEnv(".series")
+    .params <- .getfGarchEnv(".params")
+    .garchDist <- .getfGarchEnv(".garchDist")
+    .llh <- .getfGarchEnv(".llh")
 
     # Retrieve From Initialized Series:
     x = .series$x
@@ -1027,7 +1027,7 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     attr(persistence, "control") = NULL
     attr(persistence, "cond.dist") = NULL
     .params$persistence <- persistence
-    setfGarchEnv(.params = .params)
+    .setfGarchEnv(.params = .params)
     mvar = mean(z^2)
     h = rep(omega + persistence*mvar, N)
 
@@ -1114,7 +1114,7 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     # Save h and z:
     .series$h <- h
     .series$z <- z
-    setfGarchEnv(.series = .series)
+    .setfGarchEnv(.series = .series)
 
     # Calculate Log Likelihood:
     hh = (abs(h[(llh.start):N]))^deltainv
@@ -1134,7 +1134,7 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
             if(persistence > 1)
                 cat("Warning - Persistence:", persistence, "\n")
         }
-        setfGarchEnv(.llh = llh)
+        .setfGarchEnv(.llh = llh)
     }
 
     # Return Value:
@@ -1162,8 +1162,8 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
     .DEBUG = FALSE
 
     # get global variables
-    .series <- getfGarchEnv(".series")
-    .params <- getfGarchEnv(".params")
+    .series <- .getfGarchEnv(".series")
+    .params <- .getfGarchEnv(".params")
 
     # Initialization:
     INDEX = .params$index
@@ -1182,12 +1182,12 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
         fit <- .garchRnlminb(.params, .series, .garchLLH, trace)
         .params$llh = fit$llh
         .params$params[INDEX] = fit$par
-        setfGarchEnv(.params = .params)
+        .setfGarchEnv(.params = .params)
     }
     if(algorithm == "nlminb+nm") {
         fit <- .garchRnm(.params, .series, .garchLLH, trace)
         .params$params[INDEX] = fit$par
-        setfGarchEnv(.params = .params)
+        .setfGarchEnv(.params = .params)
     }
 
 
@@ -1196,12 +1196,12 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
         fit <- .garchRlbfgsb(.params, .series, .garchLLH, trace)
         .params$llh = fit$llh
         .params$params[INDEX] = fit$par
-        setfGarchEnv(.params = .params)
+        .setfGarchEnv(.params = .params)
     }
     if(algorithm == "lbfgsb+nm") {
         fit <- .garchRnm(.params, .series, .garchLLH, trace)
         .params$params[INDEX] = fit$par
-        setfGarchEnv(.params = .params)
+        .setfGarchEnv(.params = .params)
     }
 
 
@@ -1249,12 +1249,12 @@ setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
 
     # Print LLH if we trace:
     if(trace) {
-        setfGarchEnv(.llh = 1.0e99)
+        .setfGarchEnv(.llh = 1.0e99)
         cat("\nFinal Estimate of the Negative LLH:\n")
         .llh =  .garchLLH(fit$par, trace = FALSE)
         cat(" LLH: ", .llh, "   norm LLH: ", .llh/N, "\n")
         print(fit$par)
-        setfGarchEnv(.llh = .llh)
+        .setfGarchEnv(.llh = .llh)
     }
 
     # Print Hessian Matrix if we trace:
