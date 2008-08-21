@@ -49,6 +49,7 @@
 
 \alias{outlier}
 \alias{outlier,timeSeries-method}
+\alias{outlier,ANY-method}
 
 \title{Subsettig Time Series}
 
