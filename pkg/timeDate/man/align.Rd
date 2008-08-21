@@ -6,7 +6,7 @@
 
 \alias{align}
 \alias{align,timeDate-method}
-
+\alias{align,ANY-method}
 
 \description{
     
