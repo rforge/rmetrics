@@ -6,7 +6,6 @@
 
 \alias{fPFOLIOSPEC-class}
 
-\alias{show.fPFOLIOSPEC}
 \alias{show,fPFOLIOSPEC-method}
 
 
@@ -21,7 +20,7 @@
 
 
 \usage{       
-show.fPFOLIOSPEC(object)
+\S4method{show}{fPFOLIOSPEC}(object)
 }
 
 

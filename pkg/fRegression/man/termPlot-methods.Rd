@@ -1,12 +1,13 @@
-\name{termPlot-methods}
+\name{termPlot}
 
 
 \docType{methods}
 
 
-\alias{termPlot-methods}
-\alias{termPlot,ANY-method}
-\alias{termPlot,fREG-method}
+% \alias{termPlot-methods}
+% \alias{termPlot,ANY-method}
+
+\alias{termPlot.fREG}
 
 
 \title{Regression Model Plot Methods}
@@ -20,7 +21,7 @@
 
 
 \usage{
-\S4method{termPlot}{fREG}(model, \dots)
+\method{termPlot}{fREG}(model, \dots)
 }
 
 

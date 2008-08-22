@@ -53,7 +53,8 @@ setMethod("Ops", c("timeDate", "timeDate"),
         ans <- callGeneric(e1@Data, e2@Data)
 
         if (inherits(ans, "POSIXt"))
-            ans <- timeDate(charvec, zone = "GMT", FinCenter = e1@FinCenter)
+            ans <- timeDate(as.character(ans),
+                            zone = "GMT", FinCenter = e1@FinCenter)
 
         # Return Value:
         ans

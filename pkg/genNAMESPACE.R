@@ -1,36 +1,75 @@
 # this file can help to create a NAMESPACE
 
-findGlobalsPackage <-
-    function(pname)
-{
-    pname <- paste("package", pname, sep = ":")
-    if (!pname %in% search())
-        stop("package must be loaded")
-    if (pname %in% loadedNamespaces())
-        findGlobalsEnv(getNamespace(pname))
-    else
-        findGlobalsEnv(as.environment(pname))
-}
+## # remove any existing namespace
+## # search for global variables and use global env
+## # generate NAMESPACE
+## # adapt zzz.R file with .onLoad function
+## # check manually NAMESPACE
 
-findGlobalsEnv <-
-function (env)
+## ## before starting install packages without namespace
+
+## RmetricsPkgs <- c("fUtilities", "fEcofin", "timeDate", "timeSeries",
+##                   "fImport", "fBasics", "fArma", "fGarch",
+##                   "fNonlinear", "fUnitRoots", "fTrading", "fMultivar",
+
+##                   "fRegression", "fExtremes", "fCopulae", "fOptions",
+##                   "fExoticOptions", "fAsianOptions", "fAssets",
+##                   "fPortfolio")
+
+## R CMD INSTALL  timeDate timeSeries fImport fBasics fEcofin fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fOptions fExoticOptions fAsianOptions fAssets fPortfolio
+
+## for (pkg in RmetricsPkgs)
+##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
+## example
+## sapply(as.list(RmetricsPkgs), genNAMESPACE)
+
+
+genNAMESPACE <- function()
 {
-    globals <- NULL
-    for (n in ls(env, all.names = TRUE)) {
-        v <- get(n, envir = env)
-        if (typeof(v) == "closure") {
-            # message("findGlobals :", n)
-            globals <- c(globals, findGlobals(v))
-        }
+    RmetricsPkgs<- c("timeDate", "timeSeries", "fBasics", "fGarch",
+                     "fExtremes", "fCopulae", "fAssets", "fPortfolio")
+
+    for (pkg in RmetricsPkgs) {
+
+        user <- Sys.getenv("USER")
+        myFile <-
+            switch(user,
+                   "yankee" = file.path("~/r", pkg, "NAMESPACE"),
+                   paste("NAMESPACE", pkg, sep = "."))
+
+        .genNAMESPACE(pkg, RmetricsPkgs, myFile)
     }
-    unique(globals)
 }
 
-genNAMESPACE <-
-    function(pkg,
-             file = paste("NAMESPACE", pkg, sep = "."),
-             RmetricsPkgs)
+.genNAMESPACE <-
+    function(pkg, RmetricsPkgs,
+             file = paste("NAMESPACE", pkg, sep = "."))
 {
+    findGlobalsPackage <- function(pname)
+    {
+        pname <- paste("package", pname, sep = ":")
+        if (!pname %in% search())
+            stop("package must be loaded")
+        if (pname %in% loadedNamespaces())
+            findGlobalsEnv(getNamespace(pname))
+        else
+            findGlobalsEnv(as.environment(pname))
+    }
+    findGlobalsEnv <- function (env)
+    {
+        globals <- NULL
+        for (n in ls(env, all.names = TRUE)) {
+            v <- get(n, envir = env)
+            if (typeof(v) == "closure") {
+                # message("findGlobals :", n)
+                globals <- c(globals, findGlobals(v))
+            }
+        }
+        unique(globals)
+    }
+
+    ##
+    pkg <- as.character(pkg)
 
     ## Make sure to unload unneeded packages
     ss <- search()
@@ -135,9 +174,33 @@ genNAMESPACE <-
     ### if (length(idx <- grep("^\\.", new)))
     ### new <- new[-idx]
 
+
+    ## Not only check function definitions, but also S4 methods
+    ## [a version of this should be part of codetools eventually] :
+    findMethodGlobalEnv <- function(env)
+    {
+        globals <- NULL
+        for (g in methods::getGenerics(where = env))
+	    for (m in methods::findMethods(g, where = env)) {
+		fun <- methods::getDataPart(m)
+                globals <- c(globals, findGlobals(fun))
+	    }
+        unique(globals)
+    }
+    findMethodGlobalsPackage <- function(pname)
+    {
+        pname <- paste("package", pname, sep = ":")
+        if (!pname %in% search())
+            stop("package must be loaded")
+        if (pname %in% loadedNamespaces())
+            findGlobalsEnv(getNamespace(pname))
+        else
+            findGlobalsEnv(as.environment(pname))
+    }
+
     ##
     # search for all globals in order to include them in import
-    globals <- findGlobalsPackage(pkg)
+    globals <- unique(c(findGlobalsPackage(pkg), findMethodGlobalsPackage(pkg)))
     impGlobals <- sapply(globals, function(x) {
         ans <- sub("package:", "", find(x)[1])
         if (!is.na(ans) && ans == ".GlobalEnv") {
@@ -254,34 +317,5 @@ genNAMESPACE <-
     ################################################
     close(out)
     options(op)
+invisible()
 }
-
-## ###
-## # What to do now ?
-## ##
-
-## # remove any existing namespace
-## # search for global variables and use global env
-## # generate NAMESPACE
-## # adapt zzz.R file with .onLoad function
-## # check manually NAMESPACE
-
-## ## before starting install packages without namespace
-
-## RmetricsPkgs <- c("fUtilities", "fEcofin", "timeDate", "timeSeries",
-##                   "fImport", "fBasics", "fArma", "fGarch",
-##                   "fNonlinear", "fUnitRoots", "fTrading", "fMultivar",
-
-##                   "fRegression", "fExtremes", "fCopulae", "fOptions",
-##                   "fExoticOptions", "fAsianOptions", "fAssets",
-##                   "fPortfolio")
-
-RmetricsPkgs <- c("timeDate", "timeSeries", "fBasics", "fGarch",
-                   "fExtremes", "fCopulae", "fAssets", "fPortfolio")
-
-## ## R CMD INSTALL fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae  fOptions fExoticOptions fAsianOptions fAssets fPortfolio
-
-## # problem with pkg urca in dependencies
-
-for (pkg in RmetricsPkgs)
-    genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)

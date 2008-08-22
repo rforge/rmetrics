@@ -21,7 +21,6 @@
 \alias{print.option}
 \alias{summary.option}
 
-\alias{show.fOPTION}
 \alias{show,fOPTION-method}
 \alias{summary.fOPTION}
 
@@ -71,7 +70,7 @@ NDF(x)
 CND(x)
 CBND(x1, x2, rho)
 
-show.fOPTION(object)
+\S4method{show}{fOPTION}(object)
 \method{summary}{fOPTION}(object, \dots)
 
 \method{print}{option}(x, \dots)

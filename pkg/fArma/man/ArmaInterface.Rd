@@ -8,7 +8,6 @@
 \alias{armaSim}
 \alias{armaFit}
 
-\alias{show.fARMA}
 \alias{show,fARMA-method}
 
 \alias{plot.fARMA}
@@ -115,7 +114,7 @@ armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
 armaFit(formula, data, method = c("mle", "ols"), include.mean = TRUE, 
     fixed = NULL, title = NULL, description = NULL, \dots)
 
-show.fARMA(object)
+\S4method{show}{fARMA}(object)
 
 \method{plot}{fARMA}(x, which = "ask", gof.lag = 10, \dots)
 \method{summary}{fARMA}(object, doplot = TRUE, which = "all", \dots)

@@ -97,7 +97,7 @@ function (n, dimension, init = TRUE)
         # options(warn = -1)
         # rm(".runif.halton.seed")
         # options(warn = .warn)
-        setfOptionsEnv(.runif.halton.seed = list(base = rep(0, dimension), offset = 0))
+        .setfOptionsEnv(.runif.halton.seed = list(base = rep(0, dimension), offset = 0))
     }
 
     # Generate:
@@ -108,8 +108,8 @@ function (n, dimension, init = TRUE)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.integer(getfOptionsEnv(".runif.halton.seed")$base),
-        as.integer(getfOptionsEnv(".runif.halton.seed")$offset),
+        as.integer(.getfOptionsEnv(".runif.halton.seed")$base),
+        as.integer(.getfOptionsEnv(".runif.halton.seed")$offset),
         as.integer(init),
         as.integer(0),
         PACKAGE = "fOptions")
@@ -119,7 +119,7 @@ function (n, dimension, init = TRUE)
 ###     options(warn = -1)
 ###     rm(".runif.halton.seed")
 ###     options(warn = .warn)
-    setfOptionsEnv(.runif.halton.seed = list(base = result[[4]], offset = result[[5]]))
+    .setfOptionsEnv(.runif.halton.seed = list(base = result[[4]], offset = result[[5]]))
 
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -151,7 +151,7 @@ function (n, dimension, init = TRUE)
 ###         options(warn = -1)
 ###         rm(".rnorm.halton.seed")
 ###         options(warn = .warn)
-        setfOptionsEnv(.rnorm.halton.seed = list(base = rep(0, dimension), offset = 0))
+        .setfOptionsEnv(.rnorm.halton.seed = list(base = rep(0, dimension), offset = 0))
     }
 
     # Generate:
@@ -162,8 +162,8 @@ function (n, dimension, init = TRUE)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.integer(getfOptionsEnv(".rnorm.halton.seed")$base),
-        as.integer(getfOptionsEnv(".rnorm.halton.seed")$offset),
+        as.integer(.getfOptionsEnv(".rnorm.halton.seed")$base),
+        as.integer(.getfOptionsEnv(".rnorm.halton.seed")$offset),
         as.integer(init),
         as.integer(1),
         PACKAGE = "fOptions")
@@ -173,7 +173,7 @@ function (n, dimension, init = TRUE)
 ###     options(warn = -1)
 ###     rm(".rnorm.halton.seed")
 ###     options(warn = .warn)
-    setfOptionsEnv(.rnorm.halton.seed = list(base = result[[4]], offset = result[[5]]))
+    .setfOptionsEnv(.rnorm.halton.seed = list(base = result[[4]], offset = result[[5]]))
 
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -207,7 +207,7 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 ###         options(warn = -1)
 ###         rm(".runif.sobol.seed")
 ###         options(warn = .warn)
-        setfOptionsEnv(.runif.sobol.seed = list(quasi = rep(0, dimension), ll = 0,
+        .setfOptionsEnv(.runif.sobol.seed = list(quasi = rep(0, dimension), ll = 0,
             count = 0, sv = rep(0, dimension*30), seed = seed))
     }
 
@@ -219,12 +219,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.double (getfOptionsEnv(".runif.sobol.seed")$quasi),
-        as.integer(getfOptionsEnv(".runif.sobol.seed")$ll),
-        as.integer(getfOptionsEnv(".runif.sobol.seed")$count),
-        as.integer(getfOptionsEnv(".runif.sobol.seed")$sv),
+        as.double (.getfOptionsEnv(".runif.sobol.seed")$quasi),
+        as.integer(.getfOptionsEnv(".runif.sobol.seed")$ll),
+        as.integer(.getfOptionsEnv(".runif.sobol.seed")$count),
+        as.integer(.getfOptionsEnv(".runif.sobol.seed")$sv),
         as.integer(scrambling),
-        as.integer(getfOptionsEnv(".runif.sobol.seed")$seed),
+        as.integer(.getfOptionsEnv(".runif.sobol.seed")$seed),
         as.integer(init),
         as.integer(0),
         PACKAGE = "fOptions")
@@ -234,7 +234,7 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 ###     options(warn = -1)
 ###     rm(".runif.sobol.seed")
 ###     options(warn = .warn)
-    setfOptionsEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
+    .setfOptionsEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
         count = result[[6]], sv = result[[7]], seed = result[[9]]))
 
     # Deviates:
@@ -268,7 +268,7 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 ###         options(warn = -1)
 ###         rm(".rnorm.sobol.seed")
 ###         options(warn = .warn)
-        setfOptionsEnv(.rnorm.sobol.seed = list( quasi = rep(0, dimension), ll = 0,
+        .setfOptionsEnv(.rnorm.sobol.seed = list( quasi = rep(0, dimension), ll = 0,
             count = 0, sv = rep(0, dimension*30), seed = seed))
     }
 
@@ -280,12 +280,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.double (getfOptionsEnv(".rnorm.sobol.seed")$quasi),
-        as.integer(getfOptionsEnv(".rnorm.sobol.seed")$ll),
-        as.integer(getfOptionsEnv(".rnorm.sobol.seed")$count),
-        as.integer(getfOptionsEnv(".rnorm.sobol.seed")$sv),
+        as.double (.getfOptionsEnv(".rnorm.sobol.seed")$quasi),
+        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$ll),
+        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$count),
+        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$sv),
         as.integer(scrambling),
-        as.integer(getfOptionsEnv(".rnorm.sobol.seed")$seed),
+        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$seed),
         as.integer(init),
         as.integer(1),
         PACKAGE = "fOptions")
@@ -295,7 +295,7 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 ###     options(warn = -1)
 ###     rm(".rnorm.sobol.seed")
 ###     options(warn = .warn)
-    setfOptionsEnv(.rnorm.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
+    .setfOptionsEnv(.rnorm.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
         count = result[[6]], sv = result[[7]], seed = result[[9]]))
 
     # Deviates:

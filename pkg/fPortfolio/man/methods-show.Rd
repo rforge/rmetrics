@@ -2,7 +2,6 @@
 
 
 \alias{show-methods}
-\alias{show.fPORTFOLIO}
 \alias{show,fPORTFOLIO-method}
 
 
@@ -16,7 +15,7 @@
 }
 
 \usage{
-show.fPORTFOLIO(object)
+\S4method{show}{fPORTFOLIO}(object)
 }
 
 

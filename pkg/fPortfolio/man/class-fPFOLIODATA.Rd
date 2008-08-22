@@ -6,7 +6,6 @@
 
 \alias{fPFOLIODATA-class}
 
-\alias{show.fPFOLIODATA}
 \alias{show,fPFOLIODATA-method}
 
 \alias{portfolioData}
@@ -26,7 +25,7 @@
 \usage{
 portfolioData(data, spec = portfolioSpec())
 
-show.fPFOLIODATA(object)
+\S4method{show}{fPFOLIODATA}(object)
 }
 
 

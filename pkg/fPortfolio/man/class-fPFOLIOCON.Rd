@@ -6,7 +6,6 @@
 
 \alias{fPFOLIOCON-class}
 
-\alias{show.fPFOLIOCON}
 \alias{show,fPFOLIOCON-method}
 
 
@@ -21,7 +20,7 @@
 
 
 \usage{
-show.fPFOLIOCON(object)
+\S4method{show}{fPFOLIOCON}(object)
 }
 
 

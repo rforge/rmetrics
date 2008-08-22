@@ -5,7 +5,6 @@
 \alias{fCOPULA}
 \alias{fCOPULA-class}
 
-\alias{show.fCOPULA}
 \alias{show,fCOPULA-method}
 
 \alias{pfrechetCopula}
@@ -35,7 +34,7 @@
 
 
 \usage{
-show.fCOPULA(object)
+\S4method{show}{fCOPULA}(object)
 
 pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"), 
     output = c("vector", "list"))

@@ -45,10 +45,10 @@ function(lib, pkg)
     library.dynam("fOptions", pkg, lib)
 
 
-    setfOptionsEnv(.runif.halton.seed = list())
-    setfOptionsEnv(.rnorm.halton.seed = list())
-    setfOptionsEnv(.runif.sobol.seed = list())
-    setfOptionsEnv(.rnorm.sobol.seed = list())
+    .setfOptionsEnv(.runif.halton.seed = list())
+    .setfOptionsEnv(.rnorm.halton.seed = list())
+    .setfOptionsEnv(.runif.sobol.seed = list())
+    .setfOptionsEnv(.rnorm.sobol.seed = list())
 
 
 }

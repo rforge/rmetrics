@@ -8,7 +8,6 @@
 
 \alias{fHURST}
 \alias{fHURST-class}
-\alias{show.fHURST}
 \alias{show,fHURST-method}
 
 \alias{aggvarFit}
@@ -109,7 +108,7 @@ hurstSlider(x = fgnSim())
 waveletFit(x, length = NULL, order = 2, octave = c(2, 8), 
     doplot = FALSE, title = NULL, description = NULL)
         
-show.fHURST(object)
+\S4method{show}{fHURST}(object)
 }
 
 
