@@ -70,7 +70,7 @@ portfolioConstraints <-
     # Handle NULL - A NULL  :
     if (is.null(constraints)) constraints = "LongOnly"
     
-    # Chweck Vector of Valid Strings - these are strings ...
+    # Check Vector of Valid Strings - these are strings ...
     validStrings = c(
         "LongOnly", "Short",      # LongOnly and Short Notification
         "minW", "maxW",           # Box Constraints
@@ -78,12 +78,12 @@ portfolioConstraints <-
         "minB", "maxB",           # Covariance Risk Budgets
         "listF", "minF", "maxF")  # Nonlinear Functions Constraints
     if (any(constraints == "Short")) setSolver(spec) = "solveRshortExact"
-    usedStrings = unique(sort(sub("\\[.*", "", constraints)))
-    checkStrings = usedStrings %in% validStrings
-    check = (sum(!checkStrings) == 0)
-    if (check) check = "valid" else stop("Invalid Constraints String(s)")
+    # usedStrings = unique(sort(sub("\\[.*", "", constraints)))
+    # checkStrings = usedStrings %in% validStrings
+    # check = (sum(!checkStrings) == 0)
+    # if (check) check = "valid" else stop("Invalid Constraints String(s)")
     stringConstraints = constraints
-    attr(stringConstraints, "control") = check
+    # attr(stringConstraints, "control") = check
     
     minW = minWConstraints(data, spec, constraints)
     maxW = maxWConstraints(data, spec, constraints)

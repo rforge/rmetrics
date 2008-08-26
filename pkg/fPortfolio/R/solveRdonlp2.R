@@ -24,6 +24,10 @@
 ################################################################################
 
 
+
+# MaxDrawDown Portfolio Constraints:
+.conMaxDD <- function(x) min(drawdowns(pfolioReturn(data/100, x)))
+
 solveRdonlp2 <-
     function(data, spec, constraints)
 {
@@ -31,19 +35,24 @@ solveRdonlp2 <-
     #   Portfolio interface to solver Rdonlp2
 
     # Example:
-    #   data = .lppData; spec = .mvSpec; constraints = "LongOnly"
-    #   minRisk <- function(x) { .solveRfooPlot(data, x); x %*% cov(data) %*% x }
-    #   fn = match.fun(getOptimize(spec))
-    #   .counter = 0
-    #   solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
-    #   solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
-    #   solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3]
-    #   solveRdonlp2(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))[-3]  
-    #   solveRdonlp2(.lppData, .mvSpec, c("minF=-0.04", "maxF=0", "listF(.conMaxDD)"))[-3] 
-    #   solveRdonlp2(.lppData, .mvSpec, c("minW[1:6]=-0.3", "maxW[1:6]=1.3", "minF=c(-0.3,0)", "maxF=c(0, 1.30)", "listF(.con13030Lower, .con13030Upper)"))[-3] 
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")
+    if (FALSE) {
+        data = .lppData; spec = .mvSpec; constraints = "LongOnly"
+        minRisk <- function(x) { .solveRdonlp2Plot(data, x); x %*% cov(data) %*% x }
+        fn = match.fun(getOptimize(spec))
+        solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
+        solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
+        solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3]
+        solveRdonlp2(.lppData, .mvSpec, 
+            c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))[-3]  
+        solveRdonlp2(.lppData, .mvSpec, 
+            c("minF=-0.04", "maxF=0", "listF(.conMaxDD)"))[-3] 
+        solveRdonlp2(.lppData, .mvSpec, 
+            c("minW[1:6]=-0.3", "maxW[1:6]=1.3", "minF=c(-0.3,0)", 
+              "maxF=c(0, 1.30)", "listF(.con13030Lower, .con13030Upper)"))[-3] 
+        portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
+        portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
+        portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")
+    }
     
     # FUNCTION:   
 
@@ -94,7 +103,7 @@ solveRdonlp2 <-
 
 
 # Solver Plot:
-.solveRfooPlot =
+.solveRdonlp2Plot =
 function(data, weights)
 {    
     Returns = data/100
@@ -133,19 +142,19 @@ function(data, weights)
         
     }
     
+    # Return Value:
     invisible()
 }
        
 
 # 130/30 Portfolio Constraints:
-.con13030Lower = function(x) sum(x[x<0]) 
-.con13030Upper = function(x) sum(x[x>0]) 
-
-
-# MaxDrawDown Portfolio Constraints:
-.conMaxDD = function(x) min(drawdowns(pfolioReturn(data/100, x)))
+.con13030Lower <- function(x) sum(x[x<0]) 
+.con13030Upper <- function(x) sum(x[x>0]) 
  
    
+# ------------------------------------------------------------------------------
+
+
 .rdonlp2Arguments <-
 function(data, spec, constraints)
 {
@@ -292,6 +301,8 @@ function(data, spec, constraints)
     attr(weights, "invest") = sum(weights)
     
     # Check Messages and Get Status:
+    #   ... unfortunately donlp2 has no status vaqriable, 
+    #       so we have to analyze the messages
     Status = 1
     # Message = "1234567890123456789012345"
     message11 = "KT-conditions satisfied, " # no further correction computed"
@@ -345,7 +356,7 @@ function(data, spec, constraints)
         te1 = FALSE, 
         te2 = FALSE, 
         te3 = FALSE,
-        silent = TRUE,
+        silent = TRUE, # changed to TRUE
         intakt = TRUE)
 }
 

@@ -31,6 +31,7 @@ solveRquadprog <-
     #   Portfolio interface to solver Rquadprog
 
     # Example:
+    #   solveRquadprog(data, spec, constraints)[-3]
     #   solveRquadprog(.lppData, .mvSpec, "LongOnly")[-3]
     #   solveRquadprog(.lppData, .mvSpec, .BoxGroups)[-3]
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "LongOnly")

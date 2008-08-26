@@ -131,6 +131,10 @@ portfolioFrontier <-
         covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
     }  
     
+    # Check: Did we find points on the frontier?
+    if (is.null(weights)) 
+        stop("There exist no points on the efficient frontier")
+    
     # Reset Target Return:  
     setTargetReturn(spec) <- NULL
   

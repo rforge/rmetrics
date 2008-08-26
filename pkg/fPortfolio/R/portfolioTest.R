@@ -108,7 +108,7 @@ function(
     cat("\n")
     print(out[c(3:7, 11, 15, 19)], quote = FALSE)
     ep.Risk = getTargetRisk(ep)[,c(1,3)]
-    if (type == "MV") epPoint = c(ep.Risk[1], mean(data)) 
+    if (type == "MV" | type == "MAD") epPoint = c(ep.Risk[1], mean(data)) 
     if (type == "CVaR") epPoint = c(ep.Risk[2], mean(data)) 
        
     # Max Reward/Risk Ratio Portfolio:
@@ -136,7 +136,7 @@ function(
       
     # Efficient Frontier Plot: 
     print("Plot ...")
-    if (type == "MV") {
+    if (type == "MV" | type == "MAD") {
         xlim = c(0, 0.8)
         offset = 0.03
     }

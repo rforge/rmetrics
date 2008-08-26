@@ -38,12 +38,14 @@ setMethod("show", "fPORTFOLIO",
 
     # Print Title:
     cat("\nTitle:\n ")
-    cat(getType(object),  getTitle(object),     "\n")
-    cat(" Estimator:   ", getEstimator(object), "\n")
-    cat(" Solver:      ", getSolver(object),    "\n")
-    cat(" Optimize:    ", getOptimize(object),  "\n")
-    cat(" Constraints: ", getConstraintsTypes(object), "\n")
-    #at(" Objective:   ", getObjective(object), "\n")
+        cat(getType(object),  getTitle(object),     "\n")
+        cat(" Estimator:   ", getEstimator(object), "\n")
+        cat(" Solver:      ", getSolver(object),    "\n")
+        cat(" Optimize:    ", getOptimize(object),  "\n")
+        cat(" Constraints: ", getConstraintsTypes(object), "\n")
+    if(getType(object) == "CVaR")
+        cat(" VaR Alpha:   ", getAlpha(object),     "\n")
+        #at(" Objective:   ", getObjective(object), "\n")
 
     # Print Call:
     # cat("\nCall:\n ")

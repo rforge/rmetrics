@@ -59,6 +59,11 @@ setType(.cvarSpec) = "CVaR"
 setTargetReturn(.cvarSpec) = mean(.lppData)
 setSolver(.cvarSpec) = "solveRfoo"
 
+.madSpec = portfolioSpec()
+setType(.madSpec) = "MAD"
+setTargetReturn(.madSpec) = mean(.lppData)
+setSolver(.madSpec) = "solveRfoo"
+
 .Box = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
 .Group = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
 .BoxGroup = c(.Box, .Group)

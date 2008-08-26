@@ -19,9 +19,16 @@
 # FUNCTION:                    DESCRIPTION:
 #  solveRglpk                   Portfolio interface to solver Rglpk
 #  .rglpkArguments              Returns arguments for solver
+#    .cvarRglpkArguments         Returns CVaR arguments for solver
+#    .madRglpkArguments          Returns MAD arguments for solver
 #  .rglpk                       Wrapper to solver function
 #  .rglpkControl                Returns default controls for solver
 ################################################################################
+
+
+# IMPORTANT NOTE:
+#   MAD works, but frontier plot has to be adjusted, since at the moment it
+#   can not yet plot against MAD!
 
 
 solveRglpk <-
@@ -31,16 +38,23 @@ solveRglpk <-
     #   Portfolio interface to solver Rglpk
 
     # Example:
+    #
     #   solveRglpk(.lppData, .cvarSpec, "LongOnly")[-3]
     #   solveRglpk(.lppData, .cvarSpec, .BoxGroups)[-3]
     #   portfolioTest("CVaR", "minRisk", "solveRglpk", "LongOnly")
     #   portfolioTest("CVaR", "minRisk", "solveRglpk", "BoxGroup")
+    #
+    #   solveRglpk(.lppData, .madSpec, "LongOnly")[-3]
+    #   solveRglpk(.lppData, .madSpec, .BoxGroups)[-3]
+    #   portfolioTest("MAD", "minRisk", "solveRglpk", "LongOnly")
+    #   portfolioTest("MAD", "minRisk", "solveRglpk", "BoxGroup")
     
     # FUNCTION:   
 
     # Settings:
     Data = portfolioData(data, spec)
     nAssets = getNAssets(Data)
+    type = getType(spec)
     
     # Solve:
     if(nAssets == 2) {
@@ -48,7 +62,9 @@ solveRglpk <-
         # Solve two Assets Portfolio Analytically:
         # ... this is only thhought for 'unlimited' LongOnly Constraints
         # box and group constraints are discarded here.
-        ans = .cvarSolveTwoAssets(data, spec, constraints)
+        
+        fun = match.fun(paste(".", tolower(type), "SolveTwoAssets", sep = ""))
+        ans = fun(data, spec, constraints)
             
     } else {
         
@@ -68,7 +84,8 @@ solveRglpk <-
             nScenarios = args$nScenarios, 
             nAssets = args$nAssets,
             targetReturn = args$targetReturn, 
-            Alpha = args$Alpha)
+            Alpha = args$Alpha,
+            Type = args$Type)
             
     }
 
@@ -83,22 +100,43 @@ solveRglpk <-
 .rglpkArguments <-
     function(data, spec, constraints)
 {
+    # Example:
+    #   .rglpkArguments(.lppData[1:8,1:3], .cvarSpec, "LongOnly") 
+    #   .rglpkArguments(.lppData[1:8,1:3], .madSpec, "LongOnly") 
+    
+    # Settings:
+    type = getType(spec)
+    
+    # Execute appropriate .rfooArguments function:
+    fun = match.fun(paste(".", tolower(type), "RglpkArguments", sep = ""))
+    
+    # Return Value:
+    fun(data, spec, constraints)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.cvarRglpkArguments <-
+    function(data, spec, constraints)
+{
     # Description:
-    #   Returns glpk conform arguments for the solver
+    #   Returns glpk conform CVaR arguments for the solver
 
     # Details:
     #       max/min:                   obj %*% x
     #       subject to: 
     #                            mat %*%x  ?=  rhs                           
     #                                  dir  =  "?=" 
-    #                                     bounds
+    #                               upper/lower bounds
     #
     #   Rglpk_solve_LP(obj, mat, dir, rhs, types = NULL, max = FALSE,
     #       bounds = NULL, verbose = FALSE)
     
     # Example:
-    #   .rglpkArguments(.lppData, .cvarSpec, "LongOnly")[-2]
-    #   .rglpkArguments(.lppData, .cvarSpec, .BoxGroups)[-2]
+    #   .cvarRglpkArguments(.lppData[1:8,1:3], .cvarSpec, "LongOnly") 
+    #   .cvarRglpkArguments(.lppData[1:8,1:3], .cvarSpec, .BoxGroups) 
     
     # FUNCTION:
     
@@ -108,6 +146,7 @@ solveRglpk <-
     nScenarios = nrow(getSeries(Data))
     targetReturn = getTargetReturn(spec)
     Alpha = getAlpha(spec)
+    Type = getType(spec)
     
     # Objective Function:
     objNames = c("VaR", paste("e", 1:nScenarios, sep = ""), colnames(data))
@@ -120,7 +159,8 @@ solveRglpk <-
     aeq = eqsumW[, 1]
     deq = rep("==", nrow(eqsumW))
     
-    # The VaR Equation Constraints:  (1 + diag + Returns) %*% (VaR,es,W)  >= 0
+    # The VaR Equation Constraints:  
+    #   (1 + diag + Returns) %*% (VaR,es,W)  >= 0
     Avar = cbind(
         matrix(rep(-1, nScenarios), ncol = 1),
         diag(nScenarios),
@@ -184,7 +224,121 @@ solveRglpk <-
         obj = obj, mat = mat, dir = dir, rhs = rhs,
         types = types, max = max, bounds = bounds, verbose = FALSE,
         nScenarios = nScenarios, nAssets = nAssets,
-        targetReturn = targetReturn, Alpha = Alpha) 
+        targetReturn = targetReturn, Alpha = Alpha, Type = Type) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.madRglpkArguments <-
+    function(data, spec, constraints)
+{
+    # Description:
+    #   Returns glpk conform MAD arguments for the solver
+
+    # Details:
+    #       max/min:                   obj %*% x
+    #       subject to: 
+    #                            mat %*%x  ?=  rhs                           
+    #                                  dir  =  "?=" 
+    #                              upper/lower bounds
+    #
+    #   Rglpk_solve_LP(obj, mat, dir, rhs, types = NULL, max = FALSE,
+    #       bounds = NULL, verbose = FALSE)
+    
+    # Example:
+    #   .madRglpkArguments(.lppData[1:8,1:3], .madSpec, "LongOnly") 
+    #   .madRglpkArguments(.lppData[1:8,1:3], .madSpec, .BoxGroups) 
+    
+    # FUNCTION:
+    
+    # Settings:
+    Data = portfolioData(data, spec)
+    nAssets = getNAssets(Data)
+    Series = getSeries(Data)
+    Series = Series - colMeans(Series)
+    nScenarios = nrow(Series)
+    targetReturn = getTargetReturn(spec)
+    Type = getType(spec)
+    
+    # Objective Function to be Maximized:
+    objNames = c(paste("e", 1:nScenarios, sep = ""), colnames(data))
+    obj = c(rep(1/nScenarios, nScenarios), rep(0, nAssets))
+    names(obj) = objNames
+    
+    # The A_equal Equation Constraints: A_eq %*% x == a_eq
+    eqsumW = eqsumWConstraints(data, spec, constraints)
+    Aeq = cbind(matrix(0, ncol = nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+    aeq = eqsumW[, 1]
+    deq = rep("==", nrow(eqsumW))
+    
+    # The negative MAD Equation Constraints:  
+    #   (-diag + [Returns-mu]) %*% (es,W) <= 0
+    Aneg = cbind(-diag(nScenarios), as.matrix(Series) )
+    aneg = rep(0, nrow(Aneg))
+    dneg = rep("<=", nrow(Aneg))
+    
+    # The positive MAD Equation Constraints:  
+    #   (+diag + [Returns-mu]) %*% (es,W) >= 0
+    Apos = cbind( diag(nScenarios), as.matrix(Series) )
+    apos = rep(0, nrow(Apos))
+    dpos = rep(">=", nrow(Apos))
+     
+    # The e_s > = 0 Equation Constraints:
+    Aes = cbind(diag(nScenarios), matrix(0, nrow = nScenarios, ncol = nAssets))
+    aes = rep(0, nrow(Aes))
+    des = rep(">=", nrow(Aes))
+    
+    # Group Constraints: A W >= a
+    minsumW = minsumWConstraints(data, spec, constraints)
+    if (is.null(minsumW)){    
+        Aminsum = aminsum = dminsum = NULL
+    } else {
+        Aminsum = cbind(
+            matrix(0, nrow = nrow(minsumW), ncol = nScenarios), 
+            minsumW[, -1, drop = FALSE] )
+        aminsum = minsumW[, 1]
+        dminsum  = rep(">=", nrow(minsumW))
+    }
+    
+    # Group Constraints: A W <= b
+    maxsumW = maxsumWConstraints(data, spec, constraints)
+    if (is.null(maxsumW)){    
+        Amaxsum = amaxsum = dmaxsum = NULL
+    } else {
+        Amaxsum = cbind(
+            matrix(0, nrow = nrow(maxsumW), ncol = nScenarios), 
+            maxsumW[, -1, drop = FALSE] )
+        amaxsum = maxsumW[, 1]
+        dmaxsum  = rep("<=", nrow(maxsumW))
+    }
+       
+    # Putting all together:
+    mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
+    rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
+    dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
+    
+    # Box Constraints: Upper and Lower Bounds as listn required ...
+    minW = minWConstraints(data, spec, constraints)
+    maxW = maxWConstraints(data, spec, constraints)
+    nInd = 1:(nScenarios+nAssets)
+    bounds = list(
+        lower = list(ind = nInd, val = c(rep(  0, nScenarios), minW)),
+        upper = list(ind = nInd, val = c(rep(Inf, nScenarios), maxW)) )
+    
+    # What variable Types, All Continuous:
+    types = NULL
+    
+    # Should I minimize or maximize ?
+    max = FALSE
+  
+    # Return Value:
+    list(
+        obj = obj, mat = mat, dir = dir, rhs = rhs,
+        types = types, max = max, bounds = bounds, verbose = FALSE,
+        nScenarios = nScenarios, nAssets = nAssets,
+        targetReturn = targetReturn, Alpha = NA, Type = Type) 
 }
 
 
@@ -193,7 +347,7 @@ solveRglpk <-
 
 .rglpk <-
     function(obj, mat, dir, rhs, types, max, bounds, verbose,
-    nScenarios, nAssets, targetReturn, Alpha)
+    nScenarios, nAssets, targetReturn, Alpha, Type)
 {
     # Description:
     #   Rglpk Solver    
@@ -212,18 +366,18 @@ solveRglpk <-
         verbose = verbose)   
         
     # Extract Weights:
-    weights = .checkWeights(optim$solution[-(1:(nScenarios+1))])
+    weights = .checkWeights(rev(rev(optim$solution)[1:nAssets]))
     attr(weights, "invest") = sum(weights)
     
     # Result:
     ans <- list(
-        type = "CVaR",
+        type = Type,
         solver = "Rglpk",
         optim = optim,
         weights = weights, 
         targetReturn = targetReturn,
-        targetRisk = -optim$optimum, 
-        objective = -optim$optimum, 
+        targetRisk = optim$optimum, 
+        objective = optim$optimum, 
         status = optim$status[[1]], 
         message = "")    
         

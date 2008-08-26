@@ -47,7 +47,7 @@ efficientPortfolio <-
     # FUNCTION:
 
     # Match Spec Versus Constraints:
-    .checkSpecVsConstraints(spec, constraints)
+    # .checkSpecVsConstraints(spec, constraints)
 
     # Optimize Portfolio:
     Solver = match.fun(getSolver(spec))
@@ -89,7 +89,7 @@ maxratioPortfolio <-
     # FUNCTION:
 
     # Match Spec Versus Constraints:
-    .checkSpecVsConstraints(spec, constraints)
+    # .checkSpecVsConstraints(spec, constraints)
     
     # Transform Data:
     Data = portfolioData(data, spec)
@@ -165,7 +165,7 @@ minriskPortfolio <-
     # FUNCTION:
 
     # Match Spec Versus Constraints:
-    .checkSpecVsConstraints(spec, constraints)
+    # .checkSpecVsConstraints(spec, constraints)
     
     # Transform Data:
     Data = portfolioData(data, spec)
@@ -232,7 +232,7 @@ maxreturnPortfolio <-
     # FUNCTION:
 
     # Match Spec Versus Constraints:
-    .checkSpecVsConstraints(spec, constraints)
+    # .checkSpecVsConstraints(spec, constraints)
     
     # Transform Data:
     data = portfolioData(data, spec)
