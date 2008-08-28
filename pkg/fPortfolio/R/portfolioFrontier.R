@@ -145,6 +145,7 @@ portfolioFrontier <-
     portfolio@portfolio$targetRisk = targetRisk
     portfolio@portfolio$covRiskBudgets = covRiskBudgets
     portfolio@portfolio$status = 0
+    portfolio@portfolio$minriskPortfolio = mvPortfolio
     portfolio@title = "Portfolio Frontier"    
     
     # Return Value:

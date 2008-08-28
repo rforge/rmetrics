@@ -284,6 +284,12 @@ solveRglpk <-
     Apos = cbind( diag(nScenarios), as.matrix(Series) )
     apos = rep(0, nrow(Apos))
     dpos = rep(">=", nrow(Apos))
+    
+    # The Konno MAD Equation Constraints:  
+    #   (-diag - [Returns-mu]) %*% (es,W) <= 0
+    Akonno = cbind( -diag(nScenarios), -as.matrix(Series) )
+    akonno = rep(0, nrow(Apos))
+    dkonno = rep("<=", nrow(Apos))
      
     # The e_s > = 0 Equation Constraints:
     Aes = cbind(diag(nScenarios), matrix(0, nrow = nScenarios, ncol = nAssets))
@@ -315,10 +321,17 @@ solveRglpk <-
     }
        
     # Putting all together:
-    mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
-    rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
-    dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
-    
+    what = "scherer"
+    if (what == "konno") {
+        mat = rbind(Aeq, Akonno, Aes, Aminsum, Amaxsum)
+        rhs =     c(aeq, akonno, aes, aminsum, amaxsum)
+        dir =     c(deq, dkonno, des, dminsum, dmaxsum)
+    } else if (what == "scherer") {
+        mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
+        rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
+        dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
+    }
+        
     # Box Constraints: Upper and Lower Bounds as listn required ...
     minW = minWConstraints(data, spec, constraints)
     maxW = maxWConstraints(data, spec, constraints)

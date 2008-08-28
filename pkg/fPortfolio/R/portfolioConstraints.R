@@ -267,32 +267,50 @@ eqsumWConstraints <-
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = PportfolioSpec()
+    #   spec = portfolioSpec()
     #   constraints = "eqsumW[1:6]=1"
     #   eqsumWConstraints(data, spec, constraints)
+    #   eqsumWConstraints(data, spec, constraints = "LongOnly")
+    #   eqsumWConstraints(data, spec, constraints = c("LongOnly","Partial"))
 
     # FUNCTION:
 
     # Get Statistics:
     data = portfolioData(data, spec)
     targetReturn = getTargetReturn(spec)[1]
-    if (is.null(targetReturn)) targetReturn = NA
+    if (is.null(targetReturn)) {
+        targetReturn = NA
+        warning("Target Return is Missing")
+    }
        
     # Get Specifications:
     mu <- getMu(data)
     nAssets <- getNAssets(data)
-    Assets <- getNames(data)  
+    assetsNames <- getNames(data)  
     
     # Target Return: 
     Aeq <- matrix(mu, byrow = TRUE, ncol = nAssets)
     
+    # Full or partial Investment?
+    if ("partial" %in% tolower(constraints)) 
+        fullInvest = FALSE else fullInvest = TRUE
+    
     # Full Investment:
-    Aeq <- rbind(Aeq, rep(1, nAssets))
+    #   - negative to handle better partial Investment in Rquadprog:
+    if (fullInvest) Aeq <- rbind(Aeq, -rep(1, nAssets))
     
     # Dimension Names:
-    colnames(Aeq) <- Assets
-    rownames(Aeq) <- c("Return", "Budget")
-    ceq <- c(Return = targetReturn, Budget = 1)
+    colnames(Aeq) <- assetsNames
+    if (fullInvest) 
+        rownames(Aeq) <- c("Return", "Budget") 
+    else 
+        rownames(Aeq) <- "Return"
+        
+    # RHS Vector:
+    if (fullInvest) 
+        ceq <- c(Return = targetReturn, Budget = -1) 
+    else 
+        ceq <- c(Return = targetReturn)
     
     # Extract and Compose Matrix and Vector:
     what6 = substr(constraints, 1, 6)
@@ -301,7 +319,7 @@ eqsumWConstraints <-
         for (i in 1:nC) {
             if (what6[i] == "eqsumW")  {
                 eqsumW = rep(0, times = nAssets)
-                names(eqsumW) <- Assets
+                names(eqsumW) <- assetsNames
                 eval(parse(text = constraints[i]))
                 Aeq = rbind(Aeq, eqsumW = sign(eqsumW))
                 a = strsplit(constraints[i], "=")[[1]][2]
@@ -346,6 +364,7 @@ minsumWConstraints <-
     data = portfolioData(data, spec)     
     
     # Get Specifications:
+    mu = getMu(data)
     nAssets = getNAssets(data)
     assetNames <- getNames(data)          
 
@@ -358,6 +377,13 @@ minsumWConstraints <-
         count = 0
         Amat = NULL
         avec = NULL
+        
+        # Partial Investment:
+        if ("partial" %in% tolower(constraints)) {
+            Amat <- rbind(Amat, rep(1, times = nAssets))
+            avec <- c(avec, 0)
+        }
+ 
         for (i in 1:nC) {
             if (what7[i] == "minsumW")  {
                 count = count + 1
@@ -412,10 +438,11 @@ maxsumWConstraints <-
     data = portfolioData(data, spec)     
     
     # Get Specifications:
+    mu = getMu(data)
     nAssets = getNAssets(data)
     assetNames <- getNames(data)          
 
-    # Extrac and Compose Matrix and Vectors:
+    # Extract and Compose Matrix and Vectors:
     what7 = substr(constraints, 1, 7)
     
     if (!is.null(constraints)) {
@@ -424,6 +451,13 @@ maxsumWConstraints <-
         count = 0
         Amat = NULL
         avec = NULL
+        
+        # Partial Investment:
+        if ("partial" %in% tolower(constraints)) {
+            Amat <- rbind(Amat, rep(1, times = nAssets))
+            avec <- c(avec, 1)
+        }
+        
         for (i in 1:nC) {
             if (what7[i] == "maxsumW")  {
                 count = count + 1

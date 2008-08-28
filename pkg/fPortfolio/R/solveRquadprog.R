@@ -33,6 +33,8 @@ solveRquadprog <-
     # Example:
     #   solveRquadprog(data, spec, constraints)[-3]
     #   solveRquadprog(.lppData, .mvSpec, "LongOnly")[-3]
+    #   solveRquadprog(.lppData, .mvSpec, "LongOnly")$optim$args
+    #   solveRquadprog(.lppData, .mvSpec, c("LongOnly", "partial"))$optim$args
     #   solveRquadprog(.lppData, .mvSpec, .BoxGroups)[-3]
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "LongOnly")
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "BoxGroup")
@@ -63,6 +65,9 @@ solveRquadprog <-
             Amat = args$Amat, 
             bvec = args$bvec, 
             meq = args$meq)
+         
+        # Save Arguments:
+        ans$optim$args = args
             
     }
 
@@ -109,10 +114,15 @@ solveRquadprog <-
     # Part (meq=1) or Full (meq=2) Investment, the Default ?
     meq = nrow(eqsumW)
     
+    # Directions:
+    dir = c(
+        rep("==", times = meq),
+        rep(">=", times = length(bvec) - meq))
+    
     # Return Value:
     list(
         Dmat = Sigma, dvec = rep(0, nAssets), 
-        Amat = t(Amat), bvec = bvec, meq = meq)
+        Amat = t(Amat), bvec = bvec, meq = meq, dir = dir)
 }
 
 
