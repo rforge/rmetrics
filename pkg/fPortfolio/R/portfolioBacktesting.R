@@ -116,9 +116,11 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     }
 
     # Create Rolling Windows:
-    rW = rollingWindows(data, ans$horizon, "1m")
+    rW = rollingWindows(x = data, period = ans$horizon, by = "1m")
     from = rW$from
     to = rW$to
+    
+    # Optional Warmup:
     if (warmup) {
         rV = rollingWindows(data, "1m", "1m")
         rV$from = rep(rV$from[1], (horizonLength-1))
@@ -129,24 +131,24 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
 
     # Roll the Portfolio:
     portfolioFun = match.fun(portfolio)
-    tg = list()
+    strategyPortfolio = list()
     for (i in 1:length(from)) {
 
         # Optimize the Portfolio:
-        pfSeries = window(data[, ans$assets], from = from[i], to = to[i])
-        bmSeries = window(data[, ans$benchmark], from = from[i], to = to[i])
+        pfSeries = window(data[, ans$assets], start = from[i], end = to[i])
+        bmSeries = window(data[, ans$benchmark], start = from[i], end = to[i])
         attr(spec, "bmReturn") <- mean(series(bmSeries))
         attr(spec, "bmRisk") <- sd(series(bmSeries))
         portfolio = portfolioFun(data = pfSeries, spec, constraints)
-        tg[i] = portfolio
+        strategyPortfolio[i] = portfolio
 
         # Trace Optionally the Results:
         if (trace) {
 
             cat(as.character(from[i]), as.character(to[i]))
 
-            tgReturn = as.vector(getTargetReturn(portfolio))
-            cat("\t", round(tgReturn[1], digits = 3))
+            spReturn = as.vector(getTargetReturn(portfolio))
+            cat("\t", round(spReturn[1], digits = 3))
 
             bmReturn = mean(series(bmSeries))
             cat("\t", round(bmReturn, digits = 3))
@@ -161,12 +163,14 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
             cat("\n")
         }
     }
-    ans$tg = tg
+    
+    # Add Portfolio to final result:
+    ans$tg = strategyPortfolio
 
     # Extract Portfolio Investment Weights for the current period:
     weights = NULL
-    for (i in 1:length(tg)) {
-        weights = rbind(weights, getWeights(tg[[i]]))
+    for (i in 1:length(strategyPortfolio)) {
+        weights = rbind(weights, getWeights(strategyPortfolio[[i]]))
     }
     rownames(weights) = as.character(to)
     colnames(weights) = ans$assets
@@ -195,9 +199,9 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     # Compute Offset Return of Rolling Portfolio compared to Benchmark:
     cumX = colCumsums(ans$data[, ans$benchmark])
     # lastX = as.vector(
-    #     window(cumX, from = start(cumX), to = rownames(ans$weights)[1] ) )
+    #     window(cumX, start = start(cumX), end = rownames(ans$weights)[1] ) )
     #ans$offsetReturn = rev(lastX)[1]
-    lastX <- window(cumX, from = start(cumX), to = rownames(ans$weights)[1] )
+    lastX <- window(cumX, start = start(cumX), end = rownames(ans$weights)[1] )
     ans$offsetReturn = as.vector(lastX[end(lastX),])
     names(ans$offsetReturn) <- as.character(end(lastX))
 
@@ -220,13 +224,13 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     # Backtest Statistics:
     P = as.vector(P)
     B = as.vector(B)
-    Stats = c(sum(P), sum(B))
-    Stats = rbind(Stats, c(mean(P), mean(B)))
-    Stats = rbind(Stats, c(sd(P), sd(B)))
-    Stats = rbind(Stats, c(min(P), min(B)))
+    Stats = c(sum(P, na.rm = TRUE), sum(B))
+    Stats = rbind(Stats, c(mean(P, na.rm = TRUE), mean(B)))
+    Stats = rbind(Stats, c(sd(P, na.rm = TRUE), sd(B)))
+    Stats = rbind(Stats, c(min(P, na.rm = TRUE), min(B)))
     colnames(Stats) = c("Portfolio", "Benchmark")
     rownames(Stats) = c("Total Return", "Mean Return",
-        "StandardDev Return", "Minimum Monthly Return")
+        "StandardDev Return", "Maximum Loss")
     ans$stats = Stats
 
     # Return Value:
@@ -602,5 +606,57 @@ summary.portfolioBacktest <-
 }
 
 
+################################################################################
+
+
+.backtest2Plot <- 
+    function(x) {
+        par(mfrow = c(3, 2), mar = c(2, 5, 5, 3))
+        
+        plot(x)
+        
+        plot(rnorm(1), type = "n", 
+            xaxt = "n", yaxt = "n", 
+            xlab = "", ylab = "", 
+            frame = FALSE)
+        
+        TEXT = paste("Strategy:", x$portfolio)
+        mtext(TEXT, side = 3, line =  3, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+            
+        TEXT =  capture.output(round(x$stats, 2))
+        mtext(TEXT[1], side = 3, line =  2, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[2], side = 3, line =  1, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[3], side = 3, line =  0, adj = 0, cex = 0.65, 
+            font = 3, family = "mono") 
+        mtext(TEXT[4], side = 3, line = -1, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[5], side = 3, line = -2, adj = 0, cex = 0.65, 
+            font = 3, family = "mono") 
+            
+        TEXT = capture.output(x$spec)[c(2,3,4,5,8)]
+        mtext(TEXT[1], side = 3, line = -4, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[2], side = 3, line = -5, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[3], side = 3, line = -6, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[4], side = 3, line = -7, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(TEXT[5], side = 3, line = -8, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+      
+        TEXT = capture.output(x$constraints)[1]      
+        mtext("Constraints:", side = 3, line = -10, adj = 0, cex = 0.65, 
+            font = 3, family = "mono")
+        mtext(substr(TEXT[1], 4, 99), side = 3, line = -11, adj = 0, 
+            cex = 0.65, font = 3, family = "mono")
+
+        invisible()
+    }
+    
+    
 ################################################################################
 

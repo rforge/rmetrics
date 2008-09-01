@@ -53,6 +53,8 @@ efficientPortfolio <-
     Solver = match.fun(getSolver(spec))
     portfolio = Solver(data, spec, constraints)
     setWeights(spec) = portfolio$weights
+    setTargetReturn(spec) = portfolio$targetReturn
+    setTargetRisk(spec) = portfolio$targetRisk
     setStatus(spec) = portfolio$status
     Title = "Risk Minimized Efficient Portfolio"
 

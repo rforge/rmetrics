@@ -62,6 +62,8 @@
 ################################################################################
 
 
+# Extract from an object of class fPORTFOLIO
+
         
 getData.fPORTFOLIO = function(object) object@data$data
  getSeries.fPORTFOLIO = function(object) getSeries(getData(object))

@@ -151,8 +151,8 @@
     
     # Weights ?
     spec@portfolio$weights = value
-    spec@portfolio$targetReturn = NULL
-    spec@portfolio$targetRisk = NULL
+    # spec@portfolio$targetReturn = NULL
+    # spec@portfolio$targetRisk = NULL
     
     # Return Value:
     spec
@@ -176,8 +176,8 @@
 
     # Target Return ?
     spec@portfolio$targetReturn = value
-    spec@portfolio$weights = NULL
-    spec@portfolio$targetRisk = NULL
+    # spec@portfolio$weights = NULL
+    # spec@portfolio$targetRisk = NULL
     
     # DW:
     # spec@model$optimize = "minRisk"
@@ -204,9 +204,9 @@
  
     # Target Return ?
     spec@portfolio$targetRisk = value
-    spec@portfolio$weights = NULL
-    spec@portfolio$targetReturn = NULL
-    spec@model$optimize = "maxReturn"
+    # spec@portfolio$weights = NULL
+    # spec@portfolio$targetReturn = NULL
+    # spec@model$optimize = "maxReturn"
     
     # Return Value:
     spec

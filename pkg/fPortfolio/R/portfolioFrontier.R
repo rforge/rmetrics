@@ -23,7 +23,7 @@
 
 portfolioFrontier <- 
     function(data, spec = portfolioSpec(), constraints = "LongOnly", 
-    title = NULL, description = NULL)
+    include.mvl = TRUE, title = NULL, description = NULL)
 {   
     # A function implemented by Rmetrics
 
@@ -76,7 +76,7 @@ portfolioFrontier <-
     # Upper Frontier Part:
     Status = 0
     IDX = minIndex
-    weights = targetReturn = targetRisk = covRiskBudgets = NULL
+    weights = targetReturn = targetRisk = covRiskBudgets = maxDD = NULL
     while (Status == 0 & IDX <= nFrontierPoints) {
         # Add Target Return to Specification:
         setTargetReturn(spec) = targetReturns[IDX]
@@ -89,51 +89,58 @@ portfolioFrontier <-
             Status = getStatus(portfolio)
         }
         if (Status == 0) {
-            weights = rbind(weights, getWeights(portfolio))
+            Weights = getWeights(portfolio)
+            weights = rbind(weights, Weights)
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
             targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
+            maxDD = c(maxDD, 
+                min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
         IDX = IDX + 1
     }
     
     # Lower Min Variance Locus:
-    if (minIndex > 1) {
-        weights2 = targetReturn2 = targetRisk2 = covRiskBudgets2 = NULL
-        Status = 0
-        IDX = minIndex - 1
-        while (Status == 0 & IDX > 0) {
-            # Add Target Return to Specification:
-            setTargetReturn(spec) = targetReturns[IDX]
-            # Optimize Efficient Portfolio:
-            ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
-            if (class(ans) == "try-error") {
-                Status = 1
-            } else {
-                portfolio = ans
-                Status = getStatus(portfolio)
+    if (include.mvl) {
+        if (minIndex > 1) {
+            weights2 = targetReturn2 = targetRisk2 = covRiskBudgets2 = maxDD2 = NULL
+            Status = 0
+            IDX = minIndex - 1
+            while (Status == 0 & IDX > 0) {
+                # Add Target Return to Specification:
+                setTargetReturn(spec) = targetReturns[IDX]
+                # Optimize Efficient Portfolio:
+                ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+                if (class(ans) == "try-error") {
+                    Status = 1
+                } else {
+                    portfolio = ans
+                    Status = getStatus(portfolio)
+                }
+                if (Status == 0) {
+                    Weights2 = getWeights(portfolio)
+                    weights2 = rbind(Weights2, weights2)
+                    targetReturn2 = 
+                        rbind(getTargetReturn(portfolio), targetReturn2)
+                    targetRisk2 = 
+                        rbind(getTargetRisk(portfolio), targetRisk2)
+                    covRiskBudgets2 = 
+                        rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
+                    maxDD2 = c(maxDD2, min(drawdowns(
+                        pfolioReturn(data/100, as.vector(Weights2)))) )
+                }
+                IDX = IDX - 1
             }
-            if (Status == 0) {
-                weights2 = 
-                    rbind(getWeights(portfolio), weights2)
-                targetReturn2 = 
-                    rbind(getTargetReturn(portfolio), targetReturn2)
-                targetRisk2 = 
-                    rbind(getTargetRisk(portfolio), targetRisk2)
-                covRiskBudgets2 = 
-                    rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
-            }
-            IDX = IDX - 1
-        }
-        weights = rbind(weights2, weights)
-        targetReturn = rbind(targetReturn2, targetReturn)
-        targetRisk = rbind(targetRisk2, targetRisk)
-        covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
-    }  
+            weights = rbind(weights2, weights)
+            targetReturn = rbind(targetReturn2, targetReturn)
+            targetRisk = rbind(targetRisk2, targetRisk)
+            covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
+            maxDD = c(maxDD2, maxDD)
+        } 
+    } 
     
     # Check: Did we find points on the frontier?
-    if (is.null(weights)) 
-        stop("There exist no points on the efficient frontier")
+    if (is.null(weights)) return(mvPortfolio)
     
     # Reset Target Return:  
     setTargetReturn(spec) <- NULL
@@ -144,6 +151,7 @@ portfolioFrontier <-
     portfolio@portfolio$targetReturn = targetReturn
     portfolio@portfolio$targetRisk = targetRisk
     portfolio@portfolio$covRiskBudgets = covRiskBudgets
+    portfolio@portfolio$maxDD = maxDD
     portfolio@portfolio$status = 0
     portfolio@portfolio$minriskPortfolio = mvPortfolio
     portfolio@title = "Portfolio Frontier"    

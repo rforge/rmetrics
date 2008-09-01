@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                     SINGLE PORTFOLIOS:
@@ -44,43 +36,49 @@ feasiblePortfolio <-
 
     # FUNCTION:
 
-    # Transform Data and Constraints:
-    data = portfolioData(data, spec)
-    constraints = portfolioConstraints(data, spec, constraints)
+    # Transform Data:
+    Data = portfolioData(data, spec)
     
-    # Check Solver:
-    if (any(constraints@stringConstraints == "Short"))
-        setSolver(spec) = "solveRshortExact"
-
     # Get Weights:
     if(is.null(getWeights(spec))) {
-        nAssets = getNAssets(data)
+        nAssets = getNAssets(Data)
         setWeights(spec) = rep(1/nAssets, times = nAssets)
+        warning("Missing weights: Portfolio forced to equal weights portfolio")
     }
     weights = as.vector(getWeights(spec))
-    names(weights) = colnames(data@data$series)
+    names(weights) = colnames(getSeries(Data))
 
     # Compute Return:
     targetReturn = c(
-        mean = (data@statistics$mean %*% weights)[[1]],
-        mu = (data@statistics$mu %*% weights)[[1]])
-
+        mean = (Data@statistics$mean %*% weights)[[1]],
+        mu = (Data@statistics$mu %*% weights)[[1]])
+    setTargetReturn(spec) = targetReturn
+    
     # Compute Covariance Risk:
-    Cov = data@statistics$Cov
+    Cov = Data@statistics$Cov
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
 
+    # Transfor Constraints:
+    constraints = portfolioConstraints(data, spec, constraints)
+    
+    # Check Solver:
+    if (any(constraints@stringConstraints == "Short")) {
+        setSolver(spec) = "solveRshortExact"
+        warning("Short Constraints Specified: Solver forced to solveRshortExact")
+    }
+    
     # Compute Alternative/Robust Covariance Risk:
     if (getType(spec) == "SPS") {
         funSigma = match.fun(getObjective(spec))
         rcov = funSigma(as.vector(weights))
     } else {
-        Sigma = data@statistics$Sigma
+        Sigma = Data@statistics$Sigma
         rcov = sqrt((weights %*% Sigma %*% weights)[[1]])
     }
 
     # Compute VaR:
     alpha = getAlpha(spec)
-    returns = as.matrix(data@data$series) %*% weights
+    returns = as.matrix(getSeries(Data)) %*% weights
     VaR = quantile(returns, alpha, type = 1)
 
     # Compute CVaR:
@@ -106,7 +104,7 @@ feasiblePortfolio <-
     # Return Value:
     new("fPORTFOLIO",
         call = match.call(),
-        data = list(data = data),
+        data = list(data = Data),
         spec = list(spec = spec),
         constraints = constraints@stringConstraints,
         portfolio = portfolio,
