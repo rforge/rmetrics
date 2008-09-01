@@ -27,7 +27,7 @@
 portfolioBacktesting <- 
 function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
-    warmup = FALSE, trace = TRUE, title = "Backtesting")
+    startup = "6m", warmup = FALSE, trace = TRUE, title = "Backtesting")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -88,6 +88,13 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     smoothingUnit = substr(smoothing, nchar(smoothing), nchar(smoothing))
     stopifnot(smoothingUnit == "m")
     smoothing = smoothingLength
+    
+    # Get Smoothing Window Parameter:
+    ans$startup = startup
+    startupLength = as.numeric(substr(startup, 1, nchar(startup)-1))
+    startupUnit = substr(startup, nchar(startup), nchar(startup))
+    stopifnot(startupUnit == "m")
+    startup = startupLength
 
     # Formula, Benchmark and Asset Labels:
     ans$benchmark = as.character(formula)[2]
@@ -179,11 +186,15 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     # Compute Exponentially Smoothed Weights, be sure to be fully invested:
     emaWeights1 = NULL
     for (i in 1:nAssets) {
-        emaWeights1 = cbind(emaWeights1, emaTA(weights[, i], lambda = smoothing))
+        emaWeights1 = cbind(emaWeights1, .emaBacktesting(
+            weights[, i], lambda = smoothing, startup = startup))
     }
+    
+    # Double Smoothing:
     emaWeights = NULL
     for (i in 1:nAssets) {
-        emaWeights = cbind(emaWeights, emaTA(emaWeights1[, i], lambda = smoothing))
+        emaWeights = cbind(emaWeights, .emaBacktesting(
+            emaWeights1[, i], lambda = smoothing, startup = startup))
     }
     emaWeights = emaWeights / apply(emaWeights, 1, sum)
     rownames(emaWeights) = as.character(to)
@@ -508,6 +519,7 @@ plot.portfolioBacktest <-
     benchmark = object$benchmark
     horizon = object$horizon
     smoothing = object$smoothing
+    startup = object$startup
     offsetReturn = object$offsetReturn
 
     # Labels ?
@@ -526,15 +538,15 @@ plot.portfolioBacktest <-
     cumB = benchmarkReturns + offsetReturn
     # we want to start from the benchmark offsetReturn
     offsetTS <- timeSeries(offsetReturn, charvec = names(offsetReturn),
-                           units = "offsetReturn")
+        units = "offsetReturn")
     cumP <- rbind(offsetTS, cumP)
     cumB <- rbind(offsetTS, cumB)
 
     # Plot:
     MAX = max(as.vector(series(cumP)), as.vector(series(cumB)), 
-            as.vector(series(cumX)))
+        as.vector(series(cumX)))
     MIN = min(as.vector(series(cumP)), as.vector(series(cumB)), 
-            as.vector(series(cumX)))
+        as.vector(series(cumX)))
     plot(cumX, type = "l", col = "black", ylim = c(MIN, MAX), ann = FALSE, ...)
     lines(cumP-cumB, type = "h", col = "grey")
     lines(cumP, col = "red", lwd = 2)
@@ -544,7 +556,10 @@ plot.portfolioBacktest <-
     if(labels) {
         title(main = main, ylab = ylab)
         text = paste(
-            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
+            "Horizon = ", horizon, 
+            "| Smoothing:", smoothing,
+            "| Startup:", startup, 
+            "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
     }
@@ -660,3 +675,17 @@ summary.portfolioBacktest <-
     
 ################################################################################
 
+
+.emaBacktesting <- function (x, lambda, startup) {
+        x = as.vector(x)
+        lambda = 2/(lambda + 1)
+        # startup = floor(2/lambda)
+        xlam = x * lambda
+        xlam[1] = mean(x[1:startup])
+        ema = filter(xlam, filter = (1 - lambda), method = "rec")
+        ema[is.na(ema)] <- 0
+        as.numeric(ema)
+    }
+    
+    
+################################################################################
