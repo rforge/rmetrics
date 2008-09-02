@@ -111,6 +111,7 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
         cat("\nBenchmark:          ", ans$benchmark)
         cat("\nInvestment Horizon: ", ans$horizon)
         cat("\nSmoothing Horizon:  ", ans$smoothing)
+        cat("\nStartup Period:     ", ans$startup)
         cat("\nUpdate Period:      ", "1m")
         cat("\nStart Series:       ", as.character(start(data)))
         cat("\nEnd Series:         ", as.character(end(data)))
@@ -377,6 +378,7 @@ plot.portfolioBacktest <-
     assets = object$assets
     horizon = object$horizon
     smoothing = object$smoothing
+    startup = object$startup
 
     # Horizon:
     horizonLength = as.numeric(substr(horizon, 1, nchar(horizon)-1))
@@ -411,10 +413,17 @@ plot.portfolioBacktest <-
     if (labels) {
         title(main = main, xlab = xlab, ylab = ylab)
         text = paste(
-            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
+            "Horizon = ", horizon, 
+            "| Smoothing:", smoothing, 
+            "| Startup:", startup, 
+            "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
     }
+    
+    # mText:
+    mText = paste("maxdd", object$spec@model$params$maxdd)
+    mtext(mText, side = 4, line = 0, adj = 0, col = "darkgrey", cex = 0.7)
 
     # Return Value:
     invisible()
@@ -441,6 +450,7 @@ plot.portfolioBacktest <-
     assets = object$assets
     horizon = object$horizon
     smoothing = object$smoothing
+    startup = object$startup
 
     # Horizon:
     horizonLength = as.numeric(substr(horizon, 1, nchar(horizon)-1))
@@ -479,13 +489,16 @@ plot.portfolioBacktest <-
         ylim = range(as.matrix(tS)), xlab = "", ylab = "")
     for (i in 2:NCOL(tS)) lines(tS[, i], col = i)
     
-    #lines(tS, col = 1:(nAssets+1), ann = FALSE, plot.type = "single", ...)
+    # lines(tS, col = 1:(nAssets+1), ann = FALSE, plot.type = "single", ...)
     
     # Add Labels"
     if(labels) {
         title(main = main, xlab = xlab, ylab = ylab)
         text = paste(
-            "Horizon = ", horizon, "| Smoothing:", smoothing, "| Shift 1m")
+            "Horizon = ", horizon, 
+            "| Smoothing:", smoothing, 
+            "| Startup:", startup, 
+            "| Shift 1m")
         mtext(text, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
     }

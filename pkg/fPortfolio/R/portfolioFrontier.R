@@ -94,7 +94,7 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
             targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
-            maxDD = c(maxDD, 
+            maxDD = rbind(maxDD, 
                 min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
         IDX = IDX + 1
@@ -126,7 +126,7 @@ portfolioFrontier <-
                         rbind(getTargetRisk(portfolio), targetRisk2)
                     covRiskBudgets2 = 
                         rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
-                    maxDD2 = c(maxDD2, min(drawdowns(
+                    maxDD2 = rbind(maxDD2, min(drawdowns(
                         pfolioReturn(data/100, as.vector(Weights2)))) )
                 }
                 IDX = IDX - 1
@@ -135,12 +135,17 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn2, targetReturn)
             targetRisk = rbind(targetRisk2, targetRisk)
             covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
-            maxDD = c(maxDD2, maxDD)
+            maxDD = rbind(maxDD2, maxDD)
         } 
     } 
     
     # Check: Did we find points on the frontier?
-    if (is.null(weights)) return(mvPortfolio)
+    if (is.null(weights)) {
+        portfolio = mvPortfolio
+        portfolio@portfolio$maxDD = min(drawdowns(
+            pfolioReturn(data/100, as.vector(getWeights(mvPortfolio)))))
+        return(portfolio)
+    }
     
     # Reset Target Return:  
     setTargetReturn(spec) <- NULL
