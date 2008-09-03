@@ -94,8 +94,8 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
             targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
-            maxDD = rbind(maxDD, 
-                min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
+            ### maxDD = rbind(maxDD, 
+            ###    min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
         IDX = IDX + 1
     }
@@ -126,8 +126,8 @@ portfolioFrontier <-
                         rbind(getTargetRisk(portfolio), targetRisk2)
                     covRiskBudgets2 = 
                         rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
-                    maxDD2 = rbind(maxDD2, min(drawdowns(
-                        pfolioReturn(data/100, as.vector(Weights2)))) )
+                    ### maxDD2 = rbind(maxDD2, min(drawdowns(
+                    ###    pfolioReturn(data/100, as.vector(Weights2)))) )
                 }
                 IDX = IDX - 1
             }
@@ -135,15 +135,15 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn2, targetReturn)
             targetRisk = rbind(targetRisk2, targetRisk)
             covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
-            maxDD = rbind(maxDD2, maxDD)
+            ### maxDD = rbind(maxDD2, maxDD)
         } 
     } 
     
     # Check: Did we find points on the frontier?
     if (is.null(weights)) {
         portfolio = mvPortfolio
-        portfolio@portfolio$maxDD = min(drawdowns(
-            pfolioReturn(data/100, as.vector(getWeights(mvPortfolio)))))
+        ### portfolio@portfolio$maxDD = min(drawdowns(
+        ###    pfolioReturn(data/100, as.vector(getWeights(mvPortfolio)))))
         return(portfolio)
     }
     
@@ -156,7 +156,7 @@ portfolioFrontier <-
     portfolio@portfolio$targetReturn = targetReturn
     portfolio@portfolio$targetRisk = targetRisk
     portfolio@portfolio$covRiskBudgets = covRiskBudgets
-    portfolio@portfolio$maxDD = maxDD
+    ### portfolio@portfolio$maxDD = maxDD
     portfolio@portfolio$status = 0
     portfolio@portfolio$minriskPortfolio = mvPortfolio
     portfolio@title = "Portfolio Frontier"    
