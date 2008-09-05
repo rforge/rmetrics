@@ -130,7 +130,7 @@ function(formula, data, spec = portfolioSpec(), constraints = "LongOnly",
     
     # Optional Warmup:
     if (warmup) {
-        rV = rollingWindows(data, "1m", "1m")
+        rV = rollingWindows(x = data, period = "1m", by = "1m")
         rV$from = rep(rV$from[1], (horizonLength-1))
         rV$to = rV$to[1:(horizonLength-1)]
         from = c(rV$from, from)
