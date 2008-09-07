@@ -638,67 +638,70 @@ summary.portfolioBacktest <-
 
 
 .backtest2Plot <- 
-    function(x) {
-        par(mfrow = c(3, 2), mar = c(2, 5, 5, 3))
+    function(x) 
+{
+    par(mfrow = c(3, 2), mar = c(2, 5, 5, 3))
+    
+    plot(x)
+    
+    plot(rnorm(1), type = "n", 
+        xaxt = "n", yaxt = "n", 
+        xlab = "", ylab = "", 
+        frame = FALSE)
+    
+    TEXT = paste("Strategy:", x$portfolio)
+    mtext(TEXT, side = 3, line =  3, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
         
-        plot(x)
+    TEXT =  capture.output(round(x$stats, 2))
+    mtext(TEXT[1], side = 3, line =  2, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[2], side = 3, line =  1, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[3], side = 3, line =  0, adj = 0, cex = 0.65, 
+        font = 3, family = "mono") 
+    mtext(TEXT[4], side = 3, line = -1, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[5], side = 3, line = -2, adj = 0, cex = 0.65, 
+        font = 3, family = "mono") 
         
-        plot(rnorm(1), type = "n", 
-            xaxt = "n", yaxt = "n", 
-            xlab = "", ylab = "", 
-            frame = FALSE)
-        
-        TEXT = paste("Strategy:", x$portfolio)
-        mtext(TEXT, side = 3, line =  3, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-            
-        TEXT =  capture.output(round(x$stats, 2))
-        mtext(TEXT[1], side = 3, line =  2, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[2], side = 3, line =  1, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[3], side = 3, line =  0, adj = 0, cex = 0.65, 
-            font = 3, family = "mono") 
-        mtext(TEXT[4], side = 3, line = -1, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[5], side = 3, line = -2, adj = 0, cex = 0.65, 
-            font = 3, family = "mono") 
-            
-        TEXT = capture.output(x$spec)[c(2,3,4,5,8)]
-        mtext(TEXT[1], side = 3, line = -4, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[2], side = 3, line = -5, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[3], side = 3, line = -6, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[4], side = 3, line = -7, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(TEXT[5], side = 3, line = -8, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-      
-        TEXT = capture.output(x$constraints)[1]      
-        mtext("Constraints:", side = 3, line = -10, adj = 0, cex = 0.65, 
-            font = 3, family = "mono")
-        mtext(substr(TEXT[1], 4, 99), side = 3, line = -11, adj = 0, 
-            cex = 0.65, font = 3, family = "mono")
+    TEXT = capture.output(x$spec)[c(2,3,4,5,8)]
+    mtext(TEXT[1], side = 3, line = -4, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[2], side = 3, line = -5, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[3], side = 3, line = -6, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[4], side = 3, line = -7, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(TEXT[5], side = 3, line = -8, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+  
+    TEXT = capture.output(x$constraints)[1]      
+    mtext("Constraints:", side = 3, line = -10, adj = 0, cex = 0.65, 
+        font = 3, family = "mono")
+    mtext(substr(TEXT[1], 4, 99), side = 3, line = -11, adj = 0, 
+        cex = 0.65, font = 3, family = "mono")
 
-        invisible()
-    }
+    invisible()
+}
     
     
 ################################################################################
 
 
-.emaBacktesting <- function (x, lambda, startup) {
-        x = as.vector(x)
-        lambda = 2/(lambda + 1)
-        # startup = floor(2/lambda)
-        xlam = x * lambda
-        xlam[1] = mean(x[1:startup])
-        ema = filter(xlam, filter = (1 - lambda), method = "rec")
-        ema[is.na(ema)] <- 0
-        as.numeric(ema)
-    }
+.emaBacktesting <- 
+    function (x, lambda, startup) 
+{
+    x = as.vector(x)
+    lambda = 2/(lambda + 1)
+    # startup = floor(2/lambda)
+    xlam = x * lambda
+    xlam[1] = mean(x[1:startup])
+    ema = filter(xlam, filter = (1 - lambda), method = "rec")
+    ema[is.na(ema)] <- 0
+    as.numeric(ema)
+}
     
     
 ################################################################################
