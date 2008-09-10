@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
@@ -76,18 +68,25 @@ rollingWindows <-
     # for non monthly data
     # series(endPositions)[length(endPositions)] <- as.vector(end(x))
     numberOfPositions = length(startPositions)
-    startSeq <- seq(from = 1,
-                    to = (numberOfPositions-periodLength + 1),
-                    by = byLength)
+    startSeq <- seq(
+        from = 1,
+        to = (numberOfPositions-periodLength + 1),
+        by = byLength)
     startDates = startPositions[startSeq]
     endSeq <- seq(from = periodLength,
-                  to = numberOfPositions,
-                  by = byLength)
+        to = numberOfPositions,
+        by = byLength)
     endDates = endPositions[endSeq]
 
     # Windows:
-    windows = list(from = startDates, to = endDates)
-    attr(windows, "control") = c(start = start(positions), end = end(positions))
+    windows = list(
+        from = startDates, 
+        to = endDates)
+    attr(windows, "control") = c(
+        start = start(positions), 
+        end = end(positions),
+        period = period,
+        by = by)
 
     # Return Value:
     windows
