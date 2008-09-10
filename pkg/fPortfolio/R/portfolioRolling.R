@@ -82,7 +82,7 @@ rollingWindows <-
     windows = list(
         from = startDates, 
         to = endDates)
-    attr(windows, "control") = c(
+    attr(windows, "control") = list(
         start = start(positions), 
         end = end(positions),
         period = period,
