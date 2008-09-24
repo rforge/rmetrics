@@ -147,6 +147,8 @@ function()
     abline (h = 1, col = "orange", lwd = 2)
 
     # Scatterplot Uniform:
+    r = runif.sobol(n = 1000, dimension = 2)
+    plot(r, cex = 0.5, main = "Scatterplot Uniform Sobol")
 
     # Histogram Normal:
     rnorm.sobol(n = 10, dimension = 5)
@@ -157,7 +159,9 @@ function()
     lines(x, dnorm(x), col = "orange", lwd = 2)
 
     # Scatterplot Normal:
-
+    r = rnorm.sobol(n = 1000, dimension = 2)
+    plot(r, cex = 0.5, main = "Scatterplot Normal Sobol")
+    
     # Return Value:
     return()
 }
@@ -211,7 +215,7 @@ function()
     runif.sobol(10, 5, init = FALSE)
 
     # Seed:
-    print(getfOptionsEnv(".runif.sobol.seed"))
+    print(.getfOptionsEnv(".runif.sobol.seed"))
 
     # Return Value:
     return()
