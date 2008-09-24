@@ -75,7 +75,7 @@ test.garchFit.sqp <-
 
     # sqp:
     fit = garchFit( ~ garch(1,1), data = x,
-        algorithm = "lbfgsb", trace = FALSE)
+        algorithm = "sqp", trace = FALSE)
     print(coef(fit))
 
 
@@ -169,7 +169,6 @@ test.garchFit.lbfgsb.nm <-
     # Return Value:
     return()
 }
-
 
 ################################################################################
 

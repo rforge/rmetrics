@@ -19,13 +19,14 @@
 .First.lib =
 function(lib, pkg)
 {
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
+
+###     # Startup Mesage and Desription:
+###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+###     dsc <- packageDescription(pkg)
+###     if(interactive() || getOption("verbose")) {
+###         # not in test scripts
+###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+###     }
 
     # see ?cbind2
     # Currently, a call 'methods:::bind_activation(TRUE)'

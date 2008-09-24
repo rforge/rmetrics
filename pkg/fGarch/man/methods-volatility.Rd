@@ -4,10 +4,11 @@
 \docType{methods}
 
 
-\alias{volatility-methods}
-\alias{volatility,ANY-method}
-\alias{volatility,fGARCH-method}
+% \alias{volatility-methods}
+% \alias{volatility,ANY-method}
+% \alias{volatility,fGARCH-method}
 
+\alias{volatility.fGARCH}
 
 \title{Extract GARCH Model Volatility}
 
@@ -20,7 +21,8 @@
 
 
 \usage{
-\S4method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
+% \S4method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
+\method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
 }
 
 

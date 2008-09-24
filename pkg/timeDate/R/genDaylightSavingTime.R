@@ -34,7 +34,7 @@
 #  .genDaylightSavingTime   Create file with Daylight Saving Time Rules for all
 #                           centers in listFinCenter()
 ################################################################################
-# The following DST Rules were extracted from tzdata (version tzdata2007h)
+# The following DST Rules were extracted from tzdata (version tzdata2008e)
 # and integrated into R functions.
 
 

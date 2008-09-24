@@ -6,7 +6,7 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Library General Public License for more details.
 #
 # You should have received a copy of the GNU Library General
@@ -16,8 +16,9 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -27,19 +28,54 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  listIndex                 Extracts R package index
+# FUNCTION:                   SIMILARITY PLOTS:
+#  assetsTreePlot              Displays a minimum spanning tree of assets
 ################################################################################
 
 
-test.listIndex <-
-    function()
+.assetsTreePlot <-
+    function(x, labels = TRUE, title = TRUE, box = TRUE,
+    method = "euclidian", seed = NULL, ...)
 {
-    # List Functions:
-    print(listIndex(package = "fBasics2"))
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays a minimum spanning tree of assets
+
+    # FUNCTION:
+
+    # Settings:
+    if (title) {
+        Main = substitute(x)
+    } else {
+        Main = ""
+    }
+
+    # Compute Distance Matrix:
+    Order = NULL
+    if (class(x) == "dist") {
+        DIST = x
+    } else {
+        # Rank Seed:
+        x = series(x)
+        if (is.null(seed)) {
+            Order = sample(1:ncol(x))
+            x = x[, Order]
+        }
+        DIST = dist(t(x), method[1])
+    }
+    method = attr(DIST, "method")
+
+    # Compute Minimum Spanning Tree"
+    MST = .mst(DIST)
+
+    # Plot Tree:
+    .mstPlot(MST, ".nsca", main = Main, ...)
+    mtext(paste("Distance Method:", method),
+        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)
 
     # Return Value:
-    return()
+    invisible(list(mst = MST, dist = DIST, order = Order))
 }
 
 

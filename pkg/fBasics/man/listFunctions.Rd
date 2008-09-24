@@ -51,10 +51,10 @@ countFunctions(package, character.only = FALSE)
 
 \examples{
 ## listFunctions -
-   listFunctions("fUtilities")
+   listFunctions("fBasics2")
    
 ## countFunctions -
-   countFunctions("fUtilities")
+   countFunctions("fBasics2")
 }
 
 

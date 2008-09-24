@@ -42,7 +42,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    # library.dynam("fAssets", pkg, lib)
+    library.dynam("fAssets2", pkg, lib)
 }
 
 .onLoad <-

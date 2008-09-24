@@ -15,7 +15,7 @@
 
 
 \usage{
-listIndex(package = "Rmetrics", character.only = FALSE)
+listIndex(package, character.only = FALSE)
 }
 
 
@@ -50,7 +50,7 @@ listIndex(package = "Rmetrics", character.only = FALSE)
 
 \examples{
 ## listIndex -
-   listIndex("fUtilities")
+   listIndex("fBasics2")
 }
 
 

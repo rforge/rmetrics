@@ -46,47 +46,8 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
 
     # FUNCTION:
 
-    # Title:
-    cat("\nTitle:\n ")
-    cat(object@title, "\n")
-
-    # Call:
-    cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
-
-    # Mean Equation:
-    cat("\nMean and Variance Equation:\n ")
-    print(object@formula)
-
-    # Conditional Distribution:
-    cat("\nConditional Distribution:\n ")
-    cat(object@fit$params$cond.dist, "\n")
-
-    # Coefficients:
-    cat("\nCoefficient(s):\n")
-    digits = max(6, getOption("digits") - 4)
-    print.default(format(object@fit$par, digits = digits), print.gap = 2,
-         quote = FALSE)
-
-    # Error Analysis:
-    digits = max(4, getOption("digits") - 5)
-    fit = object@fit
-    # fit$cvar = solve(fit$hessian)
-    # fit$se.coef = sqrt(diag(fit$cvar))
-    # fit$tval = fit$coef/fit$se.coef
-    # fit$matcoef = cbind(fit$coef, fit$se.coef,
-    #     fit$tval, 2*(1-pnorm(abs(fit$tval))))
-    # dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate",
-    #    " Std. Error", " t value", "Pr(>|t|)"))
-    signif.stars = getOption("show.signif.stars")
-    cat("\nError Analysis:\n")
-    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars)
-
-    # Log Likelihood:
-    cat("\nLog Likelihood:\n ")
-    LLH = - object@fit$value
-    N = NROW(object@data)
-    cat(LLH, "   normalized: ", LLH/N, "\n")
+    # same output as show method
+    show(object)
 
     # Lagged Series:
     .tslagGarch = function (x, k = 1) {
@@ -152,10 +113,6 @@ setMethod(f = "summary", signature(object = "fGARCH"), definition =
     # Information Criterion Statistics:
     cat("\nInformation Criterion Statistics:\n")
     print(object@fit$ics)
-
-    # Description:
-    cat("\nDescription:\n ")
-    cat(object@description, "\n")
 
     # Return Value:
     cat("\n")

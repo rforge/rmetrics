@@ -88,12 +88,12 @@ garchFit <-
     function(formula, data,
     init.rec = c("mci", "uev"),
     delta = 2, skew = 1, shape = 4,
-    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"),
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"),
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL,
     trace = TRUE,
-    algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), ## "mnfb", "sqp",
-    hessian = "rcd", ## "fcd", "ffd"
+    algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
+    hessian = c("ropt", "rcd"),
     control = list(),
     title = NULL, description = NULL, ...)
 {
@@ -169,6 +169,8 @@ garchFit <-
         }
     }
 
+    robust.cvar <- (cond.dist == "QMLE")
+
     args = .garchArgsParser(formula = formula, data = data, trace = FALSE)
 
     # Fit:
@@ -181,6 +183,7 @@ garchFit <-
         trace,
         algorithm,
         hessian,
+        robust.cvar,
         control,
         title, description, ...)
     ans@call = CALL
@@ -353,9 +356,9 @@ garchFit <-
 
         # In General:
         fscale = TRUE,
-        xscale = FALSE,
+        xscale = TRUE,
         algorithm = algorithm,
-        llh = c("filter", "internal", "testing")[1],
+        llh = c("internal", "filter", "testing")[1],
 
         # BFGS - NLMINB Algorithm:
         tol1 = 1,
@@ -402,12 +405,13 @@ garchFit <-
     series,
     init.rec = c("mci", "uev"),
     delta = 2, skew = 1, shape = 4,
-    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"),
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"),
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
         include.shape = NULL, leverage = NULL,
     trace = TRUE,
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
     hessian = c("fda", "cda"),
+    robust.cvar,
     control = list(),
     title = NULL, description = NULL, ...)
 {
@@ -462,8 +466,11 @@ garchFit <-
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
+    ### FIX ME YC
+    scale <- if (con$xscale) sd(series) else 1
+    series <- series/scale
     .series <- .garchInitSeries(formula.mean = formula.mean,
-        formula.var = formula.var, series = series, scale = sd(series),
+        formula.var = formula.var, series = series, scale = scale,
         init.rec = init.rec[1], h.start = NULL, llh.start = NULL,
         trace = trace)
     .setfGarchEnv(.series = .series)
@@ -484,8 +491,8 @@ garchFit <-
     # Estimate Model Parameters - Minimize llh, start from big value:
     .setfGarchEnv(.llh = 1.0e99)
     .llh <- .getfGarchEnv(".llh")
-    fit = .garchOptimizeLLH(hessian, trace)
-    fit$llh = .llh
+    fit = .garchOptimizeLLH(hessian, robust.cvar, trace)
+    # fit$llh = .llh # should be done in in .garchOptimizeLLH
 
     # Add to Fit:
     .series <- .getfGarchEnv(".series")
@@ -505,13 +512,18 @@ garchFit <-
     sigma.t = (.series$h)^deltainv
 
     # Standard Errors and t-Values:
-    fit$cvar = - solve(fit$hessian)
+    fit$cvar <-
+        if (robust.cvar)
+            (solve(fit$hessian) %*% (t(fit$gradient) %*% fit$gradient) %*%
+             solve(fit$hessian))
+        else
+            - solve(fit$hessian)
     fit$se.coef = sqrt(diag(fit$cvar))
     fit$tval = fit$coef/fit$se.coef
     fit$matcoef = cbind(fit$coef, fit$se.coef,
-        fit$tval, 2*(1-pnorm(abs(fit$tval))))
+    fit$tval, 2*(1-pnorm(abs(fit$tval))))
     dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate",
-        " Std. Error", " t value", "Pr(>|t|)"))
+            " Std. Error", " t value", "Pr(>|t|)"))
 
     # Add Title and Description:
     if(is.null(title)) title = "GARCH Modelling"
@@ -873,7 +885,7 @@ garchFit <-
     # FUNCTION:
 
     # Normal Distribution:
-    if(cond.dist == "norm") {
+    if(cond.dist == "norm" || cond.dist == "QMLE") {
          .garchDist = function(z, hh, skew, shape) {
             dnorm(x = z/hh, mean = 0, sd = 1) / hh
         }
@@ -927,9 +939,8 @@ garchFit <-
 
 # ------------------------------------------------------------------------------
 
-
 .garchLLH <-
-    function(params, trace = TRUE)
+    function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -956,6 +967,59 @@ garchFit <-
     .params <- .getfGarchEnv(".params")
     .garchDist <- .getfGarchEnv(".garchDist")
     .llh <- .getfGarchEnv(".llh")
+
+    if(.params$control$llh == "internal") {
+
+        INDEX <- .params$index
+        MDIST <- c(norm = 10, QMLE = 10, snorm = 11, std = 20, sstd = 21,
+                   ged = 30, sged = 31)[.params$cond.dist]
+        if(.params$control$fscale) NORM <- length(.series$x) else NORM = 1
+        REC <- 1
+        if(.series$init.rec == "uev") REC <- 2
+        MYPAR <- c(
+            REC   = REC,                                  # How to initialize
+            LEV   = as.integer(.params$leverage),         # Include Leverage 0|1
+            MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1
+            DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1
+            SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1
+            SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1
+            ORDER = .series$order,                        # Order of ARMA-GARCH
+            NORM  = as.integer(NORM))
+
+        # Now Estimate Parameters:
+        MAX <- max(.series$order)
+        NF <- length(INDEX)
+        N <- length(.series$x)
+        DPARM <- c(.params$delta, .params$skew, .params$shape)
+        fit <- .Fortran("garchllh",
+                        N = as.integer(N),
+                        Y = as.double(.series$x),
+                        # Z = as.double(rep(2, times = N)),
+                        # H = as.double(rep(0, times = N)),
+                        Z = as.double(.series$z),
+                        H = as.double(.series$h),
+                        NF = as.integer(NF),
+                        X = as.double(params),
+                        DPARM = as.double(DPARM),
+                        MDIST = as.integer(MDIST),
+                        MYPAR = as.integer(MYPAR),
+                        F = as.double(0),
+                        PACKAGE = "fGarch")
+
+        llh <- fit[[10]]
+
+        if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
+        if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
+        .setfGarchEnv(.llh = llh)
+
+        if (fGarchEnv) {
+            # Save h and z:
+            .series$h <- fit[[4]]
+            .series$z <- fit[[3]]
+            .setfGarchEnv(.series = .series)
+        }
+
+    } else {
 
     # Retrieve From Initialized Series:
     x = .series$x
@@ -1064,6 +1128,63 @@ garchFit <-
 
     # R Filter Representation:
     # Entirely written in S, and very effective ...
+
+    # own filter method because as.ts and tsp time consuming...
+    # test
+    filter2 <-
+        function (x, filter, method = c("convolution", "recursive"),
+                  sides = 2, circular = FALSE, init = NULL)
+        {
+            method <- match.arg(method)
+            ### x <- as.ts(x)
+            ### xtsp <- tsp(x)
+            x <- as.matrix(x)
+            n <- nrow(x)
+            nser <- ncol(x)
+            nfilt <- length(filter)
+            if (any(is.na(filter)))
+                stop("missing values in 'filter'")
+            y <- matrix(NA, n, nser)
+            if (method == "convolution") {
+                if (nfilt > n)
+                    stop("'filter' is longer than time series")
+                if (sides != 1 && sides != 2)
+                    stop("argument 'sides' must be 1 or 2")
+                for (i in 1:nser) y[, i] <-
+                    .C("filter1", as.double(x[, i]),
+                       as.integer(n), as.double(filter), as.integer(nfilt),
+                       as.integer(sides), as.integer(circular), out = double(n),
+                       NAOK = TRUE, PACKAGE = "stats")$out
+            }
+            else {
+                if (missing(init)) {
+                    init <- matrix(0, nfilt, nser)
+                }
+                else {
+                    ni <- NROW(init)
+                    if (ni != nfilt)
+                        stop("length of 'init' must equal length of 'filter'")
+                    if (NCOL(init) != 1 && NCOL(init) != nser)
+                        stop(gettextf("'init'; must have 1 or %d cols",
+                                      nser), domain = NA)
+                    if (!is.matrix(init))
+                        init <- matrix(init, nfilt, nser)
+                }
+                for (i in 1:nser) y[, i] <-
+                    .C("filter2", as.double(x[, i]),
+                       as.integer(n), as.double(filter), as.integer(nfilt),
+                       out = as.double(c(rev(init[, i]), double(n))), NAOK = TRUE,
+                       PACKAGE = "stats")$out[-(1:nfilt)]
+            }
+            ### y <- drop(y)
+            ### tsp(y) <- xtsp
+            ### class(y) <- if (nser > 1)
+            ### c("mts", "ts")
+            ### else "ts"
+            y
+        }
+
+
     if(USE == "filter") {
         # Note, sometimes one of the beta's can become undefined
         # during optimization.
@@ -1074,11 +1195,11 @@ garchFit <-
             Filter = rep(0, length = p+1)
             Filter[j+1] = alpha[j]
             edelta = (abs(z) - gamma[j]*z)^delta
-            edelta = filter(edelta, filter = Filter, sides = 1)
+            edelta = filter2(edelta, filter = Filter, sides = 1)
             edeltat = edeltat + edelta
         }
         c.init = omega/(1-sum(beta))
-        h = c( h[1:pq], c.init + filter(edeltat[-(1:pq)], filter = beta,
+        h = c( h[1:pq], c.init + filter2(edeltat[-(1:pq)], filter = beta,
              method = "recursive", init = h[q:1]-c.init))
         ### ? remove ?
         if( sum(is.na(h)) > 0 ) {
@@ -1099,22 +1220,6 @@ garchFit <-
             }
         }
     }
-
-    # Fortran Implementation:
-    # May be Even Faster Compared with R's Filter Representation ...
-    if(USE == "internal") {
-        if(!.params$leverage) gamma = rep(0, p)
-        # For asymmetric APARCH Models Only !!! ---- Check it ----
-        h = .Fortran("garchllh", as.double(z), as.double(h), as.integer(N),
-            as.double(omega), as.double(alpha), as.double(gamma),
-            as.integer(p), as.double(beta), as.integer(q), as.double(delta),
-            as.integer(h.start), PACKAGE = "fGarch2")[[2]]
-    }
-
-    # Save h and z:
-    .series$h <- h
-    .series$z <- z
-    .setfGarchEnv(.series = .series)
 
     # Calculate Log Likelihood:
     hh = (abs(h[(llh.start):N]))^deltainv
@@ -1137,6 +1242,16 @@ garchFit <-
         .setfGarchEnv(.llh = llh)
     }
 
+    if (fGarchEnv) {
+        # Save h and z:
+        .series$h <- h
+        .series$z <- z
+        .setfGarchEnv(.series = .series)
+    }
+
+    }
+
+
     # Return Value:
     c(LogLikelihood = llh)
 }
@@ -1146,7 +1261,7 @@ garchFit <-
 
 
 .garchOptimizeLLH <-
-    function(hessian = hessian, trace)
+    function(hessian = hessian, robust.cvar, trace)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -1176,7 +1291,6 @@ garchFit <-
     # Optimize:
     if(trace) cat("\n\n--- START OF TRACE ---\n")
 
-
     # First Method: Two Step Apparoach > Trust Region + Nelder-Mead Simplex
     if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
         fit <- .garchRnlminb(.params, .series, .garchLLH, trace)
@@ -1186,10 +1300,10 @@ garchFit <-
     }
     if(algorithm == "nlminb+nm") {
         fit <- .garchRnm(.params, .series, .garchLLH, trace)
-        .params$params[INDEX] = fit$par
-        .setfGarchEnv(.params = .params)
-    }
-
+            .params$llh = fit$llh
+            .params$params[INDEX] = fit$par
+            .setfGarchEnv(.params = .params)
+        }
 
     # Second Method - Two Step Approach > BFGS + Nelder-Mead Simplex
     if(algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
@@ -1200,61 +1314,82 @@ garchFit <-
     }
     if(algorithm == "lbfgsb+nm") {
         fit <- .garchRnm(.params, .series, .garchLLH, trace)
+        .params$llh = fit$llh
         .params$params[INDEX] = fit$par
         .setfGarchEnv(.params = .params)
     }
 
-
-    # Third Method: Sequential Programming Algorithm ...
-    if(algorithm == "sqp") {
-        fit <- .garchFsqp(.params, .series, .garchLLH, trace)
-    }
-
-
-    # Fourth Method: Rdonlp2 ...
-    if(algorithm == "donlp2") {
-        fit <- .garchRdonlp2(.params, .series, .garchLLH, trace)
-    }
-
-
-    # Fivth Method: NLMINB full Fortran implementation ...
-    if(algorithm == "mnfb") {
-        fit = .garchFmnfb(.params, .series, .garchLLH, trace)
-    }
-
+    # save parameters
+    .params$llh = fit$llh
+    .params$params[INDEX] = fit$par
+    .setfGarchEnv(.params = .params)
 
     # Compute the Hessian:
-    if (hessian == "fcd") {
-        fit$hessian = - .garchFCDAHessian(
-            par = fit$par, .params = .params, .series = .series)
-            titleHessian = "Central"
+    if (hessian == "ropt") {
+        fit$hessian <- - .garchRoptimhess(par = fit$par, .params = .params,
+                                          .series = .series)
+        titleHessian = "R-optimhess"
     } else if (hessian == "rcd") {
-        fit$hessian = - .garchRCDAHessian(
-            par = fit$par, .params = .params, .series = .series)
-            titleHessian = "Central"
-    } else if (hessian == "ffd") {
-        fit$hessian = - .garchFFDAHessian(
-            par = fit$par, .params = .params, .series = .series)
-            titleHessian = "Forward"
+        fit$hessian <- - .garchRCDAHessian(par = fit$par, .params = .params,
+                                           .series = .series)
+        titleHessian = "Central"
     }
 
+    # rescale parameters
+    if (.params$control$xscale) {
+        .series$x <- .series$x * .series$scale
+        if (.params$include["mu"])
+            fit$coef["mu"] <- fit$par["mu"] <- .params$params["mu"] <-
+                .params$params["mu"]*.series$scale
+        if (.params$include["omega"])
+            fit$coef["omega"] <- fit$par["omega"] <- .params$params["omega"] <-
+                .params$params["omega"]*.series$scale^(.params$params["delta"])
+
+        # save changes
+        .setfGarchEnv(.params = .params)
+        .setfGarchEnv(.series = .series)
+    }
+
+    # rescale hessian matrix
+    if (.params$control$xscale) {
+        if (.params$include["mu"]) {
+            fit$hessian[,"mu"] <- fit$hessian[,"mu"] /  .series$scale
+            fit$hessian["mu",] <- fit$hessian["mu",] /  .series$scale
+        }
+        if (.params$include["omega"]) {
+            fit$hessian[,"omega"] <-
+                fit$hessian[,"omega"] / .series$scale^(.params$params["delta"])
+            fit$hessian["omega",] <-
+                fit$hessian["omega",] / .series$scale^(.params$params["delta"])
+        }
+    }
+
+
+    # recalculate llh, h, z with rescaled parameters
+    .llh <- fit$llh <- fit$value <-
+        .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
+    .series <- .getfGarchEnv(".series")
+
+    # Compute the Gradient
+    # YC: needs to be after the calculation of h, z !
+    if (robust.cvar)
+        fit$gradient <- - .garchRCDAGradient(par = fit$par, .params = .params,
+                                             .series = .series)
     # Compute Information Criterion Statistics:
     N = length(.series$x)
     NPAR = length(fit$par)
     fit$ics = c(
-        AIC  = (2*fit$value)/N + 2 * NPAR/N,
+        AIC  = c((2*fit$value)/N + 2 * NPAR/N),
         BIC  = (2*fit$value)/N + NPAR * log(N)/N,
         SIC  = (2*fit$value)/N + log((N+2*NPAR)/N),
         HQIC = (2*fit$value)/N + (2*NPAR*log(log(N)))/N )
+    names(fit$ics) <- c("AIC", "BIC", "SIC", "HQIC")
 
     # Print LLH if we trace:
     if(trace) {
-        .setfGarchEnv(.llh = 1.0e99)
         cat("\nFinal Estimate of the Negative LLH:\n")
-        .llh =  .garchLLH(fit$par, trace = FALSE)
         cat(" LLH: ", .llh, "   norm LLH: ", .llh/N, "\n")
         print(fit$par)
-        .setfGarchEnv(.llh = .llh)
     }
 
     # Print Hessian Matrix if we trace:

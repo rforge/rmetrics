@@ -32,9 +32,6 @@
 #  .garchRnlminb           R coded solver nlmin
 #  .garchRlbgfsb           R coded solver optim using method lbgfsb
 #  .garchRnm               R coded solver nm as hybrid addon
-#  .garchFsqp              Fortran coded solver sqp
-#  .garchRdonlp2           R coded solver donlp2
-#  .garchFmnfb             Fortran coded solver mnfb
 ################################################################################
 
 
@@ -75,13 +72,17 @@
                   iter.max = 1500,
                   rel.tol = 1.0e-14 * TOL1,
                   x.tol = 1.0e-14 * TOL1,
-                  trace = as.integer(trace)))
-    fit$value = fit.llh = fit$objective
+                  trace = as.integer(trace)),
+                  fGarchEnv = FALSE) # to speed up .garchLLH
+    fit$value <- fit.llh <- fit$objective
     names(fit$par) = names(.params$params[INDEX])
 
+    # make sure to save new h and z (important to speed up code)
+    .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
+
     # Result:
-    fit$coef = fit$par
-    fit$llh = fit$objective
+    fit$coef <- fit$par
+    fit$llh <- fit$objective
 
     # Return Value:
     fit
@@ -116,21 +117,24 @@
     TOL1 = .params$control$tol1
 
     # Fit Parameters - par, value:
-    fit = optim(
-        par = .params$params[INDEX],
-        fn = .garchLLH,
-        lower = .params$U[INDEX],
-        upper = .params$V[INDEX],
-        method = "L-BFGS-B",
-        control = list(
-            parscale = parscale,
-            lmm = 20,
-            pgtol = 1.0e-11 * TOL1,
-            factr = 1.0 * TOL1,
-        trace = as.integer(trace)))
+    fit <- optim(par = .params$params[INDEX],
+                 fn = .garchLLH,
+                 lower = .params$U[INDEX],
+                 upper = .params$V[INDEX],
+                 method = "L-BFGS-B",
+                 control = list(
+                           parscale = parscale,
+                           lmm = 20,
+                           pgtol = 1.0e-11 * TOL1,
+                           factr = 1.0 * TOL1,
+                           trace = as.integer(trace)),
+                 fGarchEnv = FALSE)  # to speed up .garchLLH
     names(fit$par) = names(.params$params[INDEX])
 
-    print(fit$hessian)
+    # make sure to save new h and z (important to speed up code)
+    .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
+
+    # print(fit$hessian)
 
     # Result:
     fit$coef = fit$par
@@ -179,258 +183,16 @@
         fnscale = fnscale,
         parscale = c(1, abs((.params$params[INDEX])[-1])),
         trace = as.integer(trace)),
-        hessian = TRUE)
+        hessian = TRUE,
+        fGarchEnv = FALSE)  # to speed up .garchLLH
     names(fit$par) = names(.params$params[INDEX])
+
+    # make sure to save new h and z (important to speed up code)
+    .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
 
     # Result:
     fit$coef = fit$par
     fit$llh = fit$value
-
-    # Return Value:
-    fit
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchFsqp <-
-    function(.params, .series, .garchLLH, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   SQP Full Fortran Solver
-
-    # Arguments:
-
-    # FUNCTION:
-
-    # SQP Full Fortran Solver:
-    if(trace) cat("\nFortran coded SQP Solver: \n\n")
-
-    # Control:
-    INDEX = .params$index
-    IPAR = c(
-        MIT = .params$control$MIT,
-                    # maximum number of iterations (200)
-        MFV = .params$control$MFV,
-                    # maximum number of function evaluations (500)
-        MET = .params$control$MET,
-                    # specifies scaling strategy:
-                    #  MET=1 - no scaling
-                    #  MET=2 - preliminary scaling in 1st iteration (default)
-                    #  MET=3 - controlled scaling
-                    #  MET=4 - interval scaling
-                    #  MET=5 - permanent scaling in all iterations
-        MEC = .params$control$MEC,
-                    # correction for negative curvature:
-                    #  MEC=1 - no correction
-                    #  MEC=2 - Powell correction (default)
-        MER = .params$control$MER,
-                    # restarts after unsuccessful variable metric updates:
-                    #  MER=0 - no restarts
-                    #  MER=1 - standard restart
-        MES = .params$control$MES)
-                    # interpolation method selection in a line search:
-                    #  MES=1 - bisection
-                    #  MES=2 - two point quadratic interpolation
-                    #  MES=3 - three point quadratic interpolation
-                    #  MES=4 - three point cubic interpolation (default)
-    RPAR = c(
-        XMAX = .params$control$XMAX,
-        TOLX = .params$control$TOLX,
-        TOLC = .params$control$TOLC,
-        TOLG = .params$control$TOLG,
-        TOLD = .params$control$TOLD,
-        TOLS = .params$control$TOLS,
-        RPF  = .params$control$RPF)
-    MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30,
-        sged = 31)[.params$cond.dist]
-    if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
-    REC = 1
-    if(.series$init.rec == "uev") REC = 2
-    MYPAR = c(
-        REC   = REC,                                  # How to initialize
-        LEV   = as.integer(.params$leverage),         # Include Leverage 0|1
-        MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1
-        DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1
-        SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1
-        SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1
-        ORDER = .series$order,                        # Order of ARMA-GARCH
-        NORM  = as.integer(NORM))
-
-    # Now Estimate Parameters:
-    MAX = max(.series$order)
-    NF = length(INDEX)
-    N = length(.series$x)
-    DPARM = c(.params$delta, .params$skew, .params$shape)
-    if(IPAR[1] == 0) sink("@sink@")
-    fit <- .Fortran("garchfit",
-                    N = as.integer(N),
-                    Y = as.double(.series$x),
-                    Z = as.double(rep(2, times = N)),
-                    H = as.double(rep(0, times = N)),
-                    NF = as.integer(NF),
-                    X = as.double(.params$params[INDEX]),
-                    XL = as.double(.params$U[INDEX]),
-                    XU = as.double(.params$V[INDEX]),
-                    DPARM = as.double(DPARM),
-                    MDIST = as.integer(MDIST),
-                    IPAR = as.integer(IPAR),
-                    RPAR = as.double(RPAR),
-                    IPRNT = as.integer(trace),
-                    MYPAR = as.integer(MYPAR),
-                    F = as.double(FALSE),
-                    PACKAGE = "fGarch2")
-    if(IPAR[1] == 0) {
-        sink()
-        unlink("@sink@")
-    }
-
-    # Result:
-    if(trace) {
-        cat("\nControl Parameter:\n")
-        print(IPAR)
-        print(RPAR)
-    }
-    fit$par = fit[[6]]
-    fit$value = fit[[15]]
-
-    # Update .series
-    names(fit$par) = names(.params$params[INDEX])
-    fit$coef = fit$par
-    updateLLH = .garchLLH(fit$par, trace)
-
-    # Return Value:
-    fit
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchRdonlp2 <-
-    function(.params, .series, .garchLLH, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-
-    # Arguments:
-
-    # FUNCTION:
-
-    # donlp2 R-code Solver:
-    if(!require(Rdonlp2)) stop("Package Rdonlp2 cannot be loaded")
-    if(trace) cat("\nNow DONLP2 \n\n")
-
-    # Scale Function and Parameters:
-    INDEX = .params$index
-    parscale = rep(1, length = length(INDEX))
-    names(parscale) = names(.params$params[INDEX])
-    parscale["omega"] = var(.series$x)^(.params$delta/2)
-    parscale["mu"] = abs(mean(.series$x))
-
-    fit = donlp2(
-        par = .params$params[INDEX],
-        fn = .garchLLH,
-        par.lower = .params$U[INDEX],
-        par.upper = .params$V[INDEX])
-    fit$value = fit$fx
-    names(fit$par) = names(.params$params[INDEX])
-    fit$coef = fit$par
-
-    # Return Value:
-    fit
-}
-
-# ------------------------------------------------------------------------------
-
-
-.garchFmnfb <-
-    function(.params, .series, .garchLLH, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-
-    # Arguments:
-
-    # FUNCTION:
-
-    # nlminb Full Fortran Solver:
-    if(trace) cat("\nNLMINB FULL FORTRAN Algorithm\n\n")
-
-    # The following comes from SQP ...
-    #   should be adapted:
-    INDEX = .params$index
-    IPAR = c(
-        IPRNT = as.integer(trace),
-        MIT = .params$control$MIT,
-        MFV = .params$control$MFV,
-        MET = .params$control$MET,
-        MEC = .params$control$MEC,
-        MER = .params$control$MER,
-        MES = .params$control$MES)
-    RPAR = c(
-        XMAX = .params$control$XMAX,
-        TOLX = .params$control$TOLX,
-        TOLC = .params$control$TOLC,
-        TOLG = .params$control$TOLG,
-        TOLD = .params$control$TOLD,
-        TOLS = .params$control$TOLS,
-        RPF  = .params$control$RPF)
-    MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30,
-        sged = 31)[.params$cond.dist]
-    if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
-    REC = 1
-    if(.series$init.rec == "uev") REC = 2
-    MYPAR = c(
-        REC   = REC,                                  # How to initialize
-        LEV   = as.integer(.params$leverage),         # Include Leverage 0|1
-        MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1
-        DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1
-        SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1
-        SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1
-        ORDER = .series$order,                        # Order of ARMA-GARCH
-        NORM  = as.integer(NORM))
-
-    # Now Estimate Parameters:
-    MAX = max(.series$order)
-    NF = length(INDEX)
-    N = length(.series$x)
-    DPARM = c(.params$delta, .params$skew, .params$shape)
-    if(IPAR[1] == 0) sink("@sink@")
-    fit = .Fortran("garchfit2",
-        NN = as.integer(N),
-        YY = as.double(.series$x),
-        ZZ = as.double(rep(2, times = N)),
-        HH = as.double(rep(0, times = N)),
-        NF = as.integer(NF),
-        X = as.double(.params$params[INDEX]),
-        XL = as.double(.params$U[INDEX]),
-        XU = as.double(.params$V[INDEX]),
-        DPARM = as.double(DPARM),
-        MDIST = as.integer(MDIST),
-        IPAR = as.integer(IPAR),
-        RPAR = as.double(RPAR),
-        MYPAR = as.integer(MYPAR),
-        F = as.double(0),
-        PACKAGE = "fGarch2")
-    if(IPAR[1] == 0) {
-        sink()
-        unlink("@sink@")
-    }
-
-    # Result:
-    fit$par = fit[[6]]
-    fit$llh = fit$value = fit[[14]]
-
-    # Update .series
-    names(fit$par) = names(.params$params[INDEX])
-    fit$coef = fit$par
-    updateLLH = .garchLLH(fit$par, trace)
 
     # Return Value:
     fit

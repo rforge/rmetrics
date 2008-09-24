@@ -15,7 +15,7 @@
 
 
 \usage{
-listDescription(package = "Rmetrics", character.only = FALSE)
+listDescription(package, character.only = FALSE)
 }
 
 
@@ -50,7 +50,7 @@ listDescription(package = "Rmetrics", character.only = FALSE)
 
 \examples{
 ## listDescription -
-   listDescription("fUtilities")
+   listDescription("fBasics2")
 }
 
 

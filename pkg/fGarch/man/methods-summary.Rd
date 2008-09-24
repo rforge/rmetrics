@@ -35,8 +35,9 @@
 
 \section{How to read a diagnostic summary report?}{
 
-    The first four sections return the title, the call, the
-    mean and variance formula, and the conditional distribution:
+    The first five sections return the title, the call, the
+    mean and variance formula, the conditional distribution and the type of
+    standard errors:
 
         \preformatted{ 
         Title:
@@ -49,13 +50,16 @@
          ~arch(0)
         
         Conditional Distribution:
-         dnorm 
+         norm 
+        
+        Std. Errors:
+         based on Hessian
         }
     
     
     The next three sections return the estimated coefficients, and
     an error analysis including standard errors, t values, and
-    probabilities, as well as the log Lilelihood values from 
+    probabilities, as well as the log Likelihood values from 
     optimization:
     
         \preformatted{

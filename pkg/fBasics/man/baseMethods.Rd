@@ -115,7 +115,7 @@
 
 % \method{var}{default}(x, y = NULL, na.rm = FALSE, use)
    
-\method{volatility}{default}(object, \dots)
+ \method{volatility}{default}(object, \dots)
     
 %rownames(x) <- value
 %colnames(x) <- value

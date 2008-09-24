@@ -69,9 +69,16 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
 
     # Coefficients:
     cat("\nCoefficient(s):\n")
-    digits = max(6, getOption("digits") - 4)
+    digits = max(5, getOption("digits") - 4)
     print.default(format(object@fit$par, digits = digits), print.gap = 2,
          quote = FALSE)
+
+    # Std. Errors:
+    cat("\nStd. Errors:\n ")
+    if (object@fit$params$cond.dist == "QMLE")
+        cat("robust", "\n")
+    else
+        cat("based on Hessian", "\n")
 
     # Error Analysis:
     digits = max(4, getOption("digits") - 5)

@@ -112,7 +112,7 @@
 ##     #
 
 
-##     garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "sqp")
+## garchFit(~ garch(1,1), dem2gbp, hessian = "cda", algorithm = "sqp")
 ##     # Time difference of 1.906 secs
 ##     # Error Analysis:
 ##     #         Estimate  Std. Error  t value Pr(>|t|)
@@ -155,21 +155,21 @@ function()
     # Loda Data
     data(dem2gbp)
 
-    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb")
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb")
 
     garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "nlminb")
 
     garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")
 
-    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb+nm")
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "nlminb+nm")
 
     garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "lbfgsb+nm")
 
     # garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "donlp2")
 
-    # garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "sqp")
+    garchFit(~ garch(1,1), dem2gbp, hessian = "rcd", algorithm = "sqp")
 
-    ## garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "mnfb")
+    garchFit(~ garch(1,1), dem2gbp, hessian = "fcd", algorithm = "mnfb")
 
     # Return Value:
     return()
@@ -191,8 +191,8 @@ function()
 ##         algorithm = "lbfgsb")
 
 
-##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
-##         algorithm = "sqp")
+   #  garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
+   #      algorithm = "sqp")
 ##     # Time difference of 48.954 secs
 ##     # Error Analysis:
 ##     #         Estimate  Std. Error  t value Pr(>|t|)
@@ -210,12 +210,12 @@ function()
 ##     # 1.264345    normalized:  7.413338e-05
 ##     #
 
-##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
-##         algorithm = "sqp")
+    # garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
+    #     algorithm = "sqp")
 
 
-##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
-##         algorithm = "mnfb")
+    # garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "cda",
+    #     algorithm = "mnfb")
 ##     # Time difference of 35.156 secs
 ##     # Error Analysis:
 ##     #         Estimate  Std. Error  t value Pr(>|t|)
@@ -234,8 +234,8 @@ function()
 ##     #
 
 
-##     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
-##         algorithm = "mnfb")
+    # garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fda",
+    #     algorithm = "mnfb")
 ##     # Time difference of 31.516 secs
 ##     # Error Analysis:
 ##     #         Estimate  Std. Error  t value Pr(>|t|)
@@ -268,23 +268,23 @@ function()
     sp500dge = 100 * sp500dge
 
 
-###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-###         algorithm = "lbfgsb")
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+             algorithm = "lbfgsb")
 
 
 ###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-###         algorithm = "sqp")
+###              algorithm = "sqp")
 
 ###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
-###         algorithm = "sqp")
+###              algorithm = "sqp")
 
 
-###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
-###         algorithm = "mnfb")
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "fcd",
+             algorithm = "mnfb")
 
 
-###     garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
-###         algorithm = "mnfb")
+    garchFit(~ arma(0,1) + aparch(1,1), sp500dge, hessian = "rcd",
+             algorithm = "mnfb")
 
 
     garchFit(~ arma(0,1) + aparch(1,1), sp500dge)

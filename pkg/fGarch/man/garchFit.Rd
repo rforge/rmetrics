@@ -17,11 +17,11 @@
 \usage{    
 garchFit(formula, data, init.rec = c("mci", "uev"), 
     delta = 2, skew = 1, shape = 4, 
-    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
         include.shape = NULL, leverage = NULL, trace = TRUE, 
     algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    hessian = "rcd", control = list(), 
+    hessian = c("ropt", "rcd"), control = list(), 
     title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
@@ -33,17 +33,18 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
 
   \item{algorithm}{
     a string parameter that determines the algorithm used for maximum 
-    likelihood estimation. Allowed values are \code{"nmfb"}, \code{"sqp"}, 
-    \code{"nlminb"}, and \code{"bfgs"} where the third is the default
-    setting. \code{"mnfb"} is a fully Fortran implemented and extremely
-    fast version of the R-coded \code{"nlminb"} algorithm. Note
-    \code{"nmfb"} and \code{sqp} are no more availabe in this version. 
+    likelihood estimation.
+%     Allowed values are \code{"nmfb"}, \code{"sqp"}, 
+%     \code{"nlminb"}, and \code{"bfgs"} where the third is the default
+%     setting. \code{"mnfb"} is a fully Fortran implemented and extremely
+%     fast version of the R-coded \code{"nlminb"} algorithm. 
   }
   \item{cond.dist}{
     a character string naming the desired conditional distribution.
     Valid values are \code{"dnorm"}, \code{"dged"}, \code{"dstd"}, 
-    \code{"dsnorm"}, \code{"dsged"}, \code{"dsstd"}. The default value 
-    is the normal distribution.
+    \code{"dsnorm"}, \code{"dsged"}, \code{"dsstd"} and
+    \code{"QMLE"}. The default value is the normal distribution.  See
+    Details for more information.
   }
   \item{control}{
     control parameters, the same as used for the functions from
@@ -85,10 +86,9 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
   % }
   \item{hessian}{
     a string denoting how the Hessian matrix should be evaluated,
-    either \code{hessian ="fcd"}, or \code{"rcd"}, the default,
-    This is a central difference approximation implemented
-    respectivly in Fortran and in R. Note \code{"fcd"} is no more
-    availabe in this version.
+    either \code{hessian ="rcd"}, or \code{"ropt"}, the default,
+    \code{"rcd"}  is a central difference approximation implemented
+    in R and \code{"ropt"} use the internal R function \code{optimhess}.
   }
   \item{include.delta}{
     a logical flag which determines if the parameter for the recursion
@@ -192,6 +192,36 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
 
 }
 
+
+\details{
+  
+  \code{"QMLE"} stands for Quasi-Maximum Likelihood Estimation, which
+  assumes normal distribution and uses robust standard errors for
+  inference. Bollerslev and Wooldridge (1992) proved that if the mean
+  and the volatility equations are correctly specified, the QML
+  estimates are consistent and asymptotically normally
+  distributed. However, the estimates are not efficient and \dQuote{the
+  efficiency loss can be marked under asymmetric ... distributions}
+  (Bollerslev and Wooldridge (1992), p. 166). The robust
+  variance-covariance matrix of the estimates equals the (Eicker-White)
+  sandwich estimator, i.e.
+  
+  \deqn{V = H^{-1} G^{\prime} G H^{-1},}{V = H^(-1) G' G H^(-1),}
+  
+  where \eqn{V}{V} denotes the variance-covariance matrix, \eqn{H}{H}
+  stands for the Hessian and \eqn{G}{G} represents the matrix of
+  contributions to the gradient, the elements of which are defined as
+  
+  \deqn{G_{t,i} = \frac{\partial l_{t}}{\partial \zeta_{i}},}{%
+    G_{t,i} = derivative of l_{t} w.r.t. zeta_{i},}
+  
+  where \eqn{t_{t}}{l_{t}} is the log likelihood of the t-th observation
+  and \eqn{\zeta_{i}}{zeta_{i}} is the i-th estimated parameter. See
+  sections 10.3 and 10.4 in Davidson and MacKinnon (2004) for a more
+  detailed description of the robust variance-covariance matrix.
+  
+  }
+
 \references{
 
   ATT (1984);
@@ -206,9 +236,18 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
   \emph{Generalized Autoregressive Conditional Heteroscedasticity},
   Journal of Econometrics 31, 307--327.
 
+  Bollerslev T., Wooldridge J.M. (1992);
+  \emph{Quasi-Maximum Likelihood Estimation and Inference in Dynamic
+  Models with Time-Varying Covariance},
+  Econometric Reviews 11, 143--172.
+  
   Byrd R.H., Lu P., Nocedal J., Zhu C. (1995);
   \emph{A Limited Memory Algorithm for Bound Constrained Optimization},
   SIAM Journal of Scientific Computing 16, 1190--1208.
+
+  Davidson R., MacKinnon J.G. (2004);
+  \emph{Econometric Theory and Methods},
+  Oxford University Press, New York.
   
   Engle R.F. (1982);
   \emph{Autoregressive Conditional Heteroscedasticity with Estimates 
