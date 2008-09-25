@@ -45,13 +45,6 @@ function(lib, pkg)
     # library.dynam("fExtremes", pkg, lib)
 }
 
-.onLoad <-
-    function(libname, pkgname)
-{
-
-}
-
-
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
     Sys.setenv <- Sys.putenv
 

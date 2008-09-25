@@ -80,7 +80,6 @@ importFrom("utils",
            "head",
            "str",
            "tail",
-           "packageDescription",
            "read.table")
 
 ################################################

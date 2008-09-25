@@ -5,7 +5,7 @@
 \alias{fASSETS}
 \alias{fASSETS-class}
 
-\alias{show.fASSETS}
+% \alias{show.fASSETS}
 \alias{show,fASSETS-method}
 
 \alias{assetsSim}
@@ -47,7 +47,7 @@ assetsSim(n, dim = 2, model = list(mu = rep(0, dim), Omega = diag(dim),
 assetsFit(x, method = c("st", "snorm", "norm"), title = NULL, 
     description = NULL, fixed.df = NA, \dots)
 
-show.fASSETS(object)
+\S4method{show}{fASSETS}(object)
 \method{plot}{fASSETS}(x, which = "ask", \dots)
 \method{summary}{fASSETS}(object, which = "all", \dots)
 }

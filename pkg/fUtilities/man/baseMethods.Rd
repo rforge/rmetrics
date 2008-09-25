@@ -93,10 +93,10 @@
 \method{attach}{default}(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
 
-\method{cor}{default}(x, y = NULL, use = "all.obs", 
+\method{cor}{default}(x, y = NULL, use = "everything", 
     method = c("pearson", "kendall", "spearman"))
     
-\method{cov}{default}(x, y = NULL, use = "all.obs", 
+\method{cov}{default}(x, y = NULL, use = "everything", 
     method = c("pearson", "kendall", "spearman"))
 
 \method{log}{default}(x, base = exp(1))

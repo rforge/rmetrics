@@ -35,7 +35,6 @@ importFrom("stats",
            "sd",
            "arima",
            "var",
-           "filter",
            "model.frame",
            "optim",
            "nlminb",
@@ -60,18 +59,23 @@ importFrom("timeSeries",
            "print",
            "sort",
            "colnames<-",
-           "rownames<-",
            "isUnivariate",
            ".description",
            "rev",
+           "rownames<-",
            "timeSeries",
            "lines",
            "diff",
            "quantile")
 importFrom("utils",
-           "packageDescription",
            "capture.output",
            "menu")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fGarch")
 
 ################################################
 ## S4 classes
@@ -109,13 +113,9 @@ export(
     ".dsstd",
     "dstd",
     ".garchArgsParser",
-    ".garchFCDAHessian",
-    ".garchFFDAHessian",
     "garchFit",
     ".garchFit",
     "garchFitControl",
-    ".garchFmnfb",
-    ".garchFsqp",
     ".garchInitParameters",
     ".garchInitSeries",
     "garchKappa",
@@ -125,12 +125,12 @@ export(
     ".garchNames",
     ".garchOptimizeLLH",
     ".garchOptimizerControl",
-    "garchOxFit",
+    ".garchRCDAGradient",
     ".garchRCDAHessian",
-    ".garchRdonlp2",
     ".garchRlbfgsb",
     ".garchRnlminb",
     ".garchRnm",
+    ".garchRoptimhess",
     ".garchSetCondDist",
     "garchSim",
     "garchSpec",

@@ -1,9 +1,9 @@
 Package: Rmetrics
-Version: 270.73
+Version: 280.73
 Date: 1997 - 2008
 Title: Rmetrics - Financial Engineering and Computational Finance
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), timeDate, timeSeries, fBasics, fGarch, fExtremes, fCopulae, fAssets, fPortfolio
+Depends: R (>= 2.6.0), timeDate, timeSeries, fBasics, fGarch, fAssets, fPortfolio
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.

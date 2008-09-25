@@ -3,7 +3,7 @@ Version: 280.73
 Date: 1997 - 2008
 Title: Rmetrics - Assets Selection and Modelling
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.6.0), methods, sn, MASS, timeDate, timeSeries, fBasics, fCopulae
+Depends: R (>= 2.6.0), methods, sn, MASS, robustbase, timeDate, timeSeries, fBasics, fCopulae
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.

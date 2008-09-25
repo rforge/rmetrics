@@ -20,8 +20,6 @@ importFrom("stats",
            "window",
            "approx",
            "var")
-importFrom("utils",
-           "packageDescription")
 
 ################################################
 ## S4 classes

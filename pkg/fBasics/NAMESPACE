@@ -88,8 +88,8 @@ importFrom("stats",
 importFrom("timeDate",
            "kurtosis",
            "skewness",
-           "getRmetricsOptions",
-           "setRmetricsOptions")
+           "setRmetricsOptions",
+           "getRmetricsOptions")
 importFrom("timeSeries",
            "as.timeSeries",
            "is.timeSeries",
@@ -109,7 +109,6 @@ importFrom("timeSeries",
            "na.omit",
            "str")
 importFrom("utils",
-           "packageDescription",
            "menu")
 
 ################################################

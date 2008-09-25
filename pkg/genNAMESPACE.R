@@ -16,7 +16,7 @@
 ##                   "fExoticOptions", "fAsianOptions", "fAssets",
 ##                   "fPortfolio")
 
-## R CMD INSTALL  timeDate timeSeries fImport fBasics fEcofin fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fOptions fExoticOptions fAsianOptions fAssets fPortfolio
+## R CMD INSTALL  fUtilities fCalendar fSeries fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fBonds fOptions fExoticOptions fAsianOptions fAssets fPortfolio
 
 ## for (pkg in RmetricsPkgs)
 ##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
@@ -26,8 +26,8 @@
 
 genNAMESPACE <- function()
 {
-    RmetricsPkgs<- c("timeDate", "timeSeries", "fBasics", "fGarch",
-                     "fExtremes", "fCopulae", "fAssets", "fPortfolio")
+    RmetricsPkgs<- c("timeDate", "timeSeries", "fBasics", "fGarch") #,
+                     # "fAssets", "fPortfolio")
 
     for (pkg in RmetricsPkgs) {
 

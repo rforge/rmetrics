@@ -108,7 +108,7 @@ title = NULL, description = NULL)
 
     # Compute Price:
     TypeFlag = TypeFlag[1]
-    d = (log(S / X) + (b - sigma ^ 2 / 2) * Time) / (sigma * sqrt(Time))
+    d = (log(S / X) + (r + b - sigma ^ 2 / 2) * Time) / (sigma * sqrt(Time))
     if (TypeFlag == "c")
         CashOrNothing = K * exp (-r * Time) * CND(d)
     if (TypeFlag == "p")

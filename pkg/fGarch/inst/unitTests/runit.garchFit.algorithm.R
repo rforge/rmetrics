@@ -73,10 +73,10 @@ test.garchFit.sqp <-
     # Algorithms:
     #   "nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
 
-    # sqp:
-    fit = garchFit( ~ garch(1,1), data = x,
-        algorithm = "sqp", trace = FALSE)
-    print(coef(fit))
+###     # sqp:
+###     fit = garchFit( ~ garch(1,1), data = x,
+###         algorithm = "sqp", trace = FALSE)
+###     print(coef(fit))
 
 
     # Return Value:
