@@ -431,8 +431,8 @@ function(x, ...)
         else
             x@fit$params$shape
 
-    if (cond.dist == "qnorm")
-        .qqDist(sres, dist = cond.dist)
+    if (cond.dist == "qnorm" || cond.dist == "qQMLE")
+        .qqDist(sres, dist = "qnorm")
     if (cond.dist == "qstd" | cond.dist == "qged")
         .qqDist(sres, dist = cond.dist, nu = shape)
     if (cond.dist == "qsnorm")
