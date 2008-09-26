@@ -466,7 +466,9 @@ garchFit <-
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
-    ### FIX ME YC
+    # keep copy of input data
+    data <- series
+    # scale time series
     scale <- if (con$xscale) sd(series) else 1
     series <- series/scale
     .series <- .garchInitSeries(formula.mean = formula.mean,
@@ -541,7 +543,7 @@ garchFit <-
         call = as.call(match.call()),
         formula = as.formula(paste("~", formula.mean, "+", formula.var)),
         method = "Max Log-Likelihood Estimation",
-        data = series,
+        data = data,
         fit = fit,
         residuals = residuals,
         fitted = fitted.values,
@@ -1364,11 +1366,11 @@ garchFit <-
         }
     }
 
-
     # recalculate llh, h, z with rescaled parameters
     .llh <- fit$llh <- fit$value <-
         .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
     .series <- .getfGarchEnv(".series")
+
 
     # Compute the Gradient
     # YC: needs to be after the calculation of h, z !
