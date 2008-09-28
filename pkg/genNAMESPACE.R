@@ -16,7 +16,7 @@
 ##                   "fExoticOptions", "fAsianOptions", "fAssets",
 ##                   "fPortfolio")
 
-## R CMD INSTALL  fUtilities fCalendar fSeries fEcofin timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fBonds fOptions fExoticOptions fAsianOptions fAssets fPortfolio
+## R CMD INSTALL  fUtilities fEcofin fCalendar fSeries timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fBonds fOptions fExoticOptions fAsianOptions fAssets fPortfoliols
 
 ## for (pkg in RmetricsPkgs)
 ##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
