@@ -576,7 +576,7 @@ maxBConstraints <-
 
 
 listFConstraints <-  
-function(data, spec, constraints = NULL) 
+function(data, spec = portfolioSpec(), constraints = "LongOnly") 
 {
     # Description:
     #   Nonlinear Constraints
@@ -597,7 +597,7 @@ function(data, spec, constraints = NULL)
         
 
 minFConstraints <-  
-function(data, spec, constraints = NULL) 
+function(data, spec = portfolioSpec(), constraints = "LongOnly") 
 {
     # Description:
     #   Nonlinear Constraints
@@ -613,7 +613,7 @@ function(data, spec, constraints = NULL)
 }
 
 maxFConstraints <- 
-function(data, spec, constraints = NULL) 
+function(data, spec = portfolioSpec(), constraints = "LongOnly") 
 {
     # Description:
     #   Nonlinear Constraints
