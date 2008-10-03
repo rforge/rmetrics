@@ -25,40 +25,10 @@
 
 ################################################################################
 # FUNCTION:
-#  test.tangencyPortfolio.MV.Short
 #  test.tangencyPortfolio.MV.LongOnly
-#  test.tangencyPortfolio.CVaR.Short
 #  test.tangencyPortfolio.CVaR.LongOnly
 ################################################################################
 
-
-test.tangencyPortfolio.MV.Short <-
-    function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # Specification:
-    spec = portfolioSpec()
-    setRiskFreeRate(spec) = 0.01
-    print(spec)
-
-    # Constraints - Capital Market Line:
-    constraints = "Short"
-    print(constraints)
-
-    # Portfolio:
-    portfolio = tangencyPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.tangencyPortfolio.MV.LongOnly <-
@@ -78,40 +48,6 @@ test.tangencyPortfolio.MV.LongOnly <-
     print(constraints)
 
     # Optimization:
-    portfolio = tangencyPortfolio(data, spec, constraints)
-    print(portfolio)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyPortfolio.CVaR.Short <-
-    function()
-{
-    # Linear Programming - CVaR Portfolio:
-    #   the return is fixed, we minimie the CVaR
-
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-
-    # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(colMeans(data))
-    setAlpha(spec) = 0.05
-    print(spec)
-
-    # Constraints:
-    constraints = "Short"
-    print(constraints)
-
-    # CVaR Portfolio:
     portfolio = tangencyPortfolio(data, spec, constraints)
     print(portfolio)
 
