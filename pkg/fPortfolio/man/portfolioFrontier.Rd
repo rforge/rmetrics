@@ -16,7 +16,7 @@
 
 \usage{
 portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly",
-    title = NULL, description = NULL)
+    include.mvl = TRUE, title = NULL, description = NULL)
 }
 
 
@@ -36,6 +36,10 @@ portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly",
         }
     \item{description}{ 
         a character string which allows for a brief description. 
+        }
+    \item{include.mvl}{ 
+        a logical flag, should the minimum variance locus be added to the 
+        plot? 
         }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC} as returned by the function
