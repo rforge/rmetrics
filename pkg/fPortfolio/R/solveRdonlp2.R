@@ -37,7 +37,8 @@ solveRdonlp2 <-
     # Example:
     if (FALSE) {
         data = .lppData; spec = .mvSpec; constraints = "LongOnly"
-        minRisk <- function(x) { .solveRdonlp2Plot(data, x); x %*% cov(data) %*% x }
+        # minRisk <- function(x) { 
+        #     .solveRdonlp2Plot(data, x); x %*% cov(data) %*% x }
         fn = match.fun(getOptimize(spec))
         solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
         solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
@@ -99,6 +100,8 @@ solveRdonlp2 <-
 # risk budget constraints ...
   
 
+if (FALSE) {
+
 # Examples:
 
 
@@ -151,7 +154,10 @@ function(data, weights)
 .con13030Lower <- function(x) sum(x[x<0]) 
 .con13030Upper <- function(x) sum(x[x>0]) 
  
-   
+
+} # End If .solveRdonlp2Plot
+  
+ 
 # ------------------------------------------------------------------------------
 
 
