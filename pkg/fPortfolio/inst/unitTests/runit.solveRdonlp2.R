@@ -32,6 +32,13 @@
 ################################################################################
 
 
+if (FALSE) {
+# Check before use ...
+
+
+# ------------------------------------------------------------------------------
+
+
 test.solveRdonlp2.LongOnly <- 
     function()
 { 
@@ -44,7 +51,7 @@ test.solveRdonlp2.LongOnly <-
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         print(head(data))
-        
+
         # Specification:
         spec = portfolioSpec()
         setType(spec) = "MV"
@@ -182,6 +189,9 @@ function()
     # Return Value:
     return()
 }
+
+
+} # Check not yet done ...
 
 
 ################################################################################
