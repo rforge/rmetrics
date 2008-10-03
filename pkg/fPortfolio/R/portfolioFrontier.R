@@ -34,6 +34,8 @@ portfolioFrontier <-
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
+    #   include.mvl - a logical flag, should the minimum variance 
+    #       locus be added to the plot?
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
