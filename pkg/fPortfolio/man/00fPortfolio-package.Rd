@@ -332,7 +332,7 @@
    
     \code{\link{solveRshortExact}} for unlimited short selling, \cr  
     \code{\link{solveRquadprog}} for quadratic objective with linear constraints, \cr 
-    \code{\link{solveRlpSolve}} for linear objective with linear constraints, \cr 
+    \code{\link{solveRglpk}} for linear objective with linear constraints, \cr 
     \code{\link{solveRsocp}} for linear objective with linear/quadratic constraints,\cr
     \code{\link{solveRdonlp2}} for non-linear objective with non-linear constraints. \cr
        
@@ -443,7 +443,7 @@
     By default the "CVaR" risk will be minimized for a given "Mean" return.
     Optionally one can maximize the target return for a predetermined
     value of the risk.
-    For risk minimization the solver "solveRlpSolve" is used, the 
+    For risk minimization the solver "solveRglpk" is used, the 
     default, for return maximization the solver "solverRsocp" is 
     used.
     
