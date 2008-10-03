@@ -41,7 +41,7 @@ function(
          status = 0),
     optim = list(
          solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
-                                        #      "solveRlpSolve", 
+                                        #      "solveRglpk", 
                                         #      "solveRsocp"
          objective = NULL,
          params = list(meq = 2),
@@ -61,7 +61,7 @@ function(
     # model.type = c("MV", "CVaR")
     # model.estimator.mean = "mean"
     # model.estimator.cov = c("cov", "mcd", "Mcd", "shrink")
-    # optim.solver = c("quadprog", "Rdonlp2", "lpSolve")
+    # optim.solver = c("solveRquadprog", "solveRdonlp2", "solveRglpk")
     # optim.trace = FALSE
 
     # Check Arguments:

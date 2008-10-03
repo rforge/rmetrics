@@ -58,7 +58,7 @@
     
     # Type ?
     spec@model$type = value
-    if (value == "CVaR") setSolver(spec) <- "solveRlpSolve"
+    if (value == "CVaR") setSolver(spec) <- "solveRglpk"
     
     # Return Value:
     spec

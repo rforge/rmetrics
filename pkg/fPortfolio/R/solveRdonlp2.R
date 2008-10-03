@@ -24,36 +24,11 @@
 ################################################################################
 
 
-
-# MaxDrawDown Portfolio Constraints:
-.conMaxDD <- function(x) min(drawdowns(pfolioReturn(data/100, x)))
-
 solveRdonlp2 <-
     function(data, spec, constraints)
 {
     # Description:
     #   Portfolio interface to solver Rdonlp2
-
-    # Example:
-    if (FALSE) {
-        data = .lppData; spec = .mvSpec; constraints = "LongOnly"
-        # minRisk <- function(x) { 
-        #     .solveRdonlp2Plot(data, x); x %*% cov(data) %*% x }
-        fn = match.fun(getOptimize(spec))
-        solveRdonlp2(.lppData, .mvSpec, "LongOnly")[-3]
-        solveRdonlp2(.lppData, .mvSpec, .BoxGroups)[-3]
-        solveRdonlp2(.lppData, .mvSpec, .CovBudgets)[-3]
-        solveRdonlp2(.lppData, .mvSpec, 
-            c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))[-3]  
-        solveRdonlp2(.lppData, .mvSpec, 
-            c("minF=-0.04", "maxF=0", "listF(.conMaxDD)"))[-3] 
-        solveRdonlp2(.lppData, .mvSpec, 
-            c("minW[1:6]=-0.3", "maxW[1:6]=1.3", "minF=c(-0.3,0)", 
-              "maxF=c(0, 1.30)", "listF(.con13030Lower, .con13030Upper)"))[-3] 
-        portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
-        portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
-        portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")
-    }
     
     # FUNCTION:   
 
@@ -93,71 +68,8 @@ solveRdonlp2 <-
     # Return Value:
     ans
 }
-
-
-################################################################################
-# Here we solve the quadprog problem with box/group and optional
-# risk budget constraints ...
-  
-
-if (FALSE) {
-
-# Examples:
-
-
-# Solver Plot:
-.solveRdonlp2Plot =
-function(data, weights)
-{    
-    Returns = data/100
-    totalReturn = getTargetReturn(spec)*nrow(data)/100
-    X = pfolioReturn(Returns, weights)
-    profit = rev(cumsum(X))[1]
-    
-    if (totalReturn*0.98 < profit && totalReturn*1.02 > profit) {
-    
-        # par(mfrow = c(2, 2))
-        ts.plot(cumsum(X), ylim = c(0, totalReturn), main = "Cumulated Returns")
-        abline (h = totalReturn, col = "grey")
-        grid()
-        
-        ts.plot(drawdowns(X), ylim = c(-0.05, 0), main = "Portfolio Drawdowns")
-        abline (h = 0, col = "grey")
-        grid()
-        
-        barplot(weights, col=rainbow(6), horiz = TRUE, main = "Weights", 
-            names.arg = colnames(data), las = 1)
-        box()
-        vgrid(col = "darkgrey", lty = 1)
-        
-        hist(X, breaks =  "FD", main = "Portfolio Returns", 
-            probability = TRUE, col = "steelblue", border = "white",
-            xlim = c(-0.015, 0.015), ylim = c(0, 200)) 
-        abline(v = quantile(X, 0.05), lwd = 2, col = "red")
-        abline(v = mean(X), lwd = 2, col = "blue")
-        box()
-        grid()
-        sw = paste("SW P Value:", round(shapiroTest(X)@test$p.value[[1]], 6))
-        mtext(sw, side = 4, cex = 0.8, adj = 0)
-        u = seq(-0.015, 0.015, length = 201)
-        v = dnorm(u, mean(X), sd(X))
-        lines(u,v, col = "orange")
-        
-    }
-    
-    # Return Value:
-    invisible()
-}
-       
-
-# 130/30 Portfolio Constraints:
-.con13030Lower <- function(x) sum(x[x<0]) 
-.con13030Upper <- function(x) sum(x[x>0]) 
  
-
-} # End If .solveRdonlp2Plot
   
- 
 # ------------------------------------------------------------------------------
 
 
