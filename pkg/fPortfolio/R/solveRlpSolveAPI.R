@@ -190,7 +190,7 @@ solveRlpSolveAPI <-
 	# FUNCTION:
 	
 	# Solve - use lpSolve from KK:
-    optim <- R.lpSolveAPI::lpSolveAPI(
+    optim <- lpSolveAPI::lpSolveAPI(
         obj = obj,  
         A = A,  
         b = b,  

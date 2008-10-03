@@ -284,7 +284,7 @@ function(data, spec, constraints)
 	# FUNCTION:
 	
 	# Solve:
-    optim <- R.donlp2::donlp2(
+    optim <- Rdonlp2::donlp2(
         par = par,
         fn = fn, 
         par.lower = par.lower, 

@@ -114,7 +114,7 @@ solveRsocp <-
     d2 <- eqsumW[2, 1]                                        # sum(x) <= 1
     d3 <- c(rep(0, nAssets), rep(-1, nAssets))                # x[i] > 0
 
-    A1 <- R.socp::.SqrtMatrix(Sigma)
+    A1 <- Rsocp::.SqrtMatrix(Sigma)
     A2 <- matrix(0, ncol = nAssets)
     A3 <- matrix(0, nrow = nrow(C3), ncol = nAssets)
 
@@ -162,7 +162,7 @@ solveRsocp <-
     # FUNCTION
     
     # Solve Portfolio:
-    optim <- R.socp::socp(f, A, b, C, d, N, x, z, w, control)
+    optim <- Rsocp::socp(f, A, b, C, d, N, x, z, w, control)
     
     # Extract Weights:
     weights = .checkWeights(optim$x)
