@@ -14,29 +14,17 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             ASSETS STATISTICS:
-#  assetsLPM             Computes Lower Partial Moments 
+#  assetsLPM             Computes Asymmetric Lower Partial Moments 
 ################################################################################
 
 
-
 assetsLPM = 
-function(x, tau = colMeans(x), a = 1.5, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, tau = colMeans(x), a = 1.5, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes LPM and CLPM from multivariate time series
@@ -50,6 +38,11 @@ function(x, tau = colMeans(x), a = 1.5, ...)
     # Note:
     #   The output of this function can be used for portfolio
     #   optimization.
+    
+    # Example:
+    #   DJ = 100 * returns(as.timeSeries(data(DowJones30)))
+    #   DJ = DJ[, c("CAT", "IBM", "GE", "JPM")]
+    #   assetsLPM(DJ)
     
     # FUNCTION:
     

@@ -1,30 +1,18 @@
 
-# This library is free software; you can redistribute it and/or
+# This library is free software, you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
-# License as published by the Free Software Foundation; either
+# License as published by the Free Software Foundation, either
 # version 2 of the License, or (at your option) any later version.
 #
 # This library is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# but WITHOUT ANY WARRANTY, without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
 # You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
+# Public License along with this library, if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-# MA  02111-1307  USA
-
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# MA 02111-1307 USA
 
 
 ################################################################################
@@ -33,18 +21,21 @@
 ################################################################################
 
 
+### DO NOT USE !!!
+
+
 .assetsCorrelationPlot <- 
-    function (x, y = NULL, method = c("mcd", "mve", "Mcd", "OGK", "shrink"), 
+    function (x, y = NULL, method = c("mcd", "mve", "MCD", "OGK", "shrink"), 
     labels = TRUE, ...) 
 {   
     # An adapted copy from contributed R package mvoutlier
 
     # Description:
-    #   Plots classical/robust bivariate corrleation ellipsoids
+    #   Plots classical/robust bivariate correlation ellipsoids
     
     # Arguments:
-    #   x, y - 
-    #   method -
+    #   x, y - two time series, or a bivariate time series for x
+    #   method - a character string, selects the robust estimator
     #   ... -
     
     # Details:
@@ -63,7 +54,15 @@
     #   Multivariate Outlier Detection in Exploration Geochemistry. 
     #   Computers & Geosciences.
     
-    # FIUNCTION:
+    # Example:
+    #   x = as.timeSeries(LPP2005REC)[, c("SBI", "SPI")]
+    #   .assetsCorrelationPlot(x, "mcd")
+    #   .assetsCorrelationPlot(x, "mve")
+    #   .assetsCorrelationPlot(x, "MCD")
+    #   .assetsCorrelationPlot(x, "OGK")    
+    #   .assetsCorrelationPlot(x, "shrink")
+    
+    # FUNCTION:
     
     # Settings:
     quan = 1/2
@@ -81,10 +80,10 @@
      
     # Robust Estimation:
     if (method == "mcd") {
-        cov = MASS::cov.mcd(x, cor = TRUE)
+        covr = MASS::cov.mcd(x, cor = TRUE)
     } else if (method == "mve") {
-        cov = MASS::cov.mve(x, cor = TRUE)
-    } else if (method == "Mcd") {
+        covr = MASS::cov.mve(x, cor = TRUE)
+    } else if (method == "MCD") {
         covr = robustbase::covMcd(x, cor = TRUE, alpha = quan)
     } else if (method == "OGK") {
         covr = robustbase::covOGK(x, cor = TRUE, sigmamu = scaleTau2)

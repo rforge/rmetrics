@@ -14,21 +14,9 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTION:                   PAIRS PLOTS:
+# FUNCTION:                   DESCRIPTION:
 #  assetsPairsPlot             Displays pairs of scatterplots of assets
 #  assetsCorgramPlot           Displays correlations between assets
 #  assetsCorTestPlot           Displays and tests pairwise correlations
@@ -51,6 +39,10 @@ assetsPairsPlot <-
     #   labels - a logical flag. Should default labels be printed?
     #       Not implemented.
 
+    # Example:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   assetsPairsPlot(x) 
+   
     # FUNCTION:
 
     # Settings:
@@ -68,7 +60,7 @@ assetsPairsPlot <-
 
 
 assetsCorgramPlot <-
-    function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
+    function(x, labels = TRUE, method = c("pie", "shade"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -83,7 +75,10 @@ assetsCorgramPlot <-
     #       Not implemented.
 
     # Example:
-    #   assetsCorgramPlot(x=100*as.timeSeries(data(LPP2005REC)))
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   assetsCorgramPlot(x, method = "pie")
+    #   assetsCorgramPlot(x, method = "shade")
+    #   assetsCorgramPlot(x, method = "hist") # ... has a bug, check
 
     # FUNCTION:
 
@@ -140,6 +135,10 @@ assetsCorTestPlot <-
     #   labels - a logical flag. Should default labels be printed?
     #       Not implemented.
 
+    # Example:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   assetsCorTestPlot(x)
+    
     # FUNCTION:
 
     # Settings:
@@ -204,10 +203,9 @@ assetsCorImagePlot <-
     #   uses relative colors to indicate the strength of the pairwise
     #   correlation.
 
-    # Examples:
-    #   R = as.timeSeries(data(edhec.tS))
-    #   palette(.rgPalette(NCOL(edhec.tS)))
-    #   correlationImage(edhec)
+    # Example:
+    #   x = as.timeSeries(data(LPP2005REC)) 
+    #   assetsCorImagePlot(x)
 
     # FUNCTION:
 
