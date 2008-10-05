@@ -21,6 +21,9 @@
 ### DO NOT USE !!!
 
 
+if (FALSE) {
+
+
 .rollingDrawdowns <-
 function(x, period = "24m", by = "1m", ...)
 {
@@ -52,9 +55,6 @@ function(x, period = "24m", by = "1m", ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
 .rollingEMA <-
     function(x, period = "24m", by = "1m", lambda = 0.1, ...)
 {
@@ -84,6 +84,9 @@ function(x, period = "24m", by = "1m", ...)
     # Return Value
     invisible(ans)
 }
+
+
+} # end if(FALSE)
 
 
 ################################################################################
