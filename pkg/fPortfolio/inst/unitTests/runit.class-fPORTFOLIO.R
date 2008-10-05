@@ -101,7 +101,7 @@ test.feasiblePortfolio <-
 # ------------------------------------------------------------------------------
 
 
-test.feasiblePortfolio.RDonlp2 <- 
+test.feasiblePortfolio.Rdonlp2 <- 
     function()
 {
     # Arguments:
@@ -138,7 +138,7 @@ test.feasiblePortfolio.RDonlp2 <-
 # ------------------------------------------------------------------------------
 
 
-test.feasiblePortfolio.lpsolve <- 
+test.feasiblePortfolio.glpk <- 
     function()
 {
     # Arguments:
@@ -152,7 +152,7 @@ test.feasiblePortfolio.lpsolve <-
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
     setWeights(spec) = rep(1/4, times = 4)
-    setSolver(spec) = "lpSolve"
+    setSolver(spec) = "solveRglpk"
     print(spec)
 
     # Constraints:
@@ -257,7 +257,7 @@ test.minvariancePortfolio <-
 # ------------------------------------------------------------------------------
 
 
-test.minvariancePortfolio.RDonlp2 <- 
+test.minvariancePortfolio.Rdonlp2 <- 
     function()
 {
     # Arguments:
@@ -399,7 +399,7 @@ test.plot.Rdonlp2 <-
 # ------------------------------------------------------------------------------
 
 
-test.plot.RlpSolve <- 
+test.plot.Rlpglpk <- 
     function()
 {
     # Data:

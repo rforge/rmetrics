@@ -36,8 +36,7 @@ test.solveRquadprog.LongOnly <-
     # Quadratic Programmming - Mean-Variance Portfolio:
 
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    data = .smallcapData
     print(head(data))
     
     # Specification:

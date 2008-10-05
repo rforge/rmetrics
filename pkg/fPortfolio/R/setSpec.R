@@ -41,6 +41,9 @@
 #  setSolver<-                   Sets name of desired solver
 #  setObjective<-                Sets objective function name
 #  setTrace<-                    Sets solver's trace flag
+# FUNCTION:                     OPTIMIZATION SLOT:
+#  maxReturn                     
+#  minRisk
 ################################################################################
 
 
@@ -381,7 +384,7 @@
     # A function implemented by Rmetrics
 
     # Description:
-    #   Sets the solver value for a portfolio structure
+    #   Sets the solver objective function name for a portfolio structure
     
     # Arguments:
     
@@ -416,6 +419,15 @@
     # Return Value:
     spec
 }
+
+
+################################################################################
+
+
+# maxReturn <- function(x, mu) { x %*% mu }
+
+
+# minRisk <- function(x, Sigma) { x %*% Sigma %*% x }
 
 
 ################################################################################

@@ -46,7 +46,9 @@ if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
 ################################################################################
 # some useful functions added
    
- 
+.smallcapData = as.timeSeries(data(smallcap.ts))
+.smallcapData = .smallcapData[, c("BKE", "GG", "GYMB", "KRON")]
+
 .lppData = 100* as.timeSeries(data(LPP2005REC))[, 1:6]
 
 .mvSpec = portfolioSpec()

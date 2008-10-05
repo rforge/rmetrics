@@ -21,9 +21,8 @@
 \alias{setObjective<-}
 \alias{setTrace<-}
 
-
-\alias{maxReturn}
-\alias{minRisk}
+%\alias{maxReturn}
+%\alias{minRisk}
 
 
 \title{Specification of Portfolios}
@@ -52,10 +51,10 @@
     
     \code{setSolver} \tab Sets the type of solver to be used, \cr
     \code{setObjective} \tab Sets objective function name to be used, \cr
-    \code{setTrace} \tab Sets the logical trace flag, \cr
+    \code{setTrace} \tab Sets the logical trace flag. }
     
-    \code{maxReturn} \tab Defines the default maximum return function, \cr
-    \code{minRisk} \tab Defines the default minimum risk function. }
+    %\code{maxReturn} \tab Defines the default maximum return function, \cr
+    %\code{minRisk} \tab Defines the default minimum risk function. }
     
 }
 
@@ -79,25 +78,20 @@ setSolver(spec) <- value
 setObjective(spec) <- value
 setTrace(spec) <- value
 
-maxReturn(x, mu)
-minRisk(x, Sigma)
+%maxReturn(x, mu)
+%minRisk(x, Sigma)
 }
 
 
 \arguments{
 
-    \item{mu}{
-        a vector of assets means.
-        }
-    \item{Sigma}{
-        a matix of assets covariances.
-        }
+    %\item{mu}{a vector of assets means.}
+    %\item{Sigma}{a matix of assets covariances.}
+    \item{x}{a numeric vector of weights.}
+        
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
         modified, by default the default of the function \code{portfolioSpec()}.
-        }
-    \item{x}{
-        a numeric vector of weights.
         }
     \item{value}{
         a value for that component of \code{spec} to be set.

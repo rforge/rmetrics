@@ -48,8 +48,7 @@ test.solveRdonlp2.LongOnly <-
     if (require(Rdonlp2)) {
         
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
-        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        data = .smallcapData
         print(head(data))
 
         # Specification:

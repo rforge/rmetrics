@@ -168,7 +168,7 @@ test.setSolver <-
 { 
     # Modify Solver:
     Spec = portfolioSpec()
-    setSolver(Spec) = "lpSolve"
+    setSolver(Spec) = "solveRglpk"
     Spec
     
     # Return Value:

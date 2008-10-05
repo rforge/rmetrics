@@ -46,6 +46,7 @@ test.efficientPortfolio.MV.Short <-
 
     # Specification:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
     setTargetReturn(spec) = mean(colMeans(data))
     print(spec)
 
@@ -57,13 +58,6 @@ test.efficientPortfolio.MV.Short <-
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
     print(getSolver(portfolio))
-
-    # Specify Target Risk to maximize the return ...
-    setTargetRisk(spec) <- getTargetRisk(portfolio)[,"Cov"]
-    setOptimize(spec) = "maxReturn"
-    ## portfolio = efficientPortfolio(data, spec, constraints)
-    ## print(portfolio)
-    ## print(getSolver(portfolio))
 
     # Return Value:
     return()
@@ -95,13 +89,6 @@ test.efficientPortfolio.MV.LongOnly <-
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
     print(getSolver(portfolio))
-
-    # Return Maximized Optimization:
-    setTargetRisk(spec) <- getTargetRisk(portfolio)[, "Cov"]
-    setOptimize(spec) = "maxReturn"
-    ## portfolio = efficientPortfolio(data, spec, constraints)
-    ## print(portfolio)
-    ## print(getSolver(portfolio))
 
     # Return Value:
     return()
@@ -138,13 +125,6 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
         print(portfolio)
         print(getSolver(portfolio))
 
-        # Return Maximized Optimization:
-        setTargetRisk(spec) <- getTargetRisk(portfolio)[, "Cov"]
-        setOptimize(spec) = "maxReturn"
-        ## portfolio = efficientPortfolio(data, spec, constraints)
-        ## print(portfolio)
-        ## print(getSolver(portfolio))
-
     }
 
     # Return Value:
@@ -177,8 +157,8 @@ test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
         print(constraints)
 
         # Optimization:
-        ## portfolio = efficientPortfolio(data, spec, constraints)
-        ## print(portfolio)
+        portfolio = efficientPortfolio(data, spec, constraints)
+        print(portfolio)
     }
 
     # Return Value:
@@ -247,7 +227,8 @@ test.efficientPortfolio.MV.BoxConstraints <-
 ################################################################################
 # LPP
 
-test.efficientPortfolio.LPP.LongOnly <-
+
+test.efficientPortfolio.LPM.LongOnly <-
     function()
 {
     # Data:
@@ -255,32 +236,28 @@ test.efficientPortfolio.LPP.LongOnly <-
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
-    if (FALSE) {
-
-        # Estimator:
-        lpmEstimator <-
-        function(data, spec) {
-            mu <- colMeans(data)
-            Sigma <- assetsLPM(data, tau = colMeans(data), a = 1.5)$Sigma
-            list(mu = mu, Sigma = Sigma)
-        }
-
-        # CVaR Specification:
-        spec = portfolioSpec()
-        setType(spec) = "LPP"
-        setEstimator(spec) <- "lpmEstimator"
-        setTargetReturn(spec) = mean(series(data))
-        print(spec)
-
-        # Constraints:
-        constraints = "LongOnly"
-        print(constraints)
-
-        # Optimization:
-        portfolio = efficientPortfolio(data, spec, constraints)
-        print(portfolio)
-
+    # Estimator:
+    lpmEstimator <-
+    function(data, spec) {
+        mu <- colMeans(data)
+        Sigma <- assetsLPM(data, tau = colMeans(data), a = 1.5)$Sigma
+        list(mu = mu, Sigma = Sigma)
     }
+
+    # CVaR Specification:
+    spec = portfolioSpec()
+    setType(spec) = "LPP"
+    setEstimator(spec) <- "lpmEstimator"
+    setTargetReturn(spec) = mean(series(data))
+    print(spec)
+
+    # Constraints:
+    constraints = "LongOnly"
+    print(constraints)
+
+    # Optimization:
+    portfolio = efficientPortfolio(data, spec, constraints)
+    print(portfolio)
 
     # Return Value:
     return()
@@ -325,6 +302,8 @@ test.efficientPortfolio.CVaR.LongOnly <-
 test.efficientPortfolio.CVaR.LongOnly.TwoAssets <-
     function()
 {
+    if (FALSE) {
+    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
@@ -343,6 +322,8 @@ test.efficientPortfolio.CVaR.LongOnly.TwoAssets <-
     # CVaR Portfolio:
     portfolio = efficientPortfolio(data, spec, constraints)
     print(portfolio)
+    
+    }
 
     # Return Value:
     return()

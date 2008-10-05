@@ -30,17 +30,32 @@ solveRdonlp2 <-
     # Description:
     #   Portfolio interface to solver Rdonlp2
     
+    # Example:
+    #   data = .lppData; spec = .mvSpec; constraints = "LongOnly"
+    #   Data = portfolioData(data); mu = getMu(Data); Sigma = getSigma(Data)
+    #   IMPORTANT:
+    #   fn(x) and all its parameters must be assigned to .GlobalEnv
+    #   minRisk = function(x) { x %*% Sigma %*% x }
+    #   maxReturn = function(x) { x %*% mu }
+  
     # FUNCTION:   
 
     # Settings:
     Data = portfolioData(data, spec)
     nAssets = getNAssets(Data)
     
+        
+    assign("mu", getMu(Data), envir = .GlobalEnv)
+    assign("maxReturn", function(x) { x %*% mu })
+    
+    assign("Sigma", getSigma(Data), envir = .GlobalEnv)
+    assign("minRisk", function(x) { x %*% Sigma %*% x })
+    
     # Solve:
     if(nAssets == 2) {
 
         # Solve two Assets Portfolio Analytically:
-        # ... this is only thhought for 'unlimited' LongOnly Constraints
+        # ... this is only thought for 'unlimited' LongOnly Constraints
         # box and group constraints are discarded here.
         # ans = .mvSolveTwoAssets(data, spec, constraints)
             
@@ -52,7 +67,7 @@ solveRdonlp2 <-
         # Solve Multiassets Portfolio:
         ans = .rdonlp2(
             par = args$par,
-            fn = args$fun, 
+            fn = args$fn,
             par.lower = args$par.lower, 
             par.upper = args$par.upper, 
             A = args$A, 
@@ -90,25 +105,16 @@ function(data, spec, constraints)
     #   .rdonlp2Arguments(.lppData, .mvSpec, "LongOnly") 
     #   .rdonlp2Arguments(.lppData, .mvSpec, .BoxGroup)
     #   .rdonlp2Arguments(.lppData, .mvSpec, .CovBudgets)
-    #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))  
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "LongOnly")
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "BoxGroup") 
-    #   portfolioTest("MV", "minRisk", "solveRdonlp2", "CovBudget")   
+    #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))    
 
     DEBUG = FALSE
     
     # Settings:
     Data = portfolioData(data)
-    nAssets = getNAssets(Data)
-    mu <- getMu(Data)
-    Sigma <- getSigma(Data)
+    nAssets = getNAssets(Data)  
     targetReturn = getTargetReturn(spec)
+    fn = getOptimize(spec)
     
-    # Objective Function 'fn' to be optimized:
-    maxReturn <- function(x, mu) { x %*% mu }
-    minRisk <- function(x, Sigma) { x %*% Sigma %*% x }
-    fn = match.fun(getOptimize(spec))
-
     # Box Constrains:
     par.lower = minWConstraints(data, spec, constraints)
     par.upper = maxWConstraints(data, spec, constraints)
@@ -200,6 +206,9 @@ function(data, spec, constraints)
     #   Rdonlp2 Wrapper    
 	
 	# FUNCTION:
+	
+	# Settings:
+    fn = match.fun(fn)
 	
 	# Solve:
     optim <- Rdonlp2::donlp2(
