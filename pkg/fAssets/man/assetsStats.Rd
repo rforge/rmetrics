@@ -66,16 +66,12 @@ Schaefer J., Strimmer K. (2005);
 
 
 \examples{
-## berndtInvest -
-   X = as.timeSeries(data(berndtInvest))
-   
-   # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
-   select = c("CONTIL", "DATGEN", "TANDY", "DEC")
-   X = X[, select]
+## LPP -
+   LPP = as.timeSeries(data(LPP2005REC))[, 1:3]
+   colnames(LPP)
    
    # Compute Basic Statistics:
-   basicStats(X)
-
+   basicStats(LPP)
 }
 
 

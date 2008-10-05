@@ -22,30 +22,116 @@
 ################################################################################
 
 
-assetsTest <- 
-    function(x, FUN = "mvshapiroTest", title = NULL, description = NULL, ...)
+################################################################################
+# FUNCTION:                 ASSETS NORMALITY TESTS:
+#  assetsTest                Tests for multivariate Normal Assets
+#   method = "shapiro"       ... calling Shapiro test
+#   method = "energy"        ... calling E-Statistic (energy) test
+# FUNCTION:                 INTERNAL UTILITY FUNCTIONS:
+#  .mvenergyTest             Multivariate Energy Test
+#  .mvshapiroTest            Multivariate Shapiro Test   
+# REQUIREMENTS:             DESCRIPTION:  
+#  energy                    Contributed R-package "energy"
+#  boot                      Contributed R-package "boot"
+################################################################################
+
+
+assetsTest =
+function(x, method = c("shapiro", "energy"), Replicates = 100, 
+title = NULL, description = NULL)
 {
     # Description:
     #   Tests for multivariate Normal Assets
-
-    # Example:
-    #   assetsTest(x = assetsSim(100))
     
-    # Notes old Function call:
-    #   assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
-    #       title = NULL, description = NULL)
-
+    # Example:
+    #   .mvnormTest(x = assetsSim(100))
+    #   .mvnormTest(x = assetsSim(100), method = "e", Replicates = 99)
+    
     # FUNCTION:
-
+    
     # Test:
-    fun = match.fun(FUN)
-    test = fun(x, ...)
-
+    method = match.arg(method)
+    if (method == "shapiro") {
+        test = .mvshapiroTest(x)
+    } 
+    if (method == "energy") {
+        test = .mvenergyTest(x, Replicates = Replicates)
+    }
+    
     # Return Value:
-    test
+    test    
 }
 
 
+################################################################################
+
+
+.mvenergyTest =
+function(x, Replicates = 99, title = NULL, description = NULL)
+{
+    # Description:
+    #   Computes E-statistics test for multivariate variables
+    
+    # Note:
+    #   Reimplemented function, doesn't require the contributed 
+    #   R package energy, we only use the C Program here.
+    
+    # Source:
+    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and 
+    #   Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
+    #   License: GPL 2.0 or later
+    
+    # Example:
+    #   .mvenergyTest(x = assetsSim(100), 99)
+    
+    # FUNCTION:
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = series(x)
+    x = as.matrix(x)
+    
+    # Test: 
+    R = Replicates 
+    
+    # RVs:
+    n <- nrow(x)
+    d <- ncol(x)
+    ran.gen = function(x, y) return(matrix(rnorm(n * d), nrow = n, ncol = d))
+    
+    # Parametric Mini Boot:
+    strata = rep(1, n)
+    n <- nrow(x)
+    temp.str <- strata
+    strata <- tapply(1:n, as.numeric(strata))
+    t0 <- .mvnorm.e(x)
+    lt0 <- length(t0)
+    t.star <- matrix(NA, sum(R), lt0)
+    pred.i <- NULL
+    for(r in 1:R) t.star[r, ] <- .mvnorm.e(ran.gen(x, NULL))
+    
+    # Result:
+    test <- list(
+        statistic = c("E-Statistic" = t0),
+        p.value = 1 - mean(t.star < t0),
+        method = "Energy Test",
+        data.name = paste("x, obs ", n, ", dim ", d, ", reps ", R, sep = ""))
+    names(test$p.value) = ""
+    class(test) = "list" 
+    
+    # Add:
+    if (is.null(title)) title = test$method
+    if (is.null(description)) description = .description()
+    
+    # Return Value:
+    new("fHTEST",
+        call = match.call(),
+        data = list(x = x),
+        test = test,
+        title = title,
+        description = description)
+}
+
+  
 ################################################################################
 # Package: mvnormtest
 # Version: 0.1-6
@@ -58,25 +144,25 @@ assetsTest <-
 # Depends: stats
 
 
-mvshapiroTest <- 
-    function(x, title = NULL, description = NULL)
-{
+.mvshapiroTest = 
+function(x, title = NULL, description = NULL)
+{   
     # Description:
     #   Computes Shapiro's normality test for multivariate variables
-
+    
     # Note:
-    #   Reimplemented function, doesn't require the contributed R package
+    #   Reimplemented function, doesn't require the contributed R package 
     #   mvnormtest
-
-    # Author:
+    
+    # Author: 
     #   Slawomir Jarek
     #   License: GPL
-
+    
     # Example:
     #   .mvshapiroTest(x = assetsSim(100))
-
+    
     # FUNCTION:
-
+    
     # Transform:
     U = t(as.matrix(x))
 
@@ -96,95 +182,22 @@ mvshapiroTest <-
     test = shapiro.test(Z)
     names(test$p.value) = ""
     class(test) = "list"
-
+    
     # Add title and description:
     if (is.null(title)) title = "Multivariate Shapiro Test"
     if (is.null(description)) description = .description()
-
-    # Return Value:
-    new("fHTEST",
-        call = match.call(),
-        data = list(x = x),
-        test = test,
-        title = title,
-        description = description)
-}
-
-
-################################################################################
-
-
-.mvenergyTest <- 
-    function(x, Replicates = 99, title = NULL, description = NULL)
-{
-    # Description:
-    #   Computes E-statistics test for multivariate variables
-
-    # Arguments:
-    #   x - a timeSeries object or any other rectangular object which
-    #       can be tranformed by the function as.matrix into a numeric
-    #       matrix
-    #   Replicates - an integer value, the number of replicates to be
-    #       bootstrapped
     
-    # Note:
-    #   Reimplemented function, doesn't require the contributed
-    #   R package energy, we only use the C Program here.
-
-    # Source:
-    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and
-    #   Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
-    #   License: GPL 2.0 or later
-
-    # Example:
-    #   mvenergyTest(x = assetsSim(100))
-
-    # FUNCTION:
-
-    # Transform:
-    x = as.matrix(x)
-
-    # Test:
-    R = Replicates
-
-    # RVs:
-    n <- nrow(x)
-    d <- ncol(x)
-    ran.gen = function(x, y) return(matrix(rnorm(n * d), nrow = n, ncol = d))
-
-    # Parametric Mini Boot:
-    strata = rep(1, n)
-    n <- nrow(x)
-    temp.str <- strata
-    strata <- tapply(1:n, as.numeric(strata))
-    t0 <- .mvnorm.e(x)
-    lt0 <- length(t0)
-    t.star <- matrix(NA, sum(R), lt0)
-    pred.i <- NULL
-    for(r in 1:R) t.star[r, ] <- .mvnorm.e(ran.gen(x, NULL))
-
-    # Result:
-    test <- list(
-        statistic = c("E-Statistic" = t0),
-        p.value = 1 - mean(t.star < t0),
-        method = "Energy Test",
-        data.name = paste("x, obs ", n, ", dim ", d, ", reps ", R, sep = ""))
-    names(test$p.value) = ""
-    class(test) = "list"
-
-    # Add:
-    if (is.null(title)) title = test$method
-    if (is.null(description)) description = .description()
-
     # Return Value:
-    new("fHTEST",
-        call = match.call(),
-        data = list(x = x),
-        test = test,
-        title = title,
+    new("fHTEST", 
+        call = match.call(), 
+        data = list(x = x), 
+        test = test, 
+        title = title, 
         description = description)
 }
 
 
 ################################################################################
+
+
 

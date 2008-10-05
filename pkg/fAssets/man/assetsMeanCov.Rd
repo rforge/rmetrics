@@ -3,13 +3,6 @@
 
 \alias{assetsMeanCov}
 
-\alias{covEstimate}
-\alias{mcdEstimate}
-\alias{mveEstimate}
-
-\alias{kendallEstimate}
-\alias{spearmanEstimate}
-
 
 \title{Estimation of Mean and Covariances of Asset Sets}
 
@@ -24,31 +17,27 @@
     
 
 \usage{
-assetsMeanCov(x, FUN = "covEstimate", check = TRUE, force = TRUE, ...)
-
-covEstimate(x)
-mcdEstimate(x)
-mveEstimate(x)
-
-kendallEstimate(x)
-spearmanEstimate(x)
+assetsMeanCov(x, 
+    method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
+    check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, 
+    alpha = 1/2, ...)
 }
+
 
 \arguments{
   
-
-    %item{alpha}{ 
-        % when \code{methode="MCD"}, a numeric parameter controlling the size 
-        % of the subsets over which the determinant is minimized, i.e., 
-        % \code{alpha*n} observations are used for computing the determinant. 
-        % Allowed values are between 0.5 and 1 and the default is 0.5.
-        % For details we refer to the help pages of the R-package
-        % \code{robustbase}.
-        % }
-    %item{baggedR}{
-        % when \code{methode="bagged"}, an integer value, the number of 
-        % bootstrap replicates, by default 100.
-        % }
+\item{alpha}{ 
+        when \code{methode="MCD"}, a numeric parameter controlling the size 
+        of the subsets over which the determinant is minimized, i.e., 
+        \code{alpha*n} observations are used for computing the determinant. 
+        Allowed values are between 0.5 and 1 and the default is 0.5.
+        For details we refer to the help pages of the R-package
+        \code{robustbase}.
+        }
+    \item{baggedR}{
+        when \code{methode="bagged"}, an integer value, the number of 
+        bootstrap replicates, by default 100.
+        }
     \item{check}{
         a logical flag. Should the covariance matrix be tested to be
         positive definite? By default \code{TRUE}.
@@ -57,10 +46,9 @@ spearmanEstimate(x)
         a logical flag. Should the covariance matrix be forced to be
         positive definite? By default \code{TRUE}.
         }
-    \item{FUN}{
-        a character string, which determines how to compute the mean and 
-        the covariance matix. 
-        If \code{method="cov"} is selected then the standard 
+    \item{method}{
+        a character string, whicht determines how to compute the covariance
+        matix. If \code{method="cov"} is selected then the standard 
         covariance will be computed by R's base function \code{cov}, if 
         \code{method="shrink"} is selected then the covariance will be
         computed using the shrinkage approach as suggested in Schaefer and
@@ -68,26 +56,30 @@ spearmanEstimate(x)
         covariance will be calculated from the bootstrap aggregated (bagged)
         version of the covariance estimator.\cr
         }  
-    %item{sigmamu}{ 
-        % when \code{methode="OGK"}, a function that computes univariate robust 
-        % location and scale estimates. By default it should return a single 
-        % numeric value containing the robust scale (standard deviation) 
-        % estimate. When \code{mu.too} is true (the default), \code{sigmamu()} 
-        % should return a numeric vector of length 2 containing robust location 
-        % and scale estimates. See \code{scaleTau2}, \code{s_Qn}, \code{s_Sn}, 
-        % \code{s_mad} or \code{s_IQR} for examples to be used as \code{sigmamu} 
-        % argument. 
-        % For details we refer to the help pages of the R-package
-        % \code{robustbase}.
-        % }
+    \item{sigmamu}{ 
+        when \code{methode="OGK"}, a function that computes univariate robust 
+        location and scale estimates. By default it should return a single 
+        numeric value containing the robust scale (standard deviation) 
+        estimate. When \code{mu.too} is true (the default), \code{sigmamu()} 
+        should return a numeric vector of length 2 containing robust location 
+        and scale estimates. See \code{scaleTau2}, \code{s_Qn}, \code{s_Sn}, 
+        \code{s_mad} or \code{s_IQR} for examples to be used as \code{sigmamu} 
+        argument. 
+        For details we refer to the help pages of the R-package
+        \code{robustbase}.
+        }
     \item{x}{
-        a \code{timeSeries} object or any other rectangular object which 
-        can be converted by the function \code{as.matrix()} into a matrix 
-        object. 
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }   
     \item{\dots}{
-        optional arguments to be passed to the underlying estimators
-        \code{FUN}.
+        [assetsMeanCov] - \cr
+        optional arguments to be passed to the underlying estimators. 
+        For details we refer to the manual pages of the functions 
+        \code{cov.rob} for arguments \code{"mve"} and \code{mcd"} in 
+        the R package \code{MASS}, to the functions
+        \code{covMcd} and \code{covOGK} in the R package \code{robustbase}.
         }
         
 }
@@ -104,52 +96,6 @@ spearmanEstimate(x)
     
     Note, the third entry has the same value as the first, and the second
     the same as the fourth entry.
-  
-}
-
-
-\details{
-
-    \bold{Assets Mean and Covariance:}
-  
-    The function \code{assetsMeanCov} computes the mean vector and 
-    covariance matrix of an assets set. The function \code{FUN} determines 
-    which estimator should be used.
-    
-    Three estimators are availalble in this package: The sample estimator
-    \code{covEstimate} and the two robust estimators \code{mcdEstimate}
-    and \code{mveEstimate} based on the robust estimators from the 
-    recommende MASS package.
-    
-    Further Estimators are available in the Rmetrics addon package.
-    "MCD" and "OGK" based on the robust estimators from the contributed 
-    package \code{robustbase}, or "shrink" based on the shrinkage estimator
-    from the contributed package \code{corpcor} among others.
-    
-    
-    \bold{How to add your own estimator?}
-    
-    You can add your alternative function to compute mean and covariance.
-    This is is a function of the kind \code{myEstimator(x, ...)} which
-    returns a list with at least three named entries, the mean \code{mu}, 
-    the covariance \code{Sigma} and a charactar control vector with at 
-    at least one element, the name of the function \code{control="myFunction"}.
-    
-    Here comes an example how to implement the MCD Estimator from the 
-    contributed R package \code{robustbase}:
-    
-    \preformatted{
-      require(robustbase)
-      myEstimate <- function(x, alpha = 0.5)
-        \{
-        estimate = robustbase::covMcd(as.matrix(x), alpha = alpha)
-        list(
-            mu = estimate$center,
-            Sigma = Sigma = estimate$cov, 
-            control = c("myEstimate", as.character(alpha))
-        \}
-      assetsMeanCov(x = assetsSim(100), FUN = "myEstimate")
-    }
   
 }
 
@@ -189,21 +135,15 @@ Schaefer J., Strimmer K. (2005);
 
 
 \examples{
-## berndtInvest -
-   data(berndtInvest)
+## LPP -
+   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+   colnames(LPP)
    
-   # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
-   select = c("CONTIL", "DATGEN", "TANDY", "DEC")
+## Sample Covariance Estimation:
+   assetsMeanCov(LPP)
    
-   # Convert into a timeSeries object:
-   berndtAssets.tS = as.timeSeries(berndtInvest)[, select]
-   head(berndtAssets.tS)
-   
-## Classical Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS)
-   
-## MASS mcd Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, FUN = "mcdEstimate")
+## MASS Robust mcd Covariance Estimation:
+   assetsMeanCov(LPP, "mcd")
 }
 
 

@@ -40,9 +40,8 @@ assetsLPM =
     #   optimization.
     
     # Example:
-    #   DJ = 100 * returns(as.timeSeries(data(DowJones30)))
-    #   DJ = DJ[, c("CAT", "IBM", "GE", "JPM")]
-    #   assetsLPM(DJ)
+    #   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   assetsLPM(LPP)
     
     # FUNCTION:
     

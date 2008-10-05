@@ -40,7 +40,7 @@ function()
     assetsLPM(x = tS, tau = colMeans(tS), a = 1)
 
 
-# Return Value:
+    # Return Value:
     return()
 }
 

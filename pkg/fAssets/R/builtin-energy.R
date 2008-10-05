@@ -16,14 +16,13 @@
 
 
 ################################################################################
-# REQUIREMENTS:             DESCRIPTION:
-#  energy                    Contributed R-package "energy"
-#  boot                      Contributed R-package "boot"
+# FUNCTION:             DESCRIPTION:
+#  .mvnorme
 ################################################################################
 
 
 .mvnorm.e <-
-function(x)
+    function(x)
 {
     z <- scale(x, scale = FALSE)
     ev <- eigen(var(x), symmetric = TRUE)
@@ -31,7 +30,7 @@ function(x)
     y <- z %*% (P %*% diag(1 / sqrt(ev$values)) %*% t(P))
     e <- .C("mvnEstat", y = as.double(t(y)), byrow = as.integer(TRUE),
         nobs = as.integer(nrow(x)), dim = as.integer(ncol(x)),
-        stat = as.double(0), PACKAGE = "fAssets2")$stat
+        stat = as.double(0), PACKAGE = "fAssets")$stat
 
     # Return Value:
     e

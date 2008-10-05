@@ -62,24 +62,6 @@ assetsLPM(x, tau, a, \dots)
 }
 
 
-%\details{
-%
-%    \bold{Assets Lower Partial Moments:}
-%    \cr\cr   
-%    The function \code{assetsLPM} computes xxx.
-%  
-%}
-
-
-%\references{
-%    
-%Breiman L. (1996); 
-%    \emph{Bagging Predictors},
-%    Machine Learning 24, 123--140.
-%
-%}
-
-
 \seealso{
 
     \code{assetsMeanCov}.
@@ -95,7 +77,11 @@ assetsLPM(x, tau, a, \dots)
 
 
 \examples{
-## 
+## LPP -
+   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+   
+   # Lower Partial Moments:
+   assetsLPM(LPP)
 }
 
 

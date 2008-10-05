@@ -136,9 +136,6 @@ assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 
 ## assetsMomentsPlot -
    assetsMomentsPlot(x, title = "", description = "")
-
-## assetsNIGFitPlot -
-   assetsNIGFitPlot(x, title = "", description = "")
 }
 
 

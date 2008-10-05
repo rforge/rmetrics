@@ -304,23 +304,14 @@ Hothorn T., Bretz F., Genz A. (2001);
 
 \examples{
 
-## berndtInvest -
-   data(berndtInvest)
-   # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
-   select = c("CONTIL", "DATGEN", "TANDY", "DEC")
-   # Convert into a timeSeries object:
-   berndtAssets.tS = as.timeSeries(berndtInvest)[, select]
-   head(berndtAssets.tS)
-   # Plot Prices:
-   prices = apply(berndtAssets.tS, 2, cumsum)
-   ts.plot(prices, main = "Berndt Assets", 
-     xlab = "Number of Months", ylab = "Price", col = 1:4)
-   Legend = colnames(prices)
-   legend(0, 3, legend = Legend, pch = "----", col = 1:4, cex = 1)
+## LPP -
+   # Percentual Returns:
+   LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
+   colnames(LPP)
    
 ## assetsFit -
    # Fit a Skew-Student-t Distribution:
-   fit = assetsFit(berndtAssets.tS)
+   fit = assetsFit(LPP)
    print(fit)
    # Show Model Slot:
    print(fit@model)
@@ -328,15 +319,10 @@ Hothorn T., Bretz F., Genz A. (2001);
 ## assetsSim -
    # Simulate set with same statistical properties:
    set.seed(1953)
-   berndtAssetsSim = assetsSim(n = 120, dim = 4, model = fit@model)
-   colnames(berndtAssetsSim) = paste(select, "SIM", sep = ".")
-   head(berndtAssetsSim)
-   pricesSim = apply(berndtAssetsSim, 2, cumsum)
-   ts.plot(pricesSim, main = "Berndt Assets Simulated", 
-     xlab = "Number of Months", ylab = "Simulated Price", col = 1:4)
-   Legend = colnames(pricesSim)
-   legend(0, 6, legend = Legend, pch = "----", col = 1:4, cex = 1)
-   
+   lppSim = assetsSim(n = nrow(LPP), dim = ncol(LPP), model = fit@model)
+   colnames(lppSim) <- colnames(LPP)
+   rownames(lppSim) <- rownames(LPP)
+   head(lppSim)
 }
 
 

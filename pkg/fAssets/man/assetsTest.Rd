@@ -26,9 +26,8 @@
     
 
 \usage{
-assetsTest(x, FUN = "mvshapiroTest", title = NULL, description = NULL, \dots)
-
-mvshapiroTest(x, title = NULL, description = NULL)
+assetsTest(x, method = c("shapiro", "energy"), Replicates = 100, 
+    title = NULL, description = NULL)
 }
 
 
@@ -39,20 +38,19 @@ mvshapiroTest(x, title = NULL, description = NULL)
         a character string, assigning a brief description to the
         returned object.
         }
-    \item{FUN}{
+    \item{method}{
         a character string, which allows to select the test.
-        If \code{FUN="mvshapiroTest"} then Shapiro's multivariate Normality 
+        If \code{method="shapiro"} then Shapiro's multivariate Normality 
         test will be applied as implemented in R's contributed package
-        \code{mvnormtest}. 
-        % If \code{method="energy"} then the E-statistic (energy) for 
-        % testing multivariate Normality will be used as proposed 
-        % and implemented by Szekely and Rizzo [2005] using parametric 
-        % bootstrap.
+        \code{mvnormtest}. If \code{method="energy"} then the E-statistic 
+        (energy) for testing multivariate Normality will be used as proposed 
+        and implemented by Szekely and Rizzo [2005] using parametric 
+        bootstrap.
         } 
-    %item{Replicates}{
-        % an integer value, the number of bootstrap replicates, by
-        % default 100. This value is only used if \code{method="energy"}.
-        % }
+    \item{Replicates}{
+        an integer value, the number of bootstrap replicates, by
+        default 100. This value is only used if \code{method="energy"}.
+        }
     \item{title}{
         a character string, assigning a title to an 
         \code{"fASSETS"} object.
@@ -62,21 +60,7 @@ mvshapiroTest(x, title = NULL, description = NULL)
         function \code{as.matrix()} into a matrix object, e.g. like an 
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }   
-    \item{\dots}{
-        optional arguments passed to the function \code{FUN}.
-        }
         
-}
-
-
-\note{
-    
-    The contributed package \code{energy} contains an alternative function
-    for testing multivariate normality, see the references given below.
-     
-    An implementation of the \code{mvenergyTest} which was previously 
-    available through this package as an alternative to the Shapiro test 
-    has been moved to the Rmetrics Addon package. 
 }
 
 
@@ -121,12 +105,15 @@ Szekely G.J. (1989);
 
 
 \examples{
-## berndtInvest -
-   data(berndtInvest)
-   # Exclude Date, Market and Interest Rate columns from data frame,
-   berndtAssets = berndtInvest[, -c(1, 11, 18)]
-   rownames(berndtAssets) = berndtInvest[, 1]
-   head(berndtAssets)  
+## LPP -
+   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+   colnames(LPP)
+   
+   # Multivariate Shapiro Test:
+   assetsTest(LPP, "shapiro")
+   
+   # Multivariate Energy Test:
+   assetsTest(LPP, "energy")
 }
 
 

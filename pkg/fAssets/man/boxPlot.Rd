@@ -66,15 +66,15 @@ assetsBoxPercentilePlot(x, col = "bisque", \dots)
 
 
 \examples{
-## LPP2005REC -
-   x = as.timeSeries(data(LPP2005REC))
-   head(x)
+## LPP -
+   LPP = as.timeSeries(data(LPP2005REC))
+   head(LPP)
    
 ## assetsBoxPlot - 
-   assetsBoxPlot(x)
+   assetsBoxPlot(LPP)
        
 ## assetsBoxPercentilePlot - 
-   assetsBoxPercentilePlot(x)   
+   assetsBoxPercentilePlot(LPP)   
 }
 
 

@@ -35,7 +35,7 @@
 \usage{
 assetsPairsPlot(x, labels = TRUE, \dots)
 assetsCorgramPlot(x, labels = TRUE, 
-    method = c("pie", "shade", "hist"), \dots)
+    method = c("pie", "shade"), \dots)
 assetsCorTestPlot(x, labels = TRUE, \dots)
 assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"), 
     use = c("pearson", "kendall", "spearman"), abbreviate = 3, \dots)
@@ -93,20 +93,21 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
 
 \examples{
 ## LPP2005REC -
-   x = as.timeSeries(data(LPP2005REC))
-   head(x)
+   LPP = as.timeSeries(data(LPP2005REC))
+   head(LPP)
    
 ## assetsPairsPlot - 
-   assetsPairsPlot(x)
+   assetsPairsPlot(LPP)
   
 ## assetsCorgramPlot -  
-   assetsCorgramPlot(x)
+   assetsCorgramPlot(LPP, method = "pie")
+   assetsCorgramPlot(LPP, method = "shade")
    
 ## assetsCorTestPlot -
-   assetsCorTestPlot(x)
+   assetsCorTestPlot(LPP)
    
 ## assetsCorImagePlot -
-   assetsCorImagePlot(x)    
+   assetsCorImagePlot(LPP)    
 }
 
 

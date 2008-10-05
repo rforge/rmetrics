@@ -89,14 +89,6 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 }
 
 
-%\references{
-%    
-%N. N. (1989); 
-%    \emph{Title},
-%     Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
-%
-%}
-
 
 \seealso{
 
@@ -113,20 +105,13 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 
 
 \examples{
-## berndtInvest -
-   data(berndtInvest)
-   # Market and Interest Rate columns from data frame,
-   berndtAssets.tS = as.timeSeries(berndtInvest)[, -c(10, 17)]
-   head(berndtAssets.tS)
+## LPPt -
+   LPP = as.timeSeries(data(LPP2005REC))
+   colnames(LPP)
     
 ## assetsSelect -
    # Hierarchical Clustering:
-   clustered = assetsSelect(berndtAssets.tS, doplot = FALSE)
-   clusteredAssets.tS = berndtAssets.tS[, c(clustered$order[1:4])]
-   colnames(clusteredAssets.tS)
-   # Cluster Dendogram:
-   par(mfrow = c(1, 1))
-   plot(clustered)  
+   assetsSelect(LPP)  
 }
 
 

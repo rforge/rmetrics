@@ -4,6 +4,7 @@
 
 \alias{assetsDendrogramPlot}
 \alias{assetsCorEigenPlot}
+\alias{assetsTreePlot}
 
 
 \title{Assets Similarity Plots}
@@ -22,7 +23,8 @@
    
     % SIMILARITY PLOTS:
     \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram, \cr
-    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues. }
+    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
+    \code{assetsTreePlot} \tab Displays minimal spanning tree plot. }
 }
 
 
@@ -33,9 +35,8 @@ assetsDendrogramPlot(x, labels = TRUE, title = TRUE, box = TRUE,
 assetsCorEigenPlot(x, labels = TRUE, title = TRUE, box = TRUE,
     method = c("pearson", "kendall", "spearman"), \dots)
     
-% moved to Rmetrics Addon:
-%assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
-%    method = "euclidian", seed = NULL, \dots)
+assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
+    method = "euclidian", seed = NULL, \dots)
 }
 
 
@@ -55,19 +56,19 @@ assetsCorEigenPlot(x, labels = TRUE, title = TRUE, box = TRUE,
         for the function \code{assetsCorgramPlot} a character string, 
         the type of graph used in the lower panel, for the function
         \code{assetsCorEigenPlot} a character string, the method used 
-        to compute the correlation matrix.
-        % [assetsTreePlot] - \cr
-        % a character string, the method used to compute the distance
-        % matrix, see function \code{dist}.
-        }   
+        to compute the correlation matrix.\cr
+        [assetsTreePlot] - \cr
+        a character string, the method used to compute the distance
+        matrix, see function \code{dist}.
+        } 
+    \item{seed}{
+        an integer value setting the seed in the computation of the 
+        sample ranks.
+        }
     \item{title}{
         a logical flag, should a default title be added? By default 
         \code{TRUE}.
-        }
-    %item{seed}{
-        % an integer value setting the seed in the computation of the 
-        % sample ranks.
-        % }
+        }  
     \item{x}{
         any rectangular time series object which can be converted by the 
         function \code{as.matrix()} into a matrix object, e.g. like an 
@@ -112,6 +113,10 @@ assetsCorEigenPlot(x, labels = TRUE, title = TRUE, box = TRUE,
 
 ## assetsCorEigenPlot -
    assetsCorEigenPlot(x)
+   
+## assetsTreePlot -
+   assetsTreePlot(x)
+   assetsTreePlot(x)
 }
 
 

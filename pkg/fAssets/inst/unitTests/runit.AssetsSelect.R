@@ -38,6 +38,8 @@
 test.assetsSelectHClust =
 function()
 {
+    if (FALSE) {
+    
     # Hierarchical Clustering:
     # Select the 4 most dissimilar assets from Berndt's data set
 
@@ -89,6 +91,9 @@ function()
     legend(0, 250, legend = colnames(myAssets), pch = "----", col = 1:4)
     title(main = "Cumulated Returns", ylab = "Cumulated Returns")
     abline(h = 0, lty = 3)
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -103,6 +108,8 @@ function()
 {
     # K-Means Clustering:
 
+    if (FALSE) {
+    
     # Load Data
     berndtInvest = as.timeSeries(data(berndtInvest))
     allAssets = 100 * berndtInvest[, -c(1, 10, 17)]
@@ -113,6 +120,9 @@ function()
     #   kmeans.maxiter = 10, doplot = TRUE, ...)
     clustered = assetsSelect(t(allAssets), method = "kmeans",
         kmeans.centers = 4, doplot = TRUE)
+             
+    }
+    NA
 
     # Return Value:
     return()
@@ -126,6 +136,7 @@ test.assetsSelectKMeans =
 function()
 {
     if (FALSE) {
+    
     require(cluster)
 
 
@@ -208,6 +219,7 @@ function()
     .assetsSelect(X, 4, "clara", doplot = FALSE)
 
     }
+    
     NA
 
     # Return Value:

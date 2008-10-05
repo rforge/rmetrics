@@ -54,10 +54,11 @@
 test.assetsSeriesPlot =
 function()
 { 
-    X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2))
+    LPP = as.timeSeries(data(LPP2005REC))
+    par(mfrow = c(3, 3))
     par(ask = FALSE)
-    assetsSeriesPlot(X[, c(2, 4, 11, 13)])
+    
+    assetsSeriesPlot(LPP)
     
     # Return Value:
     return()
@@ -70,10 +71,11 @@ function()
 test.assetsHistPlot =
 function()
 { 
-    X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2))
+    LPP = as.timeSeries(data(LPP2005REC))
+    par(mfrow = c(3, 3))
     par(ask = FALSE)
-    assetsHistPlot(X[, c(2, 4, 11, 13)])
+    
+    assetsHistPlot(LPP)
     
     # Return Value:
     return()
@@ -86,10 +88,11 @@ function()
 test.assetsQQNormPlot =
 function()
 { 
-    X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2))
+    LPP = as.timeSeries(data(LPP2005REC))
+    par(mfrow = c(3, 3))
     par(ask = FALSE)
-    assetsQQNormPlot(X, which = c(2, 4, 11, 13))          ### CHECK which arg !!
+    
+    assetsQQNormPlot(LPP)          
     
     # Return Value:
     return()
@@ -102,23 +105,12 @@ function()
 test.assetsBoxPlot =
 function()
 { 
-    # Load Data:
     LPP = as.timeSeries(data(LPP2005REC))
-    VAN = as.timeSeries(data(vanIndices))
-    
-    # Graph Frame:
-    par(mfrow = c(2, 2))
+    par(mfrow = c(3, 3))
     par(ask = FALSE)
     
     # Plot:
-    assetsBoxPlot(LPP[, 1:6])
-    assetsBoxPlot(LPP[, 1:6], main = "LPP", pch = 19)     
-    
-    # Plot:
-    par(mfrow = c(1, 1), las = 2, oma = c(9, 0, 0, 0))
-    assetsBoxPlot(VAN)
-    title(main = "Van Hedge Fund Indices")
-    par(las = 1, oma = c(0, 0, 0, 0))
+    assetsBoxPlot(LPP)   
     
     # Return Value:
     return()
@@ -131,16 +123,13 @@ function()
 test.assetsQQNormPlot =
 function()
 { 
-    # Load Data:
     LPP = as.timeSeries(data(LPP2005REC))
-    
-    # Graph Frame:
-    par(mfrow = c(2, 2))
+    par(mfrow = c(3, 3))
     par(ask = FALSE)
     
+  
     # Plot:
-    assetsBoxPercentilePlot(LPP[, 1:6])
-    assetsBoxPercentilePlot(LPP[, 1:6], main = "LPP2005")
+    assetsBoxPercentilePlot(LPP)
     
     # Return Value:
     return()
@@ -153,14 +142,12 @@ function()
 test.assetsPairsPlot =
 function()
 { 
-    X = as.timeSeries(data(berndtInvest))
-    
-    # Graph Frame:
-    par(mfrow = c(2,2))
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    par(mfrow = c(1, 1))
     par(ask = FALSE)
     
     # Plot:
-    assetsPairsPlot(X[, c(2, 4, 11, 13)])
+    assetsPairsPlot(LPP)
     
     # Return Value:
     return()
@@ -173,15 +160,12 @@ function()
 test.assetsCorTestPlot =
 function()
 { 
-    # Load data:
-    X = as.timeSeries(data(berndtInvest))
-    
-    # Graph Frame:
-    par(mfrow = c(2,2))
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    par(mfrow = c(1, 1))
     par(ask = FALSE)
     
     # Plot:
-    assetsCorTestPlot(X[, c(2, 4, 11, 13)], scale = 0.7)
+    assetsCorTestPlot(LPP)
     
     # Return Value:
     return()
@@ -194,12 +178,8 @@ function()
 test.assetsCorgramPlot =
 function()
 { 
-    # Pictet Pension Fund Data Sets - Use Percentage Returns:
-    LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    head(LPP)
-    
-    # Graph Frame:
-    par(mfrow = c(1, 1)) 
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    par(mfrow = c(1, 1))
     par(ask = FALSE)
     
     # Plot:
@@ -216,17 +196,12 @@ function()
 test.assetsCorEigenPlot =
 function()
 { 
-    # Pictet Pension Fund Data Sets - Use Percentage Returns:
-    LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    DJ30 = as.timeSeries(data(DowJones30))
-    
-    # Graph Frame:
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
     par(mfrow = c(1, 1))
     par(ask = FALSE)
     
     # Plot:
     assetsCorEigenPlot(LPP) 
-    assetsCorEigenPlot(DJ30) 
     
     # Return Value:
     return()
@@ -239,21 +214,12 @@ function()
 test.assetsTreePlot =
 function()
 { 
-    # moved to Rmetrics Addon package 
-    if (FALSE) {
-        
-        # Load Data:
-        DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
-        LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     
-        # Graph Frame:
-        par(mfrow = c(1, 1))
-    
-        # Plot:
-        assetsTreePlot(DJ30)
-        assetsTreePlot(LPP2005)
-        
-    }
+    # Plot:
+    assetsTreePlot(LPP)
     
     # Return Value:
     return()
@@ -266,16 +232,12 @@ function()
 assetsDendogramPlot =
 function()
 { 
-    # Load Data:
-    DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
-    LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
-
-    # Graph Frame:
+    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
     par(mfrow = c(1, 1))
+    par(ask = FALSE)
 
     # Plot:   
-    assetsDendrogramPlot(DJ30)
-    assetsDendrogramPlot(LPP2005)                      
+    assetsDendrogramPlot(LPP)                      
     
     # Return Value:
     return()

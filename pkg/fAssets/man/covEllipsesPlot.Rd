@@ -44,13 +44,13 @@ covEllipsesPlot(x = list(), \dots)
 
 
 \examples{
-## data -
+## LPP -
    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
    head(LPP)
    
 ## cov - 
    Cov = cov(LPP)
-   robustCov = mcdEstimate(LPP)$Sigma
+   robustCov = assetsMeanCov(LPP, "MCD")$Sigma
    
 ## covEllipsesPlot -
    covEllipsesPlot(list(Cov, robustCov))  

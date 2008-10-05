@@ -37,24 +37,9 @@
 test.assetsTest <- 
     function()
 { 
-    # default Method:
+    # Default Method:
     x = assetsSim(100)
     assetsTest(x)
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.mvshapiroTest <- 
-    function()
-{ 
-    # default Method:
-    x = assetsSim(100)
-    mvshapiroTest(x)
 
     # Return Value:
     return()

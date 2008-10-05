@@ -21,7 +21,7 @@
 ################################################################################
 
 
-.assetsTreePlot <-
+assetsTreePlot <-
     function(x, labels = TRUE, title = TRUE, box = TRUE,
     method = "euclidian", seed = NULL, ...)
 {
