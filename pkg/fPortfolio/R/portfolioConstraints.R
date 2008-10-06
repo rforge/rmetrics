@@ -267,7 +267,7 @@ eqsumWConstraints <-
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
+    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
     #   constraints = "eqsumW[1:6]=1"
     #   eqsumWConstraints(data, spec, constraints)
     #   eqsumWConstraints(data, spec, constraints = "LongOnly")
@@ -280,7 +280,7 @@ eqsumWConstraints <-
     targetReturn = getTargetReturn(spec)[1]
     if (is.null(targetReturn)) {
         targetReturn = NA
-        warning("Target Return is Missing")
+        stop("Target Return is Missing")
     }
        
     # Get Specifications:
@@ -353,7 +353,7 @@ minsumWConstraints <-
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
+    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
     #   constraints = c("minsumW[2:3]=0.2", "minsumW[c(1,4:6)]=0.2")
     #   minsumWConstraints(data, spec, constraints)   
     #   minsumWConstraints(data, spec)
@@ -427,7 +427,7 @@ maxsumWConstraints <-
     
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   spec = portfolioSpec()
+    #   spec = portfolioSpec(); setTargetReturn(spec) = mean(data)
     #   constraints = c("maxsumW[2:3]=0.7", "maxsumW[c(1,4:6)]=0.8")
     #   maxsumWConstraints(data, spec, constraints) 
     #   maxsumWConstraints(data, spec)      

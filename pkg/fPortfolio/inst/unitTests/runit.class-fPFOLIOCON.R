@@ -26,8 +26,8 @@
 ################################################################################
 # FUNCTION:
 #  test.fPFOLIOCON
-#  test.show.fPFOLIOCON.Short
-#  test.show.fPFOLIOCON.LongOnly
+#  test.portfolioConstraints.Short
+#  test.portfolioConstraints.LongOnly
 ################################################################################
 
 
@@ -55,24 +55,26 @@ test.fPFOLIOCON <-
 # ------------------------------------------------------------------------------
 
 
-test.show.fPFOLIOCON.Short <- 
+test.portfolioConstraints.Short <- 
     function()
 {  
-    # Constraints:
-    constraints = "Short"
    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
+
+    # Spec:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(data)
     
-    ## DW
-    ## Although this is not neede in general, we should set the
-    ## box and group constraints properly to +/- Inf !
+    # Constraints:
+    constraints = "Short"
     
     # As Object:
-    portfolioConstraints(data, spec = portfolioSpec(), constraints)
-   
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
+    
     # Return Value:
     return()
 }
@@ -81,20 +83,25 @@ test.show.fPFOLIOCON.Short <-
 # ------------------------------------------------------------------------------
 
 
-test.show.fPFOLIOCON.LongOnly <-  
+test.portfolioConstraints.LongOnly <-  
     function()
 {  
-    # Constraints:
-    constraints = "LongOnly"
-   
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
+
+    # Spec:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(data)
+    
+    # Constraints:
+    constraints = "LongOnly"
     
     # As Object:
-    portfolioConstraints(data, spec = portfolioSpec(), constraints)
-   
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
+    
     # Return Value:
     return()
 }

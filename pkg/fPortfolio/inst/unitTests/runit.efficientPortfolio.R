@@ -101,6 +101,8 @@ test.efficientPortfolio.MV.LongOnly <-
 test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
     function()
 {
+    if (FALSE) {
+    
     # This requires the Rdonlp2 Package:
     if (require(Rdonlp2)) {
 
@@ -126,6 +128,9 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
         print(getSolver(portfolio))
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -138,6 +143,8 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
 test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
     function()
 {
+    if (FALSE) {
+    
     # This requires the Rdonlp2 Package:
     if (require(Rdonlp2)) {
 
@@ -160,6 +167,9 @@ test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
         portfolio = efficientPortfolio(data, spec, constraints)
         print(portfolio)
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -225,7 +235,6 @@ test.efficientPortfolio.MV.BoxConstraints <-
 
 
 ################################################################################
-# LPP
 
 
 test.efficientPortfolio.LPM.LongOnly <-
@@ -236,18 +245,12 @@ test.efficientPortfolio.LPM.LongOnly <-
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
-    # Estimator:
-    lpmEstimator <-
-    function(data, spec) {
-        mu <- colMeans(data)
-        Sigma <- assetsLPM(data, tau = colMeans(data), a = 1.5)$Sigma
-        list(mu = mu, Sigma = Sigma)
-    }
-
     # CVaR Specification:
     spec = portfolioSpec()
-    setType(spec) = "LPP"
+    setType(spec) = "LPM"
     setEstimator(spec) <- "lpmEstimator"
+    spec@model$param$tau = colMeans
+    spec@model$param$a = 1.5
     setTargetReturn(spec) = mean(series(data))
     print(spec)
 
@@ -265,7 +268,6 @@ test.efficientPortfolio.LPM.LongOnly <-
 
 
 ################################################################################
-# CVAR
 
 
 test.efficientPortfolio.CVaR.LongOnly <-

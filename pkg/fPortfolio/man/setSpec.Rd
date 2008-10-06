@@ -87,7 +87,7 @@ setTrace(spec) <- value
 
     %\item{mu}{a vector of assets means.}
     %\item{Sigma}{a matix of assets covariances.}
-    \item{x}{a numeric vector of weights.}
+    %\item{x}{a numeric vector of weights.}
         
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 

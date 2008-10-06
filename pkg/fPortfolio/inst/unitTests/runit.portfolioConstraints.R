@@ -44,6 +44,7 @@ test.portfolioConstraints.LongOnly <-
     
     # Set Default Specifications:
     spec = portfolioSpec() 
+    setTargetReturn(spec) = mean(data)
     print(spec)
     
     # Constraints:
@@ -51,8 +52,8 @@ test.portfolioConstraints.LongOnly <-
     print(constraints)
     
     # Set Portfolio Constraints:
-    portfolio = portfolioConstraints(data, spec, constraints)
-    print(portfolio)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
     
     # Return Value:
     return()
@@ -68,18 +69,20 @@ test.portfolioConstraints.Short <-
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    print(head(data))
     
     # Set Default Specifications:
     spec = portfolioSpec() 
-    spec
+    setTargetReturn(spec) = mean(data)
+    print(spec)
     
     # Constraints:
     constraints = "Short"
-    constraints
+    print(constraints)
     
     # Set Portfolio Constraints:
-    portfolioConstraints(data, spec, constraints)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
     
     # Return Value:
     return()
@@ -99,6 +102,7 @@ test.portfolioConstraints.boxConstraints <-
    
     # Set Default Specifications:
     spec = portfolioSpec() 
+    setTargetReturn(spec) = mean(data)
     spec
    
     # Constraints:
@@ -106,7 +110,8 @@ test.portfolioConstraints.boxConstraints <-
     constraints
    
     # Set Portfolio Constraints:
-    portfolioConstraints(data, spec, constraints)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
    
     # Return Value:
     return()
@@ -126,6 +131,7 @@ test.portfolioConstraints.boxgroupConstraints <-
     
     # Set Default Specifications:
     spec = portfolioSpec() 
+    setTargetReturn(spec) = mean(data)
     spec
     
     # Constraints:
@@ -134,7 +140,8 @@ test.portfolioConstraints.boxgroupConstraints <-
         "minsumW[1:2]=0.2", "maxsumW[3:4]=0.8")
     
     # Set Portfolio Constraints:
-    portfolioConstraints(data, spec, constraints)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
     
     # Return Value:
     return()
@@ -154,13 +161,15 @@ test.portfolioConstraints.riskBudgetsConstraints <-
     
     # Set Default Specifications:
     spec = portfolioSpec() 
+    setTargetReturn(spec) = mean(data)
     spec
     
     # Constraints:
     constraints = c("minB[1:4]=runif(4, 0, 0.2)", "maxB[1:4]=0.9")
     
     # Set Portfolio Constraints:
-    portfolioConstraints(data, spec, constraints)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
     
     # Return Value:
     return()
@@ -180,6 +189,7 @@ test.portfolioConstraints.allTypes <-
     
     # Set Default Specifications:
     spec = portfolioSpec() 
+    setTargetReturn(spec) = mean(data)
     spec
     
     # Constraints:
@@ -189,7 +199,8 @@ test.portfolioConstraints.allTypes <-
         "minB[1:4]=runif(4, 0, 0.2)", "maxB[1:4]=0.9")
     
     # Set Portfolio Constraints:
-    portfolioConstraints(data, spec, constraints)
+    Constraints = portfolioConstraints(data, spec, constraints)
+    Constraints
     
     # Return Value:
     return()

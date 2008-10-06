@@ -26,6 +26,15 @@
 ################################################################################
 # FUNCTION:                    
 #  test.plot.fPORTFOLIO  
+#  test.frontierPlot.ShortMV
+#  test.frontierPlot.ConstrainedMV
+#  test.frontierPlot.ConstrainedCVaR
+#  test.barPlots.ShortMV
+#  test.barPlots.ConstrainedMV
+#  test.barPlots.ConstrainedCVaR
+#  test.piePlots.ShortMV
+#  test.piePlots.ConstrainedMV
+#  test.piePlots.ConstrainedCVaR
 ################################################################################
 
 
@@ -39,6 +48,7 @@ test.plot.fPORTFOLIO <-
    
     # Set Default Specifications:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
     print(spec)
     
     # Set Constraints:
@@ -50,8 +60,7 @@ test.plot.fPORTFOLIO <-
     print(frontier)
     
     # Plot:
-    # plot(frontier, which = "all")
-    plot(frontier, which = c(1:6,8:9))
+    plot(frontier, which = "all")
 
     # Return Value:
     return()
@@ -59,33 +68,6 @@ test.plot.fPORTFOLIO <-
 
 
 # ------------------------------------------------------------------------------
-
-
-################################################################################
-# FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
-#  frontierPlot                 Plots efficient Frontier
-#   .minvariancePlot             Adds Minimum Variance point
-#   .cmlPlot                     Adds Market Portfolio and Capital Market Line
-#   .tangencyPlot                Adds Tangency Portfolio point and line
-#   .equalWeightsPlot            Adds point of equal weights portfolio
-#   .singleAssetPlot             Adds points of single asset portfolios
-#   .twoAssetsPlot               Adds EF for all combinations of two assets
-#   .wheelPiePlot                Adds pie chart of weights on EF
-#   .monteCarloPlot              Adds randomly produced feasible portfolios
-#   .sharpeRatioPlot             Adds Sharpe Ratio
-#   .notStackedWeightsPlot       Plots the not stacked weights of potfolio
-#   .addlegend                   Adds legend to sliders
-# FUNCTION:                    FRONTIER BAR PLOTS:                  
-#  weightsPlot                  Plots staggered weights
-#  weightedReturnsPlot          Plots weighted means
-#  covRiskBudgetsPlot           Plots weighted risks
-# FUNCTION:                    PORTFOLIO PIE PLOTS:
-#  weightsPie                   Plots staggered weights
-#  weightedReturnsPie           Plots weighted means
-#  covRiskBudgetsPie            Plots weighted risks
-# FUNCTION:                    DESCRIPTION:
-#  covEllipsesPlot              Plots covariance ellipses                
-################################################################################
 
 
 test.frontierPlot.ShortMV <- 
@@ -98,6 +80,7 @@ test.frontierPlot.ShortMV <-
    
     # Set Default Specifications:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
     spec
     
     # Set Constraints:
@@ -143,7 +126,7 @@ function()
     spec
     
     # Set Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
     constraints
    
     # Calculation of Long Only Minimum Variance Portfolio:
@@ -185,25 +168,29 @@ function()
     spec
     
     # Set Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
     constraints
    
     # Calculation of Long Only Minimum Variance Portfolio:
     Frontier = portfolioFrontier(data, spec, constraints)
     Frontier
     
+    if (FALSE) {
+    
     # Plot:
     par(mfrow = c(1, 1))
-    frontierPlot(Frontier, pch = 19)
-    minvariancePoints(Frontier, col = "red", pch = 19, cex = 1.5)
-    tangencyPoints(Frontier, col = "green")
-    tangencyLines(Frontier, col = "green")
-    singleAssetPoints(Frontier, col = "red", cex = 1.5)
-    equalWeightsPoints(Frontier, col = "blue", pch = 19, cex = 1.5)
-    twoAssetsLines(Frontier, col = "grey")
+    frontierPlot(Frontier, risk = "CVaR", pch = 19)
+    minvariancePoints(Frontier, risk = "CVaR", col = "red", pch = 19, cex = 1.5)
+    tangencyPoints(Frontier, risk = "CVaR", col = "green")
+    tangencyLines(Frontier, risk = "CVaR", col = "green")
+    singleAssetPoints(Frontier, risk = "CVaR", col = "red", cex = 1.5)
+    equalWeightsPoints(Frontier, risk = "CVaR", col = "blue", pch = 19, cex = 1.5)
+    # twoAssetsLines(Frontier, risk = "CVaR", col = "grey")
     # .weightsWheel(Frontier)
-    monteCarloPoints(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)
-    sharpeRatioLines(Frontier, pch = 19, col = "blue")
+    monteCarloPoints(Frontier, risk = "CVaR", mcSteps = 1000, cex = 0.25, pch = 19)
+    sharpeRatioLines(Frontier, risk = "CVaR", pch = 19, col = "blue")
+    
+    } # Plot Problems:
 
     # Return Value:
     return()
@@ -222,12 +209,16 @@ function()
     
     # Specification:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
+    spec
     
     # Constraints:
     constraints = "Short"
+    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
     
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
@@ -283,12 +274,15 @@ function()
     # Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
+    spec
     
     # Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
+    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
     
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
@@ -313,12 +307,16 @@ function()
     
     # Specification:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
+    spec
     
     # Constraints:
     constraints = "Short"
+    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Portfolio = minvariancePortfolio(data, spec, constraints)
+    Portfolio
     
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
@@ -376,7 +374,7 @@ function()
     setType(spec) = "CVaR"
     
     # Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
     
     # Portfolio Weights Plot from Time Series Data:
     Portfolio = minvariancePortfolio(data, spec, constraints)

@@ -14,23 +14,19 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:
 #  test.portfolioFrontier.MV.Short
 #  test.portfolioFrontier.MV.LongOnly
+#  test.portfolioFrontier.MV.LongOnly.twoAssets
 #  test.portfolioFrontier.MV.LongOnly.Rdonlp2
 #  test.portfolioFrontier.MV.LongOnly.boxGroupConstraints
 #  test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints
-#  ...
+#
+#  test.portfolioFrontier.CVaR.Short
+#  test.portfolioFrontier.CVaR.LongOnly
+#  test.portfolioFrontier.CVaR.LongOnly.TwoAssets
 ################################################################################
 
 
@@ -44,7 +40,8 @@ test.portfolioFrontier.MV.Short <-
 
     # Specification:
     spec = portfolioSpec()
-    setNFrontierPoints = 10
+    setSolver(spec) = "solveRshortExact"
+    setNFrontierPoints(spec) = 10
     spec
 
     # Constraints:
@@ -92,9 +89,40 @@ test.portfolioFrontier.MV.LongOnly <-
 # ------------------------------------------------------------------------------
 
 
+test.portfolioFrontier.MV.LongOnly.twoAssets <-
+    function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
+
+    # CVaR Specification:
+    spec = portfolioSpec()
+    setType(spec) = "MV"
+    spec
+
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+
+    # CVaR Portfolio:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.portfolioFrontier.MV.LongOnly.Rdonlp2 <-
     function()
 {
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Data:
@@ -117,6 +145,9 @@ test.portfolioFrontier.MV.LongOnly.Rdonlp2 <-
         Frontier
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -169,6 +200,8 @@ test.portfolioFrontier.MV.LongOnly.boxGroupConstraints <-
 test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <-
     function()
 {
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Data:
@@ -191,6 +224,9 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <-
         Frontier
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -203,6 +239,8 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <-
 test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
     function()
 {
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Load Data:
@@ -248,6 +286,9 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
         # getRiskBudgets(ans)                               # Does not work !!!!
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -255,6 +296,19 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
 
 
 ################################################################################
+
+
+test.portfolioFrontier.CVaR.Short <-
+    function()
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 test.portfolioFrontier.CVaR.LongOnly <-

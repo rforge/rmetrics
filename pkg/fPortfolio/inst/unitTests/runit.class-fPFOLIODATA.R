@@ -63,8 +63,8 @@ test.show.fPFOLIODATA <-
     head(data)
     
     # As Object:
-    pfolioData = portfolioData(data, spec = portfolioSpec())
-    print(pfolioData)
+    Data = portfolioData(data, spec = portfolioSpec())
+    print(Data)
    
     # Return Value:
     return()

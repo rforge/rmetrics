@@ -50,14 +50,9 @@ test.fPFOLIOSPEC <-
 test.show.fPFOLIOSPEC <-
     function()
 {   
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
     # Default Specification:
-    PFOLIOSPEC = portfolioData(data, spec = portfolioSpec())
-    print(PFOLIOSPEC)
+    Spec = portfolioSpec()
+    print(Spec)
    
     # Return Value:
     return()

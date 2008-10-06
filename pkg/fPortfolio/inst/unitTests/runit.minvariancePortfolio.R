@@ -42,6 +42,7 @@ test.minvariancePortfolio.MV.Short <-
 
     # Specification:
     spec = portfolioSpec()
+    setSolver(spec) = "solveRshortExact"
     print(spec)
 
     # Constraints - Minimum Variance Portfolio:

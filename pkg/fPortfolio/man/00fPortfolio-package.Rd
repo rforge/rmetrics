@@ -333,8 +333,8 @@
     \code{\link{solveRshortExact}} for unlimited short selling, \cr  
     \code{\link{solveRquadprog}} for quadratic objective with linear constraints, \cr 
     \code{\link{solveRglpk}} for linear objective with linear constraints, \cr 
-    \code{\link{solveRsocp}} for linear objective with linear/quadratic constraints,\cr
-    \code{\link{solveRdonlp2}} for non-linear objective with non-linear constraints. \cr
+    \code{solveRsocp} for linear objective with linear/quadratic constraints,\cr
+    \code{solveRdonlp2} for non-linear objective with non-linear constraints. \cr
        
 }
 

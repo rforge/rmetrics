@@ -127,15 +127,11 @@ Schaefer J., Strimmer K. (2005);
 
 \examples{
 ## berndtInvest -
-   X = as.timeSeries(data(berndtInvest))
-   select = c("CONTIL", "DATGEN", "TANDY", "DEC")
-   
-   # Convert into a timeSeries object:
-   berndtAssets.tS = as.timeSeries(berndtInvest)[, select]
-   head(berndtAssets.tS)
+   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+   colnames(LPP)
    
 ## Classical Covariance Estimation:
-   covEstimator(berndtAssets.tS)
+   covEstimator(LPP)
 }
 
 

@@ -41,9 +41,7 @@ feasiblePortfolio <-
     
     # Get Weights:
     if(is.null(getWeights(spec))) {
-        nAssets = getNAssets(Data)
-        setWeights(spec) = rep(1/nAssets, times = nAssets)
-        warning("Missing weights: Portfolio forced to equal weights portfolio")
+        stop("Missing weights")
     }
     weights = as.vector(getWeights(spec))
     names(weights) = colnames(getSeries(Data))
@@ -62,10 +60,10 @@ feasiblePortfolio <-
     constraints = portfolioConstraints(data, spec, constraints)
     
     # Check Solver:
-    if (any(constraints@stringConstraints == "Short")) {
-        setSolver(spec) = "solveRshortExact"
-        warning("Short Constraints Specified: Solver forced to solveRshortExact")
-    }
+    # if (any(constraints@stringConstraints == "Short")) {
+    #     setSolver(spec) = "solveRshortExact"
+    #     warning("Short Constraints Specified: Solver forced to solveRshortExact")
+    # }
     
     # Compute Alternative/Robust Covariance Risk:
     if (getType(spec) == "SPS") {

@@ -34,6 +34,9 @@
     # box and group constraints are discarded here.
     
     # FUNCTION:
+    
+    # Solver:
+    # print(".mvSolveTwoAssets")
         
     # Convert Data and Constraints to S4 Objects:
     Data = portfolioData(data, spec)
@@ -70,11 +73,11 @@
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 .cvarSolveTwoAssets <-
-function(data, spec, constraints)
+    function(data, spec, constraints)
 {
     # Description:
     #   Two Assets LongOnly CVaR Portfolio
@@ -85,42 +88,49 @@ function(data, spec, constraints)
     
     # FUNCTION:
     
-    # Settings:
+    # Solver:
+    # print(".cvarSolveTwoAssets")
+        
+    # Convert Data and Constraints to S4 Objects:
     Data = portfolioData(data, spec)
-    mu = getMu(Data)
-    targetReturn = getTargetReturn(spec)[1]
+    Constraints = portfolioConstraints(data, spec, constraints)
+        
+    # Stop if the Target Return is not Defined!
+    targetReturn = getTargetReturn(spec)
+    stopifnot(is.numeric(targetReturn))
     targetAlpha = getAlpha(spec)
+    
+    # Optimize Portfolio:
+    nAssets = getNAssets(Data)
 
-    # Check Range:
+    # Solve the two Assets Case Analytically:
+    mu = getMu(Data)
     stopifnot(targetReturn >= min(mu))
     stopifnot(targetReturn <= max(mu))
-
-    names(targetReturn) <- spec@model$estimator[1]
     weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
-    weights = c(weights, 1- weights)
+    weights = c(weights, 1 - weights)
     
     optim = list(
-        VaR = .varRisk(Data, weights, targetAlpha),
-        CVaR = -.cvarRisk(Data, weights, targetAlpha),
+        VaR = .varRisk(data, weights, targetAlpha),
+        CVaR = -.cvarRisk(data, weights, targetAlpha),
         targetAlpha = targetAlpha)
         
     ans = list(
-        solver = "CVaRtwoAssets",
+        solver = "CVaRTwoAssets",
         optim = optim,
         weights = weights,
         targetReturn = targetReturn,
         targetRisk = NA,
         objective = optim$CVaR, 
         status = 0, 
-        message = "")  
-    class(ans) = c("list", "solver")  
+        message = NA)  
     
     # Return Value:
     ans 
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 .madSolveTwoAssets <-

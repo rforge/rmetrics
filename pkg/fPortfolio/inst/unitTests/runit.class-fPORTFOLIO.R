@@ -27,6 +27,19 @@
 # FUNCTION:
 #  test.fPORTFOLIO
 #  test.portfolioFrontier
+#  test.feasiblePortfolio
+#  test.feasiblePortfolio.Rdonlp2
+#  test.feasiblePortfolio.glpk
+#  test.efficientPortfolio
+#  test.tangencyPortfolio
+#  test.minvariancePortfolio
+#  test.minvariancePortfolio.Rdonlp2
+#  test.show
+#  test.plot.RQuadprog
+#  test.plot.Rdonlp2
+#  test.plot.Rlpglpk
+#  test.weightsSlider
+#  test.frontierSlider
 ################################################################################
 
 
@@ -107,6 +120,8 @@ test.feasiblePortfolio.Rdonlp2 <-
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Get Data:
@@ -121,7 +136,7 @@ test.feasiblePortfolio.Rdonlp2 <-
         print(spec)
 
         # Constraints:
-        constraints = NULL
+        constraints = "LongOnly"
         print(constraints)
 
         # Optimize Long Only Minimum Variance Portfolio:
@@ -129,6 +144,9 @@ test.feasiblePortfolio.Rdonlp2 <-
         print(ewPortfolio)
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -156,7 +174,7 @@ test.feasiblePortfolio.glpk <-
     print(spec)
 
     # Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
     print(constraints)
 
     # Optimize Long Only Minimum Variance Portfolio:
@@ -188,7 +206,7 @@ test.efficientPortfolio <-
     print(spec)
 
     # Constraints:
-    constraints = NULL
+    constraints = "LongOnly"
     print(constraints)
 
     # Calculation of Long Only Minimum Variance Portfolio
@@ -263,6 +281,8 @@ test.minvariancePortfolio.Rdonlp2 <-
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Data:
@@ -280,6 +300,9 @@ test.minvariancePortfolio.Rdonlp2 <-
         print(mvPortfolio)
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()
@@ -357,6 +380,8 @@ test.plot.RQuadprog <-
 test.plot.Rdonlp2 <- 
     function()
 {
+    if (FALSE) {
+    
     if (require(Rdonlp2)) {
 
         # Data:
@@ -390,6 +415,9 @@ test.plot.Rdonlp2 <-
         # plot(Frontier, which = "ask")
 
     }
+    
+    }
+    NA
 
     # Return Value:
     return()

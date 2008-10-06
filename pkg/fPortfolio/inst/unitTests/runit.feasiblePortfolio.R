@@ -41,17 +41,15 @@ test.feasiblePortfolio.Default <-
     head(data)
     
     # Specification:
-    #   ... use defaults, Mean-Variance with Equal Weights
     spec = portfolioSpec()
+    setWeights(spec) = rep(1/ncol(data), ncol(data))
     spec
     
     # Constraints:
-    #   ... use defaults, Long Only
     constraints = "LongOnly"
     
     # Feasible Portfolio:
-    #   ... use defaults for spec and constraints 
-    portfolio = feasiblePortfolio(data)
+    portfolio = feasiblePortfolio(data, spec)
     portfolio
     
     # Return Value:
@@ -71,7 +69,6 @@ test.feasiblePortfolio.MV.RandomWeights.LongOnly <-
     head(data)
     
     # Specification: 
-    #   ... use random weights and trace optimization
     spec = portfolioSpec()
     nAssets = ncol(data)
     Weights = runif(nAssets, 0, 1)
@@ -85,7 +82,6 @@ test.feasiblePortfolio.MV.RandomWeights.LongOnly <-
     constraints
     
     # Feasible Portfolio:
-    #   ... use default constraints
     portfolio = feasiblePortfolio(data, spec)
     portfolio
     
@@ -106,10 +102,8 @@ test.feasiblePortfolio.MV.Short <-
     head(data)
     
     # Specification:
-    #   ... short with specified target Return
     spec = portfolioSpec()
-    setTargetReturn(spec) = 10*mean(as.matrix(data))
-    setTrace = TRUE
+    setWeights(spec) = c(-0.2, 0.7, 0.6, -0.1)
     spec
     
     # Constraints:
@@ -149,8 +143,8 @@ test.feasiblePortfolio.CVaR.LongOnly.Alpha <-
     constraints
     
     # CVaR Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)
-    Portfolio
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio
     
     # Return Value:
     return()

@@ -39,22 +39,19 @@ test.frontierPoints.feasiblePortfolio <-
     print(head(data))
     
     # Specification:
-    #   ... use defaults, Mean-Variance with Equal Weights
     spec = portfolioSpec()
+    setWeights(spec) = rep(1/ncol(data), ncol(data))
     print(spec)
     
     # Constraints:
-    #   ... use defaults, Long Only
     constraints = "LongOnly"
     print(constraints)
     
     # Feasible Portfolio:
-    #   ... use defaults for spec and constraints 
-    portfolio = feasiblePortfolio(data)
+    portfolio = feasiblePortfolio(data, spec, constraints)
     print(portfolio)
     
     # Frontier Points:
-    #   ... returns target risk and target return
     points = frontierPoints(portfolio)
     print(points)
     
@@ -88,34 +85,30 @@ test.frontierPoints.portfolioFrontier <-
     print(head(data))
     
     # Specification:
-    #   ... use defaults, Mean-Variance with Equal Weights
     spec = portfolioSpec()
     print(spec)
     
     # Constraints:
-    #   ... use defaults, Long Only
     constraints = "LongOnly"
     print(constraints)
     
-    # Feasible Portfolio:
-    #   ... use defaults for spec and constraints 
-    portfolio = portfolioFrontier(data)
-    print(portfolio)
+    # Portfolio Frontier:
+    frontier = portfolioFrontier(data)
+    print(frontier)
     
     # Frontier Points:
-    #   ... returns target risk and target return
-    points = frontierPoints(portfolio)
+    points = frontierPoints(frontier)
     print(points)
     
     # Specify Return/Risk Measures, explicitely:
-    print(frontierPoints(portfolio, auto = TRUE))
-    print(frontierPoints(portfolio, 
+    print(frontierPoints(frontier, auto = TRUE))
+    print(frontierPoints(frontier, 
         return = "mean", risk = "Cov", auto = FALSE))
-    print(frontierPoints(portfolio, 
+    print(frontierPoints(frontier, 
         return = "mean", risk = "Sigma", auto = FALSE))
-    print(frontierPoints(portfolio, 
+    print(frontierPoints(frontier, 
         return = "mean", risk = "CVaR", auto = FALSE))
-    print(frontierPoints(portfolio, 
+    print(frontierPoints(frontier, 
         return = "mean", risk = "VaR", auto = FALSE))
     
     # Return Value:
