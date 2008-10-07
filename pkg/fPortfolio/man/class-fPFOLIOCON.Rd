@@ -48,7 +48,9 @@
    data = as.timeSeries(data(smallcap.ts))
 
 ## portfolioConstraints -
-   portfolioConstraints(data, portfolioSpec(), "LongOnly")
+   spec = portfolioSpec()
+   setTargetReturn(spec) = mean(data)
+   portfolioConstraints(data, spec, "LongOnly")
 }
 
 
