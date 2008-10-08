@@ -19,13 +19,13 @@
 .First.lib =
 function(lib, pkg)
 {
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
+###     # Startup Mesage and Desription:
+###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+###     dsc <- packageDescription(pkg)
+###     if(interactive() || getOption("verbose")) {
+###         # not in test scripts
+###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+###     }
 
     # Load dll:
     # library.dynam("fPortfolio", pkg, lib)
@@ -45,7 +45,7 @@ if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
 
 ################################################################################
 # some useful functions added
-   
+
 .smallcapData = as.timeSeries(data(smallcap.ts))
 .smallcapData = .smallcapData[, c("BKE", "GG", "GYMB", "KRON")]
 

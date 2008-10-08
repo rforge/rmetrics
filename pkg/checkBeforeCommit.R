@@ -9,7 +9,7 @@ checkBeforeCommit  <-
         myDir <-
             switch(user,
                    "maechler" = "~/R/D/R-forge/Rmetrics",
-                   "yankee" = "~/projects/rmetrics/",
+                   "yankee" = "~/r/",
                    "wuertz" = stop(" please fix in checkBeforeCommit()"),
                    ## otherwise:
                    stop("unknown user: please fix in checkBeforeCommit()"))

@@ -2,7 +2,7 @@ Package: fPortfolio
 Version: 280.74
 Date: 1997 - 2008
 Title: Rmetrics - Portfolio Selection and Optimization
-Author: Diethelm Wuertz, Yohan Chalabi
+Author: Diethelm Wuertz
 Depends: R (>= 2.6.0), methods, MASS, timeDate, timeSeries, fBasics, fAssets, quadprog, Rglpk
 Suggests: robustbase, corpcor, covRobust
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
