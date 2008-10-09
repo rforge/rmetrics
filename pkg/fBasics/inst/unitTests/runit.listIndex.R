@@ -36,7 +36,7 @@ test.listIndex <-
     function()
 {
     # List Functions:
-    print(listIndex(package = "fBasics2"))
+    print(listIndex(package = "fBasics"))
 
     # Return Value:
     return()

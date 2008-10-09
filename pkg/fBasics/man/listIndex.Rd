@@ -50,7 +50,7 @@ listIndex(package, character.only = FALSE)
 
 \examples{
 ## listIndex -
-   listIndex("fBasics2")
+   listIndex("fBasics")
 }
 
 

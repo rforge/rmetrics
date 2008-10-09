@@ -50,7 +50,7 @@ listDescription(package, character.only = FALSE)
 
 \examples{
 ## listDescription -
-   listDescription("fBasics2")
+   listDescription("fBasics")
 }
 
 
