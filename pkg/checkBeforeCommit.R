@@ -1,28 +1,35 @@
 checkBeforeCommit  <-
-    function(pkgs = "Rmetrics", lib = NULL, outdir = NULL, ...)
+    function(pkgs = "all", lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(pkgs))
 
     installFile <- "installRmetrics.R"
-    if(!file.exists(installFile)) {
-        user <- Sys.getenv("USER")
-        myDir <-
-            switch(user,
-                   "maechler" = "~/R/D/R-forge/Rmetrics",
-                   "yankee" = "~/r/",
-                   "wuertz" = stop(" please fix in checkBeforeCommit()"),
-                   ## otherwise:
-                   stop("unknown user: please fix in checkBeforeCommit()"))
+    if(!file.exists(installFile))
+        stop(installFile," is not in current directory",
+             "(",getwd(),")")
 
-        setwd(file.path(myDir, "pkg"))
-        ##                    ------- on R-forge
+###     if(!file.exists(installFile)) {
+###         user <- Sys.getenv("USER")
+###         myDir <-
+###             switch(user,
+###                    "maechler" = "~/R/D/R-forge/Rmetrics",
+###                    "yankee" = "~/r/",
+###                    "wuertz" = stop(" please fix in checkBeforeCommit()"),
+###                    ## otherwise:
+###                    stop("unknown user: please fix in checkBeforeCommit()"))
 
-        if(!file.exists(installFile))
-            stop(installFile," is not in current directory",
-                 "(",getwd(),")")
-    }
-    message("in ", getwd(),": source()ing ", installFile,":")
+###         setwd(file.path(myDir, "pkg"))
+###         ##                    ------- on R-forge
+
+###         if(!file.exists(installFile))
+###             stop(installFile," is not in current directory",
+###                  "(",getwd(),")")
+###     }
+
+    message("source()ing ", installFile, "in ",
+            getwd(),"... ", appendLF = FALSE)
     source(installFile)
+    message("OK")
 
     ## Set library and outdir paths
     if (is.null(lib)) {
@@ -35,8 +42,9 @@ checkBeforeCommit  <-
     if (!file.exists(outdir)) dir.create(outdir)
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- getDESCR("Rmetrics", "Depends")
-    stopifnot(pkgs %in% c(pkgsRmetrics, "Rmetrics"))
+    pkgsRmetrics <- .packagesRmetrics()
+    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
+    stopifnot(pkgs %in% pkgsRmetrics)
 
     ## search for packages which depends on the package we want to check
     listDepends <- lapply(pkgsRmetrics, getDepends,

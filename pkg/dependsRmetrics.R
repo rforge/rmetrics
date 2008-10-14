@@ -1,30 +1,20 @@
 dependsRmetrics <-
     function(pkg = "all", contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
 {
+    stopifnot(is.character(pkgs))
+
     installFile <- "installRmetrics.R"
-    if(!file.exists(installFile)) {
-        user <- Sys.getenv("USER")
-        myDir <-
-            switch(user,
-                   "maechler" = "~/R/D/R-forge/Rmetrics",
-                   "yankee" = "~/r/",
-                   "wuertz" = stop(" please fix in checkBeforeCommit()"),
-                   ## otherwise:
-                   stop("unknown user: please fix in checkBeforeCommit()"))
+    if(!file.exists(installFile))
+        stop(installFile," is not in current directory",
+             "(",getwd(),")")
 
-        setwd(file.path(myDir, "pkg"))
-        ##                    ------- on R-forge
-
-        if(!file.exists(installFile))
-            stop(installFile," is not in current directory",
-                 "(",getwd(),")")
-    }
-    message("source()ing ", installFile, "in ", getwd(),"... ", appendLF = FALSE)
+    message("source()ing ", installFile, "in ",
+            getwd(),"... ", appendLF = FALSE)
     source(installFile)
     message("OK")
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- c(getDESCR("Rmetrics", "Depends"), "Rmetrics")
+    pkgsRmetrics <- .packagesRmetrics()
     stopifnot(pkg %in% c(pkgsRmetrics, "all"))
 
     if (pkg == "all")
