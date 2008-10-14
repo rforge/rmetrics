@@ -84,7 +84,7 @@ installRmetrics  <-
     pkgsRmetrics <- .packagesRmetrics()
 
     # test if requested package is part of Rmetrics
-    if (pkgs == "all") pkgs <- pkgsRmetrics
+    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
     if (!any(pkgs %in% pkgsRmetrics))
         stop(gettextf("'%s' is not part of Rmetrics",
                       deparse(substitute(pkgs))))

@@ -1,5 +1,5 @@
 dependsRmetrics <-
-    function(pkg = "all", contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
+    function(pkgs = "all", contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
 {
     stopifnot(is.character(pkgs))
 
@@ -8,25 +8,23 @@ dependsRmetrics <-
         stop(installFile," is not in current directory",
              "(",getwd(),")")
 
-    message("source()ing ", installFile, "in ",
-            getwd(),"... ", appendLF = FALSE)
+    message("source()ing ", installFile, " in ", getwd(),"... ", appendLF = FALSE)
     source(installFile)
     message("OK")
 
     ## extract list of Rmetrics packages
     pkgsRmetrics <- .packagesRmetrics()
-    stopifnot(pkg %in% c(pkgsRmetrics, "all"))
+    stopifnot(pkgs %in% c(pkgsRmetrics, "all"))
 
-    if (pkg == "all")
-        pkg <- pkgsRmetrics
+    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
 
     # downloading list of available packages
     message("downloading list of available packages... ", appendLF = FALSE)
     info <- available.packages()
     message("OK")
 
-    idx <- unlist(sapply(pkg, grep, info[,"Depends"]))
-    idx <- c(idx, unlist(sapply(pkg, grep, info[,"Suggests"])))
+    idx <- unlist(sapply(pkgs, grep, info[,"Depends"]))
+    idx <- c(idx, unlist(sapply(pkgs, grep, info[,"Suggests"])))
     idx <- unique(idx)
 
     pkgsDepends <- rownames(info)[idx]

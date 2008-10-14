@@ -26,7 +26,7 @@ checkBeforeCommit  <-
 ###                  "(",getwd(),")")
 ###     }
 
-    message("source()ing ", installFile, "in ",
+    message("source()ing ", installFile, " in ",
             getwd(),"... ", appendLF = FALSE)
     source(installFile)
     message("OK")
