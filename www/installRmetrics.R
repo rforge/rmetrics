@@ -15,17 +15,42 @@
 ## Then type the following :
 ##
 ## > source("installRmetrics.R")
-## > installRmetrics("fSeries")
+## > installRmetrics("timeDate")
 ##
 ## _Packages at R-Forge_
 ##
 ## > source("installRmetrics.R")
-## > installRmetrics("fSeries", repos="http://R-Forge.R-project.org")
+## > installRmetrics("timeDate", repos="http://R-Forge.R-project.org")
 ##
 ################################################################################
 
+.packagesRmetrics <- function()
+    c("fUtilities",
+      "fEcofin",
+      "fCalendar",
+      "fSeries",
+      "timeDate",
+      "timeSeries",
+      "fImport",
+      "fBasics",
+      "fArma",
+      "fGarch",
+      "fNonlinear",
+      "fUnitRoots",
+      "fTrading",
+      "fMultivar",
+      "fRegression",
+      "fExtremes",
+      "fCopulae",
+      "fBonds",
+      "fOptions",
+      "fExoticOptions",
+      "fAsianOptions",
+      "fAssets",
+      "fPortfolio")
+
 installRmetrics  <-
-    function(pkgs = "Rmetrics", repos = NULL,
+    function(pkgs = "all", repos = NULL,
              CRAN = "http://stat.ethz.ch/CRAN/",
              type = "source", suggests = FALSE, ...)
 {
@@ -51,16 +76,20 @@ installRmetrics  <-
     }
 
     # list of Rmetrics packages
-    infokind <- c("Depends", "Imports", if (suggests) "Suggests")
-    pkgsRmetrics <- getDESCR("Rmetrics", infokind,
-                             if (!is.null(repos)) available)
-    pkgsRmetrics <- c(pkgsRmetrics, "Rmetrics")
+
+    # pkgsRmetrics <- getDESCR("Rmetrics", infokind,
+    #                         if (!is.null(repos)) available)
+    # pkgsRmetrics <- c(pkgsRmetrics, "Rmetrics")
+
+    pkgsRmetrics <- .packagesRmetrics()
 
     # test if requested package is part of Rmetrics
-    if (!(pkgs %in% c(pkgsRmetrics, "Rmetrics")))
+    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
+    if (!any(pkgs %in% pkgsRmetrics))
         stop(gettextf("'%s' is not part of Rmetrics",
                       deparse(substitute(pkgs))))
 
+    infokind <- c("Depends", "Imports", if (suggests) "Suggests")
     pkgsDepends <- getDepends(pkgs, pkgsRmetrics, infokind,
                               if (!is.null(repos)) available)
 
@@ -69,11 +98,6 @@ installRmetrics  <-
     all <- c(pkgsDepends, pkgs)
     depends <- unique(all[!(all %in% pkgsRmetrics)])
     pkgs <- unique(all[(all %in% pkgsRmetrics)])
-
-    ## Remove Rdonlp2 and Rsocp because they are not available at CRAN server
-    depends <- depends[!(depends %in% c("Rdonlp2", "Rsocp", "Cdonlp2",
-                                        "ClpSolve", "Csocp", "ClpSolveAPI",
-                                        "R.lpSolveAPI", "R.donlp2", "R.socp"))]
 
     ## disable unnecessary warning message when package is not installed
     ow <- options(warn = -1)
@@ -85,10 +109,7 @@ installRmetrics  <-
             install.packages(depends[i], repos = CRAN, type = type, ...)
         }
     }
-    ### # Note Rdonlp2 is not part of Rmetrics !!
-    ### if (!require(Rdonlp2, quietly = TRUE)) {
-    ### install.packages("Rdonlp2", repos = repoRmetrics, type = "source", ...)
-    ### }
+
     options(ow) # set default warning option
 
     # pkgs in good order for install
