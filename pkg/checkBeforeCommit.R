@@ -109,6 +109,7 @@ checkBeforeCommit  <-
     ## print Notes and Warnings:
     message(logNOTE)
     message(logWarning)
+    warnings()
 
     ## Return
     STATUS <- !(length(WARNING) || length(ERROR))

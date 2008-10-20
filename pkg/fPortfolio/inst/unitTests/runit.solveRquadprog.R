@@ -16,7 +16,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -26,34 +26,34 @@
 
 ################################################################################
 # FUNCTION:
-#  test.solveRquadprog.LongOnly           
+#  test.solveRquadprog.LongOnly
 ################################################################################
 
-    
-test.solveRquadprog.LongOnly <- 
+
+test.solveRquadprog.LongOnly <-
     function()
-{ 
+{
     # Quadratic Programmming - Mean-Variance Portfolio:
 
     # Data:
-    data = .smallcapData
+    data <- smallcap.ts
     print(head(data))
-    
+
     # Specification:
     spec = portfolioSpec()
     setType(spec) = "MV"
     setOptimize(spec) = "minRisk"
     setTargetReturn(spec) = mean(colMeans(data))
     print(spec)
-    
+
     # Default Constraints:
     constraints = "LongOnly"
     constraints
-    
+
     # Quadprog:
     ans = solveRquadprog(data, spec, constraints)
     print(ans)
-    
+
     # Return Value:
     return()
 }
@@ -62,9 +62,9 @@ test.solveRquadprog.LongOnly <-
 # ------------------------------------------------------------------------------
 
 
-test.solveRquadprog.twoAssets <- 
+test.solveRquadprog.twoAssets <-
     function()
-{ 
+{
     # Solved Analytically
     #   Speeds up the two-assets forntier significantly!
 
@@ -72,22 +72,22 @@ test.solveRquadprog.twoAssets <-
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
     print(head(data))
-    
+
     # Specification:
     spec = portfolioSpec()
     setType(spec) = "MV"
     setOptimize(spec) = "minRisk"
-    setTargetReturn(spec) = mean(colMeans(data))   
+    setTargetReturn(spec) = mean(colMeans(data))
     print(spec)
-    
+
     # Default Constraints:
     constraints = "LongOnly"
     print(constraints)
-    
+
     # Quadprog:
-    ans = solveRquadprog(data, spec, constraints) 
+    ans = solveRquadprog(data, spec, constraints)
     print(ans)
-    
+
     # Return Value:
     return()
 }

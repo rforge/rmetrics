@@ -25,7 +25,7 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-    
+
 ################################################################################
 # FUNCTION:
 #  decor
@@ -39,13 +39,13 @@
 ################################################################################
 
 
-decor <- 
+decor <-
 function()
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
+
     hgrid()
     boxL()
 }
@@ -54,52 +54,52 @@ function()
 ################################################################################
 
 
-hgrid <- 
-function(ny = NULL, ...) 
+hgrid <-
+function(ny = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
-    grid(NA, ny, ...) 
+
+    grid(NA, ny, ...)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-vgrid <- 
-function(nx = NULL, ...) 
+vgrid <-
+function(nx = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
-    grid(nx, NA, ...) 
+
+    grid(nx, NA, ...)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-boxL <- 
-function(col = "white") 
+boxL <-
+function(col = "white")
 {
     box()
-    box(bty = "7", col = col) 
+    box(bty = "7", col = col)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-box_ <- 
-function(col = c("white", "black")) 
+box_ <-
+function(col = c("white", "black"))
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
+
     box(bty = "c", col = col[1])
     box(bty = "]", col = col[2])
     box(bty = "7", col = col[1])
@@ -109,48 +109,48 @@ function(col = c("white", "black"))
 # ------------------------------------------------------------------------------
 
 
-.xrug <- 
-function(x) 
+.xrug <-
+function(x)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
-    rug(as.vector(x), ticksize = 0.01, side = 1, quiet = TRUE) 
+
+    rug(as.vector(x), ticksize = 0.01, side = 1, quiet = TRUE)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.yrug <- 
-function(x) 
+.yrug <-
+function(x)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
-    rug(as.vector(x), ticksize = 0.01, side = 2, quiet = TRUE) 
+
+    rug(as.vector(x), ticksize = 0.01, side = 2, quiet = TRUE)
 }
 
 
 # ------------------------------------------------------------------------------
 
-    
-copyright <- 
-function() 
+
+copyright <-
+function()
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
+
     Year = substr(Sys.Date(), 1, 4)
-    mtext(paste("\251 Rmetrics", Year), 
-        side = 4, line = 0, adj = 0, 
-        font = 1, cex = 0.7*par("cex"), col = "grey") 
+    mtext(paste("(c) Rmetrics", Year),
+        side = 4, line = 0, adj = 0,
+        font = 1, cex = 0.7*par("cex"), col = "grey")
 }
 
 
 ################################################################################
 
-    
+

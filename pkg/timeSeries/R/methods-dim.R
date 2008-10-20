@@ -99,7 +99,7 @@
 
 # ------------------------------------------------------------------------------
 
-setMethod("dim", "timeSeries", function(x) callGeneric(as(x, "matrix")))
+setMethod("dim", "timeSeries", function(x) dim(x@.Data))
 
 # ------------------------------------------------------------------------------
 

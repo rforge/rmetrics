@@ -8,28 +8,23 @@
 
 ## ## before starting install packages without namespace
 
-## RmetricsPkgs <- c("fUtilities", "fEcofin", "timeDate", "timeSeries",
-##                   "fImport", "fBasics", "fArma", "fGarch",
-##                   "fNonlinear", "fUnitRoots", "fTrading", "fMultivar",
-
-##                   "fRegression", "fExtremes", "fCopulae", "fOptions",
-##                   "fExoticOptions", "fAsianOptions", "fAssets",
-##                   "fPortfolio")
-
-## R CMD INSTALL  fUtilities fEcofin fCalendar fSeries timeDate timeSeries fImport fBasics fArma fGarch fNonlinear fUnitRoots fTrading fMultivar fRegression fExtremes fCopulae fBonds fOptions fExoticOptions fAsianOptions fAssets fPortfolio
-
-## for (pkg in RmetricsPkgs)
-##     genNAMESPACE(pkg, file = file.path("~/r", pkg, "NAMESPACE"), RmetricsPkgs)
-## example
-## sapply(as.list(RmetricsPkgs), genNAMESPACE)
-
-
-genNAMESPACE <- function()
+genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
+                         "fGarch", "fAssets", "fPortfolio"))
 {
-    RmetricsPkgs<- c("timeDate", "timeSeries", "fBasics", "fGarch") #,
-                     # "fAssets", "fPortfolio")
+    stopifnot(is.character(pkgs))
 
-    for (pkg in RmetricsPkgs) {
+    installFile <- "installRmetrics.R"
+    if(!file.exists(installFile))
+        stop(installFile," is not in current directory",
+             "(",getwd(),")")
+    message("source()ing ", installFile, " in ",
+            getwd(),"... ", appendLF = FALSE)
+    source(installFile)
+    message("OK")
+
+    RmetricsPkgs <- .packagesRmetrics()
+
+    for (pkg in pkgs) {
 
         user <- Sys.getenv("USER")
         myFile <-
@@ -45,6 +40,8 @@ genNAMESPACE <- function()
     function(pkg, RmetricsPkgs,
              file = paste("NAMESPACE", pkg, sep = "."))
 {
+
+
     findGlobalsPackage <- function(pname)
     {
         pname <- paste("package", pname, sep = ":")
@@ -69,7 +66,7 @@ genNAMESPACE <- function()
     }
 
     ##
-    pkg <- as.character(pkg)
+    stopifnot(is.character(pkg))
 
     ## Make sure to unload unneeded packages
     ss <- search()
