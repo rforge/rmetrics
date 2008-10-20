@@ -1,0 +1,81 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ghypCommands}[2008/10/19 v0.0.1 David Luethi]
+
+\newcommand{\MU}{\mathbf{\mu}}
+\newcommand{\GAMMA}{\mathbf{\gamma}}
+\newcommand{\BETA}{\mathbf{\beta}}
+\newcommand{\tvec}{\mathbf{t}}
+\newcommand{\X}{\mathbf{X}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\inReal}{\in \mathbb{R}}
+\newcommand{\inRealSigma}{\in \mathbb{R}^{\Sigma}}
+\newcommand{\inRealDelta}{\in \mathbb{R}^{\Delta}}
+\newcommand{\EXP}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\momgen}{\mathbb{M}}
+\newcommand{\VAR}[1]{\hbox{var}(#1)}
+\newcommand{\COV}[1]{\hbox{cov}(#1)}
+\newcommand{\QX}{\hbox{Q}(\x)}
+\newcommand{\Qdelta}{(\x - \MU)' \Delta^{-1} (\x - \MU)}
+\newcommand{\GammaSigGamma}{\GAMMA' \Sigma^{-1} \GAMMA}
+\newcommand{\etaIK}{\eta_i^{[k]}}
+\newcommand{\sumN}{\sum_{i=1}^n}
+\newcommand{\deltaIK}{\delta_i^{[k]}}
+\newcommand{\xiIK}{\xi_i^{[k]}}
+\newcommand{\OneDivN}{\frac{1}{n}}
+\newcommand{\dDivTwo}{\frac{d}{2}}
+\newcommand{\NuDivTwo}{\frac{\nu}{2}}
+\newcommand{\NuPlusDdivTwo}{\frac{\nu+d}{2}}
+\newcommand{\LambdaDivTwo}{\frac{\lambda}{2}}
+\newcommand{\ChiDivTwo}{\frac{\chi}{2}}
+\newcommand{\PsiDivTwo}{\frac{\psi}{2}}
+\newcommand{\OneDivTwo}{\frac{1}{2}}
+\newcommand{\Bessel}[1]{\hbox{K}_{#1}}
+\newcommand{\BesselLambda}{\hbox{K}_{\lambda}}
+\newcommand{\BesselLambdaPlusOne}{\hbox{K}_{\lambda+1}}
+\newcommand{\InvSigma}{\Sigma^{-1}}
+\newcommand{\SqrtChiPsi}{\sqrt{\chi \psi}}
+\newcommand{\MuSigGamma}{\MU,\Sigma,\GAMMA}
+\newcommand{\LambdaChiPsi}{\lambda,\chi,\psi,\MuSigGamma}
+\newcommand{\LambdaAbar}{\lambda,\abar,\MU,\Sigma,\GAMMA}
+\newcommand{\KAPPA}{\alpha^2 - \BETA ' \Delta \BETA}
+\newcommand{\BarndorffParam}{\lambda,\alpha, \MU, \Delta, \delta, \BETA}
+\newcommand{\GH}{\hbox{GH}_d(\LambdaChiPsi)}
+\newcommand{\GHk}{\hbox{GH}_d(\lambda,\chi/k,k \psi,\MU,k \Sigma,k \GAMMA)}
+\newcommand{\GHtransf}{\hbox{GH}_k(\lambda,\chi,\psi,
+                      B \MU + \mathbf{b},B \Sigma B' ,B\GAMMA)}
+\newcommand{\ThetaK}{\Theta^{[k]}}
+\newcommand{\InvGamma}{\hbox{I}\Gamma}
+\newcommand{\ghyp}{{\texttt{ghyp}}}
+
+\newcommand{\brackets}[1]{\left[ #1 \right]}
+\newcommand{\curlybrackets}[1]{\left\{ #1 \right\}}
+\newcommand{\parentheses}[1]{\left( #1 \right)}
+
+\newcommand{\ytilde}{(Q(\xvec)+\chi)}
+\newcommand{\ltilde}{\lambda-\frac{d}{2}}
+\newcommand{\xtildeIG}{(\mathbf{\gamma}'\Sigma^{-1}\mathbf{\gamma})}
+\newcommand{\ytildeIG}{(Q(\xvec)+2\beta)}
+\newcommand{\ltildeIG}{-\alpha-\frac{d}{2}}
+\newcommand{\xtildeG}{(\mathbf{\gamma}'\Sigma^{-1}\mathbf{\gamma}+2\beta)}
+\newcommand{\ytildeG}{(Q(\xvec))}
+\newcommand{\ltildeG}{\alpha-\frac{d}{2}}
+\newcommand{\betavec}{\boldsymbol{\beta}}
+\newcommand{\muvec}{\boldsymbol{\mu}}
+\newcommand{\xivec}{\boldsymbol{\xi}}
+\newcommand{\gamvec}{\boldsymbol{\gamma}}
+\newcommand{\QT}{\widetilde{Q}}
+\newcommand{\SigT}{\boldsymbol{\widetilde{\Sigma}}}
+\newcommand{\sigT}{\widetilde{\sigma}}
+\newcommand{\dd}{\hbox{d}}
+\newcommand{\abar}{\overline{\alpha}}
+\newcommand{\PsiTransfGIG}{\GammaSigGamma + \psi}
+\newcommand{\ChiTransfGIG}{\QX + \chi}
+\newcommand{\LambdaTransfGIG}{\lambda - \dDivTwo}
+\newcommand{\ChiTransfG}{\QX + \chi}
+\newcommand{\PsiTransfIG}{\GammaSigGamma}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+\newcommand{\dete}[1]{|#1|}
+\newcommand{\customspace}{\\[3ex]}
+\newcommand{\R}{\texttt{R}}
