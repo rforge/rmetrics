@@ -2,7 +2,8 @@
 \documentclass[11pt,english]{scrartcl}
 % <---------------------------------------------------------------------->
 \usepackage{ghypCommands}
-\usepackage[latin1]{inputenc}
+%\usepackage{inputenc}
+%\usepackage[latin1]{inputenc}
 \usepackage{a4wide}
 \usepackage{fancyhdr}
 \usepackage{color}
@@ -13,7 +14,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{amssymb}
-\usepackage{natbib}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
 \usepackage{babel}
 % <---------------------------------------------------------------------->
 %\VignetteIndexEntry{Generalized Hyperbolic Distribution}
@@ -1168,7 +1170,6 @@ accuracy of the fit.
 \end{appendix}
 % <---------------------------------------------------------------------->
 \bibliography{ludabib}
-\bibliographystyle{chicago}
 % <---------------------------------------------------------------------->
 \end{document}
 % <---------------------------------------------------------------------->
