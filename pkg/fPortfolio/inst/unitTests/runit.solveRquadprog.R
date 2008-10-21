@@ -36,7 +36,7 @@ test.solveRquadprog.LongOnly <-
     # Quadratic Programmming - Mean-Variance Portfolio:
 
     # Data:
-    data <- smallcap.ts
+    data <- as.timeSeries(smallcap.ts)
     print(head(data))
 
     # Specification:
@@ -69,7 +69,7 @@ test.solveRquadprog.twoAssets <-
     #   Speeds up the two-assets forntier significantly!
 
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = as.timeSeries(smallcap.ts)
     data = data[, c("BKE", "GG")]
     print(head(data))
 
