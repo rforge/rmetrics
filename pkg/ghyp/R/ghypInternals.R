@@ -686,6 +686,15 @@
 
 
 ### <======================================================================>
+".is.symmetric" <- function(object)
+{
+    return(all(object@gamma == 0))
+}
+### <---------------------------------------------------------------------->
+
+
+
+### <======================================================================>
 ".mle.default" <- function(data, pdf, vars, opt.pars = rep(TRUE, length(vars)),
                           transform = NULL, se = FALSE, na.rm = FALSE,
                           silent = FALSE, ...)

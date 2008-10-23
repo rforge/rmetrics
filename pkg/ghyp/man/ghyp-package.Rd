@@ -87,6 +87,7 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
   \code{\link{ghyp.data}} \tab              Data of a (fitted) generalized hyperbolic distribution.\cr
   \code{\link{ghyp.fit.info}} \tab          Information about the fitting procedure, log-likelihood and AIC value.\cr
   \code{\link{ghyp.name}} \tab              Returns the name of the \code{ghyp} distribution or a subclass of it.\cr
+  \code{\link{ghyp.dim}} \tab              Returns the dimension of a \code{ghyp} object.\cr
   \code{\link[=summary.mle.ghyp]{summary}} \tab       Summary of a fitted generalized hyperbolic distribution.\cr
 }
 

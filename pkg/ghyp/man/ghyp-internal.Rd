@@ -54,6 +54,8 @@
 
 .is.univariate(object)
 
+.is.symmetric(object)
+
 .is.student.t(object, symmetric = NULL)
 
 .get.stepAIC.ghyp(stepAIC.obj, dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
@@ -138,6 +140,9 @@ This function simply checks if the dimensions match.
 
 \code{.is.gaussian} \cr
   Tests whether the object is of a gaussian type.
+
+\code{.is.symmetric} \cr
+  Tests whether the object is symmetric.
 
 \code{.is.student.t} \cr
   Tests whether the object describes a Student-t distribution.

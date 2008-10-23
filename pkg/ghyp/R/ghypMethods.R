@@ -126,6 +126,17 @@
 
 
 ### <======================================================================>
+"ghyp.dim" <- function(object)
+{
+    .test.ghyp(object, case = "ghyp")
+    return(object@dimension)
+
+}
+### <---------------------------------------------------------------------->
+
+
+
+### <======================================================================>
 "ghyp.fit.info" <- function(object)
 {
   if(!is(object, "mle.ghyp")){
@@ -468,8 +479,9 @@
 
 
 ### <======================================================================>
-"portfolio.optimize" <- function(object, ptf.mean = 0.01,
+"portfolio.optimize" <- function(object, ptf.mean = 0.01, risk.free = 0,
                                  risk.measure = c("variance", "quantile", "expected-shortfall"),
+                                 type = c("minimum.risk", "tangency"),
                                  level = 0.95, ...)
 {
     ## Object must be of class "ghyp" or "mle.ghyp" and multivariate

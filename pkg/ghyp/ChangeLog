@@ -135,7 +135,7 @@ ghyp V1.2.0
 
 	* Some improvements in the manual.
 
-	* Internal functions 'is.gaussian', 'is.symmetric.t' and
+	* Internal functions 'is.gaussian', 'is.student.t' and
 	'is.univariate' added.
 
 	* Internal functions 'get.stepAIC.ghyp' added.
@@ -223,3 +223,8 @@ ghyp V1.4.0
 	renamed to '.dghypuv' and '.dghypmv' respectively.
 
 	* Package vignette extended.
+
+	* Function 'ghyp.dim' added. Returns the dimension of a 'ghyp'
+	object.
+
+	* Internal function '.is.symmetric' added.

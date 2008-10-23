@@ -1,7 +1,8 @@
-\name{ghyp-data}
+\name{ghyp-get}
 \alias{ghyp.data}
 \alias{ghyp.name}
 \alias{ghyp.fit.info}
+\alias{ghyp.dim}
 \title{Get methods for objects inheriting from class ghyp}
 % <---------------------------------------------------------------------->
 \description{
@@ -10,7 +11,10 @@
   hyperbolic distribution objects, i.e. slots of the classes \code{ghyp}
   and \code{mle.ghyp}.  \code{ghyp.fit.info} extracts information about
   the fitting procedure from objects of class
-  \code{\link[=mle.ghyp-class]{mle.ghyp}}.
+  \code{\link[=mle.ghyp-class]{mle.ghyp}}. \code{ghyp.data} returns the
+  data slot of a \code{gyhp} object. \code{ghyp.dim} returns the
+  dimension of a \code{gyhp} object. \code{ghyp.name} returns the
+  name of the distribution of a \code{gyhp} object.
 
 }
 % <---------------------------------------------------------------------->
@@ -20,6 +24,8 @@ ghyp.fit.info(object)
 ghyp.data(object)
 
 ghyp.name(object, abbr = FALSE, skew.attr = TRUE)
+
+ghyp.dim(object)
 }
 % <---------------------------------------------------------------------->
 \arguments{
@@ -44,8 +50,9 @@ ghyp.name(object, abbr = FALSE, skew.attr = TRUE)
   }
 
   \code{ghyp.data} returns \code{NULL} if no data is stored within the
-  object, a \code{vector} if it is an univariate generalized hyperbolic distribution
-  and \code{matrix} if it is an multivariate generalized hyperbolic distribution.\cr
+  object, a \code{vector} if it is an univariate generalized hyperbolic
+  distribution and \code{matrix} if it is an multivariate generalized
+  hyperbolic distribution.\cr
 
   \code{ghyp.name} returns the name of the \code{ghyp} distribution which can be the name of a special case.
   Depending on the arguments \code{abbr} and \code{skew.attr} one of the following is returned.
@@ -65,6 +72,9 @@ ghyp.name(object, abbr = FALSE, skew.attr = TRUE)
   Student-t \tab   t \cr
   Gaussian \tab   Gauss \cr
   }
+
+  \code{ghyp.dim} returns the dimension of a \code{ghyp} object.\cr
+
 }
 % <---------------------------------------------------------------------->
 \author{David Lüthi}
@@ -96,6 +106,9 @@ ghyp.name(object, abbr = FALSE, skew.attr = TRUE)
 
   ## Get data
   ghyp.data(ghyp.mv)
+
+  ## Get the dimension
+  ghyp.dim(ghyp.mv)
 
   ## Get the name of the ghyp object
   ghyp.name(ghyp(alpha.bar = 0))
