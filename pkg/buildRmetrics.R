@@ -18,6 +18,9 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL, ...)
     if (any(pkgs == "all")) pkgs <- pkgsRmetrics
     stopifnot(pkgs %in% pkgsRmetrics)
 
+    # reorder list of packages
+    pkgs <- pkgsRmetrics[pkgsRmetrics %in% pkgs]
+
     message("building the packages ...", appendLF = FALSE)
     build <-
         sapply(pkgs, function(pkg, ...) system(paste("R CMD build", pkg, ...)))
