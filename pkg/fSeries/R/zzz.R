@@ -45,8 +45,7 @@ function(lib, pkg)
 
     # Load dll:
     # library.dynam("fSeries", pkg, lib)
-    warning("The new version of 'fSeries' has been renamed to 'timeSeries'",
-            call. = FALSE)
+    message("The new version of 'fSeries' has been renamed to 'timeSeries'")
 }
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"

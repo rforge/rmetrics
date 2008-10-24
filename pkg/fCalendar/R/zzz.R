@@ -43,8 +43,7 @@ function(lib, pkg)
 
     # Load dll:
     # library.dynam("fCalendar", pkg, lib)
-    warning("The new version of 'fCalendar' has been renamed to 'timeDate'",
-            call. = FALSE)
+    message("The new version of 'fCalendar' has been renamed to 'timeDate'")
 
 }
 
