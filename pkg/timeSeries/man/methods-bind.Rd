@@ -34,32 +34,32 @@
 }
 
 
-\usage{
-\S4method{merge}{timeSeries,timeSeries}(x, y)
-\S4method{cbind2}{timeSeries,timeSeries}(x, y)
-\S4method{rbind2}{timeSeries,timeSeries}(x, y)
-\S4method{cbind2}{timeSeries,timeSeries}(x, y)
-}
+% \usage{
+% \S4method{merge}{timeSeries,timeSeries}(x, y, ...)
+% \S4method{cbind2}{timeSeries,timeSeries}(x, y)
+% \S4method{rbind2}{timeSeries,timeSeries}(x, y)
+% \S4method{cbind2}{timeSeries,timeSeries}(x, y)
+% }
 
 
-\arguments{
+% \arguments{
   
-%   \item{units}{
-%     an optional character string, which allows to overwrite the 
-%     current column names of a \code{timeSeries} object. By default 
-%     \code{NULL} which means that the column names are selected
-%     automatically.
+% %   \item{units}{
+% %     an optional character string, which allows to overwrite the 
+% %     current column names of a \code{timeSeries} object. By default 
+% %     \code{NULL} which means that the column names are selected
+% %     automatically.
+% %   }
+
+%   \item{x, y}{
+%     two objects of class \code{timeSeries}.
 %   }
 
-  \item{x, y}{
-    two objects of class \code{timeSeries}.
-  }
+% %   \item{\dots}{
+% %     arguments passed to returned timeSeries object.
+% %   }
 
-%   \item{\dots}{
-%     arguments passed to returned timeSeries object.
-%   }
-
-}
+% }
 
 
 \value{

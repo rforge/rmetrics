@@ -69,7 +69,7 @@
 \S4method{start}{timeSeries}(x, \dots)
 \S4method{end}{timeSeries}(x, \dots)
 
-\S4method{sample}{timeSeries}(x, \dots)
+% \S4method{sample}{timeSeries}(x, \dots)
 \S4method{sort}{timeSeries}(x, \dots)
 \S4method{rev}{timeSeries}(x)
 }

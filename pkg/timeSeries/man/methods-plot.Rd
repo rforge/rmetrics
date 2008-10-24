@@ -25,8 +25,8 @@
     heights = 1, xy.labels, xy.lines, panel = lines, nc, yax.flip =
     FALSE, mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
     oma.multi = c(6, 0, 5, 0), axes = TRUE, \ldots)
-\S4method{lines}{timeSeries}(x, \dots)
-\S4method{points}{timeSeries}(x, \dots)
+\S4method{lines}{timeSeries}(x, FinCenter = NULL, \dots)
+\S4method{points}{timeSeries}(x, FinCenter = NULL, \dots)
 }
 
 
