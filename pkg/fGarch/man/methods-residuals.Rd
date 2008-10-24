@@ -19,7 +19,7 @@
 
 
 \usage{
-\S4method{residuals}{fGARCH}(object, standardize = TRUE)
+\S4method{residuals}{fGARCH}(object, standardize = FALSE)
 }
 
 
