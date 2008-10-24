@@ -14,21 +14,18 @@
 }
 
 
-\usage{
-\S4method{sample}{timeDate}(x, \dots)
-}
-
-
-\arguments{
-      
-    \item{x}{
-        an object of class \code{timeDate}.
-        }  
-    \item{\dots}{
-        arguments passed to other methods.
-        }
-       
-}
+% \usage{
+% \S4method{sample}{timeDate}(x, \dots)
+% }
+% \arguments{
+%   \item{x}{ Either a (numeric, complex, character or logical) vector of
+%     more than one element from which to choose, or a positive
+%     integer.}
+%   \item{size}{non-negative integer giving the number of items to choose.}
+%   \item{replace}{Should sampling be with replacement?}
+%   \item{prob}{A vector of probability weights for obtaining the elements of
+%       the vector being sampled.}
+% }
 
 
 \value{
