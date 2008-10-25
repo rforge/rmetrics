@@ -36,7 +36,7 @@ test.timeLastDayInMonth <-
     # What date has the last day in a month for a given date ?
     charvec = "2006-04-16"
     
-    timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 
+    timeLastDayInMonth(charvec, format = "%Y-%m-%d", 
         zone = myFinCenter, FinCenter = myFinCenter)
     
     timeLastDayInMonth(charvec)
