@@ -216,7 +216,6 @@ ghyp V1.4.0
 	'ghypFitting', 'ghypGenericMethods', 'ghypGIG', 'ghypInternals',
 	'ghypMethods', 'ghypWrappers'.
 
-
 	* Internal functions now all come with a '.' in front of the name.
 
 	* Internal function 'internal.dghyp' and 'internal.dghypmv'
@@ -228,3 +227,10 @@ ghyp V1.4.0
 	object.
 
 	* Internal function '.is.symmetric' added.
+
+	* Dataset 'indices', representing 5 financial indices,
+	and documentation file 'indices.Rd' added.
+
+	* Function 'portfolio.optimize' extended for tangecy and global
+	minimum risk portfolios. Some names of the arguments had to be
+	changed.

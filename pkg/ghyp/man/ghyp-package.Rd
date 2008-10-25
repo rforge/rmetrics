@@ -72,7 +72,7 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 
 \strong{Portfolio optimization and utilities:}
 \tabular{ll}{
-  \code{\link{portfolio.optimize}} \tab     Calculate an optimal portfolio given a multivariate \code{ghyp} distribution.\cr
+  \code{\link{portfolio.optimize}} \tab     Calculate optimal portfolios with respect to alternative risk measures.\cr
   \code{\link[=mean.ghyp]{mean}} \tab       Returns the expected value.\cr
   \code{\link[=vcov.ghyp]{vcov}} \tab       Returns the  variance(-covariance).\cr
   \code{\link{ghyp.skewness}} \tab          Skewness of a univariate \code{ghyp} distribution.\cr

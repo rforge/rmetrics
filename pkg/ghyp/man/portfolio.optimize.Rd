@@ -6,77 +6,112 @@
 \description{
 
   This function performs a optimization of a portfolio with respect to
-  one of the risk measures \dQuote{variance}, \dQuote{quantile} or
-  \dQuote{expected-shortfall}, a level of risk and the requested
-  portfolio return, given a multivariate generalized hyperbolic
-  distribution.
+  one of the risk measures \dQuote{sd}, \dQuote{value.at.risk} or
+  \dQuote{expected.shortfall}. The optimization task is either to
+  find the \emph{global minimum risk} portfolio, the \emph{tangency}
+  portfolio or the \emph{minimum risk} portfolio given a target-return.
 
 }
 % <---------------------------------------------------------------------->
 \usage{
-portfolio.optimize(object, ptf.mean = 0.01,
-           risk.measure = c("variance", "quantile", "expected-shortfall"),
-           level = 0.95,...)
+portfolio.optimize(object,
+                   risk.measure = c("sd", "value.at.risk", "expected.shortfall"),
+                   type = c("minimum.risk", "tangency", "target.return"),
+                   level = 0.95, distr = c("loss", "return"),
+                   target.return = NULL, risk.free = NULL,
+                   silent = FALSE, ...)
+
 }
 % <---------------------------------------------------------------------->
 \arguments{
-  \item{object}{A multivariate \code{\link[=ghyp-class]{ghyp}} object.}
-  \item{ptf.mean}{The required expected return of the portfolio.}
-  \item{risk.measure}{The risk measure to which the portfolio should be optimized.
-                      Must be one of \dQuote{variance}, \dQuote{quantile} or
-                      \dQuote{expected-shortfall}.}
-  \item{level}{The level of the \code{risk.measure}. Not used when \code{risk.measure}
-               is \dQuote{variance}.}
-  \item{\dots}{Arguments passed to \code{\link{optim}}.}
+
+\item{object}{A multivariate \code{\link[=ghyp-class]{ghyp}} object
+  representing the loss distribution. In case \code{object} gives the
+  return distribution set the argument \code{distr} to \dQuote{return}.}
+
+\item{risk.measure}{How risk shall be measured.  Must be one of
+                      \dQuote{sd} (standard deviation),
+                      \dQuote{value.at.risk} or
+                      \dQuote{expected.shortfall}.}
+
+\item{type}{The tpye of the optimization problem. Must be one of
+  \dQuote{minimum.risk}, \dQuote{tangency} or \dQuote{target.return}
+  (see \bold{Details}).}
+
+\item{level}{The confidence level which shall be used if
+    \code{risk.measure} is either \dQuote{value.at.risk} or
+    \dQuote{expected.shortfall}.}
+
+\item{distr}{The default distribution is \dQuote{loss}. If \code{object}
+  gives the return distribution set \code{distr} to \dQuote{return}.}
+
+\item{target.return}{A numeric scalar specifying the target return if
+  the optimization problem is of \code{type} \dQuote{target.return}.}
+
+\item{risk.free}{A numeric scalar giving the risk free rate in case the
+  optimization problem is of \code{type} \dQuote{tangency}.}
+
+\item{silent}{If \code{TRUE} no prompts will appear in the console.}
+
+\item{\dots}{Arguments passed to \code{\link{optim}}.}
+
 }
 % <---------------------------------------------------------------------->
 \value{
   A list with components:
   \item{portfolio}{An univariate generalized hyperbolic object of class \code{\link[=ghyp-class]{ghyp}} which
-                   represents the generalized hyperbolic distribution of the optimal portfolio.}
-  \item{risk.measure}{The optimization criterion.}
-  \item{value}{The value of the risk measure.}
+                   represents the distribution of the optimal portfolio.}
+  \item{risk.measure}{The risk measure which was used.}
+  \item{risk}{The risk.}
   \item{opt.weights}{The optimal weights.}
-  \item{convergence}{Convergence returned from \code{\link{optim}}.}
+  \item{converged}{Convergence returned from \code{\link{optim}}.}
   \item{message}{A possible error message returned from \code{\link{optim}}.}
   \item{n.iter}{The number of iterations returned from \code{\link{optim}}.}
 }
 % <---------------------------------------------------------------------->
 \author{David Lüthi}
 % <---------------------------------------------------------------------->
+\details{
+
+  If \code{type} is \dQuote{minimum.risk} the global minimum risk
+  portfolio is returned. \cr
+
+  If \code{type} is \dQuote{tangency} the portfolio maximizing the slope
+  of \dQuote{(expected return - risk free rate) / risk} will be
+  returned. \cr
+
+  If \code{type} is \dQuote{target.return} the portfolio with expected
+  return \code{target.return} which minimizes the risk will be
+  returned. \cr
+
+  Note that in case of an elliptical distribution (symmetric generalized
+  hyperbolic distributions) it does not matter which risk measure is
+  used. That is, minimizing the standard deviation results in a
+  portfolio which also minimizes the value-at-risk et cetera. \cr
+
+}
+
+% <---------------------------------------------------------------------->
 \note{
 
-  The ghyp-object must define a return (not a loss) distribution. That
-  is, the left tail of the distribution is optimized.\cr
+  In case \code{object} denotes a non-elliptical distribution and the
+  risk measure is either \dQuote{value.at.risk} or
+  \dQuote{expected.shortfall}, then the type \dQuote{tangency}
+  optimization problem is not supported. \cr
 
-  Setting of constraints like avoid short-selling is not supported
-  yet. \cr
-
-  If the ghyp-object defines a symmetric distribution the
-  \code{risk.measure} does not matter since the distribution is then
-  elliptical. \cr
-
-  If the risk measure is \dQuote{variance} the returned portfolio is
-  simply an efficient frontier. \cr
+  Constraints like avoiding short-selling are not supported yet. \cr
 
 }
 % <---------------------------------------------------------------------->
 \seealso{\code{\link[=transform.ghyp]{transform}}, \code{\link{fit.ghypmv}}}
 % <---------------------------------------------------------------------->
 \examples{
-  data(smi.stocks)
+  data(indices)
 
-  mv.fit <- fit.ghypmv(data = smi.stocks[, 2:6], opt.pars = c(lambda = FALSE),
-                       lambda = 2, control = list(rel.tol = 1e-5, abs.tol = 1e-5))
+  nig.fit <- fit.NIGmv(data = indices, silent = TRUE)
 
-  optimal.portfolio <- portfolio.optimize(mv.fit, ptf.mean = 1e-3,
-                                          risk.measure = "expected-shortfall",
-                                          level = 0.99)
-
-  plot(optimal.portfolio$portfolio, type = "l" , col = "red")
-\dontrun{
-  lines(density(smi.stocks[, 2:6] %*% optimal.portfolio$opt.weights))
-}
+  portfolio.optimize(nig.fit, risk.measure = "value.at.risk",
+                     level = 0.95, distr = "return")
 }
 % <---------------------------------------------------------------------->
 \keyword{optimize}

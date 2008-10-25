@@ -226,7 +226,7 @@ distribution we refer to \citet*{Prause1999} and \citet*{Paolella2007}.
 The GH class is closed under linear transformations:
 \begin{proposition}
   If $\X \sim \GH$ and $\Y = B \X + \mathbf{b}$, where $B \in
-  \mathbb{R}^{k \times d}$ and $\mathbf{b} \in \mathbb{R}^k$, then $Y
+  \Real^{k \times d}$ and $\mathbf{b} \in \Real^k$, then $Y
   \sim \GHtransf$.
 \end{proposition}
 \begin{proof}
@@ -248,8 +248,10 @@ The GH class is closed under linear transformations:
   Therefore, $B \X + \mathbf{b} \sim \GHtransf$.
 \end{proof}
 Observe that by introducing a new skewness parameter $\bar{\GAMMA} =
-\Sigma \GAMMA$ all the shape and skewness parameters ($\lambda, \chi,
-\psi, \GAMMA$) become location and scale-invariant.
+\Sigma \GAMMA$, all the shape and skewness parameters ($\lambda, \chi,
+\psi, \bar{\GAMMA}$) become location and scale-invariant, provided the
+transformation does not affect the dimensionality, that is
+$B \inReal^{d \times d}$ and $\mathbf{b} \inReal^d$.
 % <---------------------------------------------------------------------->
 \section{Special cases of the generalized hyperbolic
   distribution}\label{sec:specialcases}
@@ -331,8 +333,8 @@ well as full rank.
   \end{small}
   \caption{The domain of variation for the parameters of the GH distribution and
     some of its special cases for different parametrizations. We denote the set of all feasible covariance
-    matrices in $\mathbb{R}^{d \times d}$ with $\mathbb{R}^\Sigma$.
-    Furthermore, let $\mathbb{R}^\Delta = \{A \inRealSigma : \dete{A} = 1\}$.}\label{tab:param}
+    matrices in $\Real^{d \times d}$ with $\Real^\Sigma$.
+    Furthermore, let $\Real^\Delta = \{A \inRealSigma : \dete{A} = 1\}$.}\label{tab:param}
 \end{table}
 
 Internally, he package \ghyp~uses the

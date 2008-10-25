@@ -479,67 +479,250 @@
 
 
 ### <======================================================================>
-"portfolio.optimize" <- function(object, ptf.mean = 0.01, risk.free = 0,
-                                 risk.measure = c("variance", "quantile", "expected-shortfall"),
-                                 type = c("minimum.risk", "tangency"),
-                                 level = 0.95, ...)
+"portfolio.optimize" <- function(object,
+                                 risk.measure = c("sd", "value.at.risk", "expected.shortfall"),
+                                 type = c("minimum.risk", "tangency", "target.return"),
+                                 level = 0.95, distr = c("loss", "return"),
+                                 target.return = NULL, risk.free = NULL,
+                                 silent = FALSE, ...)
 {
-    ## Object must be of class "ghyp" or "mle.ghyp" and multivariate
     .test.ghyp(object, case = "multivariate")
 
     risk.measure <- match.arg(risk.measure)
+    type <- match.arg(type)
+    distr <- match.arg(distr)
 
-    if(risk.measure == "variance"){
-        lin.sys <- rbind(vcov(object), mean(object), rep(1,object@dimension))
-        lin.sys <- cbind(lin.sys, c(mean(object), 0, 0), c(rep(1, object@dimension), 0, 0))
-        b <- c(rep(0, object@dimension), ptf.mean, 1)
-        ptf.weights <- solve(lin.sys, b)[1:object@dimension]
-        tmp.portfolio <- transform(object, multiplier = t(ptf.weights))
-        return(list(risk.measure = risk.measure,
-                    value = as.numeric(ptf.weights %*% vcov(object) %*% ptf.weights),
-                    portfolio = tmp.portfolio,
-                    opt.weights = unname(ptf.weights)))
-    }else{
-        if(object@dimension <= 2){
-            stop("Dimension must be > 2!")
-        }
-        if(risk.measure == "quantile"){
-            minimize.func <- qghyp
-        }else{
-            minimize.func <- ESghyp
-        }
+    if(type == "target.return" & is.null(target.return)){
+        stop("If optimization problem is of type 'target.return' the ",
+             "argeument 'target.return' must be specified!")
 
-        objective <- function(opt.weights, object, minimize.func, ptf.mean, level)
-        {
-            weight.2 <- (ptf.mean + mean(object)[1] * (sum(opt.weights) - 1) -
-                         sum(opt.weights * mean(object)[3:object@dimension])) /
-                             (mean(object)[2] - mean(object)[1])
-            weight.1 <- 1 - sum(opt.weights) - weight.2
-            tmp.weights <- c(weight.1, weight.2, opt.weights)
-            tmp.portfolio <- transform(object, multiplier = t(tmp.weights))
-            objective.value <- minimize.func(1 - level, object = tmp.portfolio)
-            ##cat("objective.value: ",objective.value,"\n")
-            return( - objective.value )
-        }
-
-        initial.weights <- rep(1 / (object@dimension - 2), object@dimension - 2)
-
-        opt.ptf <- optim(initial.weights, objective, object = object,
-                         minimize.func = minimize.func, ptf.mean = ptf.mean,
-                         level = level, ...)
-
-        weight.2 <- (ptf.mean + mean(object)[1] * (sum(opt.ptf$par) - 1) -
-                     sum(opt.ptf$par * mean(object)[3:object@dimension])) /
-                         (mean(object)[2] - mean(object)[1])
-        weight.1 <- 1 - sum(opt.ptf$par) - weight.2
-        tmp.weights <- c(weight.1, weight.2, opt.ptf$par)
-        tmp.portfolio <- transform(object, multiplier = t(tmp.weights))
-
-        return(list(portfolio = tmp.portfolio, risk.measure = risk.measure,
-                    value = -opt.ptf$value, opt.weights = unname(tmp.weights),
-                    convergence = opt.ptf$convergence, message = opt.ptf$message,
-                    n.iter = opt.ptf$counts[1]))
     }
+    if(type == "tangency" & is.null(risk.free)){
+        stop("If optimization problem is of type 'tangency' the ",
+             "argeument 'risk.free' must be specified!")
+
+    }
+
+    if(type == "tangency" & !.is.symmetric(object) & risk.measure != "sd"){
+        stop("Type 'tangency' optimization problem ",
+             "not implemented for non-symmetric distributions and ",
+             "risk measure not equal to 'sd'!")
+
+    }
+
+    ## This function handles all optimization problems if either
+    ## risk is measured in terms of variance or if the distribution
+    ## is symmetric.
+    mean.variance <- function(means, variance, r.f = NULL, target.return = NA,
+                              type = c("tangency", "minimum.risk", "target.return"))
+    {
+        type <- match.arg(type)
+        if(type == "tangency"){
+            weights.unnormed <- as.vector(solve(variance) %*% (means - r.f))
+            weights <- weights.unnormed / sum(weights.unnormed)
+        }else{
+            dimension <- nrow(variance)
+            lin.sys <- cbind(variance, rep(-1, dimension))
+            lin.sys <- rbind(lin.sys, c(rep(1, dimension), 0))
+
+            if(type == "minimum.risk"){
+                weights.lambda <- solve(lin.sys, c(rep(0, dimension), 1))
+                weights <- weights.lambda[1:dimension]
+            }else{                      # target.return
+                lin.sys <- cbind(lin.sys, c(- means, 0))
+                lin.sys <- rbind(lin.sys, c(means, 0, 0))
+                weights.lambda.1.2 <- solve(lin.sys, c(rep(0, dimension),
+                                                       1, target.return))
+                weights <- weights.lambda.1.2[1:dimension]
+            }
+
+        }
+        ptf.mean <- sum(weights * means)
+        ptf.sd <- as.numeric(sqrt(weights %*% variance %*% weights))
+        return(list(ptf.mean = ptf.mean, ptf.sd = ptf.sd, weights = weights))
+    }
+    ## End of function 'mean.variance'.
+
+
+    if(distr == "return"){
+        object <- transform(object, multiplier = diag(-1, ghyp.dim(object)))
+        if(!is.null(target.return)){
+            target.return <- - 1 * target.return
+        }
+    }
+
+    if(risk.measure == "sd" | .is.symmetric(object))
+    {
+        mv.opt <- mean.variance(mean(object), vcov(object),
+                                type = type, r.f = risk.free,
+                                target.return = target.return)
+
+        opt.weights <- mv.opt$weights
+
+        ptf.dist <- transform(object, multiplier = t(opt.weights))
+
+        risk <- switch(risk.measure,
+                       sd = sqrt(vcov(ptf.dist)),
+                       value.at.risk = qghyp(level, ptf.dist),
+                       expected.shortfall = ESghyp(level, ptf.dist, distr = "loss"))
+        converged <- TRUE
+
+        n.iter <- 0
+        message <- ""
+    }else{
+        ## Risk measure != "sd" and the distribution object is non-symmetric.
+        if(type == "target.return")
+        {
+            objective.target.return <- function(pars, object, target.return, level,
+                                                risk.measure, silent = TRUE)
+            {
+                weight.2 <- (target.return + mean(object)[1] * (sum(pars) - 1) -
+                             sum(pars * mean(object)[3:ghyp.dim(object)])) /
+                                 (mean(object)[2] - mean(object)[1])
+
+                weight.1 <- 1 - sum(pars) - weight.2
+                weights <- c(weight.1, weight.2, pars)
+
+                backup.weights <<- weights
+
+                ptf.dist <- transform(object, multiplier = t(weights))
+
+                if(risk.measure == "value.at.risk"){
+                    risk <- qghyp(level, ptf.dist)
+                }else if(risk.measure == "expected.shortfall"){
+                    risk <- ESghyp(level, ptf.dist, distr = "loss")
+                }else{
+                    stop("Unknown risk measure: ", risk.measure)
+                }
+
+                if(!silent){
+                    print(paste("risk: ",sprintf("% .7E", risk),
+                                "; weights: ",
+                                paste(sprintf("% .4E", weights), collapse = ", "),
+                                sep = ""))
+                }
+
+                return(risk)
+            }
+
+            initial.weights <- rep(1 / ghyp.dim(object), ghyp.dim(object) - 2)
+            backup.weights <- initial.weights
+
+            opt.ptf <- try(optim(initial.weights, objective.target.return,
+                                 object = object,
+                                 target.return = target.return,
+                                 level = level, risk.measure = risk.measure,
+                                 silent = silent, ...))
+
+            if(class(opt.ptf) == "try-error")
+            {
+                converged <- FALSE
+                risk <- NA
+                opt.weights <- backup.weights
+                ptf.dist <- transform(object, multiplier = t(opt.weights))
+                message <- opt.ptf
+            }else{
+                weight.2 <- (target.return + mean(object)[1] * (sum(opt.ptf$par) - 1) -
+                             sum(opt.ptf$par * mean(object)[3:ghyp.dim(object)])) /
+                                 (mean(object)[2] - mean(object)[1])
+
+                weight.1 <- 1 - sum(opt.ptf$par) - weight.2
+
+                opt.weights <- c(weight.1, weight.2, opt.ptf$par)
+
+                ptf.dist <- transform(object, multiplier = t(opt.weights))
+                risk <- switch(risk.measure,
+                               value.at.risk = qghyp(level, ptf.dist),
+                               expected.shortfall = ESghyp(level, ptf.dist, distr = "loss"))
+
+                if(opt.ptf$convergence == 0){
+                    converged <- TRUE
+                }else{
+                    converged <- FALSE
+                }
+                message <- opt.ptf$message
+            }
+
+
+            n.iter <- opt.ptf$counts[1]
+
+        }else{
+###<------------- type == "minimum.risk" or "tangency" --------------->
+            objective <- function(pars, object, type, r.f, level,
+                                  risk.measure, silent = TRUE)
+            {
+                weights <- c(1 - sum(pars), pars)
+
+                backup.weights <<- weights
+                ptf.dist <- transform(object, multiplier = t(weights))
+
+                if(risk.measure == "value.at.risk"){
+                    risk <- qghyp(level, ptf.dist)
+                }else if(risk.measure == "expected.shortfall"){
+                    risk <- ESghyp(level, ptf.dist, distr = "loss")
+                }else{
+                    stop("Unknown risk measure: ", risk.measure)
+                }
+
+                if(type == "tangency"){
+                    func.val <- - (mean(ptf.dist) - r.f) / risk
+                }else if(type == "minimum.risk"){
+                    func.val <- risk
+                }else{
+                    stop("Unknown optimization problem: ", type)
+                }
+                if(!silent){
+                    print(paste("fct value: ",sprintf("% .7E", func.val),
+                                "; weights: ",
+                                paste(sprintf("% .4E", weights), collapse = ", "),
+                                sep = ""))
+                }
+                return(func.val)
+            }
+
+            initial.weights <- rep(1 / ghyp.dim(object), ghyp.dim(object) - 1)
+            backup.weights <- initial.weights
+
+            opt.ptf <- try(optim(initial.weights, objective, object = object, type = type,
+                                 r.f = risk.free, level = level, risk.measure = risk.measure,
+                                 silent = silent, ...))
+            if(class(opt.ptf) == "try-error")
+            {
+                converged <- FALSE
+                risk <- NA
+                opt.weights <- backup.weights
+                ptf.dist <- transform(object, multiplier = t(opt.weights))
+                message <- opt.ptf
+            }else{
+
+                opt.weights <- c(1 - sum(opt.ptf$par), opt.ptf$par)
+
+                ptf.dist <- transform(object, multiplier = t(opt.weights))
+                risk <- switch(risk.measure,
+                               value.at.risk = qghyp(level, ptf.dist),
+                               expected.shortfall = ESghyp(level, ptf.dist, distr = "loss"))
+
+                if(opt.ptf$convergence == 0){
+                    converged <- TRUE
+                }else{
+                    converged <- FALSE
+                }
+                message <- opt.ptf$message
+            }
+
+            n.iter <- opt.ptf$counts[1]
+
+        }
+    }
+
+    if(distr == "return"){
+        ptf.dist <- transform(ptf.dist, multiplier = -1)
+    }
+
+    return(list(portfolio = ptf.dist, risk.measure = risk.measure,
+                risk = risk, opt.weights = unname(opt.weights),
+                converged = converged, message = message,
+                n.iter = n.iter))
 }
 ### <---------------------------------------------------------------------->
 
