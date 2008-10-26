@@ -107,6 +107,7 @@ test.dayOfWeek <-
     function()
 {
     # Day of Week:
+    setRmetricsOptions(myFinCenter = "GMT")
     tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     DOW = dayOfWeek(tS)
     current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
