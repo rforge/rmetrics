@@ -1,14 +1,15 @@
 Package: timeDate
-Version: 280.80
+Version: 290.81
 Date: 1997 - 2008
 Title: Rmetrics - Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi
 Depends: R (>= 2.6.0), graphics, utils, stats, methods
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
-Description: Environment for teaching "Financial Engineering and Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
-      THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES,
-      AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Description: Environment for teaching "Financial Engineering and
+        Computational Finance"
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
