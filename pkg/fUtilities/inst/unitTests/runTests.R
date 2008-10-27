@@ -38,6 +38,8 @@ if(require("RUnit", quietly = TRUE)) {
         printTextProtocol(tests)
         printTextProtocol(tests, fileName=paste(pathReport, ".txt", sep=""))
         ## Print HTML version to a file
+        ## printHTMLProtocol has problems on Mac OS X
+        if (Sys.info()["sysname"] != "Darwin")
         printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
 
         ##  stop() if there are any failures i.e. FALSE to unit test.

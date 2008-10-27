@@ -44,7 +44,7 @@ if(require("RUnit", quietly = TRUE))
                           fileName = paste(pathReport, ".txt", sep = ""))
 
         ## Print HTML Version to a File:
-        ## There is a bug in printHTMLProtocol of RUnit on Mac OS X
+        ## printHTMLProtocol has problems on Mac OS X
         if (Sys.info()["sysname"] != "Darwin")
         printHTMLProtocol(tests,
                           fileName = paste(pathReport, ".html", sep = ""))

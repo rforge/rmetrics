@@ -51,7 +51,7 @@ setMethod("returns", "ANY",
     method <- match.arg(method)
 
     # Calculate Returns:
-    data <- as(x, "matrix")
+    data <- as.matrix(x)
     positions <- time(x)
 
     if(method == "compound" || method == "continuous") {
