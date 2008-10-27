@@ -42,7 +42,6 @@
       "fRegression",
       "fExtremes",
       "fCopulae",
-      "fBonds",
       "fOptions",
       "fExoticOptions",
       "fAsianOptions",
