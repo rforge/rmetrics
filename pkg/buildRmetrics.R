@@ -1,4 +1,52 @@
-buildRmetrics <- function(pkgs = "all", outdir = NULL, ...)
+upVersion <- function(pkgs)
+{
+    sapply(pkgs, function(pkg) {
+        dcfFile <- file.path(pkg, "DESCRIPTION")
+        dcf <- read.dcf(dcfFile)
+        ## in Rmetrics first number correspond to R version and
+        ## second is the number of time the package was uploaded to CRAN
+        Rver <- paste(R.version[c("major", "minor")], collapse = "")
+        Rver <- sub("\\.","", Rver)
+
+        pkgVersion <- dcf[,"Version"]
+        pkgOldVersion <- as.numeric(unlist(strsplit(pkgVersion, "\\.")))
+        pkgNewVersion <- paste(Rver, pkgOldVersion[2]+1, sep = ".")
+
+        dcf[,"Version"] <- pkgNewVersion
+        message("Updated version number of ", pkg,
+                " (", paste(pkgOldVersion, collapse = "."),
+                "->", paste(pkgNewVersion, sep = "."), ")")
+        write.dcf(dcf, file = dcfFile)
+    })
+
+    return()
+}
+
+checkVersion <- function(pkgs)
+{
+    message("Downloading packages info from CRAN ... ", appendLF = FALSE)
+    info <- available.packages(contriburl = contrib.url(getOption("repos"), type = "source"))
+    message("OK")
+
+    for (pkg in pkgs) {
+        dcfFile <- file.path(pkg, "DESCRIPTION")
+        pkgVersion <- read.dcf(dcfFile, fields = "Version")
+
+        if (info[pkg, "Version"] == pkgVersion)
+            stop(pkg, " has same local version number as package on CRAN!")
+
+        message("\n", pkg)
+        message("CRAN  : ", info[pkg, "Version"])
+        message("Local : ", pkgVersion)
+    }
+}
+
+
+
+buildRmetrics <- function(pkgs = "all",
+                          outdir = NULL,
+                          update.version = FALSE,
+                          ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -49,5 +97,8 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL, ...)
     message("\nTo install or check the packages Please use the order:\n",
             paste(pkgsBuild, collapse = " "))
 
-    invisible(pkgsBuild)
+    ## update version number
+    if (update.version) upVersion(pkgs)
+
+    invisible(pkgs)
 }
