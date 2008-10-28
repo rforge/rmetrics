@@ -56,9 +56,14 @@ ghyp.omega(L, object = ghyp(), ...)
 % <---------------------------------------------------------------------->
 \author{David Lüthi}
 % <---------------------------------------------------------------------->
-\seealso{\code{\link{ghyp-class}} definition, \code{\link{ghyp}} constructors,
-         univariate fitting routines \code{\link{fit.ghypuv}},
+\seealso{
+
+  \code{\link{ghyp-class}} definition, \code{\link{ghyp}} constructors,
+         univariate fitting routines, \code{\link{fit.ghypuv}},
+         \code{\link{portfolio.optimize}} for portfolio optimization
+         with respect to alternative risk measures,
          \code{\link{integrate}}.
+
 }
 % <---------------------------------------------------------------------->
 \examples{

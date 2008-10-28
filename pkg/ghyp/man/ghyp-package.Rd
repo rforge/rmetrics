@@ -24,7 +24,7 @@ contains the Generalized Inverse Gaussian distribution.
 Package: \tab ghyp\cr
 Type: \tab Package\cr
 Version: \tab 1.4.0\cr
-Date: \tab 2008-10-20\cr
+Date: \tab 2008-10-28\cr
 License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 }
 
@@ -64,15 +64,15 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
   \code{\link{stepAIC.ghyp}} \tab   Perform a model selection based on the AIC.\cr
 }
 
-\strong{Risk and Performance:}
+\strong{Risk, performance and portfolio optimization:}
 \tabular{ll}{
   \code{\link{ESghyp}} \tab        Expected shortfall of a univariate generalized hyperbolic distribution.\cr
   \code{\link{ghyp.omega}} \tab    Performance measure \emph{Omega} based on a univariate \code{ghyp} distribution.\cr
+  \code{\link{portfolio.optimize}} \tab     Calculate optimal portfolios with respect to alternative risk measures.\cr
 }
 
-\strong{Portfolio optimization and utilities:}
+\strong{Utilities:}
 \tabular{ll}{
-  \code{\link{portfolio.optimize}} \tab     Calculate optimal portfolios with respect to alternative risk measures.\cr
   \code{\link[=mean.ghyp]{mean}} \tab       Returns the expected value.\cr
   \code{\link[=vcov.ghyp]{vcov}} \tab       Returns the  variance(-covariance).\cr
   \code{\link{ghyp.skewness}} \tab          Skewness of a univariate \code{ghyp} distribution.\cr

@@ -59,7 +59,7 @@ portfolio.optimize(object,
 % <---------------------------------------------------------------------->
 \value{
   A list with components:
-  \item{portfolio}{An univariate generalized hyperbolic object of class \code{\link[=ghyp-class]{ghyp}} which
+  \item{portfolio.dist}{An univariate generalized hyperbolic object of class \code{\link[=ghyp-class]{ghyp}} which
                    represents the distribution of the optimal portfolio.}
   \item{risk.measure}{The risk measure which was used.}
   \item{risk}{The risk.}
@@ -106,12 +106,47 @@ portfolio.optimize(object,
 \seealso{\code{\link[=transform.ghyp]{transform}}, \code{\link{fit.ghypmv}}}
 % <---------------------------------------------------------------------->
 \examples{
-  data(indices)
 
-  nig.fit <- fit.NIGmv(data = indices, silent = TRUE)
+data(indices)
 
-  portfolio.optimize(nig.fit, risk.measure = "value.at.risk",
-                     level = 0.95, distr = "return")
+t.object <- fit.tmv(-indices, silent = TRUE)
+gauss.object <- fit.gaussmv(-indices)
+
+t.ptf <- portfolio.optimize(t.object,
+                            risk.measure = "expected.shortfall",
+                            type = "minimum.risk",
+                            level = 0.99,
+                            distr = "loss",
+                            silent = TRUE)
+
+gauss.ptf <- portfolio.optimize(gauss.object,
+                                risk.measure = "expected.shortfall",
+                                type = "minimum.risk",
+                                level = 0.99,
+                                distr = "loss")
+
+par(mfrow = c(1, 3))
+
+plot(c(t.ptf$risk, gauss.ptf$risk),
+     c(-mean(t.ptf$portfolio.dist), -mean(gauss.ptf$portfolio.dist)),
+     xlim = c(0, 0.035), ylim = c(0, 0.004),
+     col = c("black", "red"), lwd = 4,
+     xlab = "99 percent expected shortfall",
+     ylab = "Expected portfolio return",
+     main = "Global minimum risk portfolios")
+
+legend("bottomleft", legend = c("Asymmetric t", "Gaussian"),
+       col = c("black", "red"), lty = 1)
+
+plot(t.ptf$portfolio.dist, type = "l",
+     xlab = "log-loss ((-1) * log-return)", ylab = "Density")
+lines(gauss.ptf$portfolio.dist, col = "red")
+
+weights <- cbind(Asymmetric.t = t.ptf$opt.weights,
+                 Gaussian = gauss.ptf$opt.weights)
+
+barplot(weights, beside = TRUE, ylab = "Weights")
+
 }
 % <---------------------------------------------------------------------->
 \keyword{optimize}

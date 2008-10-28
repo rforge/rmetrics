@@ -719,7 +719,7 @@
         ptf.dist <- transform(ptf.dist, multiplier = -1)
     }
 
-    return(list(portfolio = ptf.dist, risk.measure = risk.measure,
+    return(list(portfolio.dist = ptf.dist, risk.measure = risk.measure,
                 risk = risk, opt.weights = unname(opt.weights),
                 converged = converged, message = message,
                 n.iter = n.iter))

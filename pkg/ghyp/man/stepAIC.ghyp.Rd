@@ -44,18 +44,18 @@ stepAIC.ghyp(data, dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
 }
 % <---------------------------------------------------------------------->
 \examples{
-\dontrun{
-  data(smi.stocks)
+
+  data(indices)
 
   # Multivariate case:
-  aic.mv <- stepAIC.ghyp(smi.stocks[, 2:5], dist = c("ghyp", "hyp", "t", "gauss"),
+  aic.mv <- stepAIC.ghyp(indices, dist = c("ghyp", "hyp", "t", "gauss"),
                          symmetric = NULL, control = list(maxit = 500),
                          silent = TRUE, nit = 500)
 
   summary(aic.mv$best.model)
 
   # Univariate case:
-  aic.uv <- stepAIC.ghyp(smi.stocks[, "SMI"], dist = c("ghyp", "NIG", "VG", "gauss"),
+  aic.uv <- stepAIC.ghyp(indices[, "stock"], dist = c("ghyp", "NIG", "VG", "gauss"),
                          symmetric = TRUE, control = list(maxit = 500), silent = TRUE)
 
 
@@ -63,7 +63,6 @@ stepAIC.ghyp(data, dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
   # respect to the VG-model:
   lik.ratio.test(aic.uv$all.models[[1]], aic.uv$all.models[[3]])
 
-}
 }
 % <---------------------------------------------------------------------->
 \keyword{utilities}
