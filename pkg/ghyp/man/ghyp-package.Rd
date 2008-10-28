@@ -167,18 +167,18 @@ acknowledged.
 }
 % <---------------------------------------------------------------------->
 \author{
-Wolfgang Breymann, David Lüthi \cr
+Wolfgang Breymann, David Luethi \cr
 
 Institute of Data Analyses and Process Design
 (\url{http://www.idp.zhaw.ch}) \cr
 
-Maintainer: David Lüthi <david.luethi@zhaw.ch>
+Maintainer: David Luethi <david.luethi@zhaw.ch>
 }
 % <---------------------------------------------------------------------->
 \references{
 
 \emph{Quantitative Risk Management: Concepts, Techniques and Tools} by
-Alexander J. McNeil, Rüdiger Frey and Paul Embrechts \cr Princeton
+Alexander J. McNeil, Ruediger Frey and Paul Embrechts \cr Princeton
 Press, 2005 \cr
 
 \emph{Intermediate probability: A computational approach} by Marc

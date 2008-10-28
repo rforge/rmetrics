@@ -86,7 +86,7 @@ rghyp(n, object = ghyp())
 \references{
 
   \emph{Quantitative Risk Management: Concepts, Techniques and Tools} by
-  Alexander J. McNeil, Rüdiger Frey and Paul Embrechts \cr Princeton
+  Alexander J. McNeil, Ruediger Frey and Paul Embrechts \cr Princeton
   Press, 2005 \cr
 
   \code{ghyp}-package vignette in the \code{doc} folder or on
@@ -94,7 +94,7 @@ rghyp(n, object = ghyp())
 
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \note{
 

@@ -36,7 +36,7 @@
   may fail. See \code{\link{qghyp}} for details.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link[=hist.ghyp]{hist}}, \code{\link{qqghyp}},
 \code{\link[=pairs.ghyp]{pairs}}, \code{\link{plot}},

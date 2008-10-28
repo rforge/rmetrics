@@ -103,7 +103,7 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
 
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{fit.ghypuv}}, \code{\link{fit.ghypmv}}, \code{\link{integrate}},
          \code{\link{uniroot}}, \code{\link{spline}}}

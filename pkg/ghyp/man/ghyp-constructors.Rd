@@ -105,7 +105,7 @@ gauss(mu = 0, sigma = diag(rep(1, length(mu))), data = NULL)
  An object of class \code{\link[=ghyp-class]{ghyp}}.
 }
 % <---------------------------------------------------------------------->
-\author{ David Lüthi }
+\author{ David Luethi }
 % <---------------------------------------------------------------------->
 \references{
   \code{ghyp}-package vignette in the \code{doc} folder or on \url{http://cran.r-project.org/web/packages/ghyp/}

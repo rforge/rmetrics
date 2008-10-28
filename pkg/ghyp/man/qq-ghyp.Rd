@@ -54,7 +54,7 @@ qqghyp(object, data = ghyp.data(object), gaussian = TRUE, line = TRUE,
   \item{\dots}{Arguments passed to \code{\link{plot}}.}
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link[=hist.ghyp]{hist}}, \code{\link{fit.ghypuv}}, \code{\link{qghyp}},
          \code{\link[=plot.ghyp]{plot}},

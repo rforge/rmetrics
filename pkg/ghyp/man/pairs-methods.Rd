@@ -41,7 +41,7 @@
   \item{\dots}{Arguments passed to \code{\link{plot}} and \code{\link{axis}}.}
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{pairs}}, \code{\link{fit.ghypmv}},
          \code{\link{qqghyp}}, \code{\link[pkg:gplots]{hist2d}}}

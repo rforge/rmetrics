@@ -154,6 +154,6 @@ This function simply checks if the dimensions match.
   Returns a specific model from a list returned by \code{stepAIC.ghyp}
 }
 % <---------------------------------------------------------------------->
-\author{Wolfgang Breymann, David Lüthi}
+\author{Wolfgang Breymann, David Luethi}
 % <---------------------------------------------------------------------->
 \keyword{internal}

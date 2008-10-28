@@ -37,7 +37,7 @@ stepAIC.ghyp(data, dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
                    the parameters \code{mu}, \code{sigma} and \code{gamma} are added.}
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{
   \code{\link{lik.ratio.test}}, \code{\link{fit.ghypuv}} and \code{\link{fit.ghypmv}}.

@@ -107,7 +107,7 @@ Class \dQuote{mle.ghyp} extends class \code{"\linkS4class{ghyp}"}, directly.
    A \dQuote{summary} method for objects of class \dQuote{mle.ghyp} (see \code{\link[=summary.mle.ghyp]{summary}}).
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \note{
 

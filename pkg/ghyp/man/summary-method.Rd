@@ -24,7 +24,7 @@
   Nothing is returned.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{Fitting functions \code{\link{fit.ghypuv}} and \code{\link{fit.ghypmv}},
          \code{\link[=coef.ghyp]{coef}}, \code{\link[=mean.ghyp]{mean}},

@@ -35,7 +35,7 @@ distribution object.
   An object of class \code{\link[=ghyp-class]{ghyp}}.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{ghyp}}, \code{\link{fit.ghypuv}} and \code{\link{fit.ghypmv}}
          for constructors of \code{\link[=ghyp-class]{ghyp}} objects.}

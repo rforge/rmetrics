@@ -77,7 +77,7 @@ fit.gaussuv(data, na.rm = T, save.data = T)
 }
 % <---------------------------------------------------------------------->
 \author{
-  Wolfgang Breymann, David Lüthi
+  Wolfgang Breymann, David Luethi
 }
 % <---------------------------------------------------------------------->
 \references{

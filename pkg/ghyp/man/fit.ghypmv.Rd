@@ -101,7 +101,7 @@ fit.gaussmv(data, na.rm = T, save.data = T)
 % <---------------------------------------------------------------------->
 \references{
 
-  Alexander J. McNeil, Rüdiger Frey, Paul Embrechts (2005)
+  Alexander J. McNeil, Ruediger Frey, Paul Embrechts (2005)
   \emph{Quantitative Risk Management, Concepts, Techniques and Tools}
   \cr
 
@@ -114,7 +114,7 @@ fit.gaussmv(data, na.rm = T, save.data = T)
 }
 % <---------------------------------------------------------------------->
 \author{
-  Wolfgang Breymann, David Lüthi
+  Wolfgang Breymann, David Luethi
 }
 % <---------------------------------------------------------------------->
 \note{

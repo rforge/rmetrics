@@ -35,11 +35,11 @@ ghyp.moment(object, order = 3:4, absolute = FALSE, central = TRUE, ...)
   A vector containing the moments.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \references{
   \emph{Moments of the Generalized Hyperbolic Distribution} by
-  David J. Scott, Diethelm Würtz and Thanh Tam Tran \cr
+  David J. Scott, Diethelm Wuertz and Thanh Tam Tran \cr
   Working paper, 2008
 }
 % <---------------------------------------------------------------------->

@@ -47,7 +47,7 @@ ghyp.kurtosis(object)
   Either the expected value, variance, skewness or kurtosis.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{ghyp}}, \code{\link{ghyp-class}}, \code{\link{Egig}} to
 compute the expected value and the variance of the generalized inverse gaussian

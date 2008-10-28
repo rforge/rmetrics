@@ -54,7 +54,7 @@ ghyp.omega(L, object = ghyp(), ...)
   University of Massachusetts, 2003 \cr
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{
 

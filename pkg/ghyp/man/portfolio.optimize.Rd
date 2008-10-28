@@ -69,7 +69,7 @@ portfolio.optimize(object,
   \item{n.iter}{The number of iterations returned from \code{\link{optim}}.}
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \details{
 

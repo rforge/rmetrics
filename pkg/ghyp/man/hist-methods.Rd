@@ -46,7 +46,7 @@
   No value is returned.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{qqghyp}}, \code{\link{fit.ghypuv}},
         \code{\link{hist}}, \code{\link{legend}}, \code{\link[=plot.ghyp]{plot}},

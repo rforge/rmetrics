@@ -34,7 +34,7 @@
   Either the Log-Likelihood or the Akaike's Information Criterion.
 }
 % <---------------------------------------------------------------------->
-\author{David Lüthi}
+\author{David Luethi}
 % <---------------------------------------------------------------------->
 \note{
 The Log-Likelihood as well as the Akaike's Information Criterion can be obtained from
