@@ -1,0 +1,4 @@
+#! /bin/sh
+
+rm -f ./config.* 
+rm -rf ./autom4te.cache

@@ -1,0 +1,13 @@
+Package: randtoolbox	
+Type: Package
+Title: toolbox for pseudo and quasi random number generation and RNG tests.
+Version: 1.05
+Date: 2008-9-31
+Author: Christophe Dutang and Diethelm Wuertz (except some R port of the SFMT algorithm from M. Matsumoto, M. Saito and WELL generator from P. L'Ecuyer, Knuth-TAOCP RNG from D. Knuth and the Sobol sequence from the ACM transactions). See LICENCE file for details.
+Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
+Description: The package provides (1) pseudo random generators - general linear congruential generators (Park Miller) and multiple recursive generators (Knuth TAOCP), generalized feedback shift register (SF-Mersenne Twister algorithm and WELL generator); (2) a quasi random generator - the Torus algorithm, the Sobol sequence, the Halton sequence (thus include Van der Corput sequence) and (3) some additional tests such as the gap test, the serial test, the poker test... For true random number generation, use the 'random' package and for Latin Hypercube Sampling (a hybrid qmc method), use the 'lhs' package both available on CRAN.
+Depends: R (>= 2.6.0)
+License: GPL (>= 2)
+Encoding: latin1
+LazyLoad: yes
+Packaged: Thu Oct 30 21:44:23 2008; christophedutang
