@@ -205,7 +205,7 @@ ghyp V1.4.0
 	expressions and avoids numerical integration whenever possible.
 
 	* The package 'ghyp' now depends on R >= 2.7. Function 'identity'
-	removed was removed accordingly.
+	was removed accordingly.
 
 	* Functions 'ghyp.skewness' and 'ghyp.kurtosis' added.
 
@@ -234,3 +234,13 @@ ghyp V1.4.0
 	* Function 'portfolio.optimize' extended for tangecy and global
 	minimum risk portfolios. Some names of the arguments had to be
 	changed.
+
+
+
+2008-10-30 David Luethi
+ghyp V1.4.1
+
+	* 'transform.ghyp': If data is stored in slot 'data' of an object
+	inheriting from class 'ghyp', 'data' will be transformed as well.
+
+

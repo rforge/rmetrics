@@ -570,6 +570,30 @@ setMethod("summary", signature(object = "mle.ghyp"), summary.mle.ghyp)
     object <- `_data`
     .test.ghyp(object, case = "ghyp")
 
+    if(!missing(multiplier))
+    {
+        if(any(!is.finite(multiplier)))
+        {
+            stop("All elements of 'multiplier' must be finite!")
+        }
+    }
+
+    if(!missing(summand))
+    {
+        if(any(!is.finite(summand)))
+        {
+            stop("All elements of 'summand' must be finite!")
+        }
+    }
+
+    if(!missing(multiplier)){
+        tmp.multiplier <- as.matrix(multiplier)
+        if(max(dim(tmp.multiplier)) > ghyp.dim(object))
+            stop("Extending the dimension of a ghyp object is not allowed!",
+                 "That is, ncol(multiplier) and length(summand) must be <= dimension!")
+
+    }
+
     ## There are 4 cases:
     ## (1) 'summand' is missing: Set 'summand' to 0
     ## (2) 'multiplier' is missing: Set 'multiplier' to the unit matrix
@@ -583,55 +607,44 @@ setMethod("summary", signature(object = "mle.ghyp"), summary.mle.ghyp)
     ## changes its interpretation from variance to standard deviation
 
     if(missing(summand) & missing(multiplier)){
-        ## stop if 'summand' and 'multiplier' are missing
+        ## case (3)
         stop("No arguments submitted!")
     }else if(missing(summand)){
-        if(any(!is.finite(multiplier))){
-            stop("All elements of 'multiplier' must be finite!")
-        }
-
+        ## case (1)
         if(!is.matrix(multiplier)){
             multiplier <- matrix(multiplier, nrow = 1)
         }
-        if(ncol(multiplier) != object@dimension){
+        if(ncol(multiplier) != ghyp.dim(object)){
             stop("Dimension of multiplier must be ",
-                 "n x ", object@dimension, "!", sep = "")
+                 "n x ", ghyp.dim(object), "!")
         }
         summand <- rep(0, nrow(multiplier))
     }else if(missing(multiplier)){
-        if(any(!is.finite(summand))){
-            stop("All elements of 'summand' must be finite!")
-        }
+        ## case (2)
         summand <- as.vector(summand)
-        if(length(summand) != object@dimension){
-            stop("Dimension of summand must be ", object@dimension, "!", sep = "")
+        if(length(summand) != ghyp.dim(object)){
+            stop("Dimension of summand must be ", ghyp.dim(object), "!")
         }
-        multiplier <- diag(rep(1, object@dimension))
+        multiplier <- diag(rep(1, ghyp.dim(object)))
     }else{
-        if(any(!is.finite(summand))){
-            stop("All elements of 'summand' must be finite!")
-        }
-        if(any(!is.finite(multiplier))){
-            stop("All elements of 'multiplier' must be finite!")
-        }
+        ## case (4)
         summand <- as.vector(summand)
         if(!is.matrix(multiplier)){
             multiplier <- matrix(multiplier, nrow = 1)
         }
-        if(ncol(multiplier) != object@dimension){
-            stop("Dimension mimatch: ncol(multiplier) must be equal to the dimension of the object!")
+        if(ncol(multiplier) != ghyp.dim(object)){
+            stop("Dimension of multiplier must be ",
+                 "n x ", ghyp.dim(object), "!")
         }
         if(length(summand) != nrow(multiplier)){
             stop("Dimension mimatch: length(summand) must be equal to nrow(multiplier)!")
         }
     }
-    if(length(summand) > object@dimension){
-        stop("Do not extend the dimension of the ghyp distribution, i.e. ncol(multiplier) ",
-             "and length(summand) must be <= dimension!")
-    }
+
     if(any(diag(multiplier) == 0)){
         stop("Diagonal elements of multiplier must not be '0'!")
     }
+
     sigma <- multiplier %*% object@sigma %*% t(multiplier)
     if(ncol(sigma) == 1){
         sigma <- as.vector(sigma)
@@ -643,14 +656,25 @@ setMethod("summary", signature(object = "mle.ghyp"), summary.mle.ghyp)
     if(length(summand) == 1){
         sigma <- sqrt(sigma)
     }
+
+    if(is.null(ghyp.data(object))){
+        transformed.data <- NULL
+    }else{
+        transformed.data <- t(multiplier %*% t(ghyp.data(object)) +
+            t(matrix(rep(summand, nrow(as.matrix(ghyp.data(object)))),
+                     byrow = TRUE, ncol = length(summand))))
+    }
+
     if(object@parametrization == "alpha.bar"){
         return(ghyp(lambda = object@lambda, alpha.bar = object@alpha.bar,
                     mu = as.vector(multiplier %*% object@mu + summand),
-                    sigma = sigma, gamma = as.vector(multiplier %*% object@gamma)))
+                    sigma = sigma, gamma = as.vector(multiplier %*% object@gamma),
+                    data = transformed.data))
     }else{
         return(ghyp(lambda = object@lambda, chi = object@chi, psi = object@psi,
                     mu = as.vector(multiplier %*% object@mu + summand),
-                    sigma = sigma, gamma = as.vector(multiplier %*% object@gamma)))
+                    sigma = sigma, gamma = as.vector(multiplier %*% object@gamma),
+                    data = transformed.data))
     }
 }
 ### <---------------------------------------------------------------------->

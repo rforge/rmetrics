@@ -10,9 +10,9 @@ distributions}
 \description{
 
 The \code{transform} function can be used to linearly transform
-generalized hyperbolic distribution objects.  The extraction operator
-\code{[} extracts some margins of a multivariate generalized hyperbolic
-distribution object.
+generalized hyperbolic distribution objects (see \bold{Details}). The
+extraction operator \code{[} extracts some margins of a multivariate
+generalized hyperbolic distribution object.
 
 }
 % <---------------------------------------------------------------------->
@@ -33,6 +33,14 @@ distribution object.
 % <---------------------------------------------------------------------->
 \value{
   An object of class \code{\link[=ghyp-class]{ghyp}}.
+}
+% <---------------------------------------------------------------------->
+\details{
+
+   If \eqn{X \sim GH}{X is GH distributed}, \code{transform} gives the
+   distribution object of \dQuote{multiplier * X + summand}, where X is
+   the argument named \code{_data}.
+
 }
 % <---------------------------------------------------------------------->
 \author{David Luethi}
