@@ -21,39 +21,42 @@ timeSequence(from, to = Sys.timeDate(),
     length.out = NULL, format = NULL,
     zone = "", FinCenter = "")
 
-\method{seq}{timeDate}(from, to, by, length.out = NULL, \dots)
+\method{seq}{timeDate}(from, to, by, length.out = NULL, along.with = NULL, \dots)  
+
 }
+
 
 
 \arguments{
 
-    \item{from, to}{
-        starting date, required, and end date, optional. If supplied
-        \code{to} must be after \code{from}.
-        }
-    \item{by}{
-        a character string, containing one of "sec", "min",
-        "hour", "day", "week", "month" or "year".
-        This can optionally be preceded by an integer and a
-        space, or followed by "s".
-        }       
-    \item{length.out}{
-        length.out integer, optional. Desired length
-        of the sequence, if specified "to" will be ignored.
-        }    
-    \item{format}{
-        the format specification of the input character vector.
-        }
-    \item{zone}{
-        the time zone or financial center where the data were recorded.
-        }
-    \item{FinCenter}{
-        a character with the the location of the
-        financial center named as "continent/city".
-        }
-    \item{\dots}{
-        arguments passed to other methods.
-        }    
+  \item{from, to}{
+    starting date, required, and end date, optional. If supplied
+    \code{to} must be after \code{from}.
+  }
+  \item{by}{
+    a character string, containing one of "sec", "min",
+    "hour", "day", "week", "month" or "year".
+    This can optionally be preceded by an integer and a
+    space, or followed by "s".
+  }       
+  \item{length.out}{
+    length.out integer, optional. Desired length
+    of the sequence, if specified "to" will be ignored.
+  }    
+  \item{along.with}{Take the length from the length of this argument.
+  }
+  \item{format}{
+    the format specification of the input character vector.
+  }
+  \item{zone}{the time zone or financial center where the data were
+    recorded.
+  } 
+  \item{FinCenter}{
+    a character with the the location of the
+    financial center named as "continent/city".
+  }
+  \item{\dots}{arguments passed to other methods.
+  }    
 
 }
 

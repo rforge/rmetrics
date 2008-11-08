@@ -53,7 +53,7 @@ test.timeDate =
 function()
 {
     # DW: We should pack this in several test.timeDate.* functions ...
-    
+
     # Set Financial Center to GMT:
     setRmetricsOptions(myFinCenter = "GMT")
     print(getRmetricsOptions("myFinCenter"))

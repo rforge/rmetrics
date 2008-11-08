@@ -111,16 +111,14 @@ timeDate <-
 
     ## Convert:
     charvec = .formatFinCenter(charvec, zone, type = "any2gmt")
-    # it is important to set manually the tzone flag,
-    # otherwise tzone "GMT" is used globally on the system.
-    # NO : ct <- as.character(strptime(charvec, isoFormat, tz = "GMT"))
-    Data <- strptime(charvec, isoFormat)
+    Data <- strptime(charvec, isoFormat, tz = "GMT")
+    # force GMT time zone of POSIXct @Data slot
     attr(Data, "tzone") <- "GMT"
 
     # check isoFormat is appropriate to show time
-#    if (!length(grep("%H|%M|%S", format))) {
+    # if (!length(grep("%H|%M|%S", format))) {
     gmt2any <- .formatFinCenter(charvec, FinCenter, type = "gmt2any")
-    lt <- strptime(gmt2any, isoFormat)
+    lt <- strptime(gmt2any, isoFormat, tz = "GMT")
     time <- unlist(unclass(lt)[1:3])
     format <-
         if (any(time[!is.na(time)] != 0))
@@ -136,7 +134,6 @@ timeDate <-
 }
 
 # ------------------------------------------------------------------------------
-
 
 .formatFinCenter <-
     function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
@@ -201,7 +198,7 @@ timeDate <-
     # Added DW: 2005-05-27
     idx = order(o[which(o>m)])
     offSets = yout[idx]
-    dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")
+    dt = strptime(charvec, "%Y-%m-%d %H:%M:%S", tz = "GMT")
 
     ## Return Value:
     format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
@@ -211,32 +208,32 @@ timeDate <-
 # ------------------------------------------------------------------------------
 
 
-strptimeDate <- 
+strptimeDate <-
     function(x, format = whichFormat(x), tz = "")
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Creates for character time stamps a 'timeDate' object
-    
+
     # Example:
     #   timeDate(); strptimeDate(as.character(Sys.timeDate()))
-    
+
     # Note:
     #   This function works like strptime.
-    
+
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(is.character(x))
-    
+
     # Settings and Checks:
     if (tz == "")
         tz = getRmetricsOptions("myFinCenter")
-    
+
     # Create 'timeDate':
     ans = timeDate(x, format, zone = tz, FinCenter = tz)
-    
+
     # Return Value:
     ans
 }

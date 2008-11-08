@@ -69,7 +69,7 @@ timeNthNdayInMonth <-
         FinCenter <- getRmetricsOptions("myFinCenter")
 
     # timeDate:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
 
     # On or after:
     lt1 = lt
@@ -124,12 +124,13 @@ timeLastNdayInMonth <-
 
     # Last Day:
     last.day = c(31,28,31, 30,31,30, 31,31,30, 31,30,31)
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
     y = 1900 + lt$year
     leap.year = (y%%4 == 0 & (y%%100 != 0 | y%%400 == 0))
     leap.day = as.integer(leap.year)*as.integer(lt$mon == 1)
     lt$mday = last.day[1 + lt$mon] + leap.day
-    lt <- strptime(lt, format)  # to make sure that lt$wday
+    lt <- strptime(lt, format, tz = "GMT")
+                                # to make sure that lt$wday
                                 # represents the wday of the
                                 # last day of the month
     ct = 24*3600*(as.integer(julian.POSIXt(lt)) - (-(nday-lt$wday))%%7)

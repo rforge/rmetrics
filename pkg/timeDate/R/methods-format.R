@@ -42,7 +42,8 @@ format.timeDate <-
     if (tz != "") x@FinCenter <- tz
 
     charvec = .timeDateData2charvec(x)
-    ans <- ifelse(usetz, paste(charvec, x@FinCenter), charvec)
+    # should add tz from table in formatFinCenter
+    # ans <- ifelse(usetz, paste(charvec, x@FinCenter), charvec)
 
     # Return
     charvec
@@ -57,11 +58,14 @@ format.timeDate <-
     FinCenter <- object@FinCenter
     format <- object@format
 
+    # tz = "GMT" important to avoid confusion when DST in force
     charvec <- format.POSIXct(object@Data, isoFormat)
 
     ans <- .formatFinCenter(charvec, FinCenter, type = "gmt2any")
     # ans <- format(as.POSIXct(ans))
-    ans <- format(as.POSIXct(ans), format = format)
+    # tz = "GMT" important to avoid confusion when DST in force
+    if (!identical(format, isoFormat))
+        ans <- format(strptime(ans, isoFormat, tz = "GMT"), format = format)
 
     ans
 }

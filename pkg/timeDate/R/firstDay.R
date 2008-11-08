@@ -63,14 +63,14 @@ timeLastDayInMonth <-
 
     # Last day of month:
     last.day = c(31,28,31, 30,31,30, 31,31,30, 31,30,31)
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
     y = 1900 + lt$year
     leap.year = (y%%4 == 0 & (y%%100 != 0 | y%%400 == 0))
     leap.day = as.integer(leap.year)*as.integer(lt$mon == 1)
     lt$mday = last.day[1 + lt$mon] + leap.day
 
     # Return Value:
-    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -96,11 +96,11 @@ timeFirstDayInMonth <-
         FinCenter = getRmetricsOptions("myFinCenter")
 
     # First Day In Month:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
     lt$mday = 1
 
     # Return Value:
-    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -127,10 +127,10 @@ timeLastDayInQuarter <-
         FinCenter = FinCenter)
 
     # Last Day in Quarter:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
     last.quarter = rep(c(3,6,9,12), each = 3) - 1
     lt$mon = last.quarter[1 + lt$mon]
-    charvec = timeDate(lt, format = "%Y-%m-%d", zone = zone,
+    charvec = timeDate(format(lt), format = "%Y-%m-%d", zone = zone,
         FinCenter = FinCenter)
 
     # Return Value:
@@ -165,12 +165,12 @@ timeFirstDayInQuarter <-
         FinCenter = FinCenter)
 
     # First Day in Quarter:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
     first.quarter = rep(c(1,4,7,10), each = 3) - 1
     lt$mon = first.quarter[1 + lt$mon]
 
     # Return Value:
-    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
 

@@ -74,7 +74,7 @@ timeNdayOnOrAfter <-
 
 
     # timeDate:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
 
     # On or after:
     ct = 24*3600*(as.integer(julian.POSIXt(lt)) + (nday-lt$wday)%%7)
@@ -120,7 +120,7 @@ timeNdayOnOrBefore <-
         FinCenter <- getRmetricsOptions("myFinCenter")
 
     # timeDate:
-    lt = strptime(charvec, format)
+    lt = strptime(charvec, format, tz = "GMT")
 
     # On or after:
     ct = 24*3600*(as.integer(julian.POSIXt(lt)) - (-(nday-lt$wday))%%7)

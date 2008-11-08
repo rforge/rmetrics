@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -33,25 +33,25 @@
 ################################################################################
 
 
-midnightStandard <- 
+midnightStandard <-
     function(charvec, format)
-{   
-    # A function written by Diethelm Wuertz   
+{
+    # A function written by Diethelm Wuertz
     # and entirely rewritten by Martin Maechler
-    
+
     # Description:
     #   Midnight Standard & conversion to isoFormat:
-    
+
     # FUNCTION:
 
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
     ##         In that case, subtract 1 seconds convert and re-add it
 
     paste0 <- function(...) paste(..., sep = '')
-    
+
     # Missing Format:
     if (missing(format)) format = whichFormat(charvec)
-    
+
     # Format:
     rng.nch <- range(nchar(charvec[!is.na(charvec)]))
     if(rng.nch[1] != rng.nch[2])
@@ -61,9 +61,9 @@ midnightStandard <-
     n <- length(charvec)
     s <- rep(0, n)
 
-    ## Do two common formats *fast* (for large n), and then use 
+    ## Do two common formats *fast* (for large n), and then use
     ## flexible approach:
-    
+
     # ISO-8601 Midnight Standard:
     if (length(grep("%H:%M:%S", format, fixed = TRUE)) == 1) {
         if(length(ii <- grep("24:00:00", charvec, fixed=TRUE)) > 0) {
@@ -94,7 +94,7 @@ midnightStandard <-
         names(nums) <- forms
         ## at which character positions in charvec do I need to look for %H, ... :
         iHMS <- sapply(nums[c("%H","%M","%S")], regexpr, text=fDate, fixed=TRUE)
-        if(iHMS["%H"] >= 1) { 
+        if(iHMS["%H"] >= 1) {
             ## have "%H" -- otherwise, nothing to do!
             has.S <- iHMS["%S"] >= 1
             has.M <- iHMS["%M"] >= 1
@@ -105,7 +105,7 @@ midnightStandard <-
                 function(ic) substr(charvec, start=ic, stop=ic+1))), n, m.)
             twenty4 <- paste0("24", if(has.M)"00", if(has.S)"00")
             isMidN <- twenty4 == apply(HMStab, 1, paste, collapse='')
-            if(any(isMidN)) { 
+            if(any(isMidN)) {
                 ## need midnight correction
                 s[isMidN] <- 1
                 ## now *need* seconds, so we can subtract and add 1 sec :
@@ -126,9 +126,10 @@ midnightStandard <-
             }
         }
     }
-    
+
     ## Convert "charvec" to standard ISO format:
-    ans = format(s + strptime(charvec, format), "%Y-%m-%d %H:%M:%S")
+    ## YC: added tz = "GMT" to avoid confusion when DST is active
+    ans = format(s + strptime(charvec, format, tz = "GMT"), "%Y-%m-%d %H:%M:%S")
 
     # Return Value:
     ans
