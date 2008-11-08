@@ -1,0 +1,189 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fBasics",
+           "volatility",
+           "Heaviside",
+           ".sliderMenu")
+importFrom("graphics",
+           "plot",
+           "abline",
+           "grid",
+           "hist",
+           "par",
+           "title")
+importFrom("methods",
+           "show",
+           "@<-",
+           "new",
+           "slotNames",
+           "slot")
+importFrom("stats",
+           "coef",
+           "fitted",
+           "formula",
+           "predict",
+           "residuals",
+           "integrate",
+           "dnorm",
+           "dt",
+           "as.formula",
+           "terms",
+           "pnorm",
+           "sd",
+           "arima",
+           "var",
+           "model.frame",
+           "optim",
+           "nlminb",
+           "rnorm",
+           "pgamma",
+           "acf",
+           "ccf",
+           "pt",
+           "qgamma",
+           "ppoints",
+           "qnorm",
+           "qt",
+           "rgamma",
+           "runif",
+           "rt")
+importFrom("timeDate",
+           "timeDate",
+           "timeSequence",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("timeSeries",
+           "print",
+           "sort",
+           "colnames<-",
+           "isUnivariate",
+           ".description",
+           "rev",
+           "rownames<-",
+           "timeSeries",
+           "lines",
+           "diff",
+           "quantile")
+importFrom("utils",
+           "capture.output",
+           "menu")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fGarch")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fGARCH",
+              "fGARCHSPEC" )
+exportMethods("coef",
+              "fitted",
+              "formula",
+              "plot",
+              "predict",
+              "residuals",
+              "show",
+              "summary" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("volatility", "fGARCH")
+
+################################################
+## functions
+################################################
+
+export(
+    "absMoments",
+    "dged",
+    "dsged",
+    ".dsged",
+    "dsnorm",
+    ".dsnorm",
+    "dsstd",
+    ".dsstd",
+    "dstd",
+    ".garchArgsParser",
+    "garchFit",
+    ".garchFit",
+    "garchFitControl",
+    ".garchInitParameters",
+    ".garchInitSeries",
+    "garchKappa",
+    ".garchKappaFun",
+    ".garchLLH",
+    ".garchModelSeries",
+    ".garchNames",
+    ".garchOptimizeLLH",
+    ".garchOptimizerControl",
+    ".garchRCDAGradient",
+    ".garchRCDAHessian",
+    ".garchRlbfgsb",
+    ".garchRnlminb",
+    ".garchRnm",
+    ".garchRoptimhess",
+    ".garchSetCondDist",
+    "garchSim",
+    "garchSpec",
+    "gedFit",
+    ".getfGarchEnv",
+    ".interactiveGarchPlot",
+    ".multGarchPlot",
+    "normFit",
+    "pged",
+    ".plot.garch.1",
+    ".plot.garch.10",
+    ".plot.garch.11",
+    ".plot.garch.12",
+    ".plot.garch.13",
+    ".plot.garch.2",
+    ".plot.garch.3",
+    ".plot.garch.4",
+    ".plot.garch.5",
+    ".plot.garch.6",
+    ".plot.garch.7",
+    ".plot.garch.8",
+    ".plot.garch.9",
+    "psged",
+    ".psged",
+    "psnorm",
+    ".psnorm",
+    "psstd",
+    ".psstd",
+    "pstd",
+    "qged",
+    ".qqDist",
+    ".qqLine",
+    "qsged",
+    ".qsged",
+    "qsnorm",
+    ".qsnorm",
+    "qsstd",
+    ".qsstd",
+    "qstd",
+    "rged",
+    "rsged",
+    ".rsged",
+    "rsnorm",
+    ".rsnorm",
+    "rsstd",
+    ".rsstd",
+    "rstd",
+    ".setfGarchEnv",
+    "sgedFit",
+    "sgedSlider",
+    "snormFit",
+    "snormSlider",
+    "sstdFit",
+    "sstdSlider",
+    "stdFit",
+    ".truePersistence" )

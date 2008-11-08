@@ -1,0 +1,13 @@
+Package: ghyp
+Type: Package
+Version: 1.4.1
+Date: 2008-10-28
+Title: A package on the generalized hyperbolic distribution and its special cases
+Author: Wolfgang Breymann, David Luethi
+Maintainer: David Luethi <david.luethi@zhaw.ch>
+LazyLoad: yes
+LazyData: no
+Depends:  R(>= 2.7), methods, numDeriv, graphics, stats, gplots
+Description: This package provides detailed functionality for working with the univariate and multivariate Generalized Hyperbolic distribution and its special cases (Hyperbolic (hyp), Normal Inverse Gaussian (NIG), Variance Gamma (VG), skewed Student-t and Gaussian distribution). Especially, it contains fitting procedures, an AIC-based model selection routine, and functions for the computation of density, quantile, probability, random variates, expected shortfall and some portfolio optimization and plotting routines as well as the likelihood ratio test. In addition, it contains the Generalized Inverse Gaussian distribution.
+License: GPL (>= 2)
+Encoding: latin1
