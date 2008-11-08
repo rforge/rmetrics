@@ -1,3 +1,12 @@
+installFile <- "installRmetrics.R"
+if(!file.exists(installFile))
+    stop(installFile," is not in current directory",
+         "(",getwd(),")")
+message("source()ing ", installFile, " in ",
+        getwd(),"... ", appendLF = FALSE)
+source(installFile)
+message("OK")
+
 upVersion <- function(pkgs)
 {
     sapply(pkgs, function(pkg) {
@@ -50,16 +59,6 @@ buildRmetrics <- function(pkgs = "all",
 {
 
     stopifnot(is.character(pkgs))
-
-    installFile <- "installRmetrics.R"
-    if(!file.exists(installFile))
-        stop(installFile," is not in current directory",
-             "(",getwd(),")")
-
-    message("source()ing ", installFile, " in ",
-            getwd(),"... ", appendLF = FALSE)
-    source(installFile)
-    message("OK")
 
     ## extract list of Rmetrics packages
     pkgsRmetrics <- .packagesRmetrics()
