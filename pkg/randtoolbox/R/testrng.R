@@ -406,19 +406,19 @@ order.test <- function(u, d = 3, echo = TRUE)
         #compute chisquare statistic
         residu <-  (obsnum - expnum) / sqrt(expnum) 
         stat <- sum( residu^2 )
-        pvalue <- pchisq( stat, d^2 - 1, lower.tail = FALSE)
+        pvalue <- pchisq( stat, factOfD - 1, lower.tail = FALSE)
         
         options(digits=2)    
         if( echo )
         {
             cat("\n\t\t\t Order test\n")
-            cat("\nchisq stat = ", stat, ", df = ",d^2-1, ", p-value = ", pvalue, "\n", sep="")
+            cat("\nchisq stat = ", stat, ", df = ",factOfD-1, ", p-value = ", pvalue, "\n", sep="")
             cat("\n\t\t (sample size : ",length(u),")\n\n", sep="")
             cat("\tobserved number\t",obsnum,"\n")
             cat("\texpected number\t",expnum,"\n")    
         } 
         
-        res <- list( statistic = stat, parameter = d^2 -1, 
+        res <- list( statistic = stat, parameter = factOfD -1, 
                     p.value = pvalue, observed = obsnum, 
                     expected = expnum, residuals = residu) 
         return( invisible( res ) )
