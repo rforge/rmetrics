@@ -1,5 +1,17 @@
 === randtoolbox: an R package for random number generation and tests ===
 
+Version 1.06
+=============
+
+BUG FIXES
+
+- the degree of freedom is now correct for the order test.
+
+BUG REPORT
+
+- Astley Lin reports that the degree-of-freedom(df) of 
+chi-square test is wrong for the order test.
+
 Version 1.05
 =============
 
@@ -10,7 +22,7 @@ NEW FEATURES
 
 BUG FIXES
 
-- ?
+- Yes, it compiles on 64bit linux both on CRAN and R-forge.
 
 Version 1.04
 =============
