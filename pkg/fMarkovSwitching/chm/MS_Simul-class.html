@@ -1,0 +1,68 @@
+<html><head><title>A Class for the Simulation of a Markov Switching Time Series Process</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MS_Simul-class(fMarkovSwitching)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MS_Simul-class">
+<param name="keyword" value=" A Class for the Simulation of a Markov Switching Time Series Process">
+</object>
+
+
+<h2>A Class for the Simulation of a Markov Switching Time Series Process</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This class is the output from the use of function <code>MS_Regress_Simul</code>. Normally you'll never call the object contructor 
+to build this class as this task is already done by <code>MS_Regress_Simul</code>
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>nr</code>:</dt><dd>Class:<code>"numeric"</code> - Number of time periods simulated</dd>
+<dt><code>dep</code>:</dt><dd>Class:<code>"matrix"</code> - Simulated Explained/dependent Variable (a Markov Switching Process)</dd>
+<dt><code>indep</code>:</dt><dd>Class:<code>"matrix"</code> - Simulated explanatory variables (arbitrarily normal random numbers)</dd>
+<dt><code>Coeff</code>:</dt><dd>Class:<code>"list"</code> - A list with all coefficients inputed to the function <code>MS_Regress_Simul</code></dd>
+<dt><code>S</code>:</dt><dd>Class:<code>"numeric"</code> - The input that controls where to switch (from the call to <code>MS_regress_Simul</code></dd>
+<dt><code>trueStates</code>:</dt><dd>Class <code>"matrix"</code> - The "true" states of the model which where build according to transation matrix (Coeff$P)</dd>
+<dt><code>k</code>:</dt><dd>Class:<code>"numeric"</code> - Number of states in the model</dd>
+<dt><code>distrib</code>:</dt><dd>Class:<code>"character"</code> - Distribution assumption for residue</dd>
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>plot</dt><dd>Plots an object of class 'MS_Simul'</dd>
+<dt>print</dt><dd>Prints to screen the simulated model (the 'MS_Simul' object)</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="MS_Model-class.html">MS_Model</a></code> for links to other classes
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+showClass("MS_Simul")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fMarkovSwitching</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

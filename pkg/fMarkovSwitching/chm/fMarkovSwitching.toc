@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fMarkovSwitching:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fMarkovSwitching:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fMarkovSwitching-package">
+<param name="Local" value="fMarkovSwitching-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dep">
+<param name="Local" value="dep.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dim.MS_Model">
+<param name="Local" value="dim.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fMarkovSwitching">
+<param name="Local" value="fMarkovSwitching-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="indep">
+<param name="Local" value="indep.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Model-class">
+<param name="Local" value="MS_Model-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Regress_Fit">
+<param name="Local" value="MS_Regress_Fit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Regress_For">
+<param name="Local" value="MS_Regress_For.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Regress_Lik">
+<param name="Local" value="MS_Regress_Lik.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Regress_Simul">
+<param name="Local" value="MS_Regress_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MS_Simul-class">
+<param name="Local" value="MS_Simul-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot.MS_Model">
+<param name="Local" value="plot.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot.MS_Simul">
+<param name="Local" value="plot.MS_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.MS_Model">
+<param name="Local" value="print.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.MS_Simul">
+<param name="Local" value="print.MS_Simul.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fMarkovSwitching:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="A Class for the Simulation of a Markov Switching Time Series Process">
+<param name="Local" value="MS_Simul-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Definitions for Class "MS_Model"">
+<param name="Local" value="MS_Model-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Example of dependent/explained Variable for Markov switching model">
+<param name="Local" value="dep.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Example of independent/explanatory Variable for Markov switching model">
+<param name="Local" value="indep.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Estimate a Markov Switching Regression">
+<param name="Local" value="MS_Regress_Fit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Forecast a Markov Switching Model in t+1">
+<param name="Local" value="MS_Regress_For.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Get the dimension/Size of Markov Switching Variables">
+<param name="Local" value="dim.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Plot a Simulated Markov Switching Process">
+<param name="Local" value="plot.MS_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Plot the Fitted Processes of a Markov Switching Model">
+<param name="Local" value="plot.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Print (output to screen) a Markov Switching Model">
+<param name="Local" value="print.MS_Model.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Print a Markov Switching Simulation Object">
+<param name="Local" value="print.MS_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to Simulate a Time Series based on Markov Switching Process">
+<param name="Local" value="MS_Regress_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package for Estimation, Simulation and Forecasting of a Markov Switching Model">
+<param name="Local" value="fMarkovSwitching-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="The likelihood function for a General Markov Switching Model">
+<param name="Local" value="MS_Regress_Lik.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

@@ -1,0 +1,74 @@
+<html><head><title>Definitions for Class "MS_Model"</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MS_Model-class(fMarkovSwitching)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MS_Model-class">
+<param name="keyword" value=" Definitions for Class 'MS_Model'">
+</object>
+
+
+<h2>Definitions for Class 'MS_Model'</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This is the class of a fitted Markov Switching Model S4 object.
+This is a output object from <code>MS_Regress_Fit</code> so normally you wont create MS_Model objects directly
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt><code>filtProb</code>:</dt><dd>Class:<code>"matrix"</code> - Filtered States Probabilities from the model (number of columns equal to k)</dd>
+<dt><code>smoothProb</code>:</dt><dd>Class:<code>"matrix"</code> - Smoothed States Probabilities from the model by means of Kim's Algorithm</dd>
+<dt><code>Coeff</code>:</dt><dd>Class:<code>"list"</code> - A list with all estimated coefficients</dd>
+<dt><code>condMean</code>:</dt><dd>Class:<code>"matrix"</code>  - The fitted conditional Mean (based on t¦t)</dd>
+<dt><code>condStd </code>:</dt><dd>Class:<code>"matrix"</code> - The fitted conditional Standard Deviation (based on t¦t)</dd> 
+<dt><code>Coeff_Std</code>:</dt><dd>Class:<code>"list"</code>  - A list with the standard error of coefficients (same slots as @Coeff)</dd>
+<dt><code>LL</code>:</dt><dd>Class:<code>"numeric"</code> - The final log likelihood of the model</dd>
+<dt><code>k</code>:</dt><dd>Class:<code>"numeric"</code> - Number of States in the model</dd>
+<dt><code>paramVec</code>:</dt><dd>Class:<code>"numeric"</code> - The vector of parameters with the same values as Coeff, but in vector notation (you probably wont use it)</dd>
+<dt><code>stateDur</code>:</dt><dd>Class:<code>"numeric"</code> - The expected duration of each regime (how long it take to change states)</dd>
+<dt><code>nParameter</code>:</dt><dd>Class:<code>"numeric"</code> - Number of parameters in the model</dd>
+<dt><code>sizeModel</code>:</dt><dd>Class:<code>"list"</code> - A  list with information regarding the size of the model</dd>
+<dt><code>distrib</code>:</dt><dd>Class:<code>"character"</code> - The assumed distribution (Normal or r)</dd>
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>plot</dt><dd>Plots an object of class 'MS_Model'</dd>
+<dt>print</dt><dd>Prints to screen the fitted MS_Model</dd>
+<dt>dim</dt><dd>Prints to screen the dimension/size of MS_Model</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="MS_Simul-class.html">MS_Simul</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+showClass("MS_Model")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fMarkovSwitching</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
