@@ -1,16 +1,15 @@
-
-# This library is free software; you can redistribute it and/or
+# This R package is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
 # version 2 of the License, or (at your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
+# This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
 # You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
+# Public License along with this R package; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
@@ -68,11 +67,8 @@ as.timeDate.default <-
     if (FinCenter == "")
         FinCenter <- getRmetricsOptions("myFinCenter")
 
-    ans = timeDate(charvec = as.character(x),
-        zone = zone, FinCenter = FinCenter)
-
     # Return Value:
-    ans
+    timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -80,7 +76,7 @@ as.timeDate.default <-
 
 
 as.timeDate.timeDate <-
-    function(x, zone =  x@FinCenter, FinCenter = "")
+    function(x, zone = x@FinCenter, FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -93,60 +89,23 @@ as.timeDate.timeDate <-
     # Value:
     #   Returns 'x' as a 'timeDate' object.
 
-    # FUNCTION:
-    stopifnot(class(x) == "timeDate")
+    stopifnot(is(x, "timeDate"))
 
     if (FinCenter == "")
         FinCenter <- getRmetricsOptions("myFinCenter")
     if (zone != x@FinCenter)
         warning("argument zone is ignored and FinCenter\n of timeDate is used as zone")
+    ## FIXME : and now?   'zone' is *NOT* ignored!
 
-    # as timeDate:
-    ans = timeDate(charvec = as.character(x),
-        zone = zone, FinCenter = FinCenter)
-
-    # Return Value:
-    ans
+    # Return as timeDate:
+    timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-as.timeDate.POSIXt <-
-    function(x, zone = "", FinCenter = "")
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns a 'POSIXt' object as 'timeDate' object
-
-    # Arguments:
-    #   x - a 'timeDate' object
-
-    # Value:
-    #   Returns 'x' as a 'timeDate' object.
-
-    # FUNCTION:
-    if (zone == "")
-        zone <- getRmetricsOptions("myFinCenter")
-    if (FinCenter == "")
-        FinCenter <- getRmetricsOptions("myFinCenter")
-
-    # as timeDate:
-    ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-
-as.timeDate.Date <-
-    function(x, zone = "", FinCenter = "")
+as.timeDate.Date <- function(x, zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -154,11 +113,10 @@ as.timeDate.Date <-
     #   Returns a 'Date' object as 'timeDate' object
 
     # Arguments:
-    #   x - a 'timeDate' object
-    #   ... - arguments passed to other methods.
+    #   x - a 'Date' (or 'POSIXt') object
 
     # Value:
-    #   Returns 'x' as a character vector.
+    #   Returns 'x' as  timeDate object.
 
     # FUNCTION:
     if (zone == "")
@@ -166,12 +124,11 @@ as.timeDate.Date <-
     if (FinCenter == "")
         FinCenter <- getRmetricsOptions("myFinCenter")
 
-    # as timeDate:
-    ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)
-
-    # Return Value:
-    ans
+    # Return as timeDate:
+    timeDate(x, zone = zone, FinCenter = FinCenter)
 }
+
+as.timeDate.POSIXt <- as.timeDate.Date
 
 
 ################################################################################
