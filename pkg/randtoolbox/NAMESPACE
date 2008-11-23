@@ -9,4 +9,4 @@ export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
 
 export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 
-export(stirling)
+export(stirling, permut)
