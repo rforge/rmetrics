@@ -385,6 +385,35 @@ setMethod("plot", signature(x = "ghyp",y = "missing"), plot.ghyp)
 
 
 ### <======================================================================>
+scale.ghyp <- function(x, center = TRUE, scale = TRUE)
+{
+    if(scale & any(!is.finite(vcov(x))))
+    {
+        stop("Object must have finite variance if 'scale == TRUE'!")
+    }
+
+    if(center){
+        x <- transform(x, summand = - mean(x))
+    }
+
+    if(scale){
+        if(.is.univariate(x)){
+            x <- transform(x, multiplier = 1/sqrt(vcov(x)))
+        }else{
+            multiplier <- chol(solve(vcov(x)))
+            x <- transform(x, multiplier = multiplier)
+        }
+
+    }
+    return(x)
+}
+### <---------------------------------------------------------------------->
+setMethod("scale", signature(x = "ghyp"), scale.ghyp)
+### <---------------------------------------------------------------------->
+
+
+
+### <======================================================================>
 "show.ghyp" <- function(object)
 {
     cat(ghyp.name(object, abbr = FALSE, skew.attr = TRUE), "Distribution:\n", sep = " ")

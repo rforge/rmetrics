@@ -39,14 +39,21 @@ generalized hyperbolic distribution object.
 
    If \eqn{X \sim GH}{X is GH distributed}, \code{transform} gives the
    distribution object of \dQuote{multiplier * X + summand}, where X is
-   the argument named \code{_data}.
+   the argument named \code{_data}. \cr
+
+If the object is of class \code{\link[=mle-ghyp-class]{mle.ghyp}},
+iformation concerning the fitting procedure
+(cf. \code{\link{ghyp.fit.info}}) will be lost as the return value is an
+object of class \code{\link[=ghyp-class]{ghyp}}.
 
 }
 % <---------------------------------------------------------------------->
 \author{David Luethi}
 % <---------------------------------------------------------------------->
-\seealso{\code{\link{ghyp}}, \code{\link{fit.ghypuv}} and \code{\link{fit.ghypmv}}
-         for constructors of \code{\link[=ghyp-class]{ghyp}} objects.}
+
+\seealso{\code{\link[=scale.ghyp]{scale}}, \code{\link{ghyp}},
+\code{\link{fit.ghypuv}} and \code{\link{fit.ghypmv}} for constructors
+of \code{\link[=ghyp-class]{ghyp}} objects.}
 % <---------------------------------------------------------------------->
 \examples{
   ## Mutivariate generalized hyperbolic distribution

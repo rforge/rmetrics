@@ -242,5 +242,8 @@ ghyp V1.4.1
 
 	* 'transform.ghyp': If data is stored in slot 'data' of an object
 	inheriting from class 'ghyp', 'data' will be transformed as well.
+	* 'rgig' .... take Runuran
+	* Generic function 'scale' added to conveniently center and/or
+	scale a 'ghyp' object to expectation zero and/or unit variance.
 
 

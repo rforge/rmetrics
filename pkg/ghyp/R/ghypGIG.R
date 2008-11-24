@@ -349,6 +349,7 @@
     ## from Alexander J. McNeil (2005) designed to accompany the book
     ## Quantitative Risk Management, Concepts, Techniques and Tools.
     ## see http://www.math.ethz.ch/~mcneil/book/QRMlib.html
+
     if((chi < 0) | (psi < 0))
         stop("Invalid parameters for GIG")
     if((chi == 0) & (lambda <= 0))
@@ -356,10 +357,43 @@
     if((psi == 0) & (lambda >= 0))
         stop("Invalid parameters for GIG")
     if((chi == 0) & (lambda > 0))
-        return(rgamma(n, shape = lambda, rate = (psi/2)))
+        return(rgamma(n, shape = lambda, rate = psi / 2))
     if((psi == 0) & (lambda < 0))
-        return(1/rgamma(n, shape = ( - lambda), rate = (chi/2)))
+        return(1 / rgamma(n, shape = - lambda, rate = chi / 2))
+
+    ## NIG distribution
+    ## An implementation of the algorithm described in Raible (2000),
+    ## copied from the package fBasics
+    if(lambda == -0.5)
+    {
+        U <- runif(n)
+        V <- rnorm(n)^2
+        delta <- sqrt(chi)
+
+        z1 <- function(v, delta, gamma)
+        {
+            delta/gamma + v/(2 * gamma^2) - sqrt(v * delta/(gamma^3) +
+                                                 (v/(2 * gamma^2))^2)
+        }
+
+        z2 <- function(v, delta, gamma)
+        {
+            (delta/gamma)^2/z1(v = v, delta = delta, gamma = gamma)
+        }
+
+        pz1 <- function(v, delta, gamma) {
+            delta/(delta + gamma * z1(v = v, delta = delta, gamma = gamma))
+        }
+
+        s = (1 - sign(U - pz1(v = V, delta = delta, gamma = sqrt(psi))))/2
+
+        return(z1(v = V, delta = delta, gamma = sqrt(psi)) * s +
+               z2(v = V, delta = delta, gamma = sqrt(psi)) * (1 - s))
+
+    }
+
     message <- NULL
+
     if(abs(lambda) < 1)
         message <- "Not necessarily efficient rejection method\n"
     neglambda <- F
