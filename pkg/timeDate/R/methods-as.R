@@ -256,8 +256,7 @@ as.Date.timeDate <-
     ans
 }
 
-# in the method signature for function "coerce" no definition for class: “Date”
-# setAs("timeDate", "Date", function(from) as.Date.timeDate(from))
+setAs("timeDate", "Date", function(from) as.Date.timeDate(from))
 
 ################################################################################
 

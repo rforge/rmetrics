@@ -71,6 +71,7 @@ as.timeDate.default <-
     timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
+setAs("ANY", "timeDate", function(from) as.timeDate.default(from))
 
 # ------------------------------------------------------------------------------
 
@@ -101,6 +102,7 @@ as.timeDate.timeDate <-
     timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
+# setAs("timeDate", "timeDate", function(from) as.timeDate.timeDate(from))
 
 # ------------------------------------------------------------------------------
 
@@ -128,8 +130,12 @@ as.timeDate.Date <- function(x, zone = "", FinCenter = "")
     timeDate(x, zone = zone, FinCenter = FinCenter)
 }
 
-as.timeDate.POSIXt <- as.timeDate.Date
+setAs("Date", "timeDate", function(from) as.timeDate.Date(from))
 
+# ------------------------------------------------------------------------------
+
+as.timeDate.POSIXt <- as.timeDate.Date
+setAs("POSIXt", "timeDate", function(from) as.timeDate.POSIXt(from))
 
 ################################################################################
 

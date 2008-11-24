@@ -9,12 +9,16 @@
 \alias{as.timeDate.POSIXt}
 \alias{as.timeDate.Date}
 \alias{as.timeDate.timeDate}
+\alias{coerce,ANY,timeDate-method}
+\alias{coerce,Date,timeDate-method}
+\alias{coerce,POSIXt,timeDate-method}
 \alias{coerce,timeDate,character-method}
 \alias{coerce,timeDate,numeric-method}
 \alias{coerce,timeDate,data.frame-method}
 \alias{coerce,timeDate,list-method}
 \alias{coerce,timeDate,POSIXct-method}
 \alias{coerce,timeDate,POSIXlt-method}
+\alias{coerce,timeDate,Date-method}
 
 \description{
   
