@@ -60,12 +60,10 @@ diff.timeDate <-
     # FUNCTION:
 
     # Convert to GMT:
-    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    ans = diff.POSIXt(as.POSIXct(GMT@Data),
-        lag = lag, differences = differences, ...)
+    GMT <- timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
 
-    # Return Value:
-    ans
+    diff(as.POSIXct(GMT@Data),
+         lag = lag, differences = differences, ...)
 }
 
 
