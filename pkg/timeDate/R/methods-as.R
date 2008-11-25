@@ -29,6 +29,10 @@
 
 ################################################################################
 # METHOD:                   DESCRIPTION:
+#  as.timeDate               Implements Use Method
+#  as.timeDate.default       Default Method
+#  as.timeDate.POSIXt        Returns a 'POSIXt' object as 'timeDate' object
+#  as.timeDate.Date          Returns a 'Date' object as 'timeDate' object
 #  as.character.timeDate     Returns a 'timeDate' object as 'character' string
 #  as.double.timeDate        Returns a 'timeDate' object as 'numeric' object
 #  as.data.frame.timeDate    Returns a 'timeDate' object as 'data.frame' object
@@ -37,6 +41,107 @@
 #  as.POSIXlt.timeDate       Returns a 'timeDate' object as 'POSIXlt' object
 #  as.Date.timeDate          Returns a 'timeDate' object as 'Date' object
 ################################################################################
+
+as.timeDate <-
+    function(x, zone = NULL, FinCenter = NULL)
+{
+    UseMethod("as.timeDate")
+}
+
+# ------------------------------------------------------------------------------
+
+as.timeDate.default <-
+    function(x, zone = "", FinCenter = "")
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns default object as 'timeDate' object
+
+    # Arguments:
+    #   x - a 'timeDate' object
+
+    # Value:
+    #   Returns 'x' as a 'timeDate' object.
+
+    # FUNCTION:
+
+    # as timeDate:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+
+    # Return Value:
+    timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
+}
+
+setAs("ANY", "timeDate", function(from) as.timeDate.default(from))
+
+# ------------------------------------------------------------------------------
+
+as.timeDate.timeDate <-
+    function(x, zone = x@FinCenter, FinCenter = "")
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns default object as 'timeDate' object
+
+    # Arguments:
+    #   x - a 'timeDate' object
+
+    # Value:
+    #   Returns 'x' as a 'timeDate' object.
+
+    stopifnot(is(x, "timeDate"))
+
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+    if (zone != x@FinCenter)
+        warning("argument zone is ignored and FinCenter\n of timeDate is used as zone")
+    ## FIXME : and now?   'zone' is *NOT* ignored!
+
+    # Return as timeDate:
+    timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
+}
+
+# setAs("timeDate", "timeDate", function(from) as.timeDate.timeDate(from))
+
+# ------------------------------------------------------------------------------
+
+
+as.timeDate.Date <- function(x, zone = "", FinCenter = "")
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'Date' object as 'timeDate' object
+
+    # Arguments:
+    #   x - a 'Date' (or 'POSIXt') object
+
+    # Value:
+    #   Returns 'x' as  timeDate object.
+
+    # FUNCTION:
+    if (zone == "")
+        zone <- getRmetricsOptions("myFinCenter")
+    if (FinCenter == "")
+        FinCenter <- getRmetricsOptions("myFinCenter")
+
+    # Return as timeDate:
+    timeDate(x, zone = zone, FinCenter = FinCenter)
+}
+
+setAs("Date", "timeDate", function(from) as.timeDate.Date(from))
+
+# ------------------------------------------------------------------------------
+
+as.timeDate.POSIXt <- as.timeDate.Date
+setAs("POSIXt", "timeDate", function(from) as.timeDate.POSIXt(from))
+
+# ------------------------------------------------------------------------------
 
 as.character.timeDate <- function(x, ...) format(x, ...)
 
