@@ -238,12 +238,17 @@ ghyp V1.4.0
 
 
 2008-10-30 David Luethi
-ghyp V1.4.1
+ghyp V1.5.0
 
-	* 'transform.ghyp': If data is stored in slot 'data' of an object
-	inheriting from class 'ghyp', 'data' will be transformed as well.
-	* 'rgig' .... take Runuran
+	* 'transform.ghyp' changed: If data is stored in slot 'data' of an
+	object inheriting from class 'ghyp', 'data' will be transformed as
+	well.
+
 	* Generic function 'scale' added to conveniently center and/or
 	scale a 'ghyp' object to expectation zero and/or unit variance.
+
+	* Function 'rgig' modified. It now uses the random number
+	generator for the GIG distribution from the Rmetrics package
+	'fBasics'.
 
 
