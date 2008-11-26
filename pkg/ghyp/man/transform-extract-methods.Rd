@@ -41,7 +41,7 @@ generalized hyperbolic distribution object.
    distribution object of \dQuote{multiplier * X + summand}, where X is
    the argument named \code{_data}. \cr
 
-If the object is of class \code{\link[=mle-ghyp-class]{mle.ghyp}},
+If the object is of class \code{\link[=mle.ghyp-class]{mle.ghyp}},
 iformation concerning the fitting procedure
 (cf. \code{\link{ghyp.fit.info}}) will be lost as the return value is an
 object of class \code{\link[=ghyp-class]{ghyp}}.

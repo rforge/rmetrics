@@ -13,7 +13,8 @@
 
 .besselM3(lambda = 9/2, x = 2, logvalue = FALSE)
 
-.check.data(data, case = c("uv", "mv"), na.rm = TRUE, fit = TRUE, dim = NULL)
+.check.data(data, case = c("uv", "mv"), na.rm = TRUE,
+            fit = TRUE, dim = NULL)
 
 .check.gig.pars(lambda, chi, psi)
 
@@ -22,8 +23,8 @@
 .check.opt.pars(opt.pars, symmetric)
 
 .fit.ghyp(object, llh = 0, n.iter = 0, converged = FALSE, error.code = 0,
-         error.message = "", parameter.variance, fitted.params, aic,
-         trace.pars = list())
+          error.message = "", parameter.variance, fitted.params, aic,
+          trace.pars = list())
 
 .ghyp.model(lambda, chi, psi, gamma)
 
@@ -41,8 +42,8 @@
 .dghypmv(x, lambda, chi, psi, mu, sigma, gamma, logvalue = FALSE)
 
 .mle.default(data, pdf, vars, opt.pars = rep(TRUE, length(vars)),
-            transform = NULL, se = FALSE,
-            na.rm = FALSE, silent = FALSE, ...)
+             transform = NULL, se = FALSE,
+             na.rm = FALSE, silent = FALSE, ...)
 
 .p.default(q, pdf, pdf.args, lower, upper, ...)
 
@@ -58,8 +59,9 @@
 
 .is.student.t(object, symmetric = NULL)
 
-.get.stepAIC.ghyp(stepAIC.obj, dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
-                 symmetric = FALSE)
+.get.stepAIC.ghyp(stepAIC.obj,
+                  dist = c("ghyp", "hyp", "NIG", "VG", "t", "gauss"),
+                  symmetric = FALSE)
 }
 % <---------------------------------------------------------------------->
 \details{

@@ -71,9 +71,8 @@ rghyp(n, object = ghyp())
    \code{spline.points}.\cr
 
    \code{rghyp} uses the random generator for generalized inverse
-    gaussian distributed random variates from the S-Plus and R library
-    \emph{QRMlib} (see
-    \url{http://www.math.ethz.ch/~mcneil/book/QRMlib.html}).
+   Gaussian distributed random variates from the Rmetrics package
+   \emph{fBasics} (cf. \code{\link{rgig}}).
 
 }
 % <---------------------------------------------------------------------->
@@ -85,12 +84,9 @@ rghyp(n, object = ghyp())
 % <---------------------------------------------------------------------->
 \references{
 
-  \emph{Quantitative Risk Management: Concepts, Techniques and Tools} by
-  Alexander J. McNeil, Ruediger Frey and Paul Embrechts \cr Princeton
-  Press, 2005 \cr
-
   \code{ghyp}-package vignette in the \code{doc} folder or on
-  \url{http://cran.r-project.org/web/packages/ghyp/}
+  \url{http://cran.r-project.org/web/packages/ghyp/} and references
+  therein.
 
 }
 % <---------------------------------------------------------------------->

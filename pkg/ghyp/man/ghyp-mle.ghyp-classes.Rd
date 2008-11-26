@@ -100,6 +100,7 @@ Class \dQuote{mle.ghyp} extends class \code{"\linkS4class{ghyp}"}, directly.
    A \dQuote{coef} method (see \code{\link[=coef.ghyp]{coef}}).\cr
    A \dQuote{mean} method (see \code{\link[=mean.ghyp]{mean}}). \cr
    A \dQuote{vcov} method (see \code{\link[=vcov.ghyp]{vcov}}). \cr
+   A \dQuote{scale} method (see \code{\link[=scale.ghyp]{scale}}). \cr
    A \dQuote{transform} method (see \code{\link[=transform.ghyp]{transform}}). \cr
    A \dQuote{[.ghyp} method (see \code{\link[=[.ghyp]{[}}). \cr
    A \dQuote{logLik} method for objects of class \dQuote{mle.ghyp} (see \code{\link[=logLik.mle.ghyp]{logLik}}). \cr

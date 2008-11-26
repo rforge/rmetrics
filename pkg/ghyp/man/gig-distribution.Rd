@@ -26,7 +26,7 @@ qgig(p, lambda = 1, chi = 1, psi = 1, method = c("integration", "splines"),
      root.tol = .Machine$double.eps^0.5,
      rel.tol = root.tol^1.5, abs.tol = rel.tol, ...)
 
-rgig(n = 10, lambda = 1, chi = 1, psi = 1, envplot = FALSE, messages = FALSE)
+rgig(n = 10, lambda = 1, chi = 1, psi = 1)
 
 ESgig(alpha, lambda = 1, chi = 1, psi = 1, distr = c("return", "loss"), ...)
 
@@ -52,8 +52,6 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
   \item{spline.points}{The number of support points when computing the quantiles with the method
                        \dQuote{splines} instead of \dQuote{integration}.}
   \item{root.tol}{The tolerance of \code{\link{uniroot}}.}
-  \item{messages}{If \code{TRUE} error messages from \code{rgig} are printed.}
-  \item{envplot}{If \code{TRUE} an plot of the envelope is shown.}
   \item{func}{The transformation function when computing the expected value.
              \code{x} is the expected value (default), \code{log x} returns the
              expected value of the logarithm of \code{x}, \code{1/x} returns the
