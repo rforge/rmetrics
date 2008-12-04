@@ -200,8 +200,9 @@ setMethod("sort",
 # ------------------------------------------------------------------------------
 
 setMethod("rev", "timeSeries", function(x) x[NROW(x):1,])
-setMethod("start" , "timeSeries", function(x, ...) sort(time(x))[1])
-setMethod("end" , "timeSeries", function(x, ...) sort(time(x), decreasing = TRUE)[1])
+setMethod("start" , "timeSeries", function(x, ...) time(sort(x)[1,]))
+setMethod("end" , "timeSeries", function(x, ...)
+    time(sort(x, decreasing = TRUE)[1,]))
 
 ################################################################################
 
