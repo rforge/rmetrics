@@ -1,0 +1,35 @@
+INSTRUCTIONs on installing the Markov Switching Package
+
+This markov swicthing package for R needs the use of a free source optimization library called Rdonlp2.
+
+Such package can be found here:
+
+http://arumat.net/Rdonlp2/
+
+The rdnlop2 package is not available ar CRAN, meaning that when I submit the markov switching package to R-Forge, 
+The site CANNOT build it like the other packages since it doesnt find the Rdnlop2 source files.
+The consequence of it is that the library cannot be installed with:
+
+install.packages("fMarkovSwitching",repos="http://R-Forge.R-project.org")
+
+given that the zip and tar files are not available.
+I have been trying to fix it, but so far no sucess. 
+
+But, there is a work around.
+
+In the root of the package directory, there is a zip file called:
+
+fMarkovSwitching_PROCEDURAL.zip
+
+Such file contains all the functions of the library itself. And, the most important, example scripts for
+using the estimation and simulation functions. 
+The steps for using it are:
+
+1) download Rdonlp2 at http://arumat.net/Rdonlp2/
+2) install it (in R console go to "packages" and then "install packages from local zip file..")
+3) change the path (variable myPath) at the R examples scripts (e.g Example_MS_Regress_Fit.r) for where you unzipped the fMarkovSwitching_PROCEDURAL.zip file
+4) run the scripts
+
+If you need the help files, I also included the compiled help for the library (fMarkovSwitching.chm).
+
+If you have any question, feel free to contact me at marceloperlin@gmailc.com
