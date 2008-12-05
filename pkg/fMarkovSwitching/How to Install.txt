@@ -22,8 +22,7 @@ In the root of the package directory, there is a zip file called:
 fMarkovSwitching_PROCEDURAL.zip
 
 Such file contains all the functions of the library itself. And, the most important, example scripts for
-using the estimation and simulation functions. 
-The steps for using it are:
+using them. The steps for using it are:
 
 1) download Rdonlp2 at http://arumat.net/Rdonlp2/
 2) install it (in R console go to "packages" and then "install packages from local zip file..")
@@ -32,4 +31,4 @@ The steps for using it are:
 
 If you need the help files, I also included the compiled help for the library (fMarkovSwitching.chm).
 
-If you have any question, feel free to contact me at marceloperlin@gmailc.com
+If you have any question, feel free to contact me at marceloperlin@gmail.com
