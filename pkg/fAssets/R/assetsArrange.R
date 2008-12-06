@@ -129,7 +129,8 @@
 
 .statsColnames =
     function(x, FUN = colMeans, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns statistically rearranged column names
@@ -170,7 +171,8 @@
 
 .pcaColnames =
     function(x, robust = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns PCA correlation ordered column names
@@ -205,7 +207,8 @@
 
 .hclustColnames =
     function(x, method = c("euclidean", "complete"), ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns hierarchical clustered column names
