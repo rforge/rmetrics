@@ -9,5 +9,6 @@ Description: Lp_solve is freely available (under LGPL 2) software for
     we supply a "wrapper" function in C and some R functions that solve
     general linear/integer problems, assignment problems, and transportation
     problems. This version calls lp_solve version 5.5. 
-    THIS PACKAGE IS MODIFIED FOR PORTFOLIO OPTIMIZATION WITH RMETRICS
+    THIS PACKAGE IS MODIFIED FOR PORTFOLIO OPTIMIZATION WITH RMETRICS.
+    FOR OTHER PURPOSES PLEASE USE THE ORIGINAL PACKAGE ON THE CRAN SERVER.
 License: LGPL-2
