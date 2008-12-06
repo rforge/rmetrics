@@ -1,0 +1,13 @@
+Package: Rquadprog
+Title: An R extenstion library to use quadprog for portfolio Optimization
+Version: 271.1
+Date: 2008-31-01
+Author: Diethelm Wuertz
+Maintainer: Diethelm Wuertz <wuertzi@phys.ethz.ch>
+Depends: R (>= 2.4.0), quadprog
+Description: Quadratic Programming
+    THIS PACKAGE CONTAINS ADDONS FOR PORTFOLIO OPTIMIZATION WITH RMETRICS
+    USING QUDRATIC PROGRAMMING SOLVERS.
+    NOTE, CURRENTLY IT JUST LOADS QUADPROG FROM CRAN, ALTERNATIVE QUDRATIC
+    PROGRAMMING SOLVERS WLL BE ADDED HERE.
+License: GPL
