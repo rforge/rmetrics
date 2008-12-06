@@ -1,0 +1,11 @@
+Package: Ripop
+Version: 0.1
+Date: 2008-31-01
+Title: An R extenstion library to use IPOP from R.
+Author: Diethelm Wuertz
+Maintainer: Diethelm Wuertz <wuertz@Phys.ethz.ch>
+Depends: R (>= 2.4.0), utils
+Description: IPOP
+License: Ripop - GPL | IPOP - (C) see file License
+LazyLoad: yes
+LazyData: yes
