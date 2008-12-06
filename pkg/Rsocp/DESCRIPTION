@@ -1,0 +1,13 @@
+Package: Rsocp
+Title: An R extenstion library to use SOCP from R.
+Version: 271.1
+Date: 2008-31-01
+Author: Yohan Chalabi and Diethelm Wuertz
+Maintainer: Yohan Chalabi <chalabi@phys.ethz.ch>
+Depends: R (>= 2.4.0), utils
+Description: Second-order cone programming solver 
+    written by M. Lobo, L. Vandenberghe, and S. Boyd. 
+    Rsocp is a wrapper library to use it from R.
+License: Rsocp - GPL | SOCP - (C) see file License
+LazyLoad: yes
+LazyData: yes
