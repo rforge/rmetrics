@@ -18,9 +18,9 @@
 ################################################################################
 # FUNCTION:                DESCRIPTION:
 # .assetsArrange            Returns assets rearranged in columns 
-#  .sortColnames             Returns sorted column names of a time Series
-#  .sampleColnames           Returns sampled column names of a time Series
 #  .orderColnames            Returns ordered column names of a time Series
+#  .abcColnames              Returns sorted column names of a time Series
+#  .sampleColnames           Returns sampled column names of a time Series
 #  .statsColnames            Returns statistically rearranged column names
 #  .pcaColnames              Returns PCA correlation ordered column names
 #  .hclustColnames           Returns hierarchical clustered column names
