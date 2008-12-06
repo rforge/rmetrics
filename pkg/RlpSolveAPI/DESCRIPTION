@@ -1,0 +1,15 @@
+Package: RlpSolveAPI 
+Version: 2.71.55012
+Date: 2008-05-08
+Title: Interface to lp_solve v. 5.5
+Author: lp_solve <http://lpsolve.sourceforge.net/>,
+        Kjell Konis <kjell.konis@epfl.ch>.
+Maintainer: Diethelm Wuertz <wuertz@phys.ethz.ch>
+Depends: R (>= 2.6.2)
+Description: The lpSolveAPI [RlpSolve] package provides an R interface to the 
+    lp_solve library - lp_solve is a Mixed Integer Linear Programming (MILP) 
+    solver with support for pure linear, (mixed) integer/binary, semi-continuous
+    and special ordered sets (SOS) models.
+    THIS PACKAGE IS MODIFIED FOR PORTFOLIO OPTIMIZATION WITH RMETRICS.
+    FOR OTHER PURPOSES PLEASE USE THE ORIGINAL PACKAGE ON THE CRAN SERVER.
+License: LGPL version 2
