@@ -169,20 +169,23 @@ as.double.timeDate <-
 
     # FUNCTION:
 
-    # as double:
-    ct = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
+    units <- match.arg(units)
+
+    ct = as.POSIXct(x)
     origin = as.POSIXct("1970-01-01", tz = "GMT")
-    dt = difftime(ct, origin, units = units)
-    units = attr(dt, "units")
-    ans = as.double(difftime(ct, origin, units = units))
-    attr(ans, "FinCenter")<-"GMT"
-    attr(ans, "units")<-units
-    if (units == "secs")
-        attr(ans, "origin")<-"1970-01-01 00:00:00 GMT"
-    if (units == "mins" | units == "hours")
-        attr(ans, "origin")<-"1970-01-01 00:00 GMT"
-    if (units == "days" | units == "weeks")
-        attr(ans, "origin")<-"1970-01-01 GMT"
+    dt = difftime(ct, origin, tz = "GMT", units = units)
+    ans = as.double(dt)
+
+    units <- attr(dt, "units")
+    attr(ans, "FinCenter") <- "GMT"
+    attr(ans, "units") <- units
+    attr(ans, "origin") <-
+        switch(units,
+               secs  = "1970-01-01 00:00:00 GMT",
+               mins  = "1970-01-01 00:00 GMT",
+               hours = "1970-01-01 00:00 GMT",
+               days  = "1970-01-01 GMT",
+               weeks = "1970-01-01 GMT")
 
     # Return Value:
     ans
@@ -346,16 +349,24 @@ as.Date.timeDate <-
 
     # as Date:
     method = match.arg(method)
-    if (method == "trunc") {
-        ans = as.Date(as.POSIXct(trunc(x)), ...)
-    } else if (method == "round") {
-        ans = as.Date(as.POSIXct(round(x)), ...)
-    } else if (method  == "next") {
-        ans = as.Date(as.POSIXct(trunc(x)), ...) + 1
-    }
+
+    ###  # Note: one must be careful when converting to Date with tzone.
+    ###  td <- timeDate("2008-12-11 00:00:01", zone = "Zurich", FinCenter = "Zurich")
+    ###  ct <- td@Data
+    ###  attr(ct, "tzone") <- "Europe/Zurich"
+    ###  # ct and td should be identical
+    ###  ct; td
+    ###  # but
+    ###  as.Date(ct) # trunc on previous day because trunc in GMT
+    ###  as.Date(td) # trunc in the current FinCenter !
+
+    ans <- switch(method,
+                  trunc = as.Date(format(trunc(x)), ...),
+                  round = as.Date(format(round(x)), ...),
+                  "next" = as.Date(format(trunc(x)), ...) + 1)
 
     # Add Attribute:
-    attr(ans, "control")<-c(method = method, FinCenter = x@FinCenter)
+    attr(ans, "control") <- c(method = method, FinCenter = x@FinCenter)
 
     # Return Value:
     ans
