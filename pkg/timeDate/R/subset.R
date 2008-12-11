@@ -61,17 +61,9 @@
         }
     }
 
-    # Subsets:
-    z = as.POSIXlt(x@Data)
-    val <- lapply(z, "[", ..., drop = drop)
-    attributes(val) <- attributes(z)
-    val = as.POSIXct(val)
-
-    # Return Value:
-    new("timeDate",
-        Data = val,
-        format = x@format,
-        FinCenter = x@FinCenter)
+    # Simple and fast subset:
+    x@Data <- x@Data[...]
+    x
 }
 
 
