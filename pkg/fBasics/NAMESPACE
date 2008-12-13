@@ -131,8 +131,18 @@ S3method("volatility", "default")
 ## functions
 ################################################
 
-export(
-    "acfPlot",
+export( 
+    "dsgh",
+    "psgh",
+    "qsgh",
+    "rsgh",
+    ".kappaGH",
+    ".deltaKappaGH",
+    ".paramGH",
+    "dsnig",
+    "psnig",
+    "qsnig",
+    "rsnig",            ## DW added
     ".acfPlot",
     "adTest",
     "akimaInterp",
