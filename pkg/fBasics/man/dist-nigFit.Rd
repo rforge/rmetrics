@@ -1,77 +1,59 @@
-\name{DistributionFits}
+\name{nigFit}
 
-\alias{DistributionFits}
+\alias{nigFit}
 
-\alias{fDISTFIT}
-\alias{fDISTFIT-class}
-
-\alias{show,fDISTFIT-method}
-
-\alias{nFit}
-\alias{tFit}
-
-\alias{stableFit}
-
-\alias{print.fDISTFIT}
-
-\title{Parameter Fit of a Distribution}
+\title{Fit of a Normal Inverse Gaussian Distribution}
 
 
 \description{
 
-    A collection and description of moment and maximum 
-    likelihood estimators to fit the parameters of a 
-    distribution. 
-    \cr
-
-    The functions are:
-    
-    \tabular{ll}{
-    \code{nFit} \tab MLE parameter fit for a normal distribution, \cr
-    \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
-    \code{stableFit} \tab MLE and Quantile Method stable parameter fit. }
+    Estimates the parameters of a  normal inverse 
+    Gaussian distribution.
 
 }
 
 
-\usage{
-nFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
-tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
-    description = NULL, \dots)
-    
-stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-    type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
-    description = NULL) 
-    
-\S4method{show}{fDISTFIT}(object)
+\usage{   
+nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, \dots) 
 }
 
 
 \arguments{
   
-    \item{alpha, beta, gamma, delta}{
-        [stable] - \cr
-        The parameters are \code{alpha}, \code{beta}, \code{gamma}, 
-        and \code{delta}:\cr
-        value of the index parameter \code{alpha} with \code{alpha = (0,2]};
-        skewness parameter \code{beta}, in the range [-1, 1];
-        scale parameter \code{gamma}; and
-        shift parameter \code{delta}.
+    \item{alpha, beta, delta, mu}{
+        The parameters are \code{alpha}, \code{beta}, \code{delta}, and
+        \code{mu}:\cr
+        shape parameter \code{alpha};
+        skewness parameter \code{beta}, \code{abs(beta)} is in the 
+        range (0, alpha);
+        scale parameter \code{delta}, \code{delta} must be zero or 
+        positive; 
+        location parameter \code{mu}, by default 0.
+        These is the meaning of the parameters in the first 
+        parameterization \code{pm=1} which is the default 
+        parameterization selection.
+        In the second parameterization, \code{pm=2} \code{alpha}
+        and \code{beta} take the meaning of the shape parameters
+        (usually named) \code{zeta} and \code{rho}.
+        In the third parameterization, \code{pm=3} \code{alpha}
+        and \code{beta} take the meaning of the shape parameters
+        (usually named) \code{xi} and \code{chi}.
+        In the fourth parameterization, \code{pm=4} \code{alpha}
+        and \code{beta} take the meaning of the shape parameters
+        (usually named) \code{a.bar} and \code{b.bar}.
         }
     \item{description}{
         a character string which allows for a brief description.
         }
-    \item{df}{
-        the number of degrees of freedom for the Student distribution, 
-        \code{df > 2}, maybe non-integer. By default a value of 4 is
-        assumed.
-        }
-    \item{object}{
-        [show] - \cr
-        an S4 class object as returned from the fitting functions.
-        }
     \item{doplot}{
         a logical flag. Should a plot be displayed?
+        }
+    \item{scale}{
+        a logical flag, by default \code{TRUE}. Should the time series
+        be scaled by its standard deviation to achieve a more stable
+        optimization?
         }
     \item{span}{
         x-coordinates for the plot, by default 100 values 
@@ -88,11 +70,6 @@ stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
     \item{trace}{
         a logical flag. Should the parameter estimation process be
         traced?
-        }
-    \item{type}{
-        a character string which allows to select the method for
-        parameter estimation: \code{"mle"}, the maximum log likelihood
-        approach, or \code{"qm"}, McCulloch's quantile method.
         }
     \item{x}{
         a numeric vector. 
@@ -145,30 +122,17 @@ stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
 }
 
 
-\details{
-    
-    \bold{Stable Parameter Estimation:}
-    
-    Estimation techniques based on the quantiles of an empirical sample 
-    were first suggested by Fama and Roll [1971]. However their technique 
-    was limited to symmetric distributions and suffered from a small 
-    asymptotic bias. McCulloch [1986] developed a technique that uses 
-    five quantiles from a sample to estimate \code{alpha} and \code{beta}
-    without asymptotic bias. Unfortunately, the estimators provided by
-    McCulloch have restriction \code{alpha>0.6}.
-       
-}
-
-
 \examples{    
-## nFit -
-   # Simulate random normal variates N(0.5, 2.0):
+## nigFit -
+   # Simulate random variates NIG(1.5, 0.3, 0.5, -1.0):
    set.seed(1953)
-   s = rnorm(n = 1000, 0.5, 2) 
+   s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
 
 ## nigFit -  
    # Fit Parameters:
-   nFit(s, doplot = TRUE) 
+   # Note, this may take some time.
+   # Starting vector (1, 0, 1, mean(s)):
+   nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 
 

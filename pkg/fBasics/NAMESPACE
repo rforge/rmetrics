@@ -142,7 +142,9 @@ export(
     "dsnig",
     "psnig",
     "qsnig",
-    "rsnig",            ## DW added
+    "rsnig",            
+    "sghFit",
+    "snigFit",       # DW added
     ".acfPlot",
     "adTest",
     "akimaInterp",
