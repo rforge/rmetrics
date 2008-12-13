@@ -31,7 +31,7 @@ rsnig(n, zeta = 1, rho = 0)
 
 \arguments{
  
-    \item{zeta, rho, lambda}{
+    \item{zeta, rho}{
         shape parameter \code{zeta} is positive,
         skewness parameter \code{rho} is in the range (-1, 1).
         }
