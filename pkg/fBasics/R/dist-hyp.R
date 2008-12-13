@@ -33,7 +33,7 @@
 #  qhyp                  Returns quantiles for hyperbolic DF
 #  rhyp                  Returns random variates for hyperbolic DF
 # FUNCTION:             DESCRIPTION:
-#  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
+#  .[dpqr]hyp[1234]      Internal functions called by '*hyp'
 ################################################################################
 
 
