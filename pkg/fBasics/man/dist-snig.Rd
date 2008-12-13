@@ -101,7 +101,7 @@ rsnig(n, zeta = 1, rho = 0)
    
 ## snig -
    # Compute Quantiles:
-   qsnig(psnig(seq(-5, 5, 1), zeta = 1 rho = 0.5), zeta = 1 rho = 0.5) 
+   qsnig(psnig(seq(-5, 5, 1), zeta = 1, rho = 0.5), zeta = 1, rho = 0.5) 
 }
 
 
