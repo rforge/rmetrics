@@ -40,7 +40,7 @@
 
 
 dsgh <-  
-    function(x, zeta = 1, rho = 0, lambda = -0.5, log = FALSE) 
+    function(x, zeta = 1, rho = 0, lambda = 1, log = FALSE) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -59,7 +59,7 @@ dsgh <-
 
 
 psgh <-  
-    function(q, zeta = 1, rho = 0, lambda = -0.5) 
+    function(q, zeta = 1, rho = 0, lambda = 1) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -78,7 +78,7 @@ psgh <-
 
 
 qsgh <-  
-    function(p, zeta = 1, rho = 0, lambda = -0.5) 
+    function(p, zeta = 1, rho = 0, lambda = 1) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -97,7 +97,7 @@ qsgh <-
 
 
 rsgh <-  
-    function(n, zeta = 1, rho = 0, lambda = -0.5) 
+    function(n, zeta = 1, rho = 0, lambda = 1) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -116,7 +116,7 @@ rsgh <-
 
 
 .kappaGH <- 
-    function(x, lambda = -0.5)
+    function(x, lambda = 1)
 {    
     # A function implemented by Diethelm Wuertz
     
@@ -149,7 +149,7 @@ rsgh <-
 
 
 .deltaKappaGH <-  
-    function(x, lambda = -0.5)
+    function(x, lambda = 1)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -176,7 +176,7 @@ rsgh <-
 
 
 .paramGH <-  
-    function(zeta = 1, rho = 0 , lambda = -0.5)
+    function(zeta = 1, rho = 0 , lambda = 1)
 {
     # A function implemented by Diethelm Wuertz
     

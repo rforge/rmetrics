@@ -35,7 +35,7 @@
 ################################################################################
 
 
-snig <-  
+dsnig <-  
     function(x, zeta = 1, rho = 0, log = FALSE) 
 {
     # Description:
@@ -44,7 +44,7 @@ snig <-
     # FUNCTION:
  
     # Compute Density - Quick and Dirty:
-    dsgh(x, zeta, rho, lambda = -0.5, log)
+    dsgh(x, zeta, rho, lambda = -0.5, log = log)
 }
 
 
@@ -60,7 +60,7 @@ psnig <-
     # FUNCTION:
     
     # Compute Probabilities - Quick and Dirty:
-    psgh(q, alpha, beta, delta, mu, lambda = -0.5)
+    psgh(q, zeta, rho, lambda = -0.5)
 }
 
 
@@ -68,7 +68,7 @@ psnig <-
 
 
 qsnig <-  
-    function(p, zeta = 1, rho = 0, lambda = -0.5) 
+    function(p, zeta = 1, rho = 0) 
 {
     # Description:
     #   Returns quantiles of the snig distribution
@@ -92,7 +92,7 @@ rsnig <-
     # FUNCTION:
     
     # Generate Random Numbers:
-    rgh(n, zeta, rho, lambda = -0.5)
+    rsgh(n, zeta, rho, lambda = -0.5)
 }
 
 
