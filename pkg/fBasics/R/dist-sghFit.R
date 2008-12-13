@@ -41,15 +41,6 @@ function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     x = as.vector(x)
     if (scale) x = (x-mean(x)) / sd(x)
     
-    esghmle = function(x, y = x, trace) {
-        f = -sum(log(dsgh(y, x[1], x[2], x[2], log = FALSE)))
-        if (trace) {
-            cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", x[1], x[2], x[2], "\n")
-        }
-        f
-    }
-    
     eps = .Machine$double.eps^0.5
     BIG = 1000
 
@@ -75,6 +66,7 @@ function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
         names(r$par) <- c("zeta", "rho", "lambda")
             
     } else {
+    
         # LLH Function:
         esghmle = function(x, y = x, lambda, trace) {
             f = -sum(log(dsgh(y, x[1], x[2], lambda, log = FALSE)))
@@ -111,6 +103,7 @@ function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     if (is.null(description)) 
         description = description()
     
+    # Fit:
     fit = list(
         estimate = r$par,
         minimum = -r$objective, 
