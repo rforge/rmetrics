@@ -161,7 +161,8 @@ rsgh <-
     # Difference in Ratios:
     if (lambda == -0.5) {
         # NIG:
-        deltaKappa = 0
+        # Replace this with the recursion relation ...
+        deltaKappa = .kappaGH(x, lambda+1) - .kappaGH(x, lambda)
     } else {
         # GH:
         deltaKappa = .kappaGH(x, lambda+1) - .kappaGH(x, lambda)

@@ -28,10 +28,12 @@
 
 ################################################################################
 # FUNCTION:            DESCRIPTION:
-#  dsnig                Returns density of the snig distribution
-#  psnig                Returns probabilities of the snig distribution
-#  qsnig                Returns quantiles of the snig distribution
-#  rsnig                Generates snig distributed random variates
+#  dsnig                Returns density of the SNIG distribution
+#  psnig                Returns probabilities of the SNIG distribution
+#  qsnig                Returns quantiles of the SNIG distribution
+#  rsnig                Generates SNIG distributed random variates
+# FUNCTION:            DESCRIPTION:
+#  .qsnigC              Fast qsnig from C code
 ################################################################################
 
 
@@ -93,6 +95,25 @@ rsnig <-
     
     # Generate Random Numbers:
     rsgh(n, zeta, rho, lambda = -0.5)
+}
+
+
+################################################################################
+
+
+.qsnigC <-  
+    function(p, zeta = 1, rho = 0) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns quantiles of the snig distribution
+    
+    # FUNCTION:
+      
+    # Compute Quantiles:
+    param = .paramGH(zeta, rho, lambda = -0.5)
+    .qnigC(p, param[1], param[2], param[3], param[4])
 }
 
 
