@@ -36,10 +36,21 @@ snigFit =
 function (x, zeta = 1, rho = 0, scale = TRUE, doplot = TRUE, 
     span = "auto", trace = TRUE, title = NULL, description = NULL, ...) 
 {   
+
+    # Update Slots: 
+    if (is.null(title)) title = "SNIG Parameter Estimation"
+    
     # Quick and dirty ...
-    sghFit(x, zeta = zeta, rho = rho, lambda = -0.5, include.lambda = FALSE,
+    ans = sghFit(x, zeta = zeta, rho = rho, lambda = -0.5, include.lambda = FALSE,
         scale = scale, doplot = doplot, span = span, trace = trace, 
         title = title, description = description, ...) 
+    
+    # Update Slots:    
+    ans@call = match.call()
+    ans@model = "Standarized NIG Distribution"
+    
+    # Return Value:
+    ans
 }
 
 

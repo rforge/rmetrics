@@ -99,7 +99,7 @@ function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     
     # Default Title and Description:
     if (is.null(title)) 
-        title = "Standardized NIG Parameter Estimation"
+        title = "SGH Parameter Estimation"
     if (is.null(description)) 
         description = description()
     
@@ -122,14 +122,14 @@ function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
         ylim = log(c(min(y.points), max(y.points)))
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-        title("SNIG Parameter Estimation")
+        title(main = title)
         lines(x = span, y = log(y.points), col = "steelblue")
     }
     
     # Return Value:
     new("fDISTFIT", 
         call = match.call(), 
-        model = "Normal Inverse Gaussian Distribution", 
+        model = "Standarized GH Distribution", 
         data = as.data.frame(x.orig), 
         fit = fit, 
         title = as.character(title), 
