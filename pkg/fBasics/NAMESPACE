@@ -142,7 +142,10 @@ export(
     "dsnig",
     "psnig",
     "qsnig",
-    "rsnig",            
+    "rsnig",
+    ".pnigC",
+    ".qnigC",
+    ".CArrange",            
     "sghFit",
     "snigFit",       # DW added
     "acfPlot",

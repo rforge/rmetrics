@@ -32,6 +32,10 @@
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
+# FUNCTION:             DESCRIPTION:
+#  .pnigC                Fast C implementation (fails)
+#  .qnigC                Fast C implementation
+#  .CArrange             Arranges input matrices and vectors for C
 ################################################################################
 
 
@@ -40,6 +44,9 @@ dnig <-
 {   
     # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Returns density for inverse Gaussian DF
+    
     # FUNCTION:
     
     # Density:
@@ -56,6 +63,9 @@ pnig <-
 {   
     # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Returns probability for for inverse Gaussian DF
+    
     # Function:
     
     # Probability:
@@ -72,9 +82,12 @@ qnig <-
 {   
     # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Returns quantiles for for inverse Gaussian DF
+    
     # FUNCTION:
     
-    # Quantiles
+    # Quantiles:
     qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
 }
@@ -136,6 +149,134 @@ rnig <-
     
     # Return Value:
     X
+}
+
+
+################################################################################
+
+
+.qnigC <-
+    function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # Description:
+    #   Returns quantiles for for inverse Gaussian DF
+    
+    # FUNCTION:
+    
+    # Checks:
+    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.\n")
+    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.\n")
+    if(delta <= 0) stop("Invalid parameters: delta <= 0.\n")
+    if((sum(is.na(p)) > 0)) 
+        stop("Invalid probabilities:\n",p,"\n")
+    else 
+        if(sum(p < 0)+sum(p > 1) > 0) stop("Invalid probabilities:\n",p,"\n")
+              
+    n <- length(p)
+    q <- rep(0, n)
+    
+    # Evaluate NIG cdf by calling C function
+    retValues <- .C("qNIG",
+        .CArrange(p,1,1,n),
+        as.double(mu),
+        as.double(delta),
+        as.double(alpha),
+        as.double(beta),
+        as.integer(n),
+        .CArrange(q, 1, 1, n),
+        PACKAGE = "fBasics")
+    quantiles <- retValues[[7]]
+    quantiles[quantiles <= -1.78e+308] <- -Inf
+    quantiles[quantiles >= 1.78e+308] <- Inf
+
+    # Return Value:
+    quantiles
+}
+
+
+# ------------------------------------------------------------------------------   
+  
+
+.pnigC <- 
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
+{
+    # Description:
+    #   Returns probabilities for for inverse Gaussian DF
+    
+    # IMPORTANT NOTE:
+    #   DW: C program fails
+    
+    # Example:
+    #   .pnigC(runif(10))
+    
+    # FUNCTION:
+    
+    # Checks:
+    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.\n")
+    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.\n")
+    if(delta <= 0) stop("Invalid parameters: delta <= 0.\n")
+    if(sum(is.na(q)) > 0) stop("Invalid quantiles:\n", q)
+    
+    n <- length(q)
+    p <- rep(0, n)
+    
+    # Evaluate NIG cdf by calling C function
+    retValues <- .C("pNIG",
+        .CArrange(q, 1, 1, n),
+        as.double(mu),
+        as.double(delta),
+        as.double(alpha),
+        as.double(beta),
+        as.integer(n),
+        .CArrange(p, 1, 1, n),
+        PACKAGE = "fBasics")
+    probs <- retValues[[7]]   
+    
+    # Return Value:
+    probs
+}
+
+
+# ------------------------------------------------------------------------------
+ 
+    
+.CArrange <-
+    function(obj, i, j, n)
+{
+    # Description:
+    #   Arrange input matrices and vectors in a suitable way for the C program
+    #   Matrices are transposed because the C program stores matrices by row 
+    #   while R stores matrices by column
+    
+    # Arguments:
+    #   i - length of first dimension
+    #   j - length of second dimension
+    #   n - length of third dimension
+    
+    # Value:
+    #   out - transformed data set
+    
+    # Author: 
+    #   Daniel Berg <daniel at nr.no> (Kjersti Aas <Kjersti.Aas at nr.no>)
+    #   Date: 12 May 2005
+    #   Version: 1.0.2
+   
+    # FUNCTION:
+        
+    if(is.null(obj)) stop("Missing data")
+  
+    if(is.vector(obj)) {
+        if(i==1 & j==1 & length(obj)==n) out <- as.double(obj)
+        else stop("Unexpected length of vector")
+    } else if(is.matrix(obj)) {
+        if(nrow(obj) == i && ncol(obj) == j) out <- as.double(rep(t(obj), n))
+        else stop("Unexpected dimensions of matrix")
+    } else {
+        stop("Unexpected object")
+    }
+  
+    # Return Value:
+    out 
 }
 
 
