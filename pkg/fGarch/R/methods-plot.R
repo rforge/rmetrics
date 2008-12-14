@@ -30,6 +30,23 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  plot                      Plot method for an object of class 'fGARCH'
+#  .interactiveGarchPlot     Plot interactively
+#  .multGarchPlot            Arrange multivariate Plots
+#  .plot.garch.1               Plot Time Series                         
+#  .plot.garch.2               Plot Conditional SD                          
+#  .plot.garch.3               Plot Series with 2 Conditional SD Superimposed
+#  .plot.garch.4               Plot ACF of Observations                     
+#  .plot.garch.5               Plot ACF of Squared Observations       
+#  .plot.garch.6               Plot Cross Correlation                    
+#  .plot.garch.7               Plot Residuals                          
+#  .plot.garch.8               Plot Conditional SDs                         
+#  .plot.garch.9               Plot Standardized Residuals                  
+#  .plot.garch.10              Plot ACF of Standardized Residuals            
+#  .plot.garch.11              Plot ACF of Squared Standardized Residuals    
+#  .plot.garch.12              Plot Cross Correlation between r^2 and r      
+#  .plot.garch.13              Plot QQ-Plot of Standardized Residuals"       
+#   .qqDist                     Quantile-Quantile Points
+#   .qqLine                     Quantile-Quantile Line
 ################################################################################
 
 
@@ -433,12 +450,19 @@ function(x, ...)
 
     if (cond.dist == "qnorm" || cond.dist == "qQMLE")
         .qqDist(sres, dist = "qnorm")
+        
     if (cond.dist == "qstd" | cond.dist == "qged")
         .qqDist(sres, dist = cond.dist, nu = shape)
+        
     if (cond.dist == "qsnorm")
         .qqDist(sres, dist = cond.dist, xi = skew)
+        
     if (cond.dist == "qsstd" | cond.dist == "qsged")
         .qqDist(sres, dist = cond.dist, xi = skew, nu = shape)
+       
+    if (cond.dist == "qsnig") 
+        .qqDist(sres, dist = ".qsnigC", rho = skew, zeta = shape)
+
 }
 
 
@@ -462,7 +486,7 @@ function(x, ...)
     qDist = match.fun(dist)
 
     # Check Arguments:
-    if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
+    # if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
     # test = class(test = try(qDist(0.5, ...), silent = TRUE))
     # if (test == "try-error") stop("dist does not exist")
 
@@ -518,7 +542,7 @@ function (y, dist = "qnorm", datax = FALSE, ...)
     qDist = match.fun(dist)
 
     # Check Arguments:
-    if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
+    # if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
     # test = class(test = try(qDist(0.5, ...), silent = TRUE))
     # if (test == "try-error") stop("dist does not exist")
 
