@@ -6,7 +6,8 @@
 importFrom("fBasics",
            "volatility",
            "Heaviside",
-           ".sliderMenu")
+           ".sliderMenu",
+           "dsnig")                   ## DW
 importFrom("graphics",
            "plot",
            "abline",
@@ -187,3 +188,4 @@ export(
     "sstdSlider",
     "stdFit",
     ".truePersistence" )
+    

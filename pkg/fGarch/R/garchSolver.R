@@ -62,18 +62,19 @@
     TOL1 = .params$control$tol1
 
     # Fit Parameters - par | objective:
-    fit <- nlminb(start = .params$params[INDEX],
-                  objective = .garchLLH,
-                  lower = .params$U[INDEX],
-                  upper = .params$V[INDEX],
-                  scale = 1/parscale,
-                  control = list(
-                  eval.max = 2000,
-                  iter.max = 1500,
-                  rel.tol = 1.0e-14 * TOL1,
-                  x.tol = 1.0e-14 * TOL1,
-                  trace = as.integer(trace)),
-                  fGarchEnv = FALSE) # to speed up .garchLLH
+    fit <- nlminb(
+        start = .params$params[INDEX],
+        objective = .garchLLH,
+        lower = .params$U[INDEX],
+        upper = .params$V[INDEX],
+        scale = 1/parscale,
+        control = list(
+        eval.max = 2000,
+        iter.max = 1500,
+        rel.tol = 1.0e-14 * TOL1,
+        x.tol = 1.0e-14 * TOL1,
+        trace = as.integer(trace)),
+        fGarchEnv = FALSE) # to speed up .garchLLH
     fit$value <- fit.llh <- fit$objective
     names(fit$par) = names(.params$params[INDEX])
 
@@ -117,26 +118,28 @@
     TOL1 = .params$control$tol1
 
     # Fit Parameters - par, value:
-    fit <- optim(par = .params$params[INDEX],
-                 fn = .garchLLH,
-                 lower = .params$U[INDEX],
-                 upper = .params$V[INDEX],
-                 method = "L-BFGS-B",
-                 control = list(
-                           parscale = parscale,
-                           lmm = 20,
-                           pgtol = 1.0e-11 * TOL1,
-                           factr = 1.0 * TOL1,
-                           trace = as.integer(trace)),
-                 fGarchEnv = FALSE)  # to speed up .garchLLH
+    fit <- optim(
+        par = .params$params[INDEX],
+        fn = .garchLLH,
+        lower = .params$U[INDEX],
+        upper = .params$V[INDEX],
+        method = "L-BFGS-B",
+        control = list(
+            parscale = parscale,
+            lmm = 20,
+            pgtol = 1.0e-11 * TOL1,
+            factr = 1.0 * TOL1,
+            trace = as.integer(trace)),
+        fGarchEnv = FALSE)  # to speed up .garchLLH
     names(fit$par) = names(.params$params[INDEX])
 
     # make sure to save new h and z (important to speed up code)
     .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
 
+    # Print Hessian Matrix:
     # print(fit$hessian)
 
-    # Result:
+    # Add to Result:
     fit$coef = fit$par
     fit$llh = fit$value
 
@@ -177,17 +180,17 @@
         fn = .garchLLH,
         method = "Nelder-Mead",
         control = list(
-        ndeps = rep(1e-14*TOL2, length = length(INDEX)),
-        maxit = 10000,
-        reltol = 1.0e-11 * TOL2,
-        fnscale = fnscale,
-        parscale = c(1, abs((.params$params[INDEX])[-1])),
-        trace = as.integer(trace)),
-        hessian = TRUE,
-        fGarchEnv = FALSE)  # to speed up .garchLLH
+            ndeps = rep(1e-14*TOL2, length = length(INDEX)),
+            maxit = 10000,
+            reltol = 1.0e-11 * TOL2,
+            fnscale = fnscale,
+            parscale = c(1, abs((.params$params[INDEX])[-1])),
+            trace = as.integer(trace)),
+            hessian = TRUE,
+            fGarchEnv = FALSE)  # to speed up .garchLLH
     names(fit$par) = names(.params$params[INDEX])
 
-    # make sure to save new h and z (important to speed up code)
+    # Make sure to save new h and z: (important to speed up code)
     .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
 
     # Result:

@@ -33,6 +33,7 @@
 #  .garchRCDAHessian       Computes R coded CDA Hessian matrix
 ################################################################################
 
+
 .garchRoptimhess <-
     function(par, .params, .series, eps = 1.0e-4)
 {
@@ -54,6 +55,10 @@
 
     H
 }
+
+
+# ------------------------------------------------------------------------------
+
 
 .garchRCDAHessian <-
     function(par, .params, .series, eps = 1.0e-4)

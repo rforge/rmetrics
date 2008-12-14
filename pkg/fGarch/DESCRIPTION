@@ -1,8 +1,8 @@
 Package: fGarch
-Version: 290.76
+Version: 290.77
 Date: 1997 - 2008
 Title: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
-Author: Diethelm Wuertz, Yohan Chalabi
+Author: Diethelm Wuertz, Yohan Chalabi, Michal Miklovic
 Depends: R (>= 2.6.0), stats, graphics, methods, timeDate, timeSeries,
         fBasics
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>

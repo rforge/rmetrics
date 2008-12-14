@@ -37,8 +37,8 @@
 
 
 garchKappa <-  
-    function(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
-    gamma = 0, delta = 2, skew = NA, shape = NA)
+    function(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd",
+    "snig"), gamma = 0, delta = 2, skew = NA, shape = NA)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -66,7 +66,7 @@ garchKappa <-
 
 .garchKappaFun <-  
     function(x, 
-    cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
+    cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd", "snig"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
 {   
     # A function implemented by Diethelm Wuertz
@@ -99,6 +99,9 @@ garchKappa <-
     if (cond.dist == "sstd") {
         fun = funcE * dsstd(x, nu = shape, xi = skew) 
     }
+    if (cond.dist == "snig") {
+        fun = funcE * dsnig(x, zeta = shape, rho = skew) 
+    }
     
     # Return Value:
     fun
@@ -124,7 +127,7 @@ garchKappa <-
     #   delta - numeric value of APARCH exponent
     
     # Note:
-    #   fun is one of: norm, snorn, std, sstd, ged, sged
+    #   fun is one of: norm, snorn, std, sstd, ged, sged, snig
     
     # FUNCTION:
     

@@ -75,7 +75,7 @@
 
     # algorithm "NLMINB" can be used unofficicially ...
 
-    # algorithm "donlp2" can be used unofficicially ...
+    # algorithm "donlp2" can be used unofficially ...
     #   ... we need to call: require("Rdonlp2")
     #   ... "internal" has to be checked, we don't support it currently
     #       inspect .garchOptimizerControl() used fix coded "fixed"
@@ -88,7 +88,8 @@ garchFit <-
     function(formula, data,
     init.rec = c("mci", "uev"),
     delta = 2, skew = 1, shape = 4,
-    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"),
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", 
+        "snig", "QMLE"),
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL,
     trace = TRUE,
@@ -339,7 +340,7 @@ garchFit <-
 
 
 .garchOptimizerControl <-
-    function(algorithm)
+    function(algorithm, cond.dist)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -350,6 +351,10 @@ garchFit <-
     #   none
 
     # FUNCTION:
+    
+    # Check llh for the standardized NIG Distribution:
+    llh = c("internal", "filter", "testing")[1]
+    if (cond.dist == "snig") llh = "filter"
 
     # Generate Control List with Default Settings:
     con <- list(
@@ -358,7 +363,7 @@ garchFit <-
         fscale = TRUE,
         xscale = TRUE,
         algorithm = algorithm,
-        llh = c("internal", "filter", "testing")[1],
+        llh = llh,
 
         # BFGS - NLMINB Algorithm:
         tol1 = 1,
@@ -391,6 +396,7 @@ garchFit <-
         TOLD = 1.0e-6,
         TOLS = 1.0e-4,
         RPF  = 1.0e-2) # 1.0e-4)
+        
     # Return Value:
     con
 }
@@ -462,7 +468,7 @@ garchFit <-
     .StartFit <- Sys.time()
 
     # Generate Control List - Define Default Settings:
-    con <- .garchOptimizerControl(algorithm)
+    con <- .garchOptimizerControl(algorithm, cond.dist)
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
@@ -471,19 +477,33 @@ garchFit <-
     # scale time series
     scale <- if (con$xscale) sd(series) else 1
     series <- series/scale
-    .series <- .garchInitSeries(formula.mean = formula.mean,
-        formula.var = formula.var, series = series, scale = scale,
-        init.rec = init.rec[1], h.start = NULL, llh.start = NULL,
+    .series <- .garchInitSeries(
+        formula.mean = formula.mean,
+        formula.var = formula.var, 
+        cond.dist = cond.dist[1],
+        series = series, 
+        scale = scale,
+        init.rec = init.rec[1], 
+        h.start = NULL, 
+        llh.start = NULL,
         trace = trace)
     .setfGarchEnv(.series = .series)
 
     # Initialize Model Parameters - Save Globally:
-    .params <- .garchInitParameters(formula.mean = formula.mean,
-        formula.var = formula.var, delta = delta, skew = skew,
-        shape = shape, cond.dist = cond.dist[1],
-        include.mean = include.mean, include.delta = include.delta,
-        include.skew = include.skew, include.shape = include.shape,
-        leverage = leverage, algorithm = algorithm[1], control = con,
+    .params <- .garchInitParameters(
+        formula.mean = formula.mean,
+        formula.var = formula.var, 
+        delta = delta, 
+        skew = skew,
+        shape = shape, 
+        cond.dist = cond.dist[1],
+        include.mean = include.mean, 
+        include.delta = include.delta,
+        include.skew = include.skew, 
+        include.shape = include.shape,
+        leverage = leverage, 
+        algorithm = algorithm[1], 
+        control = con,
         trace = trace)
     .setfGarchEnv(.params = .params)
 
@@ -494,7 +514,7 @@ garchFit <-
     .setfGarchEnv(.llh = 1.0e99)
     .llh <- .getfGarchEnv(".llh")
     fit = .garchOptimizeLLH(hessian, robust.cvar, trace)
-    # fit$llh = .llh # should be done in in .garchOptimizeLLH
+    # fit$llh = .llh # should be done in .garchOptimizeLLH
 
     # Add to Fit:
     .series <- .getfGarchEnv(".series")
@@ -559,7 +579,7 @@ garchFit <-
 
 
 .garchInitSeries <-
-    function(formula.mean, formula.var, series, scale, init.rec,
+    function(formula.mean, formula.var, cond.dist, series, scale, init.rec,
     h.start, llh.start, trace)
 {
     # A function implemented by Diethelm Wuertz
@@ -621,15 +641,16 @@ garchFit <-
     # Trace the Result:
     if(trace) {
         cat("\nSeries Initialization:")
-        cat("\n ARMA model:               ", model.mean)
-        cat("\n Formula mean:             ", as.character(formula.mean))
-        cat("\n GARCH model:              ", model.var)
-        cat("\n Formula var:              ", as.character(formula.var))
+        cat("\n ARMA Model:               ", model.mean)
+        cat("\n Formula Mean:             ", as.character(formula.mean))
+        cat("\n GARCH Model:              ", model.var)
+        cat("\n Formula Variance:         ", as.character(formula.var))
         cat("\n ARMA Order:               ", u, v)
         cat("\n Max ARMA Order:           ", maxuv)
         cat("\n GARCH Order:              ", p, q)
         cat("\n Max GARCH Order:          ", maxpq)
         cat("\n Maximum Order:            ", max.order)
+        cat("\n Conditional Dist:         ", cond.dist)
         cat("\n h.start:                  ", h.start)
         cat("\n llh.start:                ", llh.start)
         cat("\n Length of Series:         ", length(series))
@@ -714,7 +735,7 @@ garchFit <-
 
     # Distributional Includes:
     if(cond.dist == "t") cond.dist = "std"
-    skewed.dists = c("snorm", "sged", "sstd")
+    skewed.dists = c("snorm", "sged", "sstd", "snig")
     if(is.null(include.skew)) {
         if(any(skewed.dists == cond.dist)) {
             include.skew = TRUE
@@ -722,7 +743,7 @@ garchFit <-
             include.skew = FALSE
         }
     }
-    shaped.dists = c("ged", "sged", "std", "sstd")
+    shaped.dists = c("ged", "sged", "std", "sstd", "snig")
     if(is.null(include.shape)) {
         if(any(shaped.dists == cond.dist)) {
             include.shape = TRUE
@@ -767,6 +788,8 @@ garchFit <-
 
     # Set Lower Limits of Parameters to be Estimated:
     TINY = 1.0e-8
+    USKEW = 1/10; USHAPE = 1
+    if (cond.dist == "snig") USKEW = -0.99
     U = c(
         -10*abs(mean(.series$x)),
         if(u > 0) rep(-1+TINY, times = u),
@@ -775,13 +798,15 @@ garchFit <-
         if(p > 0) rep( 0+TINY, times = p),
         if(p > 0) rep(-1+TINY, times = p),
         if(q > 0) rep( 0+TINY, times = q),
-        0,
-        1/10,
-        1)
+        0,          # delta
+        USKEW,      # skew
+        USHAPE)     # shape
     names(U) = Names
     if(.DEBUG) { cat("\nDEBUG - U: \n"); print(U) }
 
     # Set Upper Limits of Parameters to be Estimated:
+    VSKEW = 10; VSHAPE = 10
+    if (cond.dist == "snig") VSKEW = 0.99
     V = c(
         10*abs(mean(.series$x)),
         if(u > 0) rep(1-TINY, times = u),
@@ -790,9 +815,9 @@ garchFit <-
         if(p > 0) rep(1-TINY, times = p),
         if(p > 0) rep(1-TINY, times = p),
         if(q > 0) rep(1-TINY, times = q),
-        2,
-        10,
-        20)
+        2,          # delta
+        VSKEW,      # skew
+        VSHAPE)     # shape
     names(V) = Names
     if(.DEBUG) { cat("\nDEBUG - V: \n"); print(V) }
 
@@ -848,10 +873,19 @@ garchFit <-
     }
 
     # Return Value:
-    list(params = params, U = U, V = V, includes = includes,
-        index = index, mu = params[1], delta = delta, skew = skew,
-        shape = shape, cond.dist = cond.dist, leverage = leverage,
-        persistence = persistence, control = control)
+    list(params = params, 
+        U = U, 
+        V = V, 
+        includes = includes,
+        index = index, 
+        mu = params[1], 
+        delta = delta, 
+        skew = skew,
+        shape = shape, 
+        cond.dist = cond.dist, 
+        leverage = leverage,
+        persistence = persistence, 
+        control = control)
 }
 
 
@@ -869,7 +903,7 @@ garchFit <-
     # Arguments:
     #   cond.dist - a character string with the name of the
     #       conditional distribution function. Valid strings are:
-    #       "norm", "snorm", "std", "sstd", "ged", "sged".
+    #       "norm", "snorm", "std", "sstd", "ged", "sged", "snig".
 
     # Value:
     #   Returns the selection conditional distribution function
@@ -921,7 +955,13 @@ garchFit <-
             dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
         }
     }
-
+    
+    if(cond.dist == "snig") {
+        .garchDist = function(z, hh, skew, shape) {
+            dsnig(x = z/hh, zeta = shape, rho = skew) / hh
+        }
+    }
+    
     # Trace the Result:
     if(FALSE) {
         cat("\n Distribution:     ", cond.dist, "\n    .garchDist = ")
@@ -964,17 +1004,20 @@ garchFit <-
     # DEBUG:
     .DEBUG = FALSE
 
-    # get global variables
+    # Get Global Variables:
     .series <- .getfGarchEnv(".series")
     .params <- .getfGarchEnv(".params")
     .garchDist <- .getfGarchEnv(".garchDist")
     .llh <- .getfGarchEnv(".llh")
+    
+    # How to calculate the LLH Function?
+    if (.DEBUG) print(.params$control$llh)
 
     if(.params$control$llh == "internal") {
 
         INDEX <- .params$index
         MDIST <- c(norm = 10, QMLE = 10, snorm = 11, std = 20, sstd = 21,
-                   ged = 30, sged = 31)[.params$cond.dist]
+            ged = 30, sged = 31)[.params$cond.dist]
         if(.params$control$fscale) NORM <- length(.series$x) else NORM = 1
         REC <- 1
         if(.series$init.rec == "uev") REC <- 2
@@ -993,20 +1036,21 @@ garchFit <-
         NF <- length(INDEX)
         N <- length(.series$x)
         DPARM <- c(.params$delta, .params$skew, .params$shape)
-        fit <- .Fortran("garchllh",
-                        N = as.integer(N),
-                        Y = as.double(.series$x),
-                        # Z = as.double(rep(2, times = N)),
-                        # H = as.double(rep(0, times = N)),
-                        Z = as.double(.series$z),
-                        H = as.double(.series$h),
-                        NF = as.integer(NF),
-                        X = as.double(params),
-                        DPARM = as.double(DPARM),
-                        MDIST = as.integer(MDIST),
-                        MYPAR = as.integer(MYPAR),
-                        F = as.double(0),
-                        PACKAGE = "fGarch")
+        fit <- .Fortran(
+            "garchllh",
+            N = as.integer(N),
+            Y = as.double(.series$x),
+            # Z = as.double(rep(2, times = N)),
+            # H = as.double(rep(0, times = N)),
+            Z = as.double(.series$z),
+            H = as.double(.series$h),
+            NF = as.integer(NF),
+            X = as.double(params),
+            DPARM = as.double(DPARM),
+            MDIST = as.integer(MDIST),
+            MYPAR = as.integer(MYPAR),
+            F = as.double(0),
+            PACKAGE = "fGarch")
 
         llh <- fit[[10]]
 
@@ -1023,190 +1067,96 @@ garchFit <-
 
     } else {
 
-    # Retrieve From Initialized Series:
-    x = .series$x
-
-    # Get Order:
-    u = .series$order[1]
-    v = .series$order[2]
-    p = .series$order[3]
-    q = .series$order[4]
-    max.order = max(u, v, p, q)
-
-    # Get Start Conditions:
-    h.start = .series$h.start
-    llh.start = .series$llh.start
-
-    # Get the Index Values and Add Names - Just to be Sure:
-    index = .params$index
-    names(params) = names(.params$params[index])
-    Names = names(params)
-
-    # Retrieve From Initialized Parameters:
-    cond.dist = .params$cond.dist
-
-    # Extracting the parameters by name ...
-    alpha <- beta <- NULL
-    mu = c(mu = .params$mu)
-    delta = c(delta = .params$delta)
-    skew = c(skew = .params$skew)
-    shape = c(shape = .params$shape)
-    leverage = c(leverage = .params$leverage)
-    if(.params$includes["mu"]) mu = params["mu"]
-    if(u > 0) ar = params[substr(Names, 1, 2) == "ar"]
-    if(v > 0) ma = params[substr(Names, 1, 2) == "ma"]
-    omega = params[substr(Names, 1, 5) == "omega"]
-    if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
-    if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
-    if(p > 0 & !leverage) gamma = rep(0, times = p)
-    if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
-    if(.params$includes["delta"]) delta = params["delta"]
-    if(.params$includes["skew"])  skew  = params["skew"]
-    if(.params$includes["shape"]) shape = params["shape"]
-
-    # Iterate z:
-    N = length(x)
-    z = rep(0, N)
-    if(u > 0 & v > 0)
-        for (i in (h.start):N)
-            z[i] = x[i] - mu - sum(ar*x[i-(1:u)]) - sum(ma*z[i-(1:v)])
-    if(u > 0 & v == 0)
-        for (i in (h.start):N)
-            z[i] = x[i] - mu - sum(ar*x[i-(1:u)])
-    if(u == 0 & v > 0)
-        for (i in (h.start):N)
-            z[i] = x[i] - mu - sum(ma*z[i-(1:v)])
-    if(u == 0 & v == 0)
-        z = x - mu
-
-    # Initialize Variance Equation:
-    deltainv = 1/delta
-    if(.series$model[2] == "garch") {
-        persistence = sum(alpha) + sum(beta)
-    } else if(.series$model[2] == "aparch") {
-        persistence = sum(beta)
-        for (i in 1:p)
-            persistence = persistence + alpha[i]*garchKappa(cond.dist,
-                gamma[i], delta, skew, shape)
-    }
-    names(persistence) = "persistence"
-    attr(persistence, "control") = NULL
-    attr(persistence, "cond.dist") = NULL
-    .params$persistence <- persistence
-    .setfGarchEnv(.params = .params)
-    mvar = mean(z^2)
-    h = rep(omega + persistence*mvar, N)
-
-    # Iterate Conditional Variances h:
-    if(p == 0) {
-        alpha = 0
-        p = 1
-    }
-    if(q == 0) {
-        beta = 0
-        q = 1
-    }
-
-    # How to compute the LLH recursion?
-    USE = .params$control$llh
-
-    # Test Version Just a Simple Double 'for' Loop:
-    if(USE == "testing") {
-        # As You Can Imagine, Slow Version But Very Useful for Testing:
-        if(!.params$leverage) {
-            for (i in (h.start):N) {
-                h[i] = omega +
-                    sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) +
-                    sum(beta*h[i-(1:q)])
-            }
-        } else {
-            for (i in (h.start):N) {
-                h[i] = omega +
-                    sum(alpha * ( abs(z[i-(1:p)]) -
-                    gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)])
-            }
+        # Retrieve From Initialized Series:
+        x = .series$x
+    
+        # Get Order:
+        u = .series$order[1]
+        v = .series$order[2]
+        p = .series$order[3]
+        q = .series$order[4]
+        max.order = max(u, v, p, q)
+    
+        # Get Start Conditions:
+        h.start = .series$h.start
+        llh.start = .series$llh.start
+    
+        # Get the Index Values and Add Names - Just to be Sure:
+        index = .params$index
+        names(params) = names(.params$params[index])
+        Names = names(params)
+    
+        # Retrieve From Initialized Parameters:
+        cond.dist = .params$cond.dist
+    
+        # Extracting the parameters by name ...
+        alpha <- beta <- NULL
+        mu = c(mu = .params$mu)
+        delta = c(delta = .params$delta)
+        skew = c(skew = .params$skew)
+        shape = c(shape = .params$shape)
+        leverage = c(leverage = .params$leverage)
+        if(.params$includes["mu"]) mu = params["mu"]
+        if(u > 0) ar = params[substr(Names, 1, 2) == "ar"]
+        if(v > 0) ma = params[substr(Names, 1, 2) == "ma"]
+        omega = params[substr(Names, 1, 5) == "omega"]
+        if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
+        if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
+        if(p > 0 & !leverage) gamma = rep(0, times = p)
+        if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
+        if(.params$includes["delta"]) delta = params["delta"]
+        if(.params$includes["skew"])  skew  = params["skew"]
+        if(.params$includes["shape"]) shape = params["shape"]
+    
+        # Iterate z:
+        N = length(x)
+        z = rep(0, N)
+        if(u > 0 & v > 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ar*x[i-(1:u)]) - sum(ma*z[i-(1:v)])
+        if(u > 0 & v == 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ar*x[i-(1:u)])
+        if(u == 0 & v > 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ma*z[i-(1:v)])
+        if(u == 0 & v == 0)
+            z = x - mu
+    
+        # Initialize Variance Equation:
+        deltainv = 1/delta
+        if(.series$model[2] == "garch") {
+            persistence = sum(alpha) + sum(beta)
+        } else if(.series$model[2] == "aparch") {
+            persistence = sum(beta)
+            for (i in 1:p)
+                persistence = persistence + alpha[i]*garchKappa(cond.dist,
+                    gamma[i], delta, skew, shape)
         }
-    }
-
-    # R Filter Representation:
-    # Entirely written in S, and very effective ...
-
-    # own filter method because as.ts and tsp time consuming...
-    # test
-    filter2 <-
-        function (x, filter, method = c("convolution", "recursive"),
-                  sides = 2, circular = FALSE, init = NULL)
-        {
-            method <- match.arg(method)
-            ### x <- as.ts(x)
-            ### xtsp <- tsp(x)
-            x <- as.matrix(x)
-            n <- nrow(x)
-            nser <- ncol(x)
-            nfilt <- length(filter)
-            if (any(is.na(filter)))
-                stop("missing values in 'filter'")
-            y <- matrix(NA, n, nser)
-            if (method == "convolution") {
-                if (nfilt > n)
-                    stop("'filter' is longer than time series")
-                if (sides != 1 && sides != 2)
-                    stop("argument 'sides' must be 1 or 2")
-                for (i in 1:nser) y[, i] <-
-                    .C("filter1", as.double(x[, i]),
-                       as.integer(n), as.double(filter), as.integer(nfilt),
-                       as.integer(sides), as.integer(circular), out = double(n),
-                       NAOK = TRUE, PACKAGE = "stats")$out
-            }
-            else {
-                if (missing(init)) {
-                    init <- matrix(0, nfilt, nser)
-                }
-                else {
-                    ni <- NROW(init)
-                    if (ni != nfilt)
-                        stop("length of 'init' must equal length of 'filter'")
-                    if (NCOL(init) != 1 && NCOL(init) != nser)
-                        stop(gettextf("'init'; must have 1 or %d cols",
-                                      nser), domain = NA)
-                    if (!is.matrix(init))
-                        init <- matrix(init, nfilt, nser)
-                }
-                for (i in 1:nser) y[, i] <-
-                    .C("filter2", as.double(x[, i]),
-                       as.integer(n), as.double(filter), as.integer(nfilt),
-                       out = as.double(c(rev(init[, i]), double(n))), NAOK = TRUE,
-                       PACKAGE = "stats")$out[-(1:nfilt)]
-            }
-            ### y <- drop(y)
-            ### tsp(y) <- xtsp
-            ### class(y) <- if (nser > 1)
-            ### c("mts", "ts")
-            ### else "ts"
-            y
+        names(persistence) = "persistence"
+        attr(persistence, "control") = NULL
+        attr(persistence, "cond.dist") = NULL
+        .params$persistence <- persistence
+        .setfGarchEnv(.params = .params)
+        mvar = mean(z^2)
+        h = rep(omega + persistence*mvar, N)
+    
+        # Iterate Conditional Variances h:
+        if(p == 0) {
+            alpha = 0
+            p = 1
         }
-
-
-    if(USE == "filter") {
-        # Note, sometimes one of the beta's can become undefined
-        # during optimization.
-        if(!.params$leverage) gamma = rep(0, p)
-        pq = max(p, q)
-        edeltat = 0
-        for (j in 1:p) {
-            Filter = rep(0, length = p+1)
-            Filter[j+1] = alpha[j]
-            edelta = (abs(z) - gamma[j]*z)^delta
-            edelta = filter2(edelta, filter = Filter, sides = 1)
-            edeltat = edeltat + edelta
+        if(q == 0) {
+            beta = 0
+            q = 1
         }
-        c.init = omega/(1-sum(beta))
-        h = c( h[1:pq], c.init + filter2(edeltat[-(1:pq)], filter = beta,
-             method = "recursive", init = h[q:1]-c.init))
-        ### ? remove ?
-        if( sum(is.na(h)) > 0 ) {
-            # We use the testing Version ...
-            warning("Problems in Filter Representation")
+    
+        # How to compute the LLH recursion?
+        USE = .params$control$llh
+    
+        # Test Version Just a Simple Double 'for' Loop:
+        if(USE == "testing") {
+            # As You Can Imagine, Slow Version But Very Useful for Testing:
             if(!.params$leverage) {
                 for (i in (h.start):N) {
                     h[i] = omega +
@@ -1221,35 +1171,129 @@ garchFit <-
                 }
             }
         }
-    }
-
-    # Calculate Log Likelihood:
-    hh = (abs(h[(llh.start):N]))^deltainv
-    zz = z[(llh.start):N]
-    llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
-    if(.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
-    names(params) = names(.params$params[.params$index])
-    if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
-    if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
-
-    # Print if LLH has Improved:
-    if(llh < .llh) {
-        diff = (.llh - llh)/llh
-        if(trace & diff > 1e-2) {
-            # cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
-            # print(params)
-            if(persistence > 1)
-                cat("Warning - Persistence:", persistence, "\n")
+    
+        # R Filter Representation:
+        # Entirely written in S, and very effective ...
+    
+        # own filter method because as.ts and tsp time consuming...
+        # test
+        filter2 <-
+            function (x, filter, method = c("convolution", "recursive"),
+                      sides = 2, circular = FALSE, init = NULL)
+            {
+                method <- match.arg(method)
+                ### x <- as.ts(x)
+                ### xtsp <- tsp(x)
+                x <- as.matrix(x)
+                n <- nrow(x)
+                nser <- ncol(x)
+                nfilt <- length(filter)
+                if (any(is.na(filter)))
+                    stop("missing values in 'filter'")
+                y <- matrix(NA, n, nser)
+                if (method == "convolution") {
+                    if (nfilt > n)
+                        stop("'filter' is longer than time series")
+                    if (sides != 1 && sides != 2)
+                        stop("argument 'sides' must be 1 or 2")
+                    for (i in 1:nser) y[, i] <-
+                        .C("filter1", as.double(x[, i]),
+                           as.integer(n), as.double(filter), as.integer(nfilt),
+                           as.integer(sides), as.integer(circular), out = double(n),
+                           NAOK = TRUE, PACKAGE = "stats")$out
+                }
+                else {
+                    if (missing(init)) {
+                        init <- matrix(0, nfilt, nser)
+                    }
+                    else {
+                        ni <- NROW(init)
+                        if (ni != nfilt)
+                            stop("length of 'init' must equal length of 'filter'")
+                        if (NCOL(init) != 1 && NCOL(init) != nser)
+                            stop(gettextf("'init'; must have 1 or %d cols",
+                                          nser), domain = NA)
+                        if (!is.matrix(init))
+                            init <- matrix(init, nfilt, nser)
+                    }
+                    for (i in 1:nser) y[, i] <-
+                        .C("filter2", as.double(x[, i]),
+                           as.integer(n), as.double(filter), as.integer(nfilt),
+                           out = as.double(c(rev(init[, i]), double(n))), NAOK = TRUE,
+                           PACKAGE = "stats")$out[-(1:nfilt)]
+                }
+                ### y <- drop(y)
+                ### tsp(y) <- xtsp
+                ### class(y) <- if (nser > 1)
+                ### c("mts", "ts")
+                ### else "ts"
+                y
+            }
+    
+    
+        if(USE == "filter") {
+            # Note, sometimes one of the beta's can become undefined
+            # during optimization.
+            if(!.params$leverage) gamma = rep(0, p)
+            pq = max(p, q)
+            edeltat = 0
+            for (j in 1:p) {
+                Filter = rep(0, length = p+1)
+                Filter[j+1] = alpha[j]
+                edelta = (abs(z) - gamma[j]*z)^delta
+                edelta = filter2(edelta, filter = Filter, sides = 1)
+                edeltat = edeltat + edelta
+            }
+            c.init = omega/(1-sum(beta))
+            h = c( h[1:pq], c.init + filter2(edeltat[-(1:pq)], filter = beta,
+                 method = "recursive", init = h[q:1]-c.init))
+            ### ? remove ?
+            if( sum(is.na(h)) > 0 ) {
+                # We use the testing Version ...
+                warning("Problems in Filter Representation")
+                if(!.params$leverage) {
+                    for (i in (h.start):N) {
+                        h[i] = omega +
+                            sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) +
+                            sum(beta*h[i-(1:q)])
+                    }
+                } else {
+                    for (i in (h.start):N) {
+                        h[i] = omega +
+                            sum(alpha * ( abs(z[i-(1:p)]) -
+                            gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)])
+                    }
+                }
+            }
         }
-        .setfGarchEnv(.llh = llh)
-    }
-
-    if (fGarchEnv) {
-        # Save h and z:
-        .series$h <- h
-        .series$z <- z
-        .setfGarchEnv(.series = .series)
-    }
+    
+        # Calculate Log Likelihood:
+        hh = (abs(h[(llh.start):N]))^deltainv
+        zz = z[(llh.start):N]
+        llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
+        if(.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
+        names(params) = names(.params$params[.params$index])
+        if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
+        if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
+    
+        # Print if LLH has Improved:
+        if(llh < .llh) {
+            diff = (.llh - llh)/llh
+            if(trace & diff > 1e-2) {
+                # cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
+                # print(params)
+                if(persistence > 1)
+                    cat("Warning - Persistence:", persistence, "\n")
+            }
+            .setfGarchEnv(.llh = llh)
+        }
+    
+        if (fGarchEnv) {
+            # Save h and z:
+            .series$h <- h
+            .series$z <- z
+            .setfGarchEnv(.series = .series)
+        }
 
     }
 
@@ -1289,11 +1333,13 @@ garchFit <-
     algorithm = .params$control$algorithm[1]
     TOL1 = .params$control$tol1
     TOL2 = .params$control$tol2
+    if(trace) {
+        cat("\n\n--- START OF TRACE ---")
+        cat("\nSelected Algorithm:",algorithm,"\n")
+    }
 
-    # Optimize:
-    if(trace) cat("\n\n--- START OF TRACE ---\n")
-
-    # First Method: Two Step Apparoach > Trust Region + Nelder-Mead Simplex
+    # First Method: 
+    # Two Step Apparoach > Trust Region + Nelder-Mead Simplex
     if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
         fit <- .garchRnlminb(.params, .series, .garchLLH, trace)
         .params$llh = fit$llh
@@ -1307,7 +1353,8 @@ garchFit <-
             .setfGarchEnv(.params = .params)
         }
 
-    # Second Method - Two Step Approach > BFGS + Nelder-Mead Simplex
+    # Second Method:
+    # Two Step Approach > BFGS + Nelder-Mead Simplex
     if(algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
         fit <- .garchRlbfgsb(.params, .series, .garchLLH, trace)
         .params$llh = fit$llh
@@ -1352,7 +1399,7 @@ garchFit <-
         .setfGarchEnv(.series = .series)
     }
 
-    # rescale hessian matrix
+    # Rescale Hessian Matrix:
     if (.params$control$xscale) {
         if (.params$include["mu"]) {
             fit$hessian[,"mu"] <- fit$hessian[,"mu"] /  .series$scale
@@ -1366,17 +1413,17 @@ garchFit <-
         }
     }
 
-    # recalculate llh, h, z with rescaled parameters
+    # Recalculate llh, h, z with Rescaled Parameters:
     .llh <- fit$llh <- fit$value <-
         .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
     .series <- .getfGarchEnv(".series")
 
-
-    # Compute the Gradient
+    # Compute the Gradient:
     # YC: needs to be after the calculation of h, z !
     if (robust.cvar)
-        fit$gradient <- - .garchRCDAGradient(par = fit$par, .params = .params,
-                                             .series = .series)
+        fit$gradient <- - .garchRCDAGradient(
+            par = fit$par, .params = .params, .series = .series)
+            
     # Compute Information Criterion Statistics:
     N = length(.series$x)
     NPAR = length(fit$par)
