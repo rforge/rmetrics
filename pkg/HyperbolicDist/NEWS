@@ -1,0 +1,65 @@
+
+	**************************************************
+	*						 *
+	*	   HyperbolicDist News			 *
+	*						 *
+	**************************************************
+
+
+VERSION 0.5-2
+
+  o	Some bug fixes added which were causing Make Check to fail on
+	Windows when tested using Uwe Ligges site. Problem was naming of
+	objects as x conflicting with use of x as data.
+
+
+VERSION 0.5-1
+
+   o	Names changed to form with words after the initial one
+	capitalized, e.g. log.pars becomes logPars. Applies to both
+	function and variable names. Exceptions are functions for
+	distributions (dhyperb, rgig, pskewlap), and KNu.
+
+   o	Added functions for the skew-Laplace distribution: dskewlap,
+	pskewlap, qskewlap and r skewlap.
+
+   o	Added (xi, chi) parameterisation to those for which
+	hyperbChangePars (which was hyperb.change.pars) can be used to
+	interchange between parameterisations of the hyperbolic
+	distribution.
+
+  o	Added functions for the generalized hyperbolic distribution:
+	dghyp, pghyp, qghyp, rghyp, ghypChangePars, ghypCalcRange, 
+	ghypMean, ghypVar, ghypMode.
+
+  o	Added functions for the generalized inverse Gaussian
+	distribution: dgig, pgig, qgig, rgig1, rgig,
+	gigChangePars,gigCalcRange, gigMean, gigVar, gigSkew, gigKurt,
+	gigMode.
+
+   o	Parameter vector name changed to Theta instead of theta so an
+	individual component could be called theta.
+
+  o	New algorithms developed for phyperb, pghyp, and pgig where
+	numerical integrations are on sections of the real line. Developed
+	to improve accuracy of numerical results.
+
+  o	New algorithms for distribution functions use the derivative of
+	the density and need break points to determine sections to
+	integrate over. Derivative functions ddhyperb, ddghyp, ddgig, and
+	break functions hyperbBreaks, ghypBreaks, gigBreaks developed.
+
+  o	Functions for Cramer-von Mises goodness of fit test for the
+	hyperbolic distribution added.
+
+	
+VERSION 0.0-1
+
+   o	Submitted to CRAN, January 6, 2003
+	
+	
+	
+
+
+
+

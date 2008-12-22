@@ -1,0 +1,15 @@
+2008-04-28    <d.scott@auckland.ac.nz>
+
+	* print.hyperbFit, plot.hyperbFit, print.summary.hyperbFit:
+	changed name of object in call from x to object
+	to avoid conflict with x as name of data
+	* hyperbFit.Rd, summary.hyperbFit: documentation changed to
+	reflect changes in functions
+	* sampleMoment.Rd, hyperbFitStart.Rd: minor errors corrected
+
+
+
+	
+
+
+
