@@ -40,54 +40,22 @@ function(lib, pkg)
     
     
     GCCINDEX <- as.timeSeries(GCCINDEX.DF)
-    SPISECTO <- as.timeSeries(SPISECTOR.DF)
+    SPISECTOR <- as.timeSeries(SPISECTOR.DF)
     SWX <- as.timeSeries(SWX.DF)
     LPP2005 <- cumulated(as.timeSeries(LPP2005.RET.DF))
     SMALLCAP <- cumulated(as.timeSeries(SMALLCAP.RET.DF))
     
     
     GCCINDEX.RET <- returns(as.timeSeries(GCCINDEX.DF))
-    SPISECTO.RET <- returns(as.timeSeries(SPISECTOR.DF))
+    SPISECTOR.RET <- returns(as.timeSeries(SPISECTOR.DF))
     SWX.RET <- returns(as.timeSeries(SWX.DF))
     LPP2005.RET <- as.timeSeries(LPP2005.RET.DF)
     SMALLCAP.RET <- as.timeSeries(SMALLCAP.RET.DF)
 
-
+     
     if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
         Sys.setenv <- Sys.putenv
-
-    
-################################################################################
-# some useful functions added
-    
-    
-    ### OLD STUFF, STILL KEEP IT  ###
-
-    .smallcapData = SMALLCAP.RET
-    .smallcapData = .smallcapData[, c("BKE", "GG", "GYMB", "KRON")]
-    
-    .lppData = 100 * LPP2005.RET[, 1:6]
-    
-    .mvSpec = portfolioSpec()
-    setType(.mvSpec) = "MV"
-    setTargetReturn(.mvSpec) = mean(.lppData)
-    setSolver(.mvSpec) = "solveRfoo"
-    
-    .cvarSpec = portfolioSpec()
-    setType(.cvarSpec) = "CVaR"
-    setTargetReturn(.cvarSpec) = mean(.lppData)
-    setSolver(.cvarSpec) = "solveRfoo"
-    
-    .madSpec = portfolioSpec()
-    setType(.madSpec) = "MAD"
-    setTargetReturn(.madSpec) = mean(.lppData)
-    setSolver(.madSpec) = "solveRfoo"
-    
-    .Box = c("minW[3:4]=0.1", "maxW[5:6]=0.8")
-    .Group = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
-    .BoxGroup = c(.Box, .Group)
-    .CovBudget = c("minB[3:4]=0.1", "maxB[5:6]=0.9")
-
+        
 
 ################################################################################
 
