@@ -1,7 +1,7 @@
 \name{AssetsArrange}
 
 
-\alias{AssetsArrange}
+\alias{assetsArrange}
 
 
 \title{Rearranging Assets Columnwise}
