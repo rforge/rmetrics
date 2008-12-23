@@ -28,49 +28,45 @@ function(lib, pkg)
 ###     }
 
     # Load dll:
-    # library.dynam("fPortfolio", pkg, lib)
-}
-
-
-.onLoad <-
-    function(libname, pkgname)
-{
-
-
-# ------------------------------------------------------------------------------
-
+    library.dynam("fPortfolio", pkg, lib)
 
 }
 
+    data(GCCINDEX.DF, package = "fPortfolio")
+    data(SPISECTOR.DF, package = "fPortfolio") 
+    data(SWX.DF, package = "fPortfolio")
+    data(LPP2005.RET.DF, package = "fPortfolio") 
+    data(SMALLCAP.RET.DF, package = "fPortfolio") 
+    
+    
+    GCCINDEX <- as.timeSeries(GCCINDEX.DF)
+    SPISECTO <- as.timeSeries(SPISECTOR.DF)
+    SWX <- as.timeSeries(SWX.DF)
+    LPP2005 <- cumulated(as.timeSeries(LPP2005.RET.DF))
+    SMALLCAP <- cumulated(as.timeSeries(SMALLCAP.RET.DF))
+    
+    
+    GCCINDEX.RET <- returns(as.timeSeries(GCCINDEX.DF))
+    SPISECTO.RET <- returns(as.timeSeries(SPISECTOR.DF))
+    SWX.RET <- returns(as.timeSeries(SWX.DF))
+    LPP2005.RET <- as.timeSeries(LPP2005.RET.DF)
+    SMALLCAP.RET <- as.timeSeries(SMALLCAP.RET.DF)
 
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
 
+    if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
+        Sys.setenv <- Sys.putenv
 
+    
 ################################################################################
 # some useful functions added
+    
+    
+    ### OLD STUFF, STILL KEEP IT  ###
 
-
-GCCINDEX = as.timeSeries(data(GCCINDEX))
-SPISECTOR = as.timeSeries(data(SPISECTOR))
-SWX = as.timeSeries(data(SWX))
-LPP2005 = cumulated(as.timeSeries(data(LPP2005.RET)))
-SMALLCAP = cumulated(as.timeSeries(data(SMALLCAP.RET)))
-
-
-GCCINDEX.RET = returns(as.timeSeries(data(GCCINDEX)))
-SPISECTOR.RET = returns(as.timeSeries(data(SPISECTOR)))
-SWX.RET = returns(as.timeSeries(data(SWX)))
-LPP200.RET = as.timeSeries(data(LPP2005.RET))
-SMALLCAP.RET = as.timeSeries(data(SMALLCAP.RET))
-
-
-if (FALSE) {
-
-    .smallcapData = as.timeSeries(data(smallcap.ts))
+    .smallcapData = SMALLCAP.RET
     .smallcapData = .smallcapData[, c("BKE", "GG", "GYMB", "KRON")]
     
-    .lppData = 100* as.timeSeries(data(LPP2005REC))[, 1:6]
+    .lppData = 100 * LPP2005.RET[, 1:6]
     
     .mvSpec = portfolioSpec()
     setType(.mvSpec) = "MV"
@@ -91,8 +87,6 @@ if (FALSE) {
     .Group = c("minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
     .BoxGroup = c(.Box, .Group)
     .CovBudget = c("minB[3:4]=0.1", "maxB[5:6]=0.9")
-
-}
 
 
 ################################################################################
