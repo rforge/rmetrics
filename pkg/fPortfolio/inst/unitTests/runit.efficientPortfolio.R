@@ -71,7 +71,7 @@ test.efficientPortfolio.MV.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -107,7 +107,7 @@ test.efficientPortfolio.MV.LongOnly.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         print(head(data))
 
@@ -149,7 +149,7 @@ test.efficientPortfolio.MV.BoxConstraints.RDonlp2 =
     if (require(Rdonlp2)) {
 
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         print(head(data))
 
@@ -183,7 +183,7 @@ test.efficientPortfolio.MV.LongOnly.twoAssets <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG")]
     print(head(data))
 
@@ -212,7 +212,7 @@ test.efficientPortfolio.MV.BoxConstraints <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -241,7 +241,7 @@ test.efficientPortfolio.LPM.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -274,7 +274,7 @@ test.efficientPortfolio.CVaR.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -307,7 +307,7 @@ test.efficientPortfolio.CVaR.LongOnly.TwoAssets <-
     if (FALSE) {
     
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG")]
     head(data)
 
@@ -339,7 +339,7 @@ test.efficientPortfolio.CVaR.LongOnly.Alpha <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
