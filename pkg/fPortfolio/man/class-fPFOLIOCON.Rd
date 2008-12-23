@@ -45,12 +45,15 @@
    getSlots("fPFOLIOCON")   
     
 ## data -
-   data = SMALLCAP.RET
+   Data = SMALLCAP.RET
+   print(head(Data))
+   print(class(Data))
 
 ## portfolioConstraints -
-   spec = portfolioSpec()
-   setTargetReturn(spec) = mean(data)
-   portfolioConstraints(data, spec, "LongOnly")
+   Spec = portfolioSpec()
+   setTargetReturn(Spec) = mean(Data)
+   Constraints = "LongOnly"
+   portfolioConstraints(Data, Spec, Constraints)
 }
 
 

@@ -32,7 +32,7 @@ weightsSlider(object, control = list(), \dots)
          an S4 object of class \code{fPORTFOLIO}.
         }
     \item{\dots}{
-        optional arguments to be passed.\cr
+        optional arguments to be passed.
         }
 
 }
@@ -210,17 +210,18 @@ weightsSlider(object, control = list(), \dots)
     }                 
 }
 
+
 %\references{}
 
 
 \examples{
 ## Load Data and Convert to timeSeries Object:
    Data = SMALLCAP.RET
-   data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   head(data)
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(Data)
     
 ## portfolioFrontier -
-   frontier = portfolioFrontier(data)
+   frontier = portfolioFrontier(Data)
    print(frontier)
     
 ## weightsSlider -
