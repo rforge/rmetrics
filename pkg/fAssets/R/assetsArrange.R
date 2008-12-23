@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-# .assetsArrange            Returns assets rearranged in columns 
+# assetsArrange             Returns assets rearranged in columns 
 #  .orderColnames            Returns ordered column names of a time Series
 #  .abcColnames              Returns sorted column names of a time Series
 #  .sampleColnames           Returns sampled column names of a time Series
@@ -27,10 +27,7 @@
 ################################################################################
 
 
-### DO NOT USE !!!
-
-
-.assetsArrange <-
+assetsArrange <-
     function(x, method = c("pca", "hclust", "abc"), ...)
 { 
     # A function implemented by Diethelm Wuertz

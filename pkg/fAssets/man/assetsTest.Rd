@@ -66,8 +66,6 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 
 \value{
   
-    \code{assetsTest}
-    \cr
     returns an object of class \code{fHTEST}.     
   
 }

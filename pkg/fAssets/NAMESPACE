@@ -130,7 +130,7 @@ S3method("summary", "fASSETS")
 
 export(
     ".abcColnames",
-    ".assetsArrange",
+    "assetsArrange",
     "assetsBasicStatsPlot",
     "assetsBoxPercentilePlot",
     "assetsBoxPlot",

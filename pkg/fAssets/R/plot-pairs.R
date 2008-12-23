@@ -184,14 +184,13 @@ assetsCorTestPlot <-
 
 
 assetsCorImagePlot <-
-    function(x, labels = TRUE,
-    show = c("cor", "test"), use = c("pearson", "kendall", "spearman"),
-    abbreviate = 3, ...)
+    function(x, 
+        labels = TRUE,
+        show = c("cor", "test"), 
+        use = c("pearson", "kendall", "spearman"),
+        abbreviate = 3, ...)
 {
     # A function implemented by Diethelm Wuertz
-    #   @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
-    #   @author modified by Peter Carl
-    #   @author extended by Diethelm Wuertz
 
     # Description:
     #   Creates an image plot of a correlations
@@ -202,10 +201,15 @@ assetsCorImagePlot <-
     # Details:
     #   uses relative colors to indicate the strength of the pairwise
     #   correlation.
+    
+    # Authors:
+    #   Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
+    #   modified by Peter Carl
+    #   extended by Diethelm Wuertz
 
     # Example:
-    #   x = as.timeSeries(data(LPP2005REC)) 
-    #   assetsCorImagePlot(x)
+    #   x = as.timeSeries(data(LPP2005REC))
+    #   assetsCorImagePlot(x[,assetsArrange(x, "hclust")], abbreviate = 5)
 
     # FUNCTION:
 
@@ -259,8 +263,8 @@ assetsCorImagePlot <-
         Names = c(
             pearson = "Pearson", kendall = "Kendall", spearman = "Spearman")
         if (show == "test") Test = "Test" else Test = ""
-        title(main =
-            paste(Names[use], "Corrleation ", Test, " Image", sep = ""))
+        title(
+            main = paste(Names[use], " Correlation ", Test, " Image", sep = ""))
         mText = paste("Method:", show)
         mtext(mText, side = 4, adj = 0, col = "grey", cex = 0.7)
     }
