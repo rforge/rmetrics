@@ -362,7 +362,6 @@ portfolioSpec(
 ## setRiskFreeRate -
    # Modify Risk Free Rate
    setRiskFreeRate(spec) <- 2.5
-
 }
 
 

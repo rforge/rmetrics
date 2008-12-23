@@ -159,7 +159,7 @@ maxreturnPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 \examples{
 ## data -
    # Load Data and Convert to timeSeries Object:
-   Data = as.timeSeries(data(smallcap.ts))
+   Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    

@@ -35,7 +35,7 @@ test.tangencyPortfolio.MV.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -66,7 +66,7 @@ test.tangencyPortfolio.CVaR.LongOnly <-
     #   the return is fixed, we minimie the CVaR
 
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 

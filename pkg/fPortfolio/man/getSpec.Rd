@@ -94,8 +94,7 @@
 
 
 \examples{
-## get -
-   
+## get -  
    # Create default specification structure:
    Spec = portfolioSpec()
    

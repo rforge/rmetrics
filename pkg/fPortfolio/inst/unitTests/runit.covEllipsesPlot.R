@@ -35,12 +35,12 @@ test.covEllipsesPlot <-
     if (FALSE) {
         
         # Data:
-        LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
-        head(LPP)
+        Data = SMALLCAP.RET
+        head(Data)
        
         # Standard and robust Covariances:
-        Cov = cov(LPP)
-        robustCov = covMcdEstimator(LPP)$Sigma
+        Cov = cov(Data)
+        robustCov = covMcdEstimator(Data)$Sigma
        
         # covEllipsesPlot -
         covEllipsesPlot(list(Cov, robustCov))  

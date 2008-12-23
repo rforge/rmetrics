@@ -127,11 +127,10 @@ Schaefer J., Strimmer K. (2005);
 
 \examples{
 ## berndtInvest -
-   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
-   colnames(LPP)
+   colnames(SMALLCAP.RET)
    
 ## Classical Covariance Estimation:
-   covEstimator(LPP)
+   covEstimator(SMALLCAP.RET)
 }
 
 

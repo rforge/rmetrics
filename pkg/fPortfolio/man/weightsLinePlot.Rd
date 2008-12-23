@@ -128,7 +128,7 @@ covRiskBudgetsLinePlot(object, labels = TRUE, col = NULL, title = TRUE,
 \examples{
 ## data -
    # Load Data:
-   Data = as.timeSeries(data(smallcap.ts))
+   Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
 
 ## portfolioFrontier -

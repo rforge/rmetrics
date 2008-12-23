@@ -42,7 +42,7 @@ test.portfolioData <-
     function()
 {
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
    
@@ -66,7 +66,7 @@ test.Extractors <-
     function()
 {
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data)
      

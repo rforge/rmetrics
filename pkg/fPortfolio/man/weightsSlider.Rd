@@ -215,7 +215,7 @@ weightsSlider(object, control = list(), \dots)
 
 \examples{
 ## Load Data and Convert to timeSeries Object:
-   data = as.timeSeries(data(smallcap.ts))
+   Data = SMALLCAP.RET
    data = data[, c("BKE", "GG", "GYMB", "KRON")]
    head(data)
     

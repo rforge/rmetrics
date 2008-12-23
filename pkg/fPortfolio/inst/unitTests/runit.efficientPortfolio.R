@@ -40,7 +40,7 @@ test.efficientPortfolio.MV.Short <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 

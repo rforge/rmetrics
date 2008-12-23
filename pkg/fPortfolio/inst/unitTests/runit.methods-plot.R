@@ -42,7 +42,7 @@ test.plot.fPORTFOLIO <-
     function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
    
@@ -74,7 +74,7 @@ test.frontierPlot.ShortMV <-
     function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
    
@@ -117,7 +117,7 @@ test.frontierPlot.ConstrainedMV =
 function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
    
@@ -158,7 +158,7 @@ test.frontierPlot.ConstrainedCVaR =
 function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
    
@@ -204,7 +204,7 @@ test.barPlots.ShortMV =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:
@@ -238,7 +238,7 @@ test.barPlots.ConstrainedMV =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:
@@ -268,7 +268,7 @@ test.barPlots.ConstrainedCVaR =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:
@@ -302,7 +302,7 @@ test.piePlots.ShortMV =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:
@@ -336,7 +336,7 @@ test.piePlots.ConstrainedMV =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:
@@ -366,7 +366,7 @@ test.piePlots.ConstrainedCVaR =
 function()
 { 
     # Load Time Series Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
     # Specification:

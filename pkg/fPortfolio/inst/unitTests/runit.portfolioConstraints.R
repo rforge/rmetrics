@@ -38,7 +38,7 @@ test.portfolioConstraints.LongOnly <-
     function()
 { 
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
     
@@ -67,7 +67,7 @@ test.portfolioConstraints.Short <-
     function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
     
@@ -96,7 +96,7 @@ test.portfolioConstraints.boxConstraints <-
     function()
 {    
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
    
@@ -125,7 +125,7 @@ test.portfolioConstraints.boxgroupConstraints <-
     function()
 {
     # Data, Specification and Constraints:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
@@ -155,7 +155,7 @@ test.portfolioConstraints.riskBudgetsConstraints <-
     function()
 {
     # Data, Specification and Constraints:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
@@ -183,7 +183,7 @@ test.portfolioConstraints.allTypes <-
     function()
 {
     # Data, Specification and Constraints:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     

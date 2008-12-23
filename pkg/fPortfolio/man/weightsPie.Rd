@@ -125,7 +125,7 @@ tailRiskBudgetsPie(object, pos = NULL, labels = TRUE, col = NULL,
 
 \examples{
 ## data -
-   Data = as.timeSeries(data(smallcap.ts))
+   Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
 
 ## tangencyPortfolio - 

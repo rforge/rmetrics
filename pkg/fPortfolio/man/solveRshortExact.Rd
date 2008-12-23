@@ -45,7 +45,7 @@ solveRshortExact(data, spec, constraints)
 \examples{
 ## data -
    # Load Data:
-   Data = as.timeSeries(data(smallcap.ts))
+   Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    

@@ -65,7 +65,7 @@ test.portfolioFrontier <-
     #   title = NULL, description = NULL)
 
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -93,7 +93,7 @@ test.feasiblePortfolio <-
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
     # Get Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -125,7 +125,7 @@ test.feasiblePortfolio.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Get Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         print(head(data))
 
@@ -163,7 +163,7 @@ test.feasiblePortfolio.glpk <-
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
     # Get Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -196,7 +196,7 @@ test.efficientPortfolio <-
     # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
     # Load Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -228,7 +228,7 @@ test.tangencyPortfolio <-
     # tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -255,7 +255,7 @@ test.minvariancePortfolio <-
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
 
@@ -286,7 +286,7 @@ test.minvariancePortfolio.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         print(head(data))
 
@@ -316,7 +316,7 @@ test.show <-
     function()
 {
     # Load Data::
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -341,7 +341,7 @@ test.plot.RQuadprog <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
 
     # Specifications:
@@ -385,7 +385,7 @@ test.plot.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Data:
-        Data = as.timeSeries(data(smallcap.ts))
+        Data = SMALLCAP.RET
         Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
 
         # Specifications:
@@ -431,7 +431,7 @@ test.plot.Rlpglpk <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
 
     # Specifications:
@@ -472,7 +472,7 @@ test.weightsSlider <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -501,7 +501,7 @@ test.frontierSlider <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 

@@ -34,7 +34,7 @@ test.portfolioFrontier.MV.Short <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -64,7 +64,7 @@ test.portfolioFrontier.MV.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -93,7 +93,7 @@ test.portfolioFrontier.MV.LongOnly.twoAssets <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG")]
     head(data)
 
@@ -126,7 +126,7 @@ test.portfolioFrontier.MV.LongOnly.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         head(data)
 
@@ -161,7 +161,7 @@ test.portfolioFrontier.MV.LongOnly.boxGroupConstraints <-
     function()
 {
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
+    Data =SMALLCAP.RET
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)
 
@@ -205,7 +205,7 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints.Rdonlp2 <-
     if (require(Rdonlp2)) {
 
         # Data:
-        data = as.timeSeries(data(smallcap.ts))
+        data = SMALLCAP.RET
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
         head(data)
 
@@ -244,7 +244,7 @@ test.portfolioFrontier.MV.LongOnly.covRiskBudgetConstraints <-
     if (require(Rdonlp2)) {
 
         # Load Data:
-        Data = as.timeSeries(data(smallcap.ts))
+        Data = SMALLCAP.RET
         Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
         head(Data)
 
@@ -315,7 +315,7 @@ test.portfolioFrontier.CVaR.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -345,7 +345,7 @@ test.portfolioFrontier.CVaR.LongOnly.TwoAssets <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG")]
     head(data)
 

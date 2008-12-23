@@ -79,18 +79,18 @@
 ## get -
 
    # Load time series data:
-   data = as.timeSeries(data(smallcap.ts))
-   data = data[, c("BKE", "GG", "GYMB", "KRON")]
-   data
+   Data = SMALLCAP.RET
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
    
    # Create portfolio data object:
-   Data = portfolioData(data)
+   data = portfolioData(Data)
    
    # Get:
-   getData(Data)
-   getNames(Data) 
-   getMean(Data)
-   getCov(Data)
+   getData(data)
+   getNames(data) 
+   getMean(data)
+   getCov(data)
 }
 
 

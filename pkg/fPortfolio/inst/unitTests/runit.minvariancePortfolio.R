@@ -36,7 +36,7 @@ test.minvariancePortfolio.MV.Short <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -65,7 +65,7 @@ test.minvariancePortfolio.MV.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -93,7 +93,7 @@ test.minvariancePortfolio.MV.BoxConstrained <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
@@ -121,7 +121,7 @@ test.minvariancePortfolio.CVaR.LongOnly <-
     function()
 {
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 

@@ -34,7 +34,7 @@ test.frontierPoints.feasiblePortfolio <-
     function()
 {  
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
     
@@ -80,7 +80,7 @@ test.frontierPoints.portfolioFrontier <-
     function()
 {  
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     print(head(data))
     

@@ -36,7 +36,7 @@ test.feasiblePortfolio.Default <-
     function()
 {  
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
@@ -64,7 +64,7 @@ test.feasiblePortfolio.MV.RandomWeights.LongOnly <-
     function()
 {   
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
@@ -97,7 +97,7 @@ test.feasiblePortfolio.MV.Short <-
     function()
 {  
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     
@@ -126,7 +126,7 @@ test.feasiblePortfolio.CVaR.LongOnly.Alpha <-
     function()
 {   
     # Data:
-    data = as.timeSeries(data(smallcap.ts))
+    data = SMALLCAP.RET
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
     

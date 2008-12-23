@@ -45,7 +45,7 @@
    getSlots("fPFOLIOCON")   
     
 ## data -
-   data = as.timeSeries(data(smallcap.ts))
+   data = SMALLCAP.RET
 
 ## portfolioConstraints -
    spec = portfolioSpec()
