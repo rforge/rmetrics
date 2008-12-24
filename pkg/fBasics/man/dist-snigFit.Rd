@@ -102,13 +102,12 @@ snigFit(x, zeta = 1, rho = 0, scale = TRUE, doplot = TRUE,
 
 \examples{    
 ## snigFit -
-   # Simulate random variates SNIG(1, 0.3):
+   # Simulate Random Variates:
    set.seed(1953)
    s = rsnig(n = 2000, zeta = 0.7, rho = 0.5) 
 
 ## snigFit -  
    # Fit Parameters:
-   # Starting vector (1, 0):
    snigFit(s, zeta = 1, rho = 0, doplot = TRUE) 
 }
 

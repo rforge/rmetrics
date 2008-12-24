@@ -105,9 +105,6 @@ ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
     \item{steps}{
         number of function calls.
         }
-        
-    Remark: The parameter estimation for the stable distribution via the 
-    maximum Log-Likelihood approach may take a quite long time.
               
 }
 
@@ -117,21 +114,18 @@ ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
     The function \code{\link{nlm}} is used to minimize the "negative" 
     maximum log-likelihood function. \code{nlm} carries out a minimization 
     using a Newton-type algorithm.
-    \cr\cr
        
 }
 
 
 \examples{    
 ## ghFit -
-   # Simulate random variates HYP(1.5, 0.3, 0.5, -1.0):
+   # Simulate Random Variates:
    set.seed(1953)
    s = rgh(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
 
 ## ghFit -  
    # Fit Parameters:
-   # Note, this may take some time.
-   # Starting vector (1, 0, 1, mean(s)):
    ghFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 

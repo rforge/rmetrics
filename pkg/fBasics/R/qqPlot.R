@@ -30,13 +30,13 @@
 # FUNCTION:                 TAILORED QUANTILE PLOTS:
 #  qqnormPlot               Returns a tailored normal quantile-quantile plot
 #  qqnigPlot                Returns a tailored NIG quantile-quantile plot
-#  qqghtPlot                Returns a tailored GHT quantile-quantile plot
+#  qqghtPlot               Returns a tailored GHT quantile-quantile plot
 ################################################################################
 
 
 qqnormPlot <-
-    function(x, labels = TRUE, col = "steelblue",
-    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
+    function(x, labels = TRUE, col = "steelblue", pch = 19, 
+    title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -46,7 +46,7 @@ qqnormPlot <-
     #   first).
 
     # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries'
+    #   x - an univariate return series of class 'timeSeries'
     #       or any other object which can be transformed by the function
     #       'as.timeSeries()' into an object of class 'timeSeries'.
 
@@ -75,133 +75,71 @@ qqnormPlot <-
 
     # FUNCTION:
 
-    # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    DIM = dim(as.matrix(x))[2]
-    Main = x@units
-    if (length(col) == 1) col = rep(col, times = DIM)
-
-    # QQ Plots:
-    X = x
-    for (i in 1:DIM) {
-
-        # Settings:
-        mydata = as.vector(X[, i])
-        n = length(mydata)
-        p = (1:n)/(n+1)
-        if (scale) x = (mydata-mean(mydata))/sqrt(var(mydata)) else x = mydata
-        x = sort(x)
-        if (scale) z = z = qnorm(p) else z = qnorm(p, mean(x), sd(x))
-
-        # Plot:
-        plot(z, x, col = col[i], ann = FALSE, ...)
-
-        if (title) {
-            main = Main[i]
-            xlab = "Normal Quantiles"
-            ylab = paste(Main[i], "Ordered Data")
-            title(main = main, xlab = xlab, ylab = ylab)
-            Text = "Confidence Intervals: 95%"
-            mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-        }
-
-        if (grid) {
-            grid()
-        }
-
-        # Add Diagonal Line:
-        abline(0, 1, col = "grey")
-
-        # Add Rugs:
-        if(rug) {
-            rug(z, ticksize = 0.01, side = 1, quiet = TRUE)
-            rug(x, ticksize = 0.01, side = 2, quiet = TRUE)
-        }
-
-        # 95% Confidence Intervals:
-        s = 1.96*sqrt(p*(1-p)/n)
-        pl = p-s
-        i = pl<1&pl>0
-        lower = quantile(x, probs = pl[i])
-        lines(z[i], lower, col = "brown")
-        pl = p+s
-        i = pl < 1 & pl > 0
-        upper = quantile(x, probs = pl[i])
-        lines(z[i], upper, col = "brown")
-        abline (h = mean(x), col = "grey")
-        abline(v = mean(x), col = "grey")
-    }
-
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-qqnigPlot <-
-    function(x, labels = TRUE, col = "steelblue",
-    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays a NIG quantile-quantile Plot
-
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries'
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-
-    # Example:
-    #   qqnigPlot(rnig(100))
-
-    # FUNCTION:
-
     # Settings:
-    if (!is.timeSeries(x)) {
-        x = as.timeSeries(x)
-        stopifnot(isUnivariate(x))
-        Main = x@units
-    }
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    Units = x@units
     x = as.vector(x)
+    n = length(x)
 
     # Fit:
-    fit = nigFit(x, doplot = FALSE)
-    par = fit@fit$estimate
-    names(par) = c("alpha", "beta", "delta", "mu")
+    p = (1:n)/(n+1)
+    if (scale) x = (x-mean(x))/sqrt(var(x))
+    par = c(mean = mean(x), var = var(x))
+    
+    # Quantiles:
+    x = sort(x)
+    p = ppoints(x)
+    if (scale) z = qnorm(p) else z = qnorm(p, mean(x), sd(x))
 
     # Plot:
-    x = qnig(ppoints(x), par[1], par[2], par[3], par[4])
-    z = sort(x)
     if (labels) {
-        main = "NIG QQ Plot"
-        xlab = "Theoretical Quantiles"
-        ylab = "Sample Quantiles"
-        plot(z, x, main = main, xlab = xlab, ylab = ylab,
-            pch = 19, col = "steelblue")
-        if (grid) grid()
-        rpar = signif(par, 3)
-        text = paste(
-            "alpha =", rpar[1],
-            "| beta =", rpar[2],
-            "| delta =", rpar[3],
-            "| mu =", rpar[4])
-        mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+        xlab = "Normal Quantiles"
+        ylab = paste(Units, "Ordered Data")
+        plot(z, x, xlab = xlab, ylab = ylab, 
+            col = col, pch = 19, ...)
     } else {
         plot(z, x, ...)
     }
+      
+    # Title:
+    if(title) {
+        title(main = "NORM QQ PLOT")
+    } 
+            
+    # Margin Text:
+    if (mtext) {
+        Text = "Confidence Intervals: 95%"
+        mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
+    }
+    
+    # Grid:
+    if (grid) {
+        grid()
+    }
 
-    # Add Fit:
-    abline(lsfit(z, x))
+    # Add Diagonal Line:
+    abline(0, 1, col = "grey")
 
     # Add Rugs:
-    if(rug) rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
-    if(rug) rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
+    if(rug) {
+        rug(z, ticksize = 0.01, side = 1, quiet = TRUE)
+        rug(x, ticksize = 0.01, side = 2, quiet = TRUE)
+    }
+
+    # 95% Confidence Intervals:
+    s = 1.96*sqrt(p*(1-p)/n)
+    pl = p-s
+    i = pl<1 & pl>0
+    lower = quantile(x, probs = pl[i])
+    lines(z[i], lower, col = "brown")
+    pl = p+s
+    i = pl < 1 & pl > 0
+    upper = quantile(x, probs = pl[i])
+    lines(z[i], upper, col = "brown")
+    abline(h = mean(x), col = "grey")
+    abline(v = mean(x), col = "grey")
 
     # Result:
-    # .DEBUG <<-fit
     ans = list(x = z, y = x)
     attr(ans, "control")<-par
 
@@ -213,9 +151,9 @@ qqnigPlot <-
 # ------------------------------------------------------------------------------
 
 
-qqghtPlot <-
-    function(x, labels = TRUE, col = "steelblue",
-    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
+qqnigPlot <-
+    function(x, labels = TRUE, col = "steelblue", pch = 19, 
+    title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -223,7 +161,7 @@ qqghtPlot <-
     #   Displays a NIG quantile-quantile Plot
 
     # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries'
+    #   x - an univariate return series of class 'timeSeries'
     #       or any other object which can be transformed by the function
     #       'as.timeSeries()' into an object of class 'timeSeries'.
 
@@ -233,21 +171,104 @@ qqghtPlot <-
     # FUNCTION:
 
     # Settings:
-    if (!is.timeSeries(x)) {
-        x = as.timeSeries(x)
-        stopifnot(isUnivariate(x))
-        Units = x@units
-    }
-    X = as.vector(x)
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    stopifnot(isUnivariate(x))
+    Units = x@units
+    x = as.vector(x)
+    n = length(x)
 
     # Fit:
-    fit = ghtFit(X, doplot = FALSE, scale = FALSE) # CHECK SCALE !!!
+    fit = nigFit(x, doplot = FALSE, trace = FALSE)
+    par = fit@fit$estimate
+    names(par) = c("alpha", "beta", "delta", "mu")
+
+    # Quantiles:
+    x = sort(x)
+    p = ppoints(x)
+    z = qnig(p, par[1], par[2], par[3], par[4])
+        
+    # Plot:
+    if (labels) {
+        xlab = "Theoretical Quantiles"
+        ylab = "Sample Quantiles"
+        plot(z, x, xlab = xlab, ylab = ylab, col = col, pch = pch, ...)  
+    } else {
+        plot(z, x, ...)
+    }
+    
+    # Title:
+    if (title) {
+        title(main = "NIG QQ Plot")
+    }
+    
+    # Margin Text:
+    rpar = signif(par, 3)
+    text = paste(
+        "alpha =", rpar[1],
+        "| beta =", rpar[2],
+        "| delta =", rpar[3],
+        "| mu =", rpar[4])
+    mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Grid:
+    if (grid) {
+        grid()
+    }
+
+    # Add Fit:
+    abline(lsfit(z, x))
+
+    # Add Rugs:
+    if(rug) {
+        rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
+        rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
+    }
+    
+    # Result:
+    ans = list(x = z, y = x)
+    attr(ans, "control") <- par
+
+    # Return Value:
+    invisible(ans)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+qqghtPlot <-
+    function(x, labels = TRUE, col = "steelblue", pch = 19,
+    title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays a GHT quantile-quantile Plot
+
+    # Arguments:
+    #   x - an univariate return series of class 'timeSeries'
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+
+    # Example:
+    #   qqnigPlot(rgh(100))
+
+    # FUNCTION:
+
+    # Settings:
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    stopifnot(isUnivariate(x))
+    Units = x@units
+    x = as.vector(x)
+    n = length(x)
+
+    # Fit:
+    fit = ghtFit(x, doplot = FALSE)  
     par = fit@fit$estimate
     names(par) = c("beta", "delta", "mu", "nu")
 
     # Plot:
-    # QGHT IS MISSING !!!
-    x = qght(ppoints(X), par[1], par[2], par[3], par[4])
+    x = qght(ppoints(x), par[1], par[2], par[3], par[4])
     z = sort(x)
 
     if (labels) {
@@ -263,8 +284,10 @@ qqghtPlot <-
 
     # Add title:
     if (title) {
-        title(main = "GHT QQ Plot",
-            xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
+        title(
+            main = "GHT QQ Plot",
+            xlab = "Theoretical Quantiles", 
+            ylab = "Sample Quantiles")
     }
 
 

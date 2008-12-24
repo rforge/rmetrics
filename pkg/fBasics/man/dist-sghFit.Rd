@@ -109,13 +109,12 @@ sghFit(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
 
 \examples{    
 ## sghFit -
-   # Simulate random variates SGH(0.7, 0.5, 0):
+   # Simulate Random Variates:
    set.seed(1953)
    s = rsgh(n = 2000, zeta = 0.7, rho = 0.5, lambda = 0) 
 
 ## sghFit -  
    # Fit Parameters:
-   # Starting vector (1, 0, 1):
    sghFit(s, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE, 
      doplot = TRUE) 
 }

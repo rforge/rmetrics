@@ -115,23 +115,18 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     \item{steps}{
         number of function calls.
         }
-        
-    Remark: The parameter estimation for the stable distribution via the 
-    maximum Log-Likelihood approach may take a quite long time.
               
 }
 
 
 \examples{    
 ## nigFit -
-   # Simulate random variates NIG(1.5, 0.3, 0.5, -1.0):
+   # Simulate Random Variates:
    set.seed(1953)
    s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
 
 ## nigFit -  
    # Fit Parameters:
-   # Note, this may take some time.
-   # Starting vector (1, 0, 1, mean(s)):
    nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 

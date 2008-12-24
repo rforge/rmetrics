@@ -4,6 +4,7 @@
 \alias{dght}
 \alias{pght}
 \alias{qght}
+\alias{rght}
 
 
 \title{Generalized Hyperbolic Student-t}
@@ -18,15 +19,25 @@
 
 
 \usage{
-dght(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
-pght(q, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
-qght(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
+dght(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
+pght(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
+qght(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
+rght(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
 }
 
 
 \arguments{
 
 
+    \item{x, q}{
+        a numeric vector of quantiles.
+        }
+    \item{p}{
+        a numeric vector of probabilities.
+        }
+    \item{n}{
+        number of observations.
+        }
     \item{beta, delta, mu}{
         skewness parameter \code{beta}, \code{abs(beta)} is in the 
         range (0, alpha);
@@ -35,22 +46,16 @@ qght(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
         location parameter \code{mu}, by default 0.
         These are the parameters in the first parameterization.
         }
-    \item{log}{
-        a logical flag by default \code{FALSE}. 
-        Should labels and a main title drawn to the plot?
-        }
     \item{nu}{
         a numeric value, the number of degrees of freedom.
         }
-    \item{p}{
-        a numeric vector of probabilities.
-        }
-    \item{x, q}{
-        a numeric vector of quantiles.
-        }
-    \item{\dots}{
-        arguments to be passed.
-        }
+    %\item{log}{
+    %    a logical flag by default \code{FALSE}. 
+    %    Should labels and a main title drawn to the plot?
+    %    }
+    %\item{\dots}{
+    %    arguments to be passed.
+    %    }
     
 }
 

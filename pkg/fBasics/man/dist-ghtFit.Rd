@@ -12,14 +12,14 @@
 
 \description{
 
-    Estimates the distrinbutional parameters for a 
+    Estimates the distributional parameters for a 
     generalized hyperbolic Student-t distribution.
 
 }
 
 
 \usage{ 
-ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, 
+ghtFit(x, beta = 0.1, delta = 1, mu = 0, nu = 10, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
 }
@@ -109,9 +109,6 @@ ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10,
     \item{steps}{
         number of function calls.
         }
-        
-    Remark: The parameter estimation for the stable distribution via the 
-    maximum Log-Likelihood approach may take a quite long time.
               
 }
 
@@ -127,7 +124,11 @@ ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10,
 
 \examples{    
 ## ghtFit -
-   # ...
+   # Simulate Random Variates:
+   set.seed(1953)
+   
+## ghtFit -  
+   # Fit Parameters:
 }
 
 

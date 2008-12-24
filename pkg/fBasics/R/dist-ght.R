@@ -28,40 +28,31 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  dght                  Hyperbolic Distribution - Skew Symmetric Student-t
+#  dght                  Density of the generalized hyperbolic Student-t 
+#  pght                  Probability of the GHT
+#  dght                  Quantiles of the GHT
+#  rght                  Random variates of the GHT
 ################################################################################
 
 
 dght <-
-function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
+function(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns density of generalized hyperbolic Student-t
+    #   Returns density of the generalized hyperbolic Student-t
 
     # Arguments:
 
-    # Details:
-    #   Hyperbolic Distribution - Skew Symmaetric Student-t:
-    #   dght(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
+    # Example:
+    #   x = (-5):5; dght(x)
 
     # FUNCTION:
 
     # Density:
-    D = sqrt( delta^2 + (x-mu)^2 )
-    A1 = ((1-nu)/2) * log(2)
-    A2 = nu * log(delta)
-    A3 = ((nu+1)/2) * log(abs(beta))
-    A4 = log(besselK(abs(beta)*D, (nu+1)/2, expon.scaled = TRUE)) - abs(beta)*D
-    A5 = beta*(x-mu)
-    B1 = lgamma(nu/2)
-    B2 = log(sqrt(pi))
-    B3 = ((nu+1)/2) * log(D)
-
-    # Log:
-    ans = (A1 + A2 + A3 + A4 + A5) - (B1 + B2 + B3)
-    if (!log) ans = exp(ans)
+    ans = dgh(x, alpha = abs(beta) + 1e-6, beta, delta, mu, lambda = -nu/2, 
+        log = FALSE)
 
     # Return Value:
     ans
@@ -72,14 +63,17 @@ function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
 
 
 pght <-
-    function(q, beta = 1e-6, delta = 1, mu = 0, nu = 10, ...)
+    function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns probabilities of generalized hyperbolic Student-t
+    #   Returns probabilities of the generalized hyperbolic Student-t
 
     # Arguments:
+    
+    # Example:
+    #   q = (-5):5; pght(q)
 
     # FUNCTION:
 
@@ -87,7 +81,7 @@ pght <-
     ans = NULL
     for (Q in q) {
         Integral = integrate(dght, -Inf, Q, stop.on.error = FALSE,
-            beta = beta, delta = delta, mu = mu, nu = nu, ...)
+            beta = beta, delta = delta, mu = mu, nu = nu)
         ans = c(ans, as.numeric(unlist(Integral)[1]) )
     }
 
@@ -100,22 +94,24 @@ pght <-
 
 
 qght <-
-    function(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, ...)
+    function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns quanbtiles of generalized hyperbolic Student-t
+    #   Returns quantiles of the generalized hyperbolic Student-t
 
     # Arguments:
+    
+    # Example:
+    #   p = (1:9)/10; qght(p); round(pght(qght(p)), digits = 4)
 
     # FUNCTION:
 
     # Internal Functions:
-    .froot <-
-    function(x, beta = beta, delta = delta, mu = mu, nu = nu, p)
+    .froot <- function(x, beta = beta, delta = delta, mu = mu, nu = nu, p) 
     {
-        phyp(q = x, beta = beta, delta = delta, mu = mu, nu = nu,) - p
+        pght(q = x, beta = beta, delta = delta, mu = mu, nu = nu) - p
     }
 
     # Loop over all p's:
@@ -126,11 +122,12 @@ qght <-
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA(f = .froot, interval = c(lower, upper),
-                beta = beta, delta = delta, mu = mu, nu = nu,, p = pp, ...)
+            iteration = fBasics:::.unirootNA(f = .froot, interval = c(lower, 
+                upper), beta = beta, delta = delta, mu = mu, 
+                nu = nu, p = pp)
             counter = counter + 1
-            lower = lower-2^counter
-            upper = upper+2^counter
+            lower = lower - 2^counter
+            upper = upper + 2^counter
         }
         result = c(result, iteration)
     }
@@ -144,8 +141,8 @@ qght <-
 # ------------------------------------------------------------------------------
 
 
-.rght =
-function(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, ...)
+rght <- 
+function(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -153,14 +150,18 @@ function(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, ...)
     #   Returns random Variates of generalized hyperbolic Student-t
 
     # Arguments:
+    
+    # Example:
+    #   r = rght(10)
 
     # FUNCTION:
 
     # Random Variates:
-    # ... to do
+    x = rgh(n, alpha = abs(beta) + 1e-6, beta = beta, delta = delta, mu = mu, 
+        lambda = -nu/2) 
 
     # Return Value:
-    NA
+    x
 }
 
 
