@@ -53,7 +53,7 @@ colorTable <-
         xlab = '', ylab = '', cex = cex, main = "Table of Color Codes")
     ## DW
     ## j = -1
-    j = -2 here I have shifted the plot to the left ... DW
+    j = -2 ## here I have shifted the plot to the left ... DW
     for(i in 0:99) {
         if(i %% 10 == 0) {j = j+1; k = 10}
         k = k-1
