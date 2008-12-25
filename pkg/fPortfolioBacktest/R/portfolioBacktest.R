@@ -1,10 +1,38 @@
-################################################################################
-# FUNCTION:               			DESCRIPTION:
-#  portfolioBacktest    	 		Returns an object of class fPFOLIOBACKTEST
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
 #
-#  portfolioBacktesting     		Performs a portfolio bactest
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port:
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# FUNCTION:               	   DESCRIPTION:
+#  portfolioBacktest    	 	Returns an object of class fPFOLIOBACKTEST
+#  portfolioBacktesting     	Performs a portfolio bactest
 #  portfolioSmoothing       	Smoothes the weights of a portfolio backtest
 ################################################################################
+
 
 portfolioBacktest <-
 function(
@@ -24,6 +52,10 @@ function(
             initialWeights = NULL)),
     messages = list() )
 {
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # FUNCTION:
+    	
     # Description:
     #   Specifies a portfolio to be optimized from scratch
 
@@ -60,8 +92,16 @@ function(
 
 
 portfolioBacktesting <-
-    function(formula, data, spec = portfolioSpec(), constraints = "LongOnly", backtest = portfolioBacktest())
+    function(
+        formula, 
+        data, 
+        spec = portfolioSpec(), 
+        constraints = "LongOnly", 
+        backtest = portfolioBacktest(),
+        trace = TRUE)
 {
+    # A function implemented by William Chen and Diethelm Wuertz
+    
     # Description:
     #   Backtests a portfolio on rolling windows
    
@@ -82,8 +122,6 @@ portfolioBacktesting <-
    
     # FUNCTION:
    
-    trace = TRUE
-   
     # Formula, Benchmark and Asset Labels:
     benchmarkName = as.character(formula)[2]
     assetsNames = strsplit(gsub(" ", "", as.character(formula)[3]), "\\+")[[1]]
@@ -91,24 +129,17 @@ portfolioBacktesting <-
    
     # Trace the Specifications and Data Info:
     if(trace) {
-   
         cat("\nPortfolio Backtesting:\n")
-       
         cat("\nAssets:             ", assetsNames)
         cat("\nBenchmark:          ", benchmarkName)
-       
         cat("\nStart Series:       ", as.character(start(data)))
         cat("\nEnd Series:         ", as.character(end(data)))
-       
         cat("\n  Type:             ", getType(spec))
         cat("\n  Cov Estimator:    ", getEstimator(spec))
         cat("\n  Solver:           ", getSolver(spec))
-       
         cat("\nPortfolio Windows:  ", getWindowsFun(backtest))
         cat("\n  Horizon:          ", getWindowsHorizon(backtest))
-       
         cat("\nPortfolio Strategy: ", getStrategyFun(backtest))
-       
         cat("\nPortfolio Smoother: ", getSmootherFun(backtest))
         cat("\n  doubleSmoothing:  ", getSmootherDoubleSmoothing(backtest))
         cat("\n  Lambda:           ", getSmootherLambda(backtest))
@@ -145,24 +176,18 @@ portfolioBacktesting <-
    
         # Trace Optionally the Results:
         if (trace) {
-
             cat(as.character(from[i]), as.character(to[i]))
-
             spReturn = as.vector(getTargetReturn(strategy))
             cat("\t", round(spReturn[1], digits = 3))
-
             bmReturn = mean(series(bmSeries))
             cat("\t", round(bmReturn, digits = 3))
-
             nAssets = length(assetsNames)
             weights = round(getWeights(strategy), digits = 3)
             cat("\t")
             for (i in 1:length(assetsNames)) cat("\t", weights[i])         
             cat("\t  * ", round(sum(weights), 2))
-
             cat("\n")
-        }
-       
+        }  
     }
    
     # Extract Portfolio Investment Weights for the current period:
@@ -179,13 +204,10 @@ portfolioBacktesting <-
         spec = spec,
         constraints = constraints,
         backtest = backtest,
-       
         benchmarkName = benchmarkName,
         assetsNames = assetsNames,
         weights = weights,
-       
-        strategyList = strategyList,
-        
+        strategyList = strategyList, 
         Sigma = Sigma)
    
     # Return Value:
@@ -196,8 +218,10 @@ portfolioBacktesting <-
 
 
 portfolioSmoothing <-
-function(object, backtest)
+function(object, backtest, trace = TRUE)
 {
+    # A function implemented by William Chen and Diethelm Wuertz
+    
     # Description:
     #   Flexible Weights Smoother Function
    
@@ -225,12 +249,12 @@ function(object, backtest)
     nAssets = ncol(weights)
    
     # Add Smooth weights to Backtest object:
-    print("smooth ...")
+    if (trace) print("smooth ...")
     smoother = match.fun(getSmootherFun(backtest))
     smoothWeights = object$smoothWeights = smoother(weights, spec, backtest)
    
     # Compute Monthly Assets and Benchmark Returns:
-    print("aggregate ...")
+    if (trace) print("aggregate ...")
     ow <- options("warn")
     options(warn = -1)
     monthlyAssets = object$monthlyAssets =
@@ -240,7 +264,7 @@ function(object, backtest)
     options(ow)   
        
     # Compute Offset Return of Rolling Portfolio compared to Benchmark:
-    print("offset ...")
+    if (trace) print("offset ...")
     cumX = colCumsums(data[, benchmarkName])
     lastX <- window(cumX, start = start(cumX), end = rownames(weights)[1] )
     offsetReturn = as.vector(lastX[end(lastX),])
@@ -271,14 +295,15 @@ function(object, backtest)
     portfolio = portfolio - portfolio[1] + Daily[1]
     benchmark = benchmark - benchmark[1] + Daily[1]
    
-# Do Plot:
-#ylim = range(c(as.vector(benchmark), as.vector(portfolio), as.vector(daily)))
-#plot(daily, type = "l", ylim = ylim)
-#
-#lines(benchmark, lwd = 2, col = "blue")
-#lines(portfolio, lwd = 2, col = "red")
-   # points(benchmark, lwd = 2, pch = 19, col = "blue")
-#    points(portfolio, lwd = 2, pch = 19, col = "red")
+    # Do Plot:
+    # ylim = range(c(as.vector(benchmark), as.vector(portfolio), 
+    #   as.vector(daily)))
+    # plot(daily, type = "l", ylim = ylim)
+    #
+    # lines(benchmark, lwd = 2, col = "blue")
+    # lines(portfolio, lwd = 2, col = "red")
+    # points(benchmark, lwd = 2, pch = 19, col = "blue")
+    # points(portfolio, lwd = 2, pch = 19, col = "red")
    
     # Add to backtest:
     object$portfolio = portfolio
@@ -301,13 +326,15 @@ function(object, backtest)
         "Maximum Loss")
     object$stats = Stats
    
-  # Annual Lines:
-#    YYYY = as.character(1990:2010)
-#    for (year in YYYY)
-#        abline(v = as.POSIXct(paste(year, "-01-01", sep ="")), col = "green")
+    # Annual Lines:
+    # YYYY = as.character(1990:2010)
+    # for (year in YYYY)
+    #   abline(v = as.POSIXct(paste(year, "-01-01", sep ="")), col = "green")
    
     # Return Value:
     object
 } 
 
+
 ################################################################################
+

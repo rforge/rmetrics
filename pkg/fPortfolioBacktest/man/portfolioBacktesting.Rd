@@ -17,7 +17,7 @@
 
 \usage{  
 portfolioBacktesting(formula, data, spec = portfolioSpec(), 
-    		     constraints = "LongOnly", backtest = portfolioBacktest())
+    constraints = "LongOnly", backtest = portfolioBacktest(), trace = TRUE)
 
 portfolioSmoothing(object, backtest)    
 }
@@ -47,5 +47,8 @@ portfolioSmoothing(object, backtest)
         }  
     \item{object}{
         a list as returned by the function \code{portfolioBacktesting}.
+        }
+    \item{trace}{
+        a logical flag, by default TRUE. Should the backtersting be traced?
         }
 }

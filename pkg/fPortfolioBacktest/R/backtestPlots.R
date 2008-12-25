@@ -1,15 +1,42 @@
 
-################################################################################
-# PLOT FUNCTIONS:				DESCRIPTION:
-#	 backtestPlots					Wrapper function which plots all 6 sub plots listed below
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
 #
-#   backtestAssetsPlot     		Plots assets used in a portfolio backtest   
-#   backtestWeightsPlot    		Plots recommended weights from a portfolio backtest
-#   backtestRebalancePlot   	Plots rebalanced weights of a portfolio backtest 
-#   backtestPortfolioPlot   		Plots benchmark and portfolio series from a backtest
-#   backtestDrawdownPlot    Plots the drawdown of the portfolio backtest
-#   backtestReportPlot			Prints backtest report
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port:
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
 ################################################################################
+# FUNCTION:				      DESCRIPTION:
+#  backtestPlots			   Plots all 6 sub plots listed below
+#   backtestAssetsPlot     	   Plots assets used in a portfolio backtest   
+#   backtestWeightsPlot    	   Plots recommended weights from a backtest
+#   backtestRebalancePlot      Plots rebalanced weights of a backtest 
+#   backtestPortfolioPlot      Plots benchmark and portfolio series
+#   backtestDrawdownPlot       Plots the drawdown of the portfolio backtest
+#   backtestReportPlot		   Prints backtest report
+################################################################################
+
 
 backtestPlots <-
     function(object, which = "all", labels = TRUE, ...)
@@ -43,6 +70,7 @@ backtestPlots <-
     # Return Value:
     invisible()
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -186,8 +214,7 @@ backtestWeightsPlot <-
         mtext(text, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
     }
-   
-   
+      
     # Annual Lines:
     YYYY = as.character(1990:2010)
     for (year in YYYY) abline(
@@ -270,12 +297,10 @@ backtestRebalancePlot <-
         mtext(text, line = 0.5, cex = 0.7)
         grid(NA, ny = NULL)
     }
-    
-     # WC: 
-     # mText:
+     
+    # Margin Text:
     mText = paste("Start:", rownames(object$smoothWeights)[1])
     mtext(mText, side = 4, line = 0, adj = 0, col = "darkgrey", cex = 0.65)
-
    
     # Annual Lines:
     YYYY = as.character(1990:2010)
@@ -378,7 +403,9 @@ backtestPortfolioPlot <-
     invisible()
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 backtestDrawdownPlot = 
 	function(object, labels = TRUE, ...)
@@ -394,44 +421,45 @@ backtestDrawdownPlot =
 
     # FUNCTION:
 	
-	# Settings:
-    #Data = .align.timeSeries(object$data/100)
-    Data = object$data/100
+	# Align Data:
+    Data = .align.timeSeries(object$data)/100
+    
+    # Settings:
     assets = object$assetsNames
     benchmark = object$benchmarkName
     horizon = getWindowsHorizon(object$backtest)
     smoothing = getSmootherLambda(object$backtest)
     startup = getSmootherInitialWeights(object$backtest)
-    
     weights = as.timeSeries(object$smoothWeights)
     
-   	# extract the time stamps
+   	# Extract the Time Stamps:
 	tS = time(Data)
 	tW = time(weights)
 		
-	# Problem when rebalance day lands on a Weekend - need to change the date to 
-	# the nearest Monday
+	# Problem when rebalance day lands on a Weekend - 
+	#   need to change the date to the nearest Monday
 	if (any(isWeekend(tW))){
-			weekend.tW = tW[isWeekend(tW)]
-			
-			# WC: check timeNdayOnOrAfter function, the nday = 2 is a Monday!???
-			tW = sort(c(tW[!isWeekend(tW)], timeNdayOnOrAfter(weekend.tW, 2)))
-			# replace old times with new times
-			time(weights) = tW
+        weekend.tW = tW[isWeekend(tW)]
+        
+        # WC: check timeNdayOnOrAfter function, the nday = 2 is a Monday!???
+        tW = sort(c(tW[!isWeekend(tW)], timeNdayOnOrAfter(weekend.tW, 2)))
+        # replace old times with new times
+        time(weights) = tW
 	}
 			
-	# extract the updated revalance dates	
+	# Extract the Updated Revalance Dates:	
 	Dates = time(weights)
 	
-	# Subsetting the data:
+	# Subsetting the Data:
     data = window(Data, start(weights), end(weights))
     
-	# check whether we have data past the last balance date
+	# Check whether we have data past the last balance date
 	# i.e. last balance date won't take place if we don't have the return series
-
-	if (end(data)<end(weights)){ n = length(Dates)-1 
+	if (end(data) < end(weights)){ 
+	    n = length(Dates)-1 
 	} else {n = length(Dates)
-			Dates = c(Dates, end(data))}
+        Dates = c(Dates, end(data))
+	}
 
 	# Calculate the portfolio returns for the given weights:
 	# assume we start investing the new weights on the rebalance date
@@ -445,9 +473,8 @@ backtestDrawdownPlot =
 		pf = c(pf, pfolioReturn(temp, as.numeric(weights[i,])))
 	}
 	
-	# Drawdown Plot settings:
+	# Drawdown Plot Settings:
 	stopifnot(length(pf) == length(rownames(data)))
-	
 	pf = as.timeSeries(pf, charvec = rownames(data))
 	pf.DD = drawdowns(pf)
 	benchmark.DD = drawdowns(data[,benchmark]) 
@@ -457,8 +484,9 @@ backtestDrawdownPlot =
     limX = c(as.POSIXct(start(X)), as.POSIXct(end(X)))
 
 	# Plot:
-	plot(time(benchmark.DD), benchmark.DD, type = "l", col = "blue", xlim = limX, 
-				ylim = range(c(pf.DD, benchmark.DD)), lwd = 2, ann = FALSE)#, ...)
+	plot(time(benchmark.DD), benchmark.DD, type = "l", col = "blue", 
+	    xlim = limX, ylim = range(c(pf.DD, benchmark.DD)), lwd = 2, 
+	    ann = FALSE) #, ...)
 	lines(pf.DD, col = "red", lwd = 2)
 	
 	 # Labels ?
@@ -470,7 +498,7 @@ backtestDrawdownPlot =
         main = ""
     }
 	
-	# Add Labels
+	# Add Labels:
     if(labels) {
         title(main = main, ylab = ylab)
 		text = paste("(Max)", "Portfolio DD =", round(min(pf.DD),2),
@@ -479,14 +507,13 @@ backtestDrawdownPlot =
         #grid(NA, ny = NULL)
     }
     
-      # Annual Lines:
+    # Annual Lines:
     YYYY = as.character(1990:2010)
     for (year in YYYY) abline(
         v = as.POSIXct(paste(year, "-01-01", sep ="")),
         lty = 3,
         col = "brown")
-    
-   
+       
     # Return Value:
     invisible()
 }
@@ -494,64 +521,56 @@ backtestDrawdownPlot =
 
 # ------------------------------------------------------------------------------
 
+
 backtestReportPlot <-
 	function(object, ...)
-{
-      # Text size:
-      cex.size = 0.70
+{    
+    plot.new()
+    plot.window(xlim = c(0,1), ylim = c(0,1))
       
-        plot.new()
-        plot.window(xlim = c(0,1), ylim = c(0,1))
-      
-      # vertical adjustment
-        z = -2
+    # Vertical Adjustment:
+    z = -2
         
-        TEXT = paste("Strategy:", getStrategyFun(object$backtest))
-        mtext(TEXT, side = 3, line =  z + 3, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-            
-        TEXT =  capture.output(round(object$stats, 2))
-        mtext(TEXT[1], side = 3, line =  z + 2, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[2], side = 3, line =  z + 1, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[3], side = 3, line =  z + 0, adj = 0, cex = cex.size, 
-            font = 3, family = "mono") 
-        mtext(TEXT[4], side = 3, line = z + -1, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[5], side = 3, line = z + -2, adj = 0, cex = cex.size, 
-            font = 3, family = "mono") 
-            
-        TEXT = capture.output(object$spec)[c(2,3,4,5,8)]
-        mtext("Portfolio Specification:", side = 3, line = z + -4, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-            
-        if (length(grep("CVaR",TEXT[2]))!=0) TEXT[2] = gsub("CVaR", paste("CVaR |", getAlpha(object$spec)), TEXT[2])
-           
-        mtext(TEXT[2], side = 3, line = z + -5, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[3], side = 3, line = z + -6, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[4], side = 3, line = z + -7, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        mtext(TEXT[5], side = 3, line = z + -8, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-      
-        TEXT = capture.output(object$constraints)[1]      
-        mtext("Constraints:", side = 3, line = z + -10, adj = 0, cex = cex.size, 
-            font = 3, family = "mono")
-        TEXT = substr(TEXT[1], 4, 99)   
-        mtext(TEXT, side = 3, line = z + -11, adj = 0, 
-            cex = cex.size, font = 3, family = "mono")
+    TEXT = paste("Strategy:", getStrategyFun(object$backtest))
+    mtext(TEXT, side = 3, line =  z + 3, adj = 0, ...)
         
- 		# Model parameters:
-#       	mtext("Initial Weights:", side = 3, line = z + -13, adj = 0, cex = 0.65,  font = 3, family = "mono")
-#       	if (!is.null(getSmootherInitialWeights(object$backtest)))
-#       	mtext(paste("\t", paste(try(round(getSmootherInitialWeights(object$backtest), 2), silent = TRUE),collapse = " "), sep = ""), 
-#       					side = 3, line = z + -14, adj = 0, cex = 0.65,  font = 3, family = "mono")
+    TEXT =  capture.output(round(object$stats, 2))
+    mtext(TEXT[1], side = 3, line =  z + 2, adj = 0, ...)
+    mtext(TEXT[2], side = 3, line =  z + 1, adj = 0, ...)
+    mtext(TEXT[3], side = 3, line =  z + 0, adj = 0, ...) 
+    mtext(TEXT[4], side = 3, line = z + -1, adj = 0, ...)
+    mtext(TEXT[5], side = 3, line = z + -2, adj = 0, ...) 
+        
+    TEXT = capture.output(object$spec)[c(2,3,4,5,8)]
+    mtext("Portfolio Specification:", side = 3, line = z + -4, adj = 0, ...)
+        
+    if (length(grep("CVaR",TEXT[2]))!=0) TEXT[2] = 
+        gsub("CVaR", paste("CVaR |", getAlpha(object$spec)), TEXT[2])
+       
+    mtext(TEXT[2], side = 3, line = z + -5, adj = 0, ...)
+    mtext(TEXT[3], side = 3, line = z + -6, adj = 0, ...)
+    mtext(TEXT[4], side = 3, line = z + -7, adj = 0, ...)
+    mtext(TEXT[5], side = 3, line = z + -8, adj = 0, ...)
+  
+    TEXT = capture.output(object$constraints)[1]      
+    mtext("Constraints:", side = 3, line = z + -10, adj = 0, ...)
+    TEXT = substr(TEXT[1], 4, 99)   
+    mtext(TEXT, side = 3, line = z + -11, adj = 0, ...)
+        
+    # Model parameters:
+    #   mtext("Initial Weights:", side = 3, line = z + -13, 
+    #       adj = 0, cex = 0.65,  font = 3, family = "mono")
+    #   if (!is.null(getSmootherInitialWeights(object$backtest)))
+    #   mtext(paste("\t", 
+    #       paste(try(round(getSmootherInitialWeights(object$backtest), 2), 
+    #       silent = TRUE),collapse = " "), sep = ""), 
+    #       side = 3, line = z + -14, adj = 0, cex = 0.65,  font = 3, 
+    #       family = "mono")
        					
- 	#return value:
+ 	# Return Value:
  	invisible()
  }
 
-# ------------------------------------------------------------------------------
+
+################################################################################
+

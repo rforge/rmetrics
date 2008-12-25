@@ -24,48 +24,64 @@
 
 
 ################################################################################
-# FUNCTION:                    		 				WINDOWS SLOT:
-#	setWindowsFun<-								Sets the rolling windows function
-#  setWindowsParams<-							Sets the additional parameters to windows function
-#	setWindowsHorizon<-							Sets the horizon of the rolling window
-# FUNCTION:                     						STRATEGY SLOT:
-#  setStrategyFun<-         							Sets the portfolio strategy function	
-#  setStrategyParams<-							Sets the additional parameters to strategy function
-# FUNCTION:                     						SMOOTHER SLOT:
-#  setSmootherFun<-								Sets the smoothing function
-#  setSmootherParams<-							Sets the additional parameters to smoother function
-#  setSmootherLambda<-							Sets the lambda for EMA smoothing
-#  setSmootherDoubleSmoothing<-			Sets the double ema setting, logical
-#  setSmootherInitialWeights<- 				Sets the initial weights of the portfolio
-#  setSmootherSkip<-								Sets the number of months to skip starting
-
+# FUNCTION:                    DESCRIPTION:
+#	setWindowsFun<-		        Sets rolling windows function
+#  setWindowsParams<-		    Sets additional parameters to windows function
+#	setWindowsHorizon<-		    Sets horizon of the rolling window
+# FUNCTION:                    DESCRIPTION: 		
+#  setStrategyFun<-             Sets portfolio strategy function	
+#  setStrategyParams<-		    Sets additional parameters to strategy function
+# FUNCTION:                    DESCRIPTION:
+#  setSmootherFun<-			    Sets smoothing function
+#  setSmootherParams<-		    Sets additional parameters to smoother function
+#  setSmootherLambda<-			Sets lambda for EMA smoothing
+#  setSmootherDoubleSmoothing<- Sets double ema setting, logical
+#  setSmootherInitialWeights<-  Sets initial weights of the portfolio
+#  setSmootherSkip<-		    Sets number of months to skip starting
 ################################################################################
 
 
 "setWindowsFun<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@windows$windows = value
     backtest
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 "setWindowsParams<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@windows$params = value
     backtest
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 "setWindowsHorizon<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@windows$params$horizon = value
     backtest
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -73,27 +89,43 @@
 "setStrategyFun<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@strategy$strategy = value
     backtest
 }
 
 # ------------------------------------------------------------------------------
 
+
 "setStrategyParams<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@strategy$params = value
     backtest
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 "setSmootherFun<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$smoother = value
     backtest
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -101,18 +133,29 @@
 "setSmootherParams<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$params = value
     backtest
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 "setSmootherLambda<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$params$lambda = value
     backtest
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -120,9 +163,14 @@
 "setSmootherDoubleSmoothing<-" =
     function(backtest, value)   
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$params$doubleSmoothing = value
     backtest
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -130,18 +178,30 @@
 "setSmootherInitialWeights<-" =
     function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$params$initialWeights = value
     backtest
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 "setSmootherSkip<-" = 
 	function(backtest, value)
 {
+    # A function implemented by William Chen
+    
+    # FUNCTION:
+    
     backtest@smoother$params$skip = value
     backtest
 }
    
+
 ################################################################################
-   
+  
+ 
