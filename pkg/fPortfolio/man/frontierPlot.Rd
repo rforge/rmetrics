@@ -15,6 +15,8 @@
 
 \alias{monteCarloPoints}
 
+\alias{tailoredFrontierPlot}
+
 
 \title{Efficient Frontier Plot}
 
@@ -38,7 +40,8 @@
     \code{singleAssetPoints} \tab Adds points of single asset portfolios, \cr
     \code{twoAssetsLines} \tab Adds EF for all combinations of two assets, \cr
     \code{sharpeRatioLines} \tab Adds Sharpe ratio line, \cr
-    \code{monteCarloPoints} \tab Adds randomly produced feasible portfolios. }
+    \code{monteCarloPoints} \tab Adds randomly produced feasible portfolios, \cr
+    \code{tailoredFrontierPlot} \tab an example for a tailored plot. }
 
 }
 
@@ -70,6 +73,10 @@ sharpeRatioLines(object, return = c("mean", "mu"),
 
 monteCarloPoints(object, mcSteps = 5000, return = c("mean", "mu"), 
     risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
+
+tailoredFrontierPlot(object, risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    mText = NULL, col = NULL, xlim = NULL, ylim = NULL, 
+    twoAssets = FALSE)
 }
 
 
@@ -121,6 +128,20 @@ monteCarloPoints(object, mcSteps = 5000, return = c("mean", "mu"),
         }
     \item{mcSteps}{
         an integer value, the number of Monte Carlo steps.
+        }
+    \item{xlim, ylim}{
+        two numeric vectors with two elelemts , the plot range. 
+        If set to NULL the values for the plot ranges are determined 
+        automatically.
+        }
+    \item{mText}{
+        a character string, representing a marginal text string. 
+        If set to NULL the value is taken from the title of the
+        input frontier argument.
+        }
+    \item{twoAssets}{
+        a logical flag, if TRUE, then the two assets frontier lines
+        will be drawn.
         }
     \item{\dots}{
         optional arguments to be passed.

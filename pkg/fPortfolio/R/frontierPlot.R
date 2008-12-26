@@ -1064,3 +1064,69 @@ frontierPlotControl <-
 
 ################################################################################
 
+
+tailoredFrontierPlot <- 
+function(object, 
+    risk = c("Cov", "Sigma", "CVaR", "VaR"), 
+    mText = NULL, col = NULL, xlim = NULL, ylim = NULL, 
+    twoAssets = FALSE) 
+{
+    
+    # 1. Plot the Frontier, add margin text, grid and ablines:
+    if (is.null(xlim)) {
+        xlim = c(0, max(sqrt(diag(getCov(object))))) 
+        Xlim = c(xlim[1]-diff(xlim)/20, xlim[2]+diff(xlim)/20)
+    }
+    if (is.null(ylim)) {
+        ylim = range(getMean(object))
+        Ylim = c(ylim[1]-diff(ylim)/20, ylim[2]+diff(ylim)/20)
+    }
+    frontierPlot(object, pch = 19, risk = risk, 
+        xlim = Xlim, ylim = Ylim)
+    if(is.null(mText)) mText = getTitle(object)  
+    mtext(mText, side = 3, line = 0.5, font = 2)
+    grid()
+    abline(h = 0, col = "brown")
+    abline(v = 0, col = "grey")
+    
+    # 2. Add minimum risk (variance) Portfolio Point:
+    data = getData(object)
+    spec = getSpec(frontier)
+    constraints = getConstraints(object)
+    mvPortfolio = minvariancePortfolio(data, spec, constraints)
+    minvariancePoints(object, risk = risk, auto = FALSE, 
+        pch = 19, col = "red")
+    
+    # 3. Add Tangency Portfolio Point and Tangency Line:
+    tangencyPoints(object, risk = risk, pch = 19, col = "blue")
+    tangencyLines(object, risk = risk, col = "blue")
+    
+    # 4. Add Equal Weights Portfolio:
+    xy = equalWeightsPoints(object, risk = risk, pch = 15, 
+        col = "grey")
+    text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20, "EWP", 
+        font = 2, cex = 0.7)
+    abline(h = max(xy[,2]), col = "brown")
+    
+    # 5. Add all Assets Points:
+    if (is.null(col)) col = rainbow(6)
+    xy = singleAssetPoints(object, risk = risk, cex = 1.5, 
+        col = col, lwd = 2)
+    text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20, 
+        rownames(xy), font = 2, cex = 0.7)
+     
+    # 6. Add optionally all Two Assets  Lines   
+    if (twoAssets) {
+        twoAssetsLines(object, risk = risk, lty = 3, col = "grey")
+    }
+        
+    # 6. Add Sharpe Ratio Line:
+    sharpeRatioLines(object, risk = risk, col = "orange", lwd = 2)
+        
+    # Return Value:
+    invisible(frontier)
+}
+
+
+################################################################################
+
