@@ -1091,7 +1091,7 @@ function(object,
     
     # 2. Add minimum risk (variance) Portfolio Point:
     data = getData(object)
-    spec = getSpec(frontier)
+    spec = getSpec(object)
     constraints = getConstraints(object)
     mvPortfolio = minvariancePortfolio(data, spec, constraints)
     minvariancePoints(object, risk = risk, auto = FALSE, 
