@@ -1092,7 +1092,7 @@ function(object,
             xmax = -mean(r)
         }
         if (risk == "VaR") {
-            xmax = max(-colQuantiles(getSeries(longFrontier), prob = alpha))
+            xmax = max(-colQuantiles(getSeries(object), prob = alpha))
         }
         xlim = c(0, xmax) 
         Xlim = c(xlim[1]-diff(xlim)*offset, xlim[2]+diff(xlim)*offset)
