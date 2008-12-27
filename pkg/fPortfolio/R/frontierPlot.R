@@ -1124,7 +1124,7 @@ function(object,
     sharpeRatioLines(object, risk = risk, col = "orange", lwd = 2)
         
     # Return Value:
-    invisible(frontier)
+    invisible(pbject)
 }
 
 
