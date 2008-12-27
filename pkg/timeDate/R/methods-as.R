@@ -138,7 +138,11 @@ setAs("Date", "timeDate", function(from) as.timeDate.Date(from))
 
 # ------------------------------------------------------------------------------
 
-as.timeDate.POSIXt <- as.timeDate.Date
+as.timeDate.POSIXt <- function(x, zone = "", FinCenter = "")
+{
+    timeDate(x, zone = zone, FinCenter = FinCenter)
+}
+
 setAs("POSIXt", "timeDate", function(from) as.timeDate.POSIXt(from))
 
 # ------------------------------------------------------------------------------

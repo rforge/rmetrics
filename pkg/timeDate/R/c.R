@@ -59,26 +59,12 @@ c.timeDate <-
 
     # FUNCTION:
 
-    # List all:
+     # List all:
     z = list(...)
 
-    # Convert to GMT character vectors:
-    all = NULL
-    for (i in 1:length(z)) {
-        # DW added if:
-        if (length(z[[i]]) > 0) {
-            new = format(timeDate(z[[i]], zone = z[[i]]@FinCenter,
-                FinCenter = "GMT")@Data, "%Y-%m-%d %H:%M:%S")
-            all = c(all, new)
-        }
-    }
-
-    # Convert to Financial Center of the first element:
-    ans = timeDate(all, zone = "GMT", FinCenter = z[[1]]@FinCenter)
-
-    # Return Value:
-    ans
-}
+    data <- unlist(lapply(z, function(td) c(as.numeric(td, unit = "secs"))))
+    timeDate(data, zone = "GMT", FinCenter = z[[1]]@FinCenter)
+ }
 
 
 ################################################################################

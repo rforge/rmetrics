@@ -10,6 +10,7 @@ importFrom("graphics",
            "axis.POSIXct")
 importFrom("methods",
            "coerce",
+           "initialize",
            "show",
            "is",
            "@<-",
@@ -29,10 +30,13 @@ exportClasses("timeDate" )
 export("align",
         "atoms",
         "finCenter<-",
-        "finCenter" )
+        "finCenter",
+        "timeDate" )
 exportMethods("-",
+              "[",
               "+",
               "coerce",
+              "initialize",
               "julian",
               "months",
               "Ops",
@@ -82,7 +86,6 @@ S3method("sort", "timeDate")
 S3method("start", "timeDate")
 S3method("summary", "timeDate")
 S3method("[<-", "timeDate")
-S3method("[", "timeDate")
 S3method("trunc", "timeDate")
 S3method("unique", "timeDate")
 S3method("window", "timeDate")
@@ -267,6 +270,7 @@ export(
     "Fiji",
     ".fjulian",
     ".formatFinCenter",
+    ".formatFinCenterNum",
     "Fortaleza",
     "FRAllSaints",
     "Frankfurt",
@@ -609,8 +613,6 @@ export(
     "Thunder_Bay",
     "Tijuana",
     "timeCalendar",
-    "timeDate",
-    ".timeDateData2charvec",
     "timeFirstDayInMonth",
     "timeFirstDayInQuarter",
     "timeLastDayInMonth",

@@ -120,7 +120,6 @@ seq.timeDate <-
 {
 
     # This function is the same as seq.POSIXt form the base package.
-    # The copyright remains then to the authors of seq.POSIXt
 
     # Modifications by Yohan Chalabi marked with ##
 
@@ -176,8 +175,7 @@ seq.timeDate <-
         from <- unclass(cfrom)
         to <- unclass(as.POSIXct(to))
         res <- seq.int(from, to, length.out = length.out)
-        return(timeDate(structure(res, class = c("POSIXt", "POSIXct"), ##
-                                  tzone = tz), zone = zone, FinCenter = FinCenter))
+        return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
     }
     if (length(by) != 1)
         stop("'by' must be of length 1")
@@ -216,8 +214,7 @@ seq.timeDate <-
             to <- unclass(as.POSIXct(to))
             res <- seq.int(0, to - from, by) + from
         }
-        return(timeDate(structure(res, class = c("POSIXt", "POSIXct"), ##
-                                  tzone = tz), zone = zone, FinCenter = FinCenter))
+        return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
     }
     else {
         r1 <- as.POSIXlt(from)
@@ -257,7 +254,7 @@ seq.timeDate <-
             if (!missing(to))
                 res <- res[res <= as.POSIXct(to)]
         }
-        return(timeDate(res, zone = zone, FinCenter = FinCenter))
+        return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
     }
 }
 
