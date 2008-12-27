@@ -167,6 +167,15 @@
                            "isdst",
                            "TimeZone")
 
+        # force offSet and isdst to be integer columns
+        dst$offSet <- as.integer(dst$offSet)
+        dst$isdst <- as.integer(dst$isdst)
+
+        # add numeric column
+        dst$numeric <- as.numeric(as.POSIXct(dst[[1]],
+                                             format = "%Y-%m-%d %H:%M:%S",
+                                             tz = "GMT"))
+
         # add function to file DST.R if table exits
         if (nrow(dst) != 0) {
             dstFile <- file(filename, open = "a")
