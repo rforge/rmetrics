@@ -1075,6 +1075,7 @@ function(object,
 {
     
     # 1. Plot the Frontier, add margin text, grid and ablines:
+    offset = 0.10
     if (is.null(xlim)) {
         if (risk == "Cov") {
             xmax = max(sqrt(diag(getCov(object))))
@@ -1104,7 +1105,7 @@ function(object,
     if(is.null(mText)) mText = getTitle(object)  
     mtext(mText, side = 3, line = 0.5, font = 2)
     grid()
-    abline(h = 0, col = "brown")
+    abline(h = 0, col = "grey")
     abline(v = 0, col = "grey")
     
     # 2. Add minimum risk (variance) Portfolio Point:
@@ -1123,7 +1124,6 @@ function(object,
     xy = equalWeightsPoints(object, risk = risk, pch = 15, col = "grey")
     text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20, "EWP", 
         font = 2, cex = 0.7)
-    abline(h = max(xy[,2]), col = "brown")
     
     # 5. Add all Assets Points:
     if (is.null(col)) col = rainbow(6)
