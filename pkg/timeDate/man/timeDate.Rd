@@ -5,6 +5,15 @@
 
 
 \alias{timeDate}
+\alias{timeDate,ANY-method}
+\alias{timeDate,character-method}
+\alias{timeDate,Date-method}
+\alias{timeDate,missing-method}
+\alias{timeDate,numeric-method}
+\alias{timeDate,POSIXt-method}
+\alias{timeDate,timeDate-method}
+\alias{initialize,timeDate-method}
+
 \alias{strptimeDate}
 
 
@@ -16,8 +25,7 @@
 
 
 \usage{
-timeDate(charvec = Sys.timeDate(), format = NULL,
-    zone = "", FinCenter = "")
+timeDate(charvec, format = NULL, zone = "", FinCenter = "")
     
 strptimeDate(x, format = whichFormat(x), tz = "")
 }

@@ -2,7 +2,11 @@
 
 
 \alias{subset}
-\alias{[.timeDate}
+\alias{[,timeDate,missing,missing-method}
+\alias{[,timeDate,numeric,missing-method}
+\alias{[,timeDate,logical,missing-method}
+\alias{[,timeDate,character,missing-method}
+\alias{[,timeDate,ANY,missing-method}
 \alias{[<-.timeDate}
 
 
@@ -15,24 +19,24 @@
        
 }
 
+% FIXME
+% \usage{
+% \S4method{[}{timeDate}(x, \dots, drop = TRUE)
+% }
 
-\usage{
-\method{[}{timeDate}(x, \dots, drop = TRUE)
-}
 
-
-\arguments{
+% \arguments{
   
-    \item{x}{
-        an object of class \code{timeDate}.
-        }
-    \item{\dots}{
-        arguments passed to other methods.
-        }
-    \item{drop}{
-        a logical flag, by default \code{TRUE}.
-        }         
-}
+%     \item{x}{
+%         an object of class \code{timeDate}.
+%         }
+%     \item{\dots}{
+%         arguments passed to other methods.
+%         }
+%     \item{drop}{
+%         a logical flag, by default \code{TRUE}.
+%         }         
+% }
 
 
 \value{
