@@ -36,6 +36,8 @@
 # FUNCTION:                    DESCRIPTION:
 #   .notStackedWeightsPlot      Plots the not stacked weights of potfolio
 #   .addlegend                  Adds legend to sliders
+# FUNCTION:                    DESCRIPTION:
+#  tailoredFrontierPlot         Tailored frontier plot wit addons
 ################################################################################
 
 
@@ -1124,7 +1126,7 @@ function(object,
     sharpeRatioLines(object, risk = risk, col = "orange", lwd = 2)
         
     # Return Value:
-    invisible(pbject)
+    invisible(object)
 }
 
 
