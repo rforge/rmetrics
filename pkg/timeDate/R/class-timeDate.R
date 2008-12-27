@@ -47,9 +47,40 @@ setClass("timeDate",
          validity = function(object) {
              if(!identical(attr(object@Data, "tzone"), "GMT"))
                  return("@Data must be in \"GMT\" timezone.")
+             if(!is.numeric(unclass(object@Data)))
+                 return("unclass(@Data) should be of class \"numeric\".")
              ## else TRUE
              TRUE
          })
+
+# ------------------------------------------------------------------------------
+
+setMethod("initialize", "timeDate", function(.Object, ...)
+      {
+          .Object <- callNextMethod()
+
+          # ISO Date/Time Format:
+          isoDate   <- "%Y-%m-%d"
+          isoFormat <- "%Y-%m-%d %H:%M:%S"
+
+          # extract numerical value
+          num <- c(unclass(.Object@Data))
+
+          if (all(is.na(num))) {
+              # no need to look for a format if @Data has only NA's
+              .Object@format <- character(1)
+          } else {
+
+              # convert - DST
+              num <- .formatFinCenterNum(num, .Object@FinCenter, "gmt2any")
+
+              # check if num is a multiple of days
+              test <- !(abs(num %% 86400) > 0)
+              .Object@format <- ifelse(all(na.omit(test)), isoDate, isoFormat)
+          }
+
+          .Object
+      })
 
 ################################################################################
 
