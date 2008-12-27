@@ -34,11 +34,10 @@
 #  strptimeDate           Creates for character time stamps a 'timeDate' object
 ################################################################################
 
+setGeneric("timeDate",
+           function(charvec, format = NULL, zone = "", FinCenter = "")
+           standardGeneric("timeDate"))
 
-timeDate <-
-    function(charvec = Sys.timeDate(), format = NULL, zone = "",
-    FinCenter = "")
-{
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
@@ -65,6 +64,7 @@ timeDate <-
 
     # Examples:
     #   timeDate("2004-01-01")
+    #   timeDate(c("2004-01-01", "2004-01-01"))
     #   timeDate("2004-01-01 00:00:00")
     #   timeDate("20040101")
     #   timeDate("200401011600")
@@ -75,7 +75,11 @@ timeDate <-
     #   td = timeDate("2004-01-01", FinCenter = "GMT"); timeDate(td)
     #   td = timeDate("20040101", FinCenter = "GMT"); timeDate(td)
 
-    # FUNCTION:
+# ------------------------------------------------------------------------------
+
+setMethod("timeDate", "character",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+{
 
     # Settings and Checks:
     if (zone == "")
@@ -87,50 +91,139 @@ timeDate <-
     isoDate   <- "%Y-%m-%d"
     isoFormat <- "%Y-%m-%d %H:%M:%S"
 
-    if (inherits(charvec, "character")) {
-        if (is.null(format))
-            # Autodetect Format :
-            format <- whichFormat(charvec)
-    } else { ## convert from known classes to ISO :
-        format <- isoFormat
-        charvec <- if (is(charvec, "timeDate")) {
-            format(charvec, format)
-        }
-        else if (inherits(charvec, "Date")) {
-            zone <- FinCenter
-            format <- isoDate
-            format(charvec, format)
-        }
-        else if (inherits(charvec, "POSIXt")) {
-            format(charvec, format)
-        }
-    }
+    # Autodetect Format :
+    if (is.null(format))
+        format <- whichFormat(charvec[1])
 
     # Midnight Standard & conversion to isoFormat:
     charvec <- midnightStandard(charvec, format)
 
-    ## Convert:
-    charvec = .formatFinCenter(charvec, zone, type = "any2gmt")
-    Data <- strptime(charvec, isoFormat, tz = "GMT")
-    # force GMT time zone of POSIXct @Data slot
-    attr(Data, "tzone") <- "GMT"
+    # convert to POSIXct as it is
+    ct <- as.POSIXct(charvec, format = isoFormat, tz="GMT")
 
-    # check isoFormat is appropriate to show time
-    # if (!length(grep("%H|%M|%S", format))) {
-    gmt2any <- .formatFinCenter(charvec, FinCenter, type = "gmt2any")
-    lt <- strptime(gmt2any, isoFormat, tz = "GMT")
-    time <- unlist(unclass(lt)[1:3])
-    format <-
-        if (any(time[!is.na(time)] != 0))
-            isoFormat
-        else
-            isoDate
-#    }
+    ## Do conversion
+    ## YC: .formatFinCenterNum faster than .formatFinCenter
+    num = .formatFinCenterNum(c(unclass(ct)), zone, type = "any2gmt")
+    # it is important to set manually the tzone flag,
+    Data <- as.POSIXct(num, origin = "1970-01-01", tz = "GMT")
+    attr(Data, "tzone") <- "GMT"
 
     new("timeDate",
         Data = as.POSIXct(Data),
-        format = format,
+        # Note format is automatically created in
+        # initialize,timeDate-method
         FinCenter = as.character(FinCenter))
+})
+
+# ------------------------------------------------------------------------------
+
+## timeDate
+setMethod("timeDate", "timeDate",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+{
+    # if zone not provided, change only the FinCenter in charvec (timeDate)
+    if (zone == "") {
+        if (FinCenter != "")
+            finCenter(charvec) <- FinCenter
+        charvec
+    } else {
+        callGeneric(format(charvec), zone = zone, FinCenter = FinCenter)
+    }
+})
+
+# ------------------------------------------------------------------------------
+
+## POSIXt
+setMethod("timeDate", "POSIXt",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+{
+
+
+
+    if (!(zone %in% c("", "GMT", "UTC"))) {
+        callGeneric(format(charvec), zone = zone, FinCenter = FinCenter)
+    } else {
+
+        # Since zone is not provided consider that charvec is in GMT
+        charvec <- as.POSIXct(charvec)
+        attr(charvec, "tzone") <- "GMT"
+
+        # FinCenter
+        if (FinCenter == "")
+            FinCenter = getRmetricsOptions("myFinCenter")
+
+        new("timeDate",
+            Data = charvec,
+            # Note format is automatically created in
+            # initialize,timeDate-method
+            FinCenter = as.character(FinCenter))
+    }
+})
+
+
+# ------------------------------------------------------------------------------
+
+## Date
+setMethod("timeDate", "Date",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+{
+    charvec <- format(charvec)
+    format <- "%Y-%m-%d"
+    callGeneric()
+})
+
+# ------------------------------------------------------------------------------
+
+## numeric
+setMethod("timeDate", "numeric",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+{
+      charvec <- as.POSIXct(as.numeric(charvec),
+                            origin = "1970-01-01", tz = "GMT")
+      callGeneric()
+})
+
+# ------------------------------------------------------------------------------
+
+## missing
+setMethod("timeDate", "missing",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+    callGeneric(Sys.time(), format, zone, FinCenter))
+
+# ------------------------------------------------------------------------------
+
+## ANY
+setMethod("timeDate", "ANY",
+          function(charvec, format = NULL, zone = "", FinCenter = "")
+    callGeneric(as.character(charvec), format, zone, FinCenter))
+
+################################################################################
+
+.formatFinCenterNum <-
+    function(num, FinCenter, type = c("gmt2any", "any2gmt"))
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
+    # Description:
+    #   Internal function used by function timeDate()
+
+    if (FinCenter == "GMT" || FinCenter == "UTC")
+        return(num)
+
+    ## else start working:
+
+    type <- match.arg(type)
+    signum <- switch(type,
+                     "gmt2any" = +1,
+                     "any2gmt" = -1)
+    ##  otherwise give error
+
+    # Get the DST list from the database:
+    try <- try(dst.list <- rulesFinCenter(FinCenter), silent = TRUE)
+    if (inherits(try, "try-error"))
+        stop(gettextf("'%s' is not a valid FinCenter.", FinCenter))
+
+    num + signum * dst.list$offSet[ findInterval(num, dst.list$numeric)]
 }
 
 # ------------------------------------------------------------------------------
@@ -204,9 +297,7 @@ timeDate <-
     format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
 }
 
-
 # ------------------------------------------------------------------------------
-
 
 strptimeDate <-
     function(x, format = whichFormat(x), tz = "")
@@ -238,6 +329,4 @@ strptimeDate <-
     ans
 }
 
-
 ################################################################################
-
