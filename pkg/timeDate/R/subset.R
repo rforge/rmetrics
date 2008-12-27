@@ -32,43 +32,48 @@
 #  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
 ################################################################################
 
+# functions implemented by Yohan Chalabi and Diethelm Wuertz
 
-"[.timeDate" <-
-    function(x, ..., drop = TRUE)
-{
-    # A function implemented by Diethelm Wuertz
+setMethod("[", signature(x="timeDate", i="missing", j="missing", drop="ANY"),
+          function(x, i, j, ..., drop = TRUE) x)
 
-    # Description:
-    #   Extracts or replaces subsets from 'timeDate' objects
+setMethod("[", signature(x="timeDate", i="numeric", j="missing", drop="ANY"),
+          function(x, i, j, ..., drop = TRUE)
+      {
+          x@Data <- callGeneric(x@Data, i)
+          x
+      })
 
-    # Arguments:
-    #   x - a 'timeDate' object
+setMethod("[", signature(x="timeDate", i="logical", j="missing", drop="ANY"),
+          function(x, i, j, ..., drop = TRUE)
+      {
+          x@Data <- callGeneric(x@Data, i)
+          x
+      })
 
-    # Value:
-    #   Returns a subset from a 'timeDate' object.
+setMethod("[", signature(x="timeDate", i="character", j="missing", drop="ANY"),
+          function(x, i, j, ..., drop = TRUE)
+      {
 
-    # FUNCTION:
+          if (length(i) > 1) {
+              lt <- lapply(i, function(i, x) "["(x, i), x)
+              num <- unlist(lapply(lt, function(td) unclass(td@Data)))
+              return(timeDate(num, zone = "GMT", FinCenter = x@FinCenter))
+          }
+          if (.subsetCode(i) == "SPAN") {
+              # Subsetting by Span Indexing:
+              return(.subsetBySpan(x, i))
+          } else {
+              # Subsetting by Python Indexing:
+              return(.subsetByPython(x, i))
+          }
+      })
 
-    # Character Type Subsetting:
-    subset = I(...)
-    if (is.character(subset)){
-        if (.subsetCode(subset) == "SPAN") {
-            # Subsetting by Span Indexing:
-            return(.subsetBySpan(x, subset))
-        } else {
-            # Subsetting by Python Indexing:
-            return(.subsetByPython(x, subset))
-        }
-    }
-
-    # Simple and fast subset:
-    x@Data <- x@Data[...]
-    x
-}
-
+setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
+          function(x, i, j, ..., drop = TRUE)
+          stop("Not Yet implemented"))
 
 #-------------------------------------------------------------------------------
-
 
 "[<-.timeDate" <-
     function(x, ..., value)
@@ -102,9 +107,7 @@
         FinCenter = x@FinCenter)
 }
 
-
 ################################################################################
-
 
 .subsetCode <-
 function(subset)
@@ -153,10 +156,7 @@ function(subset)
     code
 }
 
-
 # ------------------------------------------------------------------------------
-
-
 
 .subsetByPython <-
 function(x = timeCalendar(), subset = "::")
@@ -179,6 +179,7 @@ function(x = timeCalendar(), subset = "::")
     #   .subsetByPython(subset = "::2008-06")
 
     # FUNCTION:
+    stopifnot(length(subset) == 1)
 
     # Subset Code:
     code = .subsetCode(subset)
@@ -190,7 +191,14 @@ function(x = timeCalendar(), subset = "::")
     date = strsplit(subset, "::")[[1]]
 
     # 1. DATE
-    if(code == "00000") ans = x[grep(date, format(x))]
+    if(code == "00000") {
+        # should return NA if no match found
+        idx = grep(date, format(x))
+        if (!length(idx))
+            ans@Data <- as.POSIXct(NA)
+        else
+            ans <- x[idx]
+    }
 
     # 2. ::
     if(code == "00010") ans = x
@@ -252,6 +260,7 @@ function(x = timeCalendar(), subset = "last 3 Months")
     #   .subsetBySpan(timeCalendar(), "last 62 days")
 
     # FUNCTION:
+    stopifnot(length(subset) == 1)
 
     # Get Code:
     code = .subsetCode(subset)
