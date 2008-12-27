@@ -34,7 +34,7 @@
 
 weightsPlot <-
     function(object, labels = TRUE, col = NULL, title = TRUE,
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -121,8 +121,8 @@ weightsPlot <-
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
 
 
-    # Add Info:
-    if (title) {
+    # Add Margin Text Info:
+    if (mtext) {
         mtext(paste(getType(object), "|", getSolver(object), "|", "minRisk =",
         minRisk), side = 4, adj = 0, col = "grey", cex = CEX)
     }
@@ -143,7 +143,7 @@ weightsPlot <-
 
 weightedReturnsPlot <-
     function(object, labels = TRUE, col = NULL, title = TRUE,
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -236,8 +236,8 @@ weightedReturnsPlot <-
     minRisk = signif(min(targetRisk))
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
 
-    # Add Info Text:
-    if (title) {
+    # Add Margin Text Info:
+    if (mtext) {
         mtext(paste(getType(object), "|", getSolver(object), "|",
             "minRisk =", minRisk), side = 4, adj = 0, col = "grey",
             cex = 0.7)
@@ -259,7 +259,7 @@ weightedReturnsPlot <-
 
 covRiskBudgetsPlot <-
     function(object, labels = TRUE, col = NULL, title = TRUE,
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -345,8 +345,8 @@ covRiskBudgetsPlot <-
     minRisk = signif(min(targetRisk), 3)
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
 
-    # Add Info:
-    if (title) {
+    # Add Margin Text Info:
+    if (mtext) {
         mtext(paste(
             getType(object), "|", getSolver(object), "|", "minRisk =", minRisk),
             side = 4, adj = 0, col = "grey", cex = CEX)
@@ -368,7 +368,7 @@ covRiskBudgetsPlot <-
 
 tailRiskBudgetsPlot <-
     function(object, labels = TRUE, col = NULL, title = TRUE,
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
 {
     # A function implemented by Rmetrics
 
@@ -453,8 +453,8 @@ tailRiskBudgetsPlot <-
     minRisk = signif(min(targetRisk), 3)
     abline(v = minIndex, col = "black", lty = 1, lwd = 2)
 
-    # Add Info:
-    if (title) {
+    # Add Margin Text Info:
+    if (mtext) {
         mtext(paste(
             getType(object), "|", getSolver(object), "|", "minRisk =", minRisk),
             side = 4, adj = 0, col = "grey", cex = CEX)

@@ -1076,15 +1076,31 @@ function(object,
     
     # 1. Plot the Frontier, add margin text, grid and ablines:
     if (is.null(xlim)) {
-        xlim = c(0, max(sqrt(diag(getCov(object))))) 
-        Xlim = c(xlim[1]-diff(xlim)/20, xlim[2]+diff(xlim)/20)
+        if (risk == "Cov") {
+            xmax = max(sqrt(diag(getCov(object))))
+        }
+        if (risk == "Sigma") {
+            xmax = max(sqrt(diag(getSigma(object))))
+        }
+        if (risk == "CVaR") {
+            alpha = getAlpha(object)
+            quantiles = colQuantiles(getSeries(object), prob = alpha)
+            n.max = which.max(-quantiles)
+            r = getSeries(object)[, n.max]
+            r = r[r < quantiles[n.max]]
+            xmax = -mean(r)
+        }
+        if (risk == "VaR") {
+            xmax = max(-colQuantiles(getSeries(longFrontier), prob = alpha))
+        }
+        xlim = c(0, xmax) 
+        Xlim = c(xlim[1]-diff(xlim)*offset, xlim[2]+diff(xlim)*offset)
     }
     if (is.null(ylim)) {
         ylim = range(getMean(object))
-        Ylim = c(ylim[1]-diff(ylim)/20, ylim[2]+diff(ylim)/20)
+        Ylim = c(ylim[1]-diff(ylim)*offset, ylim[2]+diff(ylim)*offset)
     }
-    frontierPlot(object, pch = 19, risk = risk, 
-        xlim = Xlim, ylim = Ylim)
+    frontierPlot(object, pch = 19, risk = risk, xlim = Xlim, ylim = Ylim)
     if(is.null(mText)) mText = getTitle(object)  
     mtext(mText, side = 3, line = 0.5, font = 2)
     grid()
@@ -1104,8 +1120,7 @@ function(object,
     tangencyLines(object, risk = risk, col = "blue")
     
     # 4. Add Equal Weights Portfolio:
-    xy = equalWeightsPoints(object, risk = risk, pch = 15, 
-        col = "grey")
+    xy = equalWeightsPoints(object, risk = risk, pch = 15, col = "grey")
     text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20, "EWP", 
         font = 2, cex = 0.7)
     abline(h = max(xy[,2]), col = "brown")

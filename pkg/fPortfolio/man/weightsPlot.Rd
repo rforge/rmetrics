@@ -21,16 +21,16 @@
 
 \usage{   
 weightsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
     
 weightedReturnsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
     
 covRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
     
 tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE, 
-    box = TRUE, legend = TRUE, ...)
+    mtext = TRUE, box = TRUE, legend = TRUE, ...)
 }
 
 
@@ -55,6 +55,10 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
         a logical flag. Should automatically a title and axis labels be
         added to the plot. 
         }
+    \item{mtext}{
+        a logical flag. Should automatically a margin text 
+        added to the right hand side plot?
+        }    
     \item{box}{
         a logical flag, determining whether a boxed frame should be plotted
         around the pie, by default the value is set to \code{TRUE}.
