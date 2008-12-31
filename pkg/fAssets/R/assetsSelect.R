@@ -26,8 +26,7 @@
 
 
 assetsSelect = 
-    function(x, method = c("hclust", "kmeans"), control = NULL, 
-        doplot = TRUE, ...)
+    function(x, method = c("hclust", "kmeans"), control = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -55,7 +54,7 @@ assetsSelect =
     FUN = match.fun(fun)
 
     # Cluster:
-    ans = FUN(x, control, doplot, ...)
+    ans = FUN(x, control, ...)
     
     # Return Value:
     ans
@@ -66,7 +65,7 @@ assetsSelect =
 
 
 .hclustSelect <-  
-    function(x, control = NULL, doplot = TRUE, ...)
+    function(x, control = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -83,10 +82,7 @@ assetsSelect =
     
     # hclust:
     ans = hclust(dist(t(x), method = measure), method = method, ...)
-    if (doplot) {
-        plot(ans) 
-        box()  
-    }
+    class(ans) = c("list", "hclust")
     
     # Return Value:
     ans
@@ -97,7 +93,7 @@ assetsSelect =
 
 
 .kmeansSelect <-  
-    function(x, control = NULL, doplot = TRUE, ...)
+    function(x, control = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -117,12 +113,7 @@ assetsSelect =
     
     # kmeans:
     ans = kmeans(x = t(x), centers = centers, algorithm = algorithm, ...)
-    if (doplot) {
-        plot(t(x), col = ans$cluster, pch = 19)
-        grid()
-        title(main = "kmeans Asset Clustering")
-        points(ans$centers, col = 1:centers, pch = 8, cex = 2)
-    }
+    class(ans) = c("list", "kmeans")
     
     # Return Value:
     ans

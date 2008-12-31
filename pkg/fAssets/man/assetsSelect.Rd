@@ -17,8 +17,7 @@
     
 
 \usage{
-assetsSelect(x, method = c("hclust", "kmeans"), control = NULL, 
-    doplot = TRUE, \dots)
+assetsSelect(x, method = c("hclust", "kmeans"), control = NULL, \dots)
 }
 
 
@@ -42,9 +41,6 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL,
         and for kmeans clustering this is
         \code{method=c(centers=3, algorithm="Hartigan-Wong")}.
         }
-    \item{doplot}{
-        a logical, should a plot be displayed?
-        }
     \item{\dots}{
         optional arguments to be passed. Note, for the k-means algorithm
         the number of centers has to be specified!
@@ -57,8 +53,10 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL,
   
     if \code{use="hclust"} was selected then the function returns a
     S3 object of class "hclust", otherwise if \code{use="kmeans"} was 
-    selected then the function returns an object of class "list". For
-    details we refer to the help pages of \code{hclust} and \code{kmeans}.
+    selected then the function returns an object of class "kmeans". 
+    
+    For details we refer to the help pages of \code{hclust} and 
+    \code{kmeans}.
     
 }
 
@@ -70,6 +68,8 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL,
     performs a hierarchical cluster analysis on the set of dissimilarities 
     \code{hclust(dist(t(x)))} and \code{kmeans} performs a k-means
     clustering on the data matrix itself. 
+    
+    Note, the hierarchical cluster method has in addition a plot method.
     
 }
 
@@ -87,7 +87,9 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL,
    colnames(LPP)
     
 ## assetsSelect -
-   assetsSelect(LPP, "hclust") 
+   hclust = assetsSelect(LPP, "hclust") 
+   plot(hclust)
+   
    assetsSelect(LPP, "kmeans", control = 
      c(centers = 3, algorithm = "Hartigan-Wong"))
 }
