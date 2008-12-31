@@ -18,13 +18,13 @@
 ################################################################################
 # FUNCTION:             ASSETS SELECTION:
 #  assetsSelect          Selects individual assets from a set of assets
-#   method = "hclust"     hierarchical clustering of returns
-#   method = "kmeans"     k-means clustering of returns      
+#   use = "hclust"       hierarchical clustering of returns
+#   use = "kmeans"       k-means clustering of returns      
 ################################################################################
 
 
 assetsSelect = 
-    function(x, method = c("hclust", "kmeans"),
+    function(x, use = c("hclust", "kmeans"),
     kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -37,7 +37,7 @@ assetsSelect =
     # FUNCTION:
 
     # Selection:
-    method = match.arg(method)
+    use = match.arg(use)
     
     # Transform to matrix:
     if (class(x) == "timeSeries") {
@@ -47,7 +47,7 @@ assetsSelect =
     # stats::hclust
     # Hierarchical cluster analysis on a set of dissimilarities 
     # and methods for analyzing it.     
-    if (method == "hclust") {
+    if (use == "hclust") {
         ans = hclust(dist(t(x)), ...)
         if (doplot) {
             plot(ans) 
@@ -57,7 +57,7 @@ assetsSelect =
     
     # stats::kmeans
     # Perform k-means clustering on a data matrix   
-    if (method == "kmeans") {
+    if (use == "kmeans") {
         ans = kmeans(x = t(x), centers = kmeans.centers, 
             iter.max = kmeans.maxiter, ...)
         if (doplot) {

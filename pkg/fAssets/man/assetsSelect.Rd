@@ -17,7 +17,7 @@
     
 
 \usage{
-assetsSelect(x, method = c("hclust", "kmeans"), 
+assetsSelect(x, use = c("hclust", "kmeans"), 
     kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, \dots)
 }
 
@@ -35,8 +35,8 @@ assetsSelect(x, method = c("hclust", "kmeans"),
     \item{kmeans.maxiter}{
         the maximum number of iterations allowed.
         }
-    \item{method}{
-        a character string, which clustering method should be applied? 
+    \item{use}{
+        a character string, which clustering algorithm should be used? 
         Either \code{hclust} for hierarchical clustering of dissimilarities,
         or \code{kmeans} for k-means clustering.
         }
@@ -54,8 +54,8 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 
 \value{
   
-    if \code{method="hclust"} was selected then the function returns a
-    S3 object of class "hclust", otherwise if \code{method="kmeans"} was 
+    if \code{use="hclust"} was selected then the function returns a
+    S3 object of class "hclust", otherwise if \code{use="kmeans"} was 
     selected then the function returns an object of class "list". For
     details we refer to the help pages of \code{hclust} and \code{kmeans}.
     
