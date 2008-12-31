@@ -19,53 +19,73 @@
 # FUNCTION:             ASSETS SELECTION:
 #  assetsSelect          Selects individual assets from a set of assets
 #   use = "hclust"       hierarchical clustering of returns
-#   use = "kmeans"       k-means clustering of returns      
+#   use = "kmeans"       k-means clustering of returns 
+#  .hclustSelect         Hierarchical Clustering 
+#  .kmeansSelect         k-means Clustering    
 ################################################################################
 
 
 assetsSelect = 
-    function(x, use = c("hclust", "kmeans"),
-    kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
+    function(x, method = c("hclust", "kmeans"), control = NULL, 
+        doplot = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description: 
     #   Clusters a set of assets
     
-    # Example:
-    
+    # Arguments:
+    #   method - which algorithm should be used?
+    #       hclust - Hierarchical clustering on a set of dissimilarities 
+    #       kmeans - k-means clustering on a data matrix 
+        
     # FUNCTION:
 
     # Selection:
-    use = match.arg(use)
-    
+    # do not method = match.arg(method) to allow for user specified clustering
+    method = method[1]   
+     
     # Transform to matrix:
     if (class(x) == "timeSeries") {
         x = as.matrix(x)
     }
     
-    # stats::hclust
-    # Hierarchical cluster analysis on a set of dissimilarities 
-    # and methods for analyzing it.     
-    if (use == "hclust") {
-        ans = hclust(dist(t(x)), ...)
-        if (doplot) {
-            plot(ans) 
-            box()  
-        }
-    }
+    # Compose Function:
+    fun = paste(".", method, "Select", sep = "")
+    FUN = match.fun(fun)
+
+    # Cluster:
+    ans = FUN(x, control, doplot, ...)
     
-    # stats::kmeans
-    # Perform k-means clustering on a data matrix   
-    if (use == "kmeans") {
-        ans = kmeans(x = t(x), centers = kmeans.centers, 
-            iter.max = kmeans.maxiter, ...)
-        if (doplot) {
-            plot(t(x), col = ans$cluster, pch = 19)
-            grid()
-            title(main = "kmeans Asset Clustering")
-            points(ans$centers, col = 1:(kmeans.centers), pch = 8, cex = 2)
-        }
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+.hclustSelect <-  
+    function(x, control = NULL, doplot = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description: 
+    #   Hierarchical Clustering
+    
+    # FUNCTION:
+    
+    # Method:
+    if (is.null(control)) 
+        control = c(measure = "euclidean", method = "complete")
+    measure = control[1]
+    method = control[2]
+    
+    # hclust:
+    ans = hclust(dist(t(x), method = measure), method = method, ...)
+    if (doplot) {
+        plot(ans) 
+        box()  
     }
     
     # Return Value:
@@ -75,3 +95,38 @@ assetsSelect =
 
 ################################################################################
 
+
+.kmeansSelect <-  
+    function(x, control = NULL, doplot = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description: 
+    #   kmeans Clustering
+    
+    # Note:
+    #   centers must be specified by the user!
+    
+    # FUNCTION:
+    
+    # Method:
+    if (is.null(control)) 
+        control = c(centers = 5, algorithm = "Hartigan-Wong")
+    centers = as.integer(control[1])
+    algorithm = control[2]
+    
+    # kmeans:
+    ans = kmeans(x = t(x), centers = centers, algorithm = algorithm, ...)
+    if (doplot) {
+        plot(t(x), col = ans$cluster, pch = 19)
+        grid()
+        title(main = "kmeans Asset Clustering")
+        points(ans$centers, col = 1:centers, pch = 8, cex = 2)
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################

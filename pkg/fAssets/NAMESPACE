@@ -157,6 +157,8 @@ export(
     "assetsReturnPlot",
     "assetsRiskReturnPlot",
     "assetsSelect",
+    ".hclustSelect",
+    ".kmeansSelect",
     "assetsSeriesPlot",
     "assetsSim",
     "assetsStarsPlot",

@@ -93,6 +93,7 @@ function()
     abline(h = 0, lty = 3)
     
     }
+    
     NA
 
     # Return Value:
@@ -116,12 +117,12 @@ function()
     allAssets = as.matrix(allAssets)
     head(allAssets)
 
-    # assetsSelect(x, use = c("hclust", "kmeans"), kmeans.centers = 5,
-    #   kmeans.maxiter = 10, doplot = TRUE, ...)
+    # assetsSelect(x, use = c("hclust", "kmeans"), doplot = TRUE, ...)
     clustered = assetsSelect(t(allAssets), use = "kmeans",
-        kmeans.centers = 4, doplot = TRUE)
+        centers = 4, doplot = TRUE)
              
     }
+    
     NA
 
     # Return Value:
@@ -138,7 +139,6 @@ function()
     if (FALSE) {
     
     require(cluster)
-
 
     .assetsSelect =
     function (x, k,
