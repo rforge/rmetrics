@@ -49,7 +49,6 @@ assetsBoxPlot <-
     colnames(ans$stats) = ans$names
     rownames(ans$stats) = c("lower whisker", "lower hinge", "median", 
         "upper hinge", "upper whisker")
-    abline(h = 0 , lty = 3)
     
     # Return Value:
     invisible(ans)
