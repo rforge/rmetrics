@@ -104,7 +104,7 @@ assetsBoxStatsPlot <-
 
     # Plot:
     if(par) par(mfrow = c(1, 1), oma = oma, mar = mar)
-    bp = assetsBoxPlot(x, doplot = FALSE)
+    bp = assetsBoxPlot(x, plot = FALSE)
     ans = assetsStarsPlot(abs(bp$stats), keyOffset = keyOffset)
     text(titlePosition[1], titlePosition[2], adj = 0,
         title, cex = 1.25)
