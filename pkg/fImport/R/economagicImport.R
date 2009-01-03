@@ -84,13 +84,16 @@ economagicImport <-
         ### YC
         z1 <<- SCAN[lines]
 
-        ### YC
+        ### YC:
         # Remove irrelevant HTML markup strings
         z1 <- sub('^[[:space:]]', '', z1)
         z1 <- gsub('<a href=.*</a>', '', z1)
         z1 <- gsub('<font color=white>.{0,3}</font[[:space:]]*>', ' ', z1)
         z1 <- gsub('[[:space:]]+', ' ', z1)
         z1 <- gsub('&#149;', '.', z1)
+        ### DW: Economagic has introduced ramdom centered dots for
+        ###     for numeric values, let's take care of this
+        z1 <- gsub('&#183;', '.', z1)
 
         # Next - Compose Matrix:
         n.rows = length(z1)
