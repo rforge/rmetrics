@@ -16,16 +16,19 @@
 
 
 ################################################################################
-# FUNCTION:                 MEAN-COVARIANCE ESTIMATION:
+# FUNCTION:                 DESCRIPTION:
 #  assetsMeanCov             Estimates mean and variance for a set of assets
 #   method = "cov"            uses standard covariance estimation
 #   method = "mve"            uses "cov.mve" from [MASS]
 #   method = "mcd"            uses "cov.mcd" from [MASS]
-#   method = "Mcd"            requires "covMcd" from [robustbase]  
+#   method = "MCD"            requires "covMcd" from [robustbase]  
 #   method = "OGK"            requires "covOGK" from [robustbase] 
 #   method = "nnve"           uses builtin from [covRobust]
 #   method = "shrink"         uses builtin from [corpcor]
 #   method = "bagged"         uses builtin from [corpcor]
+#   method = "foo"            uses user defined estimator named foo
+#  getCenterRob              Extracts the robust estimate for the center
+#  getCovRob                 Extracts the robust estimate for the covariance
 ################################################################################
 
 
@@ -34,10 +37,11 @@ assetsMeanCov =
     method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
     check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes mean and variance from multivariate time series
+    #   Computes robust mean and covariance from multivariate time series
     
     # Arguments:
     #   x - a multivariate time series, a data frame, or any other
@@ -64,8 +68,7 @@ assetsMeanCov =
     #       length 2 containing robust location and scale estimates. See 
     #       scaleTau2, s_Qn, s_Sn, s_mad or s_IQR for examples to be used as 
     #       sigmamu argument.
-    
-    
+        
     # Note:
     #   The output of this function can be used for portfolio
     #   optimization.
@@ -88,66 +91,77 @@ assetsMeanCov =
     
     # Transform Input:
     x.mat = as.matrix(x)
-    # method = match.arg(method)
+    
+    
+    # Do not use: method = match.arg(method)
     method = method[1]
     N = ncol(x)
     assetNames = colnames(x.mat)
        
     # Attribute Control List:
     control = c(method = method[1])
+    user = TRUE
     
     # Compute Classical Covariance:
     if (method == "cov") {
         # Classical Covariance Estimation:
-        mu = colMeans(x.mat)
-        Sigma = cov(x.mat)
+        ans = list(center = colMeans(x.mat), cov = cov(x.mat))
+        user = FALSE
     }
         
     # From R Package "robustbase":
     if (method == "MCD" | method == "Mcd") {
-        estimate = robustbase::covMcd(x.mat, alpha = alpha, ...)
-        mu = estimate$center
-        Sigma = estimate$cov
+        ans = robustbase::covMcd(x.mat, alpha = alpha, ...)
+        mu = ans$center
+        Sigma = ans$cov
+        user = FALSE
     }   
     if (method == "OGK" | method == "Ogk") {
-        estimate = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
-        mu = estimate$center
-        Sigma = estimate$cov     
+        ans = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
+        user = FALSE    
     }
     
     # [MASS] mve and mcd Routines:
     if (method == "mve") {
         # require(MASS)
         ans = MASS::cov.rob(x = x.mat, method = "mve")
-        mu = ans$center
-        Sigma = ans$cov
+        user = FALSE
     }
     if (method == "mcd") {
         # require(MASS)
         ans = MASS::cov.rob(x = x.mat, method = "mcd") 
-        mu = ans$center
-        Sigma = ans$cov
+        user = FALSE
     }    
         
     # [corpcor] Shrinkage and Bagging Routines 
     if (method == "shrink") {
         fit = .cov.shrink(x = x.mat, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit 
+        ans = list(center = colMeans(x.mat), cov = fit)
+        user = FALSE
     } 
     if (method == "bagged") {
         fit = .cov.bagged(x = x.mat, R = baggedR, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit 
+        ans = list(center = colMeans(x.mat), cov = fit)
         control = c(control, R = as.character(baggedR))
+        user = FALSE
     }
         
     # Nearest Neighbour Variance Estimation:
     if (method == "nnve") {
         fit = .cov.nnve(datamat = x.mat, ...)
-        mu = colMeans(x.mat)
-        Sigma = fit$cov
+        ans = list(center = colMeans(x.mat), cov = fit$cov)
+        user = FALSE
     }
+    
+    # User specified estimator:
+    if(user) {
+        fun = match.fun(method[1])
+        ans = fun(x.mat, ...)
+    }
+    
+    # Result:
+    mu = center = ans$center
+    Sigma = cov = ans$cov
        
     # Add Size to Control List:
     control = c(control, size = as.character(N))
@@ -179,6 +193,26 @@ assetsMeanCov =
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getCenterRob <-
+function(object)
+{
+    object$center
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getCovRob <-
+function(object)
+{
+    object$cov
 }
 
 

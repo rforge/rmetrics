@@ -2,6 +2,8 @@
 
 
 \alias{assetsMeanCov}
+\alias{getCenterRob}
+\alias{getCovRob}
 
 
 \title{Estimation of Mean and Covariances of Asset Sets}
@@ -9,8 +11,7 @@
 
 \description{
   
-    A collection and description of functions which allow
-    to estimate the mean and/or covariance matrix of a 
+    Allows to estimate the mean and/or covariance matrix of a 
     time series of assets by traditional and robust methods.
     
 }
@@ -21,12 +22,15 @@ assetsMeanCov(x,
     method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
     check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, 
     alpha = 1/2, ...)
+    
+getCenterRob(object)
+getCovRob(object)
 }
 
 
 \arguments{
   
-\item{alpha}{ 
+    \item{alpha}{ 
         when \code{methode="MCD"}, a numeric parameter controlling the size 
         of the subsets over which the determinant is minimized, i.e., 
         \code{alpha*n} observations are used for computing the determinant. 
@@ -54,8 +58,11 @@ assetsMeanCov(x,
         computed using the shrinkage approach as suggested in Schaefer and
         Strimmer [2005], if \code{method="bagged"} is selected then the 
         covariance will be calculated from the bootstrap aggregated (bagged)
-        version of the covariance estimator.\cr
+        version of the covariance estimator.
         }  
+    \item{object}{
+        a list as returned by the function \code{assetsMeanCov}.
+        } 
     \item{sigmamu}{ 
         when \code{methode="OGK"}, a function that computes univariate robust 
         location and scale estimates. By default it should return a single 
@@ -74,7 +81,6 @@ assetsMeanCov(x,
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }   
     \item{\dots}{
-        [assetsMeanCov] - \cr
         optional arguments to be passed to the underlying estimators. 
         For details we refer to the manual pages of the functions 
         \code{cov.rob} for arguments \code{"mve"} and \code{mcd"} in 
@@ -119,13 +125,6 @@ Schaefer J., Strimmer K. (2005);
 }
 
 
-\seealso{
-
-    \code{MultivariateDistribution}.
-
-}
-
-
 \author{
 
     Juliane Schaefer and Korbinian Strimmer for R's \code{corpcov} package, \cr
@@ -143,7 +142,11 @@ Schaefer J., Strimmer K. (2005);
    assetsMeanCov(LPP)
    
 ## MASS Robust mcd Covariance Estimation:
-   assetsMeanCov(LPP, "mcd")
+   mcd = assetsMeanCov(LPP, "mcd")
+   mcd
+   
+## Extract Covariance Matrix:
+   getCovRob(object = mcd)
 }
 
 

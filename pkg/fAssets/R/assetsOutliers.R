@@ -16,13 +16,13 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  .assetsOutlierDetection   Detects outliers in a multivariate set of assets
+# FUNCTION:             DESCRIPTION:
+#  assetsOutliers        Detects outliers in a multivariate set of assets
 ################################################################################
 
 
-.assetsOutlierDetection <- 
-    function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
+assetsOutliers <- 
+    function (x, center, cov, ...)
 {   
     # An adapted copy from contributed R package mvoutlier
 
@@ -43,10 +43,9 @@
        
     # FUNCTION:
     
-    # Match Arguments:
-    method = match.arg(method)
-    
-    # Allow for 'timeSeries' Input:
+    # Check timeSeries Input:
+    stopifnot(is.timeSeries(x))
+    tS = x
     x = as.matrix(x)
     
     # Critical Values:
@@ -55,36 +54,6 @@
     if (p <= 10) pcrit = (0.240 - 0.0030 * p)/sqrt(n)
     if (p  > 10) pcrit = (0.252 - 0.0018 * p)/sqrt(n)
     delta = qchisq(0.975, p)
-    
-    # Compute Robust Covariance Estimates:
-    if (method == "cov") {
-        # Standard Method:
-        center = colMeans(x)
-        cov = cov(x)
-    } else if (method == "mcd") {
-        # MCD from MASS Package
-        mean.cov = MASS::cov.mcd(x)
-        center = mean.cov$center
-        cov = mean.cov$cov
-    } else if (method == "mve") {
-        # MVE from MASS Package
-        mean.cov = MASS::cov.mve(x)
-        center = mean.cov$center
-        cov = mean.cov$cov
-    } else if (method == "Mcd") {
-        mean.cov = covMcd(x)
-        center = mean.cov$center
-        cov = mean.cov$cov
-    } else if (method == "OGK") {
-        mean.cov = robustbase::covOGK(x, cor = TRUE, sigmamu = scaleTau2)
-        center = mean.cov$center
-        cov = mean.cov$cov 
-    } else if (method == "shrink") {
-        # Shrinkage from contributed package "corpcor":
-        mean.cov = assetsMeanCov(x, "shrink")
-        center = mean.cov$mu
-        cov = mean.cov$Sigma
-    }
     
     # Compute Mahalanobis Squared Distances:
     d2 = mahalanobis(x, center, cov)
@@ -103,12 +72,16 @@
     
     # Identify Outliers:
     outliers = (1:dim(x)[1])[!w]
-    if (length(outliers) == 0) outliers = NA
+    if (length(outliers) == 0) {
+        outliers = NA
+    } else {
+        names(outliers) = rownames(x)[outliers]
+    }
     
     # Compose Result:
     ans = list(center = m, cov = c, cor = cov2cor(c), 
-        quantile = cn, outliers = outliers)
-    attr(ans, "control") = c(method = method)
+        quantile = cn, outliers = outliers, 
+        series = tS[outliers, ])
     
     # Return Value:
     ans
