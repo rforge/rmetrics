@@ -19,10 +19,10 @@
 ################################################################################
 
 
-setMethod("aggregate",
-      "timeSeries",
-      function(x, by, FUN, ...)
-{   # A function implemented by Yohan Chalabi and  Diethelm Wuertz
+setMethod("aggregate", "timeSeries",
+    function(x, by, FUN, ...)
+{   
+    # A function implemented by Yohan Chalabi and  Diethelm Wuertz
 
     # Description:
     #   Aggregates a 'timeSeries' object
@@ -44,14 +44,18 @@ setMethod("aggregate",
     #   Returns a S4 object of class 'timeSeries'.
 
     # Examples:
-    #  ts = dummySeries()
-    #  by = timeSequence(from = "2008-04-01",  to = "2009-01-01", by = "quarter")
-    # aggregate(ts, by, mean)
-    #
-    #  dates = timeSequence(from = "2008-01-01",  to = "2008-02-01", by = "day")
-    #  ts = timeSeries(matrix(rnorm(2*length(dates)), ncol = 2), charvec = dates)
-    #  by = timeSequence(from = "2008-01-01",  to = "2008-02-01", by = "week")
-    #  aggregate(ts, by, function(x) log(abs(sum(x))))
+    #   # Quarterly Aggregation:
+    #   ts = 10*round(dummySeries(), 1)
+    #   Y = getRmetricsOptions("currentYear"); Y
+    #   from = paste(Y, "04-01", sep = "-"); to = paste(Y+1, "01-01", sep = "-")
+    #   by = timeSequence(from, to, by = "quarter") - 24*3600; by  
+    #   ts; aggregate(ts, by, sum)
+    #   # Weekly Aggregation:
+    #   dates = timeSequence(from = "2009-01-01", to = "2009-02-01", by = "day")
+    #   data = 10 * round(matrix(rnorm(2*length(dates)), ncol = 2), 1); data
+    #   ts = timeSeries(data = data, charvec = dates)
+    #   by = timeSequence(from = "2009-01-08",  to = "2009-02-01", by = "week")
+    #   by = by - 24*3600; aggregate(ts, by, sum)
 
     # FUNCTION:
 
