@@ -58,12 +58,21 @@ function()
     aggregate(x, by, mean)
 
     x <- timeSeries(seq(12), timeCalendar())
-    by <- timeSequence(from = "2008-01-01",
-                       to = "2009-01-01",
-                       by = "quarter")
+    # DW This will fail again next year
+    # by <- timeSequence(
+    #    from = "2008-01-01",
+    #    to = "2009-01-01",
+    #    by = "quarter")
+    by <- timeSequence(
+        from = "2008-01-01",
+        to = "2010-01-01",
+        by = "quarter")
+                       
     x
     a <- aggregate(x, by, sum)
     a
+    
+    ### DW here are mismatches - corrected above ...
     checkEquals(sum(x[1]), a[1])
     checkEquals(sum(x[2:4]), a[2])
     checkEquals(sum(x[5:7]), a[3])
