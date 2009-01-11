@@ -29,7 +29,7 @@ oandaImport(query, file = "tempfile", source = NULL, frequency = "daily",
 
 \arguments{
 
-        \item{file}{
+    \item{file}{
         a character string with filename, usually having extension 
         ".csv", where to save the downloaded data.
         }
@@ -40,7 +40,7 @@ oandaImport(query, file = "tempfile", source = NULL, frequency = "daily",
         of the time series to be dowwnloaded. This may fail, in
         such case specify the frequency explicitely.
         }
-    \item{from} {
+    \item{from}{
         the date from when to extract the time series.
         }
     \item{nDaysBack}{
@@ -65,7 +65,7 @@ oandaImport(query, file = "tempfile", source = NULL, frequency = "daily",
     \item{symbols} {
         a character string with the symbols to be downloaded.
         }
-    \item{to} {
+    \item{to}{
         the end date of the data download, by default the current 
         date.
         }
