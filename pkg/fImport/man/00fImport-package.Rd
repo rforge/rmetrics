@@ -41,15 +41,14 @@
     data from the internet. Functions are availalbe for the 
     follwing web sites:
     
-    1. Data from www.economagic.com\cr
-    2. Data from research.stlouisfed.org\cr
-    3. Data from www.oanda.com\cr
-    4. Data from chart.yahoo.com
+    1. Data from research.stlouisfed.org\cr
+    2. Data from www.oanda.com\cr
+    3. Data from chart.yahoo.com
     
     There are two kinds of functions available, the first kind is called 
     \code{*Series} which downloads a \code{"timeSeries"} object from a
     web site wher the star \code{*} is a placeholder for the web site
-    (economagic, fred, oanda, and yahoo), and the second kind is called
+    (fred, oanda, and yahoo), and the second kind is called
     \code{*Import} which downloads an S4 object of class \code{fWEBDATA"}
     wit a \code{@Data} slot which keeps the \code{"timeSeries"} object
     and further slots which keep additional download information.
@@ -70,10 +69,9 @@
 \section{Downloading a 'timeSeries' Object:}{
 
     The following functions 
-    
-    1. economagicSeries\cr
-    2. fredSeries\cr
-    4. oandaSeries\cr
+
+    1. fredSeries\cr
+    2. oandaSeries\cr
     3. yahooSeries
     
     allow for an easy download of economic and financial time series data 
@@ -92,9 +90,8 @@
 
     If you like to keep additional download information, use the functions
     
-    1. economagicImport\cr
-    2. fredImport\cr
-    4. oandaImport\cr
+    1. fredImport\cr
+    2. oandaImport\cr
     3. yahooImport
     
     which return objects of class \code{"fWEBDATA"}.
