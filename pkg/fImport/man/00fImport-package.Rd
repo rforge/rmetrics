@@ -49,7 +49,7 @@
     \code{*Series} which downloads a \code{"timeSeries"} object from a
     web site wher the star \code{*} is a placeholder for the web site
     (fred, oanda, and yahoo), and the second kind is called
-    \code{*Import} which downloads an S4 object of class \code{fWEBDATA"}
+    \code{*Import} which downloads an S4 object of class \code{"fWEBDATA"}
     wit a \code{@Data} slot which keeps the \code{"timeSeries"} object
     and further slots which keep additional download information.
     
