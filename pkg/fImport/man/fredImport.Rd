@@ -62,7 +62,7 @@ fredImport(query, file = "tempfile", source = NULL, frequency = "daily",
         If \code{NULL}, then the URL will be set automatically to its
         default value.
         }
-    \item{symbols} {
+    \item{symbols}{
         a character string with the symbols to be downloaded.
         }
     \item{to}{
