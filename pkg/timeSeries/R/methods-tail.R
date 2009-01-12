@@ -35,17 +35,8 @@ setMethod("tail",
     # FUNCTION:
 
     # Tail:
-    cat(finCenter(x), "\n", sep = "")
-    if (recordIDs) {
-        if (dim(x)[1] == dim(x@recordIDs)[1]) {
-            Tail = tail(cbind(as.matrix(x), as.matrix(x@recordIDs)), n = n, ...)
-        } else {
-            Tail = tail(as.matrix(x), n = n, ...)
-        }
-    } else {
-        Tail = tail(as.matrix(x), n = n, ...)
-    }
-
-    # Return Value:
-    Tail
+    if (recordIDs & dim(x)[1] == dim(x@recordIDs)[1])
+        cbind(tail.matrix(x, n = n, ...), tail(x@recordIDs, n = n, ...))
+    else
+        tail.matrix(x, n = n, ...)
 })

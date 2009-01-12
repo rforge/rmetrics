@@ -99,7 +99,8 @@
 
 # ------------------------------------------------------------------------------
 
-setMethod("dim", "timeSeries", function(x) dim(x@.Data))
+# note it is faster to access attribute rather than accessing @.Data
+setMethod("dim", "timeSeries", function(x) attr(x, "dim"))
 
 # ------------------------------------------------------------------------------
 

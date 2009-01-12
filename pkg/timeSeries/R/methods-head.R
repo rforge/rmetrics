@@ -34,18 +34,8 @@ setMethod("head", "timeSeries",
     # FUNCTION:
 
     # Head:
-    cat(finCenter(x), "\n", sep = "")
-    if (recordIDs) {
-        if (dim(x)[1] == dim(x@recordIDs)[1]) {
-            Head = head(cbind(as.matrix(x), as.matrix(x@recordIDs)), n = n, ...)
-        } else {
-            Head = head(as.matrix(x), n = n, ...)
-        }
-    } else {
-        Head = head(as.matrix(x), n = n, ...)
-    }
-
-    # Return Value:
-    Head
-
+    if (recordIDs & dim(x)[1] == dim(x@recordIDs)[1])
+        cbind(head.matrix(x, n = n, ...), head(x@recordIDs, n = n, ...))
+    else
+        head.matrix(x, n = n, ...)
 })

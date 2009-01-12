@@ -48,7 +48,7 @@ setMethod("show", "timeSeries",
     }
 
     # Return Value:
-    invisible(NULL)
+    invisible(object)
 })
 
 
@@ -111,7 +111,7 @@ setMethod("show", "timeSeries",
     }
 
     # Return Value:
-    return(invisible(x))
+    invisible(x)
 }
 
 setMethod("print", "timeSeries", .print.timeSeries)
