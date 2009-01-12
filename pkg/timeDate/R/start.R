@@ -6,16 +6,16 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -35,55 +35,49 @@
 ################################################################################
 
 
-start.timeDate <- 
+start.timeDate <-
     function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Extracts the first object of a 'timeDate' vector
 
     # Arguments:
     #   x - a 'timeDate' object
-    
+
     # Value:
-    #   Returns from 'x' the earliest entry as an object of class 
+    #   Returns from 'x' the earliest entry as an object of class
     #   'timeDate'.
-    
+
     # FUNCTION:
-    
-    # Start:
-    ans = sort(x)[1]
-    
+
     # Return Value:
-    ans
+    timeDate(min(as.POSIXct(x)), zone = "GMT", FinCenter = x@FinCenter)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-end.timeDate <- 
+end.timeDate <-
     function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Extracts the last object of a 'timeDate' vector
 
     # Arguments:
     #   x - a 'timeDate' object
-    
+
     # Value:
     #   Returns an object of class 'timeDate'.
 
     # FUNCTION:
-    
-    # Start:
-    ans = sort(x)[length(x)]
-    
+
     # Return Value:
-    ans
+    timeDate(max(as.POSIXct(x)), zone = "GMT", FinCenter = x@FinCenter)
 }
 
 
