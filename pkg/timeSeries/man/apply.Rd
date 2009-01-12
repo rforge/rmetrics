@@ -90,7 +90,7 @@ applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
     Like \code{apply} applies a function to the margins of an array, the
     function \code{fapply} applies a function to the time stamps or
     signal counts of a financial (therefore the "f" in front of the 
-    function name) time series of class \code{timeSeries"}. 
+    function name) time series of class \code{'timeSeries'}. 
     
     The function \code{fapply} inputs a \code{timeSeries} object, and
     if \code{from} and \code{to} are missing, they take the start 
