@@ -56,7 +56,7 @@ efficientPortfolio <-
     setTargetReturn(spec) = portfolio$targetReturn
     setTargetRisk(spec) = portfolio$targetRisk
     setStatus(spec) = portfolio$status
-    Title = "Risk Minimized Efficient Portfolio"
+    Title = "Efficient Portfolio"
 
     # Compose Portfolio:
     portfolio = feasiblePortfolio(data, spec, constraints)
