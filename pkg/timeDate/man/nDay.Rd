@@ -58,7 +58,7 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
     
     For function \code{timeNthNdayInMonth} the \code{nth} ocurrance 
     of a n-day (nth = 1,...,5) in \code{year}, \code{month}, and
-    for {timeLastNdayInMonth} the last \code{nday} in \code{year},
+    for \code{timeLastNdayInMonth} the last \code{nday} in \code{year},
     \code{month} will be returned.
        
 }
