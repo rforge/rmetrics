@@ -204,8 +204,8 @@ as.matrix.timeSeries <-
         stop("x is not a timeSeries object!")
 
     # Convert:
-    ans <- x@.Data # is matrix
-    dimnames(ans) <- list(x@positions, x@units)
+    ans <- getDataPart(x) # is matrix
+    dimnames(ans) <- dimnames(x)
 
     # Results
     ans
