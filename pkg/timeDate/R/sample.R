@@ -36,14 +36,13 @@
 setMethod("sample", "timeDate",
     function(x, size, replace = FALSE, prob = NULL)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # FUNCTION:
 
     # Sample:
-    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
-    charvec = sample(as.character(GMT@Data), size, replace, prob)
-    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    ct <- sample(as.POSIXct(x), size, replace, prob)
+    ans <- timeDate(ct, zone = "GMT", FinCenter = x@FinCenter)
 
     # Return Value:
     ans
