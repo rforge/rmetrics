@@ -5,6 +5,7 @@
 
 
 \alias{fGARCH-class}
+\alias{update,fGARCH-method}
 
 
 \title{Class "fGARCH"}
@@ -73,7 +74,7 @@
 \section{Methods}{
     \describe{
     
-    \item{plot}{\code{signature(x = "fGARCH", y = "missing)}: 
+    \item{plot}{\code{signature(x = "fGARCH", y = "missing")}: 
         plots an object of class 'fGARCH'.
         }
     \item{show}{\code{signature(object = "fGARCH")}: 

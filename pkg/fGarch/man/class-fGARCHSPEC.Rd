@@ -5,6 +5,7 @@
 
 
 \alias{fGARCHSPEC-class}
+\alias{update,fGARCHSPEC-method}
 
 
 \title{Class "fGARCHSPEC"}
