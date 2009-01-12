@@ -36,7 +36,7 @@
 rev.timeDate <-
     function(x)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Reverts  a 'timeDate' vector object.
@@ -50,8 +50,7 @@ rev.timeDate <-
     # FUNCTION:
 
     # Return Value:
-    x@Data <- rev(x@Data)
-    x
+    timeDate(rev(as.POSIXct(x)), zone = "GMT", FinCenter=x@FinCenter)
 }
 
 
