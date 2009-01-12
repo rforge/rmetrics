@@ -22,8 +22,8 @@
 setMethod("cbind2",
           c("timeSeries", "timeSeries"),
           function(x, y)
-      {   # A function implemented by Diethelm Wuertz
-          # Modified by Yohan chalabi
+      {
+          # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
           # Description:
           #   Merges two 'timeSeries' objects
@@ -45,32 +45,39 @@ setMethod("cbind2",
                  "1" = { x <- timeSeries(x, format = "counts");
                        y <- timeSeries(y, format = "counts") })
 
-          # check if x and y have same date format,
-          # if not convert to the most extended one
-          if (y@format != x@format) {
-              if (nchar(y@format) > nchar(x@format)) {
-                  x@positions <- format(time(x), format = y@format)
-                  rownames(x) <- x@positions
-                  x@format <- y@format
-              } else {
-                  y@positions <- format(time(y), format = x@format)
-                  rownames(y) <- y@positions
-                  y@format <- x@format
-              }
-          }
+          ###  # YC: unnecessary if c(time(x), time(y)) is used in
+          ###  # next statement
+
+          ###  # check if x and y have same date format,
+          ###  # if not convert to the most extended one
+          ###  if (y@format != x@format) {
+          ###      if (nchar(y@format) > nchar(x@format)) {
+          ###          x@positions <- format(time(x), format = y@format)
+          ###          rownames(x) <- x@positions
+          ###          x@format <- y@format
+          ###      } else {
+          ###          y@positions <- format(time(y), format = x@format)
+          ###          rownames(y) <- y@positions
+          ###          y@format <- x@format
+          ###      }
+          ###  }
 
           # Manipulate in matrix form:
-          positions <- as.character(c(x@positions, y@positions))
-          LENGTH <- length(as.character(x@positions))
+          positions <- as.character(c(time(x), time(y)))
+          LENGTH <- nrow(x)
           DUP1 <- duplicated(positions)[1:LENGTH]
           DUP2 <- duplicated(positions)[-(1:LENGTH)]
-          M1 <- as.matrix(x)
-          M2 <- as.matrix(y)
+          # YC : avoid troubles with different format in @positions
+          M1 <- getDataPart(x)
+          M2 <- getDataPart(y)
+          rownames(M1) <- positions[1:LENGTH]
+          rownames(M2) <- positions[-(1:LENGTH)]
           dim1 <- dim(M1)
           dim2 <- dim(M2)
           X1 <- matrix(rep(NA, times = dim1[1]*dim2[2]), ncol = dim2[2])
           X2 <- matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
-          colnames(X1) <- colnames(M2)
+          # YC : Does not seem to be necessary
+          # colnames(X1) <- colnames(M2)
           NC <- (dim1 + dim2)[2]+1
           Z <- rbind(cbind(M1, X1, DUP1), cbind(X2, M2, DUP2))
           Z <- Z[order(rownames(Z)), ]
@@ -79,8 +86,9 @@ setMethod("cbind2",
           Z[IDX-1, NC1:(NC-1)] <- Z[IDX, NC1:(NC-1)]
           Z <- Z[!Z[, NC], -NC]
 
-          units <- c(x@units, y@units)
+          # FIXME : what about @recordIDs ?
 
+          units <- c(colnames(x), colnames(y))
           # change colnames if there are the same
           if (length(unique(units)) != length(units)) {
               for (name in unique(units)) {
@@ -91,10 +99,8 @@ setMethod("cbind2",
           }
 
           # Create time series:
-
           timeSeries( data = Z, charvec = rownames(Z), zone =
               finCenter(x), FinCenter = finCenter(x), units = units)
-
       })
 
 # ------------------------------------------------------------------------------
@@ -109,8 +115,8 @@ setMethod("cbind2", c("timeSeries", "missing"), function(x,y) x)
 
 setMethod("rbind2", c("timeSeries", "timeSeries"),
           function(x, y)
-      {   # A function implemented by Diethelm Wuertz
-          # Modified by Yohan chalabi
+      {
+          # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
           # Check Arguments:
           stopifnot(dim(x)[2] == dim(y)[2])
@@ -124,36 +130,36 @@ setMethod("rbind2", c("timeSeries", "timeSeries"),
                  "1" = { x <- timeSeries(x, format = "counts");
                        y <- timeSeries(y, format = "counts") })
 
-          # check if x and y have same date format,
-          # if not convert to the most extended one
-          if (y@format != x@format) {
-              if (nchar(y@format) > nchar(x@format)) {
-                  x@positions <- format(time(x), format = y@format)
-                  rownames(x) <- x@positions
-                  x@format <- y@format
-              } else {
-                  y@positions <- format(time(y), format = x@format)
-                  rownames(y) <- y@positions
-                  y@format <- x@format
-              }
-          }
+          ###  # check if x and y have same date format,
+          ###  # if not convert to the most extended one
+          ###  if (y@format != x@format) {
+          ###      if (nchar(y@format) > nchar(x@format)) {
+          ###          x@positions <- format(time(x), format = y@format)
+          ###          rownames(x) <- x@positions
+          ###          x@format <- y@format
+          ###      } else {
+          ###          y@positions <- format(time(y), format = x@format)
+          ###          rownames(y) <- y@positions
+          ###          y@format <- x@format
+          ###      }
+          ###  }
 
           # Bind:
-          data <- as.matrix(rbind(series(x), series(y)))
-          positions <- c(x@positions, y@positions)
-          if (x@format == "counts") positions <- as.numeric(positions)
+          positions <- as.character(c(time(x), time(y)))
+          data <- rbind(getDataPart(x), getDataPart(y))
+          # YC : Does not seem necessary
+          # if (x@format == "counts") positions <- as.numeric(positions)
           recordIDs <- as.data.frame(rbind(x@recordIDs, y@recordIDs))
 
           # Order series
           order <- order(positions)
-          data <- data[order,]
+          data <- data[order,,drop=FALSE]
           positions <- positions[order]
-          recordIDs <- recordIDs[order,]
+          recordIDs <- recordIDs[order,,drop=FALSE]
           units <- paste(colnames(x), colnames(y), sep = "_")
 
           timeSeries(data = data, charvec = positions, zone =
                      finCenter(x), FinCenter = finCenter(x), units = units)
-
       })
 
 # ------------------------------------------------------------------------------
@@ -165,4 +171,3 @@ setMethod("rbind2", c("ANY", "timeSeries"),
 setMethod("rbind2", c("timeSeries", "missing"), function(x,y) x)
 
 ################################################################################
-
