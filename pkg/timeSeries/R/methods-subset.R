@@ -54,7 +54,9 @@ setClassUnion("index_timeSeries",
     }
 
     # subset data and positions
-    slot(x, ".Data") <- .subset(slot(x, ".Data"), i, j, drop = FALSE)
+    slot(x, ".Data") <- .subset(x, i, j, drop = FALSE)
+    # YC : faster than
+    # slot(x, ".Data") <- .subset(slot(x, ".Data"), i, j, drop = FALSE)
     slot(x, "positions") <- .subset(slot(x, "positions"), i, drop = FALSE)
     slot(x, "units") <- .subset(slot(x, "units"), j, drop = FALSE)
 
@@ -81,9 +83,11 @@ setMethod("[",
                          j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
-          if(nargs() == 2) {
-              if(any(as.logical(i)) || prod(dim(x)) == 0)
-                   as.vector(x)[i]
+          if(nargs() == 2) { # same sub-setting as matrix
+              if (is.character(i))
+                  NA
+              else if(any(as.logical(i)) || prod(dim(x)) == 0)
+                  as.vector(x)[i]
           } else {
               .subset_timeSeries(x, i, TRUE)
           }
@@ -221,7 +225,7 @@ setMethod("[",
             stop("subscript out of bounds", call. = FALSE)
     }
 
-    x@.Data[i, j] <- value
+    x[i, j] <- value
 
     # Result
     x
@@ -230,23 +234,25 @@ setMethod("[",
 # ------------------------------------------------------------------------------
 # index_timeSeries
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "index_timeSeries",
-                           j = "index_timeSeries"),
-                 function(x, i, j, value)
-                 .assign_timeSeries(x, i, j, value))
+## YC : superfluous
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "index_timeSeries",
-                           j = "missing"),
-                 function(x, i, j, value)
-                 .assign_timeSeries(x, i, TRUE, value))
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "index_timeSeries",
+##                            j = "index_timeSeries"),
+##                  function(x, i, j, value)
+##                  .assign_timeSeries(x, i, j, value))
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "missing",
-                           j = "index_timeSeries"),
-                 function(x, i, j, value)
-                 .assign_timeSeries(x, TRUE, j, value))
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "index_timeSeries",
+##                            j = "missing"),
+##                  function(x, i, j, value)
+##                  .assign_timeSeries(x, i, TRUE, value))
+
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "missing",
+##                            j = "index_timeSeries"),
+##                  function(x, i, j, value)
+##                  .assign_timeSeries(x, TRUE, j, value))
 
 # ------------------------------------------------------------------------------
 # timeDate
@@ -290,16 +296,18 @@ setReplaceMethod("[",
 # ------------------------------------------------------------------------------
 # matrix
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "matrix",
-                           j = "index_timeSeries"),
-                 function(x, i, j, value)
-                 .assign_timeSeries(x, as.vector(i), j))
+## YC : superfluous
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "matrix", j = "missing"),
-                 function(x, i, j, value)
-                     .assign_timeSeries(x, as.vector(i), TRUE))
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "matrix",
+##                            j = "index_timeSeries"),
+##                  function(x, i, j, value)
+##                  .assign_timeSeries(x, as.vector(i), j))
+
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "matrix", j = "missing"),
+##                  function(x, i, j, value)
+##                      .assign_timeSeries(x, as.vector(i), TRUE))
 
 # ------------------------------------------------------------------------------
 # timeSeries
@@ -332,16 +340,20 @@ setReplaceMethod("[",
 # ------------------------------------------------------------------------------
 # all missing
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "missing", j = "missing"),
-                 function(x, i, j, value) {x@.Data[] <- value; x})
+## YC : superfluous
+
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "missing", j = "missing"),
+##                  function(x, i, j, value) {x@.Data[] <- value; x})
 
 # ------------------------------------------------------------------------------
 # ANY
 
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "ANY", j = "ANY"),
-                 function(x, i, j, value)
-                 stop("invalid or not-yet-implemented 'timeSeries' assignment"))
+## YC : superfluous
+
+## setReplaceMethod("[",
+##                  signature(x = "timeSeries", i = "ANY", j = "ANY"),
+##                  function(x, i, j, value)
+##                  stop("invalid or not-yet-implemented 'timeSeries' assignment"))
 
 ################################################################################
