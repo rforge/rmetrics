@@ -24,6 +24,7 @@ importFrom("graphics",
 importFrom("grDevices",
            "xy.coords")
 importFrom("methods",
+           "getDataPart",
            "cbind2",
            "coerce",
            "rbind2",
