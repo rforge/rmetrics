@@ -56,7 +56,7 @@ scaleTest(x, y, method = c("ansari", "mood"),
     \item{@test}{
         a list whose elements contail the results from the statistical
         test. The information provided is similar to a list object of
-        class{"htest"}.
+        class \code{"htest"}.
         }
     \item{@title}{
         a character string with the name of the test. This can be 
@@ -104,7 +104,7 @@ scaleTest(x, y, method = c("ansari", "mood"),
     any sizes of the series \code{x} and \code{y} the exact p value 
     together with its asymptotic limit.  
     
-    The code{method="mood"}, is another test which performs a 
+    The \code{method="mood"}, is another test which performs a 
     two--sample test for a difference in scale parameters. The underlying 
     model is that the two samples are drawn from \emph{f(x-l)} and 
     \emph{f((x-l)/s)/s}, respectively, where \emph{l} is a common 

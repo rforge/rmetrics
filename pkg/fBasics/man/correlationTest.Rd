@@ -63,7 +63,7 @@ spearmanTest(x, y, title = NULL, description = NULL)
     \item{@test}{
         a list whose elements contail the results from the statistical
         test. The information provided is similar to a list object of
-        class{"htest"}.
+        class \code{"htest"}.
         }
     \item{@title}{
         a character string with the name of the test. This can be 
