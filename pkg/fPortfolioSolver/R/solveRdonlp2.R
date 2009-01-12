@@ -30,14 +30,11 @@ solveRdonlp2 <-
     # Description:
     #   Portfolio interface to solver Rdonlp2
     
-    # Example:
-    #   data = .lppData; spec = .mvSpec; constraints = "LongOnly"
-    #   Data = portfolioData(data); mu = getMu(Data); Sigma = getSigma(Data)
-    #   IMPORTANT:
-    #   fn(x) and all its parameters must be assigned to .GlobalEnv
-    #   minRisk = function(x) { x %*% Sigma %*% x }
-    #   maxReturn = function(x) { x %*% mu }
-  
+    # Arguments;
+    #   data - an object of class timeSeries
+    #   spec - an object of class fPFOLIOSPEC
+    #   constraints - an object of class character
+    
     # FUNCTION:   
 
     # Settings:
@@ -45,22 +42,16 @@ solveRdonlp2 <-
     nAssets = getNAssets(Data)
     mu = getMu(Data)
     Sigma = getSigma(Data)
-        
-    #assign("mu", getMu(Data), envir = .GlobalEnv)
-    assign("maxReturn", function(x) { x %*% mu })
-    
-    #assign("Sigma", getSigma(Data), envir = .GlobalEnv)
-    assign("minRisk", function(x) { x %*% Sigma %*% x })
     
     # Solve:
-    if(nAssets == 2) {
+    # if(nAssets == 2) {
 
         # Solve two Assets Portfolio Analytically:
         # ... this is only thought for 'unlimited' LongOnly Constraints
         # box and group constraints are discarded here.
         # ans = .mvSolveTwoAssets(data, spec, constraints)
             
-    } else {
+    # } else {
         
         # Compile Arguments for Solver:
         args = .rdonlp2Arguments(data, spec, constraints)
@@ -76,10 +67,12 @@ solveRdonlp2 <-
             lin.upper = args$lin.upper,
             nlin = args$nlin, 
             nlin.lower = args$nlin.lower, 
-            nlin.upper = args$nlin.upper,
-            targetReturn = args$targetReturn)
-            
-    }
+            nlin.upper = args$nlin.upper) 
+        returnFun = match.fun(getObjective(spec)[2])
+        ans$targetReturn = returnFun(ans$weights)
+        riskFun = match.fun(getObjective(spec)[3])
+        ans$targetRisk = riskFun(ans$weights)
+    # }
 
     # Return Value:
     ans
@@ -113,17 +106,21 @@ function(data, spec, constraints)
     # Settings:
     Data = portfolioData(data)
     nAssets = getNAssets(Data)  
-    targetReturn = getTargetReturn(spec)
-    fn = getOptimize(spec)
+    mu = getMu(Data)
     Sigma = getSigma(Data)
-    
+    fn = match.fun(getObjective(spec)[1])
+     
     # Box Constrains:
     par.lower = minWConstraints(data, spec, constraints)
     par.upper = maxWConstraints(data, spec, constraints)
     if(DEBUG) print(rbind(par.lower, par.upper))
     
     # Linear / Group Constraints:
+    # ... targetReturn may be not defined,then set it to NA
+    if (is.null(getTargetReturn(spec))) setTargetReturn(spec) <- NA
+    # ... has in the first line the return constraint, if NA then ignore  it
     eqsumW = eqsumWConstraints(data, spec, constraints)
+    if (is.na(eqsumW[1, 1])) eqsumW = eqsumW[-1, , drop= FALSE]
     Aeqsum = eqsumW[, -1]
     aeqsum = eqsumW[, 1]
     minsumW = minsumWConstraints(data, spec, constraints)
@@ -192,8 +189,7 @@ function(data, spec, constraints)
         par = rep(1/nAssets, nAssets), fn = fn,
         par.lower = par.lower, par.upper = par.upper, 
         A = A, lin.lower = lin.lower, lin.upper = lin.upper,
-        nlin = nlin, nlin.lower = nlin.lower, nlin.upper = nlin.upper,
-        targetReturn = targetReturn)
+        nlin = nlin, nlin.lower = nlin.lower, nlin.upper = nlin.upper)
 }
     
 
@@ -202,15 +198,12 @@ function(data, spec, constraints)
 
 .rdonlp2 <-
     function(par, fn, par.lower, par.upper, A, lin.lower, lin.upper,
-    nlin, nlin.lower, nlin.upper, targetReturn = targetReturn)
+    nlin, nlin.lower, nlin.upper)
 {
     # Description:
     #   Rdonlp2 Wrapper    
 	
 	# FUNCTION:
-	
-	# Settings:
-    fn = match.fun(fn)
 	
 	# Solve:
     optim <- Rdonlp2::donlp2(
@@ -247,9 +240,7 @@ function(data, spec, constraints)
         solver = "solveRdonlp2",
         optim = optim,
         weights = weights, 
-        targetReturn = targetReturn,
-        targetRisk = sqrt(optim$fx), 
-        objective = sqrt(optim$fx), 
+        objective = optim$fx, 
         status = Status, 
         message = optim$message)    
         
