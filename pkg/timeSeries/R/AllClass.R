@@ -37,9 +37,9 @@ setClass("timeSeries",
                         documentation = "character"),
          contains = "structure",
          validity = function(object) {
-             if (NROW(object@.Data) != length(object@positions))
+             if (NROW(getDataPart(object)) != length(object@positions))
                  return("@positions and rows of @.Data are not equal")
-             if (NCOL(object@.Data) != length(object@units))
+             if (NCOL(getDataPart(object)) != length(object@units))
                  return("@units and columns of @.Data are not equal")
              TRUE
          })
