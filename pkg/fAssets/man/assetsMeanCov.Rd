@@ -83,7 +83,7 @@ getCovRob(object)
     \item{\dots}{
         optional arguments to be passed to the underlying estimators. 
         For details we refer to the manual pages of the functions 
-        \code{cov.rob} for arguments \code{"mve"} and \code{mcd"} in 
+        \code{cov.rob} for arguments \code{"mve"} and \code{"mcd"} in 
         the R package \code{MASS}, to the functions
         \code{covMcd} and \code{covOGK} in the R package \code{robustbase}.
         }

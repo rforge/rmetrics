@@ -53,7 +53,7 @@ assetsLPM(x, tau, a, \dots)
   
     \code{assetsLPM}
     \cr
-    returns a list with two entries named \code{mu} and Sigma{Sigma}.
+    returns a list with two entries named \code{mu} and \code{Sigma}.
     The first denotes the vector of lower partial moments, and the 
     second the co-LPM matrix. Note, that the output of this function 
     can be used as data input for the portfolio functions to compute 
@@ -86,4 +86,3 @@ assetsLPM(x, tau, a, \dots)
 
 
 \keyword{models}
-

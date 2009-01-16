@@ -81,7 +81,7 @@ assetsHistPairsPlot(x, bins = 30, method = c("square", "hex"), ...)
     \item{estimator}{
         a character string naming the type of estimator to fit the mean 
         and variance of the normal density. This may be either \code{"huber"}, 
-        \code{sample"}, or \code{"both"}.
+        \code{"sample"}, or \code{"both"}.
         }    
     \item{labels}{
         a logical flag, if \code{TRUE} then default labels will be used,
