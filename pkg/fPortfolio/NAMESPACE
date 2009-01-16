@@ -143,16 +143,6 @@ S3method("summary", "fPORTFOLIO")
 ################################################
 
 export(
-    "GCCINDEX",
-    "SPISECTOR",
-    "SWX",
-    "LPP2005",
-    "SMALLCAP",
-    "GCCINDEX.RET",
-    "SPISECTOR.RET",
-    "SWX.RET",
-    "LPP2005.RET",
-    "SMALLCAP.RET",
     ".addlegend",
     ".attributesWheel",
     ".cfgFit",

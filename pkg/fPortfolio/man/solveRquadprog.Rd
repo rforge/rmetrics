@@ -34,7 +34,7 @@ solveRquadprog(data, spec, constraints)
     \item{constraints}{
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
-        \code{"maxsumW[assets]=percentage} for sector constraints.
+        \code{"maxsumW[assets]=percentage"} for sector constraints.
         }
 }
 

@@ -89,7 +89,7 @@
     }
         
     An object of class \code{fPFOLIOSPEC} has three slots, named
-    \code{@model}, \@code{portfolio}, and \code{@optim}
+    \code{@model}, \code{portfolio}, and \code{@optim}
     The first slot \code{@model} holds the model information, the second
     slot \code{@portfolio} the portfolio information, and the last slot
     \code{@optim} the information about the solver used for optimization.
@@ -147,7 +147,7 @@
     }
     
     An object of class \code{fPFOLIODATA} has three slots repfresented
-    by lists, named \code{@data}, \@code{@statistics}, and \code{@tailrisk}.
+    by lists, named \code{@data}, \code{@statistics}, and \code{@tailrisk}.
     The first slot \code{@data} holds the data information, the second
     slot \code{@statistics} the estimated mean and covariance together
     with optional robust estimates, and the last slot \code{@tailRisk} 
@@ -188,7 +188,7 @@
     The individual string elements of such vectors have the following 
     form for box and group constraints
     
-    \description{
+    \describe{
         \item{box constraints}{
             \code{"minW[Asset(s)]=Value(s)"}, and/or \cr
             \code{"maxW[Asset(s)]=Value(s)"}.
@@ -231,7 +231,7 @@
     }
     
     An object of class \code{fPFOLIOCON} has three slots represented
-    by lists, named \code{@stringConstraints}, \@code{@boxgroupConstraints}, 
+    by lists, named \code{@stringConstraints}, \code{@boxgroupConstraints}, 
     and \code{@riskbudgetConstraints}.
     The first slot \code{@stringConstraints} holds the constraints 
     information given by the string specification, the second
