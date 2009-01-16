@@ -3,7 +3,7 @@ Version: 271.75
 Date: 2008
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
-Depends: R (>= 2.4.0), MASS, methods, timeDate, timeSeries, fBasics, fAssets, quadprog, Rglpk, fPortfolio
+Depends: R (>= 2.6.0), fPortfolio
 Suggests: Rdonlp2, Rsocp, RlpSolve, RlpSolveAPI, Rsymphony, robustbase, corpcor, covRobust
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
