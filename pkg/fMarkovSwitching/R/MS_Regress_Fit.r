@@ -155,7 +155,7 @@ assign("typeCall"   , typeCall  , envir = .GlobalEnv)
 
 # Controls for donlp2 Algorithm 
 
-myControl<-donlp2.control()     # create structure
+myControl<-donlp2Control()     # create structure 
 
 myControl$iterma=2000           # maximum number of iterations
 myControl$fnscale=-1            # maximization of function (instead of minimization)
