@@ -67,6 +67,9 @@ portfolioConstraints <-
     # Already done ...
     if (class(constraints) == "fPFOLIOCON") return(constraints)
     
+    # Missing target Return ...
+    if (is.null(getTargetReturn(spec))) setTargetReturn(spec) <- NA
+    
     # Handle NULL - A NULL  :
     if (is.null(constraints)) constraints = "LongOnly"
     
@@ -611,6 +614,7 @@ function(data, spec = portfolioSpec(), constraints = "LongOnly")
     if(!is.na(matched)) eval(parse(text = constraints[matched]))
     return(minF)
 }
+
 
 maxFConstraints <- 
 function(data, spec = portfolioSpec(), constraints = "LongOnly") 
