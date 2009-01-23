@@ -175,48 +175,6 @@ setMethod("show", "fPFOLIOSPEC",
 
 # ------------------------------------------------------------------------------
 
-if(FALSE) {
-setMethod("show", "fPFOLIOCON",
-    function(object)
-{
-    # Description:
-    #   S4 Print Method for an object of class "fPFOLIODATA"
-
-    # Arguments:
-    #   object - an object of class "fPFOLIOSPEC"
-
-    # FUNCTION:
-
-    # Print Title:
-    cat("\nTitle:\n ")
-    cat("Portfolio Constraints\n")
-
-    cat("\nConstraint String:\n")
-    print(object@stringConstraints)
-
-    cat("\nBox Constraints:\n")
-    print(object@boxConstraints)
-
-    cat("Group-Equal Constraints:\n")
-    print(object@groupEqConstraints)
-
-    cat("Group-Matrix Constraints:\n")
-    print(object@groupMatConstraints)
-
-    cat("Cov Risk Budget Constraints:\n")
-    print(object@riskBudgetConstraints)
-    
-    cat("Box/Group Constraints:\n")
-    print(object@boxGroupConstraints)
-
-    # Return Value:
-    invisible(object)
-})
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 setMethod("show", "fPFOLIOCON",
     function(object)
@@ -234,6 +192,7 @@ setMethod("show", "fPFOLIOCON",
     cat("Portfolio Constraints\n")
 
     minmaxW = rbind(object@minWConstraints, object@maxWConstraints)
+    rownames(minmaxW) = c("Lower", "Upper")
     if (length(minmaxW)) {
         cat("\nLower/Upper Bounds:\n")
         print(minmaxW)
