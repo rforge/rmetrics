@@ -154,8 +154,8 @@
     
     # Weights ?
     spec@portfolio$weights = value
-    # spec@portfolio$targetReturn = NULL
-    # spec@portfolio$targetRisk = NULL
+    spec@portfolio$targetReturn = NA
+    spec@portfolio$targetRisk = NA
     
     # Return Value:
     spec
@@ -179,11 +179,11 @@
 
     # Target Return ?
     spec@portfolio$targetReturn = value
-    # spec@portfolio$weights = NULL
-    # spec@portfolio$targetRisk = NULL
+    spec@portfolio$weights = NA
+    spec@portfolio$targetRisk = NA
     
-    # DW:
-    # spec@model$optimize = "minRisk"
+    # What to optimize ?
+    spec@model$optimize = "minRisk"
     
     # Return Value:
     spec
@@ -207,9 +207,11 @@
  
     # Target Return ?
     spec@portfolio$targetRisk = value
-    # spec@portfolio$weights = NULL
-    # spec@portfolio$targetReturn = NULL
-    # spec@model$optimize = "maxReturn"
+    spec@portfolio$weights = NA
+    spec@portfolio$targetReturn = NA
+     
+    # What to optimize ?
+    spec@model$optimize = "maxReturn"
     
     # Return Value:
     spec
@@ -424,10 +426,25 @@
 ################################################################################
 
 
-# maxReturn <- function(x, mu) { x %*% mu }
+if (FALSE) {
 
-
-# minRisk <- function(x, Sigma) { x %*% Sigma %*% x }
+    maxReturn <- 
+        function(x, mu) 
+    { 
+        x %*% mu 
+    }
+    
+    
+    # --------------------------------------------------------------------------
+    
+    
+    minRisk <- 
+        function(x, Sigma) 
+    { 
+        x %*% Sigma %*% x 
+    }
+    
+}  # FALSE END
 
 
 ################################################################################
