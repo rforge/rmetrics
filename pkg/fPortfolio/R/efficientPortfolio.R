@@ -62,8 +62,11 @@ efficientPortfolio <-
     spec@portfolio$weights = portfolio$weights
     spec@portfolio$targetReturn = portfolio$targetReturn
     spec@portfolio$targetRisk = portfolio$targetRisk
-    # ... to provide overwriting use:
+    
+    # Add Status:
     setStatus(spec) = portfolio$status
+    
+    # Add Title:
     Title = "Efficient Portfolio"
 
     # Compose Portfolio:
