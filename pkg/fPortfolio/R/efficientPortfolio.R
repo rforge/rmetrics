@@ -52,9 +52,17 @@ efficientPortfolio <-
     # Optimize Portfolio:
     Solver = match.fun(getSolver(spec))
     portfolio = Solver(data, spec, constraints)
-    setWeights(spec) = portfolio$weights
-    setTargetReturn(spec) = portfolio$targetReturn
-    setTargetRisk(spec) = portfolio$targetRisk
+    
+    # Set Parameters:
+    # Do not use ...
+    # setWeights(spec) = portfolio$weights
+    # setTargetReturn(spec) = portfolio$targetReturn
+    # setTargetRisk(spec) = portfolio$targetRisk
+    # to provide overwriting use:
+    spec@portfolio$weights = portfolio$weights
+    spec@portfolio$targetReturn = portfolio$targetReturn
+    spec@portfolio$targetRisk = portfolio$targetRisk
+    # ... to provide overwriting use:
     setStatus(spec) = portfolio$status
     Title = "Efficient Portfolio"
 

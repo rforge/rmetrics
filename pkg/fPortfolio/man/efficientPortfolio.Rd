@@ -169,7 +169,7 @@ maxreturnPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
    Spec
    setTargetReturn(Spec) = mean(colMeans(Data))
    
-## Allow for unlimited Short Selling:
+## Allow for LongOnly Constraints:
    Constraints = "LongOnly"
    
 ## efficientPortfolio -
