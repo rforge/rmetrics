@@ -134,40 +134,96 @@ setMethod("show", "fPFOLIOSPEC",
     # FUNCTION:
 
     # Model:
-        cat("\nPortfolio Specification:\t")
-        cat("\n Portfolio Type:           ",
-            object@model$type)
-        cat("\n Optimize:                 ",
-            object@model$optimize)
-        cat("\n Covariance Estimator:     ",
-            object@model$estimator)
-
+    
+    cat("\nModel List:\t")
+       
+    cat("\n Type:                     ",
+        object@model$type)
+        
+    cat("\n Optimize:                 ",
+        object@model$optimize)
+        
+    cat("\n Estimator:                ",
+        object@model$estimator)
+        
+    if (length(object@model$tailRisk) > 0) {
+        cat("\n Tail Risk:                ",
+            object@model$tailRisk)
+    } else {
+        cat("\n Tail Risk:                ", "list()")
+    }
+    
+    cat("\n Params:                   ",
+        paste(names(unlist(object@model$params)), "=", 
+            unlist(object@model$params)))
+    
     # Portfolio:
+    
+    cat("\n\nPortfolio List:\t")
+    
     if (!is.null(object@portfolio$weights)) {
         cat("\n Portfolio Weights:    ",
             object@portfolio$weights)
+    } else {
+        cat("\n Target Weights:           ", "NULL")
     }
+    
     if (!is.null(object@portfolio$targetReturn)) {
         cat("\n Target Return:            ",
             object@portfolio$targetReturn)
+    } else {
+        cat("\n Target Return:            ", "NULL")
     }
-    if (!is.null(object@portfolio$targetAlpha)) {
-        cat("\n Target Alpha:             ",
-        as.character(object@portfolio$targetAlpha))
+    
+    if (!is.null(object@portfolio$targetRisk)) {
+        cat("\n Target Risk:              ",
+            object@portfolio$targetReturn)
+    } else {
+        cat("\n Target Risk:              ", "NULL")
     }
+    
     if (!is.null(object@portfolio$riskFreeRate)) {
-        cat("\n Portfolio Risk-Free Rate: ",
+        cat("\n Risk-Free Rate:           ",
         as.character(object@portfolio$riskFreeRate))
     }
+    
     if (!is.null(object@portfolio$nFrontierPoints)) {
         cat("\n Number of Frontier Points:",
         as.character(object@portfolio$nFrontierPoints))
     }
+    
+    cat("\n Status:                   ",
+        as.character(object@portfolio$status))
 
+        
     # Optimization:
-        cat("\n Optimizer:                ",
-            object@optim$solver, "\n")
-
+    
+    cat("\n\nOptim List:\t")
+    
+    cat("\n Solver:                   ",
+        object@optim$solver)
+        
+    if (!is.null(object@optim$objective)) {
+        cat("\n Objective:                ",
+        as.character(object@optim$objective))
+    } else {
+        cat("\n Objective:                ", "list()" )
+    }
+    
+    cat("\n Params:                   ",
+        paste(names(unlist(object@optim$params)), "=", 
+            unlist(object@optim$params)))
+    
+    if (length(object@optim$control) > 0) {
+        cat("\n Control:                  ",
+        as.character(object@optim$control))
+    } else {
+        cat("\n Control:                  ", "list()")
+    }       
+        
+    cat("\n")
+            
+            
     # Return Value:
     invisible(object)
 })

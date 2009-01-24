@@ -38,7 +38,7 @@ function(
          targetRisk = NULL,
          riskFreeRate = 0,
          nFrontierPoints = 50,
-         status = 0),
+         status = NA),
     optim = list(
          solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
                                         #      "solveRglpk", 
