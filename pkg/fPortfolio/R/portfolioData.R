@@ -62,9 +62,11 @@ portfolioData <-
     estimator = getEstimator(spec)
     estimatorFun = match.fun(estimator)
     muSigma = estimatorFun(data, spec)
+    Cov = cov(data)
+    rownames(Cov) <- colnames(Cov) <- names   
     .statistics = list(
         mean = colMeans(data), 
-        Cov = cov(data),
+        Cov = Cov,
         estimator = estimator,
         mu = muSigma$mu, 
         Sigma = muSigma$Sigma)

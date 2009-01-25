@@ -108,10 +108,8 @@ setMethod("show", "fPFOLIODATA",
     print(head(object@data$series, n = 3))
     print(tail(object@data$series, n = 3))
 
-    # Statistics - first add missing names to matrix:
+    # Statistics:
     cat("\nStatistics:\n\n")
-    rownames(object@statistics$Cov) <- rownames(object@statistics$Sigma)
-    colnames(object@statistics$Cov) <- colnames(object@statistics$Sigma)
     print(object@statistics)
 
     # Tailrisk:
