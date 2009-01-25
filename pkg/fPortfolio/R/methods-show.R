@@ -104,8 +104,9 @@ setMethod("show", "fPFOLIODATA",
     # FUNCTION:
 
     # Series:
-    cat("\nSeries Data:\n\n")
-    print(object@data$series)
+    cat("\nHead/Tail Series Data:\n\n")
+    print(head(object@data$series, n = 3))
+    print(tail(object@data$series, n = 3))
 
     # Statistics:
     cat("\nStatistics:\n\n")
