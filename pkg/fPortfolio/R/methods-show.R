@@ -268,7 +268,7 @@ setMethod("show", "fPFOLIOCON",
     }
     
     maxsumW = object@maxsumWConstraints
-    if (sum(dim(minsumW)) > 2) {
+    if (sum(dim(maxsumW)) > 2) {
         cat("\nUpper Matrix Constraints:\n")
         print(maxsumW)
     }
@@ -280,9 +280,22 @@ setMethod("show", "fPFOLIOCON",
         print(minmaxB)
     }
     
+    listF = object@listFConstraints
+    minF = object@minFConstraints
+    maxF = object@maxFConstraints
+    if (length(listF) > 0) {
+        cat("\nNon-Linear Function Constraints:\n")
+        minmaxF = rbind(minF, maxF)
+        colnames(minmaxF) = names(listF)
+        rownames(minmaxF) = c("Lower", "Upper")
+        print(minmaxF)
+    }  
+        
+        
     # Return Value:
     invisible(object)
 })
+print(ans)
 
 
 ################################################################################
