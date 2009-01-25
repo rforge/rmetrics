@@ -295,7 +295,6 @@ setMethod("show", "fPFOLIOCON",
     # Return Value:
     invisible(object)
 })
-print(ans)
 
 
 ################################################################################
