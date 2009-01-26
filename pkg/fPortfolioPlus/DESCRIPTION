@@ -3,7 +3,7 @@ Version: 290.75
 Date: 1997 - 2009
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz
-Depends: R (>= 2.6.0), fPortfolio, fPortfolioSolver
+Depends: R (>= 2.6.0), fPortfolio, fPortfolioSolver, fPortfolioBacktest
 Suggests: robustbase, corpcor, covRobust
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
