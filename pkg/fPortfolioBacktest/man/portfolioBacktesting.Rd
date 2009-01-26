@@ -19,7 +19,7 @@
 portfolioBacktesting(formula, data, spec = portfolioSpec(), 
     constraints = "LongOnly", backtest = portfolioBacktest(), trace = TRUE)
 
-portfolioSmoothing(object, backtest)    
+portfolioSmoothing(object, backtest, trace = TRUE)    
 }
 
 
