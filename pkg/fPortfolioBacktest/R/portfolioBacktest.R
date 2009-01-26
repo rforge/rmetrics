@@ -108,7 +108,7 @@ portfolioBacktesting <-
     # Arguments:
     #   formula - a formula expression to select benchmark and assets
     #       from the data set
-    #   data - portfolio data, an object of class fPFLOLIODATA
+    #   data - portfolio data, an object of class fPFLOLIODATA or timeSeries
     #   spec - portfolio spec, an object of class fPFLOLIOSPEC
     #   constraints - portfolio constraints, a vector of character strings
     #   backtest - portfolio backtest, an object of class fPFLOLIOBACKTEST
@@ -122,6 +122,23 @@ portfolioBacktesting <-
    
     # FUNCTION:
    
+    # Data:
+    if (class(data) == "fPFOLIODATA") {
+        Data = data
+        data = getSeries(data)
+    } else if (class(data) == "timeSeries") {
+        Data = portfolioData(data, spec)
+    }
+    
+    # Constraints:
+    if (class(constraints) == "fPFOLIOSPEC") {
+        Constraints = constraints
+        constraints = Constraints@stringConstraints
+    } else if (class(constraints) == "character") {
+        Constraints = portfolioConstraints(data, spec, constraints)
+    }
+        
+    
     # Formula, Benchmark and Asset Labels:
     benchmarkName = as.character(formula)[2]
     assetsNames = strsplit(gsub(" ", "", as.character(formula)[3]), "\\+")[[1]]
@@ -171,7 +188,11 @@ portfolioBacktesting <-
         bmSeries = window(data[, benchmarkName], start = from[i], end = to[i])
         pfSeries = portfolioData(pfSeries, spec)
         Sigma = c(Sigma, mean(diag(getSigma(pfSeries))))
-        strategy = strategyFun(data = pfSeries, spec, constraints, backtest)
+        strategy = strategyFun(
+            data = getSeries(pfSeries), 
+            spec = spec, 
+            constraints = constraints, 
+            backtest = backtest)
         strategyList[[i]] = strategy
    
         # Trace Optionally the Results:
@@ -213,6 +234,7 @@ portfolioBacktesting <-
     # Return Value:
     invisible(ans)
 }
+
 
 # ------------------------------------------------------------------------------
 
