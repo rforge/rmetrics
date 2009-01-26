@@ -634,7 +634,7 @@ monteCarloPoints <-
         # Get Constraints Model:
         Model = rev(attr(object@constraints, "model"))[1]
         Model = "LongOnly"
-        if (Model == "Short" | any(object@constraints == "Short")) {
+        if (Model == "Short" | any(getConstraints(object) == "Short")) {
             # Monte Carlo Loop - Short:
             for (k in 1:mcSteps) {
                 s = sign(rnorm(N, mean = rnorm(1)))
@@ -644,7 +644,7 @@ monteCarloPoints <-
                 Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
                 points(Risk, Return, ...)
             }
-        } else if (Model == "LongOnly" | object@constraints == "LongOnly") {
+        } else if (Model == "LongOnly" | any(getConstraints(object) == "LongOnly")) {
             # Monte Carlo Loop - Long Only:
             for (k in 1:mcSteps) {
                 weights = abs(rcauchy(N))

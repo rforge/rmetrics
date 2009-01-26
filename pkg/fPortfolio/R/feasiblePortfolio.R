@@ -36,8 +36,10 @@ feasiblePortfolio <-
 
     # FUNCTION:
 
-    # Transform Data:
+    # Transform Data / spec / Constraints:
     Data = portfolioData(data, spec)
+    Spec = spec
+    Constraints = portfolioConstraints(data, spec, constraints)
     
     # Get Weights:
     if(is.null(getWeights(spec))) {
@@ -55,10 +57,7 @@ feasiblePortfolio <-
     # Compute Covariance Risk:
     Cov = Data@statistics$Cov
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
-
-    # Transfor Constraints:
-    constraints = portfolioConstraints(data, spec, constraints)
-    
+ 
     # Check Solver:
     # if (any(constraints@stringConstraints == "Short")) {
     #     setSolver(spec) = "solveRshortExact"
@@ -102,9 +101,9 @@ feasiblePortfolio <-
     # Return Value:
     new("fPORTFOLIO",
         call = match.call(),
-        data = list(data = Data),
-        spec = list(spec = spec),
-        constraints = constraints@stringConstraints,
+        data = Data,
+        spec = Spec,
+        constraints = Constraints,
         portfolio = portfolio,
         title = "Feasible Portfolio",
         description = description() )
