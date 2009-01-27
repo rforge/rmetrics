@@ -48,8 +48,12 @@ assetsPairsPlot <-
     # Settings:
     x = as.matrix(x)
 
-    # Plot:
+    # Pairs Plot:
+    # Suppress warnings for tick = 0 in ...
+    warn = options()$warn
+    options(warn = -1)
     pairs(x, ...)
+    options(warn = warn)
 
     # Return Value:
     invisible()
