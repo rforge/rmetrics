@@ -38,12 +38,10 @@ whichFormat <-
 {
     # A function implemented by Diethelm Wuertz
 
-
-
     # Charvec String:
-    if (all(is.na(charvec))) return(NA)
     if (is.null(charvec)) # avoid problems in timeSeries() when rownames NULL
         return("unknown")
+    if (all(is.na(charvec))) return(NA)
     charvec = as.character(charvec)
 
     # Specifications:
