@@ -99,7 +99,7 @@ plot.timeSeries <-
     # Utility Function:
     plot.type <- match.arg(plot.type)
     nser <- NCOL(x)
-    if (format == "auto") format = whichFormat(time(x))
+    if (format == "auto") format = x@format
     X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
     if (is.character(at) && at == "auto") {
         Index = round(seq(1, length(time(x)), length = 6))
