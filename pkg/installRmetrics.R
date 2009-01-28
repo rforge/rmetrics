@@ -47,16 +47,16 @@
       "fExoticOptions",
       "fAsianOptions",
       "fAssets",
-      "fPortfolio",
+      "fPortfolio")
       ##
-      "Rdonlp2",
-      "Ripop",
-      "RlpSolve",
-      "RlpSolveAPI",
-      "Rquadprog",
-      "Rsocp",
-      "fPortfolioSolver",
-      "fPortfolioBacktest")
+      ### "Rdonlp2",
+      ### "Ripop",
+      ### "RlpSolve",
+      ### "RlpSolveAPI",
+      ### "Rquadprog",
+      ### "Rsocp",
+      ### "fPortfolioSolver",
+      ### "fPortfolioBacktest")
 
 installRmetrics  <-
     function(pkgs = "all", repos = NULL,
