@@ -41,7 +41,7 @@ whichFormat <-
 
 
     # Charvec String:
-    if (is.na(charvec)) return(NA)
+    if (all(is.na(charvec))) return(NA)
     if (is.null(charvec)) # avoid problems in timeSeries() when rownames NULL
         return("unknown")
     charvec = as.character(charvec)

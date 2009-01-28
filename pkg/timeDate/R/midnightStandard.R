@@ -46,7 +46,7 @@ midnightStandard <-
 
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
     ##         In that case, subtract 1 seconds convert and re-add it
-    if(is.na(charvec)) return(NA)
+    if(all(is.na(charvec))) return(NA)
     paste0 <- function(...) paste(..., sep = '')
 
     # Missing Format:
