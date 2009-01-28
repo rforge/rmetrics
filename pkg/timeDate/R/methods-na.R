@@ -20,4 +20,4 @@
 #  is.timeSeries             Tests for a 'timeSeries' object
 ################################################################################
 
-setMethod("is.na", "timeSeries", function(x) is.na(as.POSIXct(x)))
+setMethod("is.na", "timeDate", function(x) is.na(as.POSIXct(x)))
