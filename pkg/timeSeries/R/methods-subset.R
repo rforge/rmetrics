@@ -85,7 +85,7 @@ setMethod("[",
       {
           if(nargs() == 2) { # same sub-setting as matrix
               if (is.character(i))
-                  NA
+                  as.numeric(NA)
               else if(any(as.logical(i)) || prod(dim(x)) == 0)
                   as.vector(x)[i]
           } else {
