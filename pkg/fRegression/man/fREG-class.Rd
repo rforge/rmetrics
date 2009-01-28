@@ -79,7 +79,7 @@
     \item{show}{\code{signature(object = "fREG")}: 
         prints an object of class 'fREG'.
         }    
-    \item{plot}{\code{signature(x = "fREG", y = "missing)}: 
+    \item{plot}{\code{signature(x = "fREG", y = "missing")}: 
         plots an object of class 'fREG'.
         }  
     \item{summary}{\code{signature(object = "fREG")}: 

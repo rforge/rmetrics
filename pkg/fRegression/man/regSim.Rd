@@ -71,7 +71,7 @@ GAM3(n = 100, seed = 4711)
     
     \code{"LM3"} models a liner regression model, \code{"LOGIT3"} a generalized
     linear regression model expressed by a logit model, and \code{"GAM"} an
-    additive model. \code{x1}, code{x2}, \code{x3}, and \code{eps} are random
+    additive model. \code{x1}, \code{x2}, \code{x3}, and \code{eps} are random
     normal deviates of length \code{n}.
     
     The \code{model} function should return an rectangular series defined 

@@ -87,8 +87,8 @@ CBND(x1, x2, rho)
     \item{description}{
         a character string which allows for a brief description.
         }
-    \item{FT}
-        {[Black76*][MiltersenSchwartz*] - \cr
+    \item{FT}{
+        [Black76*][MiltersenSchwartz*] - \cr
         the futures price, a numeric value.
         }
     \item{KappaE, KappaF}{
@@ -293,7 +293,7 @@ CBND(x1, x2, rho)
     \bold{Print and Summary Method:}
     \cr\cr
     Thes are two methods to print and sumarize an object of class
-    \code{"fOPTION"} or of class{"option"}. The second is used 
+    \code{"fOPTION"} or of \code{"option"}. The second is used 
     for the older class representation.
   
 }

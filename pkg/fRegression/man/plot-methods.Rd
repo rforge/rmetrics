@@ -70,7 +70,7 @@
     polytochomous MARS models \code{use = "polymars"}.
     
     In addition one can also use the original plot functions of the
-    original models, .e.g. \code{plot(slot(object, "fit)}.
+    original models, .e.g. \code{plot(slot(object, "fit")}.
     
 }
 

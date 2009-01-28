@@ -127,7 +127,7 @@ MonteCarloOption(delta.t, pathLength, mcSteps, mcLoops, init = TRUE,
     returns the vector of the option's payoffs calculated from the generated
     paths. As an example this becomes for an arithmetic Asian call option
     with a Wiener Monte Carlo path \code{payoff = exp(-r*Time)*max(SM-X, 0)} 
-    where code{SM = mean(S*exp(cumsum(path)))} and \code{path} denotes
+    where \code{SM = mean(S*exp(cumsum(path)))} and \code{path} denotes
     the MC price paths.
     \cr
     

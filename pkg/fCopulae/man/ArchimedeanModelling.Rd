@@ -81,7 +81,7 @@ archmCopulaFit(u, v = NULL, type = archmList(), \dots)
     inverse.
     \cr
     
-    The functions \code{cK} and {cKInv} return a numeric vector with the 
+    The functions \code{cK} and \code{cKInv} return a numeric vector with the 
     values of the density and inverse for Archimedian copulae.
         
 }

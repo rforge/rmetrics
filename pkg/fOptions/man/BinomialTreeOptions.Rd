@@ -133,7 +133,7 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
     
 
     \bold{TIAN Binomial Tree Model:}
-    \cr\crTian (1993) suggested to match discrete and continuous local 
+    \cr\cr Tian (1993) suggested to match discrete and continuous local 
     moments up to third order. 
     
     Leisen and Reimer (1996) proved that the order of convergence in 

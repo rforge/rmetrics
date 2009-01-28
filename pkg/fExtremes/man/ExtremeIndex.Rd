@@ -103,7 +103,7 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
         an integer value, the length of the time series to be generated.
         }
     \item{object}{
-        an object of class \code{"fTHETA} as returned by the functions
+        an object of class \code{"fTHETA"} as returned by the functions
         \code{*Theta}.
         }
     \item{plottype}{

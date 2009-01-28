@@ -345,7 +345,7 @@ armaFit(formula, data, method = c("mle", "ols"), include.mean = TRUE,
   \bold{AR - Auto-Regressive Modelling:}
   \cr\cr
   The argument \code{x~ar(p)} calls the underlying functions 
-  \code{ar.mle} or code{\link{ar.ols}} depending on the 
+  \code{ar.mle} or \code{ar.ols} depending on the 
   \code{method}'s choice. 
   For definiteness, the AR models are defined through
 

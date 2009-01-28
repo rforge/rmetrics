@@ -128,7 +128,7 @@ regFit(formula, data, family = gaussian,
     \code{data}.
     
     The function \code{plot.lm} provides four plots: a plot of residuals 
-    against fitted values, a Scale-Location plot of sqrt{| residuals |} 
+    against fitted values, a Scale-Location plot of sqrt(| residuals |) 
     against fitted values, a normal QQ plot, and a plot of Cook's 
     distances versus row labels.\cr 
     \code{[stats:lm]}
