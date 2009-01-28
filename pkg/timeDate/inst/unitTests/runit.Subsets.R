@@ -199,6 +199,15 @@ test.subset <-
     tS[isBizday(tS)]
     tS[isHoliday(tS)]
 
+    tS["2006"]
+    tS["2006::"]
+    tS["2006-04"]
+    tS["2006-04::"]
+    tS["2006-04-10::"]
+
+    sub <- tS[c("2006", "2006::", "2006-04", "2006-04::", "2006-04-10::")]
+    checkTrue(length(sub) == 39)
+
     # Return Value:
     return()
 }
