@@ -6,19 +6,17 @@ VERSION.DATE = "Released 04 Jan 2009"
 COPYRIGHT    = "Copyright (C) 2009 rmetrics.org" 
 
 
+#------------------------------------------------------------------------------- 
+#------- MainWindow ------------------------------------------------------------ 
+#------------------------------------------------------------------------------- 
 
 
-
-
-
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- MainWindow ---------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
-
-
-showMainWindow = function() {
+showMainWindow <-
+function() 
+{
 	# load glade file
-	glade = gladeXMLNew( file.path(gladePath, "rmetrics.glade"),  root='MainWindow')
+	glade = gladeXMLNew( file.path(gladePath, "rmetrics.glade"), 
+	    root='MainWindow')
 	mainWindow = glade$getWidget('MainWindow') 
 	mainWindow$setTitle("Rmetrics")
 	mainWindow$setDefaultSize(650, 400)
@@ -44,7 +42,8 @@ showMainWindow = function() {
 	# column for holiday names
 	renderer = gtkCellRendererTextNew()
 	renderer$set(xalign = 0.0)
-	col.offset = treeView$insertColumnWithAttributes(-1, "Portfolioname", renderer, text = 0)
+	col.offset = treeView$insertColumnWithAttributes(-1, "Portfolioname", 
+	    renderer, text = 0)
 	column = treeView$getColumn(col.offset - 1)
 	column$setClickable(TRUE)
 	listPortfolios()
@@ -54,20 +53,26 @@ showMainWindow = function() {
 }
 
 
-getSelectedTreeViewEntry = function(treeView) {
+getSelectedTreeViewEntry <- 
+function(treeView) 
+{
 	model = treeView$getSelection()$getSelected()$model
 	iter = treeView$getSelection()$getSelected()$iter
 	model$getValue(iter, 0)$value
 }
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- list portfolios ----------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#------- list portfolios ------------------------------------------------------- 
+#------------------------------------------------------------------------------- 
 
-listPortfolios = function() {
+
+listPortfolios <-
+function() 
+{
 	model$clear()
-	portfolios = as.list( ls(envir = .GlobalEnv)[sapply(ls(envir = .GlobalEnv),function(x){class(get(x))}) == "fPORTFOLIO"] )
+	portfolios = as.list( ls(envir = .GlobalEnv)[sapply(ls(envir = .GlobalEnv),
+	    function(x){class(get(x))}) == "fPORTFOLIO"] )
 	for(i in portfolios) {
  		iter <- model$append(NULL)$iter
  		model$set(iter, 0, i)
@@ -76,11 +81,14 @@ listPortfolios = function() {
 }
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#-------- NewWindow ---------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#-------- NewWindow ------------------------------------------------------------ 
+#------------------------------------------------------------------------------- 
 
-showNewWindow = function(input) {
+
+showNewWindow <-
+function(input) 
+{
 	nameEntry = gtkEntry()
 	glade <- gladeXMLNew( file.path(gladePath, "new.glade"),  root='NewWindow')
 	newWindow=glade$getWidget('NewWindow') 
@@ -98,29 +106,35 @@ showNewWindow = function(input) {
 
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- EditWindow ----------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#------- EditWindow ------------------------------------------------------------ 
+#------------------------------------------------------------------------------- 
 
 
-showEditWindow0 = function(button) {
+showEditWindow0 <- 
+function(button) 
+{
 	portfolioName0 <<- nameEntry$getText()
 	button$getParent()$getParent()$getParent()$destroy()
 	showEditWindow(portfolioName0)
 }
 
 
-showEditWindow1 = function(button) { 
+showEditWindow1 <- 
+function(button) 
+{ 
 	if( treeView$getSelection()$countSelectedRows() != 0) {
 		treeViewEntry = getSelectedTreeViewEntry( treeView )
 		showEditWindow(treeViewEntry)
 	}
 }
 
-showEditWindow = function(portfolioName0) {
+showEditWindow <-
+function(portfolioName0) 
+{
 	portfolioName <<- portfolioName0
 
-	glade <- gladeXMLNew( file.path(gladePath, "edit.glade"),  root='EditWindow')
+	glade <- gladeXMLNew( file.path(gladePath, "edit.glade"), root='EditWindow')
 	editWindow=glade$getWidget('EditWindow') 
 	editWindow$setTitle("Edit Portfolio")
 	editWindow$setDefaultSize(300, 50)
@@ -129,7 +143,9 @@ showEditWindow = function(portfolioName0) {
 
 
 
-	comboBoxes = list( "type", "optimize", "estimator", "weights", "targetReturn", "targetRisk", "solver", "objective", "trace", "data", "constraints" )
+	comboBoxes = list( "type", "optimize", "estimator", "weights", 
+	    "targetReturn", "targetRisk", "solver", "objective", "trace", 
+	    "data", "constraints" )
 
 	spinButtons = list("riskFreeRate", "nFrontierPoints")
 
@@ -149,7 +165,8 @@ showEditWindow = function(portfolioName0) {
 		 for(i in comboBoxes) {
 			if( i != "objective" && i != "data" && i != "constraints") {
 				elementName = paste(i, "ComboBox" , sep="")
-				functionName = paste("get", toupper( substr(i,1,1)), substr(i, 2, nchar(i) ) , sep="")
+				functionName = paste("get", toupper( substr(i,1,1)), 
+				    substr(i, 2, nchar(i) ) , sep="")
 				getFunc = match.fun(functionName)
 				value = getFunc(get(portfolioName))
 				i = 0
@@ -158,7 +175,8 @@ showEditWindow = function(portfolioName0) {
 					i = i+1
 					get(elementName)$setActive(i)
 					if (get(elementName)$getActive() == -1) {
-						print(paste("Could not sync", elementName, "with portfolio value!") )
+						print(paste("Could not sync", elementName, 
+						    "with portfolio value!") )
 						get(elementName)$setActive(0)
 						break
 					}
@@ -167,7 +185,8 @@ showEditWindow = function(portfolioName0) {
 		 }
 		 for(i in spinButtons) {
 			elementName = paste(i, "SpinButton" , sep="")
-			functionName = paste("get", toupper( substr(i,1,1)), substr(i, 2, nchar(i) ) , sep="")
+			functionName = paste("get", toupper( substr(i,1,1)), 
+			    substr(i, 2, nchar(i) ) , sep="")
 			getFunc = match.fun(functionName)
 			value = getFunc(get(portfolioName))
 			print(value)
@@ -191,12 +210,14 @@ showEditWindow = function(portfolioName0) {
 }
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- createPortfolio ----------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#------- createPortfolio ------------------------------------------------------- 
+#------------------------------------------------------------------------------- 
 
 
-createPortfolio = function(input) {
+createPortfolio <-
+function(input) 
+{
 
 	tmpSpec = portfolioSpec()
 	setType( tmpSpec )<-typeComboBox$getActiveText()
@@ -212,7 +233,8 @@ createPortfolio = function(input) {
 	setTrace(tmpSpec)<-traceComboBox$getActiveText()
 	tmpData = as.timeSeries(dataComboBox$getActiveText())   
 	tmpConstraints = constraintsComboBox$getActiveText()
-	assign(portfolioName, portfolioFrontier(tmpData, tmpSpec, tmpConstraints ), envir = .GlobalEnv )
+	assign(portfolioName, portfolioFrontier(tmpData, tmpSpec, tmpConstraints ), 
+	    envir = .GlobalEnv )
 
 	input$getParent()$getParent()$getParent()$destroy()
 	listPortfolios()
@@ -220,13 +242,16 @@ createPortfolio = function(input) {
 }
 
 
+#------------------------------------------------------------------------------- 
+#------- PrintWindow ----------------------------------------------------------- 
+#------------------------------------------------------------------------------- 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- PrintWindow --------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
 
-showPrintWindow = function(input2) {
-	glade <- gladeXMLNew( file.path(gladePath, "print.glade"), root='PrintWindow')
+showPrintWindow <-
+function(input2) 
+{
+	glade <- gladeXMLNew( file.path(gladePath, "print.glade"), 
+	    root='PrintWindow')
 	printWindow=glade$getWidget('PrintWindow') 
 	printWindow$setTitle("Print Portfolio")
 	printWindow$setDefaultSize(300, 50)
@@ -241,7 +266,8 @@ showPrintWindow = function(input2) {
 
 
 	nameLabel = glade$getWidget("nameLabel")
-	nameLabel$setText( paste("Portfolio: ", getSelectedTreeViewEntry( treeView ) ) )
+	nameLabel$setText( paste("Portfolio: ", 
+	    getSelectedTreeViewEntry( treeView ) ) )
 
 
 	printComboBox = glade$getWidget( "printComboBox" )
@@ -252,27 +278,33 @@ showPrintWindow = function(input2) {
 }
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#------- slots --------------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#------- slots ----------------------------------------------------------------- 
+#------------------------------------------------------------------------------- 
 
 
 # --- showEdit --- #
-destroyWindow = function(input) { 
+destroyWindow <-
+function(input) 
+{ 
 	input$getParent()$getParent()$getParent()$destroy()
 }
 
 
 
 # --- closeApp --- #
-closeApp = function(input) { 
+closeApp <-
+function(input) 
+{ 
 	quit()
 }
 
 
 
 # --- plotPortfolio --- #
-plotPortfolio = function(input) { 
+plotPortfolio <-
+function(input) 
+{ 
 	if( treeView$getSelection()$countSelectedRows() != 0) {
 		treeViewEntry = getSelectedTreeViewEntry( treeView )
 		frontierPlot(get(treeViewEntry))
@@ -281,15 +313,25 @@ plotPortfolio = function(input) {
 
 
 
-#----------------------------------------------------------------------------------------------------------------------------------
-#-- start -------------------------------------------------------------------------------------------------------------------------
-#----------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------- 
+#-- start ---------------------------------------------------------------------- 
+#------------------------------------------------------------------------------- 
 
-getGladePath = function() {
-	gladePath <<- file.path(.path.package(package="portfolioGui")[1], "glade")
+
+getGladePath <- 
+function() 
+{
+	gladePath <<- file.path(.path.package(package="guiPortfolio")[1], "glade")
 }
 
-portfolioGui = function () {
+
+portfolioGui <- 
+function() 
+{
 	getGladePath()
 	showMainWindow()
 }
+
+
+################################################################################
+
