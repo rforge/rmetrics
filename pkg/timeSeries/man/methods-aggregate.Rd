@@ -1,6 +1,7 @@
 \name{aggregate-methods}
 
 \docType{methods}
+\alias{aggregate}
 \alias{aggregate-methods}
 \alias{aggregate,timeSeries-method}
 
@@ -24,7 +25,8 @@
   
     \item{by}{
         [aggregate] - \cr
-        a character string denoting the aggregation period
+        sequence of \code{timeDate} objects  denoting the aggregation
+        period.
         }
     \item{FUN}{
         the function to be applied.
@@ -60,15 +62,13 @@
    by <- timeSequence(from = start(x),  to = end(x), by = "week")
    aggregate(x, by, mean)
 
-
 ## aggregate to last Friday of month -
    by <- unique(timeLastNdayInMonth(time(x), 5))
-   aggregate(x, by, mean)   
-
+   aggregate(x, by, mean)
 
 ## aggregate to last day of quarter -
    by <- unique(timeLastDayInQuarter(time(x)))
-   aggregate(x, by, mean)   
+   aggregate(x, by, mean)
 
 }
 
