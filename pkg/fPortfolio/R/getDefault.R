@@ -21,11 +21,14 @@
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 # for code accessed (or partly included) from other sources:
 #   see Rmetric's copyright and license files
-
+   
 
 ################################################################################
 # FUNCTION:
+#  getA
+#  getAlpha
 #  getConstraints
+#  getControl
 #  getCov
 #  getCovRiskBudgets
 #  getData
@@ -35,9 +38,11 @@
 #  getNAssets 
 #  getNames
 #  getNFrontierPoints
+#  getMessages
 #  getObjective
 #  getOptim
 #  getOptimize
+#  getOptions
 #  getPortfolio
 #  getParams
 #  getRiskFreeRates
@@ -47,10 +52,8 @@
 #  getSpec
 #  getStatistics
 #  getStatus
-#  getAlpha
 #  getTailRisk
 #  getTailRiskBudgets
-#  getAlpha
 #  getTargetReturn
 #  getTargetRisk
 #  getTrace
@@ -59,12 +62,48 @@
 ################################################################################
 
 
+getA <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getA")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getAlpha <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getAlpha")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 getConstraints <- 
     function(object)
 {   
     # A function implemented by Diethelm Wuertz
 
     UseMethod("getConstraints")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getControl <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getControl")
 }
 
 
@@ -179,6 +218,18 @@ getNFrontierPoints <-
 # ------------------------------------------------------------------------------
 
 
+getMessages <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getMessages")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 getObjective <-
     function(object)
 {   
@@ -186,6 +237,7 @@ getObjective <-
 
     UseMethod("getObjective")
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -208,6 +260,18 @@ getOptimize <-
     # A function implemented by Diethelm Wuertz
 
     UseMethod("getOptimize")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getOptions <-
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    UseMethod("getOptions")
 }
 
 
@@ -339,18 +403,6 @@ getTailRiskBudgets <-
     # A function implemented by Diethelm Wuertz
 
     UseMethod("getTailRiskBudgets")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getAlpha <-
-    function(object)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    UseMethod("getAlpha")
 }
 
 

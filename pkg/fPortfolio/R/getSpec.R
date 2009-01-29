@@ -25,15 +25,16 @@
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getModel                      Extract model slot
+#  getModel                      Extract whole model slot
 #   getType                       Extract portfolio type from specification 
 #   getOptimize                   Extract what to optimize from specification
 #   getEstimator                  Extract type of covariance estimator
 #   getTailRisk                   Extract list of tail dependency risk matrixes
 #   getParams                     Extract parameters from specification
-#   getAlpha                      Extracts target VaR-alpha specification
+#    getAlpha                      Extracts target VaR-alpha specification
+#    getA                          Extracts quadratic LPM Exponent
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getPortfolio                  Extract portfolio slot
+#  getPortfolio                  Extract whole portfolio slot
 #   getWeights                    Extracts weights from a portfolio object
 #   getTargetReturn               Extracts target return from specification
 #   getTargetRisk                 Extracts target riks from specification
@@ -41,10 +42,14 @@
 #   getNFrontierPoints            Extracts number of frontier points 
 #   getStatus                     Extracts portfolio status information
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getOptim                       Extract optim slot
+#  getOptim                       Extract whole optim slot
 #   getSolver                     Extracts solver from specification
 #   getObjective                  Extracs name of objective function
+#   getOptions                    Extracs options              
+#   getControl                    Extracs control list parameters
 #   getTrace                      Extracts solver's trace flag
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
+#  getMessages                    Extract whole messages slot
 ################################################################################
 
 
@@ -55,7 +60,7 @@
     #   optimize = "minRisk",
     #   estimator = "covEstimator",
     #   tailRisk = NULL,
-    #   params = list())
+    #   params = list(alpha = 0.05, a = 1))
     
     # portfolio = list(
     #   weights = NULL, 
@@ -68,7 +73,12 @@
     
     # optim = list(
     #   solver = "solveRquadprog",
+    #   objective = NULL,
+    #   options = list(meq=2), 
+    #   control = list(),
     #   trace = FALSE)
+    
+    # messages = list(NULL) 
 
 
 # ------------------------------------------------------------------------------
@@ -80,7 +90,8 @@ getModel.fPFOLIOSPEC <- function(object) object@model
   getEstimator.fPFOLIOSPEC <- function(object) object@model$estimator
   getTailRisk.fPFOLIOSPEC <- function(object) object@model$tailRisk
   getParams.fPFOLIOSPEC <- function(object) object@model$params
-
+    getAlpha.fPFOLIOSPEC <- function(object) object@model$params$alpha
+    getA.fPFOLIOSPEC <- function(object) object@model$params$a 
 
 
 # ------------------------------------------------------------------------------
@@ -90,7 +101,6 @@ getPortfolio.fPFOLIOSPEC <- function(object) object@portfolio
   getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
   getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
   getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk
-  getAlpha.fPFOLIOSPEC <- function(object) object@model$params$alpha
   getRiskFreeRate.fPFOLIOSPEC <- function(object) object@portfolio$riskFreeRate
   getNFrontierPoints.fPFOLIOSPEC <- function(object) object@portfolio$nFrontierPoints
   getStatus.fPFOLIOSPEC <-  function(object) object@portfolio$status
@@ -102,7 +112,15 @@ getPortfolio.fPFOLIOSPEC <- function(object) object@portfolio
 getOptim.fPFOLIOSPEC <- function(object) object@optim
   getSolver.fPFOLIOSPEC <- function(object) object@optim$solver 
   getObjective.fPFOLIOSPEC <- function(object) object@optim$objective 
+  getOptions.fPFOLIOSPEC <- function(object) object@optim$options  
+  getControl.fPFOLIOSPEC <- function(object) object@optim$control
   getTrace.fPFOLIOSPEC <- function(object) object@optim$trace
+
+  
+# ------------------------------------------------------------------------------
+
+
+getMessages.fPFOLIOSPEC <- function(object) object@messages
 
 
 ################################################################################

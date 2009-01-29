@@ -9,7 +9,8 @@
 \alias{getEstimator.fPFOLIOSPEC} 
 \alias{getTailRisk.fPFOLIOSPEC}      
 \alias{getParams.fPFOLIOSPEC} 
-\alias{getAlpha.fPFOLIOSPEC}       
+\alias{getAlpha.fPFOLIOSPEC}  
+\alias{getA.fPFOLIOSPEC}      
  
 \alias{getPortfolio.fPFOLIOSPEC}        
 \alias{getWeights.fPFOLIOSPEC}         
@@ -21,7 +22,9 @@
 
 \alias{getOptim.fPFOLIOSPEC}
 \alias{getSolver.fPFOLIOSPEC}   
-\alias{getObjective.fPFOLIOSPEC}      
+\alias{getObjective.fPFOLIOSPEC} 
+\alias{getOptions.fPFOLIOSPEC}       
+\alias{getControl.fPFOLIOSPEC}        
 \alias{getTrace.fPFOLIOSPEC}           
 
 
@@ -77,6 +80,8 @@
 \method{getOptim}{fPFOLIOSPEC}(object)
 \method{getSolver}{fPFOLIOSPEC}(object)
 \method{getObjective}{fPFOLIOSPEC}(object)
+\method{getOptions}{fPFOLIOSPEC}(object)
+\method{getControl}{fPFOLIOSPEC}(object)
 \method{getTrace}{fPFOLIOSPEC}(object)
 }
 

@@ -211,16 +211,33 @@ setMethod("show", "fPFOLIOSPEC",
         cat("\n Objective:                ", "list()" )
     }
     
-    cat("\n Params:                   ",
-        paste(names(unlist(object@optim$params)), "=", 
-            unlist(object@optim$params)))
+    cat("\n Options:                  ",
+        paste(names(unlist(object@optim$options)), "=", 
+            unlist(object@optim$options)))
     
     if (length(object@optim$control) > 0) {
         cat("\n Control:                  ",
         as.character(object@optim$control))
     } else {
         cat("\n Control:                  ", "list()")
-    }       
+    }  
+    
+    
+    cat("\n Trace:                    ",
+        object@optim$trace)
+    
+                 
+    # Messages:
+    
+    cat("\n\nMessage List:\t")
+    
+    if (!is.null(object@messages$list)) {
+        cat("\n List:                     ",
+            object@messages$list)
+    } else {
+        cat("\n List:                     ", "NULL")
+    }
+    
         
     cat("\n")
             

@@ -23,7 +23,8 @@ portfolioSpec(
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
         status = NA),
     optim = list(solver = "solveRquadprog", objective = NULL,
-        params = list(meq = 2), control = list(), trace = FALSE))
+        options = list(meq = 2), control = list(), trace = FALSE),
+    messages = list())
 }
 
 
@@ -46,7 +47,9 @@ portfolioSpec(
         for all control settings of the solver, and a logical flag, \code{trace}
         denoting if the optimization should be traced.
         }
-
+    \item{messages}{
+        a list, for optional messages.
+        }
 }       
 
 

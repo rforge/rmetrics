@@ -34,28 +34,23 @@
 #   getOptimize                   Extracts what to optimize of portfolio
 #   getEstimator                  Extracts mean-covariance estimator
 #   getParams                     Extracts optional parameter list
-# *getPortfolio                  Extract portfolio slot
-#  *getWeights                    Extracts weights from a portfolio object
-#  *getTargetReturn               Extracts target return from specification
-#  *getTargetRisk                 Extracts target riks from specification
-#  *getAlpha                      Extracts target VaR-alpha specification
-#  *getRiskFreeRate               Extracts risk free rate from specification 
-#  *getNFrontierPoints            Extracts number of frontier points 
-#  *getStatus                     Extracts portfolio status information
+#    getAlpha                      Extracts target VaR-alpha specification
+#    getA                          Extracts quadratic LPM exponent specification
+#  getPortfolio                  Extract portfolio slot
+#   getWeights                    Extracts weights from a portfolio object
+#   getTargetReturn               Extracts target return from specification
+#   getTargetRisk                 Extracts target riks from specification
+#   getRiskFreeRate               Extracts risk free rate from specification 
+#   getNFrontierPoints            Extracts number of frontier points 
+#   getStatus                     Extracts portfolio status information
 #  getOptim                      Extract optim slot
 #   getSolver                     Extracts solver from specification
+#   getObjective
+#   getOptions
+#   getControl
 #   getTrace                      Extracts solver's trace flag
 # FUNCTION:                     DESCRIPTION:
 #  getConstraints                Extracts weight constraints
-# FUNCTION:                     DESCRIPTION:               
-#  getPortfolio                  Extracts portfolio slot
-#   getWeights                   Extracts weights
-#   getTargetReturn              Extracts target return
-#   getTargetRisk                Extracts target return
-#   getAlpha                     Extracts significance level alpha
-#   getRiskFreeRate              Extracts risk free rate
-#   getNFrontierPoints           Extracts number of frontier points
-#   getStatus                    Extracts status
 # FUNCTION:                     GENERAL EXTRACTORS:
 #  getCovRiskBudgets             Extracts covariance risk budgets
 #  getTailRiskBudgets            Extracts tail risk budgets
@@ -86,16 +81,20 @@ getSpec.fPORTFOLIO <- function(object) object@spec
   getEstimator.fPORTFOLIO <- function(object) getEstimator(getSpec(object))
   getTailRisk.fPORTFOLIO <- function(object) getTailRisk(getSpec(object))
   getParams.fPORTFOLIO <- function(object) getParams(getSpec(object))
+    getAlpha.fPORTFOLIO <- function(object) getAlpha(getSpec(object))
+    getA.fPORTFOLIO <- function(object) getA(getSpec(object))
  getPortfolio.fPORTFOLIO <- function(object) object@spec@portfolio
   getWeights.fPORTFOLIO <- function(object) getWeights(getSpec(object))
   getTargetReturn.fPORTFOLIO <- function(object) getTargetReturn(getSpec(object))
   getTargetRisk.fPORTFOLIO <- function(object) getTargetRisk(getSpec(object))
-  getAlpha.fPORTFOLIO <- function(object) getAlpha(getSpec(object))
   getRiskFreeRate.fPORTFOLIO <- function(object) getRiskFreeRate(getSpec(object))
-  getNFrontierPoints.fPORTFOLIO <- function(object) get(getSpec(object))
-  getStatus.fPORTFOLIO <-  function(object) get(getSpec(object))
+  getNFrontierPoints.fPORTFOLIO <- function(object) getNFrontierPoints(getSpec(object))
+  getStatus.fPORTFOLIO <-  function(object) getStatus(getSpec(object))
  getOptim.fPORTFOLIO <- function(object) object@spec@optim
   getSolver.fPORTFOLIO <- function(object) getSolver(getSpec(object)) 
+  getObjective.fPORTFOLIO <- function(object) getObjective(getSpec(object)) 
+  getOptions.fPORTFOLIO <- function(object) getOptions(getSpec(object)) 
+  getControl.fPORTFOLIO <- function(object) getControl(getSpec(object)) 
   getTrace.fPORTFOLIO <- function(object) getTrace(getSpec(object))
 
 

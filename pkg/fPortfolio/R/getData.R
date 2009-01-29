@@ -60,20 +60,20 @@
     
     
 getData.fPFOLIODATA <- function(object) object@data
-getSeries.fPFOLIODATA <- function(object) object@data$series   
-getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
-getNames.fPFOLIODATA <- function(object) object@data$names 
+    getSeries.fPFOLIODATA <- function(object) object@data$series   
+    getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
+    getNames.fPFOLIODATA <- function(object) object@data$names 
 
 
 # ------------------------------------------------------------------------------
 
 
 getStatistics.fPFOLIODATA <- function(object) object@statistics
-getMean.fPFOLIODATA <- function(object) object@statistics$mean
-getCov.fPFOLIODATA <- function(object) object@statistics$Cov
-getMu.fPFOLIODATA <- function(object) object@statistics$mu
-getSigma.fPFOLIODATA <- function(object) object@statistics$Sigma
-getEstimator.fPFOLIODATA <- function(object) object@statistics$estimator
+    getMean.fPFOLIODATA <- function(object) object@statistics$mean
+    getCov.fPFOLIODATA <- function(object) object@statistics$Cov
+    getEstimator.fPFOLIODATA <- function(object) object@statistics$estimator
+    getMu.fPFOLIODATA <- function(object) object@statistics$mu
+    getSigma.fPFOLIODATA <- function(object) object@statistics$Sigma
 
 
 # ------------------------------------------------------------------------------
