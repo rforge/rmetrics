@@ -32,7 +32,7 @@
 #  getWindowsFun
 #	getWindowsParams
 #  getWindowsHorizon
-#  get Strategy
+#  getStrategy
 #  getStrategyFun
 #	getStrategyParams
 #  getStrategyParams

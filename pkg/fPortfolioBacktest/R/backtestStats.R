@@ -59,7 +59,7 @@ rollingSigma =
     function(portfolios)
 {
 	ans = sapply(portfolios, 
-	    function(x) getTargetRisk(x)[,"Sigma"])
+	    function(x) getTargetRisk(x)[, "Sigma"])
 	dates = sapply(portfolios, 
 	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
 	
