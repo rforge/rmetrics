@@ -4,7 +4,6 @@ Date: 2008
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
 Depends: R (>= 2.6.0), methods, fPortfolio
-Suggests: Rdonlp2, Rsocp, RlpSolve, RlpSolveAPI, Rsymphony, robustbase, corpcor, covRobust
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
