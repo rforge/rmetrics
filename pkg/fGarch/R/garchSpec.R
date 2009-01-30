@@ -124,6 +124,9 @@ garchSpec <-
     control[names(model)] <- model
     model <- control
 
+    # check if alpha and beta are well defined
+    if (sum(c(model$alpha, model$beta))>1)
+        warnings("sum(alpha)+sum(beta)>1")
 
     # Model Orders:
     order.ar = length(model$ar)

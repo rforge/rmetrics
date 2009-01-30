@@ -1,5 +1,0 @@
-export(
-       portfolioGui
-       )
-
-exportPattern("_") # Needed for the Glade interface
