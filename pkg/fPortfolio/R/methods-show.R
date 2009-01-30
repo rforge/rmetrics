@@ -51,36 +51,35 @@ setMethod("show", "fPORTFOLIO",
     # cat("\nCall:\n ")
     # print.default(getCall(object))
 
+    nAssets = getNAssets(object)
+    Names = getNames(object)
+    
     # Print Target Weights:
     cat("\nPortfolio Weights:\n")
-    # DW: Note obgect@portfolio is a list do not use getWeights 
-    weights = data.frame(round(object@portfolio$weights, digits = 4))
-    if (NROW(weights) == 1) rownames(weights) = ""
-    print(weights)
+    table = matrix(round(getWeights(object@portfolio), digits = 4), ncol = nAssets)
+    colnames(table) = Names
+    rownames(table) = 1:NROW(table)
+    print.table(table)
 
     # Print Covariance Risk Budgets:
     cat("\nCovariance Risk Budgets:\n")
-    covRiskBudgets = data.frame(round(getCovRiskBudgets(object), digits = 4))
-    if (NROW(covRiskBudgets) == 1) rownames(covRiskBudgets) = ""
-    print(covRiskBudgets)
-
+    table = matrix(round(getCovRiskBudgets(object@portfolio), digits = 4), ncol = nAssets)
+    colnames(table) = Names
+    rownames(table) = 1:NROW(table)
+    print.table(table)
+    
     # Print Tail Risk Budgets:
-    if (FALSE) {
-        if (!is.na(getTailRiskBudgets(object))) {
-            cat("\nRiskBudget(s):\n")
-            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-            print.table(riskBudgets)
-        }
-    }
+    # to do ...
 
     # Print Target Return and Risks:
     # DW: Note obgect@targetR* is a list do not use getTargetR*() 
     cat("\nTarget Return and Risks:\n")
-    targetReturn = object@portfolio$targetReturn
-    targetRisk = object@portfolio$targetRisk
-    target = data.frame(targetReturn, targetRisk)
-    if (NROW(target) == 1) rownames(target) = ""
-    print(round(target, digits = 4))
+    targetReturn = matrix(getTargetReturn(object@portfolio), ncol = 2)
+    targetRisk = matrix(getTargetRisk(object@portfolio), ncol = 4)
+    target = round(cbind(targetReturn, targetRisk), digits = 4)
+    colnames(target) = c("mean", "mu", "Cov", "Sigma", "CVaR", "VaR")
+    rownames(target) = 1:NROW(target) 
+    print.table(target)
 
     # Print Description:
     cat("\nDescription:\n ")

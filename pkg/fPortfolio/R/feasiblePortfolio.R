@@ -90,13 +90,14 @@ feasiblePortfolio <-
     names(covRiskBudgets) = names(weights)
 
     # Compose Portfolio:
-    portfolio = list(
-        weights = t(weights),
-        targetReturn = t(targetReturn),
-        targetRisk = t(targetRisk),
-        targetAlpha = alpha,
-        covRiskBudgets = t(covRiskBudgets),
-        status = getStatus(spec))
+    Portfolio = new("fPFOLIOVAL",
+        portfolio = list(
+            weights = weights,
+            covRiskBudgets = covRiskBudgets,
+            targetReturn = targetReturn,
+            targetRisk = targetRisk,
+            targetAlpha = alpha,
+            status = getStatus(spec)))
 
     # Return Value:
     new("fPORTFOLIO",
@@ -104,7 +105,7 @@ feasiblePortfolio <-
         data = Data,
         spec = Spec,
         constraints = Constraints,
-        portfolio = portfolio,
+        portfolio = Portfolio,
         title = "Feasible Portfolio",
         description = description() )
 }

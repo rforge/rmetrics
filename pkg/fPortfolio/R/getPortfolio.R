@@ -100,6 +100,8 @@ getSpec.fPORTFOLIO <- function(object) object@spec
   getControl.fPORTFOLIO <- function(object) getControl(getSpec(object)) 
   getTrace.fPORTFOLIO <- function(object) getTrace(getSpec(object))
 
+getCovRiskBudgets.fPORTFOLIO <- function(object) object@portfolio@portfolio$covRiskBudgets
+
 
 # ------------------------------------------------------------------------------
 
@@ -126,20 +128,21 @@ getConstraintsTypes <- function(object) {
 # These are simple lists requested here for @portfilio !
 # Thus wrong, not not delete the following lines !
 
-# getPortfolio.fPORTFOLIO <- function(object) object@portfolio
-#   getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
-#   getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
-#   getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
-#   getAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
-#   getRiskFreeRate.fPORTFOLIO <- function(object) object@Portfolio$riskFreeRate
-#   getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
-#   getStatus.fPORTFOLIO <- function(object) object@portfolio$status
+getPortfolio.fPFOLIOVAL <- function(object) object@portfolio
+   getWeights.fPFOLIOVAL <- function(object) object@portfolio$weights
+   getCovRiskBudgets.fPFOLIOVAL <- function(object) object@portfolio$covRiskBudgets
+   getTargetReturn.fPFOLIOVAL <- function(object) object@portfolio$targetReturn
+   getTargetRisk.fPFOLIOVAL <- function(object) object@portfolio$targetRisk
+   getAlpha.fPFOLIOVAL <- function(object) object@portfolio$targetAlpha
+   getRiskFreeRate.fPFOLIOVAL <- function(object) object@Portfolio$riskFreeRate
+   getNFrontierPoints.fPFOLIOVAL <- function(object) object@portfolio$nFrontierPoints
+   getStatus.fPFOLIOVAL <- function(object) object@portfolio$status
 
 
 ################################################################################
 
 
-.getCovRiskBudgets.fPORTFOLIO = 
+..getCovRiskBudgets.fPORTFOLIO = 
 function (object) 
 {   # A function implemented by Rmetrics
 
@@ -178,7 +181,7 @@ function (object)
 # ------------------------------------------------------------------------------
 
 
-getCovRiskBudgets.fPORTFOLIO =
+.getCovRiskBudgets.fPORTFOLIO =
 function(object)
 {   # A function implemented by Rmetrics
 

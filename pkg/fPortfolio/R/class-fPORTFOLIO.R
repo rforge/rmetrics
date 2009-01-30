@@ -35,7 +35,7 @@ setClass("fPORTFOLIO",
         data = "fPFOLIODATA",
         spec = "fPFOLIOSPEC",
         constraints = "fPFOLIOCON",
-        portfolio = "list",
+        portfolio = "fPFOLIOVAL",
         title = "character",
         description = "character")  
 )

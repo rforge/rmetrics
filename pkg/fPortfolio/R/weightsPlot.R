@@ -56,7 +56,7 @@ weightsPlot <-
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
     # Compute Weights:
-    weights = getWeights(object)
+    weights = getWeights(object@portfolio)
     pos.weights = +0.5 * (abs(weights) + weights)
     neg.weights = -0.5 * (abs(weights) - weights)
 
@@ -94,8 +94,8 @@ weightsPlot <-
     }
 
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object)[, 1]
-    targetReturn = getTargetReturn(object)[, 1]
+    targetRisk = getTargetRisk(object@portfolio)[, 1]
+    targetReturn = getTargetReturn(object@portfolio)[, 1]
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
@@ -165,7 +165,7 @@ weightedReturnsPlot <-
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
     # Compute Weighted Returns:
-    weights = getWeights(object)
+    weights = getWeights(object@portfolio)
     dim = dim(weights)
     returns = getStatistics(object)$mu
     weightedReturns = NULL
@@ -210,8 +210,8 @@ weightedReturnsPlot <-
     }
 
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object)[, 1]
-    targetReturn = getTargetReturn(object)[, 1]
+    targetRisk = getTargetRisk(object@portfolio)[, 1]
+    targetReturn = getTargetReturn(object@portfolio)[, 1]
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1: (nSigma %/% nLabels) ) ) *nLabels + 1
@@ -281,7 +281,7 @@ covRiskBudgetsPlot <-
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
     # Compute Covariance Risk Budgets:
-    budgets = getCovRiskBudgets(object)
+    budgets = getCovRiskBudgets(object@portfolio)
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)
 
@@ -318,8 +318,8 @@ covRiskBudgetsPlot <-
     }
 
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object)[, 1]
-    targetReturn = getTargetReturn(object)[, 1]
+    targetRisk = getTargetRisk(object@portfolio)[, 1]
+    targetReturn = getTargetReturn(object@portfolio)[, 1]
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
@@ -391,10 +391,10 @@ tailRiskBudgetsPlot <-
 
     # Check:
     stop("Not yet implemented")
-    tailRiskMatrix = getTailRisk(object)
+    tailRiskMatrix = getTailRisk(object@portfolio)
 
     # Compute Tail Risk Budgets:
-    budgets = getTailRiskBudgets(object)
+    budgets = getTailRiskBudgets(object@portfolio)
     budgets[is.na(budgets)] = 0
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)

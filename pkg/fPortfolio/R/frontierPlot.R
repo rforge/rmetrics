@@ -293,7 +293,7 @@ cmlLines <-
     cmlPortfolio = tangencyPortfolio(data, spec, constraints)
     riskFreeRate = getRiskFreeRate(spec)
     slope = ((getTargetReturn(cmlPortfolio)[, "mean"] - riskFreeRate) /
-        getTargetRisk(cmlPortfolio)[, "Cov"])
+        getTargetRisk(cmlPortfolio@portfolio)[, "Cov"])
     if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
 
     # Return Value:

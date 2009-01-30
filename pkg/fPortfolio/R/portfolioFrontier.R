@@ -72,7 +72,7 @@ portfolioFrontier <-
     
     # Compute minvariancePortfolio:
     mvPortfolio = minvariancePortfolio(data, spec, constraints)
-    mvReturn = getTargetReturn(mvPortfolio)[, "mean"]
+    mvReturn = getTargetReturn(mvPortfolio@portfolio)["mean"]
     minIndex = which.min(abs(mvReturn-targetReturns))
     
     # Upper Frontier Part:
@@ -93,9 +93,9 @@ portfolioFrontier <-
         if (Status == 0) {
             Weights = getWeights(portfolio)
             weights = rbind(weights, Weights)
-            targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
-            targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
-            covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
+            targetReturn = rbind(targetReturn, getTargetReturn(portfolio@portfolio))
+            targetRisk = rbind(targetRisk, getTargetRisk(portfolio@portfolio))
+            covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio@portfolio))
             ### maxDD = rbind(maxDD, 
             ###    min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
@@ -123,11 +123,11 @@ portfolioFrontier <-
                     Weights2 = getWeights(portfolio)
                     weights2 = rbind(Weights2, weights2)
                     targetReturn2 = 
-                        rbind(getTargetReturn(portfolio), targetReturn2)
+                        rbind(getTargetReturn(portfolio@portfolio), targetReturn2)
                     targetRisk2 = 
-                        rbind(getTargetRisk(portfolio), targetRisk2)
+                        rbind(getTargetRisk(portfolio@portfolio), targetRisk2)
                     covRiskBudgets2 = 
-                        rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
+                        rbind(getCovRiskBudgets(portfolio@portfolio), covRiskBudgets2)
                     ### maxDD2 = rbind(maxDD2, min(drawdowns(
                     ###    pfolioReturn(data/100, as.vector(Weights2)))) )
                 }
@@ -140,6 +140,10 @@ portfolioFrontier <-
             ### maxDD = rbind(maxDD2, maxDD)
         } 
     } 
+    rownames(weights) <- NULL
+    rownames(covRiskBudgets) <- NULL
+    rownames(targetReturn) <- NULL
+    rownames(targetRisk) <- NULL
     
     # Check: Did we find points on the frontier?
     if (is.null(weights)) {
@@ -152,15 +156,23 @@ portfolioFrontier <-
     # Reset Target Return:  
     setTargetReturn(spec) <- NULL
   
-    # Compose Frontier:
+    # Call
     portfolio@call = match.call()
-    portfolio@portfolio$weights  = weights
-    portfolio@portfolio$targetReturn = targetReturn
-    portfolio@portfolio$targetRisk = targetRisk
-    portfolio@portfolio$covRiskBudgets = covRiskBudgets
+    
+    # Compose Portfolio:
+    portfolio@portfolio = new("fPFOLIOVAL",
+        portfolio = list(
+            weights = weights,
+            covRiskBudgets = covRiskBudgets,
+            targetReturn = targetReturn,
+            targetRisk = targetRisk,
+            targetAlpha = getAlpha(spec),
+            minriskPortfolio = mvPortfolio,
+            status = 0))
+    
     ### portfolio@portfolio$maxDD = maxDD
-    portfolio@portfolio$status = 0
-    portfolio@portfolio$minriskPortfolio = mvPortfolio
+    
+    # Update Title
     portfolio@title = "Portfolio Frontier"    
     
     # Return Value:

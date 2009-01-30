@@ -61,9 +61,15 @@ frontierPoints <-
         if (Type == "QLPM") risk = "Sigma"
         if (Type == "CVaR") risk = "CVaR" 
     }
-    targetRisk = getTargetRisk(object)[, risk]
-    targetReturn = getTargetReturn(object)[, return]
-
+    
+    if (is.vector(getTargetRisk(object@portfolio))) { 
+        targetRisk = getTargetRisk(object@portfolio)[risk]
+        targetReturn = getTargetReturn(object@portfolio)[return]
+    } else {       
+        targetRisk = getTargetRisk(object@portfolio)[, risk]
+        targetReturn = getTargetReturn(object@portfolio)[, return]
+    }
+    
     # Whole Frontier
     ans = cbind(Risk = targetRisk, Return = targetReturn)
 
