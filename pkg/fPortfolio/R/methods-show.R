@@ -53,7 +53,8 @@ setMethod("show", "fPORTFOLIO",
 
     # Print Target Weights:
     cat("\nPortfolio Weights:\n")
-    weights = data.frame(round(getWeights(object), digits = 4))
+    # DW: Note obgect@portfolio is a list do not use getWeights 
+    weights = data.frame(round(object@portfolio$weights, digits = 4))
     if (NROW(weights) == 1) rownames(weights) = ""
     print(weights)
 
@@ -73,9 +74,10 @@ setMethod("show", "fPORTFOLIO",
     }
 
     # Print Target Return and Risks:
+    # DW: Note obgect@targetR* is a list do not use getTargetR*() 
     cat("\nTarget Return and Risks:\n")
-    targetReturn = getTargetReturn(object)
-    targetRisk = getTargetRisk(object)
+    targetReturn = object@portfolio$targetReturn
+    targetRisk = object@portfolio$targetRisk
     target = data.frame(targetReturn, targetRisk)
     if (NROW(target) == 1) rownames(target) = ""
     print(round(target, digits = 4))
@@ -163,7 +165,7 @@ setMethod("show", "fPFOLIOSPEC",
     cat("\n\nPortfolio List:\t")
     
     if (!is.null(object@portfolio$weights)) {
-        cat("\n Portfolio Weights:    ",
+        cat("\n Portfolio Weights:        ",
             object@portfolio$weights)
     } else {
         cat("\n Target Weights:           ", "NULL")
@@ -178,7 +180,7 @@ setMethod("show", "fPFOLIOSPEC",
     
     if (!is.null(object@portfolio$targetRisk)) {
         cat("\n Target Risk:              ",
-            object@portfolio$targetReturn)
+            object@portfolio$targetRisk)
     } else {
         cat("\n Target Risk:              ", "NULL")
     }

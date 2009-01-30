@@ -75,6 +75,7 @@ getData.fPORTFOLIO = function(object) object@data
 
 
 getSpec.fPORTFOLIO <- function(object) object@spec 
+
  getModel.fPORTFOLIO <- function(object) object@spec@model
   getType.fPORTFOLIO <- function(object) getType(getSpec(object))
   getOptimize.fPORTFOLIO <- function(object) getOptimize(getSpec(object))
@@ -83,6 +84,7 @@ getSpec.fPORTFOLIO <- function(object) object@spec
   getParams.fPORTFOLIO <- function(object) getParams(getSpec(object))
     getAlpha.fPORTFOLIO <- function(object) getAlpha(getSpec(object))
     getA.fPORTFOLIO <- function(object) getA(getSpec(object))
+    
  getPortfolio.fPORTFOLIO <- function(object) object@spec@portfolio
   getWeights.fPORTFOLIO <- function(object) getWeights(getSpec(object))
   getTargetReturn.fPORTFOLIO <- function(object) getTargetReturn(getSpec(object))
@@ -90,6 +92,7 @@ getSpec.fPORTFOLIO <- function(object) object@spec
   getRiskFreeRate.fPORTFOLIO <- function(object) getRiskFreeRate(getSpec(object))
   getNFrontierPoints.fPORTFOLIO <- function(object) getNFrontierPoints(getSpec(object))
   getStatus.fPORTFOLIO <-  function(object) getStatus(getSpec(object))
+  
  getOptim.fPORTFOLIO <- function(object) object@spec@optim
   getSolver.fPORTFOLIO <- function(object) getSolver(getSpec(object)) 
   getObjective.fPORTFOLIO <- function(object) getObjective(getSpec(object)) 
@@ -120,14 +123,17 @@ getConstraintsTypes <- function(object) {
 # ------------------------------------------------------------------------------
 
 
-getPortfolio.fPORTFOLIO <- function(object) object@portfolio
- getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
- getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
- getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
- getAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
- getRiskFreeRate.fPORTFOLIO <- function(object) object@spec$riskFreeRate
- getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
- getStatus.fPORTFOLIO <- function(object) object@portfolio$status
+# These are simple lists requested here for @portfilio !
+# Thus wrong, not not delete the following lines !
+
+# getPortfolio.fPORTFOLIO <- function(object) object@portfolio
+#   getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
+#   getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
+#   getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
+#   getAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
+#   getRiskFreeRate.fPORTFOLIO <- function(object) object@Portfolio$riskFreeRate
+#   getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
+#   getStatus.fPORTFOLIO <- function(object) object@portfolio$status
 
 
 ################################################################################
