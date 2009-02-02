@@ -295,6 +295,7 @@ export(
     "solveRglpk",
     "solveRquadprog",
     "solveRshortExact",
+    "solveRsymphony",
     "spearmanEstimator",
     "tailoredFrontierPlot",
     ".tailRiskBudgetsLinePlot",
