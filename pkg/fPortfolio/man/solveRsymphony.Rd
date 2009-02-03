@@ -33,7 +33,7 @@ solveRsymphony(data, spec, constraints)
     \item{constraints}{
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
-        \code{"maxsumW[assets]=percentage} for sector constraints.
+        \code{"maxsumW[assets]=percentage"} for sector constraints.
         }
 }
 
@@ -46,7 +46,7 @@ SYMPHONY development home page \url{https://projects.coin-or.org/SYMPHONY/wiki}.
 \examples{
 ## data -
    # Load Data:
-   Data <- as.timeSeries(data(smallcap.ts))
+   Data <- SMALLCAP.RET
    Data <- Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
