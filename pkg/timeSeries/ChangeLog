@@ -1,0 +1,46 @@
+2009-01-29  chalabi
+
+	* R/methods-aggregate.R, man/methods-aggregate.Rd: improved
+	  aggregate,timeSeries-method
+
+2009-01-28  chalabi
+
+	* R/methods-plot.R: small changed in plot,timeSeries to avoid
+	  warning when dealing with signal series
+	* R/methods-subset.R: timeSeries()[''] now returns a nuermic(NA)
+	  instead of logical(NA)
+	* inst/unitTests/runit.subset.R: added RUnit test with subsetting
+
+2009-01-12  chalabi
+
+	* man/apply.Rd: fixed warning with new Rd parser
+	* R/AllClass.R: use getDataPart method
+	* R/is.R: use getDataPart method
+	* R/methods-as.R: change as.matrix to use the getDatPart method
+	* R/methods-subset.R: improved speed of sub-setting and
+	  sub-assignment and fixed problem
+	  when sub-setting with character argument without comma.
+	* R/methods-dim.R, R/methods-head.R, R/methods-show.R,
+	  R/methods-tail.R: faster method
+	* R/methods-bind.R: fixed colnames problem with c,rbind
+	* NAMESPACE, R/methods-DataPart.R: added getDataPart,timeSeries
+	  method
+
+2009-01-11  wuertz
+
+	* R/align.R: old align.R script removed
+	* R/methods-align.R: align established as method filename renamed
+
+2009-01-07  wuertz
+
+	* NAMESPACE, R/align.R, inst/unitTests/runit.aggregate.R,
+	  inst/unitTests/runit.subset.R, man/methods-align.Rd: unit tests
+	  which failed from the change 2008 to 2009 repaired, function
+	  align added the same as .align.timeSeries and documented, added
+	  to namespace
+
+2009-01-06  wuertz
+
+	* R/methods-aggregate.R: example modified was not working for 2009
+	* R/methods-lag.R: example modified
+
