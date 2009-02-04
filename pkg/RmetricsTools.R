@@ -14,13 +14,8 @@
 ## Open an R process and set its working directory to this directory.
 ## Then type the following :
 ##
-## > source("installRmetrics.R")
+## > source("RmetricsTools.R")
 ## > installRmetrics("timeDate")
-##
-## _Packages at R-Forge_
-##
-## > source("installRmetrics.R")
-## > installRmetrics("timeDate", repos="http://R-Forge.R-project.org")
 ##
 ################################################################################
 
@@ -58,6 +53,17 @@
       ### "fPortfolioSolver",
       ### "fPortfolioBacktest")
 
+
+## installFile <- "installRmetrics.R"
+## if(!file.exists(installFile))
+##     stop(installFile," is not in current directory",
+##          "(",getwd(),")")
+## message("source()ing ", installFile, " in ",
+##         getwd(),"... ", appendLF = FALSE)
+## source(installFile)
+## message("OK")
+
+
 installRmetrics  <-
     function(pkgs = "all", repos = NULL,
              CRAN = "http://stat.ethz.ch/CRAN/",
@@ -85,10 +91,6 @@ installRmetrics  <-
     }
 
     # list of Rmetrics packages
-
-    # pkgsRmetrics <- getDESCR("Rmetrics", infokind,
-    #                         if (!is.null(repos)) available)
-    # pkgsRmetrics <- c(pkgsRmetrics, "Rmetrics")
 
     pkgsRmetrics <- .packagesRmetrics()
 
@@ -128,7 +130,7 @@ installRmetrics  <-
     install.packages(pkgs, repos = repos, type = type, ...)
 
     ## Return
-    return(TRUE)
+    invisible(TRUE)
 }
 
 getDESCR <- function(package, infokind, available = NULL)
@@ -173,15 +175,6 @@ dependsRmetrics <-
 {
     stopifnot(is.character(pkgs))
 
-    installFile <- "installRmetrics.R"
-    if(!file.exists(installFile))
-        stop(installFile," is not in current directory",
-             "(",getwd(),")")
-
-    message("source()ing ", installFile, " in ", getwd(),"... ", appendLF = FALSE)
-    source(installFile)
-    message("OK")
-
     ## extract list of Rmetrics packages
     pkgsRmetrics <- .packagesRmetrics()
     stopifnot(pkgs %in% c(pkgsRmetrics, "all"))
@@ -207,34 +200,6 @@ checkBeforeCommit  <-
     function(pkgs = "all", lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(pkgs))
-
-    installFile <- "installRmetrics.R"
-    if(!file.exists(installFile))
-        stop(installFile," is not in current directory",
-             "(",getwd(),")")
-
-###     if(!file.exists(installFile)) {
-###         user <- Sys.getenv("USER")
-###         myDir <-
-###             switch(user,
-###                    "maechler" = "~/R/D/R-forge/Rmetrics",
-###                    "yankee" = "~/r/",
-###                    "wuertz" = stop(" please fix in checkBeforeCommit()"),
-###                    ## otherwise:
-###                    stop("unknown user: please fix in checkBeforeCommit()"))
-
-###         setwd(file.path(myDir, "pkg"))
-###         ##                    ------- on R-forge
-
-###         if(!file.exists(installFile))
-###             stop(installFile," is not in current directory",
-###                  "(",getwd(),")")
-###     }
-
-    message("source()ing ", installFile, " in ",
-            getwd(),"... ", appendLF = FALSE)
-    source(installFile)
-    message("OK")
 
     ## Set library and outdir paths
     if (is.null(lib)) {
@@ -321,7 +286,7 @@ checkBeforeCommit  <-
     return(STATUS)
 }
 
-# this file can help to create a NAMESPACE
+# this function can help to create a NAMESPACE
 
 ## # remove any existing namespace
 ## # search for global variables and use global env
@@ -335,15 +300,6 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
                          "fGarch", "fAssets", "fPortfolio"))
 {
     stopifnot(is.character(pkgs))
-
-    installFile <- "installRmetrics.R"
-    if(!file.exists(installFile))
-        stop(installFile," is not in current directory",
-             "(",getwd(),")")
-    message("source()ing ", installFile, " in ",
-            getwd(),"... ", appendLF = FALSE)
-    source(installFile)
-    message("OK")
 
     RmetricsPkgs <- .packagesRmetrics()
 
@@ -637,16 +593,10 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     ################################################
     close(out)
     options(op)
-invisible()
+
+    invisible(TRUE)
 }
-installFile <- "installRmetrics.R"
-if(!file.exists(installFile))
-    stop(installFile," is not in current directory",
-         "(",getwd(),")")
-message("source()ing ", installFile, " in ",
-        getwd(),"... ", appendLF = FALSE)
-source(installFile)
-message("OK")
+
 
 upVersion <- function(pkgs)
 {
@@ -669,13 +619,14 @@ upVersion <- function(pkgs)
         write.dcf(dcf, file = dcfFile)
     })
 
-    return()
+    invisible(TRUE)
 }
 
 checkVersion <- function(pkgs)
 {
     message("Downloading packages info from CRAN ... ", appendLF = FALSE)
-    info <- available.packages(contriburl = contrib.url(getOption("repos"), type = "source"))
+    info <- available.packages(contriburl = contrib.url(getOption("repos"),
+                               type = "source"))
     message("OK")
 
     for (pkg in pkgs) {
@@ -691,10 +642,8 @@ checkVersion <- function(pkgs)
     }
 }
 
-buildRmetrics <- function(pkgs = "all",
-                          outdir = NULL,
-                          update.version = FALSE,
-                          ...)
+buildRmetrics <- function(pkgs = "all", outdir = NULL,
+                          update.version = FALSE, ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -706,6 +655,38 @@ buildRmetrics <- function(pkgs = "all",
 
     # reorder list of packages
     pkgs <- pkgsRmetrics[pkgsRmetrics %in% pkgs]
+
+    # update Date and revision number in DESCRIPTION file
+    sapply(pkgs, function(pkg) {
+
+        dcfFile <- file.path(pkg, "DESCRIPTION")
+        dcf <- read.dcf(dcfFile)
+
+        # get Date
+        dcf[,"Date"] <- format(Sys.Date())
+
+        # get svn rev number
+        cmd <- paste("svn info", pkg)
+        t <- try(svn <- system(cmd, intern = TRUE))
+        if (inherits(t, "try-error"))
+            warnings("Could not update svn revision number in DESC file")
+        else {
+            rev <- sub("Last Changed Rev: ", "",
+                       svn[grep("Last Changed Rev", svn)])
+            if ("Revision" %in% colnames(dcf)) # check if "REV" already present
+                dcf[,"Revision"] <- rev
+            else {
+                # insert REV just after Version field
+                cn <- grep("Version", colnames(dcf))
+                dcf <- cbind(dcf[,seq(cn),drop=FALSE],
+                             Revision = rev,
+                             dcf[,seq(cn+1, ncol(dcf)),drop=FALSE])
+            }
+        }
+        # update DCF
+        write.dcf(dcf, file = dcfFile)
+        message("Date and REV number updated")
+    })
 
     message("building the packages ...", appendLF = FALSE)
     build <-
