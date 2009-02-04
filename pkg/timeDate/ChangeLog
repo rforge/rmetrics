@@ -1,0 +1,21 @@
+2009-01-28  chalabi
+
+	* R/whichFormat.R:
+	* inst/unitTests/runit.Subsets.R: added subset RUnit tests
+	* R/midnightStandard.R, R/whichFormat.R: handling NA's with
+	  timeDate
+	* man/methods-na.Rd: added help page for is.na method of timeDate
+	* R/methods-na.R, R/midnightStandard.R, R/whichFormat.R: timeDate
+	  now handles NA's
+	* NAMESPACE: added is.na methods for timeDate objects
+	* DESCRIPTION: updated version number
+	* R/methods-na.R: added 'is.na' method for timeDate objects
+
+2009-01-12  chalabi
+
+	* man/methods-Ops.Rd, man/nDay.Rd: fixed few typos in man pages
+	* R/start.R: faster start,timeDate method
+	* R/sample.R: faster sample,timeDate method
+	* R/rev.R: faster rev,timeDate method
+	* R/rep.R: faster rep,timeDate method
+
