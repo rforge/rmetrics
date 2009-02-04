@@ -657,8 +657,8 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
     pkgs <- pkgsRmetrics[pkgsRmetrics %in% pkgs]
 
     # update Date and revision number in DESCRIPTION file
-    sapply(pkgs, function(pkg) {
-
+    message("Updating Date and Revision in DCF... ", appendLF = FALSE)
+    for (pkg in pkgs) {
         dcfFile <- file.path(pkg, "DESCRIPTION")
         dcf <- read.dcf(dcfFile)
 
@@ -669,7 +669,7 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
         cmd <- paste("svn info", pkg)
         t <- try(svn <- system(cmd, intern = TRUE))
         if (inherits(t, "try-error"))
-            warnings("Could not update svn revision number in DESC file")
+            warning("Could not update svn revision number in DESC file")
         else {
             rev <- sub("Last Changed Rev: ", "",
                        svn[grep("Last Changed Rev", svn)])
@@ -685,10 +685,28 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
         }
         # update DCF
         write.dcf(dcf, file = dcfFile)
-        message("Date and REV number updated")
-    })
+        message("OK")
 
-    message("building the packages ...", appendLF = FALSE)
+    }
+
+    # update Changelog file
+    message("Updating ChangeLog... ", appendLF = FALSE)
+    for (pkg in pkgs) {
+        svn2cl <- file.path("..", "share", "svn2cl.sh")
+        if (file.exists(svn2cl)) {
+            cmd <- paste(svn2cl, pkg,  "-o", file.path(pkg, "ChangeLog"))
+            t <- try(system(cmd))
+            if (inherits(t, "try-error"))
+                stop("Could not generate ChageLog file")
+            message("OK")
+        } else {
+            message("ERROR")
+            warning("Could not locate svn2cl.sh script")
+        }
+    }
+
+    # build package
+    message("Building the packages... ")
     build <-
         sapply(pkgs, function(pkg, ...) system(paste("R CMD build", pkg, ...)))
     if (any(build))
@@ -705,7 +723,7 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
         if (!file.exists(outdir)) dir.create(outdir)
 
         ## move packages to outdir
-        message("moving packages to ", outdir, "...", appendLF = FALSE)
+        message("moving packages to ", outdir, "... ", appendLF = FALSE)
         rename <- sapply(pkgsBuild, function(pkg)
                          file.rename(pkg, file.path(outdir, pkg)))
         if (any(!rename))
