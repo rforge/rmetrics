@@ -7,6 +7,8 @@
 \alias{dim,timeSeries-method}
 \alias{dimnames,timeSeries-method}
 
+\alias{names,timeSeries-method}
+
 \alias{colnames<-,timeSeries-method}
 \alias{rownames<-,timeSeries,timeDate-method}
 \alias{rownames<-,timeSeries,ANY-method}

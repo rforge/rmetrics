@@ -29,6 +29,9 @@
 \alias{[,timeSeries,missing,missing-method}
 \alias{[,timeSeries,ANY,ANY-method}
 
+\alias{$,timeSeries,ANY-method}
+\alias{$,timeSeries,character-method}
+
 \alias{[<-,timeSeries,index_timeSeries,index_timeSeries-method}
 \alias{[<-,timeSeries,index_timeSeries,missing-method}
 \alias{[<-,timeSeries,missing,index_timeSeries-method}
