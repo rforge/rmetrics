@@ -124,6 +124,7 @@ exportMethods(
         "lines",
         "merge",
         "na.omit",
+        "names",
         "Ops",
         "points",
         "print",

@@ -22,7 +22,7 @@
 #  rownames,timeSeries       Return row names to a 'timeSeries' object
 #  colnames<-,timeSeries     Assigns column names to a 'timeSeries' object
 #  rownames<-,timeSeries     Assigns row names to a 'timeSeries' object
-#  is.array,timeSeries       Allows that NCOL and NROW work properly
+#  names,timeSeries          Return column names of a 'timeSeries' object
 ################################################################################
 
 
@@ -195,6 +195,11 @@ setMethod("dimnames<-", c("timeSeries", "list"),
 # rownames # default methods works fine
 # colnames<- # default methods works fine because it uses dimnames defined above
 # rownmaes<- # default methods works fine because it uses dimnames defined above
+
+# ------------------------------------------------------------------------------
+
+# important for completion
+setMethod("names", "timeSeries", function(x) colnames(x))
 
 ################################################################################
 
