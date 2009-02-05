@@ -170,6 +170,34 @@ function()
                    ts[i],
                    mat[series(i)])
 
+
+    # --------------------------------------------------------------------------
+    # $,timeSeries method
+    df <- as.data.frame(ts)
+
+    checkIdentical(
+                   ts$TS.,
+                   df$TS.)
+
+    checkIdentical(
+                   ts$TS.1,
+                   df$TS.1)
+
+    checkIdentical(
+                   ts$a,
+                   df$a)
+
+    colnames(ts) <- c("aa", "bb")
+    colnames(df) <- c("aa", "bb")
+
+    checkIdentical(
+                   ts$a,
+                   df$a)
+
+    checkIdentical(
+                   ts$b,
+                   df$b)
+
 }
 
 
