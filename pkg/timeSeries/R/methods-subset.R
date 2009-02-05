@@ -203,6 +203,30 @@ setMethod("[",
 
 # ------------------------------------------------------------------------------
 
+
+################################################################################
+#  $,timeSeries            Subset by column names
+################################################################################
+
+# should behave the same way as $,data.frame
+# if none or more than one match returns NULL
+
+setMethod("$",
+          signature(x = "timeSeries", name = "character"),
+          function (x, name)
+      {
+          idx <- grep(name, x@units)
+          if (length(idx) == 1) # if none or more than one match -> NULL
+              .subset(x, TRUE, idx)
+          else
+              NULL
+      })
+
+setMethod("$",
+          signature(x = "timeSeries", name = "ANY"),
+          function(x, name)
+          NULL )
+
 ################################################################################
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
