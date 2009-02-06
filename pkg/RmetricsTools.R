@@ -694,7 +694,9 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
     for (pkg in pkgs) {
         svn2cl <- file.path("..", "share", "svn2cl.sh")
         if (file.exists(svn2cl)) {
-            cmd <- paste(svn2cl, pkg,  "-o", file.path(pkg, "ChangeLog"))
+            cmd <- paste(svn2cl, pkg,
+                         "--ignore-message-starting !",
+                         "-o", file.path(pkg, "ChangeLog"))
             t <- try(system(cmd))
             if (inherits(t, "try-error"))
                 stop("Could not generate ChageLog file")
