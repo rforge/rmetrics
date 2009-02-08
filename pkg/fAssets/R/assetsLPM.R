@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:             ASSETS STATISTICS:
-#  assetsLPM             Computes Asymmetric Lower Partial Moments 
+# FUNCTION:                   DESCRIPTION:
+#  assetsLPM                   Computes Asymmetric Lower Partial Moments
 ################################################################################
 
 

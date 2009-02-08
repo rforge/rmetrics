@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:             SIMULATION AND PARAMETER ESTIMATION:
-#  assetsSim             Simulates a set of artificial assets
+# FUNCTION:                   DESCRIPTION:
+#  assetsSim                   Simulates a set of artificial assets
 ################################################################################
             
 

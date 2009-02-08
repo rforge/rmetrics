@@ -24,17 +24,17 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
-#  pfolioVaR            Computes value-at-risk for a portfolio of assets
-#  pfolioCVaRplus       Computes value-at-risk Plus for a portfolio of assets
-#  pfolioCVaR           Computes conditional value-at-risk for a PF of assets
-#  lambdaCVaR           Computes CVaR's atomic split value lambda
-# FUNCTION:            BENCHMARKS:
-#  pfolioMaxLoss        Computes maximum loss for a portfolio of assets
-#  pfolioReturn         Computes return series of a portfolio
-#  pfolioTargetReturn   Computes target return of a portfolio
-#  pfolioTargetRisk     Computes target risk of a portfolio
-#  pfolioHist           Plots a histogram of the returns of a portfolio
+# FUNCTION:                   DESCRIPTION:
+#  pfolioVaR                   Computes VaR for a portfolio of assets
+#  pfolioCVaR                  Computes CVaR for a portfoluio of assets
+#  pfolioCVaRplus              Computes CVaR-Plus for a portfolio of assets
+#  lambdaCVaR                  Computes CVaR's atomic split value lambda
+# FUNCTION:                   DESCRIPTION:
+#  pfolioMaxLoss               Computes maximum loss for a portfolio 
+#  pfolioReturn                Computes return series for a portfolio
+#  pfolioTargetReturn          Computes target return for a portfolio
+#  pfolioTargetRisk            Computes target risk for a portfolio
+#  pfolioHist                  Plots a histogram of portfolio returns
 ################################################################################
 
 

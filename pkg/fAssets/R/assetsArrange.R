@@ -20,9 +20,9 @@
 # assetsArrange             Rearranges the columns in a deta set of assets
 #  .pcaArrange               Returns PCA correlation ordered column names
 #  .hclustArrange            Returns hierarchical clustered column names 
-#  .abcArrange               Returns sorted column names of a time Series
-#  .orderArrange             Returns ordered column names of a time Series
-#  .sampleArrange            Returns sampled column names of a time Series
+#  .abcArrange               Returns sorted column names 
+#  .orderArrange             Returns ordered column names 
+#  .sampleArrange            Returns sampled column names 
 #  .statsArrange             Returns statistically rearranged column names
 ################################################################################
 

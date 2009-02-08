@@ -16,32 +16,21 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  assetsMeanCov             Estimates mean and variance for a set of assets
-#   method = "cov"            uses standard covariance estimation
-#   method = "mve"            uses "cov.mve" from [MASS]
-#   method = "mcd"            uses "cov.mcd" from [MASS]
-#   method = "MCD"            requires "covMcd" from [robustbase]  
-#   method = "OGK"            requires "covOGK" from [robustbase] 
-#   method = "nnve"           uses builtin from [covRobust]
-#   method = "shrink"         uses builtin from [corpcor]
-#   method = "bagged"         uses builtin from [corpcor]
-#   method = "donostah"       uses builtin from [robust]
-#   method = "foo"            uses user defined estimator named foo
-# FUNCTION:                 DESCRIPTION:
-#   .covMeanCov               uses standard covariance estimation
-#   .mveMeanCov               uses "cov.mve" from [MASS]
-#   .mcdMeanCov               uses "cov.mcd" from [MASS]
-#   .MCDMeanCov               requires "covMcd" from [robustbase]  
-#   .OGKMeanCov               requires "covOGK" from [robustbase] 
-#   .nnveMeanCov              uses builtin from [covRobust]
-#   .shrinkMeanCov            uses builtin from [corpcor]
-#   .baggedMeanCov            uses builtin from [corpcor]
-#   .donostahMeanCov          uses builtin from [robust]
-#   .fooMeanCov               uses user defined estimator named foo
-# FUNCTION:                 DESCRIPTION:
-#  getCenterRob              Extracts the robust estimate for the center
-#  getCovRob                 Extracts the robust estimate for the covariance
+# FUNCTION:                   DESCRIPTION:
+#  assetsMeanCov               Estimates mean and variance for a set of assets
+# FUNCTION:                   DESCRIPTION:
+#  .covMeanCov                 uses standard covariance estimation
+#  .mveMeanCov                 uses "cov.mve" from [MASS]
+#  .mcdMeanCov                 uses "cov.mcd" from [MASS]
+#  .MCDMeanCov                 requires "covMcd" from [robustbase]  
+#  .OGKMeanCov                 requires "covOGK" from [robustbase] 
+#  .nnveMeanCov                uses builtin from [covRobust]
+#  .shrinkMeanCov              uses builtin from [corpcor]
+#  .baggedMeanCov              uses builtin from [corpcor]
+#  .donostahMeanCov            uses builtin from [robust]
+# FUNCTION:                   DESCRIPTION:
+#  getCenterRob                Extracts the robust estimate for the center
+#  getCovRob                   Extracts the robust estimate for the covariance
 ################################################################################
 
 

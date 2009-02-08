@@ -20,6 +20,7 @@
 # .txtPanel                    a diagonal text panel
 # .minmaxPanel                 a diagonal minmax text panel
 # .histPanel                   a diagonal histogram panel
+# FUNCTION:                   DESCRIPTION:
 # .ptsPanel                    an off-diagonal points panel
 # .piePanel                    an off-diagonal pie panel
 # .piePtsPanel                 an off-diagonal pie/points panel
@@ -35,6 +36,8 @@
     function(x = 0.5, y = 0.5, txt, cex, font, col.box = "white")
 {  
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     
@@ -54,6 +57,8 @@
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
     # FUNCTION:
     
     # Put the minimum in the lower-left corner and the
@@ -72,6 +77,8 @@
     function(x, col.box = "white", ...)
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     
@@ -94,6 +101,8 @@
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
     # FUNCTION:
     
     plot.xy(xy.coords(x, y), type = "p", ...)
@@ -109,9 +118,11 @@
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
     # FUNCTION:
     
-    # Coordinates of box
+    # Coordinates of box:
     usr <- par()$usr
     minx <- usr[1] #min(x, na.rm = TRUE)
     maxx <- usr[2] #max(x, na.rm = TRUE)
@@ -135,9 +146,9 @@
     col.ind <- round(ncol*(corr+1)/2)
     col.pie <- pal[col.ind]
     
-    # Watch out for the case with 0 segments
+    # Watch out for the case with 0 segments:
     segments <- round(60*abs(corr),0)
-    if(segments>0){
+    if(segments > 0) {
         angles <- seq(pi/2, pi/2+(2*pi* -corr), length=segments)
         circ <- cbind(centerx + cos(angles)*rx, centery + sin(angles)*ry)
         circ <- rbind(circ, c(centerx, centery), circ[1, ])
@@ -155,6 +166,8 @@
     function(x, y, col.box = "white", ...)
 {   
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # Example:
     #   x = series(100*as.timeSeries(data(LPP2005REC))[, 1:6])
@@ -177,6 +190,8 @@
     function(x, y, col.box = "white", ...)
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     
@@ -207,9 +222,11 @@
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
     # FUNCTION:
     
-    # Draw an ellipse
+    # Draw an ellipse:
     #  box(col="white")
     dfn <- 2
     dfd <- length(x)-1
@@ -235,7 +252,7 @@
     elly <- ifelse(elly > maxy, maxy, elly)
     lines(ellx, elly, col='gray30',...)
     
-    # Filled Ellipse:
+    # Fill Ellipse:
     # polygon(ellx, elly, col = "blue", ...)
     
     # Add a lowess line through the ellipse
@@ -254,6 +271,8 @@
     function(x, y, cex, col, col.box = "white", ...)
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     
@@ -280,6 +299,8 @@
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
     # FUNCTION:
     
     points(x, y, ...)
@@ -297,6 +318,8 @@
     function(x, y, cex, col, ...)
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     

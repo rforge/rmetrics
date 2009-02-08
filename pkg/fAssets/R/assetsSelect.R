@@ -16,10 +16,10 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  assetsSelect          Selects similar or dissimilar assets from a data set
-#  .hclustSelect         Returns results from hierarchical clustering 
-#  .kmeansSelect         Returns results from  k-means clustering    
+# FUNCTION:                   DESCRIPTION:
+#  assetsSelect                Selects similar or dissimilar assets 
+#  .hclustSelect               Selects due to hierarchical clustering 
+#  .kmeansSelect               Selects due to k-means clustering    
 ################################################################################
 
 

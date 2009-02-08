@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  assetsOutliers        Detects outliers in a multivariate set of assets
+# FUNCTION:                   DESCRIPTION:
+#  assetsOutliers              Detects outliers in multivariate assets sets
 ################################################################################
 
 

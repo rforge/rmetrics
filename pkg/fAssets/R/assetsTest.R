@@ -16,10 +16,10 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  assetsTest                Tests for multivariate Normal Assets
-#  .mvshapiroTest            Multivariate Shapiro Test
-#  .mvenergyTest             Multivariate E-Statistic (Energy) Test   
+# FUNCTION:                   DESCRIPTION:
+#  assetsTest                  Tests for multivariate Normal Assets
+#  .mvshapiroTest              Multivariate Shapiro Test
+#  .mvenergyTest               Multivariate E-Statistic (Energy) Test   
 ################################################################################
 
 
