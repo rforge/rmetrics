@@ -1,3 +1,14 @@
+2009-02-08  chalabi
+
+	* R/subset.R: use POSIX character classes instead of ASCII classes
+	  to avoid compatibility problems with different locales.
+	* R/timeDate.R: timeDate() now returns timeDate(NA) if the format
+	  of charvec can not be found
+
+2009-02-04  chalabi
+
+	* DESCRIPTION: updated version number
+
 2009-01-28  chalabi
 
 	* R/whichFormat.R:
