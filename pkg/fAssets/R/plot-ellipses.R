@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  covEllipsesPlot              Plots covariance ellipses
+# FUNCTION:                   DESCRIPTION:
+#  covEllipsesPlot             Displays a covariance ellipses plot
 ################################################################################
 
 
@@ -25,7 +25,7 @@ covEllipsesPlot <-
     function(x = list(), ...)
 {
     # Description:
-    #   Plots covariance ellipses
+    #   Displays a covariance ellipses plot
     
     # Arguments:
     #   x = a list of at least two covariance matrices   

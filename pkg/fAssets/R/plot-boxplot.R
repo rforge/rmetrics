@@ -16,9 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:                   DESCRIPTION:
-#  assetsBoxPlot               Displays standard box plots
-#  assetsBoxPercentilePlot     Displays side-by-side box-percentile plots
+#  assetsBoxPlot               Displays a standard box plot 
+#  assetsBoxPercentilePlot     Displays a side-by-side box-percentile plot
 ################################################################################
 
 

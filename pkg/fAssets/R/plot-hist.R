@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                   DESCRIPTION:
-#  assetsHistPlot              Displays histograms of individual assets
+#  assetsHistPlot              Displays a histograms of a single asset 
 #  assetsLogDensityPlot        Displays a pdf plot on logarithmic scale
 ################################################################################
 
@@ -28,7 +28,7 @@ assetsHistPlot =
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Displays histograms of individual assets
+    #   Displays a histograms of a single asset
 
     # Arguments:
     #   x - a timeSeries object or any other rectangular object

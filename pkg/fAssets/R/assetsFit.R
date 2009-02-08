@@ -16,34 +16,12 @@
 
 
 ################################################################################
-# FUNCTION:             SIMULATION AND PARAMETER ESTIMATION:
-#  'fASSETS'             Class representation for "fASSETS" Objects
+# FUNCTION:             DESCRIPTION:
 #  assetsFit             Estimates the parameters of a set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
 #   method = "st"         assuming a multivariate skew-Student-t
-# FUNCTION:             PRINT, PLOT AND SUMMARY METHOD:
-#  show.fASSETS          S4: Print method for an object of class fASSETS
-#  plot.fASSETS          S3: Plot method for an object of class fASSETS
-#  summary.fASSETS       S3: Summary method for an object of class fASSETS
-# REQUIREMENTS:         DESCRIPTION:
-#  sn                    Contributed R-package "sn"
 ################################################################################
-
-
-setClass("fASSETS",
-    representation(
-        call = "call",              # call: The matched function call
-        method = "character",       # method: One of "mn", "msn", "mst"
-        model = "list",             # model: A list(mu, Omega, alpha, df)
-        data = "data.frame",        # Data: The data records
-        fit = "list",               # fit: Results parameter estimation
-        title = "character",        # title: A short title string
-        description = "character")  # description: A brief description
-)
-
-
-# ------------------------------------------------------------------------------
 
 
 assetsFit =
@@ -143,109 +121,6 @@ description = NULL, fixed.df = NA, ...)
         title = as.character(title),
         description = as.character(description)
         )
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-
-setMethod("show", "fASSETS",
-    function(object)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Print Method for an object of class fASSETS
-
-    # Arguments:
-    #   x - an object of class fASSETS
-
-    # FUNCTION:
-
-    # Title:
-    cat("\nTitle:\n")
-    cat(as.character(object@title), "\n")
-
-    # Call:
-    cat("\nCall:\n")
-    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"),
-        "\n", sep = "")
-
-    # Model Parameters:
-    cat("\nModel Parameters:\n")
-    print(object@model)
-
-    # Description:
-    cat("Description:\n")
-    print(object@description)
-    cat("\n")
-
-    # Return Value:
-    invisible(object)
-})
-
-
-# ------------------------------------------------------------------------------
-
-
-plot.fASSETS =
-function(x, which = "ask", ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Descriptions:
-    #   Plots a fit from an assets data set or a model
-
-    # Arguments:
-    #   x - an object of class fASSETS
-    #   ... - arguments to be passed
-
-    # Notes:
-    #   Library 'sn', is version  0.32-2 (2004-03-13),
-    #     (C) 1998-2004 A. Azzalini, GPL
-    #   For "fMV" objects have a look in "fMultivar".
-
-    # FUNCTION:
-
-    # Transform to a S4 object of class "fMV":
-    object = new("fMV",
-        call = x@call,
-        method = x@method,
-        model = x@model,
-        data = x@data,
-        fit = x@fit,
-        title = x@title,
-        description =
-        x@description)
-
-    # Use plot method for objects of class "fMV"
-    plot(object, which = which, xlab = "Time", ylab = "Value", ...)
-
-    # Return value:
-    invisible(x)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-summary.fASSETS =
-function(object, which = "all", ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Descriptions:
-    #   Summarizes a fit from an assets data set or a model
-
-    # Print:
-    print(object, ...)
-
-    # Plot:
-    plot(object, which = which, ...)
-
-    # Return value:
-    invisible(object)
 }
 
 

@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                   DESCRIPTION:
-#  assetsHistPairsPlot         Displays bivariate Histogram Plot
+#  assetsHistPairsPlot         Displays a bivariate histogram plot 
 ################################################################################
 
 

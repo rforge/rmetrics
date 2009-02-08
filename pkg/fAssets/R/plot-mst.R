@@ -31,6 +31,12 @@ assetsTreePlot <-
     #   Displays a minimum spanning tree of assets
     
     # Arguments:
+    #   x -
+    #   labels -
+    #   title -
+    #   box - 
+    #   method -
+    #   seed -
     
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]

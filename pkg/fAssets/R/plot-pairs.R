@@ -18,7 +18,7 @@
 ################################################################################
 # FUNCTION:                   DESCRIPTION:
 #  assetsPairsPlot             Displays pairs of scatterplots of assets
-#  assetsCorgramPlot           Displays correlations between assets
+#  assetsCorgramPlot           Displays pairwise correlations between assets
 #  assetsCorTestPlot           Displays and tests pairwise correlations
 #  assetsCorImagePlot          Displays an image plot of a correlations
 ################################################################################
