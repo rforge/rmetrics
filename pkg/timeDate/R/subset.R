@@ -145,11 +145,12 @@ function(subset)
         code = "SPAN"
     } else {
         code = paste(
-            sign(regexpr("^::[0-9]", subset)[1]+1),
-            sign(regexpr("[0-9]::$", subset)[1]+1),
-            sign(regexpr("[0-9]::[0-9]", subset)[1]+1),
+            sign(regexpr("^::[[:digit:]]", subset)[1]+1),
+            sign(regexpr("[[:digit:]]::$", subset)[1]+1),
+            sign(regexpr("[[:digit:]]::[[:digit:]]", subset)[1]+1),
             as.integer(subset == "::"),
-            length(grep("[a-Z]", subset)), sep = "")
+            ## KH : "[a-Z]" is invalid in most locales
+            length(grep("[[:alpha:]]", subset)), sep = "")
     }
 
     # Return Value:
