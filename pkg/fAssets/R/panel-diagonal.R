@@ -17,24 +17,23 @@
 
 ################################################################################
 # FUNCTION:                   DESCRIPTION:
-# .txtPanel
-# .minmaxPanel
-# .histPanel
-# .ptsPanel
-# .piePanel
-# .piePtsPanel
-# .shadePanel
-# .ellipsePanel
-# .cortestPanel
-# .lowessPanel
-# .numberPanel
+# .txtPanel                    a diagonal text panel
+# .minmaxPanel                 a diagonal minmax text panel
+# .histPanel                   a diagonal histogram panel
+# .ptsPanel                    an off-diagonal points panel
+# .piePanel                    an off-diagonal pie panel
+# .piePtsPanel                 an off-diagonal pie/points panel
+# .shadePanel                  an off-diagonal shade panel
+# .ellipsePanel                an off-diagonal ellipse panel
+# .cortestPanel                an off-diagonal cortest panel
+# .lowessPanel                 an off-diagonal lowess panel
+# .numberPanel                 an off-diagonal lowess panel
 ################################################################################
 
 
 .txtPanel <- 
     function(x = 0.5, y = 0.5, txt, cex, font, col.box = "white")
-{
-    
+{  
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
@@ -79,8 +78,10 @@
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(usr[1:2], 0, 1.5) )
     h <- hist(x, plot = FALSE)
-    breaks <- h$breaks; nB <- length(breaks)
-    y <- h$counts; y <- y/max(y)
+    breaks <- h$breaks
+    nB <- length(breaks)
+    y <- h$counts 
+    y <- y/max(y)
     rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
 }
 
