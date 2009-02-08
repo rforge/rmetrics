@@ -94,6 +94,8 @@ setMethod("timeDate", "character",
     # Autodetect Format :
     if (is.null(format))
         format <- whichFormat(charvec[1])
+    if (identical(format,"unknown"))
+        return(timeDate(NA, zone = zone, FinCenter = FinCenter))
 
     # Midnight Standard & conversion to isoFormat:
     charvec <- midnightStandard(charvec, format)
