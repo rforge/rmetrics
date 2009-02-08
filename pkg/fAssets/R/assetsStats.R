@@ -16,8 +16,10 @@
 
 
 ################################################################################
-# FUNCTION:                 ASSETS STATISTICS:
-#  assetsStats               Computes basic statistics of a set of assets  
+# FUNCTION:                 DESCRIPTION:
+#  assetsStats               Computes basic statistics of a set of assets 
+#  basicStats                see fBasics
+#  drawdownsStats            see timeSeries 
 ################################################################################
 
 
@@ -131,6 +133,14 @@ assetsStats <-
     # Return Value:
     ans
 } 
+
+
+# ------------------------------------------------------------------------------
+# fBasics::basicStats
+
+
+# ------------------------------------------------------------------------------
+# timeSeries::drawdownsStats
 
 
 ################################################################################

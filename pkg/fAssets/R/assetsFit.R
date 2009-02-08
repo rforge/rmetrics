@@ -49,7 +49,8 @@ setClass("fASSETS",
 assetsFit =
 function(x, method = c("st", "snorm", "norm"), title = NULL,
 description = NULL, fixed.df = NA, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits the parameters of a multivariate data set of assets
@@ -151,7 +152,8 @@ description = NULL, fixed.df = NA, ...)
 
 setMethod("show", "fASSETS",
     function(object)
-{   # A function implemented by Rmetrics
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print Method for an object of class fASSETS
@@ -189,7 +191,8 @@ setMethod("show", "fASSETS",
 
 plot.fASSETS =
 function(x, which = "ask", ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Descriptions:
     #   Plots a fit from an assets data set or a model
@@ -229,7 +232,8 @@ function(x, which = "ask", ...)
 
 summary.fASSETS =
 function(object, which = "all", ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Descriptions:
     #   Summarizes a fit from an assets data set or a model

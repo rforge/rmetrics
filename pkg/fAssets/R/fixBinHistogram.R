@@ -16,45 +16,4 @@
 
 
 ################################################################################
-# FUNCTION:                   SIMILARITY PLOTS:
-#  fixBinHistogram             Returns histogram with fixed bins
-################################################################################
-
-
-.hist <- 
-    function (x, nbins) 
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns histogram with fixed bins
-    
-    # FUNCTION:
-    
-    # Classes:
-    nclass = nbins + 1
-    n = length(x)
-    xname = paste(deparse(substitute(x), 500), collapse = "\n")
-    
-    # Breaks:
-    breaks = seq(min(x), max(x), length = nclass)
-    nB = length(breaks)
-    h = diff(breaks)
-    
-    # Compute Counts:
-    counts = .C("bincount", as.double(x), as.integer(n), as.double(breaks), 
-        as.integer(nB), counts = integer(nB - 1), right = FALSE, 
-        include = TRUE, naok = FALSE, NAOK = FALSE, DUP = FALSE, 
-        PACKAGE = "base")$counts
-    dens = counts/(n * h)
-    mids = 0.5 * (breaks[-1] + breaks[-nB])
-    
-    # Histogram:
-    r = structure(list(breaks = breaks, counts = counts, intensities = dens, 
-        density = dens, mids = mids, xname = xname, equidist = TRUE), 
-        class = "histogram")
-}
-
-
-################################################################################
 

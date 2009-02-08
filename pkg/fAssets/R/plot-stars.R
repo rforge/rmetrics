@@ -18,9 +18,10 @@
 ################################################################################
 # FUNCTION:               DESCRIPTION:
 #  assetsStarsPlot         Draws segment/star diagrams of a multivariate data
-#  assetsBoxStatsPlot      Displays a segment plot of box plot statistics
+# FUNCTION:               DESCRIPTION:
 #  assetsBasicStatsPlot    Displays a segment plot of basic return statistics
 #  assetsMomentsPlot       Displays a segment plot of distribution moments
+#  assetsBoxStatsPlot      Displays a segment plot of box plot statistics
 #  assetsNIGFitPlot        Displays a segment plot NIG parameter estimates
 ################################################################################
 
@@ -41,7 +42,7 @@ assetsStarsPlot <-
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))
     #   X = basicStats(x)[-(1:2), 1:6]
-    #   assetsStarPlot(X, main = "Basic Statistics", keyOffset = -0.5)
+    #   assetsStarsPlot(X, main = "Basic Statistics", keyOffset = -0.5)
 
     # FUNCTION:
 
@@ -76,41 +77,6 @@ assetsStarsPlot <-
         key.loc = c(NX + 1, 1) + keyOffset,
         draw.segments = draw.segments, ... )
     # box()
-
-    # Return Value:
-    invisible(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-assetsBoxStatsPlot <-
-    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
-    keyOffset = c(-0.65, -0.50), main = "Assets Statistics",
-    title = "Assets", titlePosition = c(3, 3.65),
-    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50), ...)
-{
-    # A function Implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays a segment plot of box plot statistics
-
-    # Note:
-    #    The Default Settings are made for a portfolio with
-    #       7 to 9 assets.
-
-    # FUNCTION:
-
-    # Plot:
-    if(par) par(mfrow = c(1, 1), oma = oma, mar = mar)
-    bp = assetsBoxPlot(x, plot = FALSE)
-    ans = assetsStarsPlot(abs(bp$stats), keyOffset = keyOffset)
-    text(titlePosition[1], titlePosition[2], adj = 0,
-        title, cex = 1.25)
-    text(descriptionPosition[1], descriptionPosition[2], adj = 0,
-        description, cex = 1.1)
-    title(main = main)
 
     # Return Value:
     invisible(ans)
@@ -160,7 +126,8 @@ assetsMomentsPlot <-
     function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics",
     title = "Assets", titlePosition = c(3, 3.65),
-    description = "Moments Statistics", descriptionPosition = c(3, 3.50), ...)
+    description = "Moments Statistics", descriptionPosition = c(3, 3.50), 
+    ...)
 {
     # A function Implemented by Diethelm Wuertz
 
@@ -183,7 +150,7 @@ assetsMomentsPlot <-
         param = cbind(param, fit)
     }
     colnames(param) = colnames(x)
-    assetsStarsPlot(param, keyOffset = keyOffset)
+    assetsStarsPlot(param, keyOffset = keyOffset, ...)
     text(titlePosition[1], titlePosition[2], adj = 0,
         title, cex = 1.25)
     text(descriptionPosition[1], descriptionPosition[2], adj = 0,
@@ -192,6 +159,42 @@ assetsMomentsPlot <-
 
     # Return Value:
     invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsBoxStatsPlot <-
+    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
+    keyOffset = c(-0.65, -0.50), main = "Assets Statistics",
+    title = "Assets", titlePosition = c(3, 3.65),
+    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50), 
+    ...)
+{
+    # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays a segment plot of box plot statistics
+
+    # Note:
+    #    The Default Settings are made for a portfolio with
+    #       7 to 9 assets.
+
+    # FUNCTION:
+
+    # Plot:
+    if(par) par(mfrow = c(1, 1), oma = oma, mar = mar)
+    bp = assetsBoxPlot(x, plot = FALSE)
+    ans = assetsStarsPlot(abs(bp$stats), keyOffset = keyOffset, ...)
+    text(titlePosition[1], titlePosition[2], adj = 0,
+        title, cex = 1.25)
+    text(descriptionPosition[1], descriptionPosition[2], adj = 0,
+        description, cex = 1.1)
+    title(main = main)
+
+    # Return Value:
+    invisible(ans)
 }
 
 

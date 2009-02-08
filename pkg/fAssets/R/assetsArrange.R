@@ -17,13 +17,13 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-# assetsArrange             Returns assets rearranged in columns 
-#  .orderColnames            Returns ordered column names of a time Series
-#  .abcColnames              Returns sorted column names of a time Series
-#  .sampleColnames           Returns sampled column names of a time Series
-#  .statsColnames            Returns statistically rearranged column names
-#  .pcaColnames              Returns PCA correlation ordered column names
-#  .hclustColnames           Returns hierarchical clustered column names
+# assetsArrange             Rearranges the columns in a deta set of assets
+#  .pcaArrange               Returns PCA correlation ordered column names
+#  .hclustArrange            Returns hierarchical clustered column names 
+#  .abcArrange               Returns sorted column names of a time Series
+#  .orderArrange             Returns ordered column names of a time Series
+#  .sampleArrange            Returns sampled column names of a time Series
+#  .statsArrange             Returns statistically rearranged column names
 ################################################################################
 
 
@@ -52,121 +52,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.orderColnames =
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns ordered column names of a time Series
-
-    # Arguments:
-    #   x - S4 object of class 'timeSeries'
-    
-    # FUNCTION:
-
-    # Order:
-    ans = order(colnames(as.matrix(x)), ...)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.abcColnames =
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns sorted column names of a time Series
-
-    # Arguments:
-    #   x - S4 object of class 'timeSeries'
-    
-    # FUNCTION:
-
-    # Sort:
-    ans = sort(colnames(as.matrix(x)), ...)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.sampleColnames =
-    function(x, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns sampled column names of a time Series
-
-    # Arguments:
-    #   x - S4 object of class 'timeSeries'
-    
-    # FUNCTION:
-
-    # Sample:
-    ans = sample(colnames(as.matrix(x)), ...)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.statsColnames =
-    function(x, FUN = colMeans, ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns statistically rearranged column names
-
-    # Arguments:
-    #   x - S4 object of class 'timeSeries'
-    
-    # Note:
-    #   Example of function Candidates:
-    #   colStats        calculates column statistics,
-    #   colSums         calculates column sums,
-    #   colMeans        calculates column means,
-    #   colSds          calculates column standard deviations,
-    #   colVars         calculates column variances,
-    #   colSkewness     calculates column skewness,
-    #   colKurtosis     calculates column kurtosis,
-    #   colMaxs         calculates maximum values in each column,
-    #   colMins         calculates minimum values in each column,
-    #   colProds        computes product of all values in each column,
-    #   colQuantiles    computes quantiles of each column.
-
-    # FUNCTION:
-
-    # Apply colStats Function:
-    fun = match.fun(FUN)
-    Sort = sort(fun(x, ...))
-    Order = names(Sort)
-    ans = colnames(as.matrix(x)[, Order])
-    attr(ans, "control") <- Sort
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pcaColnames =
+.pcaArrange =
     function(x, robust = FALSE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -202,7 +88,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.hclustColnames =
+.hclustArrange =
     function(x, method = c("euclidean", "complete"), ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -223,6 +109,120 @@ assetsArrange <-
     Order = hclust(dist(t(as.matrix(x)),
         method = method[1]), method = method[2], ...)$order
     ans = colnames(as.matrix(x))[Order]
+
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.abcArrange =
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns sorted column names of a time Series
+
+    # Arguments:
+    #   x - S4 object of class 'timeSeries'
+    
+    # FUNCTION:
+
+    # Sort:
+    ans = sort(colnames(as.matrix(x)), ...)
+
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.orderArrange <-
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns ordered column names of a time Series
+
+    # Arguments:
+    #   x - S4 object of class 'timeSeries'
+    
+    # FUNCTION:
+
+    # Order:
+    ans = order(colnames(as.matrix(x)), ...)
+
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.sampleArrange =
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns sampled column names of a time Series
+
+    # Arguments:
+    #   x - S4 object of class 'timeSeries'
+    
+    # FUNCTION:
+
+    # Sample:
+    ans = sample(colnames(as.matrix(x)), ...)
+
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.statsArrange =
+    function(x, FUN = colMeans, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns statistically rearranged column names
+
+    # Arguments:
+    #   x - S4 object of class 'timeSeries'
+    
+    # Note:
+    #   Example of function Candidates:
+    #   colStats        calculates column statistics,
+    #   colSums         calculates column sums,
+    #   colMeans        calculates column means,
+    #   colSds          calculates column standard deviations,
+    #   colVars         calculates column variances,
+    #   colSkewness     calculates column skewness,
+    #   colKurtosis     calculates column kurtosis,
+    #   colMaxs         calculates maximum values in each column,
+    #   colMins         calculates minimum values in each column,
+    #   colProds        computes product of all values in each column,
+    #   colQuantiles    computes quantiles of each column.
+
+    # FUNCTION:
+
+    # Apply colStats Function:
+    fun = match.fun(FUN)
+    Sort = sort(fun(x, ...))
+    Order = names(Sort)
+    ans = colnames(as.matrix(x)[, Order])
+    attr(ans, "control") <- Sort
 
     # Return Value:
     ans

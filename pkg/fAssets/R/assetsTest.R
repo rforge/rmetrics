@@ -16,23 +16,10 @@
 
 
 ################################################################################
-# FUNCTION:                 ASSETS NORMALITY TESTS:
+# FUNCTION:                 DESCRIPTION:
 #  assetsTest                Tests for multivariate Normal Assets
-#  mvshapiroTest             Multivariate Shapiro Test
-################################################################################
-
-
-################################################################################
-# FUNCTION:                 ASSETS NORMALITY TESTS:
-#  assetsTest                Tests for multivariate Normal Assets
-#   method = "shapiro"       ... calling Shapiro test
-#   method = "energy"        ... calling E-Statistic (energy) test
-# FUNCTION:                 INTERNAL UTILITY FUNCTIONS:
-#  .mvenergyTest             Multivariate Energy Test
-#  .mvshapiroTest            Multivariate Shapiro Test   
-# REQUIREMENTS:             DESCRIPTION:  
-#  energy                    Contributed R-package "energy"
-#  boot                      Contributed R-package "boot"
+#  .mvshapiroTest            Multivariate Shapiro Test
+#  .mvenergyTest             Multivariate E-Statistic (Energy) Test   
 ################################################################################
 
 
@@ -63,7 +50,73 @@ title = NULL, description = NULL)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
+
+
+.mvshapiroTest = 
+function(x, title = NULL, description = NULL)
+{   
+    # Description:
+    #   Computes Shapiro's normality test for multivariate variables
+    
+    # Note:
+    #   Reimplemented function, doesn't require the contributed R package 
+    #   mvnormtest
+    
+    # Author: 
+    #   Slawomir Jarek
+    #   License: GPL
+    
+    # Source:
+    #   Package: mvnormtest
+    #   Version: 0.1-6
+    #   Date: 2005-04-02
+    #   Title: Normality test for multivariate variables
+    #   Author: Slawomir Jarek
+    #   Maintainer: Slawomir Jarek <slawomir.jarek@gallus.edu.pl>
+    #   Description: Generalization of shapiro-wilk test for 
+    #       multivariate variables.
+    
+    # Example:
+    #   .mvshapiroTest(x = assetsSim(100))
+    
+    # FUNCTION:
+    
+    # Transform:
+    U = t(as.matrix(x))
+
+    # Test:
+    n = ncol(U)
+    if (n < 3 || n > 5000) stop("sample size must be between 3 and 5000")
+    rng = range(U)
+    rng = rng[2] - rng[1]
+    if (rng == 0)
+    stop("all `U[]' are identical")
+    Us = apply(U, 1, mean)
+    R = U-Us
+    M.1 = solve(R %*% t(R), tol = 1e-18)
+    Rmax = diag(t(R) %*% M.1 %*% R)
+    C = M.1 %*% R[, which.max(Rmax)]
+    Z = t(C) %*% U
+    test = shapiro.test(Z)
+    names(test$p.value) = ""
+    class(test) = "list"
+    
+    # Add title and description:
+    if (is.null(title)) title = "Multivariate Shapiro Test"
+    if (is.null(description)) description = .description()
+    
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(), 
+        data = list(x = x), 
+        test = test, 
+        title = title, 
+        description = description)
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvenergyTest =
@@ -128,71 +181,6 @@ function(x, Replicates = 99, title = NULL, description = NULL)
         data = list(x = x),
         test = test,
         title = title,
-        description = description)
-}
-
-  
-################################################################################
-# Package: mvnormtest
-# Version: 0.1-6
-# Date: 2005-04-02
-# Title: Normality test for multivariate variables
-# Author: Slawomir Jarek
-# Maintainer: Slawomir Jarek <slawomir.jarek@gallus.edu.pl>
-# Description: Generalization of shapiro-wilk test for multivariate variables.
-
-# Depends: stats
-
-
-.mvshapiroTest = 
-function(x, title = NULL, description = NULL)
-{   
-    # Description:
-    #   Computes Shapiro's normality test for multivariate variables
-    
-    # Note:
-    #   Reimplemented function, doesn't require the contributed R package 
-    #   mvnormtest
-    
-    # Author: 
-    #   Slawomir Jarek
-    #   License: GPL
-    
-    # Example:
-    #   .mvshapiroTest(x = assetsSim(100))
-    
-    # FUNCTION:
-    
-    # Transform:
-    U = t(as.matrix(x))
-
-    # Test:
-    n = ncol(U)
-    if (n < 3 || n > 5000) stop("sample size must be between 3 and 5000")
-    rng = range(U)
-    rng = rng[2] - rng[1]
-    if (rng == 0)
-    stop("all `U[]' are identical")
-    Us = apply(U, 1, mean)
-    R = U-Us
-    M.1 = solve(R %*% t(R), tol = 1e-18)
-    Rmax = diag(t(R) %*% M.1 %*% R)
-    C = M.1 %*% R[, which.max(Rmax)]
-    Z = t(C) %*% U
-    test = shapiro.test(Z)
-    names(test$p.value) = ""
-    class(test) = "list"
-    
-    # Add title and description:
-    if (is.null(title)) title = "Multivariate Shapiro Test"
-    if (is.null(description)) description = .description()
-    
-    # Return Value:
-    new("fHTEST", 
-        call = match.call(), 
-        data = list(x = x), 
-        test = test, 
-        title = title, 
         description = description)
 }
 

@@ -16,12 +16,10 @@
 
 
 ################################################################################
-# FUNCTION:             ASSETS SELECTION:
-#  assetsSelect          Selects individual assets from a set of assets
-#   use = "hclust"       hierarchical clustering of returns
-#   use = "kmeans"       k-means clustering of returns 
-#  .hclustSelect         Hierarchical Clustering 
-#  .kmeansSelect         k-means Clustering    
+# FUNCTION:             DESCRIPTION:
+#  assetsSelect          Selects similar or dissimilar assets from a data set
+#  .hclustSelect         Returns results from hierarchical clustering 
+#  .kmeansSelect         Returns results from  k-means clustering    
 ################################################################################
 
 

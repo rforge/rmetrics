@@ -79,8 +79,12 @@ assetsOutliers <-
     }
     
     # Compose Result:
-    ans = list(center = m, cov = c, cor = cov2cor(c), 
-        quantile = cn, outliers = outliers, 
+    ans = list(
+        center = m, 
+        cov = c, 
+        cor = cov2cor(c), 
+        quantile = cn, 
+        outliers = outliers, 
         series = tS[outliers, ])
     
     # Return Value:
