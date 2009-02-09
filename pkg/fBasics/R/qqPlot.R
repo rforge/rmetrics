@@ -263,7 +263,7 @@ qqghtPlot <-
     n = length(x)
 
     # Fit:
-    fit = ghtFit(x, doplot = FALSE)  
+    fit = ghtFit(x, doplot = FALSE, trace = FALSE)  
     par = fit@fit$estimate
     names(par) = c("beta", "delta", "mu", "nu")
 
