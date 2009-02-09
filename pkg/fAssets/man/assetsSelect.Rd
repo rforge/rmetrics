@@ -1,6 +1,4 @@
-\name{AssetsSelection}
-
-\alias{AssetsSelection}
+\name{assetsSelect}
 
 
 \alias{assetsSelect}
@@ -11,7 +9,8 @@
 
 \description{
   
-    Allows to selet assets  from clustering.
+    Selet assets from Multivariate Asset Sets based 
+    on clustering.
     
 }
     
@@ -69,7 +68,7 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL, \dots)
     \code{hclust(dist(t(x)))} and \code{kmeans} performs a k-means
     clustering on the data matrix itself. 
     
-    Note, the hierarchical cluster method has in addition a plot method.
+    Note, the hierarchical clustering method has in addition a plot method.
     
 }
 
@@ -81,15 +80,27 @@ assetsSelect(x, method = c("hclust", "kmeans"), control = NULL, \dots)
 }
 
 
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
 \examples{
 ## LPP -
    LPP = as.timeSeries(data(LPP2005REC))
    colnames(LPP)
     
 ## assetsSelect -
+   # hclust Clustering:
    hclust = assetsSelect(LPP, "hclust") 
    plot(hclust)
    
+## assetsSelect -  
+   # kmeans Clustering:
    assetsSelect(LPP, "kmeans", control = 
      c(centers = 3, algorithm = "Hartigan-Wong"))
 }

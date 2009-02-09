@@ -29,31 +29,8 @@
 
 ################################################################################
 # FUNCTION:             ASSETS STATISTICS:
-#  assetsStats           Computes basic statistics of a set of assets
-# FUNCTION:             MEAN-COVARIANCE ESTIMATION:
 #  assetsMeanCov         Estimates mean and variance for a set of assets
 ################################################################################
-
-
-test.assetsStats =
-function()
-{
-    # Time Series Object:
-    Data <- as.timeSeries(LPP2005REC)[, 1:6]
-
-    # Settings:
-    class(Data)
-    head(Data)
-
-    # Statistics:
-    assetsStats(as.matrix(Data))
-
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.assetsMeanCov =

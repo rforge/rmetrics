@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                   DESCRIPTION:
-#  assetsRiskReturnPlot        Displays risk-return giagram of assets
+#  assetsRiskReturnPlot        Displays risk-return diagram of assets
 #  assetsNIGShapeTrianglePlot  Displays NIG Shape Triangle
 ################################################################################
 
@@ -135,10 +135,9 @@ assetsNIGShapeTrianglePlot <-
 
     # Shape Triangle:
     for (i in 1:n) {
-        fit = nigFit(100*x[, i], doplot = FALSE)
+        fit = nigFit(100*x[, i], doplot = FALSE, trace = FALSE)
         nigShapeTriangle(fit, add = as.logical(i-1), labels = labels,
             col = col[i], ...)
-
         par = fit@fit$estimate
         alpha = par[1]
         beta = par[2]

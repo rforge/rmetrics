@@ -246,6 +246,9 @@ assetsMeanCov <-
     function(x, ...)
 {
         # MASS:
+        x.mat = as.matrix(x)
+        N = ncol(x)
+        assetNames = colnames(x)
         ans = MASS::cov.rob(x = x.mat, method = "mve")
         names(ans$center) = assetNames
         rownames(ans$cov) = colnames(ans$cov) = assetNames
@@ -327,7 +330,7 @@ shrinkMeanCov <-
 }
 
 
-###############################################################################
+################################################################################
 
 
 getCenterRob <-

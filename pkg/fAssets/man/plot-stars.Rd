@@ -4,32 +4,19 @@
 \alias{starsPlot}
 
 \alias{assetsStarsPlot}  
-\alias{assetsMomentsPlot} 
-\alias{assetsBasicStatsPlot} 
+\alias{assetsBasicStatsPlot}
+\alias{assetsMomentsPlot}  
 \alias{assetsBoxStatsPlot} 
 \alias{assetsNIGFitPlot}    
 
 
-\title{Assets Stars Plots}
+\title{Stars Plots of Assets.}
 
 
 \description{
   
-    A collection and description of functions which 
-    display several different kind of views on
-    multivariate data sets of assets.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    
-    % STARS PLOTS:
-    \code{assetsStarsPlot} \tab Draws segment or star diagrams of data sets, \cr
-    \code{assetsBasicStatsPlot} \tab Displays a segment plot of box plot statistics, \cr
-    \code{assetsMomentsPlot} \tab Displays a segment plot of distribution moments, \cr
-    \code{assetsBoxStatsPlot} \tab Displays a segment plot of box plot statistics, \cr
-    \code{assetsNIGFitPlot} \tab Displays a segment plot NIG parameter estimates. }
+    Displays star plots to compare assets sets.
+
 }
 
 
@@ -109,13 +96,25 @@ assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 }
 
 
-\seealso{
+\details{
 
-    \code{MultivariateDistribution}.
 
+    \code{assetsStarsPlot}\cr
+    draws segment or star diagrams of data sets,
+    
+    \code{assetsBasicStatsPlot}\cr
+    displays a segment plot of box plot statistics,
+    
+    \code{assetsMomentsPlot}\cr
+    displays a segment plot of distribution moments,
+    
+    \code{assetsBoxStatsPlot}\cr
+    displays a segment plot of box plot statistics,
+    
+    \code{assetsNIGFitPlot}\cr
+    displays a segment plot NIG parameter estimates.  
+    
 }
-
-
 \author{
 
     Diethelm Wuertz for the Rmetrics port.
@@ -123,19 +122,35 @@ assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 }
 
 
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
 \examples{
 ## LPP2005REC -
-   x = as.timeSeries(data(LPP2005REC))
-   head(x)
-
-## assetsBoxStatsPlot -
-   assetsBoxStatsPlot(x, title = "", description = "")
+   LPP = as.timeSeries(data(LPP2005REC))
 
 ## assetsBasicStatsPlot -
-   assetsBasicStatsPlot(x, title = "", description = "")
-
+   # par(mfrow = c(1, 1))
+   assetsBasicStatsPlot(LPP, 
+     title = "", description = "")
+   
 ## assetsMomentsPlot -
-   assetsMomentsPlot(x, title = "", description = "")
+   assetsMomentsPlot(LPP, 
+     title = "", description = "")
+   
+## assetsBoxStatsPlot -
+   assetsBoxStatsPlot(LPP, 
+     title = "", description = "")
+
+## assetsNIGFitPlot -
+   assetsNIGFitPlot(LPP[, 7:9], 
+     title = "", description = "")
 }
 
 

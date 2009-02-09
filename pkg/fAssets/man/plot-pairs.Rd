@@ -1,10 +1,10 @@
 \name{pairsPlot}
 
 
-\alias{pirsPlot}
+\alias{pairsPlot}
 
-\alias{assetsCorgramPlot}
 \alias{assetsPairsPlot}
+\alias{assetsCorgramPlot}
 \alias{assetsCorTestPlot}
 \alias{assetsCorImagePlot}   
 
@@ -14,20 +14,8 @@
 
 \description{
   
-    A collection and description of functions which 
-    display several different kind of views on
-    multivariate data sets of assets.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    
-    % PAIRS PLOTS:
-    \code{assetsPairsPlot} \tab Displays pairs of scatterplots of individual assets, \cr
-    \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr 
-    \code{assetsCorTestPlot} \tab Displays and tests pairwise correlations, \cr
-    \code{assetsCorImagePlot} \tab Displays an image plot of a correlations.}
+    Display several aspects of correlation bettween pairs of
+    assets.   
     
 }
 
@@ -44,10 +32,11 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
 
 \arguments{
   
-    \item{abbreviate}{
-        allows to abbreviate strings to at least \code{abbreviate} 
-        characters, such that they remain unique, if they were. 
-        }
+    \item{x}{
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        } 
     \item{labels}{
         a logical flag, if \code{TRUE} then default labels will be used,
         otherwise the plots will be displayed without labels and the user
@@ -60,15 +49,14 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
         a character string, what should be pressented, correlations or
         results from correlation tests?
         }
-    \item{x}{
-        any rectangular time series object which can be converted by the 
-        function \code{as.matrix()} into a matrix object, e.g. like an 
-        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
-        } 
     \item{use}{
         a character string indicating which correlation coefficient or 
         covariance is to be computed. One of \code{"pearson"}, the default, 
         \code{"kendall"}, or \code{"spearman"}.
+        }
+    \item{abbreviate}{
+        allows to abbreviate strings to at least \code{abbreviate} 
+        characters, such that they remain unique, if they were. 
         }
     \item{\dots}{
         optional arguments to be passed.
@@ -77,10 +65,21 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
 }
 
 
-\seealso{
+\details{
 
-    \code{MultivariateDistribution}.
 
+    \code{assetsPairsPlot}\cr
+    displays pairs of scatterplots of individual assets,
+    
+    \code{assetsCorgramPlot}\cr
+    displays correlations between assets, 
+    
+    \code{assetsCorTestPlot}\cr
+    displays and tests pairwise correlations,
+    
+    \code{assetsCorImagePlot}\cr
+    displays an image plot of a correlations.
+    
 }
 
 
@@ -91,23 +90,31 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
 }
 
 
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
 \examples{
 ## LPP2005REC -
    LPP = as.timeSeries(data(LPP2005REC))
-   head(LPP)
    
 ## assetsPairsPlot - 
-   assetsPairsPlot(LPP)
+   assetsPairsPlot(LPP[, 1:6])
   
 ## assetsCorgramPlot -  
-   assetsCorgramPlot(LPP, method = "pie")
-   assetsCorgramPlot(LPP, method = "shade")
+   assetsCorgramPlot(LPP[, 1:6], method = "pie")
+   assetsCorgramPlot(LPP[, 1:6], method = "shade")
    
 ## assetsCorTestPlot -
-   assetsCorTestPlot(LPP)
+   assetsCorTestPlot(LPP[, 1:6])
    
 ## assetsCorImagePlot -
-   assetsCorImagePlot(LPP)    
+   assetsCorImagePlot(LPP[, 1:6])    
 }
 
 

@@ -7,24 +7,14 @@
 \alias{assetsBoxPercentilePlot}  
 
 
-\title{Assets Box Plots}
+\title{Displays a Box Plot of Assets}
 
 
 \description{
   
-    A collection and description of functions which 
-    display several different kind of views on
-    multivariate data sets of assets.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    
-    % BOX PLOTS:
-    \code{assetsBoxPlot} \tab Displays standard box plots, \cr
-    \code{assetsBoxPercentilePlot} \tab Displays side-by-side box-percentile plots.}
-    
+    Displays standard box and box-percentile plots
+    of assets.
+   
 }
 
 
@@ -51,16 +41,18 @@ assetsBoxPercentilePlot(x, col = "bisque", \dots)
 }
 
 
-\seealso{
-
-    \code{MultivariateDistribution}.
-
-}
-
-
 \author{
 
     Diethelm Wuertz for the Rmetrics port.
+    
+}
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
 }
 

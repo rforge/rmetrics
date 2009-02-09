@@ -2,6 +2,7 @@
 
 
 \alias{assetsMeanCov}
+
 \alias{getCenterRob}
 \alias{getCovRob}
 
@@ -11,7 +12,7 @@
 
 \description{
   
-    Allows to estimate the mean and/or covariance matrix of a 
+    Estimates the mean and/or covariance matrix of a 
     time series of assets by traditional and robust methods.
     
 }
@@ -30,26 +31,11 @@ getCovRob(object)
 
 \arguments{
   
-    \item{alpha}{ 
-        when \code{methode="MCD"}, a numeric parameter controlling the size 
-        of the subsets over which the determinant is minimized, i.e., 
-        \code{alpha*n} observations are used for computing the determinant. 
-        Allowed values are between 0.5 and 1 and the default is 0.5.
-        For details we refer to the help pages of the R-package
-        \code{robustbase}.
-        }
-    \item{baggedR}{
-        when \code{methode="bagged"}, an integer value, the number of 
-        bootstrap replicates, by default 100.
-        }
-    \item{check}{
-        a logical flag. Should the covariance matrix be tested to be
-        positive definite? By default \code{TRUE}.
-        }
-    \item{force}{
-        a logical flag. Should the covariance matrix be forced to be
-        positive definite? By default \code{TRUE}.
-        }
+    \item{x}{
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        }   
     \item{method}{
         a character string, whicht determines how to compute the covariance
         matix. If \code{method="cov"} is selected then the standard 
@@ -60,9 +46,18 @@ getCovRob(object)
         covariance will be calculated from the bootstrap aggregated (bagged)
         version of the covariance estimator.
         }  
-    \item{object}{
-        a list as returned by the function \code{assetsMeanCov}.
-        } 
+    \item{check}{
+        a logical flag. Should the covariance matrix be tested to be
+        positive definite? By default \code{TRUE}.
+        }
+    \item{force}{
+        a logical flag. Should the covariance matrix be forced to be
+        positive definite? By default \code{TRUE}.
+        }
+    \item{baggedR}{
+        when \code{methode="bagged"}, an integer value, the number of 
+        bootstrap replicates, by default 100.
+        }
     \item{sigmamu}{ 
         when \code{methode="OGK"}, a function that computes univariate robust 
         location and scale estimates. By default it should return a single 
@@ -75,11 +70,17 @@ getCovRob(object)
         For details we refer to the help pages of the R-package
         \code{robustbase}.
         }
-    \item{x}{
-        any rectangular time series object which can be converted by the 
-        function \code{as.matrix()} into a matrix object, e.g. like an 
-        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
-        }   
+    \item{object}{
+        a list as returned by the function \code{assetsMeanCov}.
+        } 
+    \item{alpha}{ 
+        when \code{methode="MCD"}, a numeric parameter controlling the size 
+        of the subsets over which the determinant is minimized, i.e., 
+        \code{alpha*n} observations are used for computing the determinant. 
+        Allowed values are between 0.5 and 1 and the default is 0.5.
+        For details we refer to the help pages of the R-package
+        \code{robustbase}.
+        }
     \item{\dots}{
         optional arguments to be passed to the underlying estimators. 
         For details we refer to the manual pages of the functions 
@@ -95,13 +96,17 @@ getCovRob(object)
   
   
     \code{assetsMeanCov}
-
     returns a list with for entries named \code{center} \code{cov},
-    \code{mu} and \code{Sigma}. The list has a character vector attributed
-    with additional control parameters.
+    \code{mu} and \code{Sigma}. The list may have a character vector 
+    attributed with additional control parameters.
     
-    Note, the third entry has the same value as the first, and the second
-    the same as the fourth entry.
+    \code{getCenterRob}
+    extracts the center from an object as returned by the function
+    \code{assetsMeanCov}.
+    
+    \code{getCovRob}
+    extracts the covariance from an object as returned by the function
+    \code{assetsMeanCov}.
   
 }
 
@@ -122,6 +127,10 @@ Schaefer J., Strimmer K. (2005);
     Large-Scale Covariance Estimation and Implications for Functional Genomics},
     Statist. Appl. Genet. Mol. Biol. 4, 32.
 
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
 }
 
 
@@ -141,12 +150,12 @@ Schaefer J., Strimmer K. (2005);
 ## Sample Covariance Estimation:
    assetsMeanCov(LPP)
    
-## MASS Robust mcd Covariance Estimation:
-   mcd = assetsMeanCov(LPP, "mcd")
-   mcd
+## Shrinked Estimation:
+   shrink = assetsMeanCov(LPP, "shrink")
+   shrink
    
 ## Extract Covariance Matrix:
-   getCovRob(object = mcd)
+   getCovRob(shrink)
 }
 
 

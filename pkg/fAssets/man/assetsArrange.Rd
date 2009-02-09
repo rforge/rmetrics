@@ -1,4 +1,4 @@
-\name{AssetsArrange}
+\name{assetsArrange}
 
 
 \alias{assetsArrange}
@@ -43,7 +43,7 @@ assetsArrange(x, method = c("pca", "hclust", "abc"), ...)
 
 \value{
   
-    a character vector with the ordered assets names.
+    a character vector with the rearranged assets names.
     
 }
 
@@ -55,15 +55,24 @@ assetsArrange(x, method = c("pca", "hclust", "abc"), ...)
 }
 
 
-\examples{
-## LPP -
-   LPP = as.timeSeries(data(LPP2005REC))
-   colnames(LPP)
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
+
+\examples{  
+## lppData -
+   lppData = as.timeSeries(data(LPP2005REC))
     
 ## assetsArrange -
-   assetsArrange(LPP, "pca")
-   assetsArrange(LPP, "hclust")
-   assetsArrange(LPP, "abc")
+   assetsArrange(lppData, "pca")
+   assetsArrange(lppData, "hclust")
+   assetsArrange(lppData, "abc")
 }
 
 

@@ -2,9 +2,9 @@
 
 \alias{similarityPlot}
 
+
 \alias{assetsDendrogramPlot}
 \alias{assetsCorEigenPlot}
-\alias{assetsTreePlot}
 
 
 \title{Assets Similarity Plots}
@@ -12,19 +12,9 @@
 
 \description{
   
-    A collection and description of functions which 
-    display several different kind of views on
-    multivariate data sets of assets.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-   
-    % SIMILARITY PLOTS:
-    \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram, \cr
-    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
-    \code{assetsTreePlot} \tab Displays minimal spanning tree plot. }
+    Displays plots of similariaies and dissimilarities between
+    data sets of assets.
+
 }
 
 
@@ -34,9 +24,6 @@ assetsDendrogramPlot(x, labels = TRUE, title = TRUE, box = TRUE,
     
 assetsCorEigenPlot(x, labels = TRUE, title = TRUE, box = TRUE,
     method = c("pearson", "kendall", "spearman"), \dots)
-    
-assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
-    method = "euclidian", seed = NULL, \dots)
 }
 
 
@@ -61,10 +48,6 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
         a character string, the method used to compute the distance
         matrix, see function \code{dist}.
         } 
-    \item{seed}{
-        an integer value setting the seed in the computation of the 
-        sample ranks.
-        }
     \item{title}{
         a logical flag, should a default title be added? By default 
         \code{TRUE}.
@@ -81,18 +64,15 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
 }
 
 
-\note{
+\details{ 
 
-    The function \code{assetsTreePlot} displaying a minimum spanning tree
-    plot has bee moved to the Rmetrics addon package.
+
+    \code{assetsDendrogramPlot}\cr
+    displays a hierarchical clustering dendrogram, 
     
-}
-
-        
-\seealso{
-
-    \code{MultivariateDistribution}.
-
+    \code{assetsCorEigenPlot}\cr
+    displays ratio plot of the largest two eigenvalues.
+    
 }
 
 
@@ -103,20 +83,24 @@ assetsTreePlot(x, labels = TRUE, title = TRUE, box = TRUE,
 }
 
 
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
 \examples{
 ## LPP2005REC -
-   x = as.timeSeries(data(LPP2005REC))
-   head(x)
+   LPP = as.timeSeries(data(LPP2005REC))
    
 ## assetsDendrogramPlot -
-   assetsDendrogramPlot(x)
+   assetsDendrogramPlot(LPP)
 
 ## assetsCorEigenPlot -
-   assetsCorEigenPlot(x)
-   
-## assetsTreePlot -
-   assetsTreePlot(x)
-   assetsTreePlot(x)
+   assetsCorEigenPlot(LPP)
 }
 
 

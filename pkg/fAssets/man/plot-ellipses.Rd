@@ -4,12 +4,12 @@
 \alias{covEllipsesPlot}
 
 
-\title{Covariance Ellipses Plot}
+\title{Displays a Covariance Ellipses Plot}
 
 
 \description{
 
-    Plots covariance ellipses.
+    Displays a covariance ellipses plot.
 
 }
 
@@ -39,8 +39,13 @@ covEllipsesPlot(x = list(), \dots)
 }
 
 
+\references{
 
-%\references{}
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \examples{

@@ -1,25 +1,15 @@
-\name{LowerPartialMoments}
-
-\alias{LowerPartialMoments}
+\name{assetsLPM}
 
 \alias{assetsLPM}
 
 
-\title{Estimation of Lower Partial Moments of Asset Sets}
+\title{Computation of Lower Partial Moments of Asset Sets}
 
 
 \description{
   
-    A collection and description of functions 
-    for the estimation of lower partial moments
-    from a tinme series of assets.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{assetsLPM} \tab Computes LPMs and co-LPMs of a set of assets. }
-    
+    Computes assymmetric lower partial moments from a time 
+    series of assets.   
 }
     
 
@@ -27,20 +17,20 @@
 assetsLPM(x, tau, a, \dots)
 }
 
+
 \arguments{
   
-
-    \item{a}{
-        the value of the moment. 
-        }
-    \item{tau}{
-        the target return.
-        }    
     \item{x}{
         any rectangular time series object which can be converted by the 
         function \code{as.matrix()} into a matrix object, e.g. like an 
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }  
+    \item{tau}{
+        the target return.
+        } 
+    \item{a}{
+        the value of the moment. 
+        }    
     \item{\dots}{
         optional arguments to be passed.
         }
@@ -51,8 +41,6 @@ assetsLPM(x, tau, a, \dots)
 \value{
   
   
-    \code{assetsLPM}
-    \cr
     returns a list with two entries named \code{mu} and \code{Sigma}.
     The first denotes the vector of lower partial moments, and the 
     second the co-LPM matrix. Note, that the output of this function 
@@ -62,16 +50,18 @@ assetsLPM(x, tau, a, \dots)
 }
 
 
-\seealso{
-
-    \code{assetsMeanCov}.
-
-}
-
-
 \author{
 
     Diethelm Wuertz for the Rmetrics port.
+    
+}
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
 }
 
@@ -86,3 +76,4 @@ assetsLPM(x, tau, a, \dots)
 
 
 \keyword{models}
+

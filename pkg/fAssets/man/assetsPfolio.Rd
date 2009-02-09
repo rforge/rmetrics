@@ -1,7 +1,7 @@
-\name{VaRModelling}
+\name{assetsPfolio}
 
 
-\alias{VaRModelling}
+\alias{assetsPfolio}
 
 \alias{pfolioVaR}
 \alias{pfolioCVaR}
@@ -16,19 +16,14 @@
 \alias{pfolioHist}
 
 
-\title{Value-at-Risk Measures for Portfolios}
+\title{Risk and Related Measures for Portfolios}
 
 
 \description{
   
-    A collection and description of functions to 
-    compute Value-at-Risk and related risk measures 
-    for a portfolio of assets. In addition utility 
-    functions are available to compute the maximum 
-    loss, to calculate the total return, and to 
-    plot a histogram of the total return.
-    \cr
-    
+    Computes Value-at-Risk and related measures 
+    for a portfolio of assets. 
+
     The functions are:
 
     \tabular{ll}{
@@ -61,6 +56,19 @@ pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, \dots)
 
 \arguments{
   
+    \item{x}{
+        a 'timeSeries' object, data frame or any other rectangular
+        object which can be expressed as a matrix. The first 
+        dimension is the number of observations, we call it \code{n},
+        and the second is the number of assets in the data set,
+        we call it \code{dim}.
+        }
+    \item{weights}{
+        usually a numeric vector which has the length of the number of 
+        assets. The weights measures the normalized weights of the 
+        individual assets. By default \code{NULL}, then an equally 
+        weighted set of assets is assumed. 
+        }
     \item{alpha}{
         a numeric value, the confidence interval, by default 0.05.
         }
@@ -72,24 +80,11 @@ pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, \dots)
         value \code{lambda=1-floor(alpha*n)/(alpha*n)} will be 
         evaluated.
         }
-    \item{weights}{
-        usually a numeric vector which has the length of the number of 
-        assets. The weights measures the normalized weights of the 
-        individual assets. By default \code{NULL}, then an equally 
-        weighted set of assets is assumed. 
-        }
     \item{range}{
         a numeric vector of two elements limiting the plot range of
         the histogram. This is quite useful if one likes to compare
         several plots on the same scale. If \code{range=NULL}, the
         default value, then the range will be selected automatically.
-        }
-    \item{x}{
-        a 'timeSeries' object, data frame or any other rectangular
-        object which can be expressed as a matrix. The first 
-        dimension is the number of observations, we call it \code{n},
-        and the second is the number of assets in the data set,
-        we call it \code{dim}.
         }
     \item{\dots}{
         optional arguments to be passet to the function \code{hist}.
@@ -189,7 +184,11 @@ pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, \dots)
 Uryasev S. (2000);
     \emph{Conditional Value-at-Risk (CVaR): Algorithms and Applications},
     Risk Management and Financial Engineering Lab, University of Florida
-    
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+      
 }
 
 

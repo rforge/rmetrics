@@ -1,26 +1,15 @@
-\name{AssetsTests}
-
-\alias{AssetsTests}
+\name{assetsTest}
 
 \alias{assetsTest}
-\alias{mvshapiroTest}
 
 
-\title{Testing Multivariate Asset Sets}
+\title{Testing Normality of Multivariate Asset Sets}
 
 
 \description{
   
-    A collection and description of functions which 
-    allow to test if a set of assets is multivariate
+    Tests if the returns of a set of assets are
     normally distributed.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{assetsTest} \tab Test Suite for multivariate Normal distribution, \cr
-    \code{mvshapiroTest} \tab multivaraite Shapiro Test. }
     
 }
     
@@ -34,10 +23,11 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 \arguments{
   
 
-    \item{description}{
-        a character string, assigning a brief description to the
-        returned object.
-        }
+    \item{x}{
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        }  
     \item{method}{
         a character string, which allows to select the test.
         If \code{method="shapiro"} then Shapiro's multivariate Normality 
@@ -55,11 +45,10 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
         a character string, assigning a title to an 
         \code{"fASSETS"} object.
         }
-    \item{x}{
-        any rectangular time series object which can be converted by the 
-        function \code{as.matrix()} into a matrix object, e.g. like an 
-        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
-        }   
+    \item{description}{
+        a character string, assigning a brief description to the
+        returned object.
+        }    
         
 }
 
@@ -85,13 +74,9 @@ Szekely G.J. (1989);
     \emph{Potential and Kinetic Energy in Statistics},
      Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
 
-}
-
-
-\seealso{
-
-    \code{MultivariateDistribution}.
-
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
 }
 
 
@@ -116,3 +101,4 @@ Szekely G.J. (1989);
 
 
 \keyword{models}
+

@@ -221,7 +221,7 @@ assetsNIGFitPlot <-
     # Plot:
     param = NULL
     for (i in 1:dim(x)[2]) {
-        fit = nigFit(x[, i], doplot = FALSE)
+        fit = nigFit(x[, i], doplot = FALSE, trace = FALSE)
         param = cbind(param, fit@fit$estimate)
     }
     if(par) par(mfrow = c(1, 1), oma = oma, mar = mar)

@@ -9,7 +9,7 @@
 
 \description{
   
-    Detects outliers in asset sets.
+    Detects multivariate outliers in asset sets.
     
 }
     
@@ -42,12 +42,13 @@ assetsOutliers(x, center, cov, \dots)
 
 \value{
 
-    returns a list with 
+    returns a list with the following entries:
     the estimate for the location named \code{center}, 
     the estimate for the covariance matrix named \code{cov},
     the estimate for the correlation matrix named \code{cor},  
-    the quantile named \code{quantile}, and 
-    the outliers named \code{outliers}. 
+    the quantile named \code{quantile},  
+    the outliers named \code{outliers}, and 
+    the time series named \code{series}.
   
 }
 
@@ -55,8 +56,17 @@ assetsOutliers(x, center, cov, \dots)
 \author{
 
     Moritz Gschwandtner and Peter Filzmoser for the original R code
-    from package "mvoutliers", \cr
+        from package "mvoutliers", \cr
     Diethelm Wuertz for the Rmetrics port.
+    
+}
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
 }
 
@@ -64,6 +74,8 @@ assetsOutliers(x, center, cov, \dots)
 \examples{
 ## LPP -
    LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+   
+## assetsOutliers -
    assetsOutliers(LPP, colMeans(LPP), cov(LPP))
 }
 

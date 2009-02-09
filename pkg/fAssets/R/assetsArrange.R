@@ -42,7 +42,7 @@ assetsArrange <-
     
     # Settings:
     method = match.arg(method)
-    FUN = paste(".", method, "Colnames", sep = "")
+    FUN = paste(".", method, "Arrange", sep = "")
     arrange = match.fun(FUN)
     
     # Return Value:
@@ -52,7 +52,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.pcaArrange =
+.pcaArrange <-
     function(x, robust = FALSE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -88,7 +88,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.hclustArrange =
+.hclustArrange <- 
     function(x, method = c("euclidean", "complete"), ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -118,7 +118,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.abcArrange =
+.abcArrange <- 
     function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -166,7 +166,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.sampleArrange =
+.sampleArrange <- 
     function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -190,7 +190,7 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.statsArrange =
+.statsArrange <- 
     function(x, FUN = colMeans, ...)
 {   
     # A function implemented by Diethelm Wuertz
