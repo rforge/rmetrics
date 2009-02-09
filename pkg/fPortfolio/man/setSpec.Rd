@@ -25,36 +25,12 @@
 %\alias{minRisk}
 
 
-\title{Specification of Portfolios}
+\title{Settings for Specifications of Portfolios}
 
 
 \description{
   
     Functions to set specifications for a portfolio.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{setType} \tab Sets type of portfolio optimization, \cr
-    \code{setOptimize} \tab Sets what to optimize, min risk or max return, \cr
-    \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
-    \code{setParams} \tab Sets optional model parameters, \cr
-    
-    \code{setWeights} \tab Sets weights vector, \cr
-    \code{setTargetReturn} \tab Sets target return value, \cr
-    \code{setTargetRisk} \tab Sets target risk value, \cr
-    \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
-    \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
-    \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
-    \code{setStatus} \tab Sets status value, \cr
-    
-    \code{setSolver} \tab Sets the type of solver to be used, \cr
-    \code{setObjective} \tab Sets objective function name to be used, \cr
-    \code{setTrace} \tab Sets the logical trace flag. }
-    
-    %\code{maxReturn} \tab Defines the default maximum return function, \cr
-    %\code{minRisk} \tab Defines the default minimum risk function. }
     
 }
 
@@ -84,10 +60,6 @@ setTrace(spec) <- value
 
 
 \arguments{
-
-    %\item{mu}{a vector of assets means.}
-    %\item{Sigma}{a matix of assets covariances.}
-    %\item{x}{a numeric vector of weights.}
         
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
@@ -102,10 +74,26 @@ setTrace(spec) <- value
 
 \details{
     
-    The function \code{portfolioSpec()} allows to set the values for the 
-    specification structure from scratch. 
+    \tabular{ll}{
+    \code{setType} \tab Sets type of portfolio optimization, \cr
+    \code{setOptimize} \tab Sets what to optimize, min risk or max return, \cr
+    \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
+    \code{setParams} \tab Sets optional model parameters, \cr
     
-    To  modify individual settings one can use the set functions.
+    \code{setWeights} \tab Sets weights vector, \cr
+    \code{setTargetReturn} \tab Sets target return value, \cr
+    \code{setTargetRisk} \tab Sets target risk value, \cr
+    \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
+    \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
+    \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
+    \code{setStatus} \tab Sets status value, \cr
+    
+    \code{setSolver} \tab Sets the type of solver to be used, \cr
+    \code{setObjective} \tab Sets objective function name to be used, \cr
+    \code{setTrace} \tab Sets the logical trace flag. }
+    
+    %\code{maxReturn} \tab Defines the default maximum return function, \cr
+    %\code{minRisk} \tab Defines the default minimum risk function. }
  
 }
 

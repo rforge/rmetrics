@@ -224,11 +224,10 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 ## Load Data and Convert to timeSeries Object:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   head(Data)
     
 ## portfolioFrontier -
    frontier = portfolioFrontier(Data)
-   print(frontier)
+   frontier
     
 ## weightsSlider -
    # Try Frontier Slider:

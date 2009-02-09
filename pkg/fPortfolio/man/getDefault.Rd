@@ -4,6 +4,7 @@
 
 
 \alias{getConstraints}
+\alias{getControl}
 \alias{getCov}
 \alias{getCovRiskBudgets}
 \alias{getData}
@@ -15,6 +16,7 @@
 \alias{getNFrontierPoints}
 \alias{getObjective}
 \alias{getOptim}
+\alias{getOptions}
 \alias{getOptimize}
 \alias{getPortfolio}
 \alias{getParams} 
@@ -35,24 +37,21 @@
 \alias{getWeights}
 
 
-\title{Extractors}
+\title{Extractor Functions}
 
 
 \description{
   
-    A collection and description of functions 
-    allowing to get information about objects
-    of class fPFOLIODATA, fPFOLIOSPEC, and 
-    fPORTFOLIO. 
-    \cr
-    
-    The functions are:
+    Extractor functions to get information from objects
+    of class fPFOLIODATA, fPFOLIOSPEC, fPFOLIODATA, fPFOLIOVAL,
+    and fPORTFOLIO.
     
 }
     
 
 \usage{
 getConstraints(object)
+getControl(object)
 getCov(object)
 getCovRiskBudgets(object)
 getData(object)
@@ -64,6 +63,7 @@ getNAssets(object)
 getNFrontierPoints(object)
 getObjective(object)
 getOptim(object)
+getOptions(object)
 getOptimize(object)
 getPortfolio(object)
 getParams(object)
@@ -109,7 +109,9 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## 
+## getModel -
+   getModel(portfolioSpec())
+   getType(portfolioSpec())
 }
 
 

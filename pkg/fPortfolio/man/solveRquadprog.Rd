@@ -39,6 +39,21 @@ solveRquadprog(data, spec, constraints)
 }
 
 
+\value{
+    
+    a list with the following named ebtries: 
+    \code{solver}, 
+    \code{optim},
+    \code{weights},
+    \code{targetReturn},
+    \code{targetRisk}, 
+    \code{objective},
+    \code{status},
+    \code{message}.
+
+}
+
+
 \references{
 
 Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
@@ -50,13 +65,21 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data - 
-   # Load Data:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
+## spec - 
+   Spec = portfolioSpec()
+   setSolver(Spec) = "solveRquaprog" 
+   setTargetReturn(Spec) = mean(Data)
+   Spec
+
+## constraints - 
+   Constraints = "LongOnly"
+         
 ## solveRquadprog -
-   # ...
+   solveRquadprog(Data, Spec, Constraints)
 }
 
 

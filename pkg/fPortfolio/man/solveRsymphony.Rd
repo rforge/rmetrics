@@ -38,6 +38,21 @@ solveRsymphony(data, spec, constraints)
 }
 
 
+\value{
+    
+    a list with the following named ebtries: 
+    \code{solver}, 
+    \code{optim},
+    \code{weights},
+    \code{targetReturn},
+    \code{targetRisk}, 
+    \code{objective},
+    \code{status},
+    \code{message}.
+
+}
+
+
 \references{
 
 SYMPHONY development home page 
@@ -51,20 +66,22 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## data -
-   # Load Data:
-   Data <- SMALLCAP.RET
-   Data <- Data[, c("BKE", "GG", "GYMB", "KRON")]
+## data - 
+   Data = SMALLCAP.RET
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## solveRsymphony - 
-   # Portfolio specification and constraints:
-   Spec <- portfolioSpec()
-   setType(Spec) <- "CVaR"
-   setTargetReturn(Spec) <- mean(colMeans(Data))
-   Constraints <- "LongOnly"
+## spec - 
+   Spec = portfolioSpec()
+   setType(Spec) = "CVaR" 
+   setSolver(Spec) = "solveRsymphony" 
+   setTargetReturn(Spec) = mean(Data)
+   Spec
 
-   # Optimize:
+## constraints - 
+   Constraints = "LongOnly"
+         
+## solveRsymphony -
    solveRsymphony(Data, Spec, Constraints)
 }
 

@@ -154,8 +154,9 @@ getCovRiskBudgets.fPORTFOLIO <-
 getConstraints.fPORTFOLIO <- 
     function(object) object@constraints@stringConstraints
     
+    
 getConstraintsTypes <- 
-function(object) 
+    function(object) 
 {
     Constraints = getConstraints(object)
     Types = NULL

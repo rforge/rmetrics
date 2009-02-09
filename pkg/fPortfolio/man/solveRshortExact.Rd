@@ -39,6 +39,21 @@ solveRshortExact(data, spec, constraints)
 }
 
 
+\value{
+    
+    a list with the following named ebtries: 
+    \code{solver}, 
+    \code{optim},
+    \code{weights},
+    \code{targetReturn},
+    \code{targetRisk}, 
+    \code{objective},
+    \code{status},
+    \code{message}.
+
+}
+
+
 \references{
 
 Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
@@ -49,14 +64,22 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## data -
-   # Load Data:
+## data - 
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## solveRshortExact - 
-   # ...
+## spec - 
+   Spec = portfolioSpec()
+   setSolver(Spec) = "solveRshortExact" 
+   setTargetReturn(Spec) = mean(Data)
+   Spec
+
+## constraints - 
+   Constraints = "LongOnly"
+         
+## solveRshortExact -
+   solveRshortExact(Data, Spec, Constraints)
 }
 
 

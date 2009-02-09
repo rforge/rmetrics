@@ -104,19 +104,6 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
 }
 
 
-\note{
-
-    With Rmetrics Version 2.7 the name of \code{attributesPlot} has been
-    changed to \code{weightedReturnsPlot} since it better describes what
-    the plot shows.
-    
-    The axes labeling has been changed in all plots, now the return on the
-    bottom side, and the risk on the upper side, before it was just vice
-    versa.
-    
-}
-
-
 \references{
 
 Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
