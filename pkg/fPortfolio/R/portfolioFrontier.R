@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  portfolioFrontier             Returns the efficient frontier of a portfolio
+# FUNCTION:                DESCRIPTION:
+#  portfolioFrontier        Returns the efficient frontier of a portfolio
 ################################################################################
 
 

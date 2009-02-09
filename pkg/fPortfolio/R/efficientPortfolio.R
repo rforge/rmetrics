@@ -191,7 +191,7 @@ minriskPortfolio <-
         ans = Solver(data, spec, constraints)
         targetRisk = ans$objective
         attr(targetRisk, "weights") <- ans$weights
-        attr(targetRisk, "status") <- ans$status
+        attr(targetRisk, "status") <- ans$status 
         return(targetRisk) 
     }
 

@@ -24,18 +24,20 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  getData                       Extracts data slot
-#   getSeries                     Extracts assets series data 
-#   getNAssets                    Extracts number of assets from data
-#   getNames                      Extracts assets names from data
-#  getStatistics                 Extracts statistics slot
-#   getMean                       Extracs mean from statistics
-#   getCov                        Extracs covariance Sigma from statistics
-#   getMu                         Extracs mu from statistics
-#   getSigma                      Extracs Sigma from statistics
-#   getEstimator                  Extracts estimator from 
-#  getTailRisk                   Extracts tailRisk slot
+# FUNCTION:                DESCRIPTION:
+#  getData                  Extracts data slot
+#   getSeries                Extracts assets series data 
+#   getNAssets               Extracts number of assets from data
+#   getNames                 Extracts assets names from data
+# FUNCTION:                DESCRIPTION:
+#  getStatistics            Extracts statistics slot
+#   getMean                  Extracs mean from statistics
+#   getCov                   Extracs covariance Sigma from statistics
+#   getMu                    Extracs mu from statistics
+#   getSigma                 Extracs Sigma from statistics
+#   getEstimator             Extracts estimator from 
+# FUNCTION:                DESCRIPTION:
+#  getTailRisk               Extracts tailRisk slot
 ################################################################################
 
 

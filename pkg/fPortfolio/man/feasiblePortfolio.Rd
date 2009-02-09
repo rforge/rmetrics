@@ -4,7 +4,7 @@
 \alias{feasiblePortfolio}
 
 
-\title{Portfolio Class}
+\title{Feasible Portfolios}
 
 
 \description{
@@ -41,10 +41,7 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
-\details{
-    
-    \bold{A Feasible Portfolio:}
-    \cr\cr   
+\details{  
     
     A feasible portfolio is a portfolio with given weights which
     lies inside the feasible region of portfolios.
@@ -105,7 +102,13 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 
 
-%\references{}
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \examples{
@@ -123,6 +126,7 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
    
 ## Allow for unlimited Short Selling:
    Constraints = "LongOnly"
+   Constraints
    
 ## Compute properties of Efficient Portfolio
    feasiblePortfolio(Data, Spec, Constraints)

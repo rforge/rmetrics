@@ -107,13 +107,10 @@ Schaefer J., Strimmer K. (2005);
     Large-Scale Covariance Estimation and Implications for Functional Genomics},
     Statist. Appl. Genet. Mol. Biol. 4, 32.
 
-}
-
-
-\seealso{
-
-    \code{MultivariateDistribution}.
-
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
 }
 
 

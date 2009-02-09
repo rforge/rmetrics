@@ -16,11 +16,11 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  portfolioSpec                 Specifies a portfolio to be optimized
-#  .checkWeights                 Forces tiny weights to zero
-#  .checkSpecVsConstraints       Check if spec and constraints do match
-#  .checkTargetReturn            Check if target Return is defined
+# FUNCTION:                DESCRIPTION:
+#  portfolioSpec            Returns an object of class fPFOLIOSPEC
+#  .checkWeights            Forces tiny weights to zero
+#  .checkSpecVsConstraints  Checks if spec and constraints do match
+#  .checkTargetReturn       Checks if target Return is defined
 ################################################################################
 
 

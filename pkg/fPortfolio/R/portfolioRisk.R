@@ -51,6 +51,10 @@ covRisk <-
     #       be transformed into a matrix
     #   weights - a numeric vector, the weights vector
     
+    # Example:
+    #   data = LPP2005.RET[, 1:6]; weights = rep(1/6, times = 6)
+    #   covRisk(data, weights)
+    
     # FUNCTION:
 
     # Data:
@@ -88,6 +92,10 @@ varRisk <-
     #   weights - a numeric vector, the weights vector
     #   alpha - a numeric value, the quantile
 
+    # Example:
+    #   data = LPP2005.RET[, 1:6]; weights = rep(1/6, times = 6)
+    #   varRisk(data, weights)
+    
     # FUNCTION:
 
     # VaR:
@@ -118,6 +126,10 @@ cvarRisk <-
     #   weights - a numeric vector, the weights vector
     #   alpha - a numeric value, the quantile
 
+    # Example:
+    #   data = LPP2005.RET[, 1:6]; weights = rep(1/6, times = 6)
+    #   cvarRisk(data, weights)
+    
     # FUNCTION:
 
     # CVaR:

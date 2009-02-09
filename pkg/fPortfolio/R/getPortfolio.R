@@ -16,98 +16,147 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  getData                       Extracts data slot
-#   getSeries                     Extracts assets series data 
-#   getNAssets                    Extracts number of assets from data
-#   getNames                      Extracts assets names from data
-#  getStatistics                 Extracts statistics slot
-#   getMean                       Extracs mean from statistics
-#   getCov                        Extracs covariance Sigma from statistics
-#   getMu                         Extracs mu from statistics
-#   getSigma                      Extracs Sigma from statistics
-#   getEstimator                  Extracts estimator from 
-#  getTailRisk                   Extracts tailRisk slot
-# FUNCTION:                     DESCRIPTION:
-#  getSpec                       Extracs specification Slot
-#   getType                       Extracts type of portfolio
-#   getOptimize                   Extracts what to optimize of portfolio
-#   getEstimator                  Extracts mean-covariance estimator
-#   getParams                     Extracts optional parameter list
-#    getAlpha                      Extracts target VaR-alpha specification
-#    getA                          Extracts quadratic LPM exponent specification
-#  getPortfolio                  Extract portfolio slot
-#   getWeights                    Extracts weights from a portfolio object
-#   getTargetReturn               Extracts target return from specification
-#   getTargetRisk                 Extracts target riks from specification
-#   getRiskFreeRate               Extracts risk free rate from specification 
-#   getNFrontierPoints            Extracts number of frontier points 
-#   getStatus                     Extracts portfolio status information
-#  getOptim                      Extract optim slot
-#   getSolver                     Extracts solver from specification
-#   getObjective
-#   getOptions
-#   getControl
-#   getTrace                      Extracts solver's trace flag
-# FUNCTION:                     DESCRIPTION:
-#  getConstraints                Extracts weight constraints
-# FUNCTION:                     GENERAL EXTRACTORS:
-#  getCovRiskBudgets             Extracts covariance risk budgets
-#  getTailRiskBudgets            Extracts tail risk budgets
+# FUNCTION:                DESCRIPTION:                                         
+#  getData                  Extracts data slot                                  
+#   getSeries                Extracts assets series data                        
+#   getNAssets               Extracts number of assets from data                
+#   getNames                 Extracts assets names from data                    
+#  getStatistics            Extracts statistics slot                            
+#   getMean                  Extracs mean from statistics                       
+#   getCov                   Extracs covariance Sigma from statistics           
+#   getMu                    Extracs mu from statistics                         
+#   getSigma                 Extracs Sigma from statistics                      
+#   getEstimator             Extracts estimator from                            
+#  getTailRisk              Extracts tailRisk slot                              
+# FUNCTION:                DESCRIPTION:                                         
+#  getSpec                  Extracs specification Slot                          
+#   getType                  Extracts type of portfolio                         
+#   getOptimize              Extracts what to optimize of portfolio             
+#   getEstimator             Extracts mean-covariance estimator                 
+#   getParams                Extracts optional parameter list                   
+#    getAlpha                 Extracts target VaR-alpha specification           
+#    getA                     Extracts quadratic LPM exponent specification     
+#  getPortfolio             Extract portfolio slot                              
+#   getWeights               Extracts weights from a portfolio object           
+#   getTargetReturn          Extracts target return from specification          
+#   getTargetRisk            Extracts target riks from specification            
+#   getRiskFreeRate          Extracts risk free rate from specification         
+#   getNFrontierPoints       Extracts number of frontier points                 
+#   getStatus                Extracts portfolio status information              
+#  getOptim                 Extract optim slot                                  
+#   getSolver                Extracts solver from specification                 
+#   getObjective             Extracts objective
+#   getOptions               Extracts optimization options
+#   getControl               Extracts solver control options
+#   getTrace                 Extracts solver's trace flag
+# FUNCTION:                 DESCRIPTION:
+#  getConstraints            Extracts weight constraints
+# FUNCTION:                 DESCRIPTION:
+#  getCovRiskBudgets         Extracts covariance risk budgets
+#  getTailRiskBudgets        Extracts tail risk budgets
 ################################################################################
 
 
-# Extract from an object of class fPORTFOLIO
+# Extract from data slot of an object of class fPORTFOLIO:
 
         
-getData.fPORTFOLIO = function(object) object@data
- getSeries.fPORTFOLIO = function(object) getSeries(getData(object))
- getNAssets.fPORTFOLIO = function(object) getNAssets(getData(object))
- getNames.fPORTFOLIO = function(object) getNames(getData(object))
- getStatistics.fPORTFOLIO = function(object) getStatistics(getData(object))
- getMean.fPORTFOLIO = function(object) getMean(getData(object))
- getCov.fPORTFOLIO = function(object) getCov(getData(object))
- getMu.fPORTFOLIO = function(object) getMu(getData(object))
- getSigma.fPORTFOLIO = function(object) getSigma(getData(object))
+getData.fPORTFOLIO <- 
+    function(object) object@data
 
- 
-# ------------------------------------------------------------------------------
-
-
-getSpec.fPORTFOLIO <- function(object) object@spec 
-
- getModel.fPORTFOLIO <- function(object) object@spec@model
-  getType.fPORTFOLIO <- function(object) getType(getSpec(object))
-  getOptimize.fPORTFOLIO <- function(object) getOptimize(getSpec(object))
-  getEstimator.fPORTFOLIO <- function(object) getEstimator(getSpec(object))
-  getTailRisk.fPORTFOLIO <- function(object) getTailRisk(getSpec(object))
-  getParams.fPORTFOLIO <- function(object) getParams(getSpec(object))
-    getAlpha.fPORTFOLIO <- function(object) getAlpha(getSpec(object))
-    getA.fPORTFOLIO <- function(object) getA(getSpec(object))
+getSeries.fPORTFOLIO <- 
+    function(object) object@data@data$series
+getNAssets.fPORTFOLIO <- 
+    function(object) object@data@data$nAssets
+getNames.fPORTFOLIO <- 
+    function(object) object@data@data$names
     
- getPortfolio.fPORTFOLIO <- function(object) object@spec@portfolio
-  getWeights.fPORTFOLIO <- function(object) getWeights(getSpec(object))
-  getTargetReturn.fPORTFOLIO <- function(object) getTargetReturn(getSpec(object))
-  getTargetRisk.fPORTFOLIO <- function(object) getTargetRisk(getSpec(object))
-  getRiskFreeRate.fPORTFOLIO <- function(object) getRiskFreeRate(getSpec(object))
-  getNFrontierPoints.fPORTFOLIO <- function(object) getNFrontierPoints(getSpec(object))
-  getStatus.fPORTFOLIO <-  function(object) getStatus(getSpec(object))
-  
- getOptim.fPORTFOLIO <- function(object) object@spec@optim
-  getSolver.fPORTFOLIO <- function(object) getSolver(getSpec(object)) 
-  getObjective.fPORTFOLIO <- function(object) getObjective(getSpec(object)) 
-  getOptions.fPORTFOLIO <- function(object) getOptions(getSpec(object)) 
-  getControl.fPORTFOLIO <- function(object) getControl(getSpec(object)) 
-  getTrace.fPORTFOLIO <- function(object) getTrace(getSpec(object))
+    
+getStatistics.fPORTFOLIO <- 
+    function(object) object@data@statistics 
+getMean.fPORTFOLIO <- 
+    function(object) object@data@statistics$mean
+getCov.fPORTFOLIO <- 
+    function(object) object@data@statistics$Cov
+getEstimator.fPORTFOLIO <- 
+    function(object) object@data@statistics$estimator
+getMu.fPORTFOLIO <- 
+    function(object) object@data@statistics$mu
+getSigma.fPORTFOLIO <- 
+    function(object) object@data@statistics$Sigma
+ 
+    
+# ------------------------------------------------------------------------------
 
-getCovRiskBudgets.fPORTFOLIO <- function(object) object@portfolio@portfolio$covRiskBudgets
+
+# Extract from spec slot of an object of class fPORTFOLIO:
+
+
+getSpec.fPORTFOLIO <- 
+    function(object) object@spec 
+
+getModel.fPORTFOLIO <- 
+    function(object) object@spec@model
+getType.fPORTFOLIO <- 
+    function(object) object@spec@model$type
+getOptimize.fPORTFOLIO <- 
+    function(object) object@spec@model$optimize
+getEstimator.fPORTFOLIO <- 
+    function(object) object@spec@model$estimator
+getTailRisk.fPORTFOLIO <- 
+    function(object) object@spec@model$tailRisk
+getParams.fPORTFOLIO <- 
+    function(object) object@spec@model$params
+getAlpha.fPORTFOLIO <- 
+    function(object) object@spec@model$params$alpha
+getA.fPORTFOLIO <- 
+    function(object) object@spec@model$params$a
+
+
+getPortfolio.fPORTFOLIO <-     
+    function(object) object@spec@portfolio
+getWeights.fPORTFOLIO <-      
+    function(object) object@spec@portfolio$weights
+getTargetReturn.fPORTFOLIO <- 
+    function(object) object@spec@portfolio$targetReturn
+getTargetRisk.fPORTFOLIO <-   
+    function(object) object@spec@portfolio$targetRisk
+getRiskFreeRate.fPORTFOLIO <- 
+    function(object) object@spec@portfolio$riskFreeRate
+getNFrontierPoints.fPORTFOLIO <- 
+    function(object) object@spec@portfolio$nFrontierPoints
+getStatus.fPORTFOLIO <-  
+    function(object) object@spec@portfolio$status
+
+    
+getOptim.fPORTFOLIO <-      
+    function(object) object@spec@optim
+getSolver.fPORTFOLIO <-    
+    function(object) object@spec@optim$solver
+getObjective.fPORTFOLIO <- 
+    function(object) object@spec@optim$objective 
+getOptions.fPORTFOLIO <-   
+    function(object) object@spec@optim$options 
+getControl.fPORTFOLIO <-   
+    function(object) object@spec@optim$control 
+getTrace.fPORTFOLIO <-     
+    function(object) object@spec@optim$trace
+
+getCovRiskBudgets.fPORTFOLIO <- 
+    function(object) object@portfolio@portfolio$covRiskBudgets
 
 
 # ------------------------------------------------------------------------------
 
 
-getConstraints.fPORTFOLIO <- function(object) object@constraints@stringConstraints
-getConstraintsTypes <- function(object) {
+# Extract from constraints slot of an object of class fPORTFOLIO:
+
+
+getConstraints.fPORTFOLIO <- 
+    function(object) object@constraints@stringConstraints
+    
+getConstraintsTypes <- 
+function(object) 
+{
     Constraints = getConstraints(object)
     Types = NULL
     if(!is.na(pmatch("LongOnly", Constraints))) Types = c(Types, "LongOnly") 
@@ -122,27 +171,10 @@ getConstraintsTypes <- function(object) {
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-# These are simple lists requested here for @portfilio !
-# Thus wrong, not not delete the following lines !
-
-getPortfolio.fPFOLIOVAL <- function(object) object@portfolio
-   getWeights.fPFOLIOVAL <- function(object) object@portfolio$weights
-   getCovRiskBudgets.fPFOLIOVAL <- function(object) object@portfolio$covRiskBudgets
-   getTargetReturn.fPFOLIOVAL <- function(object) object@portfolio$targetReturn
-   getTargetRisk.fPFOLIOVAL <- function(object) object@portfolio$targetRisk
-   getAlpha.fPFOLIOVAL <- function(object) object@portfolio$targetAlpha
-   getRiskFreeRate.fPFOLIOVAL <- function(object) object@Portfolio$riskFreeRate
-   getNFrontierPoints.fPFOLIOVAL <- function(object) object@portfolio$nFrontierPoints
-   getStatus.fPFOLIOVAL <- function(object) object@portfolio$status
-
-
 ################################################################################
 
 
-..getCovRiskBudgets.fPORTFOLIO = 
+.getCovRiskBudgets.fPORTFOLIO <-  
 function (object) 
 {   # A function implemented by Rmetrics
 
@@ -181,31 +213,7 @@ function (object)
 # ------------------------------------------------------------------------------
 
 
-.getCovRiskBudgets.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target Risk from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$covRiskBudgets
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTailRiskBudgets.fPORTFOLIO = 
+getTailRiskBudgets.fPORTFOLIO <-  
 function (object) 
 {   # A function implemented by Rmetrics
 

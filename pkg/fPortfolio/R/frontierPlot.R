@@ -569,7 +569,7 @@ sharpeRatioLines <-
 
     # Tangency Portfolio:
     tangencyPortfolio = tangencyPortfolio(data, spec, constraints)
-    # x.tg = getTargetReturn(tangencyPortfolio)[1, "mean"]
+    # x.tg = getTargetReturn(tangencyPortfolio@portfolio)["mean"]
     x.tg = frontierPoints(tangencyPortfolio,
         return = return, risk = risk, auto = auto)[, 2]
 
@@ -589,7 +589,7 @@ sharpeRatioLines <-
     Range = range(y/x * norm)
 
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
-    nPrecision = 3
+    nPrecision = 3 
     Labels = signif(Range, nPrecision)
     axis(4, at = Range, labels = c(" ", " "), cex.axis = 0.75)
     axis(4, at = mean(Range), labels = paste(Labels[1], "   ", Labels[2]),

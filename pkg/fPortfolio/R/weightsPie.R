@@ -64,15 +64,14 @@ weightsPie <-
     if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
-    # Extracting weights position on the efficient frontier:
-    if(!is.null(pos)){
-        object = object
-        object@portfolio$weights = getWeights(object)[pos, ]
-    }
-
     # Get Weights:
-    X = getWeights(object)
-
+    if (is.null(pos)) {
+        Weights = getWeights(object@portfolio)
+    } else {
+        Weights = getWeights(object@portfolio)[pos, ]   
+    }  
+    X = Weights
+    
     # Check for Negative Pie Segments:
     nX = getNAssets(object)
     Sign = rep("+", nX)
@@ -165,16 +164,15 @@ weightedReturnsPie <-
     if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
-    # Extracting weights position, if specified
-    if(!is.null(pos)){
-        object = object
-        object@portfolio$weights = getWeights(object)[pos, ]
-    }
 
-    # Get Weighted Returns:
-    weights = getWeights(object)
-    returns = getStatistics(object)$mu
-    X = weights * returns
+    # Get Weights:
+    if (is.null(pos)) {
+        Weights = getWeights(object@portfolio)
+    } else {
+        Weights = getWeights(object@portfolio)[pos, ]   
+    }  
+    Returns = getStatistics(object)$mu
+    X = Weights * Returns
 
     # Check for Negative Pie Segments:
     nX = getNAssets(object)
@@ -272,14 +270,12 @@ covRiskBudgetsPie <-
     if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
-    # Extracting weights position, if specified
-    if(!is.null(pos)){
-        object@portfolio$weights = getWeights(object)[pos, ]
-        object@portfolio$covRiskBudgets = getCovRiskBudgets(object)[pos, ]
-    }
-
-    # Get Covariance Risk Budgets:
-    X = getCovRiskBudgets(object)
+    # Get Cov Risk Budgets:
+    if (is.null(pos)) {
+        X = getCovRiskBudgets(object@portfolio)
+    } else {
+        X = getCovRiskBudgets(object@portfolio)[pos, ]   
+    }  
 
     # Check for Negative Pie Segments:
     nX = getNAssets(object)
@@ -345,6 +341,8 @@ tailRiskBudgetsPie <-
     function(object, pos = NULL, labels = TRUE, col = NULL,
     box = TRUE, legend = TRUE, radius = 0.8, ...)
 {
+    ### todo: take care of @portfolio slot ...
+ 
     # A function implemented by Diethelm Wuertz and Oliver Greshake
 
     # Arguments:
@@ -380,7 +378,7 @@ tailRiskBudgetsPie <-
     # Extracting weights position, if specified
     if(!is.null(pos)){
         object = object
-        object@portfolio$weights = getWeights(object)[pos, ]
+        object@portfolio$weights = getWeights(object@portfolio)[pos, ]
     }
 
     # Check:

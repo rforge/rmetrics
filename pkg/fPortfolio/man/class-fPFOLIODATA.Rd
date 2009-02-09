@@ -105,7 +105,13 @@ portfolioData(data, spec = portfolioSpec())
 }
 
 
-%\references{}
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \examples{

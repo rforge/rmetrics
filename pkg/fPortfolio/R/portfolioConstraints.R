@@ -16,17 +16,17 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  portfolioConstraints    Returns an object of class fPFOLIOCON
-#  minWConstraints         Returns vector with min box constraints
-#  maxWConstraints         Returns vector with max box constraints
-#  eqsumWConstraints       Returns list with group equal vec/matrix constraints
-#  minsumWConstraints      Returns list with group min vec/matrix constraints
-#  maxsumWConstraints      Returns list with group max vec/matrix constraints
-#  minBConstraints         Returns vector with min cov risk budget constraints
-#  maxBConstraints         Returns vector with max cov risk budget constraints
-#  minFConstraints         Returns vector with min nonlin functions constraints
-#  maxFConstraints         Returns vector with max nonlin functions constraints
+# FUNCTION:                DESCRIPTION:
+#  portfolioConstraints     Returns an object of class fPFOLIOCON
+#  minWConstraints          Returns vector with min box constraints
+#  maxWConstraints          Returns vector with max box constraints
+#  eqsumWConstraints        Returns list with group equal vec/matrix constraints
+#  minsumWConstraints       Returns list with group min vec/matrix constraints
+#  maxsumWConstraints       Returns list with group max vec/matrix constraints
+#  minBConstraints          Returns vector with min cov risk budget constraints
+#  maxBConstraints          Returns vector with max cov risk budget constraints
+#  minFConstraints          Returns vector with min nonlin functions constraints
+#  maxFConstraints          Returns vector with max nonlin functions constraints
 ################################################################################
 
 

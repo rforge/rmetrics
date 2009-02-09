@@ -16,8 +16,8 @@
 
 
 ################################################################################
-# FUNCTION:                     SINGLE PORTFOLIOS:
-#  feasiblePortfolio             Returns a feasible portfolio
+# FUNCTION:                DESCRIPTION:
+#  feasiblePortfolio        Returns a feasible portfolio
 ################################################################################
 
 

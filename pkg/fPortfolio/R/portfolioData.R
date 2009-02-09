@@ -24,8 +24,8 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#  portfolioData                 Creates portfolio data list
+# FUNCTION:                DESCRIPTION:
+#  portfolioData            Returns an object of class fPFOLIODATA
 ################################################################################
 
 

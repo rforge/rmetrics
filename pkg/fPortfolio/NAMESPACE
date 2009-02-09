@@ -141,12 +141,15 @@ S3method("summary", "fPORTFOLIO")
 
 S3method("getA", "fPORTFOLIO")                
 S3method("getAlpha", "fPFOLIOVAL")            
-S3method("getControl", "fPORTFOLIO")          
+S3method("getControl", "fPORTFOLIO")   
+S3method("getControl", "fPFOLIOSPEC")       
 S3method("getCovRiskBudgets", "fPFOLIOVAL")    
 S3method("getMessages", "fPFOLIOSPEC")         
 S3method("getNFrontierPoints", "fPFOLIOVAL")   
-S3method("getObjective", "fPORTFOLIO")         
+S3method("getObjective", "fPORTFOLIO")  
+S3method("getObjective", "fPFOLIOSPEC")       
 S3method("getOptions", "fPORTFOLIO")
+S3method("getOptions", "fPFOLIOSPEC")
 S3method("getPortfolio", "fPFOLIOVAL")         
 S3method("getRiskFreeRate", "fPFOLIOVAL")      
 S3method("getStatus", "fPFOLIOVAL")            
@@ -199,6 +202,7 @@ export(
     "getAlpha",
     "getConstraints",
     "getConstraintsTypes",
+    "getControl",
     "getCov",
     "getCovRiskBudgets",
     ".getCovRiskBudgets.fPORTFOLIO",
@@ -213,6 +217,7 @@ export(
     "getNFrontierPoints",
     "getObjective",
     "getOptim",
+    "getOptions",
     "getOptimize",
     "getParams",
     "getPortfolio",

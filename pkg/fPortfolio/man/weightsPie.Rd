@@ -112,13 +112,11 @@ tailRiskBudgetsPie(object, pos = NULL, labels = TRUE, col = NULL,
 
 
 
-%\references{}
+\references{
 
-
-\seealso{
-
-    \code{\link{weightsPlot}}, 
-    \code{link{weightsSlider}}.
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
 }
 
@@ -127,18 +125,28 @@ tailRiskBudgetsPie(object, pos = NULL, labels = TRUE, col = NULL,
 ## data -
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   
+## spec -
+   Spec = portfolioSpec()
+   setNFrontierPoints(Spec) = 10
 
 ## tangencyPortfolio - 
-   portfolio = tangencyPortfolio(Data)
+   tg = tangencyPortfolio(Data, Spec)
     
 ## weightsPie -
-   weightsPie(portfolio)
+   # par(mfrow = c(2, 2))
+   weightsPie(tg)
+   weightedReturnsPie(tg)
+   covRiskBudgetsPie(tg)
 
 ## portfolioFrontier - 
-   # frontier = portfolioFrontier(Data)
+   frontier = portfolioFrontier(Data, Spec)
    
 ## weightsPie -
-   # weightsPie(frontier, pos = 40)
+   # par(mfrow = c(2, 2))
+   weightsPie(frontier, pos = 7)
+   weightedReturnsPie(frontier, pos = 7)
+   covRiskBudgetsPie(frontier, pos = 7)
 }
 
 

@@ -39,7 +39,14 @@ solveRsymphony(data, spec, constraints)
 
 
 \references{
-SYMPHONY development home page \url{https://projects.coin-or.org/SYMPHONY/wiki}.
+
+SYMPHONY development home page 
+    \url{https://projects.coin-or.org/SYMPHONY/wiki}.
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
 }
 
 

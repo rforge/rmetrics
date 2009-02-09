@@ -1,6 +1,8 @@
 \name{getData}
 
 
+%%\alias{getData} %%
+
 \alias{getData.fPFOLIODATA}
 \alias{getSeries.fPFOLIODATA}
 \alias{getNAssets.fPFOLIODATA}
@@ -16,32 +18,12 @@
 \alias{getTailRisk.fPFOLIODATA}
 
 
-\title{Portfolio Data Extractors}
+\title{Portfolio Data Extractor Functions}
 
 
 \description{
   
-    A collection and description of functions 
-    allowing to get information about an object
-    of class fPFOLIODATA. 
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{getData} \tab Extracts data slot, \cr
-    \code{getSeries} \tab Extracts assets series, \cr
-    \code{getNAssets} \tab Extracts number of assets, \cr
-    \code{getNames} \tab Extracts names of assets, \cr
-    
-    \code{getStatistics} \tab Extracts statistics slot, \cr
-    \code{getMean} \tab Extracs mean vector, \cr
-    \code{getCov} \tab Extracs covariance matrix, \cr
-    \code{getMu} \tab Extracs mu vector, \cr
-    \code{getSigma} \tab Extracs Sigma matrix, \cr
-    \code{getEstimator} \tab Extracs Sigma matrix, \cr
-    
-    \code{getTailRisk} \tab Extracts tail risk slot. }  
+    Extracts information from an object of class fPFOLIODATA. 
     
 }
     
@@ -72,12 +54,36 @@
 }
 
 
-%\references{}
+\details{
+
+    \tabular{ll}{
+    \code{getData} \tab Extracts data slot, \cr
+    \code{getSeries} \tab Extracts assets series, \cr
+    \code{getNAssets} \tab Extracts number of assets, \cr
+    \code{getNames} \tab Extracts names of assets, \cr
+    
+    \code{getStatistics} \tab Extracts statistics slot, \cr
+    \code{getMean} \tab Extracs mean vector, \cr
+    \code{getCov} \tab Extracs covariance matrix, \cr
+    \code{getMu} \tab Extracs mu vector, \cr
+    \code{getSigma} \tab Extracs Sigma matrix, \cr
+    \code{getEstimator} \tab Extracs Sigma matrix, \cr
+    
+    \code{getTailRisk} \tab Extracts tail risk slot. }  
+}
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \examples{
 ## get -
-
    # Load time series data:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -86,11 +92,22 @@
    # Create portfolio data object:
    data = portfolioData(Data)
    
-   # Get:
+   # Get Data:
    getData(data)
-   getNames(data) 
+   getSeries(data)
+   getNAssets(data)
+   getNames(data)
+   
+   # Get Statistics:
+   getStatistics(data)
    getMean(data)
    getCov(data)
+   getMu(data)
+   getSigma(data)
+   getEstimator(data)
+    
+   # Get Tail Risk:
+   getTailRisk(data)
 }
 
 

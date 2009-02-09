@@ -117,14 +117,11 @@ tailRiskBudgetsPlot(object, labels = TRUE, col = NULL, title = TRUE,
 }
 
 
-%\references{}
+\references{
 
-
-\seealso{
-
-    \code{\link{weightsLinePlot}}, 
-    \code{\link{weightsPie}}, 
-    \code{\link{weightsSlider}}.
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
 }
 
