@@ -3,10 +3,16 @@
 
 \alias{netPerformance}
 
+
 \title{Net performance of the portfolio}
 
 
-\description{Displays plot of rebased portfolio performance and summary statistics.}
+\description{
+
+    Displays plot of rebased portfolio performance and summary 
+    statistics.
+    
+}
 
 
 \usage{   
@@ -23,11 +29,24 @@ netPerformance(object, format = "\%Y-\%m-\%d")
         a character string of the date format used
        }
     
-
 }
 
 
-\value{A plot of rebased portfolio returns and tables summarising portfolio performance over time}
+\value{
+
+    A plot of rebased portfolio returns and tables summarising portfolio 
+    performance over time.
+    
+}
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \keyword{models}

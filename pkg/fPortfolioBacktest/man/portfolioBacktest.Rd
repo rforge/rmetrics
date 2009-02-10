@@ -15,24 +15,38 @@
 
 
 \usage{
-portfolioBacktest(windows = list(windows = "equidistWindows", params = list(horizon = "12m")),
-		  strategy = list(strategy = "tangencyStrategy", params = list()),
-		  smoother = list(smoother = "emaSmoother", params = list(doubleSmoothing = TRUE, lambda = "3m", skip = 0, initialWeights = NULL)),
-		  messages = list())
+portfolioBacktest(
+    windows = list(
+        windows = "equidistWindows", 
+        params = list(horizon = "12m")),
+    strategy = list(
+        strategy = "tangencyStrategy", 
+        params = list()),
+    smoother = list(
+        smoother = "emaSmoother", 
+        params = list(doubleSmoothing = TRUE, 
+        lambda = "3m", skip = 0, 
+        initialWeights = NULL)),
+    messages = list())
 }
 
 
 \arguments{
 
     \item{windows}{
-        a list, containing different arguments: windows, params (horizon)
+        a list, containing different arguments: windows, params 
+        (horizon).
         }
     \item{strategy}{
-        a list, containing different arguments: strategy, params}
+        a list, containing different arguments: strategy, params.
+        }
     \item{smoother}{
-        a list, containing different arguments: smoother, params (doubleSmoothing, lambda, skip, initialWeights)}
+        a list, containing different arguments: smoother, params. 
+        (doubleSmoothing, lambda, skip, initialWeights).
+        }
      \item{messages}{
-	a list containing the backtesting messages}
+	    a list containing the backtesting messages.
+	    }
 
 }       
 
@@ -45,7 +59,7 @@ portfolioBacktest(windows = list(windows = "equidistWindows", params = list(hori
     Information about the current portfolio backtest specification can be retrieved 
     by \code{"get"} functions. These include:
     
-     \tabular{ll}{
+    \tabular{ll}{
   	\code{getWindows} \tab Extract Windows slot, \cr   	\code{getWindowsFun} \tab Extract Windows function, \cr	\code{getWindowsParams} \tab Extract a list of Windows specific parameters, \cr   	\code{getWindowsHorizon} \tab Extract Windows horizon, \cr	\code{getStrategy} \tab Extract Strategy slot, \cr   	\code{getStrategyFun} \tab Extract the portfolio Strategy function, \cr	\code{getStrategyParams} \tab Extract a list of portfolio Strategy specific parameters, \cr  	\code{getSmoother} \tab Extract the Smoother slot, \cr   	\code{getSmootherFun} \tab Extract the Smoother function, \cr	\code{getSmootherParams} \tab Extract a list of Smoothing specific parameters, \cr	\code{getSmootherLambda} \tab Extract the smoothing parameter Lambda, \cr   	\code{getSmootherDoubleSmoothing} \tab Extract setting for double smoothing, \cr   	\code{getSmootherInitialWeights} \tab Extract the initial weights to used in the smoothing, \cr
 	\code{getSmootherSkip} \tab Extract the number of skipped months, \cr  	\code{getMessages} \tab Extract the Message slot.}  
         
@@ -73,6 +87,15 @@ portfolioBacktest(windows = list(windows = "equidistWindows", params = list(hori
 }
 
 
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
 \examples{
 ## portfolioBacktest -
    # Show Default Portfolio Backtest Specifications:
@@ -88,5 +111,8 @@ portfolioBacktest(windows = list(windows = "equidistWindows", params = list(hori
    setWindowsHorizon(backtest) <- "12m"
    backtest
 }
+
+
+\keyword{models}
 
 

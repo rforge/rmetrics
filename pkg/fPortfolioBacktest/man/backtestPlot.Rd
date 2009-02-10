@@ -16,7 +16,8 @@
 
 \description{
 
-    Displays plots of assets, weights, rebalancing, portfolio, drawdown and report for backtesting.
+    Displays plots of assets, weights, rebalancing, portfolio, drawdown 
+    and report for backtesting.
 
 }
 
@@ -37,7 +38,8 @@ backtestReportPlot(object, ...)
 \arguments{
 
     \item{object}{
-        a list, returned from running the function \code{portfolioSmoothing}.
+        a list, returned from running the function 
+        \code{portfolioSmoothing}.
         }
    \item{which}{
         a numeric value, specifying which backtest plot to display.  
@@ -68,21 +70,31 @@ backtestReportPlot(object, ...)
     The function \code{backtestWeightsPlot} displays the recommended 
 	weights for investment. 
     
-    The function \code{backtestRebalancePlot} displays the weight changes over time for 
+    The function \code{backtestRebalancePlot} displays the weight 
+    changes over time for 
 	individual assets and for the portfolio.
 
-    The function \code{backtestPortfolioPlot} displays the daily, benchmark and portfolio series
+    The function \code{backtestPortfolioPlot} displays the daily, 
+    benchmark and portfolio series
 	of a portfolio backtest.
 
-    The function \code{backtestDrawdownPlot} displays the daily drawdowns for the
-	 benchmark and the portfolio.
+    The function \code{backtestDrawdownPlot} displays the daily 
+    drawdowns for the
+	benchmark and the portfolio.
 
-    The function \code{backtestReportPlot} summarises the results from a portfolio backtest.
+    The function \code{backtestReportPlot} summarises the results 
+    from a portfolio backtest.
 
 }
 
 
-%\references{}
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \keyword{models}

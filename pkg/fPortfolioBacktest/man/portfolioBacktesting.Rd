@@ -17,7 +17,8 @@
 
 \usage{  
 portfolioBacktesting(formula, data, spec = portfolioSpec(), 
-    constraints = "LongOnly", backtest = portfolioBacktest(), trace = TRUE)
+    constraints = "LongOnly", backtest = portfolioBacktest(), 
+    trace = TRUE)
 
 portfolioSmoothing(object, backtest, trace = TRUE)    
 }
@@ -52,3 +53,16 @@ portfolioSmoothing(object, backtest, trace = TRUE)
         a logical flag, by default TRUE. Should the backtersting be traced?
         }
 }
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
+
+\keyword{models}

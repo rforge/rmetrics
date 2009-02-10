@@ -11,14 +11,16 @@
 
 \description{
   
-    Default windows, strategy and smoothing functions used for portfolio backtesting.
+    Default windows, strategy and smoothing functions used for portfolio 
+    backtesting.
     
 }
     
 
 \usage{
 equidistWindows(data, backtest = portfolioBacktest())
-tangencyStrategy(data, spec = portfolioSpec(), constraints = "LongOnly", backtest = portfolioBacktest())
+tangencyStrategy(data, spec = portfolioSpec(), constraints = "LongOnly", 
+    backtest = portfolioBacktest())
 emaSmoother(weights, spec, backtest)
 }
 
@@ -34,8 +36,8 @@ emaSmoother(weights, spec, backtest)
         convert your time series.
         }
     \item{backtest}{
-        an S4 object of class \code{fPFOLIOBACKTEST} as returned by the function
-        \code{portfolioBacktest}.
+        an S4 object of class \code{fPFOLIOBACKTEST} as returned by the 
+        function \code{portfolioBacktest}.
         }  
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC} as returned by the function
@@ -47,7 +49,7 @@ emaSmoother(weights, spec, backtest)
         \code{"maxsumW[assets]=percentage"} for sector constraints.
         }
     \item{weights}{
-	a numeric vector, containing the portfolio weights of an asset
+	    a numeric vector, containing the portfolio weights of an asset
 	}
 
 }
@@ -64,20 +66,24 @@ emaSmoother(weights, spec, backtest)
     value to the backtest specification structure, use the function 
     \code{setWindowsHorizon}. 
 
+    
     \bold{tangencyStrategy:}\cr   
     
     A pre-defined tangency portfolio strategy.
        
-    The function requires four arguments: \code{data}, \code{spec}, \code{constraints} and 
-    \code{backtest}, see above.
+    The function requires four arguments: \code{data}, \code{spec}, 
+    \code{constraints} and \code{backtest}, see above.
 
+    
     \bold{emaSmoother:}\cr   
     
     A pre-defined weights smoother (EMA) for portfolio backtesting.
        
-    The function requires three arguments: \code{weights}, \code{spec} and 
-    \code{backtest}, see above.  To assign initial starting weights, smoothing parameter (lambda) or whether to perform double
-    smoothing to the backtest specification structure, use the functions \code{setSmootherInitialWeights}, \code{setSmootherLambda}
+    The function requires three arguments: \code{weights}, \code{spec} 
+    and \code{backtest}, see above.  To assign initial starting weights, 
+    smoothing parameter (lambda) or whether to perform double smoothing 
+    to the backtest specification structure, use the functions 
+    \code{setSmootherInitialWeights}, \code{setSmootherLambda}
     and \code{setSmootherDoubleSmoothing}, respectively.
     
 
@@ -86,18 +92,27 @@ emaSmoother(weights, spec, backtest)
 
 \value{
     
-    \code{equidistWindows} function returns the "from" and "to" dates
-    of the rolling window in a list form.
+    \code{equidistWindows}\cr
+    function returns the "from" and "to" dates of the rolling window 
+    in a list form.
 
-    \code{tangencyStrategy} function returns a S4 object of class \code{"fPORTFOLIO"}.
+    \code{tangencyStrategy}\cr
+    function returns a S4 object of class \code{"fPORTFOLIO"}.
  
-    \code{emaSmoother} function returns a numeric vector of smoothed weights.
+    \code{emaSmoother}\cr
+    function returns a numeric vector of smoothed weights.
     
 }
 
 
 
-%\references{}
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
 
 
 \keyword{models}

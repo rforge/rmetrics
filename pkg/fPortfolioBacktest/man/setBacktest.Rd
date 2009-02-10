@@ -4,14 +4,16 @@
 \alias{setBacktest}
 
 \alias{setWindowsFun<-} 
-\alias{setWindowsParams<-}\alias{setWindowsHorizon<-} 
+\alias{setWindowsParams<-}
+\alias{setWindowsHorizon<-} 
 
 \alias{setStrategyFun<-}
 \alias{setStrategyParams<-} 
-\alias{setSmootherFun<-}
+\alias{setSmootherFun<-}
 \alias{setSmootherParams<-} 
 \alias{setSmootherLambda<-} 
-\alias{setSmootherDoubleSmoothing<-} \alias{setSmootherInitialWeights<-}
+\alias{setSmootherDoubleSmoothing<-} 
+\alias{setSmootherInitialWeights<-}
 \alias{setSmootherSkip<-} 
 
 \title{Specification of backtesting portfolios}
@@ -53,11 +55,13 @@ setSmootherSkip(backtest) <- value
 \arguments{
 
     \item{backtest}{
-        an S4 object of class \code{fPFOLIOBACKTEST}, the specification to be 
-        modified, by default the default of the function \code{portfolioBacktest()}.
+        an S4 object of class \code{fPFOLIOBACKTEST}, the specification 
+        to be modified, by default the default of the function 
+        \code{portfolioBacktest()}.
         }
     \item{value}{
-        a value for that component of \code{backtest} to be set.  Note for setting Params value is a list.
+        a value for that component of \code{backtest} to be set.  
+        Note for setting Params value is a list.
         }
 
 }       
@@ -65,10 +69,22 @@ setSmootherSkip(backtest) <- value
 
 \details{
     
-    The function \code{portfolioBacktest()} allows to set the values for the 
-    specification structure from scratch. 
+    The function \code{portfolioBacktest()} allows to set the values 
+    for the specification structure from scratch. 
     
     To  modify individual settings one can use the set functions.
  
 }
+
+
+\references{
+
+Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+    \emph{Portfolio Optimization with R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
+    
+}
+
+
+\keyword{models}
 
