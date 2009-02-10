@@ -6,6 +6,17 @@
 \alias{TimeSeriesClass}
 
 \alias{timeSeries}
+\alias{timeSeries,ANY,ANY-method}
+\alias{timeSeries,ANY,missing-method}
+\alias{timeSeries,ANY,timeDate-method}
+\alias{timeSeries,matrix,ANY-method}
+\alias{timeSeries,matrix,missing-method}
+\alias{timeSeries,matrix,timeDate-method}
+\alias{timeSeries,missing,ANY-method}
+\alias{timeSeries,missing,missing-method}
+\alias{timeSeries,missing,timeDate-method}
+
+
 \alias{index_timeSeries}
 \alias{timeSeries-class}
 \alias{index_timeSeries-class}

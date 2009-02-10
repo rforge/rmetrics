@@ -12,275 +12,272 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  timeSeries                Creates a 'timeSeries' object from scratch
 ################################################################################
 
-
-timeSeries <-
-    function (data, charvec, units = NULL, format = NULL, zone = "",
-              FinCenter = "", recordIDs = data.frame(), title = NULL,
-              documentation = NULL, ...)
+## .signalSeries : generate units, title, documentation if NULL
+##                 data must be a matrix
+.signalSeries <-
+    function(data, charvec, units = NULL, format, zone = "",
+             FinCenter = "", recordIDs = data.frame(), title = NULL,
+             documentation = NULL, ...)
 {
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    stopifnot(inherits(data, "matrix"))
 
-    # Description:
-    #   Creates a 'timeSeries' object from scratch.
+    # Add units, title and Documentation:
+    if (is.null(units))
+        units <- colnames(data)
+    if (is.null(units))
+        units <- paste("SS.", seq.int(dim(data)[2]), sep = "")
+    if (is.null(title)) title = "Signal Series Object"
+    if (is.null(documentation)) documentation = as.character(date())
 
-    # Arguments:
-    #   data -a numeric 'matrix' object or any other object which
-    #       can be transformed by the function as.matrix.
-    #   charvec - a character vector of dates and times.
-    #   units - an optional units string, NULL defaults an empty
-    #       string.
-    #   format - the format specification of the input character
-    #       vector.
-    #   zone - the time zone or financial center where the data were
-    #       recorded.
-    #   FinCenter - a character with the the location of the
-    #       financial center named as "continent/city".
-    #   recordIDS - stores record IDs in form of a data frame
-    #   title - an optional title string, if not specified the inputs
-    #       data name is deparsed.
-    #   documentation - optional documentation string.
+    # remove rownames of data but keep colnames for
+    # functions like var, cov ...
+    # Note that if it fails, new("timeSeries" should fail to - normal
+    try(dimnames(data) <- list(NULL, units), silent = TRUE)
 
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-    #   positions - these are the POSIX date/time strings created
-    #       by default from the dimnames of the data matrix, or
-    #       alternatively if the data are read from a CSV file,
-    #       the first column is expected to hold the positions,
-    #       and the column name the "format" string.
-
-    # FUNCTION:
-
-    if (missing(data)) data = NA
-    data <- as.matrix(data)
-
-    if (zone == "")
-        zone <- getRmetricsOptions("myFinCenter")
-    if (FinCenter == "")
-        FinCenter <- getRmetricsOptions("myFinCenter")
-
-    # Determine format
-    if (missing(format) || is.null(format)) {
-        if (missing(charvec) || is.null(charvec)) {
-            format <- "unknown"
-        } else {
-            format <- whichFormat(charvec, silent = TRUE)
-        }
-        if (format == "unknown") {
-            charvec <- rownames(data)
-            if (identical(charvec, .signalCounts(seq(NROW(data))))) {
-                # check if rownames are not already a signal
-                # important for large signal series
-                format <- "counts"
-            } else {
-                format <- whichFormat(charvec, silent = TRUE)
-            }
-        }
-        if (format == "unknown" &&
-            !(is.numeric(data[,1])) &&
-            !(is.logical(data[,1]))) { # YC : to handle timeSeries(TRUE)
-            charvec <- data[,1]
-            if (identical(charvec, .signalCounts(seq(NROW(data))))) {
-                # check if rownames are not already a signal
-                # important for large signal series
-                format <- "counts"
-            } else {
-                format <- whichFormat(charvec, silent = TRUE)
-            }
-        }
-    } else {
-        # if format is provided but there is no charvec
-        # try to extract from data
-        if (missing(charvec) || is.null(charvec))
-            charvec <- rownames(data)
-    }
-
-    # check if charvec and unit are of proper length according to data
-    if (length(charvec) != NROW(data)) {
-        charvec <- NULL
-        format <- "unknown"
-    }
-    if (!missing(data) && !missing(units))
-        if (length(units) != NCOL(data)) {
-            units <- NULL
-        }
-
-    # Construct Time Series:
-    if (format %in% c("counts", "unknown")) {
-
-        # Signal Counts:
-        charvec <- .signalCounts(1:NROW(data))
-        ans <- .signalSeries(data, charvec, units, title,
-                             documentation)
-    } else {
-
-        # Time Stamps:
-        ans <- .timeSeries(data, charvec, units, format, zone,
-                           FinCenter, recordIDs, title,
-                           documentation, ...)
-
-        # check if there was a problem with format
-        if (any(is.na(ans@positions))) {
-            ans <- timeSeries(data, charvec, units, "counts", zone,
-                              FinCenter, recordIDs, title,
-                              documentation, ...)
-            warning("format provided not valid")
-        }
-    }
-
-    # Return
-    ans
+    new("timeSeries",
+        .Data = data,
+        positions = .signalCounts(seq.int(NROW(data))),
+        units = units,
+        format = "counts",
+        FinCenter = "",
+        recordIDs = recordIDs,
+        title = title,
+        documentation = documentation)
 }
 
-# ------------------------------------------------------------------------------
-
+## .timeSeries : generate units, title, documentation if NULL
+##               data must be a matrix and charvec a timeDate object
 .timeSeries <-
-    function (data, charvec, units = NULL, format = NULL, zone = "",
-              FinCenter = "", recordIDs = data.frame(), title = NULL,
-              documentation = NULL, ...)
+    function(data, charvec, units = NULL, format, zone = "",
+             FinCenter = "", recordIDs = data.frame(), title = NULL,
+             documentation = NULL, ...)
 {
-    # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Creates a timeSeries with time stamps
+    stopifnot(inherits(data, "matrix"))
+    stopifnot(inherits(charvec, "timeDate"))
 
-    # Detail:
-    #   Internal Function called by timeSeries
+    # it should be safe to only check first elt
+    # this avoid checking the whole vec ...
+    if (is.na(charvec[1]))
+        return(.signalSeries(data = data, units = units,
+                             recordIDs = recordIDs,
+                             title = title,
+                             documentation = documentation, ...))
 
-    # FUNCTION:
-
-    # Default:
-    if (missing(data) && missing(charvec)) {
-        data = matrix(rnorm(24), 12)
-        charvec = as.character(timeCalendar())
-    }
-
-    if (zone == "")
-        zone <- getRmetricsOptions("myFinCenter")
-    if (FinCenter == "")
-        FinCenter <- getRmetricsOptions("myFinCenter")
-
-    # This allows data to be a vector as input ...
-    if (is.vector(data)) data = matrix(data)
-
-    # Trace:
-    if (FinCenter == "") FinCenter = "GMT"
-    trace = FALSE
-
-    # Missing charvec:
-    if (missing(charvec)) {
-        N = dim(as.matrix(data))[1]
-        charvec = timeSequence(from = "1970-01-01", length.out = N,
-        zone = "GMT", FinCenter = "GMT")
-        warning("Dummy dates used in .timeSeries")
-    }
-
-    # charvector | Time Positions:
-    if (is(charvec, "timeDate")) {
-        timeDates = charvec
-    } else {
-        if (is.null(format)) format = whichFormat(charvec)
-        timeDates = timeDate(charvec = charvec,
-        format = format, zone = zone, FinCenter = FinCenter)
-    }
-
-    # Data | Dimension Names:
-    if (is.timeSeries(data)) {
-        recordIDs = data@recordIDs
-        data = series(data)
-        # rownames(data) = c(as.character(timeDates))
-        positions <- c(as.character(timeDates))
-        units = colnames(data)
-    } else {
-        data = as.matrix(data)
-        # rownames(data) = c(as.character(timeDates))
-        positions <- c(as.character(timeDates))
-        if (is.null(units)) {
-            if (is.null(colnames(data))) {
-                units = paste("TS.", 1:dim(data)[2], sep = "")
-            } else {
-                units = colnames(data)
-            }
-        }
-        # colnames(data) = units
-    }
-
-    # Record IDs:
-    # DW:
-    # No double row Names in data.frames - this generates problems!
-    # if (sum(dim(recordIDs)) > 0)
-    # rownames(recordIDs) = c(as.character(charvec))
-
-    # Add title and Documentation:
+    # Add units, title and Documentation:
+    if (is.null(units))
+        units <- colnames(data)
+    if (is.null(units))
+        units <- paste("TS.", seq.int(dim(data)[2]), sep = "")
     if (is.null(title)) title = "Time Series Object"
     if (is.null(documentation)) documentation = as.character(date())
 
-    # remove all colnames and rownames of data
-    dimnames(data) <- list(NULL, NULL)
+    # remove rownames of data but keep colnames for
+    # functions like var, cov ...
+    # Note that if it fails, new("timeSeries" should fail to - normal
+    try(dimnames(data) <- list(NULL, units), silent = TRUE)
 
-    # Return Value:
     new("timeSeries",
-        .Data = as.matrix(data),
-        positions = as.character(positions),
-        format = as.character(timeDates@format),
-        FinCenter = as.character(timeDates@FinCenter),
-        units = as.character(units),
-        recordIDs = as.data.frame(recordIDs),
-        title = as.character(title),
-        documentation = as.character(documentation))
-
+        .Data = data,
+        positions =  as.character(charvec),
+        units = units,
+        format = charvec@format,
+        FinCenter = charvec@FinCenter,
+        recordIDs = recordIDs,
+        title = title,
+        documentation = documentation)
 }
 
 # ------------------------------------------------------------------------------
 
-.signalSeries <-
-    function (data, charvec, units = NULL, recordIDs = data.frame(),
-              title = NULL, documentation = NULL, ...)
-{
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+## # to generate all combinations one can do
+## data = c("missing", "matrix", "ANY")
+## charvec = c("missing", "timeDate", "ANY")
+## grid <- expand.grid(data = data, charvec = charvec)
+## grid[order(grid$data),]
 
-    # Description:
-    #   Creates a timeSeries with signal counts
+## missing  missing
+## missing timeDate
+## missing      ANY
+##  matrix  missing
+##  matrix timeDate
+##  matrix      ANY
+##     ANY  missing
+##     ANY timeDate
+##     ANY      ANY
 
-    # Detail:
-    #   Internal Function called by timeSeries
+# ------------------------------------------------------------------------------
+## missing  missing
 
-    # FUNCTION:
+setMethod("timeSeries",
+          signature(data = "missing", charvec = "missing"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+          .signalSeries(data = matrix(NA),
+                        units = units,
+                        recordIDs = recordIDs,
+                        title = title,
+                        documentation = documentation,
+                        ...)
+          )
 
-    # Signal Series:
+# ------------------------------------------------------------------------------
+## missing timeDate
 
-    # Get data
-    data <- if (missing(data)) matrix(runif(24), ncol = 2) else as.matrix(data)
-    if (missing(charvec)) charvec <- .signalCounts(1:NROW(data))
+setMethod("timeSeries",
+          signature(data = "missing", charvec = "timeDate"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+          .signalSeries(data = matrix(NA),
+                        units = units,
+                        recordIDs = recordIDs,
+                        title = title,
+                        documentation = documentation,
+                        ...)
+          )
 
-    # get positions
-    nCol <- NCOL(data)
-    positions <- .signalCounts(charvec)
+# ------------------------------------------------------------------------------
+## missing      ANY
 
-    # get units
-    if (is.null(units)) units <- colnames(data)
-    if (is.null(units)) units <- paste("SS", 1:nCol, sep = ".")
+setMethod("timeSeries",
+          signature(data = "missing", charvec = "ANY"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+          .signalSeries(data = matrix(NA),
+                        units = units,
+                        recordIDs = recordIDs,
+                        title = title,
+                        documentation = documentation,
+                        ...)
+          )
 
-    # get title and description
-    if(is.null(title)) title = "Signal Series"
-    if(is.null(documentation)) documentation = description()
+# ------------------------------------------------------------------------------
+##  matrix  missing
 
-    # Return Value:
-    new("timeSeries",
-        .Data = as.matrix(data),
-        positions = as.character(positions),
-        format = "counts",
-        FinCenter = "",
-        units = as.character(units),
-        recordIDs = as.data.frame(recordIDs),
-        title = as.character(title),
-        documentation = as.character(documentation))
+setMethod("timeSeries",
+          signature(data = "matrix", charvec = "missing"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          charvec <- rownames(data)
+          if (is.null(charvec)) {
+              .signalSeries(data = data, units = units,
+                            recordIDs = recordIDs, title = title,
+                            documentation = documentation, ...)
+           } else {
+               callGeneric(data = data,
+                          charvec = charvec,
+                          units = units,
+                          format = format,
+                          zone = zone,
+                          FinCenter = FinCenter,
+                          recordIDs = recordIDs,
+                          title = title,
+                          documentation = documentation,
+                          ...)
+           }
+      })
 
-}
+# ------------------------------------------------------------------------------
+##  matrix timeDate
+
+setMethod("timeSeries",
+          signature(data = "matrix", charvec = "timeDate"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          if (any(!c(zone, FinCenter) %in% ""))
+              charvec <- timeDate(charvec, format = format,
+                                  zone = zone, FinCenter = FinCenter)
+          .timeSeries(data = data,
+                      charvec = charvec,
+                      units = units,
+                      recordIDs = recordIDs,
+                      title = title,
+                      documentation = documentation, ...)
+      })
+
+# ------------------------------------------------------------------------------
+##  matrix      ANY
+
+setMethod("timeSeries",
+          signature(data = "matrix", charvec = "ANY"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          charvec <- timeDate(charvec = charvec, format = format,
+                              zone = zone, FinCenter = FinCenter)
+          if (any(is.na(charvec))) {
+              warning("Could not coerce 'charvec' to a 'timeDate' object",
+                      call. = FALSE)
+              .signalSeries(data = data, units = units,
+                            recordIDs = recordIDs, title = title,
+                            documentation = documentation, ...)
+          } else {
+              .timeSeries(data = data,
+                          charvec = charvec,
+                          units = units,
+                          recordIDs = recordIDs,
+                          title = title,
+                          documentation = documentation,
+                          ...)
+          }
+      })
+
+# ------------------------------------------------------------------------------
+##     ANY  missing
+
+setMethod("timeSeries",
+          signature(data = "ANY", charvec = "missing"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          t <- try(data <- as.matrix(data))
+          if (inherits(t, "try-error"))
+              stop("Could not coerce 'data' to a matrix")
+          callGeneric()
+      })
+
+# ------------------------------------------------------------------------------
+##     ANY timeDate
+
+setMethod("timeSeries",
+          signature(data = "ANY", charvec = "timeDate"),
+          function (data, charvec, units = NULL, format, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          t <- try(data <- as.matrix(data))
+          if (inherits(t, "try-error"))
+              stop("Could not coerce 'data' to a matrix")
+          callGeneric()
+      })
+
+# ------------------------------------------------------------------------------
+##     ANY      ANY
+
+setMethod("timeSeries",
+          signature(data = "ANY", charvec = "ANY"),
+          function (data, charvec, units = NULL, format = NULL, zone = "",
+                    FinCenter = "", recordIDs = data.frame(), title = NULL,
+                    documentation = NULL, ...)
+      {
+          t <- try(data <- as.matrix(data))
+          if (inherits(t, "try-error"))
+              stop("Could not coerce 'data' to a matrix")
+          callGeneric()
+      })
 
 ################################################################################

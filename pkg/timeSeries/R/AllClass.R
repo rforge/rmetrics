@@ -38,8 +38,43 @@ setClass("timeSeries",
          contains = "structure",
          validity = function(object) {
              if (NROW(getDataPart(object)) != length(object@positions))
-                 return("@positions and rows of @.Data are not equal")
+                 return("length of '@positions' not equal to '@.Data' extent")
              if (NCOL(getDataPart(object)) != length(object@units))
-                 return("@units and columns of @.Data are not equal")
+                 return("length of '@units' not equal to '@.Data' extent")
              TRUE
          })
+
+# ------------------------------------------------------------------------------
+
+## setMethod("initialize", "timeSeries", function(.Object, ...)
+##       {
+##           .Object <- callNextMethod()
+
+##           # FIXME
+##           # define format
+##           # check if valid FinCenter
+##           # note might be too time consuming !!!
+
+##           # ISO Date/Time Format:
+##           isoDate   <- "%Y-%m-%d"
+##           isoFormat <- "%Y-%m-%d %H:%M:%S"
+
+## ###           # extract numerical value
+## ###           td <-
+## ###           num <- c(unclass(timeDate(.Object@positions), )
+
+##           if (all(is.na(num))) {
+##               # no need to look for a format if @Data has only NA's
+##               .Object@format <- character(1)
+##           } else {
+
+##               # convert - DST
+##               num <- .formatFinCenterNum(num, .Object@FinCenter, "gmt2any")
+
+##               # check if num is a multiple of days
+##               test <- !(abs(num %% 86400) > 0)
+##               .Object@format <- ifelse(all(na.omit(test)), isoDate, isoFormat)
+##           }
+
+##           .Object
+##       })

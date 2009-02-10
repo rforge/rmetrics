@@ -27,3 +27,9 @@ setGeneric("series<-",
 ##            function(x, value) standardGeneric("index<-"), package = "timeSeries")
 
 setGeneric("outlier",  function(x, sd = 5, complement = TRUE, ...) standardGeneric("outlier"))
+
+setGeneric("timeSeries",
+           function (data, charvec, units = NULL, format = NULL, zone = "",
+                     FinCenter = "", recordIDs = data.frame(), title = NULL,
+                     documentation = NULL, ...)
+           standardGeneric("timeSeries"))
