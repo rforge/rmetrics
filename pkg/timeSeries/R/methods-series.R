@@ -95,32 +95,49 @@ setMethod("series<-",
 
           # FUNCTION:
 
-          if (NROW(value) == NROW(x) && NCOL(value) == NCOL(x)) {
-              # if value same dimension as time series
-              # we we can assign the value directly to @.Data
-              # This can speed up math Ops significantly
+          # if value same dimension as time series
+          # we we can assign the value directly to @.Data
+          # This can speed up math Ops significantly
+          if (identical(dim(x), dim(value))) {
               x@.Data <- value
-          } else {
-
-              data <- value
-              charvec <- rownames(x)
-              units <- colnames(x)
-              format = x@format
-              zone <- FinCenter <- finCenter(x)
-              recordIDs <-
-                  if (NROW(x) == NROW(value)) x@recordIDs else data.frame()
-              title <- x@title
-              documentation <- x@documentation
-
-              x <- timeSeries(data = data, charvec = charvec,
-                              units = units, format = format, zone = zone,
-                              FinCenter = FinCenter, recordIDs = recordIDs,
-                              title = title)
-
+              return(x)
           }
 
+          if (is.null(charvec <- rownames(value)))
+              charvec <- rownames(x)
+          if (is.null(units <- colnames(value)))
+              units <- colnames(value)
+
+          # now that we have charvec and units, better to remove
+          # dimnames of value to avoid problems
+          attr(value, "dimnames") <- NULL
+
+          if (!identical(length(units), NCOL(value)))
+              units <- NULL
+
+          # if now same dim , drop charvec and returns .signalSeries
+          if (!identical(length(charvec), NROW(value)))
+              return(.signalSeries(value, units))
+
+          format <- x@format
+          zone <- FinCenter <- finCenter(x)
+          title <- x@title
+          documentation <- x@documentation
+          recordIDs <-
+              if (identical(NROW(x), NROW(value)))
+                  x@recordIDs
+              else
+                  data.frame()
+
           # Return
-          x
+          timeSeries(data = value,
+                     charvec = charvec,
+                     units = units,
+                     format = format,
+                     zone = zone,
+                     FinCenter = FinCenter,
+                     recordIDs = recordIDs,
+                     title = title)
       })
 
 ################################################################################
