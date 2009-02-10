@@ -84,49 +84,31 @@ as.timeSeries.data.frame <-
 
     # FUNCTION:
 
+    if (all(!(num <- unlist(lapply(x, is.numeric)))))
+        stop("x contains no numeric columns")
+
     # Check if rownames(x) or the first column has a valid ISO-format:
-    if (is.numeric(x[,1])) {
+    if (num[1])
         # is.numeric() is better than format == "unkown"
         # which can give wrong result. i.e. whichFormat(0.1253328600)
-        charvec <- rownames(x)
-        format = whichFormat(charvec, silent = TRUE)
-        if (format == "unknown") format = "counts"
-        X <- x
-        colNames = colnames(x)
-    } else {
-        charvec = as.character(as.vector(x[, 1]))
-        format = whichFormat(charvec, silent = TRUE)
-        if (format == "unkown")
-            stop("can not read the first column as a valid ISO-format date")
-        X <- data.frame(x[,-1])
-        colNames <- colnames(x)[-1]
-    }
+        suppressWarnings(charvec <- timeDate(rownames(x)))
+    else
+        suppressWarnings(charvec <- timeDate(as.vector(x[,1])))
 
-    Numeric = NULL
-    for (i in seq_len(NCOL(X))) {
-        if (is.numeric(X[, i])) Numeric = c(Numeric, i)
-    }
-    if (is.null(Numeric)) {
-        stop("x contains no numeric columns")
+    data <- as.matrix(x[, num])
+    units <- names(x)[num]
+    if (any(!(cl <- num[-1]))) {
+        recordIDs <- as.data.frame(x[, !c(TRUE, cl)]) # do not take first column
+        names(recordIDs) <- names(x)[!c(TRUE, cl)]
     } else {
-        data = as.matrix(X[, Numeric])
-        colnames(data) = colNames[Numeric]
-        if (length(Numeric) != length(X[1, ])) {
-            recordIDs = data.frame(X[, -Numeric])
-            colnames(recordIDs) = colnames(X)[-Numeric]
-        } else {
-            recordIDs = data.frame()
-        }
+        recordIDs <- data.frame()
     }
-
-    units <- colnames(data)
 
     # Create Time Series Object:
-    ans <- timeSeries(data = data, charvec = charvec, format = format,
-                      recordIDs = recordIDs, ...)
-
-    # Return Value:
-    ans
+    timeSeries(data = data,
+               charvec = charvec,
+               units = units,
+               recordIDs = recordIDs, ...)
 }
 
 setAs("data.frame", "timeSeries", function(from) as.timeSeries.data.frame(from))
