@@ -1,0 +1,9 @@
+## load dynamic library 'FKF'
+useDynLib(FKF)
+import("graphics")
+
+export("fkf", "plot.fkf")
+
+## export plot method for class fkf
+S3method("plot", "fkf")
+
