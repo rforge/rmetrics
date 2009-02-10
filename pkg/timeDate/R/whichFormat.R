@@ -45,7 +45,7 @@ whichFormat <-
     charvec = as.character(charvec)
 
     # Specifications:
-    NCHAR = mean(nchar(charvec))
+    # NCHAR = mean(nchar(charvec)) # YC : why NCHAR is calculated twice ?
     NCHAR = nchar(charvec[1])
     SUBSTR = (substring(charvec[1], 5, 5) == "-")
 
