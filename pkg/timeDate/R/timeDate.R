@@ -97,6 +97,12 @@ setMethod("timeDate", "character",
     if (identical(format,"unknown"))
         return(timeDate(NA, zone = zone, FinCenter = FinCenter))
 
+    # if entries of charvec are not of same length, replace them with NA's
+    if (any(nc <- !(nchar(charvec) == nchar(charvec[1])))) {
+        is.na(charvec) <- nc
+        warning("'charvec' entries of different number of characters are replaced by NA's")
+    }
+
     # Midnight Standard & conversion to isoFormat:
     charvec <- midnightStandard(charvec, format)
 
