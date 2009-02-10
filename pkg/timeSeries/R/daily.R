@@ -123,7 +123,7 @@ alignDailySeries <-
             td <- td[test, 1]
         }
         # Units:
-        td@units = units
+        # td@units = units # unneeded because have colnames after
         colnames(td) = units
         ans = td
         # Return Value:

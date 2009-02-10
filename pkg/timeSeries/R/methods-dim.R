@@ -122,7 +122,9 @@ setMethod("colnames<-", "timeSeries",
           if (length(units) != NCOL(x))
               stop("length of 'colnames' not equal to array extent",
                    call. = FALSE)
+
           x@units <- units
+          colnames(x@.Data) <- units
 
           x
       })
@@ -186,6 +188,7 @@ setMethod("dimnames<-", c("timeSeries", "list"),
       {
           rownames(x) <- value[[1]]
           colnames(x) <- value[[2]]
+
           x
       })
 
@@ -193,8 +196,6 @@ setMethod("dimnames<-", c("timeSeries", "list"),
 
 # colnames # default methods works fine
 # rownames # default methods works fine
-# colnames<- # default methods works fine because it uses dimnames defined above
-# rownmaes<- # default methods works fine because it uses dimnames defined above
 
 # ------------------------------------------------------------------------------
 
@@ -202,4 +203,3 @@ setMethod("dimnames<-", c("timeSeries", "list"),
 setMethod("names", "timeSeries", function(x) colnames(x))
 
 ################################################################################
-
