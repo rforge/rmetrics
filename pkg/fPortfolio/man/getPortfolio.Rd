@@ -137,22 +137,19 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data -
-   # Load Data and Convert to timeSeries Object:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## portfolioSpec -
-   # Set Default Specifications:
+## spec -
    Spec = portfolioSpec()
    Spec
    
-## Allow for LongOnly Constraints:
+## constraints -
    Constraints = "LongOnly"
    Constraints
    
-## tangency Portfolio -
-   # Compute properties of tangency Portfolio:
+## tangencyPortfolio -
    tg = tangencyPortfolio(Data, Spec, Constraints)   
 }
 

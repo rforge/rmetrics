@@ -21,39 +21,39 @@
 
 \description{
   
-    Functions to estimate the sample mean and covariance of
-    rectangular objects.
+    Functions to estimate and robustify the sample 
+    mean and covariance of rectangular objects.
     
 }
     
 
 \usage{
-covEstimator(x, spec = NULL, ...)
-mveEstimator(x, spec = NULL, ...)
-mcdEstimator(x, spec = NULL, ...)
+covEstimator(x, spec = NULL, \dots)
+mveEstimator(x, spec = NULL, \dots)
+mcdEstimator(x, spec = NULL, \dots)
 
-lpmEstimator(x, spec = NULL, ...)
+lpmEstimator(x, spec = NULL, \dots)
 
-kendallEstimator(x, spec = NULL, ...)
-spearmanEstimator(x, spec = NULL, ...)
+kendallEstimator(x, spec = NULL, \dots)
+spearmanEstimator(x, spec = NULL, \dots)
 
-covMcdEstimator(x, spec = NULL, ...)
-covOGKEstimator(x, spec = NULL, ...)
-shrinkEstimator(x, spec = NULL, ...)
-nnveEstimator(x, spec = NULL, ...)
+covMcdEstimator(x, spec = NULL, \dots)
+covOGKEstimator(x, spec = NULL, \dots)
+shrinkEstimator(x, spec = NULL, \dots)
+nnveEstimator(x, spec = NULL, \dots)
 
 }
 
 \arguments{
   
-    \item{spec}{
-        unused.
-        }
     \item{x}{
-        any rectangular time series object which can be converted by the 
-        function \code{as.matrix()} into a matrix object, e.g. like an 
-        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        an object of class \code{timeSeries}. 
         }   
+    \item{spec}{
+        unused, may be used to pass information from the portfolio
+        specification object to the mean and covariance estimator
+        function.
+        }
     \item{\dots}{
         optional arguments to be passed to the underlying estimators. 
         }
@@ -116,18 +116,24 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \author{
 
-    Juliane Schaefer and Korbinian Strimmer for R's \code{corpcov} package, \cr
-    Diethelm Wuertz for the Rmetrics port.
+    ... for R's \code{MASS} package, \cr
+    ... for R's \code{robustbase} package, \cr
+    ... for R's \code{covRobust} package, \cr
+    Juliane Schaefer and Korbinian Strimmer for R's \code{corpcor} package, \cr
+    Diethelm Wuertz for this Rmetrics port.
     
 }
 
 
 \examples{
-## berndtInvest -
+## data -
    colnames(SMALLCAP.RET)
    
-## Classical Covariance Estimation:
+## covEstimator -
    covEstimator(SMALLCAP.RET)
+   
+## shrinkEstimator -
+   # shrinkEstimator(SMALLCAP.RET)
 }
 
 

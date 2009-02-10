@@ -105,12 +105,11 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## get -  
-   # Create default specification structure:
+## spec -  
    Spec = portfolioSpec()
    Spec
    
-   # Extract from Model Slot:
+   # getModel -
    getModel(Spec)
    getType(Spec)
    getOptimize(Spec)
@@ -118,7 +117,7 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    getTailRisk(Spec)
    getParams(Spec)
 
-   # Extract from Portfolio Slot:
+   # getPortfolio -
    getPortfolio(Spec)
    getWeights(Spec)
    getTargetReturn(Spec)
@@ -128,7 +127,7 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    getNFrontierPoints(Spec)
    getStatus(Spec)
    
-   # Extract from Optim Slot:
+   # getOptim -
    getOptim(Spec)
    getSolver(Spec)
    getObjective(Spec)

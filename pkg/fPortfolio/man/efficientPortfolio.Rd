@@ -8,6 +8,7 @@
 \alias{minvariancePortfolio}
 \alias{maxreturnPortfolio}
 
+
 \title{Efficient Portfolios}
 
 
@@ -64,17 +65,17 @@ maxreturnPortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     the efficient portfolio as an S4 object of class \code{fPORTFOLIO}.
 
     
-    \bold{Tangency Portfolio:}
+    \bold{Minumum Risk or Tangency Portfolio:}
     
     The function \code{tangencyPortfolio} returns the portfolio with 
     the highest return/risk ratio on the efficient frontier. For the
-    Markowitz portfolio this is the same as the Sharpae ratio. To find 
+    Markowitz portfolio this is the same as the Sharpe ratio. To find 
     this point on the frontier the return/risk ratio calculated from 
     the target return and target risk returned by the function 
     \code{efficientPortfolio}. 
 
     
-    \bold{Minimum Variance Portfolio:}
+    \bold{Global minimum risk or Minimum Variance Portfolio:}
     
     The function \code{minvariancePortfolio} returns the portfolio 
     with the minimal risk on the efficient frontier. To find the 
@@ -108,32 +109,26 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data -
-   # Load Data and Convert to timeSeries Object:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## portfolioSpec -
-   # Set Default Specifications:
+## spec -
    Spec = portfolioSpec()
-   Spec
-   # Set Target Return to the grand mean:
    setTargetReturn(Spec) = mean(colMeans(Data))
+   Spec
    
-## Allow for LongOnly Constraints:
+## constraints -
    Constraints = "LongOnly"
    Constraints
    
 ## efficientPortfolio -
-   # Compute properties of efficient Portfolio:
    efficientPortfolio(Data, Spec, Constraints)
    
 ## tangency Portfolio -
-   # Compute properties of tangency Portfolio:
    tangencyPortfolio(Data, Spec, Constraints)   
    
 ## minvariancePortfolio -
-   # Compute properties of minimum variance Portfolio:
    minvariancePortfolio(Data, Spec, Constraints)
 }
 

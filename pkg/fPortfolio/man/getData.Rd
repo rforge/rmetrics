@@ -83,22 +83,21 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## get -
-   # Load time series data:
+## data -
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-   # Create portfolio data object:
+   # portfolioData - 
    data = portfolioData(Data)
    
-   # Get Data:
+   # getData - 
    getData(data)
    getSeries(data)
    getNAssets(data)
    getNames(data)
    
-   # Get Statistics:
+   # getStatistics - 
    getStatistics(data)
    getMean(data)
    getCov(data)
@@ -106,7 +105,7 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    getSigma(data)
    getEstimator(data)
     
-   # Get Tail Risk:
+   # getTailRisk -
    getTailRisk(data)
 }
 

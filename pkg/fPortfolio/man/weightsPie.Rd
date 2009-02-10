@@ -102,16 +102,6 @@ tailRiskBudgetsPie(object, pos = NULL, labels = TRUE, col = NULL,
 }
 
 
-\note{
-
-    With Rmetrics Version 2.7 the name of \code{attributesPie} has been
-    changed to \code{weightedReturnsPie} since it better describes what
-    the plot shows.
-    
-}
-
-
-
 \references{
 
 Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);

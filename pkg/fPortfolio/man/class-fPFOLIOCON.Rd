@@ -14,7 +14,7 @@
 
 \description{
   
-    Creates a fPFOLIOCON object.
+    Creates a fPFOLIOCON object from string constraints.
       
 }
 
@@ -55,9 +55,11 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    print(head(Data))
    print(class(Data))
 
-## portfolioConstraints -
+## spec -
    Spec = portfolioSpec()
    setTargetReturn(Spec) = mean(Data)
+
+## constraints -
    Constraints = "LongOnly"
    portfolioConstraints(Data, Spec, Constraints)
 }

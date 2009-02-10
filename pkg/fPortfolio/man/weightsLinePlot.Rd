@@ -101,19 +101,6 @@ covRiskBudgetsLinePlot(object, labels = TRUE, col = NULL, title = TRUE,
 }
 
 
-\note{
-
-    With Rmetrics Version 2.7 the name of \code{attributesPlot} has been
-    changed to \code{weightedReturnsPlot} since it better describes what
-    the plot shows.
-    
-    The axes labeling has been changed in all plots, now the return on the
-    bottom side, and the risk on the upper side, before it was just vice
-    versa.
-    
-}
-
-
 \references{
 
 Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
@@ -125,16 +112,14 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data -
-   # Load Data:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
 
 ## portfolioFrontier -
-   # Compute Long Only Efficient Frontier
-   frontier = portfolioFrontier(Data)
+   Frontier = portfolioFrontier(Data)
    
 ## weightsLinePlot -
-   # View Weights Line Plot:
    # weightsLinePlot(frontier)
 }
 

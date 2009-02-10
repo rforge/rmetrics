@@ -360,16 +360,13 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## portfolioSpec -
-   # Show Default Portfolio Specifications:
    spec = portfolioSpec()
    
 ## getRiskFreeRate -
-   # Get Risk Free Rate
    getRiskFreeRate(spec) 
    spec
    
 ## setRiskFreeRate -
-   # Modify Risk Free Rate
    setRiskFreeRate(spec) <- 2.5
 }
 

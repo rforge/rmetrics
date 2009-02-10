@@ -50,5 +50,26 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 }
 
 
+\examples{
+## data -
+   Data = SMALLCAP.RET
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   
+## weights - 
+   nAssets = getNAssets(portfolioData(Data))
+   Weights <- rep(1/nAssets, times = nAssets)
+   
+## covRisk -
+   covRisk(Data, Weights)
+
+## varRisk -
+   varRisk(Data, Weights, alpha = 0.05)
+
+## cvarRisk -
+   cvarRisk(Data, Weights, alpha = 0.05)
+}
+
+
 \keyword{models}
 

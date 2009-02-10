@@ -82,16 +82,14 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data -
-   # Load Data and Convert to timeSeries Object:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
 
 ## portfolioFrontier -  
-   # Compute Efficient Frontier:
    Frontier = portfolioFrontier(Data) 
    
-## frontierPoints:
-   # Extract Points and Plot:
+## frontierPoints - 
    x = frontierPoints(Frontier, risk = "VaR", auto = FALSE)
    x = frontierPoints(Frontier, risk = "CVaR", auto = FALSE)
 

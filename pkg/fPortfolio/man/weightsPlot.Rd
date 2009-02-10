@@ -115,17 +115,14 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## data -
-   # Load Data:
    Data = SMALLCAP.RET
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
 
 ## portfolioFrontier -
-   # Compute Long Only Efficient Frontier
-   frontier = portfolioFrontier(Data)
+   Frontier = portfolioFrontier(Data)
    
-## weightsLinePlot -
-   # View Weights Plot:
-   # weightsPlot(frontier)
+## weightsPlot -
+   weightsPlot(Frontier)
 }
 
 
