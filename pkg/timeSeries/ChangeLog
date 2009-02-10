@@ -1,3 +1,20 @@
+2009-02-05  chalabi
+
+	* man/methods-dim.Rd, man/methods-subset.Rd: ! added entries for
+	  $,timeSeries and names,timeSeries methods in help pages
+	* inst/unitTests/runit.subset.R: ! added RUnit test for
+	  $,timeSeries method
+	* R/methods-subset.R: added $,timeSeries method with
+	  auto-completion of column names
+	* NAMESPACE, R/methods-dim.R: added name,timeSeries method which
+	  return the column names
+
+2009-02-04  chalabi
+
+	* ChangeLog:
+	* inst/NEWS:
+	* DESCRIPTION: updated version number
+
 2009-01-29  chalabi
 
 	* R/methods-aggregate.R, man/methods-aggregate.Rd: improved
