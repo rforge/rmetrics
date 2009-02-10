@@ -48,8 +48,8 @@ SMALLCAP.RET
   
 
 
-\details{
-}
+%\details{
+%}
 
 
 \value{
