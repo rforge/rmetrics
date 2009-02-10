@@ -15,11 +15,11 @@
 ## Then type the following :
 ##
 ## > source("RmetricsTools.R")
-## > installRmetrics("timeDate")
+## > install.RmetricsDev("timeDate")
 ##
 ################################################################################
 
-.packagesRmetrics <- function()
+pkgsRmetricsDev <- function()
     c("fUtilities",
       "fEcofin",
       "fCalendar",
@@ -43,7 +43,7 @@
       "fAsianOptions",
       "fAssets",
       "fPortfolio")
-      ##
+
       ### "Rdonlp2",
       ### "Ripop",
       ### "RlpSolve",
@@ -53,19 +53,10 @@
       ### "fPortfolioSolver",
       ### "fPortfolioBacktest")
 
+# ------------------------------------------------------------------------------
 
-## installFile <- "installRmetrics.R"
-## if(!file.exists(installFile))
-##     stop(installFile," is not in current directory",
-##          "(",getwd(),")")
-## message("source()ing ", installFile, " in ",
-##         getwd(),"... ", appendLF = FALSE)
-## source(installFile)
-## message("OK")
-
-
-installRmetrics  <-
-    function(pkgs = "all", repos = NULL,
+install.RmetricsDev  <-
+    function(pkgs = pkgsRmetricsDev(), repos = NULL,
              CRAN = "http://stat.ethz.ch/CRAN/",
              type = "source", suggests = FALSE, ...)
 {
@@ -92,10 +83,9 @@ installRmetrics  <-
 
     # list of Rmetrics packages
 
-    pkgsRmetrics <- .packagesRmetrics()
+    pkgsRmetrics <- pkgsRmetricsDev()
 
     # test if requested package is part of Rmetrics
-    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
     if (!any(pkgs %in% pkgsRmetrics))
         stop(gettextf("'%s' is not part of Rmetrics",
                       deparse(substitute(pkgs))))
@@ -133,26 +123,42 @@ installRmetrics  <-
     invisible(TRUE)
 }
 
+
+# ------------------------------------------------------------------------------
+# for compatibility purpose with previous function
+
+installRmetrics <- function(...)
+{
+    .Deprecated("install.RmetricsDev")
+    install.RmetricsDev(...)
+}
+
+# ------------------------------------------------------------------------------
+
 getDESCR <- function(package, infokind, available = NULL)
 {
     stopifnot(is.character(package))
-    ans <- unlist(lapply(package, function(pkg)
-                     {
-                         if (is.null(available)) {
-                             # if available NULL try to read from
-                             # local directroy
-                             descr <- file.path(pkg, "DESCRIPTION")
-                             descr <- tools:::.read_description(descr)
-                         } else {
-                             descr <- available[pkg, ]
-                         }
-                         tools:::.split_description(na.omit(descr))[ infokind ]
-                         # na.omit important when reading files obtain from
-                         # available.packages
-                     }), recursive = TRUE)
-    as.character(ans)
+    ans <- lapply(package, function(pkg)
+              {
+                  if (is.null(available)) {
+                      # if available NULL try to read from
+                      # local directroy
+                      descr <- file.path(pkg, "DESCRIPTION")
+                      descr <- tools:::.read_description(descr)
+                  } else {
+                      descr <- available[pkg, ]
+                  }
+                  lapply(tools:::.split_description(na.omit(descr))[infokind],
+                         names)
+                  # na.omit important when reading files obtain from
+                  # available.packages
+              })
+    unlist(ans)
 }
 
+# ------------------------------------------------------------------------------
+
+# FXIME : should use utils:::getDependencies
 getDepends <- function(package, group, infokind, available = NULL)
 {
     # extract recursively dependencies of a package which belongs to a
@@ -170,16 +176,17 @@ getDepends <- function(package, group, infokind, available = NULL)
     unique(as.character(pkgsDepends))
 }
 
+# ------------------------------------------------------------------------------
+
 dependsRmetrics <-
-    function(pkgs = "all", contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
+    function(pkgs = pkgsRmetricsDev(),
+             contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
 {
     stopifnot(is.character(pkgs))
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- .packagesRmetrics()
-    stopifnot(pkgs %in% c(pkgsRmetrics, "all"))
-
-    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
+    pkgsRmetrics <- pkgsRmetricsDev()
+    stopifnot(pkgs %in% pkgsRmetrics)
 
     # downloading list of available packages
     message("downloading list of available packages... ", appendLF = FALSE)
@@ -196,8 +203,10 @@ dependsRmetrics <-
     pkgsDepends
 }
 
+# ------------------------------------------------------------------------------
+
 checkBeforeCommit  <-
-    function(pkgs = "all", lib = NULL, outdir = NULL, ...)
+    function(pkgs = pkgsRmetricsDev(), lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(pkgs))
 
@@ -212,8 +221,7 @@ checkBeforeCommit  <-
     if (!file.exists(outdir)) dir.create(outdir)
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- .packagesRmetrics()
-    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
+    pkgsRmetrics <- pkgsRmetricsDev()
     stopifnot(pkgs %in% pkgsRmetrics)
 
     ## search for packages which depends on the package we want to check
@@ -286,6 +294,8 @@ checkBeforeCommit  <-
     return(STATUS)
 }
 
+# ------------------------------------------------------------------------------
+
 # this function can help to create a NAMESPACE
 
 ## # remove any existing namespace
@@ -301,7 +311,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 {
     stopifnot(is.character(pkgs))
 
-    RmetricsPkgs <- .packagesRmetrics()
+    RmetricsPkgs <- pkgsRmetricsDev()
 
     for (pkg in pkgs) {
 
@@ -314,6 +324,8 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
         .genNAMESPACE(pkg, RmetricsPkgs, myFile)
     }
 }
+
+# ------------------------------------------------------------------------------
 
 .genNAMESPACE <-
     function(pkg, RmetricsPkgs,
@@ -597,6 +609,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     invisible(TRUE)
 }
 
+# ------------------------------------------------------------------------------
 
 upVersion <- function(pkgs)
 {
@@ -622,7 +635,9 @@ upVersion <- function(pkgs)
     invisible(TRUE)
 }
 
-checkVersion <- function(pkgs)
+# ------------------------------------------------------------------------------
+
+checkVersion <- function(pkgs = pkgsRmetricsDev())
 {
     message("Downloading packages info from CRAN ... ", appendLF = FALSE)
     info <- available.packages(contriburl = contrib.url(getOption("repos"),
@@ -642,15 +657,14 @@ checkVersion <- function(pkgs)
     }
 }
 
-buildRmetrics <- function(pkgs = "all", outdir = NULL,
+buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
                           update.version = FALSE, ...)
 {
 
     stopifnot(is.character(pkgs))
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- .packagesRmetrics()
-    if (any(pkgs == "all")) pkgs <- pkgsRmetrics
+    pkgsRmetrics <- pkgsRmetricsDev()
     stopifnot(pkgs %in% pkgsRmetrics)
 
     # reorder list of packages
@@ -741,3 +755,69 @@ buildRmetrics <- function(pkgs = "all", outdir = NULL,
 
     invisible(pkgs)
 }
+
+# ------------------------------------------------------------------------------
+
+## checkSummaryRmetrics <-
+##     function(pkgs,
+##              url = "http://cran.r-project.org/web/checks/check_summary.html")
+## {
+
+##     message(gettextf("read information at %s", url))
+##     t <- try(html <- readLines(url))
+##     if (inherits(t, "try-error"))
+##         stop(gettextf("Could not read %s", url))
+
+
+
+##     ## check <- html[grep(pkgs, html)]
+##     summary <- matrix(ncol = 11)
+##     colnames(summary) <- c("Package",
+##                            "Version",
+##                            "R-devel Linux ix86",
+##                            "R-devel Linux ix86_64 (GCC)",
+##                            "R-devel Linux ix86_64 (SUN)",
+##                            "R-devel Windows ix86",
+##                            "R-patch Linux ix86",
+##                            "R-patch Linux ix64",
+##                            "R-release Linux ix86",
+##                            "R-release Mac OS X ix86",
+##                            "R-release Windows ix86")
+##     count <- 1
+
+##     for (pkg in pkgs) {
+##         lines <- html[grep(pkg, html)]
+##         for (line in lines) {
+
+##             # split by tags <td></td>
+##             str <- strsplit(line, "<td>|</td>", fixed = FALSE)[[1]]
+
+##             # remove empty lines
+##             str <- str[-grep("^[[:space:]]*$", str)]
+##             str <- gsub("^[[:space:]]*", "", str)
+##             str <- gsub("[[:space:]]*$", "", str)
+
+##             # remove unneded fields
+##             str <- str[-c(1,11,12)]
+
+
+##             new <- strsplit(line, "<a href=\"|</a>")[[1]]
+##             version <- gsub("[[:space:]]*</td>[[:space:]]*<td>[[:space:]]*|[[:space:]]*</td>[[:space:]]*<td>[[:space:]]*", "", new[3])
+
+##             # remove unneeded lines
+##             info <- new[-grep("<td>", new)]
+
+
+##             strsplit(line, "<font.*>|</font>")
+
+
+
+##             summary[count, 1] <- pkg
+##             summary[count, 2] <-
+
+##             count <- count + 1
+##         }
+##     }
+
+
+## }
