@@ -475,7 +475,7 @@ backtestDrawdownPlot =
 	
 	# Drawdown Plot Settings:
 	stopifnot(length(pf) == length(rownames(data)))
-	pf = as.timeSeries(pf, charvec = rownames(data))
+	pf = timeSeries(pf, charvec = rownames(data))
 	pf.DD = drawdowns(pf)
 	benchmark.DD = drawdowns(data[,benchmark]) 
 	
