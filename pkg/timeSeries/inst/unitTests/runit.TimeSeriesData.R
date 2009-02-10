@@ -179,6 +179,8 @@ function()
     # Merge:
     X = uTS
     Y = log(abs(uTS))
+    merge(x = X, y = Y, units = "One column")
+    colnames(Y) <- "log"
     merge(x = X, y = Y, units = c("RN", "logAbsRN"))
     merge(x = X[-6,], y = Y[-3,], units = c("RN", "logAbsRN"))
     merge(x = X[2:5,], y = Y[4:6,], units = c("RN", "logAbsRN"))

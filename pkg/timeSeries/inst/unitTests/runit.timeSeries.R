@@ -34,8 +34,8 @@ function()
 
     x = rnorm(12)
     y = rnorm(12)
-    timeSeries:::.signalSeries(x, 1:12)
-    timeSeries:::.signalSeries(cbind(x,y), 1:12)
+    timeSeries:::.signalSeries(as.matrix(x), 1:12)
+    timeSeries:::.signalSeries(as.matrix(cbind(x,y)), 1:12)
 }
 
 

@@ -36,8 +36,9 @@ function()
     is(timeSeries(), "timeSeries")
 
     # Series
-    x = timeSeries:::.signalSeries()
-    y = timeSeries:::.timeSeries()
+    ts = dummySeries()
+    x = timeSeries:::.signalSeries(as.matrix(ts))
+    y = timeSeries:::.timeSeries(as.matrix(ts), time(ts))
 
     # A vector to a timeSeries
     as.vector(x)

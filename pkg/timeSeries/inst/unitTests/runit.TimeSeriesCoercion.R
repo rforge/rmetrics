@@ -95,7 +95,7 @@ function()
     # First Column holds Positions:
     tS = as.timeSeries(x.df)
     head(tS)
-    # Missing Positions - add dummy dates:
+    # Missing Positions - return signal series
     x.df = msft.dat[, -1]
     head(x.df)
     tS = as.timeSeries(x.df)
