@@ -21,6 +21,7 @@
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
 % \alias{as.logical.timeSeries}
+\alias{as.list.timeSeries}
 
 
 \description{

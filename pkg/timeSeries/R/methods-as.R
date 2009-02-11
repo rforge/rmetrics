@@ -27,6 +27,7 @@
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
 #  as.ts.logical             Converts a 'timeSeries' to 'logical'
+#  as.list.timeSeries        Converts a 'timeSeries' to 'list'
 ################################################################################
 
 
@@ -258,7 +259,12 @@ as.ts.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
+## YC : unneeded since timeSeries inherits from the structure class
 ## as.logical.timeSeries <- function(x, ...) as.logical(series(x), ...)
 
-################################################################################
+# ------------------------------------------------------------------------------
 
+# YC : important for functions like lapply and sapply to work properly
+as.list.timeSeries <- function(x, ...) as.list(as.data.frame(x), ...)
+
+################################################################################
