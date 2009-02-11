@@ -2,7 +2,7 @@ Package: FKF
 Type: Package
 Version: 0.0.1
 Date: 2009-02-10
-Title: FKF: Fast Kalman Filter
+Title: Fast Kalman Filter
 Author: David Luethi, Philipp Erb
 Maintainer: David Luethi <david.luethi@zhaw.ch>
 LazyLoad: yes
