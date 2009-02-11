@@ -9,8 +9,8 @@
 \alias{cbind2}
 \alias{rbind2}
 
-% \alias{cbind.timeSeries} 
-% \alias{rbind.timeSeries} 
+\alias{cbind.timeSeries} 
+\alias{rbind.timeSeries} 
 % \alias{c.timeSeries}
 
 \alias{merge,ANY,timeSeries-method}

@@ -25,10 +25,15 @@ cbind.timeSeries <- function(..., deparse.level = 1)
 
     dots <- list(...)
 
-    if (any(!unlist(lapply(dots, inherits, "timeSeries"))))
-        stop("Args must be 'timeSeries' objects")
+    # coerce to timeSeries object if not a timeSeries
+    if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
+        dots[t] <- lapply(dots[t], as.timeSeries)
 
+    # get names of arguments if any
     units <- unlist(lapply(dots, colnames))
+    if (length(t <- as.logical((nchar(nm <- names(units))))))
+        units[t] <- nm[t]
+
     # change colnames if there are the same
     if (length(unique(units)) != length(units)) {
         for (name in unique(units)) {
@@ -40,10 +45,12 @@ cbind.timeSeries <- function(..., deparse.level = 1)
 
     # FIXME : data.frame
 
+    # FIXME
     if (any(unlist(lapply(dots, function(ts) ts@format == "counts")))) {
-        if (!diff(range((unlist(lapply(dots, nrow))))))
+        if (diff(range((unlist(lapply(dots, nrow))))))
             stop("number of rows must match")
-        return(timeSeries(data=sapply(dots, getDataPart), units = units))
+        data <- as.matrix(as.data.frame(lapply(dots, getDataPart)))
+        return(timeSeries(data=data, units = units))
     }
 
     dots <- lapply(dots, sort)
@@ -80,15 +87,19 @@ rbind.timeSeries <- function(..., deparse.level = 1)
     # Check Arguments:
     dots <- list(...)
 
-    if (any(!unlist(lapply(dots, inherits, "timeSeries"))))
-        stop("Args must be 'timeSeries' objects")
+    # coerce to timeSeries object if not a timeSeries
+    if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
+        dots[t] <- lapply(dots[t], as.timeSeries)
+
     if (diff(range((unlist(lapply(dots, ncol))))))
         stop("number of columns must match")
 
-    # FIXME : should be simplified ...
-    clnames <- unlist(lapply(dots, colnames))
-    clnames <- structure(clnames, dim = c(ncol(dots[[1]]), length(dots)))
-    units <- apply(clnames, 1, paste, collapse = "_")
+    # get names of arguments if any otherwise use colnames
+    units <- unlist(lapply(dots, colnames))
+    if (length(t <- as.logical((nchar(nm <- names(units))))))
+        units[t] <- nm[t]
+    units <- structure(units, dim = c(ncol(dots[[1]]), length(dots)))
+    units <- apply(units, 1, paste, collapse = "_")
 
     # FIXME : data.frame
 
@@ -97,6 +108,7 @@ rbind.timeSeries <- function(..., deparse.level = 1)
     data <- sapply(seq.int(ncol(dots[[1]])),
                    function(idx, ts) unlist(lapply(ts, .subset, TRUE, idx)),
                    dots)
+    rownames(data) <- NULL # safer to remove rownames
 
     if (any(unlist(lapply(dots, function(ts) ts@format == "counts")))) {
         return(timeSeries(data=data, units = units))
