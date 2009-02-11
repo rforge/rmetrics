@@ -12,41 +12,12 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-
 ################################################################################
 
-
-.First.lib =
-function(lib, pkg)
-{
-
-###     # Startup Mesage and Desription:
-###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-###     dsc <- packageDescription(pkg)
-###     if(interactive() || getOption("verbose")) {
-###         # not in test scripts
-###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-###     }
-
-    # see ?cbind2
-    # Currently, a call 'methods:::bind_activation(TRUE)'
-    methods:::bind_activation(TRUE)
-}
-
 .onLoad <- function(libname, pkgname) {
-
-    # see ?cbind2
-    # Currently, a call 'methods:::bind_activation(TRUE)'
-    methods:::bind_activation(TRUE)
-
     if(is.null(getOption("max.print")))
 	options(max.print = 10000)#-> show() of large matrices
 }
-
-.onUnload <- function(libpath) methods:::bind_activation(FALSE)
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
 
 ################################################################################
 

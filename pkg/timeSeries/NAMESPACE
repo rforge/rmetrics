@@ -168,6 +168,8 @@ S3method("model.frame", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("time<-", "timeSeries")
 S3method("window", "timeSeries")
+S3method("rbind", "timeSeries")
+S3method("cbind", "timeSeries")
 
 ################################################
 ## functions
