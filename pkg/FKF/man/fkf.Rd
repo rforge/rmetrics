@@ -159,10 +159,11 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   the predicted state variables, i.e. \eqn{a_t = E(\alpha_t | y_{t - 1})}{at[,t] =
     E(alpha[t] | y[,t - 1])}.\cr
   \code{Ptt} \tab A \eqn{m \times m \times n}{m * m * n}-array
-  containing the variance of \code{att}, i.e. \eqn{P_{t|t} = var(a_{t|t})}{Ptt[,,t] = var(att[,t])}.\cr
+  containing the variance of \code{att}, i.e. \eqn{P_{t|t} =
+  var(\alpha_t | y_t)}{Ptt[,,t] = var(alpha[t] | y[,t])}.\cr
   \code{Pt} \tab A \eqn{m \times m \times (n + 1)}{m * m * (n +
     1)}-array containing the variances of \code{at}, i.e. \eqn{
-    P_t = var(a_t)}{Pt[,,t] = var(at[,t])}.\cr
+    P_t = var(\alpha_t | y_{t - 1})}{Pt[,,t] = var(alpha[t] | y[,t - 1])}.\cr
   \code{vt} \tab A \eqn{d \times n}{d * n}-matrix of the prediction
   errors given by \eqn{v_t = y_t - c_t - Z_t a_t}{vt[,t] = yt[,t] - ct[,t] -
     Zt[,,t] \%*\% at[,t]}.\cr
@@ -173,8 +174,16 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   \code{logLik} \tab The log-likelihood. \cr
   \code{status} \tab A \code{vector} which contains the status of LAPACK's
   \code{dpotri} and \code{dpotrf}. \eqn{(0, 0)} means sucessful exit.\cr
-  \code{sys.time} \tab The time elapsed as an object of class \dQuote{proc\_time}. \cr
-  }
+  \code{sys.time} \tab The time elapsed as an object of class \dQuote{proc\_time}. 
+}
+
+The first element of both \code{at} and \code{Pt} is filled with the
+function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
+1)-th, element of \code{at} and \code{Pt} contains the predictions
+(\eqn{at[,n + 1] = E(\alpha_{n + 1} | y_n)}{at[,n + 1] =
+    E(alpha[n + 1] | y[,n])} and \eqn{Pt[,,n + 1] = var(\alpha_{n + 1} |
+    y_n)}{Pt[,,n + 1] = var(alpha[n + 1] | y[,n])}.
+
 }
 % <---------------------------------------------------------------------->
 \references{
