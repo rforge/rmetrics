@@ -4,7 +4,7 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  This function provides a fast and flexible Kalman filter. The
+  This function allows for fast and flexible Kalman filtering. The
   state-space parameters are allowed to be time-varying and intercepts
   are supported in both, the transition equation and the measurement
   equation. \code{fkf} wraps the \code{C}-function \code{FKF} which
