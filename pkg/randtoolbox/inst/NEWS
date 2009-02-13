@@ -3,6 +3,23 @@
 Version 1.06
 =============
 
+IMPROVEMENT
+
+- increase the speed of congruRand.
+
+BUG FIXES
+
+- fix setSeed function.
+- a warning shows up on 64 bit architecture.
+
+BUG REPORT
+
+- setting the seed with WELL's RNGs was not correct, 
+reported by Petr Savicy.
+
+Version 1.06
+=============
+
 BUG FIXES
 
 - the degree of freedom is now correct for the order test.

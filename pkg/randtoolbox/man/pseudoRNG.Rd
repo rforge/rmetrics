@@ -262,7 +262,39 @@ WELL(10, order =19937, temper=TRUE)
 knuthTAOCP(10)
 knuthTAOCP(10, 2) 
 
-# (6) computation times on my macbook, mean of 1000 runs
+
+# (6) How to set the seed?
+# all example is duplicated to ensure setSeed works
+
+# congruRand
+setSeed(1302)
+congruRand(1)
+setSeed(1302)
+congruRand(1)
+# SFMT
+setSeed(1302)
+SFMT(1, usepset=FALSE)
+setSeed(1302)
+SFMT(1, usepset=FALSE)
+# BEWARE if you do not set usepset to FALSE
+setSeed(1302)
+SFMT(1)
+setSeed(1302)
+SFMT(1)
+# WELL
+setSeed(1302)
+WELL(1)
+setSeed(1302)
+WELL(1)
+# Knuth TAOCP
+setSeed(1302)
+knuthTAOCP(1)
+setSeed(1302)
+knuthTAOCP(1)
+
+
+
+# (7) computation times on my macbook, mean of 1000 runs
 #
 
 \dontrun{
@@ -271,7 +303,7 @@ knuthTAOCP(10, 2)
 # SF Mersenne Twister  	       			0.044 
 # WELL generator				0.065
 # Knuth TAOCP					0.046
-# Park Miller  		      			0.174 
+# Park Miller  		      			0.108
 n <- 1e+06
 mean( replicate( 1000, system.time( runif(n), gcFirst=TRUE)[3]) )
 mean( replicate( 1000, system.time( SFMT(n), gcFirst=TRUE)[3]) )

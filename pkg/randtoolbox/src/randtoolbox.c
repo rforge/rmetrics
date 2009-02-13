@@ -34,12 +34,12 @@
 static unsigned long seed; 
 static unsigned long torusoffset;
 //a pseudo boolean to initiate the seed
-static int isInit;
+static int isInit=0;
 //the length (maximal) of the internal seed array for WELL44497
 #define LENSEEDARRAY 1391
 static unsigned int seedArray[LENSEEDARRAY];
 //a pseudo boolean to initiate the seed array
-static int isInitByArray;
+static int isInitByArray=0;
 
 //the first 100 000 prime numbers taken from http://primes.utm.edu/ declared at the end of the file
 static int primeNumber[100000];
@@ -214,23 +214,42 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
     //u_ij is the nth (n = i + j * nb) term of a general congruential linear generator
     //i.e. u_ij = [ ( mult * x_{n-1}  + incr ) % mod ] / mod
     //u is stored column by column
-    for(i = 0; i < nb; i++)
+    if(!show) 
     {
-        for(j = 0; j < dim; j++) 
+        for(i = 0; i < nb; i++)
         {
-            temp  = mult * seed + incr;
-            seed = temp % mod;
-            
-            //sanity check
-            if(seed <= 0) 
-                seed += mod; 
-            
-            if(show) 
+            for(j = 0; j < dim; j++) 
+            {
+                temp  = mult * seed + incr;
+                seed = temp % mod;
+                
+                //sanity check
+                if(seed <= 0) 
+                    seed += mod; 
+                
+                u[i + j * nb] = (double) seed / (double) mod;
+            }
+        }
+    }else //show the seed
+    {    
+        for(i = 0; i < nb; i++)
+        {
+            for(j = 0; j < dim; j++) 
+            {
+                temp  = mult * seed + incr;
+                seed = temp % mod;
+                
+                //sanity check
+                if(seed <= 0) 
+                    seed += mod; 
+
                 Rprintf("%u th integer generated : %u\n", 1+ i + j * nb, seed);
-            
-            u[i + j * nb] = (double) seed / (double) mod;
+                
+                u[i + j * nb] = (double) seed / (double) mod;
+            }
         }
     }
+    
     isInit = 0;		
 }
 
@@ -279,7 +298,6 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
     init_SFMT(mexp, usepset);
     //init the seed of SFMT
     init_gen_rand(seed);
-
     
     //size of internal array
     int blocksize = get_min_array_size32();
@@ -819,6 +837,7 @@ void setSeed(long s)
 	
     seed = s;
     isInit = 1;
+    isInitByArray = 0;
 }
 
 //randomize and set the seed when not initialized
@@ -910,8 +929,7 @@ void randSeedByArray(int length)
     if( length > LENSEEDARRAY)
         error(_("error while initializing WELL generator\n"));
     
-    randSeed();
-    isInit = 0;
+    if (!isInit) randSeed();
 
 //    Rprintf("length %d \n", length);
   /*  for(i = 0; i < length/2; i++)
@@ -958,6 +976,7 @@ void randSeedByArray(int length)
     */
     
     
+    isInit = 0;
     isInitByArray = 1;
 }
 
