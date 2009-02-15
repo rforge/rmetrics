@@ -1,6 +1,14 @@
 === randtoolbox: an R package for random number generation and tests ===
 
-Version 1.06
+Version 1.08
+=============
+
+IMPROVEMENT
+
+- TODO
+
+
+Version 1.07
 =============
 
 IMPROVEMENT
@@ -15,7 +23,7 @@ BUG FIXES
 BUG REPORT
 
 - setting the seed with WELL's RNGs was not correct, 
-reported by Petr Savicy.
+reported by Petr Savicky.
 
 Version 1.06
 =============
