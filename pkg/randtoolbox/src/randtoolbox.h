@@ -107,3 +107,5 @@ void setSeed(long s);
 void randSeedByArray(int length);
 void randSeed();
 
+void reconstruct_primes();
+

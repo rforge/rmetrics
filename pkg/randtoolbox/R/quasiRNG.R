@@ -71,6 +71,11 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
                 as.matrix(res)
 }
 
+get.primes <- function(n)
+{
+	n <- min(n,100000)
+	.C("get_primes",as.integer(n),integer(n))[[2]]
+}
 
 halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 {   
