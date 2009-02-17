@@ -41,7 +41,7 @@ static unsigned int seedArray[LENSEEDARRAY];
 //a pseudo boolean to initiate the seed array
 static int isInitByArray=0;
 
-//the first 100 000 prime numbers taken from http://primes.utm.edu/ declared at the end of the file
+//the first 100 000 prime numbers taken from http://primes.utm.edu/ declared in primes.c
 extern int primeNumber[100000];
 
 // pi
@@ -95,8 +95,8 @@ SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed)
 	
     //computation step
     if(prime == NULL) {
-		if (primeNumber[2] == 1)
-			reconstruct_primes();
+        if (primeNumber[2] == 1)
+            reconstruct_primes();
         torus(u, nb, dim, primeNumber, seqstart, mixed, usetime);
     } else
         torus(u, nb, dim, prime, seqstart, mixed, usetime);
@@ -982,9 +982,4 @@ void randSeedByArray(int length)
     isInitByArray = 1;
 }
 
-
-
-/**************/
-/* constants */
-//the first 100 000 prime numbers taken from http://primes.utm.edu/
 
