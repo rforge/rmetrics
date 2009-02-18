@@ -4,7 +4,9 @@
 // Starting from 5, the source code contains only the half-difference from the previous prime.
 // The original primes are reconstructed when the package is loaded by the code at the end of
 // this file.
-extern int primeNumber[100000] = {
+extern int primeNumber[100000];
+
+int primeNumber[100000] = {
 2,3,1,1,2,1,2,1,2,3,1,3,2,1,2,3,3,1,3,2,1,3,2,3,4,2,1,2,1,2,7,2,3,1,5,1,3,3,2,3,3,1,5,1,2,1,6,6,2,1,
 2,3,1,5,3,3,3,1,3,2,1,5,7,2,1,2,7,3,5,1,2,3,4,3,3,2,3,4,2,4,5,1,5,1,3,2,3,4,2,1,2,6,4,2,4,2,3,6,1,9,
 3,5,3,3,1,3,5,3,3,1,3,3,2,1,6,5,1,2,3,3,1,6,2,3,4,5,4,5,4,3,3,2,4,3,2,4,2,7,5,6,1,5,1,2,1,5,7,2,1,2,
