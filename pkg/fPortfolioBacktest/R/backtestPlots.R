@@ -342,7 +342,7 @@ backtestPortfolioPlot <-
     # Labels ?
     if (labels) {
         ylab = "Cumulated"
-        main = "Portfolio versus Benchmark"
+        main = "Portfolio vs Benchmark"
     } else {
         ylab = ""
         main = ""
@@ -492,7 +492,7 @@ backtestDrawdownPlot =
 	 # Labels ?
     if (labels) {
         ylab = "Drawdowns"
-        main = "Drawdowns | Portfolio versus Benchmark"
+        main = "Drawdowns | Portfolio vs Benchmark"
     } else {
         ylab = ""
         main = ""
