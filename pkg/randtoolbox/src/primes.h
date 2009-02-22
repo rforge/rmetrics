@@ -1,12 +1,9 @@
-#include <R.h>
-
 // The first 100 000 prime numbers.
 // Starting from 5, the source code contains only the half-difference from the previous prime.
 // The original primes are reconstructed when the package is loaded by the code at the end of
 // this file.
-extern int primeNumber[100000];
 
-int primeNumber[100000] = {
+static int primeNumber[100000] = {
 2,3,1,1,2,1,2,1,2,3,1,3,2,1,2,3,3,1,3,2,1,3,2,3,4,2,1,2,1,2,7,2,3,1,5,1,3,3,2,3,3,1,5,1,2,1,6,6,2,1,
 2,3,1,5,3,3,3,1,3,2,1,5,7,2,1,2,7,3,5,1,2,3,4,3,3,2,3,4,2,4,5,1,5,1,3,2,3,4,2,1,2,6,4,2,4,2,3,6,1,9,
 3,5,3,3,1,3,5,3,3,1,3,3,2,1,6,5,1,2,3,3,1,6,2,3,4,5,4,5,4,3,3,2,4,3,2,4,2,7,5,6,1,5,1,2,1,5,7,2,1,2,
@@ -2233,25 +2230,4 @@ int primeNumber[100000] = {
 17,6,4,3,2,27,1,2,1,6,9,6,6,9,3,12,20,9,6,9,4,6,2,9,3,7,8,40,11,1,23,7,11,4,15,3,12,5,1,23,10,2,12,
 12,4,5,4,6,5,6,9,7,12,11,1,6,14,6,9,4,9,3,3,5,6,9,1,9,9,2,21,13,2,7,8,3,1,6,2,15,6,7,3,5,9,3,9,1,3,
 5,4,5,1,29,1,5,1,3,17,4,17,4,6,15,9,15,3,5,3,10,8,10};
-
-void reconstruct_primes()
-{
-	int i;
-	if (primeNumber[2] == 1) {
-		for (i = 2; i < 100000; i++) {
-			primeNumber[i] = primeNumber[i-1] + 2*primeNumber[i];
-		}
-	}
-}
-
-void get_primes(int *n, int *pri)
-{
-	int i;
-	if (primeNumber[2] == 1) {
-		reconstruct_primes();
-	}
-	for (i = 0; i < *n; i++) {
-		pri[i] = primeNumber[i];
-	}
-}
 

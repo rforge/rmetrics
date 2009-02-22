@@ -108,4 +108,5 @@ void randSeedByArray(int length);
 void randSeed();
 
 void reconstruct_primes();
+void get_primes(int *n, int *pri);
 

@@ -11,3 +11,5 @@ export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 
 export(stirling, permut)
 
+# export(version.randtoolbox)
+

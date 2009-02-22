@@ -41,8 +41,8 @@ static unsigned int seedArray[LENSEEDARRAY];
 //a pseudo boolean to initiate the seed array
 static int isInitByArray=0;
 
-//the first 100 000 prime numbers taken from http://primes.utm.edu/ declared in primes.c
-extern int primeNumber[100000];
+//the first 100 000 prime numbers taken from http://primes.utm.edu/ included at the end of the file
+static int primeNumber[100000];
 
 // pi
 const long double constpi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679 ;
@@ -982,4 +982,31 @@ void randSeedByArray(int length)
     isInitByArray = 1;
 }
 
+
+
+/**************/
+/* constants */
+//the first 100 000 prime numbers taken from http://primes.utm.edu/
+#include "primes.h"
+
+void reconstruct_primes()
+{
+	int i;
+	if (primeNumber[2] == 1) {
+		for (i = 2; i < 100000; i++) {
+			primeNumber[i] = primeNumber[i-1] + 2*primeNumber[i];
+		}
+	}
+}
+
+void get_primes(int *n, int *pri)
+{
+	int i;
+	if (primeNumber[2] == 1) {
+		reconstruct_primes();
+	}
+	for (i = 0; i < *n; i++) {
+		pri[i] = primeNumber[i];
+	}
+}
 
