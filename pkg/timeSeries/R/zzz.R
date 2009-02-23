@@ -14,10 +14,16 @@
 
 ################################################################################
 
+.First.lib <- function(libname, pkgname){
+    if(!is.numeric(getRmetricsOptions("max.print")))
+	setRmetricsOptions(max.print = 100) #-> show() of large matrices
+}
+
+# ------------------------------------------------------------------------------
+
 .onLoad <- function(libname, pkgname) {
-    if(is.null(getOption("max.print")))
-	options(max.print = 10000)#-> show() of large matrices
+    if(!is.numeric(getRmetricsOptions("max.print")))
+	setRmetricsOptions(max.print = 100) #-> show() of large matrices
 }
 
 ################################################################################
-

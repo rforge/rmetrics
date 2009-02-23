@@ -30,7 +30,10 @@ setMethod("show", "timeSeries",
 
     # FUNCTION:
 
-    # Unlike print the argument for show is 'object'.
+    if (ptest <- (is.numeric(max <- getRmetricsOptions("max.print")) &&
+                  ((omitted <- NROW(object) - max) > 0)))
+        object <- object[seq.int(max),]
+
     data <- as.matrix(object)
     recordIDs <- object@recordIDs
     FinCenter <- finCenter(object)
@@ -47,13 +50,19 @@ setMethod("show", "timeSeries",
         print(data)
     }
 
+    if (ptest)
+        cat(gettextf("...\n[ reached getRmetricsOptions('max.print') -- omitted %i rows ]\n", omitted))
+
     # Return Value:
-    invisible(object)
+    invisible(NULL) # as specified in ?show
 })
 
 
 # ------------------------------------------------------------------------------
 
+
+# FIXME
+# print whould be S3
 
 .print.timeSeries <-
     function(x, FinCenter = NULL, format = NULL,
@@ -118,4 +127,3 @@ setMethod("print", "timeSeries", .print.timeSeries)
 
 
 ################################################################################
-
