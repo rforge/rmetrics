@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -35,10 +35,10 @@
 ################################################################################
 
 
-.periods <-
+periods <-
     function (x, period = "12m", by = "1m", offset = "0d")
 {
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi 
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns start and end dates for a rolling periods
@@ -51,53 +51,55 @@
     #       and a unit value, e.g. "4w" for 4 weeks.
     #   offset - a span string, consisting of a length integer
     #       and a unit value, e.g. "0d" for no offset.
-    
+
     # Details:
-    #   Periodically Rolling - Allowed unit values are "m" for 
-    #       4 weeks, "w" for weeks, "d" for days, "H" for hours, "M" 
+    #   Periodically Rolling - Allowed unit values are "m" for
+    #       4 weeks, "w" for weeks, "d" for days, "H" for hours, "M"
     #       for minutes, and "S" for seconds.
-    #   Monthly Calendar Rolling - The only allowed allowed unit 
-    #       value is "m" for monthly periods. Express a quarterly 
+    #   Monthly Calendar Rolling - The only allowed allowed unit
+    #       value is "m" for monthly periods. Express a quarterly
     #       period by "3m", a semester by "6m", a year by "12m" etc.
-    
+
     # Example:
     #   x = time(as.timeSeries(data(smallcap.ts)))
     #   periods(x, "12m", "1m")
     #   periods(x, "52w", "4w")
-     
+
     # FUNCTION:
-    
+
     # Check x:
     stopifnot(is(x, "timeDate"))
-    
+
     # Check Periods:
-    Names = c("m", "w", "d", "H", "M", "S") 
+    Names = c("m", "w", "d", "H", "M", "S")
     periodUnit = gsub("[ 0-9]", "", period, perl = TRUE)
     stopifnot(periodUnit %in% Names)
     offsetUnit = gsub("[ 0-9]", "", offset, perl = TRUE)
     stopifnot(offsetUnit %in% Names)
     byUnit = gsub("[ 0-9]", "", by, perl = TRUE)
     stopifnot(byUnit %in% Names)
-    
+
     # Rolling Periods:
     if (periodUnit == "m" & byUnit == "m") {
         ans = .monthlyRolling(x, period, by)
     } else {
         ans = .periodicallyRolling(x, period, by)
     }
-    
+
     # Return Value:
     ans
 }
-    
-       
+
 # ------------------------------------------------------------------------------
 
+.periods <- periods
 
-.periodicallyRolling <-
+# ------------------------------------------------------------------------------
+
+periodicallyRolling <-
     function(x, period = "52w", by = "4w", offset = "0d")
-{    
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi 
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns start and end dates for a rolling periods
@@ -110,20 +112,20 @@
     #       and a unit value, e.g. "4w" for 4 weeks.
     #   offset - a span string, consisting of a length integer
     #       and a unit value, e.g. "0d" for no offset.
-    
+
     # Details:
-    #   Allowed unit values are "m" for 4 weeks, "w" for weeks,  
-    #   "d" for days, "H" for hours, "M" for minutes, and "S" 
+    #   Allowed unit values are "m" for 4 weeks, "w" for weeks,
+    #   "d" for days, "H" for hours, "M" for minutes, and "S"
     #   for seconds.
-    
+
     # Example:
     #   .periodicallyRolling((time(as.timeSeries(data(smallcap.ts)))))
-     
+
     # FUNCTION:
-    
+
     # Check:
     stopifnot(is(x, "timeDate"))
-    
+
     # Settings:
     periods = c(4*7*24*3600, 7*24*3600, 24*3600, 3600, 60, 1)
     names(periods) = Names = c("m", "w", "d", "H", "M", "S")
@@ -133,7 +135,7 @@
     stopifnot(offsetUnit %in% Names)
     byUnit = gsub("[ 0-9]", "", by, perl = TRUE)
     stopifnot(byUnit %in% Names)
-    
+
     # Extract Periods:
     period = as.integer(gsub("[mwdHMS]", "", period, perl = TRUE)) *
         periods[periodUnit]
@@ -141,11 +143,11 @@
         periods[offsetUnit]
     by = as.integer(gsub("[mwdHMS]", "", by, perl = TRUE)) *
         periods[byUnit]
-        
+
     # Convert timeDate to GMT-POSIX
     posixGMT = as.POSIXct(
         timeDate(x, zone = x@FinCenter, FinCenter = "GMT"), tz = "GMT")
-    
+
     # Compute Julian counts (x) and series values (y)
     Origin = as.POSIXct("1970-01-01", tz = "GMT")
     u <- as.integer(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
@@ -156,23 +158,26 @@
     fromGMT = fromGMT[fromGMT >= posixGMT[1]]
     to = timeDate(toGMT, zone = "GMT", FinCenter = x@FinCenter)
     from = timeDate(fromGMT, zone = "GMT", FinCenter = x@FinCenter)
-    
+
     # Windows:
     windows = list(from = from, to = to)
     attr(windows, "control") = c(start = start(x), end = end(x))
-    
+
     # Return Value:
     windows
 }
 
+# ------------------------------------------------------------------------------
+
+.periodicallyRolling <- periodicallyRolling
 
 # ------------------------------------------------------------------------------
 
 
-.monthlyRolling <-
+monthlyRolling <-
     function(x, period = "12m", by = "1m")
 {
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi 
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns start and end dates for monthly periods
@@ -183,12 +188,12 @@
     #       and a unit value, e.g. "12m" for 1 calendar year.
     #   by - a span string, consisting of a length integer
     #       and a unit value, e.g. "1m" for 1 calendar month.
-    
+
     # Details:
     #   The only allowed allowed unit value is "m" for monthly
-    #   periods. Express a quarterly period by "3m", a semester 
-    #   by "6m", a year by "12m" etc.  
-        
+    #   periods. Express a quarterly period by "3m", a semester
+    #   by "6m", a year by "12m" etc.
+
     # Example:
     #   .monthlyRolling((time(as.timeSeries(data(smallcap.ts)))))
 
@@ -196,7 +201,7 @@
 
     # Check:
     stopifnot(is(x, "timeDate"))
-    
+
     # Get Window Parameter:
     periodLength = as.numeric(substr(period, 1, nchar(period)-1))
     periodUnit = substr(period, nchar(period), nchar(period))
@@ -208,11 +213,11 @@
     # Make Windows - expand series x to a monthly series
     positions = x
     startPositions = unique(timeFirstDayInMonth(positions))
-    
+
     # for non monthly data
     # startPositions@Data[1] <- start(x)@Data
     endPositions = unique(timeLastDayInMonth(positions))
-    
+
     # for non monthly data
     # endPositions@Data[length(endPositions)] <- end(x)@Data
     numberOfPositions = length(startPositions)
@@ -233,6 +238,9 @@
     windows
 }
 
+# ------------------------------------------------------------------------------
+
+.monthlyRolling <- monthlyRolling
 
 ################################################################################
 
