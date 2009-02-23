@@ -73,7 +73,7 @@ whichFormat <-
 
     # Otherwise:
     if (!silent)
-    warning("Could not determine time(date) format")
+        warning("character string is not in a standard unambiguous format")
 
     # Return Value:
     "unknown"
