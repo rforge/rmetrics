@@ -65,8 +65,7 @@ rollingSigma =
     ans <- sapply(prtval,
                   function(x) getTargetRisk(x)["Sigma"])
 
-    dates <- sapply(portfolios,
-                    function(x) as.character(rev(time(getSeries(x)))[1]))
+    dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# return
 	timeSeries(ans, charvec = dates, units = "Sigma")
@@ -88,8 +87,7 @@ rollingVaR =
 	ans = sapply(portfolios, FUN = .var, alpha = alpha)
 
 	# Extracts the dates:
-	dates = sapply(portfolios,
-	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
+	dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# Return:
 	timeSeries(ans, charvec = dates, units = paste("VaR", alpha, sep = "."))
@@ -113,8 +111,7 @@ rollingCVaR =
 	ans = sapply(portfolios, FUN = .cvar, alpha = alpha)
 
 	# Extract the dates:
-	dates = sapply(portfolios,
-	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
+	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# Return:
 	timeSeries(ans, charvec = dates, units = paste("CVaR",alpha, sep = "."))
@@ -137,8 +134,7 @@ rollingDaR =
 	ans = sapply(portfolios, FUN = .dar, alpha = alpha)
 
 	# Extracts the dates:
-	dates = sapply(portfolios,
-	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
+	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# Return:
 	timeSeries(ans, charvec = dates, units = paste("DaR",alpha, sep = "."))
@@ -163,8 +159,7 @@ rollingCDaR =
 	ans = sapply(portfolios, FUN = .cdar, alpha = alpha)
 
 	# Extract the dates:
-	dates = sapply(portfolios,
-	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
+	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# Return:
 	timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
@@ -186,8 +181,7 @@ rollingRiskBudgets =
 		}
 
 	# Extract the dates:
-	dates = sapply(portfolios,
-	    function(x) as.character(rev(rownames(getSeries(x)))[1]))
+	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
 	# Return:
 	timeSeries(ans, charvec = dates, units = assetNames)
