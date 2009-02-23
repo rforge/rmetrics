@@ -15,7 +15,7 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  na.omit.timeSeries        Handles missing values in objects
+#  na.omit,timeSeries        Handles missing values in objects
 #  .naOmitMatrix             Internal function called from na.omit.timeSeries
 # OLD FUNCTIONS:            DESCRIPTION:
 #  removeNA                  Remove NAs from a matrix object
@@ -31,7 +31,7 @@ setMethod("na.omit", "timeSeries",
     # Description
     #    Handles NAs in timeSeries objects
 
-    # FUNTION:
+    # FUNCTION:
 
     # Check Arguments:
     method <- match.arg(method)
@@ -150,7 +150,7 @@ interp = c("before", "linear", "after"))
 
 removeNA =
 function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Remove NA's from objects which can be transformed to a matrix
@@ -163,9 +163,9 @@ function (x, ...)
     # Convert to Matrix:
     if (class(x) == "timeSeries") {
         TS = TRUE
-        positions = x@positions
-        FinCenter = x@FinCenter
-        units = x@units
+        # positions = time(x)
+        FinCenter = finCenter(x)
+        units = colnames(x)
         x = series(x)
     } else {
         TS = FALSE
@@ -210,9 +210,9 @@ function(x, type = c("zeros", "mean", "median"), ...)
     # Convert to Matrix:
     if (class(x) == "timeSeries") {
         TS = TRUE
-        positions = x@positions
-        FinCenter = x@FinCenter
-        units = x@units
+        positions = time(x)
+        FinCenter = finCenter(x)
+        units = colnames(x)
         ans = series(x)
     } else {
         TS = FALSE
@@ -274,9 +274,9 @@ function(x, method = c("linear", "before", "after"), ...)
     # Convert to Matrix:
     if (class(x) == "timeSeries") {
         TS = TRUE
-        positions = x@positions
-        FinCenter = x@FinCenter
-        units = x@units
+        positions = time(x)
+        FinCenter = finCenter(x)
+        units = colnames(x)
         x = series(x)
     } else {
         TS = FALSE

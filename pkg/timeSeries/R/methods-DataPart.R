@@ -19,13 +19,13 @@
 ################################################################################
 
 # this makes getDataPart a bit faster than default function
-setMethod("getDataPart", "timeSeries",
+setMethod("getDataPart", "timeSeries", #"signalSeries",
           function(object)
       {
-         value <- object
-         attributes(value) <- NULL
-         attr(value, "dim") <- attr(object, "dim")
-         object <- value
-
-         object
+          dim <- dim(object)
+          attributes(object) <- NULL
+          dim(object) <- dim
+          object
       })
+
+################################################################################

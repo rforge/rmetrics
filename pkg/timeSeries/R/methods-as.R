@@ -183,7 +183,7 @@ as.matrix.timeSeries <-
     # FUNCTION:
 
     # Check:
-    if (class(x) != "timeSeries")
+    if (!inherits(x, "timeSeries"))
         stop("x is not a timeSeries object!")
 
     # Convert:
@@ -265,6 +265,14 @@ as.ts.timeSeries <-
 # ------------------------------------------------------------------------------
 
 # YC : important for functions like lapply and sapply to work properly
-as.list.timeSeries <- function(x, ...) as.list(as.data.frame(x), ...)
+as.list.timeSeries <- function(x, ...)
+{
+    data <- getDataPart(x)
+    ncols <- NCOL(data)
+    value <- vector("list", ncols)
+    for (i in seq.int(ncols)) value[[i]] <- as.vector(data[, i])
+    names(value) <- colnames(x)
+    value
+}
 
 ################################################################################

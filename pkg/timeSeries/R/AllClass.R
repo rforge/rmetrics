@@ -15,66 +15,58 @@
 
 ################################################################################
 # CLASS:                    REPRESENTATION:
+#  'signalSeries'              S4 Class representation
 #  'timeSeries'              S4 Class representation
 ################################################################################
 
+## setClass("signalSeries",
+##          representation(
+##                         .Data = "matrix",
+##                         units = "character",
+##                         recordIDs = "data.frame",
+##                         title = "character",
+##                         documentation = "character"),
+##          contains = "structure",
+##          validity = function(object) {
+##              if (NCOL(getDataPart(object)) != length(object@units))
+##                  return("length of '@units' not equal to '@.Data' extent")
+##              TRUE
+##          })
+
+## # ------------------------------------------------------------------------------
+
+## setClass("timeSeries",
+##          representation(positions = "numeric",
+##                         format = "character",
+##                         FinCenter = "character"),
+##          contains = "signalSeries",
+##          validity = function(object) {
+##              if (NROW(getDataPart(object)) != length(object@positions))
+##                  return("length of '@positions' not equal to '@.Data' extent")
+##              if (NCOL(getDataPart(object)) != length(object@units))
+##                  return("length of '@units' not equal to '@.Data' extent")
+##              TRUE
+##          })
+
+################################################################################
+
+
 setClass("timeSeries",
-         # A class implemented by Diethelm Wuertz and Yohan Chalabi
-
-         # Description:
-         #   Class representatation for 'timeSeries' Objects.
-
-         # CLASS:
-
          representation(
                         .Data = "matrix",
-                        positions = "character",
+                        units = "character",
+                        positions = "numeric",
                         format = "character",
                         FinCenter = "character",
-                        units = "character",
                         recordIDs = "data.frame",
                         title = "character",
                         documentation = "character"),
          contains = "structure",
          validity = function(object) {
-             if (NROW(getDataPart(object)) != length(object@positions))
+             if (length(object@positions > 0) &&
+                 NROW(getDataPart(object)) != length(object@positions))
                  return("length of '@positions' not equal to '@.Data' extent")
              if (NCOL(getDataPart(object)) != length(object@units))
                  return("length of '@units' not equal to '@.Data' extent")
              TRUE
          })
-
-# ------------------------------------------------------------------------------
-
-## setMethod("initialize", "timeSeries", function(.Object, ...)
-##       {
-##           .Object <- callNextMethod()
-
-##           # FIXME
-##           # define format
-##           # check if valid FinCenter
-##           # note might be too time consuming !!!
-
-##           # ISO Date/Time Format:
-##           isoDate   <- "%Y-%m-%d"
-##           isoFormat <- "%Y-%m-%d %H:%M:%S"
-
-## ###           # extract numerical value
-## ###           td <-
-## ###           num <- c(unclass(timeDate(.Object@positions), )
-
-##           if (all(is.na(num))) {
-##               # no need to look for a format if @Data has only NA's
-##               .Object@format <- character(1)
-##           } else {
-
-##               # convert - DST
-##               num <- .formatFinCenterNum(num, .Object@FinCenter, "gmt2any")
-
-##               # check if num is a multiple of days
-##               test <- !(abs(num %% 86400) > 0)
-##               .Object@format <- ifelse(all(na.omit(test)), isoDate, isoFormat)
-##           }
-
-##           .Object
-##       })

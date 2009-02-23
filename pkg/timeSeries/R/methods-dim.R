@@ -104,7 +104,71 @@ setMethod("dim", "timeSeries", function(x) attr(x, "dim"))
 
 # ------------------------------------------------------------------------------
 
-setMethod("dimnames", "timeSeries", function(x) list(x@positions, x@units))
+# colnames # faster to have dedicated method than relying on dimnames[[2]]
+setMethod("colnames", "timeSeries", # "signalSeries",
+          function(x, do.NULL = TRUE, prefix = "col") x@units)
+
+# ------------------------------------------------------------------------------
+
+# rownames #
+
+## setMethod("rownames", "signalSeries",
+##           function (x, do.NULL = TRUE, prefix = "row") NULL)
+
+## setMethod("rownames", "timeSeries",
+##           function (x, do.NULL = TRUE, prefix = "row") as.character(time(x)))
+
+setMethod("rownames", "timeSeries",
+          function (x, do.NULL = TRUE, prefix = "row")
+      {
+          if (length(x@positions) > 0)
+              as.character(time(x))
+          else
+              NULL
+      })
+
+# ------------------------------------------------------------------------------
+
+setMethod("dimnames", "timeSeries", # "signalSeries",
+          function(x) list(rownames(x),colnames(x)))
+
+# ------------------------------------------------------------------------------
+
+## setMethod("colnames<-", "signalSeries",
+##           function(x, value)
+##       {
+##           units <- as.character(value)
+
+##           if(!length(units))
+##                   units <- paste("SS", seq(NCOL(x)), sep = ".")
+
+##           if (length(units) != NCOL(x))
+##               stop("length of 'colnames' not equal to array extent",call.=FALSE)
+
+##           x@units <- units
+##           colnames(x@.Data) <- units
+
+##           x
+##       })
+
+## # ------------------------------------------------------------------------------
+
+## setMethod("colnames<-", "timeSeries",
+##           function(x, value)
+##       {
+##           units <- as.character(value)
+
+##           if(!length(units))
+##               units <- paste("TS", seq(NCOL(x)), sep = ".")
+
+##           if (length(units) != NCOL(x))
+##               stop("length of 'colnames' not equal to array extent",call.=FALSE)
+
+##           x@units <- units
+##           colnames(x@.Data) <- units
+
+##           x
+##       })
 
 # ------------------------------------------------------------------------------
 
@@ -120,8 +184,7 @@ setMethod("colnames<-", "timeSeries",
                   units <- paste("TS", seq(NCOL(x)), sep = ".")
 
           if (length(units) != NCOL(x))
-              stop("length of 'colnames' not equal to array extent",
-                   call. = FALSE)
+              stop("length of 'colnames' not equal to array extent",call.=FALSE)
 
           x@units <- units
           colnames(x@.Data) <- units
@@ -131,59 +194,52 @@ setMethod("colnames<-", "timeSeries",
 
 # ------------------------------------------------------------------------------
 
-setMethod("rownames<-", c("timeSeries", "timeDate"),
+setMethod("rownames<-", c("timeSeries", "timeDate"), #c("signalSeries", "timeDate"),
           function (x, value)
       {
-          positions <- value
-          if (length(positions) != NROW(x))
-              stop("length of 'rownames' not equal to array extent",
-                   call. = FALSE)
-          x@FinCenter <- finCenter(positions)
-          x@positions <- as.character(positions)
-          x@format <- positions@format
-          x
+          .timeSeries(data = getDataPart(x),
+                      charvec = value,
+                      units = colnames(x),
+                      recordIDs = x@recordIDs,
+                      title = x@title,
+                      documentation = x@documentation)
       })
 
 # ------------------------------------------------------------------------------
 
-setMethod("rownames<-", "timeSeries",
+setMethod("rownames<-", "timeSeries", # "signalSeries",
           function (x, value)
       {
+          # if charvec NULL returns a signal series
+          if (is.null(value))
+              return(.signalSeries(data = getDataPart(x),
+                                   units = colnames(x),
+                                   recordIDs = x@recordIDs,
+                                   title = x@title,
+                                   documentation = x@documentation))
 
-          positions <- as.character(value)
+          # coerce charvec to timeDate
+          charvec <- timeDate(charvec = value)
 
-          if(!length(positions))
-              positions <- .signalCounts(seq(NROW(x)))
-
-          if (length(positions) != NROW(x))
-              stop("length of 'rownames' not equal to array extent",
-                   call. = FALSE)
-
-          if (identical(positions, .signalCounts(seq(NROW(x))))) {
-              x@positions <- as.character(positions)
-              x@format <- "counts"
-              x@FinCenter <- ""
-          }
-          else {
-              format <- whichFormat(positions, silent = TRUE)
-              if (format %in% c("unknown", "%Y")) {
-                  x@positions <- .signalCounts(seq(NROW(x)))
-                  x@format <- "counts"
-                  x@FinCenter <- ""
-              }
-              else {
-                  positions <- timeDate(positions, format = format)
-                  x@format <- positions@format
-                  x@positions <- as.character(positions)
-              }
-          }
-
-          x
+          if (any(is.na(charvec)))
+              # Note : there is already a warning in timeDate if there are NA's
+              .signalSeries(data = getDataPart(x),
+                            units = colnames(x),
+                            recordIDs = x@recordIDs,
+                            title = x@title,
+                            documentation = x@documentation)
+          else
+              .timeSeries(data = getDataPart(x),
+                          charvec = charvec,
+                          units = colnames(x),
+                          recordIDs = x@recordIDs,
+                          title = x@title,
+                          documentation = x@documentation)
       })
 
 # ------------------------------------------------------------------------------
 
-setMethod("dimnames<-", c("timeSeries", "list"),
+setMethod("dimnames<-", c("timeSeries", "list"), # c("signalSeries", "list"),
           function(x, value)
       {
           rownames(x) <- value[[1]]
@@ -194,12 +250,8 @@ setMethod("dimnames<-", c("timeSeries", "list"),
 
 # ------------------------------------------------------------------------------
 
-# colnames # default methods works fine
-# rownames # default methods works fine
-
-# ------------------------------------------------------------------------------
-
-# important for completion
-setMethod("names", "timeSeries", function(x) colnames(x))
+# important for completion with $
+setMethod("names", "timeSeries", # "signalSeries",
+          function(x) colnames(x))
 
 ################################################################################
