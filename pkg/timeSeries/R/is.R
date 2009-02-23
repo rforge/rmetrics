@@ -47,6 +47,10 @@ is.timeSeries <-
 
 # ------------------------------------------------------------------------------
 
+is.signalSeries <- function(x) !as.logical(length(x@positions))
+
+# ------------------------------------------------------------------------------
+
 # YC : Note if is.na returns a timeSeries objects then we have problem
 # with the function quantile...
 setMethod("is.na", "timeSeries", function(x)
