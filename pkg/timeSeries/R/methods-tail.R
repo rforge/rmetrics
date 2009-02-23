@@ -36,7 +36,8 @@ setMethod("tail",
 
     # Tail:
     if (recordIDs & dim(x)[1] == dim(x@recordIDs)[1])
-        cbind(tail.matrix(x, n = n, ...), tail(x@recordIDs, n = n, ...))
+        cbind(tail.matrix(x, n = n, addrownums = FALSE, ...),
+              tail(x@recordIDs, n = n, addrownums = FALSE, ...))
     else
-        tail.matrix(x, n = n, ...)
+        tail.matrix(x, n = n, addrownums = FALSE, ...)
 })
