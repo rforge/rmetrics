@@ -35,7 +35,7 @@
 
 
 qqnormPlot <-
-    function(x, labels = TRUE, col = "steelblue", pch = 19, 
+    function(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -85,7 +85,7 @@ qqnormPlot <-
     p = (1:n)/(n+1)
     if (scale) x = (x-mean(x))/sqrt(var(x))
     par = c(mean = mean(x), var = var(x))
-    
+
     # Quantiles:
     x = sort(x)
     p = ppoints(x)
@@ -95,23 +95,23 @@ qqnormPlot <-
     if (labels) {
         xlab = "Normal Quantiles"
         ylab = paste(Units, "Ordered Data")
-        plot(z, x, xlab = xlab, ylab = ylab, 
+        plot(z, x, xlab = xlab, ylab = ylab,
             col = col, pch = 19, ...)
     } else {
         plot(z, x, ...)
     }
-      
+
     # Title:
     if(title) {
         title(main = "NORM QQ PLOT")
-    } 
-            
+    }
+
     # Margin Text:
     if (mtext) {
         Text = "Confidence Intervals: 95%"
         mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
     }
-    
+
     # Grid:
     if (grid) {
         grid()
@@ -152,7 +152,7 @@ qqnormPlot <-
 
 
 qqnigPlot <-
-    function(x, labels = TRUE, col = "steelblue", pch = 19, 
+    function(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -186,21 +186,21 @@ qqnigPlot <-
     x = sort(x)
     p = ppoints(x)
     z = qnig(p, par[1], par[2], par[3], par[4])
-        
+
     # Plot:
     if (labels) {
         xlab = "Theoretical Quantiles"
         ylab = "Sample Quantiles"
-        plot(z, x, xlab = xlab, ylab = ylab, col = col, pch = pch, ...)  
+        plot(z, x, xlab = xlab, ylab = ylab, col = col, pch = pch, ...)
     } else {
         plot(z, x, ...)
     }
-    
+
     # Title:
     if (title) {
         title(main = "NIG QQ Plot")
     }
-    
+
     # Margin Text:
     rpar = signif(par, 3)
     text = paste(
@@ -209,7 +209,7 @@ qqnigPlot <-
         "| delta =", rpar[3],
         "| mu =", rpar[4])
     mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
-    
+
     # Grid:
     if (grid) {
         grid()
@@ -223,7 +223,7 @@ qqnigPlot <-
         rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
         rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
     }
-    
+
     # Result:
     ans = list(x = z, y = x)
     attr(ans, "control") <- par
@@ -263,13 +263,15 @@ qqghtPlot <-
     n = length(x)
 
     # Fit:
-    fit = ghtFit(x, doplot = FALSE, trace = FALSE)  
+    fit = ghtFit(x, doplot = FALSE, trace = FALSE)
     par = fit@fit$estimate
     names(par) = c("beta", "delta", "mu", "nu")
 
     # Plot:
-    x = qght(ppoints(x), par[1], par[2], par[3], par[4])
-    z = sort(x)
+    x <- sort(x)
+    p <- ppoints(x)
+    z <- qght(p, par[1], par[2], par[3], par[4])
+
 
     if (labels) {
         plot(z, x, col = col, ann = FALSE, ...)
@@ -286,7 +288,7 @@ qqghtPlot <-
     if (title) {
         title(
             main = "GHT QQ Plot",
-            xlab = "Theoretical Quantiles", 
+            xlab = "Theoretical Quantiles",
             ylab = "Sample Quantiles")
     }
 
