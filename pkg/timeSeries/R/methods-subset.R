@@ -23,60 +23,256 @@
 # index
 ################################################################################
 setClassUnion("index_timeSeries",
-              members =  c("numeric", "logical", "character"))
+              members =  c("numeric", "logical")) # , "character"))
 
 ################################################################################
 #  [,timeSeries              Subsets of a 'timeSeries' object
 ################################################################################
 
+## x <- "timeSeries"
+## i <- c("index_timeSeries", "character", "timeDate", "timeSeries",
+##        "matrix", "missing", "ANY")
+## j <- c("index_timeSeries", "character", "missing", "ANY")
+## expand.grid(x = x, i = i, j = j)
+
+##             x                i                j
+## 1  timeSeries index_timeSeries index_timeSeries
+## 2  timeSeries        character index_timeSeries
+## 3  timeSeries         timeDate index_timeSeries
+## 4  timeSeries       timeSeries index_timeSeries
+## 5  timeSeries           matrix index_timeSeries
+## 6  timeSeries          missing index_timeSeries
+## 7  timeSeries              ANY index_timeSeries
+## 8  timeSeries index_timeSeries        character
+## 9  timeSeries        character        character
+## 10 timeSeries         timeDate        character
+## 11 timeSeries       timeSeries        character
+## 12 timeSeries           matrix        character
+## 13 timeSeries          missing        character
+## 14 timeSeries              ANY        character
+## 15 timeSeries index_timeSeries          missing
+## 16 timeSeries        character          missing
+## 17 timeSeries         timeDate          missing
+## 18 timeSeries       timeSeries          missing
+## 19 timeSeries           matrix          missing
+## 20 timeSeries          missing          missing
+## 21 timeSeries              ANY          missing
+## 22 timeSeries index_timeSeries              ANY
+## 23 timeSeries        character              ANY
+## 24 timeSeries         timeDate              ANY
+## 25 timeSeries       timeSeries              ANY
+## 26 timeSeries           matrix              ANY
+## 27 timeSeries          missing              ANY
+## 28 timeSeries              ANY              ANY
+
+# ------------------------------------------------------------------------------
+
 .subset_timeSeries <-
     function(x, i, j)
 {
 
-    if (is(i, "character")) {
-###         pos <- time(x)
-###         i <-
-###             if (.subsetCode(i) == "SPAN")
-###                 # Subsetting by Span Indexing:
-###                 .subsetBySpan(pos, i)
-###             else
-###                 # Subsetting by Python Indexing:
-###                 .subsetByPython(pos, i)
-        i <- pmatch(as.character(i),
-                    slot(x, "positions"), duplicates.ok = TRUE)
-        if (any(is.na(i)))
-            stop("subscript out of bounds", call. = FALSE)
-    }
-    if (is(j, "character")) {
-        j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-        if (any(is.na(j)))
-            stop("subscript out of bounds", call. = FALSE)
-    }
+    stopifnot(inherits(x, "timeSeries"))
+    stopifnot(is(i, "index_timeSeries"))
+    stopifnot(is(j, "index_timeSeries"))
 
     # subset data and positions
-    slot(x, ".Data") <- .subset(x, i, j, drop = FALSE)
+    x <- setDataPart(x, .subset(x, i, j, drop = FALSE), check = FALSE)
     # YC : faster than
     # slot(x, ".Data") <- .subset(slot(x, ".Data"), i, j, drop = FALSE)
-    slot(x, "positions") <- .subset(slot(x, "positions"), i, drop = FALSE)
-    slot(x, "units") <- .subset(slot(x, "units"), j, drop = FALSE)
+    if (length(x@positions)>0)
+        `slot<-`(x, "positions", check = FALSE,
+                 .subset(x@positions, i, drop = FALSE))
+    `slot<-`(x, "units", check = FALSE,
+             .subset(slot(x, "units"), j, drop = FALSE))
 
     # Record IDs:
-    df <- slot(x, "recordIDs")
-    slot(x, "recordIDs") <- if (prod(dim(df))) df[i, , drop = FALSE] else df
+    df <- x@recordIDs
+    `slot<-`(x, "recordIDs", check = FALSE,
+             if (prod(dim(df))) df[i, , drop = FALSE] else data.frame())
 
     # Result
     x
 }
 
 # ------------------------------------------------------------------------------
-# index_timeSeries
+
+.findIndex <- function(ipos, pos)
+{
+    attributes(ipos) <- NULL
+
+    if (unsorted <- is.unsorted(pos)) {
+        or <- order(pos)
+        pos <- pos[or]
+    }
+
+    i <- findInterval(ipos, pos)
+
+    if (!identical(ipos, pos[i]))
+        stop("subscript out of bounds", call. = FALSE)
+
+    if (unsorted) i <- or[i]
+    i
+}
+
+# ------------------------------------------------------------------------------
+
+## FIXME : deal with signal series
+
+# ------------------------------------------------------------------------------
+## 1  timeSeries index_timeSeries index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
-                         j = "index_timeSeries"),
+                    j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
               .subset_timeSeries(x, i, j))
 
+# ------------------------------------------------------------------------------
+## 2  timeSeries        character index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "character", j = "index_timeSeries"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+
+          # FIXME
+
+          # check if :: separator
+
+          td <- timeDate(i)
+          if (any(is.na(td))) return(as.vector(NA))
+
+          i <- .findIndex(as.numeric(td, "sec"), x@positions)
+
+          # Return
+          .subset_timeSeries(x, i, j)
+
+      })
+
+# ------------------------------------------------------------------------------
+## 3  timeSeries         timeDate index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "timeDate", j = "index_timeSeries"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          i <- .findIndex(as.numeric(i, "sec"), x@positions)
+          .subset_timeSeries(x, i, j)
+      })
+
+# ------------------------------------------------------------------------------
+## 4  timeSeries       timeSeries index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "timeSeries", j = "index_timeSeries"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          if (x@format != "counts" &&
+              i@format != "counts" &&
+              finCenter(x) != finCenter(i))
+              stop("FinCenter of timeSeries and subset do not match")
+
+          .subset_timeSeries(x, as.vector(i), j)
+      })
+
+# ------------------------------------------------------------------------------
+## 5  timeSeries           matrix index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "matrix", j = "index_timeSeries"),
+          function(x, i, j, ..., drop = FALSE)
+          .subset_timeSeries(x, as.vector(i), j))
+
+# ------------------------------------------------------------------------------
+## 6  timeSeries          missing index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "missing",
+                         j = "index_timeSeries"),
+          function(x, i, j, ..., drop = FALSE)
+          .subset_timeSeries(x, TRUE, j))
+
+# ------------------------------------------------------------------------------
+## 7  timeSeries              ANY index_timeSeries
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 8  timeSeries index_timeSeries        character
+
+setMethod("[",
+          signature(x = "timeSeries", i = "index_timeSeries", j = "character"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+          if (any(is.na(j)))
+              stop("subscript out of bounds", call. = FALSE)
+          .subset_timeSeries(x, i, j)
+      })
+
+# ------------------------------------------------------------------------------
+## 9  timeSeries        character        character
+
+setMethod("[",
+          signature(x = "timeSeries", i = "character", j = "character"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+          if (any(is.na(j)))
+              stop("subscript out of bounds", call. = FALSE)
+          callGeneric(x=x, i=i, j=j, drop=drop)
+      })
+
+# ------------------------------------------------------------------------------
+## 10 timeSeries         timeDate        character
+
+setMethod("[",
+          signature(x = "timeSeries", i = "timeDate", j = "character"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          i <- .findIndex(as.numeric(i, "sec"), x@positions)
+          j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+          if (any(is.na(j)))
+              stop("subscript out of bounds", call. = FALSE)
+          .subset_timeSeries(x, i, j)
+      })
+
+# ------------------------------------------------------------------------------
+## 11 timeSeries       timeSeries        character
+
+## FIXME
+
+# ------------------------------------------------------------------------------
+## 12 timeSeries           matrix        character
+
+## FIXME
+
+# ------------------------------------------------------------------------------
+## 13 timeSeries          missing        character
+
+setMethod("[",
+          signature(x = "timeSeries", i = "missing", j = "character"),
+          function(x, i, j, ..., drop = FALSE)
+      {
+          j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+          if (any(is.na(j)))
+              stop("subscript out of bounds", call. = FALSE)
+          .subset_timeSeries(x, TRUE, j)
+      })
+
+# ------------------------------------------------------------------------------
+## 14 timeSeries              ANY        character
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 15 timeSeries index_timeSeries          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
@@ -93,54 +289,46 @@ setMethod("[",
           }
       })
 
+# ------------------------------------------------------------------------------
+## 16 timeSeries        character          missing
+
+# FIXME
 setMethod("[",
-          signature(x = "timeSeries", i = "missing",
-                         j = "index_timeSeries"),
-          function(x, i, j, ..., drop = FALSE)
-          .subset_timeSeries(x, TRUE, j))
+          signature(x = "timeSeries", i = "character", j = "missing"),
+          function(x, i, j, ..., drop = FALSE) x[i,TRUE])
 
 # ------------------------------------------------------------------------------
-# timeDate
-
-setMethod("[",
-          signature(x = "timeSeries", i = "timeDate",
-                    j = "index_timeSeries"),
-          function(x, i, j, ..., drop = FALSE)
-      {
-          # series settings
-          if (x@format != "counts") {
-              FinCenter <- finCenter(x)
-              # convert FinCenter of index_timeSeries to FinCenter of timeSeries
-              i <- timeDate(i, zone = i@FinCenter, FinCenter = FinCenter)
-          }
-          i <- as(i, "character")
-
-          .subset_timeSeries(x, i, j)
-      })
+## 17 timeSeries         timeDate          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
-          # series settings
-          if (x@format != "counts") {
-              FinCenter <- finCenter(x)
-              # convert FinCenter of index_timeSeries to FinCenter of timeSeries
-              i <- timeDate(i, zone = i@FinCenter, FinCenter = FinCenter)
-          }
-
-          i <- as(i, "character")
-
+          i <- .findIndex(as.numeric(i, "sec"), x@positions)
           .subset_timeSeries(x, i, TRUE)
       })
 
 # ------------------------------------------------------------------------------
-# matrix
+## 18 timeSeries       timeSeries          missing
 
 setMethod("[",
-          signature(x = "timeSeries", i = "matrix", j = "index_timeSeries"),
+          signature(x = "timeSeries", i = "timeSeries", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
-          .subset_timeSeries(x, as.vector(i), j))
+      {
+          if (x@format != "counts" &&
+              i@format != "counts" &&
+              finCenter(x) != finCenter(i))
+              stop("FinCenter of timeSeries and subset do not match")
+          if(nargs() == 2) {
+              if(any(as.logical(i)) || prod(dim(x)) == 0)
+                   as.vector(x)[as.vector(i)]
+          } else {
+              .subset_timeSeries(x, as.vector(i), TRUE)
+          }
+      })
+
+# ------------------------------------------------------------------------------
+## 19 timeSeries           matrix          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "matrix", j = "missing"),
@@ -155,53 +343,75 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-# timeSeries
-
-setMethod("[",
-          signature(x = "timeSeries", i = "timeSeries", j = "index_timeSeries"),
-          function(x, i, j, ..., drop = FALSE)
-      {
-          if (x@format != "counts" &&
-              i@format != "counts" &&
-              finCenter(x) != finCenter(i))
-              stop("FinCenter of timeSeries and subset do not match")
-
-          .subset_timeSeries(x, as.vector(i), j)
-      })
-
-setMethod("[",
-          signature(x = "timeSeries", i = "timeSeries", j = "missing"),
-          function(x, i, j, ..., drop = FALSE)
-      {
-          if (x@format != "counts" &&
-              i@format != "counts" &&
-              finCenter(x) != finCenter(i))
-              stop("FinCenter of timeSeries and subset do not match")
-
-          if(nargs() == 2) {
-              if(any(as.logical(i)) || prod(dim(x)) == 0)
-                   as.vector(x)[as.vector(i)]
-          } else {
-              .subset_timeSeries(x, as.vector(i), TRUE)
-          }
-      })
-
-# ------------------------------------------------------------------------------
-# all missing
+## 20 timeSeries          missing          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "missing", j = "missing"),
           function(x, i, j, ..., drop = FALSE) x)
 
 # ------------------------------------------------------------------------------
-# ANY
+## 21 timeSeries              ANY          missing
 
 setMethod("[",
-          signature(x = "timeSeries", i = "ANY", j = "ANY"),
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
+## 22 timeSeries index_timeSeries              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 23 timeSeries        character              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 24 timeSeries         timeDate              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 25 timeSeries       timeSeries              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 26 timeSeries           matrix              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 27 timeSeries          missing              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
+
+# ------------------------------------------------------------------------------
+## 28 timeSeries              ANY              ANY
+
+setMethod("[",
+          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 
 ################################################################################
@@ -230,8 +440,6 @@ setMethod("$",
 ################################################################################
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
-
-# ------------------------------------------------------------------------------
 
 .assign_timeSeries <-
     function(x, i, j, value)

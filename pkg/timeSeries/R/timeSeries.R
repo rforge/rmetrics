@@ -39,15 +39,23 @@
     # Note that if it fails, new("timeSeries" should fail to - normal
     try(dimnames(data) <- list(NULL, units), silent = TRUE)
 
+###     new("signalSeries",
+###         .Data = data,
+###         units = units,
+###         recordIDs = recordIDs,
+###         title = title,
+###         documentation = documentation)
+
     new("timeSeries",
         .Data = data,
-        positions = .signalCounts(seq.int(NROW(data))),
         units = units,
-        format = "counts",
+        positions = numeric(0),
         FinCenter = "",
+        format = "counts",
         recordIDs = recordIDs,
         title = title,
         documentation = documentation)
+
 }
 
 ## .timeSeries : generate units, title, documentation if NULL
@@ -82,9 +90,12 @@
     # Note that if it fails, new("timeSeries" should fail to - normal
     try(dimnames(data) <- list(NULL, units), silent = TRUE)
 
+    positions <- as.numeric(charvec, "sec")
+    attributes(positions) <- NULL
+
     new("timeSeries",
         .Data = data,
-        positions =  as.character(charvec),
+        positions =  positions,
         units = units,
         format = charvec@format,
         FinCenter = charvec@FinCenter,
@@ -216,15 +227,22 @@ setMethod("timeSeries",
                     FinCenter = "", recordIDs = data.frame(), title = NULL,
                     documentation = NULL, ...)
       {
+          # if charvec NULL returns a signal series
+          if (is.null(charvec))
+              return(.signalSeries(data = data, units = units,
+                                   recordIDs = recordIDs, title = title,
+                                   documentation = documentation, ...))
+
+          # coerce charvec to timeDate
           charvec <- timeDate(charvec = charvec, format = format,
                               zone = zone, FinCenter = FinCenter)
-          if (any(is.na(charvec))) {
-              warning("Could not coerce 'charvec' to a 'timeDate' object",
-                      call. = FALSE)
+
+          if (any(is.na(charvec)))
+              # Note : there is already a warning in timeDate if there are NA's
               .signalSeries(data = data, units = units,
                             recordIDs = recordIDs, title = title,
                             documentation = documentation, ...)
-          } else {
+          else
               .timeSeries(data = data,
                           charvec = charvec,
                           units = units,
@@ -232,7 +250,6 @@ setMethod("timeSeries",
                           title = title,
                           documentation = documentation,
                           ...)
-          }
       })
 
 # ------------------------------------------------------------------------------
