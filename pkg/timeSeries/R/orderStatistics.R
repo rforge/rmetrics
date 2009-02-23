@@ -22,7 +22,7 @@
 orderStatistics <-
     function(x)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Compute the order statistics for a 'timeSeries object
@@ -34,25 +34,13 @@ orderStatistics <-
     # FUNCTION:
 
     # Order Statistics
-    Units = x@units
-    nUnits = length(Units)
-    ans = list()
-    for (i in 1:nUnits) {
-        X = x[, i]
-        positions = X@positions
-        S = sort(series(X), index.return = TRUE)
-        series(X) = matrix(S$x, ncol = 1)
-        X@positions = rownames(X) = positions[S$ix]
-        colnames(X) = Units[i]
-        TEXT = paste("ans$", Units[i], "=X", sep = "")
-        eval(parse(text = TEXT))
-    }
-
-    # Return Value:
-    ans
-
+    td <- time(x)
+    mapply(function(cl, nm)
+       {
+           S <- sort(cl, index.return = TRUE)
+           timeSeries(data = S$x, charvec = td[S$ix], units = nm)
+       }, as.list(x), colnames(x), SIMPLIFY = FALSE)
 }
-
 
 ################################################################################
 

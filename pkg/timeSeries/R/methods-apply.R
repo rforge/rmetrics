@@ -22,15 +22,18 @@
 #  .fapply
 ################################################################################
 
-## # YC: TODO: method for apply make problems with aggregate
-## setMethod("apply", "timeSeries",
-##           function(X, MARGIN, FUN, ...)
-##       {
-##           ans <- callGeneric()
-##           if (is(ans, "matrix"))
-##               ans <- timeSeries(ans)
-##           ans
-##       })
+setMethod("apply", "timeSeries",
+          function(X, MARGIN, FUN, ...)
+      {
+          pos <- time(X)
+          X <- getDataPart(X)
+          ans <- callNextMethod()
+          if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
+              ans <- timeSeries(data = ans, charvec = pos)
+          ans
+      })
+
+# ------------------------------------------------------------------------------
 
 applySeries <-
     function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),

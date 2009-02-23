@@ -23,9 +23,9 @@
 
 # DW: See also ...
 #   in package timeDate
-#   setMethod("align", "ANY",       
-#   setMethod("align", "timeDate",  
-    
+#   setMethod("align", "ANY",
+#   setMethod("align", "timeDate",
+
 
 # ------------------------------------------------------------------------------
 
@@ -46,14 +46,14 @@ setMethod("align", "timeSeries",
     #   align(USDTHB, by = "3h", offset = "92m")
     #   MSFT = as.timeSeries(data(msft.dat))
     #   align(MSFT)
-    
+
     # See also:
     #   in package timeDate
-    #   setMethod("align", "ANY",       
-    #   setMethod("align", "timeDate",  
+    #   setMethod("align", "ANY",
+    #   setMethod("align", "timeDate",
 
     # FUNCTION:
-    
+
     # Settings:
     periods = c(7*24*3600, 24*3600, 3600, 60, 1)
     names(periods) = c("w", "d", "h", "m", "s")
@@ -126,7 +126,7 @@ setMethod("align", "timeSeries",
     #   USDTHB = timeSeries(data, charvec, format = "%Y%M%d%H%M")
     #   align(USDTHB, by = "3h", offset = "92m")
     #   MSFT = as.timeSeries(data(msft.dat))
-    #   align(MSFT)  
+    #   align(MSFT)
 
     # FUNCTION:
 
@@ -190,67 +190,67 @@ setMethod("align", "timeSeries",
 ################################################################################
 
 
-.align.timeSeries.old =
-    function(x, method = c("before", "after", "interp"), startOn = "hours",
-        by = "30 m")
-{   
-    # A function implemented by Diethelm Wuertz
+## .align.timeSeries.old =
+##     function(x, method = c("before", "after", "interp"), startOn = "hours",
+##         by = "30 m")
+## {
+##     # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Aligns a 'timeSeries' object
+##     # Description:
+##     #   Aligns a 'timeSeries' object
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], 
-            " is for time series and not for signal series.")
+##     if (x@format == "counts")
+##         stop(as.character(match.call())[1],
+##             " is for time series and not for signal series.")
 
-    # Settings:
-    method = match.arg(method)
-    numberOfColumns = dim(x)[2]
-    typeMethod = c(interp = "linear", before = "constant", after = "constant")
-    fMethod = c(interp = 0.5, before = 0, after = 1)
-    by = .by2seconds(by)
+##     # Settings:
+##     method = match.arg(method)
+##     numberOfColumns = dim(x)[2]
+##     typeMethod = c(interp = "linear", before = "constant", after = "constant")
+##     fMethod = c(interp = 0.5, before = 0, after = 1)
+##     by = .by2seconds(by)
 
-    # Convert to GMT:
-    tD = timeDate(x@positions, zone = x@FinCenter, FinCenter = "GMT")
+##     # Convert to GMT:
+##     tD = timeDate(x@positions, zone = x@FinCenter, FinCenter = "GMT")
 
-    # Convert to POSIX:
-    Positions = as.POSIXct(tD, tz = "GMT")
-    N = length(Positions)
-    Start = as.POSIXct(trunc(Positions[1], startOn), tz = "GMT")
-    End   = as.POSIXct(trunc(Positions[N], startOn), tz = "GMT") + 24*3600
-    print(Start)
-    print(End)
+##     # Convert to POSIX:
+##     Positions = as.POSIXct(tD, tz = "GMT")
+##     N = length(Positions)
+##     Start = as.POSIXct(trunc(Positions[1], startOn), tz = "GMT")
+##     End   = as.POSIXct(trunc(Positions[N], startOn), tz = "GMT") + 24*3600
+##     print(Start)
+##     print(End)
 
-    # Compute Positions:
-    X = as.integer(difftime(Positions, Start, units = "sec"))
+##     # Compute Positions:
+##     X = as.integer(difftime(Positions, Start, units = "sec"))
 
-    # Compute New Positions:
-    timeDiff = as.integer(difftime(End, Start, units = "secs"))
-    lengthOut = trunc(timeDiff/by) + 1
-    posix = seq(from = Start, by = paste(by, "sec"), length.out = lengthOut)
-    newX = as.integer(difftime(posix, Start, units = "secs"))
+##     # Compute New Positions:
+##     timeDiff = as.integer(difftime(End, Start, units = "secs"))
+##     lengthOut = trunc(timeDiff/by) + 1
+##     posix = seq(from = Start, by = paste(by, "sec"), length.out = lengthOut)
+##     newX = as.integer(difftime(posix, Start, units = "secs"))
 
-    # Align:
-    matY = NULL
-    for (i in 1:numberOfColumns) {
-        Y = as.vector(x[, i])
-        newY = approx(X, Y, xout = newX, method = typeMethod[method],
-            f = fMethod[method])$y
-        matY = cbind(matY, newY)
+##     # Align:
+##     matY = NULL
+##     for (i in 1:numberOfColumns) {
+##         Y = as.vector(x[, i])
+##         newY = approx(X, Y, xout = newX, method = typeMethod[method],
+##             f = fMethod[method])$y
+##         matY = cbind(matY, newY)
 
-    }
+##     }
 
-    # Create Series in local time:
-    print(head(as.character(posix)))
-    ans = timeSeries(matY, as.character(posix),
-        units = x@units, zone = "GMT", FinCenter = x@FinCenter,
-        recordIDs = data.frame())
+##     # Create Series in local time:
+##     print(head(as.character(posix)))
+##     ans = timeSeries(matY, as.character(posix),
+##         units = x@units, zone = "GMT", FinCenter = x@FinCenter,
+##         recordIDs = data.frame())
 
-    # Return Value:
-    ans
-}
+##     # Return Value:
+##     ans
+## }
 
 
 ################################################################################

@@ -49,11 +49,11 @@ durations <-
     dur <- c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
 
     # Data Matrix:
-    series(x) <- matrix(dur, dimnames = list(x@positions, "Duration"))
-    if (trim) x <- x[-1, ]
+    ans <- timeSeries(data = dur, charvec = pos, units = "Duration")
+    if (trim) ans <- ans[-1, ]
 
     # Return Series:
-    x
+    ans
 }
 
 
