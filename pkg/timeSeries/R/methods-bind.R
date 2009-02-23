@@ -1,4 +1,4 @@
-#
+
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
@@ -34,7 +34,7 @@ cbind.timeSeries <- function(..., deparse.level = 1)
     if (length(t <- as.logical((nchar(nm <- names(units))))))
         units[t] <- nm[t]
 
-    # change colnames if there are the same
+    # change colnames if they are the same
     if (length(unique(units)) != length(units)) {
         for (name in unique(units)) {
             pos <- grep(name, units)
@@ -62,10 +62,11 @@ cbind.timeSeries <- function(..., deparse.level = 1)
         mm[findInterval(td, ref),] <- getDataPart(ts)
         mm}
     data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td))
-    data <- structure(unlist(data), dim = c(length(td), sum(sapply(dots, ncol))))
+    data <- structure(unlist(data), dim= c(length(td), sum(sapply(dots, ncol))))
 
     # note that new timeSeries get FinCenter of first entry of args
-    timeSeries(data = data, charvec = td, units = units, zone = "GMT", FinCenter = finCenter(dots[[1]]))
+    timeSeries(data = data, charvec = td, units = units, zone = "GMT",
+               FinCenter = finCenter(dots[[1]]))
 }
 
 # ------------------------------------------------------------------------------

@@ -21,13 +21,16 @@ setMethod("merge", c("timeSeries", "timeSeries"),
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
+    x <- sort(x)
+    y <- sort(y)
+
     # FIXME : if any counts
 
     # Convert to Data Frame:
     df.x <- data.frame(as.numeric(time(x), "sec"), getDataPart(x),
                        row.names = 1:nrow(x))
     names(df.x) <- c("positions", colnames(x))
-    df.y <- data.frame( as.numeric(time(y), "sec"), getDataPart(y),
+    df.y <- data.frame(as.numeric(time(y), "sec"), getDataPart(y),
                        row.names = nrow(x) + (1:nrow(y)))
     names(df.y) <- c("positions", colnames(y))
 
@@ -35,13 +38,18 @@ setMethod("merge", c("timeSeries", "timeSeries"),
     df <- merge(df.x, df.y, all = TRUE)
     data <- as.matrix(df[,-1])
     units <- names(df)[-1]
+    charvec <- as.numeric(df[,1])
 
     # Compose and sort the timeSeries:
-    ans <- timeSeries(data = data, charvec = as.numeric(df[,1]), units = units,
-                      zone = "GMT", FinCenter = finCenter(x))
+    ans <-
+        if (any(c(is.signalSeries(x), is.signalSeries(y))))
+            timeSeries(data = data,  units = units)
+        else
+            timeSeries(data = data, charvec = charvec, units = units,
+                       zone = "GMT", FinCenter = finCenter(x))
 
     # Return Value:
-    sort(ans)
+    ans
 })
 
 
