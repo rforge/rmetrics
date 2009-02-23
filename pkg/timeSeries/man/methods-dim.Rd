@@ -12,6 +12,7 @@
 \alias{colnames<-,timeSeries-method}
 \alias{rownames<-,timeSeries,timeDate-method}
 \alias{rownames<-,timeSeries,ANY-method}
+% \alias{rownames<-,timeSeries-method}
 
 \alias{dimnames<-,timeSeries,list-method}
 

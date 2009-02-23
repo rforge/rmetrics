@@ -54,10 +54,7 @@ function()
     # Get Positions:
     POS = time(uTS)
     POS
-    charvec = as.vector(as.character(POS))
-    checkTrue(inherits(POS, "timeDate"))
-    attr(uTS@positions, "control")<-NULL
-    checkIdentical(target = charvec, current = uTS@positions)
+    checkIdentical(charvec, POS)
 
     # Return Value:
     return()

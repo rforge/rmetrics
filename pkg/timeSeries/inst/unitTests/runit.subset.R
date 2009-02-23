@@ -47,9 +47,8 @@ function()
                    ts[],
                    ts)
 
-    checkIdentical(
-                   ts[""],
-                   mat[""]) # should be NA
+    checkTrue(suppressWarnings(is.na(ts[""])))
+    checkTrue(is.na(mat[""]))
 
     checkIdentical(
                    as.matrix(ts[seq(4),2]),

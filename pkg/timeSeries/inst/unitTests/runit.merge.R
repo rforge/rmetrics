@@ -16,4 +16,12 @@ function()
     y = timeSeries(format = "counts")
     y
     merge(x, y)
+
+
+    x <- dummySeries()[,1]
+    x
+    y <- dummySeries()
+    y
+    merge(x, y)
+
 }
