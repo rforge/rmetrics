@@ -24,15 +24,16 @@ importFrom("graphics",
 importFrom("grDevices",
            "xy.coords")
 importFrom("methods",
-           "getDataPart",
            "cbind2",
            "coerce",
+           "getDataPart",
            "rbind2",
            "show",
            "@<-",
            "is",
            "slot",
            "new",
+           "setDataPart",
            "slot<-")
 importFrom("stats",
            "as.ts",
@@ -65,19 +66,17 @@ importFrom("timeDate",
            "timeSequence",
            "isWeekday",
            "timeDate",
-           ".by2seconds",
            "as.timeDate",
            "timeFirstDayInMonth",
            "timeFirstDayInQuarter",
            "timeLastDayInMonth",
            "timeLastDayInQuarter",
-           "whichFormat",
            "timeCalendar",
            "kurtosis",
            "skewness",
+           "setRmetricsOptions",
            "atoms",
-           "sample",
-           "setRmetricsOptions")
+           "sample")
 importFrom("utils",
            "head",
            "str",
@@ -90,69 +89,74 @@ importFrom("utils",
 
 exportClasses("index_timeSeries",
               "timeSeries" )
-export(
-        "outlier",
+export("outlier",
         "returns",
         "rowCumsums",
         "series<-",
-        "series" )
-exportMethods(
-        "align",
-        "aggregate",
-        "attach",
-        "[<-",
-        "[",
-        "cbind2",
-        "coerce",
-        "colnames<-",
-        "comment<-",
-        "comment",
-        "cummax",
-        "cummin",
-        "cumprod",
-        "cumsum",
-        "diff",
-        "dim",
-        "dimnames<-",
-        "dimnames",
-        "end",
-        "finCenter<-",
-        "finCenter",
-        "head",
-        "is.na",
-        "lag",
-        "lines",
-        "merge",
-        "na.omit",
-        "names",
-        "Ops",
-        "points",
-        "print",
-        "quantile",
-        "rbind2",
-        "rev",
-        "rownames<-",
-        "sample",
-        "scale",
-        "show",
-        "sort",
-        "start",
-        "str",
-        "tail",
-        "time" )
+        "series",
+        "timeSeries" )
+exportMethods("aggregate",
+              "align",
+              "apply",
+              "attach",
+              "[<-",
+              "[",
+              "$",
+              "cbind2",
+              "coerce",
+              "colnames<-",
+              "colnames",
+              "comment<-",
+              "comment",
+              "cummax",
+              "cummin",
+              "cumprod",
+              "cumsum",
+              "diff",
+              "dim",
+              "dimnames<-",
+              "dimnames",
+              "end",
+              "finCenter<-",
+              "finCenter",
+              "getDataPart",
+              "head",
+              "is.na",
+              "lag",
+              "lines",
+              "merge",
+              "names",
+              "na.omit",
+              "Ops",
+              "points",
+              "print",
+              "quantile",
+              "rbind2",
+              "rev",
+              "rownames<-",
+              "rownames",
+              "sample",
+              "scale",
+              "show",
+              "sort",
+              "start",
+              "str",
+              "tail",
+              "time" )
 
 ################################################
 ## S3 classes
 ################################################
 
 S3method("as.data.frame", "timeSeries")
+S3method("as.list", "timeSeries")
 S3method("as.matrix", "timeSeries")
 S3method("as.timeSeries", "character")
 S3method("as.timeSeries", "data.frame")
 S3method("as.timeSeries", "default")
 S3method("as.timeSeries", "zoo")
 S3method("as.ts", "timeSeries")
-S3method("as.list", "timeSeries")
+S3method("cbind", "timeSeries")
 S3method("colCummaxs", "default")
 S3method("colCummaxs", "timeSeries")
 S3method("colCummins", "default")
@@ -167,10 +171,9 @@ S3method("cumulated", "default")
 S3method("cut", "timeSeries")
 S3method("model.frame", "timeSeries")
 S3method("plot", "timeSeries")
+S3method("rbind", "timeSeries")
 S3method("time<-", "timeSeries")
 S3method("window", "timeSeries")
-S3method("rbind", "timeSeries")
-S3method("cbind", "timeSeries")
 
 ################################################
 ## functions
@@ -179,7 +182,6 @@ S3method("cbind", "timeSeries")
 export(
     "alignDailySeries",
     ".align.timeSeries",
-    ".align.timeSeries.old",
     "applySeries",
     ".applySeries",
     ".assign_timeSeries",
@@ -216,11 +218,13 @@ export(
     ".extract.turnpointsPastecs",
     "fapply",
     ".fapply",
+    ".findIndex",
     "getReturns",
     "hclustColnames",
     "interpNA",
     "isMonthly",
     "isMultivariate",
+    "is.signalSeries",
     "is.timeSeries",
     "isUnivariate",
     "midquotes",
@@ -255,7 +259,6 @@ export(
     "substituteNA",
     ".summary.turnpointsPastecs",
     "time<-",
-    "timeSeries",
     ".timeSeries",
     ".turnpoints",
     ".turnpointsPastecs",
