@@ -23,8 +23,8 @@ monthlyRolling(x, period = "12m", by = "1m")
 
   
 \arguments{
-  \item{x}{an object of class timeDate
-    period - a span string, consisting of a length integer
+  \item{x}{an object of class timeDate}
+  \item{period}{a span string, consisting of a length integer
     and a unit value, e.g. "52w" for 52 weeks.}
   \item{by}{a span string, consisting of a length integer
     and a unit value, e.g. "4w" for 4 weeks.}
