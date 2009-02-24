@@ -6,6 +6,9 @@ Version 1.08
 IMPROVEMENT
 
 - add function get.primes
+- table of primes moved from randtoolbox.c to primes.h and compressed
+  by storing half difference from the previous prime instead of each
+  prime at least 5.
 
 Version 1.07
 =============
