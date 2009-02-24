@@ -46,7 +46,7 @@ monthlyRolling(x, period = "12m", by = "1m")
 }
 
 \examples{
-x = time(as.timeSeries(data(smallcap.ts)))
+x <- timeSequence(from = "2001-01-01", to = "2009-01-01", by = "day") 
 
 periods(x, "12m", "1m")
 periods(x, "52w", "4w")
