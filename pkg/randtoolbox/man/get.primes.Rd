@@ -10,10 +10,10 @@
 get.primes(n)
 }
 \arguments{
-  \item{n}{The required number of primes. Should be at most 100_000.}
+  \item{n}{The required number of primes. Should be at most 100 000.}
 }
 \details{
-  The package contains an internal table of the smallest 100_000 primes,
+  The package contains an internal table of the smallest 100 000 primes,
   which may be used in \code{torus} algorithm.
 }
 \value{
