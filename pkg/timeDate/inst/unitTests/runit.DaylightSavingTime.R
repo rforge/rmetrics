@@ -42,7 +42,7 @@ function()
 }
 
 
-if ((any(Sys.info()["user"] %in% c("yankee", "chalabi")) && !try(system("zdump"))) {
+if ((any(Sys.info()["user"] %in% c("yankee", "chalabi")) && !try(system("zdump")))) {
     test.DST <- function()
     {
         # works only if OS is well configured !!!
