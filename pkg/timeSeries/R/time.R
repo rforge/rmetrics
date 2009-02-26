@@ -138,7 +138,7 @@ setMethod("sort",
     # FUNCTION:
 
     if (length(x@positions)>0)
-        x[order(x@positions), ]
+        x[order(x@positions, decreasing = decreasing), ]
     else
         x
 })
