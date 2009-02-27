@@ -560,6 +560,61 @@ MCECM algorithm are sketched as follows:
     relation (\ref{eq:abartochipsi}).  }
 \end{enumerate}
 % <---------------------------------------------------------------------->
+\section{Applications, comments and references}
+\label{sec:applications}
+% <---------------------------------------------------------------------->
+Even though the GH distribution was initially ivented to study the
+distribution of the logarithm of particle sizes, we will focus on
+applications of the GH distribution family in finance and risk
+measurement.
+
+We have seen above that the GH distribution is very flexible in the
+sense that it nests several other distributions such as the Student-t
+(cf. \ref{sec:studentt}).
+
+To give some references and applications of the GH distribution let us
+first summarize some of its important properties. Beside of the above
+mentioned flexibility, three major facts led
+to the popularity of GH distribution family in finance:
+\begin{enumerate}
+\item The GH distribution features both \emph{fat tails} and
+  \emph{skewness}. These properties account for the
+  stylized facts of financial returns.
+\item The GH family is naturally extended to multivariate
+  distributions\footnote{The extension to multivariate distributions
+    is natural because of the mixing structure (see
+    eq. (\ref{eq:mixture})).}. A multivariate GH distribution does
+  exhibit some kind of \emph{non-linear dependence},
+  for example \emph{tail-dependence}. This reflects the fact that extremes
+  mostly occure for a couple of risk-drivers simultaneously in
+  financial markets. This property is of fundamental importance for
+  risk-management, and can influence for instance the asset allocation
+  in portfolio theory.
+\item The GH distribution is infinitely divisible
+  (cf. \cite{Halgreen.1977}). This is a necessary and sufficient
+  condition to build \emph{L\'evy processes}. L\'evy
+  processes are widespread in finance because of their time-continuity and their ability to model jumps.
+\end{enumerate}
+
+Based on these properties one can classify the applications of the GH
+distributions into the fields \emph{empirical modelling}, \emph{riks
+  and dependence modelling}, \emph{derivative pricing}, and
+\emph{portfolio selection}.
+
+In the following, we try to assign papers to each of the classes of
+applications mentioned above. Rather than giving abstracts for each
+paper, we simply cite them and refer the interested reader to the
+bibliography and to the articles. Note that some articles deal with
+special cases of the GH distribution only.
+
+\paragraph{Empirical modelling}
+\citet{EberleinKeller95,BarndorffNielsen.2001,Fergusson.2006}
+\paragraph{Risk and dependence modelling}
+\citet{EberleinKellerPrause98,BreymannDiEm03,QRM2005,Chen.2005,Kassberger.2006}
+\paragraph{L\'evy processes}
+\citet{Barndorffnielsen97,Barndorffnielsen97b,Bibby.1997,Madan.1998,Raible2000,Cont.2003}
+\paragraph{Portfolio selection}
+\citet{Kassberger.2007}
 \clearpage
 \begin{appendix}
 % <---------------------------------------------------------------------->
