@@ -56,7 +56,14 @@ is.signalSeries <- function(x) !as.logical(length(x@positions))
 setMethod("is.na", "timeSeries", function(x)
     setDataPart(x, is.na(getDataPart(x))))
 
+# ------------------------------------------------------------------------------
+
 setMethod("quantile", "timeSeries", function(x, ...)
-          callGeneric(as(x, "matrix"), ...))
+          callGeneric(x = getDataPart(x), ...))
+
+# ------------------------------------------------------------------------------
+
+setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE, strictly = FALSE)
+          callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
 
 ################################################################################
