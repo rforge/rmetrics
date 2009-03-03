@@ -15,7 +15,7 @@
 \alias{timeSeries,missing,ANY-method}
 \alias{timeSeries,missing,missing-method}
 \alias{timeSeries,missing,timeDate-method}
-
+\alias{timeSeries,matrix,numeric-method}
 
 \alias{index_timeSeries}
 \alias{timeSeries-class}

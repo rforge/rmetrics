@@ -3,6 +3,8 @@
 
 \title{Time Series Columns and Rows}
 
+\alias{colnames,timeSeries-method}
+\alias{rownames,timeSeries-method}
 
 \alias{dim,timeSeries-method}
 \alias{dimnames,timeSeries-method}

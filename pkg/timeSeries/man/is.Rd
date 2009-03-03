@@ -6,12 +6,14 @@
 
 
 \alias{is.timeSeries}
+\alias{is.signalSeries}
 \alias{is.na,timeSeries-method}
 
 
 \description{
 
   \code{is.timeSeries} tests if its argument is a \code{timeSeries}.
+  \code{is.timeSeries} tests if series has no timestamps.
   
 }
 
@@ -19,6 +21,7 @@
 \usage{
 
 is.timeSeries(x)
+is.signalSeries(x)
 
 }
 

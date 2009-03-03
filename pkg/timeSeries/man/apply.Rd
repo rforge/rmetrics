@@ -5,7 +5,7 @@
 
 \alias{fapply}
 \alias{applySeries}
-
+\alias{apply,timeSeries-method}
 
 
 \description{
