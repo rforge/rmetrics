@@ -36,9 +36,9 @@
 ################################################################################
 
 
-kurtosis <- 
+kurtosis <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -51,9 +51,9 @@ kurtosis <-
 # ------------------------------------------------------------------------------
 
 
-kurtosis.default <- 
+kurtosis.default <-
     function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -67,6 +67,8 @@ kurtosis.default <-
     # Method:
     method = match.arg(method)
 
+    stopifnot(NCOL(x) == 1)
+
     # Warnings:
     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
         warning("argument is not numeric or logical: returning NA")
@@ -79,10 +81,10 @@ kurtosis.default <-
     n = length(x)
     if (is.integer(x)) x = as.numeric(x)
     if (method == "excess") {
-        kurtosis = sum((x-mean(x))^4/var(x)^2)/length(x) - 3
+        kurtosis = sum((x-mean(x))^4/as.numeric(var(x))^2)/length(x) - 3
     }
     if (method == "moment") {
-        kurtosis = sum((x-mean(x))^4/var(x)^2)/length(x)
+        kurtosis = sum((x-mean(x))^4/as.numeric(var(x))^2)/length(x)
     }
     if (method == "fisher") {
         kurtosis = ((n+1)*(n-1)*((sum(x^4)/n)/(sum(x^2)/n)^2 -
@@ -100,9 +102,9 @@ kurtosis.default <-
 # ------------------------------------------------------------------------------
 
 
-kurtosis.data.frame <- 
+kurtosis.data.frame <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -115,9 +117,9 @@ kurtosis.data.frame <-
 # ------------------------------------------------------------------------------
 
 
-kurtosis.POSIXct <- 
+kurtosis.POSIXct <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -130,9 +132,9 @@ kurtosis.POSIXct <-
 # ------------------------------------------------------------------------------
 
 
-kurtosis.POSIXlt <- 
+kurtosis.POSIXlt <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
