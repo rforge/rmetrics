@@ -85,7 +85,7 @@
     if (is.null(title)) title = "Time Series Object"
     if (is.null(documentation)) documentation = as.character(date())
     if (missing(format))
-        format <- "%Y-%m-%y"
+        format <- "%Y-%m-%d"
     if (identical("", FinCenter))
         FinCenter <- "GMT"
 
