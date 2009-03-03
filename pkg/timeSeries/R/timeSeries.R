@@ -239,6 +239,10 @@ setMethod("timeSeries",
                     FinCenter = "", recordIDs = data.frame(), title = NULL,
                     documentation = NULL, ...)
       {
+          if (any(is.na(charvec)))
+              return(.signalSeries(data = data, units = units,
+                                   recordIDs = recordIDs, title = title,
+                                   documentation = documentation, ...))
           if (any(!c(zone, FinCenter) %in% ""))
               charvec <- timeDate(charvec, format = format,
                                   zone = zone, FinCenter = FinCenter)
