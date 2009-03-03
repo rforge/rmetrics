@@ -15,7 +15,9 @@
 
 ################################################################################
 # S4 METHODS:               PRINT AND PLOT FUNCTIONS:
-#  getDataPart,timeSeries    Summarizes a 'timeSeries' object
+#  getDataPart,timeSeries
+#  setDataPart,timeSeries
+
 ################################################################################
 
 # this makes getDataPart a bit faster than default function
@@ -26,6 +28,23 @@ setMethod("getDataPart", "timeSeries", #"signalSeries",
           attributes(object) <- NULL
           dim(object) <- dim
           object
+      })
+
+# ------------------------------------------------------------------------------
+
+# this makes setDataPart a bit faster than default function
+setMethod("setDataPart", "timeSeries",
+          function(object, value, check = TRUE)
+      {
+          if (check) value <- as(value, "matrix")
+
+          supplied <- attributes(object)
+          valueAttrs <- attributes(value)
+
+          supplied[names(valueAttrs)] <- valueAttrs
+          attributes(value) <- supplied
+
+          asS4(value, TRUE)
       })
 
 ################################################################################
