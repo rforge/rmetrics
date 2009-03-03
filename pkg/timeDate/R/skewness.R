@@ -36,9 +36,9 @@
 ################################################################################
 
 
-skewness <- 
+skewness <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -51,9 +51,9 @@ skewness <-
 # ------------------------------------------------------------------------------
 
 
-skewness.default <- 
+skewness.default <-
     function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -72,6 +72,8 @@ skewness.default <-
         warning("argument is not numeric or logical: returning NA")
         return(as.numeric(NA))}
 
+    stopifnot(NCOL(x) == 1)
+
     # Remove NAs:
     if (na.rm) x = x[!is.na(x)]
 
@@ -81,7 +83,7 @@ skewness.default <-
 
     # Selected Method:
     if (method == "moment") {
-        skewness = sum((x-mean(x))^3/sqrt(var(x))^3)/length(x)
+        skewness = sum((x-mean(x))^3/sqrt(as.numeric(var(x)))^3)/length(x)
     }
     if (method == "fisher") {
         if (n < 3)
@@ -101,9 +103,9 @@ skewness.default <-
 # ------------------------------------------------------------------------------
 
 
-skewness.data.frame <- 
+skewness.data.frame <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -116,9 +118,9 @@ skewness.data.frame <-
 # ------------------------------------------------------------------------------
 
 
-skewness.POSIXct <- 
+skewness.POSIXct <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -131,9 +133,9 @@ skewness.POSIXct <-
 # ------------------------------------------------------------------------------
 
 
-skewness.POSIXlt <- 
+skewness.POSIXlt <-
     function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
