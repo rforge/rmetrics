@@ -64,11 +64,13 @@ setMethod("aggregate", "timeSeries",
               stop("'by' should be of the same class as 'time(x)'", call.=FALSE)
 
           # make sure that x is sorted
-          x <- sort(x)
+          if (is.unsorted(x))
+              x <- sort(x)
+
           # sort and remove double entries in by
           by <- unique(sort(by))
 
-          INDEX <- findInterval(as.numeric(time(x), "sec"), as.numeric(by, "sec") + 1)
+          INDEX <- findInterval(x@positions, as.numeric(by, "sec") + 1)
           INDEX <- INDEX + 1
           is.na(INDEX) <- !(INDEX <= length(by))
 

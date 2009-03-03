@@ -53,16 +53,20 @@ cbind.timeSeries <- function(..., deparse.level = 1)
         return(timeSeries(data=data, units = units))
     }
 
-    dots <- lapply(dots, sort)
-    tds <- lapply(dots, function(ts) as.numeric(time(ts), "sec"))
-    td <- unique(sort(unlist(tds)))
+    # check if unsorted ...
+    if (any(t <- unlist(lapply(dots, function(ts) is.unsorted(ts@positions)))))
+        dots[t] <- lapply(dots[t], sort)
+
+    tds <- lapply(dots, slot, "positions")
+    td <- sort(unique(unlist(tds)))
 
     fun <- function(ts, td, ref) {
         mm <- matrix(NA, ncol = ncol(ts), nrow = length(ref))
         mm[findInterval(td, ref),] <- getDataPart(ts)
         mm}
-    data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td))
-    data <- structure(unlist(data), dim= c(length(td), sum(sapply(dots, ncol))))
+    data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td),
+                   SIMPLIFY = FALSE)
+    data <- array(unlist(data), dim = c(length(td), sum(sapply(dots, ncol))))
 
     # note that new timeSeries get FinCenter of first entry of args
     timeSeries(data = data, charvec = td, units = units, zone = "GMT",
@@ -115,7 +119,7 @@ rbind.timeSeries <- function(..., deparse.level = 1)
         return(timeSeries(data=data, units = units))
     }
 
-    tds <- unlist(lapply(dots, function(ts) as.numeric(time(ts), "sec")))
+    tds <- unlist(lapply(dots, slot, "positions"))
     ans <- timeSeries(data = data, charvec = tds, zone = "GMT",
                       FinCenter = finCenter(dots[[1]]), units = units)
     sort(ans)
