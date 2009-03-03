@@ -76,28 +76,39 @@ setClassUnion("index_timeSeries",
     stopifnot(is(j, "index_timeSeries"))
 
     # subset data and positions
-    x <- setDataPart(x, .subset(x, i, j, drop = FALSE), check = FALSE)
-    # YC : faster than
-    # slot(x, ".Data") <- .subset(slot(x, ".Data"), i, j, drop = FALSE)
-    if (length(x@positions)>0)
-        `slot<-`(x, "positions", check = FALSE,
-                 .subset(x@positions, i, drop = FALSE))
-    `slot<-`(x, "units", check = FALSE,
-             .subset(slot(x, "units"), j, drop = FALSE))
+    data <- .subset(x, i, j, drop = FALSE)
+    pos <-
+        if (length(x@positions)>0)
+            .subset(x@positions, i)
+        else
+            numeric(0)
+    units <- .subset(x@units, j)
 
     # Record IDs:
     df <- x@recordIDs
-    `slot<-`(x, "recordIDs", check = FALSE,
-             if (prod(dim(df))) df[i, , drop = FALSE] else data.frame())
+    if (prod(dim(df)))
+        df <- df[i, , drop = FALSE]
 
     # Result
-    x
+    new("timeSeries",
+        .Data = data,
+        title = x@title,
+        documentation = x@documentation,
+        format = x@format,
+        FinCenter = x@FinCenter,
+        units = units,
+        recordIDs = df,
+        positions = pos)
+
 }
 
 # ------------------------------------------------------------------------------
 
 .findIndex <- function(ipos, pos)
 {
+
+    # FIXME : if NAs ...
+
     attributes(ipos) <- NULL
 
     if (unsorted <- is.unsorted(pos)) {
@@ -107,7 +118,7 @@ setClassUnion("index_timeSeries",
 
     i <- findInterval(ipos, pos)
 
-    if (!identical(ipos, pos[i]))
+    if (!identical(as.numeric(ipos), as.numeric(pos[i]))) #-> avoid troubles with int
         stop("subscript out of bounds", call. = FALSE)
 
     if (unsorted) i <- or[i]
@@ -142,7 +153,7 @@ setMethod("[",
           td <- timeDate(i)
           if (any(is.na(td))) return(as.vector(NA))
 
-          i <- .findIndex(as.numeric(td, "sec"), x@positions)
+          i <- .findIndex(as.numeric(td, units = "secs"), x@positions)
 
           # Return
           .subset_timeSeries(x, i, j)
@@ -156,7 +167,7 @@ setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
-          i <- .findIndex(as.numeric(i, "sec"), x@positions)
+          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
           .subset_timeSeries(x, i, j)
       })
 
@@ -233,7 +244,7 @@ setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "character"),
           function(x, i, j, ..., drop = FALSE)
       {
-          i <- .findIndex(as.numeric(i, "sec"), x@positions)
+          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
           j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
           if (any(is.na(j)))
               stop("subscript out of bounds", call. = FALSE)
@@ -304,7 +315,7 @@ setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
-          i <- .findIndex(as.numeric(i, "sec"), x@positions)
+          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
           .subset_timeSeries(x, i, TRUE)
       })
 
@@ -441,50 +452,8 @@ setMethod("$",
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
 
-.assign_timeSeries <-
-    function(x, i, j, value)
-{
-    if (is(i, "character")) {
-        # i <- match(i, x@positions)
-        # not sure if better to use pmatch
-        i <- pmatch(i, slot(x, "positions"), duplicates.ok = TRUE)
-        if (any(is.na(i)))
-            stop("subscript out of bounds", call. = FALSE)
-    }
-    if (is(j, "character")) {
-        j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-        if (any(is.na(j)))
-            stop("subscript out of bounds", call. = FALSE)
-    }
-
-    x[i, j] <- value
-
-    # Result
-    x
-}
-
-# ------------------------------------------------------------------------------
-# index_timeSeries
-
-## YC : superfluous
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "index_timeSeries",
-##                            j = "index_timeSeries"),
-##                  function(x, i, j, value)
-##                  .assign_timeSeries(x, i, j, value))
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "index_timeSeries",
-##                            j = "missing"),
-##                  function(x, i, j, value)
-##                  .assign_timeSeries(x, i, TRUE, value))
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "missing",
-##                            j = "index_timeSeries"),
-##                  function(x, i, j, value)
-##                  .assign_timeSeries(x, TRUE, j, value))
+## i <- c("timeDate", "character", "index_timeSeries", "timeSeries", "matrix")
+## j <- c("index_timeSeries", "character", "missing")
 
 # ------------------------------------------------------------------------------
 # timeDate
@@ -494,52 +463,90 @@ setReplaceMethod("[",
                            j = "index_timeSeries"),
                  function(x, i, j, value)
              {
-                 # series settings
-                 if (x@format != "counts") {
-                     FinCenter <- finCenter(x)
-                     # convert FinCenter of index_timeSeries to
-                     # FinCenter of timeSeries
-                     i <- timeDate(i, zone = i@FinCenter, FinCenter = FinCenter)
-                 }
+                 i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
+                 callGeneric(x=x, i=i, j=j, value=value)
+             })
 
-                 i <- as(i, "character")
-
-                 .assign_timeSeries(x, i, j, value)
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "timeDate", j = "character"),
+                 function(x, i, j, value)
+             {
+                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+                 if (any(is.na(j)))
+                     stop("subscript out of bounds", call. = FALSE)
+                 callGeneric(x=x, i=i, j=j, value=value)
              })
 
 setReplaceMethod("[",
                  signature(x = "timeSeries", i = "timeDate", j = "missing"),
                  function(x, i, j, value)
+                 callGeneric(x=x, i=i, j=TRUE, value=value))
+
+# ------------------------------------------------------------------------------
+# character
+
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "character", j = "index_timeSeries"),
+                 function(x, i, j, value)
              {
-
-                 # series settings
-                 if (x@format != "counts") {
-                     FinCenter <- finCenter(x)
-                     # convert FinCenter of index_timeSeries to
-                     # FinCenter of timeSeries
-                     i <- timeDate(i, zone = i@FinCenter, FinCenter = FinCenter)
-                 }
-
-                 i <- as(i, "character")
-
-                 .assign_timeSeries(x, i, TRUE, value)
+                 i <- timeDate(i)
+                 callGeneric(x=x, i=i, j=j, value=value)
              })
+
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "character", j = "character"),
+                 function(x, i, j, value)
+             {
+                 i <- timeDate(i)
+                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+                 if (any(is.na(j)))
+                     stop("subscript out of bounds", call. = FALSE)
+                 callGeneric(x=x, i=i, j=j, value=value)
+             })
+
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "character", j = "missing"),
+                 function(x, i, j, value)
+             {
+                 i <- timeDate(i)
+                 callGeneric(x=x, i=i, j=TRUE, value=value)
+             })
+
+# ------------------------------------------------------------------------------
+# index_timeSeries
+
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "index_timeSeries", j = "character"),
+                 function(x, i, j, value)
+             {
+                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+                 if (any(is.na(j)))
+                     stop("subscript out of bounds", call. = FALSE)
+                 callGeneric(x=x, i=i, j=j, value=value)
+             })
+
+# Note
+# index_timeSeries,index_timeSeries
+# index_timeSeries,missing
+# works by default
 
 # ------------------------------------------------------------------------------
 # matrix
 
-## YC : superfluous
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "matrix", j = "character"),
+                 function(x, i, j, value)
+             {
+                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+                 if (any(is.na(j)))
+                     stop("subscript out of bounds", call. = FALSE)
+                 callGeneric(x=x, i=i, j=j, value=value)
+             })
 
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "matrix",
-##                            j = "index_timeSeries"),
-##                  function(x, i, j, value)
-##                  .assign_timeSeries(x, as.vector(i), j))
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "matrix", j = "missing"),
-##                  function(x, i, j, value)
-##                      .assign_timeSeries(x, as.vector(i), TRUE))
+# Note
+# matrix,index_timeSeries
+# matrix,missing
+# works by default
 
 # ------------------------------------------------------------------------------
 # timeSeries
@@ -553,39 +560,22 @@ setReplaceMethod("[",
                      i@format != "counts" &&
                      finCenter(x) != finCenter(i))
                      stop("FinCenter of timeSeries and subset do not match")
+                 callGeneric(x=x, i=as.vector(i), j=j, value=value)
+             })
 
-                 .assign_timeSeries(x, as.vector(i), j, value)
+setReplaceMethod("[",
+                 signature(x = "timeSeries", i = "timeSeries", j = "character"),
+                 function(x, i, j, value)
+             {
+                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
+                 if (any(is.na(j)))
+                     stop("subscript out of bounds", call. = FALSE)
+                 callGeneric(x=x, i=i, j=j, value=value)
              })
 
 setReplaceMethod("[",
                  signature(x = "timeSeries", i = "timeSeries", j = "missing"),
                  function(x, i, j, value)
-             {
-                 if (x@format != "counts" &&
-                     i@format != "counts" &&
-                     finCenter(x) != finCenter(i))
-                     stop("FinCenter of timeSeries and subset do not match")
-
-                 .assign_timeSeries(x, as.vector(i), TRUE, value)
-             })
-
-# ------------------------------------------------------------------------------
-# all missing
-
-## YC : superfluous
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "missing", j = "missing"),
-##                  function(x, i, j, value) {x@.Data[] <- value; x})
-
-# ------------------------------------------------------------------------------
-# ANY
-
-## YC : superfluous
-
-## setReplaceMethod("[",
-##                  signature(x = "timeSeries", i = "ANY", j = "ANY"),
-##                  function(x, i, j, value)
-##                  stop("invalid or not-yet-implemented 'timeSeries' assignment"))
+                 callGeneric(x=x, i=i, j=TRUE, value=value))
 
 ################################################################################

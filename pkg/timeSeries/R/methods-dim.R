@@ -198,8 +198,10 @@ setMethod("rownames<-", c("timeSeries", "timeDate"), #c("signalSeries", "timeDat
           function (x, value)
       {
           .timeSeries(data = getDataPart(x),
-                      charvec = value,
+                      charvec = as.numeric(value, "sec"),
                       units = colnames(x),
+                      format = value@format,
+                      FinCenter = value@FinCenter,
                       recordIDs = x@recordIDs,
                       title = x@title,
                       documentation = x@documentation)
@@ -230,8 +232,10 @@ setMethod("rownames<-", "timeSeries", # "signalSeries",
                             documentation = x@documentation)
           else
               .timeSeries(data = getDataPart(x),
-                          charvec = charvec,
+                          charvec = as.numeric(charvec, "sec"),
                           units = colnames(x),
+                          format = charvec@format,
+                          FinCenter = charvec@FinCenter,
                           recordIDs = x@recordIDs,
                           title = x@title,
                           documentation = x@documentation)
