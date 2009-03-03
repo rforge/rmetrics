@@ -129,9 +129,9 @@ function()
 
     i <- ts < 0.4
 
-    checkException(ts[series(i), ])
-    checkException(ts[i, ])
-    checkException(mat[series(i), ]) # it fails as expected
+    checkException(ts[series(i), ], silent = TRUE)
+    checkException(ts[i, ], silent = TRUE)
+    checkException(mat[series(i), ], silent = TRUE) # it fails as expected
 
     checkIdentical(
                    as.matrix(ts[series(i)[,1], ]),
@@ -154,12 +154,12 @@ function()
     checkException(ts[i, 2], silent = TRUE)
     checkException(ts[series(i), 1], silent = TRUE)
 
-    checkException(ts[series(i),1])
-    checkException(ts[i,1])
-    checkException(mat[series(i),1])
+    checkException(ts[series(i),1], silent = TRUE)
+    checkException(ts[i,1], silent = TRUE)
+    checkException(mat[series(i),1], silent = TRUE)
 
-    checkException(ts[series(i),])
-    checkException(mat[series(i),])
+    checkException(ts[series(i),], silent = TRUE)
+    checkException(mat[series(i),], silent = TRUE)
 
     checkIdentical(
                     ts[series(i)],

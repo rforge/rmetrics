@@ -38,7 +38,7 @@ function()
     # Series
     ts = dummySeries()
     x = timeSeries:::.signalSeries(as.matrix(ts))
-    y = timeSeries:::.timeSeries(as.matrix(ts), time(ts))
+    y = timeSeries:::.timeSeries(as.matrix(ts), as.numeric(time(ts), "sec"))
 
     # A vector to a timeSeries
     as.vector(x)
@@ -46,8 +46,8 @@ function()
     as.vector(y)
     as.vector(y[,1])
 
-    # ?? as.numeric:
-    as.numeric(x)           # errors !!!
+    # as.numeric:
+    as.numeric(x)
     as.numeric(x[,1])
     as.numeric(y)
     as.numeric(y[,1])
