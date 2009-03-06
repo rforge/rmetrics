@@ -48,7 +48,7 @@ setMethod("show", "timeDate",
     print(layout, quote = FALSE)
 
     # Return
-    invisible(object)
+    invisible(NULL) # 'show' returns an invisible 'NULL'. (cf. ?show)
 })
 
 
