@@ -3,7 +3,6 @@
 \alias{HyperbolicDist-package}
 \alias{HyperbolicDistribution}
 
-
 \title{
   The Package `HyperbolicDist': Summary Information
 }
@@ -22,8 +21,8 @@ mode of a given hyperbolic distribution are given by \code{hyperbMean},
 \code{hyperbMode} respectively. For assessing the fit of the hyperbolic
 distribution to a set of data, the log-histogram is useful. See
 \code{\link{logHist}}. Q-Q and P-P plots are also provided for assessing
-the fit of a hyperbolic distribution. A Cram\'{e}r-von~Mises test of the
-goodness of fit of data to a hyperbolic distribution is given by
+the fit of a hyperbolic distribution. A Cramer-von~Mises
+test of the goodness of fit of data to a hyperbolic distribution is given by
 \code{hyperbCvMTest}. S3 \code{print}, \code{plot} and \code{summary}
 methods are provided for the output of \code{hyperbFit}.
 
@@ -58,7 +57,7 @@ fit of a skew-Laplace distribution.
 \section{Acknowledgements}{
   A number of students have worked on the package: Ai-Wei Lee, Jennifer Tso,
   Richard Trendall, and Thomas Tran.
-  
+
   Thanks to Ross Ihaka and Paul Murrell for their willingness to answer
   my questions, and to all the core group for the development of R.
 }
@@ -67,19 +66,19 @@ fit of a skew-Laplace distribution.
   Exponentially decreasing distributions for the logarithm of particle size,
   \emph{Proc. Roy. Soc. Lond.},
   A\bold{353}, 401--419.
-  
+
   Barndorff-Nielsen, O. and Blaesild, P (1983).
-  Hyperbolic distributions. 
-  In \emph{Encyclopedia of Statistical Sciences}, 
+  Hyperbolic distributions.
+  In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
   pp. 700--707. New York: Wiley.
-  
+
   Fieller, N. J., Flenley, E. C. and Olbricht, W. (1992)
   Statistics of particle size data.
   \emph{Appl. Statist.},
   \bold{41}, 127--146.
 
-  J{\o}rgensen, B. (1982). \emph{Statistical Properties of the
+  Jorgensen, B. (1982). \emph{Statistical Properties of the
   Generalized Inverse Gaussian Distribution}. Lecture Notes in
   Statistics, Vol. 9, Springer-Verlag, New York.
 
@@ -91,8 +90,8 @@ fit of a skew-Laplace distribution.
 
 
 \section{LICENCE}{
-This library and its documentation are usable under the terms of the 
-"GNU General Public License", a copy of which is distributed with the 
+This library and its documentation are usable under the terms of the
+"GNU General Public License", a copy of which is distributed with the
 package.
 }
 

@@ -1,6 +1,6 @@
 Package: HyperbolicDist
-Version: 0.5-2
-Date: 2008-04-28
+Version: 0.5-3
+Date: 2009-03-05
 Title: The hyperbolic distribution
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
@@ -12,6 +12,6 @@ Description: This package provides functions for the hyperbolic and related
 	Gaussian distribution and the skew-Laplace distribution. Additional 
 	functionality is provided for the hyperbolic distribution, including 
 	fitting of the hyperbolic to data.
-License: GPL Version 2 or newer
+License: GPL (>=2)
 URL: http://www.r-project.org
-Packaged: Tue Apr 29 20:13:53 2008; dsco036
+Packaged: Thu Feb  8 13:01:13 2007; dscott

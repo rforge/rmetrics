@@ -6,13 +6,13 @@
 \description{
   This function interchanges between the following 4 parameterizations
   of the generalized hyperbolic distribution:
-	
+
   1. \eqn{\lambda, \alpha, \beta, \delta, \mu}{lambda, alpha, beta, delta, mu}
-	
+
   2. \eqn{\lambda, \zeta, \rho, \delta, \mu}{lambda, zeta, rho, delta, mu}
-	
+
   3. \eqn{\lambda, \xi, \chi, \delta, \mu}{lambda, xi, chi, delta, mu}
-	
+
   4. \eqn{\lambda, \bar\alpha, \bar\beta, \delta, \mu}{%
     lambda, alpha bar, beta bar, delta, mu}
 
@@ -33,15 +33,15 @@ ghypChangePars(from, to, Theta, noNames = FALSE)
 
 \details{
   In the 4 parameterizations, the following must be positive:
-	
+
   1. \eqn{\alpha, \delta}{alpha, delta}
-	
+
   2. \eqn{\zeta, \delta}{zeta, delta}
-	
+
   3. \eqn{\xi, \delta}{xi, delta}
-	
+
   4. \eqn{\bar\alpha, \delta}{alpha bar, delta}
-	
+
   Furthermore, note that in the first parameterization
   \eqn{\alpha}{alpha} must be greater than the absolute value of
   \eqn{\beta}{beta}; in the third parameterization, \eqn{\xi}{xi}
@@ -57,18 +57,18 @@ ghypChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \references{
-  Barndorff-Nielsen, O. and Bl{\ae}sild, P. (1983).
-  Hyperbolic distributions. 
-  In \emph{Encyclopedia of Statistical Sciences}, 
+  Barndorff-Nielsen, O. and Blaesild, P. (1983).
+  Hyperbolic distributions.
+  In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
   pp. 700--707. New York: Wiley.
 
   Prause, K. (1999) \emph{The generalized hyperbolic models: Estimation,
   financial derivatives and risk measurement.} PhD Thesis, Mathematics
-  Faculty, University of Freiburg. 
+  Faculty, University of Freiburg.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, 
+\author{David Scott \email{d.scott@auckland.ac.nz},
 Jennifer Tso, Richard Trendall}
 
 \seealso{\code{\link{dghyp}}}

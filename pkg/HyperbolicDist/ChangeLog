@@ -1,15 +1,37 @@
+2009-03-06    <d.scott@auckland.ac.nz>
+
+	* HyperbolicDist moved to R-Forge
+	Current release will be on CRAN, development version on R-Forge,
+	working on own machine(s)
+
+2009-03-04    <d.scott@auckland.ac.nz>
+
+	* hyperbFit, print.hyperbFit, plot.hyperbFit, print.summary.hyperbFit:
+	changed name of object in call from object to x to follow
+	requirements for S3 generics. Changed name of data from x to obs
+	and data name from xName to obsName to avoid conflict with x as
+	name of object and of data
+	* hyperbFit.Rd, summary.hyperbFit.Rd: documentation changed to
+	reflect changes in functions
+	* hyperbFit, hyperbFit.Rd: changed name of control list for
+	Nelder-Mead from controlNLM to controlNM
+	* summary.hyperbFit, summary.hyperbFit.Rd: changed Theta to
+	object$Theta in two places on advice from Bernhard Pfaff since
+	there was an error:
+	Error in summary.hyperbFit(tmp) : object "Theta" not found
+
 2008-04-28    <d.scott@auckland.ac.nz>
 
 	* print.hyperbFit, plot.hyperbFit, print.summary.hyperbFit:
 	changed name of object in call from x to object
 	to avoid conflict with x as name of data
-	* hyperbFit.Rd, summary.hyperbFit: documentation changed to
+	* hyperbFit.Rd, summary.hyperbFit.Rd: documentation changed to
 	reflect changes in functions
-	* sampleMoment.Rd, hyperbFitStart.Rd: minor errors corrected
 
 
 
-	
+
+
 
 
 

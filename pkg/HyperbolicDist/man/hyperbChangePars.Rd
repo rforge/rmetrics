@@ -6,17 +6,17 @@
 \description{
   This function interchanges between the following 4 parameterizations
   of the hyperbolic distribution:
-	
+
   1. \eqn{\pi, \zeta, \delta, \mu}{pi, zeta, delta, mu}
-	
+
   2. \eqn{\alpha, \beta, \delta, \mu}{alpha, beta, delta, mu}
-	
+
   3. \eqn{\phi, \gamma, \delta, \mu}{phi, gamma, delta, mu}
-	
+
   4. \eqn{\xi, \chi, \delta, \mu}{xi, chi, delta, mu}
 
-  The first three are given in Barndorff-Nielsen and Bl{\ae}sild (1983),
-  and the fourth in Prause (1999)
+  The first three are given in Barndorff-Nielsen and
+  Blaesild (1983), and the fourth in Prause (1999)
 }
 
 \usage{
@@ -33,15 +33,15 @@ hyperbChangePars(from, to, Theta, noNames = FALSE)
 
 \details{
   In the 4 parameterizations, the following must be positive:
-	
+
   1. \eqn{\zeta,\delta}{zeta, delta}
-	
+
   2. \eqn{\alpha,\delta}{alpha, delta}
-	
+
   3. \eqn{\phi,\gamma,\delta}{phi, gamma, delta}
-	
+
   4. \eqn{\xi,\delta}{xi, delta}
-	
+
   Furthermore, note that in the second parameterization
   \eqn{\alpha}{alpha} must be greater than the absolute value of
   \eqn{\beta}{beta}, while in the fourth parameterization, \eqn{\xi}{xi}
@@ -55,18 +55,18 @@ hyperbChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \references{
-  Barndorff-Nielsen, O. and Bl{\ae}sild, P. (1983).
-  Hyperbolic distributions. 
-  In \emph{Encyclopedia of Statistical Sciences}, 
+  Barndorff-Nielsen, O. and Blaesild, P. (1983).
+  Hyperbolic distributions.
+  In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
   pp. 700--707. New York: Wiley.
 
   Prause, K. (1999) \emph{The generalized hyperbolic models: Estimation,
   financial derivatives and risk measurement.} PhD Thesis, Mathematics
-  Faculty, University of Freiburg. 
+  Faculty, University of Freiburg.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, 
+\author{David Scott \email{d.scott@auckland.ac.nz},
 Jennifer Tso, Richard Trendall}
 
 \seealso{\code{\link{dhyperb}}}

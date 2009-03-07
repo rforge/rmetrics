@@ -7,18 +7,18 @@
 \description{
   This function interchanges between the following 4 parameterizations
   of the generalized inverse Gaussian distribution:
-	
+
   1. \eqn{(\lambda,\chi,\psi)}{(lambda, chi, psi)}
-	
+
   2. \eqn{(\lambda,\delta,\gamma)}{(lambda, delta, gamma)}
-	
+
   3. \eqn{(\lambda,\alpha,\beta)}{(lambda, alpha, beta)}
-	
+
   4. \eqn{(\lambda,\omega,\eta)}{(lambda, omega, eta)}
 
-  See J{\o}rgensen (1982) and Dagpunar (1989)
+  See Jorgensen (1982) and Dagpunar (1989)
 }
-  
+
 \usage{
 gigChangePars(from, to, Theta, noNames = FALSE)
 }
@@ -33,7 +33,7 @@ gigChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \details{
-  The range of \eqn{\lambda}{lambda} is the whole real line. 
+  The range of \eqn{\lambda}{lambda} is the whole real line.
   In each parameterization, the other two parameters must take positive
   values.
 }
@@ -44,13 +44,13 @@ gigChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \references{
-  J{\o}rgensen, B. (1982).
+  Jorgensen, B. (1982).
   \emph{Statistical Properties of the Generalized Inverse Gaussian
     Distribution}.
   Lecture Notes in Statistics, Vol. 9, Springer-Verlag, New York.
-	
+
   Dagpunar, J. S. (1989).
-  An easily implemented generalised inverse {G}aussian generator,
+  An easily implemented generalised inverse Gaussian generator,
   \emph{Commun. Statist.---Simula.}, \bold{18}, 703--710.
 }
 

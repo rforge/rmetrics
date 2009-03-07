@@ -1,5 +1,6 @@
 \name{gigCalcRange}
 \alias{gigCalcRange}
+
 \title{Range of a Generalized Inverse Gaussian Distribution}
 \description{
   Given the parameter vector Theta of a generalized inverse Gaussian
@@ -25,7 +26,7 @@ gigCalcRange(Theta, tol = 10^(-5), density = TRUE, ...)
 \details{
   The particular generalized inverse Gaussian distribution being
   considered is specified by the value of the parameter value
-  \code{Theta}.  
+  \code{Theta}.
 
   If \code{density = TRUE}, the function gives a range, outside of which
   the density is less than the given tolerance. Useful for plotting the
@@ -41,7 +42,7 @@ gigCalcRange(Theta, tol = 10^(-5), density = TRUE, ...)
   A two-component vector giving the lower and upper ends of the range.
 }
 \references{
-  J{\o}rgensen, B. (1982).
+  Jorgensen, B. (1982).
   \emph{Statistical Properties of the Generalized Inverse Gaussian
   Distribution}.
   Lecture Notes in Statistics, Vol. 9, Springer-Verlag, New York.

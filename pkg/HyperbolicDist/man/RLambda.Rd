@@ -8,6 +8,7 @@
 \alias{WLambda4}
 \alias{gammaLambda1}
 \alias{gammaLambda2}
+
 \title{Functions for Calculating Moments}
 \description{
   Functions used to calculate the mean, variance, skewness and kurtosis
@@ -35,30 +36,30 @@ gammaLambda1(hyperbPi, zeta, lambda = 1)
 
 \value{
   The functions \code{RLambda} and \code{SLambda}
-  are used in the calculation of the mean and variance. They are 
+  are used in the calculation of the mean and variance. They are
   functions of the Bessel functions of the third kind,
   implemented in \R as \code{\link{besselK}}. The other functions are
   used in calculation of higher moments. See Barndorff-Nielsen, O. and
-  Bl{\ae}sild, P (1981) for details of the calculations.
-  
+  Blaesild, P (1981) for details of the calculations.
+
   The parameterisation of the hyperbolic distribution used for this
   and other components of the \code{HyperbolicDist} package is the
   \eqn{(\pi,\zeta)}{(pi,zeta)} one. See \code{hyperbChangePars} to
   transfer between parameterizations.
 }
 \references{
-  Barndorff-Nielsen, O. and Bl{\ae}sild, P (1981).
+  Barndorff-Nielsen, O. and Blaesild, P (1981).
   Hyperbolic distributions and ramifications: contributions to theory
   and application.
   In \emph{Statistical Distributions in Scientific Work},
   eds., Taillie, C., Patil, G. P., and Baldessari, B. A., Vol. 4,
   pp. 19--44. Dordrecht: Reidel.
 
-  Barndorff-Nielsen, O. and Bl{\ae}sild, P (1983).
-  Hyperbolic distributions. 
-  In \emph{Encyclopedia of Statistical Sciences}, 
+  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Hyperbolic distributions.
+  In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
-  pp. 700--707. New York: Wiley. 
+  pp. 700--707. New York: Wiley.
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Richard Trendall,

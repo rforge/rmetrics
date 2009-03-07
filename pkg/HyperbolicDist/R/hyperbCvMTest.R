@@ -1,25 +1,25 @@
-### Cramer-von Mises goodness of fit for the hyperbolic distribution 
+### Cramer-von Mises goodness of fit for the hyperbolic distribution
 hyperbCvMTest <- function(x, Theta, conf.level = 0.95, ...){
   if (!missing(conf.level) && (length(conf.level) != 1 ||
-                               !is.finite(conf.level) || 
-                               conf.level < 0 || conf.level > 1)) 
+                               !is.finite(conf.level) ||
+                               conf.level < 0 || conf.level > 1))
       stop("conf.level must be a single number between 0 and 1")
   DNAME <- deparse(substitute(x))
   NX <- length(x)
-  if (NX < 2) 
+  if (NX < 2)
       stop("not enough x observations")
   METHOD <- "Cramer-von Mises test of hyperbolic distribution"
   zvals <- phyperb(sort(x),Theta)
-  STATISTIC <- sum((zvals - ((2*(1:length(x)) - 1)/(2*length(x))))^2) + 
+  STATISTIC <- sum((zvals - ((2*(1:length(x)) - 1)/(2*length(x))))^2) +
            1/(12*length(x))
-  xi <- 1/sqrt(1 + Theta[2]) 
-  chi <- Theta[1]*xi/sqrt(1 + Theta[1]^2) 
+  xi <- 1/sqrt(1 + Theta[2])
+  chi <- Theta[1]*xi/sqrt(1 + Theta[1]^2)
   PARAMETER <- c(xi,chi)
   names(STATISTIC) <- "Wsq"
   names(PARAMETER) <- c("xi","chi")
   names(METHOD) <- "Cramer-von Mises test of hyperbolic distribution"
-  pValResult <- hyperbCvMTestPValue(xi, chi, STATISTIC) 
-  RVAL <- list(statistic = STATISTIC, method = METHOD, data.name = DNAME, 
+  pValResult <- hyperbCvMTestPValue(xi, chi, STATISTIC)
+  RVAL <- list(statistic = STATISTIC, method = METHOD, data.name = DNAME,
                parameter = PARAMETER, p.value = pValResult$pValue,
                warn = pValResult$warn )
   class(RVAL) <- "hyperbCvMTest"
@@ -34,6 +34,7 @@ hyperbCvMTestPValue <- function(xi, chi, Wsq, digits = 3){
   exactChi <- FALSE
   exactXi <- FALSE
   warn <- c(FALSE, FALSE)
+  data(hyperbWSqTable)
   wsqTable <- hyperbWSqTable
   if(abs(chi) > xi ) stop ("Chi must be less than or equal to Xi")
   tol <- .Machine$double.eps
@@ -49,7 +50,7 @@ hyperbCvMTestPValue <- function(xi, chi, Wsq, digits = 3){
                          (chiList[j+1] - chiList[j]))*
                            (wsqTable[,j + 1] - wsqTable[,j])
     }
-  }  
+  }
   for (j in 1:5){
     if(identical(all.equal(chiList[j], chi), TRUE)){
       exactChi <- TRUE
@@ -91,7 +92,7 @@ hyperbCvMTestPValue <- function(xi, chi, Wsq, digits = 3){
   if(wsqTable[1] == Wsq) pValue <- "0.25"
   if(wsqTable[5] < Wsq) pValue <- "< 0.01"
   if(wsqTable[5] == Wsq) pValue <- "0.01"
-  
+
   for(i in 1:4){
     if(Wsq >= wsqTable[i] && Wsq < wsqTable[i + 1]){
       pValue <- alphaList[i] + ((Wsq-wsqTable[i])/
@@ -113,17 +114,17 @@ print.hyperbCvMTest <- function (x, prefix = "\t", ...){
   cat("\n")
   cat("data: ", x$data.name, "\n")
   out <- character()
-  if (!is.null(x$statistic)) 
-    out <- c(out, paste(names(x$statistic), "=", 
+  if (!is.null(x$statistic))
+    out <- c(out, paste(names(x$statistic), "=",
              format(round(x$statistic, 4))))
-  if (!is.null(x$parameter)) 
-    out <- c(out, paste(names(x$parameter), "=", 
+  if (!is.null(x$parameter))
+    out <- c(out, paste(names(x$parameter), "=",
              format(round(x$parameter, 3))))
   if (!is.null(x$p.value)) {
     fp <- as.character(x$p.value)
-    out <- c(out, paste("p-value", 
-             if (substr(fp, 1, 1) == "<" ||substr(fp, 1, 1) == ">"){ 
-               fp 
+    out <- c(out, paste("p-value",
+             if (substr(fp, 1, 1) == "<" ||substr(fp, 1, 1) == ">"){
+               fp
              }else{
                paste("=", fp)
              }))
