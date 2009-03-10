@@ -7,9 +7,12 @@ export(torus, runif.halton, halton, runif.sobol, sobol, get.primes)
 
 export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
 
+export(set.generator, put.state, get.state)
+
 export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 
 export(stirling, permut)
 
+### Debugging
 # export(version.randtoolbox)
 
