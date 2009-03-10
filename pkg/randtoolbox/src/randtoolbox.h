@@ -24,6 +24,7 @@
  *
  */
 
+//R header files
 #include <R.h>
 #include <Rinternals.h>
 #include <Rdefines.h>
@@ -33,9 +34,6 @@
 #include "config.h"
 #include "locale.h"
 
-#if defined(HAVE_SSE2)
-#error fait chier de bordel de cul!
-#endif
 
 //SFMT
 #include "SFMT.h"
@@ -70,7 +68,7 @@
 #include "knuthTAOCP2002.h"
 
 
-
+//time header files
 #if HAVE_TIME_H
 # include <time.h>
 #endif
