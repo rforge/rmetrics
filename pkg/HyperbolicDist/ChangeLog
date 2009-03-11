@@ -1,5 +1,8 @@
 2009-03-11    <d.scott@auckland.ac.nz>
 
+	* hyperbFitStart.Rd changed to take out {\o} and {\ae} in names
+	and replace with \enc entries
+
 	* All .Rd files changed where they contained a name with foreign
 	accents. Encoding changed in description file as
 	Encoding: latin1 and changed wherever possible Blaesild to

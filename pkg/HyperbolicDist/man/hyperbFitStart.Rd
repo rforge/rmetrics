@@ -76,8 +76,8 @@
   \emph{Proc. Roy. Soc. Lond.},
   A\bold{353}, 401--419.
 
-  Barndorff-Nielsen, O., Bl{\ae}sild, P., Jensen, J., and  S{\o}rensen,
-  M. (1985).
+  Barndorff-Nielsen, O., \enc{Blæsild}{Blaesild}, P., Jensen, J.,
+  and  \enc{Sörenson}{Sorenson}, M. (1985).
   The fascination of sand.
   In \emph{A celebration of statistics, The ISI Centenary Volume},
   eds., Atkinson, A. C. and Fienberg, S. E.,
