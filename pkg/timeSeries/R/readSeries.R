@@ -18,8 +18,9 @@
 ################################################################################
 
 readSeries <-
-    function(file, header = TRUE, sep = ";", zone = "",
-    FinCenter = "", title = NULL, documentation = NULL, ...)
+    function(file,
+             header = TRUE, sep = ";",
+             zone = "", FinCenter = "", ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -49,20 +50,24 @@ readSeries <-
     #   the first cell holds the time/date format specification!
 
     # FUNCTION:
-    if (zone == "")
-        zone <- getRmetricsOptions("myFinCenter")
-    if (FinCenter == "")
-        FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Read Data:
-    df = read.table(file = file, header = header, sep = sep, ...)
+    df <- read.table(file = file, header = header, sep = sep,
+                     check.names = FALSE, colClasses = "character", ...)
+
+    # YC : colClass "character" important otherwise if first column
+    # has %Y%m%d%H%M%S format it would be converted to a numeric in
+    # the form of 1.XXXXXe+13 ... not good
+
+    # get timeDate from first column with header specifying the format
+    charvec <- as.character(df[[1]])
+    format <- names(df)[1]
+    td <- timeDate(charvec = charvec, format = format, zone = zone,
+                   FinCenter = FinCenter)
 
     # Create Time Series from Data Frame:
-    ans = as.timeSeries(df, zone = zone, FinCenter = FinCenter)
-
-    # Add title and Documentation:
-    if (is.null(title)) ans@title = "Time Series Object"
-    if (is.null(documentation)) ans@documentation = description()
+    data <- sapply(df[-1], as.numeric)
+    ans <- timeSeries(data = data, charvec = charvec)
 
     # Return Value:
     ans
