@@ -69,14 +69,6 @@
     stopifnot(inherits(data, "matrix"))
     stopifnot(is.numeric(charvec))
 
-###     # it should be safe to only check first elt
-###     # this avoid checking the whole vec ...
-###     if (is.na(charvec[1]))
-###         return(.signalSeries(data = data, units = units,
-###                              recordIDs = recordIDs,
-###                              title = title,
-###                              documentation = documentation, ...))
-
     # Add units, title and Documentation:
     if (is.null(units))
         units <- colnames(data)
@@ -109,24 +101,6 @@
 }
 
 # ------------------------------------------------------------------------------
-
-## # to generate all combinations one can do
-## data = c("missing", "matrix", "ANY")
-## charvec = c("missing", "timeDate", "numeric", "Date", "POSIXct", "POSIXlt", "ANY")
-## grid <- expand.grid(data = data, charvec = charvec)
-## grid[order(grid$data),]
-
-## missing  missing
-## missing timeDate
-## missing      ANY
-##  matrix  missing
-##  matrix timeDate
-##  matrix      ANY
-##     ANY  missing
-##     ANY timeDate
-##     ANY      ANY
-
-# ------------------------------------------------------------------------------
 ## missing ANY
 
 setMethod("timeSeries",
@@ -153,54 +127,6 @@ setMethod("timeSeries",
               stop("Could not coerce 'data' to a matrix")
           callGeneric()
       })
-
-## # ------------------------------------------------------------------------------
-## ## missing  missing
-
-## setMethod("timeSeries",
-##           signature(data = "missing", charvec = "missing"),
-##           function (data, charvec, units = NULL, format = NULL, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##           .signalSeries(data = matrix(NA),
-##                         units = units,
-##                         recordIDs = recordIDs,
-##                         title = title,
-##                         documentation = documentation,
-##                         ...)
-##           )
-
-## # ------------------------------------------------------------------------------
-## ## missing timeDate
-
-## setMethod("timeSeries",
-##           signature(data = "missing", charvec = "timeDate"),
-##           function (data, charvec, units = NULL, format = NULL, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##           .signalSeries(data = matrix(NA),
-##                         units = units,
-##                         recordIDs = recordIDs,
-##                         title = title,
-##                         documentation = documentation,
-##                         ...)
-##           )
-
-## # ------------------------------------------------------------------------------
-## ## missing      ANY
-
-## setMethod("timeSeries",
-##           signature(data = "missing", charvec = "ANY"),
-##           function (data, charvec, units = NULL, format = NULL, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##           .signalSeries(data = matrix(NA),
-##                         units = units,
-##                         recordIDs = recordIDs,
-##                         title = title,
-##                         documentation = documentation,
-##                         ...)
-##           )
 
 # ------------------------------------------------------------------------------
 ##  matrix  missing
@@ -308,50 +234,5 @@ setMethod("timeSeries",
                           documentation = documentation,
                           ...)
       })
-
-# ------------------------------------------------------------------------------
-##     ANY  missing
-
-## setMethod("timeSeries",
-##           signature(data = "ANY", charvec = "missing"),
-##           function (data, charvec, units = NULL, format = NULL, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##       {
-##           t <- try(data <- as.matrix(data))
-##           if (inherits(t, "try-error"))
-##               stop("Could not coerce 'data' to a matrix")
-##           callGeneric()
-##       })
-
-## # ------------------------------------------------------------------------------
-## ##     ANY timeDate
-
-## setMethod("timeSeries",
-##           signature(data = "ANY", charvec = "timeDate"),
-##           function (data, charvec, units = NULL, format, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##       {
-##           t <- try(data <- as.matrix(data))
-##           if (inherits(t, "try-error"))
-##               stop("Could not coerce 'data' to a matrix")
-##           callGeneric()
-##       })
-
-## # ------------------------------------------------------------------------------
-## ##     ANY      ANY
-
-## setMethod("timeSeries",
-##           signature(data = "ANY", charvec = "ANY"),
-##           function (data, charvec, units = NULL, format = NULL, zone = "",
-##                     FinCenter = "", recordIDs = data.frame(), title = NULL,
-##                     documentation = NULL, ...)
-##       {
-##           t <- try(data <- as.matrix(data))
-##           if (inherits(t, "try-error"))
-##               stop("Could not coerce 'data' to a matrix")
-##           callGeneric()
-##       })
 
 ################################################################################
