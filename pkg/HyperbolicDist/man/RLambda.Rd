@@ -48,14 +48,14 @@ gammaLambda1(hyperbPi, zeta, lambda = 1)
   transfer between parameterizations.
 }
 \references{
-  Barndorff-Nielsen, O. and Blaesild, P (1981).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1981).
   Hyperbolic distributions and ramifications: contributions to theory
   and application.
   In \emph{Statistical Distributions in Scientific Work},
   eds., Taillie, C., Patil, G. P., and Baldessari, B. A., Vol. 4,
   pp. 19--44. Dordrecht: Reidel.
 
-  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions.
   In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,

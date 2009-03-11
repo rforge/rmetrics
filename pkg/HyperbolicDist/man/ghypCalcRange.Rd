@@ -42,7 +42,7 @@ ghypCalcRange(Theta, tol = 10^(-5), density = TRUE, ...)
   A two-component vector giving the lower and upper ends of the range.
 }
 \references{ 
-  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions. 
   In \emph{Encyclopedia of Statistical Sciences}, 
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,

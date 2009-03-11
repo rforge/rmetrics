@@ -42,7 +42,7 @@ gigCalcRange(Theta, tol = 10^(-5), density = TRUE, ...)
   A two-component vector giving the lower and upper ends of the range.
 }
 \references{
-  Jorgensen, B. (1982).
+  \enc{Jörgensen}{Jorgensen}, B. (1982).
   \emph{Statistical Properties of the Generalized Inverse Gaussian
   Distribution}.
   Lecture Notes in Statistics, Vol. 9, Springer-Verlag, New York.

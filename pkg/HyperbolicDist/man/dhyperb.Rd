@@ -66,7 +66,7 @@ hyperbBreaks(Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
   third kind with order 1.
 
   A succinct description of the hyperbolic distribution is given in
-  Barndorff-Nielsen and Blaesild (1983). Three different
+  Barndorff-Nielsen and \enc{Blæsild}{Blaesild} (1983). Three different
   possibleparameterisations are described in that paper. A fourth
   parameterization is given in Prause (1999). All use location and scale
   parameters \eqn{\mu}{mu} and \eqn{\delta}{delta}. There are two other
@@ -110,11 +110,11 @@ hyperbBreaks(Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
   accurate to 5 decimal places.
 
   The hyperbolic distribution is a special case of the generalized
-  hyperbolic distribution (Barndorff-Nielsen and Blaesild (1983)). The
-  generalized hyperbolic distribution can be represented as a particular
-  mixture of the normal distribution where the mixing distribution is
-  the generalized inverse Gaussian.  \code{rhyperb} uses this
-  representation to generate observations from the hyperbolic
+  hyperbolic distribution (Barndorff-Nielsen and \enc{Blæsild}{Blaesild}
+  (1983)). The generalized hyperbolic distribution can be represented as
+  a particular mixture of the normal distribution where the mixing
+  distribution is the generalized inverse Gaussian.  \code{rhyperb} uses
+  this representation to generate observations from the hyperbolic
   distribution. Generalized inverse Gaussian observations are obtained
   via the algorithm of Dagpunar (1989).  }
 
@@ -147,7 +147,7 @@ hyperbBreaks(Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
  }
 
 \references{
-  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions.
   In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,

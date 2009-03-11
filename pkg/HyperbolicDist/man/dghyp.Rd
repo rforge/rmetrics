@@ -106,7 +106,7 @@ ghypBreaks(Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
   accurate to 5 decimal places.
 
   The generalized hyperbolic distribution is discussed in Bibby and
-  Sorenson (2003). It can be represented as a particular
+  \enc{Sörenson}{Sorenson} (2003). It can be represented as a particular
   mixture of the normal distribution where the mixing distribution is the
   generalized inverse Gaussian.  \code{rghyp} uses this representation
   to generate observations from the generalized hyperbolic
@@ -144,13 +144,13 @@ ghypBreaks(Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
  }
 
 \references{
-  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions.
   In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
   pp. 700--707. New York: Wiley.
 
-  Bibby, B. M. and Sorenson, M. (2003).
+  Bibby, B. M. and \enc{Sörenson}{Sorenson}, M. (2003).
   Hyperbolic processes in finance.
   In \emph{Handbook of Heavy Tailed Distributions in Finance}, ed.,
   Rachev, S. T. pp. 212--248. Elsevier Science B.~V.

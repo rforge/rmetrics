@@ -16,7 +16,7 @@
 
   4. \eqn{(\lambda,\omega,\eta)}{(lambda, omega, eta)}
 
-  See Jorgensen (1982) and Dagpunar (1989)
+  See \enc{Jörgensen}{Jorgensen} (1982) and Dagpunar (1989)
 }
 
 \usage{
@@ -44,7 +44,7 @@ gigChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \references{
-  Jorgensen, B. (1982).
+  \enc{Jörgensen}{Jorgensen}, B. (1982).
   \emph{Statistical Properties of the Generalized Inverse Gaussian
     Distribution}.
   Lecture Notes in Statistics, Vol. 9, Springer-Verlag, New York.

@@ -16,7 +16,7 @@
   4. \eqn{\xi, \chi, \delta, \mu}{xi, chi, delta, mu}
 
   The first three are given in Barndorff-Nielsen and
-  Blaesild (1983), and the fourth in Prause (1999)
+  \enc{Blæsild}{Blaesild} (1983), and the fourth in Prause (1999)
 }
 
 \usage{
@@ -55,7 +55,7 @@ hyperbChangePars(from, to, Theta, noNames = FALSE)
 }
 
 \references{
-  Barndorff-Nielsen, O. and Blaesild, P. (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P. (1983).
   Hyperbolic distributions.
   In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,

@@ -70,7 +70,7 @@ gigBreaks (Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
    \eqn{\lambda}{lambda}.
 
   The generalized inverse Gaussian distribution is investigated in
-  detail in Jorgensen (1982).
+  detail in \enc{Jörgensen}{Jorgensen} (1982).
 
   Use \code{gigChangePars} to convert from the
   \eqn{(\delta,\gamma)}{(delta,gamma)},
@@ -147,7 +147,7 @@ gigBreaks (Theta, small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
   Gaussian generator. \emph{Commun. Statist. -Simula.}, \bold{18},
   703--710.
   
-  Jorgensen, B. (1982). \emph{Statistical Properties of
+  \enc{Jörgensen}{Jorgensen}, B. (1982). \emph{Statistical Properties of
   the Generalized Inverse Gaussian Distribution}. Lecture Notes in
   Statistics, Vol. 9, Springer-Verlag, New York.
 }

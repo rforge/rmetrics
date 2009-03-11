@@ -97,7 +97,7 @@
   \emph{Proc. Roy. Soc. Lond.},
   A\bold{353}, 401--419.
   
-  Barndorff-Nielsen, O. and Blaesild, P (1983).
+  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions. 
   In \emph{Encyclopedia of Statistical Sciences}, 
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
