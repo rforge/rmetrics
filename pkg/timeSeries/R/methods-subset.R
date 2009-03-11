@@ -23,47 +23,8 @@
 # index
 ################################################################################
 setClassUnion("index_timeSeries",
-              members =  c("numeric", "logical")) # , "character"))
-
-################################################################################
-#  [,timeSeries              Subsets of a 'timeSeries' object
-################################################################################
-
-## x <- "timeSeries"
-## i <- c("index_timeSeries", "character", "timeDate", "timeSeries",
-##        "matrix", "missing", "ANY")
-## j <- c("index_timeSeries", "character", "missing", "ANY")
-## expand.grid(x = x, i = i, j = j)
-
-##             x                i                j
-## 1  timeSeries index_timeSeries index_timeSeries
-## 2  timeSeries        character index_timeSeries
-## 3  timeSeries         timeDate index_timeSeries
-## 4  timeSeries       timeSeries index_timeSeries
-## 5  timeSeries           matrix index_timeSeries
-## 6  timeSeries          missing index_timeSeries
-## 7  timeSeries              ANY index_timeSeries
-## 8  timeSeries index_timeSeries        character
-## 9  timeSeries        character        character
-## 10 timeSeries         timeDate        character
-## 11 timeSeries       timeSeries        character
-## 12 timeSeries           matrix        character
-## 13 timeSeries          missing        character
-## 14 timeSeries              ANY        character
-## 15 timeSeries index_timeSeries          missing
-## 16 timeSeries        character          missing
-## 17 timeSeries         timeDate          missing
-## 18 timeSeries       timeSeries          missing
-## 19 timeSeries           matrix          missing
-## 20 timeSeries          missing          missing
-## 21 timeSeries              ANY          missing
-## 22 timeSeries index_timeSeries              ANY
-## 23 timeSeries        character              ANY
-## 24 timeSeries         timeDate              ANY
-## 25 timeSeries       timeSeries              ANY
-## 26 timeSeries           matrix              ANY
-## 27 timeSeries          missing              ANY
-## 28 timeSeries              ANY              ANY
+              members =  c("numeric", "logical"))
+# no "character" -> because needs to be coerced to timeDate object.
 
 # ------------------------------------------------------------------------------
 
@@ -76,12 +37,19 @@ setClassUnion("index_timeSeries",
     stopifnot(is(j, "index_timeSeries"))
 
     # subset data and positions
-    data <- .subset(x, i, j, drop = FALSE)
+    t <- try(data <- .subset(x, i, j, drop = FALSE), silent = TRUE)
+    if (inherits(t, "try-error")) {
+        # cast error and remove calling function
+        msg <- sub("Error in.*: \n *", "", t)
+        stop(msg, call. = FALSE)
+    }
+
     pos <-
         if (length(x@positions)>0)
             .subset(x@positions, i)
         else
             numeric(0)
+
     units <- .subset(x@units, j)
 
     # Record IDs:
@@ -106,9 +74,6 @@ setClassUnion("index_timeSeries",
 
 .findIndex <- function(ipos, pos)
 {
-
-    # FIXME : if NAs ...
-
     attributes(ipos) <- NULL
 
     if (unsorted <- is.unsorted(pos)) {
@@ -118,19 +83,64 @@ setClassUnion("index_timeSeries",
 
     i <- findInterval(ipos, pos)
 
-    if (!identical(as.numeric(ipos), as.numeric(pos[i]))) #-> avoid troubles with int
+    if (!identical(as.numeric(ipos), as.numeric(pos[i])))
+        #-> avoid troubles with int
         stop("subscript out of bounds", call. = FALSE)
 
     if (unsorted) i <- or[i]
     i
 }
 
+################################################################################
+#  [,timeSeries              Subsets of a 'timeSeries' object
+################################################################################
+
+
+
+## i <- c("index_timeSeries", "character", "timeDate",
+##        "timeSeries", "missing", "ANY")
+## j <- c("index_timeSeries", "character", "timeSeries",
+##        "missing", "ANY")
+## expand.grid(i = i, j = j)
+
+## >                   i                j
+## 1  index_timeSeries index_timeSeries
+## 2         character index_timeSeries
+## 3          timeDate index_timeSeries
+## 4        timeSeries index_timeSeries
+## 5           missing index_timeSeries
+## 6               ANY index_timeSeries
+## 7  index_timeSeries        character
+## 8         character        character
+## 9          timeDate        character
+## 10       timeSeries        character
+## 11          missing        character
+## 12              ANY        character
+## 13 index_timeSeries       timeSeries
+## 14        character       timeSeries
+## 15         timeDate       timeSeries
+## 16       timeSeries       timeSeries
+## 17          missing       timeSeries
+## 18              ANY       timeSeries
+## 19 index_timeSeries          missing
+## 20        character          missing
+## 21         timeDate          missing
+## 22       timeSeries          missing
+## 23          missing          missing
+## 24              ANY          missing
+## 25 index_timeSeries              ANY
+## 26        character              ANY
+## 27         timeDate              ANY
+## 28       timeSeries              ANY
+## 29          missing              ANY
+## 30              ANY              ANY
+
 # ------------------------------------------------------------------------------
 
 ## FIXME : deal with signal series
 
 # ------------------------------------------------------------------------------
-## 1  timeSeries index_timeSeries index_timeSeries
+## 1  index_timeSeries index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
@@ -139,29 +149,20 @@ setMethod("[",
               .subset_timeSeries(x, i, j))
 
 # ------------------------------------------------------------------------------
-## 2  timeSeries        character index_timeSeries
+## 2         character index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "character", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
-
-          # FIXME
-
-          # check if :: separator
-
           td <- timeDate(i)
           if (any(is.na(td))) return(as.vector(NA))
-
           i <- .findIndex(as.numeric(td, units = "secs"), x@positions)
-
-          # Return
           .subset_timeSeries(x, i, j)
-
       })
 
 # ------------------------------------------------------------------------------
-## 3  timeSeries         timeDate index_timeSeries
+## 3          timeDate index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "index_timeSeries"),
@@ -172,7 +173,7 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 4  timeSeries       timeSeries index_timeSeries
+## 4        timeSeries index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeSeries", j = "index_timeSeries"),
@@ -182,29 +183,19 @@ setMethod("[",
               i@format != "counts" &&
               finCenter(x) != finCenter(i))
               stop("FinCenter of timeSeries and subset do not match")
-
           .subset_timeSeries(x, as.vector(i), j)
       })
 
 # ------------------------------------------------------------------------------
-## 5  timeSeries           matrix index_timeSeries
+## 5           missing index_timeSeries
 
 setMethod("[",
-          signature(x = "timeSeries", i = "matrix", j = "index_timeSeries"),
-          function(x, i, j, ..., drop = FALSE)
-          .subset_timeSeries(x, as.vector(i), j))
-
-# ------------------------------------------------------------------------------
-## 6  timeSeries          missing index_timeSeries
-
-setMethod("[",
-          signature(x = "timeSeries", i = "missing",
-                         j = "index_timeSeries"),
+          signature(x = "timeSeries", i = "missing", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
           .subset_timeSeries(x, TRUE, j))
 
 # ------------------------------------------------------------------------------
-## 7  timeSeries              ANY index_timeSeries
+## 6               ANY index_timeSeries
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -212,7 +203,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 8  timeSeries index_timeSeries        character
+## 7  index_timeSeries        character
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries", j = "character"),
@@ -225,7 +216,7 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 9  timeSeries        character        character
+## 8         character        character
 
 setMethod("[",
           signature(x = "timeSeries", i = "character", j = "character"),
@@ -238,7 +229,7 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 10 timeSeries         timeDate        character
+## 9          timeDate        character
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "character"),
@@ -252,17 +243,12 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 11 timeSeries       timeSeries        character
+## 10       timeSeries        character
 
-## FIXME
-
-# ------------------------------------------------------------------------------
-## 12 timeSeries           matrix        character
-
-## FIXME
+# inherited method works fine
 
 # ------------------------------------------------------------------------------
-## 13 timeSeries          missing        character
+## 11          missing        character
 
 setMethod("[",
           signature(x = "timeSeries", i = "missing", j = "character"),
@@ -275,7 +261,7 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 14 timeSeries              ANY        character
+## 12              ANY        character
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -283,7 +269,18 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 15 timeSeries index_timeSeries          missing
+
+## 13 index_timeSeries       timeSeries
+## 14        character       timeSeries
+## 15         timeDate       timeSeries
+## 16       timeSeries       timeSeries
+## 17          missing       timeSeries
+## 18              ANY       timeSeries
+
+## rely on inherited methods
+
+# ------------------------------------------------------------------------------
+## 19 index_timeSeries          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "index_timeSeries",
@@ -291,9 +288,7 @@ setMethod("[",
           function(x, i, j, ..., drop = FALSE)
       {
           if(nargs() == 2) { # same sub-setting as matrix
-              if (is.character(i))
-                  as.numeric(NA)
-              else if(any(as.logical(i)) || prod(dim(x)) == 0)
+              if(any(as.logical(i)) || prod(dim(x)) == 0)
                   as.vector(x)[i]
           } else {
               .subset_timeSeries(x, i, TRUE)
@@ -301,26 +296,32 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 16 timeSeries        character          missing
+## 20        character          missing
 
-# FIXME
 setMethod("[",
           signature(x = "timeSeries", i = "character", j = "missing"),
-          function(x, i, j, ..., drop = FALSE) x[i,TRUE])
+          function(x, i, j, ..., drop = FALSE)
+      {
+          if (nargs() == 2)
+              as.numeric(NA) #-> return NA if comma missing
+          else
+              callGeneric(x=x, i=i, j=TRUE)
+      })
 
 # ------------------------------------------------------------------------------
-## 17 timeSeries         timeDate          missing
+## 21         timeDate          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
+          # do not return NA if comma missing because timeDate index
           i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
           .subset_timeSeries(x, i, TRUE)
       })
 
 # ------------------------------------------------------------------------------
-## 18 timeSeries       timeSeries          missing
+## 22       timeSeries          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "timeSeries", j = "missing"),
@@ -339,29 +340,29 @@ setMethod("[",
       })
 
 # ------------------------------------------------------------------------------
-## 19 timeSeries           matrix          missing
+## workaround  i <- matrix.
 
 setMethod("[",
           signature(x = "timeSeries", i = "matrix", j = "missing"),
           function(x, i, j, ..., drop = FALSE)
       {
-          if(nargs() == 2) {
+          if(nargs() == 2) { # same sub-setting as matrix
               if(any(as.logical(i)) || prod(dim(x)) == 0)
-                   as.vector(x)[i]
+                  as.vector(x)[i]
           } else {
               .subset_timeSeries(x, as.vector(i), TRUE)
           }
       })
 
 # ------------------------------------------------------------------------------
-## 20 timeSeries          missing          missing
+## 23          missing          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "missing", j = "missing"),
           function(x, i, j, ..., drop = FALSE) x)
 
 # ------------------------------------------------------------------------------
-## 21 timeSeries              ANY          missing
+## 24              ANY          missing
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -369,7 +370,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 22 timeSeries index_timeSeries              ANY
+## 25 index_timeSeries              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -377,7 +378,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 23 timeSeries        character              ANY
+## 26        character              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -385,7 +386,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 24 timeSeries         timeDate              ANY
+## 27         timeDate              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -393,7 +394,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 25 timeSeries       timeSeries              ANY
+## 28       timeSeries              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -401,7 +402,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 26 timeSeries           matrix              ANY
+## 29          missing              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -409,15 +410,7 @@ setMethod("[",
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
 # ------------------------------------------------------------------------------
-## 27 timeSeries          missing              ANY
-
-setMethod("[",
-          signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
-          function(x,i,j, ..., drop = FALSE)
-          stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
-
-# ------------------------------------------------------------------------------
-## 28 timeSeries              ANY              ANY
+## 30              ANY              ANY
 
 setMethod("[",
           signature(x = "timeSeries", i = "ANY", j = "index_timeSeries"),
@@ -452,28 +445,17 @@ setMethod("$",
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
 
-## i <- c("timeDate", "character", "index_timeSeries", "timeSeries", "matrix")
-## j <- c("index_timeSeries", "character", "missing")
+# Note that most of the generic function works by default with [<-,timeDate
+# only need to deal with special cases that are i <- ("timeDate", "character")
 
 # ------------------------------------------------------------------------------
 # timeDate
 
 setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "timeDate",
-                           j = "index_timeSeries"),
+                 signature(x = "timeSeries", i = "timeDate", j = "ANY"),
                  function(x, i, j, value)
              {
                  i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
-                 callGeneric(x=x, i=i, j=j, value=value)
-             })
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "timeDate", j = "character"),
-                 function(x, i, j, value)
-             {
-                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-                 if (any(is.na(j)))
-                     stop("subscript out of bounds", call. = FALSE)
                  callGeneric(x=x, i=i, j=j, value=value)
              })
 
@@ -486,21 +468,10 @@ setReplaceMethod("[",
 # character
 
 setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "character", j = "index_timeSeries"),
+                 signature(x = "timeSeries", i = "character", j = "ANY"),
                  function(x, i, j, value)
              {
                  i <- timeDate(i)
-                 callGeneric(x=x, i=i, j=j, value=value)
-             })
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "character", j = "character"),
-                 function(x, i, j, value)
-             {
-                 i <- timeDate(i)
-                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-                 if (any(is.na(j)))
-                     stop("subscript out of bounds", call. = FALSE)
                  callGeneric(x=x, i=i, j=j, value=value)
              })
 
@@ -511,71 +482,5 @@ setReplaceMethod("[",
                  i <- timeDate(i)
                  callGeneric(x=x, i=i, j=TRUE, value=value)
              })
-
-# ------------------------------------------------------------------------------
-# index_timeSeries
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "index_timeSeries", j = "character"),
-                 function(x, i, j, value)
-             {
-                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-                 if (any(is.na(j)))
-                     stop("subscript out of bounds", call. = FALSE)
-                 callGeneric(x=x, i=i, j=j, value=value)
-             })
-
-# Note
-# index_timeSeries,index_timeSeries
-# index_timeSeries,missing
-# works by default
-
-# ------------------------------------------------------------------------------
-# matrix
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "matrix", j = "character"),
-                 function(x, i, j, value)
-             {
-                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-                 if (any(is.na(j)))
-                     stop("subscript out of bounds", call. = FALSE)
-                 callGeneric(x=x, i=i, j=j, value=value)
-             })
-
-# Note
-# matrix,index_timeSeries
-# matrix,missing
-# works by default
-
-# ------------------------------------------------------------------------------
-# timeSeries
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "timeSeries",
-                           j = "index_timeSeries"),
-                 function(x, i, j, value)
-             {
-                 if (x@format != "counts" &&
-                     i@format != "counts" &&
-                     finCenter(x) != finCenter(i))
-                     stop("FinCenter of timeSeries and subset do not match")
-                 callGeneric(x=x, i=as.vector(i), j=j, value=value)
-             })
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "timeSeries", j = "character"),
-                 function(x, i, j, value)
-             {
-                 j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
-                 if (any(is.na(j)))
-                     stop("subscript out of bounds", call. = FALSE)
-                 callGeneric(x=x, i=i, j=j, value=value)
-             })
-
-setReplaceMethod("[",
-                 signature(x = "timeSeries", i = "timeSeries", j = "missing"),
-                 function(x, i, j, value)
-                 callGeneric(x=x, i=i, j=TRUE, value=value))
 
 ################################################################################

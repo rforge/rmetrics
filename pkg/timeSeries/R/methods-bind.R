@@ -15,11 +15,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  cbind.timeSeries          Binds columns of two 'timeSeries' objects
-#  rbind.timeSeries          Binds rows of two 'timeSeries' objects
+#  cbind,timeSeries          Binds columns of two 'timeSeries' objects
+#  rbind,timeSeries          Binds rows of two 'timeSeries' objects
 ################################################################################
 
-cbind.timeSeries <- function(..., deparse.level = 1)
+.cbind.timeSeries <- function(..., deparse.level = 1)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
@@ -75,6 +75,28 @@ cbind.timeSeries <- function(..., deparse.level = 1)
 
 # ------------------------------------------------------------------------------
 
+# YC:
+# Note that since 2.9.0 S3 methods can not be defined for S4 classes
+# which extends an object like matrix. Therefore we turn all S3
+# generics to S4 generics for backward compatibility
+
+# Note that since 2.8.0 it is possible to define methods for functions
+# with dots ...
+
+if (getRversion() < "2.9.0") {
+    cbind.timeSeries <-
+        function(..., deparse.level = 1)
+            .cbind.timeSeries(..., deparse.level = deparse.level)
+} else {
+    setGeneric("cbind", signature = "...") #-> creates warning but
+                                           # cannot avoid it with
+                                           # current dotsMethods scheme
+    setMethod("cbind", "timeSeries", function(..., deparse.level = 1)
+              .cbind.timeSeries(..., deparse.level = deparse.level))
+}
+
+# ------------------------------------------------------------------------------
+
 setMethod("cbind2", c("timeSeries", "timeSeries"),
           function(x, y) cbind(x, y))
 setMethod("cbind2", c("timeSeries", "ANY"),
@@ -85,7 +107,7 @@ setMethod("cbind2", c("timeSeries", "missing"), function(x,y) x)
 
 # ------------------------------------------------------------------------------
 
-rbind.timeSeries <- function(..., deparse.level = 1)
+.rbind.timeSeries <- function(..., deparse.level = 1)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
@@ -123,6 +145,28 @@ rbind.timeSeries <- function(..., deparse.level = 1)
     ans <- timeSeries(data = data, charvec = tds, zone = "GMT",
                       FinCenter = finCenter(dots[[1]]), units = units)
     sort(ans)
+}
+
+# ------------------------------------------------------------------------------
+
+# YC:
+# Note that since 2.9.0 S3 methods can not be defined for S4 classes
+# which extends an object like matrix. Therefore we turn all S3
+# generics to S4 generics for backward compatibility
+
+# Note that since 2.8.0 it is possible to define methods for functions
+# with dots ...
+
+if (getRversion() < "2.9.0") {
+    rbind.timeSeries <-
+        function(..., deparse.level = 1)
+            .rbind.timeSeries(..., deparse.level = deparse.level)
+} else {
+    setGeneric("rbind", signature = "...") #-> creates warning but
+                                           # cannot avoid it with
+                                           # current dotsMethods scheme
+    setMethod("rbind", "timeSeries", function(..., deparse.level = 1)
+              .rbind.timeSeries(..., deparse.level = deparse.level))
 }
 
 # ------------------------------------------------------------------------------

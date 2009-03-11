@@ -15,7 +15,7 @@
 
 ################################################################################
 # METHOD:                   SUBSETTING METHODS ON DATA:
-#  tail.timeSeries           Returns the tail of a 'timeSeries' object
+#  tail,timeSeries           Returns the tail of a 'timeSeries' object
 ################################################################################
 
 setMethod("tail",

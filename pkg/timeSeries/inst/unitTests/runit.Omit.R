@@ -43,7 +43,7 @@ function()
     x[1, 1] = NA
     x[3:4, 2] = NA
     x[18:20, 4] = NA
-    print(x)
+    show(x)
 
     timeSeries:::.naOmitMatrix(as.matrix(x))
     timeSeries:::.naOmitMatrix(as.matrix(x), "s")
@@ -70,7 +70,7 @@ function()
     x[1, 1] = NA
     x[3:4, 2] = NA
     x[18:20, 4] = NA
-    print(x)
+    show(x)
 
     na.omit(x)
     na.omit(x, "s")

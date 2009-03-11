@@ -19,54 +19,54 @@
 ################################################################################
 
 
-model.frame.timeSeries <- function(formula, data, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod("model.frame", "timeSeries", function(formula, data, ...)
+      {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Extracting the Environment of a Model Formula
+          # Description:
+          #   Extracting the Environment of a Model Formula
 
-    # Arguments:
-    #   formula - a model formula
-    #   data - a 'timeSeries' object
+          # Arguments:
+          #   formula - a model formula
+          #   data - a 'timeSeries' object
 
-    # Details:
-    #   Allows to use model.frame() for "timeSeries" objects.
+          # Details:
+          #   Allows to use model.frame() for "timeSeries" objects.
 
-    # Examples:
-    #   x = as.timeSeries(data(msft.dat))[1:12, ]
-    #   model.frame( ~ High + Low, data = x)
-    #   model.frame.timeSeries(Open ~ High + log(Low), data = x)
+          # Examples:
+          #   x = as.timeSeries(data(msft.dat))[1:12, ]
+          #   model.frame( ~ High + Low, data = x)
+          #   model.frame(Open ~ High + log(Low), data = x)
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Create Model Frame:
-    format <- data@format
-    FinCenter <- finCenter(data)
-    recordIDs <- data@recordIDs
-    title <- data@title
+          # Create Model Frame:
+          format <- data@format
+          FinCenter <- finCenter(data)
+          recordIDs <- data@recordIDs
+          title <- data@title
 
-    Model <- stats::model.frame.default(formula, data, ...)
+          Model <- stats::model.frame.default(formula, data, ...)
 
-    recordIDs <-
-        if (NROW(Model) == NROW(recordIDs))
-            recordIDs
-        else
-            data.frame()
+          recordIDs <-
+              if (NROW(Model) == NROW(recordIDs))
+                  recordIDs
+              else
+                  data.frame()
 
-    # Convert to timeSeries:
-    ans <- timeSeries(data = as.matrix(Model),
-                      charvec = rownames(Model),
-                      units = colnames(Model),
-                      format = format,
-                      FinCenter = FinCenter,
-                      recordIDs = recordIDs,
-                      title = title,
+          # Convert to timeSeries:
+          ans <- timeSeries(data = as.matrix(Model),
+                            charvec = rownames(Model),
+                            units = colnames(Model),
+                            format = format,
+                            FinCenter = FinCenter,
+                            recordIDs = recordIDs,
+                            title = title,
                       documentation = description()
-                      )
+                            )
 
-    # Return value:
-    ans
-}
+          # Return value:
+          ans
+      })
 
 ################################################################################
 

@@ -33,20 +33,20 @@ function()
     # RUnit Test:
 
     # Signal Series
-    tS = dummySeries(format = "counts")
-    colCumsums(tS)
-    colCummaxs(tS)
-    colCummins(tS)
-    colCumprods(tS)
-    colCumreturns(tS)
+    ts = dummySeries(format = "counts")
+    colCumsums(ts)
+    colCummaxs(ts)
+    colCummins(ts)
+    colCumprods(ts)
+    colCumreturns(ts)
 
     # Time Series:
     ts = dummySeries()
-    colCumsums(tS)
-    colCummaxs(tS)
-    colCummins(tS)
-    colCumprods(tS)
-    colCumreturns(tS)
+    colCumsums(ts)
+    colCummaxs(ts)
+    colCummins(ts)
+    colCumprods(ts)
+    colCumreturns(ts)
 }
 
 

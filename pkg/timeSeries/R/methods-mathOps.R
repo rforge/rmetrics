@@ -101,10 +101,10 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
 
 # ------------------------------------------------------------------------------
 
-## setMethod("cummax", "timeSeries", function(x) callGeneric(getDataPart(x)))
-## setMethod("cummin", "timeSeries", function(x) callGeneric(getDataPart(x)))
-## setMethod("cumprod", "timeSeries", function(x) callGeneric(getDataPart(x)))
-## setMethod("cumsum", "timeSeries", function(x) callGeneric(getDataPart(x)))
+setMethod("cummax", "timeSeries", function(x) callGeneric(getDataPart(x)))
+setMethod("cummin", "timeSeries", function(x) callGeneric(getDataPart(x)))
+setMethod("cumprod", "timeSeries", function(x) callGeneric(getDataPart(x)))
+setMethod("cumsum", "timeSeries", function(x) callGeneric(getDataPart(x)))
 
 # ------------------------------------------------------------------------------
 

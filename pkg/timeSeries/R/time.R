@@ -65,20 +65,14 @@ function(object, value)
 
 # ------------------------------------------------------------------------------
 
-## if (!exists("time<-", mode = "function"))
-"time<-" <- function(x, value) UseMethod("time<-")
-
-# ------------------------------------------------------------------------------
-"time<-.timeSeries" <-
-    function(x, value)
-{
-    stopifnot(is.timeSeries(x))
-
-    rownames(x) <- value
-
-    # Return
-    x
-}
+`time<-` <- function(x, value) UseMethod("time<-")
+setGeneric("time<-")
+setMethod("time<-", "timeSeries", function(x, value)
+      {
+          rownames(x) <- value
+          # Return
+          x
+      })
 
 ################################################################################
 # METHOD:                   POSITION HANDLING:

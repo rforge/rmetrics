@@ -19,8 +19,8 @@
 ################################################################################
 
 
-plot.timeSeries <-
-    function(x, y = NULL, FinCenter = NULL,
+setMethod("plot", "timeSeries",
+    function(x, y, FinCenter = NULL,
     plot.type = c("multiple", "single"),
     format = "auto", at = "auto",
     widths = 1, heights = 1,
@@ -52,6 +52,9 @@ plot.timeSeries <-
 
     # FUNCTION:
 
+    #
+    if (missing(y)) y <- NULL
+
     # Labels:
     xlabel <- if (!missing(x)) deparse(substitute(x))
     ylabel <- if (!missing(y)) deparse(substitute(y))
@@ -69,7 +72,7 @@ plot.timeSeries <-
         xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
         oma.multi = oma.multi, yax.flip = yax.flip,
         format = format, at = at, widths = widths, heights = heights, ...)
-}
+})
 
 
 # ------------------------------------------------------------------------------

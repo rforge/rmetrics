@@ -18,18 +18,10 @@
 #  rank.timeSeries           Returns sample ranks of a timeSeries object.
 ################################################################################
 
-
-rank.timeSeries <-
-function(x, ...)
-{
-    # rank, timeSeries method ...
-
-    x = apply(x, 2, rank, ...)
-
-    # Return Value:
-    x
-}
-
+setMethod("rank", "timeSeries",
+          function(x,  na.last = TRUE,
+                   ties.method = c("average", "first", "random", "max", "min"))
+          apply(x, 2, rank, na.last = na.last, ties.method = ties.method))
 
 ################################################################################
 

@@ -42,123 +42,125 @@
 #  as.timeSeries.character   Loads and transformas from a demo file
 #  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
 
-as.timeSeries <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
+# ------------------------------------------------------------------------------
 
-    UseMethod("as.timeSeries")
-}
+# YC:
+# Note that since 2.9.0 S3 methods can not be defined for S4 classes
+# which extends an object like matrix. Therefore we turn all S3
+# generics to S4 generics for backward compatibility
 
 # ------------------------------------------------------------------------------
 
-as.timeSeries.default <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
-
-    # FUNCTION:
-
-    # Return Value:
-    ans <- timeSeries(x, ...)
-
-    ans
-}
-
-setAs("ANY", "timeSeries", function(from) as.timeSeries.default(from))
+setMethod("as.timeSeries", "timeSeries", function(x, ...) x)
 
 # ------------------------------------------------------------------------------
 
-as.timeSeries.data.frame <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
+setMethod("as.timeSeries", "ANY", function(x, ...)
+      {   # A function implemented by Diethelm Wuertz
+          # Extended by Yohan Chalabi
 
-    # Description:
-    #   Converts a data.frame into a timeSeries object
+          # FUNCTION:
 
-    # Notes:
-    #   The first column must contain the dates.
+          # Return Value:
+          ans <- timeSeries(x, ...)
 
-    # Examples:
-    #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
+          ans
+      })
 
-    # FUNCTION:
-
-    if (all(!(num <- unlist(lapply(x, is.numeric)))))
-        stop("x contains no numeric columns")
-
-    # Check if rownames(x) or the first column has a valid ISO-format:
-    if (num[1])
-        # is.numeric() is better than format == "unkown"
-        # which can give wrong result. i.e. whichFormat(0.1253328600)
-        suppressWarnings(charvec <- timeDate(rownames(x)))
-    else
-        suppressWarnings(charvec <- timeDate(as.vector(x[,1])))
-
-    data <- as.matrix(x[, num])
-    units <- names(x)[num]
-    if (any(!(cl <- num[-1]))) {
-        recordIDs <- as.data.frame(x[, !c(TRUE, cl)]) # do not take first column
-        names(recordIDs) <- names(x)[!c(TRUE, cl)]
-    } else {
-        recordIDs <- data.frame()
-    }
-
-    # Create Time Series Object:
-    timeSeries(data = data,
-               charvec = charvec,
-               units = units,
-               recordIDs = recordIDs, ...)
-}
-
-setAs("data.frame", "timeSeries", function(from) as.timeSeries.data.frame(from))
+setAs("ANY", "timeSeries", function(from) as.timeSeries(from))
 
 # ------------------------------------------------------------------------------
 
+setMethod("as.timeSeries", "data.frame", function(x, ...)
+      {   # A function implemented by Diethelm Wuertz
+          # Extended by Yohan Chalabi
 
-as.timeSeries.character <-
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
+          # Description:
+          #   Converts a data.frame into a timeSeries object
 
-    # Example:
-    #   as.timeSeries(data(nyse))
+          # Notes:
+          #   The first column must contain the dates.
 
-    # FUNCTION:
+          # Examples:
+          #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
 
-    # Load Demo File - Returns a data frame:
-    x <- eval(parse(text = eval(x)))
+          # FUNCTION:
 
-    # timeSeries:
-    ans <- as.timeSeries(x, ...)
+          if (all(!(num <- unlist(lapply(x, is.numeric)))))
+              stop("x contains no numeric columns")
 
-    # Return Value:
-    ans
-}
+          # Check if rownames(x) or the first column has a valid ISO-format:
+          if (num[1])
+              # is.numeric() is better than format == "unkown"
+              # which can give wrong result. i.e. whichFormat(0.1253328600)
+              suppressWarnings(charvec <- timeDate(rownames(x)))
+          else
+              suppressWarnings(charvec <- timeDate(as.vector(x[,1])))
 
-setAs("character", "timeSeries", function(from) as.timeSeries.character(from))
+          data <- as.matrix(x[, num])
+          units <- names(x)[num]
+          if (any(!(cl <- num[-1]))) {
+              recordIDs <- as.data.frame(x[, !c(TRUE, cl)]) # do not take first column
+              names(recordIDs) <- names(x)[!c(TRUE, cl)]
+          } else {
+              recordIDs <- data.frame()
+          }
+
+          # Create Time Series Object:
+          timeSeries(data = data,
+                     charvec = charvec,
+                     units = units,
+                     recordIDs = recordIDs, ...)
+      })
+
+setAs("data.frame", "timeSeries", function(from) as.timeSeries(from))
 
 # ------------------------------------------------------------------------------
 
+setMethod("as.timeSeries", "character", function(x, ...)
+      {   # A function implemented by Diethelm Wuertz
+          # Extended by Yohan Chalabi
 
-as.timeSeries.zoo <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
+          # Example:
+          #   as.timeSeries(data(nyse))
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # as. timeSeries:
+          # Load Demo File - Returns a data frame:
+          x <- eval(parse(text = eval(x)))
 
-    ans <- timeSeries(data = as.matrix(x),
-                      charvec = as.character(attr(x, "index")), ...)
+          # timeSeries:
+          ans <- as.timeSeries(x, ...)
 
-    # Return Value:
-    ans
+          # Return Value:
+          ans
+      })
 
-}
+setAs("character", "timeSeries", function(from) as.timeSeries(from))
 
+# ------------------------------------------------------------------------------
+
+## can not define a method for zoo since it is now longer possible to
+## have S3 methods for S4 classes and that zoo is an unknown class in
+## timeSeries ....
+
+## setMethod("as.timeSeries", "zoo", function(x, ...)
+##       {   # A function implemented by Diethelm Wuertz
+##           # Extended by Yohan Chalabi
+##
+##           # FUNCTION:
+##
+##           # as. timeSeries:
+##
+##           ans <- timeSeries(data = as.matrix(x),
+##                             charvec = as.character(attr(x, "index")), ...)
+##
+##           # Return Value:
+##           ans
+##
+##       })
+##
+## setAs("zoo", "timeSeries", function(from) as.timeSeries(from))
 
 ################################################################################
 # METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
@@ -167,95 +169,99 @@ as.timeSeries.zoo <-
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
 #  as.ts.logical             Converts a 'timeSeries' to 'logical'
 
-as.matrix.timeSeries <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod("as.matrix", "timeSeries", function(x, ...)
+      {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Converts a multivariate "timeSeries" to a matrix
+          # Description:
+          #   Converts a multivariate "timeSeries" to a matrix
 
-    # Arguments:
-    #   x - a 'timeSeries' object
+          # Arguments:
+          #   x - a 'timeSeries' object
 
-    # Value:
-    #   Returns the data slot of a 'timesSeries' object as a vector.
+          # Value:
+          #   Returns the data slot of a 'timesSeries' object as a vector.
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Check:
-    if (!inherits(x, "timeSeries"))
-        stop("x is not a timeSeries object!")
+          # Check:
+          if (!inherits(x, "timeSeries"))
+              stop("x is not a timeSeries object!")
 
-    # Convert:
-    ans <- getDataPart(x) # is matrix
-    dimnames(ans) <- dimnames(x)
+          # Convert:
+          ans <- getDataPart(x) # is matrix
+          dimnames(ans) <- dimnames(x)
 
-    # Results
-    ans
-}
+          # Results
+          ans
+      })
 
-
-# ------------------------------------------------------------------------------
-
-as.data.frame.timeSeries <-
-    function(x, row.names = NULL, optional = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Converts a multivariate "timeSeries" to a data.frame
-
-    # Arguments:
-    #   x - a 'timeSeries' object
-    #   row.names, optional - not used
-
-    # Value:
-    #   Returns the data slot of a 'timesSeries' object as a data frame.
-
-    # FUNCTION:
-
-    # Check:
-    if (class(x) != "timeSeries")
-        stop("x is not a timeSeries object!")
-
-    # Convert:
-    ans = as.data.frame(as.matrix(x))
-
-    # Return Value:
-    ans
-}
+setAs("timeSeries", "matrix", function(from) as.matrix(from))
 
 # ------------------------------------------------------------------------------
 
-as.ts.timeSeries <-
-    function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod("as.data.frame", "timeSeries",
+          function(x, row.names = NULL, optional = NULL, ...)
+      {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Converts a colum from a 'timeSeries' object into an object
-    #   of class 'ts'.
+          # Description:
+          #   Converts a multivariate "timeSeries" to a data.frame
 
-    # Example:
-    #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
+          # Arguments:
+          #   x - a 'timeSeries' object
+          #   row.names, optional - not used
 
-    # Changes:
-    #
+          # Value:
+          #   Returns the data slot of a 'timesSeries' object as a data frame.
 
-    # FUNCTION:
+          # FUNCTION:
 
-    # Transform:
+          # Check:
+          if (class(x) != "timeSeries")
+              stop("x is not a timeSeries object!")
 
-    if (isUnivariate(x)) {
-        ans = as.ts(as.vector(x), ...)
-    } else if (isMultivariate(x)) {
-        ans = as.ts(as.matrix(x), ...)
-    }
+          # Convert:
+          ans = as.data.frame(as.matrix(x))
 
-    # Add Attribute:
-    attr(ans, "positions") = time(x)
+          # Return Value:
+          ans
+      })
 
-    # Return Value:
-    ans
-}
+setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
+
+# ------------------------------------------------------------------------------
+
+setMethod("as.ts", "timeSeries",
+          function(x, ...)
+      {   # A function implemented by Diethelm Wuertz
+
+          # Description:
+          #   Converts a colum from a 'timeSeries' object into an object
+          #   of class 'ts'.
+
+          # Example:
+          #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
+
+          # Changes:
+          #
+
+          # FUNCTION:
+
+          # Transform:
+
+          if (isUnivariate(x)) {
+              ans = as.ts(as.vector(x), ...)
+          } else if (isMultivariate(x)) {
+              ans = as.ts(as.matrix(x), ...)
+          }
+
+          # Add Attribute:
+          attr(ans, "positions") = time(x)
+
+          # Return Value:
+          ans
+      })
+
+setAs("timeSeries", "ts", function(from) as.ts(from))
 
 # ------------------------------------------------------------------------------
 
@@ -265,14 +271,16 @@ as.ts.timeSeries <-
 # ------------------------------------------------------------------------------
 
 # YC : important for functions like lapply and sapply to work properly
-as.list.timeSeries <- function(x, ...)
-{
-    data <- getDataPart(x)
-    ncols <- NCOL(data)
-    value <- vector("list", ncols)
-    for (i in seq.int(ncols)) value[[i]] <- as.vector(data[, i])
-    names(value) <- colnames(x)
-    value
-}
+setMethod("as.list", "timeSeries", function(x, ...)
+      {
+          data <- getDataPart(x)
+          ncols <- NCOL(data)
+          value <- vector("list", ncols)
+          for (i in seq.int(ncols)) value[[i]] <- as.vector(data[, i])
+          names(value) <- colnames(x)
+          value
+      })
+
+setAs("timeSeries", "list", function(from) as.list(from))
 
 ################################################################################

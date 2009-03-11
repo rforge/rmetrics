@@ -4,8 +4,8 @@
 ################################################
 
 importFrom("graphics",
-           "plot",
            "lines",
+           "plot",
            "points",
            "grid",
            "title",
@@ -27,25 +27,26 @@ importFrom("methods",
            "cbind2",
            "coerce",
            "getDataPart",
-           "setDataPart",
+           "initialize",
            "rbind2",
+           "setDataPart",
            "show",
            "@<-",
            "is",
            "slot",
-           "new",
-           "slot<-")
+           "slotNames",
+           "new")
 importFrom("stats",
-           "as.ts",
-           "model.frame",
-           "window",
            "aggregate",
+           "as.ts",
            "end",
            "lag",
+           "model.frame",
            "na.omit",
            "quantile",
            "start",
            "time",
+           "window",
            "approx",
            "rnorm",
            "runif",
@@ -89,26 +90,39 @@ importFrom("utils",
 
 exportClasses("index_timeSeries",
               "timeSeries" )
-export("outlier",
+export("as.timeSeries",
+        "colCummaxs",
+        "colCummins",
+        "colCumprods",
+        "colCumreturns",
+        "colCumsums",
+        "outlier",
         "returns",
         "rowCumsums",
         "series<-",
         "series",
-        "timeSeries" )
+        "timeSeries",
+        "time<-" )
 exportMethods("aggregate",
               "align",
               "apply",
+              "as.data.frame",
+              "as.list",
+              "as.matrix",
+              "as.ts",
               "attach",
-#              "[<-",
+              "[<-",
               "[",
               "$",
               "cbind2",
+              "cbind",
               "coerce",
               "colnames<-",
               "colnames",
               "comment<-",
               "comment",
-               "diff",
+              "cut",
+              "diff",
               "dim",
               "dimnames<-",
               "dimnames",
@@ -116,61 +130,43 @@ exportMethods("aggregate",
               "finCenter<-",
               "finCenter",
               "getDataPart",
-              "setDataPart",
               "head",
+              "initialize",
               "is.na",
+              "is.unsorted",
               "lag",
               "lines",
               "merge",
+              "model.frame",
               "names",
               "na.omit",
               "Ops",
+              "plot",
               "points",
               "print",
               "quantile",
+              "rank",
               "rbind2",
+              "rbind",
               "rev",
               "rownames<-",
               "rownames",
               "sample",
               "scale",
+              "setDataPart",
               "show",
               "sort",
               "start",
               "str",
               "tail",
-              "time" )
+              "time",
+              "window" )
 
 ################################################
 ## S3 classes
 ################################################
 
-S3method("as.data.frame", "timeSeries")
-S3method("as.list", "timeSeries")
-S3method("as.matrix", "timeSeries")
-S3method("as.timeSeries", "character")
-S3method("as.timeSeries", "data.frame")
-S3method("as.timeSeries", "default")
-S3method("as.timeSeries", "zoo")
-S3method("as.ts", "timeSeries")
-S3method("cbind", "timeSeries")
-S3method("colCummaxs", "default")
-S3method("colCummaxs", "timeSeries")
-S3method("colCummins", "default")
-S3method("colCummins", "timeSeries")
-S3method("colCumprods", "default")
-S3method("colCumprods", "timeSeries")
-S3method("colCumreturns", "default")
-S3method("colCumreturns", "timeSeries")
-S3method("colCumsums", "default")
-S3method("colCumsums", "timeSeries")
 S3method("cumulated", "default")
-S3method("cut", "timeSeries")
-S3method("model.frame", "timeSeries")
-S3method("plot", "timeSeries")
-S3method("rbind", "timeSeries")
-S3method("time<-", "timeSeries")
-S3method("window", "timeSeries")
 
 ################################################
 ## functions
@@ -181,14 +177,8 @@ export(
     ".align.timeSeries",
     "applySeries",
     ".applySeries",
-#    ".assign_timeSeries",
-    "as.timeSeries",
+    ".cbind.timeSeries",
     "colAvgs",
-    "colCummaxs",
-    "colCummins",
-    "colCumprods",
-    "colCumreturns",
-    "colCumsums",
     "colKurtosis",
     "colMaxs",
     "colMins",
@@ -229,6 +219,8 @@ export(
     ".naOmitMatrix",
     "newPositions<-",
     "ohlcDailyPlot",
+    ".old2newRda",
+    ".old2newTimeSeries",
     "orderColnames",
     "orderStatistics",
     "pcaColnames",
@@ -236,7 +228,7 @@ export(
     ".plotTimeSeries",
     ".plot.turnpointsPastecs",
     ".print.timeSeries",
-    "rank.timeSeries",
+    ".rbind.timeSeries",
     "readSeries",
     "removeNA",
     "returnSeries",
@@ -255,7 +247,6 @@ export(
     ".subset_timeSeries",
     "substituteNA",
     ".summary.turnpointsPastecs",
-    "time<-",
     ".timeSeries",
     ".turnpoints",
     ".turnpointsPastecs",

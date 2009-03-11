@@ -14,24 +14,22 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  merge.timeSeries          Merges two 'timeSeries' objects
+#  merge,timeSeries          Merges two 'timeSeries' objects
 
 setMethod("merge", c("timeSeries", "timeSeries"),
     function(x, y, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-    x <- sort(x)
-    y <- sort(y)
-
-    # FIXME : if any counts
+    if (is.signalSeries(x) | is.signalSeries(y)) {
+        data <- merge(getDataPart(x), getDataPart(x))
+        return(timeSeries(data = data, units = colnames(data)))
+    }
 
     # Convert to Data Frame:
-    df.x <- data.frame(as.numeric(time(x), "sec"), getDataPart(x),
-                       row.names = 1:nrow(x))
+    df.x <- data.frame(as.numeric(time(x), "sec"), getDataPart(x))
     names(df.x) <- c("positions", colnames(x))
-    df.y <- data.frame(as.numeric(time(y), "sec"), getDataPart(y),
-                       row.names = nrow(x) + (1:nrow(y)))
+    df.y <- data.frame(as.numeric(time(y), "sec"), getDataPart(y))
     names(df.y) <- c("positions", colnames(y))
 
     # Merge as Data Frame:
@@ -40,16 +38,9 @@ setMethod("merge", c("timeSeries", "timeSeries"),
     units <- names(df)[-1]
     charvec <- as.numeric(df[,1])
 
-    # Compose and sort the timeSeries:
-    ans <-
-        if (any(c(is.signalSeries(x), is.signalSeries(y))))
-            timeSeries(data = data,  units = units)
-        else
-            timeSeries(data = data, charvec = charvec, units = units,
-                       zone = "GMT", FinCenter = finCenter(x))
-
     # Return Value:
-    ans
+    timeSeries(data = data, charvec = charvec, units = units,
+               zone = "GMT", FinCenter = finCenter(x))
 })
 
 

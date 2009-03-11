@@ -24,9 +24,9 @@
 setMethod("getDataPart", "timeSeries", #"signalSeries",
           function(object)
       {
-          dim <- dim(object)
-          attributes(object) <- NULL
-          dim(object) <- dim
+          lattrs <- list(dim = dim(object),
+                         dimnames = list(NULL, object@units))
+          attributes(object) <- lattrs
           object
       })
 

@@ -27,7 +27,7 @@ setMethod("apply", "timeSeries",
       {
           pos <- time(X)
           X <- getDataPart(X)
-          ans <- callNextMethod()
+          ans <- callGeneric()
           if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
               ans <- timeSeries(data = ans, charvec = pos)
           ans

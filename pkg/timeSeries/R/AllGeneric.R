@@ -12,24 +12,44 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-setGeneric("returns",
-           function(x, ...) standardGeneric("returns"), package = "timeSeries")
+setGeneric("returns", function(x, ...)
+           standardGeneric("returns"), package = "timeSeries")
 
 setGeneric("rowCumsums", function(x, na.rm = FALSE, ...)
            standardGeneric("rowCumsums"), package = "timeSeries")
 
 setGeneric("series", function(x) standardGeneric("series"), package = "timeSeries")
-setGeneric("series<-",
-           function(x, value) standardGeneric("series<-"), package = "timeSeries")
+setGeneric("series<-", function(x, value)
+           standardGeneric("series<-"), package = "timeSeries")
 
-## setGeneric("index", function(x, ...) standardGeneric("index"), package = "timeSeries")
-## setGeneric("index<-",
-##            function(x, value) standardGeneric("index<-"), package = "timeSeries")
+## setGeneric("index", function(x, ...)
+##            standardGeneric("index"), package = "timeSeries")
+## setGeneric("index<-", function(x, value)
+##            standardGeneric("index<-"), package = "timeSeries")
 
-setGeneric("outlier",  function(x, sd = 5, complement = TRUE, ...) standardGeneric("outlier"))
+setGeneric("outlier",  function(x, sd = 5, complement = TRUE, ...)
+           standardGeneric("outlier"))
 
 setGeneric("timeSeries",
            function (data, charvec, units = NULL, format = NULL, zone = "",
                      FinCenter = "", recordIDs = data.frame(), title = NULL,
                      documentation = NULL, ...)
            standardGeneric("timeSeries"))
+
+setGeneric("as.timeSeries", function(x, ...) standardGeneric("as.timeSeries"))
+
+## if (getRversion() >= "2.9.0") {
+##     setGeneric("time<-", function(x, value) standardGeneric("time<-"))
+## }
+
+setGeneric("colCumsums", function(x, na.rm = FALSE, ...) standardGeneric("colCumsums"))
+setGeneric("colCummaxs", function(x, na.rm = FALSE, ...) standardGeneric("colCummaxs"))
+setGeneric("colCummins", function(x, na.rm = FALSE, ...) standardGeneric("colCummins"))
+setGeneric("colCumprods", function(x, na.rm = FALSE, ...) standardGeneric("colCumprods"))
+setGeneric("colCumreturns",
+           function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+           standardGeneric("colCumreturns"))
+
+
+
+
