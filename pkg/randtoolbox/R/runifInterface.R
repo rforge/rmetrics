@@ -1,8 +1,13 @@
-set.generator <- function(generator="congru", params=NULL, seed=NULL)
+set.generator <- function(generator=c("congruRand", "default"), params=NULL, seed=NULL)
 {
-	if (generator == "congru") {
+	generator <- match.arg(generator)
+	if (generator == "congruRand") {
 		if (is.null(params)) {
-			params <- list(generator="congru", mod=2147483647, mult=16807, incr=0)
+			params <- list(generator="congruRand", mod=2147483647, mult=16807, incr=0)
+		} else if (is.null(params$generator)) {
+			params <- c(list(generator="congruRand"), params)
+		} else {
+			params$generator <- "congruRand"
 		}
 		if (is.null(seed)) {
 			if (!is.null(params$seed)) {
@@ -19,18 +24,18 @@ set.generator <- function(generator="congru", params=NULL, seed=NULL)
 			set.seed(seed)
 		}
 	} else {
-		stop("unsupported generator", generator)
+		stop("unsupported generator: ", generator)
 	}
 	invisible(NULL)
 }
 
 put.state <- function(state)
 {
-	if (state$generator == "congru") {
+	if (state$generator == "congruRand") {
 		.C("set_generator",
 			as.integer(1),
 			PACKAGE="randtoolbox")
-		RNGkind("user")
+		RNGkind("user-supplied")
 		.C("put_state_congru",
 			as.double(state$mod),
 			as.double(state$mult),
@@ -38,7 +43,7 @@ put.state <- function(state)
 			as.double(state$seed),
 			PACKAGE="randtoolbox")
 	} else {
-		stop("unsupported generator", state$generator)
+		stop("unsupported generator: ", state$generator)
 	}
 	invisible(NULL)
 }
@@ -46,7 +51,7 @@ put.state <- function(state)
 get.state <- function()
 {
 	if (RNGkind(NULL)[1] != "user-supplied") {
-		stop("For R base generators, use .Random.seed, not this function")
+		stop("For R base generators, use .Random.seed, not get.state()")
 	}
 	generator <- .C("current_generator",
 		integer(1),
@@ -58,7 +63,7 @@ get.state <- function()
 			incr=double(1),
 			seed=double(1),
 			PACKAGE="randtoolbox")
-		state <- c(list(generator="congru"),aux)
+		state <- c(list(generator="congruRand"),aux)
 	} else {
 		stop("internal error of randtoolbox")
 	}
