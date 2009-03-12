@@ -103,6 +103,15 @@ export("as.timeSeries",
         "series",
         "timeSeries",
         "time<-" )
+
+if (getRversion() < "2.9.0") {
+    S3method("cbind", "timeSeries")
+    S3method("rbind", "timeSeries")
+} else {
+    exportMethods("cbind",
+                  "rbind")
+}
+
 exportMethods("aggregate",
               "align",
               "apply",
@@ -115,7 +124,6 @@ exportMethods("aggregate",
               "[",
               "$",
               "cbind2",
-              "cbind",
               "coerce",
               "colnames<-",
               "colnames",
@@ -147,7 +155,6 @@ exportMethods("aggregate",
               "quantile",
               "rank",
               "rbind2",
-              "rbind",
               "rev",
               "rownames<-",
               "rownames",
