@@ -75,6 +75,19 @@ setMethod("+", c("timeDate", "numeric"),
 
 # ------------------------------------------------------------------------------
 
+setMethod("+", c("numeric", "timeDate"),
+          function(e1, e2)
+      {
+
+          ans <- callGeneric(e1, e2@Data)
+          ans <- timeDate(ans, zone = "GMT", FinCenter = e2@FinCenter)
+
+          # Return Value:
+          ans
+      })
+
+# ------------------------------------------------------------------------------
+
 setMethod("+", c("timeDate", "timeDate"),
           function(e1, e2)
           stop("binary '+' is not defined for \"timeDate\" objects"))
@@ -91,6 +104,12 @@ setMethod("-", c("timeDate", "numeric"),
           # Return Value:
           ans
       })
+
+# ------------------------------------------------------------------------------
+
+setMethod("-", c("numeric", "timeDate"),
+          function(e1, e2)
+          stop("Can only subtract from timeDate objects"))
 
 # ------------------------------------------------------------------------------
 
