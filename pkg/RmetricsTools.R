@@ -307,8 +307,9 @@ checkBeforeCommit  <-
 ## ## before starting install packages without namespace
 
 genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
-                         "fGarch", "fAssets", "fPortfolio"))
+                         "fGarch", "fCopulae", "fAssets", "fPortfolio"), ...)
 {
+
     stopifnot(is.character(pkgs))
 
     RmetricsPkgs <- pkgsRmetricsDev()
@@ -316,12 +317,34 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     for (pkg in pkgs) {
 
         user <- Sys.getenv("USER")
-        myFile <-
-            switch(user,
-                   "yankee" = file.path("~/r", pkg, "NAMESPACE"),
-                   paste("NAMESPACE", pkg, sep = "."))
 
-        .genNAMESPACE(pkg, RmetricsPkgs, myFile)
+        # Change here your personal path to the your local packages
+        pkgPath <-
+            switch(user,
+                   "yankee" = file.path("~/r", pkg),
+                   stop("edit your path in genNAMSPACE"))
+
+        # test if given directory exists
+        if (!file.exists(pkgPath))
+            stop(gettextf("package in %s does not exist", pkgPath))
+
+        # first remove current NAMEPSACE
+        nmSpace <- file.path(pkgPath , "NAMESPACE")
+        suppressWarnings(file.remove(nmSpace))
+
+        message("\n")
+        message("install.packages()ing without NAMESPACE : ", pkgPath)
+        install.packages(pkgPath, repos = NULL, ...)
+
+        message("\n")
+        message("generating NAMESPACE : ", nmSpace)
+        t <- try(.genNAMESPACE(pkg, RmetricsPkgs, nmSpace))
+        if (inherits(t, "try-error"))
+            stop("could not generate NAMESPACE")
+
+        message("\n")
+        message("install.packages()ing with NAMESPACE : ", pkgPath)
+        install.packages(pkgPath, repos = NULL, ...)
     }
 }
 
@@ -332,6 +355,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
              file = paste("NAMESPACE", pkg, sep = "."))
 {
 
+    # FIXME : why is it not possible to generate namespace of different packages ?
 
     findGlobalsPackage <- function(pname)
     {
@@ -486,6 +510,8 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
             findGlobalsEnv(as.environment(pname))
     }
 
+    # import full namespace of other package to stay on the safe side ...
+
     ##
     # search for all globals in order to include them in import
     globals <- unique(c(findGlobalsPackage(pkg), findMethodGlobalsPackage(pkg)))
@@ -514,9 +540,9 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     # remove base, pkg and some special functions (plot and summary from urca)
     imp <- imp[!(imp$pkg %in% c("base", pkg)),]
 
-###     for (idx in match("urca", imp$pkg))
-###         if (imp$func[idx] %in% c("plot", "summary"))
-###             imp <- imp[-idx,]
+    ###     for (idx in match("urca", imp$pkg))
+    ###         if (imp$func[idx] %in% c("plot", "summary"))
+    ###             imp <- imp[-idx,]
 
     imp <- tapply(imp$func, as.character(imp$pkg), function(x)
                   paste("\"", x, "\"", sep = "", collapse = ",\n           "))
@@ -525,6 +551,13 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
     imp <- imp[((names(imp) %in% RmetricsPkgs) ||
                packageHasNamespace(names(imp), file.path(R.home(), "library")))]
+
+    ## FIXME with timeSeries and cbind cbind.timeSeries
+
+###     impPkg <- c(na.omit(unique(c(impGlobals, "timeDate"))))
+###     impPkg <- impPkg[!(impPkg %in% pkg)]  # avoid cyclic name space dependencies
+###     # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
+###     imp <- impPkg[(impPkg %in% RmetricsPkgs) || packageHasNamespace(impPkg, file.path(R.home(), "library"))]
 
     ##
     # should we include C or Fortran code ?
@@ -540,14 +573,21 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 ## import name space
 ################################################
 \n", file = out)
-    if (ln <- length(imp))
-        for (i in seq(ln))
-        cat("importFrom(", "\"", names(imp)[i], "\",\n           ",
-            imp[[i]], ")\n", sep = "", file = out)
-###     if (length(deps))
-###         for (dep in deps)
-###             if (any(dep %in% RmetricsPkgs))
-###                 cat("import(", dQuote(dep), ")\n", sep = "", file = out)
+
+        if (ln <- length(imp))
+            for (i in seq(ln))
+            cat("importFrom(", "\"", names(imp)[i], "\",\n           ",
+                imp[[i]], ")\n", sep = "", file = out)
+
+###     ## YC : rather than importing specific function, we now import whole
+###     ## namespace of other packages to stay on the safe side
+###     for (pp in imp)
+###         cat("import(", "\"", pp, "\")\n", sep = "", file = out)
+
+    ###     if (length(deps))
+    ###         for (dep in deps)
+    ###             if (any(dep %in% RmetricsPkgs))
+    ###                 cat("import(", dQuote(dep), ")\n", sep = "", file = out)
     if (SRC) {
         cat("
 ################################################
@@ -589,6 +629,18 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
             cat("S3method(", dQuote(i), ", ", dQuote(j), ")\n", sep = "",
                 file = out)
         }
+    }
+
+    if (pkg == "timeSeries") {
+        cat("
+################################################
+## Special Case
+################################################
+
+if (getRversion() < \"2.9.0\") {
+    S3method(\"cbind\", \"timeSeries\")
+    S3method(\"rbind\", \"timeSeries\")
+}\n", file = out)
     }
 
     cat("
