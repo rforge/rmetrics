@@ -91,27 +91,20 @@ importFrom("utils",
 exportClasses("index_timeSeries",
               "timeSeries" )
 export("as.timeSeries",
+        "cbind",
         "colCummaxs",
         "colCummins",
         "colCumprods",
         "colCumreturns",
         "colCumsums",
         "outlier",
+        "rbind",
         "returns",
         "rowCumsums",
         "series<-",
         "series",
         "timeSeries",
         "time<-" )
-
-if (getRversion() < "2.9.0") {
-    S3method("cbind", "timeSeries")
-    S3method("rbind", "timeSeries")
-} else {
-    exportMethods("cbind",
-                  "rbind")
-}
-
 exportMethods("aggregate",
               "align",
               "apply",
@@ -129,6 +122,10 @@ exportMethods("aggregate",
               "colnames",
               "comment<-",
               "comment",
+              "cummax",
+              "cummin",
+              "cumprod",
+              "cumsum",
               "cut",
               "diff",
               "dim",
@@ -173,7 +170,20 @@ exportMethods("aggregate",
 ## S3 classes
 ################################################
 
+S3method("as.timeSeries", "character")
+S3method("as.timeSeries", "data.frame")
+S3method("as.timeSeries", "default")
+S3method("as.timeSeries", "zoo")
 S3method("cumulated", "default")
+
+################################################
+## Special Case
+################################################
+
+if (getRversion() < "2.9.0") {
+    S3method("cbind", "timeSeries")
+    S3method("rbind", "timeSeries")
+}
 
 ################################################
 ## functions

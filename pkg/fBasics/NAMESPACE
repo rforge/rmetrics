@@ -7,7 +7,6 @@ importFrom("graphics",
            "box",
            "abline",
            "axis",
-           "plot",
            "polygon",
            "boxplot",
            "par",
@@ -89,23 +88,32 @@ importFrom("stats",
 importFrom("timeDate",
            "kurtosis",
            "skewness",
-           "getRmetricsOptions",
-           "setRmetricsOptions")
+           "setRmetricsOptions",
+           "getRmetricsOptions")
 importFrom("timeSeries",
            "as.timeSeries",
+           "colnames",
            "is.timeSeries",
            "rev",
            "sort",
            "colnames<-",
            "rownames<-",
+           "cbind",
+           "as.matrix",
            "quantile",
            "lines",
+           "plot",
+           "as.data.frame",
            "isUnivariate",
+           "apply",
+           "rbind",
            "points",
            "colCumsums",
            "print",
            "drawdowns",
+           "rank",
            "diff",
+           "rownames",
            "returns",
            "na.omit",
            "str")
@@ -130,6 +138,9 @@ exportMethods("show" )
 ## S3 classes
 ################################################
 
+S3method("stdev", "default")
+S3method("termPlot", "default")
+S3method("volatility", "default")
 
 ################################################
 ## functions

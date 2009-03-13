@@ -12,7 +12,6 @@ importFrom("fBasics",
            "getTitle",
            ".sliderMenu")
 importFrom("graphics",
-           "plot",
            "legend",
            "par",
            "polygon",
@@ -47,14 +46,18 @@ importFrom("timeDate",
            "getRmetricsOptions",
            "setRmetricsOptions")
 importFrom("timeSeries",
+           "plot",
+           "cbind",
            "colnames",
            "colnames<-",
            "diff",
            "lines",
            "points",
+           "as.matrix",
            "rownames<-",
            "colMaxs",
            "colMins",
+           "rbind",
            "quantile",
            "description",
            "is.timeSeries",
@@ -62,6 +65,7 @@ importFrom("timeSeries",
            "rev",
            "sort",
            "drawdowns",
+           "cut",
            "end",
            "start",
            "time",
@@ -104,8 +108,6 @@ S3method("getEstimator", "fPORTFOLIO")
 S3method("getMean", "fPFOLIODATA")
 S3method("getMean", "fPORTFOLIO")
 S3method("getMessages", "fPFOLIOSPEC")
-S3method("getModel", "fPFOLIOSPEC")
-S3method("getModel", "fPORTFOLIO")
 S3method("getMu", "fPFOLIODATA")
 S3method("getMu", "fPORTFOLIO")
 S3method("getNames", "fPFOLIODATA")
@@ -215,7 +217,8 @@ export(
     "getEstimator",
     "getMean",
     "getMessages",
-    "getModel",
+    "getModel.fPFOLIOSPEC",
+    "getModel.fPORTFOLIO",
     "getMu",
     "getNames",
     "getNAssets",

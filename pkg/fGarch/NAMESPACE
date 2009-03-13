@@ -5,9 +5,9 @@
 
 importFrom("fBasics",
            "volatility",
+           "dsnig",
            "Heaviside",
-           ".sliderMenu",
-           "dsnig")                   ## DW
+           ".sliderMenu")
 importFrom("graphics",
            "plot",
            "abline",
@@ -22,12 +22,12 @@ importFrom("methods",
            "slotNames",
            "slot")
 importFrom("stats",
-           "update",
            "coef",
            "fitted",
            "formula",
            "predict",
            "residuals",
+           "update",
            "integrate",
            "dnorm",
            "dt",
@@ -37,7 +37,6 @@ importFrom("stats",
            "sd",
            "arima",
            "var",
-           "model.frame",
            "optim",
            "nlminb",
            "rnorm",
@@ -58,14 +57,21 @@ importFrom("timeDate",
            "setRmetricsOptions",
            "getRmetricsOptions")
 importFrom("timeSeries",
+           "colnames",
            "print",
+           "rownames",
            "sort",
+           "as.data.frame",
            "colnames<-",
            "isUnivariate",
+           "cbind",
            ".description",
            "rev",
            "rownames<-",
+           "as.matrix",
+           "model.frame",
            "timeSeries",
+           "plot",
            "lines",
            "diff",
            "quantile")
@@ -86,14 +92,14 @@ useDynLib("fGarch")
 exportClasses("fGARCH",
               "fGARCHSPEC" )
 exportMethods("coef",
-              "update",
               "fitted",
               "formula",
               "plot",
               "predict",
               "residuals",
               "show",
-              "summary" )
+              "summary",
+              "update" )
 
 ################################################
 ## S3 classes
@@ -190,4 +196,3 @@ export(
     "sstdSlider",
     "stdFit",
     ".truePersistence" )
-
