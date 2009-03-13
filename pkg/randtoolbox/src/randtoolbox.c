@@ -27,6 +27,7 @@
  */
 
 #include "randtoolbox.h"
+#include "congruRand.h"
 
 /*********************************/
 /*              constants               */
@@ -218,18 +219,12 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
     //u is stored column by column
     if(!show) 
     {
+        set_congruRand(mod, mult, incr, seed);
         for(i = 0; i < nb; i++)
         {
             for(j = 0; j < dim; j++) 
             {
-                temp  = mult * seed + incr;
-                seed = temp % mod;
-                
-                //sanity check
-                if(seed <= 0) 
-                    seed += mod; 
-                
-                u[i + j * nb] = (double) seed / (double) mod;
+                u[i + j * nb] = get_congruRand();
             }
         }
     }else //show the seed

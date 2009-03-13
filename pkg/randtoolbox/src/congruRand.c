@@ -1,3 +1,5 @@
+/* License information to be included */
+
 #include <R.h>
 #include <Rmath.h>
 
@@ -10,10 +12,30 @@ double get_rand_congru()
 	double x;
 	congru_seed  = (mult * congru_seed + incr) % mod;
 	x = (double) congru_seed / (double) mod;
-	if (x == 0) {
+	if (x == 0.0) {
 		x = 0.5 / (double) mod;
 	}
 	return x;
+}
+
+double get_congruRand()
+{
+	double x;
+	congru_seed  = (mult * congru_seed + incr) % mod;
+	x = (double) congru_seed / (double) mod;
+	if (x == 0.0) {
+		x = 1.0;
+	}
+	return x;
+}
+
+void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
+		unsigned long long inp_incr, unsigned int seed)
+{
+	mod = inp_mod;
+	mult = inp_mult;
+	incr = inp_incr;
+	congru_seed = (unsigned long long) seed;
 }
 
 void user_unif_init_congru(unsigned int seed)

@@ -1,9 +1,10 @@
+/* License information to be included */
+
 #include <R.h>
 #include <Rmath.h>
 #include <R_ext/Random.h>
 
-extern double get_rand_congru();
-extern void user_unif_init_congru(unsigned int seed);
+#include "congruRand.h"
 
 static int generator;
 static double (*get_rand) (void);
