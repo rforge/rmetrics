@@ -177,6 +177,9 @@ qqnigPlot <-
     x = as.vector(x)
     n = length(x)
 
+    ## YC: no scaling
+    ## FIXME: should take care of too small time series
+
     # Fit:
     fit = nigFit(x, doplot = FALSE, trace = FALSE)
     par = fit@fit$estimate
@@ -185,6 +188,7 @@ qqnigPlot <-
     # Quantiles:
     x = sort(x)
     p = ppoints(x)
+
     z = qnig(p, par[1], par[2], par[3], par[4])
 
     # Plot:
