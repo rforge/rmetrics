@@ -34,7 +34,6 @@
 #  getData
 #  getEstimator
 #  getMean
-#  getModel
 #  getMu
 #  getNAssets
 #  getNames
@@ -169,18 +168,6 @@ getMean <-
 
 
 # ------------------------------------------------------------------------------
-
-getModel <-
-    function(object)
-{
-    # A function implemented by Diethelm Wuertz
-
-    UseMethod("getModel")
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 getMu <-
     function(object)
