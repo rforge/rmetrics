@@ -1,49 +1,53 @@
-set.generator <- function(generator=c("congruRand", "default"), params=NULL, seed=NULL)
+set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed=NULL, ...)
 {
-	generator <- match.arg(generator)
-	if (generator == "congruRand") {
-		if (is.null(params)) {
-			params <- list(generator="congruRand", mod=2147483647, mult=16807, incr=0)
-		} else if (is.null(params$generator)) {
-			params <- c(list(generator="congruRand"), params)
-		} else {
-			params$generator <- "congruRand"
+	name <- match.arg(name)
+	dots <- list(...)
+	if (name == "congruRand") {
+		if (is.null(parameters)) {
+			parameters <- c(mod=dots$mod, mult=dots$mult, incr=dots$incr)
+		}
+		if (length(parameters) == 0) {
+			parameters <- c(mod=2147483647, mult=16807, incr=0)
+		}
+		if (!identical(names(parameters), c("mod", "mult", "incr"))) {
+			param.names <- paste(names(parameters),collapse=" ")
+			stop("parameters \"", param.names, "\" are not correct for congruRand")
 		}
 		if (is.null(seed)) {
-			if (!is.null(params$seed)) {
-				seed <- params$seed
-			} else {
-				seed <- floor(2^32 * runif(1))
-			}
+			seed <- floor(2^32 * runif(1))
 		}
-		params$seed <- seed
-		put.state(params)
-	} else if (generator == "default") {
+		state <- c(seed=seed)
+		description <- list(name=name, parameters=parameters, state=state)
+		put.state(description)
+	} else if (name == "default") {
 		RNGkind("default")
 		if (!is.null(seed)) {
 			set.seed(seed)
 		}
 	} else {
-		stop("unsupported generator: ", generator)
+		stop("unsupported generator: ", name)
 	}
 	invisible(NULL)
 }
 
-put.state <- function(state)
+put.state <- function(description)
 {
-	if (state$generator == "congruRand") {
+	name <- description$name
+	parameters <- description$parameters
+	state <- description$state
+	if (name == "congruRand") {
 		.C("set_generator",
 			as.integer(1),
 			PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
 		.C("put_state_congru",
-			as.double(state$mod),
-			as.double(state$mult),
-			as.double(state$incr),
-			as.double(state$seed),
+			as.double(parameters["mod"]),
+			as.double(parameters["mult"]),
+			as.double(parameters["incr"]),
+			as.double(state["seed"]),
 			PACKAGE="randtoolbox")
 	} else {
-		stop("unsupported generator: ", state$generator)
+		stop("unsupported generator: ", name)
 	}
 	invisible(NULL)
 }
@@ -57,16 +61,18 @@ get.state <- function()
 		integer(1),
 		PACKAGE="randtoolbox")[[1]]
 	if (generator == 1) {
+		name <- "congruRand"
 		aux <- .C("get_state_congru",
 			mod=double(1),
 			mult=double(1),
 			incr=double(1),
 			seed=double(1),
 			PACKAGE="randtoolbox")
-		state <- c(list(generator="congruRand"),aux)
+		parameters <- c(mod=aux$mod, mult=aux$mult, incr=aux$incr)
+		state <- c(seed=aux$seed)
 	} else {
 		stop("internal error of randtoolbox")
 	}
-	state
+	list(name=name, parameters=parameters, state=state)
 }
 
