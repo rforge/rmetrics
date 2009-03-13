@@ -39,10 +39,10 @@ title = NULL, description = NULL)
     # Test:
     method = match.arg(method)
     if (method == "shapiro") {
-        test = .mvshapiroTest(x)
+        test = .mvshapiroTest(series(x))
     } 
     if (method == "energy") {
-        test = .mvenergyTest(x, Replicates = Replicates)
+        test = .mvenergyTest(series(x), Replicates = Replicates)
     }
     
     # Return Value:
