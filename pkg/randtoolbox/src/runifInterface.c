@@ -5,16 +5,17 @@
 #include <R_ext/Random.h>
 
 #include "congruRand.h"
+#include "runifInterface.h"
 
 static int generator;
-static double (*get_rand) (void);
+static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
 static void (*user_unif_init_selected) (unsigned int seed);
 double x;
 
 // R_ext/Random.h entry point
 double *user_unif_rand(void)
 {
-    x = get_rand();
+    x = user_unif_rand_selected();
     return(&x);
 }
 
@@ -32,13 +33,27 @@ void current_generator(int *pgener)
 }
 
 // .C entry point
-void set_generator(int *pgener)
+void set_user_unif_init(int *pgener)
 {
 	generator = *pgener;
 	switch (generator) {
 		case 1:
 			user_unif_init_selected = user_unif_init_congru;
-			get_rand = get_rand_congru;
+			break;
+		default:
+			Rprintf("UNKNOWN GENERATOR\n");
+	}
+}
+
+// .C entry point
+void set_user_unif_rand(int *pgener)
+{
+	if (generator != *pgener) {
+		Rprintf("INTERNAL ERROR of randtoolbox\n");
+	}
+	switch (generator) {
+		case 1:
+			user_unif_rand_selected = user_unif_rand_congru;
 			break;
 		default:
 			Rprintf("UNKNOWN GENERATOR\n");

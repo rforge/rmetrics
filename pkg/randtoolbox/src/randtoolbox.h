@@ -34,6 +34,8 @@
 #include "config.h"
 #include "locale.h"
 
+//congruRand
+#include "congruRand.h"
 
 //SFMT
 #include "SFMT.h"

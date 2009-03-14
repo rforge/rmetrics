@@ -27,7 +27,6 @@
  */
 
 #include "randtoolbox.h"
-#include "congruRand.h"
 
 /*********************************/
 /*              constants               */
@@ -200,7 +199,7 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
 //compute the sequence of a general congruential linear generator
 void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show)
 {
-    int i, j;
+    int i, j, err;
     unsigned long long temp;
 	
     if (!R_FINITE(nb) || !R_FINITE(dim))
@@ -217,9 +216,13 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
     //u_ij is the nth (n = i + j * nb) term of a general congruential linear generator
     //i.e. u_ij = [ ( mult * x_{n-1}  + incr ) % mod ] / mod
     //u is stored column by column
+    err = check_congruRand(mod, mult, incr, (unsigned long long) seed);
+    if (err)
+        error(_("incorrect parameters of the generator"));
+    set_congruRand(mod, mult, incr, (unsigned long long) seed);
+
     if(!show) 
     {
-        set_congruRand(mod, mult, incr, seed);
         for(i = 0; i < nb; i++)
         {
             for(j = 0; j < dim; j++) 
@@ -233,16 +236,8 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
         {
             for(j = 0; j < dim; j++) 
             {
-                temp  = mult * seed + incr;
-                seed = temp % mod;
-                
-                //sanity check
-                if(seed <= 0) 
-                    seed += mod; 
-
                 Rprintf("%u th integer generated : %u\n", 1+ i + j * nb, seed);
-                
-                u[i + j * nb] = (double) seed / (double) mod;
+                u[i + j * nb] = get_congruRand();
             }
         }
     }

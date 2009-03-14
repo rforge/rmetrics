@@ -1,4 +1,5 @@
-set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed=NULL, ...)
+set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed=NULL, ...,
+		only.description=FALSE)
 {
 	name <- match.arg(name)
 	dots <- list(...)
@@ -11,14 +12,18 @@ set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed
 		}
 		if (!identical(names(parameters), c("mod", "mult", "incr"))) {
 			param.names <- paste(names(parameters),collapse=" ")
-			stop("parameters \"", param.names, "\" are not correct for congruRand")
+			stop("parameter list \"", param.names, "\" is not correct for congruRand")
 		}
 		if (is.null(seed)) {
-			seed <- floor(2^32 * runif(1))
+			seed <- floor(as.double(parameters["mod"]) * runif(1))
 		}
 		state <- c(seed=seed)
 		description <- list(name=name, parameters=parameters, state=state)
-		put.state(description)
+		if (only.description) {
+			return(description)
+		} else {
+			put.state(description)
+		}
 	} else if (name == "default") {
 		RNGkind("default")
 		if (!is.null(seed)) {
@@ -36,10 +41,23 @@ put.state <- function(description)
 	parameters <- description$parameters
 	state <- description$state
 	if (name == "congruRand") {
-		.C("set_generator",
+		aux <- .C("check_state_congru",
+			as.double(parameters["mod"]),
+			as.double(parameters["mult"]),
+			as.double(parameters["incr"]),
+			as.double(state["seed"]),
+			err = integer(1),
+			PACKAGE="randtoolbox")
+		if (aux$err != 0) {
+			stop("check congruRand error: ", aux$err)
+		}
+		.C("set_user_unif_init",
 			as.integer(1),
 			PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
+		.C("set_user_unif_rand",
+			as.integer(1),
+			PACKAGE="randtoolbox")
 		.C("put_state_congru",
 			as.double(parameters["mod"]),
 			as.double(parameters["mult"]),
