@@ -259,7 +259,7 @@ Finally, we generally use one of the three types of \emph{output function}:
 \begin{itemize*}
 \item $g: \mathbb N \mapsto [0,1[$, and $g(x) = \frac{x}{m}$, % \{0,\dots, m-1\}
 \item $g: \mathbb N \mapsto ]0,1]$, and $ g(x) = \frac{x}{m-1}$,
-\item $g: \mathbb N \mapsto ]0,1[$, and $ g(x) = \frac{x+1}{m}$.
+\item $g: \mathbb N \mapsto ]0,1[$, and $ g(x) = \frac{x+1/2}{m}$.
 \end{itemize*}
 %The last one has the good property to generate variate in $]0,1[$.
 Linear congruential generators are implemented in the \soft{R} function \code{congruRand}.
