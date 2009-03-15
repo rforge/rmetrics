@@ -37,11 +37,12 @@ importFrom("methods",
            "slotNames",
            "new")
 importFrom("stats",
+           "model.frame",
            "aggregate",
            "as.ts",
            "end",
            "lag",
-           "model.frame",
+           "model.frame.default",
            "na.omit",
            "quantile",
            "start",
@@ -55,6 +56,7 @@ importFrom("stats",
            "var",
            "dist",
            "hclust",
+           "na.fail",
            "ts",
            "cor",
            "is.mts")
@@ -90,8 +92,7 @@ importFrom("utils",
 
 exportClasses("index_timeSeries",
               "timeSeries" )
-export("as.timeSeries",
-        "cbind",
+export("cbind",
         "colCummaxs",
         "colCummins",
         "colCumprods",
@@ -142,7 +143,7 @@ exportMethods("aggregate",
               "lag",
               "lines",
               "merge",
-              "model.frame",
+              "model.frame.default",
               "names",
               "na.omit",
               "Ops",
@@ -175,6 +176,7 @@ S3method("as.timeSeries", "data.frame")
 S3method("as.timeSeries", "default")
 S3method("as.timeSeries", "zoo")
 S3method("cumulated", "default")
+S3method("model.frame", "default")
 
 ################################################
 ## Special Case
@@ -194,6 +196,7 @@ export(
     ".align.timeSeries",
     "applySeries",
     ".applySeries",
+    "as.timeSeries",
     ".cbind.timeSeries",
     "colAvgs",
     "colKurtosis",
