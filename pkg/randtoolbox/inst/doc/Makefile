@@ -1,9 +1,11 @@
 TEXI2DVI = texi2dvi --pdf
+SWEAVE = R CMD Sweave
 RM = rm -rf
 
 all: randtoolbox.pdf clean
 
-randtoolbox.pdf : randtoolbox.tex
+randtoolbox.pdf : randtoolbox.Rnw
+	$(SWEAVE) randtoolbox.Rnw
 	$(TEXI2DVI) randtoolbox.tex
 
 clean:
