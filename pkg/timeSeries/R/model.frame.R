@@ -18,9 +18,12 @@
 #  model.frame.default       Allows to use model.frame for "timeSeries"
 ################################################################################
 
-
-setMethod("model.frame", "timeSeries", function(formula, data, ...)
-      {   # A function implemented by Diethelm Wuertz
+setMethod("model.frame.default", signature(data = "timeSeries"),
+          function(formula, data = NULL,
+                   subset = NULL, na.action = na.fail,
+                   drop.unused.levels = FALSE, xlev = NULL, ...)
+      {
+          # A function implemented by Diethelm Wuertz
 
           # Description:
           #   Extracting the Environment of a Model Formula
@@ -38,35 +41,46 @@ setMethod("model.frame", "timeSeries", function(formula, data, ...)
           #   model.frame(Open ~ High + log(Low), data = x)
 
           # FUNCTION:
+          data <- as(data, "data.frame")
 
-          # Create Model Frame:
-          format <- data@format
-          FinCenter <- finCenter(data)
-          recordIDs <- data@recordIDs
-          title <- data@title
+###           model.frame.default(formula, data,
+###                               subset, na.action,
+###                               drop.unused.levels,
+###                               xlev, ...)
 
-          Model <- stats::model.frame.default(formula, data, ...)
-
-          recordIDs <-
-              if (NROW(Model) == NROW(recordIDs))
-                  recordIDs
-              else
-                  data.frame()
-
-          # Convert to timeSeries:
-          ans <- timeSeries(data = as.matrix(Model),
-                            charvec = rownames(Model),
-                            units = colnames(Model),
-                            format = format,
-                            FinCenter = FinCenter,
-                            recordIDs = recordIDs,
-                            title = title,
-                      documentation = description()
-                            )
-
-          # Return value:
-          ans
+          model.frame(formula, data, ...)
       })
 
-################################################################################
+## ###           # Create Model Frame:
+## ###           format <- data@format
+## ###           FinCenter <- finCenter(data)
+## ###           recordIDs <- data@recordIDs
+## ###           title <- data@title
 
+##           data <- as(data, "data.frame")
+##           Model <- model.frame(formula, data, ...)
+##           #-> should be in parent.frame?
+
+## ###           recordIDs <-
+## ###               if (NROW(Model) == NROW(recordIDs))
+## ###                   recordIDs
+## ###               else
+## ###                   data.frame()
+
+## ###           # Convert to timeSeries:
+## ###           ans <- timeSeries(data = as.matrix(Model),
+## ###                             charvec = rownames(Model),
+## ###                             units = colnames(Model),
+## ###                             format = format,
+## ###                             FinCenter = FinCenter,
+## ###                             recordIDs = recordIDs,
+## ###                             title = title,
+## ###                             documentation = description()
+## ###                             )
+
+## ###           # Return value:
+## ###           ans
+##           Model
+##       })
+
+## ################################################################################
