@@ -194,7 +194,7 @@ setAs("timeSeries", "matrix", function(from) as.matrix(from))
 # ------------------------------------------------------------------------------
 
 setMethod("as.data.frame", "timeSeries",
-          function(x, row.names = NULL, optional = NULL, ...)
+          function(x, row.names = NULL, optional = FALSE, ...)
       {   # A function implemented by Diethelm Wuertz
 
           # Description:
@@ -214,7 +214,11 @@ setMethod("as.data.frame", "timeSeries",
               stop("x is not a timeSeries object!")
 
           # Convert:
-          ans = as.data.frame(as.matrix(x))
+          if (is.null(row.names))
+              row.names <- rownames(x)
+
+          ans <- as.data.frame(as.list(x), row.names = row.names,
+                               optional = optional, ...)
 
           # Return Value:
           ans

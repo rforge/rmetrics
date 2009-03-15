@@ -36,12 +36,6 @@ setGeneric("timeSeries",
                      documentation = NULL, ...)
            standardGeneric("timeSeries"))
 
-setGeneric("as.timeSeries", function(x, ...) standardGeneric("as.timeSeries"))
-
-## if (getRversion() >= "2.9.0") {
-##     setGeneric("time<-", function(x, value) standardGeneric("time<-"))
-## }
-
 setGeneric("colCumsums", function(x, na.rm = FALSE, ...) standardGeneric("colCumsums"))
 setGeneric("colCummaxs", function(x, na.rm = FALSE, ...) standardGeneric("colCummaxs"))
 setGeneric("colCummins", function(x, na.rm = FALSE, ...) standardGeneric("colCummins"))
