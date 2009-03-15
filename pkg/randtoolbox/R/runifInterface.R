@@ -1,3 +1,5 @@
+#licence to be done
+
 set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed=NULL, ...,
 		only.description=FALSE)
 {
@@ -88,9 +90,21 @@ get.state <- function()
 			PACKAGE="randtoolbox")
 		parameters <- c(mod=aux$mod, mult=aux$mult, incr=aux$incr)
 		state <- c(seed=aux$seed)
+                  if(parameters[1] == 2^32 && parameters[2] == 1664525 && parameters[3] == 1013904223)
+                  	literature <- "Knuth - Lewis"
+                  else if(parameters[1] == 2^48 && parameters[2] == 31167285 && parameters[3] == 1)
+                           literature <- "Lavaux - Jenssens"
+                  else if(parameters[1] == 2^64 && parameters[2] == 636412233846793005 && parameters[3] == 1)
+                           literature <- "Haynes"
+                  else if(parameters[1] == 2^32 && parameters[2] == 69069 && parameters[3] == 0) 
+                           literature <- "Marsiglia"
+                  else if(parameters[1] == 2^31-1 && parameters[2] == 16807 && parameters[3] == 0) 
+                           literature <- "Park - Miller"
+                  else 
+                           literature <- "Unknown"    
 	} else {
 		stop("internal error of randtoolbox")
 	}
-	list(name=name, parameters=parameters, state=state)
+	list(name=name, authors=literature, parameters=parameters, state=state)
 }
 

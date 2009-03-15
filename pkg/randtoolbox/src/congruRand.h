@@ -1,5 +1,10 @@
 /* License information to be included */
 
+//R header files
+#include <R.h>
+#include <Rmath.h>
+
+
 double user_unif_rand_congru();
 void user_unif_init_congru(unsigned int seed);
 

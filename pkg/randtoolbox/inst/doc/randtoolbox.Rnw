@@ -997,7 +997,7 @@ congruRand(5, mod = 2^8, mult = 25, incr = 16, echo= TRUE)
 Those values are correct according to \citealp[page 119]{planchetMFAbook}.
 
 \initFmark
-Here is a list of RNGs computable with \code{congruRand}:
+Here is a example list of RNGs computable with \code{congruRand}:
 \begin{table}[!htb]
 \center
 \begin{tabular}{llll}
@@ -1028,7 +1028,7 @@ Park - Miller & $2^{32}-1$ & $16807$ & $0$\\
 
 One may wonder why we implement such a short-period algorithm since
 we know the Mersenne-Twister algorithm. It is provided to make
-comparisons with other algorithms. The Park-Miller should \textbf{not} be 
+comparisons with other algorithms. The Park-Miller RNG should \textbf{not} be 
 viewed as a ``good'' random generator. 
 
 Finally, \code{congruRand} function has a \code{dim} argument to generate 

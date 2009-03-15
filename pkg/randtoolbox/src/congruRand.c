@@ -1,8 +1,5 @@
 /* License information to be included */
 
-#include <R.h>
-#include <Rmath.h>
-
 #include "congruRand.h"
 
 // general linear congruential generator
