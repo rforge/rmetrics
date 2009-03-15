@@ -36,8 +36,12 @@
 \alias{[<-,timeSeries,timeDate,character-method}
 \alias{[<-,timeSeries,timeSeries,character-method}
 
-\alias{window.timeSeries}
-\alias{cut.timeSeries}
+\alias{[<-,timeSeries,character,ANY-method}
+\alias{[<-,timeSeries,timeDate,ANY-method}
+
+
+\alias{window,timeSeries-method}
+\alias{cut,timeSeries-method}
 \alias{head,timeSeries-method}
 \alias{tail,timeSeries-method}
 
@@ -70,14 +74,14 @@
 % \method{[}{timeSeries}(x, i, j, drop)
 % \method{[}{timeSeries}(x, i, j) <- value
 
-\method{window}{timeSeries}(x, start, end, \dots)
+\S4method{window}{timeSeries}(x, start, end, \dots)
 
 \S4method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 \S4method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 
 \S4method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
 
-\method{cut}{timeSeries}(x, from, to, \dots)
+\S4method{cut}{timeSeries}(x, from, to, \dots)
 }
 
 

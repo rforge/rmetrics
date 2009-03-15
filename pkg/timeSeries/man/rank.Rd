@@ -4,7 +4,7 @@
 \title{Sample Ranks of a Time Series}
 
 
-\alias{rank.timeSeries}
+\alias{rank,timeSeries-method}
 
 
 \description{
@@ -16,7 +16,7 @@
 
 
 \usage{
-\method{rank}{timeSeries}(x, ...)
+\S4method{rank}{timeSeries}(x, ...)
 }
 
 

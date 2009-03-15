@@ -10,18 +10,20 @@
 \alias{as.timeSeries.character}
 \alias{as.timeSeries.zoo} 
 
+\alias{as.data.frame,timeSeries-method}
+\alias{as.list,timeSeries-method}
+\alias{as.matrix,timeSeries-method}
+\alias{as.ts,timeSeries-method}
+
 \alias{coerce,ANY,timeSeries-method}
 \alias{coerce,data.frame,timeSeries-method}
 \alias{coerce,character,timeSeries-method}
 \alias{coerce,ANY,timeSeries-method}
 
-% \alias{as.vector.timeSeries}
-% \alias{as.numeric.timeSeries}
-\alias{as.matrix.timeSeries}
-\alias{as.data.frame.timeSeries}
-\alias{as.ts.timeSeries}
-% \alias{as.logical.timeSeries}
-\alias{as.list.timeSeries}
+\alias{coerce,timeSeries,data.frame-method}
+\alias{coerce,timeSeries,list-method}
+\alias{coerce,timeSeries,matrix-method}
+\alias{coerce,timeSeries,ts-method}
 
 
 \description{
@@ -73,9 +75,9 @@
 
 % \method{as.vector}{timeSeries}(x, mode = "any")
 % \method{as.numeric}{timeSeries}(x, \dots)
-\method{as.matrix}{timeSeries}(x, \dots)
-\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
-\method{as.ts}{timeSeries}(x, \dots)
+\S4method{as.matrix}{timeSeries}(x, \dots)
+\S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
+\S4method{as.ts}{timeSeries}(x, \dots)
 % \method{as.logical}{timeSeries}(x, \dots)
 }
 

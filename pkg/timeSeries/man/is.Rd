@@ -8,7 +8,7 @@
 \alias{is.timeSeries}
 \alias{is.signalSeries}
 \alias{is.na,timeSeries-method}
-
+\alias{is.unsorted,timeSeries-method}
 
 \description{
 

@@ -1,12 +1,11 @@
-\name{model.fram}
+\name{model.frame}
 
 
 \title{Model Frames for Time Series Objects}
 
 
 \alias{model.frame}
-\alias{model.frame.timeSeries}
-
+\alias{model.frame.default,ANY,timeSeries-method}
 
 \description{
     
@@ -14,24 +13,24 @@
 }
 
 
-\usage{
-\method{model.frame}{timeSeries}(formula, data, ...) 
-}
+% \usage{
+% model.frame(formula, data, ...) 
+% }
 
 
-\arguments{
+% \arguments{
 
-    \item{formula}{ 
-        a model formula object. 
-        }
-    \item{data}{
-        an object of class \code{timeSeries}.
-        }
-    \item{\dots}{
-        arguments passed to the function \code{stats::model.frame}.
-        }
+%     \item{formula}{ 
+%         a model formula object. 
+%         }
+%     \item{data}{
+%         an object of class \code{timeSeries}.
+%         }
+%     \item{\dots}{
+%         arguments passed to the function \code{stats::model.frame}.
+%         }
         
-}
+% }
 
 
 \value{

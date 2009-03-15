@@ -4,27 +4,25 @@
 \title{Cumulated Column Statistics}
 
 
+
+
 \alias{colCum}
-
-\alias{colCumsums} 
-\alias{colCumsums.default}
-\alias{colCumsums.timeSeries}
-
-\alias{colCummaxs} 
-\alias{colCummaxs.default}
-\alias{colCummaxs.timeSeries}
-
-\alias{colCummins} 
-\alias{colCummins.default}
-\alias{colCummins.timeSeries}
-
-\alias{colCumprods} 
-\alias{colCumprods.default}
-\alias{colCumprods.timeSeries}
-
+\alias{colCummaxs}
+\alias{colCummins}
+\alias{colCumprods}
 \alias{colCumreturns}
-\alias{colCumreturns.default}
-\alias{colCumreturns.timeSeries}
+\alias{colCumsums}
+
+\alias{colCummaxs,matrix-method}
+\alias{colCummaxs,timeSeries-method}
+\alias{colCummins,matrix-method}
+\alias{colCummins,timeSeries-method}
+\alias{colCumprods,matrix-method}
+\alias{colCumprods,timeSeries-method}
+\alias{colCumreturns,matrix-method}
+\alias{colCumreturns,timeSeries-method}
+\alias{colCumsums,matrix-method}
+\alias{colCumsums,timeSeries-method}
 
 \description{
 
@@ -34,20 +32,15 @@
 
 
 \usage{
-\method{colCumsums}{default}(x, na.rm = FALSE, \dots)
-\method{colCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
+\S4method{colCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
 
-\method{colCummaxs}{default}(x, na.rm = FALSE, \dots)
-\method{colCummaxs}{timeSeries}(x, na.rm = FALSE, \dots)
+\S4method{colCummaxs}{timeSeries}(x, na.rm = FALSE, \dots)
 
-\method{colCummins}{default}(x, na.rm = FALSE, \dots)
-\method{colCummins}{timeSeries}(x, na.rm = FALSE, \dots)
+\S4method{colCummins}{timeSeries}(x, na.rm = FALSE, \dots)
 
-\method{colCumprods}{default}(x, na.rm = FALSE, \dots)
-\method{colCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
+\S4method{colCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
 
-\method{colCumreturns}{default}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
-\method{colCumreturns}{timeSeries}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
+\S4method{colCumreturns}{timeSeries}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
 
 }
 
