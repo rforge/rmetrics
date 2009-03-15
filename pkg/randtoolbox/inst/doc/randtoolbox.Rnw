@@ -1008,7 +1008,7 @@ Knuth - Lewis & $2^{32}$ & $1664525$ & $1.01e9\fmark $\\
 Lavaux - Jenssens & $2^{48}$ & $31167285$ & $1$\\
 Haynes & $2^{64}$ & $6.36e17\fmark $ & $1$\\
 Marsaglia & $2^{32}$ & $69069$ & $0$\\
-Park - Miller & $2^{32}-1$ & $16807$ & $0$\\
+Park - Miller & $2^{31}-1$ & $16807$ & $0$\\
 \hline
 \end {tabular}
 \caption{some linear RNGs}
