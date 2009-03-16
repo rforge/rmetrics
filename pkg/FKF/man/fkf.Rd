@@ -92,8 +92,8 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 
     \code{ct} \tab either a \eqn{d \times n}{d * n} or a \eqn{d \times
     1}{d * 1} matrix. \cr
-    \code{Zt} \tab either a \eqn{d \times d \times n}{d * d * n} or a
-    \eqn{d \times d \times 1}{d * d * 1} array. \cr
+    \code{Zt} \tab either a \eqn{d \times m \times n}{d * m * n} or a
+    \eqn{d \times m \times 1}{d * m * 1} array. \cr
     \code{GGt} \tab either a \eqn{d \times d \times n}{d * d * n} or a
     \eqn{d \times d \times 1}{d * d * 1} array. \cr
     \code{yt} \tab a \eqn{d \times n}{d * n} matrix.
