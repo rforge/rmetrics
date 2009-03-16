@@ -476,7 +476,7 @@ coll.test <- function(rand, lenSample = 2^14, nbCell = 2^20, nbSample = 1000, ec
 # compute stirling number S_n^k for k = 0 : n and n = lenSample
         stirling0toN <- stirling(lenSample)
 #      print(stirling0toN)
-        stirlingDivided <- stirlingDividedByK(lenSample, floor(collMax/2), nbCell)
+#        stirlingDivided <- stirlingDividedByK(lenSample, floor(collMax/2), nbCell)
 #        print(stirlingDivided)
 # collision c = 0 : (n-1)
         collRange <- 0:collMax
