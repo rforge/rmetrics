@@ -134,44 +134,6 @@ setMethod("dimnames", "timeSeries", # "signalSeries",
 
 # ------------------------------------------------------------------------------
 
-## setMethod("colnames<-", "signalSeries",
-##           function(x, value)
-##       {
-##           units <- as.character(value)
-
-##           if(!length(units))
-##                   units <- paste("SS", seq(NCOL(x)), sep = ".")
-
-##           if (length(units) != NCOL(x))
-##               stop("length of 'colnames' not equal to array extent",call.=FALSE)
-
-##           x@units <- units
-##           colnames(x@.Data) <- units
-
-##           x
-##       })
-
-## # ------------------------------------------------------------------------------
-
-## setMethod("colnames<-", "timeSeries",
-##           function(x, value)
-##       {
-##           units <- as.character(value)
-
-##           if(!length(units))
-##               units <- paste("TS", seq(NCOL(x)), sep = ".")
-
-##           if (length(units) != NCOL(x))
-##               stop("length of 'colnames' not equal to array extent",call.=FALSE)
-
-##           x@units <- units
-##           colnames(x@.Data) <- units
-
-##           x
-##       })
-
-# ------------------------------------------------------------------------------
-
 setMethod("colnames<-", "timeSeries",
           function(x, value)
       {

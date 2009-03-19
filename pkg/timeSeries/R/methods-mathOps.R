@@ -171,6 +171,8 @@ setMethod("diff", "timeSeries",
                      title = x@title, documentation = x@documentation)
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+diff.timeSeries <- function(x, ...) timeSeries::diff(x, ...)
 
 # ------------------------------------------------------------------------------
 
@@ -188,5 +190,9 @@ setMethod("scale", "timeSeries",
     # Scale:
     setDataPart(x, scale(x = getDataPart(x), center = center, scale = scale))
 })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+scale.timeSeries <- function (x, center = TRUE, scale = TRUE)
+    timeSeries::scale(x, center = center, scale = scale)
 
 ################################################################################

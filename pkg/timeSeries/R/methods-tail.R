@@ -41,3 +41,6 @@ setMethod("tail",
     else
         tail.matrix(x, n = n, addrownums = FALSE, ...)
 })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+tail.timeSeries <- function(x, ...) timeSeries::tail(x, ...)

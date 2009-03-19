@@ -43,6 +43,8 @@ setMethod("merge", c("timeSeries", "timeSeries"),
                zone = "GMT", FinCenter = finCenter(x))
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+merge.timeSeries <- function(x, y, ...) timeSeries::merge(x, y, ...)
 
 # ------------------------------------------------------------------------------
 

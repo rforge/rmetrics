@@ -105,6 +105,8 @@ setMethod("lag" , "timeSeries",
 
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+lag.timeSeries <- function(x, ...) timeSeries::lag(x, ...)
 
 ################################################################################
 

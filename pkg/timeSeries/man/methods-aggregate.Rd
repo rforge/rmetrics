@@ -2,6 +2,7 @@
 
 \docType{methods}
 \alias{aggregate}
+\alias{aggregate.timeSeries}
 \alias{aggregate-methods}
 \alias{aggregate,timeSeries-method}
 

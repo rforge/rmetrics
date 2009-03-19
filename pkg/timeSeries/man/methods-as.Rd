@@ -15,6 +15,12 @@
 \alias{as.matrix,timeSeries-method}
 \alias{as.ts,timeSeries-method}
 
+\alias{as.data.frame.timeSeries}
+\alias{as.list.timeSeries}
+\alias{as.matrix.timeSeries}
+\alias{as.ts.timeSeries}
+
+
 \alias{coerce,ANY,timeSeries-method}
 \alias{coerce,data.frame,timeSeries-method}
 \alias{coerce,character,timeSeries-method}
@@ -71,14 +77,10 @@
 \method{as.timeSeries}{character}(x, \dots) 
 \method{as.timeSeries}{zoo}(x, \dots) 
 
-% \S4method{coerce}{ANY,timeSeries}(from, to)
 
-% \method{as.vector}{timeSeries}(x, mode = "any")
-% \method{as.numeric}{timeSeries}(x, \dots)
 \S4method{as.matrix}{timeSeries}(x, \dots)
 \S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \S4method{as.ts}{timeSeries}(x, \dots)
-% \method{as.logical}{timeSeries}(x, \dots)
 }
 
 

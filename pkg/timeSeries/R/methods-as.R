@@ -189,6 +189,9 @@ setMethod("as.matrix", "timeSeries", function(x, ...)
           ans
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+as.matrix.timeSeries <- function(x, ...) timeSeries::as.matrix(x, ...)
+
 setAs("timeSeries", "matrix", function(from) as.matrix(from))
 
 # ------------------------------------------------------------------------------
@@ -223,6 +226,9 @@ setMethod("as.data.frame", "timeSeries",
           # Return Value:
           ans
       })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+as.data.frame.timeSeries <- function(x, ...) timeSeries::as.data.frame(x, ...)
 
 setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 
@@ -259,6 +265,9 @@ setMethod("as.ts", "timeSeries",
           ans
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+as.ts.timeSeries <- function(x, ...) timeSeries::as.ts(x, ...)
+
 setAs("timeSeries", "ts", function(from) as.ts(from))
 
 # ------------------------------------------------------------------------------
@@ -269,6 +278,13 @@ setAs("timeSeries", "ts", function(from) as.ts(from))
 # ------------------------------------------------------------------------------
 
 # YC : important for functions like lapply and sapply to work properly
+
+## unlockBinding("as.list", baseenv())
+## setGeneric("as.list", where = baseenv())
+## lockBinding("as.list", baseenv())
+
+# setGeneric("as.list", package = "base")
+
 setMethod("as.list", "timeSeries", function(x, ...)
       {
           data <- getDataPart(x)
@@ -278,6 +294,9 @@ setMethod("as.list", "timeSeries", function(x, ...)
           names(value) <- colnames(x)
           value
       })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+as.list.timeSeries <- function(x, ...) timeSeries::as.list(x, ...)
 
 setAs("timeSeries", "list", function(from) as.list(from))
 

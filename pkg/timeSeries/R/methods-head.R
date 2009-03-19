@@ -39,3 +39,6 @@ setMethod("head", "timeSeries",
     else
         head.matrix(x, n = n, ...)
 })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+head.timeSeries <- function(x, ...) timeSeries::head(x, ...)

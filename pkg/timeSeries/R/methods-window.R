@@ -61,6 +61,9 @@ setMethod("window", "timeSeries",
           x[test,]
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+window.timeSeries <- function(x, ...) timeSeries::window(x, ...)
+
 # ------------------------------------------------------------------------------
 
 setMethod("cut", "timeSeries", function (x, from, to, ...)
@@ -96,5 +99,8 @@ setMethod("cut", "timeSeries", function (x, from, to, ...)
           # Return value:
           ans
       })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+cut.timeSeries <- function(x, ...) timeSeries::cut(x, ...)
 
 ################################################################################

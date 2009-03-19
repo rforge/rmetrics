@@ -28,6 +28,11 @@
 
 \alias{quantile,timeSeries-method}
 
+\alias{diff.timeSeries}
+\alias{scale.timeSeries}
+
+\alias{quantile.timeSeries}
+
 
 \title{Mathematical Time Series Operations}
 

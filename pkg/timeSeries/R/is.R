@@ -57,9 +57,12 @@ setMethod("is.na", "timeSeries", function(x)
     setDataPart(x, is.na(getDataPart(x))))
 
 # ------------------------------------------------------------------------------
+## YC: quantile works thanks to inheritance from 'matrix'
+## setMethod("quantile", "timeSeries", function(x, ...)
+##           callGeneric(x = getDataPart(x), ...))
 
-setMethod("quantile", "timeSeries", function(x, ...)
-          callGeneric(x = getDataPart(x), ...))
+## # until UseMethod dispatches S4 methods in 'base' functions
+## quatile.timeSeries <- function(x, ...) timeSeries::quantile(x, ...)
 
 # ------------------------------------------------------------------------------
 

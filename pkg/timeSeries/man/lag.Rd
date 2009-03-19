@@ -5,7 +5,8 @@
 
 
 \alias{lag}
-\alias{lag,timeSeries-method} 
+\alias{lag,timeSeries-method}
+\alias{lag.timeSeries}
 
 
 \description{

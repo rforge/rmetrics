@@ -9,8 +9,11 @@
 \alias{cbind2}
 \alias{rbind2}
 
-\alias{cbind,timeSeries-method} 
-\alias{rbind,timeSeries-method} 
+% \alias{cbind,timeSeries-method} 
+% \alias{rbind,timeSeries-method} 
+
+\alias{cbind.timeSeries}
+\alias{rbind.timeSeries}
 
 % \alias{c.timeSeries}
 
@@ -18,6 +21,9 @@
 \alias{merge,timeSeries,ANY-method}
 \alias{merge,timeSeries,missing-method}
 \alias{merge,timeSeries,timeSeries-method}
+
+\alias{merge.timeSeries}
+
 \alias{cbind2,ANY,timeSeries-method}
 \alias{cbind2,timeSeries,ANY-method}
 \alias{cbind2,timeSeries,missing-method}

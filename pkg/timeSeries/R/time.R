@@ -66,13 +66,20 @@ function(object, value)
 # ------------------------------------------------------------------------------
 
 `time<-` <- function(x, value) UseMethod("time<-")
-setGeneric("time<-")
-setMethod("time<-", "timeSeries", function(x, value)
-      {
-          rownames(x) <- value
-          # Return
-          x
-      })
+
+# to avoid conflict with zoo package
+`time<-.timeSeries` <- function(x, value)
+{
+    rownames(x) <- value
+    x
+}
+
+## setMethod("time<-", "timeSeries", function(x, value)
+##       {
+##           rownames(x) <- value
+##           # Return
+##           x
+##       })
 
 ################################################################################
 # METHOD:                   POSITION HANDLING:
@@ -106,6 +113,9 @@ setMethod("time" ,
               seq.int(NROW(x))
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+time.timeSeries <- function(x, ...) timeSeries::time(x, ...)
+
 # ------------------------------------------------------------------------------
 
 setMethod("sample" , "timeSeries",
@@ -137,9 +147,16 @@ setMethod("sort",
         x
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+sort.timeSeries <- function(x, decreasing = FALSE, ...)
+    timeSeries::sort(x, decreasing = decreasing, ...)
+
 # ------------------------------------------------------------------------------
 
 setMethod("rev", "timeSeries", function(x) x[NROW(x):1,])
+
+# until UseMethod dispatches S4 methods in 'base' functions
+rev.timeSeries <- function(x) timeSeries::rev(x)
 
 # ------------------------------------------------------------------------------
 
@@ -151,6 +168,9 @@ setMethod("start" , "timeSeries", function(x, ...)
         NULL
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+start.timeSeries <- function(x, ...) timeSeries::start(x, ...)
+
 # ------------------------------------------------------------------------------
 
 setMethod("end" , "timeSeries", function(x, ...)
@@ -160,6 +180,9 @@ setMethod("end" , "timeSeries", function(x, ...)
     else
         NULL
 })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+end.timeSeries <- function(x, ...) timeSeries::end(x, ...)
 
 ################################################################################
 

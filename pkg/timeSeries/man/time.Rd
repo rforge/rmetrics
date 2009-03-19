@@ -11,18 +11,26 @@
 % % \alias{index<-}
 
 \alias{time,timeSeries-method}
-\alias{time<-,timeSeries-method}
+\alias{time.timeSeries}
+
+\alias{time<-.timeSeries}
 
 % \alias{index.timeSeries}
 % \alias{index<-.timeSeries}
 
 \alias{sample,timeSeries-method}
+
 \alias{sort,timeSeries-method}
+\alias{sort.timeSeries}
+
 \alias{rev,timeSeries-method}
+\alias{rev.timeSeries}
 
 \alias{start,timeSeries-method}
-\alias{end,timeSeries-method}
+\alias{start.timeSeries}
 
+\alias{end,timeSeries-method}
+\alias{end.timeSeries}
 
 \description{
     
@@ -61,7 +69,7 @@
 \usage{
 
 \S4method{time}{timeSeries}(x, \dots)
-\S4method{time}{timeSeries}(x) <- value
+\method{time}{timeSeries}(x) <- value
 
 % \method{index}{timeSeries}(x, \dots)
 % \method{index}{timeSeries}(x) <- value

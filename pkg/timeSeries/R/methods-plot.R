@@ -74,6 +74,8 @@ setMethod("plot", "timeSeries",
         format = format, at = at, widths = widths, heights = heights, ...)
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
 
 # ------------------------------------------------------------------------------
 # Internal Function called by plot():
@@ -269,6 +271,10 @@ setMethod("lines", "timeSeries",
     invisible(x)
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+lines.timeSeries <- function(x, FinCenter = NULL, ...)
+    timeSeries::lines(x, FinCenter = FinCenter, ...)
+
 # ------------------------------------------------------------------------------
 
 setMethod("points", "timeSeries",
@@ -301,5 +307,9 @@ setMethod("points", "timeSeries",
     # Return Value:
     invisible(x)
 })
+
+# until UseMethod dispatches S4 methods in 'base' functions
+points.timeSeries <- function(x, FinCenter = NULL, ...)
+    timeSeries::points(x, FinCenter = FinCenter, ...)
 
 ################################################################################

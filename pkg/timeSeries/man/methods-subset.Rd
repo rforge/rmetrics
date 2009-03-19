@@ -45,6 +45,11 @@
 \alias{head,timeSeries-method}
 \alias{tail,timeSeries-method}
 
+\alias{window.timeSeries}
+\alias{cut.timeSeries}
+\alias{head.timeSeries}
+\alias{tail.timeSeries}
+
 \alias{outlier}
 \alias{outlier,timeSeries-method}
 \alias{outlier,ANY-method}

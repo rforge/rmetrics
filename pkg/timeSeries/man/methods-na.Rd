@@ -7,6 +7,7 @@
 \alias{na}
 \alias{na.omit}
 \alias{na.omit,timeSeries-method}
+\alias{na.omit.timeSeries}
 
 \alias{removeNA}
 \alias{substituteNA}

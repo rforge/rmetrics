@@ -84,5 +84,8 @@ setMethod("aggregate", "timeSeries",
           timeSeries(data, ...)
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+aggregate.timeSeries <- function(x, ...) timeSeries::aggregate(x, ...)
+
 ################################################################################
 

@@ -100,6 +100,9 @@ setMethod("na.omit", "timeSeries",
     object
 })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+na.omit.timeSeries <- function(object, ...) timeSeries::na.omit(object, ...)
+
 # ------------------------------------------------------------------------------
 
 .naOmitMatrix <-

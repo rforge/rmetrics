@@ -60,6 +60,8 @@ setMethod("str", "timeSeries",
           invisible()
       })
 
+# until UseMethod dispatches S4 methods in 'base' functions
+str.timeSeries <- function (object, ...) timeSeries::str(object, ...)
 
 ################################################################################
 
