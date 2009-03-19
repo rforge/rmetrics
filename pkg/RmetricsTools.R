@@ -539,6 +539,13 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     }
     # remove base, pkg and some special functions (plot and summary from urca)
     imp <- imp[!(imp$pkg %in% c("base", pkg)),]
+    # put Rmetrics pkgs at the end of list
+    imp <- rbind(imp[!(imp$pkg %in% RmetricsPkgs),],
+                 imp[(imp$pkg %in% RmetricsPkgs),])
+    # remove duplicated entries. It should use first the definition
+    # from a base pacakge rather than from a Rmetrics pkgs because
+    # Rmetrics at the end of imp
+    imp <- imp[!duplicated(imp$func),]
 
     ###     for (idx in match("urca", imp$pkg))
     ###         if (imp$func[idx] %in% c("plot", "summary"))
@@ -631,17 +638,19 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
         }
     }
 
-    if (pkg == "timeSeries") {
-        cat("
-################################################
-## Special Case
-################################################
+## YC : Not needed since we are still using S3 methods of cbind and
+## rbind but will need this code eventually
+###     if (pkg == "timeSeries") {
+###         cat("
+### ################################################
+### ## Special Case
+### ################################################
 
-if (getRversion() < \"2.9.0\") {
-    S3method(\"cbind\", \"timeSeries\")
-    S3method(\"rbind\", \"timeSeries\")
-}\n", file = out)
-    }
+### if (getRversion() < \"2.9.0\") {
+###     S3method(\"cbind\", \"timeSeries\")
+###     S3method(\"rbind\", \"timeSeries\")
+### }\n", file = out)
+###     }
 
     cat("
 ################################################
