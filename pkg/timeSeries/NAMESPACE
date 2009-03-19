@@ -37,14 +37,11 @@ importFrom("methods",
            "slotNames",
            "new")
 importFrom("stats",
-           "model.frame",
            "aggregate",
            "as.ts",
            "end",
            "lag",
-           "model.frame.default",
            "na.omit",
-           "quantile",
            "start",
            "time",
            "window",
@@ -53,10 +50,10 @@ importFrom("stats",
            "runif",
            "median",
            "qt",
+           "quantile",
            "var",
            "dist",
            "hclust",
-           "na.fail",
            "ts",
            "cor",
            "is.mts")
@@ -92,20 +89,17 @@ importFrom("utils",
 
 exportClasses("index_timeSeries",
               "timeSeries" )
-export("cbind",
-        "colCummaxs",
+export("colCummaxs",
         "colCummins",
         "colCumprods",
         "colCumreturns",
         "colCumsums",
         "outlier",
-        "rbind",
         "returns",
         "rowCumsums",
         "series<-",
         "series",
-        "timeSeries",
-        "time<-" )
+        "timeSeries" )
 exportMethods("aggregate",
               "align",
               "apply",
@@ -143,14 +137,12 @@ exportMethods("aggregate",
               "lag",
               "lines",
               "merge",
-              "model.frame.default",
               "names",
               "na.omit",
               "Ops",
               "plot",
               "points",
               "print",
-              "quantile",
               "rank",
               "rbind2",
               "rev",
@@ -171,33 +163,34 @@ exportMethods("aggregate",
 ## S3 classes
 ################################################
 
+S3method("as.data.frame", "timeSeries")
+S3method("as.matrix", "timeSeries")
 S3method("as.timeSeries", "character")
 S3method("as.timeSeries", "data.frame")
 S3method("as.timeSeries", "default")
 S3method("as.timeSeries", "zoo")
+S3method("cbind", "timeSeries")
 S3method("cumulated", "default")
-S3method("model.frame", "default")
-
-################################################
-## Special Case
-################################################
-
-if (getRversion() < "2.9.0") {
-    S3method("cbind", "timeSeries")
-    S3method("rbind", "timeSeries")
-}
+S3method("lines", "timeSeries")
+S3method("plot", "timeSeries")
+S3method("points", "timeSeries")
+S3method("rbind", "timeSeries")
+S3method("str", "timeSeries")
+S3method("time<-", "timeSeries")
 
 ################################################
 ## functions
 ################################################
 
 export(
+    "aggregate.timeSeries",
     "alignDailySeries",
     ".align.timeSeries",
     "applySeries",
     ".applySeries",
+    "as.list.timeSeries",
     "as.timeSeries",
-    ".cbind.timeSeries",
+    "as.ts.timeSeries",
     "colAvgs",
     "colKurtosis",
     "colMaxs",
@@ -211,8 +204,10 @@ export(
     "colVars",
     "countMonthlyRecords",
     "cumulated",
+    "cut.timeSeries",
     "description",
     ".description",
+    "diff.timeSeries",
     "drawdowns",
     "drawdownsStats",
     "dummyDailySeries",
@@ -222,21 +217,26 @@ export(
     ".endOfPeriodBenchmarks",
     ".endOfPeriodSeries",
     ".endOfPeriodStats",
+    "end.timeSeries",
     ".extract.turnpointsPastecs",
     "fapply",
     ".fapply",
     ".findIndex",
     "getReturns",
     "hclustColnames",
+    "head.timeSeries",
     "interpNA",
     "isMonthly",
     "isMultivariate",
     "is.signalSeries",
     "is.timeSeries",
     "isUnivariate",
+    "lag.timeSeries",
+    "merge.timeSeries",
     "midquotes",
     "midquoteSeries",
     ".naOmitMatrix",
+    "na.omit.timeSeries",
     "newPositions<-",
     "ohlcDailyPlot",
     ".old2newRda",
@@ -248,27 +248,34 @@ export(
     ".plotTimeSeries",
     ".plot.turnpointsPastecs",
     ".print.timeSeries",
-    ".rbind.timeSeries",
     "readSeries",
     "removeNA",
     "returnSeries",
+    "rev.timeSeries",
     "rollDailySeries",
     "rollMonthlySeries",
     "rollMonthlyWindows",
     "sampleColnames",
+    "scale.timeSeries",
     "seriesData",
     "seriesPositions",
     ".signalCounts",
     ".signalSeries",
     "sortColnames",
+    "sort.timeSeries",
     "spreads",
     "spreadSeries",
+    "start.timeSeries",
     "statsColnames",
     ".subset_timeSeries",
     "substituteNA",
     ".summary.turnpointsPastecs",
+    "tail.timeSeries",
+    "time<-",
     ".timeSeries",
+    "time.timeSeries",
     ".turnpoints",
     ".turnpointsPastecs",
     ".turnpointsSeries",
-    ".turnpointsStats" )
+    ".turnpointsStats",
+    "window.timeSeries" )
