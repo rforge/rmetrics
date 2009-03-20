@@ -136,7 +136,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \code{rollDailySeries}\cr
     \cr
     returns an object of class \code{timeSeries} with rolling values, 
-    computed from the function \code{FUN"}.
+    computed from the function \code{FUN}.
     \cr
     
     \code{ohlcDailyPlot} 

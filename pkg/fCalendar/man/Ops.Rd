@@ -52,7 +52,7 @@
     
     \code{Ops.timeDate}
     \cr
-    these are functions for mathematical operations. Group code{Ops} are 
+    these are functions for mathematical operations. Group \code{Ops} are 
     generic functions which manage mathematical operations. 
     
     \code{+.timeDate}\cr
