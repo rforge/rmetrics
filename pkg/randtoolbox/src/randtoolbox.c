@@ -237,7 +237,8 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
         {
             for(j = 0; j < dim; j++) 
             {
-                Rprintf("%u th integer generated : %u\n", 1+ i + j * nb, seed);
+                get_seed_congruRand(&temp);
+                Rprintf("%u th integer generated : %llu\n", 1+ i + j * nb, temp);
                 u[i + j * nb] = get_congruRand();
             }
         }

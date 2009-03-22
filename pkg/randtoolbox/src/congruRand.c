@@ -62,6 +62,12 @@ void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
 	congru_seed = inp_seed;
 }
 
+// get seed
+void get_seed_congruRand(unsigned long long *out_seed)
+{
+	*out_seed = congru_seed;
+}
+
 // .C entry point
 void get_state_congru(double *pmod, double *pmult, double *pincr, double *pseed)
 {
