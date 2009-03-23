@@ -10,7 +10,7 @@
 
 densityPlots <- function(result, assetsSel = NULL, numSimulations = BLCOPOptions("numSimulations"), ...)
 {
-    invisible(NULL)
+    stop("Not implemented for this class")
 }
 
 setGeneric("densityPlots")
@@ -61,11 +61,9 @@ densityPlots.BLResult <- function(result, assetsSel = seq(along = assetSet(resul
 
             lines(x, dnorm(x, mean = priorMean, sd = priorStDev), col = "black", type = "l",...)
             abline(v = priorMean, lty = 2, col = "black")        
-            legend(x = "topright", legend = c("Prior", "Posterior"), lty = c(1,1), col = c("black", "blue"))
-            
+            legend(x = "topright", legend = c("Prior", "Posterior"), lty = c(1,1), col = c("black", "blue"))   
         }
     }      
-
 }
 
 setMethod("densityPlots", signature(result = "BLResult"), densityPlots.BLResult)
