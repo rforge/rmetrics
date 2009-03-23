@@ -1,6 +1,11 @@
 test.COPPosterior <- function()
 {
-    NUMTESTSIMULATIONS <- 1000
+    if(!require("sn", quiet = TRUE))
+	{
+		warning("This test relies on the sn package which is not available \n")
+		return()
+	}
+	NUMTESTSIMULATIONS <- 1000
     .unitTestPath <- BLCOPOptions("unitTestPath")
     testEnvironment <- new.env()
     

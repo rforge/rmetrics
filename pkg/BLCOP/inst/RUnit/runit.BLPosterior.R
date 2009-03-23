@@ -57,14 +57,21 @@ test.optimalPortfolios <- function()
 
 test.posteriorFeasibility <- function()
 {
-   pick <- matrix(0, 2, 6)
-   pick[1,1:3] <- 1/3
-   pick[2,4:6] <- 1/3
-   views <- BLViews(pick, q = c(0.2, -0.1), confidences = c(100,100), colnames(monthlyReturns))
-   post <- BLPosterior(monthlyReturns, views, 1, sp500Returns, US13wTB, 0.9)
-   feasibility <- posteriorFeasibility(post)
-
-   checkEquals(2.261890, feasibility$mahalDist, tolerance = 1e-03)
-   checkEquals(0.8941064, feasibility$mahalDistProb, tolerance = 1e-06)
-    
+	# at the moment this test requires corpcor, due to the expected availability of the shrinkage estimator.  
+	# TODO: remove this dependency
+	if(!require("corpcor", quiet = TRUE))
+	{
+		warning("Could not load the corpcor package, these tests will not be run")
+		return()
+	}
+	pick <- matrix(0, 2, 6)
+	pick[1,1:3] <- 1/3
+	pick[2,4:6] <- 1/3
+	views <- BLViews(pick, q = c(0.2, -0.1), confidences = c(100,100), colnames(monthlyReturns))
+	post <- BLPosterior(monthlyReturns, views, 1, sp500Returns, US13wTB, 0.9, covEstimator = "cov.shrink")
+	feasibility <- posteriorFeasibility(post)
+	
+	checkEquals(2.261890, feasibility$mahalDist, tolerance = 1e-03)
+	checkEquals(0.8941064, feasibility$mahalDistProb, tolerance = 1e-06)
+	
 }   

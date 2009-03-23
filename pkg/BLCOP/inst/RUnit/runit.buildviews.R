@@ -56,6 +56,11 @@ test.addCOPViews <- function()
     pick[1, "MS"] <- 1
     pick[1, "BAC"] <- 0.01
     
+	if(!require("sn", quiet = TRUE))
+	{
+		warning("The next tests require the sn package, which could not be loaded \n")
+		return()
+	}
     viewDist2 <- list(distribution("sn", location = 0.05, scale = 10, shape = 0.001))
     views1 <- addCOPViews(pick, viewDist2, 0.4, views1 )
     
