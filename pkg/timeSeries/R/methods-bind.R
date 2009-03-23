@@ -25,6 +25,10 @@ cbind.timeSeries <- function(..., deparse.level = 1)
 
     dots <- list(...)
 
+    # remove NULL from dots args
+    if (any(t <- unlist(lapply(dots, is.null))))
+        dots[t] <- NULL
+
     # coerce to timeSeries object if not a timeSeries
     if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
         dots[t] <- lapply(dots[t], as.timeSeries)
@@ -113,6 +117,10 @@ rbind.timeSeries <- function(..., deparse.level = 1)
 
     # Check Arguments:
     dots <- list(...)
+
+    # remove NULL from dots args
+    if (any(t <- unlist(lapply(dots, is.null))))
+        dots[t] <- NULL
 
     # coerce to timeSeries object if not a timeSeries
     if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
