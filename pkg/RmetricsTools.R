@@ -236,7 +236,7 @@ checkBeforeCommit  <-
             c(pkgs, names(tocheck)[tocheck])
 
     # pkgs in good order for install
-    pkgsToCheck <- pkgsRmetrics[sort(match(pkgsToCheck, pkgsRmetrics))]
+    pkgsToCheck <- unique(pkgsRmetrics[sort(match(pkgsToCheck, pkgsRmetrics))])
 
     ## Run R CMD check ...
     Rbin <- file.path(R.home(), "bin", "R")
