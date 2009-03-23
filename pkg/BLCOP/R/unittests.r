@@ -1,6 +1,13 @@
-runBLCOPTestSuite <- function(testPath = BLCOPOptions("unitTestPath"))
+
+runBLCOPTests <- function(testPath = BLCOPOptions("unitTestPath"), protocolFile = "BLCOPTests.html", writeProtocol = FALSE)
 {
-    BLTestSuite <- defineTestSuite(name = "Black-Litterman / COP unit tests", dirs = testPath) 
+    if(!require("RUnit"))
+	{
+		stop("Unable to load the RUnit package, will not execute the tests.")
+	}
+	BLTestSuite <- defineTestSuite(name = "Black-Litterman / COP unit tests", dirs = testPath) 
     testResults <- runTestSuite(BLTestSuite)
-    summary(testResults)                                  
+    if(writeProtocol)
+		printHTMLProtocol(testResults, file = protocolFile)
+	testResults
 }
