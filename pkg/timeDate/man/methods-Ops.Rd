@@ -9,7 +9,8 @@
 \alias{+,timeDate,numeric-method}
 \alias{-,timeDate,timeDate-method}
 \alias{-,timeDate,numeric-method}
-
+\alias{-,numeric,timeDate-method}
+\alias{+,numeric,timeDate-method}
 
 \title{timeDate Mathematical Operations}
 
