@@ -72,6 +72,8 @@ stocks, 3 of which are technology stocks and the other 3 of which are from the f
 \SweaveOpts{keep.source=TRUE}
 <<echo=FALSE,print=FALSE>>=
 require(BLCOP)
+require("sn")
+require("corpcor")
 @
 <<echo=TRUE,print=FALSE>>=
 pickMatrix <- matrix(c(rep(1/2, 2), -1,  rep(0, 3)), nrow = 1, ncol = 6 )
