@@ -68,3 +68,16 @@ confidences <- function(views)
     .assertClass(views, c("BLViews", "COPViews"))
     views@confidences
 }
+
+posteriorMeanCov <- function(BLposterior)
+{
+	.assertClass(posterior, "BLResult")
+	list("covariance" = posterior@posteriorCovar, "mean" = "posterior@posteriorMean")
+	
+}
+
+posteriorSimulations <- function(COPPosterior)
+{
+	.assertClass(posterior, "COPResult")
+	COPResult@posteriorSims
+}
