@@ -9,7 +9,7 @@
     
 }
 \usage{
-BLPosterior(returns, views, tau = 1, marketIndex, riskFree = NULL, kappa = 0)
+BLPosterior(returns, views, tau = 1, marketIndex, riskFree = NULL, kappa = 0, covEstimator = "cov")
 posteriorEst(views, tau, alphas, sigma, kappa = 0)
 
 }
@@ -24,11 +24,13 @@ posteriorEst(views, tau, alphas, sigma, kappa = 0)
   \item{sigma}{The variance-covariance matrix of the returns of the assets}
   \item{kappa}{If greater than 0, the confidences in each view are replaced.  See the details section
       for more information}
+  \item{covEstimator}{A string holding the name of the function that should be used to estimate the variance-covariance function.
+    This function should simply return a matrix.}
 }
 \details{
     Some authors have suggested that the confidences should not be set by the analyst but rather should just be equal
     to kappa * t(P) \%*\% Sigma \%*\% P.  Setting kappa > 0 will cause this to happen.  In BLPosterior, the equilibrium return
-    means are computed with \code{\link{CAPMList}}, while the variance-covariance matrix is calculated with \code{cov.shrink} from the \code{corpcor}.
+    means are computed with \code{\link{CAPMList}}.
 }
 \value{
     An object of class BLResults

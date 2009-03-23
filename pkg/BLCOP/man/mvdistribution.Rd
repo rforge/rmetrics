@@ -28,12 +28,14 @@ distribution(RName, ...)
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
 \seealso{\code{\link{sampleFrom}}}
 \examples{
-    # create a uniform distribution object and sample from it
-    myUnif <- distribution("unif", min = -0.1, max = 0.1)
-    hist(sampleFrom(myUnif, 1000))
-    
-    mvNormal <- mvdistribution("mnorm", mean = c(1, 5), varcov = diag(c(2, 0.1)))
-    x <- sampleFrom(mvNormal, 1000)
-    plot(x[,1] ~ x[,2])
+    \dontrun{
+	    # create a uniform distribution object and sample from it
+	    myUnif <- distribution("unif", min = -0.1, max = 0.1)
+	    hist(sampleFrom(myUnif, 1000))
+	    
+	    mvNormal <- mvdistribution("mnorm", mean = c(1, 5), varcov = diag(c(2, 0.1)))
+	    x <- sampleFrom(mvNormal, 1000)
+	    plot(x[,1] ~ x[,2])
+    }
 }
 \keyword{distribution}
