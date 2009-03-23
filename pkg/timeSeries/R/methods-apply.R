@@ -25,11 +25,13 @@
 setMethod("apply", "timeSeries",
           function(X, MARGIN, FUN, ...)
       {
-          pos <- time(X)
+          pos <- X@positions
+          FinCenter <- finCenter(X)
           X <- getDataPart(X)
           ans <- callGeneric()
           if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
-              ans <- timeSeries(data = ans, charvec = pos)
+              ans <- timeSeries(data = ans, charvec = pos,
+                                zone = FinCenter, FinCenter = FinCenter)
           ans
       })
 
