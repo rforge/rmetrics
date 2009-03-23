@@ -63,10 +63,11 @@ seriesData(object)
 \arguments{
 
     \item{charvec}{
-        a character vector of dates and times.
+        a character vector of dates and times or any objects which can
+        be coerced to a \code{timeDate} object.
         }
     \item{data}{
-        a \code{data.frame} or a \code{matrix} object of numeric data.
+        a \code{matrix} object or any objects which can be coereced to a matrix.
         }
     \item{documentation}{
         optional documentation string, or a vector of character strings.
@@ -220,6 +221,15 @@ seriesData(object)
    from
    to
    applySeries(tsRet, from, to, FUN = sum)
+
+## create large timeSeries objects with different 'charvec' object classes
+   # charvec is a 'timeDate' object
+   head(timeSeries(1:1e6L, timeSequence(length.out = 1e6L, by = "sec")))
+   head(timeSeries(1:1e6L, seq(Sys.timeDate(), length.out = 1e6L, by = "sec")))
+   # 'charvec' is a 'POSIXt' object
+   head(timeSeries(1:1e6L, seq(Sys.time(), length.out = 1e6L, by = "sec")))
+   # 'charvec' is a 'numeric' object
+   head(timeSeries(1:1e6L, 1:1e6L))
 }
 
 

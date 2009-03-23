@@ -161,8 +161,8 @@
        
 ## head - 
    head(tS)
+
 }
 
 
 \keyword{chron}
-
