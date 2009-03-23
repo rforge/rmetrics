@@ -55,15 +55,17 @@ posteriorEst <- function
                posteriorMean = postMu, posteriorCovar = postSigma, kappa = kappa )
 }
 
-###############################################################################
-# Mango Solutions, Chippenham SN14 0SQ 2008
-# posteriorEst
-# Author: Francisco
-###############################################################################
-# DESCRIPTION: wrapper function to facilitate Black-Litterman calculations. prevents users from having to manually compute alphas 
-# and variance-covariance matrix manually
-# KEYWORDS: datagen
-###############################################################################
+#' 
+#' @param returns 
+#' @param views 
+#' @param tau 
+#' @param marketIndex 
+#' @param riskFree 
+#' @param kappa 
+#' @param covEstimator 
+#' @return 
+#' @author Francisco
+#' @export
 
 BLPosterior <- function
 (
@@ -72,13 +74,13 @@ BLPosterior <- function
   tau = 1,         
   marketIndex,
   riskFree = NULL,
-  kappa = 0
+  kappa = 0,
+  covEstimator = "cov"
 )
 {
-  # TODO: Replace this so that there is no longer a dependency on fAssets
+  covEstimator <- match.fun(covEstimator)
   alphaInfo <- CAPMList(returns, marketIndex, riskFree = riskFree)
-
   post <- posteriorEst(views, tau = tau, alphas = alphaInfo[["alphas"]], 
-      sigma = unclass(cov.shrink(returns)),  kappa = kappa)
+      sigma = unclass(covEstimator(returns)),  kappa = kappa)
   post
 }
