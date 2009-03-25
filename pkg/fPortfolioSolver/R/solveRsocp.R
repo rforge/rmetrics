@@ -101,27 +101,32 @@ solveRsocp <-
     targetRisk = getTargetRisk(spec) / Scale
     
     # Objective Function:
-    lambda = 10
-    f <- -mu - lambda * length(mu) * max(abs(mu))
+    f <- -mu
      
+    # Constraints:
     eqsumW = eqsumWConstraints(data, spec, constraints)
 
+    # C - Cone Constraints:
     C1 <- rep(0, nAssets)                                     # xCx
-    C2 <- eqsumW[2,-1]                                        # sum(x)
+    C2 <- eqsumW[2, -1]                                       # sum(x)
     C3 <- rbind(diag(nAssets), -diag(nAssets) )               # x[i]>0
 
+    # d - Cone Constraints:
     d1 <- targetRisk                                          # xCx = risk
     d2 <- eqsumW[2, 1]                                        # sum(x) <= 1
     d3 <- c(rep(0, nAssets), rep(-1, nAssets))                # x[i] > 0
 
+    # A - Cone Constraints:
     A1 <- Rsocp::.SqrtMatrix(Sigma)
     A2 <- matrix(0, ncol = nAssets)
     A3 <- matrix(0, nrow = nrow(C3), ncol = nAssets)
 
+    # b - Cone Constraints:
     b1 <- rep(0, nAssets)                                     # xCx
     b2 <- 0                                                   # sum(x)
     b3 <- rep(0, nrow(C3))                                    # x[i]>0
 
+    # N - Cone Constraints:
     N1 <- nAssets                                             # dim(C)
     N2 <- 1                                                   # Full Investment
     N3 <- rep(1, nrow(C3))                                    # Long
