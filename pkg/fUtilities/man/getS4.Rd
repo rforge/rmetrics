@@ -2,7 +2,6 @@
 
 \alias{getS4}
 
-\alias{isS4}
 
 \alias{getCall}
 \alias{getModel}
@@ -34,8 +33,6 @@
 
 
 \usage{
-isS4(object)
-
 getCall(object)
 getModel(object)
 getTitle(object)
@@ -59,10 +56,10 @@ getSlot(object, slotName)
 
 \value{
 
-    \code{isS4}\cr
+%     \code{isS4}\cr
     
-    returns either TRUR or FALSE depending if the argument is
-    an object of class S4 or not.
+%     returns either TRUR or FALSE depending if the argument is
+%     an object of class S4 or not.
     
     \code{getCall}\cr
     \code{getModel}\cr

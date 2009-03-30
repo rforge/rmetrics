@@ -71,7 +71,7 @@ ciaByIndicator(code = 2001, from = FALSE, details = FALSE)
         recorded.
         }
     \item{names}{
-        a logical flag. If set to \code{TRUE"} then the full names
+        a logical flag. If set to \code{TRUE} then the full names
         of the countries will be returned in an additional column
         }
     \item{x}{

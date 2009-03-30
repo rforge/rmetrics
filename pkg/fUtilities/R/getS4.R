@@ -162,7 +162,6 @@ getSlot <-
 
     # FUNCTION:
 
-    .Deprecated()
 
     # isS4
     stopifnot(isS4(object))
