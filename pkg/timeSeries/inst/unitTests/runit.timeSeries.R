@@ -38,12 +38,21 @@ function()
     timeSeries:::.signalSeries(as.matrix(cbind(x,y)), 1:12)
 }
 
-
 test.timeSeries.Internal <-
 function()
 {
-    NA
+    # this is to test the problem when a ts object is passed to
+    # timeSeries. It seems that as.matrix does not convert the object
+    # to a matrix !!!
+    z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
+    # class(as.matrix(z)) #<< mts ts and not matrix in R 2.9.0
+    # Note that is is possible that a ts object is considered as a
+    # matrix when timeSeries method as dispatched. Hence this check
+    t <- timeSeries(z)
+    checkTrue(identical(as(z, "matrix"), as(t, "matrix")))
+
 }
+
 
 
 ################################################################################

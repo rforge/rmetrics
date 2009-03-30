@@ -24,7 +24,10 @@
              FinCenter = "", recordIDs = data.frame(), title = NULL,
              documentation = NULL, ...)
 {
-    stopifnot(inherits(data, "matrix"))
+    # Note that is is possible that a ts object is considered as a
+    # matrix when timeSeries method as dispatched. Hence this check
+    if (!is(data, "matrix"))
+        data <- as(data, "matrix")
 
     # Add units, title and Documentation:
     if (is.null(units))
@@ -65,9 +68,12 @@
              FinCenter = "", recordIDs = data.frame(), title = NULL,
              documentation = NULL, ...)
 {
+    # Note that is is possible that a ts object is considered as a
+    # matrix when timeSeries method as dispatched. Hence this check
+    if (!is(data, "matrix"))
+        data <- as(data, "matrix")
 
-    stopifnot(inherits(data, "matrix"))
-    stopifnot(is.numeric(charvec))
+    stopifnot(is(charvec, "numeric"))
 
     # Add units, title and Documentation:
     if (is.null(units))
@@ -122,8 +128,8 @@ setMethod("timeSeries",
                     FinCenter = "", recordIDs = data.frame(), title = NULL,
                     documentation = NULL, ...)
       {
-          t <- try(data <- as.matrix(data))
-          if (inherits(t, "try-error"))
+          data <- as(data, "matrix")
+          if (!is(data, "matrix"))
               stop("Could not coerce 'data' to a matrix")
           callGeneric()
       })

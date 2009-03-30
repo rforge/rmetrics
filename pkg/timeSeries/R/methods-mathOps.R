@@ -51,6 +51,20 @@ setMethod("Ops", c("array", "timeSeries"),
           value
       })
 
+setMethod("Ops", c("ts", "timeSeries"),
+          function(e1, e2)
+      {
+          e1 <- as(e1, "matrix")
+          lattrs <- attributes(e2)
+          e2 <- getDataPart(e2)
+          value <- callGeneric(e1, e2)
+          if (identical(dim(value), dim(e2))) {
+              attributes(value) <- lattrs
+              value <- asS4(value, TRUE)
+          }
+          value
+      })
+
 setMethod("Ops", c("timeSeries", "vector"),
           function(e1, e2)
       {
@@ -69,6 +83,20 @@ setMethod("Ops", c("timeSeries", "array"),
       {
           lattrs <- attributes(e1)
           e1 <- getDataPart(e1)
+          value <- callGeneric(e1, e2)
+          if (identical(dim(value), dim(e1))) {
+              attributes(value) <- lattrs
+              value <- asS4(value, TRUE)
+          }
+          value
+      })
+
+setMethod("Ops", c("timeSeries", "ts"),
+          function(e1, e2)
+      {
+          lattrs <- attributes(e1)
+          e1 <- getDataPart(e1)
+          e2 <- as(e2, "matrix")
           value <- callGeneric(e1, e2)
           if (identical(dim(value), dim(e1))) {
               attributes(value) <- lattrs

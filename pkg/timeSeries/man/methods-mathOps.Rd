@@ -2,11 +2,14 @@
 
 \alias{math}
 
-\alias{Ops,timeSeries,timeSeries-method}
-\alias{Ops,array,timeSeries-method}
-\alias{Ops,timeSeries,array-method}
-\alias{Ops,timeSeries,vector-method}
 \alias{Ops,vector,timeSeries-method}
+\alias{Ops,array,timeSeries-method}
+\alias{Ops,ts,timeSeries-method}
+\alias{Ops,timeSeries,vector-method}
+\alias{Ops,timeSeries,array-method}
+\alias{Ops,timeSeries,ts-method}
+\alias{Ops,timeSeries,timeSeries-method}
+
 \alias{-,timeSeries,missing-method}
 \alias{+,timeSeries,missing-method}
 \alias{cummax,timeSeries-method}
