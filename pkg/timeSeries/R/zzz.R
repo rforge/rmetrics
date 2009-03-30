@@ -17,6 +17,10 @@
 .First.lib <- function(libname, pkgname){
     if(!is.numeric(getRmetricsOptions("max.print")))
 	setRmetricsOptions(max.print = 100) #-> show() of large matrices
+
+    # YC: This should really go in methods package. keep it here for
+    # the time being. (R -2.9.0)
+    setOldClass("difftime")
 }
 
 # ------------------------------------------------------------------------------
@@ -24,6 +28,10 @@
 .onLoad <- function(libname, pkgname) {
     if(!is.numeric(getRmetricsOptions("max.print")))
 	setRmetricsOptions(max.print = 100) #-> show() of large matrices
+
+    # YC: This should really go in methods package. keep it here for
+    # the time being. (R -2.9.0)
+    setOldClass("difftime")
 }
 
 ################################################################################

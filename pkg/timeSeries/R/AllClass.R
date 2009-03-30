@@ -74,6 +74,7 @@ setClass("timeSeries",
 
 # ------------------------------------------------------------------------------
 
+# Note it is faster to assign manually all slots of the timeSeries objects.
 setMethod("initialize", "timeSeries",
           function(.Object,
                    .Data = new("matrix"),
@@ -98,33 +99,3 @@ setMethod("initialize", "timeSeries",
       })
 
 ################################################################################
-
-## # before init methods
-## system.time(new("timeSeries", .Data = as.matrix(1:1e6L), units = "hello", positions = 1:1e6L))
-## ###    user  system elapsed
-## ###   0.230   0.180   0.405
-
-## system.time(timeSeries(1:1e6L, units = "hello", positions = 1:1e6L))
-###    user  system elapsed
-###    0.40    0.10    0.49
-
-## # after
-## system.time(new("timeSeries", .Data = as.matrix(1:1e6L), units = "hello", positions = 1:1e6L))
-## ###    user  system elapsed
-## ###    0.15    0.12    0.27
-###    user  system elapsed
-###    0.06    0.09    0.15
-
-## system.time(timeSeries(1:1e6L, units = "hello", positions = 1:1e6L))
-###    user  system elapsed
-###   0.200   0.050   0.273
-
-## system.time(timeSeries(as.matrix(1:1e6L), units = "hello", positions = 1:1e6L))
-## ###   user  system elapsed
-## ###   0.150   0.120   0.267
-
-## # twice faster !!
-## # and without check
-## system.time(new("timeSeries", .Data = as.matrix(1:1e6L), units = "hello", positions = 1:1e6L, check = FALSE))
-## # does not seem faster ....
-
