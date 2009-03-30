@@ -4,9 +4,6 @@
 \alias{timeSeries-package}
 
 
-\alias{timeSeries}
-
-
 \docType{package}
 
 
