@@ -5,6 +5,7 @@
 \alias{usdchf}
 \alias{LPP2005REC}
 \alias{msft.dat}
+\alias{MSFT}
 \alias{usdchf}
 
 
