@@ -215,7 +215,7 @@ checkBeforeCommit  <-
         lib <- .libPaths()[1]
         message("will install the R packages into ", lib)
     }
-    if (is.null(outdir)) outdir <- "../Rcheck"
+    if (is.null(outdir)) outdir <- file.path("../Rcheck", getRversion())
 
     ## if outdir does not exist, create it
     if (!file.exists(outdir)) dir.create(outdir)
