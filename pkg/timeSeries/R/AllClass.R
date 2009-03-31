@@ -84,17 +84,16 @@ setMethod("initialize", "timeSeries",
                    FinCenter = character(0),
                    recordIDs = data.frame(),
                    title = character(0),
-                   documentation = character(0),
-                   check = TRUE)
+                   documentation = character(0))
       {
-          .Object <- setDataPart(.Object, value = .Data, check = check)
-          `slot<-`(.Object, "units", check = check, value = units)
-          `slot<-`(.Object, "positions", check = check, value = positions)
-          `slot<-`(.Object, "format", check = check, value = format)
-          `slot<-`(.Object, "FinCenter", check = check, value = FinCenter)
-          `slot<-`(.Object, "recordIDs", check = check, value = recordIDs)
-          `slot<-`(.Object, "title", check = check, value = title)
-          `slot<-`(.Object, "documentation", check = check, value = documentation)
+          .Object <- setDataPart(.Object, value = .Data)
+          `slot<-`(.Object, "units", value = units)
+          `slot<-`(.Object, "positions", value = positions)
+          `slot<-`(.Object, "format", value = format)
+          `slot<-`(.Object, "FinCenter", value = FinCenter)
+          `slot<-`(.Object, "recordIDs", value = recordIDs)
+          `slot<-`(.Object, "title", value = title)
+          `slot<-`(.Object, "documentation", value = documentation)
           .Object
       })
 

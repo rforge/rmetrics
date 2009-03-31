@@ -33,18 +33,35 @@ setMethod("getDataPart", "timeSeries", #"signalSeries",
 # ------------------------------------------------------------------------------
 
 # this makes setDataPart a bit faster than default function
-setMethod("setDataPart", "timeSeries",
-          function(object, value, check = TRUE)
-      {
-          if (check) value <- as(value, "matrix")
 
-          supplied <- attributes(object)
-          valueAttrs <- attributes(value)
+if (getRversion() < "2.8.0") {
+    setMethod("setDataPart", "timeSeries",
+              function(object, value)
+          {
+              value <- as(value, "matrix")
 
-          supplied[names(valueAttrs)] <- valueAttrs
-          attributes(value) <- supplied
+              supplied <- attributes(object)
+              valueAttrs <- attributes(value)
 
-          asS4(value, TRUE)
-      })
+              supplied[names(valueAttrs)] <- valueAttrs
+              attributes(value) <- supplied
+
+              asS4(value, TRUE)
+          })
+} else {
+    setMethod("setDataPart", "timeSeries",
+              function(object, value, check = TRUE)
+          {
+              if (check) value <- as(value, "matrix")
+
+              supplied <- attributes(object)
+              valueAttrs <- attributes(value)
+
+              supplied[names(valueAttrs)] <- valueAttrs
+              attributes(value) <- supplied
+
+              asS4(value, TRUE)
+          })
+}
 
 ################################################################################

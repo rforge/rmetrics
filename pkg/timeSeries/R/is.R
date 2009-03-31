@@ -66,7 +66,12 @@ setMethod("is.na", "timeSeries", function(x)
 
 # ------------------------------------------------------------------------------
 
-setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE, strictly = FALSE)
-          callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
+if (getRversion() < "2.8.0") {
+    setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE)
+              callGeneric(x@positions, na.rm = na.rm))
+} else {
+    setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE, strictly = FALSE)
+              callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
+}
 
 ################################################################################
