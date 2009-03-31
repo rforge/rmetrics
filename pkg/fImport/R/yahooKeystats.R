@@ -33,7 +33,7 @@
 
 
 yahooKeystats <-
-    function (query, file = "tempfile", source = NULL, 
+    function (query, file = "tempfile", source = NULL,
     save = FALSE, try = TRUE)
 {
     # A function implemented by Diethelm Wuertz and Matthew C.Keller
@@ -70,6 +70,10 @@ yahooKeystats <-
 
         # Extract Data Records:
         x = x[grep("datamodoutline1", x)]
+
+        # YC: 2009-03-31
+        # if keystats are not available, returns NA
+        if (!length(x)) return(NA)
 
         # Clean up HTML:
         x = gsub("/", "", x, perl = TRUE)
