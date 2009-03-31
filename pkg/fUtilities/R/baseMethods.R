@@ -176,9 +176,9 @@ attach.default <- base::attach
 
 # ------------------------------------------------------------------------------
 
-
+# use arg changed from "all.obs" to "everything" in R-2.8.0
 cor <-
-    function(x, y = NULL, use = "all.obs",
+    function(x, y = NULL, use = "everything",
     method = c("pearson", "kendall", "spearman"))
 {
     # A function implemented by Diethelm Wuertz
@@ -198,9 +198,9 @@ cor.default <- stats::cor
 
 # ------------------------------------------------------------------------------
 
-
+# use arg changed from "all.obs" to "everything" in R-2.8.0
 cov <-
-    function(x, y = NULL, use = "all.obs",
+    function(x, y = NULL, use = "everything",
     method = c("pearson", "kendall", "spearman"))
 {
     # A function implemented by Diethelm Wuertz
