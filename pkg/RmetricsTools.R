@@ -225,6 +225,7 @@ checkBeforeCommit  <-
     stopifnot(pkgs %in% pkgsRmetrics)
 
     ## search for packages which depends on the package we want to check
+    # FIXME : since 2.9.0 pkg tools has function 'dependsOnPkgs'
     listDepends <- lapply(pkgsRmetrics, getDepends,
                           group = pkgsRmetrics, "Depends")
     names(listDepends) <- pkgsRmetrics
@@ -731,9 +732,14 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     # reorder list of packages
     pkgs <- pkgsRmetrics[pkgsRmetrics %in% pkgs]
 
+    # Update svn version important to have up-dated Changelog and rev number in DCF
+    message("\nUpdating svn version ... ")
+    try(system("svn update"))
+
     # update Date and revision number in DESCRIPTION file
-    message("Updating Date and Revision in DCF... ", appendLF = FALSE)
+    message("\nUpdating Date and Revision in DCF ... ")
     for (pkg in pkgs) {
+        message(pkg, " ... ", appendLF = FALSE)
         dcfFile <- file.path(pkg, "DESCRIPTION")
         dcf <- read.dcf(dcfFile)
 
@@ -765,8 +771,9 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     }
 
     # update Changelog file
-    message("Updating ChangeLog... ", appendLF = FALSE)
+    message("\nUpdating ChangeLog ... ")
     for (pkg in pkgs) {
+        message(pkg, " ... ", appendLF = FALSE)
         svn2cl <- file.path("..", "share", "svn2cl.sh")
         if (file.exists(svn2cl)) {
             cmd <- paste(svn2cl, pkg,
@@ -783,7 +790,7 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     }
 
     # build package
-    message("Building the packages... ")
+    message("\nBuilding packages ... ")
     build <-
         sapply(pkgs, function(pkg, ...) system(paste("R CMD build", pkg, ...)))
     if (any(build))
