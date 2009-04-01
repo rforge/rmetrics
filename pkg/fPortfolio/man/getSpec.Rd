@@ -11,6 +11,8 @@
 \alias{getParams.fPFOLIOSPEC} 
 \alias{getAlpha.fPFOLIOSPEC}  
 \alias{getA.fPFOLIOSPEC}      
+\alias{getA}
+\alias{getMessages}
  
 \alias{getPortfolio.fPFOLIOSPEC}        
 \alias{getWeights.fPFOLIOSPEC}         
