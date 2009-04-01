@@ -2,7 +2,7 @@
 
 
 \alias{assetsFit}
-
+\alias{mvsnormFit} % FIXME
 
 \title{Fitting of Multivariate Asset Sets}
 
