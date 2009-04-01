@@ -57,7 +57,8 @@
   param_indep_nS[,1]<-param[(k+1):(k+n_nS)]
 
   param_indep_S<-matrix(0,n_S,k)
-  for (i in 0:k-1)
+  
+  for (i in 0:(k-1))
       param_indep_S[,i+1]<-param[(1+k+n_nS+i*n_S):(k+n_nS+n_S+n_S*i)] 
   
   # Building coeff structure as a list class
@@ -114,10 +115,10 @@
   LL<-sum(log(f[-1]))
   
   if (is.infinite(LL))  # control for optimization
-    LL<--10000
+    LL<--nr*100
     
   if (is.nan(LL))  # control for optimization
-    LL<--10000
+    LL<--nr*100
     
   cat("Sum of log Likelihood for MS-Regression Model ->",sprintf("%4.4f",LL),"\n")
   

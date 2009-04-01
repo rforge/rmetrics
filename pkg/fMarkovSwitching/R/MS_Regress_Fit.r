@@ -237,7 +237,7 @@ if (distIn=='t')
 }    
 
 indep_S_Std<-matrix(0,n_S,k)
-for (i in 0:k-1)
+for (i in 0:(k-1))
   indep_S_Std[,i+1]<-stdCoeff[(1+k+n_nS+i*n_S):(k+n_nS+n_S+n_S*i)] 
 
 if (distIn=='Normal')
