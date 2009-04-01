@@ -70,7 +70,7 @@ yahooKeystats <-
 
         # Extract Data Records:
         x = x[grep("datamodoutline1", x)]
-
+ 
         # YC: 2009-03-31
         # if keystats are not available, returns NA
         if (!length(x)) return(NA)
