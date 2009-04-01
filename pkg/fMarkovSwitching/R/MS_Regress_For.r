@@ -56,7 +56,7 @@ for (i in 1:nPeriods)
 {
     for (j in 1:k)
     {
-        condMean[i,j]<-newIndep_nS%*%Coeff$indep_nS + newIndep_S%*%t(Coeff$indep_S[,j])
+        condMean[i,j]<-newIndep_nS%*%Coeff$indep_nS + newIndep_S%*%(Coeff$indep_S[,j])
     }
   
     
