@@ -114,6 +114,9 @@ regFit <-
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]
     cmd[[1]] <- as.name(fun)
 
+    # Ensure that data is a data.frame
+    if (!is.null(cmd$data)) cmd$data <- call("as.data.frame", cmd$data)
+
     # Fit Regression Model:
     fit <- eval(cmd, parent.frame())
 
