@@ -1,6 +1,7 @@
 Package: fUtilities
 Version: 290.76
-Date: 1997 - 2008
+Revision: 4018
+Date: 2009-04-01
 Title: Function Utilities
 Author: Diethelm Wuertz and many others. See the SOURCE file
 Depends: R (>= 2.4.0), methods, MASS

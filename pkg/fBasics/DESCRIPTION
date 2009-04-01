@@ -1,6 +1,7 @@
 Package: fBasics
 Version: 290.76
-Date: 1997 - 2009
+Revision: 3987
+Date: 2009-04-01
 Title: Rmetrics - Markets and Basic Statistics
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.6.0), MASS, methods, timeDate, timeSeries

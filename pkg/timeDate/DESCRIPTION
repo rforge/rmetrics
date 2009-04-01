@@ -1,7 +1,7 @@
 Package: timeDate
 Version: 290.85
-Revision: 3856
-Date: 2009-02-08
+Revision: 3991
+Date: 2009-04-01
 Title: Rmetrics - Chronological and Calendarical Objects
 Author: Diethelm Wuertz and Yohan Chalabi
 Depends: R (>= 2.6.0), graphics, utils, stats, methods
