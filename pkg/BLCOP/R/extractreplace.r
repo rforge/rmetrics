@@ -76,8 +76,8 @@ posteriorMeanCov <- function(BLposterior)
 	
 }
 
-posteriorSimulations <- function(COPPosterior)
+posteriorSimulations <- function(posterior)
 {
 	.assertClass(posterior, "COPResult")
-	COPResult@posteriorSims
+	posterior@posteriorSims
 }
