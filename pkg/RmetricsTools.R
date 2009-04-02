@@ -356,7 +356,6 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
              file = paste("NAMESPACE", pkg, sep = "."))
 {
 
-    # FIXME : why is it not possible to generate namespace of different packages ?
 
     findGlobalsPackage <- function(pname)
     {
@@ -511,7 +510,6 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
             findGlobalsEnv(as.environment(pname))
     }
 
-    # import full namespace of other package to stay on the safe side ...
 
     ##
     # search for all globals in order to include them in import
@@ -544,7 +542,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     imp <- rbind(imp[!(imp$pkg %in% RmetricsPkgs),],
                  imp[(imp$pkg %in% RmetricsPkgs),])
     # remove duplicated entries. It should use first the definition
-    # from a base pacakge rather than from a Rmetrics pkgs because
+    # from a base package rather than from a Rmetrics pkgs because
     # Rmetrics at the end of imp
     imp <- imp[!duplicated(imp$func),]
 
@@ -559,13 +557,6 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
     imp <- imp[((names(imp) %in% RmetricsPkgs) ||
                packageHasNamespace(names(imp), file.path(R.home(), "library")))]
-
-    ## FIXME with timeSeries and cbind cbind.timeSeries
-
-###     impPkg <- c(na.omit(unique(c(impGlobals, "timeDate"))))
-###     impPkg <- impPkg[!(impPkg %in% pkg)]  # avoid cyclic name space dependencies
-###     # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
-###     imp <- impPkg[(impPkg %in% RmetricsPkgs) || packageHasNamespace(impPkg, file.path(R.home(), "library"))]
 
     ##
     # should we include C or Fortran code ?
@@ -587,15 +578,15 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
             cat("importFrom(", "\"", names(imp)[i], "\",\n           ",
                 imp[[i]], ")\n", sep = "", file = out)
 
-###     ## YC : rather than importing specific function, we now import whole
-###     ## namespace of other packages to stay on the safe side
-###     for (pp in imp)
-###         cat("import(", "\"", pp, "\")\n", sep = "", file = out)
+###     ## YC : rather than importing specific function, should import
+###     ## whole namespace of other packages to stay on the safe side
+###     ## ... but this creates other problems with functions might be
+###     ## imported twice and it generates errors when loading
+###     ## package...
+###     if (length(names(imp)))
+###         for (impPkg in names(imp))
+###             cat("import(", "\"", impPkg, "\")\n", sep = "", file = out)
 
-    ###     if (length(deps))
-    ###         for (dep in deps)
-    ###             if (any(dep %in% RmetricsPkgs))
-    ###                 cat("import(", dQuote(dep), ")\n", sep = "", file = out)
     if (SRC) {
         cat("
 ################################################
