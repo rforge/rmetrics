@@ -1,10 +1,11 @@
 Package: fCalendar
 Version: 270.78.2
-Revision: 3989
+Revision: 4023
 Date: 2009-04-01
 Title: Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi
 Depends: R (>= 2.4.0), methods, MASS, fUtilities, fEcofin
+Suggests: RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"

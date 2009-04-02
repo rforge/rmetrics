@@ -1,11 +1,12 @@
 Package: fRegression
 Version: 290.75
-Revision: 3835
+Revision: 4026
 Date: 2009-04-01
 Title: Regression Based Decision and Prediction
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), methods, mgcv, nnet, polspline, timeDate,
         timeSeries, fBasics, fTrading, fMultivar
+Suggests: RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"

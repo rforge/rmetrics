@@ -1,10 +1,11 @@
 Package: fEcofin
 Version: 290.76
-Revision: 4011
+Revision: 4023
 Date: 2009-04-01
 Title: Economic and Financial Data Sets
 Author: Diethelm Wuertz and many others. See the SOURCE file
 Depends: R (>= 2.6.0), utils
+Suggests: RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
