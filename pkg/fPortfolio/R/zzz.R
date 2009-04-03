@@ -16,18 +16,17 @@
 ################################################################################
 
 
-## .First.lib =
-## function(lib, pkg)
-## {
-## ###     # Startup Mesage and Desription:
-## ###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-## ###     dsc <- packageDescription(pkg)
-## ###     if(interactive() || getOption("verbose")) {
-## ###         # not in test scripts
-## ###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-## ###     }
+.First.lib <- function(libname, pkgname){
+    if(!is.numeric(getRmetricsOptions("length.print")))
+	setRmetricsOptions(length.print = 5)
+}
 
-## }
+# ------------------------------------------------------------------------------
+
+.onLoad <- function(libname, pkgname) {
+    if(!is.numeric(getRmetricsOptions("length.print")))
+	setRmetricsOptions(length.print = 5)
+}
 
 
 ################################################################################

@@ -35,52 +35,60 @@ setMethod("show", "fPORTFOLIO",
 
     # FUNCTION:
 
+    # Length Out:
+    nFrontierPoints <- NROW(matrix(getWeights(object@portfolio), ncol = getNAssets(object)))
+    length.out <- getRmetricsOptions("length.print") # get it from Rmetrics Options
+    index <-
+        if (length.out)
+            unique(trunc(seq.int(from = 1, to = nFrontierPoints,
+                                 length.out = length.out)))
+        else
+            seq.int(from = 1, to = NROW(nFrontierPoints))
+
     # Print Title:
     cat("\nTitle:\n ")
         cat(getType(object),  getTitle(object),     "\n")
-        cat(" Estimator:   ", getEstimator(object), "\n")
-        cat(" Solver:      ", getSolver(object),    "\n")
-        cat(" Optimize:    ", getOptimize(object),  "\n")
-        cat(" Constraints: ", getConstraintsTypes(object), "\n")
-    if(getType(object) == "CVaR")
-        cat(" VaR Alpha:   ", getAlpha(object),     "\n")
-        #at(" Objective:   ", getObjective(object), "\n")
-        
-    # Length Out:
-    length.out = 1 # get it from Rmetrics Options
+        cat(" Estimator:        ", getEstimator(object), "\n")
+        cat(" Solver:           ", getSolver(object),    "\n")
+        cat(" Optimize:         ", getOptimize(object),  "\n")
+        cat(" Constraints:      ", getConstraintsTypes(object), "\n")
+    if (!identical(index, 1))
+        cat(" Portfolio Points: ", length(index), "of", nFrontierPoints, "\n")
+    if (getType(object) == "CVaR")
+        cat(" VaR Alpha:        ", getAlpha(object),     "\n")
+        #at(" Objective:        ", getObjective(object), "\n")
 
     # Assets:
     nAssets = getNAssets(object)
     Names = getNames(object)
-    
+
     # Print Target Weights:
     cat("\nPortfolio Weights:\n")
-    table = matrix(round(getWeights(object@portfolio), digits = 4), 
-        ncol = nAssets)
+    table <- matrix(round(getWeights(object@portfolio), digits = 4),
+                    ncol = nAssets)
     colnames(table) = Names
     rownames(table) = 1:NROW(table)
-    index = trunc(seq(1, NROW(table), length.out = length.out))
     print.table(table[index, ])
 
     # Print Covariance Risk Budgets:
     cat("\nCovariance Risk Budgets:\n")
-    table = matrix(round(getCovRiskBudgets(object@portfolio), digits = 4), 
+    table = matrix(round(getCovRiskBudgets(object@portfolio), digits = 4),
         ncol = nAssets)
     colnames(table) = Names
     rownames(table) = 1:NROW(table)
     print.table(table[index, ])
-    
+
     # Print Tail Risk Budgets:
     # to do ...
 
     # Print Target Return and Risks:
-    # DW: Note obgect@targetR* is a list do not use getTargetR*() 
+    # DW: Note obgect@targetR* is a list do not use getTargetR*()
     cat("\nTarget Return and Risks:\n")
     targetReturn = matrix(getTargetReturn(object@portfolio), ncol = 2)
     targetRisk = matrix(getTargetRisk(object@portfolio), ncol = 4)
     target = round(cbind(targetReturn, targetRisk), digits = 4)
     colnames(target) = c("mean", "mu", "Cov", "Sigma", "CVaR", "VaR")
-    rownames(target) = 1:NROW(target) 
+    rownames(target) = 1:NROW(target)
     print.table(table[index, ])
 
     # Print Description:
@@ -88,7 +96,7 @@ setMethod("show", "fPORTFOLIO",
     cat(getDescription(object), "\n")
 
     # Return Value:
-    invisible(object)
+    invisible(NULL)
 })
 
 
@@ -119,7 +127,7 @@ setMethod("show", "fPFOLIODATA",
     # NYI
 
     # Return Value:
-    invisible(object)
+    invisible(NULL)
 })
 
 
@@ -138,115 +146,115 @@ setMethod("show", "fPFOLIOSPEC",
     # FUNCTION:
 
     # Model:
-    
+
     cat("\nModel List:\t")
-       
+
     cat("\n Type:                     ",
         object@model$type)
-        
+
     cat("\n Optimize:                 ",
         object@model$optimize)
-        
+
     cat("\n Estimator:                ",
         object@model$estimator)
-        
+
     if (length(object@model$tailRisk) > 0) {
         cat("\n Tail Risk:                ",
             object@model$tailRisk)
     } else {
         cat("\n Tail Risk:                ", "list()")
     }
-    
+
     cat("\n Params:                   ",
-        paste(names(unlist(object@model$params)), "=", 
+        paste(names(unlist(object@model$params)), "=",
             unlist(object@model$params)))
-    
+
     # Portfolio:
-    
+
     cat("\n\nPortfolio List:\t")
-    
+
     if (!is.null(object@portfolio$weights)) {
         cat("\n Portfolio Weights:        ",
             object@portfolio$weights)
     } else {
         cat("\n Target Weights:           ", "NULL")
     }
-    
+
     if (!is.null(object@portfolio$targetReturn)) {
         cat("\n Target Return:            ",
             object@portfolio$targetReturn)
     } else {
         cat("\n Target Return:            ", "NULL")
     }
-    
+
     if (!is.null(object@portfolio$targetRisk)) {
         cat("\n Target Risk:              ",
             object@portfolio$targetRisk)
     } else {
         cat("\n Target Risk:              ", "NULL")
     }
-    
+
     if (!is.null(object@portfolio$riskFreeRate)) {
         cat("\n Risk-Free Rate:           ",
         as.character(object@portfolio$riskFreeRate))
     }
-    
+
     if (!is.null(object@portfolio$nFrontierPoints)) {
         cat("\n Number of Frontier Points:",
         as.character(object@portfolio$nFrontierPoints))
     }
-    
+
     cat("\n Status:                   ",
         as.character(object@portfolio$status))
 
-        
+
     # Optimization:
-    
+
     cat("\n\nOptim List:\t")
-    
+
     cat("\n Solver:                   ",
         object@optim$solver)
-        
+
     if (!is.null(object@optim$objective)) {
         cat("\n Objective:                ",
         as.character(object@optim$objective))
     } else {
         cat("\n Objective:                ", "list()" )
     }
-    
+
     cat("\n Options:                  ",
-        paste(names(unlist(object@optim$options)), "=", 
+        paste(names(unlist(object@optim$options)), "=",
             unlist(object@optim$options)))
-    
+
     if (length(object@optim$control) > 0) {
         cat("\n Control:                  ",
         as.character(object@optim$control))
     } else {
         cat("\n Control:                  ", "list()")
-    }  
-    
-    
+    }
+
+
     cat("\n Trace:                    ",
         object@optim$trace)
-    
-                 
+
+
     # Messages:
-    
+
     cat("\n\nMessage List:\t")
-    
+
     if (!is.null(object@messages$list)) {
         cat("\n List:                     ",
             object@messages$list)
     } else {
         cat("\n List:                     ", "NULL")
     }
-    
-        
+
+
     cat("\n")
-            
-            
+
+
     # Return Value:
-    invisible(object)
+    invisible(NULL)
 })
 
 
@@ -280,26 +288,27 @@ setMethod("show", "fPFOLIOCON",
         cat("\nEqual Matrix Constraints:\n")
         print(eqsumW)
     }
-    
+
     minsumW = object@minsumWConstraints
     if (sum(dim(minsumW)) > 2) {
         cat("\nLower Matrix Constraints:\n")
         print(minsumW)
     }
-    
+
     maxsumW = object@maxsumWConstraints
     if (sum(dim(maxsumW)) > 2) {
         cat("\nUpper Matrix Constraints:\n")
         print(maxsumW)
     }
-    
-    minmaxB = rbind(object@minBConstraints, object@maxBConstraints)
-    if (length(minmaxB) > 0) {
+
+    minmaxB <- rbind(object@minBConstraints, object@maxBConstraints)
+    if (length(minmaxB) > 0 &&
+        !(all(object@minBConstraints == -Inf) && all(object@maxBConstraints == 1))) {
         cat("\nLower/Upper Cov Risk Budget Bounds:\n")
         rownames(minmaxB) = c("Lower", "Upper")
         print(minmaxB)
     }
-    
+
     listF = object@listFConstraints
     minF = object@minFConstraints
     maxF = object@maxFConstraints
@@ -309,11 +318,11 @@ setMethod("show", "fPFOLIOCON",
         colnames(minmaxF) = names(listF)
         rownames(minmaxF) = c("Lower", "Upper")
         print(minmaxF)
-    }  
-        
-        
+    }
+
+
     # Return Value:
-    invisible(object)
+    invisible(NULL)
 })
 
 
