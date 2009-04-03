@@ -18,9 +18,9 @@
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
 #  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
-#  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects
-#  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
-#  show.fPFOLIOCON               Print method for 'fPFOLIOCON' objects
+#  show.fPFOLIODATA              S4 Print method for 'fPFOLIODATA' objects
+#  show.fPFOLIOSPEC              S4 Print method for 'fPFOLIOSPEC' objects
+#  show.fPFOLIOCON               S4 Print method for 'fPFOLIOCON' objects
 ################################################################################
 
 
@@ -45,27 +45,30 @@ setMethod("show", "fPORTFOLIO",
     if(getType(object) == "CVaR")
         cat(" VaR Alpha:   ", getAlpha(object),     "\n")
         #at(" Objective:   ", getObjective(object), "\n")
+        
+    # Length Out:
+    length.out = 1 # get it from Rmetrics Options
 
-    # Print Call:
-    # cat("\nCall:\n ")
-    # print.default(getCall(object))
-
+    # Assets:
     nAssets = getNAssets(object)
     Names = getNames(object)
     
     # Print Target Weights:
     cat("\nPortfolio Weights:\n")
-    table = matrix(round(getWeights(object@portfolio), digits = 4), ncol = nAssets)
+    table = matrix(round(getWeights(object@portfolio), digits = 4), 
+        ncol = nAssets)
     colnames(table) = Names
     rownames(table) = 1:NROW(table)
-    print.table(table)
+    index = trunc(seq(1, NROW(table), length.out = length.out))
+    print.table(table[index, ])
 
     # Print Covariance Risk Budgets:
     cat("\nCovariance Risk Budgets:\n")
-    table = matrix(round(getCovRiskBudgets(object@portfolio), digits = 4), ncol = nAssets)
+    table = matrix(round(getCovRiskBudgets(object@portfolio), digits = 4), 
+        ncol = nAssets)
     colnames(table) = Names
     rownames(table) = 1:NROW(table)
-    print.table(table)
+    print.table(table[index, ])
     
     # Print Tail Risk Budgets:
     # to do ...
@@ -78,7 +81,7 @@ setMethod("show", "fPORTFOLIO",
     target = round(cbind(targetReturn, targetRisk), digits = 4)
     colnames(target) = c("mean", "mu", "Cov", "Sigma", "CVaR", "VaR")
     rownames(target) = 1:NROW(target) 
-    print.table(target)
+    print.table(table[index, ])
 
     # Print Description:
     cat("\nDescription:\n ")
