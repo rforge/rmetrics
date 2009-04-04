@@ -63,41 +63,33 @@ colStats <-
     # FUNCTION:
 
     # Statistics:
-    apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
+    if (inherits(x, "timeSeries"))
+        apply(na.omit(getDataPart(x), ...), 2, FUN, ...) #<< YC : as.matrix is slow !
+       else
+           apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
 }
 
+# ------------------------------------------------------------------------------
+
+# YC important because default colSums is unefficient since it retrive
+# full dimnames, i.e. rownames which is very time consuming
+setMethod("colSums", "timeSeries",
+          function(x, na.rm = FALSE, dims = 1L, ...)
+      {
+          x <- getDataPart(x)
+          callGeneric()
+      })
 
 # ------------------------------------------------------------------------------
 
-
-## colSums <-
-##     function(x, ...)
-## {
-##     # FUNCTION:
-
-##     if (class(x) == "timeSeries") {
-##         return(colStats(x, "sum", ...))
-##     } else {
-##         return(base::colSums(x, ...))
-##     }
-## }
-
-
-# ------------------------------------------------------------------------------
-
-
-## colMeans <-
-##     function(x, ...)
-## {
-##     # FUNCTION:
-
-##     if (class(x) == "timeSeries") {
-##         return(colStats(x, "mean", ...))
-##     } else {
-##         return(base::colMeans(x, ...))
-##     }
-## }
-
+# YC important because default colSums is unefficient since it retrive
+# full dimnames, i.e. rownames which is very time consuming
+setMethod("colMeans", "timeSeries",
+          function(x, na.rm = FALSE, dims = 1L, ...)
+      {
+          x <- getDataPart(x)
+          callGeneric()
+      })
 
 # ------------------------------------------------------------------------------
 
