@@ -154,6 +154,7 @@ minWConstraints <-
 
     # Settings:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
     nAssets = getNAssets(Data)
     assetNames <- getNames(Data)
 
@@ -217,6 +218,7 @@ maxWConstraints <-
 
     # Settings:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
     nAssets = getNAssets(Data)
     assetNames <- getNames(Data)
 
@@ -510,6 +512,7 @@ minBConstraints <-
 
     # Create Data Object:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
 
     # Get Specifications:
     nAssets = getNAssets(Data)
@@ -556,6 +559,7 @@ maxBConstraints <-
 
     # Create Data Object:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
 
     # Get Specifications:
     N = nAssets = getNAssets(Data)

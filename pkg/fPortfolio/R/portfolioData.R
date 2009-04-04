@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
@@ -29,25 +29,25 @@
 ################################################################################
 
 
-portfolioData <- 
+portfolioData <-
     function(data, spec = portfolioSpec())
-{   
+{
     # A function implemented by Rmetrics
 
     # Description:
     #   Creates portfolio data list
-    
+
     # Arguments:
     #   data - a multivariate 'timeSeries' object
     #   spec -  a portfolio specification structure, from which
     #       the mean and covariance type of estimator will be extracted
-    
+
     # FUNCTION:
-    
-    # Check and Sort Data: 
-    if (class(data) == "fPFOLIODATA") return(data)  
-    stopifnot(class(data) == "timeSeries") 
-    
+
+    # Check and Sort Data:
+    if (is(data, "fPFOLIODATA")) return(data)
+    stopifnot(class(data) == "timeSeries")
+
     # Data:
     data = sort(data)
     nAssets = NCOL(data)
@@ -57,28 +57,28 @@ portfolioData <-
         series = data,
         nAssets = nAssets,
         names = names)
-        
+
     # Statistics:
     estimator = getEstimator(spec)
     estimatorFun = match.fun(estimator)
     muSigma = estimatorFun(data, spec)
     Cov = cov(data)
-    rownames(Cov) <- colnames(Cov) <- names   
+    rownames(Cov) <- colnames(Cov) <- names
     .statistics = list(
-        mean = colMeans(data), 
+        mean = colMeans(data),
         Cov = Cov,
         estimator = estimator,
-        mu = muSigma$mu, 
+        mu = muSigma$mu,
         Sigma = muSigma$Sigma)
-  
+
     # Tail Risk:
     .tailRisk = spec@model$tailRisk
-        
+
     # Return Value:
-    new("fPFOLIODATA", 
+    new("fPFOLIODATA",
         data = .data,
         statistics = .statistics,
-        tailRisk = .tailRisk)  
+        tailRisk = .tailRisk)
 }
 
 

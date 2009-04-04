@@ -52,7 +52,7 @@ efficientPortfolio <-
     # Optimize Portfolio:
     Solver = match.fun(getSolver(spec))
     portfolio = Solver(data, spec, constraints)
-    
+
     # Set Parameters:
     # Do not use ...
     # setWeights(spec) = portfolio$weights
@@ -62,10 +62,10 @@ efficientPortfolio <-
     spec@portfolio$weights = portfolio$weights
     spec@portfolio$targetReturn = portfolio$targetReturn
     spec@portfolio$targetRisk = portfolio$targetRisk
-    
+
     # Add Status:
     setStatus(spec) = portfolio$status
-    
+
     # Add Title:
     Title = "Efficient Portfolio"
 
@@ -103,10 +103,11 @@ maxratioPortfolio <-
 
     # Match Spec Versus Constraints:
     # .checkSpecVsConstraints(spec, constraints)
-    
+
     # Transform Data:
     Data = portfolioData(data, spec)
-    
+    data <- getSeries(Data)
+
     # Compute Sharpe ratio to be minimized:
     ratioFun = function(x, data, spec, constraints)
     {
@@ -123,15 +124,15 @@ maxratioPortfolio <-
     # Start Solution - Equal Weights Portfolio:
     nAssets = getNAssets(Data)
     setWeights(spec) = rep(1/nAssets, times = nAssets)
-    fp = feasiblePortfolio(data, spec, constraints)
+    fp = feasiblePortfolio(Data, spec, constraints)
     setTargetReturn(spec) <- getTargetReturn(fp)
     portfolio = optimize(f = ratioFun, interval = range(getMu(Data)),
-        maximum = TRUE, data = data, spec = spec, constraints = constraints)  
+        maximum = TRUE, data = Data, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
     # Compose Portfolio:
-    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio = feasiblePortfolio(Data, spec, constraints)
     portfolio@call = match.call()
     portfolio@title = "Max Return/Risk Ratio Portfolio"
 
@@ -179,9 +180,10 @@ minriskPortfolio <-
 
     # Match Spec Versus Constraints:
     # .checkSpecVsConstraints(spec, constraints)
-    
+
     # Transform Data:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
 
     # Compute target risk to be minimized:
     targetRiskFun <- function(x, data, spec, constraints) {
@@ -191,13 +193,13 @@ minriskPortfolio <-
         ans = Solver(data, spec, constraints)
         targetRisk = ans$objective
         attr(targetRisk, "weights") <- ans$weights
-        attr(targetRisk, "status") <- ans$status 
-        return(targetRisk) 
+        attr(targetRisk, "status") <- ans$status
+        return(targetRisk)
     }
 
     # Minimal Risk:
     portfolio <- optimize(targetRiskFun, interval = range(getMu(Data)),
-        data = data, spec = spec, constraints = constraints)
+        data = Data, spec = spec, constraints = constraints)
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
@@ -246,7 +248,7 @@ maxreturnPortfolio <-
 
     # Match Spec Versus Constraints:
     # .checkSpecVsConstraints(spec, constraints)
-    
+
     # Transform Data:
     data = portfolioData(data, spec)
 

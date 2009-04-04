@@ -38,9 +38,10 @@ feasiblePortfolio <-
 
     # Transform Data / spec / Constraints:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
     Spec = spec
-    Constraints = portfolioConstraints(data, spec, constraints)
-    
+    Constraints = portfolioConstraints(Data, spec, constraints)
+
     # Get Weights:
     if(is.null(getWeights(spec))) {
         stop("Missing weights")
@@ -53,17 +54,17 @@ feasiblePortfolio <-
         mean = (Data@statistics$mean %*% weights)[[1]],
         mu = (Data@statistics$mu %*% weights)[[1]])
     setTargetReturn(spec) = targetReturn
-    
+
     # Compute Covariance Risk:
     Cov = Data@statistics$Cov
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
- 
+
     # Check Solver:
     # if (any(constraints@stringConstraints == "Short")) {
     #     setSolver(spec) = "solveRshortExact"
     #     warning("Short Constraints Specified: Solver forced to solveRshortExact")
     # }
-    
+
     # Compute Alternative/Robust Covariance Risk:
     if (getType(spec) == "SPS") {
         funSigma = match.fun(getObjective(spec))
@@ -75,7 +76,7 @@ feasiblePortfolio <-
 
     # Compute VaR:
     alpha = getAlpha(spec)
-    returns = as.matrix(getSeries(Data)) %*% weights
+    returns = getDataPart(getSeries(Data)) %*% weights
     VaR = quantile(returns, alpha, type = 1)
 
     # Compute CVaR:

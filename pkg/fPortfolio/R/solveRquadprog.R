@@ -38,37 +38,38 @@ solveRquadprog <-
     #   solveRquadprog(.lppData, .mvSpec, .BoxGroups)[-3]
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "LongOnly")
     #   portfolioTest("MV", "minRisk", "solveRquadprog", "BoxGroup")
-    
-    # FUNCTION:   
+
+    # FUNCTION:
 
     # Transform Data:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
     nAssets = getNAssets(Data)
-    
+
     # Solve:
     if(nAssets == 2) {
 
         # Solve two Assets Portfolio Analytically:
-        ans = .mvSolveTwoAssets(data, spec, constraints)
+        ans = .mvSolveTwoAssets(Data, spec, constraints)
         # ... this is only  for 'unlimited' LongOnly constraints,
         # box and group constraints are discarded here.
-            
+
     } else {
-        
+
         # Compile Arguments for Solver:
-        args = .rquadprogArguments(data, spec, constraints)
-        
+        args = .rquadprogArguments(Data, spec, constraints)
+
         # Solve Multiassets Portfolio:
         ans = .rquadprog(
-            Dmat = args$Dmat, 
-            dvec = args$dvec, 
-            Amat = args$Amat, 
-            bvec = args$bvec, 
+            Dmat = args$Dmat,
+            dvec = args$dvec,
+            Amat = args$Amat,
+            bvec = args$bvec,
             meq = args$meq)
-         
+
         # Save Arguments:
         ans$optim$args = args
-            
+
     }
 
     # Return Value:
@@ -84,44 +85,45 @@ solveRquadprog <-
 {
     # Description:
     #   Returns quadprog conform arguments for the solver
-    
+
     # Example:
     #   .rquadprogArguments(.lppData, .mvSpec, "LongOnly")
     #   .rquadprogArguments(.lppData, .mvSpec, .BoxGroups)
-    
+
     # FUNCTION:
-    
+
     # Data and Constraints as S4 Objects:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
     Sigma = getSigma(Data)
     nAssets = getNAssets(Data)
-    
+
     # Set up A_mat of Constraints:
-    eqsumW = eqsumWConstraints(data, spec, constraints)
-    minsumW = minsumWConstraints(data, spec, constraints)
-    maxsumW = maxsumWConstraints(data, spec, constraints)
+    eqsumW = eqsumWConstraints(Data, spec, constraints)
+    minsumW = minsumWConstraints(Data, spec, constraints)
+    maxsumW = maxsumWConstraints(Data, spec, constraints)
     Amat = rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
     if(!is.null(minsumW)) Amat = rbind(Amat, minsumW[, -1])
     if(!is.null(maxsumW)) Amat = rbind(Amat, -maxsumW[, -1])
 
     # Set up Vector A_mat >= bvec of Constraints:
-    minW = minWConstraints(data, spec, constraints)
-    maxW = maxWConstraints(data, spec, constraints)
+    minW = minWConstraints(Data, spec, constraints)
+    maxW = maxWConstraints(Data, spec, constraints)
     bvec = c(eqsumW[, 1], minW, -maxW)
     if(!is.null(minsumW)) bvec = c(bvec, minsumW[, 1])
     if(!is.null(maxsumW)) bvec = c(bvec, -maxsumW[, 1])
 
     # Part (meq=1) or Full (meq=2) Investment, the Default ?
     meq = nrow(eqsumW)
-    
+
     # Directions:
     dir = c(
         rep("==", times = meq),
         rep(">=", times = length(bvec) - meq))
-    
+
     # Return Value:
     list(
-        Dmat = Sigma, dvec = rep(0, nAssets), 
+        Dmat = Sigma, dvec = rep(0, nAssets),
         Amat = t(Amat), bvec = bvec, meq = meq, dir = dir)
 }
 
@@ -134,11 +136,11 @@ solveRquadprog <-
 {
     # Description:
     #   Goldfarb and Idnani's quadprog solver function
-    
+
     # Note:
     #   Requires to load contributed R package quadprog from which we use
     #   the Fortran subroutine of the quadratic solver.
-    
+
     # Package: quadprog
     #   Title: Functions to solve Quadratic Programming Problems.
     #   Author: S original by Berwin A. Turlach <berwin.turlach@anu.edu.au>
@@ -147,7 +149,7 @@ solveRquadprog <-
     #   Description: This package contains routines and documentation for
     #       solving quadratic programming problems.
     #   License: GPL-2
-    
+
     # Value of slove.QP():
     #   solution - vector containing the solution of the quadratic
     #       programming problem.
@@ -162,7 +164,7 @@ solveRquadprog <-
     #       active constraints at the solution.
 
     # FUNCION:
-    
+
     # Settings:
     n = nrow(Dmat)
     q = ncol(Amat)
@@ -188,11 +190,11 @@ solveRquadprog <-
         work = as.double(work),
         ierr = as.integer(0),
         PACKAGE = "quadprog")
-          
+
     # Set Tiny Weights to Zero:
     weights = .checkWeights(optim$sol)
-    attr(weights, "invest") = sum(weights) 
-    
+    attr(weights, "invest") = sum(weights)
+
     # Compose Output List:
     ans = list(
         type = "MV",
@@ -204,7 +206,7 @@ solveRquadprog <-
         objective = sqrt(optim$sol %*% Dmat %*% optim$sol)[[1,1]],
         status = optim$ierr,
         message = NA)
-            
+
     # Return Value:
     ans
 }
@@ -218,14 +220,14 @@ solveRquadprog <-
 {
     # Description:
     #   Returns default quadprog control settings
-    
+
     # Arguments:
     #   none
-    
+
     # FUNCTION:
-    
+
     # This algorithm comes with no control parameter list
-    
+
     NA
 }
 

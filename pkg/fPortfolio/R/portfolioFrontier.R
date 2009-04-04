@@ -6,12 +6,12 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR Description. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307 USA
 
 
@@ -21,41 +21,42 @@
 ################################################################################
 
 
-portfolioFrontier <- 
-    function(data, spec = portfolioSpec(), constraints = "LongOnly", 
+portfolioFrontier <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly",
     include.mvl = TRUE, title = NULL, description = NULL)
-{   
+{
     # A function implemented by Rmetrics
 
     # Description:
     #   Computes the efficient frontier of a portfolio
-    
+
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    #   include.mvl - a logical flag, should the minimum variance 
+    #   include.mvl - a logical flag, should the minimum variance
     #       locus be added to the plot?
-    
+
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
     #   spec = portfolioSpec()
     #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8", "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
     #   portfolioFrontier(data, spec, constraints)
-    
+
     # FUNCTION:
-    
+
     DEBUG = TRUE
-    
+
     # Match Spec Versus Constraints?
     .checkSpecVsConstraints(spec, constraints)
-    
+
     # Transform Data and Constraints:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
 
     # Optimize in N Points the Portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
-    
+
     # The Target Return - get problems in the first and last point for
     #   long only portfolios, just move a little bit aside ...
     mu = getMu(Data)
@@ -63,18 +64,18 @@ portfolioFrontier <-
     eps = .Machine$double.eps^0.5
     targetReturns[1] = targetReturns[1]*(1+eps)
     targetReturns[nFrontierPoints] = targetReturns[nFrontierPoints]*(1-eps)
-    
-    # How to Go Along the Frontier ? 
+
+    # How to Go Along the Frontier ?
     #   The Idea is to start from the minvariance portfolio and to explore
     #   the efficient frontier and the minimum variance locus starting from
     #   this point ...
     #   Then we stop when the status flag fails ...
-    
+
     # Compute minvariancePortfolio:
-    mvPortfolio = minvariancePortfolio(data, spec, constraints)
+    mvPortfolio = minvariancePortfolio(Data, spec, constraints)
     mvReturn = getTargetReturn(mvPortfolio@portfolio)["mean"]
     minIndex = which.min(abs(mvReturn-targetReturns))
-    
+
     # Upper Frontier Part:
     Status = 0
     IDX = minIndex
@@ -83,7 +84,7 @@ portfolioFrontier <-
         # Add Target Return to Specification:
         setTargetReturn(spec) = targetReturns[IDX]
         # Optimize Efficient Portfolio:
-        ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+        ans = try(efficientPortfolio(Data, spec, constraints), silent = TRUE)
         if (class(ans) == "try-error") {
             Status = 1
         } else {
@@ -96,12 +97,12 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio@portfolio))
             targetRisk = rbind(targetRisk, getTargetRisk(portfolio@portfolio))
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio@portfolio))
-            ### maxDD = rbind(maxDD, 
+            ### maxDD = rbind(maxDD,
             ###    min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
         IDX = IDX + 1
     }
-    
+
     # Lower Min Variance Locus:
     if (include.mvl) {
         if (minIndex > 1) {
@@ -112,7 +113,7 @@ portfolioFrontier <-
                 # Add Target Return to Specification:
                 setTargetReturn(spec) = targetReturns[IDX]
                 # Optimize Efficient Portfolio:
-                ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+                ans = try(efficientPortfolio(Data, spec, constraints), silent = TRUE)
                 if (class(ans) == "try-error") {
                     Status = 1
                 } else {
@@ -122,11 +123,11 @@ portfolioFrontier <-
                 if (Status == 0) {
                     Weights2 = getWeights(portfolio)
                     weights2 = rbind(Weights2, weights2)
-                    targetReturn2 = 
+                    targetReturn2 =
                         rbind(getTargetReturn(portfolio@portfolio), targetReturn2)
-                    targetRisk2 = 
+                    targetRisk2 =
                         rbind(getTargetRisk(portfolio@portfolio), targetRisk2)
-                    covRiskBudgets2 = 
+                    covRiskBudgets2 =
                         rbind(getCovRiskBudgets(portfolio@portfolio), covRiskBudgets2)
                     ### maxDD2 = rbind(maxDD2, min(drawdowns(
                     ###    pfolioReturn(data/100, as.vector(Weights2)))) )
@@ -138,13 +139,13 @@ portfolioFrontier <-
             targetRisk = rbind(targetRisk2, targetRisk)
             covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
             ### maxDD = rbind(maxDD2, maxDD)
-        } 
-    } 
+        }
+    }
     rownames(weights) <- NULL
     rownames(covRiskBudgets) <- NULL
     rownames(targetReturn) <- NULL
     rownames(targetRisk) <- NULL
-    
+
     # Check: Did we find points on the frontier?
     if (is.null(weights)) {
         portfolio = mvPortfolio
@@ -152,13 +153,13 @@ portfolioFrontier <-
         ###    pfolioReturn(data/100, as.vector(getWeights(mvPortfolio)))))
         return(portfolio)
     }
-    
-    # Reset Target Return:  
+
+    # Reset Target Return:
     setTargetReturn(spec) <- NULL
-  
+
     # Call
     portfolio@call = match.call()
-    
+
     # Compose Portfolio:
     portfolio@portfolio = new("fPFOLIOVAL",
         portfolio = list(
@@ -169,53 +170,54 @@ portfolioFrontier <-
             targetAlpha = getAlpha(spec),
             minriskPortfolio = mvPortfolio,
             status = 0))
-    
+
     ### portfolio@portfolio$maxDD = maxDD
-    
+
     # Update Title
-    portfolio@title = "Portfolio Frontier"    
-    
+    portfolio@title = "Portfolio Frontier"
+
     # Return Value:
-    portfolio   
+    portfolio
 }
 
 
 ################################################################################
 
 
-.portfolioFrontier <- 
-    function(data, spec = portfolioSpec(), constraints = "LongOnly", 
+.portfolioFrontier <-
+    function(data, spec = portfolioSpec(), constraints = "LongOnly",
     include.mvl = TRUE, title = NULL, description = NULL)
-{   
+{
     # A function implemented by Rmetrics
 
     # Description:
     #   Computes the efficient frontier of a portfolio
-    
+
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # Example:
     #   data = as.timeSeries(data(LPP2005REC))[, 1:6]
     #   spec = portfolioSpec()
     #   constraints = c("minW[3:4]=0.1", "maxW[5:6]=0.8", "minsumW[1:3]=0.2", "maxsumW[c(2,4)]=0.8")
     #   portfolioFrontier(data, spec, constraints)
-    
+
     # FUNCTION:
-    
+
     DEBUG = TRUE
-    
+
     # Match Spec Versus Constraints?
     .checkSpecVsConstraints(spec, constraints)
-    
+
     # Transform Data and Constraints:
     Data = portfolioData(data, spec)
+    data <- getSeries(Data)
 
     # Optimize in N Points the Portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)
-    
+
     # The Target Return - get problems in the first and last point for
     #   long only portfolios, just move a little bit aside ...
     mu = getMu(Data)
@@ -223,18 +225,18 @@ portfolioFrontier <-
     eps = .Machine$double.eps^0.5
     targetReturns[1] = targetReturns[1]*(1+eps)
     targetReturns[nFrontierPoints] = targetReturns[nFrontierPoints]*(1-eps)
-    
-    # How to Go Along the Frontier ? 
+
+    # How to Go Along the Frontier ?
     #   The Idea is to start from the minvariance portfolio and to explore
     #   the efficient frontier and the minimum variance locus starting from
     #   this point ...
     #   Then we stop when the status flag fails ...
-    
+
     # Compute minvariancePortfolio:
-    mvPortfolio = minvariancePortfolio(data, spec, constraints)
+    mvPortfolio = minvariancePortfolio(Data, spec, constraints)
     mvReturn = getTargetReturn(mvPortfolio)[, "mean"]
     minIndex = which.min(abs(mvReturn-targetReturns))
-    
+
     # Upper Frontier Part:
     Status = 0
     IDX = minIndex
@@ -243,7 +245,7 @@ portfolioFrontier <-
         # Add Target Return to Specification:
         setTargetReturn(spec) = targetReturns[IDX]
         # Optimize Efficient Portfolio:
-        ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+        ans = try(efficientPortfolio(Data, spec, constraints), silent = TRUE)
         if (class(ans) == "try-error") {
             Status = 1
         } else {
@@ -256,12 +258,12 @@ portfolioFrontier <-
             targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
             targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
             covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
-            maxDD = rbind(maxDD, 
+            maxDD = rbind(maxDD,
                 min(drawdowns(pfolioReturn(data/100, as.vector(Weights)))) )
         }
         IDX = IDX + 1
     }
-    
+
     # Lower Min Variance Locus:
     if (include.mvl) {
         if (minIndex > 1) {
@@ -272,7 +274,7 @@ portfolioFrontier <-
                 # Add Target Return to Specification:
                 setTargetReturn(spec) = targetReturns[IDX]
                 # Optimize Efficient Portfolio:
-                ans = try(efficientPortfolio(data, spec, constraints), silent = TRUE)
+                ans = try(efficientPortfolio(Data, spec, constraints), silent = TRUE)
                 if (class(ans) == "try-error") {
                     Status = 1
                 } else {
@@ -282,11 +284,11 @@ portfolioFrontier <-
                 if (Status == 0) {
                     Weights2 = getWeights(portfolio)
                     weights2 = rbind(Weights2, weights2)
-                    targetReturn2 = 
+                    targetReturn2 =
                         rbind(getTargetReturn(portfolio), targetReturn2)
-                    targetRisk2 = 
+                    targetRisk2 =
                         rbind(getTargetRisk(portfolio), targetRisk2)
-                    covRiskBudgets2 = 
+                    covRiskBudgets2 =
                         rbind(getCovRiskBudgets(portfolio), covRiskBudgets2)
                     maxDD2 = rbind(maxDD2, min(drawdowns(
                         pfolioReturn(data/100, as.vector(Weights2)))) )
@@ -298,9 +300,9 @@ portfolioFrontier <-
             targetRisk = rbind(targetRisk2, targetRisk)
             covRiskBudgets = rbind(covRiskBudgets2, covRiskBudgets)
             maxDD = rbind(maxDD2, maxDD)
-        } 
-    } 
-    
+        }
+    }
+
     # Check: Did we find points on the frontier?
     if (is.null(weights)) {
         portfolio = mvPortfolio
@@ -308,10 +310,10 @@ portfolioFrontier <-
             pfolioReturn(data/100, as.vector(getWeights(mvPortfolio)))))
         return(portfolio)
     }
-    
-    # Reset Target Return:  
+
+    # Reset Target Return:
     setTargetReturn(spec) <- NULL
-  
+
     # Compose Frontier:
     portfolio@call = match.call()
     portfolio@portfolio$weights  = weights
@@ -321,8 +323,8 @@ portfolioFrontier <-
     portfolio@portfolio$maxDD = maxDD
     portfolio@portfolio$status = 0
     portfolio@portfolio$minriskPortfolio = mvPortfolio
-    portfolio@title = "Portfolio Frontier"    
-    
+    portfolio@title = "Portfolio Frontier"
+
     # Return Value:
-    portfolio   
+    portfolio
 }

@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   www.rmetrics.org
@@ -32,38 +32,39 @@
 #  mveEstimator              Uses robust estimation "cov.mve" from [MASS]
 #  mcdEstimator              Uses robust estimation "cov.mcd" from [MASS]
 # FUNCTION:                 RANK ESTIMATORS:
-#  lpmEstimator              Returns Lower Partial Moment Estimator      
-# FUNCTION:                 LPM ESTIMATOR: 
+#  lpmEstimator              Returns Lower Partial Moment Estimator
+# FUNCTION:                 LPM ESTIMATOR:
 #  kendallEstimator          Returns Kendall's Covariance Estimator
 #  spearmanEstimator         Returns Spearman's Covariance Estimator
 # FUNCTION:                 REQUIRE OTHER PACKAGES:
-#  covMcdEstimator           Requires "covMcd" from [robustbase]  
-#  covOGKEstimator           Requires "covOGK" from [robustbase] 
+#  covMcdEstimator           Requires "covMcd" from [robustbase]
+#  covOGKEstimator           Requires "covOGK" from [robustbase]
 #  shrinkEstimator           Requires "cov.shrink" from [corpcor]
 #  nnveEstimator             Requires "cov.nnve" from [covRobust]
 ################################################################################
 
 
-covEstimator <- 
+covEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Uses sample covariance estimation
 
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = cov(x.mat)
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -72,26 +73,27 @@ covEstimator <-
 # ------------------------------------------------------------------------------
 
 
-mveEstimator <- 
+mveEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Uses robust estimation "cov.mve" from [MASS]
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mveEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate: {
     mu = colMeans(x.mat)
     Sigma = MASS::cov.rob(x = x.mat, method = "mve")$cov
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -100,26 +102,27 @@ mveEstimator <-
 # ------------------------------------------------------------------------------
 
 
-mcdEstimator <- 
+mcdEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Uses robust estimation "cov.mve" from [MASS]
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mcdEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = MASS::cov.rob(x = x.mat, method = "mcd")$cov
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -128,22 +131,23 @@ mcdEstimator <-
 ################################################################################
 
 
-lpmEstimator <- 
-function(x, spec = NULL, ...) 
+lpmEstimator <-
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns lower partial moment estimator
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; lpmEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu <- colMeans(x)
     if (is.null(spec)) {
@@ -155,7 +159,7 @@ function(x, spec = NULL, ...)
     }
     Sigma <- assetsLPM(x, tau = FUN(x), a = a)$Sigma
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -164,26 +168,27 @@ function(x, spec = NULL, ...)
 ################################################################################
 
 
-kendallEstimator <- 
+kendallEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Uses Kendall's rank covariance estimation
 
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = cov(x.mat, method = "kendall")
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -192,26 +197,27 @@ kendallEstimator <-
 # ------------------------------------------------------------------------------
 
 
-spearmanEstimator <- 
+spearmanEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Uses Spearman's rank covariance estimation
 
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = cov(x.mat, method = "spearman")
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -220,25 +226,26 @@ spearmanEstimator <-
 ################################################################################
 
 
-covMcdEstimator <- 
+covMcdEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covMcdEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = robustbase::covMcd(x.mat, alpha = 1/2, ...)$cov
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -247,28 +254,29 @@ covMcdEstimator <-
 # ------------------------------------------------------------------------------
 
 
-covOGKEstimator <- 
+covOGKEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    
+
     # Arguments:
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covOGKEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov  
+    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -277,27 +285,28 @@ covOGKEstimator <-
 # ------------------------------------------------------------------------------
 
 
-shrinkEstimator <- 
+shrinkEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; shrinkEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
     Sigma = corpcor::cov.shrink(x = x.mat, verbose = FALSE, ...)
     attr(Sigma, "lambda.var") <- NULL
     attr(Sigma, "lambda.var.estimated") <- NULL
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }
@@ -306,28 +315,29 @@ shrinkEstimator <-
 # ------------------------------------------------------------------------------
 
 
-nnveEstimator <- 
+nnveEstimator <-
     function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    
+
     # Arguments:
-    
+
     # Eample:
     #   x  = as.timeSeries(data(LPP2005REC))[, 1:6]; nnveEstimator(x)
-    
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeSeries"))
+
     # Extract Matrix:
-    x.mat = as.matrix(x)
-    
+    x.mat = getDataPart(x)
+
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = covRobust::cov.nnve(datamat = x.mat, ...)$cov 
+    Sigma = covRobust::cov.nnve(datamat = x.mat, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
-    
+
     # Return Value:
     list(mu = mu, Sigma = Sigma)
 }

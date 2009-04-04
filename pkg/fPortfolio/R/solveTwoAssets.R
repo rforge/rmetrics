@@ -28,24 +28,25 @@
 {
     # Description:
     #   Two Assets LongOnly MV Portfolio
-    
+
     # Details:
     # ... this is only thohgt for 'unlimited' LongOnly
     # box and group constraints are discarded here.
-    
+
     # FUNCTION:
-    
+
     # Solver:
     # print(".mvSolveTwoAssets")
-        
+
     # Convert Data and Constraints to S4 Objects:
     Data = portfolioData(data, spec)
-    Constraints = portfolioConstraints(data, spec, constraints)
-        
+    data <- getSeries(Data)
+    Constraints = portfolioConstraints(Data, spec, constraints)
+
     # Stop if the Target Return is not Defined!
     targetReturn = getTargetReturn(spec)
     stopifnot(is.numeric(targetReturn))
-    
+
     # Optimize Portfolio:
     nAssets = getNAssets(Data)
 
@@ -56,7 +57,7 @@
     stopifnot(targetReturn <= max(mu))
     weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
     weights = c(weights, 1 - weights)
-    
+
     # Output List:
     ans = list(
         solver = "MVTwoAssets",
@@ -67,7 +68,7 @@
         objective = sqrt(weights %*% Sigma %*% weights),
         status = 0,
         message = NA)
-        
+
     # Return Value:
     ans
 }
@@ -81,25 +82,26 @@
 {
     # Description:
     #   Two Assets LongOnly CVaR Portfolio
-    
+
     # Details:
     # ... this is only thohgt for 'unlimited' LongOnly
     # box and group constraints are discarded here.
-    
+
     # FUNCTION:
-    
+
     # Solver:
     # print(".cvarSolveTwoAssets")
-        
+
     # Convert Data and Constraints to S4 Objects:
     Data = portfolioData(data, spec)
-    Constraints = portfolioConstraints(data, spec, constraints)
-        
+    data <- getSeries(Data)
+    Constraints = portfolioConstraints(Data, spec, constraints)
+
     # Stop if the Target Return is not Defined!
     targetReturn = getTargetReturn(spec)
     stopifnot(is.numeric(targetReturn))
     targetAlpha = getAlpha(spec)
-    
+
     # Optimize Portfolio:
     nAssets = getNAssets(Data)
 
@@ -109,24 +111,24 @@
     stopifnot(targetReturn <= max(mu))
     weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
     weights = c(weights, 1 - weights)
-    
+
     optim = list(
         VaR = .varRisk(data, weights, targetAlpha),
         CVaR = -.cvarRisk(data, weights, targetAlpha),
         targetAlpha = targetAlpha)
-        
+
     ans = list(
         solver = "CVaRTwoAssets",
         optim = optim,
         weights = weights,
         targetReturn = targetReturn,
         targetRisk = NA,
-        objective = optim$CVaR, 
-        status = 0, 
-        message = NA)  
-    
+        objective = optim$CVaR,
+        status = 0,
+        message = NA)
+
     # Return Value:
-    ans 
+    ans
 }
 
 
@@ -138,21 +140,22 @@
 {
     # Description:
     #   Two Assets LongOnly MAD Portfolio
-    
+
     # Details:
     # ... this is only thohgt for 'unlimited' LongOnly
     # box and group constraints are discarded here.
-    
+
     # FUNCTION:
-        
+
     # Convert Data and Constraints to S4 Objects:
     Data = portfolioData(data, spec)
-    Constraints = portfolioConstraints(data, spec, constraints)
-        
+    data <- getSeries(Data)
+    Constraints = portfolioConstraints(Data, spec, constraints)
+
     # Stop if the Target Return is not Defined!
     targetReturn = getTargetReturn(spec)
     stopifnot(is.numeric(targetReturn))
-    
+
     # Optimize Portfolio:
     nAssets = getNAssets(Data)
 
@@ -163,7 +166,7 @@
     weights = (targetReturn-mu[2]) / (mu[1]-mu[2])
     weights = c(weights, 1 - weights)
     targetRisk = mean( abs( (data - colMeans(data)) %*% weights ) )
-    
+
     # Output List:
     ans = list(
         solver = "MADTwoAssets",
@@ -174,7 +177,7 @@
         objective = targetRisk,
         status = 0,
         message = NA)
-        
+
     # Return Value:
     ans
 }
