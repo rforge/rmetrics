@@ -2,8 +2,8 @@
 
 
 \alias{colStats} 
-% \alias{colSums}
-% \alias{colMeans}
+\alias{colSums,timeSeries-method}
+\alias{colMeans,timeSeries-method}
 \alias{colSds}
 \alias{colVars}
 \alias{colSkewness}
@@ -35,8 +35,8 @@
     \tabular{ll}{  
     \code{colStats}\tab calculates column statistics, \cr
     
-%    \code{colSums} \tab calculates column sums, \cr
-%    \code{colMeans} \tab calculates column means, \cr
+    \code{colSums} \tab calculates column sums, \cr
+    \code{colMeans} \tab calculates column means, \cr
     \code{colSds} \tab calculates column standard deviations, \cr
     \code{colVars} \tab calculates column variances, \cr 
     \code{colSkewness} \tab calculates column skewness, \cr
@@ -51,9 +51,6 @@
 
 \usage{
 colStats(x, FUN, \dots) 
-
-% colSums(x, \dots)
-% colMeans(x, \dots)
 
 colSds(x, \dots)
 colVars(x, \dots)
