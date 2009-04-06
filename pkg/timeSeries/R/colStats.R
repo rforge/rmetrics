@@ -73,23 +73,41 @@ colStats <-
 
 # YC important because default colSums is unefficient since it retrive
 # full dimnames, i.e. rownames which is very time consuming
-setMethod("colSums", "timeSeries",
-          function(x, na.rm = FALSE, dims = 1L, ...)
-      {
-          x <- getDataPart(x)
-          callGeneric()
-      })
+if (getRversion() < "2.9.0") {
+    setMethod("colSums", "timeSeries",
+              function(x, na.rm = FALSE, dims = 1L)
+          {
+              x <- getDataPart(x)
+              callGeneric()
+          })
+} else {
+    setMethod("colSums", "timeSeries",
+              function(x, na.rm = FALSE, dims = 1L, ...)
+          {
+              x <- getDataPart(x)
+              callGeneric()
+          })
+}
 
 # ------------------------------------------------------------------------------
 
 # YC important because default colSums is unefficient since it retrive
 # full dimnames, i.e. rownames which is very time consuming
-setMethod("colMeans", "timeSeries",
-          function(x, na.rm = FALSE, dims = 1L, ...)
-      {
-          x <- getDataPart(x)
-          callGeneric()
-      })
+if (getRversion() < "2.9.0") {
+    setMethod("colMeans", "timeSeries",
+              function(x, na.rm = FALSE, dims = 1L)
+          {
+              x <- getDataPart(x)
+              callGeneric()
+          })
+} else {
+    setMethod("colMeans", "timeSeries",
+              function(x, na.rm = FALSE, dims = 1L, ...)
+          {
+              x <- getDataPart(x)
+              callGeneric()
+          })
+}
 
 # ------------------------------------------------------------------------------
 
