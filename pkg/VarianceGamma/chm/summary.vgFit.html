@@ -1,0 +1,121 @@
+<html><head><title>Summarizing Variance Gamme Distribution Fit</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>summary.vgFit(VarianceGamma)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   summary.vgFit">
+<param name="keyword" value="R:   print.summary.vgFit">
+<param name="keyword" value=" Summarizing Variance Gamme Distribution Fit">
+</object>
+
+
+<h2>Summarizing Variance Gamme Distribution Fit</h2>
+
+
+<h3>Description</h3>
+
+<p>
+<code>summary</code> Method for class <code>"vgFit"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'vgFit':
+summary(object, ...)
+
+## S3 method for class 'summary.vgFit':
+print(x, digits = max(3, getOption("digits") - 3), ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+An object of class <code>"vgFit"</code>, resulting from a call to
+<code><a href="vgFit.html">vgFit</a></code>.</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+An object of class <code>"summary.vgFit"</code>, resulting from a call to
+<code><a href="summary.vgFit.html">summary.vgFit</a></code>.</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+The number of significant digits to use when printing.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Further arguments passed to or from other methods.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<code>summary.vgFit</code> calculates standard errors for the estimates
+of <i>c</i>, <i>sigma</i>, <i>theta</i>, and
+<i>nu</i> of the variance gamma distribution parameter vector param if
+the Hessian from the call to <code><a onclick="findlink('stats', 'optim.html')" style="text-decoration: underline; color: blue; cursor: hand">optim</a></code> or <code><a onclick="findlink('stats', 'nlm.html')" style="text-decoration: underline; color: blue; cursor: hand">nlm</a></code>
+is available. Because the parameters in the call to the optimiser are
+<i>c</i>, <i>log(sigma)</i>, <i>theta</i> and
+<i>log(nu)</i>, the delta method is used to obtain the
+standard errors for <i>sigma</i> and <i>nu</i>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+If the Hessian is available, <code>summary.vgFit</code> computes
+standard errors for the estimates of <i>c</i>, <i>sigma</i>,
+<i>theta</i>, and <i>nu</i>, and adds them to <code>object</code>
+as <code>object$sds</code>. Otherwise, no calculations are performed and the
+composition of <code>object</code> is unaltered.
+<br>
+<code>summary.vgFit</code> invisibly returns <code>x</code> with class changed to
+<code>summary.vgFit</code>.
+<br>
+See <code><a href="vgFit.html">vgFit</a></code> for the composition of an object of class
+<code>vgFit</code>.
+<br>
+<code>print.summary.vgFit</code> prints a summary in the same format as
+<code><a href="vgFit.html">print.vgFit</a></code> when the Hessian is not available from
+the fit. When the Hessian is available, the standard errors for the
+parameter estimates are printed in parentheses beneath the parameter
+estimates, in the manner of <code>fitdistr</code> in the package
+<code>MASS</code>.</p>
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="vgFit.html">vgFit</a></code>, <code><a onclick="findlink('base', 'summary.html')" style="text-decoration: underline; color: blue; cursor: hand">summary</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+### Continuing the  vgFit(.) example:
+param &lt;- c(0,0.5,0,0.5)
+dataVector &lt;- rvg(500, param = param)
+fit &lt;- vgFit(dataVector)
+print(fit)
+summary(fit)          
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>VarianceGamma</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

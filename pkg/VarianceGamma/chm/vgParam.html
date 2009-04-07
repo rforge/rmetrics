@@ -1,0 +1,89 @@
+<html><head><title>Parameter Sets for Variance Gamma Distribution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>vgParam(VarianceGamma)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   smallShape">
+<param name="keyword" value="R:   largeShape">
+<param name="keyword" value="R:   smallParam">
+<param name="keyword" value="R:   largeParam">
+<param name="keyword" value=" Parameter Sets for Variance Gamma Distribution">
+</object>
+
+
+<h2>Parameter Sets for Variance Gamma Distribution</h2>
+
+
+<h3>Description</h3>
+
+<p>
+These objects store different parameter sets of the Variance Gamma distribution
+for testing or demonstrating purpose as matrixes. Specifically, the parameter 
+sets <code>smallShape</code> and <code>largeShape</code> have constant (standard) location
+and spread parameters of <i>c</i>=0 and <i>sigma</i>=1; 
+where asymmetry and shape parameters vary from <i>theta</i>=(-2, 0, 2)
+and <i>nu</i>=(0.5, 1, 2) for <code>smallShape</code> and 
+<i>theta</i>=(-4, -2, 0, 2, 4)
+and <i>nu</i>=(0.25, 0.5, 1, 2, 4) for <code>largeShape</code>.
+</p>
+<p>
+The parameter sets <code>smallParam</code> and <code>largeParam</code> have varied 
+values of all 4 parameters. <code>smallParam</code> contains all of the parameter 
+combinations from <i>c</i>=(-2, 0, 2), <i>sigma</i>=(0.5, 1, 2),
+<i>theta</i>=(-2, 0, 2) and <i>nu</i>=(0.5, 1, 2). 
+<code>largeParam</code> contains all of the parameter combinations from 
+<i>c</i>=(-4, -2, 0, 2, 4), <i>sigma</i>=(0.25, 0.5, 1, 2, 4),
+<i>theta</i>=(-4, -2, 0, 2, 4) and <i>nu</i>=(0.25, 0.5, 1, 2, 4).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  smallShape
+  largeShape
+  smallParam
+  largeParam  
+</pre>
+
+
+<h3>Format</h3>
+
+<p>
+<code>smallShape</code>: a 9 by 4 matrix;
+<code>largeShape</code>: a 25 by 4 matrix;
+<code>smallParam</code>: a 81 by 4 matrix;
+<code>largeParam</code>: a 625 by 4 matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Christine Yang Dong
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+data(vgParam)
+## Testing the accuracy of vgMean  
+for (i in 1:nrow(smallParam)) {
+    param &lt;- smallParam[i,]  
+    x &lt;- rvg(10000,param = param)             
+    sampleMean &lt;- mean(x)
+    funMean &lt;- vgMean(param = param)
+    difference &lt;- abs(sampleMean - funMean) 
+    print(difference)
+}
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>VarianceGamma</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

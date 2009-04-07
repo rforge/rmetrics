@@ -1,0 +1,171 @@
+<html><head><title>Range of a Variance Gamma Distribution</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>vgCalcRange(VarianceGamma)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   vgCalcRange">
+<param name="keyword" value=" Range of a Variance Gamma Distribution">
+</object>
+
+
+<h2>Range of a Variance Gamma Distribution</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Given the parameter vector <code>param</code> or the idividual parameter values  
+<i>(c,sigma,theta,nu)</i> of a variance gamma 
+distribution, this function determines the range outside of which the density
+function is negligible, to a specified tolerance. The parameterization used
+is the <i>(c,sigma,theta,nu)</i> one (see
+<code><a href="VarianceGamma.html">dvg</a></code>). To use another parameterization, use
+<code><a href="vgChangePars.html">vgChangePars</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  vgCalcRange(vgC = 0, sigma = 1, theta = 0, nu = 1, 
+    param = c(vgC, sigma, theta, nu), tol = 10^(-5), density = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>vgC</code></td>
+<td>
+The location parameter <i>c</i>, default is 0.</td></tr>
+<tr valign="top"><td><code>sigma</code></td>
+<td>
+The spread parameter <i>sigma</i>, default is 1, 
+must be positive.</td></tr>
+<tr valign="top"><td><code>theta</code></td>
+<td>
+The asymmetry parameter <i>theta</i>, default is 0.</td></tr>
+<tr valign="top"><td><code>nu</code></td>
+<td>
+The shape parameter <i>nu</i>, default is 1, must be 
+positive.</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+Specifying the parameters as a vector which takes the form 
+<code>c(vgC,sigma,theta,nu)</code>.</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+Tolerance.</td></tr>
+<tr valign="top"><td><code>density</code></td>
+<td>
+Logical. If <code>TRUE</code>, the bounds are for the density
+function. If <code>FALSE</code>, they should be for the probability
+distribution, but this has not yet been implemented.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Extra arguments for calls to <code><a onclick="findlink('stats', 'uniroot.html')" style="text-decoration: underline; color: blue; cursor: hand">uniroot</a></code>.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Users may either specify the values of the parameters individually or as a
+vector. If both forms are specifed but with different values, then the 
+values specified by vector <code>param</code> will always overwrite the other ones.
+</p>
+<p>
+The particular variance gamma distribution being considered is
+specified by the value of the parameter <code>param</code>.
+</p>
+<p>
+If <code>density = TRUE</code>, the function gives a range, outside of which
+the density is less than the given tolerance. Useful for plotting the
+density. Also used in determining break points for the separate
+sections over which numerical integration is used to determine the
+distribution function. The points are found by using
+<code><a onclick="findlink('stats', 'uniroot.html')" style="text-decoration: underline; color: blue; cursor: hand">uniroot</a></code> on the density function.
+</p>
+<p>
+If <code>density = FALSE</code>, the function returns the message:
+"<code>Distribution function bounds not yet implemented</code>".
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+A two-component vector giving the lower and upper ends of the range.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Christine Yang Dong
+</p>
+
+
+<h3>References</h3>
+
+<p>
+E. Seneta. (2004). Fitting the variance-gamma model to financial data.
+emph {J. Appl. Prob.},41A:177-187.
+S. Kotz, T. J. Kozubowski, and K. Podgorski. (2001). The Laplace 
+Distribution and Generalizations. <EM>Birkhauser</EM>, Boston, 349 p.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="VarianceGamma.html">dvg</a></code>, <code><a href="vgChangePars.html">vgChangePars</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+## Use the following rules for vgCalcRange when plotting graphs for dvg,
+## ddvg and pvg.
+## if nu &lt; 2, use:
+##   maxDens &lt;- dvg(vgMode(param = c(vgC, sigma, theta, nu)),
+##   param = c(vgC, sigma, theta, nu), log = FALSE)
+##   vgRange &lt;- vgCalcRange(param = c(vgC, sigma, theta, nu),
+##     tol = 10^(-2)*maxDens, density = TRUE)
+
+## if nu &gt;= 2 and theta &lt; 0, use:
+##   vgRange &lt;- c(vgC-2,vgC+6)
+## if nu &gt;= 2 and theta &gt; 0, use:
+##   vgRange &lt;- c(vgC-6,vgC+2)
+## if nu &gt;= 2 and theta = 0, use:
+##   vgRange &lt;- c(vgC-4,vgC+4)
+
+param &lt;- c(0,0.5,0,0.5)
+maxDens &lt;- dvg(vgMode(param = param), param = param)
+vgRange &lt;- vgCalcRange(param = param, tol = 10^(-2)*maxDens)
+vgRange
+curve(dvg(x, param = param), vgRange[1], vgRange[2])
+curve(dvg(x, param = param), vgRange[1], vgRange[2])
+
+param &lt;- c(2,2,0,3)
+vgRange &lt;- c(2-4,2+4)
+vgRange
+curve(dvg(x, param = param), vgRange[1], vgRange[2])
+## Not run: vgCalcRange(param = param, tol = 10^(-3), density = FALSE)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>VarianceGamma</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

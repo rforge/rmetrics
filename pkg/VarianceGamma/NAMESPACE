@@ -1,0 +1,8 @@
+exportPattern("vg")
+importFrom(HyperbolicDist, skewness, kurtosis, dskewlap)
+importFrom(HyperbolicDist, safeIntegrate)
+S3method(print,vgFit)
+S3method(plot,vgFit)
+S3method(summary,vgFit)
+S3method(print,summary.vgFit)
+

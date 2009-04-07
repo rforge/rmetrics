@@ -1,0 +1,9 @@
+2009-03-25    <d.scott@auckland.ac.nz>
+
+	* summary.vgFit.Rd
+	Changed \code{\link{fitdistr}} to just\code{fitdistr} to avoid
+	link not found error on R CMD Check
+	* vgParam.Rd
+	Added data(vgParam) statemen in examples section to avoid error
+	the smallParam was not found
+
