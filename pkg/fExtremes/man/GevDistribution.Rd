@@ -16,15 +16,9 @@
 
 \description{
   
-    A collection and description of functions to compute
-    the generalized extreme value distribution. The 
-    functions compute density, distribution function, 
-    quantile function and generate random deviates 
-    for the GEV including the Frechet, Gumbel, and 
-    Weibull distributions. In addition functions to 
-    compute the true moments and to display the distribution
-    and random variates changing parameters interactively 
-    are available.
+    Density, distribution function, quantile function, random 
+    number generation, and true moments for the GEV including 
+    the Frechet, Gumbel, and Weibull distributions.
     \cr
     
     The GEV distribution functions are:
@@ -61,32 +55,26 @@ gevSlider(method = c("dist", "rvs"))
         a logical, if \code{TRUE}, the default, then
         probabilities are \code{P[X <= x]}, otherwise, \code{P[X > x]}.
         }
-    \item{method}{
-        [gevSlider] - \cr        
+    \item{method}{       
         a character sgtring denoting what should be displayed. Either
         the density and \code{"dist"} or random variates \code{"rvs"}.
         } 
-    \item{n}{
-        [rgev] - \cr        
+    \item{n}{      
         the number of observations.
         } 
     \item{p}{
-        [qgev] - \cr
         a numeric vector of probabilities.
         [hillPlot] - \cr
         probability required when option \code{quantile} is
         chosen.
         }
     \item{q}{
-        [pgev] - \cr
         a numeric vector of quantiles.
         }
     \item{x}{
-        [dgev] - \cr
         a numeric vector of quantiles.
         }
     \item{xi, mu, beta}{
-        [*gev] - \cr
         \code{xi} is the shape parameter, \code{mu} the location parameter,
         and \code{beta} is the scale parameter. The default values are 
         \code{xi=1}, \code{mu=0}, and \code{beta=1}. Note, if \code{xi=0} 
@@ -156,6 +144,14 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## qgev -   
    # Compute quantiles, a test:
    qgev(pgev(seq(-5, 5, 0.25), xi = -1), xi = -1)   
+
+## gevMoments:
+   # Returns true mean and variance:
+   gevMoments(xi = 0, mu = 0, beta = 1)
+   
+## Slider:
+   # gevSlider(method = "dist")
+   # gevSlider(method = "rvs")
 }
 
 

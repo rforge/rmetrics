@@ -47,7 +47,8 @@
 
 dgpd <- 
     function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
-{   # A function written by Diethelm Wuertz
+{   
+    # A function written by Diethelm Wuertz
 
     # Description:
     #   Density for the Generalized Pareto DF
@@ -78,7 +79,8 @@ dgpd <-
 
 pgpd <- 
     function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
-{   # A function written by Diethelm Wuertz
+{   
+    # A function written by Diethelm Wuertz
 
     # Description:
     #   Probability for the Generalized Pareto DF
@@ -109,7 +111,8 @@ pgpd <-
 
 qgpd <- 
     function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
-{   # A function written by Diethelm Wuertz
+{   
+    # A function written by Diethelm Wuertz
 
     # Description:
     #   Quantiles for the Generalized Pareto DF
@@ -140,7 +143,8 @@ qgpd <-
 
 rgpd <- 
     function(n, xi = 1, mu = 0, beta = 1)
-{   # A function written by Diethelm Wuertz
+{   
+    # A function written by Diethelm Wuertz
 
     # Description:
     #   Random variates for the Generalized Pareto DF
@@ -171,7 +175,8 @@ rgpd <-
 
 gpdMoments <- 
     function(xi = 1, mu = 0, beta = 1)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
  
     # Description:
     #   Compute true statistics for Generalized Pareto distribution
@@ -208,7 +213,8 @@ gpdMoments <-
 
 gpdSlider <- 
     function(method = c("dist", "rvs"))
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays distribution and rvs for GPD distribution

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2009, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,81 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:             GEV SIMULATION:
-#  gevSim                Simulates a GEV distributed process
-#  gumbelSim             Simulates a Gumbel distributed process
 # FUNCTION:             GEV PARAMETER ESTIMATION:
 #  'fGEVFIT'             S4 class representation
-#  gevFit                Fits Parameters of GEV distribution
-#  gumbelFit             Fits Parameters of Gumbel distribution
-#   .gumpwmFit            Fits Gumbel with probability weighted moments
-#   .gevpwmFit            Fits GEV with probability weighted moments
-#   .gummleFit            Fits Gumbel with max log-likelihood approach
-#    .gumLLH               Computes Gumbel log-likelihood function
-#   .gevmleFit            Fits GEV with max log-likelihood approach
-#    .gevLLH               Computes GEV log-likelihood function
-################################################################################
-
-
-gevSim =
-function(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates random variates from a GEV distribution
-
-    # Arguments:
-
-    # Examples:
-    #   gevSim(n = 100)
-    #   gevSim(n = 100, seed = 4711)
-    #   gevSim(model = list(xi = -0.15, mu = 0, beta = 0.02))
-
-    # FUNCTION:
-
-    # Seed:
-    if (is.null(seed)) seed = NA else set.seed(seed)
-
-    # Simulate:
-    ans = rgev(n = n, xi = model$xi, mu = model$mu, beta = model$beta)
-    ans = as.ts(ans)
-
-    # Control:
-    attr(ans, "control") =
-        data.frame(t(unlist(model)), seed = seed, row.names = "control")
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-gumbelSim =
-function(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates random variates from a GEV distribution
-
-    # Arguments:
-
-    # Examples:
-    #   gumbelSim(n = 100)
-    #   gumbelSim(n = 100, seed = 4711)
-
-    # FUNCTION:
-
-    # Simulate:
-    ans = gevSim(model = list(xi = 0, mu = model$mu, beta = model$beta),
-        n = n, seed = seed)
-
-    # Return Value:
-    ans
-}
-
-
+#  gevFit                Fits parameters of GEV distribution
+#  gumbelFit             Fits parameters of Gumbel distribution
+# FUNCTION:             FOR INTERNAL USE:
+#  .gumpwmFit            Fits Gumbel with probability weighted moments
+#  .gevpwmFit            Fits GEV with probability weighted moments
+#  .gummleFit            Fits Gumbel with max log-likelihood approach
+#   .gumLLH               Computes Gumbel log-likelihood function
+#  .gevmleFit            Fits GEV with max log-likelihood approach
+#   .gevLLH               Computes GEV log-likelihood function
 ################################################################################
 
 
@@ -126,13 +62,22 @@ setClass("fGEVFIT",
 gevFit =
 function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
+    #   Fits the parameters of GEV distribution
 
     # Arguments:
+    #   x - an object of class timeSeries
+    #   block - an integer value, the block size
+    #   type - a character string, which type of method should be used,
+    #       max log-likelihood estimation, "mle", or partial weighted
+    #       moments estimation, "pwm".
 
     # Examples:
+    #   gevFit(gevSim())
+    #   par(mfrow = c(2,2)); summary(gevFit(gevSim()))
 
     # FUNCTION:
 
@@ -158,13 +103,22 @@ title = NULL, description = NULL, ...)
 gumbelFit =
 function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
+    #   Fits the parameters of Gumbel distribution
 
     # Arguments:
+    #   x - an object of class timeSeries
+    #   block - an integer value, the block size
+    #   type - a character string, which type of method should be used,
+    #       max log-likelihood estimation, "mle", or partial weighted
+    #       moments estimation, "pwm".
 
     # Examples:
+    #   gumbelFit(gumbelSim())
+    #   par(mfrow = c(2,2)); summary(gumbelFit(gumbelSim()))
 
     # FUNCTION:
 
@@ -190,7 +144,8 @@ title = NULL, description = NULL, ...)
 .gevFit =
 function(x, block = 1, type = c("mle", "pwm"),
 gumbel = FALSE, title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits parameters to a GEV distribution
@@ -328,9 +283,10 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
 
 .gumpwmFit =
 function(data, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
-    # Description # FUNCTION:
+    # Description:
 
     # Arguments:
 
@@ -439,7 +395,8 @@ function(data, block = NA, ...)
 
 .gummleFit =
 function(data, block = NA, ...)
-{   # A copy from evir
+{   
+    # A copy from evir
 
     # Description:
 
@@ -486,7 +443,8 @@ function(data, block = NA, ...)
 
 .gumLLH =
 function(theta, tmp)
-{   # A copy from evir
+{   
+    # A copy from evir
 
     # Description:
 
@@ -515,7 +473,8 @@ function(theta, tmp)
 
 .gevmleFit =
 function(data, block = NA, ...)
-{   # A copy from evir
+{   
+    # A copy from evir
 
     # Description:
 
@@ -563,9 +522,11 @@ function(data, block = NA, ...)
 
 .gevLLH =
 function(theta, tmp)
-{   # A copy from evir
+{   
+    # A copy from evir
 
     # Description:
+    #   Computes log-likelihood for GEV distribution
 
     # Arguments:
 

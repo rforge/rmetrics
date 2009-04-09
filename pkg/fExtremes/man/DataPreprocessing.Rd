@@ -42,7 +42,6 @@ deCluster(x, run = 20, doplot = TRUE)
 \arguments{
 
     \item{block}{
-        [blockMaxima] - \cr
         the block size. A numeric value is interpreted as the number  
         of data values in each successive block. All the data is used,
         so the last block may not contain \code{block} observations. 
@@ -59,26 +58,22 @@ deCluster(x, run = 20, doplot = TRUE)
         default \code{TRUE}.
         }
     \item{n}{
-        [findThreshold] - \cr
         a numeric value or vector giving number of extremes above 
         the threshold. By default, \code{n} is 
         set to an integer representing 5\% of the data from the 
         whole data set \code{x}.
         }
     \item{run}{
-        [deCluster] - \cr
         parameter to be used in the runs method; any two consecutive 
         threshold exceedances separated by more than this number of 
         observations/days are considered to belong to different clusters.
         }  
     \item{u}{
-        [pointProcess] - \cr
         a numeric value at which level the data are to be truncated. By 
         default the threshold value which belongs to the 95\% quantile,
         \code{u=quantile(x,0.95)}.       
         }
     \item{x}{
-        [finThreshold][blocks][blockMaxima][deCluster] - \cr
         a numeric data vector from which \code{findThreshold} and 
         \code{blockMaxima} determine the threshold values and block 
         maxima values. 
@@ -94,15 +89,7 @@ deCluster(x, run = 20, doplot = TRUE)
 }
 
 
-\details{
-  
-    \bold{Finding Thresholds:} 
-    \cr\cr
-    The function \code{findThreshold} finds a threshold so that a given 
-    number of extremes lie above. When the data are tied a threshold is 
-    found so that at least the specified number of extremes lie above.
-    \cr
-    
+\details{  
   
     \bold{Computing Block Maxima:} 
     \cr\cr  
@@ -110,6 +97,14 @@ deCluster(x, run = 20, doplot = TRUE)
     or a time series, whereas the function
     \code{blocks} is more general and allows for the calculation of
     an arbitrary function \code{FUN} on blocks.
+    \cr
+    
+    
+    \bold{Finding Thresholds:} 
+    \cr\cr
+    The function \code{findThreshold} finds a threshold so that a given 
+    number of extremes lie above. When the data are tied a threshold is 
+    found so that at least the specified number of extremes lie above.
     \cr
     
         
@@ -170,7 +165,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \examples{ 
 ## findThreshold -
-   # Threshold giving (at least) fifty exceedances for Danish data
+   # Threshold giving (at least) fifty exceedances for Danish data:
    x = as.timeSeries(data(danishClaims))
    findThreshold(x, n = c(10, 50, 100))    
    
@@ -183,16 +178,21 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    head(x)
    y = blockMaxima(-BMW, block = 65)    
    head(y) 
+   y = blockMaxima(-BMW, block = "monthly")    
+   head(y)
+
+   
+## pointProcess -
+   # Return Values above threshold in negative BMW log-return data:
+   PP = pointProcess(x = -BMW, u = quantile(as.vector(x), 0.75))
+   PP
+   nrow(PP)
  
 ## deCluster -
    # Decluster the 200 exceedances of a particular  
-   # threshold in the negative BMW log-return data
-   PP = pointProcess(x = -BMW, u = quantile(as.vector(x), 0.75))
-   PP
-   dim(PP)
    DC = deCluster(x = PP, run = 15, doplot = TRUE) 
    DC
-   dim(DC)
+   nrow(DC)
 }
 
 

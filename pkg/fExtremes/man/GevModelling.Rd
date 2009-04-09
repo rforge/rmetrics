@@ -301,8 +301,13 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 \examples{
 ## gevSim -
    # Simulate GEV Data, use default length n=1000
-   x = gevSim(model = list(xi = 0.25, mu = 0 , beta = 1))
-   
+   x = gevSim(model = list(xi = 0.25, mu = 0 , beta = 1), n = 1000)
+   head(x)
+
+## gumbelSim -
+   # Simulate GEV Data, use default length n=1000
+   x = gumbelSim(model = list(xi = 0.25, mu = 0 , beta = 1))
+     
 ## gevFit -
    # Fit GEV Data by Probability Weighted Moments:
    fit = gevFit(x, type = "pwm") 

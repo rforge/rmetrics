@@ -38,7 +38,8 @@
 
 normMeanExcessFit = 
 function(x, doplot = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits mean excesses with a normal density   
@@ -69,7 +70,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
         y2 = integrate(dnorm, lower = u, upper = Inf, 
-            mean = param[1], sd = param[2])[[1]]
+            mean = param[1], 
+            sd = param[2])[[1]]
         Y = c(Y, y1/y2)
     }
     
@@ -90,7 +92,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
 
 ghMeanExcessFit = 
 function(x, doplot = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits mean excesses with a hyperbolic density   
@@ -121,8 +124,11 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
         if (trace) print(c(u, y1))
-        y2 = integrate(dgh, lower = u, upper = Inf, alpha = param[1], 
-            beta = param[2], delta = param[3], mu = param[4],
+        y2 = integrate(dgh, lower = u, upper = Inf, 
+            alpha = param[1], 
+            beta = param[2], 
+            delta = param[3], 
+            mu = param[4],
             lambda = param[5])[[1]]
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
@@ -145,7 +151,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
 
 hypMeanExcessFit = 
 function(x, doplot = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits mean excesses with a hyperbolic density   
@@ -172,8 +179,7 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         (x-u)*dhyp(x, param[1], param[2], param[3], param[4])}     
     Y = NULL
     for (u in U) {
-        y = integrate(func, lower = u, upper = Inf, u = u, 
-            param = param)[[1]]
+        y = integrate(func, lower = u, upper = Inf, u = u, param = param)[[1]]
         Y = c(Y, y)
     }
     # Plot:
@@ -193,7 +199,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
 
 nigMeanExcessFit = 
 function(x, doplot = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits mean excesses with a genaralized hyperbolic density   
@@ -224,8 +231,11 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
         if (trace) print(c(u, y1))
-        y2 = integrate(dnig, lower = u, upper = Inf, alpha = param[1], 
-            beta = param[2], delta = param[3], mu = param[4])[[1]]
+        y2 = integrate(dnig, lower = u, upper = Inf, 
+            alpha = param[1], 
+            beta = param[2], 
+            delta = param[3], 
+            mu = param[4])[[1]]
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
     }
@@ -247,7 +257,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
 
 ghtMeanExcessFit = 
 function(x, doplot = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits mean excesses with a genaralized hyperbolic density   
@@ -279,7 +290,10 @@ function(x, doplot = TRUE, trace = TRUE, ...)
             param = param)[[1]]
         if (trace) print(c(u, y1))
         y2 = integrate(dght, lower = u, upper = Inf, 
-            beta = param[1], delta = param[2], mu = param[3], nu = param[4])[[1]]
+            beta = param[1], 
+            delta = param[2], 
+            mu = param[3], 
+            nu = param[4])[[1]]
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
     }

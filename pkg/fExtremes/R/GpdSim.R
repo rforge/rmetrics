@@ -35,10 +35,16 @@
 
 gpdSim = 
 function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates random variates from a GPD distribution
+    
+    # Arguments:
+    #   model - a list of model parameters, xi, mu and beta.
+    #   n - an integer, the number of simulated random variates
+    #   seed - an integer, the random number generator seed
     
     # FUNCTION:
     
@@ -47,7 +53,8 @@ function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
     
     # Simulate:
     ans = rgpd(n = n, xi = model$xi, mu = model$mu, beta = model$beta)  
-    ans = as.ts(ans)
+    # DW: ans = as.ts(ans)
+    ans = timeSeries(ans, units = "GPD")
 
     # Control:
     attr(ans, "control") = 

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2009, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -45,7 +45,8 @@
 
 dgev =
 function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
-{   # A function implemented from evd
+{   
+    # A function implemented from package evd
 
     # Description:
     #   GEV Density Function
@@ -73,7 +74,8 @@ function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
 
 pgev =
 function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
-{   # A function implemented from evd
+{   
+    # A function implemented from package evd
 
     # Description:
     #   GEV Probability Function
@@ -102,7 +104,8 @@ function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 
 qgev =
 function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
-{   # A function implemented from evd
+{   
+    # A function implemented from package evd
 
     # Description:
     #   GEV Quantile Function
@@ -131,7 +134,8 @@ function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 
 rgev =
 function(n, xi = 1, mu = 0, beta = 1)
-{   # A function implemented from evd
+{   
+    # A function implemented from package evd
 
     # Description:
     #   GEV Random Variables
@@ -158,7 +162,8 @@ function(n, xi = 1, mu = 0, beta = 1)
 
 gevMoments =
 function(xi = 0, mu = 0, beta = 1)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute true statistics for Generalized Extreme Value distribution

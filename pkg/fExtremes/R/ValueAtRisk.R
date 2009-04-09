@@ -77,7 +77,8 @@ function(x, alpha = 0.05, type = "sample", tail = c("lower", "upper"))
 
 CVaR = 
 function(x, alpha = 0.05, type = "sample", tail = c("lower", "upper"))  
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Conditional Value-at-Risk
@@ -86,10 +87,9 @@ function(x, alpha = 0.05, type = "sample", tail = c("lower", "upper"))
     #   x -  an uni- or multivariate timeSeries object
     #   alpha - a numeric value, the confidence interval
     #   type - a character string, the type to calculate the value-at-risk
-    #   tail - a character string denoting which tail will be
-    #       considered, either \code{"lower"} or \code{"upper"}
-    #       If \code{tail="lower"}, then alpha will be converted to
-    #       \code{alpha=1-alpha}.
+    #   tail - a character string denoting which tail will be considered, 
+    #       either "lower" or upper", if tail="lower", then alpha will be 
+    #       converted to alpha=1-alpha.
     
     # FUNCTION:
         

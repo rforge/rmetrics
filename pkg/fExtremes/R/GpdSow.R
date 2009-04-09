@@ -39,6 +39,9 @@ setMethod("show", "fGPDFIT",
 
     # Description:
     #   Print Method for an object of class 'gpdFit'
+    
+    # Arguments:
+    #   object - an object of class fGPDFIT
 
     # FUNCTION:
 
@@ -59,7 +62,6 @@ setMethod("show", "fGPDFIT",
 
     # Desription:
     cat("\nDescription\n ", object@description, "\n\n")
-
 
     # Return Value:
     invisible(object)

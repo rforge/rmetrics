@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION          DATA PREPROCESSING:
+# FUNCTIONé         DESCRIPTION:
 #  blockMaxima       Returns block maxima from a time series
 #  findThreshold     Upper threshold for a given number of extremes
 #  pointProcess      Returns peaks over a threshold from a time series
@@ -38,7 +38,8 @@
 
 blockMaxima <-
     function (x, block = c("monthly", "quarterly"), doplot = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute block maxima from a time series or numeric vector
@@ -47,7 +48,7 @@ blockMaxima <-
     #   x - an univariate 'timeSeries' object or any other object
     #       which can be coerced in a numeric vector by the function
     #       as.vector().
-    #    block -  block size, either a "monthl" or "quarterly"
+    #   block -  block size, either a "monthl" or "quarterly"
     #       calendrical block, or an integer value, specifying the
     #       length of the block.
 
@@ -127,7 +128,8 @@ blockMaxima <-
 
 findThreshold =
 function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Upper threshold for a given number of extremes
@@ -180,7 +182,8 @@ function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
 
 pointProcess =
 function(x, u = quantile(x, 0.95), doplot = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns peaks over a threshold from a time series
@@ -231,7 +234,8 @@ function(x, u = quantile(x, 0.95), doplot = FALSE)
 
 deCluster =
 function(x, run = 20, doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Decluster a Point Process.

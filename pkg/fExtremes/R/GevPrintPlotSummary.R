@@ -41,12 +41,14 @@
 
 setMethod("show", "fGEVFIT",
     function(object)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Print Method for an object of class "gevFit".
+    #   Print Method for an object of class "fGEVFIT".
 
     # Arguments:
+    #   object - an object of class fGEVFIT
 
     # FUNCTION:
 
@@ -80,8 +82,9 @@ setMethod("show", "fGEVFIT",
 
 
 plot.fGEVFIT =
-function(x, which = "ask", ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, which = "ask", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class "gevFit".
@@ -135,13 +138,21 @@ function(x, which = "ask", ...)
 
 
 .gev1Plot =
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Time Series Plot of Block Maxima
 
     # Arguments:
+    #   x - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit
+    #   labels - a logical, should labels be added to the plot
+    #   ... - optional arguments passed to the function plot
+    
+    # Example:
+    #   .gev1Plot(gevFit(gevSim()))
 
     # FUNCTION:
 
@@ -174,13 +185,21 @@ function(x, labels = TRUE, ...)
 
 
 .gev2Plot =
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Scatterplot of Residuals:
 
     # Arguments:
+    #   x - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit
+    #   labels - a logical, should labels be added to the plot
+    #   ... - optional arguments passed to the function plot
+    
+    # Example:
+    #   .gev2Plot(gevFit(gevSim()))
 
     # FUNCTION:
 
@@ -214,13 +233,20 @@ function(x, labels = TRUE, ...)
 
 
 .gev3Plot =
-function(x, labels = TRUE, ...)
+    function(x, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Histogram Plot of Residuals with Gaussian Fit:
 
     # Arguments:
+    #   x - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit
+    #   labels - a logical, should labels be added to the plot
+    #   ... - optional arguments passed to the function hist
+    
+    # Example:
+    #   .gev3Plot(gevFit(gevSim()))
 
     # FUNCTION:
 
@@ -256,12 +282,20 @@ function(x, labels = TRUE, ...)
 
 .gev4Plot =
 function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Quantile-Quantile Plot:
 
     # Arguments:
+    #   x - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit
+    #   labels - a logical, should labels be added to the plot
+    #   ... - optional arguments passed to the function plot
+    
+    # Example:
+    #   .gev4Plot(gevFit(gevSim()))
 
     # FUNCTION:
 
@@ -297,7 +331,7 @@ function(x, labels = TRUE, ...)
 
 
 summary.fGEVFIT =
-function(object, doplot = TRUE, which = "all", ...)
+    function(object, doplot = TRUE, which = "all", ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -305,9 +339,14 @@ function(object, doplot = TRUE, which = "all", ...)
     #   Summary method for an object of class "gevFit".
 
     # Arguments:
-
+    #   object - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit
+    #   doplot - a logical, should a plot be returned 
+    #   which - which plot(s) should be returned 
+    #   optional arguments passed to the function plot
+    
     # Example:
-    #   fit = gevFit(gevSim(), type = "mle", gumbel = FALSE)
+    #   fit = gevFit(gevSim(), type = "mle")
     #   par(mfrow = c(2, 2)); summary(fit)
 
     # FUNCTION:

@@ -55,7 +55,8 @@ function(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
     
     # Simulate:
     ans = rgev(n = n, xi = model$xi, mu = model$mu, beta = model$beta)
-    ans = as.ts(ans)
+    # DW: ans = as.ts(ans)
+    ans = timeSeries(ans, units = "GEV")
     
     # Control:
     attr(ans, "control") = 
@@ -87,6 +88,7 @@ function(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
     # Simulate:
     ans = gevSim(model = list(xi = 0, mu = model$mu, beta = model$beta), 
         n = n, seed = seed)
+    colnames(ans) = "GUMBEL"
         
     # Return Value:
     ans 
