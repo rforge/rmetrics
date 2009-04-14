@@ -25,36 +25,24 @@
 	wts$solution
 }
 
-###############################################################################
-# Mango Solutions, Chippenham SN14 0SQ 2008
-# optimalPortfolios.simple
-# Author: Francisco
-###############################################################################
-# DESCRIPTION: A utility function that calculates "optimal" portfolios with respect to a prior and (Black-Litterman) posterior distribution, 
-# and then returns the weights and optionally plots them with barplots.  The optimizer is provided by the user, but there is a "toy" 
-# Markowitz optimizer that is used by default
-# KEYWORDS: optimize
-###############################################################################
 
 
-#' 
-#' @param result 
-#' @param optimizer 
-#' @param ... 
-#' @param doPlot 
-#' @param beside 
-#' @return 
+#'  A utility function that calculates "optimal" portfolios with respect to a prior and (Black-Litterman) posterior distribution, 
+#' and then returns the weights and optionally plots them with barplots.  The optimizer is provided by the user, but there is a "toy" 
+#' Markowitz optimizer that is used by default 
+#' @param result BLPosterior result
+#' @param optimizer Function that performs optimization.  Its first argument should be the mean vector, its
+#' second the variance-covariance matrix
+#' @param ... Additional paramters to be passed to the optimizer
+#' @param doPlot Should a barplot be created?
+#' @param beside should the barplot be a side-by-side plot or just a plot of the differences in weights?
+#' @return The weights of the optimal prior and posterior portfolios
 #' @author fgochez <fgochez@mango-solutions.com>
 #' @export
 
 optimalPortfolios <- function
 (                                         
-	result,                               #
-	optimizer = .optimalWeights.simpleMV,  # Function that performs optimization.  Its first argument should be the mean vector, its
-	# second the variance-covariance matrix
-	...,                                  # Additional paramters to be passed to the optimizer
-	doPlot = TRUE,                        # Should a barplot be created?
-	beside = TRUE                         # should the barplot be a side-by-side plot or just a plot of the differences in weights?
+	result, optimizer = .optimalWeights.simpleMV, ...,	doPlot = TRUE, 	beside = TRUE  
 ) 
 {
 	BARWIDTH <- 1
@@ -83,30 +71,84 @@ optimalPortfolios <- function
 	return(list(priorPfolioWeights = priorPortfolioWeights, postPfolioWeights = postPortfolioWeights ))    
 }
 
-optimalPortfolios.fPort <- function(result, spec, constraints = "LongOnly", optimizer = "efficientPortfolio")
+#'  A utility function that calculates "optimal" portfolios with respect to a prior and (Black-Litterman) posterior distribution
+#' using the functionality of the Rmetrics fPortfolio package. 
+#' and then returns the weigh
+#' @param result BLPosterior result
+#' @param spec An object of class fPORTFOLIOSPEC containing the portfolio specification
+#' @param constraints A set of portfolio constraints
+#' @param optimizer 
+#' @title Optimal prior and posterior portfolios using fPortfolios
+#' @return A list with 2 elements: the prior and posterior portfolios (of class)
+#' @author fgochez
+#' @keywords
+
+optimalPortfolios.fPort <- function(result, spec, constraints = "LongOnly", optimizer = "minriskPortfolio", 
+			inputData = NULL, numSimulations = NA)
 {
+	stop("Not implemented for this call")
+}
+
+setGeneric("optimalPortfolios.fPort")
+
+optimalPortfolios.fPort.BL <- function(result, spec,constraints = "LongOnly", optimizer = "minriskPortfolio", 
+		inputData = NULL, numSimulations = NA)
+{
+	if(!require("fPortfolio"))
+		stop("The package fPortfolio is required to run this function, but you do not have it installed.")
+	setType(spec) <- "MV"
 	assets <- assetSet(result@views)
 	dmySeries <- as.timeSeries(matrix(0, nrow = 1, ncol = length(assets), dimnames = list(NULL, assets)))
 	
 	priorSpec <- spec
 	
-	.priorEstim <<- function(...)
+	.priorEstim <- function(...)
 	{
 		list(mu = result@priorMean, Sigma = result@priorCovar)
 	}
-	.posteriorEstim <<- function(...)
+	.posteriorEstim <- function(...)
 	{
 		list(mu = result@posteriorMean, Sigma = result@posteriorCovar)
 	}
+	#
+	if(exists(".priorEstim", envir = .GlobalEnv) | exists(".posteriorEstim", envir = .GlobalEnv))
+		stop("Unwilling to perform assignment of .priorEstim or .posteriorEstim because they already exist in the global environment.")
+	assign(".priorEstim", .priorEstim, envir = .GlobalEnv)
+	assign(".posteriorEstim", .posteriorEstim, envir = .GlobalEnv)
 	setEstimator(priorSpec) <- ".priorEstim"
 	posteriorSpec <- spec
 	setEstimator(posteriorSpec) <- ".posteriorEstim"
 	optimizer <- match.fun(optimizer)
-	priorOptimPortfolio <- optimizer(dmySeries, priorSpec, constraints)
+	priorOptimPortfolio <- optimizer(dmySeries, priorSpec, constraints)	
 	posteriorOptimPortfolio <- optimizer(dmySeries, posteriorSpec, constraints)
-	
-	.priorEstim <<- NULL
-	.posteriorEstim <<- NULL
+	rm(.posteriorEstim, envir = .GlobalEnv)
+	rm(.priorEstim, envir = .GlobalEnv)
 	
 	list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
 }
+
+setMethod("optimalPortfolios.fPort", signature(result = "BLResult"), optimalPortfolios.fPort.BL )
+
+optimalPortfolios.fPort.COP <- function(result, spec, constraints = "LongOnly", optimizer = "minriskPortfolio",
+			inputData = NULL, numSimulations = BLCOPOptions("numSimulations"))
+{
+	if(!require("fPortfolio"))
+		stop("The package fPortfolio is required to execute this function, but you do not have it installed.")
+	if(is.null(inputData))
+	{
+		# no input time series provided, so simulate the asset returns
+		inputData <- sampleFrom(result@marketDist, n = numSimulations)
+		colnames(inputData) <- assetSet(result@views)
+		inputData <- as.timeSeries(inputData)
+	}
+	outData <- tail(posteriorSimulations(result), numSimulations)
+	colnames(outData) <- assetSet(result@views)
+	outData <- as.timeSeries(outData)
+	optimizer <- match.fun(optimizer)
+	gc()
+	priorOptimPortfolio <- optimizer(inputData,spec, constraints)
+	posteriorOptimPortfolio <- optimizer(outData, spec, constraints)
+	list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
+}
+
+setMethod("optimalPortfolios.fPort", signature(result = "COPResult"), optimalPortfolios.fPort.COP )
