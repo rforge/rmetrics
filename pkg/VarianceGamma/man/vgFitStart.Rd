@@ -66,14 +66,14 @@
 
   \code{vgFitStartMoM} returns only the method of moments estimates
   as a vector with elements \code{vgC}, \code{lSigma} (log of sigma),
-  \code{theta} and \code{lNu} (log of nu).}
+  \code{theta} and \code{lNu} (log of nu).
 }
 
 \references{
-  E. Seneta. (2004). Fitting the variance-gamma model to financial data.
-  \emph {J. Appl. Prob.},41A:177-187.
-
+  Seneta, E. (2004). Fitting the variance-gamma model to financial data.
+  \emph{J. Appl. Prob.}, 41A:177--187.
 }
+
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
 

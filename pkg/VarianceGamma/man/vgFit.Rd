@@ -131,9 +131,10 @@
   }
 
 \references{
-  E. Seneta. (2004). Fitting the variance-gamma model to financial data.
-  \emph {J. Appl. Prob.},41A:177-187.
+  Seneta, E. (2004). Fitting the variance-gamma model to financial data.
+  \emph{J. Appl. Prob.}, 41A:177--187.
 }
+
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
 

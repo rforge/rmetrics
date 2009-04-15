@@ -56,11 +56,14 @@
 \value{
   A two-component vector giving the lower and upper ends of the range.
 }
+
 \references{
-  E. Seneta. (2004). Fitting the variance-gamma model to financial data.
-  \emph {J. Appl. Prob.},41A:177-187.
-  S. Kotz, T. J. Kozubowski, and K. Podgorski. (2001). The Laplace 
-  Distribution and Generalizations. \emph{Birkhauser}, Boston, 349 p.
+  Seneta, E. (2004). Fitting the variance-gamma model to financial data.
+  \emph{J. Appl. Prob.}, 41A:177--187.
+  Kotz, S, Kozubowski, T. J., and \enc{Podgórski}{Podgorski},
+  K. (2001). 
+  The Laplace Distribution and Generalizations. \emph{Birkhauser},
+  Boston, 349 p.
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}

@@ -1,9 +1,18 @@
+2009-04-15    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION changed to add encoding UTF-8
+	* VarianceGamma.Rd, vgCalcRange.Rd, vgChangePars.Rd, vgFit.Rd,
+	vgFitStart.Rd, vgMomentsAndMode.Rd all changed to drop space
+	between \emph and { in Seneta reference, and to update all
+	references to add encoding for Podgórski
+
 2009-03-25    <d.scott@auckland.ac.nz>
 
 	* summary.vgFit.Rd
 	Changed \code{\link{fitdistr}} to just\code{fitdistr} to avoid
 	link not found error on R CMD Check
 	* vgParam.Rd
-	Added data(vgParam) statemen in examples section to avoid error
+	Added data(vgParam) statement in examples section to avoid error
 	the smallParam was not found
+	
 
