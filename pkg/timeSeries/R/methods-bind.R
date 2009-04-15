@@ -57,24 +57,35 @@ cbind.timeSeries <- function(..., deparse.level = 1)
         return(timeSeries(data=data, units = units))
     }
 
-    # check if unsorted ...
-    if (any(t <- unlist(lapply(dots, function(ts) is.unsorted(ts@positions)))))
-        dots[t] <- lapply(dots[t], sort)
+    # ensure that data is sorted
+    dots <- lapply(dots, sort)
 
+    # get list of timestamps
     tds <- lapply(dots, slot, "positions")
-    td <- sort(unique(unlist(tds)))
 
-    fun <- function(ts, td, ref) {
-        mm <- matrix(NA, ncol = ncol(ts), nrow = length(ref))
-        mm[findInterval(td, ref),] <- getDataPart(ts)
-        mm}
-    data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td),
-                   SIMPLIFY = FALSE)
-    data <- array(unlist(data), dim = c(length(td), sum(sapply(dots, ncol))))
+    # fast version when timeSeries have identical timestamps
+    if (all(sapply(tds, identical, tds[[1]])))
+    {
+        td <- tds[[1]]
+        data <- array(unlist(dots), dim=c(length(td), sum(sapply(dots, ncol))))
+        timeSeries(data = data, charvec = td, units = units, zone = "GMT",
+                       FinCenter = finCenter(dots[[1]]))
+    } else {
+        # aligned timestamps
+        td <- sort(unique(unlist(tds)))
 
-    # note that new timeSeries get FinCenter of first entry of args
-    timeSeries(data = data, charvec = td, units = units, zone = "GMT",
-               FinCenter = finCenter(dots[[1]]))
+        fun <- function(ts, td, ref) {
+            mm <- matrix(NA, ncol = ncol(ts), nrow = length(ref))
+            mm[findInterval(td, ref),] <- getDataPart(ts)
+            mm}
+        data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td),
+                       SIMPLIFY = FALSE)
+        data <- array(unlist(data), dim=c(length(td), sum(sapply(dots, ncol))))
+
+        # note that new timeSeries get FinCenter of first entry of args
+        timeSeries(data = data, charvec = td, units = units, zone = "GMT",
+                   FinCenter = finCenter(dots[[1]]))
+    }
 }
 
 # ------------------------------------------------------------------------------
@@ -140,10 +151,7 @@ rbind.timeSeries <- function(..., deparse.level = 1)
 
     # Bind:
     # data <- base::rbind(...) # no because S3 method dispatch done in C level
-    data <- sapply(seq.int(ncol(dots[[1]])),
-                   function(idx, ts) unlist(lapply(ts, .subset, TRUE, idx)),
-                   dots)
-    rownames(data) <- NULL # safer to remove rownames
+    data <- do.call(base::rbind, lapply(dots, getDataPart))
 
     if (any(unlist(lapply(dots, function(ts) ts@format == "counts")))) {
         return(timeSeries(data=data, units = units))
