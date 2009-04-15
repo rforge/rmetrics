@@ -64,7 +64,7 @@ setClass("timeSeries",
                         documentation = "character"),
          contains = "structure",
          validity = function(object) {
-             if (length(object@positions > 0) &&
+             if ((length(object@positions) > 0) &&
                  NROW(getDataPart(object)) != length(object@positions))
                  return("length of '@positions' not equal to '@.Data' extent")
              if (NCOL(getDataPart(object)) != length(object@units))
@@ -81,7 +81,8 @@ setMethod("initialize", "timeSeries",
                    units = character(0),
                    positions = numeric(0),
                    format = character(0),
-                   FinCenter = character(0),
+                   FinCenter = "",
+                   #<< FIXME: use identical in code rather than FinCenter == ""
                    recordIDs = data.frame(),
                    title = character(0),
                    documentation = character(0))
@@ -94,6 +95,7 @@ setMethod("initialize", "timeSeries",
           `slot<-`(.Object, "recordIDs", value = recordIDs)
           `slot<-`(.Object, "title", value = title)
           `slot<-`(.Object, "documentation", value = documentation)
+          validObject(.Object)
           .Object
       })
 
