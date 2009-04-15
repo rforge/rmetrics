@@ -16,6 +16,7 @@
 ################################################################################
 # S4 METHOD:                   DIM OPERATIONS ON DATA:
 #  dim,timeSeries            Returns dimension of a 'timeSeries' object
+#  dim<-,timeSeries          Assigns dimension of a 'timeSeries' object
 #  dimnames,timeDSeries      Returns dimension names of a 'timeSeries' object
 #  dimnames<-,timeSeries     Assign dimension names of a 'timeSeries' object
 #  colnames,timeSeries       Return column names to a 'timeSeries' object
@@ -23,6 +24,7 @@
 #  colnames<-,timeSeries     Assigns column names to a 'timeSeries' object
 #  rownames<-,timeSeries     Assigns row names to a 'timeSeries' object
 #  names,timeSeries          Return column names of a 'timeSeries' object
+#  names<.,timeSeries        Assigns column names of a 'timeSeries' object
 ################################################################################
 
 
@@ -99,8 +101,20 @@
 
 # ------------------------------------------------------------------------------
 
-# note it is faster to access attribute rather than accessing @.Data
+# Note it is faster to access attribute rather than accessing @.Data
 setMethod("dim", "timeSeries", function(x) attr(x, "dim"))
+
+# This should make functions like
+# model.response(model.frame(dummySeries() ~1)) work
+setReplaceMethod("dim", "timeSeries", function(x, value)
+                 {
+                     # dim(x) <- NULL returns a vector
+                     if (is.null(value))
+                         return(as.vector(x))
+                     else
+                         x #<< returns same object : # setting new dim
+                           # is forbidden for a timeSeries object
+                 })
 
 # ------------------------------------------------------------------------------
 
@@ -219,5 +233,8 @@ setMethod("dimnames<-", c("timeSeries", "list"), # c("signalSeries", "list"),
 # important for completion with $
 setMethod("names", "timeSeries", # "signalSeries",
           function(x) colnames(x))
+
+setReplaceMethod("names", "timeSeries", # "signalSeries",
+          function(x, value) {colnames(x) <- value; x})
 
 ################################################################################
