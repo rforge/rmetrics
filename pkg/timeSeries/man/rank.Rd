@@ -15,21 +15,22 @@
 }
 
 
-\usage{
-\S4method{rank}{timeSeries}(x, ...)
-}
+% \usage{
+% \S4method{rank}{timeSeries}(x, na.last = TRUE, ties.method =
+% c("average", "first", "random", "max", "min"))
+% }
 
 
-\arguments{
+% \arguments{
         
-    \item{x}{
-        an univariate object of class \code{timeSeries}.
-        }
-    \item{\dots}{
-        arguments to be passed to the default rank function .
-        }  
+%     \item{x}{
+%         an univariate object of class \code{timeSeries}.
+%         }
+%     \item{\dots}{
+%         arguments to be passed to the default rank function .
+%         }  
        
-}
+% }
 
 
 \value{

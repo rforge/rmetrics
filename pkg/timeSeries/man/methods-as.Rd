@@ -79,7 +79,7 @@
 
 
 \S4method{as.matrix}{timeSeries}(x, \dots)
-\S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
+\S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = FALSE, \dots)
 \S4method{as.ts}{timeSeries}(x, \dots)
 }
 

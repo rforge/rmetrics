@@ -19,7 +19,7 @@
 
 \usage{
 % \S4method{plot}{timeSeries, missing}(x, \dots) 
-\S4method{plot}{timeSeries}(x, y = NULL, FinCenter = NULL, plot.type =
+\S4method{plot}{timeSeries}(x, y, FinCenter = NULL, plot.type =
     c("multiple", "single"), format = "auto", at = "auto", widths = 1,
     heights = 1, xy.labels, xy.lines, panel = lines, nc, yax.flip =
     FALSE, mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
