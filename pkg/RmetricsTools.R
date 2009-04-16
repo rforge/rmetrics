@@ -57,7 +57,7 @@ pkgsRmetricsDev <- function()
 
 install.RmetricsDev  <-
     function(pkgs = pkgsRmetricsDev(), repos = NULL,
-             CRAN = "http://stat.ethz.ch/CRAN/",
+             CRAN = "http://cran.r-project.org",
              type = "source", suggests = FALSE, ...)
 {
 
@@ -180,7 +180,7 @@ getDepends <- function(package, group, infokind, available = NULL)
 
 dependsRmetrics <-
     function(pkgs = pkgsRmetricsDev(),
-             contrib =  "http://stat.ethz.ch/CRAN/src/contrib")
+             contrib =  "http://cran.r-project.org/src/contrib")
 {
     stopifnot(is.character(pkgs))
 
@@ -255,6 +255,12 @@ checkBeforeCommit  <-
         dirCheck <- paste(pkg, ".Rcheck", sep = "")
         logFile <- file.path(outdir, dirCheck, "00check.log")
         log  <- readLines(logFile)
+
+        # Note R CMD check does not check by default S4 method mismatches.
+        # We do it if variable _R_CHECK_CODOC_S4_METHODS_ is TRUE
+        check_S4_methods <-
+              isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
+	if (check_S4_methods) tools::codoc(pkg, lib.loc = lib)
 
         ERROR <- grep("ERROR", log)
         WARNING <- grep("WARNING", log)
@@ -701,12 +707,14 @@ checkVersion <- function(pkgs = pkgsRmetricsDev())
         dcfFile <- file.path(pkg, "DESCRIPTION")
         pkgVersion <- read.dcf(dcfFile, fields = "Version")
 
-        if (info[pkg, "Version"] == pkgVersion)
-            stop(pkg, " has same local version number as package on CRAN!")
-
         message("\n", pkg)
         message("CRAN  : ", info[pkg, "Version"])
         message("Local : ", pkgVersion)
+
+        if (info[pkg, "Version"] == pkgVersion)
+            warning(pkg, " has same local version number as package on CRAN!",
+                    call. = FALSE)
+
     }
 }
 
