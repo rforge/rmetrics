@@ -1,0 +1,106 @@
+2009-04-08  ellis
+
+	* R/plot-pairs.R: added function to compute color space for
+	  correlation matrix plot
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-03-13  wuertz
+
+	* R/assetsTest.R: small fix done
+
+2009-03-13  wuertz
+
+	* R/assetsTest.R: fixed
+
+2009-02-09  wuertz
+
+	* NAMESPACE, R/assetsArrange.R, R/assetsMeanCov.R, R/assetsStats.R,
+	  R/plot-risk.R, R/plot-stars.R, R/zzz.Deprecated.R, R/zzz.R,
+	  inst/unitTests/runit.AssetsMeanCov.R, man/00fAssets-package.Rd,
+	  man/VaRModelling.Rd, man/assetsArrange.Rd, man/assetsFit.Rd,
+	  man/assetsLPM.Rd, man/assetsMeanCov.Rd, man/assetsOutliers.Rd,
+	  man/assetsPfolio.Rd, man/assetsSelect.Rd, man/assetsSim.Rd,
+	  man/assetsStats.Rd, man/assetsTest.Rd, man/boxPlot.Rd,
+	  man/class-fASSETS.Rd, man/covEllipsesPlot.Rd, man/pairsPlot.Rd,
+	  man/plot-binning.Rd, man/plot-boxplot.Rd, man/plot-ellipses.Rd,
+	  man/plot-hist.Rd, man/plot-mst.Rd, man/plot-pairs.Rd,
+	  man/plot-qqplot.Rd, man/plot-risk.Rd, man/plot-series.Rd,
+	  man/plot-similarity.Rd, man/plot-stars.Rd, man/seriesPlot.Rd,
+	  man/similarityPlot.Rd, man/starsPlot.Rd: help pages and
+	  documentation essentiall improved, all functions, arguments and
+	  retur5ned values should now be documented
+
+2009-02-08  wuertz
+
+	* R/builtin-corrgram.R, R/buitin-corrgram.R: package reorganized,
+	  script files
+
+2009-02-08  wuertz
+
+	* R/assetsArrange.R, R/assetsFit.R, R/assetsLPM.R,
+	  R/assetsMeanCov.R, R/assetsOutliers.R, R/assetsPfolio.R,
+	  R/assetsSelect.R, R/assetsSim.R, R/assetsStats.R, R/assetsTest.R,
+	  R/panel-diagonal.R, R/plot-panels.R, R/plot-qqplot.R,
+	  R/zzz.Deprecated.R: script files reorganized
+
+2009-02-08  wuertz
+
+	* R/panel-diagonal.R, R/plot-panels.R, R/plotPanels.R:
+	  reorganization of files
+
+2009-02-08  wuertz
+
+	* R/assetsFit.R, R/assetsPfolio.R, R/assetsRisk.R,
+	  R/class-fASSETS.R, R/plot-binning.R, R/plot-boxplot.R,
+	  R/plot-ellipses.R, R/plot-hist.R, R/plot-mst.R, R/plot-pairs.R,
+	  R/plot-panels.R, R/plotPanels.R: script files freorganisation
+
+2009-02-08  wuertz
+
+	* R/VaRModelling.R, R/assetsRisk.R, R/exampleCovData.R,
+	  R/fixBinHistogram.R, R/plot-binning.R, R/plot-correlation.R,
+	  R/plot-covEllipses.R, R/plot-ellipses.R, R/plot-histPairs.R,
+	  R/plot-minSpanTree.R, R/plot-mst.R, R/plot-pairsPanels.R,
+	  R/plot-panels.R: files renamed
+	* R/assetsArrange.R, R/assetsFit.R, R/assetsMeanCov.R,
+	  R/assetsOutliers.R, R/assetsSelect.R, R/assetsStats.R,
+	  R/assetsTest.R, R/builtin-robust.R, R/exampleCovData.R,
+	  R/fixBinHistogram.R, R/plot-correlation.R, R/plot-histPairs.R,
+	  R/plot-stars.R, R/zzz.Deprecated.R: reorginization of files
+
+2009-01-27  wuertz
+
+	* R/plot-pairs.R: warnings hidden for pairs() if tick = 0
+
+2009-01-16  chalabi
+
+	* man/assetsLPM.Rd, man/assetsMeanCov.Rd, man/seriesPlot.Rd: fixed
+	  warning with new Rd parser
+
+2009-01-04  wuertz
+
+	* NAMESPACE, R/assetsMeanCov.R, R/assetsOutliers.R,
+	  R/outlierDetection.R, man/assetsMeanCov.Rd,
+	  man/assetsOutliers.Rd: internal function .assetsOutlierDetection
+	  moved to assetsOutlier, documented and added to NAMESPACE
+
+2009-01-02  wuertz
+
+	* R/plot-boxplot.R: default abline removed from box plot
+
+2009-01-02  wuertz
+
+	* R/plot-stars.R: stars plot, plot argument corrected
+
+2008-12-31  wuertz
+
+	* R/assetsSelect.R, man/assetsSelect.Rd: small modifications
+

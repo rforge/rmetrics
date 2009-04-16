@@ -1,0 +1,42 @@
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+	* R/yahooKeystats.R: yahooKeystats now returns NA if there is no
+	  data is available from Yahoo
+
+2009-03-31  chalabi
+
+	* R/yahooKeystats.R: yahooKeystats returns 'NA' when there is no
+	  data for a give query.
+
+2009-01-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* DESCRIPTION: changed version number to match version on CRAN + 1
+
+2009-01-11  wuertz
+
+	* man/00fImport-package.Rd: typo removed
+	* DESCRIPTION: next version number
+	* man/fredImport.Rd, man/oandaImport.Rd, man/yahooImport.Rd:
+	* DESCRIPTION: next Version number
+	* R/economagicImport.R, inst/unitTests/runit.economagicImport.R,
+	  man/00fImport-package.Rd, man/economagicImport.Rd: economagic
+	  download function removed
+	* man/economagicImport.Rd, man/fredImport.Rd, man/oandaImport.Rd,
+	  man/yahooImport.Rd: spaces in >item{} {
+
+2009-01-04  chalabi
+
+	* R/economagicImport.R: update function because of new format
+
+2009-01-03  wuertz
+
+	* R/economagicImport.R: DW: Economagic has introduced ramdom
+	  centered dots for numeric values, let's take care of this
+

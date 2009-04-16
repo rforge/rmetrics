@@ -1,0 +1,16 @@
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* R/regFit.R: regFit data arg is coerced to a data.frame when
+	  calling underlying method
+	* DESCRIPTION: updated DESC file
+
+2009-01-28  chalabi
+
+	* man/fREG-class.Rd, man/plot-methods.Rd, man/regFit.Rd,
+	  man/regSim.Rd: updated manual pages to new Rd parser
+

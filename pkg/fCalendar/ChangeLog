@@ -1,0 +1,17 @@
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-03-20  chalabi
+
+	* man/Ops.Rd, man/nDay.Rd: fixed Rd files to new Rd-parser
+
+2009-03-05  chalabi
+
+	* R/zzz.R: added more explicit message about new name of package
+

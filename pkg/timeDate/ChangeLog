@@ -1,9 +1,44 @@
+2009-04-15  chalabi
+
+	* R/DaylightSavingTime.R: updated DST table
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-03-06  chalabi
+
+	* R/methods-show.R: 'show' should return an invisible 'NULL'. as
+	  specified in ?show
+
+2009-02-23  chalabi
+
+	* NAMESPACE, R/periods.R, man/periods.Rd: added functions
+	  monthlyRolling, periodicallyRolling and periods
+
+2009-02-10  chalabi
+
+	* R/timeDate.R: in timeDate() charvec entries of different length
+	  are replaced with NA's
+
 2009-02-08  chalabi
 
 	* R/subset.R: use POSIX character classes instead of ASCII classes
 	  to avoid compatibility problems with different locales.
+
+2009-02-08  chalabi
+
 	* R/timeDate.R: timeDate() now returns timeDate(NA) if the format
 	  of charvec can not be found
+
+2009-02-04  chalabi
+
+	* ChangeLog:
 
 2009-02-04  chalabi
 
@@ -12,21 +47,54 @@
 2009-01-28  chalabi
 
 	* R/whichFormat.R:
+
+2009-01-28  chalabi
+
 	* inst/unitTests/runit.Subsets.R: added subset RUnit tests
+
+2009-01-28  chalabi
+
 	* R/midnightStandard.R, R/whichFormat.R: handling NA's with
 	  timeDate
+
+2009-01-28  chalabi
+
 	* man/methods-na.Rd: added help page for is.na method of timeDate
+
+2009-01-28  chalabi
+
 	* R/methods-na.R, R/midnightStandard.R, R/whichFormat.R: timeDate
 	  now handles NA's
+
+2009-01-28  chalabi
+
 	* NAMESPACE: added is.na methods for timeDate objects
+
+2009-01-28  chalabi
+
 	* DESCRIPTION: updated version number
+
+2009-01-28  chalabi
+
 	* R/methods-na.R: added 'is.na' method for timeDate objects
 
 2009-01-12  chalabi
 
 	* man/methods-Ops.Rd, man/nDay.Rd: fixed few typos in man pages
+
+2009-01-12  chalabi
+
 	* R/start.R: faster start,timeDate method
+
+2009-01-12  chalabi
+
 	* R/sample.R: faster sample,timeDate method
+
+2009-01-12  chalabi
+
 	* R/rev.R: faster rev,timeDate method
+
+2009-01-12  chalabi
+
 	* R/rep.R: faster rep,timeDate method
 

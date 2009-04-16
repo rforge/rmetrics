@@ -1,0 +1,14 @@
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-02-24  chalabi
+
+	* R/TermStructure.R: thanks to Dott. Sergio S. Guirreri - wrong
+	  name assigned to fitted parameter in Svesson
+

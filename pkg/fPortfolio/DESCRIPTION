@@ -1,11 +1,12 @@
 Package: fPortfolio
 Version: 290.75
-Revision: 4030
-Date: 2009-04-01
+Revision: 4042
+Date: 2009-04-15
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz
 Depends: R (>= 2.7.0), methods, MASS, timeDate, timeSeries (>= 290.81),
-        fBasics, fCopulae, fAssets, quadprog, Rglpk, Rsymphony, robustbase
+        fBasics, fCopulae, fAssets, quadprog, Rglpk, Rsymphony,
+        robustbase
 Suggests: corpcor, covRobust, RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and

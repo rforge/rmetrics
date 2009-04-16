@@ -1,0 +1,32 @@
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-01-30  chalabi
+
+	* R/garchSpec.R:
+
+2009-01-28  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-01-28  chalabi
+
+	* DESCRIPTION: changed version number to match version on CRAN + 1
+
+2009-01-12  chalabi
+
+	* NAMESPACE, R/methods-update.R, man/class-fGARCH.Rd,
+	  man/class-fGARCHSPEC.Rd: added update method for fGARCH and
+	  fGARCHSPEC object
+
+2009-01-07  chalabi
+
+	* src/dist.f: fixed conditional distribution thanks to comments of
+	  Michal Miklovic.
+
