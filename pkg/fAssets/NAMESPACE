@@ -41,6 +41,7 @@ importFrom("graphics",
            "segments",
            "plot.xy")
 importFrom("grDevices",
+           "rgb",
            "palette",
            "rainbow",
            "cm.colors",
@@ -96,6 +97,7 @@ importFrom("timeSeries",
            "rownames",
            "series",
            "na.omit",
+           "rev",
            "points",
            "colCumsums",
            "apply",
@@ -109,8 +111,7 @@ importFrom("timeSeries",
            "rank",
            "series<-",
            "print",
-           "returns",
-           "rev")
+           "returns")
 
 ################################################
 ## useDynLib

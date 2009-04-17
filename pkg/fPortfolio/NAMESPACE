@@ -28,7 +28,8 @@ importFrom("grDevices",
 importFrom("methods",
            "show",
            "@<-",
-           "new")
+           "new",
+           "is")
 importFrom("robustbase",
            "scaleTau2")
 importFrom("stats",
