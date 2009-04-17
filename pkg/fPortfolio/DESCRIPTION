@@ -1,7 +1,7 @@
 Package: fPortfolio
 Version: 2100.76
-Revision: 4042
-Date: 2009-04-15
+Revision: 4061
+Date: 2009-04-17
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz
 Depends: R (>= 2.7.0), methods, MASS, timeDate, timeSeries (>= 290.81),

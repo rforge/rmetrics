@@ -70,6 +70,9 @@
 	  R/plot-covEllipses.R, R/plot-ellipses.R, R/plot-histPairs.R,
 	  R/plot-minSpanTree.R, R/plot-mst.R, R/plot-pairsPanels.R,
 	  R/plot-panels.R: files renamed
+
+2009-02-08  wuertz
+
 	* R/assetsArrange.R, R/assetsFit.R, R/assetsMeanCov.R,
 	  R/assetsOutliers.R, R/assetsSelect.R, R/assetsStats.R,
 	  R/assetsTest.R, R/builtin-robust.R, R/exampleCovData.R,

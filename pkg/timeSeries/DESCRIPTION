@@ -1,7 +1,7 @@
 Package: timeSeries
 Version: 2100.82
-Revision: 4053
-Date: 2009-04-15
+Revision: 4063
+Date: 2009-04-17
 Title: Rmetrics - Financial Time Series Objects
 Author: Diethelm Wuertz and Yohan Chalabi
 Depends: R (>= 2.6.0), graphics, grDevices, methods, stats, utils,

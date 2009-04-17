@@ -1,3 +1,8 @@
+2009-04-17  chalabi
+
+	* R/methods-aggregate.R: fixed colnames in
+	  aggregate,timeSeries-method
+
 2009-04-15  chalabi
 
 	* R/AllClass.R: initialize,timeSeries-method checks object with

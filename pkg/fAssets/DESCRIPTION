@@ -1,7 +1,7 @@
 Package: fAssets
 Version: 2100.76
-Revision: 4055
-Date: 2009-04-15
+Revision: 4061
+Date: 2009-04-17
 Title: Rmetrics - Assets Selection and Modelling
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.6.0), methods, sn, MASS, robustbase, timeDate,
