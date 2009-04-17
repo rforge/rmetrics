@@ -126,6 +126,44 @@ function(
 # ------------------------------------------------------------------------------
 
 
+.checkSpec <-
+function(spec)
+{
+    # Description:
+    #   Checks for specification conflicts
+    
+    # FUNCTION:
+    
+    if (getSolver(spec) == "solveRglpk" && getType(spec) == "MV") {
+        # Error Message:
+        cat("\nExecution stopped:")   
+        cat("\n  Specification conflict for portfolio solver and type.")
+        cat("\nSpec Information:")
+        cat("\n  Solver=", getSolver(spec), ",", " type = ", getType(spec), 
+            ".", sep = "")
+        cat("\n")
+        stop(call. = FALSE, show.error.messages = "\n  returned from Rmetrics")
+     }
+     
+     if (getSolver(spec) == "solveRsymphony" && getType(spec) == "MV") {
+        # Error Message:
+        cat("\nExecution stopped:")   
+        cat("\n  Specification conflict for portfolio solver and type.")
+        cat("\nSpec Information:")
+        cat("\n  Solver=", getSolver(spec), ",", "type = ", getType(spec), 
+            ".", sep = "")
+        cat("\n")
+        stop(call. = FALSE, show.error.messages = "\n  returned from Rmetrics")
+     }
+     
+     # Return Value:
+     "ok"
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .checkWeights <-
     function(weights, eps = sqrt(.Machine$double.eps))
 {    
