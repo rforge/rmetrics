@@ -211,11 +211,9 @@ checkBeforeCommit  <-
     stopifnot(is.character(pkgs))
 
     ## Set library and outdir paths
-    if (is.null(lib)) {
-        lib <- .libPaths()[1]
-        message("will install the R packages into ", lib)
-    }
     if (is.null(outdir)) outdir <- file.path("../Rcheck", getRversion())
+    if (is.null(lib)) lib <- outdir
+    message("will install the packages into ", lib)
 
     ## if outdir does not exist, create it
     if (!file.exists(outdir)) dir.create(outdir)
@@ -263,7 +261,8 @@ checkBeforeCommit  <-
 	if (check_S4_methods) tools::codoc(pkg, lib.loc = lib)
 
         ERROR <- grep("ERROR", log)
-        WARNING <- grep("WARNING", log)
+        # Note do not check for object files in pkgs
+        WARNING <- grep("WARNING", log[-grep("source package", log)])
         NOTE <- grep("NOTE", log)
 
         if (length(ERROR)) {
