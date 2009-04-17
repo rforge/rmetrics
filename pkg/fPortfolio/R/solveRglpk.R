@@ -128,7 +128,7 @@ solveRglpk <-
     # Details:
     #       max/min:                   obj %*% x
     #       subject to:
-    #                            mat %*%x  ?=  rhs
+    #                            mat %*% x ?=  rhs
     #                                  dir  =  "?="
     #                               upper/lower bounds
     #
@@ -242,7 +242,7 @@ solveRglpk <-
     # Details:
     #       max/min:                   obj %*% x
     #       subject to:
-    #                            mat %*%x  ?=  rhs
+    #                           mat %*% x  ?=  rhs
     #                                  dir  =  "?="
     #                              upper/lower bounds
     #
@@ -392,8 +392,8 @@ solveRglpk <-
         optim = optim,
         weights = weights,
         targetReturn = targetReturn,
-        targetRisk = optim$optimum,
-        objective = optim$optimum,
+        targetRisk = -optim$optimum,
+        objective = -optim$optimum,
         status = optim$status[[1]],
         message = "")
 
