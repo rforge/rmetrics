@@ -6,7 +6,7 @@ Author: David Scott <d.scott@auckland.ac.nz> and
         Christine Yang Dong <c.dong@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz> 
 Depends: R (>= 2.3.0), HyperbolicDist
-Encoding: UTF-8
+Encoding: latin1
 Description: This package provides functions for the variance gamma
         distributions. Density, distribution and quantile
         functions. In addition, there are also functions for random
