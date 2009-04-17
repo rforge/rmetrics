@@ -78,7 +78,7 @@ setMethod("aggregate", "timeSeries",
           data <- matrix(apply(getDataPart(x), 2, tapply, INDEX, FUN), ncol=ncol(x))
 
           rownames(data) <- as.character(by[unique(na.omit(INDEX))])
-          colnames(x) <- colnames(x)
+          colnames(data) <- colnames(x)
 
           # Return Value:
           timeSeries(data, ...)
