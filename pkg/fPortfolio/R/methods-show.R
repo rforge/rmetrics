@@ -35,16 +35,18 @@ setMethod("show", "fPORTFOLIO",
 
     # FUNCTION:
 
-    # Length Out:
-    nFrontierPoints <- NROW(matrix(getWeights(object@portfolio), ncol = getNAssets(object)))
-    length.out <- getRmetricsOptions("length.print") # get it from Rmetrics Options
+    # Determine Length Out:
+    nFrontierPoints <- NROW(matrix(getWeights(object@portfolio), 
+        ncol = getNAssets(object)))
+    length.out <- getRmetricsOptions("length.print") # from Rmetrics Options
     index <-
-        if (length.out)
+        if (length.out) {
             unique(trunc(seq.int(from = 1, to = nFrontierPoints,
-                                 length.out = length.out)))
-        else
+                length.out = length.out)))
+        } else {
             seq.int(from = 1, to = NROW(nFrontierPoints))
-
+        }
+        
     # Print Title:
     cat("\nTitle:\n ")
         cat(getType(object),  getTitle(object),     "\n")
@@ -65,7 +67,7 @@ setMethod("show", "fPORTFOLIO",
     # Print Target Weights:
     cat("\nPortfolio Weights:\n")
     table <- matrix(round(getWeights(object@portfolio), digits = 4),
-                    ncol = nAssets)
+        ncol = nAssets)
     colnames(table) = Names
     rownames(table) = 1:NROW(table)
     print.table(table[index, ])
@@ -82,14 +84,14 @@ setMethod("show", "fPORTFOLIO",
     # to do ...
 
     # Print Target Return and Risks:
-    # DW: Note obgect@targetR* is a list do not use getTargetR*()
+    # DW: Note object@targetR* is a list do not use getTargetR*()
     cat("\nTarget Return and Risks:\n")
     targetReturn = matrix(getTargetReturn(object@portfolio), ncol = 2)
     targetRisk = matrix(getTargetRisk(object@portfolio), ncol = 4)
     target = round(cbind(targetReturn, targetRisk), digits = 4)
     colnames(target) = c("mean", "mu", "Cov", "Sigma", "CVaR", "VaR")
     rownames(target) = 1:NROW(target)
-    print.table(table[index, ])
+    print.table(target[index, ])
 
     # Print Description:
     cat("\nDescription:\n ")
