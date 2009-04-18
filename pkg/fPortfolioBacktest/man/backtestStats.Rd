@@ -23,16 +23,14 @@
 
 
 \usage{   
-backtestStats(object, stats = "rollingSigma", ...)
+backtestStats(object, FUN = "rollingSigma", \dots)
 
-rollingSigma(portfolios)
-rollingVaR(portfolios, alpha = 0.05)
-rollingCVaR(portfolios, alpha = 0.05)
-rollingDaR(portfolios, alpha = 0.05)
-rollingCDaR(portfolios, alpha = 0.05)
-rollingRiskBudgets(portfolios)
-
-
+rollingSigma(object)
+rollingVaR(object)
+rollingCVaR(object)
+rollingDaR(object)
+rollingCDaR(object)
+rollingRiskBudgets(object)
 }
 
 
@@ -42,18 +40,13 @@ rollingRiskBudgets(portfolios)
         a list, returned from running the function 
         \code{portfolioSmoothing}.
         }
-   \item{stats}{
+   \item{FUN}{
         a character string, specifying the name of the rolling statistics 
         function.
         }
-   \item{portfolios}{
-	    a list, portfolio objects of class fPORTFOLIO ordered by time.
-	    }
-   \item{alpha}{
-	    a numeric value, specifying the quantile level
-	    }
-    \item{\dots}{
-        additional arguments passed to the \code{stats} function
+   \item{\dots}{
+        optional argument to be passed to the rolling statistics 
+        function \code{FUN}.
         }
 }
 
@@ -87,6 +80,11 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
+}
+
+
+\examples{
+##  -   
 }
 
 

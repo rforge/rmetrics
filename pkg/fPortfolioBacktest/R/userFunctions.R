@@ -32,8 +32,10 @@
 
 
 equidistWindows <-
-    function(data, backtest = portfolioBacktest())
+function(data, backtest = portfolioBacktest())
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Defines default equidistant rolling windows
    
@@ -64,9 +66,13 @@ equidistWindows <-
 
 
 tangencyStrategy <-
-    function(data, spec = portfolioSpec(), constraints = "LongOnly", 
-        backtest = portfolioBacktest())
+function(data, spec = portfolioSpec(), constraints = "LongOnly", 
+    backtest = portfolioBacktest())
 { 
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # FUNCTION:
+    
     strategyPortfolio <- tangencyPortfolio(data, spec, constraints)
     Status = getStatus(strategyPortfolio)
     
@@ -83,8 +89,10 @@ tangencyStrategy <-
 
 
 emaSmoother <-
-    function(weights, spec, backtest)
+function(weights, spec, backtest)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   A user defined weights smoother for portfolio backtesting
    

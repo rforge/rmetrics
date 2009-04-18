@@ -1,7 +1,7 @@
 Package: fPortfolioBacktest
 Version: 290.02
-Date: 2008
-Title: Rmetrics - Portfolio Selection and Optimization
+Date: 2009
+Title: Rmetrics - Portfolio Backtesting
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
 Depends: R (>= 2.6.0), methods, fPortfolio
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>

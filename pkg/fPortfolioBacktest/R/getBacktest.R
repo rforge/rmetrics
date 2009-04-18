@@ -16,44 +16,46 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:
-#  getWindows					Extract Windows slot
-#   getWindowsFun				Extract Windows function
-#	 getWindowsParams		    Extract a list of windows specific parameters
-#   getWindowsHorizon			Extract windows horizon
-#  getStrategy					Extract Strategy slot
-#   getStrategyFun				Extract the portfolio strategy function
-#	 getStrategyParams			Extract a list of sStrategy specific parameters
-#  getSmoother					Extract the Smoother slot
-#   getSmootherFun				Extract the Smoother function
-#	 getSmootherParams			Extract a list of smoothing specific parameters
-#   getSmootherLambda			Extract the smoothing parameter Lambda
-#   getSmootherDoubleSmoothing	Extract setting for double smoothing
-#   getSmootherInitialWeights	Extract the initial weights in the smoothing
-#	getSmootherSkip 		 	Extract the number of skipped months
-#  getMessages					Extract the Message slot
-
+# FUNCTION:                    EXTRACTORS FOR PFOLIOBACTEST OBJECTS:
+#  getWindows                   Extracts windows slot
+#   getWindowsFun               Extracts name of windows function
+#   getWindowsParams            Extracts a list of windows specific parameters
+#   getWindowsHorizon           Extracts windows horizon
+#  getStrategy                  Extracts strategy slot
+#   getStrategyFun              Extracts the name of portfolio strategy function
+#   getStrategyParams           Extracts a list of strategy specific parameters
+#  getSmoother                  Extracts the smoother slot
+#   getSmootherFun              Extracts the name of the moother function
+#   getSmootherParams           Extracts a list of smoothing specific parameters
+#   getSmootherLambda           Extracts the smoothing parameter Lambda
+#   getSmootherDoubleSmoothing  Extracts setting for double smoothing
+#   getSmootherInitialWeights   Extracts the initial weights in the smoothing
+#   getSmootherSkip             Extracts the number of skipped months
+#  getMessages                  Extracts the message slot
 ################################################################################
 
 
-getWindows.fPFOLIOBACKTEST =
-    function(object)
+getWindows.fPFOLIOBACKTEST <- 
+function(object)
 {   
-    # A function implemented by William Chen
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts Windows slot from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
     
     # FUNCTION:
-    	
+        
     # Description:
     #   gets the "model" slot from an object of class 4
    
@@ -61,56 +63,91 @@ getWindows.fPFOLIOBACKTEST =
     #   object - an object of class S4
    
     # FUNCTION:
-   
-    # check if its of .fPFOLIOBACKTEST class
-    stopifnot(class(object) == "fPFOLIOBACKTEST")
    
     # Return Value:
     getSlot(object, "windows")
 }
-
-
-# ------------------------------------------------------------------------------
-	
-
-getWindowsFun.fPFOLIOBACKTEST = 
-    function(object) getWindows(object)$windows
-
+            
 
 # ------------------------------------------------------------------------------
-
-
-getWindowsParams.fPFOLIOBACKTEST = 
-    function(object) getWindows(object)$params
- 
-   
-# ------------------------------------------------------------------------------
-
-
-getWindowsHorizon.fPFOLIOBACKTEST = 
-    function(object) getWindowsParams(object)$horizon
     
-    
-# ------------------------------------------------------------------------------
 
-
-getSmoother.fPFOLIOBACKTEST =
-    function(object)
-{   
-    # A function implemented by William Chen
+getWindowsFun.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
     
-    # FUNCTION:
-    	
     # Description:
-    #   gets the "model" slot from an object of class 4
-   
+    #   Extracts name of windows function from an object of class fPFOLIOBACKTEST
+    
     # Arguments:
-    #   object - an object of class S4
-   
+    #   object - an object of class fPFOLIOBACKTEST
+    
     # FUNCTION:
+    
+    # Return Value:
+    getWindows(object)$windows
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getWindowsParams.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts a list of windows specific parameters from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getWindows(object)$params
+}
+
    
-     # check if its of .fPFOLIOBACKTEST class
-    stopifnot(class(object) == "fPFOLIOBACKTEST")
+# ------------------------------------------------------------------------------
+
+
+getWindowsHorizon.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts windows horizon from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getWindowsParams(object)$horizon
+}
+    
+    
+# ------------------------------------------------------------------------------
+
+
+getSmoother.fPFOLIOBACKTEST <- 
+function(object)
+{   
+    # A function implemented by William Chen and Diethelm Wuertz
+        
+    # Description:
+    #   Extracts the smoother slot from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
    
     # Return Value:
     getSlot(object, "smoother")
@@ -120,65 +157,149 @@ getSmoother.fPFOLIOBACKTEST =
 # ------------------------------------------------------------------------------
 
 
-getSmootherFun.fPFOLIOBACKTEST = 
-    function(object) getSmoother(object)$smoother
+getSmootherFun.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts the name of the moother function from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmoother(object)$smoother
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-getSmootherParams.fPFOLIOBACKTEST = 
-    function(object) getSmoother(object)$params
+getSmootherParams.fPFOLIOBACKTEST <-  
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts a list of strategy specific parameters
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmoother(object)$params
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-getSmootherLambda.fPFOLIOBACKTEST = 
-    function(object) getSmootherParams(object)$lambda
+getSmootherLambda.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts the smoothing parameter Lambda from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmootherParams(object)$lambda
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-getSmootherDoubleSmoothing.fPFOLIOBACKTEST = 
-    function(object) getSmootherParams(object)$doubleSmoothing
+getSmootherDoubleSmoothing.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts setting for double smoothing from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmootherParams(object)$doubleSmoothing
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-getSmootherInitialWeights.fPFOLIOBACKTEST = 
-    function(object) getSmootherParams(object)$initialWeights
+getSmootherInitialWeights.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts the initial weights in the smoothing from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmootherParams(object)$initialWeights
+}
 
     
 # ------------------------------------------------------------------------------
 
 
-getSmootherSkip.fPFOLIOBACKTEST = 
-    function(object) getSmootherParams(object)$skip
+getSmootherSkip.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts the number of skipped months from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getSmootherParams(object)$skip
+}
  
        
 # ------------------------------------------------------------------------------
 
 
-getStrategy.fPFOLIOBACKTEST =
-    function(object)
+getStrategy.fPFOLIOBACKTEST <- 
+function(object)
 {   
-    # A function implemented by William Chen
+    # A function implemented by William Chen and Diethelm Wuertz
+        
+    # Description:
+    #   Extracts strategy slot from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
     
     # FUNCTION:
-    	
-    # Description:
-    #   gets the "model" slot from an object of class 4
-   
-    # Arguments:
-    #   object - an object of class S4
-   
-    # FUNCTION:
-   
-    # check if its of .fPFOLIOBACKTEST class
-    stopifnot(class(object) == "fPFOLIOBACKTEST")
    
     # Return Value:
     getSlot(object, "strategy")
@@ -188,37 +309,62 @@ getStrategy.fPFOLIOBACKTEST =
 # ------------------------------------------------------------------------------
 
 
-getStrategyFun.fPFOLIOBACKTEST = 
-    function(object) getStrategy(object)$strategy
-
+getStrategyFun.fPFOLIOBACKTEST <-  
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
     
-# ------------------------------------------------------------------------------
-
-
-getStrategyParams.fPFOLIOBACKTEST = 
-    function(object) getStrategy(object)$params
-    
-
-# ------------------------------------------------------------------------------
-   
-
-getMessages.fPFOLIOBACKTEST =
-    function(object)
-{   
-    # A function implemented by William Chen
-    
-    # FUNCTION:
-    	
     # Description:
-    #   gets the "model" slot from an object of class 4
-   
+    #   Extracts the name of portfolio strategy function from an object 
+    #   of class fPFOLIOBACKTEST
+    
     # Arguments:
-    #   object - an object of class S4
-   
+    #   object - an object of class fPFOLIOBACKTEST
+    
     # FUNCTION:
+    
+    # Return Value:
+    getStrategy(object)$strategy
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+getStrategyParams.fPFOLIOBACKTEST <- 
+function(object) 
+{
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts a list of strategy specific parameters from an object 
+    #   of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
+    
+    # Return Value:
+    getStrategy(object)$params
+}
    
-     # check if its of .fPFOLIOBACKTEST class
-    stopifnot(class(object) == "fPFOLIOBACKTEST")
+
+# ------------------------------------------------------------------------------
+                
+
+getMessages.fPFOLIOBACKTEST <- 
+function(object)
+{   
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Extracts the message slot from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - an object of class fPFOLIOBACKTEST
+    
+    # FUNCTION:
    
     # Return Value:
     getSlot(object, "messages")

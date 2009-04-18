@@ -19,8 +19,10 @@
 
 \usage{
 equidistWindows(data, backtest = portfolioBacktest())
+
 tangencyStrategy(data, spec = portfolioSpec(), constraints = "LongOnly", 
     backtest = portfolioBacktest())
+    
 emaSmoother(weights, spec, backtest)
 }
 
@@ -112,6 +114,11 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
+}
+
+
+\examples{
+##  -   
 }
 
 

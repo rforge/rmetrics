@@ -16,59 +16,80 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
-# PLOT FUNCTIONS:		DESCRIPTION:
-# backtestStats			 Wrapper function for calculating rolling stats
-# rollingSigma			 Rolling portfolio Sigma risk
-# rollingVaR			 Rolling Value at Risk
-# rollingCVaR			 Rolling Conditional Value at Risk
-# rollingDar			 Rolling Drawdowns at Risk
-# rollingCDaR			 Rolling Conditional Drawdowns at Risk
-# rollingRiskBudgets	 Rolling portfolio risk budgets
+# PLOT FUNCTIONS:       DESCRIPTION:
+# backtestStats          Wrapper function for calculating rolling stats
+# rollingSigma           Rolling portfolio Sigma risk
+# rollingVaR             Rolling Value at Risk
+# rollingCVaR            Rolling Conditional Value at Risk
+# rollingDar             Rolling Drawdowns at Risk
+# rollingCDaR            Rolling Conditional Drawdowns at Risk
+# rollingRiskBudgets     Rolling portfolio risk budgets
 ################################################################################
 
 
 backtestStats =
-    function(object, stats = "rollingSigma", ...)
+function(object, FUN = "rollingSigma", ...)
 {
-	# Extract the portfolios into a list:
-	portfolios <- object$strategyList
+    # A function implemented by William Chen
+    
+    # Description:
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    #   FUN - a character string, the name of the statistics function
+        
+    # Example:
+    #   data = returns(align(SPISECTOR))
+    #   formula <- SPI ~ BASI+INDU+CONG+HLTH+CONS+TELE+UTIL+FINA+TECH
+    #   backtests <- portfolioBacktesting(formula, data, trace = FALSE) 
+    #   portfolios <- portfolioSmoothing(backtests, portfolioBacktest())
+         
+    # FUNCTION:
 
-	# perfrorm stats:
-	backtestFun <- match.fun(stats)
-	ans <- backtestFun(portfolios, ...)
+    # Perform Statistics:
+    statsFun <- match.fun(FUN)
+    ans <- statsFun(object, ...)
 
-	# return
-	ans
+    # Return Value
+    ans
 }
 
 # ------------------------------------------------------------------------------
 
 
-rollingSigma =
-    function(portfolios)
+rollingSigma <-
+function(object)
 {
-
+    # A function implemented by William Chen and Diethelm Wuertz
+    
+    # Description:
+    #   Returns rolling sigmas from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingSigma(object)
+    
+    # FUNCTION:
+    
     # quick fix ... there is some confusion with getTargetRisk of
     # @portfolio and @spec
+    portfolios <- object$strategyList
     prtval <- lapply(portfolios, slot, "portfolio")
-    ans <- sapply(prtval,
-                  function(x) getTargetRisk(x)["Sigma"])
-
+    ans <- sapply(prtval, function(x) getTargetRisk(x)["Sigma"])
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
-	# return
-	timeSeries(ans, charvec = dates, units = "Sigma")
+    # Return Value:
+    timeSeries(ans, charvec = dates, units = "Sigma")
 }
 
 
@@ -76,117 +97,200 @@ rollingSigma =
 
 
 rollingVaR =
-    function(portfolios, alpha = 0.05)
+function(object)
 {
-	# calculate VaR for one portfolio:
-  	.var = function(x, alpha){
-  		R = getSeries(x) %*% getWeights(x)
-		quantile.default(R, probs = alpha)}
+    # A function implemented by William Chen
+    
+    # Description:
+    #   Returns rolling VaR from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingVaR(object)
+    
+    # FUNCTION:
+    
+    # calculate VaR for one portfolio:
+    .var = function(x) {
+        alpha = getAlpha(x)
+        R = getSeries(x) %*% getWeights(x)
+        quantile.default(R, probs = alpha) }
+        
+    # Get Portfolios:
+    portfolios <- object$strategyList
+    
+    # Calculates VaR for all portfolios:
+    ans = sapply(Portfolios, FUN = .var)
 
-	# Calculates VaR for all portfolios:
-	ans = sapply(portfolios, FUN = .var, alpha = alpha)
+    # Extracts the dates:
+    dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
-	# Extracts the dates:
-	dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
-	# Return:
-	timeSeries(ans, charvec = dates, units = paste("VaR", alpha, sep = "."))
+    # Return Value:
+    alpha = getAlpha(portfolios[[1]])
+    timeSeries(ans, charvec = dates, units = paste("VaR", alpha, sep = "."))
 }
+
 
 # ------------------------------------------------------------------------------
 
 
 rollingCVaR =
-    function(portfolios, alpha = 0.05)
+function(object)
 {
-	# Calculate CVaR for one portfolio:
-  	.cvar =
-  	  function(x, alpha){
-  		R = getSeries(x) %*% getWeights(x)
-		z = quantile.default(R, probs = alpha)
-		mean(as.numeric(R)[R <= z], na.rm = TRUE)
-		}
+    # A function implemented by William Chen
+    
+    # Description:
+    #   Returns rolling DVaR from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingCVaR(object)
+    
+    # FUNCTION:
+    
+    # Calculate CVaR for one portfolio:
+    .cvar = function(x) {
+        alpha = getAlpha(x)
+        R = getSeries(x) %*% getWeights(x)
+        z = quantile.default(R, probs = alpha)
+        mean(as.numeric(R)[R <= z], na.rm = TRUE)}
 
-	# Calculate CVaR for all portfolios:
-	ans = sapply(portfolios, FUN = .cvar, alpha = alpha)
+    # Get Portfolios:
+    portfolios <- object$strategyList
+    
+    # Calculate CVaR for all portfolios:
+    ans = sapply(portfolios, FUN = .cvar)
 
-	# Extract the dates:
-	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
+    # Extract the Dates:
+    dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
-	# Return:
-	timeSeries(ans, charvec = dates, units = paste("CVaR",alpha, sep = "."))
+    # Return:
+    alpha = getAlpha(Portfolios[[1]])
+    timeSeries(ans, charvec = dates, units = paste("CVaR", alpha, sep = "."))
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rollingDaR =
-    function(portfolios, alpha = 0.05)
+rollingDaR <-
+function(object)
 {
-	# calculate VaR for one portfolio:
-  	.dar = function(x, alpha){
-  		R = getSeries(x) %*% getWeights(x)
-  		dd = drawdowns(as.timeSeries(R)/100)
-		quantile.default(dd, probs = alpha)}
+    # A function implemented by William Chen
+    
+    # Description:
+    #   Returns rolling DaR from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingDaR(object)
+    
+    # FUNCTION:
+    
+    # calculate DaR for one portfolio:
+    .dar = function(x) {
+        alpha = getAlpha(x)
+        R = getSeries(x) %*% getWeights(x)
+        dd = 100 * drawdowns(as.timeSeries(R)/100)
+        quantile.default(dd, probs = alpha)}
 
-	# Calculates DaR for all portfolios:
-	ans = sapply(portfolios, FUN = .dar, alpha = alpha)
+    # Get Portfolios:
+    portfolios <- object$strategyList
+    
+    # Calculates DaR for all portfolios:
+    ans = sapply(portfolios, FUN = .dar)
 
-	# Extracts the dates:
-	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
+    # Extracts the dates:
+    dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
-	# Return:
-	timeSeries(ans, charvec = dates, units = paste("DaR",alpha, sep = "."))
-}
-
-# ------------------------------------------------------------------------------
-
-
-rollingCDaR =
-  function(portfolios, alpha = 0.05){
-
-	# Calculate CDaR for one portfolio:
-  	.cdar =
-  	  function(x, alpha){
-  		R = getSeries(x) %*% getWeights(x)
-  		dd = drawdowns(as.timeSeries(R)/100)
-		z = quantile.default(dd, probs = alpha)
-		mean(as.numeric(R)[R <= z], na.rm = TRUE)
-		}
-
-	# Calculate CVaR for all portfolios:
-	ans = sapply(portfolios, FUN = .cdar, alpha = alpha)
-
-	# Extract the dates:
-	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
-	# Return:
-	timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
+    # Return:
+    alpha = getAlpha(Portfolios[[1]])
+    timeSeries(ans, charvec = dates, units = paste("DaR", alpha, sep = "."))
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rollingRiskBudgets =
-	function(portfolios){
+rollingCDaR <- 
+function(object)
+{
+    # A function implemented by William Chen
+    
+    # Description:
+    #   Returns rolling CDaR from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingCDaR(object)
+    
+    # FUNCTION:
+    
+    # Calculate CDaR for one portfolio:
+    .cdar = function(x, alpha){
+        R = getSeries(x) %*% getWeights(x)
+        dd = 100 * drawdowns(as.timeSeries(R)/100)
+        z = quantile.default(dd, probs = alpha)
+        mean(as.numeric(R)[R <= z], na.rm = TRUE)
+        }
 
-	nPortfolios = length(portfolios)
-	assetNames = colnames(getSeries(portfolios[[1]]))
+    # Get Portfolios:
+    portfolios <- object$strategyList
+    
+    # Calculate CVaR for all portfolios:
+    ans = sapply(portfolios, FUN = .cdar)
 
-	ans = NULL
-	for (i in 1:nPortfolios){
-		ans = rbind(ans, getCovRiskBudgets(portfolios[[i]]))
-		}
+    # Extract the dates:
+    dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
-	# Extract the dates:
-	dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
-	# Return:
-	timeSeries(ans, charvec = dates, units = assetNames)
+    # Return:
+    alpha = getAlpha(Portfolios[[1]])
+    timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
 }
 
 
 # ------------------------------------------------------------------------------
+
+
+rollingRiskBudgets <- 
+function(object)
+{
+    # A function implemented by William Chen
+    
+    # Description:
+    #   Returns rolling RiskBudgets from an object of class fPFOLIOBACKTEST
+    
+    # Arguments:
+    #   object - a list as returned by the function portfolioBacktesting()
+    
+    # Example:
+    #   rollingCDaR(object)
+    
+    # FUNCTION:
+    
+    portfolios = object$StrategyList
+    nPortfolios = length(Portfolios)
+    assetNames = colnames(getSeries(portfolios[[1]]))
+
+    ans = NULL
+    for (i in 1:nPortfolios) {
+        ans = rbind(ans, getCovRiskBudgets(portfolios[[i]])) }
+
+    # Extract the Dates:
+    dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
+
+    # Return:
+    timeSeries(ans, charvec = dates, units = assetNames)
+}
+
+
+################################################################################
 

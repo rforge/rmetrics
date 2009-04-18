@@ -16,25 +16,24 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
-#	show.fPFOLIOBACKTEST		Print method for 'fPFOLIOBACKTEST' objects
+# FUNCTION:                    DESCRIPTION:
+#   show.fPFOLIOBACKTEST        Print method for 'fPFOLIOBACKTEST' objects
 ################################################################################
 
 
 setMethod("show", "fPFOLIOBACKTEST",
-    function(object)
+function(object)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   S4 Print Method for an object of class "fPFOLIODATA"
 
@@ -43,6 +42,7 @@ setMethod("show", "fPFOLIOBACKTEST",
 
     # FUNCTION:
 
+    # Windows:
     cat("\nBacktest Specification:\t")
     cat("\n\n Windows Function:           ",
         object@windows$windows)
@@ -67,7 +67,7 @@ setMethod("show", "fPFOLIOBACKTEST",
         paste(rep(" ", 24-nchar(paramNames[i])),collapse = ""), 
         as.character(strategyParams[[i]]))      
     }     
-	
+    
     # Smoother:
     cat("\n\n Smoother Function:          ",
         object@smoother$smoother)
@@ -78,13 +78,12 @@ setMethod("show", "fPFOLIOBACKTEST",
         cat("\n  -", paramNames[i], 
         paste(rep(" ", 24-nchar(paramNames[i])),collapse = ""), 
         substr(as.character(smootherParams[[i]]), 1, 5))      
-	}     
-	
+    }     
+    
     # Messages:
     cat("\n\n Messages:                   ",
         unlist(object@messages), "\n\n")
    
-
     # Return Value:
     invisible(object)
 })

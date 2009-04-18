@@ -43,8 +43,8 @@ portfolioSmoothing(object, backtest, trace = TRUE)
         details we refer to \code{portfolioConstraints}.
         }      
     \item{backtest}{
-        an S4 object of class \code{fPFOLIOBACKTEST} as returned by the function
-        \code{portfolioBacktest}.
+        an S4 object of class \code{fPFOLIOBACKTEST} as returned by the 
+        function \code{portfolioBacktest}.
         }  
     \item{object}{
         a list as returned by the function \code{portfolioBacktesting}.
@@ -64,5 +64,10 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 }
 
 
+\examples{
+##  -   
+}
+
 
 \keyword{models}
+

@@ -16,14 +16,11 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
@@ -34,6 +31,8 @@
 
 setClass("fPFOLIOBACKTEST",
    
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Represens S4 fPFOLIOBACKTEST Class
      

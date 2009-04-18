@@ -16,21 +16,18 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
-# FUNCTION:               	   DESCRIPTION:
-#  portfolioBacktest    	 	Returns an object of class fPFOLIOBACKTEST
-#  portfolioBacktesting     	Performs a portfolio bactest
-#  portfolioSmoothing       	Smoothes the weights of a portfolio backtest
+# FUNCTION:                    DESCRIPTION:
+#  portfolioBacktest            Returns an object of class fPFOLIOBACKTEST
+#  portfolioBacktesting         Performs a portfolio bactest
+#  portfolioSmoothing           Smoothes the weights of a portfolio backtest
 ################################################################################
 
 
@@ -55,7 +52,7 @@ function(
     # A function implemented by William Chen and Diethelm Wuertz
     
     # FUNCTION:
-    	
+        
     # Description:
     #   Specifies a portfolio to be optimized from scratch
 
@@ -92,13 +89,13 @@ function(
 
 
 portfolioBacktesting <-
-    function(
-        formula, 
-        data, 
-        spec = portfolioSpec(), 
-        constraints = "LongOnly", 
-        backtest = portfolioBacktest(),
-        trace = TRUE)
+function(
+    formula, 
+    data, 
+    spec = portfolioSpec(), 
+    constraints = "LongOnly", 
+    backtest = portfolioBacktest(),
+    trace = TRUE)
 {
     # A function implemented by William Chen and Diethelm Wuertz
     
@@ -112,13 +109,27 @@ portfolioBacktesting <-
     #   spec - portfolio spec, an object of class fPFLOLIOSPEC
     #   constraints - portfolio constraints, a vector of character strings
     #   backtest - portfolio backtest, an object of class fPFLOLIOBACKTEST
+    #   trace - a logical, should the backtesting be traced ?
+    
+    # Value:
+    #   A list with the following elements 
+    #   formula - the input formulas 
+    #   data - the input data
+    #   spec - the input specification, by default portfolioSpec()
+    #   constraints - the input constraints, by default "LongOnly"
+    #   backtest  
+    #   benchmarkName 
+    #   assetsNames 
+    #   weights 
+    #   strategyList 
+    #   Sigma 
    
     # Details:
     #   Allows for user specified rolling Windows
-    #   Smoothing is separated andcan be usere specified
+    #   Smoothing is separated and can be usere specified
    
     # Example:
-    #   ans = object = portfolioBacktesting(formula, data, spec, constraints, backtest)
+    #   portfolioBacktesting(formula, data, spec, constraints, backtest)
    
     # FUNCTION:
    
@@ -181,8 +192,8 @@ portfolioBacktesting <-
     # WC: track the sigma over time:
     Sigma = NULL
      
-    for (i in 1:length(from)) {
-
+    for (i in 1:length(from)) 
+    {
         # Optimize the Portfolio:
         pfSeries = window(data[, assetsNames], start = from[i], end = to[i])
         bmSeries = window(data[, benchmarkName], start = from[i], end = to[i])
@@ -249,7 +260,8 @@ function(object, backtest, trace = TRUE)
    
     # Arguments:
     #   object - an object as returned by the function portfolioBacktesting
-    #	backtest - an S4 class object of 'FPFOLIOBACKTEST'
+    #   backtest - an S4 class object of 'FPFOLIOBACKTEST'
+    #   trace - 
     
     # Example:
     #   object =
@@ -266,11 +278,11 @@ function(object, backtest, trace = TRUE)
     benchmarkName = object$benchmarkName
     assetsNames = object$assetsNames
     weights = object$weights
-	skip = getSmootherSkip(backtest)
+    skip = getSmootherSkip(backtest)
     if (skip > 0) weights = weights[-(1:skip), ]
     nAssets = ncol(weights)
    
-    # Add Smooth weights to Backtest object:
+    # Add Smooth Weights to Backtest object:
     if (trace) print("smooth ...")
     smoother = match.fun(getSmootherFun(backtest))
     smoothWeights = object$smoothWeights = smoother(weights, spec, backtest)
@@ -289,7 +301,7 @@ function(object, backtest, trace = TRUE)
     if (trace) print("offset ...")
     cumX = colCumsums(data[, benchmarkName])
     lastX <- window(cumX, start = start(cumX), end = rownames(weights)[1] )
-    offsetReturn = as.vector(lastX[end(lastX),])
+    offsetReturn = as.vector(lastX[end(lastX), ])
     names(offsetReturn) <- as.character(end(lastX))
     object$offsetReturn <- offsetReturn
 

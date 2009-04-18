@@ -16,41 +16,39 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
 # FUNCTION:
 #  getWindows               
-#  getWindowsFun
+#   getWindowsFun
 #	getWindowsParams
-#  getWindowsHorizon
+#   getWindowsHorizon
 #  getStrategy
-#  getStrategyFun
+#   getStrategyFun
 #	getStrategyParams
-#  getStrategyParams
 #  getSmoother
-#  getSmootherFun
+#   getSmootherFun
 #	getSmootherParams
-#  getSmootherLambda
-#  getSmootherDoubleSmoothing
-#  getSmootherInitialWeights
+#   getSmootherLambda
+#   getSmootherDoubleSmoothing
+#   getSmootherInitialWeights
 #	getSmootherSkip
 #  getMessages
 ################################################################################
 
 
 getWindows <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getWindows")
 }
 
@@ -59,9 +57,11 @@ getWindows <-
 
 
 getWindowsFun <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getWindowsFun")
 }
 
@@ -70,9 +70,11 @@ getWindowsFun <-
 
 
 getWindowsParams <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getWindowsParams")
 }
 
@@ -81,9 +83,11 @@ getWindowsParams <-
 
 
 getWindowsHorizon <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getWindowsHorizon")
 }
 
@@ -92,9 +96,11 @@ getWindowsHorizon <-
 
 
 getSmoother <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmoother")
 }
 
@@ -103,9 +109,10 @@ getSmoother <-
 
 
 getSmootherFun <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     UseMethod("getSmootherFun")
 }
 
@@ -113,9 +120,11 @@ getSmootherFun <-
 
 
 getSmootherParams <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmootherParams")
 }
 
@@ -124,9 +133,11 @@ getSmootherParams <-
 
 
 getSmootherLambda <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmootherLambda")
 }
 
@@ -134,9 +145,11 @@ getSmootherLambda <-
 
 
 getSmootherDoubleSmoothing <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmootherDoubleSmoothing")
 }
 
@@ -145,9 +158,11 @@ getSmootherDoubleSmoothing <-
 
 
 getSmootherInitialWeights <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmootherInitialWeights")
 }
 
@@ -155,9 +170,11 @@ getSmootherInitialWeights <-
 # ------------------------------------------------------------------------------
 
 getSmootherSkip <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getSmootherSkip")
 }
 
@@ -165,9 +182,11 @@ getSmootherSkip <-
 
 
 getStrategy <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getStrategy")
 }
 
@@ -176,9 +195,10 @@ getStrategy <-
 
 
 getStrategyFun <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     UseMethod("getStrategyFun")
 }
 
@@ -187,9 +207,11 @@ getStrategyFun <-
 
 
 getStrategyParams <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getStrategyParams")
 }
 
@@ -198,9 +220,11 @@ getStrategyParams <-
 
 
 getMessages <-
-    function(object)
+function(object)
 {   
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Return Value:
     UseMethod("getMessages")
 }
 

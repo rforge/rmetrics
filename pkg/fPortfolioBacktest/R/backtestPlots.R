@@ -16,39 +16,42 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   1999 - 2009, Rmetrics Association, Zurich
+#   1999 - 2009, Diethelm Wuertz <wuertz@itp.phys.ethz.ch>  
 #   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+# for code accessed (or partly included) from other R-ports 
+#   and other sources see R's copyright and license files
 
 
 ################################################################################
-# FUNCTION:				      DESCRIPTION:
-#  backtestPlots			   Plots all 6 sub plots listed below
-#   backtestAssetsPlot     	   Plots assets used in a portfolio backtest   
-#   backtestWeightsPlot    	   Plots recommended weights from a backtest
+# FUNCTION:                   DESCRIPTION:
+#  backtestPlot                Creates a summary of backtesting plots
+#   backtestAssetsPlot         Plots assets used in a portfolio backtest   
+#   backtestWeightsPlot        Plots recommended weights from a backtest
 #   backtestRebalancePlot      Plots rebalanced weights of a backtest 
 #   backtestPortfolioPlot      Plots benchmark and portfolio series
 #   backtestDrawdownPlot       Plots the drawdown of the portfolio backtest
-#   backtestReportPlot		   Prints backtest report
+#   backtestReportPlot         Prints backtest report
 ################################################################################
 
 
-backtestPlots <-
-    function(object, which = "all", labels = TRUE, ...)
+backtestPlot <-
+function(object, which = "all", labels = TRUE, ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
 
     # Description:
-
+    #   Creates a summary of backtesting plots
+    
     # Arguments:
-
+    #   object - a list as returned by the function portfolioSmoothing()
+    #   which - which plots should be displayed
+    #   labels - a logical flag, should automated labels added to the plot
+    #   ... - optional arguments to be passed to the plot functions
+    
     # FUNCTION:
     
+    # Frame:
     if (any(which == "all"))
     par(mfrow = c(3, 2), mar = c(1.5, 4, 5, 2), oma = c(5,1,0,1))
        
@@ -64,9 +67,8 @@ backtestPlots <-
     if(any(which == "5") || which == "all")
         backtestDrawdownPlot(object, labels, ...)
     if(any(which == "6" )|| which == "all")
-    	backtestReportPlot(object, ...)
+        backtestReportPlot(object, ...)
         
-	
     # Return Value:
     invisible()
 }
@@ -76,13 +78,15 @@ backtestPlots <-
 
    
 backtestAssetsPlot <-
-    function(object, labels = TRUE, ...)
+function(object, labels = TRUE, ...)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Plots assets used in a portfolio backtest
 
     # Arguments:
-    #   object - an object as returned by the weights smoothing
+    #   object - a list as returned by the function portfolioSmoothing()
     #   labels - a logical flag, should automated labels added to the plot
 
     # FUNCTION:
@@ -117,7 +121,6 @@ backtestAssetsPlot <-
     Time = as.character(xlim[1] + Days*24*60*60)
     range.tS = timeSeries(data = matrix(rep(0, length(Time))), as.character(Time))
    
-    # Plot:
     # Plot:
     X = x[, benchmark]
     plot(X, type = "n", xaxt = "n", ylim = ylim, xlab = "", ylab = ylab) 
@@ -156,13 +159,15 @@ backtestAssetsPlot <-
 
 
 backtestWeightsPlot <-
-    function(object, labels = TRUE, ...)
+function(object, labels = TRUE, ...)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Plots recommended weights from a portfolio backtest
    
     # Arguments:
-    #   object - an object as returned by the weights smoothing
+    #   object - a list as returned by the function portfolioSmoothing()
     #   labels - a logical flag, should automated labels added to the plot
 
     # FUNCTION:
@@ -231,13 +236,15 @@ backtestWeightsPlot <-
 
 
 backtestRebalancePlot <-
-    function(object, labels = TRUE, ...)
+function(object, labels = TRUE, ...)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Plots rebalanced weights of a backtest
 
     # Arguments:
-    #   object - an object as returned by the weights smoothing
+    #   object - a list as returned by the function portfolioSmoothing()
     #   labels - a logical flag, should automated labels added to the plot
    
     # FUNCTION:
@@ -247,8 +254,7 @@ backtestRebalancePlot <-
     weights = object$smoothWeights
     assets = object$assetsNames
     benchmark = object$benchmarkName
-  
-     horizon = getWindowsHorizon(object$backtest)
+    horizon = getWindowsHorizon(object$backtest)
     smoothing = getSmootherLambda(object$backtest)
     startup = "1m"
 
@@ -318,13 +324,15 @@ backtestRebalancePlot <-
 
 
 backtestPortfolioPlot <-
-    function(object, labels = TRUE, ...)
+function(object, labels = TRUE, ...)
 {
+    # A function implemented by Diethelm Wuertz and William Chen
+    
     # Description:
     #   Plots daily, benchmark and portfolio series of a portfolio backtest
 
     # Arguments:
-    #   object - an object as returned by the weights smoothing
+    #   object - a list as returned by the function portfolioSmoothing()
     #   labels - a logical flag, should automated labels added to the plot
 
     # FUNCTION:
@@ -408,20 +416,20 @@ backtestPortfolioPlot <-
 
 
 backtestDrawdownPlot = 
-	function(object, labels = TRUE, ...)
+function(object, labels = TRUE, ...)
 {
-	# A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and William Chen
 
     # Description:
-    #   Backtest Portfolio Plot:
+    #   Creates Backtest Portfolio Plot
 
     # Arguments:
-    #   object
-    #   labels
+    #   object - a list as returned by the function portfolioSmoothing()
+    #   labels - a logical flag, should automated labels added to the plot
 
     # FUNCTION:
-	
-	# Align Data:
+    
+    # Align Data:
     Data = .align.timeSeries(object$data)/100
     
     # Settings:
@@ -432,64 +440,64 @@ backtestDrawdownPlot =
     startup = getSmootherInitialWeights(object$backtest)
     weights = as.timeSeries(object$smoothWeights)
     
-   	# Extract the Time Stamps:
-	tS = time(Data)
-	tW = time(weights)
-		
-	# Problem when rebalance day lands on a Weekend - 
-	#   need to change the date to the nearest Monday
-	if (any(isWeekend(tW))){
+    # Extract the Time Stamps:
+    tS = time(Data)
+    tW = time(weights)
+        
+    # Problem when rebalance day lands on a Weekend - 
+    #   need to change the date to the nearest Monday
+    if (any(isWeekend(tW))){
         weekend.tW = tW[isWeekend(tW)]
         
         # WC: check timeNdayOnOrAfter function, the nday = 2 is a Monday!???
         tW = sort(c(tW[!isWeekend(tW)], timeNdayOnOrAfter(weekend.tW, 2)))
         # replace old times with new times
         time(weights) = tW
-	}
-			
-	# Extract the Updated Revalance Dates:	
-	Dates = time(weights)
-	
-	# Subsetting the Data:
+    }
+            
+    # Extract the Updated Revalance Dates:  
+    Dates = time(weights)
+    
+    # Subsetting the Data:
     data = window(Data, start(weights), end(weights))
     
-	# Check whether we have data past the last balance date
-	# i.e. last balance date won't take place if we don't have the return series
-	if (end(data) < end(weights)){ 
-	    n = length(Dates)-1 
-	} else {n = length(Dates)
+    # Check whether we have data past the last balance date
+    # i.e. last balance date won't take place if we don't have the return series
+    if (end(data) < end(weights)){ 
+        n = length(Dates)-1 
+    } else {n = length(Dates)
         Dates = c(Dates, end(data))
-	}
+    }
 
-	# Calculate the portfolio returns for the given weights:
-	# assume we start investing the new weights on the rebalance date
-	pf = NULL
-	a = NULL
-	for (i in 1:n){
-		temp = window(data, Dates[i], Dates[i+1])[,assets]
-		nr = nrow(temp)
-		if (i != n) temp = temp[-nr,]
-		a = c(a, nrow(temp))
-		pf = c(pf, pfolioReturn(temp, as.numeric(weights[i,])))
-	}
-	
-	# Drawdown Plot Settings:
-	stopifnot(length(pf) == length(rownames(data)))
-	pf = timeSeries(pf, charvec = rownames(data))
-	pf.DD = drawdowns(pf)
-	benchmark.DD = drawdowns(data[,benchmark]) 
-	
-	# Return Series:
+    # Calculate the portfolio returns for the given weights:
+    # assume we start investing the new weights on the rebalance date
+    pf = NULL
+    a = NULL
+    for (i in 1:n){
+        temp = window(data, Dates[i], Dates[i+1])[,assets]
+        nr = nrow(temp)
+        if (i != n) temp = temp[-nr,]
+        a = c(a, nrow(temp))
+        pf = c(pf, pfolioReturn(temp, as.numeric(weights[i,])))
+    }
+    
+    # Drawdown Plot Settings:
+    stopifnot(length(pf) == length(rownames(data)))
+    pf = timeSeries(pf, charvec = rownames(data))
+    pf.DD = drawdowns(pf)
+    benchmark.DD = drawdowns(data[,benchmark]) 
+    
+    # Return Series:
     X = Data[, benchmark]
     limX = c(as.POSIXct(start(X)), as.POSIXct(end(X)))
 
-	# Plot:
-	plot(time(benchmark.DD), benchmark.DD, type = "l", col = "blue", 
-	    xlim = limX, ylim = range(c(pf.DD, benchmark.DD)), lwd = 2, 
-	    ann = FALSE) #, ...)
-	lines(pf.DD, col = "red", lwd = 2)
-	
-	 # Labels ?
+    # Plot:
+    plot(time(benchmark.DD), benchmark.DD, type = "l", col = "blue", 
+        xlim = limX, ylim = range(c(pf.DD, benchmark.DD)), lwd = 2, 
+        ann = FALSE) #, ...)
+    lines(pf.DD, col = "red", lwd = 2)
+    
+     # Labels ?
     if (labels) {
         ylab = "Drawdowns"
         main = "Drawdowns | Portfolio vs Benchmark"
@@ -497,12 +505,12 @@ backtestDrawdownPlot =
         ylab = ""
         main = ""
     }
-	
-	# Add Labels:
+    
+    # Add Labels:
     if(labels) {
         title(main = main, ylab = ylab)
-		text = paste("(Max)", "Portfolio DD =", round(min(pf.DD),2),
-					"|", "Benchmark DD =", round(min(benchmark.DD),2))
+        text = paste("(Max)", "Portfolio DD =", round(min(pf.DD),2),
+                    "|", "Benchmark DD =", round(min(benchmark.DD),2))
         mtext(text, line = 0.5, cex = 0.7)
         #grid(NA, ny = NULL)
     }
@@ -523,8 +531,20 @@ backtestDrawdownPlot =
 
 
 backtestReportPlot <-
-	function(object, ...)
+function(object, ...)
 {    
+    # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    #   Prints backtest report as graphical plot
+    
+    # Arguments:
+    # Arguments:
+    #   object - a list as returned by the function portfolioSmoothing()
+    
+    # FUNCTION:
+    
+    # Start Plot:
     plot.new()
     plot.window(xlim = c(0,1), ylim = c(0,1))
       
@@ -566,9 +586,9 @@ backtestReportPlot <-
     #       silent = TRUE),collapse = " "), sep = ""), 
     #       side = 3, line = z + -14, adj = 0, cex = 0.65,  font = 3, 
     #       family = "mono")
-       					
- 	# Return Value:
- 	invisible()
+                        
+    # Return Value:
+    invisible()
  }
 
 
