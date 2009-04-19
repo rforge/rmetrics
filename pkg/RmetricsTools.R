@@ -313,7 +313,8 @@ checkBeforeCommit  <-
 ## ## before starting install packages without namespace
 
 genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
-                         "fGarch", "fCopulae", "fAssets", "fPortfolio"), ...)
+                         "fGarch", "fCopulae", "fAssets", "fPortfolio"),
+                         dependsOnPkgsDESC = TRUE, ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -348,9 +349,40 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
         if (inherits(t, "try-error"))
             stop("could not generate NAMESPACE")
 
+### if (dependsOnPkgsDESC) {
+###             message("\n")
+###             message("update DESC of pkgs which depend on : ", pkg)
+###             # check if all Rmetrics are installed in lib
+###             if (!all(RmetricsPkgs %in% installed.packages(...)))
+###                 stop("All Rmetrics Dev packages should be installed")
+###             dpkgs <- tools::dependsOnPkgs(pkg, ...)
+###             dpkgs <- RmetricsPkgs[RmetricsPkgs %in% dpkgs] #<- in right order
+###             # only packages with NAMESPACE is critical
+###             dpkgs <- dpkgs[file.exists(file.path(dpkgs, "NAMESPACE"))]
+###             pkgVersion <- read.dcf(file.path(pkg, "DESCRIPTION"))[,"Version"]
+###             for (dpkg  in dpkgs) {
+###                 message("Update DESC of ", dpkg)
+###                 dcfFile <- file.path(dpkg, "DESCRIPTION")
+###                 dcf <- read.dcf(dcfFile)
+###                 pattern <- paste(pkg, ".*", sep = "")
+###                 replacement <- paste(pkg, " (>= ", pkgVersion, ")", sep = "")
+###                 dcfDepends <- dcf[,"Depends"]
+###                 # check if depend pkgs is at the end of line otherwise add comma
+###                 if (length(grep(paste(pattern, ",", sep = ""), dcfDepends))) {
+###                     pattern <- paste(pattern, ",", sep = "")
+###                     replacement <- paste(replacement, ",", sep = "")
+###                 }
+###                 dcf[,"Depends"] <- sub(pattern, replacement, dcfDepends)
+###                 write.dcf(dcf, file = dcfFile)
+###             }
+###         }
+
         message("\n")
         message("install.packages()ing with NAMESPACE : ", pkgPath)
         install.packages(pkgPath, repos = NULL, ...)
+
+
+
     }
 }
 
