@@ -25,7 +25,7 @@
 
 ################################################################################
 # PLOT FUNCTIONS:       DESCRIPTION:
-# backtestStats          Wrapper function for calculating rolling stats
+# backtestStats          Wrapper function for calculating rolling statistics
 # rollingSigma           Rolling portfolio Sigma risk
 # rollingVaR             Rolling Value at Risk
 # rollingCVaR            Rolling Conditional Value at Risk
@@ -35,12 +35,26 @@
 ################################################################################
 
 
-backtestStats =
+backtestStats <- function(object, FUN = "rollingSigma", ...) 
+    UseMethod("portfolioBacktesting")
+rollingSigma <- function(object) UseMethod("portfolioBacktesting")
+rollingVaR <- function(object) UseMethod("backtestStats")
+rollingCVaR <- function(object) UseMethod("portfolioBacktesting")
+rollingDaR <- function(object) UseMethod("portfolioBacktesting")
+rollingCDaR <- function(object) UseMethod("portfolioBacktesting")
+rollingRiskBudgets <- function(object) UseMethod("portfolioBacktesting")
+
+
+# ------------------------------------------------------------------------------
+
+
+backtestStats.portfolioBacktesting <- 
 function(object, FUN = "rollingSigma", ...)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Wrapper function for calculating rolling statistics
     
     # Arguments:
     #   object - a list as returned by the function portfolioBacktesting()
@@ -65,7 +79,7 @@ function(object, FUN = "rollingSigma", ...)
 # ------------------------------------------------------------------------------
 
 
-rollingSigma <-
+rollingSigma.portfolioBacktesting <-
 function(object)
 {
     # A function implemented by William Chen and Diethelm Wuertz
@@ -96,7 +110,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingVaR =
+rollingVaR.portfolioBacktesting =
 function(object)
 {
     # A function implemented by William Chen
@@ -122,7 +136,7 @@ function(object)
     portfolios <- object$strategyList
     
     # Calculates VaR for all portfolios:
-    ans = sapply(Portfolios, FUN = .var)
+    ans = sapply(portfolios, FUN = .var)
 
     # Extracts the dates:
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
@@ -136,7 +150,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingCVaR =
+rollingCVaR.portfolioBacktesting <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -169,7 +183,7 @@ function(object)
     dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
     # Return:
-    alpha = getAlpha(Portfolios[[1]])
+    alpha = getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("CVaR", alpha, sep = "."))
 }
 
@@ -177,7 +191,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingDaR <-
+rollingDaR.portfolioBacktesting <-
 function(object)
 {
     # A function implemented by William Chen
@@ -210,7 +224,7 @@ function(object)
     dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
     # Return:
-    alpha = getAlpha(Portfolios[[1]])
+    alpha = getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("DaR", alpha, sep = "."))
 }
 
@@ -218,7 +232,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingCDaR <- 
+rollingCDaR.portfolioBacktesting <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -252,7 +266,7 @@ function(object)
     dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
 
     # Return:
-    alpha = getAlpha(Portfolios[[1]])
+    alpha = getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
 }
 
@@ -260,7 +274,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingRiskBudgets <- 
+rollingRiskBudgets.portfolioBacktesting <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -277,7 +291,7 @@ function(object)
     # FUNCTION:
     
     portfolios = object$StrategyList
-    nPortfolios = length(Portfolios)
+    nPortfolios = length(portfolios)
     assetNames = colnames(getSeries(portfolios[[1]]))
 
     ans = NULL

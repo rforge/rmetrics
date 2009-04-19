@@ -122,10 +122,15 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 ## Smoothed Rebalnacing -   
    smoothedPortfolios <- portfolioSmoothing(
      object = portfolios, 
-     backtest <- swxBacktest)  
+     backtest = swxBacktest)  
 
-## A typical Plot -
-   backtestRebalancePlot(smoothedPortfolios)  
+## Typical Plots -
+   backtestAssetsPlot(smoothedPortfolios)
+   backtestWeightsPlot(smoothedPortfolios)
+   backtestRebalancePlot(smoothedPortfolios)
+   backtestPortfolioPlot(smoothedPortfolios)
+   backtestDrawdownPlot(smoothedPortfolios)
+   backtestReportPlot(smoothedPortfolios)  
 
 ## backtestPlot Summary:  
    backtestPlot(smoothedPortfolios)    

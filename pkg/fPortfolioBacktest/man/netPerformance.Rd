@@ -42,7 +42,7 @@ netPerformance(object, format = "\%Y-\%m-\%d")
 
 \references{
 
-Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
@@ -50,7 +50,29 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-##  -   
+## Specifications - 
+   swxData <- 100 * SWX.RET 
+   swxSpec <- portfolioSpec()
+   swxBacktest <- portfolioBacktest()
+   setWindowsHorizon(swxBacktest) = "18m"
+   swxFormula <- LP40 ~ SBI + SPI + SII
+
+## Portfolio Backtesting -
+   portfolios <- portfolioBacktesting(
+     formula = swxFormula, 
+     data = swxData, 
+     spec = swxSpec, 
+     constraints = "LongOnly", 
+     backtest = swxBacktest, 
+     trace = TRUE)
+
+## Smoothed Rebalancing -   
+   smoothedPortfolios <- portfolioSmoothing(
+     object = portfolios, 
+     backtest = swxBacktest)  
+     
+## Net Peformance - 
+   netPerformance(smoothedPortfolios)
 }
 
 

@@ -48,6 +48,12 @@ function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Return Value:
     UseMethod("getWindows")
 }
@@ -60,6 +66,12 @@ getWindowsFun <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getWindowsFun")
@@ -87,6 +99,12 @@ function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Return Value:
     UseMethod("getWindowsHorizon")
 }
@@ -99,6 +117,12 @@ getSmoother <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getSmoother")
@@ -123,6 +147,12 @@ getSmootherParams <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getSmootherParams")
@@ -149,6 +179,12 @@ function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Return Value:
     UseMethod("getSmootherDoubleSmoothing")
 }
@@ -174,6 +210,12 @@ function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Return Value:
     UseMethod("getSmootherSkip")
 }
@@ -185,6 +227,12 @@ getStrategy <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getStrategy")
@@ -199,6 +247,12 @@ function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     UseMethod("getStrategyFun")
 }
 
@@ -210,6 +264,12 @@ getStrategyParams <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getStrategyParams")
@@ -223,6 +283,12 @@ getMessages <-
 function(object)
 {   
     # A function implemented by Diethelm Wuertz and William Chen
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
     
     # Return Value:
     UseMethod("getMessages")

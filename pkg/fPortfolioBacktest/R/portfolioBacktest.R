@@ -26,23 +26,23 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
 #  portfolioBacktest            Returns an object of class fPFOLIOBACKTEST
-#  portfolioBacktesting         Performs a portfolio bactest
-#  portfolioSmoothing           Smoothes the weights of a portfolio backtest
+#  portfolioBacktesting         Performs a portfolio backtesting
+#  portfolioSmoothing           Smoothes the weights of a portfolio backtesting
 ################################################################################
 
 
 portfolioBacktest <-
 function(
     windows = list(
-         windows = "equidistWindows",
-         params = list(
+        windows = "equidistWindows",
+        params = list(
             horizon = "12m")),
     strategy = list(
-         strategy = "tangencyStrategy",
-         params = list()),
+        strategy = "tangencyStrategy",
+        params = list()),
     smoother = list(
-         smoother = "emaSmoother",
-         params = list(
+        smoother = "emaSmoother",
+        params = list(
             doubleSmoothing = TRUE,
             lambda = "3m",
             skip = 0,
@@ -85,7 +85,7 @@ function(
         messages = messages)
 }
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 portfolioBacktesting <-
@@ -105,28 +105,32 @@ function(
     # Arguments:
     #   formula - a formula expression to select benchmark and assets
     #       from the data set
-    #   data - portfolio data, an object of class fPFLOLIODATA or timeSeries
-    #   spec - portfolio spec, an object of class fPFLOLIOSPEC
+    #   data - data set of assets returns, an object of class fPFLOLIODATA 
+    #       or timeSeries
+    #   spec - portfolio specification, an object of class fPFLOLIOSPEC,
+    #       by default as returned by the function portfolioSpec()
     #   constraints - portfolio constraints, a vector of character strings
-    #   backtest - portfolio backtest, an object of class fPFLOLIOBACKTEST
+    #   backtest - portfolio backtest specification, an object of 
+    #       class fPFLOLIOBACKTEST, by default as returned by the function
+    #       portfolioBacktest
     #   trace - a logical, should the backtesting be traced ?
     
     # Value:
     #   A list with the following elements 
-    #   formula - the input formulas 
-    #   data - the input data
-    #   spec - the input specification, by default portfolioSpec()
-    #   constraints - the input constraints, by default "LongOnly"
-    #   backtest  
-    #   benchmarkName 
-    #   assetsNames 
-    #   weights 
-    #   strategyList 
-    #   Sigma 
+    #   formula - the input formula 
+    #   data - the input data set
+    #   spec - the input portfolio specification 
+    #   constraints - the input constraints 
+    #   backtest - the input backtest specification  
+    #   benchmarkName - the name of the benchmark returns 
+    #   assetsNames - the names of the assets returns
+    #   weights - the rolling weights matrix 
+    #   strategyList - the rolling list of optimized portfolios 
+    #   Sigma - ...
    
     # Details:
     #   Allows for user specified rolling Windows
-    #   Smoothing is separated and can be usere specified
+    #   Smoothing is separated and can be user specified
    
     # Example:
     #   portfolioBacktesting(formula, data, spec, constraints, backtest)
@@ -148,8 +152,7 @@ function(
     } else if (class(constraints) == "character") {
         Constraints = portfolioConstraints(data, spec, constraints)
     }
-        
-    
+            
     # Formula, Benchmark and Asset Labels:
     benchmarkName = as.character(formula)[2]
     assetsNames = strsplit(gsub(" ", "", as.character(formula)[3]), "\\+")[[1]]
@@ -243,6 +246,7 @@ function(
         Sigma = Sigma)
    
     # Return Value:
+    class(ans) = c("portfolioBacktesting", "list")
     invisible(ans)
 }
 
@@ -259,13 +263,18 @@ function(object, backtest, trace = TRUE)
     #   Flexible Weights Smoother Function
    
     # Arguments:
-    #   object - an object as returned by the function portfolioBacktesting
-    #   backtest - an S4 class object of 'FPFOLIOBACKTEST'
-    #   trace - 
+    #   object - an object as returned by the function portfolioBacktesting()
+    #   backtest - an S4 class object of 'FPFOLIOBACKTEST', the same as
+    #       used in the function portfolioBacktesting() or a user modified
+    #       version
+    #   trace - a logical, should the computation be traced ?
+    
+    # Value:
+    #   a list with the following entries
     
     # Example:
-    #   object =
-    #   portfoloioSmoothing(object)
+    #   data=100*SWX.RET; object=portfolioBacktesting(LP40~SBI+SPI+SII, data)
+    #   portfolioSmoothing(object, portfolioBacktest())
    
     # FUNCTION:
    
@@ -366,6 +375,7 @@ function(object, backtest, trace = TRUE)
     #   abline(v = as.POSIXct(paste(year, "-01-01", sep ="")), col = "green")
    
     # Return Value:
+    class(object) = c("portfolioBacktesting", "list")
     object
 } 
 

@@ -10,6 +10,14 @@
 \alias{rollingCDaR}
 \alias{rollingRiskBudgets}
 
+\alias{backtestStats.portfolioBacktesting}
+
+\alias{rollingSigma.portfolioBacktesting}
+\alias{rollingVaR.portfolioBacktesting}
+\alias{rollingCVaR.portfolioBacktesting}
+\alias{rollingDaR.portfolioBacktesting}
+\alias{rollingCDaR.portfolioBacktesting}
+\alias{rollingRiskBudgets.portfolioBacktesting}
 
 
 \title{Rolling Portfolio Backtest Statistics}
@@ -31,6 +39,15 @@ rollingCVaR(object)
 rollingDaR(object)
 rollingCDaR(object)
 rollingRiskBudgets(object)
+
+\method{backtestStats}{portfolioBacktesting}(object, FUN = "rollingSigma", \dots)
+
+\method{rollingSigma}{portfolioBacktesting}(object)
+\method{rollingVaR}{portfolioBacktesting}(object)
+\method{rollingCVaR}{portfolioBacktesting}(object)
+\method{rollingDaR}{portfolioBacktesting}(object)
+\method{rollingCDaR}{portfolioBacktesting}(object)
+\method{rollingRiskBudgets}{portfolioBacktesting}(object)
 }
 
 
@@ -76,7 +93,7 @@ rollingRiskBudgets(object)
 
 \references{
 
-Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
@@ -84,7 +101,50 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-##  -   
+## Specifications - 
+   swxData <- 100 * SWX.RET 
+   swxSpec <- portfolioSpec()
+   swxBacktest <- portfolioBacktest()
+   setWindowsHorizon(swxBacktest) = "18m"
+   swxFormula <- LP40 ~ SBI + SPI + SII
+
+## Portfolio Backtesting -
+   portfolios <- portfolioBacktesting(
+     formula = swxFormula, 
+     data = swxData, 
+     spec = swxSpec, 
+     constraints = "LongOnly", 
+     backtest = swxBacktest, 
+     trace = TRUE)
+
+## Smoothed Rebalancing -   
+   smoothedPortfolios <- portfolioSmoothing(
+     object = portfolios, 
+     backtest = swxBacktest)  
+     
+## Rolling Variance Sigma - 
+   # series <- rollingSigma(smoothedPortfolios)
+   # plot(series, main = "Rolling Variance")
+
+## Rolling Value at Risk -
+   # series <- rollingVaR(smoothedPortfolios)
+   # plot(series, main = "Rolling VaR")
+
+## Rolling Conditional Value at Risk -
+   # series <- rollingCVaR(smoothedPortfolios)
+   # plot(series, main = "Rolling CVaR")
+
+## Rolling Drawdown at Risk -
+   # series <- rollingDaR(smoothedPortfolios)
+   # plot(series, main = "Rolling DaR")
+
+## Rolling Conditional Drawdown at Risk -
+   # series <- rollingCDaR(smoothedPortfolios)
+   # plot(series, main = "Rolling CDaR")
+
+## Rolling Risk Budgets -
+   # series <- rollingRiskBudgets(smoothedPortfolios)
+   # plot(series, main = "Rolling Risk Budgets")
 }
 
 

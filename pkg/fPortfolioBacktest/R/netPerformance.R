@@ -31,8 +31,15 @@
 #   .netPerformanceCalendar     Returns calendar performance
 #   .netPerformancePlot         Creates a net performance plot
 ################################################################################
-   
+  
+# DW - TO DO:
+#   Add argument doplot to function netPerformance
+#   Make plot() a generic function
+
+
+# ------------------------------------------------------------------------------ 
  
+
 netPerformance <-  
 function(object, format = "%Y-%m-%d")
 {
@@ -42,7 +49,7 @@ function(object, format = "%Y-%m-%d")
     #   Returns performance from a portfolio backtest
     
     # Arguments:
-    #   object -
+    #   object - an object as returned by the function portfolioSmoothing.
     #   format -
     
     # FUNCTION:
@@ -75,17 +82,16 @@ function(object, format = "%Y-%m-%d")
     rownames(netCalendar) = c("Portfolio", "Benchmark")
     
     # Print Summary:
-    cat("\nNET PERFORMANCE (%) TO", 
+    cat("\nNet Performance % to", 
         paste(rev(char.dates)[1], ":",sep = ""), "\n")
     print(round(netYTD,2))
-    cat("\n\nNET PERFORMANCE (%) CALENDAR YEAR:\n")
+    cat("\n\nNet Performance % Calendar Year:\n")
     print(round(netCalendar,2))
     cat("\n")
     
     # Return Value:
     ans = list(YTD = netYTD, Calendar = netCalendar)
-    invisible(ans)
-                
+    invisible(ans)               
 }
    
 

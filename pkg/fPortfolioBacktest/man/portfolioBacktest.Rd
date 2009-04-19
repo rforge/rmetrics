@@ -54,8 +54,7 @@ portfolioBacktest(
 \details{     
     
     \bold{Retrieving and Modifying Specification Settings:}
-    
-             
+                
     Information about the current portfolio backtest specification can be retrieved 
     by \code{"get"} functions. These include:
     
@@ -82,25 +81,21 @@ portfolioBacktest(
     \tabular{ll}{
    	\code{setWindowsFun} \tab Sets Windows function, \cr   	
    	\code{setWindowsHorizon} \tab Sets Windows horizon, \cr   	
-   	\code{setStrategyFun} \tab Sets the portfolio Strategy function, 
-   	\cr   	\code{setSmootherFun} \tab Sets the Smoother function, \cr	 
+   	\code{setStrategyFun} \tab Sets the portfolio Strategy function, \cr   	
+   	\code{setSmootherFun} \tab Sets the Smoother function, \cr	 
    	\code{setSmootherLambda} \tab Sets the smoothing parameter Lambda, \cr   	
    	\code{setSmootherDoubleSmoothing} \tab Sets setting for double smoothing, \cr   	
    	\code{setSmootherInitialWeights} \tab Sets the initial weights to used in the smoothing, \cr
 	\code{setSmootherSkip} \tab Sets the number of skipped months, \cr
     \code{setType} \tab Sets type of portfolio optimization. }
-    
-    
+        
     For details we refer to \code{link{setBacktest}}.
-     
-      
+           
 }
 
 
 \value{
   
-    \code{portfolioBacktest}\cr
-    \cr
     returns an S4 object of class \code{"fPFOLIOBACKTEST"}.
 
 }
@@ -108,7 +103,7 @@ portfolioBacktest(
 
 \references{
 
-Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     

@@ -25,14 +25,14 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  setWindowsFun<-              Sets rolling windows function
+#  setWindowsFun<-              Sets name of rolling windows function
 #  setWindowsParams<-           Sets additional parameters to windows function
-#   setWindowsHorizon<-         Sets horizon of the rolling window
+#  setWindowsHorizon<-          Sets horizon of the rolling window
 # FUNCTION:                    DESCRIPTION:         
-#  setStrategyFun<-             Sets portfolio strategy function    
+#  setStrategyFun<-             Sets name of portfolio strategy function    
 #  setStrategyParams<-          Sets additional parameters to strategy function
 # FUNCTION:                    DESCRIPTION:
-#  setSmootherFun<-             Sets smoothing function
+#  setSmootherFun<-             Sets name of weights smoothing function
 #  setSmootherParams<-          Sets additional parameters to smoother function
 #  setSmootherLambda<-          Sets lambda for EMA smoothing
 #  setSmootherDoubleSmoothing<- Sets double ema setting, logical
@@ -41,17 +41,19 @@
 ################################################################################
 
 
-"setWindowsFun<-" =
+"setWindowsFun<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets name of rolling windows function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@windows$windows = value
     
     # Return Value:
@@ -62,17 +64,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setWindowsParams<-" =
+"setWindowsParams<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets additional parameters to windows function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@windows$params = value
     
     # Return Value:
@@ -83,17 +87,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setWindowsHorizon<-" =
+"setWindowsHorizon<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets horizon of the rolling window
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@windows$params$horizon = value
     
     # Return Value:
@@ -104,17 +110,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setStrategyFun<-" =
+"setStrategyFun<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets portfolio strategy function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@strategy$strategy = value
     
     # Return Value:
@@ -122,19 +130,21 @@ function(backtest, value)
 }
 
 # ------------------------------------------------------------------------------
+          
 
-
-"setStrategyParams<-" =
+"setStrategyParams<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets additional parameters to strategy function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@strategy$params = value
     
     # Return Value:
@@ -145,17 +155,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherFun<-" =
+"setSmootherFun<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets name of weights smoothing function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$smoother = value
     
     # Return Value:
@@ -166,17 +178,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherParams<-" =
+"setSmootherParams<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets additional parameters to smoother function
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$params = value
     
     # Return Value:
@@ -187,17 +201,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherLambda<-" =
+"setSmootherLambda<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets lambda parameter for EMA smoothing
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$params$lambda = value
     
     # Return Value:
@@ -208,17 +224,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherDoubleSmoothing<-" =
+"setSmootherDoubleSmoothing<-" <- 
 function(backtest, value)   
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets double EMA setting, TRUE or FALSE, a logical
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$params$doubleSmoothing = value
     
     # Return Value:
@@ -229,17 +247,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherInitialWeights<-" =
+"setSmootherInitialWeights<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets initial weights of the portfolio
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$params$initialWeights = value
     
     # Return Value:
@@ -250,17 +270,19 @@ function(backtest, value)
 # ------------------------------------------------------------------------------
 
 
-"setSmootherSkip<-" = 
+"setSmootherSkip<-" <- 
 function(backtest, value)
 {
     # A function implemented by William Chen
     
     # Description:
+    #   Sets number of months to skip starting values
     
     # Arguments:
     
     # FUNCTION:
     
+    # Set Value:
     backtest@smoother$params$skip = value
     
     # Return Value:

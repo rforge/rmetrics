@@ -33,8 +33,8 @@
 	\tabular{ll}{
 		Package: \tab fPortfolioBacktest\cr
 		Type: \tab Package\cr
-		Version: \tab 1.0\cr
-		Date: \tab 2008-09-17\cr
+		Version: \tab 290.02\cr
+		Date: \tab 2009-04-18\cr
 		License: \tab GPL Version 2 or later\cr}
 
 }

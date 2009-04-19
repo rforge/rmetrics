@@ -32,13 +32,12 @@
 \alias{getSmootherSkip}
 \alias{getMessages}
 
-\title{Portfolio Backtesting Specification Extractors}
+\title{Portfolio Backtest Extractors}
 
 
 \description{
   
-    A collection and description of functions 
-    allowing to get information about an object
+    Functions to extract information from an object
     of class fPFOLIOBACKTEST. \cr
     
     The functions are:
@@ -84,14 +83,16 @@
 \arguments{
 
     \item{object}{
-        an object of class \code{fPFOLIOBACKTEST}.}
+        an object of class \code{fPFOLIOBACKTEST} as returned by 
+        function \code{portfolioBacktest}.
+        }
 
 }
 
 
 \references{
 
-Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
@@ -99,15 +100,32 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-## get -
+## portfolioBacktest Specification -
+   backtestSpec = portfolioBacktest()
+   backtestSpec
    
-   # Create default backtest specification structure:
-   backtest = portfolioBacktest()
-   
-   # Get:
-   getWindowsFun(backtest)
-   getSmootherFun(backtest)
-   getSmootherInitialWeights(backtest)  
+## Get Windows Information - 
+   getWindows(backtestSpec)
+   getWindowsFun(backtestSpec)
+   getWindowsParams(backtestSpec)
+   getWindowsHorizon(backtestSpec) 
+ 
+## Get Strategy Information -  
+   getStrategy(backtestSpec) 
+   getStrategyFun(backtestSpec) 
+   getStrategyParams(backtestSpec) 
+ 
+## Get Smoother Information -  
+   getSmoother(backtestSpec)  
+   getSmootherFun(backtestSpec) 
+   getSmootherParams(backtestSpec) 
+   getSmootherLambda(backtestSpec) 
+   getSmootherDoubleSmoothing(backtestSpec)
+   getSmootherInitialWeights(backtestSpec)
+   getSmootherSkip(backtestSpec)  
+ 
+## Get Messages Information -  	
+   getMessages(backtestSpec) 
 }
 
 

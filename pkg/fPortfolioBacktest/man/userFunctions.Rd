@@ -110,7 +110,7 @@ emaSmoother(weights, spec, backtest)
 
 \references{
 
-Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
+W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
     \emph{Portfolio Optimization with R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich.
     
@@ -118,7 +118,14 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-##  -   
+## Show default rolling windows function - 
+   equidistWindows
+
+## Show default portfolio strategy function -
+   tangencyStrategy
+
+## Swhow default weights smoother function -   
+   emaSmoother
 }
 
 

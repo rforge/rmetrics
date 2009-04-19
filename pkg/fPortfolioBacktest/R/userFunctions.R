@@ -73,10 +73,11 @@ function(data, spec = portfolioSpec(), constraints = "LongOnly",
     
     # FUNCTION:
     
+    # Strategy Portfolio:
     strategyPortfolio <- tangencyPortfolio(data, spec, constraints)
     Status = getStatus(strategyPortfolio)
     
-    # if tangency portfolio doesn't exist we take the minimum variance portfolio
+    # If tangency portfolio doesn't exist take the minimum variance portfolio
     if(Status == 1)
         strategyPortfolio <- minvariancePortfolio(data, spec, constraints)
     
