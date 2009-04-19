@@ -1,5 +1,21 @@
 \name{getBacktest}
 
+\alias{getWindows}
+\alias{getWindowsFun}
+\alias{getWindowsParams}
+\alias{getWindowsHorizon}
+\alias{getStrategy}
+\alias{getStrategyFun}
+\alias{getStrategyParams}
+\alias{getSmoother}
+\alias{getSmootherFun}
+\alias{getSmootherParams}						
+\alias{getSmootherLambda}
+\alias{getSmootherDoubleSmoothing}
+\alias{getSmootherInitialWeights}
+\alias{getSmootherSkip}
+\alias{getMessages}
+
 \alias{getWindows.fPFOLIOBACKTEST}
 \alias{getWindowsFun.fPFOLIOBACKTEST}
 \alias{getWindowsParams.fPFOLIOBACKTEST}
@@ -16,21 +32,6 @@
 \alias{getSmootherSkip.fPFOLIOBACKTEST}
 \alias{getMessages.fPFOLIOBACKTEST}
 
-\alias{getWindows}
-\alias{getWindowsFun}
-\alias{getWindowsParams}
-\alias{getWindowsHorizon}
-\alias{getStrategy}
-\alias{getStrategyFun}
-\alias{getStrategyParams}
-\alias{getSmoother}
-\alias{getSmootherFun}
-\alias{getSmootherParams}						
-\alias{getSmootherLambda}
-\alias{getSmootherDoubleSmoothing}
-\alias{getSmootherInitialWeights}
-\alias{getSmootherSkip}
-\alias{getMessages}
 
 \title{Portfolio Backtest Extractors}
 
@@ -43,21 +44,21 @@
     The functions are:
     
     \tabular{ll}{
-  	\code{getWindows} \tab Extract Windows slot, \cr   	
-  	\code{getWindowsFun} \tab Extract Windows function, \cr	
-  	\code{getWindowsParams} \tab Extract a list of Windows specific parameters, \cr   	
-  	\code{getWindowsHorizon} \tab Extract Windows horizon, \cr	
-  	\code{getStrategy} \tab Extract Strategy slot, \cr   	
-  	\code{getStrategyFun} \tab Extract the portfolio Strategy function, \cr	
-  	\code{getStrategyParams} \tab Extract a list of portfolio Strategy specific parameters, \cr  	
-  	\code{getSmoother} \tab Extract the Smoother slot, \cr   	
-  	\code{getSmootherFun} \tab Extract the Smoother function, \cr	
-  	\code{getSmootherParams} \tab Extract a list of Smoothing specific parameters, \cr	
-  	\code{getSmootherLambda} \tab Extract the smoothing parameter Lambda, \cr   	
-  	\code{getSmootherDoubleSmoothing} \tab Extract setting for double smoothing, \cr   	
-  	\code{getSmootherInitialWeights} \tab Extract the initial weights to used in the smoothing, \cr
-	\code{getSmootherSkip} \tab Extract the number of skipped months, \cr  	
-	\code{getMessages} \tab Extract the Message slot.}  
+  	\code{getWindows} \tab Extract windows slot, \cr   	
+  	\code{getWindowsFun} \tab extract windows function, \cr	
+  	\code{getWindowsParams} \tab extract a list of windows specific parameters, \cr   	
+  	\code{getWindowsHorizon} \tab extract windows horizon, \cr	
+  	\code{getStrategy} \tab extract strategy slot, \cr   	
+  	\code{getStrategyFun} \tab extract the portfolio strategy function, \cr	
+  	\code{getStrategyParams} \tab extract a list of portfolio strategy specific parameters, \cr  	
+  	\code{getSmoother} \tab extract the smoother slot, \cr   	
+  	\code{getSmootherFun} \tab Extract the Ssoother function, \cr	
+  	\code{getSmootherParams} \tab extract a list of Smoothing specific parameters, \cr	
+  	\code{getSmootherLambda} \tab extract the smoothing parameter Lambda, \cr   	
+  	\code{getSmootherDoubleSmoothing} \tab extract setting for double smoothing, \cr   	
+  	\code{getSmootherInitialWeights} \tab extract the initial weights to used in the smoothing, \cr
+	\code{getSmootherSkip} \tab extract the number of skipped months, \cr  	
+	\code{getMessages} \tab extract the message slot.}  
 }
     
 
