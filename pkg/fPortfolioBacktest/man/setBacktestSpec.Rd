@@ -78,7 +78,7 @@ setSmootherSkip(backtest) <- value
     The function \code{portfolioBacktest()} allows to set the values 
     for the specification structure from scratch. 
     
-    To  modify individual settings one can use the set functions.
+    To modify individual settings one can use the set functions.
  
 }
 
@@ -93,7 +93,14 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \examples{
-##  -   
+## Setting defaults -   
+   myBacktest = portfolioBacktest()
+   myBacktest
+   
+## Changing some defaults -  
+   setWindowsHorizon(myBacktest) <- "24m"
+   setSmootherLambda(myBacktest) <- "6m" 
+   myBacktest
 }
 
 
