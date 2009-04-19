@@ -4,8 +4,8 @@ Revision: 4061
 Date: 2009-04-17
 Title: Rmetrics - Portfolio Selection and Optimization
 Author: Diethelm Wuertz
-Depends: R (>= 2.7.0), methods, MASS, timeDate, timeSeries (>= 290.81),
-        fBasics, fCopulae, fAssets, quadprog, Rglpk, Rsymphony,
+Depends: R (>= 2.7.0), methods, MASS, timeDate (>= 290.85), timeSeries (>= 2100.82),
+        fBasics (>= 290.76), fCopulae (>= 290.75), fAssets (>= 2100.76), quadprog, Rglpk, Rsymphony,
         robustbase
 Suggests: corpcor, covRobust, RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
