@@ -1,6 +1,5 @@
 \name{backtestStats}
 
-
 \alias{backtestStats}
 
 \alias{rollingSigma}
@@ -9,15 +8,6 @@
 \alias{rollingDaR}
 \alias{rollingCDaR}
 \alias{rollingRiskBudgets}
-
-%\alias{backtestStats.portfolioBacktesting}
-
-%\alias{rollingSigma.portfolioBacktesting}
-%\alias{rollingVaR.portfolioBacktesting}
-%\alias{rollingCVaR.portfolioBacktesting}
-%\alias{rollingDaR.portfolioBacktesting}
-%\alias{rollingCDaR.portfolioBacktesting}
-%\alias{rollingRiskBudgets.portfolioBacktesting}
 
 
 \title{Rolling Portfolio Backtest Statistics}
@@ -38,16 +28,6 @@ rollingVaR(object)
 rollingCVaR(object)
 rollingDaR(object)
 rollingCDaR(object)
-%rollingRiskBudgets(object)
-%
-%\method{backtestStats}{portfolioBacktesting}(object, FUN = "rollingSigma", \dots)
-%
-%\method{rollingSigma}{portfolioBacktesting}(object)
-%\method{rollingVaR}{portfolioBacktesting}(object)
-%\method{rollingCVaR}{portfolioBacktesting}(object)
-%\method{rollingDaR}{portfolioBacktesting}(object)
-%\method{rollingCDaR}{portfolioBacktesting}(object)
-%\method{rollingRiskBudgets}{portfolioBacktesting}(object)
 }
 
 
@@ -140,6 +120,10 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 ## Rolling Conditional Drawdown at Risk -
    series <- rollingCDaR(smoothedPortfolios)
+   plot(series, main = "Rolling CDaR")
+   
+## Rolling Conditional Drawdown at Risk -
+   series <- backtestStats(smoothedPortfolios, "rollingCDaR")
    plot(series, main = "Rolling CDaR")
 }
 

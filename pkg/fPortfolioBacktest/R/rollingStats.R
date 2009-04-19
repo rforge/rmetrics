@@ -31,21 +31,7 @@
 # rollingCVaR            Rolling Conditional Value at Risk
 # rollingDar             Rolling Drawdowns at Risk
 # rollingCDaR            Rolling Conditional Drawdowns at Risk
-# .rollingRiskBudgets    Rolling portfolio risk budgets
 ################################################################################
-
-
-# backtestStats <- function(object, FUN = "rollingSigma", ...) 
-#     UseMethod("portfolioBacktesting")
-# rollingSigma <- function(object) UseMethod("portfolioBacktesting")
-# rollingVaR <- function(object) UseMethod("portfolioBacktesting")
-# rollingCVaR <- function(object) UseMethod("portfolioBacktesting")
-# rollingDaR <- function(object) UseMethod("portfolioBacktesting")
-# rollingCDaR <- function(object) UseMethod("portfolioBacktesting")
-# .rollingRiskBudgets <- function(object) UseMethod("portfolioBacktesting")
-
-
-# ------------------------------------------------------------------------------
 
 
 backtestStats <- 
@@ -269,42 +255,6 @@ function(object)
     # Return:
     alpha = getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rollingRiskBudgets <- 
-function(object)
-{
-    # A function implemented by William Chen
-    
-    # Description:
-    #   Returns rolling RiskBudgets from an object of class fPFOLIOBACKTEST
-    
-    # Arguments:
-    #   object - a list as returned by the function portfolioBacktesting()
-    
-    # Example:
-    #   rollingCDaR(object)
-    
-    # FUNCTION:
-    
-    # Portfolios:
-    portfolios = object$StrategyList
-    nPortfolios = length(portfolios)
-    assetNames = colnames(getSeries(portfolios[[1]]))
-
-    ans = NULL
-    for (i in 1:nPortfolios) {
-        ans = rbind(ans, getCovRiskBudgets(portfolios[[i]])) }
-
-    # Extract the Dates:
-    dates = sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
-    # Return:
-    timeSeries(ans, charvec = dates, units = assetNames)
 }
 
 
