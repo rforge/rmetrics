@@ -40,6 +40,14 @@ netPerformance(object, format = "\%Y-\%m-\%d")
 }
 
 
+\note{
+
+    This function will become obsolete by functions provided in the
+    upcoming \code{fPortfolioPerformance} package.
+
+}
+
+
 \references{
 
 W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
