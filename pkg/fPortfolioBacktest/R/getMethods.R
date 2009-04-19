@@ -24,7 +24,7 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:                         METHODS:
 #  getWindows               
 #   getWindowsFun
 #	getWindowsParams

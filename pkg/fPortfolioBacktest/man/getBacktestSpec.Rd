@@ -1,21 +1,5 @@
 \name{getBacktest}
 
-\alias{getWindows}
-\alias{getWindowsFun}
-\alias{getWindowsParams}
-\alias{getWindowsHorizon}
-\alias{getStrategy}
-\alias{getStrategyFun}
-\alias{getStrategyParams}
-\alias{getSmoother}
-\alias{getSmootherFun}
-\alias{getSmootherParams}						
-\alias{getSmootherLambda}
-\alias{getSmootherDoubleSmoothing}
-\alias{getSmootherInitialWeights}
-\alias{getSmootherSkip}
-\alias{getMessages}
-
 \alias{getWindows.fPFOLIOBACKTEST}
 \alias{getWindowsFun.fPFOLIOBACKTEST}
 \alias{getWindowsParams.fPFOLIOBACKTEST}
@@ -38,8 +22,8 @@
 
 \description{
   
-    Functions to extract information from an object
-    of class fPFOLIOBACKTEST. \cr
+    Extracts information from an object of class
+    fPFOLIOBACKTEST. \cr
     
     The functions are:
     
@@ -67,9 +51,11 @@
 \method{getWindowsFun}{fPFOLIOBACKTEST}(object)
 \method{getWindowsParams}{fPFOLIOBACKTEST}(object)
 \method{getWindowsHorizon}{fPFOLIOBACKTEST}(object)
+
 \method{getStrategy}{fPFOLIOBACKTEST}(object)
 \method{getStrategyFun}{fPFOLIOBACKTEST}(object)
 \method{getStrategyParams}{fPFOLIOBACKTEST}(object)
+
 \method{getSmoother}{fPFOLIOBACKTEST}(object)
 \method{getSmootherFun}{fPFOLIOBACKTEST}(object)
 \method{getSmootherParams}{fPFOLIOBACKTEST}(object)
@@ -77,6 +63,7 @@
 \method{getSmootherDoubleSmoothing}{fPFOLIOBACKTEST}(object)
 \method{getSmootherInitialWeights}{fPFOLIOBACKTEST}(object)
 \method{getSmootherSkip}{fPFOLIOBACKTEST}(object)
+
 \method{getMessages}{fPFOLIOBACKTEST}(object)
 }
 
@@ -104,29 +91,29 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 ## portfolioBacktest Specification -
    backtestSpec = portfolioBacktest()
    backtestSpec
-   
-## Get Windows Information - 
-   getWindows(backtestSpec)
-   getWindowsFun(backtestSpec)
-   getWindowsParams(backtestSpec)
-   getWindowsHorizon(backtestSpec) 
  
-## Get Strategy Information -  
+## Extract Windows Information -  	
+   getWindows(backtestSpec) 
+   getWindowsFun(backtestSpec) 
+   getWindowsParams(backtestSpec) 
+   getWindowsHorizon(backtestSpec) 
+   
+## Extract Strategy Information - 
    getStrategy(backtestSpec) 
    getStrategyFun(backtestSpec) 
    getStrategyParams(backtestSpec) 
- 
-## Get Smoother Information -  
-   getSmoother(backtestSpec)  
+   
+## Extract Smoother Information - 
+   getSmoother(backtestSpec) 
    getSmootherFun(backtestSpec) 
-   getSmootherParams(backtestSpec) 
+   getSmootherParams(backtestSpec) 						
    getSmootherLambda(backtestSpec) 
-   getSmootherDoubleSmoothing(backtestSpec)
-   getSmootherInitialWeights(backtestSpec)
-   getSmootherSkip(backtestSpec)  
- 
-## Get Messages Information -  	
-   getMessages(backtestSpec) 
+   getSmootherDoubleSmoothing(backtestSpec) 
+   getSmootherInitialWeights(backtestSpec) 
+   getSmootherSkip(backtestSpec) 
+   
+## Extract Backtest Information - 
+   getMessages(backtestSpec)  
 }
 
 
