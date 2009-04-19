@@ -1,4 +1,4 @@
-\name{getBacktest}
+\name{getBacktestSpec}
 
 \alias{getWindows.fPFOLIOBACKTEST}
 \alias{getWindowsFun.fPFOLIOBACKTEST}
@@ -17,7 +17,7 @@
 \alias{getMessages.fPFOLIOBACKTEST}
 
 
-\title{Portfolio Backtest Extractors}
+\title{Portfolio backtest specification extractors}
 
 
 \description{

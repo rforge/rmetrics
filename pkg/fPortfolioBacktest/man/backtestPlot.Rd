@@ -11,7 +11,7 @@
 \alias{backtestReportPlot}
 
 
-\title{Portfolio Backtest Plots}
+\title{Portfolio backtesting plots}
 
 
 \description{

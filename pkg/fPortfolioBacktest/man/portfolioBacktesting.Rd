@@ -5,7 +5,7 @@
 \alias{portfolioSmoothing}
 
 
-\title{Portfolio Backtesting}
+\title{Portfolio backtesting}
 
 
 \description{

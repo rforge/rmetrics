@@ -1,4 +1,4 @@
-\name{getBacktest}
+\name{getBacktestMethods}
 
 \alias{getWindows}
 \alias{getWindowsFun}

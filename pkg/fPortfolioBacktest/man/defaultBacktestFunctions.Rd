@@ -1,4 +1,4 @@
-\name{equidistWindows}
+\name{defaultBacktestFunctions}
 
 
 \alias{equidistWindows}

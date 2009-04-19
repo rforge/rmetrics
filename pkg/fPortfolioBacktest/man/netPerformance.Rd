@@ -4,7 +4,7 @@
 \alias{netPerformance}
 
 
-\title{Net performance of the portfolio}
+\title{Portfolio backtesting net performance}
 
 
 \description{

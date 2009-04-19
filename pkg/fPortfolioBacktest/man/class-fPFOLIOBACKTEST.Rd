@@ -9,12 +9,12 @@
 \alias{show,fPFOLIOBACKTEST-method}
 
 
-\title{Specification of portfolio backtesting}
+\title{Portfolio backtesting specifications}
 
 
 \description{
   
-    Specifies portfolio backtesting object.
+    Specifies portfolio backtesting objects.
     
 }
 

@@ -10,7 +10,7 @@
 \alias{rollingRiskBudgets}
 
 
-\title{Rolling Portfolio Backtest Statistics}
+\title{Rolling portfolio backtesting statistics}
 
 
 \description{
