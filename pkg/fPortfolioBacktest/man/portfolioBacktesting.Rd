@@ -84,7 +84,8 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 ## Smoothed Rebalancing -   
    smoothedPortfolios <- portfolioSmoothing(
      object = portfolios, 
-     backtest = swxBacktest)     
+     backtest = swxBacktest,
+     trace = TRUE)     
 }
 
 

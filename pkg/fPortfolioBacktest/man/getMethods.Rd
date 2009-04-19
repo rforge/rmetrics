@@ -14,7 +14,7 @@
 \alias{getSmootherDoubleSmoothing}
 \alias{getSmootherInitialWeights}
 \alias{getSmootherSkip}
-\alias{getMessages}
+%\alias{getMessages} Already defined in fPortfolio
 
 
 \title{Portfolio Backtest Extractors}
@@ -71,9 +71,9 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    getSmootherDoubleSmoothing(backtestSpec) 
    getSmootherInitialWeights(backtestSpec) 
    getSmootherSkip(backtestSpec) 
-   
-## Extract Backtest Information - 
-   getMessages(backtestSpec) 
+%
+%## Extract Backtest Information - 
+%   getMessages(backtestSpec) 
 }
 
 

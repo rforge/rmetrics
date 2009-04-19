@@ -119,7 +119,8 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 ## Smoothed Rebalancing -   
    smoothedPortfolios <- portfolioSmoothing(
      object = portfolios, 
-     backtest = swxBacktest)  
+     backtest = swxBacktest,
+     trace = TRUE)  
      
 ## Rolling Variance Sigma - 
    series <- rollingSigma(smoothedPortfolios)
@@ -138,12 +139,8 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
    plot(series, main = "Rolling DaR")
 
 ## Rolling Conditional Drawdown at Risk -
-   # series <- rollingCDaR(smoothedPortfolios)
-   # plot(series, main = "Rolling CDaR")
-%
-%## Rolling Risk Budgets -
-%   # series <- rollingRiskBudgets(smoothedPortfolios)
-%   # plot(series, main = "Rolling Risk Budgets")
+   series <- rollingCDaR(smoothedPortfolios)
+   plot(series, main = "Rolling CDaR")
 }
 
 

@@ -279,6 +279,8 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
+if(FALSE) {
+# Already defined in fPortfolio
 getMessages <-
 function(object)
 {   
@@ -292,6 +294,7 @@ function(object)
     
     # Return Value:
     UseMethod("getMessages")
+}
 }
 
 

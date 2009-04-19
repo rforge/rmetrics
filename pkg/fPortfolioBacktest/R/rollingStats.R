@@ -251,10 +251,10 @@ function(object)
     # Calculate CDaR for one portfolio:
     .cdar = function(x){
         alpha = getAlpha(x)
-        R = getSeries(x) %*% getWeights(x)
+        R = as.numeric(getSeries(x) %*% getWeights(x))
         dd = 100 * drawdowns(as.timeSeries(R)/100)
         z = quantile.default(dd, probs = alpha)
-        mean(as.numeric(R)[R <= z], na.rm = TRUE)
+        mean(dd[dd <= z])
         }
 
     # Get Portfolios:

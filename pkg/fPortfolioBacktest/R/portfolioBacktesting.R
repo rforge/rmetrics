@@ -154,7 +154,7 @@ function(
         # Trace Optionally the Results:
         if (trace) {
             cat(as.character(from[i]), as.character(to[i]))
-            spReturn = as.vector(getTargetReturn(strategy))
+            spReturn = getTargetReturn(strategy@portfolio)[[2]]
             cat("\t", round(spReturn[1], digits = 3))
             bmReturn = mean(series(bmSeries))
             cat("\t", round(bmReturn, digits = 3))
