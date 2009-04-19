@@ -94,7 +94,7 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## Setting defaults -   
-   myBacktest = portfolioBacktest()
+   myBacktest <- portfolioBacktest()
    myBacktest
    
 ## Changing some defaults -  
