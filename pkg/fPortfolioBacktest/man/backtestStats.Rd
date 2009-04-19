@@ -10,14 +10,14 @@
 \alias{rollingCDaR}
 \alias{rollingRiskBudgets}
 
-\alias{backtestStats.portfolioBacktesting}
+%\alias{backtestStats.portfolioBacktesting}
 
-\alias{rollingSigma.portfolioBacktesting}
-\alias{rollingVaR.portfolioBacktesting}
-\alias{rollingCVaR.portfolioBacktesting}
-\alias{rollingDaR.portfolioBacktesting}
-\alias{rollingCDaR.portfolioBacktesting}
-\alias{rollingRiskBudgets.portfolioBacktesting}
+%\alias{rollingSigma.portfolioBacktesting}
+%\alias{rollingVaR.portfolioBacktesting}
+%\alias{rollingCVaR.portfolioBacktesting}
+%\alias{rollingDaR.portfolioBacktesting}
+%\alias{rollingCDaR.portfolioBacktesting}
+%\alias{rollingRiskBudgets.portfolioBacktesting}
 
 
 \title{Rolling Portfolio Backtest Statistics}
@@ -38,16 +38,16 @@ rollingVaR(object)
 rollingCVaR(object)
 rollingDaR(object)
 rollingCDaR(object)
-rollingRiskBudgets(object)
-
-\method{backtestStats}{portfolioBacktesting}(object, FUN = "rollingSigma", \dots)
-
-\method{rollingSigma}{portfolioBacktesting}(object)
-\method{rollingVaR}{portfolioBacktesting}(object)
-\method{rollingCVaR}{portfolioBacktesting}(object)
-\method{rollingDaR}{portfolioBacktesting}(object)
-\method{rollingCDaR}{portfolioBacktesting}(object)
-\method{rollingRiskBudgets}{portfolioBacktesting}(object)
+%rollingRiskBudgets(object)
+%
+%\method{backtestStats}{portfolioBacktesting}(object, FUN = "rollingSigma", \dots)
+%
+%\method{rollingSigma}{portfolioBacktesting}(object)
+%\method{rollingVaR}{portfolioBacktesting}(object)
+%\method{rollingCVaR}{portfolioBacktesting}(object)
+%\method{rollingDaR}{portfolioBacktesting}(object)
+%\method{rollingCDaR}{portfolioBacktesting}(object)
+%\method{rollingRiskBudgets}{portfolioBacktesting}(object)
 }
 
 
@@ -84,9 +84,8 @@ rollingRiskBudgets(object)
     The function \code{rollingCDaR} calculates a rolling Conditional 
     Drawdowns at Risk.
 
-    The function \code{rollingRiskBudgets} calculates a rolling Risk 
-    Budget of the portfolio.
-
+    %The function \code{rollingRiskBudgets} calculates a rolling Risk 
+    %Budget of the portfolio.
 
 }
 
@@ -123,28 +122,28 @@ W\"urtz, D., Chalabi, Y., Chen W., Ellis A. (2009);
      backtest = swxBacktest)  
      
 ## Rolling Variance Sigma - 
-   # series <- rollingSigma(smoothedPortfolios)
-   # plot(series, main = "Rolling Variance")
+   series <- rollingSigma(smoothedPortfolios)
+   plot(series, main = "Rolling Variance")
 
 ## Rolling Value at Risk -
-   # series <- rollingVaR(smoothedPortfolios)
-   # plot(series, main = "Rolling VaR")
+   series <- rollingVaR(smoothedPortfolios)
+   plot(series, main = "Rolling VaR")
 
 ## Rolling Conditional Value at Risk -
-   # series <- rollingCVaR(smoothedPortfolios)
-   # plot(series, main = "Rolling CVaR")
+   series <- rollingCVaR(smoothedPortfolios)
+   plot(series, main = "Rolling CVaR")
 
 ## Rolling Drawdown at Risk -
-   # series <- rollingDaR(smoothedPortfolios)
-   # plot(series, main = "Rolling DaR")
+   series <- rollingDaR(smoothedPortfolios)
+   plot(series, main = "Rolling DaR")
 
 ## Rolling Conditional Drawdown at Risk -
    # series <- rollingCDaR(smoothedPortfolios)
    # plot(series, main = "Rolling CDaR")
-
-## Rolling Risk Budgets -
-   # series <- rollingRiskBudgets(smoothedPortfolios)
-   # plot(series, main = "Rolling Risk Budgets")
+%
+%## Rolling Risk Budgets -
+%   # series <- rollingRiskBudgets(smoothedPortfolios)
+%   # plot(series, main = "Rolling Risk Budgets")
 }
 
 

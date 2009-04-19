@@ -246,7 +246,7 @@ function(
         Sigma = Sigma)
    
     # Return Value:
-    class(ans) = c("portfolioBacktesting", "list")
+    class(ans) <- c("portfolioBacktesting", "list")
     invisible(ans)
 }
 
@@ -375,7 +375,7 @@ function(object, backtest, trace = TRUE)
     #   abline(v = as.POSIXct(paste(year, "-01-01", sep ="")), col = "green")
    
     # Return Value:
-    class(object) = c("portfolioBacktesting", "list")
+    class(object) <- c("portfolioBacktesting", "list")
     object
 } 
 

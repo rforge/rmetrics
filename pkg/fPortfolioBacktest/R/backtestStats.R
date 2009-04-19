@@ -31,24 +31,24 @@
 # rollingCVaR            Rolling Conditional Value at Risk
 # rollingDar             Rolling Drawdowns at Risk
 # rollingCDaR            Rolling Conditional Drawdowns at Risk
-# rollingRiskBudgets     Rolling portfolio risk budgets
+# .rollingRiskBudgets    Rolling portfolio risk budgets
 ################################################################################
 
 
-backtestStats <- function(object, FUN = "rollingSigma", ...) 
-    UseMethod("portfolioBacktesting")
-rollingSigma <- function(object) UseMethod("portfolioBacktesting")
-rollingVaR <- function(object) UseMethod("backtestStats")
-rollingCVaR <- function(object) UseMethod("portfolioBacktesting")
-rollingDaR <- function(object) UseMethod("portfolioBacktesting")
-rollingCDaR <- function(object) UseMethod("portfolioBacktesting")
-rollingRiskBudgets <- function(object) UseMethod("portfolioBacktesting")
+# backtestStats <- function(object, FUN = "rollingSigma", ...) 
+#     UseMethod("portfolioBacktesting")
+# rollingSigma <- function(object) UseMethod("portfolioBacktesting")
+# rollingVaR <- function(object) UseMethod("portfolioBacktesting")
+# rollingCVaR <- function(object) UseMethod("portfolioBacktesting")
+# rollingDaR <- function(object) UseMethod("portfolioBacktesting")
+# rollingCDaR <- function(object) UseMethod("portfolioBacktesting")
+# .rollingRiskBudgets <- function(object) UseMethod("portfolioBacktesting")
 
 
 # ------------------------------------------------------------------------------
 
 
-backtestStats.portfolioBacktesting <- 
+backtestStats <- 
 function(object, FUN = "rollingSigma", ...)
 {
     # A function implemented by William Chen
@@ -79,7 +79,7 @@ function(object, FUN = "rollingSigma", ...)
 # ------------------------------------------------------------------------------
 
 
-rollingSigma.portfolioBacktesting <-
+rollingSigma <-
 function(object)
 {
     # A function implemented by William Chen and Diethelm Wuertz
@@ -110,7 +110,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingVaR.portfolioBacktesting =
+rollingVaR <-
 function(object)
 {
     # A function implemented by William Chen
@@ -150,7 +150,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingCVaR.portfolioBacktesting <- 
+rollingCVaR <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -191,7 +191,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingDaR.portfolioBacktesting <-
+rollingDaR <-
 function(object)
 {
     # A function implemented by William Chen
@@ -232,7 +232,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingCDaR.portfolioBacktesting <- 
+rollingCDaR <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -249,7 +249,8 @@ function(object)
     # FUNCTION:
     
     # Calculate CDaR for one portfolio:
-    .cdar = function(x, alpha){
+    .cdar = function(x){
+        alpha = getAlpha(x)
         R = getSeries(x) %*% getWeights(x)
         dd = 100 * drawdowns(as.timeSeries(R)/100)
         z = quantile.default(dd, probs = alpha)
@@ -274,7 +275,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-rollingRiskBudgets.portfolioBacktesting <- 
+.rollingRiskBudgets <- 
 function(object)
 {
     # A function implemented by William Chen
@@ -290,6 +291,7 @@ function(object)
     
     # FUNCTION:
     
+    # Portfolios:
     portfolios = object$StrategyList
     nPortfolios = length(portfolios)
     assetNames = colnames(getSeries(portfolios[[1]]))
