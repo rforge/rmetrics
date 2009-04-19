@@ -16,6 +16,7 @@
 \alias{setSmootherInitialWeights<-}
 \alias{setSmootherSkip<-} 
 
+
 \title{Specification of backtesting portfolios}
 
 
