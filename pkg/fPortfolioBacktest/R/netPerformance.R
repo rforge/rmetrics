@@ -32,9 +32,11 @@
 #   .netPerformancePlot         Creates a net performance plot
 ################################################################################
   
+
 # DW - TO DO:
 #   Add argument doplot to function netPerformance
 #   Make plot() a generic function
+#   Problems in plot function
 
 
 # ------------------------------------------------------------------------------ 
@@ -68,8 +70,9 @@ function(object, format = "%Y-%m-%d")
     years = substr(nye, 1,4)        
     nYears = length(years)
     
-    # NET PERFORMANCE Plots:
-    .netPerformancePlot(dates, char.dates, years, nye, P)
+    # Net Performance Plot:
+    # DW: Needs repair, all following plots fails once called
+    # .netPerformancePlot(dates, char.dates, years, nye, P)
     
     # NET PERFORMANCE TO YTD:
     netYTD = rbind(.netPerformanceYTD(char.dates, monthlyP, P, nYears),
@@ -209,7 +212,7 @@ function(dates, char.dates, years, nye, P, base = 100)
         
     # NET PERFORMANCE PLOT:
     
-    ### Setup figure frame:
+    # Setup figure frame:
     Opar = par(oma = rep(0,4), mar = rep(0,4))
     
     mat = matrix(c(1,2,3), nr = 3, nc = 1)
