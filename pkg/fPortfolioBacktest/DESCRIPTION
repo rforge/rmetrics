@@ -1,14 +1,17 @@
 Package: fPortfolioBacktest
-Version: 290.02
-Date: 2009
+Version: 2100.3
+Revision: 4096
+Date: 2009-04-20
 Title: Rmetrics - Portfolio Backtesting
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
-Depends: R (>= 2.6.0), methods, timeDate, timeSeries, fBasics, fAssets, fPortfolio (>= 2100.77)
+Depends: R (>= 2.6.0), methods, timeDate, timeSeries, fBasics, fAssets,
+        fPortfolio (>= 2100.77)
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
-Description: Environment for teaching "Financial Engineering and Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
-      THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES,
-      AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Description: Environment for teaching "Financial Engineering and
+        Computational Finance"
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
