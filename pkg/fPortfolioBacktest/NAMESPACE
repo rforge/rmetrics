@@ -1,0 +1,164 @@
+
+################################################
+## import name space
+################################################
+
+importFrom("fAssets",
+           "pfolioReturn")
+importFrom("fBasics",
+           "getSlot")
+importFrom("fPortfolio",
+           "getMessages",
+           "getEstimator",
+           "getType",
+           "getAlpha",
+           "rollingWindows",
+           "getSeries",
+           "getSigma",
+           "getSolver",
+           "getTargetReturn",
+           "getWeights",
+           "portfolioConstraints",
+           "portfolioData",
+           "portfolioSpec",
+           "getTargetRisk",
+           "getStatus",
+           "minvariancePortfolio",
+           "tangencyPortfolio")
+importFrom("graphics",
+           "abline",
+           "grid",
+           "legend",
+           "mtext",
+           "title",
+           "par",
+           "plot.new",
+           "plot.window",
+           "axis",
+           "layout",
+           "lcm",
+           "rect",
+           "text")
+importFrom("methods",
+           "show",
+           "new",
+           "slot",
+           "@<-")
+importFrom("stats",
+           "filter",
+           "sd",
+           "quantile.default")
+importFrom("timeDate",
+           "isWeekend",
+           "timeNdayOnOrAfter",
+           "setRmetricsOptions",
+           "getRmetricsOptions")
+importFrom("timeSeries",
+           "colCumsums",
+           "diff",
+           "lines",
+           "plot",
+           "time",
+           "timeSeries",
+           ".align.timeSeries",
+           "as.timeSeries",
+           "drawdowns",
+           "end",
+           "rownames",
+           "sort",
+           "start",
+           "time<-",
+           "window",
+           "series",
+           "apply",
+           "colnames",
+           "colnames<-",
+           "rownames<-",
+           "print",
+           "rev",
+           "applySeries",
+           "as.matrix",
+           "colSums")
+importFrom("utils",
+           "capture.output")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fPFOLIOBACKTEST" )
+exportMethods("show" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("getMessages", "fPFOLIOBACKTEST")
+S3method("getSmootherDoubleSmoothing", "fPFOLIOBACKTEST")
+S3method("getSmoother", "fPFOLIOBACKTEST")
+S3method("getSmootherFun", "fPFOLIOBACKTEST")
+S3method("getSmootherInitialWeights", "fPFOLIOBACKTEST")
+S3method("getSmootherLambda", "fPFOLIOBACKTEST")
+S3method("getSmootherParams", "fPFOLIOBACKTEST")
+S3method("getSmootherSkip", "fPFOLIOBACKTEST")
+S3method("getStrategy", "fPFOLIOBACKTEST")
+S3method("getStrategyFun", "fPFOLIOBACKTEST")
+S3method("getStrategyParams", "fPFOLIOBACKTEST")
+S3method("getWindows", "fPFOLIOBACKTEST")
+S3method("getWindowsFun", "fPFOLIOBACKTEST")
+S3method("getWindowsHorizon", "fPFOLIOBACKTEST")
+S3method("getWindowsParams", "fPFOLIOBACKTEST")
+
+################################################
+## functions
+################################################
+
+export(
+    "backtestAssetsPlot",
+    "backtestDrawdownPlot",
+    "backtestPlot",
+    "backtestPortfolioPlot",
+    "backtestRebalancePlot",
+    "backtestReportPlot",
+    "backtestStats",
+    "backtestWeightsPlot",
+    "emaSmoother",
+    "equidistWindows",
+    "getSmoother",
+    "getSmootherDoubleSmoothing",
+    "getSmootherFun",
+    "getSmootherInitialWeights",
+    "getSmootherLambda",
+    "getSmootherParams",
+    "getSmootherSkip",
+    "getStrategy",
+    "getStrategyFun",
+    "getStrategyParams",
+    "getWindows",
+    "getWindowsFun",
+    "getWindowsHorizon",
+    "getWindowsParams",
+    "netPerformance",
+    ".netPerformanceCalendar",
+    ".netPerformancePlot",
+    ".netPerformanceYTD",
+    "portfolioBacktest",
+    "portfolioBacktesting",
+    "portfolioSmoothing",
+    "rollingCDaR",
+    "rollingCVaR",
+    "rollingDaR",
+    "rollingSigma",
+    "rollingVaR",
+    "setSmootherDoubleSmoothing<-",
+    "setSmootherFun<-",
+    "setSmootherInitialWeights<-",
+    "setSmootherLambda<-",
+    "setSmootherParams<-",
+    "setSmootherSkip<-",
+    "setStrategyFun<-",
+    "setStrategyParams<-",
+    "setWindowsFun<-",
+    "setWindowsHorizon<-",
+    "setWindowsParams<-",
+    "tangencyStrategy" )
