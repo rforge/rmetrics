@@ -1,3 +1,8 @@
+2009-04-19  chalabi
+
+	* DESCRIPTION: added explicit version number in Depends field for
+	  key packages
+
 2009-04-02  chalabi
 
 	* DESCRIPTION: more explicit depends and suggests field in DESC
@@ -6,6 +11,9 @@
 2009-04-01  chalabi
 
 	* NAMESPACE: updated NAMESPACE
+
+2009-04-01  chalabi
+
 	* DESCRIPTION: updated DESC file
 
 2009-01-28  chalabi

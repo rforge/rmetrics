@@ -1,11 +1,11 @@
 Package: fCopulae
 Version: 2100.76
-Revision: 4033
-Date: 2009-04-15
+Revision: 4093
+Date: 2009-04-19
 Title: Rmetrics - Dependence Structures with Copulas
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), sn, adapt, methods, timeDate (>= 290.85),
-        timeSeries (>= 2100.82), fBasics (>= 290.76)
+Depends: R (>= 2.4.0), sn, adapt, methods, timeDate,
+        timeSeries, fBasics (>= 2100.77)
 Suggests: RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and

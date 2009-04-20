@@ -1,3 +1,8 @@
+2009-04-19  chalabi
+
+	* DESCRIPTION: added explicit version number in Depends field for
+	  key packages
+
 2009-04-02  chalabi
 
 	* DESCRIPTION: more explicit depends and suggests field in DESC

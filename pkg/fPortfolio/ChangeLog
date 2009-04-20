@@ -1,3 +1,24 @@
+2009-04-19  chalabi
+
+	* DESCRIPTION: added explicit version number in Depends field for
+	  key packages
+
+2009-04-17  wuertz
+
+	* R/solveRglpk.R: Problems with Rglpk solver now solved.
+
+2009-04-17  wuertz
+
+	* R/portfolioSpec.R: New internal function .checkSpec() introduced.
+	  Stops execution when we have specified a linear solver forgot
+	  that we have still a quadratic programming problem. Not yet all
+	  cases to be checked are already implemented.
+	* R/methods-show.R: A bug introduced when printing option
+	  introduced for n (=5) lines, has been removed.
+	* R/efficientPortfolio.R: The compution of the portfolio now stops
+	  and returns an error if the minrisk and/or maxratio portfolios do
+	  not exist.
+
 2009-04-04  chalabi
 
 	* NAMESPACE, R/covEstimator.R, R/efficientPortfolio.R,
