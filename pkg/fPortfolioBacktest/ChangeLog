@@ -1,0 +1,123 @@
+2009-04-20  chalabi
+
+	* DESCRIPTION, NAMESPACE: added NAMESPACE and made more explicit
+	  Depends field in DESC file
+
+2009-04-19  wuertz
+
+	* man/setBacktestSpec.Rd: example modified
+
+2009-04-19  wuertz
+
+	* man/setBacktestSpec.Rd: examples added
+	* man/portfolioBacktestSpec.Rd, man/setBacktestSpec.Rd: examples
+	  added
+	* man/netPerformance.Rd: Note added
+	* man/backtestPlot.Rd, man/class-fPFOLIOBACKTEST.Rd,
+	  man/defaultBacktestFunctions.Rd, man/getBacktestSpec.Rd,
+	  man/getMethods.Rd, man/netPerformance.Rd,
+	  man/portfolioBacktesting.Rd, man/rollingStats.Rd: text added and
+	  modified
+	* R/rollingStats.R, inst/unitTests/runit.backtesting.R,
+	  man/getMethods.Rd, man/rollingStats.Rd: unit testing file added
+	* R/defaultBacktestFunctions.R, R/getMethods.R,
+	  R/portfolioBacktesting.R, R/rollingStats.R, R/userFunctions.R,
+	  man/defaultBacktestFunctions.Rd, man/getMethods.Rd,
+	  man/portfolioBacktesting.Rd, man/rollingStats.Rd,
+	  man/userFunctions.Rd: small modifications in .Rd and .R scripting
+	  files
+	* R/netPerformance.R: plot made ineffective due to device problems
+	* R/setBacktest.R, R/setBacktestSpec.R, man/setBacktest.Rd,
+	  man/setBacktestSpec.Rd: script functions renamed
+	* R/getDefault.R, R/getMethods.R, man/getBacktest.Rd,
+	  man/getBacktestSpec.Rd, man/getMethods.Rd: methods better
+	  documentation and reorginastion of script files
+	* R/getBacktest.R, R/getBacktestSpec.R, R/portfolioBacktest.R,
+	  R/portfolioBacktestSpec.R, man/portfolioBacktest.Rd,
+	  man/portfolioBacktestSpec.Rd: backtest script files in
+	  backtestSpec files renamed
+	* R/portfolioBacktest.R, R/portfolioBacktesting.R: spec and
+	  backtesting scripts now in two files
+	* man/getBacktest.Rd: text modified
+	* R/backtestStats.R, R/rollingStats.R, man/backtestStats.Rd,
+	  man/rollingStats.Rd: files backstatStats renamed in rollingStats
+	* R/backtestStats.R, R/portfolioBacktest.R, man/backtestStats.Rd:
+	  minor modifications
+	* ChangeLog: ChangeLog file added
+	* R/backtestStats.R, R/getDefault.R, R/netPerformance.R,
+	  R/portfolioBacktest.R, R/setBacktest.R, R/userFunctions.R, inst,
+	  inst/DocCopying.pdf, inst/unitTests, inst/unitTests/Makefile,
+	  inst/unitTests/runTests.R, man/00fBacktest-package.Rd,
+	  man/backtestPlot.Rd, man/backtestStats.Rd,
+	  man/class-fPFOLIOBACKTEST.Rd, man/getBacktest.Rd,
+	  man/netPerformance.Rd, man/portfolioBacktest.Rd,
+	  man/portfolioBacktesting.Rd, man/setBacktest.Rd,
+	  man/userFunctions.Rd, tests, tests/doRUnit.R: several extensions
+	  and enhancements added
+
+2009-04-18  wuertz
+
+	* R/class-fPFOLIOBACKTEST.R:
+
+2009-04-18  wuertz
+
+	* R/class-fPFOLIOBACKTEST.R:
+	* DESCRIPTION, R/backtestPlots.R, R/backtestStats.R,
+	  R/class-fPFOLIOBACKTEST.R, R/getBacktest.R, R/getDefault.R,
+	  R/methods-show.R, R/netPerformance.R, R/portfolioBacktest.R,
+	  R/setBacktest.R, R/userFunctions.R, man/00fBacktest-package.Rd,
+	  man/backtestPlot.Rd, man/backtestStats.Rd, man/getBacktest.Rd,
+	  man/netPerformance.Rd, man/portfolioBacktest.Rd,
+	  man/portfolioBacktesting.Rd, man/setBacktest.Rd,
+	  man/userFunctions.Rd: Help pages completed and essentially
+	  improved.
+	  Missing headers added, uncomplete headers improved, rolling
+	  functions redesigned.
+
+2009-02-10  chalabi
+
+	* R/backtestPlots.R: pf in backtestDrawdownPlot was not properly
+	  converted to a timeSeries object
+
+2009-02-10  wuertz
+
+	* man/00fBacktest-package.Rd, man/backtestPlot.Rd,
+	  man/backtestStats.Rd, man/class-fPFOLIOBACKTEST.Rd,
+	  man/fBacktest-package.Rd, man/getBacktest.Rd,
+	  man/netPerformance.Rd, man/portfolioBacktest.Rd,
+	  man/portfolioBacktesting.Rd, man/setBacktest.Rd,
+	  man/userFunctions.Rd: keywords, references added, lines cutted to
+	  80 characters
+
+2009-02-02  chalabi
+
+	* DESCRIPTION: new version number
+
+2009-02-02  chalabi
+
+	* DESCRIPTION: changed version #
+
+2009-01-30  wuertz
+
+	* R/backtestStats.R, R/getDefault.R: minor modification concerning
+	  get/set functions
+
+2009-01-30  chalabi
+
+	* DESCRIPTION: removed suggested packages because they are not
+	  related to this package IMO
+
+2009-01-26  wuertz
+
+	* DESCRIPTION, man/portfolioBacktesting.Rd: missing argument added,
+	  methods depends added
+
+2009-01-26  wuertz
+
+	* R/portfolioBacktest.R: made working together with the updated
+	  fPortfolio
+
+2009-01-16  chalabi
+
+	* DESCRIPTION: removed rebundant packages in Depends field
+
