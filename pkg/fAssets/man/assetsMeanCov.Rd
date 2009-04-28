@@ -5,7 +5,7 @@
 
 \alias{getCenterRob}
 \alias{getCovRob}
-\alias{shrinkMeanCov} % FIXME
+
 
 \title{Estimation of Mean and Covariances of Asset Sets}
 
