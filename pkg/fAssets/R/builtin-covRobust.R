@@ -21,31 +21,41 @@
 ################################################################################
 
 
-################################################################################
-#   Package: covRobust
-#   Title: Robust Covariance Estimation via Nearest Neighbor Cleaning
-#   Version: 1.0
-#   Author: Naisyin Wang <nwang@stat.tamu.edu> and
-#       Adrian Raftery <raftery@stat.washington.edu>
-#       with contributions from Chris Fraley <fraley@stat.washington.edu>
-#   Description: The cov.nnve() function for robust covariance estimation
-#       by the nearest neighbor variance estimation (NNVE) method
-#       of Wang and Raftery (2002,JASA)
-#   Maintainer: Naisyin Wang <nwang@stat.tamu.edu>
-#   License: GPL version 2 or newer
-#   Notes:
-#       Wang and Raftery(2002), "Nearest neighbor variance estimation (NNVE):
-#           Robust covariance estimation via nearest neighbor cleaning
-#           (with discussion)", 
-#           Journal of the American Statistical Association 97:994-1019
-#       Available as Technical Report 368 (2000) from
-#           http://www.stat.washington.edu/www/research/report
+# Rmetrics:
+#   Note that covRobust is not available on Debian as of 2009-04-28. 
+#   To run these functions under Debian/Rmetrics we have them    
+#   implemented here as a builtin.
+#   We also made modifications for tailored usage with Rmetrics. 
+
+
+# Package: covRobust
+# Title: Robust Covariance Estimation via Nearest Neighbor Cleaning
+# Version: 1.0
+# Author: Naisyin Wang <nwang@stat.tamu.edu> and
+#     Adrian Raftery <raftery@stat.washington.edu>
+#     with contributions from Chris Fraley <fraley@stat.washington.edu>
+# Description: The cov.nnve() function for robust covariance estimation
+#     by the nearest neighbor variance estimation (NNVE) method
+#     of Wang and Raftery (2002,JASA)
+# Maintainer: Naisyin Wang <nwang@stat.tamu.edu>
+# License: GPL version 2 or newer
+# Notes:
+#     Wang and Raftery(2002), "Nearest neighbor variance estimation (NNVE):
+#         Robust covariance estimation via nearest neighbor cleaning
+#         (with discussion)", 
+#         Journal of the American Statistical Association 97:994-1019
+#     Available as Technical Report 368 (2000) from
+#         http://www.stat.washington.edu/www/research/report
     
+
+# ------------------------------------------------------------------------------
+
 
 .cov.nnve =
 function(datamat, k = 12, pnoise = 0.05, emconv = 0.001, bound = 1.5, 
-extension = TRUE, devsm = 0.01)
-{   # A (modified) copy from coontributed R package covRobust
+    extension = TRUE, devsm = 0.01)
+{   
+    # A (modified) copy from coontributed R package covRobust
 
     # Description:
     #   Function to perform Nearest Neighbor Variance Estimation
@@ -206,10 +216,11 @@ extension = TRUE, devsm = 0.01)
 # ------------------------------------------------------------------------------
 
  
-.cov.nne.nclean.sub = 
+.cov.nne.nclean.sub <-  
 function(datamat, k, distances = NULL, convergence = 0.001, S.mean = NULL, 
-S.sd = NULL) 
-{   # A (modified) copy from coontributed R package covRobust
+    S.sd = NULL) 
+{   
+    # A (modified) copy from coontributed R package covRobust
 
     # Description:
     #   Internal Function called by .cov.nne()
@@ -279,9 +290,10 @@ S.sd = NULL)
 # ------------------------------------------------------------------------------
 
 
-.cov.nne.dDk = 
+.cov.nne.dDk <-  
 function(x, lambda, k, d, alpha.d) 
-{   # A (modified) copy from coontributed R package covRobust
+{   
+    # A (modified) copy from coontributed R package covRobust
 
     # Description:
     #   Internal Function called by .cov.nne()
@@ -302,9 +314,10 @@ function(x, lambda, k, d, alpha.d)
 # ------------------------------------------------------------------------------
 
 
-.cov.nne.splusNN = 
+.cov.nne.splusNN <-  
 function(datamat, k)
-{   # A (modified) copy from coontributed R package covRobust
+{   
+    # A (modified) copy from coontributed R package covRobust
 
     # Description:
     #   Internal Function called by .cov.nne()
@@ -340,10 +353,10 @@ function(datamat, k)
 # ------------------------------------------------------------------------------
 
 
-
-.cov.nne.Mtovec = 
+.cov.nne.Mtovec <-  
 function(M) 
-{   # A (modified) copy from coontributed R package covRobust
+{   
+    # A (modified) copy from coontributed R package covRobust
 
     # Description:
     #   Internal Function called by .cov.nne()
@@ -370,7 +383,7 @@ function(M)
 # ------------------------------------------------------------------------------
 
 
-.cov.nne.vectoM = 
+.cov.nne.vectoM <-  
 function(vec, d) 
 {   # A (modified) copy from coontributed R package covRobust
 

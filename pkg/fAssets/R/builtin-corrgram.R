@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:
+# FUNCTION:             DESCRIPTION:
 #   .col.corrgram
 #   .panel.pts
 #   .panel.pie
@@ -27,14 +27,27 @@
 ################################################################################
 
 
-################################################################################
-# corrgram.r
-# Time-stamp: <30 Nov 2006 13:32:49 c:/X/Rpkgs/corrgram/R/corrgram.r>
+# Rmetrics:
+#   Note that corrgram is not available on Debian as of 2009-04-28. 
+#   To run these functions under Debian/Rmetrics we have them    
+#   implemented here as a builtin.
+#   We also made modifications for tailored usage with Rmetrics. 
+
+
+# Package: corrgram
+# Type: Package
+# Title: Plot a correlogram
+# Version: 0.1
+# Date: 2006-11-28
 # Author: Kevin Wright
-# Code for plotting ellipses was derived from the ellipse package.
-# 2006.11.28 : Package version 0.1 created.
-# 2006.04.16 : First work
-################################################################################
+# Maintainer: Kevin Wright, <kw.statr@gmail.com>
+# Description: 
+#     Calculates correlation of variables and displays the results graphically.
+# License: GPL version 2 or later.
+# Packaged: Thu Nov 30
+
+
+# ------------------------------------------------------------------------------
 
 
 .col.corrgram = 

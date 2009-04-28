@@ -18,11 +18,25 @@
 ################################################################################
 # FUNCTION:             INTERNAL USE:
 #  .cov.shrink           Builtin from Package 'corpcor'
+#  .cor.shrink
+#  .varcov
 #  .cov.bagged           Builtin from Package 'corpcor'
+#  .cor.bagged
+#  .bag.fun
+#  .robust.cov.boot
+#  .sm2vec
+#  .smindexes
+#  .vec2sm
 ################################################################################
 
 
-################################################################################
+# Rmetrics:
+#   Note that corpcor is not available on Debian as of 2009-04-28. 
+#   To run these functions under Debian/Rmetrics we have them    
+#   implemented here as a builtin.
+#   We also made modifications for tailored usage with Rmetrics. 
+
+
 # Package: corpcor
 # Version: 1.1.2
 # Date: 2005-12-12
@@ -47,7 +61,10 @@
 # Packaged: Mon Dec 12 13:07:22 2005; strimmer
 
 
-.cov.shrink =
+# ------------------------------------------------------------------------------
+
+
+.cov.shrink <- 
 function(x, lambda, verbose = FALSE)
 {
    x = as.matrix(x)
@@ -69,7 +86,7 @@ function(x, lambda, verbose = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.cor.shrink = 
+.cor.shrink <- 
 function(x, lambda, verbose = FALSE)
 {
     # Standardize data (and turn x into a matrix)
@@ -110,7 +127,7 @@ function(x, lambda, verbose = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.varcov = 
+.varcov <-  
 function(x, type = c("unbiased", "ML"), verbose = FALSE)
 {
     # Details:
@@ -197,12 +214,13 @@ function(x, type = c("unbiased", "ML"), verbose = FALSE)
 # Packaged: Mon Dec 12 13:07:22 2005; strimmer
 
 
-.cov.bagged = 
+.cov.bagged <-  
 function(x, R = 1000, ...)
 {
     vec.out = .bag.fun(cov, x, R = R, diag = TRUE, ...)
     mat.out = .vec2sm(vec.out, diag = TRUE)
   
+    # Return Value:
     mat.out
 }
 
@@ -210,7 +228,7 @@ function(x, R = 1000, ...)
 # ------------------------------------------------------------------------------
 
 
-.cor.bagged = 
+.cor.bagged <-  
 function(x, R = 1000, ...)
 {
     vec.out = .bag.fun(cor, x, R = R, diag = FALSE, ...)
@@ -219,6 +237,7 @@ function(x, R = 1000, ...)
     # Fill diagonal with 1
     diag(mat.out) = rep(1, dim(mat.out)[1]) 
   
+    # Return Value:
     mat.out
 }
 
@@ -226,7 +245,7 @@ function(x, R = 1000, ...)
 # ------------------------------------------------------------------------------
 
 
-.bag.fun = 
+.bag.fun <-  
 function(fun, data, R, diag, ...)
 {
     # Number of variables 
@@ -255,7 +274,7 @@ function(fun, data, R, diag, ...)
 # ------------------------------------------------------------------------------
 
 
-.robust.cov.boot = 
+.robust.cov.boot <-  
 function(data, statistic, R)
 {
     # Description:
@@ -340,7 +359,7 @@ function(m, diag = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.smindexes = 
+.smindexes <-  
 function(m, diag = FALSE)
 {
     # Descriiption:
@@ -382,7 +401,7 @@ function(m, diag = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.vec2sm = 
+.vec2sm <-  
 function(vec, diag = FALSE, order = NULL)
 {
     # Description:
