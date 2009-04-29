@@ -372,7 +372,8 @@ solveRglpk <-
 	# FUNCTION:
 
 	# Solve - use Rglpk_solve_LP:
-    optim <- Rglpk::Rglpk_solve_LP(
+    # optim <- Rglpk::Rglpk_solve_LP(
+    optim <- .Rglpk_solve_LP(
         obj = obj,
         mat = mat,
         dir = dir,

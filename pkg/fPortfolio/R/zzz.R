@@ -16,16 +16,23 @@
 ################################################################################
 
 
-.First.lib <- function(libname, pkgname){
+.First.lib <- 
+function(libname, pkgname)
+{
     if(!is.numeric(getRmetricsOptions("length.print")))
 	setRmetricsOptions(length.print = 5)
+	
+	# Load dll:
+    library.dynam("fPortfolio", pkg, lib)
 }
 
 # ------------------------------------------------------------------------------
 
-.onLoad <- function(libname, pkgname) {
+.onLoad <- 
+function(libname, pkgname) 
+{
     if(!is.numeric(getRmetricsOptions("length.print")))
-	setRmetricsOptions(length.print = 5)
+	setRmetricsOptions(length.print = 5)	
 }
 
 
