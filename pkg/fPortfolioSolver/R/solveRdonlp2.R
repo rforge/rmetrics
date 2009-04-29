@@ -68,6 +68,7 @@ solveRdonlp2 <-
             nlin = args$nlin, 
             nlin.lower = args$nlin.lower, 
             nlin.upper = args$nlin.upper) 
+            
         returnFun = match.fun(getObjective(spec)[2])
         ans$targetReturn = returnFun(ans$weights)
         riskFun = match.fun(getObjective(spec)[3])
@@ -75,6 +76,7 @@ solveRdonlp2 <-
     # }
 
     # Return Value:
+    class(ans) = c("solveRfoo", "list")
     ans
 }
  
@@ -216,7 +218,8 @@ function(data, spec, constraints)
         lin.upper = lin.upper,
         nlin = nlin, 
         nlin.lower = nlin.lower, 
-        nlin.upper = nlin.upper)   
+        nlin.upper = nlin.upper,
+        env = .GlobalEnv)   
     
     # Extract Weights:
     weights = .checkWeights(optim$par)

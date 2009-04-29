@@ -67,6 +67,7 @@ solveRipop <-
     }
 
     # Return Value:
+    class(ans) = c("solveRfoo", "list")
     ans
 }
 
@@ -160,7 +161,8 @@ function(c, H, A, b, l, u, r, targetReturn,
     
     # FUNCTION:
     
-    optim = Ripop::ipop(c, H, A, b, l, u, r, targetReturn,
+    # Optimize:
+    optim = Ripop::ipop(c, H, A, b, l, u, r,  
         sigf, maxiter, margin, bound, verb)
         
     # Set Tiny Weights to Zero:
@@ -176,8 +178,8 @@ function(c, H, A, b, l, u, r, targetReturn,
         targetReturn = targetReturn,
         targetRisk = sqrt(weights %*% H %*% weights)[[1,1]],
         objective = sqrt(weights %*% H %*% weights)[[1,1]],
-        status = status,
-        message = message)
+        status = optim$status,
+        message = optim$message)
             
     # Return Value:
     ans
