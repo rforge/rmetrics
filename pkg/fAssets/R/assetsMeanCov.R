@@ -31,6 +31,7 @@
 #  .donostahMeanCov            uses builtin from [robust]
 #  .bayesSteinMeanCov          copy from Alexios Ghalanos
 #  .ledoitWolfMeanCov          uses builtin from [tawny]
+#  .rmtMeanCov                 uses builtin from [tawny]
 # FUNCTION:                   DESCRIPTION:
 #  getCenterRob                Extracts the robust estimate for the center
 #  getCovRob                   Extracts the robust estimate for the covariance
