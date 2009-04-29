@@ -61,6 +61,7 @@ solveRshortExact <-
         targetReturn, targetRisk)
 
     # Return Value:
+    class(ans) = c("solveRfoo", "list")
     ans
 }
 
