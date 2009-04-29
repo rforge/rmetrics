@@ -41,11 +41,17 @@
 #  covOGKEstimator           Requires "covOGK" from [robustbase]
 #  shrinkEstimator           Requires "cov.shrink" from [corpcor]
 #  nnveEstimator             Requires "cov.nnve" from [covRobust]
+# FUNCTION:                 ADDONS:
+#  .studentEstimator         uses "cov.trob" from [MASS]
+#  .baggedEstimator          uses builtin from [corpcor]
+#  .donostahEstimator        uses builtin from [robust]
+#  .bayesSteinEstimator      copy from Alexios Ghalanos
+#  .ledoitWolfEstimator      uses builtin from [tawny]
 ################################################################################
 
 
 covEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -74,7 +80,7 @@ covEstimator <-
 
 
 mveEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -103,7 +109,7 @@ mveEstimator <-
 
 
 mcdEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -143,6 +149,8 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; lpmEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -169,7 +177,7 @@ function(x, spec = NULL, ...)
 
 
 kendallEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -180,6 +188,8 @@ kendallEstimator <-
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -198,7 +208,7 @@ kendallEstimator <-
 
 
 spearmanEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -209,6 +219,8 @@ spearmanEstimator <-
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -227,7 +239,7 @@ spearmanEstimator <-
 
 
 covMcdEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -237,6 +249,8 @@ covMcdEstimator <-
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covMcdEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -255,7 +269,7 @@ covMcdEstimator <-
 
 
 covOGKEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -267,6 +281,8 @@ covOGKEstimator <-
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covOGKEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -286,7 +302,7 @@ covOGKEstimator <-
 
 
 shrinkEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -296,6 +312,8 @@ shrinkEstimator <-
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; shrinkEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -316,7 +334,7 @@ shrinkEstimator <-
 
 
 nnveEstimator <-
-    function(x, spec = NULL, ...)
+function(x, spec = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -328,6 +346,8 @@ nnveEstimator <-
     #   x  = as.timeSeries(data(LPP2005REC))[, 1:6]; nnveEstimator(x)
 
     # FUNCTION:
+    
+    # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
     # Extract Matrix:
@@ -337,6 +357,228 @@ nnveEstimator <-
     mu = colMeans(x.mat)
     Sigma = covRobust::cov.nnve(datamat = x.mat, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+################################################################################
+
+
+.studentEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses mean/student-d covariance estimation 
+    
+    # Arguments:
+    
+    # Note:
+    #   Source from package MASS
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .studentEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .studentMeanCov(x.mat, ...)
+    mu = robust$center
+    Sigma = robust$cov
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.baggedEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses bagged mean/covariance estimation  
+
+    # Arguments:
+    
+    # Note:
+    #   Source from package corpcor
+    
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .baggedMeanCov(x, ...)
+    mu = robust$center
+    Sigma = robust$cov
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.donostahEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Arguments:
+    
+    # Description:
+    #   Uses Donostah's mean/covariance estimation 
+    
+    # Note:
+    #   Source from package robust
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .donostahMeanCov(x, ...)
+    mu = robust$center
+    Sigma = robust$cov
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.bayesSteinEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses Bayes Stein mean/covariance estimation 
+    
+    # Arguments:
+    
+    # Note:
+    #   Source from Alexios Ghalanos
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .donostahMeanCov(x, ...)
+    mu = robust$center
+    Sigma = robust$cov
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.bayesSteinEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses Bayes Stein mean/covariance estimation 
+    
+    # Arguments:
+    
+    # Note:
+    #   Source from Alexios Ghalanos
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .donostahMeanCov(x, ...)
+    mu = robust$center
+    Sigma = robust$cov
+
+    # Return Value:
+    list(mu = mu, Sigma = Sigma)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.ledoitWolfEstimator <-
+function(x, spec = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses Ledoit-Wolf mean/covariance estimation 
+    
+    # Arguments:
+    
+    # Note:
+    #   Source from package tawny
+
+    # Eample:
+    #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
+
+    # FUNCTION:
+    
+    # Check Arguments:
+    stopifnot(inherits(x, "timeSeries"))
+
+    # Extract Matrix:
+    x.mat = getDataPart(x)
+
+    # Estimate:
+    robust = .donostahMeanCov(x, ...)
+    mu = robust$center
+    Sigma = robust$cov
 
     # Return Value:
     list(mu = mu, Sigma = Sigma)
