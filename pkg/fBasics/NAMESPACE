@@ -433,4 +433,17 @@ export(
     "vgrid",
     "volatility",
     ".xrug",
-    ".yrug" )
+    ".yrug",
+    ".gmm",
+        ".HAC",
+        ".weightsAndrews2",
+        ".bwAndrews2",
+        ".summary.gmm",
+        ".lintest",
+        ".rho",                
+        ".get_lamb",           
+        ".gel",                 
+        ".smooth_g",           
+        ".bwNeweyWest2",        
+        ".summary.gel",         
+        ".get_dat")
