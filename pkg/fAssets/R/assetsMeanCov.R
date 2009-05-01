@@ -28,6 +28,7 @@
 #  .nnveMeanCov                uses builtin from [covRobust]
 #  .shrinkMeanCov              uses builtin from [corpcor]
 #  .baggedMeanCov              uses builtin from [corpcor]
+#  .arwMeanCov                 uses builtin from [mvoutlier]
 #  .donostahMeanCov            uses builtin from [robust]
 #  .bayesSteinMeanCov          copy from Alexios Ghalanos
 #  .ledoitWolfMeanCov          uses builtin from [tawny]
@@ -39,7 +40,7 @@
 
 
 assetsMeanCov <- 
-    function(x, 
+function(x, 
     method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
     check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     ...)
@@ -206,18 +207,25 @@ assetsMeanCov <-
      
     
 .covMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-        # R base:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        
-        ans = list(center = colMeans(x.mat), cov = cov(x.mat))
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames 
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    
+    ans = list(center = colMeans(x.mat), cov = cov(x.mat))
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames 
+    
+    # Return Value:
+    ans
 }
 
 
@@ -225,18 +233,25 @@ assetsMeanCov <-
 
     
 .mveMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-        # MASS:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        
-        ans = MASS::cov.rob(x = x.mat, method = "mve")
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    
+    ans = MASS::cov.rob(x = x.mat, method = "mve")
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
 
 
@@ -244,18 +259,25 @@ assetsMeanCov <-
 
         
 .mcdMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-        # MASS:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        
-        ans = MASS::cov.rob(x = x.mat, method = "mcd") 
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    
+    ans = MASS::cov.rob(x = x.mat, method = "mcd") 
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
   
 
@@ -265,7 +287,13 @@ assetsMeanCov <-
 .studentMeanCov <-
 function(x, ...)
 {
-    # MASS:
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
     x.mat = as.matrix(x)
     N = ncol(x)
     assetNames = colnames(x)
@@ -273,7 +301,8 @@ function(x, ...)
     ans = MASS::cov.trob(x, ...)
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
+      
+    # Return Value:  
     ans
 }
 
@@ -282,18 +311,25 @@ function(x, ...)
 
 
 .MCDMeanCov <- 
-    function(x, alpha = 1/2, ...)
+function(x, alpha = 1/2, ...)
 {
-        # robustbase:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        
-        ans = robustbase::covMcd(x.mat, alpha = alpha, ...)
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    
+    ans = robustbase::covMcd(x.mat, alpha = alpha, ...)
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
   
 
@@ -301,18 +337,25 @@ function(x, ...)
  
         
 .OGKMeanCov <- 
-    function(x, sigmamu = scaleTau2, ...)
+function(x, sigmamu = scaleTau2, ...)
 {
-        # robustbase:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        
-        ans = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    
+    ans = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans    
 }
 
 
@@ -320,19 +363,26 @@ function(x, ...)
        
 
 .nnveMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-        # covRobust:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        fit = .cov.nnve(datamat = x.mat, ...)
-        
-        ans = list(center = colMeans(x.mat), cov = fit$cov) 
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    fit = .cov.nnve(datamat = x.mat, ...)
+    
+    ans = list(center = colMeans(x.mat), cov = fit$cov) 
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
 
 
@@ -340,19 +390,29 @@ function(x, ...)
       
    
 .shrinkMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-        # corpcor:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        fit = .cov.shrink(x = x.mat, ...)
-        
-        ans = list(center = colMeans(x.mat), cov = fit)
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Description:
+    
+    # Arguments:
+    
+    # Note:                                              
+    #   Based on a function borrowed from package corpcor
+
+    # FUNCTION:
+    
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    fit = .cov.shrink(x = x.mat, ...)
+    
+    ans = list(center = colMeans(x.mat), cov = fit)
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
  
 
@@ -360,29 +420,78 @@ function(x, ...)
        
          
 .baggedMeanCov <- 
-    function(x, baggedR = 100, ...)
+function(x, baggedR = 100, ...)
 {
-        # corpcor:
-        x.mat = as.matrix(x)
-        N = ncol(x)
-        assetNames = colnames(x)
-        fit = .cov.bagged(x = x.mat, R = baggedR, ...)
+    # Description:
+    
+    # Arguments:
+    
+    # Note:                                                
+    #   Based on a function borrowed from package corpcor
+    
+    # FUNCTION:
         
-        ans = list(center = colMeans(x.mat), cov = fit)
-        names(ans$center) = assetNames
-        rownames(ans$cov) = colnames(ans$cov) = assetNames
-        
-        ans
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    fit = .cov.bagged(x = x.mat, R = baggedR, ...)
+    
+    ans = list(center = colMeans(x.mat), cov = fit)
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
 }
  
+
+# ------------------------------------------------------------------------------
+       
+         
+.arwMeanCov <- 
+function(x, ...)
+{
+    # Description:
+    #   Adaptive reweighted estimator for multivariate location and scatter
+    #   with hard-rejection weights and delta = chi2inv(1-d,p)
+    
+    # Arguments:
+    
+    # Note:
+    #   Based on a function borrowed from package mvoutlier
+    
+    # FUNCTION:
+     
+    # Settings:
+    x.mat = as.matrix(x)
+    N = ncol(x)
+    assetNames = colnames(x)
+    fit = .cov.arw(x = x.mat, center = colMeans(x.mat), cov = cov(x),, ...)
+    
+    ans = list(center = fit$center, cov = fit$cov)
+    names(ans$center) = assetNames
+    rownames(ans$cov) = colnames(ans$cov) = assetNames
+    
+    # Return Value:
+    ans
+}
+
 
 # ------------------------------------------------------------------------------
 
 
 .donostahMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
-    # robust:
+    # Description:
+    
+    # Arguments:
+    
+    # Note:
+    #   Based on a function borrowed from package robust
+    
+    # Settings:
     x.mat = as.matrix(x)
     N = ncol(x)
     assetNames = colnames(x)
@@ -391,6 +500,7 @@ function(x, ...)
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
     
+    # Return Value:
     ans
 }
 
@@ -399,8 +509,15 @@ function(x, ...)
 
 
 .bayesSteinMeanCov <- 
-    function(x, ...)
+function(x, ...)
 {
+    # Description:
+    
+    # Arguments:
+    
+    # Note:
+    #   Based on a function written by Alexios Ghalanos
+    
     # Bayes Stein estimator
     # Alexios Ghalanos 2008
     # alexios at 4dscape.com
@@ -408,6 +525,7 @@ function(x, ...)
     #   and covariance using Bayes-Stein shrinkage as described in 
     #   Jorion, 1986.
 
+    # Settings:
     data <- getDataPart(x)
     mu <- as.matrix(apply(data,2, FUN = function(x) mean(x)))
     S <- cov(data)
@@ -453,15 +571,23 @@ function(x, ...)
 .ledoitWolfMeanCov <-
 function(x, ...)
 {
-    # Perform shrinkage on a sample covariance towards a biased covariance
-    # Author: Brian Lee Yung Rowe
+    # Description:
+    #   Perform shrinkage on a sample covariance towards a biased covariance
     
-    # This performs a covariance shrinkage estimation as specified in 
-    # Ledoit and Wolf. Using within the larger framework only requires 
-    # using the getCorFilter.Shrinkage function, which handles the work 
-    # of constructing a shrinkage estimate of the covariance matrix of 
-    # returns (and consequently its corresponding correlation matrix).
+    # Arguments:
+    
+    # Details:
+    #   This performs a covariance shrinkage estimation as specified in 
+    #   Ledoit and Wolf. Using within the larger framework only requires 
+    #   using the getCorFilter.Shrinkage function, which handles the work 
+    #   of constructing a shrinkage estimate of the covariance matrix of 
+    #   returns (and consequently its corresponding correlation matrix).
 
+    # Note:
+    #   Based on a function borrowed from package tawny
+    #   Author: Brian Lee Yung Rowe
+    
+    # Settings:
     data = getDataPart(x)
     center = colMeans(data)
     cov = .cov.shrink.tawny(data, ...)
@@ -481,9 +607,21 @@ function(x, ...)
 .rmtMeanCov <-
 function(x, ...)
 {
-    # Perform rmt on correlation matrix
-    # Author: Brian Lee Yung Rowe
+    # Description:
+    #   Perform Random Matrix Theory on correlation matrix
+    
+    # Arguments:
+    
+    # Author: 
+    #   tawnyBrian Lee Yung Rowe
 
+    # Note:
+    #   Based on a function borrowed from package tawny
+    #   Author: Brian Lee Yung Rowe
+    
+    # FUNCTION:
+    
+    # Settings:
     data = getDataPart(x)
     center = colMeans(data)
     cor = .filter.RMT(data, trace = FALSE, doplot = FALSE)
@@ -510,6 +648,7 @@ function(x, ...)
 getCenterRob <-
 function(object)
 {
+    # Return Value:
     object$center
 }
 
@@ -520,6 +659,7 @@ function(object)
 getCovRob <-
 function(object)
 {
+    # Return Value:
     object$cov
 }
 
