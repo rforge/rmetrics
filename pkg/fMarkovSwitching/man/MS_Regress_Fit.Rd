@@ -20,7 +20,7 @@ MS_Regress_Fit(dep, indep, S, k = 2, distIn = "Normal")
 \value{
   Returns a S4 "MS_Model" object the following slots:
 
-\item{@filtProb}{A matrix with the filtered probabilities from the Model")}
+\item{@filtProb}{A matrix with the filtered probabilities from the Model}
 \item{@smoothProb}{A matrix with the smooth probabilities from the Model (Kim's algorithm)}
 \item{@Coeff}{A list structure with all estimated coefficients (see documentation for more details)}
 \item{@CondMean}{A matrix of fitted conditional means, conditional on the probabilities of t¦t}
@@ -43,9 +43,7 @@ MS_Regress_Fit(dep, indep, S, k = 2, distIn = "Normal")
 }
 \author{Marcelo Perlin - ICMA/UK <\email{marceloperlin@gmail.com}>}
 
-\note{A MatLab version of the code is also available without loss of funcionality. See matlab exchange site (http://www.mathworks.com/matlabcentral/fileexchange)
-and search for "Marcelo Perlin."
-}
+\note{A MatLab version of the code is also available. See matlab exchange site (http://www.mathworks.com/matlabcentral/fileexchange/15789)}
 
 \seealso{\code{\link{MS_Regress_Simul}},\code{\link{MS_Regress_For}},\code{\link{MS_Regress_Lik}}}
 \examples{

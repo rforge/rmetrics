@@ -1,6 +1,6 @@
   # Function of likelihood calculation of MS model
     
-  MS_Regress_Lik<-function(param)
+  MS_Regress_Lik<-function(param,dep,indep_S,indep_nS,k,S,distIn,typeCall)
   {         
   
   # Some precalculations 

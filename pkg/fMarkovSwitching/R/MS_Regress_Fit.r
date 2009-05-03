@@ -143,7 +143,6 @@ typeCall<-"optim"   # this controls the output of the likelihood function. If ty
                     # along with filtered time series (smoothed/filtered probabilibites, conditional mean, etc)
 
 # donlp2 optimization function only takes one argument so Im passing the rest of it as global variables
-# (I dont really like doing it, but I have no other choice)
 
 assign("dep"        , dep       , envir = .GlobalEnv)
 assign("indep_S"    , indep_S   , envir = .GlobalEnv)
