@@ -42,7 +42,7 @@
 
 
 frontierPlot <-
-    function(object, frontier = c("both", "lower", "upper"),
+function(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, labels = TRUE,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, title = TRUE, ...)
@@ -199,7 +199,7 @@ frontierPlot <-
 
 
 minvariancePoints <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -234,7 +234,7 @@ minvariancePoints <-
 
 
 cmlPoints <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -269,7 +269,7 @@ cmlPoints <-
 
 
 cmlLines <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -294,8 +294,12 @@ cmlLines <-
     riskFreeRate = getRiskFreeRate(spec)
     slope = ((getTargetReturn(cmlPortfolio)[, "mean"] - riskFreeRate) /
         getTargetRisk(cmlPortfolio@portfolio)[, "Cov"])
-    if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
-
+    if(slope > 0) { 
+        abline(riskFreeRate, slope, ...)
+    } else {
+        warning("CML Line does not exist")
+    }
+    
     # Return Value:
     invisible(slope)
 }
@@ -305,7 +309,7 @@ cmlLines <-
 
 
 tangencyPoints <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -342,7 +346,7 @@ tangencyPoints <-
 
 
 tangencyLines <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -358,18 +362,23 @@ tangencyLines <-
     risk = match.arg(risk)
 
     # Get Portfolio Slots:
-    data = getSeries(object)
-    spec = getSpec(object)
-    constraints = getConstraints(object)
+    data <- getSeries(object)
+    spec <- getSpec(object)
+    constraints <- getConstraints(object)
+    riskFreeRate <- getRiskFreeRate(object)
 
     # Compute Tangency Portfolio:
     tgPortfolio = tangencyPortfolio(data, spec, constraints)
 
     # Add Tangency Line:
-    assets = frontierPoints(tgPortfolio, return = return, risk = risk,
+    assets <- frontierPoints(tgPortfolio, return = return, risk = risk,
         auto = auto)
-    slope = assets[2] / assets[1]
-    abline(0, slope, ...)
+    slope <-( assets[2] - riskFreeRate ) / assets[1]
+    if (slope > 0) {
+        abline(riskFreeRate, slope, ...)
+    } else {
+        warning("Tangency point does not exist")
+    }
 
     # Return Value:
     invisible(list(slope = slope, assets = assets))
@@ -380,7 +389,7 @@ tangencyLines <-
 
 
 equalWeightsPoints =
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -419,7 +428,7 @@ equalWeightsPoints =
 
 
 singleAssetPoints <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -491,7 +500,7 @@ singleAssetPoints <-
 
 
 twoAssetsLines <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -540,7 +549,7 @@ twoAssetsLines <-
 
 
 sharpeRatioLines <-
-    function(object,
+function(object,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -559,13 +568,14 @@ sharpeRatioLines <-
     data = getSeries(object)
     spec = getSpec(object)
     constraints = getConstraints(object)
+    riskFreeRate = getRiskFreeRate(object)
     Type = getType(object)
 
     # Efficient Frontier:
     frontPoints = frontierPoints(object, frontier = "upper",
         return = return, risk = risk, auto = auto)
     x = frontPoints[, 1]
-    y = frontPoints[, 2]
+    y = frontPoints[, 2] - riskFreeRate
 
     # Tangency Portfolio:
     tangencyPortfolio = tangencyPortfolio(data, spec, constraints)
@@ -576,7 +586,7 @@ sharpeRatioLines <-
     # Normalization to fit in EF Plot:
     norm = x.tg / max(y/x)
     index = 2:length(x)
-    index = index[diff(x) > 0]
+    #index = index[diff(x) > 0]
     x = x[index]
     y = y[index]
     y.norm = (y/x*norm)
@@ -597,7 +607,7 @@ sharpeRatioLines <-
 
     # Add Axis Labels and Title:
     mtext("Sharpe Ratio", side = 4, line = 2, cex = 0.75)
-
+    
     # Return Value:
     invisible(assets)
 }
@@ -607,7 +617,7 @@ sharpeRatioLines <-
 
 
 monteCarloPoints <-
-    function(object, mcSteps = 5000,
+function(object, mcSteps = 5000,
     return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     auto = TRUE, ...)
 {
@@ -678,7 +688,7 @@ monteCarloPoints <-
 
 
 frontierPlotControl <-
-    function(
+function(
 
     # Colors:
     sharpeRatio.col   = "blue",
@@ -764,7 +774,7 @@ frontierPlotControl <-
 
 
 .weightsWheel <-
-    function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
+function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {
     # A function implemented by Rmetrics
 
@@ -846,7 +856,7 @@ frontierPlotControl <-
 
 
 .attributesWheel <-
-    function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
+function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {
     # A function implemented by Rmetrics
 
@@ -937,7 +947,7 @@ frontierPlotControl <-
 
 
 .notStackedWeightsPlot <-
-    function(object, col = NULL)
+function(object, col = NULL)
 {
     # A function implemented by Rmetrics
 
@@ -1017,7 +1027,7 @@ frontierPlotControl <-
 
 
 .addlegend <-
-    function(object, control = list())
+function(object, control = list())
 {
     # A function implemented by Rmetrics
 
