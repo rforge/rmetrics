@@ -1,0 +1,22 @@
+[OPTIONS]
+Auto Index=Yes
+Contents file=fACD.toc
+Compatibility=1.1 or later
+Compiled file=fACD.chm
+Default topic=00Index.html
+Display compile progress=No
+Full-text search=Yes
+Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+Title=R Help for package fACD
+
+
+[FILES]
+00Index.html
+ACD_Fit.html
+ACD_Lik.html
+ACD_Simul.html
+acdModel-class.html
+fACD-package.html
+myDur.html
+plot.acdModel.html
+print.acdModel.html

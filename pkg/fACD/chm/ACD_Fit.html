@@ -1,0 +1,133 @@
+<html><head><title>Function for Estimation of an ACD Model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ACD_Fit(fACD)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ACD_Fit">
+<param name="keyword" value=" Function for Estimation of an ACD Model">
+</object>
+
+
+<h2>Function for Estimation of an ACD Model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function estimates, based on maximum likelihood, the parameters of an 
+ACD (autoregressive conditional duration) model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>ACD_Fit(x, qLag = 1, pLag = 1, distrib = "exp", typeACD = "ACD")</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+Vector with observed durations</td></tr>
+<tr valign="top"><td><code>qLag</code></td>
+<td>
+Maximum lag for alpha parameter</td></tr>
+<tr valign="top"><td><code>pLag</code></td>
+<td>
+Maximum lag for beta parameter</td></tr>
+<tr valign="top"><td><code>distrib</code></td>
+<td>
+Assumed distribution ('exp' or 'weibull')</td></tr>
+<tr valign="top"><td><code>typeACD</code></td>
+<td>
+Functional form of conditional duration equation (possible value = 'ACD','log','BC' or 'EX')</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns a S4 object with the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+Observed Durations</td></tr>
+<tr valign="top"><td><code>qLag</code></td>
+<td>
+Maximum lag for alpha parameter</td></tr>
+<tr valign="top"><td><code>pLag</code></td>
+<td>
+Maximum lag for beta parameter</td></tr>
+<tr valign="top"><td><code>condDur</code></td>
+<td>
+Conditional Duration Series</td></tr>
+<tr valign="top"><td><code>Coeff</code></td>
+<td>
+A list with all estimated coefficients</td></tr>
+<tr valign="top"><td><code>Coeff_Std</code></td>
+<td>
+A list with all standard errors for coefficients</td></tr>
+<tr valign="top"><td><code>Coeff_pValues</code></td>
+<td>
+A list with all p values of coefficients</td></tr>
+<tr valign="top"><td><code>LL</code></td>
+<td>
+Value of maximum log likelihood</td></tr>
+<tr valign="top"><td><code>paramVec</code></td>
+<td>
+A vector with all coefficients (same values as in Coeff)</td></tr>
+<tr valign="top"><td><code>nParameter</code></td>
+<td>
+Number of parameters in the model</td></tr>
+<tr valign="top"><td><code>sizeModel</code></td>
+<td>
+A list with the size of the model (number of indep var, etc)</td></tr>
+<tr valign="top"><td><code>distrib</code></td>
+<td>
+Assumed distribution for ML estimation</td></tr>
+<tr valign="top"><td><code>typeACD</code></td>
+<td>
+Assumed functional form of ACD filter</td></tr>
+<tr valign="top"><td><code>timeRun</code></td>
+<td>
+Time of estimation of model</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ACD_Simul.html">ACD_Simul</a></code>,<code><a href="acdModel-class.html">acdModel-class</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+data(myDur)
+
+x=myDur#[1:500]
+pLag=1
+qLag=1
+distrib='exp'
+
+typeACD='ACD'
+
+modelOut&lt;-ACD_Fit(x,qLag,pLag,distrib,typeACD)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fACD</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

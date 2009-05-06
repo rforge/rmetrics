@@ -1,0 +1,91 @@
+<html><head><title>Function for Simulation of an ACD model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ACD_Simul(fACD)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ACD_Simul">
+<param name="keyword" value=" Function for Simulation of an ACD model">
+</object>
+
+
+<h2>Function for Simulation of an ACD model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function simulates an ACD process based on input arguments.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>ACD_Simul(nr, Coeff, distrib = "exp", typeACD = "ACD")</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>nr</code></td>
+<td>
+Number of observations in simulation</td></tr>
+<tr valign="top"><td><code>Coeff</code></td>
+<td>
+List with all coefficients (check example)</td></tr>
+<tr valign="top"><td><code>distrib</code></td>
+<td>
+Distribution assumption for disturbance</td></tr>
+<tr valign="top"><td><code>typeACD</code></td>
+<td>
+Type of ACD model to be simulated ('ACD', 'log', 'BC' or 'EX'</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns a vector with the simulated duration series</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ACD_Fit.html">ACD_Fit</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+nr=1000
+
+pLag=1
+qLag=1
+distrib='weibull'
+
+typeACD='BC'
+
+Coeff&lt;-list(w=.05  ,
+            q=0.016,
+            p=.95  ,
+            y=.9   ,
+            delta=.4)
+
+simDur&lt;-ACD_Simul(nr,Coeff,distrib,typeACD)
+
+plot(simDur,xlab='Event',ylab='Simulated Duration',type='l')
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fACD</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,70 @@
+<html><head><title>Function for calculation of log likelihood of ACD model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ACD_Lik(fACD)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ACD_Lik">
+<param name="keyword" value=" Function for calculation of log likelihood of ACD model">
+</object>
+
+
+<h2>Function for calculation of log likelihood of ACD model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function calculates the conditional duration and resulting log likelihood of ACD models. 
+This function is called by <code>ACD_Fit</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>ACD_Lik(param, x, qLag, pLag, distrib, typeACD, typeCall = "maxLik")</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>param</code></td>
+<td>
+parameter vector</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+Observed duration series</td></tr>
+<tr valign="top"><td><code>qLag</code></td>
+<td>
+Maximum lag for alpha parameter</td></tr>
+<tr valign="top"><td><code>pLag</code></td>
+<td>
+Maximum lag for beta parameter</td></tr>
+<tr valign="top"><td><code>distrib</code></td>
+<td>
+Distribution assumption</td></tr>
+<tr valign="top"><td><code>typeACD</code></td>
+<td>
+Type of ACD model</td></tr>
+<tr valign="top"><td><code>typeCall</code></td>
+<td>
+Type of Call to function</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns the log likelihood of the model, or filtered series (dependeding on typeCall)</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+
+<hr><div align="center">[Package <em>fACD</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

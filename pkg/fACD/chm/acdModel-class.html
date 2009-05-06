@@ -1,0 +1,65 @@
+<html><head><title>A Class for an ACD Model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>acdModel-class(fACD)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   acdModel-class">
+<param name="keyword" value=" A Class for an ACD Model">
+</object>
+
+
+<h2>A Class for an ACD Model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This class is the output from the use of function <code>ACD_Fit</code>. Normally you'll never call the object contructor 
+to build this class
+</p>
+
+
+<h3>Slots</h3>
+
+<dl>
+<dt>x</dt><dd>Observed Durations</dd>
+<dt>qLag</dt><dd>Maximum lag for alpha parameter</dd>
+<dt>pLag</dt><dd>Maximum lag for beta parameter</dd>  
+<dt>condDur</dt><dd>Conditional Duration Series</dd>  
+<dt>Coeff</dt><dd>A list with all estimated coefficients</dd>
+<dt>Coeff_Std</dt><dd>A list with all standard errors for coefficients</dd>
+<dt>Coeff_pValues</dt><dd>A list with all p values of coefficients</dd>
+<dt>LL</dt><dd>Value of maximum log likelihood</dd>
+<dt>paramVec</dt><dd>A vector with all coefficients (same values as in Coeff)</dd>
+<dt>nParameter</dt><dd>Number of parameters in the model</dd>
+<dt>sizeModel</dt><dd>A list with the size of the model (number of indep var, etc)</dd>
+<dt>distrib</dt><dd>Assumed distribution for ML estimation</dd>  
+<dt>typeACD</dt><dd>Assumed functional form of ACD filter</dd>    
+<dt>timeRun</dt><dd>Time of estimation of model</dd>  
+</dl>
+
+<h3>Methods</h3>
+
+<dl>
+<dt>plot</dt><dd>Plots an object of class 'acdModel'</dd>
+<dt>print</dt><dd>Prints to screen the coefficients of the model (the 'acdModel' object)</dd>
+</dl>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>showClass("acdModel")</pre>
+
+
+
+<hr><div align="center">[Package <em>fACD</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
