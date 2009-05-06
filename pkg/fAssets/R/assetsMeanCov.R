@@ -19,7 +19,7 @@
 # FUNCTION:                   DESCRIPTION:
 #  assetsMeanCov               Estimates mean and variance for a set of assets
 # FUNCTION:                   DESCRIPTION:
-#  .covMeanCov                 uses standard covariance estimation
+#  .covMeanCov                 uses sample covariance estimation
 #  .mveMeanCov                 uses "cov.mve" from [MASS]
 #  .mcdMeanCov                 uses "cov.mcd" from [MASS]
 #  .studentMeanCov             uses "cov.trob" from [MASS]
@@ -98,7 +98,6 @@ function(x,
     
     # Transform Input:
     x.mat = as.matrix(x)
-    
     
     # Do not use: method = match.arg(method)
     method = method[1]
@@ -210,8 +209,10 @@ function(x,
 function(x, ...)
 {
     # Description:
+    #   Uses sample covariance estimation
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -238,6 +239,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -264,6 +266,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -290,6 +293,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -316,6 +320,7 @@ function(x, alpha = 1/2, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -342,6 +347,7 @@ function(x, sigmamu = scaleTau2, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -368,6 +374,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # FUNCTION:
     
@@ -395,6 +402,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Note:                                              
     #   Based on a function borrowed from package corpcor
@@ -425,6 +433,7 @@ function(x, baggedR = 100, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Note:                                                
     #   Based on a function borrowed from package corpcor
@@ -457,6 +466,7 @@ function(x, ...)
     #   with hard-rejection weights and delta = chi2inv(1-d,p)
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Note:
     #   Based on a function borrowed from package mvoutlier
@@ -487,6 +497,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Note:
     #   Based on a function borrowed from package robust
@@ -514,6 +525,7 @@ function(x, ...)
     # Description:
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Note:
     #   Based on a function written by Alexios Ghalanos
@@ -575,6 +587,7 @@ function(x, ...)
     #   Perform shrinkage on a sample covariance towards a biased covariance
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Details:
     #   This performs a covariance shrinkage estimation as specified in 
@@ -611,6 +624,7 @@ function(x, ...)
     #   Perform Random Matrix Theory on correlation matrix
     
     # Arguments:
+    #   x - an object of class timeSeries
     
     # Author: 
     #   tawnyBrian Lee Yung Rowe
