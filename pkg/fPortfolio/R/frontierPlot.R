@@ -51,7 +51,9 @@ function(object, frontier = c("both", "lower", "upper"),
 
     # Description:
     #   Plots the efficient frontier
-
+    
+    # Arguments:
+    
     # FUNCTION:
 
     # Check Colors:
@@ -208,6 +210,8 @@ function(object,
     # Description:
     #   Adds the minimum risk point to a MV and CVaR portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -243,6 +247,8 @@ function(object,
     # Description:
     #   Adds the capital market line to a portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -278,6 +284,8 @@ function(object,
     # Description:
     #   Adds the capital market line to a portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -318,6 +326,8 @@ function(object,
     # Description:
     #   Adds tangency point and line to a MV and CVaR portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -355,6 +365,8 @@ function(object,
     # Description:
     #   Adds tangency point and line to a MV and CVaR portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -398,6 +410,8 @@ function(object,
     # Description:
     #   Adds equal weights portfolio to a portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -437,6 +451,8 @@ function(object,
     # Description:
     #   Adds all single assets returns and risks to a portfolio plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Add Single Assets:
@@ -509,6 +525,8 @@ function(object,
     # Description:
     #   Adds efficient long-only frontier of all portfolio pairs
 
+    # Arguments:
+    
     # Note:
     #   Only supported for "Short" and "LongOnly" Constraints!
 
@@ -558,6 +576,8 @@ function(object,
     # Description:
     #   Adds Sharpe Ratio
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -622,10 +642,12 @@ function(object, mcSteps = 5000,
     auto = TRUE, ...)
 {
     # A function implemented by Rmetrics
-
+    
     # Description:
     #   Adds randomly feasible portfolios to a plot
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Match Arguments:
@@ -728,6 +750,8 @@ function(
     # Description:
     #   Sets frontier plot control parameters
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Return Value:
@@ -781,6 +805,8 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     # Description:
     #   Adds a pie plot of weights for MV and CVaR Portfolios
 
+    # Arguments:
+    
     # Details:
     #   The default settings are:
     #   piePos - Position of tangency Portfolio
@@ -863,6 +889,8 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     # Description:
     #   Adds a pie plot of the weights
 
+    # Arguments:
+    
     # Details:
     #   The default settings are:
     #   piePos - Position of tangency Portfolio
@@ -1079,11 +1107,20 @@ function(object, control = list())
 
 tailoredFrontierPlot <-
 function(object,
-    risk = c("Cov", "Sigma", "CVaR", "VaR"),
+    return = c("mean", "mu"), risk = c("Cov", "Sigma", "CVaR", "VaR"),
     mText = NULL, col = NULL, xlim = NULL, ylim = NULL,
     twoAssets = FALSE)
 {
 
+    # A function implemented by Rmetrics
+
+    # Description:
+    #   Creates an easy to use tailored frontier plot
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # 1. Plot the Frontier, add margin text, grid and ablines:
     offset = 0.10
     risk <- match.arg(risk)
@@ -1112,7 +1149,8 @@ function(object,
         ylim = range(getMean(object))
         Ylim = c(ylim[1]-diff(ylim)*offset, ylim[2]+diff(ylim)*offset)
     }
-    frontierPlot(object, pch = 19, risk = risk, xlim = Xlim, ylim = Ylim)
+    frontierPlot(object, return = return, risk = risk, auto = FALSE, 
+        xlim = Xlim, ylim = Ylim, pch = 19)
     if(is.null(mText)) mText = getTitle(object)
     mtext(mText, side = 3, line = 0.5, font = 2)
     grid()
@@ -1124,32 +1162,38 @@ function(object,
     spec = getSpec(object)
     constraints = getConstraints(object)
     mvPortfolio = minvariancePortfolio(data, spec, constraints)
-    minvariancePoints(object, risk = risk, auto = FALSE,
+    minvariancePoints(object, return = return, risk = risk, auto = FALSE,
         pch = 19, col = "red")
 
     # 3. Add Tangency Portfolio Point and Tangency Line:
-    tangencyPoints(object, risk = risk, pch = 19, col = "blue")
-    tangencyLines(object, risk = risk, col = "blue")
+    tangencyPoints(object, return = return, risk = risk, auto = FALSE,
+        pch = 19, col = "blue")
+    tangencyLines(object, return = return, risk = risk, auto = FALSE,
+        col = "blue")
 
     # 4. Add Equal Weights Portfolio:
-    xy = equalWeightsPoints(object, risk = risk, pch = 15, col = "grey")
+    xy = equalWeightsPoints(object, return = return, risk = risk, 
+        auto = FALSE, pch = 15, col = "grey")
     text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20, "EWP",
         font = 2, cex = 0.7)
 
     # 5. Add all Assets Points:
     if (is.null(col)) col = rainbow(6)
-    xy = singleAssetPoints(object, risk = risk, cex = 1.5,
+    xy = singleAssetPoints(object, return = return, risk = risk, 
+        auto = FALSE, cex = 1.5,
         col = col, lwd = 2)
     text(xy[, 1]+diff(xlim)/20, xy[, 2]+diff(ylim)/20,
         rownames(xy), font = 2, cex = 0.7)
 
     # 6. Add optionally all Two Assets  Lines
     if (twoAssets) {
-        twoAssetsLines(object, risk = risk, lty = 3, col = "grey")
+        twoAssetsLines(object, return = return, risk = risk, auto = FALSE,
+            lty = 3, col = "grey")
     }
 
     # 6. Add Sharpe Ratio Line:
-    sharpeRatioLines(object, risk = risk, col = "orange", lwd = 2)
+    sharpeRatioLines(object, return = return, risk = risk, auto = FALSE,
+        col = "orange", lwd = 2)
 
     # Return Value:
     invisible(object)
