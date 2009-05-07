@@ -73,8 +73,8 @@ solveRquadprog <-
         # class:
         class(ans) = c("solveRfoo", "list")
 
-        if(ans$status != 0)
-        print(ans)
+        ##if(ans$status != 0)
+        ##print(ans)
     }
 
     # Return Value:
