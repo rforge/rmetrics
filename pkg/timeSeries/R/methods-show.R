@@ -60,6 +60,7 @@ setMethod("show", "timeSeries",
 
 # ------------------------------------------------------------------------------
 
+
 .print.timeSeries <-
     function(x, FinCenter = NULL, format = NULL,
     style = c("tS", "h", "ts"), by = c("month", "quarter"), ...)
@@ -92,20 +93,35 @@ setMethod("show", "timeSeries",
     # Match Arguments:
     style = match.arg(style)
     by = match.arg(by)
-
-    # Print:
-    if (style == "tS") {
-        # Change Format:
-        if (!is.null(format)) {
-            charvec = rownames(x)
-            charvec = format(as.POSIXct(charvec, tz = "GMT"),
-                format = format, tz = "GMT")
-            rownames(x) <- charvec
+    
+    # Change Format:
+    if (is.null(format)) {
+        charvec = rownames(x)
+    } else {
+        ans = timeDate(charvec = rownames(x), 
+            zone = "GMT", FinCenter = finCenter(x))
+        if (format == "%Q") {
+            Quarters = rep(paste("Q", 1:4, sep = ""), each = 3)
+            Y = atoms(ans)[, 1]
+            Q = Quarters[atoms(ans)[, 2]]
+            charvec = paste(Y, Q)
+        } else {
+            charvec = format(ans, format)
         }
-        show(x)
+    }
+  
+    # Styles:
+    if (style == "tS") {
+        cat(finCenter(x), "\n")
+        X <- getDataPart(x)  
+        rownames(X) = charvec
+        print(X)
     } else if (style == "h") {
         stopifnot(isUnivariate(x))
-        print(as.vector(x))
+        # print(as.vector(x))
+        ans = as.matrix(x)[,1]
+        names(ans) = charvec
+        print(ans)  
     } else if (style == "ts") {
         freq = c(month = 12, quarter = 4)
         start(x)
@@ -118,6 +134,10 @@ setMethod("show", "timeSeries",
     # Return Value:
     invisible(x)
 }
+
+
+# ------------------------------------------------------------------------------
+
 
 setMethod("print", "timeSeries", .print.timeSeries)
 
