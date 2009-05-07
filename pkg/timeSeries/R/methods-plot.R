@@ -12,6 +12,7 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
+
 ################################################################################
 #  plot.timeSeries           Plots a 'timeSeries' object
 #  points,timeSeries         Adds points to a 'timeSeries' plot
@@ -68,27 +69,30 @@ setMethod("plot", "timeSeries",
 
     # Return Value:
     .plotTimeSeries(x = x, y = y, plot.type = plot.type, xy.labels =
-        xy.labels, xy.lines = xy.lines, panel = panel, nc = nc, xlabel =
-        xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
-        oma.multi = oma.multi, yax.flip = yax.flip,
-        format = format, at = at, widths = widths, heights = heights, ...)
+            xy.labels, xy.lines = xy.lines, panel = panel, nc = nc, xlabel =
+            xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
+            oma.multi = oma.multi, yax.flip = yax.flip,
+            format = format, at = at, widths = widths, heights = heights, ...)
 })
+
 
 # until UseMethod dispatches S4 methods in 'base' functions
 plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
+
 
 # ------------------------------------------------------------------------------
 # Internal Function called by plot():
 
 
 .plotTimeSeries <-
-    function(x, y = NULL, plot.type = c("multiple",
+function(x, y = NULL, plot.type = c("multiple",
     "single"), xy.labels, xy.lines, panel = lines, nc, xlabel, ylabel,
-    type = "l", xlim = NULL, ylim = NULL, xlab = "Time", ylab, log =
-    "", col = par("col"), bg = NA, pch = par("pch"), cex = par("cex"),
+    type = "l", xlim = NULL, ylim = NULL, xlab = "Time", ylab, log = "", 
+    col = 1:ncol(x), bg = NA, 
+    pch = 1:ncol(x), cex = par("cex"),
     lty = par("lty"), lwd = par("lwd"), axes = TRUE, frame.plot =
     axes, ann = par("ann"), main = NULL, mar.multi, oma.multi, yax.flip,
-    format, at, widths, heights, ...)
+    format, at, widths, heights, grid = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -107,10 +111,11 @@ plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
     if (format == "auto") format = x@format
     X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
     if (is.character(at) && at == "auto") {
-        Index = round(seq(1, length(time(x)), length = 6))
-        at = X[Index] }
+        # Index = round(seq(1, length(time(x)), length = 6))
+        # at = X[Index] 
+        at = seq(X[1], X[length(X)], length = 6) 
+    }
     if(is(at, "timeDate")) at = as.POSIXct(at)
-
 
     # Multiple Plots, each one Curve, on one Page:
     if (plot.type == "multiple" && nser > 1) {
@@ -129,10 +134,10 @@ plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
         layout(matrix(seq(nr * nc), nr), widths = widths, heights = heights)
         for (i in 1:nser) {
             plot(X, series(x)[, i], axes = FALSE,
-                 xlab = "", ylab = "", log = log, col = col, bg = bg,
-                 pch = pch, ann = ann, type = "n", ...)
-            panel(X, series(x)[, i], col = col, bg = bg,
-                  pch = pch, type = type, ...)
+                 xlab = "", ylab = "", log = log, col = col[i], bg = bg,
+                 pch = pch[i], ann = ann, type = "n", ...)
+            panel(X, series(x)[, i], col = col[i], bg = bg,
+                  pch = pch[i], type = type, ...)
             if (frame.plot) box(...)
             y.side <- if (i%%2 || !yax.flip) 2 else 4
             do.xax <- i%%nr == 0 || i == nser
@@ -150,6 +155,7 @@ plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
                 mtext(nm[i], y.side, line = 3, ...)
                 if (do.xax) mtext(xlab, side = 1, line = 3, ...)
             }
+            if(grid) abline(v = at, lty = 3, col = "grey")
         }
         if (ann && !is.null(main)) {
             par(mfcol = c(1, 1))
@@ -218,12 +224,12 @@ plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
     if (NCOL(x) > 1)
         for (i in 2:NCOL(x))
             lines(X, series(x)[, i],
-                  col = col[(i - 1)%%length(col) + 1],
-                  lty = lty[(i - 1)%%length(lty) + 1],
-                  lwd = lwd[(i - 1)%%length(lwd) + 1],
-                  bg = bg[(i - 1)%%length(bg) + 1],
-                  pch = pch[(i - 1)%%length(pch) + 1],
-                  type = type)
+                col = col[(i - 1)%%length(col) + 1],
+                lty = lty[(i - 1)%%length(lty) + 1],
+                lwd = lwd[(i - 1)%%length(lwd) + 1],
+                bg = bg[(i - 1)%%length(bg) + 1],
+                pch = pch[(i - 1)%%length(pch) + 1],
+                type = type)
     if (ann)
         title(main = main, xlab = xlab, ylab = ylab, ...)
     if (axes) {
@@ -237,7 +243,9 @@ plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
     return(invisible())
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 setMethod("lines", "timeSeries",
     function(x, FinCenter = NULL, ...)
@@ -275,7 +283,9 @@ setMethod("lines", "timeSeries",
 lines.timeSeries <- function(x, FinCenter = NULL, ...)
     timeSeries::lines(x, FinCenter = FinCenter, ...)
 
+    
 # ------------------------------------------------------------------------------
+
 
 setMethod("points", "timeSeries",
     function(x, FinCenter = NULL, ...)
@@ -308,8 +318,10 @@ setMethod("points", "timeSeries",
     invisible(x)
 })
 
+
 # until UseMethod dispatches S4 methods in 'base' functions
 points.timeSeries <- function(x, FinCenter = NULL, ...)
     timeSeries::points(x, FinCenter = FinCenter, ...)
 
+    
 ################################################################################
