@@ -30,6 +30,8 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# adapted with small changes (##) by Yohan Chalabi for presonal use
+
 # exit on any failures
 set -e
 # report unset variables
@@ -42,7 +44,7 @@ VERSION="0.11"
 PWD=`pwd`
 STRIPPREFIX="AUTOMATICALLY-DETERMINED"
 LINELEN=75
-GROUPBYDAY="yes"
+GROUPBYDAY="yes" ##
 INCLUDEREV="no"
 BREAKBEFOREMSG="no"
 REPARAGRAPH="no"
@@ -50,10 +52,10 @@ SEPARATEDAYLOGS="no"
 ACTIONS="no"
 CHANGELOG=""
 OUTSTYLE="cl"
-SVNLOGCMD="svn --verbose --xml log -r BASE:{2009-01-01}"
+SVNLOGCMD="svn --verbose --xml log -r BASE:{2009-01-01}" ##
 SVNINFOCMD="svn info"
 AUTHORSFILE=""
-IGNORE_MESSAGE_STARTING=""
+IGNORE_MESSAGE_STARTING="!" ##
 TITLE="ChangeLog"
 REVISION_LINK="#r"
 TMPFILES=""
@@ -223,7 +225,7 @@ do
       echo "  --title=NAME         title used in html file"
       echo "  --revision-link=NAME link revision numbers in html output"
       echo "  --ignore-message-starting=STRING"
-      echo "                       ignore messages starting with the string"
+      echo "                       ignore messages starting with string"
       echo "  -o, --output=FILE    output to FILE instead of ChangeLog"
       echo "  -f, --file=FILE      alias for -o, --output"
       echo "  --stdout             output to stdout instead of ChangeLog"

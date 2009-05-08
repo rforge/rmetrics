@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- minor modification made by Yohan Chalabi for personal use -->
+<!-- ignore-message-starting is now ignore-message-regexp -->
+<!-- src of info about regexp at http://www.w3.org/TR/xpath-functions/#func-matches -->
+<!-- http://www.exslt.org/regexp/functions/match/regexp.match.html -->
+<!-- http://www.ibm.com/developerworks/library/x-callbk/index.html -->
+
 <!--
 
    svn2cl.xsl - xslt stylesheet for converting svn log to a normal
@@ -110,9 +116,13 @@
  <!-- match the topmost log entry -->
  <xsl:template match="log">
   <xsl:choose>
-   <xsl:when test="$ignore-message-starting != ''">
-    <!-- only handle logentries with don't contain the string -->
-    <xsl:apply-templates select="logentry[not(starts-with(msg,$ignore-message-starting))]" />
+    <xsl:when test="$ignore-message-starting != ''">
+      <!-- only handle logentries with don't contain the string -->
+      <xsl:apply-templates select="logentry[not(starts-with(msg,$ignore-message-starting))]" />
+      <!-- FIXME : use ignore-message-regexp -->
+      <!-- <xsl:when test="$ignore-message-regexp != ''"> -->
+      <!-- <xsl:apply-templates select="logentry[not(matches(msg,$ignore-message-regexp))]"/>
+      -->
    </xsl:when>
    <xsl:otherwise>
     <xsl:apply-templates select="logentry" />
