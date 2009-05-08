@@ -15,12 +15,12 @@ importFrom("graphics",
            "plot.new",
            "plot.window",
            "segments",
+           "abline",
            "axis.POSIXct",
            "layout",
            "mtext",
            "plot.default",
-           "text",
-           "abline")
+           "text")
 importFrom("grDevices",
            "xy.coords")
 importFrom("methods",

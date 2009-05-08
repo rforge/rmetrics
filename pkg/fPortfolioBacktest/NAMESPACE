@@ -22,7 +22,6 @@ importFrom("fPortfolio",
            "portfolioData",
            "portfolioSpec",
            "getTargetRisk",
-           "getStatus",
            "minvariancePortfolio",
            "tangencyPortfolio")
 importFrom("graphics",
