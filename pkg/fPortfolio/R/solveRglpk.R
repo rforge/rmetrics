@@ -271,34 +271,33 @@ solveRglpk <-
     obj = c(rep(1/nScenarios, nScenarios), rep(0, nAssets))
     names(obj) = objNames
 
-    # The A_equal Equation Constraints: A_eq %*% x == a_eq
-    eqsumW = eqsumWConstraints(Data, spec, constraints)
-    Aeq = cbind(matrix(0, ncol = nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
-    aeq = eqsumW[, 1]
-    deq = rep("==", nrow(eqsumW))
-
+    # 1
     # The negative MAD Equation Constraints:
     #   (-diag + [Returns-mu]) %*% (es,W) <= 0
     Aneg = cbind(-diag(nScenarios), getDataPart(Series) )
     aneg = rep(0, nrow(Aneg))
     dneg = rep("<=", nrow(Aneg))
 
+    # 2
     # The positive MAD Equation Constraints:
     #   (+diag + [Returns-mu]) %*% (es,W) >= 0
     Apos = cbind( diag(nScenarios), getDataPart(Series) )
     apos = rep(0, nrow(Apos))
     dpos = rep(">=", nrow(Apos))
 
-    # The Konno MAD Equation Constraints:
-    #   (-diag - [Returns-mu]) %*% (es,W) <= 0
-    Akonno = cbind( -diag(nScenarios), - getDataPart(Series) )
-    akonno = rep(0, nrow(Apos))
-    dkonno = rep("<=", nrow(Apos))
+    # 3 and 4
+    # The A_equal Equation Constraints: A_eq %*% x == a_eq
+    eqsumW = eqsumWConstraints(Data, spec, constraints)
+    Aeq = cbind(matrix(0, ncol = nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+    aeq = eqsumW[, 1]
+    deq = rep("==", nrow(eqsumW))
 
+    # 5
     # The e_s > = 0 Equation Constraints:
     Aes = cbind(diag(nScenarios), matrix(0, nrow = nScenarios, ncol = nAssets))
     aes = rep(0, nrow(Aes))
     des = rep(">=", nrow(Aes))
+
 
     # Group Constraints: A W >= a
     minsumW = minsumWConstraints(Data, spec, constraints)
@@ -324,17 +323,13 @@ solveRglpk <-
         dmaxsum  = rep("<=", nrow(maxsumW))
     }
 
-    # Putting all together:
-    what = "scherer"
-    if (what == "konno") {
-        mat = rbind(Aeq, Akonno, Aes, Aminsum, Amaxsum)
-        rhs =     c(aeq, akonno, aes, aminsum, amaxsum)
-        dir =     c(deq, dkonno, des, dminsum, dmaxsum)
-    } else if (what == "scherer") {
-        mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
-        rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
-        dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
-    }
+    # Putting together
+    mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
+    rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
+    dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
+
+
+
 
     # Box Constraints: Upper and Lower Bounds as listn required ...
     minW = minWConstraints(Data, spec, constraints)
@@ -372,16 +367,14 @@ solveRglpk <-
 	# FUNCTION:
 
 	# Solve - use Rglpk_solve_LP:
-    # optim <- Rglpk::Rglpk_solve_LP(
-    optim <- .Rglpk_solve_LP(
-        obj = obj,
-        mat = mat,
-        dir = dir,
-        rhs = rhs,
-        types = types,
-        max = max,
-        bounds = bounds,
-        verbose = verbose)
+    optim <- Rglpk::Rglpk_solve_LP(obj = obj,
+                                   mat = mat,
+                                   dir = dir,
+                                   rhs = rhs,
+                                   types = types,
+                                   max = max,
+                                   bounds = bounds,
+                                   verbose = verbose)
 
     # Extract Weights:
     weights = .checkWeights(rev(rev(optim$solution)[1:nAssets]))

@@ -62,7 +62,7 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
 
@@ -95,7 +95,7 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mveEstimator(x)
 
@@ -128,7 +128,7 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; mcdEstimator(x)
 
@@ -161,12 +161,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; lpmEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -204,12 +204,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -239,12 +239,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -273,12 +273,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covMcdEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -312,7 +312,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; covOGKEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -342,12 +342,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; shrinkEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -356,7 +356,7 @@ function(x, spec = NULL, ...)
 
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = corpcor::cov.shrink(x = x.mat, verbose = FALSE, ...)
+    Sigma = .cov.shrink(x = x.mat, verbose = FALSE, ...)
     attr(Sigma, "lambda.var") <- NULL
     attr(Sigma, "lambda.var.estimated") <- NULL
 
@@ -378,12 +378,12 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Eample:
     #   x  = as.timeSeries(data(LPP2005REC))[, 1:6]; nnveEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -392,7 +392,7 @@ function(x, spec = NULL, ...)
 
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = covRobust::cov.nnve(datamat = x.mat, ...)$cov
+    Sigma = .cov.nnve(datamat = x.mat, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
 
     # Return Value:
@@ -409,12 +409,12 @@ function(x, spec = NULL, ...)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Uses mean/student-d covariance estimation 
-    
+    #   Uses mean/student-d covariance estimation
+
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Note:
     #   Source from package MASS
 
@@ -422,7 +422,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .studentEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -448,20 +448,20 @@ function(x, spec = NULL, ...)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Uses bagged mean/covariance estimation  
+    #   Uses bagged mean/covariance estimation
 
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Note:
     #   Source from package corpcor
-    
+
     # Eample:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .baggedEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -489,10 +489,10 @@ function(x, spec = NULL, ...)
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Description:
-    #   Uses Donostah's mean/covariance estimation 
-    
+    #   Uses Donostah's mean/covariance estimation
+
     # Note:
     #   Source from package robust
 
@@ -500,7 +500,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .donostahEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -526,12 +526,12 @@ function(x, spec = NULL, ...)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Uses Bayes Stein mean/covariance estimation 
-    
+    #   Uses Bayes Stein mean/covariance estimation
+
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Note:
     #   Source from Alexios Ghalanos
 
@@ -539,7 +539,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .bayesSteinEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -565,12 +565,12 @@ function(x, spec = NULL, ...)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Uses Ledoit-Wolf mean/covariance estimation 
-    
+    #   Uses Ledoit-Wolf mean/covariance estimation
+
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Note:
     #   Source from package tawny
 
@@ -578,7 +578,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .ledoitWolfEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
@@ -604,12 +604,12 @@ function(x, spec = NULL, ...)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Uses Random Matrix Theory correlation estimation 
-    
+    #   Uses Random Matrix Theory correlation estimation
+
     # Arguments:
     #   x - an object of class timeSeries
     #   spec - a portfolio specification of class fPFOLIOSPEC
-    
+
     # Note:
     #   Source from package tawny
 
@@ -617,7 +617,7 @@ function(x, spec = NULL, ...)
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]; .rmtEstimator(x)
 
     # FUNCTION:
-    
+
     # Check Arguments:
     stopifnot(inherits(x, "timeSeries"))
 
