@@ -1,6 +1,7 @@
 \name{getPortfolio}
 
 
+
 \alias{getData.fPORTFOLIO}
 \alias{getSeries.fPORTFOLIO}
 \alias{getNAssets.fPORTFOLIO}
@@ -37,6 +38,11 @@
 
 \alias{getCovRiskBudgets.fPORTFOLIO}
 \alias{getTailRiskBudgets.fPORTFOLIO}
+
+\alias{getA.fPORTFOLIO}
+\alias{getControl.fPORTFOLIO}
+\alias{getObjective.fPORTFOLIO}
+\alias{getOptions.fPORTFOLIO}
 
 
 \title{Portfolio Class Extractors}
@@ -113,6 +119,13 @@
 
 \method{getCovRiskBudgets}{fPORTFOLIO}(object)
 \method{getTailRiskBudgets}{fPORTFOLIO}(object)
+
+
+\method{getA}{fPORTFOLIO}(object)
+\method{getControl}{fPORTFOLIO}(object)
+\method{getObjective}{fPORTFOLIO}(object)
+\method{getOptions}{fPORTFOLIO}(object)
+
 }
 
 

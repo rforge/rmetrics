@@ -29,6 +29,7 @@
 \alias{getControl.fPFOLIOSPEC}        
 \alias{getTrace.fPFOLIOSPEC}           
 
+\alias{getMessages.fPFOLIOSPEC}
 
 \title{Portfolio Specification Extractor Functions}
 
@@ -63,6 +64,8 @@
 \method{getOptions}{fPFOLIOSPEC}(object)
 \method{getControl}{fPFOLIOSPEC}(object)
 \method{getTrace}{fPFOLIOSPEC}(object)
+
+\method{getMessages}{fPFOLIOSPEC}(object)
 }
 
 

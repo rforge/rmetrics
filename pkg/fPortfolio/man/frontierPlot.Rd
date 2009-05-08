@@ -58,9 +58,9 @@ sharpeRatioLines(object, return = c("mean", "mu"),
 monteCarloPoints(object, mcSteps = 5000, return = c("mean", "mu"), 
     risk = c("Cov", "Sigma", "CVaR", "VaR"), auto = TRUE, \dots)
 
-tailoredFrontierPlot(object, risk = c("Cov", "Sigma", "CVaR", "VaR"), 
-    mText = NULL, col = NULL, xlim = NULL, ylim = NULL, 
-    twoAssets = FALSE)
+tailoredFrontierPlot(object, return = c("mean", "mu"), risk = c("Cov",
+"Sigma", "CVaR", "VaR"), mText = NULL, col = NULL, xlim = NULL, ylim =
+NULL, twoAssets = FALSE) 
 }
 
 
