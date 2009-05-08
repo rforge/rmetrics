@@ -42,7 +42,8 @@ pkgsRmetricsDev <- function()
       "fExoticOptions",
       "fAsianOptions",
       "fAssets",
-      "fPortfolio")
+      "fPortfolio",
+      "fPortfolioBacktest")
 
       ### "Rdonlp2",
       ### "Ripop",
@@ -313,8 +314,8 @@ checkBeforeCommit  <-
 ## ## before starting install packages without namespace
 
 genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
-                         "fGarch", "fCopulae", "fAssets", "fPortfolio"),
-                         dependsOnPkgsDESC = TRUE, ...)
+                         "fGarch", "fCopulae", "fAssets", "fPortfolio",
+                         "fPortfolioBacktest"), dependsOnPkgsDESC = TRUE, ...)
 {
 
     stopifnot(is.character(pkgs))
