@@ -97,7 +97,7 @@ setMethod("AIC", signature(object = "mle.ghyp"), AIC.mle.ghyp)
                                gamma = k * object@gamma)
         }
     }else if(type == "alpha.delta"){
-        if(.is.univariate(object)){      #Univariate
+        if(.is.univariate(object)){     #Univariate
             sigma <- as.numeric(object@sigma)
             alpha <- sqrt(1/sigma^2 * (object@psi + object@gamma^2/sigma^2))
             beta <- object@gamma / sigma^2
@@ -131,25 +131,48 @@ setMethod("coefficients", signature(object = "ghyp"), coef.ghyp)
 {
     .test.ghyp(x, case = "multivariate")
     i <- as.integer(i)
-    if(min(i) >= 1 & max(i) <= x@dimension){
-        if(length(x@data) == 0){
-            data <- NULL
-        }else{
-            data <- x@data[, i]
-        }
-        if(length(i)==1){
-            return(ghyp(lambda = x@lambda, chi = x@chi, psi = x@psi,
-                        mu = x@mu[i], sigma = sqrt(x@sigma[i, i]),
-                        gamma = x@gamma[i], data = data))
-        }else{
-            return(ghyp(lambda = x@lambda, chi = x@chi, psi = x@psi,
-                        mu = x@mu[i], sigma = x@sigma[i, i],
-                        gamma = x@gamma[i], data = data))
-        }
-    }else{
-        stop("Dimension mismatch. ghyp dimension = ", x@dimension,
-             "; Input = ",paste(i, collapse=", "), "!\n", sep="")
+    if(min(i) < 1 | max(i) > ghyp.dim(x)){
+        stop("Dimension mismatch. ghyp dimension = ", ghyp.dim(x),
+             "; Input = ",paste(i, collapse=", "), "!\n", sep = "")
     }
+
+    if(length(ghyp.data(x)) == 0){
+        data <- NULL
+    }else{
+        data <- ghyp.data(x)[, i]
+    }
+
+    if(length(i)==1){
+       sigma <- sqrt(x@sigma[i, i])
+    }else{
+       sigma <- x@sigma[i, i]
+    }
+
+    if(x@parametrization == "alpha.bar"){
+        if(.is.student.t(x)){
+            return(student.t(nu = -2 * x@lambda, mu = x@mu[i],
+                             sigma = sigma, gamma = x@gamma[i],
+                             data = data))
+        }else{
+            return(ghyp(lambda = x@lambda, alpha.bar = x@alpha.bar,
+                        mu = x@mu[i], sigma = sigma, gamma = x@gamma[i],
+                        data = data))
+        }
+    }else if(x@parametrization == "chi.psi"){
+        return(ghyp(lambda = x@lambda, chi = x@chi, psi = x@psi,
+                    mu = x@mu[i], sigma = sigma, gamma = x@gamma[i],
+                    data = data))
+    }else if(x@parametrization == "alpha.delta"){
+        tmp.obj <- ghyp(lambda = x@lambda, chi = x@chi, psi = x@psi,
+                        mu = x@mu[i], sigma = sigma, gamma = x@gamma[i])
+        return(do.call("ghyp.ad", c(coef(tmp.obj, type = "alpha.delta"), list(data = data))))
+    }else if(x@parametrization == "Gaussian"){
+        return(gauss(mu = x@mu[i], sigma = sigma, data = data))
+    }else{
+        stop("Unknown parametrization: ", x@parametrization)
+    }
+
+
 }
 ### <---------------------------------------------------------------------->
 setMethod("[", signature(x = "ghyp", i = "numeric", j = "missing", drop = "missing"), `[.ghyp`)
@@ -418,7 +441,7 @@ setMethod("scale", signature(x = "ghyp"), scale.ghyp)
 {
     cat(ghyp.name(object, abbr = FALSE, skew.attr = TRUE), "Distribution:\n", sep = " ")
     cat("\nParameters:\n")
-    if(object@dimension > 1){           # Multivariate case
+    if(ghyp.dim(object) > 1){           # Multivariate case
         param <- coef(object)
         if(object@parametrization == "alpha.delta"){
             if(ghyp.name(object, abbr = TRUE, skew.attr = FALSE) == "t"){
@@ -563,18 +586,18 @@ setMethod("show", signature(object = "mle.ghyp"), show.mle.ghyp)
     cat("log-Likelihood:               ", logLik(object), "\n")
     cat("AIC:                          ", AIC(object),    "\n")
 
+    object.dim <- ghyp.dim(object)
     if(.is.gaussian(object)){
-        nbr.fitted.params <- unname(object@dimension +
-                                    object@dimension/2 * (object@dimension + 1) *
+        nbr.fitted.params <- unname(object.dim + object.dim/2 * (object.dim + 1) *
                                     object@fitted.params["sigma"])
+
         names.fitted.param <- paste(names(object@fitted.params[object@fitted.params]),collapse=", ")
     }else{
         nbr.fitted.params <- unname(sum(object@fitted.params[c("alpha.bar", "lambda")]) +
-                                    object@dimension * sum(object@fitted.params[c("mu", "gamma")]) +
-                                    object@dimension/2 * (object@dimension + 1) *
-                                    object@fitted.params["sigma"])
-        names.fitted.param <- paste(names(object@fitted.params[object@fitted.params]),collapse=", ")
+                                    object.dim * sum(object@fitted.params[c("mu", "gamma")]) +
+                                    object.dim/2 * (object.dim + 1) * object@fitted.params["sigma"])
 
+        names.fitted.param <- paste(names(object@fitted.params[object@fitted.params]),collapse=", ")
     }
     cat("Fitted parameters:             " , names.fitted.param,   ";  (Number: ", nbr.fitted.params, ")\n", sep = "")
     cat("Number of iterations:         "  , object@n.iter,        "\n")
@@ -694,16 +717,35 @@ setMethod("summary", signature(object = "mle.ghyp"), summary.mle.ghyp)
                      byrow = TRUE, ncol = length(summand))))
     }
 
+    ## Return the transformed object in the same parametrization
     if(object@parametrization == "alpha.bar"){
-        return(ghyp(lambda = object@lambda, alpha.bar = object@alpha.bar,
-                    mu = as.vector(multiplier %*% object@mu + summand),
-                    sigma = sigma, gamma = as.vector(multiplier %*% object@gamma),
-                    data = transformed.data))
-    }else{
+        if(.is.student.t(object)){
+            return(student.t(nu = -2 * object@lambda,
+                             mu = as.vector(multiplier %*% object@mu + summand),
+                             sigma = sigma,
+                             gamma = as.vector(multiplier %*% object@gamma),
+                             data = transformed.data))
+        }else{
+            return(ghyp(lambda = object@lambda, alpha.bar = object@alpha.bar,
+                        mu = as.vector(multiplier %*% object@mu + summand),
+                        sigma = sigma, gamma = as.vector(multiplier %*% object@gamma),
+                        data = transformed.data))
+        }
+    }else if(object@parametrization == "chi.psi"){
         return(ghyp(lambda = object@lambda, chi = object@chi, psi = object@psi,
                     mu = as.vector(multiplier %*% object@mu + summand),
                     sigma = sigma, gamma = as.vector(multiplier %*% object@gamma),
                     data = transformed.data))
+    }else if(object@parametrization == "alpha.delta"){
+        tmp.obj <- ghyp(lambda = object@lambda, chi = object@chi, psi = object@psi,
+                        mu = as.vector(multiplier %*% object@mu + summand),
+                        sigma = sigma, gamma = as.vector(multiplier %*% object@gamma))
+        return(do.call("ghyp.ad", c(coef(tmp.obj, type = "alpha.delta"), list(data = transformed.data))))
+    }else if(object@parametrization == "Gaussian"){
+        return(gauss(mu = as.vector(multiplier %*% object@mu + summand),
+                     sigma = sigma, data = transformed.data))
+    }else{
+        stop("Unknown parametrization: ", object@parametrization)
     }
 }
 ### <---------------------------------------------------------------------->

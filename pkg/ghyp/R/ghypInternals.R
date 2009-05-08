@@ -198,11 +198,11 @@
     default.names <- c("lambda", "alpha.bar", "mu", "sigma", "gamma")
     ## There are 3 possibilities:
     ## (1) opt.pars are not named: They must be of length 5
-    ##     and in the order of 'default.names'
+    ##     and are interpreted in the same order as 'default.names'
     ## (2) opt.pars are named and are in 'default.names':
     ##     (*) Any unknown names are dropped
     ##     (*) opt.pars is reordered
-    ## (3) If unknown opt.pars are passed an error occurs
+    ## (3) If opt.pars with unknown names are passed an error occurs
     if(is.null(names(opt.pars))){
         if(length(opt.pars) == 5){
             new.opt.pars <- c(lambda = opt.pars[1], alpha.bar = opt.pars[2],
@@ -210,14 +210,22 @@
                               gamma = opt.pars[5])
 
             if(new.opt.pars["gamma"] & symmetric){
-                warning("'symmetric' and opt.pars[5] are TRUE!\n",
-                        "opt.pars[5] is set to FALSE!\n")
+                warning("Clash: symmetric == TRUE while opt.pars[5] == TRUE!\n",
+                        "A symmetric model will be fitted (i.e. opt.pars[5] <- FALSE)!\n")
             }
         }else{
-            stop("If opt.pars is not named it must have length 5!\n",
+            stop("If 'opt.pars' is not named it must have length 5!\n",
                  "The order is lambda, alpha.bar, mu, sigma, gamma.\n")
         }
     }else{
+        ## In case a named argument 'symmetric' was submitted and
+        ## 'opt.pars' was not submited, the name corresponding to the
+        ## 'gamma' parameter in 'opt.pars' is of the structure
+        ## 'gamma.xx'. Here, set it back to 'gamma'.
+        if(length(grep("gamma", names(opt.pars))) > 0){
+            names(opt.pars)[grep("gamma", names(opt.pars))] <- "gamma"
+        }
+
         if(all(default.names %in% names(opt.pars))){
             if(length(opt.pars) != 5){
                 warning("The following names were dropped:\n",
@@ -230,8 +238,8 @@
                               sigma = unname(opt.pars["sigma"]),
                               gamma = unname(opt.pars["gamma"]))
             if(new.opt.pars["gamma"] & symmetric){
-                warning("'symmetric' and opt.pars['gamma'] are TRUE!\n",
-                        "opt.pars['gamma'] is set to FALSE!\n")
+                warning("Clash: symmetric == TRUE while opt.pars['gamma'] == TRUE!\n",
+                        "A symmetric model will be fitted (i.e. opt.pars['gamma'] <- FALSE)!\n")
             }
         }else if(!any(default.names %in% names(opt.pars))){
             stop("The names '", paste(names(opt.pars), collapse = "', '"),
@@ -265,8 +273,8 @@
             if("gamma" %in% names(opt.pars)){
                 new.opt.pars <-  c(new.opt.pars, gamma = unname(opt.pars["gamma"]))
                 if(new.opt.pars["gamma"] & symmetric){
-                    warning("'symmetric' and opt.pars['gamma'] are TRUE!\n",
-                            "opt.pars['gamma'] is set to FALSE!\n")
+                warning("Clash: symmetric == TRUE while opt.pars['gamma'] == TRUE!\n",
+                        "A symmetric model will be fitted (i.e. opt.pars['gamma'] <- FALSE)!\n")
                 }
             }else{
                 new.opt.pars <-  c(new.opt.pars, gamma = TRUE)

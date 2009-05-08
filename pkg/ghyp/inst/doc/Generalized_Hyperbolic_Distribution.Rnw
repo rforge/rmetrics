@@ -47,21 +47,25 @@
   linkcolor = {black},
   citecolor = {black},
   urlcolor = {darkblue},
-  linktocpage = {true},
+  linktocpage = {true}
 }
 % <---------------------------------------------------------------------->
 \begin{document}
 % <---------------------------------------------------------------------->
-\title{
-ghyp: A package on generalized hyperbolic distributions\\[10ex]
-}
-\author{
-Wolfgang Breymann\\
-David L\"uthi\\[3ex]
-Institute of Data Analysis and Process Design\\
-www.idp.zhaw.ch \\[3ex]
-E-mail: david.luethi@zhaw.ch
-}
+\title{ghyp: A package on generalized hyperbolic distributions}
+\author{Wolfgang Breymann\footnote{Institute of Data Analysis and
+    Process Design (www.idp.zhaw.ch), e-mail:
+    wolfgang.breymann@zhaw.ch} \and David L\"uthi\footnote{Clariden
+    Leu Bank (www.claridenleu.com), e-mail: luethid@gmail.com}}
+%\publishers{}
+\date{\today}
+% \author{
+% Wolfgang Breymann\\
+% David L\"uthi\\[3ex]
+% Institute of Data Analysis and Process Design\\
+% www.idp.zhaw.ch \\[3ex]
+% E-mail: david.luethi@zhaw.ch
+% }
 \maketitle
 \vfill
 % <---------------------------------------------------------------------->
@@ -92,7 +96,7 @@ The origin of this package goes back to the first authors' years at
 RiskLab, when he worked together with Alexander McNeil to develop an
 algorithm for fitting multivariate generalized hyperbolic (GH)
 distributions. Accordingly, the functionality of this package partly
-overlaps McNeil's library QRMlib \citep{QRMlib}.  However, there are
+overlaps McNeil's library QRMlib \citep{McNeil2005a}.  However, there are
 quite some differences in the implementation.  From the user's point
 of view, an important difference may be that one can choose between
 different parametrizations. In addition, with the present library it
@@ -115,14 +119,14 @@ parametrizations, (ii) fitting multivariate GH distributions, and
 Please note that this document is by far not complete. A nice reference for univariate
 GH distributions and the generalized inverse Gaussian (GIG)
 distribution is \citet*{Paolella2007}. An instructive guide for
-multivariate GH distributions is \citet*{QRMmcneil05}, where one can
+multivariate GH distributions is \citet*{McNeil2005}, where one can
 find also some empirical work and applications of the GH distribution
 to the finance area.
 % <---------------------------------------------------------------------->
 \section{Definition}
 % <---------------------------------------------------------------------->
 Facts about generalized hyperbolic (GH) distributions are cited
-according to \citet*{QRMmcneil05} chapter $3.2$.\\[1ex]
+according to \citet*{McNeil2005} chapter $3.2$.\\[1ex]
 % <---------------------------------------------------------------------->
 The random vector $\X$ is said to have a multivariate GH distribution
 if
@@ -391,7 +395,7 @@ be found in (\ref{eq:abartochipsiinvgamma}) and
 % <---------------------------------------------------------------------->
 \subsection{$(\BarndorffParam)$-Parametrization}
 % <---------------------------------------------------------------------->
-When the GH distribution was introduced in \citet{Barndorffnielsen77},
+When the GH distribution was introduced in \citet{Barndorff-Nielsen1977a},
 the following parametrization for the multivariate case was used.
 \begin{equation}
   f_\X(\x)  = \frac{ (\KAPPA)^{\lambda /2}}{(2\pi)^{\dDivTwo} \sqrt{\dete{\Delta}} \, \delta^\lambda \,
@@ -452,7 +456,7 @@ Numerical optimizers can be used to fit univariate GH
 distributions to data by means of maximum likelihood estimation.
 Multivariate GH distributions
 can be fitted with expectation-maximazion (EM) type algorithms (see
-\citet{Dempster.1977} and \citet{Meng.1993}).
+\citet{Dempster1977} and \citet{Meng1993}).
 %-------------------------------------------------------------------------
 \subsection{EM-Scheme}\label{sec:EM}
 % <---------------------------------------------------------------------->
@@ -513,7 +517,7 @@ calculate these quantities (cf. (\ref{eq:conddistGIG})).
 % <---------------------------------------------------------------------->
 In the \texttt{R} implementation a modified EM scheme is used, which
 is called multi-cycle, expectation, conditional estimation (MCECM)
-algorithm \citep*{Meng.1993, QRMmcneil05}.  The different steps of the
+algorithm \citep*{Meng1993, McNeil2005}.  The different steps of the
 MCECM algorithm are sketched as follows:
 \renewcommand{\labelenumi}{(\arabic{enumi})}
 \begin{enumerate}
@@ -578,22 +582,22 @@ mentioned flexibility, three major facts led
 to the popularity of GH distribution family in finance:
 \begin{enumerate}
 \item The GH distribution features both \emph{fat tails} and
-  \emph{skewness}. These properties account for the
-  stylized facts of financial returns.
+  \emph{skewness}. These properties account for some of the frequently
+  reported stylized facts of financial returns.
 \item The GH family is naturally extended to multivariate
   distributions\footnote{The extension to multivariate distributions
     is natural because of the mixing structure (see
     eq. (\ref{eq:mixture})).}. A multivariate GH distribution does
-  exhibit some kind of \emph{non-linear dependence},
-  for example \emph{tail-dependence}. This reflects the fact that extremes
-  mostly occure for a couple of risk-drivers simultaneously in
-  financial markets. This property is of fundamental importance for
-  risk-management, and can influence for instance the asset allocation
-  in portfolio theory.
+  exhibit some kind of \emph{non-linear dependence}, for example
+  \emph{tail-dependence}. This reflects the fact that extremes mostly
+  occur for several risk-drivers simultaneously in financial
+  markets. This property is of fundamental importance for
+  risk-management, and can influence for instance portfolio weights.
 \item The GH distribution is infinitely divisible
-  (cf. \cite{Halgreen.1977}). This is a necessary and sufficient
-  condition to build \emph{L\'evy processes}. L\'evy
-  processes are widespread in finance because of their time-continuity and their ability to model jumps.
+  (cf. \cite{Barndorff-Nielsen1977}). This is a necessary and sufficient
+  condition to build \emph{L\'evy processes}. L\'evy processes are
+  widespread in finance because of their time-continuity and their
+  ability to model jumps.
 \end{enumerate}
 
 Based on these properties one can classify the applications of the GH
@@ -608,13 +612,13 @@ bibliography and to the articles. Note that some articles deal with
 special cases of the GH distribution only.
 
 \paragraph{Empirical modelling}
-\citet{EberleinKeller95,BarndorffNielsen.2001,Fergusson.2006}
+\citet{Eberlein1995,Barndorff-Nielsen2001,Fergusson2006}
 \paragraph{Risk and dependence modelling}
-\citet{EberleinKellerPrause98,BreymannDiEm03,QRM2005,Chen.2005,Kassberger.2006}
+\citet{Eberlein1998,Breymann2003,McNeil2005,Chen2005,Kassberger2006}
 \paragraph{L\'evy processes}
-\citet{Barndorffnielsen97,Barndorffnielsen97b,Bibby.1997,Madan.1998,Raible2000,Cont.2003}
+\citet{Barndorff-Nielsen1997,Barndorff-Nielsen1997a,Bibby1997,Madan1998,Raible2000,Cont2003}
 \paragraph{Portfolio selection}
-\citet{Kassberger.2007}
+\citet{Kassberger2007}
 \clearpage
 \begin{appendix}
 % <---------------------------------------------------------------------->

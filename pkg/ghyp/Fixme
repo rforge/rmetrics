@@ -5,7 +5,4 @@
 => Student-t: wenn dof >= z.B. 1e5 mit gauss arbeiten
 => cauchy in student.t (modify construcor).
 => vignette: stable property of NIG.
-=> fit.ghypuv/mv crahses if symmetric is named!
-=> transform(ghyp.ab(), ...) returns "chi.psi" parametrization
-=> fit.ghypmv: EM has closed form for NIG distribution
-=> 'ghyp.moment' crashes if Gaussian object is submitted.
+=> ghyp(lambda = -0.3, psi = 0) # -> Student.t funktioniert nicht (coef, dghyp, ...)

@@ -159,7 +159,7 @@
                 eta.sum <- sum(Egig(lambda - d/2, Q + chi, psi + Offset, func = "x", check.pars = FALSE))
 
                 ## Supress warnings because if some parameters are not subject to optimization the
-                ## problem can reduce to 1 dimension for which optim is not optimal. Nonetheless,
+                ## problem can reduce to 1 dimension for which 'optim' is not optimal. Nonetheless,
                 ## we use optim for the purpose to get a uniform list returned from one optimization routine.
                 tmp.fit <- suppressWarnings(optim(log(lambda), vg.optfunc, eta.sum = eta.sum,
                                                   xi.sum = xi.sum, n.rows = n,...))

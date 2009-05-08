@@ -4,7 +4,9 @@
 \description{
 
   This function computes moments of arbitrary orders of the univariate
-  generalized hyperbolic distribution.
+  generalized hyperbolic distribution. The expectation of \eqn{f(X -
+  c)^k} is calculated. \eqn{f} can be either the absolute value or the
+  identity. \eqn{c} can be either zero or \eqn{E(X)}.
 
 }
 % <---------------------------------------------------------------------->
@@ -16,9 +18,13 @@ ghyp.moment(object, order = 3:4, absolute = FALSE, central = TRUE, ...)
   \item{object}{A univarite generalized hyperbolic object inheriting from class
                \code{\link[=ghyp-class]{ghyp}}.}
   \item{order}{A vector containing the order of the moments.}
-  \item{absolute}{Indicate whether the absolute value is taken or not. Must be \code{TRUE}
-                  if \code{order} is not integer.}
-  \item{central}{If \code{TRUE} the moment about the expected value is computed.}
+  \item{absolute}{Indicate whether the absolute value is taken or
+    not. If \code{absolute = TRUE} then \eqn{E(|X - c|^k)} is
+    computed. Otherwise \eqn{E((X - c)^k)}. \eqn{c} depends on the
+    argument \code{central}. \code{absolute} must be \code{TRUE}
+    if \code{order} is not integer. }
+  \item{central}{If \code{TRUE} the moment around the expected value
+    \eqn{E((X - E(X))^k)} is computed. Otherwise \eqn{E(X^k)}.}
   \item{\dots}{Arguments passed to \code{\link{integrate}}.}
 }
 % <---------------------------------------------------------------------->
@@ -26,8 +32,9 @@ ghyp.moment(object, order = 3:4, absolute = FALSE, central = TRUE, ...)
 
   In general \code{ghyp.moment} is based on numerical integration. For
   the special cases of either a \dQuote{ghyp}, \dQuote{hyp} or
-  \dQuote{NIG} distribution analytic expressions will be taken if
-  non-absolute and non-centered moments of integer order are requested.
+  \dQuote{NIG} distribution analytic expressions (see \bold{References})
+  will be taken if non-absolute and non-centered moments of integer
+  order are requested.
 
 }
 % <---------------------------------------------------------------------->
