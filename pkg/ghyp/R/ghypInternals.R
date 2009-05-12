@@ -30,7 +30,7 @@
             psi <- 2 * lambda
         }else if(lambda < 0){           # Student-t
             psi <- 0
-            chi <- 2 * (-lambda - 1)
+            chi <- -2 * (lambda + 1)
         }else{
             stop("Forbidden combination of parameter values");
         }
@@ -409,9 +409,6 @@
 ".dghypuv" <- function(x, lambda = 1, chi = 1, psi = 1, alpha.bar = NULL,
                              mu = 1, sigma = 1, gamma = 0, logvalue = FALSE)
 {
-    ## Density of a univariate generalized hyperbolic distribution.
-    ## Covers all special cases as well.
-
     sigma <- as.vector(sigma)
     if(!is.null(alpha.bar)){
         tmp.abar2chipsi <- .abar2chipsi(alpha.bar, lambda)
@@ -434,13 +431,21 @@
     }
     out <- NA
     if (psi == 0){
+        lambda.min.0.5 <- lambda - 0.5
         if(symm){                       # Symmetric Student-t
-            nu <- -2 * lambda
-            sigma.t <- sqrt((nu - 2) / nu) * sigma
-            out <- dt((x - mu) / sigma.t, df = nu, log = TRUE) - log(sigma.t)
+##             nu <- -2 * lambda
+##             sigma.t <- sqrt((nu - 2) / nu) * sigma
+##             out <- dt((x - mu) / sigma.t, df = nu, log = TRUE) - log(sigma.t)
+
+            interm <- chi + Q
+
+            log.const.top <- -lambda * log(chi) + lgamma(-lambda.min.0.5)
+            log.const.bottom <- 0.5 * log(pi) + log(sigma) + lgamma(-lambda)
+            log.top <- lambda.min.0.5 * log(interm)
+
+            out <- log.const.top + log.top - log.const.bottom
         }else{                          # Asymmetric Student-t
             interm <- sqrt((chi + Q) * skewness.norm)
-            lambda.min.0.5 <- lambda - 0.5
 
             log.const.top <- -lambda * log(chi) - lambda.min.0.5 * log(skewness.norm)
             log.const.bottom <- 0.5 * log(2 * pi) + log(sigma) + lgamma(-lambda) - (lambda + 1) * log(2)

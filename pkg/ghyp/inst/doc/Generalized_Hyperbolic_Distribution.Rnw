@@ -297,7 +297,9 @@ parametrizations implemented in the package~\ghyp.  Table
 parametrization and each special case. Clearly, the dispersion
 matrices $\Sigma$ and $\Delta$ have to fulfill the usual conditions
 for covariance matrices, i.e., symmetry and positive definiteness as
-well as full rank.
+well as full rank. Appendix \ref{sec:exampledistobj} also gives a
+table where the constructor functions for each combination of
+distribution and parametrization are listed.
 
 \begin{table}[h]
   \begin{small}
@@ -366,8 +368,16 @@ There is a more elegant way to eliminate the degree of freedom. We
 simply constrain the expected value of the generalized inverse
 Gaussian distributed mixing variable $W$ to be $1$
 (cf. \ref{sec:gig}). This makes the interpretation of the skewness
-parameters $\gamma$
-easier and in addition, the fitting procedure becomes faster (cf. \ref{sec:EM}). \\
+parameters $\gamma$ easier and in addition, the fitting procedure
+becomes faster (cf. \ref{sec:EM}).
+
+Note that the expected value of a GIG distributed random variable
+exists as long as $\psi > 0$. If $\psi \rightarrow 0$ the GIG
+distribution approaches the Inverse Gamma distribution (which is the
+mixing distribution belonging to a Student-t distribution,
+cf. appendix \ref{sec:gig} and \ref{sec:studentt}) for which the expectation
+only exists if $\gamma < -1$.
+
 We define
 \begin{equation}
   \EXP{W}  =  \sqrt{\frac{\chi}{\psi}}\frac{\BesselLambdaPlusOne(\SqrtChiPsi)}
@@ -420,7 +430,8 @@ in literature.
 The following formulas can be used to switch between the
 ($\LambdaAbar$), ($\LambdaChiPsi$), and the
 ($\BarndorffParam$)-parametrization. The parameters $\lambda$
-and $\MU$ remain the same, regardless of the parametrization. \\
+and $\MU$ remain the same, regardless of the parametrization.
+
 The way to obtain the ($\BarndorffParam$)-parametrization from the
 ($\LambdaAbar$)-parametrization yields over the
 ($\LambdaChiPsi$)-parametrization:
@@ -502,7 +513,8 @@ distribution (cf. \ref{eq:densgig}) is
 When using the ($\lambda,\abar$)-parametrization this problem is of
 dimension two instead of three as it is in the ($\lambda, \chi,
 \psi$)-parametrization.
-As a consequence the performance increases.\\
+As a consequence the performance increases.
+
 Since the $w_i$'s are latent one has to replace $w$, $1/w$ and $\ln w$
 with the respective expected values in order to maximize the log
 likelihood function.  Let
@@ -800,14 +812,17 @@ $\chi > 0, \psi > 0, \hspace{0.5cm}\lambda = 0 $\\
 $\chi \geq 0, \psi > 0, \hspace{0.5cm}\lambda > 0 $ .  \customspace
 The GIG density nests the inverse Gaussian (IG) density ($\lambda =
 -0.5$) and contains many special cases as limits, among others the
-Gamma ($\Gamma$) and Inverse Gamma ($\InvGamma$) densities .  If $\chi
-= 0$ and $\lambda > 0$ then $X$ is gamma distributed with parameters
-$\lambda$ and $\OneDivTwo \psi$ ($\Gamma(\lambda,\OneDivTwo \psi$)).
-If $\psi = 0$ and $\lambda < 0$ then $X$ has an inverse gamma
-distribution with parameters $-\lambda$ and $\OneDivTwo \chi$
-($\InvGamma(-\lambda,\OneDivTwo \chi$)). The moment generating
-function of the GIG distribution (cf. \citet{Paolella2007}) is
-determined by
+Gamma ($\Gamma$) and Inverse Gamma ($\InvGamma$) densities
+(cf. \ref{subsec:gamma_dist} and \ref{subsec:inv_gamma_dist} below).
+
+% If $\chi = 0$ and $\lambda > 0$ then $X$ is gamma distributed with
+% parameters $\lambda$ and $\OneDivTwo \psi$ ($\Gamma(\lambda,\OneDivTwo
+% \psi$)).  If $\psi = 0$ and $\lambda < 0$ then $X$ has an inverse
+% gamma distribution with parameters $-\lambda$ and $\OneDivTwo \chi$
+% ($\InvGamma(-\lambda,\OneDivTwo \chi$)).
+
+The moment generating function of the GIG distribution
+(cf. \citet{Paolella2007}) is determined by
 \begin{equation}
   \label{eq:moment-gen-gig}
   \momgen_{GIG}(t) = \parentheses{\frac{\psi}{\psi - 2 t}}^{\lambda / 2}
@@ -827,12 +842,19 @@ Note that numerical calculations of $\EXP{\ln X}$ may be performed
 with the integral representation as well.  In the~\R~package~\ghyp~the
 derivative construction is implemented.
 % <---------------------------------------------------------------------->
-\subsection{Gamma distribution}
+\subsection{Gamma distribution}\label{subsec:gamma_dist}
 % <---------------------------------------------------------------------->
 When $\chi = 0$ and $\lambda > 0$ the GIG distribution reduces to the
-gamma distribution with density
+Gamma ($\Gamma$) distribution:
+\begin{equation}
+  \label{eq:transition_gig_gamma}
+  \lim\limits_{\chi \downarrow 0}{f_{GIG}(x |\lambda, \chi, \psi)} =
+  f_{\Gamma}(x | \lambda, 1/2 \psi), \quad x \inReal,\, \lambda > 0, \,
+  \chi > 0
+\end{equation}
+The density of $X \sim \Gamma(\alpha, \beta)$ is
 \begin{equation}\nonumber \label{eq:fgamma}
-  f_{W}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
+  f_{\Gamma}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
   w^{\alpha-1}\exp\curlybrackets{-\beta w}.
 \end{equation}
 The expected value and the variance are
@@ -846,12 +868,19 @@ function. We will see that this value is not needed to fit a
 multivariate variance gamma distribution
 (cf. \ref{sec:conddistgamma}).
 % <---------------------------------------------------------------------->
-\subsection{Inverse gamma distribution}
+\subsection{Inverse gamma distribution}\label{subsec:inv_gamma_dist}
 % <---------------------------------------------------------------------->
 When $\psi = 0$ and $\lambda < 0$ the GIG distribution reduces to the
-gamma distribution with density
+Inverse Gamma ($\InvGamma$) distribution:
+\begin{equation}
+  \label{eq:transition_gig_gamma}
+  \lim\limits_{\psi \downarrow 0}{f_{GIG}(x | \lambda, \chi, \psi)} =
+  f_{\InvGamma}(x | -\lambda, 1/2 \chi), \quad x \inReal,\, \lambda < 0, \,
+  \psi > 0
+\end{equation}
+The density of $X \sim \InvGamma(\alpha, \beta)$ is
 \begin{equation}\nonumber \label{eq:finversegamma}
-  f_{W}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
+  f_{X}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
   w^{-\alpha-1}\exp\curlybrackets{-\frac{\beta}{w}}.
 \end{equation}
 The expected value and the variance are
@@ -1138,12 +1167,52 @@ that: \renewcommand{\labelenumi}{\arabic{enumi}.}
 See appendix \ref{sec:example} for several examples and
 \ref{sec:exampleobjoriented} for particular examples concerning the
 object-oriented approach.
+
+% <---------------------------------------------------------------------->
+\section{Constructors}\label{sec:constructors}
+% <---------------------------------------------------------------------->
+Before giving examples on how GH distribution objects can be
+initialized, let us list the constructor functions for different
+distributions and parametrizations. Note that the constructors below
+are used to initialize both, univariate and multivariate
+distributions.
+
+\begin{center}
+  \begin{tabular}{c|c|c|c|}
+    & \multicolumn{3}{|c|}{Parametrization} \\
+    \hline
+    Distribution & $(\LambdaChiPsi)$ & $(\LambdaAbar)$ &
+    $(\BarndorffParam)$ \\
+    \hline
+    GH & \verb\ghyp(...)\ & \verb\ghyp(..., alpha.bar = x)\ & \verb\ghyp.ad(...)=\ \\
+    hyp & \verb\hyp(...)\ & \verb\hyp(..., alpha.bar = x)\ & \verb\hyp.ad(...)=\ \\
+    NIG & \verb\NIG(...)\ & \verb\NIG(..., alpha.bar = x)\ & \verb\NIG.ad(...)\ \\
+    Student-t & \verb\ghyp(..., psi = 0)\ & \verb\student.t(...)\  &
+    \verb\student.t.ad(...)\ \\
+    VG & \verb\VG(..., psi = x)\ & \verb\VG(...)\  & \verb\NIG.ad(...)\
+  \end{tabular}
+\end{center}
+
+Apparently, except for the case of a Student-t distribution, the same
+constructor functions are used for the $(\LambdaChiPsi)$ and the
+$(\LambdaAbar)$ parametrization. The idea is that as long as the
+parameter \verb=alpha.bar= is not submitted the $(\LambdaChiPsi)$
+parametrization is used. Conversely, if \verb=alpha.bar= is submitted,
+the $(\LambdaAbar)$ parametrization will be used and the parameters
+$\chi$ and $\psi$ are neglected.
+
+For the Student-t distribution, the default is the $(\LambdaAbar)$
+parametrization. A fully flexible Student-t parametrization is obtained
+by using the constructor \verb=ghyp= and setting $\psi$ to zero.  To
+get the standard Student-t parametrization (i.e. the R-core
+implementation) use \verb\ghyp(lambda = -nu/2, chi = nu, psi = 0)\.
 % <---------------------------------------------------------------------->
 \section{Examples}\label{sec:example}
 % <---------------------------------------------------------------------->
 This section provides examples of distribution objects and the object-oriented
 approach as well as fitting to data and
 portfolio optimization.
+
 % <---------------------------------------------------------------------->
 \subsection{Initializing distribution objects}\label{sec:exampledistobj}
 % <---------------------------------------------------------------------->

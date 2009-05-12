@@ -57,10 +57,18 @@
         sigma <- unname(sigma)
 
         if(all(gamma == 0)){
-            variance <- unname(e.gig * sigma^2)
+            if(is.finite(e.gig)){
+                variance <- unname(e.gig * sigma^2)
+            }else{
+                variance <- Inf
+            }
         }else{
             var.gig <- Egig(lambda, chi, psi, func = "var")
-            variance <- unname(var.gig * gamma^2 + e.gig * sigma^2)
+            if(is.finite(var.gig)){
+                variance <- unname(var.gig * gamma^2 + e.gig * sigma^2)
+            }else{
+                variance <- Inf
+            }
         }
 
     }else if(length(mu)>1){
@@ -78,10 +86,18 @@
         }
 
         if(all(gamma == 0)){
-            variance <- e.gig * sigma
+            if(is.finite(e.gig)){
+                variance <- e.gig * sigma
+            }else{
+                variance <- matrix(Inf, ncol = length(mu), nrow = length(mu))
+            }
         }else{
             var.gig <- Egig(lambda, chi, psi, func = "var")
-            variance <- var.gig * outer(gamma, gamma) + e.gig * sigma
+            if(is.finite(var.gig)){
+                variance <- var.gig * outer(gamma, gamma) + e.gig * sigma
+            }else{
+                variance <- matrix(Inf, ncol = length(mu), nrow = length(mu))
+            }
         }
         dimnames(variance) <- dimnames(sigma)
 

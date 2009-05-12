@@ -5,4 +5,4 @@
 => Student-t: wenn dof >= z.B. 1e5 mit gauss arbeiten
 => cauchy in student.t (modify construcor).
 => vignette: stable property of NIG.
-=> ghyp(lambda = -0.3, psi = 0) # -> Student.t funktioniert nicht (coef, dghyp, ...)
+

@@ -368,9 +368,9 @@
         vars[nam] <- do.call(inv.transform[nam], list(vars[nam]))
     }
     tmp.fit <- .mle.default(data = data, pdf = ".dghypuv",
-                           vars = vars, opt.pars = opt.pars,
-                           transform = transform, se = T,
-                           silent = silent, ...)
+                            vars = vars, opt.pars = opt.pars,
+                            transform = transform, se = T,
+                            silent = silent, ...)
 
     if(tmp.fit$convergence != 0){
         converged <- FALSE

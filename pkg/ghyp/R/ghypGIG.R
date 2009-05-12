@@ -62,6 +62,7 @@
             ## Inv Gamma -> Student-t
             beta <- 0.5 * chi
             alpha <- -lambda
+            alpha[alpha <= 1] <- NA # expectation is not defined if alpha <= 1
             return(beta / (alpha - 1))
         }else if(all(chi == 0)){
             ## Gamma -> VG
@@ -129,11 +130,9 @@
             ## Inv Gamma -> Student-t
             beta <- 0.5 * chi
             alpha <- -lambda
-            if(alpha <= 2){
-                warning("variance of inverse gamma distribution not defined for 'lambda >= -2'!")
-                return(Inf)
-            }
-            return(beta^2 / ((alpha - 1)^2 * (alpha - 2)))
+            tmp.var <- beta^2 / ((alpha - 1)^2 * (alpha - 2))
+            tmp.var[alpha <= 2] <- Inf # variance is Inf if alpha <= 2
+            return(tmp.var)
         }else if(all(chi == 0)){
             ## Gamma -> VG
             beta <- 0.5 * psi
