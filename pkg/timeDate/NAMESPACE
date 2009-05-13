@@ -686,4 +686,5 @@ export(
     "Yerevan",
     "Zagreb",
     "Zaporozhye",
-    "Zurich" )
+    "Zurich",
+    ".endpoints")
