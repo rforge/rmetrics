@@ -478,6 +478,7 @@ setMethod("scale", signature(x = "ghyp"), scale.ghyp)
                 ## Student-t  ->  alpha.bar == 0
                 if(object@parametrization == "chi.psi"){
                     param.uv <- param.uv[c("lambda", "chi")]
+                    param.uv <- c(nu = unname(-2 * param.uv["lambda"]), param.uv["chi"])
                 }else{
                     param.uv <- param.uv["nu"]
                 }
@@ -505,7 +506,9 @@ setMethod("scale", signature(x = "ghyp"), scale.ghyp)
     }else{                              # Univariate case
         param <- unlist(coef(object))
         ## alpha.delta-parametrization
-        if(object@parametrization == "alpha.delta"){
+        if(.is.gaussian(object)){
+            param <- c(param["mu"], param["sigma"])
+        }else if(object@parametrization == "alpha.delta"){
             if(ghyp.name(object, abbr = TRUE, skew.attr = FALSE) == "t"){
                 ## Student-t  ->  alpha^2 == beta^2
                 param <- param[-2]
@@ -518,14 +521,12 @@ setMethod("scale", signature(x = "ghyp"), scale.ghyp)
                                         # hyp or NIG -> lambda is constant
                 param <- param[-1]
             }
-        }else if(.is.gaussian(object)){
-            param <- c(param["mu"], param["sigma"])
-        }else{
+        }else {
             ## chi.psi or alpha.bar-parametrization
             if(ghyp.name(object, abbr = TRUE, skew.attr = FALSE) == "t"){
                 ## Student-t  ->  alpha.bar == 0
                 if(object@parametrization == "chi.psi"){
-                    param <- param[-3]
+                    param <- c(nu = -2 * unname(param[1]), param[-c(1, 3)])
                 }else{
                     param <- param[-c(1, 3)]
                 }

@@ -318,14 +318,18 @@
 
 
 ### <======================================================================>
-"student.t" <- function(nu = 3.5, mu = 0, sigma = diag(rep(1, length(mu))),
+"student.t" <- function(nu = 3.5, chi = nu - 2, mu = 0, sigma = diag(rep(1, length(mu))),
                         gamma = rep(0, length(mu)), data = NULL)
 {
     call <- match.call()
 
-    parametrization <- "alpha.bar"
-    ghyp.object <-  ghyp(lambda = -nu/2, psi = 0, mu = mu, sigma = sigma,
-                         gamma = gamma, alpha.bar = 0, data = data)
+    if(chi == nu - 2){
+        parametrization <- "alpha.bar"
+    }else{
+        parametrization <- "chi.psi"
+    }
+    ghyp.object <-  ghyp(lambda = -nu/2, chi = chi, psi = 0, mu = mu, sigma = sigma,
+                         gamma = gamma, alpha.bar = NULL, data = data)
     ghyp.object@call <- call
     ghyp.object@parametrization <- parametrization
     return(ghyp.object)

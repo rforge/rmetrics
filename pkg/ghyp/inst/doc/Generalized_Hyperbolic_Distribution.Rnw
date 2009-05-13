@@ -586,16 +586,15 @@ measurement.
 
 We have seen above that the GH distribution is very flexible in the
 sense that it nests several other distributions such as the Student-t
-(cf. \ref{sec:studentt}).
-
-To give some references and applications of the GH distribution let us
-first summarize some of its important properties. Beside of the above
-mentioned flexibility, three major facts led
-to the popularity of GH distribution family in finance:
+(cf. \ref{sec:studentt}). To give some references and applications of
+the GH distribution let us first summarize some of its important
+properties. Beside of the above mentioned flexibility, three major
+facts led to the popularity of GH distribution family in finance:
 \begin{enumerate}
 \item The GH distribution features both \emph{fat tails} and
   \emph{skewness}. These properties account for some of the frequently
-  reported stylized facts of financial returns.
+  reported stylized facts of financial returns but also of financial
+  return volatility (hyperbolic GARCH effects).
 \item The GH family is naturally extended to multivariate
   distributions\footnote{The extension to multivariate distributions
     is natural because of the mixing structure (see
@@ -614,23 +613,23 @@ to the popularity of GH distribution family in finance:
 
 Based on these properties one can classify the applications of the GH
 distributions into the fields \emph{empirical modelling}, \emph{riks
-  and dependence modelling}, \emph{derivative pricing}, and
-\emph{portfolio selection}.
-
-In the following, we try to assign papers to each of the classes of
-applications mentioned above. Rather than giving abstracts for each
-paper, we simply cite them and refer the interested reader to the
-bibliography and to the articles. Note that some articles deal with
-special cases of the GH distribution only.
-
-\paragraph{Empirical modelling}
-\citet{Eberlein1995,Barndorff-Nielsen2001,Fergusson2006}
-\paragraph{Risk and dependence modelling}
-\citet{Eberlein1998,Breymann2003,McNeil2005,Chen2005,Kassberger2006}
-\paragraph{L\'evy processes}
-\citet{Barndorff-Nielsen1997,Barndorff-Nielsen1997a,Bibby1997,Madan1998,Raible2000,Cont2003}
-\paragraph{Portfolio selection}
-\citet{Kassberger2007}
+  and dependence modelling}, \emph{L\'evy processes  \& derivatives}, and
+\emph{portfolio selection}.  In the following, we try to assign papers
+to each of the classes of applications mentioned above. Rather than
+giving summaries and conclusions for each paper, we simply cite them
+and refer the interested reader to the articles and the references
+therein. Note that some articles deal with special cases of the GH
+distribution only.
+\begin{description}
+\item[Empirical modelling:]
+  \citet{Eberlein1995,Barndorff-Nielsen2001,Forsberg2002,Davidson2004,Fergusson2006}.
+\item[Risk and dependence modelling:]
+  \citet{Eberlein1998,Breymann2003,McNeil2005,Chen2005,Kassberger2006}.
+\item[L\'evy processes \& derivatives:]
+  \citet{Barndorff-Nielsen1997,Barndorff-Nielsen1997a,Bibby1997,Madan1998,Raible2000,Cont2003,Prause1999}.
+\item[Portfolio selection:]
+  \citet{Kassberger2007}.
+\end{description}
 \clearpage
 \begin{appendix}
 % <---------------------------------------------------------------------->
@@ -1184,28 +1183,39 @@ distributions.
     Distribution & $(\LambdaChiPsi)$ & $(\LambdaAbar)$ &
     $(\BarndorffParam)$ \\
     \hline
-    GH & \verb\ghyp(...)\ & \verb\ghyp(..., alpha.bar = x)\ & \verb\ghyp.ad(...)=\ \\
-    hyp & \verb\hyp(...)\ & \verb\hyp(..., alpha.bar = x)\ & \verb\hyp.ad(...)=\ \\
+    GH & \verb\ghyp(...)\ & \verb\ghyp(..., alpha.bar = x)\ & \verb\ghyp.ad(...)\ \\
+    hyp & \verb\hyp(...)\ & \verb\hyp(..., alpha.bar = x)\ & \verb\hyp.ad(...)\ \\
     NIG & \verb\NIG(...)\ & \verb\NIG(..., alpha.bar = x)\ & \verb\NIG.ad(...)\ \\
-    Student-t & \verb\ghyp(..., psi = 0)\ & \verb\student.t(...)\  &
+    Student-t & \verb\student.t(..., chi = x)\ & \verb\student.t(...)\  &
     \verb\student.t.ad(...)\ \\
-    VG & \verb\VG(..., psi = x)\ & \verb\VG(...)\  & \verb\NIG.ad(...)\
+    VG & \verb\VG(..., psi = x)\ & \verb\VG(...)\  & \verb\VG.ad(...)\
   \end{tabular}
 \end{center}
 
-Apparently, except for the case of a Student-t distribution, the same
-constructor functions are used for the $(\LambdaChiPsi)$ and the
-$(\LambdaAbar)$ parametrization. The idea is that as long as the
-parameter \verb=alpha.bar= is not submitted the $(\LambdaChiPsi)$
-parametrization is used. Conversely, if \verb=alpha.bar= is submitted,
-the $(\LambdaAbar)$ parametrization will be used and the parameters
-$\chi$ and $\psi$ are neglected.
+Apparently, the same constructor functions are used for the
+$(\LambdaChiPsi)$ and the $(\LambdaAbar)$ parametrization.
 
-For the Student-t distribution, the default is the $(\LambdaAbar)$
-parametrization. A fully flexible Student-t parametrization is obtained
-by using the constructor \verb=ghyp= and setting $\psi$ to zero.  To
-get the standard Student-t parametrization (i.e. the R-core
-implementation) use \verb\ghyp(lambda = -nu/2, chi = nu, psi = 0)\.
+In case of the GH, hyp, and NIG distribution, the idea is that as long
+as the parameter \verb=alpha.bar= is not submitted the
+$(\LambdaChiPsi)$ parametrization is used. Conversely, if
+\verb=alpha.bar= is submitted, the $(\LambdaAbar)$ parametrization
+will be used and the parameters $\chi$ and $\psi$ are neglected. Thus,
+typing either \verb=ghyp()=, \verb=hyp()=, or \verb=NIG()= initializes
+an distribution object in the $(\LambdaChiPsi)$ parametrization.
+
+This is different for the Student-t and the VG distribution. Per
+default, these distributions are initialized in the $(\LambdaAbar)$
+parametrization. In case of the Student-t distribution, the
+$(\LambdaChiPsi)$ parametrization is choosen as soon as a $\chi$
+(\verb=chi=) is submitted which does not satisfy
+eq. \ref{eq:abartochipsiinvgamma} In case of the VG distribution, the
+$(\LambdaChiPsi)$ parametrization is choosen as soon as a $\psi$
+(\verb=psi=) is submitted which does not satisfy
+eq. \ref{eq:abartochipsigamma}
+
+To get the standard Student-t parametrization (i.e. the R-core
+implementation) use \\ \verb\student.t(nu = nu, chi = nu)\.
+
 % <---------------------------------------------------------------------->
 \section{Examples}\label{sec:example}
 % <---------------------------------------------------------------------->
@@ -1249,8 +1259,8 @@ inheriting from the class \verb=ghyp=.
 \begin{Sinput}
   ## Consistency check when initializing a GH distribution object.
   ## Valid input:
-  univariate.ghyp.object <- ghyp(lambda = -2, alpha.bar = 0.5,
-                                 mu = 10, sigma = 5, gamma = 1)
+  univariate.ghyp.object <- student.t(nu = 3.5, mu = 10,
+                                      sigma = 5, gamma = 1)
 
   ## Passing a distribution object to the density function
   dghyp(10:14,univariate.ghyp.object)
@@ -1263,16 +1273,16 @@ inheriting from the class \verb=ghyp=.
   hist(fitted.ghyp.object, legend.cex = 0.7)
 
   ## Generic programming:
-  mean(fitted.ghyp.object)     ## fitted.ghyp.object extends "ghypuv"
-                               ## which extends "ghypbase"
+  mean(fitted.ghyp.object)     ## fitted.ghyp.object is of class
+                               ## "mle.ghyp" which extends "ghyp"
 
-  vcov(univariate.ghyp.object) ## univariate.ghyp.object extends "ghypbase"
+  vcov(univariate.ghyp.object)
 \end{Sinput}
 \end{Schunk}
 % <---------------------------------------------------------------------->
 \subsection{Fitting generalized hyperbolic distributions to data}
 % <---------------------------------------------------------------------->
-A multivariate GH distribution is fitted to the
+A multivariate NIG distribution is fitted to the
 daily returns of three swiss blue chips:
 Credit Suisse, Nestle and Novartis.
 A \emph{pairs} plot is drawn in order to
@@ -1280,17 +1290,17 @@ do some graphical diagnostics of the accuracy of the fit.
 \setkeys{Gin}{width=\textwidth}
 <<fig=TRUE>>=
  data(smi.stocks)
- fitted.returns.mv <- fit.ghypmv(data=smi.stocks[1:500,c("CS","Nestle","Novartis")],
+ fitted.returns.mv <- fit.NIGmv(data=smi.stocks[1:500,c("CS","Nestle","Novartis")],
                                  silent=TRUE)
  pairs(fitted.returns.mv, cex=0.5, nbins=20)
 @
 \\[3ex]
 In the following part daily log-returns of the SMI are fitted to the
-GH distribution. Again, some graphical verification is done to check the
+hyperbolic distribution. Again, some graphical verification is done to check the
 accuracy of the fit.
 \setkeys{Gin}{width=\textwidth}
 <<fig=TRUE,width=8,height=4>>=
-  fitted.smi.returns <- fit.ghypuv(data=smi.stocks[,c("SMI")],silent=TRUE)
+  fitted.smi.returns <- fit.hypuv(data=smi.stocks[,c("SMI")],silent=TRUE)
   par(mfrow=c(1,3))
   hist(fitted.smi.returns,ghyp.col="blue",legend.cex=0.7)
   hist(fitted.smi.returns,log.hist=T,nclass=30,plot.legend=F,ghyp.col="blue")
