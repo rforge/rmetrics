@@ -33,7 +33,7 @@
 
 
 listDescription <-
-    function(package, character.only = FALSE)
+function(package, character.only = FALSE)
 {
     # A function implemented by Diethelm Wuertz & Yohan Chalabi
 
@@ -53,6 +53,8 @@ listDescription <-
     name = ans$name
     parh = ans$path
     description = ans$info[[1]]
+    # DW: next line for proper insertion added 
+    description = gsub("\n", "\n    ", description)
     index = ans$info[[2]]
     cat("\n", package, "Description:\n\n")
     cat(paste(" ", description), sep = "\n")
