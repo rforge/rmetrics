@@ -38,7 +38,7 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100, extended = FALSE)
             by default 0.8, specifying a model of order 1; 
         \cr
         The optional values for the linear part are: \cr
-        \code{mu} - the mean value, by default 0; \cr
+        \code{mu} - the intercept value, by default 0 (it implies that the mean = mu/(1-sum(ar))); \cr
         \code{ar} - the autoregressive ARMA coefficients, by default 0; \cr
         \code{ma} - the moving average ARMA coefficients, by default 0. 
         \cr

@@ -57,7 +57,7 @@ garchSim <-
     #       length p for the APARCH specification,
     #     beta - a vector of moving average coefficients of
     #       length q for the GARCH/APARCH specification,
-    #     mu - the mean value for ARMA specification,
+    #     mu - the intercept for ARMA specification (mean=mu/(1-sum(ar))),
     #     delta - the exponent value used in the variance
     #       equation.
     #     skew - a numeric value for the skew parameter.
