@@ -34,7 +34,7 @@
 
 
 setMethod(f = "predict", signature(object = "fGARCH"), definition =
-    function(object, n.ahead = 10, trace = FALSE, ...)
+function(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -48,8 +48,12 @@ setMethod(f = "predict", signature(object = "fGARCH"), definition =
     #       value, by default 10)
     #   trace - should the prediction be traced? A logical value,
     #       by default FALSE)
+    #    mse - should the mean squared errors be conditional or unconditional
+    
 
     # FUNCTION:
+
+mse <- match.arg(mse)
 
     # Retrieve "fit" from Parameter Estimation:
     fit = object@fit
@@ -121,23 +125,7 @@ setMethod(f = "predict", signature(object = "fGARCH"), definition =
     x = c(object@data, rep(mu, M))
     h = c(object@h.t, rep(0, M))
     z = c(fit$series$z, rep(mu, M))
-
-    # Forecast and Optionally Trace Mean Model:
-    # Note we set maxit=0 to get an object of class Arima with fixed
-    #   init parameters ...
-    ARMA = arima(x = object@data, order = c(max(u, 1), 0, max(v, 1)),
-        init = c(ar, ma, mu), transform.pars = FALSE, optim.control =
-        list(maxit = 0))
-    prediction = predict(ARMA, n.ahead)
-    meanForecast = as.vector(prediction$pred)
-    meanError = as.vector(prediction$se)
-    if (trace) {
-        cat("\nForecast ARMA Mean:\n")
-        print(ARMA)
-        cat("\n")
-        print(prediction)
-    }
-
+    
     # Forecast and Optionally Trace Variance Model:
     var.model = fit$series$model[2]
     # Forecast GARCH Variance:
@@ -172,6 +160,49 @@ setMethod(f = "predict", signature(object = "fGARCH"), definition =
             }
         }
     }
+
+# Forecast and Optionally Trace Mean Model:
+    # Note we set maxit=0 to get an object of class Arima with fixed
+    #   init parameters ...
+	mu <- mu/(1-sum(ar))
+    ARMA = arima(x = object@data, order = c(max(u, 1), 0, max(v, 1)),
+        init = c(ar, ma, mu), transform.pars = FALSE, optim.control =
+        list(maxit = 0))
+    prediction = predict(ARMA, n.ahead)
+    meanForecast = as.vector(prediction$pred)
+if(mse=="uncond")
+	{
+    meanError = as.vector(prediction$se)
+	}
+else
+	{
+	# coefficients of h(t+1)
+	a_vec <- rep(0,(n.ahead-1))
+	hhat <- h[-(1:N)]^(2/delta)
+	u2 <- length(ar)
+	meanError <- hhat[1]
+	for( i in 1:(n.ahead-1))
+		{
+		if(i==1)
+			{
+			a_vec[i] = ar[1]+ma[1]
+			meanError <- c(meanError,sum(hhat[1:2]*c(a_vec[1]^2,1)))
+			}	
+		if(i>1)
+			{
+			a_vec[i] <- ar[1:min(u2,i-1)]*a_vec[(i-1):(i-u2)]+ifelse(i>u,0,ar[i])+ifelse(i>v,0,ma[i])
+			meanError <- c(meanError,sum(hhat[1:(i+1)]*c(a_vec[i:1]^2,1)))
+			}
+		}
+	meanError <- sqrt(meanError)
+	}
+    if (trace) {
+        cat("\nForecast ARMA Mean:\n")
+        print(ARMA)
+        cat("\n")
+        print(prediction)
+    }
+
 
     # Standard Deviations:
     standardDeviation = h^(1/delta)

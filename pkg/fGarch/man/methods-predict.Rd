@@ -20,7 +20,7 @@
 
 
 \usage{
-\S4method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, \dots)
+\S4method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"), \dots)
 }
 
 
@@ -38,6 +38,11 @@
         a logical flag. Should the prediction process be traced? By 
         default \code{trace=FALSE}.
         }  
+     \item{mse}{
+	If set to \code{"cond"}, \code{meanError} is defined as the conditional mean errors 
+	\eqn{\sqrt{E_t[x_{t+h}-E_t(x_{t+h})]^2}}. If set to \code{"uncond"}, it is defined as 
+	\eqn{\sqrt{E[x_{t+h}-E_t(x_{t+h})]^2}}.
+	}
     \item{\dots}{
         additional arguments to be passed.
         }   
@@ -85,6 +90,7 @@
 
 ## predict -
    predict(fit, n.ahead = 10)
+   predict(fit, n.ahead = 10,mse="uncond")
 }
 
 
