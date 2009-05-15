@@ -3,7 +3,8 @@ Version: 2100.79
 Revision: 4093
 Date: 2009-04-19
 Title: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
-Author: Diethelm Wuertz, Yohan Chalabi, Michal Miklovic
+Author: Diethelm Wuertz and Yohan Chalabi with contribution from Michal 
+	Miklovic, Pierre Chausse and others
 Depends: R (>= 2.6.0), stats, graphics, methods, timeDate, timeSeries,
         fBasics (>= 2100.77)
 Suggests: RUnit, tcltk
