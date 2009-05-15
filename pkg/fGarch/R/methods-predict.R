@@ -34,7 +34,7 @@
 
 
 setMethod(f = "predict", signature(object = "fGARCH"), definition =
-function(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),...)
+predict <- function(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),plot=FALSE,nx=NULL,crit_val=NULL,conf=NULL,...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -49,6 +49,11 @@ function(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),...)
     #   trace - should the prediction be traced? A logical value,
     #       by default FALSE)
     #    mse - should the mean squared errors be conditional or unconditional
+    #    plot - should the predictions be plotted
+    #    nx - The number of observations to be plotted with the predictions 
+    #         (If plot is TRUE, the default value of nx is the sample size times 0.25.)	
+    #    crit_va - If you want to set manually the critical values for the confidence intervals
+    #    conf -  The confidence level for computing the critical values of the confidence intervals 
     
 
     # FUNCTION:
@@ -207,11 +212,114 @@ else
     # Standard Deviations:
     standardDeviation = h^(1/delta)
 
+    # Plotting the predictions
+
+    if (plot)
+	{
+	if(is.null(nx))
+		nx <- round(length(object@data)*.25)
+	t <- length(object@data)
+	x <- c(object@data[(t-nx+1):t],meanForecast)
+
+	# Computing the appropriate critical values
+
+	if (is.null(conf))
+		conf <- 0.95
+				
+		if (is.null(crit_val))
+			{
+			if(object@fit$params$cond.dist=="norm")
+				{
+				crit_valu <- qnorm(1-(1-conf)/2)
+				crit_vald <- qnorm((1-conf)/2)
+				}
+			if(object@fit$params$cond.dist=="snorm")
+				{
+				crit_valu <- qsnorm(1-(1-conf)/2,xi=coef(object)["skew"])
+				crit_vald <- qsnorm((1-conf)/2,xi=coef(object)["skew"])
+				}
+			if(object@fit$params$cond.dist=="ged")
+				{
+				crit_valu <- qged(1-(1-conf)/2,nu=coef(object)["shape"])
+				crit_vald <- qged((1-conf)/2,nu=coef(object)["shape"])
+				}
+			if(object@fit$params$cond.dist=="sged")
+				{
+				crit_valu <- qsged(1-(1-conf)/2,nu=coef(object)["shape"],xi=coef(object)["skew"])
+				crit_vald <- qsged((1-conf)/2,nu=coef(object)["shape"],xi=coef(object)["skew"])
+				}
+			if(object@fit$params$cond.dist=="std")
+				{
+				crit_valu <- qstd(1-(1-conf)/2,nu=coef(object)["shape"])
+				crit_vald <- qstd((1-conf)/2,nu=coef(object)["shape"])
+				}
+			if(object@fit$params$cond.dist=="sstd")
+				{
+				crit_valu <- qsstd(1-(1-conf)/2,nu=coef(object)["shape"],xi=coef(object)["skew"])
+				crit_vald <- qsstd((1-conf)/2,nu=coef(object)["shape"],xi=coef(object)["skew"])
+				}
+			if(object@fit$params$cond.dist=="snig")
+				{
+				crit_valu <- qsnig(1-(1-conf)/2,zeta=coef(object)["shape"],rho=coef(object)["skew"])
+				crit_vald <- qsnig((1-conf)/2,zeta=coef(object)["shape"],rho=coef(object)["skew"])
+				}
+			if(object@fit$params$cond.dist=="QMLE")
+				{
+				e <- sort(object@residuals/object@sigma.t)
+				crit_valu <- e[round(t*(1-(1-conf)/2))]
+				crit_vald <- e[round(t*(1-conf)/2)]
+				}
+			}
+		else
+			{
+			if(length(crit_val)==2)
+				{
+				crit_valu <- crit_val[2]
+				crit_vald <- crit_val[1]
+				}
+			if(length(crit_val)==1)
+				{
+				crit_valu <- abs(crit_val)
+				crit_vald <- -abs(crit_val)
+				}
+			}	
+
+	int_l <- meanForecast+crit_vald*meanError
+	int_u <- meanForecast+crit_valu*meanError
+	ylim_l <- min(c(x,int_l)*(.95))
+	ylim_u <- max(c(x,int_u)*(1.05))
+	
+	plot(x,type='l',ylim=c(ylim_l,ylim_u))
+	title("Prediction with confidence intervals")
+	lines((nx+1):(nx+n.ahead), meanForecast, col = 2, lwd = 2)
+	lines((nx+1):(nx+n.ahead), int_l, col = 3, lwd = 2)
+	lines((nx+1):(nx+n.ahead), int_u, col = 4, lwd = 2)
+	polygon(c((nx+1):(nx+n.ahead),(nx+n.ahead):(nx+1)), c(int_l, int_u[n.ahead:1]), border = NA, density = 20, col = 5, angle = 90)
+	es1 <- as.expression(substitute(hat(X)[t+h] + crit_valu*sqrt(MSE),list(crit_valu=round(crit_valu,3))))
+	es2 <- as.expression(substitute(hat(X)[t+h] - crit_vald*sqrt(MSE),list(crit_vald=abs(round(crit_vald,3)))))
+	es3 <- expression(hat(X)[t+h])
+	legend("bottomleft",c(es3,es2,es1),col=2:4,lty=rep(1,3),lwd=rep(2,3))
+	grid()
+	}
+
+
     # Result:
-    forecast = data.frame(
+	if(plot)
+	{
+	forecast = data.frame(
+        meanForecast = meanForecast,
+        meanError = meanError,
+        standardDeviation = standardDeviation[-(1:N)],
+	lowerInterval = int_l,
+	upperInterval = int_u)	    
+	}
+	else
+	{
+	forecast = data.frame(
         meanForecast = meanForecast,
         meanError = meanError,
         standardDeviation = standardDeviation[-(1:N)])
+	}
 
     # Return Value:
     forecast
