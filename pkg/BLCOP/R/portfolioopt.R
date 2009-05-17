@@ -86,7 +86,7 @@ optimalPortfolios <- function
 optimalPortfolios.fPort <- function(result, spec, constraints = "LongOnly", optimizer = "minriskPortfolio", 
 			inputData = NULL, numSimulations = NA)
 {
-	stop("Not implemented for this call")
+	stop("Not implemented for this class of result")
 }
 
 setGeneric("optimalPortfolios.fPort")
