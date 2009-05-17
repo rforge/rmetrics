@@ -18,7 +18,7 @@ test.BLPosterior <- function()
     pick[3, 3:6] <- c(0.9, -0.9, .1, -.1)
     confidences <- 1 / c(0.00709, 0.000141, 0.000866)
     myViews <- BLViews(pick, c(0.0525, 0.0025, 0.02), confidences, letters[1:8])
-    myPosterior <- posteriorEst(myViews, tau = 0.025, mu, myVarcov2 )
+    myPosterior <- posteriorEst(myViews, tau = 0.025, mu = mu, myVarcov2 )
     
     checkEquals(myPosterior@posteriorMean, c(0.0006845523,0.0049366147,0.0624770045,0.0412809077,0.0728581285,
         0.0375468518, 0.0469830868, 0.0655370385 ), checkNames = FALSE )
@@ -44,7 +44,7 @@ test.optimalPortfolios <- function()
     pick[3, 3:6] <- c(0.9, -0.9, .1, -.1)
     confidences <- 1 / c(0.00709, 0.000141, 0.000866)
     myViews <- BLViews(pick, c(0.0525, 0.0025, 0.02), confidences, letters[1:8])
-    myPosterior <- posteriorEst(myViews, tau = 0.025, mu, myVarcov2 )
+    myPosterior <- posteriorEst(myViews, tau = 0.025, mu = mu, myVarcov2 )
     
     res <- optimalPortfolios(myPosterior, doPlot = TRUE)
     expected <- c(0.00000000,0.00000000,0.38204176, 0.00000000, 0.08198505,0.00000000, 0.36548138,0.17049181)
