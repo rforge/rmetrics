@@ -186,6 +186,9 @@ function()
 test.fromTimeSeriesUV =
 function()
 {
+    if (FALSE) { 
+    # DW has to be fixed ...
+    
     # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
     # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
     # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
@@ -227,6 +230,7 @@ function()
     head(TS)
     class(TS)
     checkIdentical(class(TS), "ts")
+    }
 
     # Return Value:
     return()
@@ -239,6 +243,9 @@ function()
 test.fromTimeSeriesMV =
 function()
 {
+    if (FALSE) { 
+    # DW has to be fixed ...
+    
     # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
     # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
     # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
@@ -278,7 +285,8 @@ function()
     checkIdentical(
         target = class(TS),
         current = c("mts", "ts"))
-
+    }
+    
     # Return Value:
     return()
 }
