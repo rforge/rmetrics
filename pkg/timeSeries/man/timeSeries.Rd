@@ -3,6 +3,7 @@
 
 \title{timeSeries Class}
 
+
 \alias{TimeSeriesClass}
 
 \alias{timeSeries}

@@ -3,29 +3,32 @@
 
 \title{timeSeries Class, Coercion and Transformation}
 
+
 \alias{as}
 \alias{as.timeSeries}
 \alias{as.timeSeries.default}
+\alias{as.timeSeries.ts} 
 \alias{as.timeSeries.data.frame} 
 \alias{as.timeSeries.character}
 \alias{as.timeSeries.zoo} 
 
+\alias{as.ts,timeSeries-method}
 \alias{as.data.frame,timeSeries-method}
 \alias{as.list,timeSeries-method}
 \alias{as.matrix,timeSeries-method}
-\alias{as.ts,timeSeries-method}
 
+\alias{as.ts.timeSeries}
 \alias{as.data.frame.timeSeries}
 \alias{as.list.timeSeries}
 \alias{as.matrix.timeSeries}
-\alias{as.ts.timeSeries}
-
 
 \alias{coerce,ANY,timeSeries-method}
+\alias{coerce,ts,timeSeries-method}
 \alias{coerce,data.frame,timeSeries-method}
 \alias{coerce,character,timeSeries-method}
 \alias{coerce,ANY,timeSeries-method}
 
+\alias{coerce,timeSeries,tse-method}
 \alias{coerce,timeSeries,data.frame-method}
 \alias{coerce,timeSeries,list-method}
 \alias{coerce,timeSeries,matrix-method}
@@ -41,15 +44,13 @@
     Functions to create 'timeSeries' objects from other objects:
     
     \tabular{ll}{
-      \code{as.timeSeries} \tab Generic function to convert an object to
-      a 'timeSeries' object, \cr
-      \code{as.timeSeries.default} \tab Returns the unchanged  object, \cr
+    \code{as.timeSeries} \tab Generic function to convert an object to a 'timeSeries' object, \cr
+    \code{as.timeSeries.default} \tab Returns the unchanged  object, \cr
     \code{as.timeSeries.numeric} \tab Converts from a numeric vector, \cr 
     \code{as.timeSseries.data.frame} \tab Converts from a numeric vector, \cr 
     \code{as.timeSeries.matrix} \tab Converts from a matrix, \cr 
     \code{as.timeSeries.ts} \tab Converts from an object of class 'ts', \cr
-    \code{as.timeSeries.character} \tab Converts from a named demo file,
-      \cr  
+    \code{as.timeSeries.character} \tab Converts from a named demo file, \cr  
     \code{as.timeSeries.zoo} \tab Converts an object of class zoo. }
     
     Functions to transform 'timeSeries' objects into other objects: 
@@ -72,13 +73,15 @@
 
 
 \usage{
-\method{as.timeSeries}{default}(x, \dots) 
+\method{as.timeSeries}{default}(x, \dots)
+\method{as.timeSeries}{ts}(x, \dots) 
 \method{as.timeSeries}{data.frame}(x, \dots) 
 \method{as.timeSeries}{character}(x, \dots) 
 \method{as.timeSeries}{zoo}(x, \dots) 
 
 
 \S4method{as.matrix}{timeSeries}(x, \dots)
+\S4method{as.ts}{timeSeries}(x, \dots)
 \S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = FALSE, \dots)
 \S4method{as.ts}{timeSeries}(x, \dots)
 }
@@ -87,10 +90,10 @@
 \arguments{
   
 
-%     \item{mode}{ 
-%         a character string giving an atomic mode or \code{"list"},
-%         or (not for 'vector') \code{"any"}.
-%     }
+%   \item{mode}{ 
+%       a character string giving an atomic mode or \code{"list"},
+%       or (not for 'vector') \code{"any"}.
+%   }
     \item{optional}{
         A logical value. If \code{TRUE}, setting row names and converting
         column names (to syntactic names) is optional.
@@ -116,7 +119,7 @@
     returns a S4 object of class \code{timeSeries}.
     \cr
     
-%    \code{as.vector}\cr
+%   \code{as.vector}\cr
     \code{as.numeric}\cr
     \code{as.data.frame}\cr
     \code{as.matrix}\cr
@@ -143,9 +146,6 @@
 ## As Matrix or Data Frame:
    as.matrix(TS)
    as.data.frame(TS)
-   
-## As Univariate Object of Class 'ts':
-   as.ts(TS)
 }
 
 

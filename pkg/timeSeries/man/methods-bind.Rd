@@ -20,6 +20,8 @@
 \alias{merge,ANY,timeSeries-method}
 \alias{merge,timeSeries,ANY-method}
 \alias{merge,timeSeries,missing-method}
+\alias{merge,timeSeries,numeric-method}
+\alias{merge,timeSeries,matrix-method}
 \alias{merge,timeSeries,timeSeries-method}
 
 \alias{merge.timeSeries}
