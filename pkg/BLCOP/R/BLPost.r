@@ -2,6 +2,9 @@
 # Mango Solutions, Chippenham SN14 0SQ 2008
 # posteriorEst
 # Author: Francisco
+# $Rev$
+# $LastChangedDate$
+#
 ###############################################################################
 # DESCRIPTION: Computes the Black-Litterman posterior estimate 
 # KEYWORDS: math
@@ -10,8 +13,9 @@
 posteriorEst <- function
 (
     views,     # full BLview object.  
-    tau,       # Degree of uncertainty in prior
-    alphas,    # Equilibrium expected returns
+	mu,    # Equilibrium expected returns
+	tau = 0.5,       # Degree of uncertainty in prior
+    
     sigma,     # variance-covariance matrix of asset returns
     kappa = 0  # if greater than 0, the view confidences will be ignored and the
                # omega matrix in the BL model will be replaced by kappa * P %*% sigma %*% t(P)
@@ -44,14 +48,14 @@ posteriorEst <- function
   
   temp <- tcrossprod(sigma, P)
  
-  postMu <- alphas + tau * temp %*% solve(tau * P %*% temp + omega, qv - P %*% alphas)
+  postMu <- mu + tau * temp %*% solve(tau * P %*% temp + omega, qv - P %*% mu)
   postMu <- as.numeric(postMu)
   
   postSigma <- (1 + tau) * sigma - tau^2 * temp %*% solve(tau * P %*% temp + omega, P %*% sigma)
-  names(alphas) <- assetSet(views)
+  names(mu) <- assetSet(views)
   names(postMu) <- assetSet(views)
   
-  new("BLResult", views = views, tau = tau, priorMean = alphas, priorCovar = sigma,
+  new("BLResult", views = views, tau = tau, priorMean = mu, priorCovar = sigma,
                posteriorMean = postMu, posteriorCovar = postSigma, kappa = kappa )
 }
 
@@ -80,7 +84,7 @@ BLPosterior <- function
 {
   covEstimator <- match.fun(covEstimator)
   alphaInfo <- CAPMList(returns, marketIndex, riskFree = riskFree)
-  post <- posteriorEst(views, tau = tau, alphas = alphaInfo[["alphas"]], 
+  post <- posteriorEst(views, tau = tau, mu = alphaInfo[["alphas"]], 
       sigma = unclass(covEstimator(returns)),  kappa = kappa)
   post
 }
