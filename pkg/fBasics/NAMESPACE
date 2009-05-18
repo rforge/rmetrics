@@ -305,6 +305,7 @@ export(
     "maxddStats",
     ".maxddStats",
     ".mleStableFit",
+    ".stablePlot",
     "monoPalette",
     ".moodTest",
     ".mrlPlot",
