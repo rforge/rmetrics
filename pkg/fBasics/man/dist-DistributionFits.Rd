@@ -36,12 +36,13 @@
 
 \usage{
 nFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
+
 tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
     description = NULL, \dots)
     
 stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-    type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
-    description = NULL) 
+    type = c("q", "mle"), doplot = TRUE, algorithm = c("nlminb", "nlm"),
+    trace = FALSE, title = NULL, description = NULL) 
     
 \S4method{show}{fDISTFIT}(object)
 }
@@ -49,6 +50,11 @@ stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
 
 \arguments{
   
+    \item{algorithm}{
+        [stableFit] - \cr
+        a character string, which optimization algorithm should be
+        used for max log-lilelihood estimation.
+        }
     \item{alpha, beta, gamma, delta}{
         [stable] - \cr
         The parameters are \code{alpha}, \code{beta}, \code{gamma}, 

@@ -37,9 +37,9 @@
 
 
 stableFit <-
-    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
-    type = c("q", "mle"), doplot = TRUE, trace = FALSE,
-    title = NULL, description = NULL)
+function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
+    type = c("q", "mle"), doplot = TRUE, algorithm = c("nlminb", "nlm"),
+    trace = FALSE, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -62,7 +62,7 @@ stableFit <-
         if (is.na(Gamma)) Gamma = gamma
         if (is.na(Delta)) Delta = delta
         ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot,
-            trace, title, description)
+            algorithm, trace, title, description)
     }
 
     # Return Value:
@@ -74,7 +74,7 @@ stableFit <-
 
 
 .phiStable =
-    function()
+function()
 {
     # A function implemented by Diethelm Wuertz
 
@@ -371,7 +371,7 @@ stableFit <-
 
 
 .qStableFit <-
-    function(x, doplot = TRUE, title = NULL, description = NULL)
+function(x, doplot = TRUE, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -463,7 +463,7 @@ stableFit <-
     # Return Value:
     new("fDISTFIT",
         call = as.call(CALL),
-        model = "Student-t Distribution",
+        model = "Stable Distribution",
         data = as.data.frame(x),
         fit = fit,
         title = as.character(title),
@@ -475,8 +475,9 @@ stableFit <-
 
 
 .mleStableFit <-
-    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
-    trace = FALSE, title = NULL, description = NULL)
+function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
+    algorithm = c("nlminb", "nlm"), trace = FALSE, 
+    title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -513,8 +514,14 @@ stableFit <-
     }
 
     # Minimization:
-    r = nlm(f = establemle, p = c(log(alpha/(2-alpha)), atanh(beta),
-        gamma, delta), y = x, trace = trace)
+    if (algorithm == "nlminb") {
+        r <- nlminb(start = c(log(alpha/(2-alpha)), atanh(beta), gamma, delta), 
+            objective = establemle, y = x, trace = trace) 
+        r$estimate = r$par
+    } else if (algorithm == "nlm") {
+        r = nlm(f = establemle, p = c(log(alpha/(2 - alpha)), atanh(beta), 
+            gamma, delta), y = x, trace = trace)
+    }
     alpha = 2/(1+exp(-r$estimate[1]))
     beta = tanh(r$estimate[2])
     gamma = r$estimate[3]
@@ -533,7 +540,7 @@ stableFit <-
         ylim = log(c(min(y.points), max(y.points)))
         plot(x, log(y), xlim = c(span[1], span[length(span)]),
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
-        title("STUDENT-T: Parameter Estimation")
+        title("Stable Distribution: Parameter Estimation")
         lines(x = span, y = log(y.points), col = "steelblue")
         if (exists("grid")) grid()
     }
@@ -550,7 +557,7 @@ stableFit <-
     # Return Value:
     new("fDISTFIT",
         call = as.call(CALL),
-        model = "Student-t Distribution",
+        model = "Stable Distribution",
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title),

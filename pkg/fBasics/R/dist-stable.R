@@ -27,7 +27,7 @@
 
 
 ################################################################################
-# FUNCTIONS:            STABLE DISTRIBUTION:
+# FUNCTIONS:            DESCRIPTION:
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
@@ -38,7 +38,7 @@
 
 
 dstable =
-    function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -164,7 +164,7 @@ dstable =
 
 
 .g1 <-
-    function(x, xarg, alpha, beta)
+function(x, xarg, alpha, beta)
 {
     # Function to Integrate:
     varzeta = -beta * tan(pi*alpha/2)
@@ -182,7 +182,7 @@ dstable =
 
 
 .fct1 <-
-    function(xarg, alpha, beta, tol, subdivisions)
+function(xarg, alpha, beta, tol, subdivisions)
 {
     # Integration:
     varzeta = -beta * tan(pi*alpha/2)
@@ -207,7 +207,7 @@ dstable =
 
 
 .g2 <-
-    function(x, xarg, alpha, beta)
+function(x, xarg, alpha, beta)
 {
     # Function to Integrate:
     # x is a non-sorted vector!
@@ -225,7 +225,7 @@ dstable =
 
 
 .fct2 <-
-    function(xarg, alpha, beta, tol, subdivisions)
+function(xarg, alpha, beta, tol, subdivisions)
 {
     # Integration:
     theta2 = optimize(f = .g2, lower = -pi/2, upper = pi/2,
@@ -248,7 +248,7 @@ dstable =
 
 
 pstable =
-    function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -345,7 +345,7 @@ pstable =
 
 
 .G1 <-
-    function(x, xarg, alpha, beta)
+function(x, xarg, alpha, beta)
 {
     # Function to Integrate:
     varzeta = -beta * tan(pi*alpha/2)
@@ -363,7 +363,7 @@ pstable =
 
 
 .FCT1 <-
-    function(xarg, alpha, beta, tol, subdivisions)
+function(xarg, alpha, beta, tol, subdivisions)
 {
     # Integration:
     varzeta = -beta * tan(pi*alpha/2)
@@ -390,7 +390,7 @@ pstable =
 
 
 .G2 <-
-    function(x, xarg, alpha, beta)
+function(x, xarg, alpha, beta)
 {
     # Function to Integrate:
     # x is a non-sorted vector!
@@ -408,7 +408,7 @@ pstable =
 
 
 .FCT2 <-
-    function(xarg, alpha, beta, tol, subdivisions)
+function(xarg, alpha, beta, tol, subdivisions)
 {
     # Integration:
     theta2 = optimize(f = .G2, lower = -pi/2, upper = pi/2,
@@ -545,7 +545,7 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
 
 rstable <-
-    function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -609,7 +609,7 @@ rstable <-
 
 
 stableMode <-
-    function(alpha, beta)
+function(alpha, beta)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -670,7 +670,7 @@ stableMode <-
 
 
 .integrateStable =
-    function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
+function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 {
     # A function implemented by Diethelm Wuertz
 
