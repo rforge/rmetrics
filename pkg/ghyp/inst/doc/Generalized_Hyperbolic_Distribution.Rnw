@@ -1,15 +1,3 @@
-% %% PDF ohne Animation
-% \documentclass[11pt,english]{scrartcl}
-
-% %%\beamertemplatenavigationsymbolsempty ,handout
-
-% %% neue deutsche Rechtschreibung
-% \usepackage[english]{babel}
-% \usepackage{lmodern}            %% Optimale Fonts für T1
-% \usepackage[T1]{fontenc}
-% \usepackage[ansinew]{inputenc}
-% \usepackage{amsmath, amsthm, amssymb}
-% \usepackage{csquotes}
 % <---------------------------------------------------------------------->
 \documentclass[11pt,english]{scrartcl}
 % <---------------------------------------------------------------------->
@@ -21,12 +9,6 @@
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{fancyhdr}
 \usepackage{color}
-% \usepackage{amsmath}
-% \usepackage{amstext}
-% \usepackage{amsfonts}
-% \usepackage{amsthm}
-% \usepackage{amssymb}
-% \usepackage{amsbsy}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage[authoryear,round]{natbib}
