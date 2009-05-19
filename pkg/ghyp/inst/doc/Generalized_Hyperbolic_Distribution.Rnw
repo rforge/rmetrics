@@ -1,21 +1,35 @@
+% %% PDF ohne Animation
+% \documentclass[11pt,english]{scrartcl}
+
+% %%\beamertemplatenavigationsymbolsempty ,handout
+
+% %% neue deutsche Rechtschreibung
+% \usepackage[english]{babel}
+% \usepackage{lmodern}            %% Optimale Fonts für T1
+% \usepackage[T1]{fontenc}
+% \usepackage[ansinew]{inputenc}
+% \usepackage{amsmath, amsthm, amssymb}
+% \usepackage{csquotes}
 % <---------------------------------------------------------------------->
 \documentclass[11pt,english]{scrartcl}
 % <---------------------------------------------------------------------->
+\usepackage{lmodern}            %% Optimale Fonts für T1
 \usepackage{ghypCommands}
 %\usepackage{inputenc}
 %\usepackage[latin1]{inputenc}
 \usepackage{a4wide}
+\usepackage{amsmath, amsthm, amssymb}
 \usepackage{fancyhdr}
 \usepackage{color}
-\usepackage{amsmath}
-\usepackage{amstext}
-\usepackage{amsfonts}
-\usepackage{amsthm}
+% \usepackage{amsmath}
+% \usepackage{amstext}
+% \usepackage{amsfonts}
+% \usepackage{amsthm}
+% \usepackage{amssymb}
+% \usepackage{amsbsy}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{amssymb}
 \usepackage[authoryear,round]{natbib}
-\bibliographystyle{plainnat}
 \usepackage{babel}
 % <---------------------------------------------------------------------->
 %\VignetteIndexEntry{Generalized Hyperbolic Distribution}
@@ -269,7 +283,7 @@ names.
 \item{If $\chi = 0$ and $\lambda > 0$ one gets a limiting case which
     is known amongst others as \emph{Variance Gamma (VG)}
     distribution.}
-\item{If $\psi = 0$ and $\lambda < -1$ the \emph{generalized
+\item{If $\psi = 0$ and $\lambda < 0$ the \emph{generalized
       hyperbolic Student-t} distribution is obtained (called simply
     \emph{Student-t} in what follows).}
 \end{itemize}
@@ -1374,6 +1388,7 @@ accuracy of the fit.
 % <---------------------------------------------------------------------->
 \end{appendix}
 % <---------------------------------------------------------------------->
+\bibliographystyle{plainnat}
 \bibliography{ludabib}
 % <---------------------------------------------------------------------->
 \end{document}
