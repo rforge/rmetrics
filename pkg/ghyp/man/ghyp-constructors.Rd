@@ -82,10 +82,9 @@ gauss(mu = 0, sigma = diag(rep(1, length(mu))), data = NULL)
 \details{
 
   These functions serve as constructors for univariate and multivariate
-  generalized hyperbolic (GH) distribution objects and the special cases
-  of the GH distribution. \cr
+  objects. \cr
 
-  \code{ghyp}, \code{hyp} and \code{NIG} serve as constructor functions
+  \code{ghyp}, \code{hyp} and \code{NIG} are constructor functions
   for both the \dQuote{chi/psi} and the \dQuote{alpha.bar}
   parametrization.  Whenever \code{alpha.bar} is not \code{NULL} it is
   assumed that the \dQuote{alpha.bar} parametrization is used and the
@@ -93,16 +92,29 @@ gauss(mu = 0, sigma = diag(rep(1, length(mu))), data = NULL)
 
   Similarly, the variance gamma (VG) and the Student-t distribution
   share the same constructor function for both the \code{chi/psi} and
-  \code{alpha.bar} parametrization too. To initialize them in the
+  \code{alpha.bar} parametrization. To initialize them in the
   \code{alpha.bar} parametrization simply omit the argument \code{psi}
   and \code{chi}, respectively. If \code{psi} or \code{chi} are
   submitted, the \dQuote{chi/psi} parametrization will be used.\cr
 
   \code{ghyp.ad}, \code{hyp.ad}, \code{NIG.ad}, \code{student.t.ad} and
-  \code{VG.ad} use the \dQuote{alpha/delta} parametrization.  Have a
-  look on the vignette of this package in the \code{doc} folder for
-  further information regarding the parametrization and for the domains
-  of variation of the parameters.
+  \code{VG.ad} use the \dQuote{alpha/delta} parametrization.  \cr
+
+  The following table gives the constructors for each combination of
+  distribution and parametrization.
+  \tabular{cccc}{
+      \tab   \tab  \bold{Parametrization}  \tab  \cr
+      \bold{Distribution}  \tab \dQuote{chi/psi} \tab \dQuote{alpha.bar} \tab \dQuote{alpha/delta} \cr
+    GH \tab \code{ghyp(...)} \tab \code{ghyp(..., alpha.bar=x)} \tab \code{ghyp.ad(...)} \cr
+    hyp \tab \code{hyp(...)} \tab \code{hyp(..., alpha.bar=x)} \tab \code{hyp.ad(...)} \cr
+    NIG \tab \code{NIG(...)} \tab \code{NIG(..., alpha.bar=x)} \tab \code{NIG.ad(...)} \cr
+    Student-t \tab \code{student.t(..., chi=x)} \tab \code{student.t(...)} \tab \code{student.t.ad(...)} \cr
+    VG \tab \code{VG(..., psi=x)} \tab \code{VG(...)} \tab   \code{VG.ad(...)} \cr
+  }
+
+  Have a look on the vignette of this package in the \code{doc} folder
+  for further information regarding the parametrization and for the
+  domains of variation of the parameters.
 
 }
 % <---------------------------------------------------------------------->
@@ -127,8 +139,8 @@ gauss(mu = 0, sigma = diag(rep(1, length(mu))), data = NULL)
   standard \R implementation of the Student-t distribution. \cr
 
   In case of non-finite variance, the \dQuote{alpha.bar} parametrization
-  does not work because the standard deviation is defined by
-  \code{sigma}. In this case the \dQuote{chi/psi} parametrization can be
+  does not work because \code{sigma} is defined to be the standard
+  deviation. In this case the \dQuote{chi/psi} parametrization can be
   used by submitting the parameter \code{chi}. To obtain equal results
   as the standard \R implmentation use \code{student.t(nu = nu, chi =
   nu)} (see \bold{Examples}).\cr

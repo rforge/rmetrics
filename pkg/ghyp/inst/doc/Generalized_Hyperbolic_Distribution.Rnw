@@ -1244,12 +1244,12 @@ distributions.
     Distribution & $(\LambdaChiPsi)$ & $(\LambdaAbar)$ &
     $(\BarndorffParam)$ \\
     \hline
-    GH & \verb\ghyp(...)\ & \verb\ghyp(..., alpha.bar = x)\ & \verb\ghyp.ad(...)\ \\
-    hyp & \verb\hyp(...)\ & \verb\hyp(..., alpha.bar = x)\ & \verb\hyp.ad(...)\ \\
-    NIG & \verb\NIG(...)\ & \verb\NIG(..., alpha.bar = x)\ & \verb\NIG.ad(...)\ \\
-    Student-t & \verb\student.t(..., chi = x)\ & \verb\student.t(...)\  &
+    GH & \verb\ghyp(...)\ & \verb\ghyp(..., alpha.bar=x)\ & \verb\ghyp.ad(...)\ \\
+    hyp & \verb\hyp(...)\ & \verb\hyp(..., alpha.bar=x)\ & \verb\hyp.ad(...)\ \\
+    NIG & \verb\NIG(...)\ & \verb\NIG(..., alpha.bar=x)\ & \verb\NIG.ad(...)\ \\
+    Student-t & \verb\student.t(..., chi=x)\ & \verb\student.t(...)\  &
     \verb\student.t.ad(...)\ \\
-    VG & \verb\VG(..., psi = x)\ & \verb\VG(...)\  & \verb\VG.ad(...)\
+    VG & \verb\VG(..., psi=x)\ & \verb\VG(...)\  & \verb\VG.ad(...)\
   \end{tabular}
 \end{center}
 
