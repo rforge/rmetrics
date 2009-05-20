@@ -49,7 +49,7 @@ function(formula, data,
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Fit parameters to a ARMA-GARCH model
+    #   Fit parameters to a ARMA-GARCH model by Formula Specification
 
     # Arguments:
     #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance
@@ -72,9 +72,11 @@ function(formula, data,
     #   description - an optional project description string
     
     # Example:
-    #   garchFit(~ garch(1,1), dem2gbp[,1]) 
+    #   garchFit(~ garch(1, 1), dem2gbp[, 1]) 
 
     # FUNCTION:
+    
+    DEBUG = FALSE
 
     # Match arguments:
     init.rec = match.arg(init.rec)
@@ -121,10 +123,35 @@ function(formula, data,
         }
     }
 
+    # Robust Covariance ?
     robust.cvar <- (cond.dist == "QMLE")
 
+    # Parse Arguments:
     args = .garchArgsParser(formula = formula, data = data, trace = FALSE)
 
+    # DEBUG - Print Arguments:
+    if (DEBUG) print(list(
+        formula.mean = args$formula.mean,
+        formula.var = args$formula.var,
+        series = args$series,
+        init.rec = init.rec, 
+        delta = delta, 
+        skew = skew, 
+        shape = shape, 
+        cond.dist = cond.dist, 
+        include.mean = include.mean,
+        include.delta = include.delta, 
+        include.skew = include.skew, 
+        include.shape = include.shape, 
+        leverage = leverage,
+        trace = trace,
+        algorithm = algorithm,
+        hessian = hessian,
+        robust.cvar = robust.cvar,
+        control = control,
+        title = title, 
+        description = description))
+        
     # Fit:
     ans = .garchFit(
         formula.mean = args$formula.mean,

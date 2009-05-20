@@ -19,7 +19,7 @@
 # FUNCTION:               DESCRIPTION:
 #  .garchFit               Internal GARCH Fit
 #  .garchArgsParser        Parses formula and data for garchFit
-#  .garchModelSeries
+#  .garchModelSeries       Composes model series like in lm fits
 #  .garchOptimizerControl  Sets default values for Garch Optimizer
 #  .garchNames             Slot names, @fit slot, parameters and controls
 ################################################################################
@@ -74,7 +74,10 @@ function(
 
     # FUNCTION:
 
+    DEBUG <- FALSE
+    
     # Allow only full formula specification:
+    if(DEBUG) print("Formula Specification ...")
     fcheck = rev(all.names(formula.mean))[1]
     if (fcheck == "ma") {
         stop("Use full formula: arma(0,q) for ma(q)")
@@ -83,6 +86,7 @@ function(
     }
 
     # Check for Recursion Initialization:
+    if(DEBUG) print("Recursion Initialization ...")
     if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
         stop("Algorithm only supported for mci Recursion")
     }
@@ -91,11 +95,13 @@ function(
     .StartFit <- Sys.time()
 
     # Generate Control List - Define Default Settings:
+    if(DEBUG) print("Generate Control List ...")
     con <- .garchOptimizerControl(algorithm, cond.dist)
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
     # keep copy of input data
+    if(DEBUG) print("Initialize Time Series ...")
     data <- series
     # scale time series
     scale <- if (con$xscale) sd(series) else 1
@@ -113,6 +119,7 @@ function(
     .setfGarchEnv(.series = .series)
 
     # Initialize Model Parameters - Save Globally:
+    if(DEBUG) print("Initialize Model Parameters ...")
     .params <- .garchInitParameters(
         formula.mean = formula.mean,
         formula.var = formula.var, 
@@ -131,6 +138,7 @@ function(
     .setfGarchEnv(.params = .params)
 
     # Select Conditional Distribution Function:
+    if(DEBUG) print("Select Conditional Distribution ...")
     .setfGarchEnv(.garchDist = .garchSetCondDist(cond.dist[1]))
 
     # Estimate Model Parameters - Minimize llh, start from big value:
@@ -140,6 +148,7 @@ function(
     # fit$llh = .llh # should be done in .garchOptimizeLLH
 
     # Add to Fit:
+    if (DEBUG) print("Add to fit...")
     .series <- .getfGarchEnv(".series")
     .params <- .getfGarchEnv(".params")
     names(.series$h) <- NULL
@@ -297,31 +306,35 @@ function (formula, data, fake = FALSE, lhs = FALSE)
     # A function implemented by Diethelm Wuertz
 
     # Description:
+    #   Composes model series like in lm fits
     
     # Arguments:
     
     # Note:
-    #   ... is the same funtion as Rmetrics' .modelSeries()
-    #   ... have also a look on model.frame()
+    #   ... have a look on model.frame()
 
     # FUNCTION:
 
+    # Formula:
     if (length(formula) == 2) {
         formula = as.formula(paste("x", formula[1], formula[2],
             collapse = ""))
         stopifnot(!missing(data))
     }
     
+    # Missing Data ?
     if (missing(data)) {
         data = eval(parse(text = search()[2]), parent.frame())
     }
     
+    # Numeric Data ?
     if (is.numeric(data)) {
         data = data.frame(data)
         colnames(data) = all.vars(formula)[1]
         lhs = TRUE
     }
     
+    # Faked Formula ?
     if (fake) {
         response = as.character(formula)[2]
         Call = as.character(match.call()[[2]][[3]])
@@ -330,17 +343,21 @@ function (formula, data, fake = FALSE, lhs = FALSE)
         formula = as.formula(paste(response, "~", predictors))
     }
     
+    # Left-Hand-Side Formula ?
     if (lhs) {
         response = as.character(formula)[2]
         formula = as.formula(paste(response, "~", 1))
     }
 
+    # Compose Model Frame:
     x = model.frame(formula, data)
 
+    # timeSeries ?
     if (class(data) == "timeSeries") {
         x = timeSeries(x)
     }
     
+    # Add control atrribute:
     if (fake) {
         attr(x, "control") <- method
     }

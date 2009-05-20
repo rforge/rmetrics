@@ -139,15 +139,21 @@ function(
 function(data, spec = .ugarchSpec())
 {
     # Description:
-    
+    #   Fit parameters to a ARMA-GARCH model by GARCH Specification
+
     # Arguments:
+    #   data -
+    #   spec -
     
-    # Example:   
+    # Example:
+    #   .ugarchFit(dem2gbp[, 1])   
     
     # FUNCTION:
 
+    DEBUG = FALSE
+    
     # Set Call:
-    spec@documentation$call = match.call()
+    CALL <- spec@documentation$call <- match.call()
 
     # Parse Data:
     Name = capture.output(substitute(data))
@@ -189,7 +195,29 @@ function(data, spec = .ugarchSpec())
 
     # Parse Arguments:
     args = .garchArgsParser(formula = formula, data = data, trace = FALSE)
-    print(args)
+      
+    # DEBUG - Print Arguments:
+    if(DEBUG) print(list(
+        formula.mean = args$formula.mean,
+        formula.var = args$formula.var,
+        series = args$series,
+        init.rec = spec@model$init.rec, 
+        delta = spec@model$delta, 
+        skew = spec@distribution$skew, 
+        shape = spec@distribution$shape, 
+        cond.dist = spec@distribution$cond.dist, 
+        include.mean = spec@model$include.mean,
+        include.delta = spec@model$include.delta, 
+        include.skew  = spec@distribution$include.skew, 
+        include.shape = spec@distribution$include.shape, 
+        leverage = spec@model$leverage,
+        trace = spec@optimization$trace,
+        algorithm = spec@optimization$algorithm,
+        hessian = spec@optimization$hessian,
+        robust.cvar = robust.cvar,
+        control = spec@optimization$control,
+        title = spec@documentation$title, 
+        description = spec@documentation$description))
 
     # Fit:
     ans = .garchFit(
@@ -198,18 +226,18 @@ function(data, spec = .ugarchSpec())
         series = args$series,
         init.rec = spec@model$init.rec, 
         delta = spec@model$delta, 
-        skew = spec@model$skew, 
-        shape = spec@model$shape, 
-        cond.dist = spec@distribution$dist, 
-        include.mean = spec@distribution$include.mean,
-        include.delta = spec@distribution$include.delta, 
+        skew = spec@distribution$skew, 
+        shape = spec@distribution$shape, 
+        cond.dist = spec@distribution$cond.dist, 
+        include.mean = spec@model$include.mean,
+        include.delta = spec@model$include.delta, 
         include.skew  = spec@distribution$include.skew, 
         include.shape = spec@distribution$include.shape, 
-        leverage = spec@distribution$leverage,
+        leverage = spec@model$leverage,
         trace = spec@optimization$trace,
         algorithm = spec@optimization$algorithm,
         hessian = spec@optimization$hessian,
-        robust.cvar = robust.var,
+        robust.cvar = robust.cvar,
         control = spec@optimization$control,
         title = spec@documentation$title, 
         description = spec@documentation$description)
