@@ -16,8 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION:
-#  garchFit                Fits the parameters of GARCH process
+# FUNCTION:               DESCRIPTION:
 #  .garchFit               Internal GARCH Fit
 #  .garchArgsParser        Parses formula and data for garchFit
 #  .garchModelSeries
@@ -28,7 +27,8 @@
 
 .garchFit <-
 function(
-    formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1),
+    formula.mean = ~arma(0, 0), 
+    formula.var = ~garch(1, 1),
     series,
     init.rec = c("mci", "uev"),
     delta = 2, skew = 1, shape = 4,
@@ -40,7 +40,9 @@ function(
     hessian = c("fda", "cda"),
     robust.cvar,
     control = list(),
-    title = NULL, description = NULL, ...)
+    title = NULL, 
+    description = NULL, 
+    ...)
 {
     # A function implemented by Diethelm Wuertz
 
