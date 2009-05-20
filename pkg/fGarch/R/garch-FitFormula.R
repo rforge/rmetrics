@@ -25,27 +25,6 @@
 ################################################################################
 
 
-# ------------------------------------------------------------------------------
-# To do:
-
-
-    #   .garchFit() should be integrated into garchFit()
-    #   .garchFilter() should be added for filter, internal and testing mode
-    #   Still undocumented: algorithm="donlp2, and algorithm = "NLMINB"
-
-
-# ------------------------------------------------------------------------------
-# Globally needed Variables:
-
-
-.setfGarchEnv(.llh = 1e99)
-.setfGarchEnv(.garchDist = NA)
-.setfGarchEnv(.params = NA)
-.setfGarchEnv(.series = NA)
-.setfGarchEnv(.trace = NA) # to be added for donlp2 which has no "..." argument
-
-
-# ------------------------------------------------------------------------------
 # History:
 
 
@@ -69,16 +48,23 @@
 garchFit <-
 function(formula, data,
     init.rec = c("mci", "uev"),
-    delta = 2, skew = 1, shape = 4,
+    delta = 2, 
+    skew = 1, 
+    shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", 
         "snig", "QMLE"),
-    include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-    include.shape = NULL, leverage = NULL,
+    include.mean = TRUE, 
+    include.delta = NULL, 
+    include.skew = NULL,
+    include.shape = NULL, 
+    leverage = NULL,
     trace = TRUE,
     algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
     hessian = c("ropt", "rcd"),
     control = list(),
-    title = NULL, description = NULL, ...)
+    title = NULL,
+    description = NULL, 
+    ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -161,14 +147,24 @@ function(formula, data,
         formula.mean = args$formula.mean,
         formula.var = args$formula.var,
         series = args$series,
-        init.rec, delta, skew, shape, cond.dist, include.mean,
-            include.delta, include.skew, include.shape, leverage,
+        init.rec, 
+        delta, 
+        skew, 
+        shape, 
+        cond.dist, 
+        include.mean,
+        include.delta, 
+        include.skew, 
+        include.shape, 
+        leverage,
         trace,
         algorithm,
         hessian,
         robust.cvar,
         control,
-        title, description, ...)
+        title, 
+        description, 
+        ...)
     ans@call = CALL
     attr(formula, "data") <- paste("data = ", Name, sep = "")
     ans@formula = formula
@@ -257,10 +253,11 @@ function(formula, data, trace = FALSE)
     }
 
     # Result:
-    ans <- list(formula.mean = formula.mean,
-                formula.var = formula.var,
-                formula.lhs = formula.lhs,
-                series = x)
+    ans <- list(
+        formula.mean = formula.mean,
+        formula.var = formula.var,
+        formula.lhs = formula.lhs,
+        series = x)
 
     # Return Value:
     ans

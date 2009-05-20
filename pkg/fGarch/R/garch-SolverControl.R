@@ -28,13 +28,13 @@
 
 
 ##############################################################################
-# FUNCTION:               PARAMETER ESTIMATION:    
+# FUNCTION:               DESCRIPTION:    
 #  garchFitControl         Sets default values for Garch Optimizer
 ##############################################################################
   
 
 garchFitControl <- 
-    function(
+function(
     llh = c("filter", "internal", "testing"),
     nlminb.eval.max = 2000, 
     nlminb.iter.max = 1500,
