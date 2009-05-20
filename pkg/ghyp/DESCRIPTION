@@ -1,7 +1,7 @@
 Package: ghyp
 Type: Package
-Version: 1.6.0
-Date: 2009-06-01
+Version: 1.5.1
+Date: 2009-05-20
 Title: A package on the generalized hyperbolic distribution and its special cases
 Author: Wolfgang Breymann, David Luethi
 Maintainer: David Luethi <luethid@gmail.com>

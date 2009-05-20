@@ -1,8 +1,6 @@
-=> vignette: kontinuierliche parametrization
 => portfolio optimization: vignette and examples
 => doc: step.aic.ghyp k==2 beschreiben
 => q/p.default: nur einmal warnen
 => Student-t: wenn dof >= z.B. 1e5 mit gauss arbeiten
-=> cauchy in student.t (modify construcor).
 => vignette: stable property of NIG.
 

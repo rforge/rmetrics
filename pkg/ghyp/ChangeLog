@@ -251,10 +251,11 @@ ghyp V1.5.0
 	generator for the GIG distribution from the Rmetrics package
 	'fBasics'.
 
-2009-06-01 David Luethi
-ghyp V1.6.0
+2009-05-20 David Luethi
+ghyp V1.5.1
 
 	* 'student.t' constructor and internals modified such that it
 	works for non-finite variance and Cauchy distribution in
 	particular.
+	* Documentation and Vignette improved...
 
