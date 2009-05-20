@@ -193,4 +193,11 @@ export(
     "sstdFit",
     "sstdSlider",
     "stdFit",
-    ".truePersistence" )
+    ".truePersistence",
+    ".normCondDist",
+    ".snormCondDist",
+    ".stdCondDist",
+    ".sstdCondDist",
+    ".gedCondDist",
+    ".sgedCondDist",
+    ".snigCondDist")

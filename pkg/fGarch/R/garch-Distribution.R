@@ -17,7 +17,6 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-#  .setfGarchEnv            Set fGarch environment for conditional distribution
 #  .garchSetCondDist        Selects conditional density function
 #  .garchDist               Defines conditional density function
 #  .normCondDist            Normal Distribution
@@ -26,15 +25,10 @@
 #  .stdCondDist             Student-t Distribution
 #  .sstdCondDist            Skew Student-t Distribution
 #  .gedCondDist             Generalized Error Distribution
-#  .gedCondDist             Skew Generalized Error Distribution
-#  .snigCondDist            Normal Inverse Gaussian Distribution                  
+#  .sgedCondDist            Skew Generalized Error Distribution
+#  .snigCondDist            Normal Inverse Gaussian Distribution
+#  .setfGarchEnv            Set fGarch environment for conditional distribution                  
 ################################################################################
-
-
-.setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
-
-
-# ------------------------------------------------------------------------------
 
 
 .garchSetCondDist <-
@@ -66,7 +60,7 @@ function(cond.dist = "norm")
     # FUNCTION:
 
     # Compose Function:
-    fun = paste(".", cond.dist, "CondDist, sep = "")
+    fun = paste(".", cond.dist, "CondDist", sep = "")
     .garchDist = match.fun(fun)
     
     
@@ -90,11 +84,11 @@ function(z, hh, skew, shape)
     # FUNCTION:
     
     # Normal Distribution:
-    # Use fGarch::dnorm
-    if(cond.dist == "norm" || cond.dist == "QMLE") {
+    # Use fGarch::dnorm 
     .garchDist = function(z, hh, skew, shape) {
-        dnorm(x = z/hh, mean = 0, sd = 1) / hh
+        dnorm(x = z/hh, mean = 0, sd = 1) / hh  
     }
+}
     
 
 # ------------------------------------------------------------------------------
@@ -107,9 +101,10 @@ function(z, hh, skew, shape)
     
     # Normal Distribution:
     # Use fGarch::dnorm
-    .garchDist = function(z, hh, skew, shape) {
-        dnorm(x = z/hh, mean = 0, sd = 1) / hh
+    .garchDist = function(z, hh, skew, shape) {  
+        dnorm(x = z/hh, mean = 0, sd = 1) / hh  
     }
+}
         
         
 # ------------------------------------------------------------------------------
@@ -123,8 +118,9 @@ function(z, hh, skew, shape)
     # Skew Normal Distribution:
     # Use fGarch::dsnorm
     .garchDist = function(z, hh, skew, shape) {
-        dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh
+        dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh  
     }
+}
     
 
 # ------------------------------------------------------------------------------
@@ -138,8 +134,9 @@ function(z, hh, skew, shape)
     # Standardized Student-t Distribution:
     # Use fGarch::dstd
     .garchDist = function(z, hh, skew, shape) {
-        dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
+        dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh  
     }
+}
     
 
 # ------------------------------------------------------------------------------
@@ -155,6 +152,7 @@ function(z, hh, skew, shape)
     .garchDist = function(z, hh, skew, shape) {
         dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
     }
+}
 
     
 
@@ -171,6 +169,7 @@ function(z, hh, skew, shape)
     .garchDist = function(z, hh, skew, shape) {
         dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
     }
+}
     
 
 # ------------------------------------------------------------------------------
@@ -187,6 +186,7 @@ function(z, hh, skew, shape)
     .garchDist = function(z, hh, skew, shape) {
         dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
     }
+}
     
 
 # ------------------------------------------------------------------------------
@@ -203,7 +203,15 @@ function(z, hh, skew, shape)
     .garchDist = function(z, hh, skew, shape) {
         dsnig(x = z/hh, zeta = shape, rho = skew) / hh
     }
-    
+}
+ 
+
+
+# ------------------------------------------------------------------------------
+   
+
+.setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
+
     
 ################################################################################
 

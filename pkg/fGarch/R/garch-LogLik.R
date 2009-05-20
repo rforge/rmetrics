@@ -248,12 +248,10 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
                            out = double(n),
                            NAOK = TRUE, 
                            PACKAGE = "stats")$out
-                }
-                else {
+                } else {
                     if (missing(init)) {
                         init <- matrix(0, nfilt, nser)
-                    }
-                    else {
+                    } else {
                         ni <- NROW(init)
                         if (ni != nfilt)
                             stop("length of 'init' must equal length of 'filter'")
