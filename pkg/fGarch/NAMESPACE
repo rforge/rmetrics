@@ -88,7 +88,8 @@ useDynLib("fGarch")
 ################################################
 
 exportClasses("fGARCH",
-              "fGARCHSPEC" )
+              "fGARCHSPEC",
+              "fUGARCHSPEC" )
 exportMethods("coef",
               "fitted",
               "formula",
@@ -200,4 +201,6 @@ export(
     ".sstdCondDist",
     ".gedCondDist",
     ".sgedCondDist",
-    ".snigCondDist")
+    ".snigCondDist",
+    ".ugarchSpec",
+    ".ugarchFit")

@@ -17,20 +17,21 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:    
-#  .fGarchEnv
-#  .setfGarchEnv
-#  .getfGarchEnv
+#  .fGarchEnv              Create GARCH Environment
+#  .setfGarchEnv           Set GARCH Environment       
+#  .getfGarchEnv           Get GARCH Environment
 ################################################################################
 
 
-.fGarchEnv <- new.env(hash = TRUE)
+.fGarchEnv <- 
+new.env(hash = TRUE)
 
 
 # ------------------------------------------------------------------------------
 
 
 .setfGarchEnv <-
-    function(...)
+function(...)
 {
     x <- list(...)
     nm <- names(x)
@@ -45,12 +46,12 @@
 
 
 .getfGarchEnv <-
-    function(x = NULL, unset = "")
+function(x = NULL, unset = "")
 {
     if (is.null(x))
         x <- ls(all.names = TRUE, envir = .fGarchEnv)
-###     unlist(mget(x, envir = .fGarchEnv, mode = "any",
-###         ifnotfound = as.list(unset)), recursive = FALSE)
+        ###     unlist(mget(x, envir = .fGarchEnv, mode = "any",
+        ###         ifnotfound = as.list(unset)), recursive = FALSE)
     get(x, envir = .fGarchEnv, mode = "any")
 }
 

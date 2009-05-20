@@ -70,6 +70,9 @@ function(formula, data,
     #   control - list of additional control parameters for solver
     #   title - an optional title string
     #   description - an optional project description string
+    
+    # Example:
+    #   garchFit(~ garch(1,1), dem2gbp[,1]) 
 
     # FUNCTION:
 
