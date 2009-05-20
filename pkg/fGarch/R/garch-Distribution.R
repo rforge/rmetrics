@@ -14,26 +14,20 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  .setfGarchEnv
-#  .garchSetCondDist       Selects conditional density function
-#  .garchDist              Defines conditional density function
-#  .normCondDist 
-#  .QLMECondDist
+# FUNCTION:                DESCRIPTION:
+#  .setfGarchEnv            Set fGarch environment for conditional distribution
+#  .garchSetCondDist        Selects conditional density function
+#  .garchDist               Defines conditional density function
+#  .normCondDist            Normal Distribution
+#  .QLMECondDist            QLME with Normal Distribution
+#  .snormCondDist           Skew Normal Distribution 
+#  .stdCondDist             Student-t Distribution
+#  .sstdCondDist            Skew Student-t Distribution
+#  .gedCondDist             Generalized Error Distribution
+#  .gedCondDist             Skew Generalized Error Distribution
+#  .snigCondDist            Normal Inverse Gaussian Distribution                  
 ################################################################################
 
 
@@ -106,7 +100,7 @@ function(z, hh, skew, shape)
 # ------------------------------------------------------------------------------
 
 
-.QMLECondDist <- 
+.QLMECondDist <- 
 function(z, hh, skew, shape)
 {
     # FUNCTION:
@@ -139,6 +133,8 @@ function(z, hh, skew, shape)
 .stdCondDist <- 
 function(z, hh, skew, shape)
 {   
+    # FUNCTION:
+    
     # Standardized Student-t Distribution:
     # Use fGarch::dstd
     .garchDist = function(z, hh, skew, shape) {
@@ -152,6 +148,8 @@ function(z, hh, skew, shape)
 .sstdCondDist <- 
 function(z, hh, skew, shape)
 {      
+    # FUNCTION:
+    
     # Skew Standardized Student-t Distribution:
     # Use fGarch::dsstd
     .garchDist = function(z, hh, skew, shape) {

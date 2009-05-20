@@ -33,10 +33,6 @@
 #  .garchArgsParser        Parses formula and data for garchFit
 #  .garchOptimizerControl  Sets default values for Garch Optimizer
 #  .garchFit               ... old Version, still in use by garchFit()
-#  .garchInitSeries        Initializes Series
-#  .garchInitParameters    Initializes Parameters
-#  .garchSetCondDist       Selects conditional density function
-#   .garchDist              Defines conditional density function
 #  .garchOptimizeLLH       Opimizes log-likelihood function
 #   .garchLLH               Computes log-likelihood function
 #  .garchNames              Slot names, @fit slot, parameters and controls
@@ -85,7 +81,7 @@
 
 
 garchFit <-
-    function(formula, data,
+function(formula, data,
     init.rec = c("mci", "uev"),
     delta = 2, skew = 1, shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", 
@@ -200,7 +196,7 @@ garchFit <-
 
 
 .garchArgsParser <-
-    function(formula, data, trace = FALSE)
+function(formula, data, trace = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -289,7 +285,7 @@ garchFit <-
 
 
 .garchModelSeries <-
-    function (formula, data, fake = FALSE, lhs = FALSE)
+function (formula, data, fake = FALSE, lhs = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -340,7 +336,7 @@ garchFit <-
 
 
 .garchOptimizerControl <-
-    function(algorithm, cond.dist)
+function(algorithm, cond.dist)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -406,7 +402,7 @@ garchFit <-
 
 
 .garchFit <-
-    function(
+function(
     formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1),
     series,
     init.rec = c("mci", "uev"),
@@ -577,412 +573,8 @@ garchFit <-
 
 # ------------------------------------------------------------------------------
 
-
-.garchInitSeries <-
-    function(formula.mean, formula.var, cond.dist, series, scale, init.rec,
-    h.start, llh.start, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Initialize time series
-
-    # Arguments:
-    #   see function garchFit()
-
-    # FUNCTION:
-
-    # Check Mean Formula ARMA - Is it Valid ?
-    mm = length(formula.mean)
-    if(mm != 2) stop("Mean Formula misspecified")
-    end = regexpr("\\(", as.character(formula.mean[mm])) - 1
-    model.mean = substr(as.character(formula.mean[mm]), 1, end)
-    if(!any( c("ar", "ma", "arma") == model.mean))
-        stop("formula.mean must be one of: ar, ma, arma")
-
-    # Check Variance Formula GARCH - Is it Valid ?
-    mv = length(formula.var)
-    if(mv != 2) stop("Variance Formula misspecified")
-    end = regexpr("\\(", as.character(formula.var[mv])) - 1
-    model.var = substr(as.character(formula.var[mv]), 1, end)
-    if(!any( c("garch", "aparch") == model.var))
-        stop("formula.var must be one of: garch, aparch")
-
-    # Determine Mean Order from ARMA Formula:
-    model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
-        formula.mean), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
-    u = model.order[1]
-    v = 0
-    if(length(model.order) == 2) v = model.order[2]
-    maxuv = max(u, v)
-    if(u < 0 | v < 0) stop("*** ARMA orders must be positive.")
-
-    # Determine Variance Order from GARCH Formula:
-    model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
-        formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
-    p = model.order[1]
-    q = 0
-    if(length(model.order) == 2) q = model.order[2]
-    if(p+q == 0)
-        stop("Misspecified GARCH Model: Both Orders are zero!")
-    maxpq = max(p, q)
-    if(p < 0 | q < 0) stop("*** GARCH orders must be positive.")
-
-    # Fix Start Position of Series "h" and for Likelihood Calculation:
-    max.order = max(maxuv, maxpq)
-    if(is.null(h.start)) h.start = max.order + 1
-    if(is.null(llh.start)) llh.start = 1
-
-    # Check for Recursion Initialization:
-    if(init.rec != "mci" & model.var != "garch") {
-        stop("Algorithm only supported for mci Recursion")
-    }
-
-    # Trace the Result:
-    if(trace) {
-        cat("\nSeries Initialization:")
-        cat("\n ARMA Model:               ", model.mean)
-        cat("\n Formula Mean:             ", as.character(formula.mean))
-        cat("\n GARCH Model:              ", model.var)
-        cat("\n Formula Variance:         ", as.character(formula.var))
-        cat("\n ARMA Order:               ", u, v)
-        cat("\n Max ARMA Order:           ", maxuv)
-        cat("\n GARCH Order:              ", p, q)
-        cat("\n Max GARCH Order:          ", maxpq)
-        cat("\n Maximum Order:            ", max.order)
-        cat("\n Conditional Dist:         ", cond.dist)
-        cat("\n h.start:                  ", h.start)
-        cat("\n llh.start:                ", llh.start)
-        cat("\n Length of Series:         ", length(series))
-        cat("\n Recursion Init:           ", init.rec)
-        cat("\n Series Scale:             ", scale)
-        cat("\n\n")
-    }
-
-    # Result:
-    ans  = list(
-        model = c(model.mean, model.var),
-        order = c(u = u, v = v, p = p, q = q),
-        max.order = max.order,
-        z = rep(0, times = length(series)),
-        h = rep(var(series), times = length(series)),
-        x = series,
-        scale = scale,
-        init.rec = init.rec,
-        h.start = h.start,
-        llh.start = llh.start)
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchInitParameters <-
-    function(formula.mean, formula.var, delta, skew, shape, cond.dist,
-    include.mean, include.delta, include.skew, include.shape, leverage,
-    algorithm, control, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Initialize model parameters
-
-    # Arguments:
-    #   see function garchFit()
-
-    # FUNCTION:
-
-    # DEBUG:
-    .DEBUG = FALSE
-
-    # global variables
-    .series <- .getfGarchEnv(".series")
-
-    # Determine Mean Order from ARMA Formula:
-    model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
-        formula.mean), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
-    u = model.order[1]
-    v = 0
-    if(length(model.order) == 2) v = model.order[2]
-
-    # Determine Variance Order from GARCH Formula:
-    model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
-        formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
-    p = model.order[1]
-    if (p == 0) stop("The order p must be > 0 in GARCH/APARCH(p,q)")
-    q = 0
-    if(length(model.order) == 2) q = model.order[2]
-
-    # Includes:
-    model.var = .series$model[2]
-    if(is.null(include.delta)) {
-        if(model.var == "garch") {
-            include.delta = FALSE
-        } else {
-            include.delta = TRUE
-        }
-    }
-    if(is.null(leverage)) {
-        if(model.var == "garch") {
-            leverage = FALSE
-        } else {
-            leverage = TRUE
-        }
-    }
-
-    # Distributional Includes:
-    if(cond.dist == "t") cond.dist = "std"
-    skewed.dists = c("snorm", "sged", "sstd", "snig")
-    if(is.null(include.skew)) {
-        if(any(skewed.dists == cond.dist)) {
-            include.skew = TRUE
-        } else {
-            include.skew = FALSE
-        }
-    }
-    shaped.dists = c("ged", "sged", "std", "sstd", "snig")
-    if(is.null(include.shape)) {
-        if(any(shaped.dists == cond.dist)) {
-            include.shape = TRUE
-        } else {
-            include.shape = FALSE
-        }
-    }
-
-    # Set Names for Parameters:
-    Names = c(
-        "mu",
-        if(u > 0) paste("ar", 1:u, sep = ""),
-        if(v > 0) paste("ma", 1:v, sep = ""),
-        "omega",
-        if(p > 0) paste("alpha", 1:p, sep = ""),
-        if(p > 0) paste("gamma", 1:p, sep = ""),
-        if(q > 0) paste("beta",  1:q, sep = ""),
-        "delta",
-        "skew",
-        "shape")
-    if(.DEBUG) { cat("\nDEBUG - Names: \n"); print(Names) }
-
-    # Initialize Model Parameters to be Estimated:
-    fit.mean = arima(.series$x, order = c(u, 0, v),
-        include.mean = include.mean)$coef
-    alpha.start = 0.1
-    beta.start = 0.8
-    ## if(include.delta) delta = 1.5
-    params = c(
-        if(include.mean) fit.mean[length(fit.mean)] else 0,
-        if(u > 0) fit.mean[1:u],
-        if(v > 0) fit.mean[(u+1):(length(fit.mean)-as.integer(include.mean))],
-        var(.series$x, na.rm = TRUE)*(1-alpha.start-beta.start),
-        if(p > 0) rep(alpha.start/p, times = p),
-        if(p > 0) rep(0.1, times = p),
-        if(q > 0) rep(beta.start/q, times = q),
-        delta,
-        skew,
-        shape)
-    names(params) = Names
-    if(.DEBUG) { cat("\nDEBUG - params: \n"); print(params) }
-
-    # Set Lower Limits of Parameters to be Estimated:
-    TINY = 1.0e-8
-    USKEW = 1/10; USHAPE = 1
-    if (cond.dist == "snig") USKEW = -0.99
-    U = c(
-        -10*abs(mean(.series$x)),
-        if(u > 0) rep(-1+TINY, times = u),
-        if(v > 0) rep(-1+TINY, times = v),
-        1.0e-6*var(.series$x),
-        if(p > 0) rep( 0+TINY, times = p),
-        if(p > 0) rep(-1+TINY, times = p),
-        if(q > 0) rep( 0+TINY, times = q),
-        0,          # delta
-        USKEW,      # skew
-        USHAPE)     # shape
-    names(U) = Names
-    if(.DEBUG) { cat("\nDEBUG - U: \n"); print(U) }
-
-    # Set Upper Limits of Parameters to be Estimated:
-    VSKEW = 10; VSHAPE = 10
-    if (cond.dist == "snig") VSKEW = 0.99
-    V = c(
-        10*abs(mean(.series$x)),
-        if(u > 0) rep(1-TINY, times = u),
-        if(v > 0) rep(1-TINY, times = v),
-        100*var(.series$x),
-        if(p > 0) rep(1-TINY, times = p),
-        if(p > 0) rep(1-TINY, times = p),
-        if(q > 0) rep(1-TINY, times = q),
-        2,          # delta
-        VSKEW,      # skew
-        VSHAPE)     # shape
-    names(V) = Names
-    if(.DEBUG) { cat("\nDEBUG - V: \n"); print(V) }
-
-    # Includes:
-    includes = c(
-        include.mean,
-        if(u > 0) rep(TRUE, times = u),
-        if(v > 0) rep(TRUE, times = v),
-        TRUE,
-        if(p > 0) rep(TRUE, times = p),
-        if(p > 0) rep(leverage, times = p),
-        if(q > 0) rep(TRUE, times = q),
-        include.delta,
-        include.skew,
-        include.shape)
-    names(includes) = Names
-    if(.DEBUG) { cat("\nDEBUG - V: \n"); print(includes) }
-
-    # Index List of Parameters to be Optimized:
-    index = (1:length(params))[includes == TRUE]
-    names(index) = names(params)[includes == TRUE]
-    if(.DEBUG) { cat("\nDEBUG - fixed: \n"); print(index) }
-
-    # Persistence:
-    alpha <- beta <- NULL
-    if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
-    if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
-    if(p > 0 & !leverage) gamma = rep(0, times = p)
-    if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
-    if(.series$model[2] == "garch") {
-        persistence = sum(alpha) + sum(beta)
-    } else if(.series$model[2] == "aparch") {
-        persistence = sum(beta)
-        for (i in 1:p)
-            persistence = persistence + alpha[i]*garchKappa(cond.dist,
-                gamma[i], params["delta"], params["skew"], params["shape"])
-    }
-    names(persistence) = "persistence"
-
-    # Trace the Result:
-    if(trace) {
-        cat("Parameter Initialization:")
-        cat("\n Initial Parameters:          $params")
-        cat("\n Limits of Transformations:   $U, $V")
-        cat("\n Which Parameters are Fixed?  $includes")
-        cat("\n Parameter Matrix:\n")
-        ans = data.frame(U, V, params, includes)
-        rownames(ans) = paste("   ", names(params))
-        print(ans)
-        cat(" Index List of Parameters to be Optimized:\n")
-        print(index)
-        cat(" Persistence:                 ", persistence, "\n")
-    }
-
-    # Return Value:
-    list(params = params, 
-        U = U, 
-        V = V, 
-        includes = includes,
-        index = index, 
-        mu = params[1], 
-        delta = delta, 
-        skew = skew,
-        shape = shape, 
-        cond.dist = cond.dist, 
-        leverage = leverage,
-        persistence = persistence, 
-        control = control)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchSetCondDist <-
-    function(cond.dist = "norm")
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Select Conditional Density Function
-
-    # Arguments:
-    #   cond.dist - a character string with the name of the
-    #       conditional distribution function. Valid strings are:
-    #       "norm", "snorm", "std", "sstd", "ged", "sged", "snig".
-
-    # Value:
-    #   Returns the selection conditional distribution function
-    #   named uniquely '.garchDist'.
-
-    # Details:
-    #   Implemented Distributions:
-    #    norm - Normal Distribution: nothing to estimate
-    #    snorm - Skew Normal Distribution: xi may be estimated
-    #    std - Student-t Distribution: nu may be estimated
-    #    sstd - Skew Student-t Distribution: nu and xi may be estimated
-    #    ged - Generalized Error Distribution: nu may be estimated
-    #    sged - Skew Generalized Error Distribution: nu and xi may be estimated
-
-    # FUNCTION:
-
-    # Normal Distribution:
-    if(cond.dist == "norm" || cond.dist == "QMLE") {
-         .garchDist = function(z, hh, skew, shape) {
-            dnorm(x = z/hh, mean = 0, sd = 1) / hh
-        }
-    }
-    if(cond.dist == "snorm") {
-        .garchDist = function(z, hh, skew, shape) {
-            dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh
-        }
-    }
-
-    # Standardized Student-t:
-    if(cond.dist == "std") {
-        .garchDist = function(z, hh, skew, shape) {
-            dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
-        }
-    }
-    if(cond.dist == "sstd") {
-        .garchDist = function(z, hh, skew, shape) {
-            dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
-        }
-    }
-
-    # Generalized Error Distribution:
-    if(cond.dist == "ged") {
-        .garchDist = function(z, hh, skew, shape) {
-            dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
-        }
-    }
-    if(cond.dist == "sged") {
-        .garchDist = function(z, hh, skew, shape) {
-            dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
-        }
-    }
-    
-    if(cond.dist == "snig") {
-        .garchDist = function(z, hh, skew, shape) {
-            dsnig(x = z/hh, zeta = shape, rho = skew) / hh
-        }
-    }
-    
-    # Trace the Result:
-    if(FALSE) {
-        cat("\n Distribution:     ", cond.dist, "\n    .garchDist = ")
-        print(.garchDist)
-    }
-
-    # Return Value:
-    .garchDist
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.setfGarchEnv(.garchDist = .garchSetCondDist("norm"))
-
-
-# ------------------------------------------------------------------------------
-
 .garchLLH <-
-    function(params, trace = TRUE, fGarchEnv = FALSE)
+function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -1178,7 +770,7 @@ garchFit <-
         # own filter method because as.ts and tsp time consuming...
         # test
         filter2 <-
-            function (x, filter, method = c("convolution", "recursive"),
+        function (x, filter, method = c("convolution", "recursive"),
                       sides = 2, circular = FALSE, init = NULL)
             {
                 method <- match.arg(method)
@@ -1197,10 +789,16 @@ garchFit <-
                     if (sides != 1 && sides != 2)
                         stop("argument 'sides' must be 1 or 2")
                     for (i in 1:nser) y[, i] <-
-                        .C("filter1", as.double(x[, i]),
-                           as.integer(n), as.double(filter), as.integer(nfilt),
-                           as.integer(sides), as.integer(circular), out = double(n),
-                           NAOK = TRUE, PACKAGE = "stats")$out
+                        .C("filter1", 
+                        as.double(x[, i]),
+                           as.integer(n), 
+                           as.double(filter), 
+                           as.integer(nfilt),
+                           as.integer(sides), 
+                           as.integer(circular), 
+                           out = double(n),
+                           NAOK = TRUE, 
+                           PACKAGE = "stats")$out
                 }
                 else {
                     if (missing(init)) {
@@ -1217,10 +815,15 @@ garchFit <-
                             init <- matrix(init, nfilt, nser)
                     }
                     for (i in 1:nser) y[, i] <-
-                        .C("filter2", as.double(x[, i]),
-                           as.integer(n), as.double(filter), as.integer(nfilt),
-                           out = as.double(c(rev(init[, i]), double(n))), NAOK = TRUE,
-                           PACKAGE = "stats")$out[-(1:nfilt)]
+                        .C("filter2", 
+                            as.double(x[, i]),
+                            as.integer(n), 
+                            as.double(filter), 
+                            as.integer(nfilt),
+                            out = as.double(c(rev(init[, i]), 
+                            double(n))), 
+                            NAOK = TRUE,
+                            PACKAGE = "stats")$out[-(1:nfilt)]
                 }
                 ### y <- drop(y)
                 ### tsp(y) <- xtsp
@@ -1307,7 +910,7 @@ garchFit <-
 
 
 .garchOptimizeLLH <-
-    function(hessian = hessian, robust.cvar, trace)
+function(hessian = hessian, robust.cvar, trace)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -1458,7 +1061,7 @@ garchFit <-
 
 
 .garchNames <-
-    function(object)
+function(object)
 {
     # A function implemented by Diethelm Wuertz
 
