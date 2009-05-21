@@ -173,7 +173,7 @@ Wolfgang Breymann, David Luethi \cr
 Institute of Data Analyses and Process Design
 (\url{http://www.idp.zhaw.ch}) \cr
 
-Maintainer: David Luethi <david.luethi@zhaw.ch>
+Maintainer: David Luethi <luethid@gmail.com>
 }
 % <---------------------------------------------------------------------->
 \references{

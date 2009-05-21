@@ -55,13 +55,6 @@
     Leu Bank (www.claridenleu.com), e-mail: luethid@gmail.com}}
 %\publishers{}
 \date{\today}
-% \author{
-% Wolfgang Breymann\\
-% David L\"uthi\\[3ex]
-% Institute of Data Analysis and Process Design\\
-% www.idp.zhaw.ch \\[3ex]
-% E-mail: david.luethi@zhaw.ch
-% }
 \maketitle
 \vfill
 % <---------------------------------------------------------------------->
