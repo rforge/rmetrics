@@ -74,6 +74,7 @@ function(
 
     # FUNCTION:
 
+    # Debug Mode:
     DEBUG <- FALSE
     
     # Allow only full formula specification:
@@ -142,13 +143,14 @@ function(
     .setfGarchEnv(.garchDist = .garchSetCondDist(cond.dist[1]))
 
     # Estimate Model Parameters - Minimize llh, start from big value:
+    if(DEBUG) print("Estimate Model Parameters ...")
     .setfGarchEnv(.llh = 1.0e99)
     .llh <- .getfGarchEnv(".llh")
     fit = .garchOptimizeLLH(hessian, robust.cvar, trace)
     # fit$llh = .llh # should be done in .garchOptimizeLLH
 
     # Add to Fit:
-    if (DEBUG) print("Add to fit...")
+    if (DEBUG) print("Add to fit ...")
     .series <- .getfGarchEnv(".series")
     .params <- .getfGarchEnv(".params")
     names(.series$h) <- NULL
@@ -156,6 +158,7 @@ function(
     fit$params = .params
 
     # Retrieve Residuals and Fitted Values:
+    if (DEBUG) print("Retrieve Residuals and Fitted Values ...")
     residuals = .series$z
     fitted.values = .series$x - residuals
     h.t = .series$h
@@ -166,6 +169,7 @@ function(
     sigma.t = (.series$h)^deltainv
 
     # Standard Errors and t-Values:
+    if (DEBUG) print("Standard Errors and t-Values ...")
     fit$cvar <-
         if (robust.cvar)
             (solve(fit$hessian) %*% (t(fit$gradient) %*% fit$gradient) %*%
@@ -180,6 +184,7 @@ function(
             " Std. Error", " t value", "Pr(>|t|)"))
 
     # Add Title and Description:
+    if (DEBUG) print("Add Title and Description ...")
     if(is.null(title)) title = "GARCH Modelling"
     if(is.null(description)) description = .description()
 
