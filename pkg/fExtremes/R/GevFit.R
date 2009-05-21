@@ -62,7 +62,7 @@ setClass("fGEVFIT",
 gevFit =
 function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -103,7 +103,7 @@ title = NULL, description = NULL, ...)
 gumbelFit =
 function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -144,7 +144,7 @@ title = NULL, description = NULL, ...)
 .gevFit =
 function(x, block = 1, type = c("mle", "pwm"),
 gumbel = FALSE, title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -237,7 +237,7 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
     if (gumbel) {
         # GUMBEL:
         xi = 0
-        beta = fit$par.ests["xi"]
+        beta = fit$par.ests["beta"]
         mu = fit$par.ests["mu"]
         residuals = exp( - exp( - (x - mu)/beta))
     } else {
@@ -283,7 +283,7 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
 
 .gumpwmFit =
 function(data, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -395,7 +395,7 @@ function(data, block = NA, ...)
 
 .gummleFit =
 function(data, block = NA, ...)
-{   
+{
     # A copy from evir
 
     # Description:
@@ -443,7 +443,7 @@ function(data, block = NA, ...)
 
 .gumLLH =
 function(theta, tmp)
-{   
+{
     # A copy from evir
 
     # Description:
@@ -473,7 +473,7 @@ function(theta, tmp)
 
 .gevmleFit =
 function(data, block = NA, ...)
-{   
+{
     # A copy from evir
 
     # Description:
@@ -522,7 +522,7 @@ function(data, block = NA, ...)
 
 .gevLLH =
 function(theta, tmp)
-{   
+{
     # A copy from evir
 
     # Description:
