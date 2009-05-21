@@ -31,13 +31,19 @@ function(
     formula.var = ~garch(1, 1),
     series,
     init.rec = c("mci", "uev"),
-    delta = 2, skew = 1, shape = 4,
+    delta = 2, 
+    skew = 1, 
+    shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"),
-    include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-        include.shape = NULL, leverage = NULL,
+    include.mean = TRUE, 
+    include.delta = NULL, 
+    include.skew = NULL,
+    include.shape = NULL, 
+    leverage = NULL,
     trace = TRUE,
+    recursion = c("internal", "filter", "testing"),
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("fda", "cda"),
+    hessian = c("ropt", "rcd", "rts"),
     robust.cvar,
     control = list(),
     title = NULL, 
@@ -64,6 +70,8 @@ function(
     #   include.delta - should the exponent be estimated ?
     #   leverage - should the leverage factors be estimated ?
     #   trace - should the optimization be traced ?
+    #   recursion -
+    #   algorithm -
     #   control - list of additional control parameters for solver
     #   title - an optional title string
     #   description - an optional project description string
@@ -97,7 +105,7 @@ function(
 
     # Generate Control List - Define Default Settings:
     if(DEBUG) print("Generate Control List ...")
-    con <- .garchOptimizerControl(algorithm, cond.dist)
+    con <- .garchOptimizerControl(recursion, algorithm, cond.dist)
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
@@ -376,7 +384,7 @@ function (formula, data, fake = FALSE, lhs = FALSE)
 
 
 .garchOptimizerControl <-
-function(algorithm, cond.dist)
+function(recursion, algorithm, cond.dist)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -389,7 +397,7 @@ function(algorithm, cond.dist)
     # FUNCTION:
     
     # Check llh for the standardized NIG Distribution:
-    llh = c("internal", "filter", "testing")[1]
+    llh = recursion # "internal", "filter", "testing"  
     if (cond.dist == "snig") llh = "filter"
 
     # Generate Control List with Default Settings:

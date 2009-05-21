@@ -81,13 +81,14 @@ function(cond.dist = "norm")
 .normCondDist <- 
 function(z, hh, skew, shape)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Normal Distribution:
-    # Use fGarch::dnorm 
-    .garchDist = function(z, hh, skew, shape) {
-        dnorm(x = z/hh, mean = 0, sd = 1) / hh  
-    }
+    # Use base::dnorm 
+        
+    dnorm(x = z/hh, mean = 0, sd = 1) / hh   
 }
     
 
@@ -97,13 +98,14 @@ function(z, hh, skew, shape)
 .QLMECondDist <- 
 function(z, hh, skew, shape)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Normal Distribution:
-    # Use fGarch::dnorm
-    .garchDist = function(z, hh, skew, shape) {  
-        dnorm(x = z/hh, mean = 0, sd = 1) / hh  
-    }
+    # Use base::dnorm
+ 
+    dnorm(x = z/hh, mean = 0, sd = 1) / hh  
 }
         
         
@@ -113,13 +115,14 @@ function(z, hh, skew, shape)
 .snormCondDist <- 
 function(z, hh, skew, shape)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Skew Normal Distribution:
     # Use fGarch::dsnorm
-    .garchDist = function(z, hh, skew, shape) {
-        dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh  
-    }
+
+    dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh         
 }
     
 
@@ -129,13 +132,14 @@ function(z, hh, skew, shape)
 .stdCondDist <- 
 function(z, hh, skew, shape)
 {   
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Standardized Student-t Distribution:
     # Use fGarch::dstd
-    .garchDist = function(z, hh, skew, shape) {
-        dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh  
-    }
+
+    dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh  
 }
     
 
@@ -145,13 +149,14 @@ function(z, hh, skew, shape)
 .sstdCondDist <- 
 function(z, hh, skew, shape)
 {      
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Skew Standardized Student-t Distribution:
     # Use fGarch::dsstd
-    .garchDist = function(z, hh, skew, shape) {
-        dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
-    }
+        
+    dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
 }
 
     
@@ -162,13 +167,14 @@ function(z, hh, skew, shape)
 .gedCondDist <- 
 function(z, hh, skew, shape)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Generalized Error Distribution:
     # Use fGarch::dged
-    .garchDist = function(z, hh, skew, shape) {
-        dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
-    }
+
+    dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
 }
     
 
@@ -178,14 +184,14 @@ function(z, hh, skew, shape)
 .sgedCondDist <- 
 function(z, hh, skew, shape)
 {
-
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # Skew Generalized Error Distribution:
     # Use fGarch::dsged
-    .garchDist = function(z, hh, skew, shape) {
-        dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
-    }
+    
+    dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
 }
     
 
@@ -195,14 +201,14 @@ function(z, hh, skew, shape)
 .snigCondDist <- 
 function(z, hh, skew, shape)
 {
-
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
     
     # (Skew) Normal Inverse Gaussian Distribution:
     # Use fBasics::dsnig
-    .garchDist = function(z, hh, skew, shape) {
-        dsnig(x = z/hh, zeta = shape, rho = skew) / hh
-    }
+
+    dsnig(x = z/hh, zeta = shape, rho = skew) / hh
 }
  
 

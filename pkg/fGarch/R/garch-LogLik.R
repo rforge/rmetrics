@@ -18,9 +18,9 @@
 ################################################################################
 # FUNCTION:               DESCRIPTION:
 #  .garchLLH               Computes log-likelihood function
-#  .garchLLH.internal       internally by Fortran Code
-#  .garchLLH.testing        simple double loops in R
-#  .garchLLH.filter         fast filter approach in R
+#  .garchLLH.internal       Internal ARMA-APARCH recursion done by Fortran Code
+#  .garchLLH.filter         Fast approach using the filter function in R
+#  .garchLLH.testing        Simple double loops over time and order in R
 #  .garchOptimizeLLH       Opimizes log-likelihood function
 ################################################################################
 
@@ -47,6 +47,7 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 
     # DEBUG:
     DEBUG = FALSE
+    if (DEBUG) print("Entering Function .garchLLH")
 
     # Get Global Variables:
     .series <- .getfGarchEnv(".series")
@@ -59,15 +60,18 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 
     if(.params$control$llh == "internal")  {
     
+        if (DEBUG) print("internal")
         return(.garchLLH.internal(params, trace = TRUE, fGarchEnv = FALSE))
+        
+    } else if (.params$control$llh == "filter")  {
+    
+        if (DEBUG) print("filter")
+        return(.garchLLH.filter(params, trace = TRUE, fGarchEnv = FALSE))
         
     } else if (.params$control$llh == "testing")  {
     
-        return(.garchLLH.testing(params, trace = TRUE, fGarchEnv = FALSE))
- 
-    } else if (.params$control$llh == "filter")  {
-    
-        return(.garchLLH.filter(params, trace = TRUE, fGarchEnv = FALSE))
+        if (DEBUG) print("testing")
+        return(.garchLLH.testing(params, trace = TRUE, fGarchEnv = FALSE))  
      
     } else {
     
@@ -86,12 +90,14 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Compute Log-Likelihood Function
-
+    #   Internal ARMA-APARCH recursion done by Fortran Code
+   
     # Arguments:
     #   params - a named numeric vector with the model parameters
     #       to be optimized
-
+    #   trace -
+    #   fGarchEnv - 
+    
     # Value:
     #   Returns the value of the max log-likelihood function.
 
@@ -102,6 +108,7 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 
     # DEBUG:
     DEBUG = FALSE
+    if (DEBUG) print("Entering Function .garchLLH.internal")
 
     # Get Global Variables:
     .series <- .getfGarchEnv(".series")
@@ -178,201 +185,20 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.garchLLH.testing <-
-function(params, trace = TRUE, fGarchEnv = FALSE)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute Log-Likelihood Function
-
-    # Arguments:
-    #   params - a named numeric vector with the model parameters
-    #       to be optimized
-
-    # Value:
-    #   Returns the value of the max log-likelihood function.
-
-    # Note:
-    #   The variables '.series' and '.params' must be global available
-
-    # FUNCTION:
-
-    # DEBUG:
-    DEBUG = FALSE
-
-    # Get Global Variables:
-    .series <- .getfGarchEnv(".series")
-    .params <- .getfGarchEnv(".params")
-    .garchDist <- .getfGarchEnv(".garchDist")
-    .llh <- .getfGarchEnv(".llh")
-    
-    # How to calculate the LLH Function?
-    if (DEBUG) print(.params$control$llh)
-
-    if(.params$control$llh == "testing") {
-
-        # Retrieve From Initialized Series:
-        x = .series$x
-    
-        # Get Order:
-        u = .series$order[1]
-        v = .series$order[2]
-        p = .series$order[3]
-        q = .series$order[4]
-        max.order = max(u, v, p, q)
-    
-        # Get Start Conditions:
-        h.start = .series$h.start
-        llh.start = .series$llh.start
-    
-        # Get the Index Values and Add Names - Just to be Sure:
-        index = .params$index
-        names(params) = names(.params$params[index])
-        Names = names(params)
-    
-        # Retrieve From Initialized Parameters:
-        cond.dist = .params$cond.dist
-    
-        # Extracting the parameters by name ...
-        alpha <- beta <- NULL
-        mu = c(mu = .params$mu)
-        delta = c(delta = .params$delta)
-        skew = c(skew = .params$skew)
-        shape = c(shape = .params$shape)
-        leverage = c(leverage = .params$leverage)
-        if(.params$includes["mu"]) mu = params["mu"]
-        if(u > 0) ar = params[substr(Names, 1, 2) == "ar"]
-        if(v > 0) ma = params[substr(Names, 1, 2) == "ma"]
-        omega = params[substr(Names, 1, 5) == "omega"]
-        if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
-        if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
-        if(p > 0 & !leverage) gamma = rep(0, times = p)
-        if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
-        if(.params$includes["delta"]) delta = params["delta"]
-        if(.params$includes["skew"])  skew  = params["skew"]
-        if(.params$includes["shape"]) shape = params["shape"]
-    
-        # Iterate z:
-        N = length(x)
-        z = rep(0, N)
-        if(u > 0 & v > 0)
-            for (i in (h.start):N)
-                z[i] = x[i] - mu - sum(ar*x[i-(1:u)]) - sum(ma*z[i-(1:v)])
-        if(u > 0 & v == 0)
-            for (i in (h.start):N)
-                z[i] = x[i] - mu - sum(ar*x[i-(1:u)])
-        if(u == 0 & v > 0)
-            for (i in (h.start):N)
-                z[i] = x[i] - mu - sum(ma*z[i-(1:v)])
-        if(u == 0 & v == 0)
-            z = x - mu
-    
-        # Initialize Variance Equation:
-        deltainv = 1/delta
-        if(.series$model[2] == "garch") {
-            persistence = sum(alpha) + sum(beta)
-        } else if(.series$model[2] == "aparch") {
-            persistence = sum(beta)
-            for (i in 1:p)
-                persistence = persistence + alpha[i]*garchKappa(cond.dist,
-                    gamma[i], delta, skew, shape)
-        }
-        names(persistence) = "persistence"
-        attr(persistence, "control") = NULL
-        attr(persistence, "cond.dist") = NULL
-        .params$persistence <- persistence
-        .setfGarchEnv(.params = .params)
-        mvar = mean(z^2)
-        h = rep(omega + persistence*mvar, N)
-    
-        # Iterate Conditional Variances h:
-        if(p == 0) {
-            alpha = 0
-            p = 1
-        }
-        if(q == 0) {
-            beta = 0
-            q = 1
-        }
-    
-        # Test Version Just a Simple Double 'for' Loop:
-        if (DEBUG) print("USE = testing ...")
-        # As You Can Imagine, Slow Version But Very Useful for Testing:
-        if(!.params$leverage) {
-            for (i in (h.start):N) {
-                h[i] = omega +
-                    sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) +
-                    sum(beta*h[i-(1:q)])
-            }
-        } else {
-            for (i in (h.start):N) {
-                h[i] = omega +
-                    sum(alpha * ( abs(z[i-(1:p)]) -
-                    gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)])
-            }
-        }
-    
-        # R Filter Representation:
-        # Entirely written in S, and very effective ...
-        # own filter method because as.ts and tsp time consuming ...
-        
-        # .filter2 was here, not effective ?!
-    
-        # Calculate Log Likelihood:
-        hh = (abs(h[(llh.start):N]))^deltainv
-        zz = z[(llh.start):N]
-        llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
-        if(DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
-        names(params) = names(.params$params[.params$index])
-        if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
-        if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
-    
-        # Print if LLH has Improved:
-        if(llh < .llh) {
-            diff = (.llh - llh)/llh
-            if(trace & diff > 1e-2) {
-                # cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
-                # print(params)
-                if(persistence > 1)
-                    cat("Warning - Persistence:", persistence, "\n")
-            }
-            .setfGarchEnv(.llh = llh)
-        }
-    
-        if (fGarchEnv) {
-            # Save h and z:
-            .series$h <- h
-            .series$z <- z
-            .setfGarchEnv(.series = .series)
-        }
-        
-    } else {
-
-        stop("LLH is not testing!")
-
-    }
-
-    # Return Value:
-    c(LogLikelihood = llh)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .garchLLH.filter <-
 function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Compute Log-Likelihood Function
+    #  Fast approach using the filter function in R for ARMA-APARCH models
 
     # Arguments:
     #   params - a named numeric vector with the model parameters
     #       to be optimized
-
+    #   trace - a logical, should the frunction output be traced ?
+    #   fGarchEnv - 
+    
     # Value:
     #   Returns the value of the max log-likelihood function.
 
@@ -383,6 +209,7 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 
     # DEBUG:
     DEBUG = FALSE
+    if (DEBUG) print("Entering Function .garchLLH.filter")
 
     # Get Global Variables:
     .series <- .getfGarchEnv(".series")
@@ -390,8 +217,11 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
     .garchDist <- .getfGarchEnv(".garchDist")
     .llh <- .getfGarchEnv(".llh")
     
+    # Which conditional distribution function should be used ?
+    if(DEBUG) print(.garchDist)
+    
     # How to calculate the LLH Function?
-    if (DEBUG) print(.params$control$llh)
+    if (DEBUG) print(c("testing ?", .params$control$llh))
 
     if(.params$control$llh == "filter") {
 
@@ -435,7 +265,8 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
         if(.params$includes["delta"]) delta = params["delta"]
         if(.params$includes["skew"])  skew  = params["skew"]
         if(.params$includes["shape"]) shape = params["shape"]
-    
+        if(DEBUG) print(params)
+        
         # Iterate z:
         N = length(x)
         z = rep(0, N)
@@ -483,7 +314,6 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
         # Entirely written in S, and very effective ...
         # own filter method because as.ts and tsp time consuming...
        
-        if (DEBUG) print("USE = filter ...")
         # Note, sometimes one of the beta's can become undefined
         # during optimization.
         if(!.params$leverage) gamma = rep(0, p)
@@ -493,11 +323,11 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
             Filter = rep(0, length = p+1)
             Filter[j+1] = alpha[j]
             edelta = (abs(z) - gamma[j]*z)^delta
-            edelta = filter2(edelta, filter = Filter, sides = 1)
+            edelta = .filter2(edelta, filter = Filter, sides = 1)
             edeltat = edeltat + edelta
         }
         c.init = omega/(1-sum(beta))
-        h = c( h[1:pq], c.init + filter2(edeltat[-(1:pq)], filter = beta,
+        h = c( h[1:pq], c.init + .filter2(edeltat[-(1:pq)], filter = beta,
              method = "recursive", init = h[q:1]-c.init))
              
         ### ? remove ? ### DW: May be not .
@@ -552,8 +382,192 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
         stop("LLH is not filter!")
 
     }
+    
+    # Return Value:
+    if (DEBUG) print("Entering Function .garchLLH.filter")
+    c(LogLikelihood = llh)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.garchLLH.testing <-
+function(params, trace = TRUE, fGarchEnv = FALSE)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Compute Log-Likelihood Function for ARMA-APARCH models
+
+    # Arguments:
+    #   params - a named numeric vector with the model parameters
+    #       to be optimized
+    #   trace -
+    #   fGarchEnv - 
+    
+    # Value:
+    #   Returns the value of the max log-likelihood function.
+
+    # Note:
+    #   The variables '.series' and '.params' must be global available
+
+    # FUNCTION:
+
+    # DEBUG:
+    DEBUG = FALSE
+    if (DEBUG) print("Entering Function .garchLLH.testing")
+
+    # Get Global Variables:
+    .series <- .getfGarchEnv(".series")
+    .params <- .getfGarchEnv(".params")
+    .garchDist <- .getfGarchEnv(".garchDist")
+    .llh <- .getfGarchEnv(".llh")
+    if(DEBUG) print(.garchDist)
+    
+    # How to calculate the LLH Function?
+    if (DEBUG) print(.params$control$llh)
+
+    if(.params$control$llh == "testing") {
+
+        # Retrieve From Initialized Series:
+        x = .series$x
+    
+        # Get Order:
+        u = .series$order[1]
+        v = .series$order[2]
+        p = .series$order[3]
+        q = .series$order[4]
+        max.order = max(u, v, p, q)
+    
+        # Get Start Conditions:
+        h.start = .series$h.start
+        llh.start = .series$llh.start
+    
+        # Get the Index Values and Add Names - Just to be Sure:
+        index = .params$index
+        names(params) = names(.params$params[index])
+        Names = names(params)
+    
+        # Retrieve From Initialized Parameters:
+        cond.dist = .params$cond.dist
+        if(DEBUG) print(paste("Conditional Distribution:", cond.dist))
+    
+        # Extracting the parameters by name ...
+        alpha <- beta <- NULL
+        mu = c(mu = .params$mu)
+        delta = c(delta = .params$delta)
+        skew = c(skew = .params$skew)
+        shape = c(shape = .params$shape)
+        leverage = c(leverage = .params$leverage)
+        if(.params$includes["mu"]) mu = params["mu"]
+        if(u > 0) ar = params[substr(Names, 1, 2) == "ar"]
+        if(v > 0) ma = params[substr(Names, 1, 2) == "ma"]
+        omega = params[substr(Names, 1, 5) == "omega"]
+        if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"]
+        if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
+        if(p > 0 & !leverage) gamma = rep(0, times = p)
+        if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"]
+        if(.params$includes["delta"]) delta = params["delta"]
+        if(.params$includes["skew"])  skew  = params["skew"]
+        if(.params$includes["shape"]) shape = params["shape"]
+        if(DEBUG) print(params)
+    
+        # Iterate z:
+        N = length(x)
+        z = rep(0, N)
+        if(u > 0 & v > 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ar*x[i-(1:u)]) - sum(ma*z[i-(1:v)])
+        if(u > 0 & v == 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ar*x[i-(1:u)])
+        if(u == 0 & v > 0)
+            for (i in (h.start):N)
+                z[i] = x[i] - mu - sum(ma*z[i-(1:v)])
+        if(u == 0 & v == 0)
+            z = x - mu
+    
+        # Initialize Variance Equation:
+        deltainv = 1/delta
+        if(.series$model[2] == "garch") {
+            persistence = sum(alpha) + sum(beta)
+        } else if(.series$model[2] == "aparch") {
+            persistence = sum(beta)
+            for (i in 1:p)
+                persistence = persistence + alpha[i]*garchKappa(cond.dist,
+                    gamma[i], delta, skew, shape)
+        }
+        names(persistence) = "persistence"
+        attr(persistence, "control") = NULL
+        attr(persistence, "cond.dist") = NULL
+        .params$persistence <- persistence
+        .setfGarchEnv(.params = .params)
+        mvar = mean(z^2)
+        h = rep(omega + persistence*mvar, N)
+    
+        # Initial Values to Iterate Conditional Variances h:
+        if(p == 0) {
+            alpha = 0
+            p = 1
+        }
+        if(q == 0) {
+            beta = 0
+            q = 1
+        }
+    
+        # Test Version Just a Simple Double 'for' Loop:
+        # As You Can Imagine, Slow Version But Very Useful for Testing:
+        if(!.params$leverage) {
+            for (i in (h.start):N) {
+                h[i] = omega +
+                    sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) +
+                    sum(beta*h[i-(1:q)])
+            }
+        } else {
+            for (i in (h.start):N) {
+                h[i] = omega +
+                    sum(alpha * ( abs(z[i-(1:p)]) -
+                    gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)])
+            }
+        }
+    
+        # Calculate Log Likelihood:
+        hh = (abs(h[(llh.start):N]))^deltainv
+        zz = z[(llh.start):N]
+        llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
+        if(DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
+        names(params) = names(.params$params[.params$index])
+        if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))
+        if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
+    
+        # Print if LLH has Improved:
+        if(llh < .llh) {
+            diff = (.llh - llh)/llh
+            if(trace & diff > 1e-2) {
+                # cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
+                # print(params)
+                if(persistence > 1)
+                    cat("Warning - Persistence:", persistence, "\n")
+            }
+            .setfGarchEnv(.llh = llh)
+        }
+    
+        if (fGarchEnv) {
+            # Save h and z:
+            .series$h <- h
+            .series$z <- z
+            .setfGarchEnv(.series = .series)
+        }
+        
+    } else {
+
+        stop("LLH is not testing!")
+
+    }
 
     # Return Value:
+    if (DEBUG) print("Leaving Function .garchLLH.testing")
     c(LogLikelihood = llh)
 }
 
@@ -578,6 +592,7 @@ function(hessian = hessian, robust.cvar, trace)
 
     # DEBUG:
     DEBUG = FALSE
+    if (DEBUG) print("Entering Function .garchOptimizeLLH")
 
     # get global variables
     .series <- .getfGarchEnv(".series")
@@ -639,6 +654,10 @@ function(hessian = hessian, robust.cvar, trace)
         fit$hessian <- - .garchRCDAHessian(par = fit$par, .params = .params,
             .series = .series)
         titleHessian = "Central"
+    } else if (hessian == "rts") {
+        fit$hessian <- - .garchTSHessian(par = fit$par, .params = .params,
+            .series = .series)
+        titleHessian = "Two Sided"
     }
 
     # Rescale Parameters:
@@ -706,6 +725,7 @@ function(hessian = hessian, robust.cvar, trace)
     }
 
     # Return Value:
+    if (DEBUG) print("Entering Function .garchOptimizeLLH")
     fit
 }
 
@@ -717,18 +737,30 @@ function(hessian = hessian, robust.cvar, trace)
 function (x, filter, method = c("convolution", "recursive"),
     sides = 2, circular = FALSE, init = NULL)
 {
-    # NOTE: Not used 
+    # Description:
+    #   Fast filter function based on top of stats::filter() 
     
+    # Arguments:
+    
+    # Note: 
+    #   This function is called from .garchLLH.filter 
+    
+    # FUNCTION:
+    
+    # DEBUG:
+    DEBUG = FALSE
+    if (DEBUG) print("Entering Function .filter2")
+    
+    # Settings:
     method <- match.arg(method)
-    ### x <- as.ts(x)
-    ### xtsp <- tsp(x)
     x <- as.matrix(x)
     n <- nrow(x)
     nser <- ncol(x)
     nfilt <- length(filter)
-    if (any(is.na(filter)))
-        stop("missing values in 'filter'")
+    if (any(is.na(filter))) stop("missing values in 'filter'")
     y <- matrix(NA, n, nser)
+    
+    # Convolution Filter:
     if (method == "convolution") {
         if (nfilt > n)
             stop("'filter' is longer than time series")
@@ -745,6 +777,8 @@ function (x, filter, method = c("convolution", "recursive"),
                out = double(n),
                NAOK = TRUE, 
                PACKAGE = "stats")$out
+    
+    # Recursive Filter:
     } else {
         if (missing(init)) {
             init <- matrix(0, nfilt, nser)
@@ -754,7 +788,7 @@ function (x, filter, method = c("convolution", "recursive"),
                 stop("length of 'init' must equal length of 'filter'")
             if (NCOL(init) != 1 && NCOL(init) != nser)
                 stop(gettextf("'init'; must have 1 or %d cols",
-                              nser), domain = NA)
+                    nser), domain = NA)
             if (!is.matrix(init))
                 init <- matrix(init, nfilt, nser)
         }
@@ -769,15 +803,11 @@ function (x, filter, method = c("convolution", "recursive"),
                 NAOK = TRUE,
                 PACKAGE = "stats")$out[-(1:nfilt)]
     }
-    ### y <- drop(y)
-    ### tsp(y) <- xtsp
-    ### class(y) <- if (nser > 1)
-    ### c("mts", "ts")
-    ### else "ts"
+    
+    # Return Value:
+    if (DEBUG) print("Entering Function .filter2")
     y
 }
-
-
 
 
 ################################################################################

@@ -69,11 +69,11 @@
         upper = .params$V[INDEX],
         scale = 1/parscale,
         control = list(
-        eval.max = 2000,
-        iter.max = 1500,
-        rel.tol = 1.0e-14 * TOL1,
-        x.tol = 1.0e-14 * TOL1,
-        trace = as.integer(trace)),
+            eval.max = 2000,
+            iter.max = 1500,
+            rel.tol = 1.0e-14 * TOL1,
+            x.tol = 1.0e-14 * TOL1,
+            trace = as.integer(trace)),
         fGarchEnv = FALSE) # to speed up .garchLLH
     fit$value <- fit.llh <- fit$objective
     names(fit$par) = names(.params$params[INDEX])

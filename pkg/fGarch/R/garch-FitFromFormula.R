@@ -26,7 +26,9 @@
 
 
 garchFit <-
-function(formula, data,
+function(
+    formula = ~ garch(1,1), 
+    data = dem2gbp,
     init.rec = c("mci", "uev"),
     delta = 2, 
     skew = 1, 
@@ -39,8 +41,9 @@ function(formula, data,
     include.shape = NULL, 
     leverage = NULL,
     trace = TRUE,
+    recursion = c("internal", "filter", "testing"),
     algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("ropt", "rcd"),
+    hessian = c("ropt", "rcd", "rts"),
     control = list(),
     title = NULL,
     description = NULL, 
@@ -60,19 +63,20 @@ function(formula, data,
     #       mci = mu-current-iteration, or
     #       uev = unconditional-expected-variances
     #   delta - numeric value of the exponent delta
-    #   skew - optional skewness parameter
+    #   skew - optional skewness or skewness related parameter
     #   shape - optional shape parameter
-    #   cond.dist - name of the conditional distribution
-    #   include.mean - should the mean value be estimated ?
+    #   cond.dist - name of the conditional distribution, one of
+    #       norm, snorm, ged, sged, std, sstd, snig, QMLE   
+    #   include.mean - a logical, should the mean value be estimated ?
     #   include.delta - should the exponent be estimated ?
     #   leverage - should the leverage factors be estimated ?
     #   trace - should the optimization be traced ?
-    #   control - list of additional control parameters for solver
+    #   control - list of additional control parameters for the solver
     #   title - an optional title string
     #   description - an optional project description string
     
     # Example:
-    #   garchFit(~ garch(1, 1), dem2gbp[, 1]) 
+    #   garchFit() 
 
     # FUNCTION:
     
@@ -82,6 +86,7 @@ function(formula, data,
     init.rec = match.arg(init.rec)
     cond.dist = match.arg(cond.dist)
     hessian = match.arg(hessian)
+    recursion = match.arg(recursion)
     algorithm = match.arg(algorithm)
 
     # Call:
@@ -145,6 +150,7 @@ function(formula, data,
         include.shape = include.shape, 
         leverage = leverage,
         trace = trace,
+        recursion = recursion,
         algorithm = algorithm,
         hessian = hessian,
         robust.cvar = robust.cvar,
@@ -168,6 +174,7 @@ function(formula, data,
         include.shape, 
         leverage,
         trace,
+        recursion,
         algorithm,
         hessian,
         robust.cvar,
