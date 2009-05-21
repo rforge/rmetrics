@@ -41,9 +41,8 @@ function(
     include.shape = NULL, 
     leverage = NULL,
     trace = TRUE,
-    recursion = c("internal", "filter", "testing"),
     algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("ropt", "rcd", "rts"),
+    hessian = c("ropt", "rcd"), 
     control = list(),
     title = NULL,
     description = NULL, 
@@ -80,13 +79,13 @@ function(
 
     # FUNCTION:
     
+    # DEBUG:
     DEBUG = FALSE
 
     # Match arguments:
     init.rec = match.arg(init.rec)
     cond.dist = match.arg(cond.dist)
     hessian = match.arg(hessian)
-    recursion = match.arg(recursion)
     algorithm = match.arg(algorithm)
 
     # Call:
@@ -150,7 +149,6 @@ function(
         include.shape = include.shape, 
         leverage = leverage,
         trace = trace,
-        recursion = recursion,
         algorithm = algorithm,
         hessian = hessian,
         robust.cvar = robust.cvar,
@@ -174,7 +172,6 @@ function(
         include.shape, 
         leverage,
         trace,
-        recursion,
         algorithm,
         hessian,
         robust.cvar,

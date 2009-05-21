@@ -20,7 +20,7 @@
 #  .garchSetCondDist        Selects conditional density function
 #  .garchDist               Defines conditional density function
 #  .normCondDist            Normal Distribution
-#  .QLMECondDist            QLME with Normal Distribution
+#  .QMLECondDist            QMLE with Normal Distribution
 #  .snormCondDist           Skew Normal Distribution 
 #  .stdCondDist             Student-t Distribution
 #  .sstdCondDist            Skew Student-t Distribution
@@ -95,7 +95,7 @@ function(z, hh, skew, shape)
 # ------------------------------------------------------------------------------
 
 
-.QLMECondDist <- 
+.QMLECondDist <- 
 function(z, hh, skew, shape)
 {
     # A function implemented by Diethelm Wuertz

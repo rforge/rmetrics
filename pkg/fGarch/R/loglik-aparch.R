@@ -17,75 +17,15 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  .garchLLH               Computes log-likelihood function
-#  .garchLLH.internal       Internal ARMA-APARCH recursion done by Fortran Code
-#  .garchLLH.filter         Fast approach using the filter function in R
-#  .garchLLH.testing        Simple double loops over time and order in R
-#  .garchOptimizeLLH       Opimizes log-likelihood function
+#  .aparchLLH.internal     Internal ARMA-APARCH recursion done by Fortran Code
+#  .aparchLLH.filter       Fast approach using the filter function in R
+#  .aparchLLH.testing      Simple double loops over time and order in R
+#  .filter2                Fast filter function based on top of stats::filter() 
 ################################################################################
 
 
-.garchLLH <-
-function(params, trace = TRUE, fGarchEnv = FALSE)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute Log-Likelihood Function
-
-    # Arguments:
-    #   params - a named numeric vector with the model parameters
-    #       to be optimized
-
-    # Value:
-    #   Returns the value of the max log-likelihood function.
-
-    # Note:
-    #   The variables '.series' and '.params' must be global available
-
-    # FUNCTION:
-
-    # DEBUG:
-    DEBUG = FALSE
-    if (DEBUG) print("Entering Function .garchLLH")
-
-    # Get Global Variables:
-    .series <- .getfGarchEnv(".series")
-    .params <- .getfGarchEnv(".params")
-    .garchDist <- .getfGarchEnv(".garchDist")
-    .llh <- .getfGarchEnv(".llh")
-    
-    # How to calculate the LLH Function?
-    if (DEBUG) print(.params$control$llh)
-
-    if(.params$control$llh == "internal")  {
-    
-        if (DEBUG) print("internal")
-        return(.garchLLH.internal(params, trace = TRUE, fGarchEnv = FALSE))
-        
-    } else if (.params$control$llh == "filter")  {
-    
-        if (DEBUG) print("filter")
-        return(.garchLLH.filter(params, trace = TRUE, fGarchEnv = FALSE))
-        
-    } else if (.params$control$llh == "testing")  {
-    
-        if (DEBUG) print("testing")
-        return(.garchLLH.testing(params, trace = TRUE, fGarchEnv = FALSE))  
-     
-    } else {
-    
-        stop("LLH is neither internal, testing, nor filter!")
-    }   
-        
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchLLH.internal <-
-function(params, trace = TRUE, fGarchEnv = FALSE)
+.aparchLLH.internal <-
+function(params, trace = TRUE, fGarchEnv = TRUE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -164,12 +104,12 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
         if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
         .setfGarchEnv(.llh = llh)
 
-        if (fGarchEnv) {
+        #if (fGarchEnv) {
             # Save h and z:
             .series$h <- fit[[4]]
             .series$z <- fit[[3]]
             .setfGarchEnv(.series = .series)
-        }
+        #}
 
     } else {
 
@@ -185,7 +125,7 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.garchLLH.filter <-
+.aparchLLH.filter <-
 function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
@@ -370,12 +310,12 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
             .setfGarchEnv(.llh = llh)
         }
     
-        if (fGarchEnv) {
+        #if (fGarchEnv) {
             # Save h and z:
             .series$h <- h
             .series$z <- z
             .setfGarchEnv(.series = .series)
-        }
+        #}
 
     } else {
 
@@ -392,7 +332,7 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.garchLLH.testing <-
+.aparchLLH.testing <-
 function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
@@ -553,12 +493,12 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
             .setfGarchEnv(.llh = llh)
         }
     
-        if (fGarchEnv) {
+        #if (fGarchEnv) {
             # Save h and z:
             .series$h <- h
             .series$z <- z
             .setfGarchEnv(.series = .series)
-        }
+        #}
         
     } else {
 
@@ -569,164 +509,6 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
     # Return Value:
     if (DEBUG) print("Leaving Function .garchLLH.testing")
     c(LogLikelihood = llh)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchOptimizeLLH <-
-function(hessian = hessian, robust.cvar, trace)
-{
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Opimizes the Log-Likelihood Function
-
-    # Arguments:
-    #   hessian - the Hessian matrix
-    #   robust.cvar - a logical
-    #   trace - a logical
-
-    # FUNCTION:
-
-    # DEBUG:
-    DEBUG = FALSE
-    if (DEBUG) print("Entering Function .garchOptimizeLLH")
-
-    # get global variables
-    .series <- .getfGarchEnv(".series")
-    .params <- .getfGarchEnv(".params")
-
-    # Initialization:
-    INDEX = .params$index
-
-    # Algorithm:
-    algorithm = .params$control$algorithm[1]
-    TOL1 = .params$control$tol1
-    TOL2 = .params$control$tol2
-    if(trace) {
-        cat("\n\n--- START OF TRACE ---")
-        cat("\nSelected Algorithm:", algorithm, "\n")
-    }
-
-    # First Method: 
-    # Two Step Apparoach > Trust Region + Nelder-Mead Simplex
-    if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
-        fit <- .garchRnlminb(.params, .series, .garchLLH, trace)
-        .params$llh = fit$llh
-        .params$params[INDEX] = fit$par
-        .setfGarchEnv(.params = .params)
-    }
-    if(algorithm == "nlminb+nm") {
-        fit <- .garchRnm(.params, .series, .garchLLH, trace)
-            .params$llh = fit$llh
-            .params$params[INDEX] = fit$par
-            .setfGarchEnv(.params = .params)
-    }
-
-    # Second Method:
-    # Two Step Approach > BFGS + Nelder-Mead Simplex
-    if(algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
-        fit <- .garchRlbfgsb(.params, .series, .garchLLH, trace)
-        .params$llh = fit$llh
-        .params$params[INDEX] = fit$par
-        .setfGarchEnv(.params = .params)
-    }
-    if(algorithm == "lbfgsb+nm") {
-        fit <- .garchRnm(.params, .series, .garchLLH, trace)
-        .params$llh = fit$llh
-        .params$params[INDEX] = fit$par
-        .setfGarchEnv(.params = .params)
-    }
-
-    # Save parameters:
-    .params$llh = fit$llh
-    .params$params[INDEX] = fit$par
-    .setfGarchEnv(.params = .params)
-
-    # Compute the Hessian:
-    if (hessian == "ropt") {
-        fit$hessian <- - .garchRoptimhess(par = fit$par, .params = .params,
-            .series = .series)
-        titleHessian = "R-optimhess"
-    } else if (hessian == "rcd") {
-        fit$hessian <- - .garchRCDAHessian(par = fit$par, .params = .params,
-            .series = .series)
-        titleHessian = "Central"
-    } else if (hessian == "rts") {
-        fit$hessian <- - .garchTSHessian(par = fit$par, .params = .params,
-            .series = .series)
-        titleHessian = "Two Sided"
-    }
-
-    # Rescale Parameters:
-    if (.params$control$xscale) {
-        .series$x <- .series$x * .series$scale
-        if (.params$include["mu"])
-            fit$coef["mu"] <- fit$par["mu"] <- .params$params["mu"] <-
-                .params$params["mu"]*.series$scale
-        if (.params$include["omega"])
-            fit$coef["omega"] <- fit$par["omega"] <- .params$params["omega"] <-
-                .params$params["omega"]*.series$scale^(.params$params["delta"])
-        # save changes
-        .setfGarchEnv(.params = .params)
-        .setfGarchEnv(.series = .series)
-    }
-
-    # Rescale Hessian Matrix:
-    if (.params$control$xscale) {
-        if (.params$include["mu"]) {
-            fit$hessian[,"mu"] <- fit$hessian[,"mu"] /  .series$scale
-            fit$hessian["mu",] <- fit$hessian["mu",] /  .series$scale
-        }
-        if (.params$include["omega"]) {
-            fit$hessian[,"omega"] <-
-                fit$hessian[,"omega"] / .series$scale^(.params$params["delta"])
-            fit$hessian["omega",] <-
-                fit$hessian["omega",] / .series$scale^(.params$params["delta"])
-        }
-    }
-
-    # Recalculate llh, h, z with Rescaled Parameters:
-    .llh <- fit$llh <- fit$value <-
-        .garchLLH(fit$par, trace = FALSE, fGarchEnv = TRUE)
-    .series <- .getfGarchEnv(".series")
-
-    # Compute the Gradient:
-    # YC: needs to be after the calculation of h, z !
-    if (robust.cvar)
-        fit$gradient <- - .garchRCDAGradient(
-            par = fit$par, .params = .params, .series = .series)
-            
-    # Compute Information Criterion Statistics:
-    N = length(.series$x)
-    NPAR = length(fit$par)
-    fit$ics = c(
-        AIC  = c((2*fit$value)/N + 2 * NPAR/N),
-        BIC  = (2*fit$value)/N + NPAR * log(N)/N,
-        SIC  = (2*fit$value)/N + log((N+2*NPAR)/N),
-        HQIC = (2*fit$value)/N + (2*NPAR*log(log(N)))/N )
-    names(fit$ics) <- c("AIC", "BIC", "SIC", "HQIC")
-
-    # Print LLH if we trace:
-    if(trace) {
-        cat("\nFinal Estimate of the Negative LLH:\n")
-        cat(" LLH: ", .llh, "   norm LLH: ", .llh/N, "\n")
-        print(fit$par)
-    }
-
-    # Print Hessian Matrix if we trace:
-    if(trace) {
-        cat("\n", titleHessian, " Difference Approximated Hessian Matrix:\n",
-            sep = "")
-        print(fit$hessian)
-        cat("\n--- END OF TRACE ---\n\n")
-    }
-
-    # Return Value:
-    if (DEBUG) print("Entering Function .garchOptimizeLLH")
-    fit
 }
 
 

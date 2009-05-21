@@ -16,12 +16,12 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  .garchFit               Internal GARCH Fit
-#  .garchArgsParser        Parses formula and data for garchFit
-#  .garchModelSeries       Composes model series like in lm fits
-#  .garchOptimizerControl  Sets default values for Garch Optimizer
-#  .garchNames             Slot names, @fit slot, parameters and controls
+# FUNCTION:                DESCRIPTION:
+#  .garchFit                Internal GARCH Fit
+#  .garchArgsParser         Parses formula and data for garchFit
+#  .garchModelSeries        Composes model series like in lm fits
+#  .garchOptimizerControl   Sets default values for Garch Optimizer
+#  .garchNames              Slot names, @fit slot, parameters and controls
 ################################################################################
 
 
@@ -41,9 +41,8 @@ function(
     include.shape = NULL, 
     leverage = NULL,
     trace = TRUE,
-    recursion = c("internal", "filter", "testing"),
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
-    hessian = c("ropt", "rcd", "rts"),
+    hessian = c("ropt", "rcd"),
     robust.cvar,
     control = list(),
     title = NULL, 
@@ -70,7 +69,6 @@ function(
     #   include.delta - should the exponent be estimated ?
     #   leverage - should the leverage factors be estimated ?
     #   trace - should the optimization be traced ?
-    #   recursion -
     #   algorithm -
     #   control - list of additional control parameters for solver
     #   title - an optional title string
@@ -100,12 +98,12 @@ function(
         stop("Algorithm only supported for mci Recursion")
     }
 
-    # Start Time:
+    # Get Start Time:
     .StartFit <- Sys.time()
 
     # Generate Control List - Define Default Settings:
     if(DEBUG) print("Generate Control List ...")
-    con <- .garchOptimizerControl(recursion, algorithm, cond.dist)
+    con <- .garchOptimizerControl(algorithm, cond.dist)
     con[(namc <- names(control))] <- control
 
     # Initialize Time Series Information - Save Globally:
@@ -155,7 +153,6 @@ function(
     .setfGarchEnv(.llh = 1.0e99)
     .llh <- .getfGarchEnv(".llh")
     fit = .garchOptimizeLLH(hessian, robust.cvar, trace)
-    # fit$llh = .llh # should be done in .garchOptimizeLLH
 
     # Add to Fit:
     if (DEBUG) print("Add to fit ...")
@@ -384,7 +381,8 @@ function (formula, data, fake = FALSE, lhs = FALSE)
 
 
 .garchOptimizerControl <-
-function(recursion, algorithm, cond.dist)
+function(algorithm, cond.dist)
+# function(algorithm, cond.dist)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -397,7 +395,7 @@ function(recursion, algorithm, cond.dist)
     # FUNCTION:
     
     # Check llh for the standardized NIG Distribution:
-    llh = recursion # "internal", "filter", "testing"  
+    llh = "internal"
     if (cond.dist == "snig") llh = "filter"
 
     # Generate Control List with Default Settings:

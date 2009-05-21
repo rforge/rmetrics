@@ -15,14 +15,14 @@
 
 
 \usage{    
-garchFit(formula ~ garch(1, 1), data = dem2gbp, 
+garchFit(formula = ~ garch(1, 1), data = dem2gbp, 
     init.rec = c("mci", "uev"), 
     delta = 2, skew = 1, shape = 4, 
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", 
         "snig", "QMLE"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
         include.shape = NULL, leverage = NULL, trace = TRUE, 
-    recursuin = c("internal", "filter", "testing"),
+    %recursion = c("internal", "filter", "testing"),
     algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
     hessian = c("ropt", "rcd"), control = list(), 
     title = NULL, description = NULL, \dots)
@@ -34,11 +34,11 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd",
 
 \arguments{
 
-    \item{recursion}{
-        a string parameter that determines the recursion used for calculating 
-        the maximum log-likelihood function.
+    %\item{recursion}{
+    %   a string parameter that determines the recursion used for calculating 
+    %   the maximum log-likelihood function.
         % Allowed values are ...
-    }
+    %}
     \item{algorithm}{
         a string parameter that determines the algorithm used for maximum 
         likelihood estimation.

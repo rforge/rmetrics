@@ -202,5 +202,10 @@ export(
     ".gedCondDist",
     ".sgedCondDist",
     ".snigCondDist",
+    ".QMLECondDist",
+    ".aparchLLH.internal",
+    ".aparchLLH.filter",
+    ".aparchLLH.testing",
+    ".filter2", 
     ".ugarchSpec",
     ".ugarchFit")

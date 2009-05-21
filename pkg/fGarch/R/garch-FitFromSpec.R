@@ -55,6 +55,7 @@ function(
         delta = 2,
         include.delta = NULL, 
         leverage = NULL,
+        recursion = c("internal", "filter", "testing")[1],
         init.rec = c("mci", "uev")[1]),
 
     distribution = list(
@@ -67,7 +68,7 @@ function(
         
     optimization = list(
         algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm")[1],
-        hessian = c("ropt", "rcd")[1],
+        hessian = c("ropt", "rcd", "rts")[1],
         trace = TRUE,
         control = list(),
         status = NA), 
@@ -94,6 +95,7 @@ function(
         delta = 2,
         include.delta = NULL, 
         leverage = NULL,
+        recursion = c("internal", "filter", "testing")[1],
         init.rec = c("mci", "uev")[1])
     Model[(Names <- names(model))] <- model
 
@@ -110,7 +112,7 @@ function(
     # Optimization Slot:
     Optimization = list(
         algorithm = c("nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm")[1],
-        hessian = c("ropt", "rcd")[1],
+        hessian = c("ropt", "rcd", "rst")[1],
         trace = TRUE,
         control = list(),
         status = NA)
@@ -142,8 +144,8 @@ function(data, spec = .ugarchSpec())
     #   Fit parameters to a ARMA-GARCH model by GARCH Specification
 
     # Arguments:
-    #   data -
-    #   spec -
+    #   data - time series or vector of data
+    #   spec - garch specification object
     
     # Example:
     #   .ugarchFit(dem2gbp[, 1])   
@@ -212,6 +214,7 @@ function(data, spec = .ugarchSpec())
         include.shape = spec@distribution$include.shape, 
         leverage = spec@model$leverage,
         trace = spec@optimization$trace,
+        ## recursion = spec@model$recursion,
         algorithm = spec@optimization$algorithm,
         hessian = spec@optimization$hessian,
         robust.cvar = robust.cvar,
@@ -235,6 +238,7 @@ function(data, spec = .ugarchSpec())
         include.shape = spec@distribution$include.shape, 
         leverage = spec@model$leverage,
         trace = spec@optimization$trace,
+        ## recursion = spec@model$recursion,
         algorithm = spec@optimization$algorithm,
         hessian = spec@optimization$hessian,
         robust.cvar = robust.cvar,
@@ -250,4 +254,5 @@ function(data, spec = .ugarchSpec())
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+
