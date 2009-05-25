@@ -1,7 +1,7 @@
 Package: fCalendar
-Version: 270.78.3
-Revision: 4033
-Date: 2009-04-15
+Version: 270.78.4
+Revision: 4191
+Date: 2009-05-25
 Title: Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi
 Depends: R (>= 2.4.0), methods, MASS, fUtilities, fEcofin
