@@ -46,11 +46,11 @@ function(lib, pkg)
     # Load dll:
     # library.dynam("fSeries", pkg, lib)
 
-    message("")
-    message("#################################################################")
-    message("# The new version of 'fSeries' has been renamed to 'timeSeries' #")
-    message("#################################################################")
-    message("")
+    MSG("")
+    MSG("#################################################################")
+    MSG("# The new version of 'fSeries' has been renamed to 'timeSeries' #")
+    MSG("#################################################################")
+    MSG("")
 
 }
 
