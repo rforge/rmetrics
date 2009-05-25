@@ -1,7 +1,7 @@
 Package: fPortfolioBacktest
 Version: 2100.3
-Revision: 4097
-Date: 2009-04-20
+Revision: 4143
+Date: 2009-05-11
 Title: Rmetrics - Portfolio Backtesting
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
 Depends: R (>= 2.6.0), methods, timeDate, timeSeries, fBasics, fAssets,
