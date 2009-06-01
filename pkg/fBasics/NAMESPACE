@@ -458,4 +458,5 @@ export(
     "volatility",
     ".weightsAndrews2",
     ".xrug",
-    ".yrug" )
+    ".yrug",
+    ".recessionLines" )
