@@ -1,6 +1,6 @@
 Package: fACD
 Type: Package
-Title: fACD - ACD Models in R
+Title: Autoregressive Conditional Duration Models in R
 Version: 1.0
 Date: 2009-05-05
 Author: Marcelo Perlin 

@@ -56,7 +56,6 @@ if (distrib=='weibull')
        }
 }
 
-
 param0[1]<-.1
 param0[2:(1+qLag)]<-.05/qLag
 param0[(2+qLag):(1+qLag+pLag)]<-.95/pLag
