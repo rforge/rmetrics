@@ -496,17 +496,23 @@ setMethod("$",
           function (x, name)
       {
 
-          dataIdx <- grep(name, colnames(x))
-          recordIDsIdx <- grep(name, names(x@recordIDs))
+          nc <- colnames(x)
+          nr <- names(x@recordIDs)
+          dataIdx <- pmatch(name, nc)
+          recordIDsIdx <- pmatch(name, nr)
 
           # if none or more than one match returns NULL
-          if (sum(c(length(dataIdx), length(recordIDsIdx))) != 1)
+          if ((is.na(dataIdx) && is.na(recordIDsIdx)) ||
+              (!is.na(dataIdx) && !is.na(recordIDsIdx)))
               return(NULL)
 
-          if (length(dataIdx) == 1)
+          if (!is.na(dataIdx))
               return(.subset(x, TRUE, dataIdx))
-          if (length(recordIDsIdx) == 1)
+
+          if (!is.na(recordIDsIdx))
               return(x@recordIDs[[recordIDsIdx]])
+
+          NULL
       })
 
 setMethod("$",
