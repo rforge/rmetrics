@@ -18,6 +18,7 @@
 #  .subset_timeSeries
 #  .findIndex
 #  $,timeSeries              Subset by column names
+#  $<-,timeSeries            Replace subset by column names
 #  [,timeSeries              Subsets of a 'timeSeries' object
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
@@ -81,8 +82,8 @@ function(x, i, j)
 # ------------------------------------------------------------------------------
 
 
-.findIndex <- 
-function(ipos, pos)
+.findIndex <-
+    function(ipos, pos)
 {
     attributes(ipos) <- NULL
 
@@ -91,10 +92,17 @@ function(ipos, pos)
         pos <- pos[or]
     }
 
-    i <- findInterval(ipos, pos)
+    # call directly .C("findInteval") because faster than
+    # i <- findInterval(ipos, pos)
+    if (!is.double(ipos)) ipos <- as.double(ipos)
+    if (!is.double(pos)) pos <- as.double(pos)
+    nx <- length(ipos)
+    i <- integer(nx)
+    .C("find_interv_vec", xt = pos, n = length(pos), x = ipos,
+       nx = nx, FALSE, FALSE, i, DUP = FALSE, NAOK = TRUE,
+       PACKAGE = "base")
 
-    if (!identical(as.numeric(ipos), as.numeric(pos[i])))
-        #-> avoid troubles with int
+    if (!identical(ipos, pos[i]))
         stop("subscript out of bounds", call. = FALSE)
 
     if (unsorted) i <- or[i]
@@ -162,7 +170,7 @@ setMethod("[",
           function(x, i, j, ..., drop = FALSE)
               .subset_timeSeries(x, i, j))
 
-              
+
 # ------------------------------------------------------------------------------
 ## 2         character index_timeSeries
 
@@ -173,11 +181,12 @@ setMethod("[",
       {
           td <- timeDate(i)
           if (any(is.na(td))) return(as.vector(NA))
-          i <- .findIndex(as.numeric(td, units = "secs"), x@positions)
+          # bad to use directly @Data but more efficient in this case
+          i <- .findIndex(td@Data, x@positions)
           .subset_timeSeries(x, i, j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 3          timeDate index_timeSeries
 
@@ -186,11 +195,12 @@ setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "index_timeSeries"),
           function(x, i, j, ..., drop = FALSE)
       {
-          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
+          # bad to use directly @Data but more efficient in this case
+          i <- .findIndex(i@Data, x@positions)
           .subset_timeSeries(x, i, j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 4        timeSeries index_timeSeries
 
@@ -206,7 +216,7 @@ setMethod("[",
           .subset_timeSeries(x, as.vector(i), j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 5           missing index_timeSeries
 
@@ -224,7 +234,7 @@ setMethod("[",
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
-          
+
 # ------------------------------------------------------------------------------
 ## 7  index_timeSeries        character
 
@@ -239,7 +249,7 @@ setMethod("[",
           .subset_timeSeries(x, i, j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 8         character        character
 
@@ -254,7 +264,7 @@ setMethod("[",
           callGeneric(x=x, i=i, j=j, drop=drop)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 9          timeDate        character
 
@@ -263,14 +273,15 @@ setMethod("[",
           signature(x = "timeSeries", i = "timeDate", j = "character"),
           function(x, i, j, ..., drop = FALSE)
       {
-          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
+          # bad to use directly @Data but more efficient in this case
+          i <- .findIndex(i@Data, x@positions)
           j <- pmatch(j, slot(x, "units"), duplicates.ok = TRUE)
           if (any(is.na(j)))
               stop("subscript out of bounds", call. = FALSE)
           .subset_timeSeries(x, i, j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 10       timeSeries        character
 
@@ -292,7 +303,7 @@ setMethod("[",
           .subset_timeSeries(x, TRUE, j)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 12              ANY        character
 
@@ -331,7 +342,7 @@ setMethod("[",
           }
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 20        character          missing
 
@@ -354,11 +365,12 @@ setMethod("[",
           function(x, i, j, ..., drop = FALSE)
       {
           # do not return NA if comma missing because timeDate index
-          i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
+          # bad to use directly @Data but more efficient in this case
+          i <- .findIndex(i@Data, x@positions)
           .subset_timeSeries(x, i, TRUE)
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## 22       timeSeries          missing
 
@@ -379,7 +391,7 @@ setMethod("[",
           }
       })
 
-      
+
 # ------------------------------------------------------------------------------
 ## workaround  i <- matrix.
 
@@ -430,7 +442,7 @@ setMethod("[",
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
-          
+
 # ------------------------------------------------------------------------------
 ## 27         timeDate              ANY
 
@@ -440,7 +452,7 @@ setMethod("[",
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
-          
+
 # ------------------------------------------------------------------------------
 ## 28       timeSeries              ANY
 
@@ -450,7 +462,7 @@ setMethod("[",
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
-          
+
 # ------------------------------------------------------------------------------
 ## 29          missing              ANY
 
@@ -483,20 +495,31 @@ setMethod("$",
           signature(x = "timeSeries", name = "character"),
           function (x, name)
       {
-          idx <- grep(name, x@units)
-          if (length(idx) == 1) # if none or more than one match -> NULL
-              .subset(x, TRUE, idx)
-          else
-              NULL
+
+          dataIdx <- grep(name, colnames(x))
+          recordIDsIdx <- grep(name, names(x@recordIDs))
+
+          # if none or more than one match returns NULL
+          if (sum(c(length(dataIdx), length(recordIDsIdx))) != 1)
+              return(NULL)
+
+          if (length(dataIdx) == 1)
+              return(.subset(x, TRUE, dataIdx))
+          if (length(recordIDsIdx) == 1)
+              return(x@recordIDs[[recordIDsIdx]])
       })
 
-      
 setMethod("$",
           signature(x = "timeSeries", name = "ANY"),
           function(x, name)
           NULL )
 
-          
+################################################################################
+#  $<-,timeSeries            Subset by column names
+################################################################################
+
+# FIXME
+
 ################################################################################
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
 ################################################################################
@@ -514,11 +537,12 @@ setReplaceMethod("[",
                  signature(x = "timeSeries", i = "timeDate", j = "ANY"),
                  function(x, i, j, value)
              {
-                 i <- .findIndex(as.numeric(i, units = "secs"), x@positions)
+                 # bad to use directly @Data but more efficient in this case
+                 i <- .findIndex(i@Data, x@positions)
                  callGeneric(x=x, i=i, j=j, value=value)
              })
 
-             
+
 setReplaceMethod("[",
                  signature(x = "timeSeries", i = "timeDate", j = "missing"),
                  function(x, i, j, value)
@@ -536,7 +560,7 @@ setReplaceMethod("[",
                  callGeneric(x=x, i=i, j=j, value=value)
              })
 
-             
+
 setReplaceMethod("[",
                  signature(x = "timeSeries", i = "character", j = "missing"),
                  function(x, i, j, value)
@@ -545,6 +569,6 @@ setReplaceMethod("[",
                  callGeneric(x=x, i=i, j=TRUE, value=value)
              })
 
-             
+
 ################################################################################
 

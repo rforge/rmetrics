@@ -67,14 +67,14 @@ setClass("timeSeries",
          contains = "structure",
          validity = function(object) {
              if ((length(object@positions) > 0) &&
-                 NROW(getDataPart(object)) != length(object@positions))
+                 NROW(object) != length(object@positions))
                  return("length of '@positions' not equal to '@.Data' extent")
-             if (NCOL(getDataPart(object)) != length(object@units))
+             if (NCOL(object) != length(object@units))
                  return("length of '@units' not equal to '@.Data' extent")
              TRUE
          })
 
-         
+
 # ------------------------------------------------------------------------------
 
 
@@ -91,6 +91,10 @@ setMethod("initialize", "timeSeries",
                    title = character(0),
                    documentation = character(0))
       {
+
+          # as.double -> crucial for speed improvement in subsetting
+          if (!is.double(positions)) positions <- as.double(positions)
+
           .Object <- setDataPart(.Object, value = .Data)
           `slot<-`(.Object, "units", value = units)
           `slot<-`(.Object, "positions", value = positions)
@@ -103,6 +107,6 @@ setMethod("initialize", "timeSeries",
           .Object
       })
 
-      
+
 ################################################################################
 

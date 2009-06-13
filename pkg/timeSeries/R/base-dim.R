@@ -109,7 +109,7 @@ setMethod("dim", "timeSeries", function(x) attr(x, "dim"))
 # model.response(model.frame(dummySeries() ~1)) work
 
 
-setReplaceMethod("dim", "timeSeries", 
+setReplaceMethod("dim", "timeSeries",
     function(x, value)
     {
         # dim(x) <- NULL returns a vector
@@ -161,7 +161,7 @@ setMethod("rownames", "timeSeries",
 
 
 setMethod("dimnames", "timeSeries", # "signalSeries",
-    function(x)  
+    function(x)
     {
         list(rownames(x),colnames(x))
     }
@@ -225,10 +225,10 @@ setMethod("rownames<-", "timeSeries", # "signalSeries",
                                  recordIDs = x@recordIDs,
                                  title = x@title,
                                  documentation = x@documentation))
-        
+
         # coerce charvec to timeDate
         charvec <- timeDate(charvec = value)
-        
+
         if (any(is.na(charvec)))
             # Note : there is already a warning in timeDate if there are NA's
             .signalSeries(data = getDataPart(x),
@@ -263,17 +263,23 @@ setMethod("dimnames<-", c("timeSeries", "list"), # c("signalSeries", "list"),
 )
 
 # ------------------------------------------------------------------------------
-
-
 # important for completion with $
 
-
 setMethod("names", "timeSeries", # "signalSeries",
-    function(x) colnames(x))
+    function(x) c(colnames(x), names(x@recordIDs)))
 
-          
 setReplaceMethod("names", "timeSeries", # "signalSeries",
-    function(x, value) {colnames(x) <- value; x})
-          
+                 function(x, value) {
+                     nc <- ncol(x)
+                     nv <- length(value)
+                     nr <- length(x@recordIDs)
+
+                     # Note that using [][] ensure that length of the
+                     # names are equal to array extent
+                     colnames(x) <- value[seq.int(nv)][seq.int(nc)]
+                     if (nv > nc)
+                         names(x@recordIDs) <- value[-seq.int(nc)][seq.int(nr)]
+                     x
+                 })
 
 ################################################################################
