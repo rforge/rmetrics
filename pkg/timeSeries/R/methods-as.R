@@ -332,8 +332,12 @@ setMethod("as.ts", "timeSeries",
         # get year of first entry
         y1 <- as.numeric(format(td[1], "%Y"))
 
-        # important to use matrix to avoid troubles with ts()
-        data <- matrix(x, ncol = ncol(x))
+        # important to use vector/matrix to avoid troubles with ts()
+        data <-
+            if (isUnivariate(x))
+                as.vector(x)
+            else
+                matrix(x, ncol = ncol(x))
 
         if (identical(monthly, m)) # Monthly data
             return(ts(data, start = c(y1, m[1]), frequency = 12))
@@ -341,8 +345,10 @@ setMethod("as.ts", "timeSeries",
         if (identical(quarterly, m)) # Quarterly data
             return(ts(data, start = c(y1, m[1]%/%4+1), frequency = 4))
 
-        # other frequencies not implemented yet
-        stop("Cannot convert to regular monthly or quarterly series")
+        # other frequencies not implemented yet; return default value
+        ans <- ts(data)
+        attr(ans, "positions") <- time(x)
+        ans
     })
 
 
