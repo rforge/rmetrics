@@ -39,8 +39,8 @@
 # ------------------------------------------------------------------------------
 
 
-as.timeSeries <- 
-function(x, ...) 
+as.timeSeries <-
+function(x, ...)
 {
     UseMethod("as.timeSeries")
 }
@@ -51,7 +51,7 @@ function(x, ...)
 
 as.timeSeries.default <-
  function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # FUNCTION:
@@ -71,13 +71,13 @@ setAs("ANY", "timeSeries", function(from) as.timeSeries(from))
 
 as.timeSeries.ts <-
 function(x, ...)
-{ 
+{
     asTime = unclass(time(x))
     yearPart = trunc(asTime)
     decimalPart = asTime - yearPart
     leapYears = yearPart%%4 == 0 & (yearPart%%100 != 0 | yearPart%%400 == 0)
     days = trunc(decimalPart * (365 + leapYears)) + 1
-    
+
     if (frequency(x) == 4) {
         # Quarterly Data:
         days = days + 1
@@ -93,26 +93,26 @@ function(x, ...)
     } else {
         stop()
     }
-    
+
     # Result:
     tS = timeSeries(x, ans, ...)
-    attr(tS, "ts") <- c(start = round(start(x)), 
+    attr(tS, "ts") <- c(start = round(start(x)),
         frequency = round(frequency(x)), deltat = deltat(x))
-    
+
     # Return Value:
     tS
-} 
+}
 
 
 setAs("ts", "timeSeries", function(from) as.timeSeries(from))
-    
-    
+
+
 # ------------------------------------------------------------------------------
 
 
-as.timeSeries.data.frame <- 
+as.timeSeries.data.frame <-
 function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
@@ -186,9 +186,9 @@ setAs("character", "timeSeries", function(from) as.timeSeries(from))
 # ------------------------------------------------------------------------------
 
 
-as.timeSeries.zoo <- 
+as.timeSeries.zoo <-
 function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # FUNCTION:
@@ -210,9 +210,9 @@ function(x, ...)
 # YC : since 2.9.0 must define proper S4 methods
 
 
-setMethod("as.matrix", "timeSeries", 
+setMethod("as.matrix", "timeSeries",
     function(x, ...)
-    {   
+    {
         # A function implemented by Diethelm Wuertz
 
         # Description:
@@ -252,7 +252,7 @@ setAs("timeSeries", "matrix", function(from) as.matrix(from))
 
 setMethod("as.data.frame", "timeSeries",
     function(x, row.names = NULL, optional = FALSE, ...)
-    {   
+    {
         # A function implemented by Diethelm Wuertz
 
         # Description:
@@ -296,7 +296,7 @@ setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 
 setMethod("as.ts", "timeSeries",
     function(x, ...)
-    {   
+    {
         # A function implemented by Diethelm Wuertz
 
         # Description:
@@ -304,28 +304,46 @@ setMethod("as.ts", "timeSeries",
         #   of class 'ts'.
 
         # Example:
-        #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
+        #
+        #   x = dummySeries(); as.ts(x)
+        #
+        #   x = timeSeries(seq(12), timeSequence(by = "month", length.out = 12))
+        #   as.ts(x)
+        #
+        #   x = dummySeries()[c(3,6,9,12),]; as.ts(x)
+        #   x = dummySeries()[c(2,5,8,11),]; as.ts(x)
+        #   x = dummySeries()[c(1,4,7,10),]; as.ts(x)
+        #
+        #   x = dummySeries()[c(4,7,10,1),]; as.ts(x)
+
 
         # Changes:
         #
 
         # FUNCTION:
 
-        # Transform:
+        # check if monthly or quarterly data
+        td <- time(x)
+        m <- c(timeDate::months(td)) #-> c() to remove attributes
+        # (m[1] -1) -> shift vector to match first entry in m
+        monthly <- seq(from = m[1]-1, length.out=length(m)) %% 12 + 1
+        quarterly <- seq(from = m[1]-1, by = 3, length=length(m)) %% 12 + 1
 
-        tsp = attr(x, "ts")
-        
-        if (is.null(tsp)) {
-            stop("Cannot convert to regular monthly or quarterly series")
-        } else {
-            if(isUnivariate(x)) Data = as.vector(x) else Data = series(x)
-            ans = ts(Data, 
-                start = round(tsp[1:2]),
-                frequency = round(tsp[3]))
-            return(ans)
-        }
-    }
-)
+        # get year of first entry
+        y1 <- as.numeric(format(td[1], "%Y"))
+
+        # important to use matrix to avoid troubles with ts()
+        data <- matrix(x, ncol = ncol(x))
+
+        if (identical(monthly, m)) # Monthly data
+            return(ts(data, start = c(y1, m[1]), frequency = 12))
+
+        if (identical(quarterly, m)) # Quarterly data
+            return(ts(data, start = c(y1, m[1]%/%4+1), frequency = 4))
+
+        # other frequencies not implemented yet
+        stop("Cannot convert to regular monthly or quarterly series")
+    })
 
 
 # until UseMethod dispatches S4 methods in 'base' functions
@@ -355,7 +373,7 @@ setAs("timeSeries", "ts", function(from) as.ts(from))
 # setGeneric("as.list", package = "base")
 
 
-setMethod("as.list", "timeSeries", 
+setMethod("as.list", "timeSeries",
     function(x, ...)
     {
         data <- getDataPart(x)
