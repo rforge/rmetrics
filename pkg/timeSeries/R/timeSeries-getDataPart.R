@@ -29,7 +29,7 @@ setMethod("getDataPart", "timeSeries", #"signalSeries",
         lattrs <- list(dim = dim(object),
             dimnames = list(NULL, object@units))
         attributes(object) <- lattrs
-        
+
         object
     }
 )
@@ -46,13 +46,16 @@ if (getRversion() < "2.8.0") {
         function(object, value)
         {
             value <- as(value, "matrix")
-            
+
             supplied <- attributes(object)
             valueAttrs <- attributes(value)
-            
+
             supplied[names(valueAttrs)] <- valueAttrs
+            # YC: force @unit to be identical to colnames(value)
+            supplied[["units"]] <- colnames(value)
             attributes(value) <- supplied
-            
+
+
             asS4(value, TRUE)
         }
     )
@@ -66,6 +69,8 @@ if (getRversion() < "2.8.0") {
             valueAttrs <- attributes(value)
 
             supplied[names(valueAttrs)] <- valueAttrs
+            # YC: force @unit to be identical to colnames(value)
+            supplied[["units"]] <- colnames(value)
             attributes(value) <- supplied
 
             asS4(value, TRUE)

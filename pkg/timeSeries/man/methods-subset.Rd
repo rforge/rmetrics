@@ -39,6 +39,9 @@
 \alias{[<-,timeSeries,character,ANY-method}
 \alias{[<-,timeSeries,timeDate,ANY-method}
 
+\alias{$<-,timeSeries,character,ANY-method}
+\alias{$<-,timeSeries,character,factor-method}
+\alias{$<-,timeSeries,character,numeric-method}
 
 \alias{window,timeSeries-method}
 \alias{cut,timeSeries-method}

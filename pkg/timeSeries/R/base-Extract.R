@@ -524,7 +524,75 @@ setMethod("$",
 #  $<-,timeSeries            Subset by column names
 ################################################################################
 
-# FIXME
+
+setReplaceMethod("$",
+                 signature(x = "timeSeries", name = "character",
+                           value = "numeric"),
+                 function(x, name, value)
+             {
+                 if (NROW(value) != nrow(x))
+                     stop(gettextf("replacement has %i rows, time series has %i",
+                                   NROW(value), nrow(x))) #, call. = FALSE)
+
+                 # get data part
+                 data <- getDataPart(x)
+
+                 # coerce value to matrix
+                 ncol <- NCOL(value)
+                 value <- matrix(value, ncol = NCOL(value), dimnames = NULL)
+
+                 # set up colnames
+                 cn <- colnames(value)
+                 if (any(is.null(cn)))
+                     cn <-
+                         if (ncol > 1)
+                             paste(name, ".", seq.int(ncol), sep = "")
+                         else
+                             name
+                 colnames(value) <- cn
+
+                 # if name already present - subsitute ...
+                 if (any(cdata <- (colnames(data) %in% cn)))
+                 {
+                     cvalue <- cn %in% colnames(data)
+                     data[,cdata] <- value[,cvalue]
+                     value <- cbind(data, value[,!cvalue])
+                 } else {
+                     value <- cbind(data, value)
+                 }
+
+                 # return
+                 ans <- setDataPart(x, value)
+                 ans
+             })
+
+setReplaceMethod("$",
+          signature(x = "timeSeries", name = "character", value = "factor"),
+                 function(x, name, value)
+             {
+                 if (length(x@recordIDs)) {
+                     x@recordIDs[[name]] <-  value
+                 } else {
+                     x@recordIDs <- as.data.frame(value)
+                     colnames(x@recordIDs) <- name
+                 }
+                 validObject(x)
+                 x
+             })
+
+setReplaceMethod("$",
+          signature(x = "timeSeries", name = "character", value = "ANY"),
+                 function(x, name, value)
+             {
+                 if (length(x@recordIDs)) {
+                     x@recordIDs[[name]] <-  value
+                 } else {
+                     x@recordIDs <- as.data.frame(value)
+                     colnames(x@recordIDs) <- name
+                 }
+                 validObject(x)
+                 x
+             })
 
 ################################################################################
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
