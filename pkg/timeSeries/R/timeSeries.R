@@ -34,15 +34,15 @@ function(data, charvec, units = NULL, format, zone = "",
     documentation = NULL, ...)
 {
     # Description:
-    
+
     # Arguments:
-    
+
     # Note:
     #    it is possible that a ts object is considered as a
     #   matrix when timeSeries method as dispatched. Hence this check
-    
+
     # FUNCTION:
-    
+
     if (!is(data, "matrix"))
         data <- as(data, "matrix")
 
@@ -91,15 +91,15 @@ function(data, charvec, units = NULL, format, zone = "",
     documentation = NULL, ...)
 {
     # Description:
-    
+
     # Arguments:
-    
+
     # Note:
     #   it is possible that a ts object is considered as a
     #   matrix when timeSeries method as dispatched. Hence this check
-    
+
     # FUNCTION:
-    
+
     if (!is(data, "matrix"))
         data <- as(data, "matrix")
 
@@ -152,14 +152,14 @@ setMethod("timeSeries", signature(data = "missing", charvec = "ANY"),
             title = title,
             documentation = documentation,
             ...)
-    }          
+    }
 )
 
-  
+
 # ------------------------------------------------------------------------------
 ## ANY ANY
 
-        
+
 setMethod("timeSeries", signature(data = "ANY", charvec = "ANY"),
     function (data, charvec, units = NULL, format = NULL, zone = "",
         FinCenter = "", recordIDs = data.frame(), title = NULL,
@@ -168,11 +168,13 @@ setMethod("timeSeries", signature(data = "ANY", charvec = "ANY"),
         data <- as(data, "matrix")
         if (!is(data, "matrix"))
             stop("Could not coerce 'data' to a matrix")
-        callGeneric()
-    }
-)
+        callGeneric(data = data, charvec = charvec, units = units,
+                    format = format, zone = zone, FinCenter =
+                    FinCenter, recordIDs = recordIDs, title = title,
+                    documentation = documentation, ...)
+    })
 
-      
+
 # ------------------------------------------------------------------------------
 ##  matrix missing
 
@@ -201,7 +203,7 @@ setMethod("timeSeries", signature(data = "matrix", charvec = "missing"),
         }
     }
 )
-    
+
 
 # ------------------------------------------------------------------------------
 ##  matrix timeDate
@@ -230,7 +232,7 @@ setMethod("timeSeries", signature(data = "matrix", charvec = "timeDate"),
     }
 )
 
-      
+
 # ------------------------------------------------------------------------------
 ##  matrix numeric
 
@@ -249,7 +251,7 @@ setMethod("timeSeries", signature(data = "matrix", charvec = "numeric"),
     }
 )
 
-      
+
 # ------------------------------------------------------------------------------
 ##  matrix      ANY
 
@@ -287,6 +289,6 @@ setMethod("timeSeries", signature(data = "matrix", charvec = "ANY"),
     }
 )
 
-      
+
 ################################################################################
 
