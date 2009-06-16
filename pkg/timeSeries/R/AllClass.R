@@ -71,6 +71,9 @@ setClass("timeSeries",
                  return("length of '@positions' not equal to '@.Data' extent")
              if (NCOL(object) != length(object@units))
                  return("length of '@units' not equal to '@.Data' extent")
+             # if (NROW(object@recordIDs) > 0 &
+             #    NROW(object@recordIDs) != ncol(object))
+             #    return("length of '@recordIDs' not equal to '@.Data' extent")
              TRUE
          })
 
@@ -94,6 +97,8 @@ setMethod("initialize", "timeSeries",
 
           # as.double -> crucial for speed improvement in subsetting
           if (!is.double(positions)) positions <- as.double(positions)
+
+          # should force recordIDs to be of same length as .Data
 
           .Object <- setDataPart(.Object, value = .Data)
           `slot<-`(.Object, "units", value = units)
