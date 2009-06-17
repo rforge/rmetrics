@@ -4,10 +4,15 @@
 #include <Rmath.h>
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
+
+/* Macro to transform an index of a 2-dimensional array into an index
+   of a vector */
 #define IDX(i,j,dim0) (i) + (j) * (dim0)
 
+/* If DEBUG_PRINT is defined all inputs and outputs will be printed */
 /* #define DEBUG_PRINT  */
 
+/* Function to print a 2-dimensional array */
 void print_array(double * data, int i, int j, const char * lab)
 {
     int icnt, jcnt;
@@ -34,7 +39,7 @@ void FKFmirrorLU(double * data, int dim, char * uplo)
 	}
 /* 	Rprintf("FKFmirrorLU '%s'\n", uplo); */
     }else{
-/* 	Rprintf("FKFmirrorLUmust not be 'U' '%s'\n", uplo); */
+/* 	Rprintf("FKFmirrorLU must not be 'U' '%s'\n", uplo); */
 	for(j = 1; j < dim; j++){
 	    for(i = 0; i < j; i++){
 		data[IDX(i, j, dim)] = data[IDX(j, i, dim)];
@@ -43,7 +48,8 @@ void FKFmirrorLU(double * data, int dim, char * uplo)
     }
 }
 
-void cfkf(int m, int d, int n,
+void cfkf(/* inputs */
+	  int m, int d, int n,
 	  double * a0, double * P0,
 	  double * dt, int incdt,
 	  double * ct, int incct,
@@ -52,6 +58,7 @@ void cfkf(int m, int d, int n,
 	  double * HHt, int incHHt,
 	  double * GGt, int incGGt,
 	  double * yt,
+	  /* outputs */
 	  double * at, double * att,
 	  double * Pt, double * Ptt,
 	  double * vt, double * Ft,
@@ -76,6 +83,7 @@ void cfkf(int m, int d, int n,
 
   /*  e(t) and u(t) are independent innovations with zero */
   /*  expectation and variance HH(t) and GG(t), respectively. */
+  /*  Covariance between e(t) and u(t) is not supported. */
 
   /*  The deterministic parameters admit the following dimensions: */
   /*   alpha(t) in R^(m) */
@@ -96,10 +104,10 @@ void cfkf(int m, int d, int n,
   /*  The outputs at, att, Pt, Ptt, vt, Ft, Kt, ans status admit */
   /*  the following dimensions and interpretations: */
 
-  /*  at in R^(m x n), at(i) = E(alpha(i) | y(1), ..., y(i - 1))  */
+  /*  at in R^(m x (n + 1)), at(i) = E(alpha(i) | y(1), ..., y(i - 1)), at(0) = a0 */
   /*  att in R^(m x n), att(i) = E(alpha(i) | y(1), ..., y(i))  */
-  /*  Pt in R^(m x m x n), pt(i) = var(alpha(i) | y(1), ..., y(i - 1)) */
-  /*  Ptt in R^(m x m x n), ptt(i) = var(alpha(i) | y(1), ..., y(i)) */
+  /*  Pt in R^(m x m x (n + 1)), Pt(i) = var(alpha(i) | y(1), ..., y(i - 1)), Pt(0) = P0 */
+  /*  Ptt in R^(m x m x n), Ptt(i) = var(alpha(i) | y(1), ..., y(i)) */
   /*  vt in R^(d x n), measurement equation error term v(i) = y(i) - c(i) - Z(i) * a(i) */
   /*  Ft in R^(d x d x n) */
   /*  Kt in R^(m x d x n) */
@@ -136,6 +144,7 @@ void cfkf(int m, int d, int n,
 
   strcpy(dpotri_uplo, "U");
 
+  /* Temporary arrays */
   double *tmpdxm = (double *) Calloc(m_x_d, double);
   double *tmpmxm = (double *) Calloc(m_x_m, double);
   double *tmptmpmxm = (double *) Calloc(m_x_m, double);
@@ -156,13 +165,15 @@ void cfkf(int m, int d, int n,
   print_array(Pt, m, m, "P0:");
 #endif
 
-  /* Initialize the logLikelihood */
+  /* Initialize the logLikelihood: loglik = - n * d * log(sqrt(2 * pi)) */
   *loglik = - (double)(n * d) *  M_LN_SQRT_2PI;
 
   /* ======================================================================  */
   /* Start filtering */
   /* ======================================================================  */
   while(i < n && potrf_info == 0 && potri_info == 0){
+    /* potri_info and potrf_info are 0 as long as matrix inversion and
+       and Cholesky factorization exit successfully */
 
 #ifdef DEBUG_PRINT
     Rprintf("\n\nLoop Nr.:  %d\n", i);
