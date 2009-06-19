@@ -83,7 +83,7 @@
                                       of the fisher information matrix. This slot is filled only in the case of
                                       an univariate fit.
                                       This slot is of class \code{matrix}.}
-    \item{\code{trace.pars}:}{Containes the parameter value evolution during the fitting procedure.
+    \item{\code{trace.pars}:}{Contains the parameter value evolution during the fitting procedure.
                               \code{trace.pars} of class \code{list}.}
   }
 }
