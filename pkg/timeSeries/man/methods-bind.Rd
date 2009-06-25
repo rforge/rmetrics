@@ -23,7 +23,9 @@
 \alias{merge,timeSeries,numeric-method}
 \alias{merge,timeSeries,matrix-method}
 \alias{merge,timeSeries,timeSeries-method}
-
+\alias{merge,matrix,timeSeries-method}
+\alias{merge,numeric,timeSeries-method}
+  
 \alias{merge.timeSeries}
 
 \alias{cbind2,ANY,timeSeries-method}

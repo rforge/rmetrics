@@ -4,6 +4,7 @@
 ################################################
 
 importFrom("graphics",
+           "abline",
            "lines",
            "plot",
            "points",
@@ -32,15 +33,19 @@ export("align",
         "finCenter<-",
         "finCenter",
         "timeDate" )
-exportMethods("-",
+exportMethods("abline",
+              "-",
               "[",
               "+",
               "coerce",
               "initialize",
               "is.na",
               "julian",
+              "lines",
               "months",
               "Ops",
+              "plot",
+              "points",
               "sample",
               "show" )
 
@@ -69,11 +74,8 @@ S3method("kurtosis", "default")
 S3method("kurtosis", "POSIXct")
 S3method("kurtosis", "POSIXlt")
 S3method("length", "timeDate")
-S3method("lines", "timeDate")
 S3method("max", "timeDate")
 S3method("min", "timeDate")
-S3method("plot", "timeDate")
-S3method("points", "timeDate")
 S3method("range", "timeDate")
 S3method("rep", "timeDate")
 S3method("rev", "timeDate")
@@ -264,6 +266,7 @@ export(
     "El_Aaiun",
     "El_Salvador",
     "Enderbury",
+    ".endpoints",
     "Epiphany",
     "Eucla",
     "Fakaofo",
@@ -686,5 +689,4 @@ export(
     "Yerevan",
     "Zagreb",
     "Zaporozhye",
-    "Zurich",
-    ".endpoints")
+    "Zurich" )

@@ -152,8 +152,25 @@ setMethod("timeSeries", signature(data = "missing", charvec = "ANY"),
             title = title,
             documentation = documentation,
             ...)
-    }
-)
+    })
+
+
+# ------------------------------------------------------------------------------
+## missing missing
+
+
+setMethod("timeSeries", signature(data = "missing", charvec = "missing"),
+    function (data, charvec, units = NULL, format = NULL, zone = "",
+        FinCenter = "", recordIDs = data.frame(), title = NULL,
+        documentation = NULL, ...)
+    {
+        .signalSeries(data = matrix(NA),
+            units = units,
+            recordIDs = recordIDs,
+            title = title,
+            documentation = documentation,
+            ...)
+    })
 
 
 # ------------------------------------------------------------------------------
@@ -169,6 +186,25 @@ setMethod("timeSeries", signature(data = "ANY", charvec = "ANY"),
         if (!is(data, "matrix"))
             stop("Could not coerce 'data' to a matrix")
         callGeneric(data = data, charvec = charvec, units = units,
+                    format = format, zone = zone, FinCenter =
+                    FinCenter, recordIDs = recordIDs, title = title,
+                    documentation = documentation, ...)
+    })
+
+
+# ------------------------------------------------------------------------------
+## ANY missing
+
+
+setMethod("timeSeries", signature(data = "ANY", charvec = "missing"),
+    function (data, charvec, units = NULL, format = NULL, zone = "",
+        FinCenter = "", recordIDs = data.frame(), title = NULL,
+        documentation = NULL, ...)
+    {
+        data <- as(data, "matrix")
+        if (!is(data, "matrix"))
+            stop("Could not coerce 'data' to a matrix")
+        callGeneric(data = data, units = units,
                     format = format, zone = zone, FinCenter =
                     FinCenter, recordIDs = recordIDs, title = title,
                     documentation = documentation, ...)

@@ -5,7 +5,7 @@ Date: 2009-05-11
 Title: Rmetrics - Portfolio Backtesting
 Author: Diethelm Wuertz, Yohan Chalabi, William Chen
 Depends: R (>= 2.6.0), methods, timeDate, timeSeries, fBasics, fAssets,
-        fPortfolio (>= 2100.77)
+        fPortfolio (>= 2100.78)
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"

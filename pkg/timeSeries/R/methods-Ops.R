@@ -20,6 +20,7 @@
 #  cummin                    Returns cumulated minima
 #  cumprod                   Returns cumulated products
 #  cumsum                    Returns cumulated sums
+#  quantile,timeSeries       Sample qunatile of a timeSeries object
 ################################################################################
 
 
@@ -130,7 +131,7 @@ setMethod("Ops", c("timeSeries", "ts"),
     }
 )
 
-    
+
 # ------------------------------------------------------------------------------
 
 
@@ -161,30 +162,34 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
 # ------------------------------------------------------------------------------
 
 
-setMethod("cummax", "timeSeries", 
+setMethod("cummax", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
-   
-     
+
+
 # ------------------------------------------------------------------------------
 
 
-setMethod("cummin", "timeSeries", 
+setMethod("cummin", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
-    
-    
+
+
 # ------------------------------------------------------------------------------
 
 
-setMethod("cumprod", "timeSeries", 
+setMethod("cumprod", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
-   
-     
+
+
 # ------------------------------------------------------------------------------
 
 
-setMethod("cumsum", "timeSeries", 
+setMethod("cumsum", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
-    
+# ------------------------------------------------------------------------------
+
+setMethod("quantile", "timeSeries", function(x, ...)
+          callGeneric(as.vector(x), ...))
+
 ################################################################################
 

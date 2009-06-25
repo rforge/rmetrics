@@ -524,15 +524,45 @@ setMethod("$",
 #  $<-,timeSeries            Subset by column names
 ################################################################################
 
+.dollar_assign <-
+    function(x, name, value)
+{
+    stopifnot(inherits(x, "timeSeries"))
+
+    # check size of value
+    if (NROW(value) < nrow(x)) {
+        value <- rep(value, length.out = nrow(x))
+    } else if (NROW(value) > nrow(x)) {
+        stop(gettextf("replacement has %i rows, time series has %i",
+                      NROW(value), nrow(x))) #, call. = FALSE)
+    }
+
+    # assign value to recordIDs
+    if (length(x@recordIDs)) {
+        x@recordIDs[[name]] <-  value
+    } else {
+        x@recordIDs <- as.data.frame(value)
+        colnames(x@recordIDs) <- name
+    }
+
+    # check if object is valid
+    validObject(x)
+    x
+}
 
 setReplaceMethod("$",
                  signature(x = "timeSeries", name = "character",
                            value = "numeric"),
                  function(x, name, value)
              {
-                 if (NROW(value) != nrow(x))
+
+                 # check size of value
+                 if (NROW(value) < nrow(x)) {
+                     value <- rep(value, length.out = nrow(x))
+                 } else if (NROW(value) > nrow(x)) {
                      stop(gettextf("replacement has %i rows, time series has %i",
                                    NROW(value), nrow(x))) #, call. = FALSE)
+                 }
 
                  # get data part
                  data <- getDataPart(x)
@@ -557,42 +587,22 @@ setReplaceMethod("$",
                      cvalue <- cn %in% colnames(data)
                      data[,cdata] <- value[,cvalue]
                      value <- cbind(data, value[,!cvalue])
+                     ans <- setDataPart(x, value)
                  } else {
-                     value <- cbind(data, value)
+                     ans <- .dollar_assign(x, name, as.vector(value))
                  }
 
                  # return
-                 ans <- setDataPart(x, value)
                  ans
              })
 
 setReplaceMethod("$",
           signature(x = "timeSeries", name = "character", value = "factor"),
-                 function(x, name, value)
-             {
-                 if (length(x@recordIDs)) {
-                     x@recordIDs[[name]] <-  value
-                 } else {
-                     x@recordIDs <- as.data.frame(value)
-                     colnames(x@recordIDs) <- name
-                 }
-                 validObject(x)
-                 x
-             })
+                 function(x, name, value) .dollar_assign(x, name, value))
 
 setReplaceMethod("$",
           signature(x = "timeSeries", name = "character", value = "ANY"),
-                 function(x, name, value)
-             {
-                 if (length(x@recordIDs)) {
-                     x@recordIDs[[name]] <-  value
-                 } else {
-                     x@recordIDs <- as.data.frame(value)
-                     colnames(x@recordIDs) <- name
-                 }
-                 validObject(x)
-                 x
-             })
+                 function(x, name, value) .dollar_assign(x, name, value))
 
 ################################################################################
 #  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object

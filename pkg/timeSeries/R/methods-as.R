@@ -267,16 +267,18 @@ setMethod("as.data.frame", "timeSeries",
 
         # FUNCTION:
 
-        # Check:
-        if (class(x) != "timeSeries")
-            stop("x is not a timeSeries object!")
-
-        # Convert:
+        # get rownames from timeSeries
         if (is.null(row.names))
             row.names <- rownames(x)
 
-        ans <- as.data.frame(as.list(x), row.names = row.names,
-                             optional = optional, ...)
+        if (any(duplicated(row.names)))
+            stop("cannot convert to data.frame with duplicate timestamps")
+
+        ans <-
+            if (!length(x@recordIDs))
+                data.frame(as.list(x), row.names = row.names, ...)
+            else
+                data.frame(as.list(x), x@recordIDs, row.names = row.names, ...)
 
         # Return Value:
         ans

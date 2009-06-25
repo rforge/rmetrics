@@ -20,17 +20,17 @@
 ################################################################################
 
 
-cbind.timeSeries <- 
+cbind.timeSeries <-
 function(..., deparse.level = 1)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Columnwise bind:
     dots <- list(...)
 
@@ -56,33 +56,42 @@ function(..., deparse.level = 1)
         }
     }
 
-    # FIXME : data.frame
-
-    # FIXME
-    if (any(unlist(lapply(dots, function(ts) ts@format == "counts")))) {
-        if (diff(range((unlist(lapply(dots, nrow))))))
-            stop("number of rows must match")
-        data <- as.matrix(as.data.frame(lapply(dots, getDataPart)))
-        return(timeSeries(data=data, units = units))
-    }
-
     # ensure that data is sorted
     dots <- lapply(dots, sort)
 
-    # get list of timestamps
+    # deal with single numeric values
+    vecIdx <- sapply(dots, function(obj) (prod(dim(obj)) == 1))
+    if (any(vecIdx))
+        dots[vecIdx] <- lapply(dots[vecIdx], function(vec)
+                               as.timeSeries(rep(as.vector(vec), nrow(dots[[1]]))))
+
+    # get list of timestamps and recordIDs
     tds <- lapply(dots, slot, "positions")
+    rec <- lapply(dots, slot, "recordIDs")
 
     # fast version when timeSeries have identical timestamps
-    if (all(sapply(tds, identical, tds[[1]])))
+    # or with signal series
+    if (any(co <- unlist(lapply(dots, function(ts) ts@format == "counts"))) ||
+        (any(!co) & all(sapply(tds[!co], identical, tds[!co][[1]]))))
     {
-        td <- tds[[1]]
-        data <- array(unlist(dots), dim=c(length(td), sum(sapply(dots, ncol))))
+
+        # check if all have same number of rows
+        if (diff(range((unlist(lapply(dots, nrow))))))
+            stop("number of rows must match")
+        td <- if (any(!co)) tds[!co][[1]] else NULL
+        data <- array(unlist(dots), dim=c(nrow(dots[[1]]),
+                                    sum(sapply(dots, ncol))))
+        recordIDs <-
+            if (sum(recIdx <- sapply(rec, length)))
+                do.call(cbind, rec[recIdx])
+            else
+                data.frame()
         timeSeries(data = data, charvec = td, units = units, zone = "GMT",
-                       FinCenter = finCenter(dots[[1]]))
+                   FinCenter = finCenter(dots[[1]]),
+                   recordIDs = recordIDs)
     } else {
         # aligned timestamps
         td <- sort(unique(unlist(tds)))
-
         fun <- function(ts, td, ref) {
             mm <- matrix(NA, ncol = ncol(ts), nrow = length(ref))
             mm[findInterval(td, ref),] <- getDataPart(ts)
@@ -90,6 +99,14 @@ function(..., deparse.level = 1)
         data <- mapply(fun, ts = dots, td = tds, MoreArgs = list(ref=td),
                        SIMPLIFY = FALSE)
         data <- array(unlist(data), dim=c(length(td), sum(sapply(dots, ncol))))
+
+        # Note that recordIDs are not preserved when time stamps are
+        # not equal because don't know what value we should use for
+        # missing entries
+        if (sum(sapply(rec, length))) {
+            msg <- "@recordIDs cannot be binded when timestamps are not identical"
+            warning(msg, call. = FALSE)
+        }
 
         # note that new timeSeries get FinCenter of first entry of args
         timeSeries(data = data, charvec = td, units = units, zone = "GMT",
@@ -125,36 +142,36 @@ function(..., deparse.level = 1)
 
 setMethod("cbind2", c("timeSeries", "timeSeries"),
     function(x, y) cbind(x, y))
-          
-          
+
+
 setMethod("cbind2", c("timeSeries", "ANY"),
     function(x,y) callGeneric(x, as(y, "timeSeries")))
-          
-          
+
+
 setMethod("cbind2", c("ANY", "timeSeries"),
     function(x,y) callGeneric(as(x, "timeSeries"), y))
-          
-          
-setMethod("cbind2", c("timeSeries", "missing"), 
+
+
+setMethod("cbind2", c("timeSeries", "missing"),
     function(x,y) x)
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-rbind.timeSeries <- 
+rbind.timeSeries <-
 function(..., deparse.level = 1)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Columnwise bind:
-    
+
     # Row bind:
     dots <- list(...)
 
@@ -176,8 +193,6 @@ function(..., deparse.level = 1)
     units <- structure(units, dim = c(ncol(dots[[1]]), length(dots)))
     units <- apply(units, 1, paste, collapse = "_")
 
-    # FIXME : data.frame
-
     # Bind:
     # data <- base::rbind(...) # no because S3 method dispatch done in C level
     data <- do.call(base::rbind, lapply(dots, getDataPart))
@@ -186,12 +201,26 @@ function(..., deparse.level = 1)
         return(timeSeries(data=data, units = units))
     }
 
+    # recordIDs part
+    # trick because identical(rbind(data.frame()), data.frame()) is FALSE ?!!
+    if (length(dots) > 2)
+        recordIDs <- tryCatch(do.call(rbind, lapply(dots, slot, "recordIDs")),
+                              error = function(e) {
+                                  msg <- paste("@recordIDs cannot be binded :",
+                                               conditionMessage(e))
+                                  warning(msg, call. = FALSE)
+                                  data.frame()})
+    else
+        recordIDs <- slot(dots[[1]], "recordIDs")
+
     tds <- unlist(lapply(dots, slot, "positions"))
     ans <- timeSeries(data = data, charvec = tds, zone = "GMT",
-        FinCenter = finCenter(dots[[1]]), units = units)
-        
+                      FinCenter = finCenter(dots[[1]]), units = units,
+                      recordIDs = recordIDs)
+
     # Return Value:
-    sort(ans)
+    # sort(ans)
+    ans
 }
 
 
@@ -224,17 +253,17 @@ function(..., deparse.level = 1)
 
 setMethod("rbind2", c("timeSeries", "timeSeries"),
     function(x, y) rbind(x, y))
-          
-    
+
+
 setMethod("rbind2", c("timeSeries", "ANY"),
     function(x,y) callGeneric(x, as(y, "timeSeries")))
-    
-    
+
+
 setMethod("rbind2", c("ANY", "timeSeries"),
     function(x,y) callGeneric(as(x, "timeSeries"), y))
-    
-    
-setMethod("rbind2", c("timeSeries", "missing"), 
+
+
+setMethod("rbind2", c("timeSeries", "missing"),
     function(x,y) x)
 
 

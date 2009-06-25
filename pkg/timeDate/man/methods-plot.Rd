@@ -1,21 +1,21 @@
 \name{plot-methods}
 \title{Plot Methods}
 
-\alias{plot.timeDate}
-\alias{points.timeDate}
-\alias{lines.timeDate}
+\alias{plot,timeDate-method}
+\alias{points,timeDate-method}
+\alias{lines,timeDate-method}
 \alias{axis.timeDate}
-
+\alias{abline,ANY,ANY,ANY,timeDate-method}
 
 \description{
     Plot methods for \code{timeDate} objects.
 }
 
 \usage{
-\method{plot}{timeDate}(x, y, \dots)
-\method{lines}{timeDate}(x, y, \dots)
-\method{points}{timeDate}(x, y, \dots)
-\method{axis}{timeDate}(side, x, at, format = NULL, labels = TRUE, \dots)
+\S4method{plot}{timeDate}(x, y, \dots)
+\S4method{lines}{timeDate}(x, y, \dots)
+\S4method{points}{timeDate}(x, y, \dots)
+axis.timeDate(side, x, at, format = NULL, labels = TRUE, \dots)
 }
 \arguments{
   \item{x, y, at}{

@@ -17,7 +17,7 @@
 # FUNCTION:                 DESCRIPTION:
 #  show,timeSeries           Prints a 'timeSeries' object
 #  print,timeSeries          Prints a 'timeSeries' object
-#  .print.timeSeries         Called by function print,timeSerie 
+#  .print.timeSeries         Called by function print,timeSerie
 ################################################################################
 
 
@@ -25,12 +25,12 @@ setMethod("show", "timeSeries",
     function(object)
     {
         # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
         # Description:
         #   Print method for an S4 object of class "timeSeries"
-    
+
         # FUNCTION:
-    
+
         # Check records to get printed:
         if (ptest <- (is.numeric(max <- getRmetricsOptions("max.print")) &&
             ((omitted <- NROW(object) - max) > 0)))
@@ -38,22 +38,22 @@ setMethod("show", "timeSeries",
         data <- as(object, "matrix")
         recordIDs <- object@recordIDs
         FinCenter <- finCenter(object)
-    
+
         # Series:
         cat(FinCenter, "\n", sep = "")
-        if (!prod(dim(recordIDs))) {
-            if (dim(data)[1] == dim(recordIDs)[1]) {
-                callGeneric(cbind(data, as.matrix(recordIDs))) #, quote = FALSE)
-            } else {
-                callGeneric(data)
-            }
+        if (prod(dim(recordIDs)) & (ncol(data == NCOL(recordIDs)))) {
+            dataIDs <- as.matrix(recordIDs)
+            colnames(dataIDs) <- paste(colnames(dataIDs), "*", sep = "")
+            #-> use format(data) to have same number of digits when timeSeries
+            # is printed without @recordIDs
+            print(cbind(format(data), dataIDs), quote = FALSE, right = TRUE)
         } else {
-            callGeneric(data)
+            print(data, quote = FALSE) #-> to be consistent with @recordIDs print
         }
-    
+
         if (ptest)
             cat(gettextf("...\n[ reached getRmetricsOptions('max.print') -- omitted %i rows ]\n", omitted))
-    
+
         # Return Value:
         invisible(NULL) # as specified in ?show
     }
@@ -95,12 +95,12 @@ setMethod("show", "timeSeries",
     # Match Arguments:
     style = match.arg(style)
     by = match.arg(by)
-    
+
     # Change Format:
     if (is.null(format)) {
         charvec = rownames(x)
     } else {
-        ans = timeDate(charvec = rownames(x), 
+        ans = timeDate(charvec = rownames(x),
             zone = "GMT", FinCenter = finCenter(x))
         if (format == "%Q") {
             Quarters = rep(paste("Q", 1:4, sep = ""), each = 3)
@@ -111,11 +111,11 @@ setMethod("show", "timeSeries",
             charvec = format(ans, format)
         }
     }
-  
+
     # Styles:
     if (style == "tS") {
         cat(finCenter(x), "\n")
-        X <- getDataPart(x)  
+        X <- getDataPart(x)
         rownames(X) = charvec
         print(X)
     } else if (style == "h") {
@@ -123,7 +123,7 @@ setMethod("show", "timeSeries",
         # print(as.vector(x))
         ans = as.matrix(x)[,1]
         names(ans) = charvec
-        print(ans)  
+        print(ans)
     } else if (style == "ts") {
         freq = c(month = 12, quarter = 4)
         start(x)
@@ -141,7 +141,7 @@ setMethod("show", "timeSeries",
 # ------------------------------------------------------------------------------
 
 
-setMethod("print", "timeSeries", 
+setMethod("print", "timeSeries",
     .print.timeSeries)
 
 
