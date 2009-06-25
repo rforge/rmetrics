@@ -48,7 +48,7 @@ setMethod("plot", "timeDate",
           # FUNCTION:
 
           # Plot:
-          callGeneric(as.POSIXct(x), y, ...)
+          plot(as.POSIXct(x), y, ...)
       })
 
 
@@ -66,7 +66,7 @@ setMethod("points", "timeDate",
           #   Doesn't yet support the features of timeDate objects ...
 
           # Add Points:
-          callGeneric(as.POSIXct(x), y, ...)
+          points(as.POSIXct(x), y, ...)
       })
 
 
@@ -84,7 +84,7 @@ setMethod("lines", "timeDate",
           #   Doesn't yet support the features of timeDate objects ...
 
           # Add Lines:
-          callGeneric(as.POSIXct(x), y, ...)
+          lines(as.POSIXct(x), y, ...)
       })
 
 
