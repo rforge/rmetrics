@@ -16,41 +16,39 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  start,timeSeries          Extracts start date of a 'timeSeries' object
-#  end,timeSeries            Extracts end date of a 'timeSeries' object        
+#  end,timeSeries            Extracts end date of a 'timeSeries' object
 ################################################################################
 
 
-setMethod("start" , "timeSeries", 
-    function(x, ...)
-    {
-        if (length(x@positions)>0)
-            timeDate(min(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
-        else
-            NULL
-    }
-)
+.start.timeSeries <- function(x, ...)
+{
+    if (length(x@positions)>0)
+        timeDate(min(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
+    else
+        NULL
+}
 
+setMethod("start" , "timeSeries", function(x, ...) .start.timeSeries(x, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-start.timeSeries <- function(x, ...) timeSeries::start(x, ...)
+start.timeSeries <- function(x, ...) .start.timeSeries(x, ...)
 
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("end", "timeSeries", 
-    function(x, ...)
-    {
-        if (length(x@positions)>0)
-            timeDate(max(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
-        else
-            NULL
-    }
-)
+.end.timeSeries <- function(x, ...)
+{
+    if (length(x@positions)>0)
+        timeDate(max(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
+    else
+        NULL
+}
 
+setMethod("end", "timeSeries", function(x, ...) .end.timeSeries(x, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-end.timeSeries <- function(x, ...) timeSeries::end(x, ...)
+end.timeSeries <- function(x, ...) .end.timeSeries(x, ...)
 
 
 ################################################################################

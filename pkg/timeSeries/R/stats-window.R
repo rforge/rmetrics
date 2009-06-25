@@ -20,97 +20,98 @@
 ################################################################################
 
 
-setMethod("window", "timeSeries",
-    function(x, start, end, ...)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+.window.timeSeries <- function(x, start, end, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Windows a piece from a 'timeSeries' object.
+    # Description:
+    #   Windows a piece from a 'timeSeries' object.
 
-        # Arguments:
-        #   x - a 'timeSeries' object
-        #   from, to - two 'timeDate' position vectors which size the
-        #       blocks
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   from, to - two 'timeDate' position vectors which size the
+    #       blocks
 
-        # Details:
-        #   from and to, are both included in the window.
+    # Details:
+    #   from and to, are both included in the window.
 
-        # Value:
-        #   Returns a S4 object of class 'timeSeries'.
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
 
-        # FUNCTION:
-        stopifnot(is.timeSeries(x))
-        if (x@format == "counts")
-            stop(as.character(match.call())[1],
-                 " is for time series and not for signal series.")
+    # FUNCTION:
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
-        # check if all argument names are used
-        if (length(dot <- list(...))) {
-            if (any(names(dot) %in% c("from", "to"))) {
-                if (!is.null(from <- dot$from)) start <- from
-                if (!is.null(to <- dot$to)) end <- to
-                warning("Arguments 'from/to' are deprecated.\nUse instead 'start/end'.", call. = FALSE)
-            }
+    # check if all argument names are used
+    if (length(dot <- list(...))) {
+        if (any(names(dot) %in% c("from", "to"))) {
+            if (!is.null(from <- dot$from)) start <- from
+            if (!is.null(to <- dot$to)) end <- to
+            warning("Arguments 'from/to' are deprecated.\nUse instead 'start/end'.", call. = FALSE)
         }
+    }
 
-        start <- timeDate(start)
-        end <- timeDate(end)
-        Positions <- time(x)
-        test <- (Positions >= start & Positions <= end)
+    start <- timeDate(start)
+    end <- timeDate(end)
+    Positions <- time(x)
+    test <- (Positions >= start & Positions <= end)
 
-        # Return value:
-        x[test,]
-      })
+    # Return value:
+    x[test,]
+}
 
-      
+setMethod("window", "timeSeries",
+          function(x, start, end, ...) .window.timeSeries(x, start, end, ...))
+
 # until UseMethod dispatches S4 methods in 'base' functions
-window.timeSeries <- function(x, ...) timeSeries::window(x, ...)
+window.timeSeries <- function(x, ...) .window.timeSeries(x, ...)
 
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("cut", "timeSeries", 
-    function (x, from, to, ...)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+cut.timeSeries <- function (x, from, to, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Cuts out a piece from a 'timeSeries' object.
+    # Description:
+    #   Cuts out a piece from a 'timeSeries' object.
 
-        # Arguments:
-        #   x - a 'timeSeries' object
-        #   from, to - two 'timeDate' position vectors which size the
-        #       blocks
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   from, to - two 'timeDate' position vectors which size the
+    #       blocks
 
-        # Value:
-        #   Returns a S4 object of class 'timeSeries'.
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
 
-        # FUNCTION:
+    # FUNCTION:
 
-        # .Deprecated("window", "timeSeries")
+    # .Deprecated("window", "timeSeries")
 
-        stopifnot(is.timeSeries(x))
-        if (x@format == "counts")
-            stop(as.character(match.call())[1],
-                 " is for time series and not for signal series.")
+    stopifnot(is.timeSeries(x))
+    if (x@format == "counts")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
-        from = timeDate(from)
-        to = timeDate(to)
-        Positions = time(x)
+    from = timeDate(from)
+    to = timeDate(to)
+    Positions = time(x)
 
-        test = (Positions >= from & Positions <= to)
-        ans <- x[test,]
+    test = (Positions >= from & Positions <= to)
+    ans <- x[test,]
 
-        # Return value:
-        ans
-    }
-)
+    # Return value:
+    ans
+}
 
+setMethod("cut", "timeSeries",
+          function (x, from, to, ...) .cut.timeSeries(x, from, to, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-cut.timeSeries <- function(x, ...) timeSeries::cut(x, ...)
+cut.timeSeries <- function(x, ...) .cut.timeSeries(x, ...)
 
 
 ################################################################################

@@ -24,22 +24,21 @@
 ################################################################################
 
 
-setMethod("na.omit", "timeSeries",
-function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-    interp = c("before", "linear", "after"), ...)
+.na.omit.timeSeries <-  function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+                                 interp = c("before", "linear", "after"), ...)
 {
     # Description
-    #   Handles NAs in timeSeries objects 
-    
+    #   Handles NAs in timeSeries objects
+
     # Detials:
     #   Linear Interpolation is done by the function approx.
-    #   Spline interpolation like in zoo is not yet supported.    
+    #   Spline interpolation like in zoo is not yet supported.
 
     # Arguments:
     #   object - an object of class timeSeries
     #   method -
-    #   interp - 
-    
+    #   interp -
+
     # FUNCTION:
 
     # Check Arguments:
@@ -74,7 +73,7 @@ function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
             idy = (1:n)[!is.na(y)]
             ## DW: ... added
             # Linear/Constant Interpolation:
-            y = approx(x = idy, y = y[idy], xout = 1:n, method = interp, 
+            y = approx(x = idy, y = y[idy], xout = 1:n, method = interp,
                 f = f, ...)$y
             object[, i] = y
         }
@@ -110,11 +109,16 @@ function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
 
     # Return Value:
     object
-})
+}
 
+
+setMethod("na.omit", "timeSeries",
+          function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+                   interp = c("before", "linear", "after"), ...)
+          .na.omit.timeSeries(object, method, interp, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-na.omit.timeSeries <- function(object, ...) timeSeries::na.omit(object, ...)
+na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
 
 
 # ------------------------------------------------------------------------------
@@ -126,9 +130,9 @@ function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
 {
     # Description:
     #   Internal Function called from na.omit.timSeries()
-    
+
     # Arguments:
-    
+
     # FUNCTION:
 
     # Extract matrix:
@@ -204,7 +208,7 @@ function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
 
 removeNA =
 function (x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
@@ -249,7 +253,7 @@ function (x, ...)
 
 substituteNA =
 function(x, type = c("zeros", "mean", "median"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:

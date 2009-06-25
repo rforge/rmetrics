@@ -210,8 +210,7 @@ function(x, ...)
 # YC : since 2.9.0 must define proper S4 methods
 
 
-setMethod("as.matrix", "timeSeries",
-    function(x, ...)
+.as.matrix.timeSeries <- function(x, ...)
     {
         # A function implemented by Diethelm Wuertz
 
@@ -237,11 +236,14 @@ setMethod("as.matrix", "timeSeries",
         # Results
         ans
     }
-)
 
+
+
+setMethod("as.matrix", "timeSeries",
+          function(x, ...) .as.matrix.timeSeries(x, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-as.matrix.timeSeries <- function(x, ...) timeSeries::as.matrix(x, ...)
+as.matrix.timeSeries <- function(x, ...) .as.matrix.timeSeries(x, ...)
 
 
 setAs("timeSeries", "matrix", function(from) as.matrix(from))
@@ -250,45 +252,45 @@ setAs("timeSeries", "matrix", function(from) as.matrix(from))
 # ------------------------------------------------------------------------------
 
 
+.as.data.frame.timeSeries <- function(x, row.names = NULL, optional = FALSE, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a multivariate "timeSeries" to a data.frame
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   row.names, optional - not used
+
+    # Value:
+    #   Returns the data slot of a 'timesSeries' object as a data frame.
+
+    # FUNCTION:
+
+    # get rownames from timeSeries
+    if (is.null(row.names))
+        row.names <- rownames(x)
+
+    if (any(duplicated(row.names)))
+        stop("cannot convert to data.frame with duplicate timestamps")
+
+    ans <-
+        if (!length(x@recordIDs))
+            data.frame(as.list(x), row.names = row.names, ...)
+        else
+            data.frame(as.list(x), x@recordIDs, row.names = row.names, ...)
+
+    # Return Value:
+    ans
+}
+
 setMethod("as.data.frame", "timeSeries",
     function(x, row.names = NULL, optional = FALSE, ...)
-    {
-        # A function implemented by Diethelm Wuertz
-
-        # Description:
-        #   Converts a multivariate "timeSeries" to a data.frame
-
-        # Arguments:
-        #   x - a 'timeSeries' object
-        #   row.names, optional - not used
-
-        # Value:
-        #   Returns the data slot of a 'timesSeries' object as a data frame.
-
-        # FUNCTION:
-
-        # get rownames from timeSeries
-        if (is.null(row.names))
-            row.names <- rownames(x)
-
-        if (any(duplicated(row.names)))
-            stop("cannot convert to data.frame with duplicate timestamps")
-
-        ans <-
-            if (!length(x@recordIDs))
-                data.frame(as.list(x), row.names = row.names, ...)
-            else
-                data.frame(as.list(x), x@recordIDs, row.names = row.names, ...)
-
-        # Return Value:
-        ans
-    }
-)
-
+          .as.data.frame.timeSeries(x, row.names = row.names, optional = optional, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-as.data.frame.timeSeries <- function(x, ...) timeSeries::as.data.frame(x, ...)
-
+as.data.frame.timeSeries <- function(x, ...) .as.data.frame.timeSeries(x, ...)
 
 setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 
@@ -296,70 +298,68 @@ setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 # ------------------------------------------------------------------------------
 
 
-setMethod("as.ts", "timeSeries",
-    function(x, ...)
-    {
-        # A function implemented by Diethelm Wuertz
+.as.ts.timeSeries <- function(x, ...)
+{
+    # A function implemented by Diethelm Wuertz
 
-        # Description:
-        #   Converts a colum from a 'timeSeries' object into an object
-        #   of class 'ts'.
+    # Description:
+    #   Converts a colum from a 'timeSeries' object into an object
+    #   of class 'ts'.
 
-        # Example:
-        #
-        #   x = dummySeries(); as.ts(x)
-        #
-        #   x = timeSeries(seq(12), timeSequence(by = "month", length.out = 12))
-        #   as.ts(x)
-        #
-        #   x = dummySeries()[c(3,6,9,12),]; as.ts(x)
-        #   x = dummySeries()[c(2,5,8,11),]; as.ts(x)
-        #   x = dummySeries()[c(1,4,7,10),]; as.ts(x)
-        #
-        #   x = dummySeries()[c(4,7,10,1),]; as.ts(x)
+    # Example:
+    #
+    #   x = dummySeries(); as.ts(x)
+    #
+    #   x = timeSeries(seq(12), timeSequence(by = "month", length.out = 12))
+    #   as.ts(x)
+    #
+    #   x = dummySeries()[c(3,6,9,12),]; as.ts(x)
+    #   x = dummySeries()[c(2,5,8,11),]; as.ts(x)
+    #   x = dummySeries()[c(1,4,7,10),]; as.ts(x)
+    #
+    #   x = dummySeries()[c(4,7,10,1),]; as.ts(x)
 
 
-        # Changes:
-        #
+    # Changes:
+    #
 
-        # FUNCTION:
+    # FUNCTION:
 
-        # check if monthly or quarterly data
-        td <- time(x)
-        m <- c(timeDate::months(td)) #-> c() to remove attributes
-        # (m[1] -1) -> shift vector to match first entry in m
-        monthly <- seq(from = m[1]-1, length.out=length(m)) %% 12 + 1
-        quarterly <- seq(from = m[1]-1, by = 3, length=length(m)) %% 12 + 1
+    # check if monthly or quarterly data
+    td <- time(x)
+    m <- c(timeDate::months(td)) #-> c() to remove attributes
+    # (m[1] -1) -> shift vector to match first entry in m
+    monthly <- seq(from = m[1]-1, length.out=length(m)) %% 12 + 1
+    quarterly <- seq(from = m[1]-1, by = 3, length=length(m)) %% 12 + 1
 
-        # get year of first entry
-        y1 <- as.numeric(format(td[1], "%Y"))
+    # get year of first entry
+    y1 <- as.numeric(format(td[1], "%Y"))
 
-        # important to use vector/matrix to avoid troubles with ts()
-        data <-
-            if (isUnivariate(x))
-                as.vector(x)
-            else
-                matrix(x, ncol = ncol(x))
+    # important to use vector/matrix to avoid troubles with ts()
+    data <-
+        if (isUnivariate(x))
+            as.vector(x)
+        else
+            matrix(x, ncol = ncol(x))
 
-        if (identical(monthly, m)) # Monthly data
-            return(ts(data, start = c(y1, m[1]), frequency = 12))
+    if (identical(monthly, m)) # Monthly data
+        return(ts(data, start = c(y1, m[1]), frequency = 12))
 
-        if (identical(quarterly, m)) # Quarterly data
-            return(ts(data, start = c(y1, m[1]%/%4+1), frequency = 4))
+    if (identical(quarterly, m)) # Quarterly data
+        return(ts(data, start = c(y1, m[1]%/%4+1), frequency = 4))
 
-        # other frequencies not implemented yet; return default value
-        ans <- ts(data)
-        attr(ans, "positions") <- time(x)
-        ans
-    })
+    # other frequencies not implemented yet; return default value
+    ans <- ts(data)
+    attr(ans, "positions") <- time(x)
+    ans
+}
 
+setMethod("as.ts", "timeSeries", function(x, ...) .as.ts.timeSeries(x, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-as.ts.timeSeries <- function(x, ...) timeSeries::as.ts(x, ...)
-
+as.ts.timeSeries <- function(x, ...) .as.ts.timeSeries(x, ...)
 
 setAs("timeSeries", "ts", function(from) as.ts(from))
-
 
 # ------------------------------------------------------------------------------
 
@@ -372,34 +372,23 @@ setAs("timeSeries", "ts", function(from) as.ts(from))
 
 # YC : important for functions like lapply and sapply to work properly
 
-
-## unlockBinding("as.list", baseenv())
-## setGeneric("as.list", where = baseenv())
-## lockBinding("as.list", baseenv())
-
-
-# setGeneric("as.list", package = "base")
-
+.as.list.timeSeries <- function(x, ...)
+{
+    data <- getDataPart(x)
+    ncols <- NCOL(data)
+    value <- vector("list", ncols)
+    for (i in seq.int(ncols)) value[[i]] <- as.vector(data[, i])
+    names(value) <- colnames(x)
+    value
+}
 
 setMethod("as.list", "timeSeries",
-    function(x, ...)
-    {
-        data <- getDataPart(x)
-        ncols <- NCOL(data)
-        value <- vector("list", ncols)
-        for (i in seq.int(ncols)) value[[i]] <- as.vector(data[, i])
-        names(value) <- colnames(x)
-        value
-    }
-)
-
+          function(x, ...) .as.list.timeSeries(x, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-as.list.timeSeries <- function(x, ...) timeSeries::as.list(x, ...)
-
+as.list.timeSeries <- function(x, ...) .as.list.timeSeries(x, ...)
 
 setAs("timeSeries", "list", function(from) as.list(from))
-
 
 ################################################################################
 

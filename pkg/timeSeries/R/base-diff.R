@@ -19,73 +19,76 @@
 ################################################################################
 
 
+.diff.timeSeries <- function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+{   # A function implemented by Diethelm Wuertz
+    # Modified by Yohan Chalabi
+
+    # Description:
+    #   Difference 'timeSeries' objects.
+
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   lag - an integer indicating which lag to use.
+    #       By default 1.
+    #   diff - an integer indicating the order of the difference.
+    #       By default 1.
+    #   trim - a logical. Should NAs at the beginning of the
+    #       series be removed?
+    #   pad - a umeric value with which NAs should be replaced
+    #       at the beginning of the series.
+
+    # Value:
+    #   Returns a differenced object of class 'timeSeries'.
+
+    # FUNCTION:
+
+    # Convert:
+    y = getDataPart(x) # as.matrix(x)
+
+    # Check NAs:
+    # if (any(is.na(y))) stop("NAs are not allowed in time series")
+
+    # Difference:
+    z = diff(y, lag = lag, difference = diff)
+
+    diffNums = dim(y)[1] - dim(z)[1]
+
+    # Trim:
+    if (!trim) {
+        zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
+        z = rbind(zpad, z)
+    }
+
+    pos <-
+        if (!trim)
+            x@positions
+        else
+            x@positions[-(1:diffNums)]
+
+    # Record IDs:
+    df <- x@recordIDs
+    if (trim) {
+        if (sum(dim(df)) > 0) {
+            TRIM = dim(df)[1] - dim(z)[1]
+            df = df[-(1:TRIM), ]
+        }
+    }
+
+    # Return Value:
+    timeSeries(data = z, charvec = pos, units = colnames(z),
+               format = x@format, zone = x@FinCenter,
+               FinCenter = x@FinCenter, recordIDs = df,
+               title = x@title, documentation = x@documentation)
+}
+
+
 setMethod("diff", "timeSeries",
-    function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
-      {   # A function implemented by Diethelm Wuertz
-          # Modified by Yohan Chalabi
+          function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+          .diff.timeSeries(x, lag, diff, trim, pad, ...))
 
-          # Description:
-          #   Difference 'timeSeries' objects.
-
-          # Arguments:
-          #   x - a 'timeSeries' object.
-          #   lag - an integer indicating which lag to use.
-          #       By default 1.
-          #   diff - an integer indicating the order of the difference.
-          #       By default 1.
-          #   trim - a logical. Should NAs at the beginning of the
-          #       series be removed?
-          #   pad - a umeric value with which NAs should be replaced
-          #       at the beginning of the series.
-
-          # Value:
-          #   Returns a differenced object of class 'timeSeries'.
-
-          # FUNCTION:
-
-          # Convert:
-          y = getDataPart(x) # as.matrix(x)
-
-          # Check NAs:
-          # if (any(is.na(y))) stop("NAs are not allowed in time series")
-
-          # Difference:
-          z = diff(y, lag = lag, difference = diff)
-
-          diffNums = dim(y)[1] - dim(z)[1]
-
-          # Trim:
-          if (!trim) {
-              zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
-              z = rbind(zpad, z)
-          }
-
-          pos <-
-              if (!trim)
-                  x@positions
-              else
-                  x@positions[-(1:diffNums)]
-
-          # Record IDs:
-          df <- x@recordIDs
-          if (trim) {
-              if (sum(dim(df)) > 0) {
-                  TRIM = dim(df)[1] - dim(z)[1]
-                  df = df[-(1:TRIM), ]
-              }
-          }
-
-          # Return Value:
-          timeSeries(data = z, charvec = pos, units = colnames(z),
-                     format = x@format, zone = x@FinCenter,
-                     FinCenter = x@FinCenter, recordIDs = df,
-                     title = x@title, documentation = x@documentation)
-      })
-
-      
 # until UseMethod dispatches S4 methods in 'base' functions
-diff.timeSeries <- function(x, ...) timeSeries::diff(x, ...)
+diff.timeSeries <- function(x, ...) .diff.timeSeries(x, ...)
 
-    
+
 ################################################################################
 

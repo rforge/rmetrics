@@ -186,7 +186,9 @@ setMethod("cumprod", "timeSeries",
 setMethod("cumsum", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
+
 # ------------------------------------------------------------------------------
+
 
 setMethod("quantile", "timeSeries", function(x, ...)
           callGeneric(as.vector(x), ...))

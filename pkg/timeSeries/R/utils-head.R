@@ -20,9 +20,8 @@
 ################################################################################
 
 
-setMethod("head", "timeSeries",
-    function(x, n = 6, recordIDs = FALSE, ...)
-{   
+.head.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -41,19 +40,19 @@ setMethod("head", "timeSeries",
         cbind(head.matrix(x, n = n, ...), head(x@recordIDs, n = n, ...))
     else
         head.matrix(x, n = n, ...)
-})
+}
 
+setMethod("head", "timeSeries", function(x, n = 6, recordIDs = FALSE, ...)
+          .head.timeSeries(x, n, recordIDs, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-head.timeSeries <- function(x, ...) timeSeries::head(x, ...)
+head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
 
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("tail",
-          "timeSeries",
-    function(x, n = 6, recordIDs = FALSE, ...)
+.tail.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -73,11 +72,13 @@ setMethod("tail",
               tail(x@recordIDs, n = n, addrownums = FALSE, ...))
     else
         tail.matrix(x, n = n, addrownums = FALSE, ...)
-})
+}
 
+setMethod("tail", "timeSeries", function(x, n = 6, recordIDs = FALSE, ...)
+          .tail.timeSeries(x, n, recordIDs, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-tail.timeSeries <- function(x, ...) timeSeries::tail(x, ...)
+tail.timeSeries <- function(x, ...) .tail.timeSeries(x, ...)
 
 
 ################################################################################

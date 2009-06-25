@@ -17,46 +17,46 @@
 # FUNCTION:                 DESCRIPTION:
 #  time,timeSeries           Extracs time positions from a 'timeSeries'
 #  time<-                    Defines S3 UseMethod
-#  time<-.timeSeries         ... to avoid problems with zoo    
+#  time<-.timeSeries         ... to avoid problems with zoo
 #  seriesPositions           Deprecated, use time
-#  newPositions<-            Deprecated, use time<-     
+#  newPositions<-            Deprecated, use time<-
 ################################################################################
 
 
+.time.timeSeries <- function(x, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
+    # Description:
+    #   Extracs time positions from a 'timeSeries'
+
+    # Arguments:
+    #   x - a 'timeSeries' object.
+
+    # Value:
+    #   Returns a time resampled object of class 'timeSeries'.
+
+    # FUNCTION:
+
+    if (length(x@positions)>0)
+        timeDate(x@positions, zone = "GMT",
+                 FinCenter = x@FinCenter)
+    else
+        seq.int(NROW(x))
+}
+
 setMethod("time", "timeSeries",
-    function(x, ...)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+          function(x, ...) .time.timeSeries(x, ...))
 
-          # Description:
-          #   Extracs time positions from a 'timeSeries'
-
-          # Arguments:
-          #   x - a 'timeSeries' object.
-
-          # Value:
-          #   Returns a time resampled object of class 'timeSeries'.
-
-          # FUNCTION:
-
-          if (length(x@positions)>0)
-              timeDate(x@positions, zone = "GMT",
-                       FinCenter = x@FinCenter)
-          else
-              seq.int(NROW(x))
-    }
-)
-
-      
 # until UseMethod dispatches S4 methods in 'base' functions
-time.timeSeries <- function(x, ...) timeSeries::time(x, ...)
+time.timeSeries <- function(x, ...) .time.timeSeries(x, ...)
 
 
 # ------------------------------------------------------------------------------
 
 
-`time<-` <- 
-function(x, value) 
+`time<-` <-
+function(x, value)
 {
     UseMethod("time<-")
 }
@@ -65,12 +65,12 @@ function(x, value)
 # ------------------------------------------------------------------------------
 
 
-`time<-.timeSeries` <- 
+`time<-.timeSeries` <-
 function(x, value)
 {
     # Note:
     #   to avoid conflict with zoo package
-     
+
     # Assign Rownames
     rownames(x) <- value
     x
@@ -88,9 +88,9 @@ function(x, value)
 # ------------------------------------------------------------------------------
 
 
-seriesPositions <- 
+seriesPositions <-
 function(object)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -121,10 +121,10 @@ function(object, value)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Deprecated:
     .Deprecated("time<-", "timeSeries")
-    
+
     # Assign Rownames:
     rownames(object) <- value
 

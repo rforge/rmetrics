@@ -21,7 +21,7 @@
 
 is.timeSeries <-
 function (x)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -49,12 +49,12 @@ function (x)
 # ------------------------------------------------------------------------------
 
 
-is.signalSeries <- 
-function(x) 
+is.signalSeries <-
+function(x)
 {
     !as.logical(length(x@positions))
 }
-    
+
 
 # ------------------------------------------------------------------------------
 
@@ -64,17 +64,6 @@ function(x)
 
 setMethod("is.na", "timeSeries", function(x)
     setDataPart(x, is.na(getDataPart(x))))
-
-    
-# ------------------------------------------------------------------------------
-
-
-## YC: quantile works thanks to inheritance from 'matrix'
-## setMethod("quantile", "timeSeries", function(x, ...)
-##           callGeneric(x = getDataPart(x), ...))
-
-## # until UseMethod dispatches S4 methods in 'base' functions
-## quatile.timeSeries <- function(x, ...) timeSeries::quantile(x, ...)
 
 
 # ------------------------------------------------------------------------------

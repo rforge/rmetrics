@@ -88,63 +88,63 @@ setMethod("merge", c("timeSeries", "matrix"),
 # ------------------------------------------------------------------------------'
 
 
-setMethod("merge", c("timeSeries", "timeSeries"),
-    function(x, y, ...)
-    {
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+.merge.timeSeries <- function(x, y, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Merges two objects of class 'timeSeries'
+    # Description:
+    #   Merges two objects of class 'timeSeries'
 
-        # Arguments:
-        #   x,y - two objects of class 'timeSeries'
+    # Arguments:
+    #   x,y - two objects of class 'timeSeries'
 
-        # FUNCTION:
+    # FUNCTION:
 
-        # Merge:
-        if (is.signalSeries(x) | is.signalSeries(y)) {
-            data <- merge(getDataPart(x), getDataPart(x))
-            return(timeSeries(data = data, units = colnames(data)))
-        }
-
-        # Convert to Data Frame
-        tx <- as.numeric(time(x), "sec")
-        ty <- as.numeric(time(y), "sec")
-        df.x <-
-            if (prod(dim(rec.x <- x@recordIDs)))
-                data.frame(positions = tx, getDataPart(x), rec.x)
-            else
-                data.frame(positions = tx, getDataPart(x))
-        df.y <-
-            if (prod(dim(rec.y <- y@recordIDs)))
-                data.frame(positions = ty, getDataPart(y), rec.y)
-            else
-                data.frame(positions = ty, getDataPart(y))
-
-        # Merge as Data Frame:
-        df <- merge(df.x, df.y, all = TRUE)
-        nx <- colnames(x)
-        nxrec <- colnames(rec.x)
-        ny <- colnames(y)
-        nyrec <- colnames(rec.y)
-
-        dataIdx <- colnames(df) %in% c(nx, ny)
-        recIdx <- colnames(df) %in% c(nxrec, nyrec)
-
-        data <- as.matrix(df[,dataIdx, drop=FALSE])
-        recordIDs <- df[,recIdx, drop=FALSE]
-        units <- names(df)[dataIdx]
-        charvec <- as.numeric(df[,1])
-
-        # Return Value:
-        timeSeries(data = data, charvec = charvec, units = units,
-            zone = "GMT", FinCenter = finCenter(x), recordIDs = recordIDs)
+    # Merge:
+    if (is.signalSeries(x) | is.signalSeries(y)) {
+        data <- merge(getDataPart(x), getDataPart(x))
+        return(timeSeries(data = data, units = colnames(data)))
     }
-)
 
+    # Convert to Data Frame
+    tx <- as.numeric(time(x), "sec")
+    ty <- as.numeric(time(y), "sec")
+    df.x <-
+        if (prod(dim(rec.x <- x@recordIDs)))
+            data.frame(positions = tx, getDataPart(x), rec.x)
+        else
+            data.frame(positions = tx, getDataPart(x))
+    df.y <-
+        if (prod(dim(rec.y <- y@recordIDs)))
+            data.frame(positions = ty, getDataPart(y), rec.y)
+        else
+            data.frame(positions = ty, getDataPart(y))
+
+    # Merge as Data Frame:
+    df <- merge(df.x, df.y, all = TRUE)
+    nx <- colnames(x)
+    nxrec <- colnames(rec.x)
+    ny <- colnames(y)
+    nyrec <- colnames(rec.y)
+
+    dataIdx <- colnames(df) %in% c(nx, ny)
+    recIdx <- colnames(df) %in% c(nxrec, nyrec)
+
+    data <- as.matrix(df[,dataIdx, drop=FALSE])
+    recordIDs <- df[,recIdx, drop=FALSE]
+    units <- names(df)[dataIdx]
+    charvec <- as.numeric(df[,1])
+
+    # Return Value:
+    timeSeries(data = data, charvec = charvec, units = units,
+               zone = "GMT", FinCenter = finCenter(x), recordIDs = recordIDs)
+}
+
+setMethod("merge", c("timeSeries", "timeSeries"),
+          function(x, y, ...) .merge.timeSeries(x, y, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-merge.timeSeries <- function(x, y, ...) timeSeries::merge(x, y, ...)
+merge.timeSeries <- function(x, y, ...) .merge.timeSeries(x, y, ...)
 
 
 # ------------------------------------------------------------------------------

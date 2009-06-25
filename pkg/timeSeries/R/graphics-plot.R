@@ -22,65 +22,78 @@
 ################################################################################
 
 
-setMethod("plot", "timeSeries",
-    function(x, y, FinCenter = NULL,
-        plot.type = c("multiple", "single"),
-        format = "auto", at = "auto",
-        widths = 1, heights = 1,
-        xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
-        mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
-        oma.multi = c(6, 0, 5, 0), axes = TRUE, ...)
-    {
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+.plot.timeSeries <- function(x, y, FinCenter = NULL,
+                             plot.type = c("multiple", "single"),
+                             format = "auto", at = "auto",
+                             widths = 1, heights = 1,
+                             xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
+                             mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
+                             oma.multi = c(6, 0, 5, 0), axes = TRUE, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Plots 'timeSeries' objects
+    # Description:
+    #   Plots 'timeSeries' objects
 
-        # Arguments:
-        #   see plot.ts()
+    # Arguments:
+    #   see plot.ts()
 
-        # Additional Arguments:
-        #   format, at to beautify axis.POSIXct() function
-        #   widths, heights to handle layout() function
+    # Additional Arguments:
+    #   format, at to beautify axis.POSIXct() function
+    #   widths, heights to handle layout() function
 
-        # Details:
-        #   This function is build in exactly the same way as the function
-        #   plot.ts() for regular time series (R's ts) objects...
+    # Details:
+    #   This function is build in exactly the same way as the function
+    #   plot.ts() for regular time series (R's ts) objects...
 
-        # Examples:
-        #   x = as.timeSeries(data(msft.dat))[, 1:4]
-        #   .plot.timeSeries(x)
-        #   .plot.timeSeries(x[,1], x[,2], pch = 19)
-        #   .plot.timeSeries(x, plot.type = "single", col = 2:5)
+    # Examples:
+    #   x = as.timeSeries(data(msft.dat))[, 1:4]
+    #   .plot.timeSeries(x)
+    #   .plot.timeSeries(x[,1], x[,2], pch = 19)
+    #   .plot.timeSeries(x, plot.type = "single", col = 2:5)
 
-        # FUNCTION:
+    # FUNCTION:
 
-        #
-        if (missing(y)) y <- NULL
+    #
+    if (missing(y)) y <- NULL
 
-        # Labels:
-        xlabel <- if (!missing(x)) deparse(substitute(x))
-        ylabel <- if (!missing(y)) deparse(substitute(y))
+    # Labels:
+    xlabel <- if (!missing(x)) deparse(substitute(x))
+    ylabel <- if (!missing(y)) deparse(substitute(y))
 
-        # Take care of FinCenter:
-        if (!is.null(FinCenter)) {
-            finCenter(x) <- FinCenter
-            if (!is.null(y)) finCenter(y) <- FinCenter
-            if (is(at, "timeDate")) at@FinCenter <- FinCenter
-        }
-
-        # Return Value:
-        .plotTimeSeries(x = x, y = y, plot.type = plot.type, xy.labels =
-            xy.labels, xy.lines = xy.lines, panel = panel, nc = nc, xlabel =
-            xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
-            oma.multi = oma.multi, yax.flip = yax.flip,
-            format = format, at = at, widths = widths, heights = heights, ...)
+    # Take care of FinCenter:
+    if (!is.null(FinCenter)) {
+        finCenter(x) <- FinCenter
+        if (!is.null(y)) finCenter(y) <- FinCenter
+        if (is(at, "timeDate")) at@FinCenter <- FinCenter
     }
-)
 
+    # Return Value:
+    .plotTimeSeries(x = x, y = y, plot.type = plot.type, xy.labels =
+                    xy.labels, xy.lines = xy.lines, panel = panel, nc = nc, xlabel =
+                    xlabel, ylabel = ylabel, axes = axes, mar.multi = mar.multi,
+                    oma.multi = oma.multi, yax.flip = yax.flip,
+                    format = format, at = at, widths = widths, heights = heights, ...)
+}
+
+setMethod("plot", "timeSeries",
+          function(x, y, FinCenter = NULL,
+                   plot.type = c("multiple", "single"),
+                   format = "auto", at = "auto",
+                   widths = 1, heights = 1,
+                   xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
+                   mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
+                   oma.multi = c(6, 0, 5, 0), axes = TRUE, ...)
+          .plot.timeSeries(x = x, y = y, FinCenter = FinCenter,
+                           plot.type = plot.type,
+                           format = format, at = at,
+                           widths = widths, heights = heights,
+                           xy.labels=xy.labels, xy.lines=xy.lines, panel = panel, nc = nc, yax.flip = yax.flip,
+                           mar.multi = mar.multi,
+                           oma.multi = oma.multi, axes = axes, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
-plot.timeSeries <- function(x, y, ...) timeSeries::plot(x, y, ...)
+plot.timeSeries <- function(x, y, ...) .plot.timeSeries(x, y, ...)
 
 
 # ------------------------------------------------------------------------------
@@ -255,8 +268,7 @@ function(x, y = NULL, plot.type = c("multiple",
 # ------------------------------------------------------------------------------
 
 
-setMethod("lines", "timeSeries",
-    function(x, FinCenter = NULL, ...)
+.lines.timeSeries <- function(x, FinCenter = NULL, ...)
     {
         # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -286,53 +298,57 @@ setMethod("lines", "timeSeries",
         # Return Value:
         invisible(x)
     }
-)
 
+
+
+
+setMethod("lines", "timeSeries", function(x, FinCenter = NULL, ...)
+          .lines.timeSeries(x, FinCenter, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
 lines.timeSeries <- function(x, FinCenter = NULL, ...)
-    timeSeries::lines(x, FinCenter = FinCenter, ...)
+    .lines.timeSeries(x, FinCenter = FinCenter, ...)
 
 
 # ------------------------------------------------------------------------------
 
 
-setMethod("points", "timeSeries",
-    function(x, FinCenter = NULL, ...)
-    {
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+.points.timeSeries <- function(x, FinCenter = NULL, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Plot method for an object of class "timeSeries"
+    # Description:
+    #   Plot method for an object of class "timeSeries"
 
-        # Arguments:
-        #   x - a "timeSeries" object
+    # Arguments:
+    #   x - a "timeSeries" object
 
-        # Value:
-        #   Plots a 'timeSeries' object.
+    # Value:
+    #   Plots a 'timeSeries' object.
 
-        # FUNCTION:
+    # FUNCTION:
 
-        # Change FinCenter:
-        if (!is.null(FinCenter)) finCenter(x) <- FinCenter
+    # Change FinCenter:
+    if (!is.null(FinCenter)) finCenter(x) <- FinCenter
 
-        # Points:
-        positions <- time(x)
-        if (x@format == "counts") {
-          points(x = positions, y = series(x), ...)
-        } else {
-          points(x = as.POSIXct(positions), y = series(x), ...)
-        }
-
-        # Return Value:
-        invisible(x)
+    # Points:
+    positions <- time(x)
+    if (x@format == "counts") {
+        points(x = positions, y = series(x), ...)
+    } else {
+        points(x = as.POSIXct(positions), y = series(x), ...)
     }
-)
 
+    # Return Value:
+    invisible(x)
+}
+
+setMethod("points", "timeSeries",
+          function(x, FinCenter = NULL, ...)
+          .points.timeSeries(x, FinCenter = FinCenter, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
 points.timeSeries <- function(x, FinCenter = NULL, ...)
-    timeSeries::points(x, FinCenter = FinCenter, ...)
-
+    .points.timeSeries(x, FinCenter = FinCenter, ...)
 
 ################################################################################
