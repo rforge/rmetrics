@@ -1,4 +1,9 @@
 2009-02-10 David Luethi
+
 FKF V0.0.1
 	* Release of FKF
+
+FKF V0.0.2
+	* Minor corrections in the documentation.
+	* Function 'fkf' scans for missing arguments now.
 
