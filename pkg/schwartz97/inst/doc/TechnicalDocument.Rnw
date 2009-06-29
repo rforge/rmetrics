@@ -1,0 +1,514 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{url}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[
+colorlinks=true,
+linkcolor=black,
+anchorcolor=black,
+citecolor=black,
+filecolor=black,
+pdfstartview={Fit},
+pdfstartpage={1}
+]
+{hyperref}
+\newcommand{\RR}{\textsf{R}}
+\newcommand{\vnorm}[1]{\Vert#1\Vert} % Notation: 2-Norm of a Vector
+\newcommand{\condexp}[2]{
+  \mathbb{\tilde{E}}\left[#1\vert\mathcal{F}_{#2}\right]}
+\newcommand{\condexprf}[2]{
+  \mathbb{\tilde{E}}\left[#1\vert\mathcal{F}_{#2}\right]}
+% Conditional Expectation
+\newcommand{\Rpackage}{\textit{schwartz97}}
+\newcommand{\sigmaS}{\sigma_S}
+\newcommand{\sigmaE}{\sigma_\epsilon}
+%%\VignetteIndexEntry{Technical Document}
+\title{Schwartz 1997 Two-Factor Model\\Technical Document}
+\author{Philipp Erb \and David L\"{u}thi}%\\\email{philipp.erb@zhaw.org}}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+  The purpose of this document is to give the formulas and relations
+  needed to understand the Schwartz two-factor model
+  \citep{Schwartz1997}. This includes parameter estimation using the
+  Kalman filter as well as pricing of European options according to
+  \cite{Miltersen1998}.
+\end{abstract}
+
+%\tableofcontents
+% <============================================================>
+\section{Introduction}\label{sec:intro}
+% <============================================================>
+This document will describe the Schwartz two-factor model to the
+extent which is necessary to understand the \RR{} package \Rpackage.  The
+two-factor model describes the spot price of a commodity as well as
+its instantaneous convenience yield. It was introduced in
+\cite{Gibson1990} and extended in \cite{Schwartz1997} for the pricing
+of futures contracts. \cite{Miltersen1998} presented equations for
+arbitrage free prices of European options on commodity futures. In
+particular, they provided a formula for the three-factor model (which
+includes a stochastic interest rate). In what follows we fully rely on
+the above mentioned articles and state the corresponding formulas.
+% <============================================================>
+\section{Model}\label{sec:model}
+% <============================================================>
+The spot price of the commodity and the instantaneous convenience
+yield are assumed to follow the joint stochastic process:
+
+\begin{eqnarray}
+  dS_t &=& (\mu - \delta_t) S_t dt + \sigmaS S_t
+  dW_S   \label{eq:Pdynamics-S} \\
+  d\delta_t &=& \kappa (\alpha - \delta_t) dt + \sigmaE
+  dW_\epsilon, \label{eq:Pdynamics-delta}
+\end{eqnarray}
+with Brownian motions $W_S$ and $W_\epsilon$ under the objective
+measure $\mathbb{P}$ and correlation $dW_SdW_\epsilon = \rho dt$.
+
+Under the equivalent martingale measure $\mathbb{Q}$ the dynamics are
+of the form
+\begin{eqnarray}
+  dS_t &=& (r - \delta_t) S_t dt + \sigmaS S_t
+  d\widetilde{W}_S   \label{eq:Qdynamics-S} \\
+  d\delta_t &=& [\kappa (\alpha - \delta_t) - \lambda] dt + \sigmaE
+  d\widetilde{W}_\epsilon, \label{eq:Qdynamics-delta}.
+\end{eqnarray}
+where the constant $\lambda$ denotes the market price of convenience
+yield risk and $\widetilde{W}_S$ and $\widetilde{W}_\epsilon$ are now
+$\mathbb{Q}$-Brownian motions. It may be handy to introduce a
+new mean-level for the convenience yield process under $\mathbb{Q}$
+\begin{equation}
+  \label{eq:Q-drift}
+ \tilde{\alpha} = \alpha - \lambda / \kappa.
+\end{equation}
+Its dynamics thus becomes
+\begin{equation}
+d\delta_t = \kappa (\tilde{\alpha} - \delta_t) dt + \sigmaE
+  d\widetilde{W}_\epsilon.
+\end{equation}
+% <============================================================>
+\section{Distributions}\label{sec:distributions}
+% <============================================================>
+\subsection{Joint Distribution of State Variables}
+% <============================================================>
+The log-spot $X_t$ and the convenience yield $\delta_t$ are jointly
+normally distributed (cf. appendix \ref{sec:deriv-joint-distr} for a
+derivation):
+\begin{equation}
+\label{jointDist}
+\begin{pmatrix}X_t \\ \delta_t \end{pmatrix} \sim
+\mathcal{N}\left( \boldsymbol{\mu} = \begin{pmatrix}\mu_X \\
+    \mu_\delta \end{pmatrix},
+  \boldsymbol{\Sigma} = \begin{pmatrix}\sigma_X^2 & \sigma_{X\delta}  \\ \sigma_{X\delta} & \sigma_\delta^2  \\
+    \end{pmatrix} \right),
+\end{equation}
+with parameters
+\begin{align}
+  \mu_X &= X_0 + \left(\mu - \frac{1}{2}\sigmaS^2 - \alpha\right) t
+  + \left(\alpha  - \delta_0\right) \frac{1 - e^{-\kappa t}}{\kappa}\label{eq:spot-mu}\\
+  \mu_\delta &= e^{-\kappa t}\delta_0 + \alpha \left(1 - e^{-\kappa
+      t}\right)\label{eq:cy-mu}\\
+  \sigma_X^2 &= \frac{\sigmaE^2}{\kappa^2}
+  \left(\frac{1}{2\kappa}\left(1 - e^{-2\kappa t}\right) -
+    \frac{2}{\kappa}\left(1 - e^{-\kappa t}\right) + t\right) +
+  2\frac{\sigmaS\sigmaE\rho}{\kappa} \left(\frac{1 - e^{-\kappa
+        t}}{\kappa} - t\right) + \sigma^2_St \label{eq:spot-var}\\
+  \sigma_\delta^2 &= \frac{\sigmaE^2}{2\kappa}\left(1 -
+    e^{-2\kappa t}\right) \label{eq:cy-var}\\
+  \sigma_{X\delta} &= \frac{1}{\kappa}\left\{\left(\sigmaS\sigmaE\rho -
+      \frac{\sigmaE^2}{\kappa}\right)\left(1 - e^{-\kappa t}\right) +
+    \frac{\sigmaE^2}{2\kappa}\left(1 - e^{-2\kappa
+        t}\right)\right\}\label{eq:spot-cov}
+\end{align}
+The mean-parameters given in equations \ref{eq:spot-mu} and
+\ref{eq:cy-mu} refer to the $\mathbb{P}$-dynamics. To obtain the
+parameters under $\mathbb{Q}$ one can simply replace $\mu$ by $r$ and
+$\alpha$ by $\tilde{\alpha}$ defined in equation \ref{eq:Q-drift}. Let
+the $\mathbb{Q}$-parameters be denoted by $\tilde{\mu}_X$ and
+$\tilde{\mu}_{\delta}$.
+% <============================================================>
+\section{Futures Price}\label{sec:futures-price}
+% <============================================================> In
+It is worth to mention that the futures and forward price coincide
+since in our model the interest rate is assumed to be constant. In the
+rest of this document, the statements made about futures contracts
+therefore also hold for forward contracts.
+
+Let the futures price at time $t$ with time to maturity $\tau = (T -
+t)$ be $G(S_t, \delta_t, T - t)$. A futures contract must be priced
+under the spot martingale measure $\mathbb{Q}$. Let's start at time
+zero:
+\begin{equation}
+  \label{futuresPrice}
+  G(S_0, \delta_0, T) = \mathbb{E}^{\mathbb{Q}}(S_T)
+\end{equation}
+From the previous section \ref{sec:distributions} we know that
+$\log(S_T)$ is a Gaussian random variable. Hence we can easily
+calculate the futures price by taking the expectation under the
+measure $\mathbb{Q}$ (i.e. using $\tilde{\mu}_X$ and
+$\tilde{\mu}_{\delta}$).
+\begin{eqnarray}
+  \label{futuresPrice}
+  G(S_0, \delta_0, T) &=& \exp\left\{\tilde{\mu}_X + \frac{1}{2}\sigma_X^2\right\}\\
+  &=& S_0 e^{A(T) + B(T)\delta_0}
+\end{eqnarray}
+with
+\begin{align}
+  A(\tau) &= \left(r - \tilde{\alpha} + \frac{1}{2}
+    \frac{\sigmaE^2}{\kappa^2} - \frac{\sigmaS \sigmaE
+      \rho}{\kappa}\right) \tau  + \frac{1}{4} \sigmaE^2 \frac{1 - e^{-
+      2 \kappa \tau}}{\kappa^3} + \left( \kappa\tilde{\alpha} +
+    \sigmaS \sigmaE \rho - \frac{\sigmaE^2}{\kappa} \right) \frac{1 -
+    e^{-\kappa \tau}}{\kappa^2}\label{eq:A-futures},\\
+  B(\tau) &= - \frac{1 - e^{-\kappa \tau}}{\kappa}\label{eq:B-futures}.
+\end{align}
+% <============================================================>
+\subsection{Distribution of Futures Prices}
+% <============================================================>
+In the Schwartz model the log-price of a futures contract is a linear
+combination of the models normally distributed state variables and is
+hence also normally distributed, i.e.,
+\begin{align}
+\log{G(t,T)} &\sim \mathcal{N}\left(\mu_G, \sigma_G^2\right),\label{distrG}
+\end{align}
+where $t$ stands for the time the stochastic processes $\log{G}$ is
+evaluated and $T$ denotes the maturity date.
+
+According to (\ref{jointDist}) and (\ref{futuresPrice}) the parameters
+for the distribution (\ref{distrG}) of the futures price become
+\begin{align}
+  \mu_G &= \mu_X + A(T-t) + B(T-t)\mu_\delta \label{muG} \\
+  \sigma_G^2 &= \sigma_X^2 + 2 B(T-t)\sigma_{X\delta} + +
+  B(T-t)^2 \sigma_\delta. \label{varG}
+\end{align}
+
+
+
+% <============================================================>
+\section{Risk Measures for Futures Contracts}
+\label{sec:Risk}
+% <============================================================>
+The log-returns of futures contracts are normally distributed since in
+our model the futures prices are log-normal. Using this fact,
+closed-form solutions can be obtained for both, value at risk (VaR)
+and expected shortfall (ES).
+
+At time zero and considering a time period $\Delta t$, the
+\textit{negative} log-return or loss $l$ of a futures contract with
+maturity $T$ is defined to be
+\begin{equation}
+  l(\Delta t, T) := \log{G(0,T)} - \log{G(\Delta t,T)}
+\end{equation}
+
+According to (\ref{distrG}) -- (\ref{varG}) the potential loss during
+time period $\Delta t$ is given by
+\begin{equation}
+  \label{distrLoss}
+  l(\Delta t,T) \sim \mathcal{N}\left(\log{G(0,T)}-\mu_G(\Delta
+  t,T),\sigma_G^2(\Delta t,T)\right).
+\end{equation}
+
+The VaR for the normally distributed negative log-return $l(\Delta
+t,T)$ times the futures price at time zero $G(0,T)$ gives us the VaR
+for the futures contract. The VaR at the confidence level
+$\alpha$\footnote{For a 95\%-VaR one sets $\alpha = 0.95$.} for the
+futures contract $G(0,T)$ at time zero thus becomes
+\begin{equation}
+  \label{VaRG}
+  VaR_\alpha^G = G(0,T) \left(\log{G(0,T)} - \mu_G +
+  \sigma_G\Phi^{-1}\left(\alpha\right)\right)
+\end{equation}
+where $\Phi$ denotes the standard normal distribution function and
+$\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
+
+Similarly the ES at the confidence level $\alpha$ for the futures
+contract $G(0,T)$ at time is then given by
+\begin{equation}
+  \label{ESG}
+  ES_\alpha^G = G(0,T)\left(\log{G(0,T)} - \mu_G +
+    \sigma_G\frac{\phi\left(\Phi^{-1}(\alpha)\right)}{1 -
+      \alpha}\right)
+\end{equation}
+where $\phi$ is the density of the standard normal distribution.
+
+
+
+% <============================================================>
+\section{European Commodity Options}
+\label{sec:Options}
+% <============================================================>
+The fair price of a European call option on a commodity futures
+contract was derived in \cite{Miltersen1998} for a general setting,
+and in particular for the models presented in \cite{Schwartz1997}.
+
+Here we give the formula for the two-factor model. In this setting,
+the price of a European call option $C$ at time zero with maturity $t$,
+exercise price $K$ written on a commodity futures contract with
+maturity $T$ is given by
+\begin{align}
+  C &= \mathbb{E}^{\mathbb{Q}}\left[e^{-r\,t}(G(S_t, \delta_t, T - t)
+    - K)^+\right]
+\end{align}
+Since the futures price $G(S_t, \delta_t, T - t)$ is log-normally
+distributed we obtain a Black-Scholes type formula for the call price
+$C^G$.
+\begin{equation}
+  \label{callF}
+  C^G = P(0,t) \left\{G(0,T) \Phi(d_+) - K \Phi(d_-)\right\}
+\end{equation}
+with
+\begin{align*}
+d_\pm &= \frac{\log\frac{G(0,T)}{K} \pm \frac{1}{2}\sigma^2}{\sigma}\\
+\sigma^2 &= \sigma_{S}^2 t + \frac{2 \sigma_{S} \sigma_{\epsilon} \rho}{\kappa}
+\left(\frac{1}{\kappa} e^{-\kappa T}
+  \left(e^{\kappa t} - 1\right) - t\right)\\
+&+ \frac{\sigma_{\epsilon}^2}{\kappa^2}
+\left(t + \frac{1}{2 \kappa} e^{-2 \kappa T}
+  \left(e^{2 \kappa t} - 1\right) - \frac{2}{\kappa}
+  e^{-\kappa T}  \left(e^{\kappa t} - 1\right)\right)\notag
+\end{align*}
+and $\Phi$ being the standard Gaussian distribution
+function.
+
+The following put-call parity is established
+\begin{equation}
+C^G - P^G = P(0,t)\left\{G(0,t)e^\alpha - K\right\}.
+\end{equation}
+Thus, the price for a European put option $P^G$ at time zero with
+maturity $t$, exercise price $K$ written on a commodity futures
+contract with maturity $T$ becomes
+\begin{equation}
+  \label{putF}
+  P^G = P(0,t) \left\{K \Phi(-d_-) - G(0,T) \Phi(-d_+)\right\}.
+\end{equation}
+
+Remark: For the special case when the exercise time $t$ of the option
+and the maturity $T$ of the futures contract coincide formulas
+(\ref{callF}) and (\ref{putF}) still hold. However, the options we
+price for $t=T$ are no longer options written on futures contracts
+with maturity $T$ but rather options with exercise time $T$ written on
+a commodity \textit{spot} contract.
+
+
+% <============================================================>
+\section{Calibration}\label{sec:Calibration}
+% <============================================================>
+This section demonstrates an elegant way of calibrating the Schwartz
+multi-factor model. That is estimating the model parameters by
+applying the Kalman filter methodology. Subsection
+\ref{sec:stateSpace} contains a documentation of how the Schwartz
+two-factor model can be expressed in state space form. Once the model
+has been cast in this form one can compute MLE estimates of arbitrary
+model parameters by numerically maximizing the Kalman-filter
+likelihood function.
+% <============================================================>
+\subsection{State Space Representation}
+\label{sec:stateSpace}
+% <============================================================>
+Let $\mathbf{y}_t$ denote a $(n\times{1})$ vector of variables
+observed at date $t$ and $\boldsymbol{\alpha}_t$ denote a
+$(2\times{1})$ vector named \textit{state vector}. The \textit{state
+  space representation} of the dynamics of $\mathbf{y}$ may be
+given by the linear system of equations
+\begin{eqnarray}
+  \mathbf{y}_t &=& \mathbf{c}_t + Z_t \boldsymbol{\alpha}_t + G_t
+  \boldsymbol{\eta}_t  \label{eq:measurement}\\
+  \boldsymbol{\alpha}_{t + 1} &=& \mathbf{d}_t + T_t \boldsymbol{\alpha}_t +
+  H_t \boldsymbol{\epsilon}_t, \label{eq:transition}
+\end{eqnarray}
+where $\boldsymbol{\epsilon}_t \sim \mathcal{N}(\boldsymbol{0}, I_2)$
+and $\boldsymbol{\eta}_t \sim \mathcal{N}(\boldsymbol{0}, I_n).$ $G_t$
+and $H_t$ are assumed to be time-invariant.  The errors
+(``innovations'') in the measurement equation (\ref{eq:measurement}) are
+further assumed to be independent, i.e.
+\begin{equation}
+  \label{eq:1}
+  \mathbf{G}_t\mathbf{G}^{'}_t = \begin{pmatrix}g_{11}^2&&\\
+    &\ddots&\\ &&g_{nn}^2\end{pmatrix}.
+\end{equation}
+Using the functions $A(\cdot)$ and $B(\cdot)$ defined in
+eq. (\ref{eq:A-futures}) and (\ref{eq:B-futures}) the components of
+the state space representation (eq. \ref{eq:measurement} and
+eq. \ref{eq:transition}) are
+\begin{eqnarray}
+  \boldsymbol{\alpha}_{t+\Delta t}&=&\begin{pmatrix}X_{t+\Delta t}\\\delta_{t+\Delta t}\end{pmatrix}\\
+  \mathbf{T}_t &=&
+  \begin{pmatrix}
+    1 & \frac{1}{\kappa}\left(e^{-\kappa
+        \Delta t} - 1\right)\\
+    0 & e^{-\kappa \Delta t}
+  \end{pmatrix}\\
+  \mathbf{d}_t &=&
+  \begin{pmatrix}
+    \left(\mu - \frac{1}{2} \sigmaS^2 - \alpha \right) \Delta t + \frac{\alpha}{\kappa} \left(1 - e^{-\kappa \Delta t}\right)\\
+    \alpha \left(1 - e^{-\kappa \Delta t}\right)
+  \end{pmatrix}\\
+  \mathbf{H}_t\mathbf{H}^{'}_t &=&
+  \begin{pmatrix}
+    \sigma_X^2(\Delta{t}) & \sigma_{X \delta}(\Delta{t}) \\
+    \sigma_{X \delta}(\Delta{t}) & \sigma_\delta^2(\Delta{t})
+  \end{pmatrix}
+\end{eqnarray}
+
+\begin{eqnarray}
+  \mathbf{y}_t =
+  \begin{pmatrix}
+    \log{G_t(1)}\\
+    \vdots\\
+    \log{G_t(n)}
+  \end{pmatrix}
+  & \mathbf{Z}_t =
+  \begin{pmatrix}
+    1 & B(m_t(1))\\
+    \vdots & \vdots\\
+    1 & B(m_t(n))
+  \end{pmatrix}\\
+  \mathbf{c}_t =
+  \begin{pmatrix}
+    A(m_t(1))\\
+    \vdots \\
+    A(m_t(n))
+  \end{pmatrix}
+  & \mathbf{G}_t\mathbf{G}^{'}_t =
+  \begin{pmatrix}
+    g_{11}^2&&\\
+    &\ddots&\\
+    &&g_{nn}^2
+  \end{pmatrix}
+\end{eqnarray}
+
+where $X_t=\log{S_t}$, $\Delta{t}=t_{k+1}-t_k$ and $m_t(i)$ denotes
+the \textit{remaining time to maturity} of the $i$-th closest to
+maturity futures $G_t(i)$.
+% <============================================================>
+\clearpage
+% <============================================================>
+\begin{appendix}
+% <============================================================>
+\section{Derivation of the joint distribution}\label{sec:deriv-joint-distr}
+% <============================================================>
+The joint dynamics of the commodity log-price $X_t := \log{S_t}$ and
+the spot convenience yield $\delta_t$ reads in an orthogonal
+decomposition
+
+\begin{eqnarray}
+  dX_t &=& \left(\mu - \delta_t - \frac{1}{2}\sigmaS^2\right)dt +
+  \sigmaS \sqrt{1 - \rho^2 }dW_t^1 + \sigmaS \rho dW_t^2 \label{eq:Pdynamics-X-ortho}\\
+  d\delta_t &=& \kappa (\alpha - \delta_t) dt + \sigmaE dW_t^2, \label{eq:Pdynamics-delta-ortho}
+\end{eqnarray}
+Equation (\ref{eq:Pdynamics-delta-ortho}) can be solved using the
+substitution $\tilde{\delta}_t := e^{\kappa t}\delta_t$ and Ito's lemma.
+\begin{equation}
+\label{eq:delta-integrated}
+\begin{split}
+  \delta_t = e^{-\kappa t}\delta_0 + \alpha \left(1 -
+    e^{-\kappa t}\right) +
+  \sigmaE e^{-\kappa t} \int_0^te^{\kappa u}dW_u^2
+\end{split}
+\end{equation}
+Plugging (\ref{eq:delta-integrated}) into (\ref{eq:Pdynamics-X-ortho})
+gives
+\begin{eqnarray}
+  \label{eq:x}
+  X_t &=& X_0 + \int_0^t dX_u\\
+  &=& X_0 + \left(\mu - \frac{1}{2}\sigmaS^2\right) t -  \int_0^t
+  \delta_u du  + \int_0^t  \sigmaS \sqrt{1 - \rho^2} dW_u^1 + \int_0^t  \sigmaS \rho dW_u^2
+\end{eqnarray}
+Let's have a look on the integral $\int_0^t \delta_u du$.
+\begin{equation}\label{eq:integra-deltat}
+\begin{split}
+  \int_0^t \delta_u du = \int_0^t e^{-\kappa u}\delta_0 du + \int_0^t \alpha \left(1 -
+    e^{-\kappa u}\right) du + \int_0^t\sigmaE e^{-\kappa u} \left(\int_0^u
+  e^{\kappa s}dW_s^2 \right) du
+\end{split}
+\end{equation}
+For the integral $\int_0^te^{-\kappa u}\left(\int_0^u e^{\kappa
+    s}dW_s^2\right) du$ we use Fubini's theorem to interchange the
+order of integration:
+\begin{eqnarray}
+  \int_0^t\left(\int_0^u  e^{-\kappa u} e^{\kappa
+      s}dW_s^2\right) du &=& \int_0^t\left(\int_s^t  e^{-\kappa u} e^{\kappa
+      s}du\right) dW_s^2\\
+  &=& \int_0^t \frac{1}{\kappa}\left(1 - e^{-\kappa (t - s)}\right)
+  dW_s^2 \label{eq:fubini}
+\end{eqnarray}
+Plugging eq. \ref{eq:fubini} into eq. \ref{eq:integra-deltat} and
+solving the Riemann integrals yields
+\begin{equation}\label{eq:integra-deltat-fubini}
+\begin{split}
+  \int_0^t \delta_u du =  \frac{\delta_0}{\kappa} \left(1 -
+    e^{-\kappa t}\right) + \alpha t - \frac{\alpha}{\kappa} \left(1 - e^{-\kappa
+      t}\right) + \sigmaE \int_0^t \frac{1}{\kappa}\left(1 -
+    e^{-\kappa (t - s)}\right) dW_s^2
+\end{split}
+\end{equation}
+This leaves us with the following expression for $X_t$:
+\begin{eqnarray}
+  \label{eq:x}
+  X_t &=& X_0 + \left(\mu - \frac{1}{2}\sigmaS^2 - \alpha\right) t +
+  (\alpha - \delta_0) \frac{1 - e^{-\kappa t}}{\kappa} +  \nonumber \\
+  && +  \int_0^t \sigmaS \sqrt{1 - \rho^2} dW_u^1
+  + \int_0^t \left\{\sigmaS \rho + \frac{\sigmaE}{\kappa}\left(e^{-\kappa (t - u)} - 1\right)\right\} dW_u^2.
+\end{eqnarray}
+The log-spot $X_t$ and the convenience yield $\delta_t$ are jointly
+normally distributed with expectations
+\begin{eqnarray}
+  \label{eq:5}
+  E(X_t) &=& \mu_X = X_0 + \left(\mu - \frac{1}{2}\sigmaS^2 - \alpha\right) t
+  + \left(\alpha  - \delta_0\right) \frac{1 - e^{-\kappa t}}{\kappa}\\
+  E(\delta_t) &=& \mu_\delta = e^{-\kappa t}\delta_0 + \alpha \left(1 - e^{-\kappa
+      t}\right).
+\end{eqnarray}
+The variance are obtained using expectation rules for Ito integrals
+and the Ito isometry.
+
+\begin{align}
+  var(X_t) &= \sigma_X^2 = \frac{\sigmaE^2}{\kappa^2}
+  \left\{\frac{1}{2\kappa}\left(1 - e^{-2\kappa t}\right) -
+    \frac{2}{\kappa}\left(1 - e^{-\kappa t}\right) + t\right\} +
+  2\frac{\sigmaS\sigmaE\rho}{\kappa} \left(\frac{1 - e^{-\kappa
+        t}}{\kappa} - t\right) + \sigma^2_St \\
+  var(\delta_t) &= \sigma_\delta^2 = \frac{\sigmaE^2}{2\kappa}\left(1 -
+    e^{-2\kappa t}\right) \\
+  cov(X_t, \delta_t) &= \sigma_{X\delta} = \frac{1}{\kappa}\left[\left(\sigmaS\sigmaE\rho -
+      \frac{\sigmaE^2}{\kappa}\right)\left(1 - e^{-\kappa t}\right) +
+    \frac{\sigmaE^2}{2\kappa}\left(1 - e^{-2\kappa t}\right)\right]
+\end{align}
+% The covariance between $X_t$ and $\delta_t$ is computed as follows
+% \begin{align}
+% \sigma_{X\delta} &= \mathbb{E}\left[X_t\delta_t\right] -
+% \mathbb{E}X_t\mathbb{E}\delta_t \\
+% &= \mathbb{E}\left[
+% \int_0^t\left[\sigmaS +
+%   \frac{\sigmaE\rho}{\kappa}
+% \left(e^{-\kappa(t - u)} - 1\right)\right]dW_u^1
+% \times
+% \sigmaE\rho^{-\kappa
+%   t}\int_0^te^{\kappa u}dW_u^1
+% \right] \notag \\
+% &+ \mathbb{E}\left[
+% \frac{\sigmaE\sqrt{1 -
+%   \rho^2}}{\kappa}\int_0^t\left(e^{-\kappa(t
+%   - u)} - 1\right)dW_u^2
+% \times
+% \sigmaE\sqrt{1 -
+%   \rho^2}e^{-\kappa t}\int_0^te^{\kappa
+%   u}dW_u^2
+% \right] \\
+% &=
+% \int_0^t\left\{\sigmaS\sigmaE\rho^{-\kappa(t
+%     - u)} +
+%   \frac{\sigmaE^2\rho^2}{\kappa}\left(
+%   e^{-2\kappa(t - u)} - e^{-\kappa(t - u)}
+% \right)\right\}du
+% \notag \\
+% &+ \int_0^t \frac{\sigmaE^2\left(1 -
+%     \rho^2\right)}{\kappa}\left(
+%   e^{-2\kappa(t - u)} - e^{-\kappa(t - u)} \right)du.
+% \end{align}
+\end{appendix}
+\bibliography{SpotCommodity}
+\end{document}

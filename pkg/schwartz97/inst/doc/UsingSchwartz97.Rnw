@@ -1,0 +1,530 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{url}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[
+colorlinks=true,
+linkcolor=black,
+anchorcolor=black,
+citecolor=black,
+filecolor=black,
+pdfstartview={Fit},
+pdfstartpage={1}
+]
+{hyperref}
+\newcommand{\RR}{\textsf{R}}
+\newcommand{\vnorm}[1]{\Vert#1\Vert} % Notation: 2-Norm of a Vector
+\newcommand{\condexp}[2]{
+  \mathbb{\tilde{E}}\left[#1\vert\mathcal{F}_{#2}\right]}
+\newcommand{\condexprf}[2]{
+  \mathbb{\tilde{E}}\left[#1\vert\mathcal{F}_{#2}\right]}
+% Conditional Expectation
+\newcommand{\Rpackage}{\textit{schwartz97}}
+\newcommand{\sigmaS}{\sigma_S}
+\newcommand{\sigmaE}{\sigma_\epsilon}
+% <---------------------------------------------------------------------->
+\SweaveOpts{engine=R,eps=FALSE}
+%%\VignetteIndexEntry{User Guide}
+\title{Using the \Rpackage~package}
+\author{Philipp Erb \and David L\"{u}thi}%\\\email{philipp.erb@zhaw.org}}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+  The purpose of this document is to show how the \RR{}
+  package~\Rpackage~can be used. This is done by numerous examples and
+  explanations. In addition, this document aims at giving some
+  intuition.
+\end{abstract}
+
+%\tableofcontents
+% <============================================================>
+\section{Introduction}\label{sec:intro}
+% <============================================================>
+The package~\Rpackage~provides a set of functions to work with the
+two-factor model of \cite{Gibson1990} and \cite{Schwartz1997}. The
+two-factor model describes the joint dynamics of the state variables
+\emph{spot price} and \emph{spot convenience yield} (later simply
+called \emph{convenience yield}).
+
+We believe that the value of this package primarily lies in the
+parameter fitting routine \verb=fit2factor=. Once the parameters of
+the two-factor model are known, a number of functions can be used to,
+e.g., draw samples from the model, price derivatives as European
+options, calculate risk-measures, or filter a futures price
+time-series to get an estimate of the underlying state variables. The
+document is organized as follows: Section \ref{sec:model} briefly
+describes the model and section \ref{sec:overview} gives an overview
+of the classes and functions. Then, section \ref{sec:init} to
+\ref{sec:parameter-estimation} give examples and a case study.
+% <============================================================>
+\section{The Schwartz 1997 Model}\label{sec:model}
+% <============================================================>
+Relying on \cite{Schwartz1997}, the spot price of the commodity and
+the instantaneous convenience yield follow the joint stochastic
+process:
+\begin{eqnarray}
+  dS_t &=& (\mu - \delta_t) S_t dt + \sigmaS S_t
+  dW_S   \label{eq:Pdynamics-S} \\
+  d\delta_t &=& \kappa (\alpha - \delta_t) dt + \sigmaE
+  dW_\epsilon, \label{eq:Pdynamics-delta}
+\end{eqnarray}
+with Brownian motions $W_S$ and $W_\epsilon$ under the objective
+measure $\mathbb{P}$ and correlation $dW_SdW_\epsilon = \rho dt$.
+Under an equivalent martingale measure $\mathbb{Q}$ the dynamics are
+of the form
+\begin{eqnarray}
+  dS_t &=& (r - \delta_t) S_t dt + \sigmaS S_t
+  d\widetilde{W}_S   \label{eq:Qdynamics-S} \\
+  d\delta_t &=& [\kappa (\alpha - \delta_t) - \lambda] dt + \sigmaE
+  d\widetilde{W}_\epsilon, \label{eq:Qdynamics-delta}
+\end{eqnarray}
+where the constant $\lambda$ denotes the market price of convenience
+yield risk and $\widetilde{W}_S$ and $\widetilde{W}_\epsilon$ are now
+$\mathbb{Q}$-Brownian motions. It may be handy to introduce a
+new mean-level for the convenience yield process under $\mathbb{Q}$
+\begin{equation}
+  \label{eq:Q-drift}
+ \tilde{\alpha} = \alpha - \lambda / \kappa.
+\end{equation}
+The dynamics is then
+\begin{equation}
+d\delta_t = \kappa (\tilde{\alpha} - \delta_t) dt + \sigmaE
+  d\widetilde{W}_\epsilon.
+\end{equation}
+For more information on the model and pricing formulas we refer to the
+other package vignette \emph{Technical Document} or to
+\cite{Schwartz1997}.
+% <============================================================>
+\section{Package Overview}\label{sec:overview}
+% <============================================================>
+This section gives an overview of the functions and classes contained
+in the package~\Rpackage. In addition, the object-oriented programming
+approach follwed in this package is explained.
+% <------------------------------------------------------------>
+\subsection{Functions}\label{sec:functions}
+% <------------------------------------------------------------>
+The main-functions of the package~\Rpackage~are the following:\\[1ex]
+\begin{center}
+  \begin{tabular}{l|l}
+    R-function & Description \\
+    \hline
+    \verb=dstate= & Density of the bivariate state vector. \\
+    \verb=pstate= & Distribution of the bivariate state vector. \\
+    \verb=qstate= & Quantile of the bivariate state vector. \\
+    \verb=rstate= & Sample from the state vector distribution at a given time in the future. \\
+    \verb=simstate= & Generate trajectories from the bivariate state vector. \\
+    \verb=dfutures= & Density of the futures price. \\
+    \verb=pfutures= & Distribution of the futures price. \\
+    \verb=qfutures= & Quantile of the futures price. \\
+    \verb=rfutures= & Sample from the futures price distribution. \\
+    \verb=VaRfutures= & Value-at-risk of the futures price. \\
+    \verb=ESfutures= & Expected shortfall of the futures price. \\
+    \verb=pricefutures= & Calculate the futures price. \\
+    \verb=priceoption= & Calculate the price of a European call or put option. \\
+    \verb=filter2factor= & Filter a futures-price time-series. \\
+    \verb=fit2factor= & Fit the two-factor model to data. \\
+  \end{tabular}
+\end{center}
+\vspace{3mm} Except the function \verb=fit2factor=, all the above
+functions are set to \emph{generic} and accept three different
+signatures (see section \ref{sec:oop}).
+% <------------------------------------------------------------>
+\subsection{Classes}\label{sec:classes}
+% <------------------------------------------------------------>
+The package~\Rpackage~provides the class \verb=schwartz2factor=. This
+class contains all parameters which are needed to define the dynamics
+of the state variables \emph{spot price} and \emph{convenience yield}
+under the objective measure $\mathbb{P}$. The class
+\verb=schwartz2factor= has the following slots:\\[1ex]
+\begin{center}
+  \begin{tabular}{llll}
+    Slot name & Class & Symbol & Description\\
+    \hline
+    s0 & numeric & $s_0$ & Initial spot price.\\
+    delta0 & numeric & $\delta_0$ & Initial convenience yield.\\
+    mu & numeric & $\mu$ & Drift parameter of the spot price process.\\
+    sigmaS & numeric & $\sigma_S$ & Diffusion parameter of the spot price process.\\
+    kappaE & numeric & $\kappa$ & Speed of mean-reversion of the convenience yield process.\\
+    alpha & numeric & $\alpha$ & Mean-level of the convenience yield process.\\
+    sigmaE & numeric & $\sigma_\epsilon$ & Diffusion parameter of the convenience yield process.\\
+    rhoSE & numeric & $\rho$ & Correlation between the two Brownian motions.\\
+    call & call & & The function call.\\
+  \end{tabular}
+\end{center}
+\vspace{3mm} It can be seen that all symbols appearing in
+eq. \ref{eq:Pdynamics-S} and \ref{eq:Pdynamics-delta} are
+defined\footnote{The suffix ``S'' and ``E'' in the slot names indicate
+  the parameter corresponding to the spot price and convenience yield,
+  respectively. Sometimes they are not needed to ensure
+  uniqueness. Yet in order to allow for a potential extension to the
+  three factor model the suffixes are already used.}, together with
+the initial values $s_0$ and $\delta_0$. To create an object of class
+\verb=schwartz2factor= the constructor with the same name can be used
+(see section \ref{sec:init}).
+
+The function \verb=fit2factor=, which fits the two-factor model to
+data, returns an object of class \verb=fit.schwartz2factor=. This
+class inherits from the class \verb=schwartz2factor= and adds around
+ten slots. Most of them contain information about the fit, as the
+log-likelihood for instance. From a practical point of view, important
+extensions by the class \verb=fit.schwartz2factor= refer to parameters
+which are needed to work with derivatives (as the market price of
+convenience yield risk parameter $\lambda$). The following table
+describes these slots. A complete description of the slots can be
+found in the R-documentation (type \verb=?fit.schwartz2factor-class=
+in the R-console).\\[1ex]
+\begin{center}
+  \begin{tabular}{llll}
+    Slot name & Class & Symbol & Description\\
+    \hline
+    lambda & numeric & $\lambda$ & Market price of convenience yield risk.\\
+    alphaT & numeric & $\tilde{\alpha}$ & Drift parameter $\tilde{\alpha}$ of the convenience yield under $\mathbb{Q}$.\\
+    r & numeric & $r$  & Risk-free interest-rate.\\
+  \end{tabular}
+\end{center}
+\vspace{3mm} These slots together with the ones contained in the class
+\verb=schwartz2factor= fully determine the dynamics of the model under
+both, the objective measure $\mathbb{P}$ and the equivalent martingale
+measure $\mathbb{Q}$. Notice that one of the parameters \verb=lambda=
+and \verb=alphaT= is redundant according to equation \ref{eq:Q-drift}.
+% <------------------------------------------------------------>
+\subsection{Object Orientation}\label{sec:oop}
+% <------------------------------------------------------------>
+As mentioned earlier all functions listed in section
+\ref{sec:functions} (except \verb=fit2factor=) are set to generic.
+The idea is to leave some freedom to the user, which can decide
+whether he wants to use an object-oriented approach or provide a
+fairly large set of arguments for each function-call.
+
+As an example, let us consider the function \verb=dfutures=.
+The function headers for different signatures are:
+\begin{verbatim}
+## S4 method for signature 'ANY, ANY, numeric':
+dfutures(x, ttm = 1, s0 = 50, delta0 = 0,
+         mu = 0.18, sigmaS = 0.6, kappa = 1, alpha = 0,
+         sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
+         alphaT = NULL, ...)
+
+## S4 method for signature 'ANY, ANY, schwartz2factor':
+dfutures(x, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL, ...)
+
+## S4 method for signature 'ANY, ANY, fit.schwartz2factor':
+dfutures(x, ttm = 1, s0, ...)
+\end{verbatim}
+Without using objects, the function takes twelve arguments. Ten
+parameters are needed to describe the dynamics under both measures:
+The futures price, yet calculated based on the dynamics under the
+equivalent martingale measure $\mathbb{Q}$, is a function of the state
+variables which evolve under the objective measure $\mathbb{P}$.
+
+If the parameters are estimated by the function \verb=fit2factor=, we
+completely know the transition density. Hence, for a given point in
+time the distribution is defined under both measures. Therefore, the
+only additional arguments are \verb=x= and \verb=ttm= (\emph{time
+  to maturity}).
+
+On the other hand, if for instance the object of interest is the
+density of the futures price as a function of the state variables, it
+may be handy to use the function which takes all parameters as
+arguments, i.e. no object. Doing so, a repeated initialization of
+\verb=schwartz2factor= objects with different \verb=s0= and
+\verb=delta0= can be avoided.
+% <============================================================>
+% <============================================================>
+\section{Object Initialization}\label{sec:init}
+% <============================================================>
+A \verb=schwartz2factor= object with reasonable parameters is
+constructed in the following code junk.
+<<>>=
+library(schwartz97)
+s0 <- 100
+delta0 <- 0
+mu <- 0.05
+sigmaS <- 0.2
+kappa <- 1
+alpha <- 0.05
+sigmaE <- 0.3
+rho <- 0.4
+
+obj <- schwartz2factor(s0 = s0, delta0 = delta0, alpha = alpha,
+                       mu = mu, sigmaS = sigmaS, sigmaE = sigmaE,
+                       rho = rho, kappa = kappa)
+obj
+@
+
+% <============================================================>
+\section{Working with the state variables}\label{sec:state}
+% <============================================================>
+As soon as a \verb=schwartz2factor= object is constructed it can be
+passed to the functions \verb=dstate=, \verb=pstate=, \verb=qstate=,
+\verb=rstate=, and \verb=simstate=. As we know the distribution of the
+state variables for a given point of time in the future, once this
+point is defined we can use the above functions as the standard \RR{}
+distribution functions for, e.g., the normal distribution
+(\verb=dnorm=, \verb=pnorm=, \verb=qnorm=, \verb=rnorm=).
+
+Notice that the logarithm of the spot price and the convenience yield
+are jointly normally distributed. To deal with the bivariate normal
+distribution we rely on the \RR{} package \verb=mvtnorm=.
+
+In the next example we draw a trajectory of the state variables, i.e.,
+of the spot price and the convenience yield. The spot price and the
+convenience yield are simulated on a daily basis over the next five
+years using \verb=simstate=. Then, a sample of the spot price and the
+convenience yield in five years is generated by the function
+\verb=rstate=. Finally, we compute the probability that the spot price
+is below 150 and the convenience yield is lower than 0 in five years.
+Figure \ref{fig:state-trajectory} shows a trajectory and the
+distribution of the state variables in 5 years.
+
+<<>>=
+time <- 5
+n <- time * 260
+set.seed(1)
+state.trajectory <- simstate(n, time, obj)
+distr.time.t <- rstate(n = 2000, time, obj)
+pstate(c(0, -Inf), c(150, 0), time, obj)
+@
+
+\begin{figure}\centering
+<<fig=TRUE,echo=FALSE>>=
+par(mfcol = c(2, 2))
+plot(state.trajectory[, "S"], type = "l", ylab = "spot price", main =  "Trajectory")
+plot(state.trajectory[, "delta"], type = "l", ylab = "convenience yield", main = "Trajectory")
+plot(density(distr.time.t[, "S"]), ylab = "spot price", main = "Empirical distribution")
+plot(density(distr.time.t[, "delta"]), ylab = "convenience yield", main = "Empirical distribution")
+@
+\caption{The left figures show a trajectory of the spot price and the
+  convenience yield, sampled on a daily frequency over a five years
+  horizon. The initial values of the state variables are 100 for the
+  spot price ($s_0$) and 0 for the convenience yield ($\delta_0$). The
+  spot price has a drift $\mu$ of 5\% and a volatility $\sigma_S$ of
+  20\%.  The \emph{speed of mean-reversion} parameter $\kappa$ of the
+  convenience yield process is 1, and the long-term mean ($\alpha$) is
+  5\%.  The volatility of the convenience yield $\sigma_\epsilon$ is
+  30\% and the correlation $\rho$ between the Brownian motions driving
+  the state variables is 40\%. The right figures show the empirical
+  distribution of the state variables in five
+  years.}\label{fig:state-trajectory}
+\end{figure}
+
+In the following a futures contract is priced according to the
+trajectory of the state variables generated in the example above. We
+assume that the futures expires in seven years from now. This is
+reflected in the variable \verb=ttm= which stands for \emph{time to
+  maturity}. We further assume an interest-rate of 3\%. Since we want
+to calculate the futures price for a sequence of state variables we do
+not use objects, but call the function \verb=pricefutures=
+directly\footnote{If we used objects, we would had to initialize an
+  object for each realization of the state variables \textsf{s0} and
+  \textsf{delta0}.}.
+
+<<>>=
+ttm <- seq(time, 0, length = n) + 2 # time-to-maturity
+r <- 0.03
+lambda <- 0
+futures.trajectory <- pricefutures(ttm =  ttm, state.trajectory[, "S"],
+                                   state.trajectory[,"delta"],
+                                   sigmaS = sigmaS, kappa = kappa, alpha = alpha,
+                                   sigmaE = sigmaE, rho = rho,
+                                   lambda = lambda, r = r)
+@
+
+\begin{figure}\centering
+<<fig=TRUE,echo=FALSE>>=
+par(mfcol = c(3, 1))
+plot(state.trajectory[, "S"], type = "l", ylim = range(futures.trajectory, state.trajectory[, "S"]),
+     ylab = "", main = "Trajectories")
+lines(futures.trajectory, col = "red")
+legend("top", legend = c("simulated spot price", "futures price"),
+       col = c("black", "red"), lty = 1)
+plot(state.trajectory[, "S"] - futures.trajectory, type = "l",
+     ylab = "", main = "Spot price minus futures price")
+abline(h = 0)
+plot(state.trajectory[, "delta"], type = "l", ylab = "", main = "Convenience yield")
+abline(h = r, col = "blue")
+legend("top", legend = "Risk-free rate", lty = 1, col = "blue")
+@
+\caption{The top figure shows the trajectory of the spot price
+  generated in the previous example together with the corresponding
+  trajectory of the seven years futures price. It can be seen that
+  sometimes the futures price is above the spot price (contango) and
+  sometimes the futures price is below the spot price
+  (backwardation). In case of zero market price of convenience yield
+  risk ($\lambda = 0$) the market is in contango exactly when the
+  interest rate $r$ is higher then the convenience yield
+  $\delta_t$. Conversely, if the convenience yield is higher than the
+  interest rate, the spot price is expected to decrease (under the
+  risk-neutral dynamics, see eq. \ref{eq:Qdynamics-S} and
+  \ref{eq:Qdynamics-delta}) and therefore the futures price lies below
+  the spot price. Such a situation is called
+  backwardation.}\label{fig:futures-trajectory}
+\end{figure}
+% <============================================================>
+\section{Working with derivatives}\label{sec:derivatives}
+% <============================================================>
+As mentioned in section \ref{sec:oop}, the distribution of a simple
+derivative as a futures contract yet depends on quite a number of
+parameters ($s_0$, $\delta_0$, $\mu$, $\sigma_S$, $\kappa$, $\alpha$,
+$\lambda$, $\sigma_\epsilon$, $\rho$, $r$). While some parameters
+admit an intuitive interpretation (e.g. the volatility of the spot
+price $\sigma_S$), some parameters are rather abstract. Think about
+the market price of convenience yield risk $\lambda$ for instance: At
+a first glance, it is difficult to assign a value to a parameter which
+enters a stochstic differential equation of a non-observable process
+(the convenience yield process). However, the parameters can be
+estimated by the function \verb=fit2factor= (see section
+\ref{sec:parameter-estimation}. For the moment, assume all the
+parameters are known such that the price of a derivative can be
+computed.\\[2ex]
+\textbf{Example:}\\
+Assume the current two years futures price for a bushel of soybeans is
+USD 370. Assume further that the annualized soybean volatility is
+30\%. The convenience yield is expected to decrease fastly to its
+long-term average. ``Decrease fastly'' is reflected in a $\kappa$ of
+2. The volatility of the convenience yield is guessed to be
+50\%. Finally, we observe a risk-free rate of 4\%.
+
+Now, we want to price a European call option written on a two years
+soybean futures contract with strike price USD 390. The option expires
+in one year. The following code-junk shows how the arbitrage-free
+price can be computed:
+
+<<>>=
+priceoption("call", time = 1, Time = 2, K = 390, g0 = 370,
+            sigmaS = 0.3, kappa = 2, sigmaE = 0.5, r = 0.04)
+
+@ 
+% <============================================================>
+\section{Parameter Estimation}\label{sec:parameter-estimation}
+% <============================================================>
+As mentioned in section \ref{sec:intro}, we think that the most
+valuable piece of code of the package~\Rpackage~is in the function
+\verb=fit2factor=. This function can estimate all the nine parameters
+involved in equations \ref{eq:Pdynamics-S} - \ref{eq:Qdynamics-delta}
+(including the initial values of the state variables $s_0$ and
+$\delta_0$). The estimation procedure is based on the Kalman filter.
+Because the log-futures prices linearly depend on two Gaussian random
+variables (the log-spot price and the convenience yield), it is the
+most straightforward way to use a linear state-space model.
+
+The header of the function \verb=fit2factor= looks like
+
+<<>>=
+  args(fit2factor)
+@
+
+The only mandatory inputs are \verb=data= and \verb=ttm=. \verb=data=
+must be a matrix of futures prices and \verb=ttm= a matrix giving the
+time-to-maturity. The time-to-maturity matrix is interpreted the
+following way: \verb=ttm[i,j]= corresponds to the time-to-maturity of
+the futures price \verb=data[i,j]=.  The next nine arguments are
+initial values of all parameters. The argument \verb=meas.sd= gives
+the standard deviation of the measurement error. There must be a
+measurement error standard deviation associated to each futures
+series\footnote{For a detailed explanation consult the other package
+  vignette \emph{Technical Document} or the article
+  \cite{Schwartz1997}.}. \verb=opt.pars= is a vector of logicals
+stating which parameters shall be fitted. The argument
+\verb=opt.meas.sd= defines how the measurement error standard
+deviation will be treated. If \verb+opt.meas.sd == "scalar"+ it means
+that \verb=meas.sd= is scaled by a single factor, which enters the
+optimization procedure. Finally, the risk-free rate must be
+given.\\[2ex]
+\textbf{Example:}\\
+We have around 7000 daily observations from Jan. 1989 to Jan. 2009 of
+8 simultaneously listed copper futures prices. Now, we want to
+estimate the parameters. As the data must not have NA's, we first
+compute the indexes of rows containing NA's. Then, we use the default
+arguments of the function \verb=fit2factor= to estimate the
+parameters. That is, all parameters except the initial values
+\verb=s0= and \verb=delta0= are estimated and the standard deviation
+of the measurement equation error is assumed to be equal for all
+futures contracts (\verb+opt.meas.sd = "scalar"+). Notice that the
+default values for \verb=s0= and \verb=delta0= are \verb=data[1,1]=
+(the first observation of the closest to maturity futures) and 0,
+respectively.
+<<>>=
+data(futures)
+
+na.idx <- apply(is.na(copper$futures), 1, any)
+
+copper.fit <- fit2factor(copper$futures[!na.idx,], copper$ttm[!na.idx,],
+                         control = list(maxit = 100, reltol = 1e-3),
+                         silent = TRUE)
+copper.fit
+
+@
+
+Let's spend a few words on the estimated parameters. As the initial
+values of the state variables were not estimated, the first parameter
+to discuss is the drift parameter of the spot price process
+$\mu$. A value of approx. 20\% was estimated, which seems to be
+reasonable. The volatility of the spot price process $\sigma_S$ was
+found to be 37\%. This value makes sense too.
+
+Then, regarding the convenience yield process, three parameters were
+estimated: The speed of mean-reversion parameter $\kappa$, the
+long-term average parameter \verb=alpha= and the volatility parameter
+$\sigma_\epsilon$. The mean-reversion speed $\kappa$ was estimated to
+be 1.1. It is hard to verify whether this value is sensible. But it
+can be said that it is at least not far off. A reasonable mean-level
+$\alpha$ of approx. 6\% was estimated. The volatility
+$\sigma_\epsilon$ is found to be around 50\%, also a sensible value.
+
+The correlation coefficient $\rho$ is pretty high at 81\% and the
+market price of convenience yield risk $\lambda$ takes a realistic
+value of 4\%.
+
+We want to have a look at the spot price and the convenience
+yield. Since we do not observe these variables, the data has to be
+filtered to estimate the state variables. Figure
+\ref{fig:filtered-state} shows a plot of the estimated spot price and
+convenience yield.
+<<>>=
+filtered <- filter2factor(copper$futures[!na.idx,], copper$ttm[!na.idx,], copper.fit)
+@
+\begin{figure}\centering
+<<fig=TRUE,echo=FALSE>>=
+par(mfrow = c(2, 1))
+plot(filtered$state[, "S"], type = "l", ylab = "",
+     main = "State variables based on filtered futures prices")
+lines(copper$futures[!na.idx, 1], col = "blue", lty = "dotted")
+legend("topleft", legend = c("Spot price",
+                    "Closest to maturity futures"),
+       lty = c("solid", "dotted"), col = c("black", "blue"))
+plot(filtered$state[, "delta"], type = "l", 
+     ylab = "")
+legend("top", legend = "Convenience yield")
+@
+\caption{Futures prices are filtered based on the parameters estimated
+  by \textsf{fit2factor}. As a result of the function
+  \textsf{filter2factor}, we obtain the spot price and the convenience
+  yield. The top panel shows the estimated spot price together with
+  the closest to maturity futures price. The prices can hardly be
+  distinguished. The estimated convenience yield is plotted in the
+  bottom panel. The range of the convenience yield $[-0.1, 0.5]$ seems
+  to be reasonable.}\label{fig:filtered-state}
+\end{figure}
+
+The output of the fitting procedure was stored in the variable
+\verb=copper.fit=. As this object is of class
+\verb=fit.schwartz2factor=, it contains all information needed to
+price derivatives. To give an example, we calculate the price of a
+European put option written on a copper futures with strike price
+90. The futures expires in 3 years, and the option in 2 years. We also
+calculate the 3 years futures price.
+<<>>=
+priceoption("put", time = 2, Time = 3, K = 90, copper.fit)
+
+pricefutures(ttm = 3, copper.fit)
+@ 
+
+% <---------------------------------------------------------------------->
+\bibliography{SpotCommodity}
+\end{document}
+
