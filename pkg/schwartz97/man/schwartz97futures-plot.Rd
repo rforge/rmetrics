@@ -52,7 +52,7 @@ futuresplot(x, type = c("futures", "ttm"), contr = 1:8,
 \examples{
   data(futures)
 
-  futuresplot(gold, type = "fut", contr = c(1, 2, 6),
+  futuresplot(soybeans, type = "fut", contr = c(1, 2, 6),
                range = c("01.01.1978", "31.12.1982"))
 
   futuresplot(crude.oil, type = "ttm", contr = c(1, 3),
