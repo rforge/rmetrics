@@ -469,7 +469,7 @@ found to be 37\%. This value makes sense too.
 
 Then, regarding the convenience yield process, three parameters were
 estimated: The speed of mean-reversion parameter $\kappa$, the
-long-term average parameter \verb=alpha= and the volatility parameter
+long-term average parameter $\alpha$ and the volatility parameter
 $\sigma_\epsilon$. The mean-reversion speed $\kappa$ was estimated to
 be 1.1. It is hard to verify whether this value is sensible. But it
 can be said that it is at least not far off. A reasonable mean-level
