@@ -103,7 +103,7 @@ other package vignette \emph{Technical Document} or to
 % <============================================================>
 This section gives an overview of the functions and classes contained
 in the package~\Rpackage. In addition, the object-oriented programming
-approach follwed in this package is explained.
+approach followed in this package is explained.
 % <------------------------------------------------------------>
 \subsection{Functions}\label{sec:functions}
 % <------------------------------------------------------------>
@@ -375,7 +375,7 @@ admit an intuitive interpretation (e.g. the volatility of the spot
 price $\sigma_S$), some parameters are rather abstract. Think about
 the market price of convenience yield risk $\lambda$ for instance: At
 a first glance, it is difficult to assign a value to a parameter which
-enters a stochstic differential equation of a non-observable process
+enters a stochastic differential equation of a non-observable process
 (the convenience yield process). However, the parameters can be
 estimated by the function \verb=fit2factor= (see section
 \ref{sec:parameter-estimation}. For the moment, assume all the
@@ -398,7 +398,7 @@ price can be computed:
 priceoption("call", time = 1, Time = 2, K = 390, g0 = 370,
             sigmaS = 0.3, kappa = 2, sigmaE = 0.5, r = 0.04)
 
-@ 
+@
 % <============================================================>
 \section{Parameter Estimation}\label{sec:parameter-estimation}
 % <============================================================>
@@ -497,7 +497,7 @@ lines(copper$futures[!na.idx, 1], col = "blue", lty = "dotted")
 legend("topleft", legend = c("Spot price",
                     "Closest to maturity futures"),
        lty = c("solid", "dotted"), col = c("black", "blue"))
-plot(filtered$state[, "delta"], type = "l", 
+plot(filtered$state[, "delta"], type = "l",
      ylab = "")
 legend("top", legend = "Convenience yield")
 @
@@ -522,9 +522,8 @@ calculate the 3 years futures price.
 priceoption("put", time = 2, Time = 3, K = 90, copper.fit)
 
 pricefutures(ttm = 3, copper.fit)
-@ 
+@
 
 % <---------------------------------------------------------------------->
 \bibliography{SpotCommodity}
 \end{document}
-
