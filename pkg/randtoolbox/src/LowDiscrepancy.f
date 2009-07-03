@@ -6,23 +6,45 @@ C ##############################################################################
 C PART I: HALTON SEQUENCE:
 
 
-C This library is free software; you can redistribute it and/or
-C modify it under the terms of the GNU Library General Public
-C License as published by the Free Software Foundation; either
-C version 2 of the License, or (at your option) any later version.
+C-------------------------------------------------------------------------- 
+C @file  LowDiscrepancy.f
+C @brief Halton sequence
 C
-C This library is distributed in the hope that it will be useful,
-C but WITHOUT ANY WARRANTY; without even the implied warranty of
-C MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
-C GNU Library General Public License for more details.
+C @author Diethelm Wuertz 
 C
-C You should have received a copy of the GNU Library General 
-C Public License along with this library; if not, write to the 
-C Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
-C MA  02111-1307  USA
-
-
-COPYRIGHT: DIETHELM WUERTZ, SEPT. 2002
+C
+C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C
+C The new BSD License is applied to this software.
+C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C
+C      Redistribution and use in source and binary forms, with or without
+C      modification, are permitted provided that the followingConditions are
+C      met:
+C      
+C          - Redistributions of sourceCode must retain the aboveCopyright
+C          notice, this list ofConditions and the following disclaimer.
+C          - Redistributions in binary form must reproduce the above
+C         Copyright notice, this list ofConditions and the following
+C          disclaimer in the documentation and/or other materials provided
+C          with the distribution.
+C          - Neither the name of the ETH Zurich nor the names of itsContributors 
+C          may be used to endorse or promote products derived from this software 
+C          without specific prior written permission.
+C     
+C      THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+C      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+C      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
+C      OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C      SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+C      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
+C      THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+C      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+C  
+C-------------------------------------------------------------------------- 
 
 
 C-------------------------------------------------------------------------------
@@ -259,8 +281,12 @@ C ##############################################################################
 C PART II: SOBOL SEQUENCE:
 
 
-COPYRIGHTS:
-
+C-------------------------------------------------------------------------- 
+C @file  LowDiscrepancy.f
+C @brief Sobol sequence
+C
+C @author Diethelm Wuertz 
+C
 C     ORIGINAL VERSION:
 C       ALGORITHM 659, COLLECTED ALGORITHMS FROM ACM. PUBLISHED IN
 C       TRANSACTIONS ON MATHEMATICAL SOFTWARE, VOL. 14, NO. 1, P.88.
@@ -276,7 +302,39 @@ C       R/SPLUS FUNCTION.
 C     SEE:
 C       http://www.acm.org/pubs/copyright_policy/softwareCRnotice.html
 C
-C-------------------------------------------------------------------------------
+C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C
+C The new BSD License is applied to this software.
+C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C
+C      Redistribution and use in source and binary forms, with or without
+C      modification, are permitted provided that the followingConditions are
+C      met:
+C      
+C          - Redistributions of sourceCode must retain the aboveCopyright
+C          notice, this list ofConditions and the following disclaimer.
+C          - Redistributions in binary form must reproduce the above
+C         Copyright notice, this list ofConditions and the following
+C          disclaimer in the documentation and/or other materials provided
+C          with the distribution.
+C          - Neither the name of the ETH Zurich nor the names of itsContributors 
+C          may be used to endorse or promote products derived from this software 
+C          without specific prior written permission.
+C     
+C      THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+C      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+C      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
+C      OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C      SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+C      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
+C      THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+C      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+C  
+C-------------------------------------------------------------------------- 
+
 
 C     FUNCTIONS:
 C       SOBOL (QN, N, DIMEN, QUASI, 

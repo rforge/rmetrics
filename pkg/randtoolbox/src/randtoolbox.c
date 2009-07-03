@@ -1,22 +1,47 @@
-/**********************************************************************************************
- *   Copyright (c) 2008 Christophe Dutang                                                                    *
- *                                                                                                                                           *
- *   This program is free software; you can redistribute it and/or modify                 *
- *   it under the terms of the GNU General Public License as published by           *
- *   the Free Software Foundation; either version 2 of the License, or                     *
- *   (at your option) any later version.                                                                              *
- *                                                                                                                                           *
- *   This program is distributed in the hope that it will be useful,                               *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of            *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the   *
- *   GNU General Public License for more details.                                                      *
- *                                                                                                                                           *
- *   You should have received a copy of the GNU General Public License             *
- *   along with this program; if not, write to the                                                             *
- *   Free Software Foundation, Inc.,                                                                                *
- *   59 Temple Place, Suite 330, Boston, MA 02111-1307, USA                               *
- *                                                                                                                                           *
- **********************************************************************************************/
+/** 
+ * @file  randtoolbox.c
+ * @brief C file for all RNGs
+ *
+ * @author Christophe Dutang
+ * @author Petr Savicky 
+ *
+ *
+ * Copyright (C) 2009, Christophe Dutang, 
+ * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * All rights reserved.
+ *
+ * The new BSD License is applied to this software.
+ * Copyright (c) 2009 Christophe Dutang, Petr Savicky. 
+ * All rights reserved.
+ *
+ *      Redistribution and use in source and binary forms, with or without
+ *      modification, are permitted provided that the following conditions are
+ *      met:
+ *      
+ *          - Redistributions of source code must retain the above copyright
+ *          notice, this list of conditions and the following disclaimer.
+ *          - Redistributions in binary form must reproduce the above
+ *          copyright notice, this list of conditions and the following
+ *          disclaimer in the documentation and/or other materials provided
+ *          with the distribution.
+ *          - Neither the name of the Academy of Sciences of the Czech Republic
+ *          nor the names of its contributors may be used to endorse or promote 
+ *          products derived from this software without specific prior written
+ *          permission.
+ *     
+ *      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *      OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *      SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *  
+ */
 /*
  *  various Random Number Generators
  *
@@ -408,336 +433,7 @@ SEXP doWELL(SEXP n, SEXP d, SEXP order, SEXP tempering, SEXP version)
     return resultinR;   
 }
 
-// call the WELL generator of L'Ecuyer
-void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
-{
-    int i, j;
-    
-    if(temper && order == 512)
-        error(_("no tempering possible since it is useless, cf. Panneton et al.(2006)."));
-    if(temper && order == 521)
-        error(_("no tempering possible since it is useless, cf. Panneton et al.(2006)."));
-    if(temper && order == 607)
-        error(_("no tempering possible since it is useless, cf. Panneton et al.(2006)."));
-    if(temper && order == 1024)
-        error(_("no tempering possible since it is useless, cf. Panneton et al.(2006)."));
-        
-    if(version !=1 && version != 2)
-        error(_("wrong version for WELL RNG, it must be 1 or 2."));
-    
-    switch (order) 
-    {
-    //no tempering for the first four RNGs
-        case 512:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(16); 
-            
-            //init SFMT parameters
-            InitWELLRNG512a( seedArray );        
-    
-            // compute u_ij
-            for(j = 0; j < dim; j++)
-                for(i = 0; i < nb; i++) 
-                    u[i + j * nb] = WELLRNG512a(); // real on ]0,1[ interval
-            break;
-            
-        case 521:            
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(17);
-        
-            if(version == 1)
-            {
-                //init SFMT parameters
-                InitWELLRNG521a( seedArray );        
 
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG521a(); // real on ]0,1[ interval
-            }
-            else
-            {
-                //init SFMT parameters
-                InitWELLRNG521b( seedArray );        
-                
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG521b(); // real on ]0,1[ interval
-            }
-            break;
-            
-       case 607:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(19);
-            
-            if(version == 1)
-            {
-                //init SFMT parameters
-                InitWELLRNG607a( seedArray );        
-                
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG607a(); // real on ]0,1[ interval
-            }
-            else
-            {
-                //init SFMT parameters
-                InitWELLRNG607b( seedArray );        
-                
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG607b(); // real on ]0,1[ interval                
-            }
-            break;
-            
-        case 1024:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(32); 
-            
-            if(version == 1)
-            {
-                //init SFMT parameters
-                InitWELLRNG1024a( seedArray );        
-                
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG1024a(); // real on ]0,1[ interval
-            }
-            else
-            {
-                //init SFMT parameters
-                InitWELLRNG1024b( seedArray );        
-                
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG1024b(); // real on ]0,1[ interval
-            }            
-            break;
-        
-    //tempering possible for these RNGs
-        case 800:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(25); 
-            
-            if(temper == 0)
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800a( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800a(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800b( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800b(); // real on ]0,1[ interval
-                }
-            }
-            else
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800bTemp(); // real on ]0,1[ interval
-                }
-            }
-            break;
-            
-        case 19937:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(624); 
-            
-            if(temper == 0)
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937a( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937a(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937b( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937b(); // real on ]0,1[ interval
-                }
-            }
-            else
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937bTemp(); // real on ]0,1[ interval
-                }
-            }
-            break;
-        
-        case 21701:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(679); 
-            
-            if(temper == 0)
-            {                
-                //init SFMT parameters
-                InitWELLRNG21701a( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG21701a(); // real on ]0,1[ interval
-            }
-            else
-            {
-               
-                //init SFMT parameters
-                InitWELLRNG21701aTemp( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG21701aTemp(); // real on ]0,1[ interval
-            }
-            break;
-            
-        case 23209:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(726); 
-            
-            if(temper == 0)
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209a( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209a(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209b( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209b(); // real on ]0,1[ interval
-                }
-            }
-            else
-            {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209bTemp(); // real on ]0,1[ interval
-                }
-            }
-            break;    
-            
-        case 44497:
-            //initiate the seed with the machine time
-            // and ensure it is positive
-            if(!isInitByArray) 
-                randSeedByArray(1391); 
-            
-            if(temper == 0)
-            {                
-                //init SFMT parameters
-                InitWELLRNG44497a( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG44497a(); // real on ]0,1[ interval
-            }
-            else
-            {
-                
-                //init SFMT parameters
-                InitWELLRNG44497aTemp( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG44497aTemp(); // real on ]0,1[ interval
-            }
-            break;
-            
-        default:
-            error(_("error wrong exponent in WELL generator\n"));
-    }
-    
-    isInitByArray = 0;	          
-}
 
 //main function used .Call()
 SEXP doKnuthTAOCP(SEXP n, SEXP d)

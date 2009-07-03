@@ -157,9 +157,11 @@ Wikipedia (2008), \emph{a linear congruential generator}.
     \code{\link{.Random.seed}} for what is done in R about random number generation. 
 }
 \author{
- Christophe Dutang.
+ Christophe Dutang and Petr Savicky
 }
 \examples{
+require(rngWELL)
+
 # (1) the Park Miller sequence
 #
 
@@ -252,9 +254,9 @@ WELL(10, order = 19937, temper = TRUE)
 WELL(10, order = 44497, temper = TRUE)
 
 # tempering vs no tempering
-setSeed(08082008)
+setSeed4WELL(08082008)
 WELL(10, order =19937)
-setSeed(08082008)
+setSeed4WELL(08082008)
 WELL(10, order =19937, temper=TRUE)
 
 # (5) Knuth TAOCP generator
