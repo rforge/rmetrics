@@ -1,0 +1,11 @@
+### C code
+useDynLib(rngWELL, .registration = TRUE)
+
+
+### Exports
+export(WELL2test, setSeed4WELL)
+
+
+### Debugging
+# export(version.rngWELL)
+
