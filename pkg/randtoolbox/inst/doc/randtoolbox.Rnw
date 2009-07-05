@@ -143,7 +143,7 @@
 
 \title{A note on random numbers}
 
-\author{Christophe Dutang\\ ENSIMAG, Grenoble INP\\}
+\author{Christophe Dutang and Diethelm Wuertz}
 
 \date{June 2008\\ \vspace{3cm}}
 
@@ -679,7 +679,7 @@ $n$	&	$p=2$ & $p=3$ & $p=5$ & 	$p=2$& $p=3$& $p=5$\\
 \hline
 7	&	111	&	21	&	12	&	0.875	&	0.555&0.44\\
 \hline
-8	&	1000	&	22	&	13	&	0.0625	&	0.555&0.64\\
+8	&	1000	&	22	&	13	&	0.0625	&	0.888&0.64\\
 \hline
 \end {tabular}
 \caption{Van der Corput first terms}
@@ -807,6 +807,57 @@ $n$	&	$a_{13}a_{12}a_{11}\fmark$ & $a_{23}a_{22}a_{21}$ & $\phi(a_{13}..)$ & $\p
 \ftext{we omit commas for simplicity.}
 
 %TODO add the generalized Faure sequence
+
+\subsubsection{Sobol sequences}
+This sub-section is taken from unpublished work of Diethelm Wuertz. 
+
+The Sobol sequence $x_n=(x_{n,1}, \dots, x_{n,d})$ is generated from a set of binary functions
+of length $\omega$ bits ($v_{i,j}$ with $i=1,\dots,\omega$ and $j=1,\dots,d$). $v_{i,j}$, generally
+called direction numbers are numbers related to primitive (irreducible) polynomials over
+the field $\{0,1\}$.
+
+In order to generate the $j$th dimension, we suppose that the primitive polynomial in dimension $j$
+is 
+$$
+p_j(x) = x^q+a_1x^{q-1}+\dots +a_{q-1}x+1.
+$$
+Then we define the following $q$-term recurrence relation on integers $(M_{i,j})_i$
+\begin{multline*}
+M_{i,j} = 2a_1 M_{i-1,j} \oplus 2^2a_2 M_{i-2,j} \oplus \dots\\ 
+\oplus 2^{q-1}a_{q-1} M_{i-q+1,j} \oplus 2^qa_q M_{i-q,j} \oplus M_{i-q}
+\end{multline*}
+where $i>q$. 
+
+This allow to compute direction numbers as
+$$
+v_{i,j} = M_{i,j}/2^i.
+$$
+This recurrence is initialized by the set of arbitrary odd integers $v_{1,j} 2^\omega, \dots, v_{,j} 2^q\omega$, which are smaller than $2, \dots, 2^q$ respectively. Finally the $j$th dimension of the $n$th term of the Sobol sequence is with
+$$
+x_{n,j} = b_1 v_{1,j} \oplus  b_2 v_{2,j} \oplus \dots \oplus v_{\omega, j},
+$$  
+where $b_k$'s are the bits of integer $n = \sum_{k=0}^{\omega-1}b_k 2^k$. The requirement is to use a different primitive polynomial in each dimension. An e?cient variant to implement the generation of Sobol sequences was proposed by \cite{antonov}. The use of this approach is demonstrated in \cite{bratley} and \cite{pressetal}.
+
+\subsubsection{Scrambled Sobol sequences}
+Randomized QMC methods are the basis for error estimation. A generic recipe is the following: 
+Let $A_1 , \dots , A_n$ be a QMC point set and $X_i$ a scrambled version of $A_i$. 
+Then we are searching for randomizations which have the following properties: 
+\begin{itemize}
+\item Uniformity: The $X_i$ makes the approximator 
+$\hat I = \frac{1}{N} \sum_{i=1}^N f (X_i )$ an unbiased estimate of $I = \int_{[0,1]^d}f (x)dx$.
+\item Equidistribution: The $X_i$ form a point set with probability 1; i.e. the random- 
+ization process has preserved whatever special properties the underlying point set 
+had. 
+\end{itemize}
+The Sobol sequences can be scrambled by the Owen's type of scrambling, by the Faure-Tezuka 
+type of scrambling, and by a combination of both. 
+
+The program we have interfaced to R is based on the ACM Algorithm 659 described by 
+\cite{bratley} and \cite{bratleyfoxniederreiter}. Modifications by \cite{hong} allow for a randomization of the sequences. Furthermore, in the case of the Sobol sequence we followed the implementation of \cite{joekuo} which can handle up to 1111 dimensions.
+
+To interface the Fortran routines to the R environment some modifications had to be performed. One important point was to make possible to re-initialize a sequence and to recall a sequence without renitialization from R. This required to remove BLOCKDATA, COMMON and SAVE statements from the original code and to pass the initialization variables through the argument lists of the subroutines, so that these variables can be accessed from R.
+
+
 
 \subsubsection{Kronecker sequences}
 Another kind of low-discrepancy sequence uses irrational number and fractional part.
@@ -1081,9 +1132,86 @@ the strength of their code. For example, we do not use block generation and SSE2
 
 
 \subsection{Quasi-random generation}
-In a near future, \code{randtoolbox} package will have more than one quasi-random
-sequence. Currently, we only have the Torus sequence with the function \code{torus}.
-Its usage is the same.
+
+\subsubsection{Halton sequences}
+The function \code{halton} implements both the Van Der Corput (unidimensional) and
+Halton sequences. The usage is similar to pseudo-RNG functions 
+
+%%% R code
+<<halton, fig=FALSE, echo=TRUE, eval=FALSE>>=
+halton(10)
+halton(10, 2)
+@
+<<halton2, fig=FALSE, echo=FALSE>>=
+options( width =40)
+halton(10)
+halton(10, 2)
+@
+%%%
+
+You can use the \code{init} argument set to FALSE (default is TRUE) if you want that two calls to \code{halton} functions do not produce the same sequence (but the second call continues the sequence from the first call.
+
+%%% R code
+<<halton3, fig=FALSE, echo=TRUE, eval=FALSE>>=
+halton(5)
+halton(5, init=FALSE)
+@
+<<halton4, fig=FALSE, echo=FALSE>>=
+options( width =40)
+halton(5)
+halton(5, init=FALSE)
+@
+%%%
+
+\code{init} argument is also available for other quasi-RNG functions.
+
+\subsubsection{Sobol sequences}
+The function \code{sobol} implements the Sobol sequences with optional sampling (Owen, Faure-Tezuka or both type of sampling). This sub-section also comes from an unpublished work of Diethelm Wuertz.
+
+To use the different scrambling option, you just to use the \code{scrambling} argument:
+0 for (the default) no scrambling, 1 for Owen, 2 for Faure-Tezuka and 3 for both types of scrambling.
+ 
+ %%% R code
+<<sobol, fig=FALSE, echo=TRUE, eval=FALSE>>=
+sobol(10)
+sobol(10, scramb=3)
+@
+<<sobol2, fig=FALSE, echo=FALSE>>=
+options( width =40)
+sobol(10)
+sobol(10, scramb=3)
+@
+%%%
+
+It is easier to see the impact of scrambling by plotting two-dimensional sequence in the unit square. Below we plot the default Sobol sequence and Sobol scrambled by Owen algorithm, see figure \ref{sobol01}.
+
+
+%%% R code
+<<unitsquare1, fig=FALSE, echo=TRUE, eval=FALSE>>=
+par(mfrow = c(2,1))
+plot(sobol(1000, 2))
+plot(sobol(10^3, 2, scram=1))
+@
+\begin{figure}[!htb]
+\begin{center}
+<<unitsquare2, fig=TRUE, echo=FALSE, width=5, height=10, eps=FALSE>>=
+par(mfrow = c(2,1))
+plot(sobol(1000, 2), xlab ="u", ylab="v", main="Sobol (no scrambling)")
+plot(sobol(10^3, 2, scram=1), xlab ="u", ylab="v", main="Sobol (Owen)")
+@
+\caption{Sobol (two sampling types)}
+\label{sobol01}
+\end{center}
+\end{figure} 
+%%%
+
+
+\subsubsection{Faure sequences}
+In a near future, \code{randtoolbox} package will have an implementation of Faure sequences.
+For the moment, there is no function \code{faure}.
+
+\subsubsection{Torus algorithm (or Kronecker sequence)}
+The function \code{torus} implements the Torus algorithm. 
 %%% R code
 <<torus, fig=FALSE, echo=TRUE, eval=FALSE>>=
 torus(10)
@@ -1142,7 +1270,7 @@ torus(5,  mixed =TRUE)
 @
 %%%
 In order to see the difference between, we can plot the empirical autocorrelation 
-function (\code{acf} in \soft{R}).
+function (\code{acf} in \soft{R}), see figure \ref{acfplot}.
 %%% R code
 <<torus9, fig=FALSE, echo=TRUE, eval=FALSE>>=
 par(mfrow = c(2,1))
@@ -1157,6 +1285,7 @@ acf(torus(10^5))
 acf(torus(10^5, mix=TRUE))
 @
 \caption{Auto-correlograms}
+\label{acfplot}
 \end{center}
 \end{figure}
 %%%
@@ -1170,20 +1299,44 @@ To understand the difference between pseudo and quasi RNGs,
 we can make visual comparisons of how random numbers
 fill the unit square.
 
+First we compare SFMT algorithm with Torus algorithm on figure \ref{SFMTTorus}.
+
 %%% R code
-<<unitsquare, fig=FALSE, echo=TRUE, eval=FALSE>>=
+<<unitsquare3, fig=FALSE, echo=TRUE, eval=FALSE>>=
 par(mfrow = c(2,1))
 plot(SFMT(1000, 2))
 plot(torus(10^3, 2))
 @
 \begin{figure}[!htb]
 \begin{center}
-<<unitsquare, fig=TRUE, echo=FALSE, width=5, height=10, eps=FALSE>>=
+<<unitsquare4, fig=TRUE, echo=FALSE, width=5, height=10, eps=FALSE>>=
 par(mfrow = c(2,1))
-#plot(congruRand(1000, 2), xlab ="u", ylab="v", main="Park Miller")
 plot(SFMT(1000, 2), xlab ="u", ylab="v", main="SFMT")
 plot(torus(1000, 2), xlab ="u", ylab="v", main="Torus")
 @
+\caption{SFMT vs. Torus algorithm}
+\label{SFMTTorus}
+\end{center}
+\end{figure} 
+%%%
+
+Secondly we compare WELL generator with Faure-Tezuka-scrambled Sobol sequences on figure \ref{WELLSobol}.
+
+%%% R code
+<<unitsquare5, fig=FALSE, echo=TRUE, eval=FALSE>>=
+par(mfrow = c(2,1))
+plot(WELL(1000, 2))
+plot(sobol(10^3, 2, scram=2))
+@
+\begin{figure}[!htb]
+\begin{center}
+<<unitsquare6, fig=TRUE, echo=FALSE, width=5, height=10, eps=FALSE>>=
+par(mfrow = c(2,1))
+plot(WELL(1000, 2), xlab ="u", ylab="v", main="WELL 512a")
+plot(sobol(10^3, 2, scram=2), xlab ="u", ylab="v", main="Sobol (Faure-Tezuka)")
+@
+\caption{WELL vs. Sobol}
+\label{WELLSobol}
 \end{center}
 \end{figure} 
 %%%
@@ -1194,11 +1347,78 @@ plot(torus(1000, 2), xlab ="u", ylab="v", main="Torus")
 
 %3D graphs??
 
-%\clearpage
+%\newpage
 
 \subsection{Applications of QMC methods}
+
+\subsubsection{$d$ dimensional integration}
+Now we will show how to use low-discrepancy sequences to compute a $d$-dimensional integral defined on the unit hypercube. We want compute
+\begin{multline*}
+I_{cos}(d) = \int_{\mathbb R^d} cos(|| x ||) e^{|| x ||^2 } dx\\
+\approx \frac{\pi^{d/2}}{n} \sum_{i=1}^n cos\left(\sqrt{ \sum\limits_{j=1}^d \left(\Phi^{-1} \right)^2 (t_{ij}) } \right)
+\end{multline*}
+where $\Phi^{-1}$ denotes the quantile function of the standard normal distribution.
+
+We simply use the following code to compute the $I_{cos}(25)$ integral whose exact value is $-1356914$.
+
+%%% R code
+<<integralcos, fig=FALSE, echo=TRUE, eval=FALSE>>=
+I25 <- -1356914
+nb <- c(1200, 14500, 214000)
+ans <- NULL
+for(i in 1:3)
+{
+	tij <- sobol(nb[i], dim=25, scramb=2, norm=TRUE )
+	Icos <- mean(cos(sqrt( apply( tij^2/2, 1, sum ) ))) * pi^(25/2)
+	ans <- rbind(ans, c(n=nb[i], I25=Icos, Delta=(Icos-I25)/I25 ))
+}
+data.frame(ans)
+@
+
+<<integralcos2, fig=FALSE, echo=FALSE>>=
+options( width =40)
+I25 <- -1356914
+nb <- c(1200, 14500, 214000)
+ans <- NULL
+for(i in 1:3)
+{
+	tij <- sobol(nb[i], dim=25, scramb=2, norm=TRUE )
+	Icos <- mean(cos(sqrt( apply( tij^2/2, 1, sum ) ))) * pi^(25/2)
+	ans <- rbind(ans, c(n=nb[i], I25=Icos, Delta=(Icos-I25)/I25 ))
+}
+data.frame(ans)
+@
+%%%
+
+The results obtained from the Sobol Monte Carlo method in comparison to those obtained by \cite{papageorgiou} with a generalized Faure sequence and in comparison with the quadrature rules of \cite{mcnamee}, \cite{genz} and \cite{paterson} are listed in the following table.
+
+\begin{table}[!htb]
+\center
+\begin{tabular}{lccc}
+\hline
+n & 1200 & 14500 & 214000\\
+\hline
+Faure (P\&T) &  0.001 & 0.0005 & 0.00005\\
+\hline
+Sobol (s=0) & 0.02 & 0.003 & 0.00006\\
+s=1 & 0.004 & 0.0002 & 0.00005\\
+s=2 & 0.001 & 0.0002 & 0.000002\\
+s=3 & 0.002 & 0.0009 & 0.00003\\
+\hline
+Quadrature (McN\&S) & 2 & 0.75 & 0.07\\
+G\&P & 2 & 0.4 & 0.06\\
+\hline
+\end {tabular}
+\caption{list of errors}
+%\label{parkmiller}
+\end{table}
+
+
+
+\subsubsection{Pricing of a Vanilla Call}
+
 In this sub-section, we will present one financial application of QMC methods.
-Firstly, we want to price a vanilla European call in the framework of a geometric
+We want to price a vanilla European call in the framework of a geometric
 Brownian motion for the underlying asset. Those options are already 
 implemented in the package \code{fOptions} of \code{Rmetrics}
 bundle\footnote{created by \cite{foptions}.}.
@@ -1237,8 +1457,9 @@ As showed on figure \ref{vanilla}, the convergence of Monte Carlo price for the 
 is extremely fast. Whereas for SF-Mersenne Twister and Park Miller prices, the convergence
 is very slow.
 
+\subsubsection{Pricing of a DOC}
 
-Secondly, we want to price a barrier option: a down-out call i.e. an Downward
+Now, we want to price a barrier option: a down-out call i.e. an Downward
 knock-Out Call\footnote{ DOC is disactived when the underlying
 asset hits the barrier.}. These kind of options belongs to the path-dependent
 option family, i.e. we need to simulate whole trajectories of the underlying asset $S$ on $[0,T]$.
@@ -1743,6 +1964,9 @@ void R_init_pkg(DllInfo *dll)
 }
 \end{verbatim}
 See file \code{randtoolbox.h} to find headers of RNGs.
+Examples of $C$ calls to other functions can be found in this package 
+with the WELL RNG functions.
+
 The definitive reference for these matters remains the \emph{Writing R
 Extensions} manual, page 20 in sub-section ``specifying imports
 exports'' and page 64 in sub-section ``registering native routines''.

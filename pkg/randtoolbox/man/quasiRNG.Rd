@@ -137,6 +137,14 @@ par(mfrow = c(1,2))
 acf(torus(10^6))
 acf(torus(10^6, mix=TRUE))
 
+#usage of the init argument
+torus(5)
+torus(5, init=FALSE)
+
+#should be equal to the combination of the two
+#previous call
+torus(10)
+
 # (2) Halton sequences
 #
 
@@ -145,6 +153,14 @@ halton(n = 10, dim = 5)
 
 # normal variate
 halton(n = 10, dim = 5, normal = TRUE)
+
+#usage of the init argument
+halton(5)
+halton(5, init=FALSE)
+
+#should be equal to the combination of the two
+#previous call
+halton(10)
 
 # some plots
 par(mfrow = c(2, 2), cex = 0.75)
@@ -170,6 +186,13 @@ hist(sobol(5000, 1, scrambling = 2), main = "Uniform Sobol",
 hist(sobol(5000, 1, scrambling = 2, normal = TRUE), main = "Normal Sobol", 
   xlab = "x", col = "steelblue3", border = "white")
 
+#usage of the init argument
+sobol(5)
+sobol(5, init=FALSE)
+
+#should be equal to the combination of the two
+#previous call
+sobol(10)
 
 # (4) computation times on my macbook, mean of 1000 runs
 #
