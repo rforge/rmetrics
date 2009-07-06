@@ -1,7 +1,7 @@
 /* David */
 
 - sinnvolle 'examples' section
-- schöne namen für .Rd files
+
 
 /* Philipp */
 
@@ -16,20 +16,3 @@
 - methoden wie z.B: logLik, (step.AIC.schwartz.fit.2.factor)
 - fit2factor: rho war mal auf ca. 2 geschätzt. vielleicht sollten wir
   rho auf [-1 , 1] constrainen, z.b. mit tangens.
-
-
-*/ AUFBAU PRÄSENTATION */
-
-1. MOTIVATION (KTI Projekt, noch keine Comm-Modelle in R)
-2. COMMODITY MODELLE (Terminstruktor Modelle, Spot-Modelle, Terminkurve, Convenience Yield, Mean-reverting)
-3. SCHWARTZ 2-FAKTOR MODELL ('most parsimonious' Modell von Schwartz, Einfache Kalib anhand hist. Daten)
-4. THEORIE (2dim stoch. diff eq., affine Terminstruktur der Terminpreise --> Zustandsraumform ohne approx.,
-   Europ. Optionen, gem. Verteilung der Zustandsvar. --> VaR, ES
-
-5. STATE SPACE BLA BLA (Parameterschätzproblem, Zustandsvariablen nicht beobachtbar)
-6. PAKET ALLGEMEIN (Funktionen)
-7. PAKET IN ACTION (Tutorial, FKF)
-8. EMPIRISCHE STUDIE
-
-
-/* MISC */

@@ -157,13 +157,13 @@ $\tilde{\mu}_{\delta}$).
 \end{eqnarray}
 with
 \begin{align}
-  A(\tau) &= \left(r - \tilde{\alpha} + \frac{1}{2}
+  A(T) &= \left(r - \tilde{\alpha} + \frac{1}{2}
     \frac{\sigmaE^2}{\kappa^2} - \frac{\sigmaS \sigmaE
-      \rho}{\kappa}\right) \tau  + \frac{1}{4} \sigmaE^2 \frac{1 - e^{-
-      2 \kappa \tau}}{\kappa^3} + \left( \kappa\tilde{\alpha} +
+      \rho}{\kappa}\right) T  + \frac{1}{4} \sigmaE^2 \frac{1 - e^{-
+      2 \kappa T}}{\kappa^3} + \left( \kappa\tilde{\alpha} +
     \sigmaS \sigmaE \rho - \frac{\sigmaE^2}{\kappa} \right) \frac{1 -
-    e^{-\kappa \tau}}{\kappa^2}\label{eq:A-futures},\\
-  B(\tau) &= - \frac{1 - e^{-\kappa \tau}}{\kappa}\label{eq:B-futures}.
+    e^{-\kappa T}}{\kappa^2}\label{eq:A-futures},\\
+  B(T) &= - \frac{1 - e^{-\kappa T}}{\kappa}\label{eq:B-futures}.
 \end{align}
 % <============================================================>
 \subsection{Distribution of Futures Prices}
@@ -249,7 +249,7 @@ the price of a European call option $C$ at time zero with maturity $t$,
 exercise price $K$ written on a commodity futures contract with
 maturity $T$ is given by
 \begin{align}
-  C &= \mathbb{E}^{\mathbb{Q}}\left[e^{-r\,t}(G(S_t, \delta_t, T - t)
+  C^G &= \mathbb{E}^{\mathbb{Q}}\left[e^{-r\,t}(G(S_t, \delta_t, T - t)
     - K)^+\right]
 \end{align}
 Since the futures price $G(S_t, \delta_t, T - t)$ is log-normally
@@ -275,7 +275,7 @@ function.
 
 The following put-call parity is established
 \begin{equation}
-C^G - P^G = P(0,t)\left\{G(0,t)e^\alpha - K\right\}.
+C^G - P^G = P(0,t)\left\{G(0,t) - K\right\}.
 \end{equation}
 Thus, the price for a European put option $P^G$ at time zero with
 maturity $t$, exercise price $K$ written on a commodity futures

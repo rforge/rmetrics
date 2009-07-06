@@ -1,5 +1,5 @@
 setGeneric("pricefutures",
-           function(ttm = 1, s0 = 50, ...)
+           function(ttm = 1, object, ...)
            standardGeneric("pricefutures"),
            package = "schwartz97")
 
@@ -26,13 +26,13 @@ pricefutures.default <- function(ttm = 1, s0 = 50, delta0 = 0,
     return(s0 * exp(delta0 * compB + compA))
 }
 
-setMethod("pricefutures", signature(ttm = "ANY", s0 = "numeric"),
+setMethod("pricefutures", signature(ttm = "ANY", object = "missing"),
           pricefutures.default)
 
-pricefutures.schwartz2factor <- function(ttm = 1, s0, r = 0.05,
+pricefutures.schwartz2factor <- function(ttm = 1, object, r = 0.05,
                                          lambda = 0, alphaT = NULL)
 {
-    tmp.coef <- coef(s0)
+    tmp.coef <- coef(object)
 
     delta0 <- tmp.coef$delta0
     sigmaS <- tmp.coef$sigmaS
@@ -58,12 +58,12 @@ pricefutures.schwartz2factor <- function(ttm = 1, s0, r = 0.05,
 
 }
 
-setMethod("pricefutures", signature(ttm = "ANY", s0 = "schwartz2factor"),
+setMethod("pricefutures", signature(ttm = "ANY", object = "schwartz2factor"),
           pricefutures.schwartz2factor)
 
-pricefutures.fit.schwartz2factor <- function(ttm = 1, s0)
+pricefutures.fit.schwartz2factor <- function(ttm = 1, object)
 {
-    tmp.coef <- coef(s0)
+    tmp.coef <- coef(object)
 
     delta0 <- tmp.coef$delta0
     sigmaS <- tmp.coef$sigmaS
@@ -81,14 +81,14 @@ pricefutures.fit.schwartz2factor <- function(ttm = 1, s0)
 }
 
 setMethod("pricefutures", signature(ttm = "ANY",
-                                    s0 = "fit.schwartz2factor"),
+                                    object = "fit.schwartz2factor"),
           pricefutures.fit.schwartz2factor)
 
 
 ## <---------- ---------- ---------- ---------- ---------- ---------->
 setGeneric("priceoption",
            function(type = c("call", "put"), time = 0.5, Time = 1,
-                    K = 40, g0 = 50, ...)
+                    K = 40, object, ...)
            standardGeneric("priceoption"),
            package = "schwartz97")
 
@@ -121,17 +121,17 @@ priceoption.default <- function(type = c("call", "put"), time = 0.5,
 
 setMethod("priceoption", signature(type = "ANY", time = "ANY",
                                    Time = "ANY", K = "ANY",
-                                   g0 = "numeric"),
+                                   object = "missing"),
           priceoption.default)
 
 priceoption.schwartz2factor <- function(type = c("call", "put"),
                                         time = 0.5, Time = 1, K = 40,
-                                        g0, r = 0.05, lambda = 0, alphaT = NULL)
+                                        object, r = 0.05, lambda = 0, alphaT = NULL)
 {
     if(Time < time)
         stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
 
     if(missing(lambda) & missing(alphaT)){
         warning("Both 'alphaT' and 'lambda' are missing!\n",
@@ -143,7 +143,7 @@ priceoption.schwartz2factor <- function(type = c("call", "put"),
       warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
     }
 
-    G <- pricefutures(ttm = Time - time, s0 = g0, r = r, alphaT = alphaT)
+    G <- pricefutures(ttm = Time - time, object = object, r = r, alphaT = alphaT)
 
     sigmaS <- tmp.coef$sigmaS
     kappa <- tmp.coef$kappa
@@ -159,24 +159,24 @@ priceoption.schwartz2factor <- function(type = c("call", "put"),
 
 setMethod("priceoption", signature(type = "ANY", time = "ANY",
                                    Time = "ANY", K = "ANY",
-                                   g0 = "schwartz2factor"),
+                                   object = "schwartz2factor"),
           priceoption.schwartz2factor)
 
 priceoption.fit.schwartz2factor <- function(type = c("call", "put"),
-                                            time = 0.5, Time = 1, K = 40, g0)
+                                            time = 0.5, Time = 1, K = 40, object)
 {
     if(Time < time)
         stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
-    G <- pricefutures(ttm = Time - time, s0 = g0)
+    G <- pricefutures(ttm = Time - time, object = object)
 
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
     sigmaS <- tmp.coef$sigmaS
     kappa <- tmp.coef$kappa
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    r <- g0@r
+    r <- object@r
 
     type <- match.arg(type)
 
@@ -187,5 +187,5 @@ priceoption.fit.schwartz2factor <- function(type = c("call", "put"),
 
 setMethod("priceoption", signature(type = "ANY", time = "ANY",
                                    Time = "ANY", K = "ANY",
-                                   g0 = "fit.schwartz2factor"),
+                                   object = "fit.schwartz2factor"),
           priceoption.fit.schwartz2factor)

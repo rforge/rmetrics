@@ -3,15 +3,15 @@
 \title{Schwartz two-factor Model: Distribution of State Variables}
 
 \alias{pstate}
-\alias{pstate,ANY,ANY,ANY,numeric-method}
+\alias{pstate,ANY,ANY,ANY,missing-method}
 \alias{pstate,ANY,ANY,ANY,schwartz2factor-method}
 
 \alias{dstate}
-\alias{dstate,ANY,ANY,numeric-method}
+\alias{dstate,ANY,ANY,missing-method}
 \alias{dstate,ANY,ANY,schwartz2factor-method}
 
 \alias{qstate}
-\alias{qstate,ANY,ANY,numeric-method}
+\alias{qstate,ANY,ANY,missing-method}
 \alias{qstate,ANY,ANY,schwartz2factor-method}
 
 % <---------------------------------------------------------------------->
@@ -28,24 +28,24 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{dstate}{ANY,ANY,numeric}(x, time = 1, s0 = 50, delta0 = 0,
+\S4method{dstate}{ANY,ANY,missing}(x, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, \dots)
 
-\S4method{dstate}{ANY,ANY,schwartz2factor}(x, time = 1, s0, \dots)
+\S4method{dstate}{ANY,ANY,schwartz2factor}(x, time = 1, object, \dots)
 
 
-\S4method{pstate}{ANY,ANY,ANY,numeric}(lower, upper, time = 1, s0 = 50, delta0 = 0,
+\S4method{pstate}{ANY,ANY,ANY,missing}(lower, upper, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, \dots)
 
-\S4method{pstate}{ANY,ANY,ANY,schwartz2factor}(lower, upper, time = 1, s0, \dots)
+\S4method{pstate}{ANY,ANY,ANY,schwartz2factor}(lower, upper, time = 1, object, \dots)
 
-\S4method{qstate}{ANY,ANY,numeric}(p, time = 1, s0 = 50, delta0 = 0,
+\S4method{qstate}{ANY,ANY,missing}(p, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, tail = "lower.tail", \dots)
 
-\S4method{qstate}{ANY,ANY,schwartz2factor}(p, time = 1, s0, tail = "lower.tail", \dots)
+\S4method{qstate}{ANY,ANY,schwartz2factor}(p, time = 1, object, tail = "lower.tail", \dots)
 
 }
 
@@ -65,10 +65,10 @@
     \code{\link[mvtnorm:00Index]{mvtnorm}}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
-  \item{s0}{Either an object inheriting from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}} or a
-    \code{numeric} representing the initial value of the commodity spot
-    price.}
+  \item{object}{An object inheriting from class
+    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
+  \item{s0}{A \code{numeric} representing the initial value of the
+    commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
@@ -125,7 +125,7 @@ pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
 dstate(x = c(50, 0.03), time = 2, model)
 
 ## Quantile
-qstate(p = 0.5, s0 = model)
+qstate(p = 0.5, obj = model)
 
 }
 

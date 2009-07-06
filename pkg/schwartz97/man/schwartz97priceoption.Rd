@@ -3,7 +3,7 @@
 \title{Schwartz two-factor Model: European Option Prices}
 
 \alias{priceoption}
-\alias{priceoption,ANY,ANY,ANY,ANY,numeric-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,missing-method}
 \alias{priceoption,ANY,ANY,ANY,ANY,schwartz2factor-method}
 \alias{priceoption,ANY,ANY,ANY,ANY,fit.schwartz2factor-method}
 
@@ -18,14 +18,14 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{priceoption}{ANY,ANY,ANY,ANY,numeric}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
+\S4method{priceoption}{ANY,ANY,ANY,ANY,missing}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
             g0 = 50, sigmaS = 0.3, kappa = 1, sigmaE = 0.5,
             rho = 0.75, r = 0.05)
 
-\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0,
+\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, object,
             r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{priceoption}{ANY,ANY,ANY,ANY,fit.schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0)
+\S4method{priceoption}{ANY,ANY,ANY,ANY,fit.schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, object)
 
 }
 
@@ -37,9 +37,10 @@
   \item{time}{Exercise time of the option.}
   \item{Time}{Maturity date of the underlying instrument (see \bold{Details}).}
   \item{K}{Strike price at exercise time \code{time}.}
-  \item{g0}{A \code{numeric} representing the current futures price ar
-    an object of class \code{\link[=schwartz2factor-class]{schwartz2factor}},
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} (see \bold{Details}).}
+  \item{object}{An object of class
+    \code{\link[=schwartz2factor-class]{schwartz2factor}} or
+    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}.}
+  \item{g0}{A \code{numeric} representing the current futures price.}
   \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
   \item{sigmaS}{Diffusion parameter of the spot price-process.}
   \item{sigmaE}{Diffusion parameter of the convenience-yield process.}
@@ -61,17 +62,21 @@
   futures price towards the spot price at maturity.  In general the
   option expires before the futures contract (\code{time < Time}).\cr
 
-  \code{g0} can either be the current futures price or objects of class
-  \code{\link[=schwartz2factor-class]{schwartz2factor}} or
-  \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}. In the
-  latter cases, the futures price is computed first and then plugged
-  into the options pricing formula by the argument \code{g0}. \cr
-
   The market price of convenience yield risk can either be specified
   explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
   \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
+
+}
+% <---------------------------------------------------------------------->
+\note{
+
+  If either a \code{\link[=schwartz2factor-class]{schwartz2factor}},
+  \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} object
+  is submitted the futures price is calculated first and then the
+  default function is called with the calculated futures price
+  \code{g0}.
 
 }
 

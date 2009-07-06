@@ -3,7 +3,7 @@
 \title{Schwartz two-factor Model: Filter futures data}
 
 \alias{filter2factor}
-\alias{filter2factor,ANY,ANY,numeric-method}
+\alias{filter2factor,ANY,ANY,missing-method}
 \alias{filter2factor,ANY,ANY,schwartz2factor-method}
 \alias{filter2factor,ANY,ANY,fit.schwartz2factor-method}
 
@@ -17,17 +17,17 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{filter2factor}{ANY,ANY,numeric}(data, ttm, s0 = 50, delta0 = 0,
+\S4method{filter2factor}{ANY,ANY,missing}(data, ttm, s0 = 50, delta0 = 0,
               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
               rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL,
               deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
               P0 = 0.5 * diag(c(log(s0), delta0)))
 
-\S4method{filter2factor}{ANY,ANY,schwartz2factor}(data, ttm, s0, r = 0.05, lambda = 0, alphaT = NULL,
+\S4method{filter2factor}{ANY,ANY,schwartz2factor}(data, ttm, object, r = 0.05, lambda = 0, alphaT = NULL,
              deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
              P0 = 0.5 * diag(c(log(s0), delta0)))
 
-\S4method{filter2factor}{ANY,ANY,fit.schwartz2factor}(data, ttm, s0)
+\S4method{filter2factor}{ANY,ANY,fit.schwartz2factor}(data, ttm, object)
 
 }
 
@@ -35,11 +35,10 @@
 \arguments{
   \item{data}{A matrix with futures prices.}
   \item{ttm}{A matrix with the corresponding time to maturity (see \bold{Details}).}
-  \item{s0}{Either an object of class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}},
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}
-    or a \code{numeric} representing the initial value of the commodity spot
-    price.}
+  \item{object}{An object inheriting from class
+    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
+  \item{s0}{A \code{numeric} representing the initial value of the
+    commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{sigmaS}{Diffusion parameter of the spot price process.}

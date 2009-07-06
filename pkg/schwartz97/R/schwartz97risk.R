@@ -2,7 +2,7 @@
 ## Compute risk measures
 
 setGeneric("VaRfutures",
-           function(level = 0.95, ttm = 1, g0 = 50, ...)
+           function(level = 0.95, ttm = 1, object, ...)
            standardGeneric("VaRfutures"),
            package = "schwartz97")
 
@@ -30,13 +30,13 @@ VaRfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, del
 }
 
 setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "numeric"),
+                                  object = "missing"),
           VaRfutures.default)
 
-VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, r = 0.05,
+VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object, r = 0.05,
                                        lambda = 0, alphaT = NULL)
 {
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
 
     if(missing(lambda) & missing(alphaT)){
         warning("Both 'lambda' and 'alphaT' are missing!\n",
@@ -45,9 +45,8 @@ VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, 
     }else if(missing(alphaT)){
         alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
     }
-    g0 <- pricefutures(ttm, g0, r = 0.05, alphaT = alphaT)
+    g0 <- pricefutures(ttm, object, r = 0.05, alphaT = alphaT)
 
-    g0 <- tmp.coef$s0
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
     sigmaS <- tmp.coef$sigmaS
@@ -63,14 +62,13 @@ VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, 
 }
 
 setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "schwartz2factor"),
+                                  object = "schwartz2factor"),
           VaRfutures.schwartz2factor)
 
-VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0)
+VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object)
 {
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
 
-    g0 <- tmp.coef$s0
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
     sigmaS <- tmp.coef$sigmaS
@@ -80,7 +78,7 @@ VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, 
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    g0 <- pricefutures(ttm, g0)
+    g0 <- pricefutures(ttm, object)
 
     return(VaRfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
                       delta0 = delta0,
@@ -90,13 +88,13 @@ VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, 
 }
 
 setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "fit.schwartz2factor"),
+                                  object = "fit.schwartz2factor"),
           VaRfutures.fit.schwartz2factor)
 
 
 ## <---------- ---------- ---------- ---------- ---------- ---------->
 setGeneric("ESfutures",
-           function(level = 0.95, ttm = 1, g0 = 50, ...)
+           function(level = 0.95, ttm = 1, object, ...)
            standardGeneric("ESfutures"),
            package = "schwartz97")
 
@@ -125,13 +123,13 @@ ESfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, delt
 }
 
 setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "numeric"),
+                                 object = "missing"),
           ESfutures.default)
 
-ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, r = 0.05,
+ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object, r = 0.05,
                                       lambda = 0, alphaT = NULL)
 {
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
 
     if(missing(lambda) & missing(alphaT)){
         warning("Both 'lambda' and 'alphaT' are missing!\n",
@@ -140,9 +138,8 @@ ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, r
     }else if(missing(alphaT)){
         alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
     }
-    g0 <- pricefutures(ttm, g0, r = 0.05, alphaT = alphaT)
+    g0 <- pricefutures(ttm, object, r = 0.05, alphaT = alphaT)
 
-    g0 <- tmp.coef$s0
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
     sigmaS <- tmp.coef$sigmaS
@@ -158,14 +155,13 @@ ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0, r
 }
 
 setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "schwartz2factor"),
+                                  object = "schwartz2factor"),
           ESfutures.schwartz2factor)
 
-ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g0)
+ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object)
 {
-    tmp.coef <- coef(g0)
+    tmp.coef <- coef(object)
 
-    g0 <- tmp.coef$s0
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
     sigmaS <- tmp.coef$sigmaS
@@ -175,7 +171,7 @@ ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    g0 <- pricefutures(ttm, g0)
+    g0 <- pricefutures(ttm, object)
 
     return(ESfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
                      delta0 = delta0,
@@ -185,5 +181,5 @@ ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, g
 }
 
 setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
-                                  g0 = "fit.schwartz2factor"),
+                                 object = "fit.schwartz2factor"),
           ESfutures.fit.schwartz2factor)

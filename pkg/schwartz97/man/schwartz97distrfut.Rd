@@ -3,22 +3,22 @@
 \title{Schwartz two-factor Model: Distribution of Futures Prices}
 
 \alias{pfutures}
-\alias{pfutures,ANY,ANY,numeric-method}
+\alias{pfutures,ANY,ANY,missing-method}
 \alias{pfutures,ANY,ANY,schwartz2factor-method}
 \alias{pfutures,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{dfutures}
-\alias{dfutures,ANY,ANY,numeric-method}
+\alias{dfutures,ANY,ANY,missing-method}
 \alias{dfutures,ANY,ANY,schwartz2factor-method}
 \alias{dfutures,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{qfutures}
-\alias{qfutures,ANY,ANY,numeric-method}
+\alias{qfutures,ANY,ANY,missing-method}
 \alias{qfutures,ANY,ANY,schwartz2factor-method}
 \alias{qfutures,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{rfutures}
-\alias{rfutures,ANY,ANY,numeric-method}
+\alias{rfutures,ANY,ANY,missing-method}
 \alias{rfutures,ANY,ANY,schwartz2factor-method}
 \alias{rfutures,ANY,ANY,fit.schwartz2factor-method}
 
@@ -34,41 +34,41 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{dfutures}{ANY,ANY,numeric}(x, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{dfutures}{ANY,ANY,missing}(x, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{dfutures}{ANY,ANY,schwartz2factor}(x, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{dfutures}{ANY,ANY,schwartz2factor}(x, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{dfutures}{ANY,ANY,fit.schwartz2factor}(x, ttm = 1, s0, \dots)
+\S4method{dfutures}{ANY,ANY,fit.schwartz2factor}(x, ttm = 1, object, \dots)
 
 
-\S4method{pfutures}{ANY,ANY,numeric}(q, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{pfutures}{ANY,ANY,missing}(q, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{pfutures}{ANY,ANY,schwartz2factor}(q, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{pfutures}{ANY,ANY,schwartz2factor}(q, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{pfutures}{ANY,ANY,fit.schwartz2factor}(q, ttm = 1, s0, \dots)
+\S4method{pfutures}{ANY,ANY,fit.schwartz2factor}(q, ttm = 1, object, \dots)
 
-\S4method{qfutures}{ANY,ANY,numeric}(p, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{qfutures}{ANY,ANY,missing}(p, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{qfutures}{ANY,ANY,schwartz2factor}(p, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{qfutures}{ANY,ANY,schwartz2factor}(p, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{qfutures}{ANY,ANY,fit.schwartz2factor}(p, ttm = 1, s0, \dots)
+\S4method{qfutures}{ANY,ANY,fit.schwartz2factor}(p, ttm = 1, object, \dots)
 
-\S4method{rfutures}{ANY,ANY,numeric}(n, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{rfutures}{ANY,ANY,missing}(n, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{rfutures}{ANY,ANY,schwartz2factor}(n, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL)
+\S4method{rfutures}{ANY,ANY,schwartz2factor}(n, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{rfutures}{ANY,ANY,fit.schwartz2factor}(n, ttm = 1, s0)
+\S4method{rfutures}{ANY,ANY,fit.schwartz2factor}(n, ttm = 1, object)
 
 }
 
@@ -79,11 +79,10 @@
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{ttm}{Time to maturity.}
-  \item{s0}{Either an object of class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}},
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}
-    or a \code{numeric} representing the initial value of the commodity spot
-    price.}
+  \item{object}{An object inheriting from class
+    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
+  \item{s0}{A \code{numeric} representing the initial value of the
+    commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{Drift term of commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}

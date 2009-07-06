@@ -203,17 +203,17 @@ fairly large set of arguments for each function-call.
 As an example, let us consider the function \verb=dfutures=.
 The function headers for different signatures are:
 \begin{verbatim}
-## S4 method for signature 'ANY, ANY, numeric':
+## S4 method for signature 'ANY, ANY, missing':
 dfutures(x, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.18, sigmaS = 0.6, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, ...)
 
 ## S4 method for signature 'ANY, ANY, schwartz2factor':
-dfutures(x, ttm = 1, s0, r = 0.05, lambda = 0, alphaT = NULL, ...)
+dfutures(x, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, ...)
 
 ## S4 method for signature 'ANY, ANY, fit.schwartz2factor':
-dfutures(x, ttm = 1, s0, ...)
+dfutures(x, ttm = 1, object, ...)
 \end{verbatim}
 Without using objects, the function takes twelve arguments. Ten
 parameters are needed to describe the dynamics under both measures:
@@ -327,8 +327,8 @@ directly\footnote{If we used objects, we would had to initialize an
 ttm <- seq(time, 0, length = n) + 2 # time-to-maturity
 r <- 0.03
 lambda <- 0
-futures.trajectory <- pricefutures(ttm =  ttm, state.trajectory[, "S"],
-                                   state.trajectory[,"delta"],
+futures.trajectory <- pricefutures(ttm =  ttm, s0 = state.trajectory[, "S"],
+                                   delta0 = state.trajectory[,"delta"],
                                    sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                                    sigmaE = sigmaE, rho = rho,
                                    lambda = lambda, r = r)
