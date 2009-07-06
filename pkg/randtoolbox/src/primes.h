@@ -1,6 +1,6 @@
 /** 
  * @file  primes.h
- * @brief halves of prime numbers
+ * @brief halves of differences between prime numbers
  *
  * @author Petr Savicky 
  *
@@ -41,7 +41,7 @@
  *  
  */
 /*
- *  halves of prime numbers
+ *  halves of differences between prime numbers
  *    
  *      header file
  *
