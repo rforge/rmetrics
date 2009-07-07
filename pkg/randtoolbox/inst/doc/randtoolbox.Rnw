@@ -731,8 +731,8 @@ O\left( \frac{\log(n)^d}{n} \right).
 $
 
 The following Halton theorem gives us better discrepancy estimate
-of infinite sequences. For any dimension $d\geq 1$, there exists an
-infinite sequence of points in $I^d$ such that the discrepancy 
+of finite sequences. For any dimension $d\geq 1$, there exists an
+finite sequence of points in $I^d$ such that the discrepancy 
 $$
 D_n = O\left( \frac{\log(n)^{d-1}}{n} \right)\footnote{if the sequence has at least two points, cf.
 \cite{niederreiter}.}.
