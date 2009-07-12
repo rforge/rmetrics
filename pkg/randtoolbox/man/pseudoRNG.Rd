@@ -131,9 +131,9 @@ The currently available generator are given below.
 See the pdf vignette for details.
 }
 \value{
-  \code{SFMT}, \code{WELL}, \code{congruRand} and \code{knuthTAOCP} generates random variables in ]0,1[,  [0,1[ and [0,1[ respectively. It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim}>1 otherwise a vector of length \code{n}.
+  \code{SFMT}, \code{WELL}, \code{congruRand} and \code{knuthTAOCP} generate random variables in ]0,1[,  [0,1[ and [0,1[ respectively. It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim}>1 otherwise a vector of length \code{n}.
 
-  \code{setSeed} set the seed of the \code{randtoolbox} package 
+  \code{setSeed} sets the seed of the \code{randtoolbox} package 
 (i.e. both for the \code{knuthTAOCP}, \code{SFMT}, \code{WELL} and \code{congruRand} functions).
 }
 \references{

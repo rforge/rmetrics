@@ -1,13 +1,15 @@
 ### Exports
-export(torus, runif.halton, halton, runif.sobol, sobol, get.primes)
+export(torus, runif.halton, halton, runif.sobol, sobol)
 
 export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
+
+export(trueRNG)
 
 export(set.generator, put.state, get.state)
 
 export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 
-export(stirling, permut)
+export(stirling, permut, get.primes)
 
 ### Debugging
 # export(version.randtoolbox)
