@@ -39,7 +39,7 @@
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  
  */
-/*
+/*****************************************************************************
  *  call headers of Matsumoto and Saito
  *
  *		header

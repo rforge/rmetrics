@@ -40,7 +40,7 @@
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  
  */
-/*
+/*****************************************************************************
  *  halves of differences between prime numbers
  *    
  *      header file

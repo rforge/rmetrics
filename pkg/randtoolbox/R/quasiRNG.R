@@ -42,6 +42,7 @@
 #      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  
 #
+#############################################################################
 ### quasi random generation
 ###
 ###			R functions

@@ -42,7 +42,7 @@
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  
  */
-/*
+/*****************************************************************************
  *  randtoolbox to generate pseudo and quasi random sequences
  *
  *		init file
