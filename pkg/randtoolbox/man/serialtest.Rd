@@ -81,4 +81,4 @@ print( serial.test( runif(1000000), d=2, e=FALSE) )
 serial.test(runif(5000), 5) 
 
 }
-\keyword{distribution}
+\keyword{htest}

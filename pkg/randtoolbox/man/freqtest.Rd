@@ -85,4 +85,4 @@ freq.test(runif(1000), 1:4)
 freq.test(runif(1000), 10:40)
 
 }
-\keyword{distribution}
+\keyword{htest}

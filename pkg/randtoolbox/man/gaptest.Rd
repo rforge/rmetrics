@@ -95,4 +95,4 @@ gap.test(runif(1000), 1/3, 2/3)
 
 
 }
-\keyword{distribution}
+\keyword{htest}

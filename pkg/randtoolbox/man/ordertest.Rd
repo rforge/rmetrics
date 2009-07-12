@@ -87,4 +87,4 @@ order.test(torus(5000), 5)
 
 
 }
-\keyword{distribution}
+\keyword{htest}

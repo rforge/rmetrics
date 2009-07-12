@@ -1,5 +1,16 @@
 === randtoolbox: an R package for random number generation and tests ===
 
+Version 1.09
+=============
+
+STRUCTURAL CHANGE
+
+- extract Pierre L'Ecuyer's code from randtoolbox and 
+put it in a dedicated package rngWELL
+- change the licence of randtoolbox from GPL to BSD licence
+- depends now on rngWELL.
+
+
 Version 1.08
 =============
 
@@ -8,13 +19,16 @@ IMPROVEMENT
 - add function get.primes
 - table of primes moved from randtoolbox.c to primes.h and compressed
   by storing half difference from the previous prime instead of each
-  prime at least 5.
+  prime at least 5
+- start runifinterface.
 
 Version 1.07
 =============
 
 IMPROVEMENT
 
+- integrate code for Halton, Sobol sequence from fBasics (Rmetrics)
+- randoolbox is now part of Rmetrics project (available on R-forge)
 - increase the speed of congruRand.
 
 BUG FIXES

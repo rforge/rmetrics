@@ -97,4 +97,4 @@ coll.test(runif)
 coll.test(SFMT, 2^7, 2^10, 10000)
 
 }
-\keyword{distribution}
+\keyword{htest}

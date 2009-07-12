@@ -86,4 +86,4 @@ poker.test(runif(40000), 4)
 poker.test(runif(420000), 42)
 
 }
-\keyword{distribution}
+\keyword{htest}
