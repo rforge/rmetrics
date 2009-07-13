@@ -16,3 +16,4 @@
 - methoden wie z.B: logLik, (step.AIC.schwartz.fit.2.factor)
 - fit2factor: rho war mal auf ca. 2 geschätzt. vielleicht sollten wir
   rho auf [-1 , 1] constrainen, z.b. mit tangens.
+- gg/ meas.sd: soll stdv oder var zurückgegeben werden? (was wird z.Z. zurück gegeben?)
