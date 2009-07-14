@@ -349,7 +349,7 @@ setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
         return(ts(data, start = c(y1, m[1]%/%4+1), frequency = 4))
 
     # other frequencies not implemented yet; return default value
-    ans <- ts(data)
+    ans <- ts(data, names = colnames(x))
     attr(ans, "positions") <- time(x)
     ans
 }
