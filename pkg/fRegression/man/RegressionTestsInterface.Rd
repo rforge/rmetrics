@@ -381,8 +381,8 @@ Farebrother R.W. (1980);
     Applied Statistics 29, 224--227.
 
 Farebrother R.W. (1984);
-    \emph{The Distribution of a Linear Combination of $\chi^2$ Random
-    Variables},
+    \emph{The Distribution of a Linear Combination of
+    \eqn{\chi^2}{chi^2} Random Variables}, 
     Applied Statistics 33, 366--369.
 
 Godfrey, L.G. (1978);
