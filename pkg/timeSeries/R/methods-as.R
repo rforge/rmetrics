@@ -72,30 +72,34 @@ setAs("ANY", "timeSeries", function(from) as.timeSeries(from))
 as.timeSeries.ts <-
 function(x, ...)
 {
-    asTime = unclass(time(x))
-    yearPart = trunc(asTime)
-    decimalPart = asTime - yearPart
-    leapYears = yearPart%%4 == 0 & (yearPart%%100 != 0 | yearPart%%400 == 0)
-    days = trunc(decimalPart * (365 + leapYears)) + 1
+    asTime <- unclass(time(x))
+    yearPart <- trunc(asTime)
+    decimalPart <- asTime - yearPart
+    leapYears <- yearPart%%4 == 0 & (yearPart%%100 != 0 | yearPart%%400 == 0)
+    days <- trunc(decimalPart * (365 + leapYears)) + 1
 
-    if (frequency(x) == 4) {
-        # Quarterly Data:
-        days = days + 1
-        ans = timeDate(format(strptime(paste(yearPart, days), format = "%Y %j")),
-            zone = "GMT", FinCenter = "GMT")
-        ans = timeLastDayInQuarter(ans)
-    } else if (frequency(x) == 12) {
-        # Monthly Data:
-        days = days + 1
-        ans = timeDate(format(strptime(paste(yearPart, days), format = "%Y %j")),
-            zone = "GMT", FinCenter = "GMT")
-        ans = timeLastDayInMonth(ans)
-    } else {
-        stop()
-    }
+    freq <- frequency(x)
+    charvec <-
+        if (freq == 4) {
+            # Quarterly Data:
+            days <- days + 1
+            ans <- timeDate(format(strptime(paste(yearPart, days),
+                                            format = "%Y %j")),
+                            zone = "GMT", FinCenter = "GMT")
+            timeLastDayInQuarter(ans)
+        } else if (freq == 12) {
+            # Monthly Data:
+            days <- days + 1
+            ans <- timeDate(format(strptime(paste(yearPart, days),
+                                            format = "%Y %j")),
+                            zone = "GMT", FinCenter = "GMT")
+            timeLastDayInMonth(ans)
+        } else {
+            NA
+        }
 
     # Result:
-    tS = timeSeries(x, ans, ...)
+    tS = timeSeries(x, charvec, ...)
     attr(tS, "ts") <- c(start = round(start(x)),
         frequency = round(frequency(x)), deltat = deltat(x))
 
