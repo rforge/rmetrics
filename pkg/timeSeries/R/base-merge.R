@@ -131,7 +131,7 @@ setMethod("merge", c("timeSeries", "matrix"),
     recIdx <- colnames(df) %in% c(nxrec, nyrec)
 
     data <- as.matrix(df[,dataIdx, drop=FALSE])
-    recordIDs <- df[,recIdx, drop=FALSE]
+    recordIDs <- if (any(recIdx)) df[,recIdx, drop=FALSE] else data.frame()
     units <- names(df)[dataIdx]
     charvec <- as.numeric(df[,1])
 
