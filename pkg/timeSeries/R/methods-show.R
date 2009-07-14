@@ -51,8 +51,11 @@ setMethod("show", "timeSeries",
             print(data, quote = FALSE) #-> to be consistent with @recordIDs print
         }
 
-        if (ptest)
-            cat(gettextf("...\n[ reached getRmetricsOptions('max.print') -- omitted %i rows ]\n", omitted))
+        # Do not print reached limit message if default R max.print is reached
+        rmax <- getOption("max.print")
+        if (!is.numeric(rmax)) rmax <- 99999
+        if (ptest && max < rmax)
+            cat(gettextf("...\n [ reached getRmetricsOptions('max.print') -- omitted %i rows ]]\n", omitted))
 
         # Return Value:
         invisible(NULL) # as specified in ?show
