@@ -3,27 +3,6 @@
 ## import name space
 ################################################
 
-importFrom("fAssets",
-           "pfolioReturn")
-importFrom("fBasics",
-           "getSlot")
-importFrom("fPortfolio",
-           "getMessages",
-           "getEstimator",
-           "getType",
-           "getAlpha",
-           "rollingWindows",
-           "getSeries",
-           "getSigma",
-           "getSolver",
-           "getTargetReturn",
-           "getWeights",
-           "portfolioConstraints",
-           "portfolioData",
-           "portfolioSpec",
-           "getTargetRisk",
-           "minvariancePortfolio",
-           "tangencyPortfolio")
 importFrom("graphics",
            "grid",
            "legend",
@@ -42,44 +21,19 @@ importFrom("methods",
            "new",
            "slot",
            "@<-")
+importFrom("slam",
+           "colSums")
 importFrom("stats",
            "filter",
            "sd",
            "quantile.default")
-importFrom("timeDate",
-           "abline",
-           "lines",
-           "plot",
-           "isWeekend",
-           "timeNdayOnOrAfter",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
-importFrom("timeSeries",
-           "colCumsums",
-           "diff",
-           "time",
-           "timeSeries",
-           ".align.timeSeries",
-           "as.timeSeries",
-           "drawdowns",
-           "end",
-           "rownames",
-           "sort",
-           "start",
-           "time<-",
-           "window",
-           "series",
-           "apply",
-           "colnames",
-           "colnames<-",
-           "rownames<-",
-           "print",
-           "rev",
-           "applySeries",
-           "as.matrix",
-           "colSums")
 importFrom("utils",
            "capture.output")
+import("fAssets")
+import("fBasics")
+import("fPortfolio")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## S4 classes

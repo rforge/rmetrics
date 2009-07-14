@@ -563,6 +563,12 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     globalsPkg <- data.frame(pkg = impGlobals, func = names(impGlobals))
     rownames(globalsPkg) <- NULL
 
+
+    ## ## check if a function has been defined as generic in Rmetrics
+    ## ## and remove its definition from the other package
+    ## duplicated(globalsPkg$func)
+
+
     ##
     # list of function to import
     imp <- unique(rbind(S3pkg, S4pkg, globalsPkg,
@@ -580,9 +586,11 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     imp <- rbind(imp[!(imp$pkg %in% RmetricsPkgs),],
                  imp[(imp$pkg %in% RmetricsPkgs),])
     # remove duplicated entries. It should use first the definition
-    # from a base package rather than from a Rmetrics pkgs because
-    # Rmetrics at the end of imp
-    imp <- imp[!duplicated(imp$func),]
+    # from Rmetrics
+    # imp <- imp[!duplicated(imp$func),]
+    imp <- imp[!rev(duplicated(rev(imp$func))),]
+
+
 
     ###     for (idx in match("urca", imp$pkg))
     ###         if (imp$func[idx] %in% c("plot", "summary"))
@@ -595,6 +603,10 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
     imp <- imp[((names(imp) %in% RmetricsPkgs) ||
                packageHasNamespace(names(imp), file.path(R.home(), "library")))]
+
+
+
+    # import only ones if generic was defined in one of the Rmetrics package
 
     ##
     # should we include C or Fortran code ?
@@ -611,19 +623,15 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 ################################################
 \n", file = out)
 
-        if (ln <- length(imp))
-            for (i in seq(ln))
-            cat("importFrom(", "\"", names(imp)[i], "\",\n           ",
-                imp[[i]], ")\n", sep = "", file = out)
-
-###     ## YC : rather than importing specific function, should import
-###     ## whole namespace of other packages to stay on the safe side
-###     ## ... but this creates other problems with functions might be
-###     ## imported twice and it generates errors when loading
-###     ## package...
-###     if (length(names(imp)))
-###         for (impPkg in names(imp))
-###             cat("import(", "\"", impPkg, "\")\n", sep = "", file = out)
+    impR <- imp[!(names(imp) %in% RmetricsPkgs)]
+    impRmetrics <- imp[(names(imp) %in% RmetricsPkgs)]
+    if (ln <- length(impR))
+        for (i in seq(ln))
+            cat("importFrom(", "\"", names(impR)[i], "\",\n           ",
+                impR[[i]], ")\n", sep = "", file = out)
+    if (length(names(impRmetrics)))
+        for (impPkg in names(impRmetrics))
+            cat("import(", "\"", impPkg, "\")\n", sep = "", file = out)
 
     if (SRC) {
         cat("

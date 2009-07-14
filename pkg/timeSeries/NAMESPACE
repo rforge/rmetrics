@@ -4,9 +4,6 @@
 ################################################
 
 importFrom("graphics",
-           "lines",
-           "plot",
-           "points",
            "grid",
            "title",
            "axis",
@@ -61,27 +58,6 @@ importFrom("stats",
            "hclust",
            "cor",
            "is.mts")
-importFrom("timeDate",
-           "align",
-           "finCenter<-",
-           "finCenter",
-           "getRmetricsOptions",
-           "julian",
-           "timeSequence",
-           "isWeekday",
-           "timeDate",
-           "as.timeDate",
-           "timeFirstDayInMonth",
-           "timeFirstDayInQuarter",
-           "timeLastDayInMonth",
-           "timeLastDayInQuarter",
-           "timeCalendar",
-           "kurtosis",
-           "skewness",
-           "setRmetricsOptions",
-           "abline",
-           "atoms",
-           "sample")
 importFrom("utils",
            "head",
            "str",
@@ -89,6 +65,7 @@ importFrom("utils",
            "head.matrix",
            "read.table",
            "tail.matrix")
+import("timeDate")
 
 ################################################
 ## S4 classes

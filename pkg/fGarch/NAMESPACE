@@ -3,13 +3,7 @@
 ## import name space
 ################################################
 
-importFrom("fBasics",
-           "volatility",
-           "dsnig",
-           "Heaviside",
-           ".sliderMenu")
 importFrom("graphics",
-           "plot",
            "grid",
            "hist",
            "par",
@@ -51,32 +45,12 @@ importFrom("stats",
            "rgamma",
            "runif",
            "rt")
-importFrom("timeDate",
-           "timeDate",
-           "timeSequence",
-           "abline",
-           "lines",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
-importFrom("timeSeries",
-           "print",
-           "as.matrix",
-           "rev",
-           "colnames",
-           "rownames",
-           "sort",
-           "as.data.frame",
-           "colnames<-",
-           "isUnivariate",
-           ".description",
-           "rownames<-",
-           "timeSeries",
-           "apply",
-           "diff",
-           "quantile")
 importFrom("utils",
            "capture.output",
            "menu")
+import("fBasics")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## useDynLib

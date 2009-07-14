@@ -3,22 +3,6 @@
 ## import name space
 ################################################
 
-importFrom("fAssets",
-           ".baggedMeanCov",
-           ".bayesSteinMeanCov",
-           ".donostahMeanCov",
-           ".ledoitWolfMeanCov",
-           "assetsLPM",
-           ".cov.nnve",
-           "pfolioReturn",
-           ".rmtMeanCov",
-           ".cov.shrink",
-           ".studentMeanCov")
-importFrom("fBasics",
-           "seqPalette",
-           "interactivePlot",
-           "getTitle",
-           ".sliderMenu")
 importFrom("graphics",
            "legend",
            "par",
@@ -39,6 +23,9 @@ importFrom("methods",
            "is")
 importFrom("robustbase",
            "scaleTau2")
+importFrom("slam",
+           "colMeans",
+           "rowSums")
 importFrom("stats",
            "cov",
            "ts.plot",
@@ -48,39 +35,10 @@ importFrom("stats",
            "optimize",
            "rcauchy",
            "rnorm")
-importFrom("timeDate",
-           "plot",
-           "lines",
-           "points",
-           "abline",
-           "getRmetricsOptions",
-           "setRmetricsOptions",
-           "timeFirstDayInMonth",
-           "timeLastDayInMonth")
-importFrom("timeSeries",
-           "colnames",
-           "colnames<-",
-           "diff",
-           "getDataPart",
-           "colMeans",
-           "rownames<-",
-           "as.matrix",
-           "colMaxs",
-           "colMins",
-           "quantile",
-           "description",
-           "is.timeSeries",
-           "series",
-           "rev",
-           "sort",
-           "drawdowns",
-           "cut",
-           "end",
-           "start",
-           "time",
-           "print",
-           "colQuantiles",
-           "rownames")
+import("fAssets")
+import("fBasics")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## S4 classes

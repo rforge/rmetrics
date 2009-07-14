@@ -94,41 +94,10 @@ importFrom("stats",
            "t.test",
            "pf",
            "qf")
-importFrom("timeDate",
-           "kurtosis",
-           "skewness",
-           "abline",
-           "lines",
-           "plot",
-           "points",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
-importFrom("timeSeries",
-           "as.timeSeries",
-           "colnames",
-           "is.timeSeries",
-           "rev",
-           "sort",
-           "colnames<-",
-           "rownames<-",
-           "as.matrix",
-           "quantile",
-           "as.data.frame",
-           "apply",
-           "na.omit",
-           "isUnivariate",
-           "colCumsums",
-           "print",
-           "drawdowns",
-           "rank",
-           "colMeans",
-           "colSums",
-           "diff",
-           "rownames",
-           "returns",
-           "str")
 importFrom("utils",
            "menu")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## useDynLib

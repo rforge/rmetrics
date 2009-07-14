@@ -3,21 +3,6 @@
 ## import name space
 ################################################
 
-importFrom("fBasics",
-           "basicStats",
-           "seriesPlot",
-           "histPlot",
-           "isPositiveDefinite",
-           "makePositiveDefinite",
-           "nigFit",
-           "nigShapeTriangle",
-           "qqnormPlot",
-           "pnig")
-importFrom("fCopulae",
-           "grid2d",
-           "mvFit",
-           "hexBinning",
-           "squareBinning")
 importFrom("graphics",
            "text",
            "axis",
@@ -78,45 +63,10 @@ importFrom("stats",
            "qf",
            "kmeans",
            "shapiro.test")
-importFrom("timeDate",
-           "plot",
-           "abline",
-           "lines",
-           "points",
-           "kurtosis",
-           "skewness",
-           "sample",
-           "setRmetricsOptions",
-           "getRmetricsOptions")
-importFrom("timeSeries",
-           "as.matrix",
-           "colnames",
-           "sort",
-           "colMeans",
-           "colnames<-",
-           "rownames<-",
-           "as.data.frame",
-           "is.timeSeries",
-           "rownames",
-           "series",
-           "na.omit",
-           "rev",
-           "colCumsums",
-           "apply",
-           "as.list",
-           ".description",
-           "as.timeSeries",
-           "colStdevs",
-           "diff",
-           "getDataPart",
-           "scale",
-           "rank",
-           "print",
-           "colSds",
-           "head",
-           "tail",
-           "series<-",
-           "returns")
+import("fBasics")
+import("fCopulae")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## useDynLib
