@@ -3,6 +3,10 @@
 Version 1.09
 =============
 
+NEW FEATURES
+
+- start to test true randomness.
+
 STRUCTURAL CHANGE
 
 - extract Pierre L'Ecuyer's code from randtoolbox and 
@@ -14,7 +18,7 @@ put it in a dedicated package rngWELL
 Version 1.08
 =============
 
-IMPROVEMENT
+NEW FEATURES
 
 - add function get.primes
 - table of primes moved from randtoolbox.c to primes.h and compressed
@@ -25,7 +29,7 @@ IMPROVEMENT
 Version 1.07
 =============
 
-IMPROVEMENT
+NEW FEATURES
 
 - integrate code for Halton, Sobol sequence from fBasics (Rmetrics)
 - randoolbox is now part of Rmetrics project (available on R-forge)

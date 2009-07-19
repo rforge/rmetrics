@@ -67,12 +67,12 @@ trueRNG <- function(n, dim = 1)
 			subset <- ( maxsequence * (i-1) + 1):(maxsequence * i)
 #			print(range(subset))
 			options(show.error.messages=FALSE, warn=-1)
-			testtry <- try(res[subset, ] <- randomNumbers(length(subset), min=1, max=2^16-1, col=dim, base=10, check=FALSE)/2^16)	
+			testtry <- try(res[subset, ] <- randomNumbers(length(subset), min=0, max=2^16-1, col=dim, base=10, check=FALSE)/2^16)	
 			options(show.error.messages=TRUE, warn=0)
 			
 			if(class(testtry) == "try-error")
 			{
-				stop(paste("www.random.org service no longer available at ",i,"th call", sep=""))
+				stop(paste("www.random.org service no longer available at ",i,"th call.\n", sep=""))
 			}
 		}
 	}else
@@ -84,12 +84,12 @@ trueRNG <- function(n, dim = 1)
 	subset <- ( maxsequence * (i-1) + 1):(n)
 #			print(range(subset))
 	options(show.error.messages=FALSE, warn=-1)
-	testtry <- try(res[subset, ] <- randomNumbers(length(subset), min=1, max=2^16-1, col=dim, base=10, check=FALSE)/2^16)	
+	testtry <- try(res[subset, ] <- randomNumbers(length(subset), min=0, max=2^16-1, col=dim, base=10, check=FALSE)/2^16)	
 	options(show.error.messages=TRUE, warn=0)
 
 	if(class(testtry) == "try-error")
 	{
-		stop(paste("www.random.org service no longer available at ",i,"th call", sep=""))
+		stop(paste("www.random.org service no longer available at ",i,"th call.\n", sep=""))
 	}
 
 	
