@@ -15,7 +15,7 @@ put it in a dedicated package rngWELL
 - depends now on rngWELL.
 
 
-Version 1.08
+Version 1.08 (never released on CRAN)
 =============
 
 NEW FEATURES
@@ -108,7 +108,7 @@ unix-like system. Hence a call like this
 > for(i in 1:10) print(congruRand(1))
 produces the same output. Now it is fixed.
 
-Version 1.01 (never released)
+Version 1.01 (never released on CRAN)
 =============
 
 NEW FEATURES
