@@ -92,8 +92,8 @@
   \code{\link{optim}} and \code{\link{nlm}}, see \code{\link{optim}} and
   \code{\link{nlm}.}
 
-	When \code{method = "nlm"} is used, warnings may be produced. These do
-	not appear to be a problem.
+  When \code{method = "nlm"} is used, warnings may be produced. These do
+  not appear to be a problem.
 }
 \value{
   A list with components:
