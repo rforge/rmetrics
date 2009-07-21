@@ -1,4 +1,4 @@
-smallShape <- matrix(
+vgSmallShape <- matrix(
   c(0,1,-2,0.5,
     0,1,-2,1,
     0,1,-2,2,
@@ -9,8 +9,8 @@ smallShape <- matrix(
     0,1,2,1,
     0,1,2,2),
   byrow = TRUE, ncol = 4)
-  
-largeShape <- matrix(
+
+vgLargeShape <- matrix(
   c(0,1,-4,0.25,
     0,1,-4,0.5,
     0,1,-4,1,
@@ -37,8 +37,8 @@ largeShape <- matrix(
     0,1,4,2,
     0,1,4,4),
   byrow = TRUE, ncol = 4)
-  
-smallParam <- matrix(
+
+vgSmallParam <- matrix(
   c(-2,0.5,-2,0.5,
     -2,0.5,-2,1,
     -2,0.5,-2,2,
@@ -122,7 +122,7 @@ smallParam <- matrix(
     2,2,2,2),
   byrow = TRUE, ncol = 4)
 
-largeParam <- matrix(
+vgLargeParam <- matrix(
   c(-4,0.25,-4,0.25,
     -4,0.25,-4,0.5,
     -4,0.25,-4,1,

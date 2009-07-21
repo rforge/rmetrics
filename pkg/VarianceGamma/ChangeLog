@@ -1,10 +1,33 @@
+2009-07-21    <d.scott@auckland.ac.nz>
+
+	* Checked code submitted by Christine: vgChangePars.R,
+	vgChangePars.Rd, dvg.R, pvg.R, qvg.R, rvg.R ddvg.R, vgBreaks.R,
+	VarianceGamma.Rd, vgFitStart.R, vgFitStartMoM.R (no apparent
+	changes though), vgParam.R, vgParam.Rd, vgCheckPars.R, vgCheckPars.Rd
+
+	* Changes submitted by Christine: For the R codes, the major
+	changes from the current VG package is vgChangePars. And rvg,
+	vgFitStart, dpqr were also changed a little according to
+	vgChangePars and vgCheckPars. Data codes vgParam had some tiny
+	changes around the names. And the moments codes are new to VG package.
+
+	For the Rd codes, changes were made in vgChangePars,
+	vgParam. Previous vgMomentsAndMode now have a new name as
+	vgMVSKMode. Since I thought better to distinguish this one from
+	vgMom. But if you could suggest me a better name, then I will edit
+	it. Other Rd codes stayed about the same, except I added my email
+	address in. And the moments Rd files are new. I think I corrected
+	a typo in momChangeAbout.Rd, but nothing has been changed in
+	momIntegrated or is.wholenumber.
+	
+
 2009-04-15    <d.scott@auckland.ac.nz>
 
-	* DESCRIPTION changed to add encoding UTF-8
-	* VarianceGamma.Rd, vgCalcRange.Rd, vgChangePars.Rd, vgFit.Rd,
-	vgFitStart.Rd, vgMomentsAndMode.Rd all changed to drop space
-	between \emph and { in Seneta reference, and to update all
-	references to add encoding for Podgórski
+	* DESCRIPTION changed to add encoding UTF-8 * VarianceGamma.Rd,
+	vgCalcRange.Rd, vgChangePars.Rd, vgFit.Rd, vgFitStart.Rd,
+	vgMomentsAndMode.Rd all changed to drop space between \emph and {
+	in Seneta reference, and to update all references to add encoding
+	for Podgórski
 
 2009-03-25    <d.scott@auckland.ac.nz>
 
@@ -14,5 +37,6 @@
 	* vgParam.Rd
 	Added data(vgParam) statement in examples section to avoid error
 	the smallParam was not found
+	
 	
 

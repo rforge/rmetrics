@@ -1,20 +1,18 @@
 dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
-                 param = c(vgC,sigma,theta,nu), log = FALSE,
-                 tolerance = .Machine$double.eps ^ 0.5, ...) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
-  }
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
+  param = c(vgC,sigma,theta,nu), log = FALSE,
+  tolerance = .Machine$double.eps ^ 0.5, ...) {
 
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
+  ## check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
   }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
   if (log == TRUE) {
     stop ("This function is not yet implemented")
@@ -27,10 +25,6 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
           sqrt((2*sigma^2/nu) + theta^2)), nu = (1/nu - 1/2)))
     } else {
     if(nu < 2) {
-      if (nu - 0 < 0.0068) { # dvg will become inf/0 when nu<0.0068
-        vgDens <- 0          # gamma function will be out of range when 
-                             #  nu<0.0059
-      } else {
         vgDens <- ifelse(abs(x - vgC) < tolerance, gamma(1/nu - 1/2)/(sigma*
           sqrt(2*pi)*nu^(1/nu)*gamma(1/nu))*((2*sigma^2/
           (2*sigma^2/nu + theta^2))^(1/nu - 1/2)),
@@ -38,7 +32,6 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
           sigma*gamma(1/nu)))*((abs(x - vgC)/sqrt(2*(sigma^2)/nu + theta^2))^
           (1/nu - 1/2))*besselK(x = ((1/sigma^2)*abs(x - vgC)*
           sqrt((2*sigma^2/nu) + theta^2)), nu = (1/nu - 1/2)))
-        }
       }
     if (nu > 2) {
         vgDens <- ifelse(abs(x - vgC) < tolerance, Inf,
@@ -50,6 +43,7 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
     }
     vgDens <- ifelse(is.nan(vgDens), 0, vgDens)
   }
+
   return(vgDens)
 }
 
@@ -57,21 +51,19 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
                  param = c(vgC,sigma,theta,nu), lower.tail = TRUE,
                  log.p = FALSE, small = 10^(-6), tiny = 10^(-10),
                  deriv = 0.3, subdivisions = 100, accuracy = FALSE, ...) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
-  }
 
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
+  ## check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
+  }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
-  }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
   if (lower.tail == TRUE) {
     if (log.p == FALSE){
       bks <- vgBreaks(param = param, small = small, tiny = tiny,
@@ -117,8 +109,8 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
       dvgInt <- function (q) {
         dvg(q, param = param, log = FALSE)
       }
-      resSmall <- safeIntegrate(dvgInt, xTiny,
-                                xSmall, subdivisions, ...)
+      resSmall <- safeIntegrate(dvgInt, xTiny, xSmall,
+                                subdivisions, ...)
       resLarge <- safeIntegrate(dvgInt, xLarge, xHuge,
                                 subdivisions, ...)
       intSmall <- resSmall$value
@@ -185,21 +177,18 @@ qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
                  param = c(vgC,sigma,theta,nu), lower.tail = TRUE,
                  log.p = FALSE, small = 10^(-6), tiny = 10^(-10),
                  deriv = 0.3, nInterpol = 100, subdivisions = 100, ...) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
-  }
 
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
-
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
+  ## check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
   }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
   if (lower.tail == TRUE) {
     if (log.p == FALSE){
@@ -322,9 +311,9 @@ qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
                     qSort[i] <- modeDist
                   }
                   else {
-                    qSort[i] <-
-                        uniroot(zeroFun, interval = c(lowBreak, modeDist),
-                                ...)$root
+                    qSort[i] <- uniroot(zeroFun,
+                                        interval = c(lowBreak,modeDist),
+                                        ...)$root
                   }
               }
           }
@@ -427,54 +416,49 @@ qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
 }
 
 rvg <- function (n, vgC = 0, sigma = 1, theta = 0, nu = 1,
-  param = c(vgC,sigma,theta,nu)) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
+                 param = c(vgC,sigma,theta,nu)) {
+
+  ## check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
   }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
+  kkp1Param <- vgChangePars(1, 2, param = param)
+  mu <- kkp1Param[3]
+  kkp1Sigma <- kkp1Param[2]
+  tau <- kkp1Param[4]
+  kkp1Theta <- kkp1Param[1]
+  kkp2Param <- vgChangePars(1, 3, param = param)
+  kappa <- kkp2Param[3]
+  rgamma1 <- rgamma(n, shape = tau, rate = 1)
+  rgamma2 <- rgamma(n, shape = tau, rate = 1)
 
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
-  }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
-
-  mu <- theta*nu
-  sigmaKotz <- sigma*sqrt(nu)
-  vgTau <- 1/nu
-  thetaKotz <- vgC
-  vgKappa <- (sqrt(2*sigmaKotz^2 + mu^2) - mu)/(sigmaKotz*sqrt(2))
-  rgamma1 <- rgamma(n, shape = vgTau, rate = 1)
-  rgamma2 <- rgamma(n, shape = vgTau, rate = 1)
-
-  X <- thetaKotz + (sigmaKotz/sqrt(2))*((1/vgKappa)*rgamma1 - vgKappa*rgamma2)
+  X <- kkp1Theta + (kkp1Sigma/sqrt(2))*((1/kappa)*rgamma1 - kappa*rgamma2)
   return(X)
 }
 
 ddvg <- function (x,  vgC = 0, sigma = 1, theta = 0, nu = 1,
                   param = c(vgC,sigma,theta,nu), log = FALSE,
                   tolerance = .Machine$double.eps ^ 0.5, ...) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
-  }
 
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
-
-
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
+  ## check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
   }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
   if (log == TRUE) {
     stop ("This function is not yet implemented")
@@ -523,21 +507,18 @@ ddvg <- function (x,  vgC = 0, sigma = 1, theta = 0, nu = 1,
 vgBreaks <- function (vgC = 0, sigma = 1, theta = 0, nu = 1,
                       param = c(vgC,sigma,theta,nu), small = 10^(-6),
                       tiny = 10^(-10), deriv = 0.3, ...) {
-  if (length(param) != 4) {
-    stop ("param vector must contain 4 values")
-  }
 
-    vgC <- param[1]
-    sigma <- param[2]
-    theta <- param[3]
-    nu <- param[4]
-
-  if (sigma <= 0) {
-    stop("sigma must be greater than zero")
+  #check parameters
+  parResult <- vgCheckPars(param = param)
+  case <- parResult$case
+  errMessage <- parResult$errMessage
+  if (case == "error"){
+    stop(errMessage)
   }
-  if (nu <= 0) {
-    stop("nu must be greater than zero")
-  }
+  vgC <- param[1]
+  sigma <- param[2]
+  theta <- param[3]
+  nu <- param[4]
 
   if (nu < 2) {
   xTiny <- vgCalcRange(param = param, tol = tiny, density = TRUE)[1]

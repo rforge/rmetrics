@@ -45,8 +45,7 @@ vgFitStart <- function (x, breaks = NULL, startValues = "SL",
     if (startValues == "SL") {
         svName <- "Skew Laplace"
         llsklp <- function(param) {
-            -sum(log(dskewlap(x, param, logPars = TRUE))) #need to be changed
-                                                          #once skewlap changed
+            -sum(log(dskewlap(x, param, logPars = TRUE)))
         }
         lSkewAlpha <- log(1/leftAsymptote[2])
         lSkewBeta <- log(abs(1/rightAsymptote[2]))
