@@ -28,7 +28,6 @@ posteriorEst <- function
   P <- views@P
   if(kappa == 0)
   {    
-      P <- views@P
       if(length(views@confidences) > 1) 
         omega <- diag( 1/ views@confidences) 
       else 
@@ -37,7 +36,7 @@ posteriorEst <- function
   
   else    
   {
-      omega <- kappa * tcrossprod(views@P %*% sigma, views@P)
+      omega <- kappa * tcrossprod(P %*% sigma, P)
       omegaInv <- solve(omega)
   }     
 
