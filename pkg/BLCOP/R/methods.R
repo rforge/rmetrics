@@ -15,7 +15,7 @@ show.BLViews <- function(object)
     }
     viewStrings <- apply(viewMatrix(object),1,.innerViewString)
     for(i in seq(along  = viewStrings))
-        cat(i, ":", viewStrings[i], ". Confidence:", object@confidences[i], "\n")
+        cat(i, ":", viewStrings[i], " + eps. Confidence:", object@confidences[i], " \n")
 }
 
 show.BLResult <- function(object)
