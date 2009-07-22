@@ -94,9 +94,6 @@ setGeneric("optimalPortfolios.fPort")
 optimalPortfolios.fPort.BL <- function(result, spec,constraints = "LongOnly", optimizer = "minriskPortfolio", 
 		inputData = NULL, numSimulations = NA)
 {
-	if(!require("fPortfolio"))
-		stop("The package fPortfolio is required to run this function, but you do not have it installed.")
-	setType(spec) <- "MV"
 	assets <- assetSet(result@views)
 	dmySeries <- as.timeSeries(matrix(0, nrow = 1, ncol = length(assets), dimnames = list(NULL, assets)))
 	
@@ -124,7 +121,18 @@ optimalPortfolios.fPort.BL <- function(result, spec,constraints = "LongOnly", op
 	rm(.posteriorEstim, envir = .GlobalEnv)
 	rm(.priorEstim, envir = .GlobalEnv)
 	
-	list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
+	x <- list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
+	class(x) <- "BLOptimPortfolios"
+	x
+}
+
+plot.BLOptimPortfolios <- function(x,...)
+{
+	plotData <-   getWeights(x[[2]]@portfolio) - getWeights(x[[1]]@portfolio)
+	
+	plotData <- plotData[plotData != 0]
+	
+	barplot(plotData, col = c("lightblue"), ylab = "Difference", border = "blue", main = "Differences in weights", horiz = FALSE)	
 }
 
 setMethod("optimalPortfolios.fPort", signature(result = "BLResult"), optimalPortfolios.fPort.BL )
@@ -145,10 +153,22 @@ optimalPortfolios.fPort.COP <- function(result, spec, constraints = "LongOnly", 
 	colnames(outData) <- assetSet(result@views)
 	outData <- as.timeSeries(outData)
 	optimizer <- match.fun(optimizer)
-	gc()
+	
 	priorOptimPortfolio <- optimizer(inputData,spec, constraints)
 	posteriorOptimPortfolio <- optimizer(outData, spec, constraints)
-	list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
+	x <- list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
+	class(x) <- "COPOptimPortfolios"
+	x
 }
+
+plot.COPOptimPortfolios <- function(x,...)
+{
+	plotData <-   getWeights(x[[2]]@portfolio) - getWeights(x[[1]]@portfolio)
+	
+	plotData <- plotData[plotData != 0]
+	
+	barplot(plotData, col = c("lightblue"), ylab = "Difference", border = "blue", main = "Differences in weights", horiz = FALSE)	
+}
+
 
 setMethod("optimalPortfolios.fPort", signature(result = "COPResult"), optimalPortfolios.fPort.COP )
