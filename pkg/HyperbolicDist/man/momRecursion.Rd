@@ -1,10 +1,10 @@
 \name{momRecursion}
-
 \alias{momRecursion}
 
 
-\title{Computes the moment coefficients recursively for generalized hyperbolic
-  and related disbributions}
+\title{Computes the moment coefficients recursively for generalized
+  hyperbolic and related distributions
+}
 
 \description{
   This function computes all of the moments coffecicients by resursion based on
@@ -13,7 +13,7 @@
 }
 
 \usage{
-  momCoeffRecursion(order = 12, printMatrix = FALSE)
+  momRecursion(order = 12, printMatrix = FALSE)
 }
 
 \arguments{
@@ -59,7 +59,7 @@
 \author{David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
-\seealso{\code{\link{vgMom}}}
+\seealso{\code{\link[VarianceGamma]{vgMom}}}
 
 
 \examples{

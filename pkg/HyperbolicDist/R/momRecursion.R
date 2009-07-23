@@ -1,6 +1,6 @@
 ### Calculate recursion for any generalized hyperbolic distribution
 ### Christine Yang Dong and David Scott from code by Diethelm Wuertz
-momCoeffRecursion <- function(order = 12, printMatrix = FALSE) {
+momRecursion <- function(order = 12, printMatrix = FALSE) {
    ## Description:
    ##   Computes the moment coefficients recursively
    ## Setting Start Values:

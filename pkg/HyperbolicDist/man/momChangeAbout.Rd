@@ -1,4 +1,5 @@
 \name{momChangeAbout}
+\alias{momChangeAbout}
 
 \title{Obtain Moment About a New Location}
 \description{
@@ -14,7 +15,7 @@
 
 \arguments{
   \item{order}{Integer. The order of the new moment to be obtained.}
-  \item{moments}{Numeric, of length greater or equal to \code{order}.
+  \item{oldMom}{Numeric, of length greater or equal to \code{order}.
     Moments of orders 1, 2, \dots, \code{order} (at least) about the point
     \code{oldAbout}.}
   \item{oldAbout}{Numeric. The point about which the moments \code{oldMom} have
@@ -70,7 +71,7 @@ for (i in 1:k){
 m
 
 ### Calculate moment of order k about newAbout
-momChangeAbout(k, m, old, new)
+momChangeAbout(k, m, oldAbout, newAbout)
 ### Can also calculate moments about newAbout for orders less than k
 momChangeAbout(3, m, oldAbout, newAbout)
 momChangeAbout(2, m, oldAbout, newAbout)

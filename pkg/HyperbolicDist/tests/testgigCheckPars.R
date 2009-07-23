@@ -1,3 +1,4 @@
+source("../../HyperbolicDist/R/gigCheckPars.R")
 ### Test gigCheckPars
 Theta <- c(-0.5,5,2.5)
 gigCheckPars(Theta)

@@ -1,3 +1,4 @@
+source("../../HyperbolicDist/R/besselRatio.R")
 ### Create vector of nu values and of x values
 nus <- c(0:5, 10, 20)
 x <- seq(1, 4, length.out = 11)
@@ -35,3 +36,24 @@ for (i in 1:length(nus)){
 results
 max(abs(results - 1))
 
+### Now use besselRatio function
+nus <- c(0:5, 10, 20)
+x <- seq(1, 4, length.out = 11)
+k <- 3
+
+raw <- matrix(nrow = length(nus), ncol = length(x))
+scaled <- matrix(nrow = length(nus), ncol = length(x))
+compare <- matrix(nrow = length(nus), ncol = length(x))
+
+for (i in 1:length(nus)){
+    for (j in 1:length(x)) {
+        raw[i,j] <- besselRatio(x[j], nus[i],
+                                orderDiff = k)
+        scaled[i,j] <- besselRatio(x[j], nus[i],
+                                orderDiff = k, useExpScaled = 1)
+        compare[i,j] <- raw[i,j]/scaled[i,j]
+    }
+}
+raw
+scaled
+compare

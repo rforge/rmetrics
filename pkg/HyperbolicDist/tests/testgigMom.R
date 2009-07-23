@@ -1,12 +1,9 @@
 ### Test raw and other moments
-library(HyperbolicDist)
-source("../R/besselRatio.R")
-source("../R/momIntegrated.R")
-source("../R/momChangeAbout.R")
-source("../R/gigMom.R")
-source("../R/gigCheckPars.R")
-source("../R/is.wholenumber.R")
-
+fileList <- list.files("../../HyperbolicDist/R/")
+fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
+n <- length(fileNames)
+fileNames <- fileNames[-n]
+lapply(fileNames, source)
 
 ### Test gigRawMom
 Theta <- c(-0.5,5,2.5)
@@ -32,7 +29,7 @@ gigMom(1, Theta, m1)
 gigVar(Theta)
 gigMom(3, Theta, m1)
 momIntegrated("gig", order = 3, param = Theta, about = m1)
-gigMom(2.5, Theta, m1)
+#gigMom(2.5, Theta, m1)
 
 ### Test gammaRawMom
 shape <- 2
@@ -69,15 +66,15 @@ momIntegrated("gamma", order = 2,
 ### Infinite moment
 gigRawMom(-2, Theta)
 mgamma(-2, Theta[1], Theta[3]/2)
-momIntegrated("gamma", order = -2,
-              param = c(Theta[1],Theta[3]/2), about = 0)
+#momIntegrated("gamma", order = -2,
+#              param = c(Theta[1],Theta[3]/2), about = 0)
 ### Test gigRawMom for inverse gamma case
 Theta <- c(-0.5,5,0)
 ### Infinite moment
 gigRawMom(2, Theta)
 minvgamma(2, -Theta[1], Theta[2]/2)
-momIntegrated("invgamma", order = 2,
-              param = c(-Theta[1],Theta[2]/2), about = 0)
+#momIntegrated("invgamma", order = 2,
+#              param = c(-Theta[1],Theta[2]/2), about = 0)
 gigRawMom(-2, Theta)
 minvgamma(-2, -Theta[1], Theta[2]/2)
 momIntegrated("invgamma", order = -2,
@@ -95,11 +92,11 @@ momIntegrated("gamma", order = 2,
               param = c(Theta[1],Theta[3]/2), about = m1)
 ### Infinite moments
 gigMom(-2, Theta)
-momIntegrated("gamma", order = -2,
-              param = c(Theta[1],Theta[3]/2), about = 0)
-gigMom(-2, Theta, m1)
-momIntegrated("gamma", order = -2,
-              param = c(Theta[1],Theta[3]/2), about = m1)
+#momIntegrated("gamma", order = -2,
+#              param = c(Theta[1],Theta[3]/2), about = 0)
+#gigMom(-2, Theta, m1)
+#momIntegrated("gamma", order = -2,
+#              param = c(Theta[1],Theta[3]/2), about = m1)
 
 ### Test gigRawMom for inverse gamma case
 Theta <- c(-0.5,5,0)
@@ -107,16 +104,16 @@ Theta <- c(-0.5,5,0)
 m1 <- gigMom(1, Theta)
 m1
 minvgamma(1, -Theta[1], Theta[2]/2)
-momIntegrated("invgamma", order = 1,
-              param = c(-Theta[1],Theta[2]/2), about = 0)
+#momIntegrated("invgamma", order = 1,
+#              param = c(-Theta[1],Theta[2]/2), about = 0)
 gigMom(2, Theta, m1)
-momIntegrated("invgamma", order = 2,
-              param = c(-Theta[1],Theta[2]/2), about = m1)
+#momIntegrated("invgamma", order = 2,
+#              param = c(-Theta[1],Theta[2]/2), about = m1)
 
 gigMom(-2, Theta)
 momIntegrated("invgamma", order = -2,
               param = c(-Theta[1],Theta[2]/2), about = 0)
-gigMom(-2, Theta, m1)
+#gigMom(-2, Theta, m1)
 momIntegrated("invgamma", order = -2,
               param = c(-Theta[1],Theta[2]/2), about = m1)
 

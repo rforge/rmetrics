@@ -1,4 +1,5 @@
 \name{Bessel K Ratio}
+\alias{besselRatio}
 
 
 \title{Ratio of Bessel K Functions}
@@ -6,7 +7,7 @@
   Calculates the ratio of Bessel K functions of different orders
 }
 \usage{
-besselRatio(x, nu, orderDiff = k, useExpScaled = 700)
+besselRatio(x, nu, orderDiff, useExpScaled = 700)
 
 }
 \arguments{
@@ -45,7 +46,7 @@ besselRatio(x, nu, orderDiff = k, useExpScaled = 700)
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
 \seealso{
-  \code{\link{besselK}}, \code{\link{gigMoments}}
+  \code{\link{besselK}}, \code{\link{gigMom}}
 }
 
 \examples{

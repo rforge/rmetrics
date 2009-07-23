@@ -7,7 +7,7 @@
   generalized hyperbolic and related distributions.
 }
 \usage{
-momIntegrated(densFn, param, order, about = 0, absolute = FALSE)
+momIntegrated(densFn, order, param = NULL, about = 0, absolute = FALSE)
 }
 
 \arguments{
@@ -16,8 +16,9 @@ momIntegrated(densFn, param, order, about = 0, absolute = FALSE)
   \item{order}{Numeric. The order of the moment or absolute moment to be
     calculated.}
   \item{param}{Numeric. A vector giving the parameter values for the
-    distribution specified by \code{densFn}. If missing, default values
-    are assigned depending on the particular density function.}
+    distribution specified by \code{densFn}. If no \code{param} values
+  are specified, then the default parameter values of each distribution
+  are used instead.}
   \item{about}{Numeric. The point about which the moment is to be calculated.}
   \item{absolute}{Logical. Whether absolute moments or ordinary moments
     are to be calculated. Default is \code{FALSE}.}
@@ -54,7 +55,7 @@ momIntegrated(densFn, param, order, about = 0, absolute = FALSE)
   density used is the density of the inverse gamma distribution given by
    \deqn{f(x) = \frac{u^\alpha e^{-u}}{x \Gamma(\alpha)}, %
     \quad u = \theta/x}{%
-    f(x) = u^alpha exp(-u)/(x Gamma(alpha)), u = theta/x}
+      f(x) = u^alpha exp(-u)/(x Gamma(alpha)), u = theta/x}
 
   for \eqn{x > 0}, \eqn{\alpha > 0}{alpha > 0} and
   \eqn{\theta > 0}{theta > 0}.  The parameter vector
@@ -72,10 +73,13 @@ momIntegrated(densFn, param, order, about = 0, absolute = FALSE)
   The value of the integral as specified in \bold{Details}.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}}
+\author{David Scott \email{d.scott@auckland.ac.nz}, 
+        Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 \seealso{\code{\link{dghyp}}, \code{\link{dhyperb}},
-  \code{\link{dgamma}}, \code{\link{dgig}}, \code{\link{dvg}} }
+  \code{\link{dgamma}}, \code{\link{dgig}},
+  \code{\link[VarianceGamma]{dvg}}
+}
 \examples{
 ### Calculate the mean of a generalized hyperbolic distribution
 ### Compare the use of integration and the formula for the mean

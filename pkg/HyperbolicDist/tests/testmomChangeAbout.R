@@ -1,3 +1,4 @@
+source("../../HyperbolicDist/R/momChangeAbout.R")
 ### Gamma distribution
 k <- 4
 shape <- 2

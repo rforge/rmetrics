@@ -1,4 +1,5 @@
 ### Test is.wholenumber
+source("../../HyperbolicDist/R/is.wholenumber.R")
 is.wholenumber(-3:5)
 is.wholenumber(c(0,0.1,1.3,5))
 is.wholenumber(-3:5 + .Machine$double.eps)

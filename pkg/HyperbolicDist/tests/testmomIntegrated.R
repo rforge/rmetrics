@@ -1,11 +1,10 @@
 ### Test using all possible options
-library(HyperbolicDist)
-source("../R/momIntegrated.R")
-source("../R/momChangeAbout.R")
-source("../R/gigMom.R")
-source("../R/is.wholenumber.R")
-source("../R/gigCheckPars.R")
-source("../R/besselRatio.R")
+fileList <- list.files("../../HyperbolicDist/R/")
+fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
+n <- length(fileNames)
+fileNames <- fileNames[-n]
+lapply(fileNames, source)
+
 
 
 ### Test ghyp
@@ -54,27 +53,30 @@ gigMom(2, c(1,2,3), about = m1)
 ### Test gamma
 m1 <- momIntegrated("gamma", order = 1, param = c(2,3), about = 0)
 m1
-gammaMom(order = 1, shape = 2, rate = 3)
+shape <- 2
+rate <- 3
+gigMom(1, c(shape, 0, 2*rate))
 momIntegrated("gamma", order = 1, param = c(2,3), about = m1)
 m2 <- momIntegrated("gamma", order = 2, param = c(2,3), about = 0)
 m2
 m2 - m1^2
 momIntegrated("gamma", order = 2, param = c(2,3), about = m1)
-gammaMom(order = 2, shape = 2, rate = 3, about = m1)
+gigMom(2, c(shape, 0, 2*rate), about = m1)
 
 ### Test inverse gamma
 m1 <- momIntegrated("invgamma", order = 1, param = c(3,4), about = 0)
 m1
-gammaMom(order = -1, shape = 3, rate = 1/4)
+shape <- 3
+rate <- 1/4
+gigMom(order = -1, c(shape, 0, 2*rate))
 momIntegrated("invgamma", order = 1, param = c(3,4), about = m1)
 m2 <- momIntegrated("invgamma", order = 2, param = c(3,4), about = 0)
 m2
-gammaMom(order = -2, shape = 3, rate = 1/4)
+gigMom(order = -2, c(shape, 0, 2*rate))
 m2 - m1^2
 momIntegrated("invgamma", order = 2, param = c(3,4), about = m1)
 
 ### Test vg
-m1 <- momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = 0)
 library(VarianceGamma)
 m1 <- momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = 0)
 m1
