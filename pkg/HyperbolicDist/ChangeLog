@@ -1,8 +1,16 @@
+2009-07-22    <d.scott@auckland.ac.nz>
+
+	* momIntegrated.R, gigMom.R, gigMom.Rd, testgigMom.R corrected and
+	moved to HyperbolicDist. Corrected momChangeAbout.Rd since
+	momChangeAbout only produces a single moment of the specified
+	order, not a vector as stated by Christine 
+
 2009-07-21    <d.scott@auckland.ac.nz>
 
 	* momRecursion.R, momRecursion.Rd, momChangeAbout.R,
 	momChangeAbout.Rd, testmomChangeAbout.Rd taken from Christine's
-	latest VarianceGamma files
+	latest VarianceGamma files and moved to
+	HyperbolicDist 
 
 	* is.wholenumber.R, is.wholenumber.Rd, testis.wholenumber.R,
 	besselRatio.R, besselRatio.Rd, testbesselRatio.R, gigCheckPars.R,
