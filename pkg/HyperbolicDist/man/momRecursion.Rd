@@ -20,7 +20,7 @@
   \item{order}{Numeric. The order of the moment coffecicients to be calculated.
     Not permitted to be a vector. Must be a positive whole number except for
     moments about zero.}
-  \item{printMatrix} {Logical. Should the coefficients matrix be printed?}
+  \item{printMatrix}{Logical. Should the coefficients matrix be printed?}
 }
 
 \details{
