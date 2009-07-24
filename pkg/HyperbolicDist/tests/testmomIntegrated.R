@@ -1,11 +1,8 @@
-### Test using all possible options
+### Read all files into directory
 fileList <- list.files("../../HyperbolicDist/R/")
+fileList <- fileList[fileList!="zzz.R"]
 fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
-n <- length(fileNames)
-fileNames <- fileNames[-n]
 lapply(fileNames, source)
-
-
 
 ### Test ghyp
 m1 <- momIntegrated("ghyp", order = 1, param = c(1/2,3,1,1,0), about = 0)

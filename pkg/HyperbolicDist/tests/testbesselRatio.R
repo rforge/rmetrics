@@ -1,4 +1,9 @@
-source("../../HyperbolicDist/R/besselRatio.R")
+### Read all files into directory
+fileList <- list.files("../../HyperbolicDist/R/")
+fileList <- fileList[fileList!="zzz.R"]
+fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
+lapply(fileNames, source)
+
 ### Create vector of nu values and of x values
 nus <- c(0:5, 10, 20)
 x <- seq(1, 4, length.out = 11)

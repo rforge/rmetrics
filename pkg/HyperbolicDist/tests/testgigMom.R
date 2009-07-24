@@ -1,8 +1,7 @@
-### Test raw and other moments
+### Read all files into directory
 fileList <- list.files("../../HyperbolicDist/R/")
+fileList <- fileList[fileList!="zzz.R"]
 fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
-n <- length(fileNames)
-fileNames <- fileNames[-n]
 lapply(fileNames, source)
 
 ### Test gigRawMom
