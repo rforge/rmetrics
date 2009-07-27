@@ -97,6 +97,7 @@ priceoption.default <- function(type = c("call", "put"), time = 0.5,
                                 sigmaS = 0.3, kappa = 1,
                                 sigmaE = 0.5, rho = 0.75, r = 0.05)
 {
+    type <- match.arg(type)
     if(Time < time)
         stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
@@ -128,6 +129,7 @@ priceoption.schwartz2factor <- function(type = c("call", "put"),
                                         time = 0.5, Time = 1, K = 40,
                                         object, r = 0.05, lambda = 0, alphaT = NULL)
 {
+    type <- match.arg(type)
     if(Time < time)
         stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
@@ -165,6 +167,7 @@ setMethod("priceoption", signature(type = "ANY", time = "ANY",
 priceoption.fit.schwartz2factor <- function(type = c("call", "put"),
                                             time = 0.5, Time = 1, K = 40, object)
 {
+    type <- match.arg(type)
     if(Time < time)
         stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 

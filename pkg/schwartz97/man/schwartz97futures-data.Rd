@@ -1,18 +1,8 @@
 \name{futures-data}
 \alias{futures-data}
 \alias{copper}
-% \alias{corn}
 \alias{crude.oil}
-% \alias{electricity}
-% \alias{gold}
-% \alias{live.cattle}
-% \alias{natural.gas}
-% \alias{oats}
-% \alias{platin}
-% \alias{silver}
-% \alias{soybean.oil}
 \alias{soybeans}
-% \alias{wheat}
 \docType{data}
 % <---------------------------------------------------------------------->
 \title{Daily futures prices}

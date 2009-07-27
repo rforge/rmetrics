@@ -1,6 +1,7 @@
 \name{schwartz2factor-class-hierarchy}
 \docType{class}
 \alias{schwartz2factor-class}
+\alias{fit.schwartz2factor}
 \alias{fit.schwartz2factor-class}
 \alias{show.schwartz2factor}
 \alias{show.fit.schwartz2factor}
@@ -17,7 +18,7 @@
   \code{schwartz2factor} class. The class \code{fit.schwartz2factor}
   adds slots containing data regarding the fit and parameters of the
   risk-neutral dynamics. In particular, it adds the market-price-of
-  convenience-yield risk \code{lambda} and the interest rate. 
+  convenience-yield risk \code{lambda} and the interest rate.
 
 }
 % <---------------------------------------------------------------------->

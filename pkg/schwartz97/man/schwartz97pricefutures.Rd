@@ -56,7 +56,7 @@
 \details{
 
   The market price of convenience yield risk can either be specified
-  explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
+  explicitly by \code{lambda} or implicitly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
   \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
