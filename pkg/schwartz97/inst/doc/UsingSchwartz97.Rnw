@@ -55,7 +55,7 @@ parameter fitting routine \verb=fit2factor=. Once the parameters of
 the two-factor model are known, a number of functions can be used to,
 e.g., draw samples from the model, price derivatives as European
 options, calculate risk-measures, or filter a futures price
-time-series to get an estimate of the underlying state variables. The
+time series to get an estimate of the underlying state variables. The
 document is organized as follows: Section \ref{sec:model} briefly
 describes the model and section \ref{sec:overview} gives an overview
 of the classes and functions. Then, section \ref{sec:init} to
@@ -171,11 +171,12 @@ data, returns an object of class \verb=fit.schwartz2factor=. This
 class inherits from the class \verb=schwartz2factor= and adds around
 ten slots. Most of them contain information about the fit, as the
 log-likelihood for instance. From a practical point of view, important
-extensions by the class \verb=fit.schwartz2factor= refer to parameters
-which are needed to work with derivatives (as the market price of
-convenience yield risk parameter $\lambda$). The following table
-describes these slots. A complete description of the slots can be
-found in the R-documentation (type \verb=?fit.schwartz2factor-class=
+extensions (to class \verb=schwartz2factor=) by the class
+\verb=fit.schwartz2factor= refer to parameters which are needed to
+work with derivatives (as the market price of convenience yield risk
+parameter $\lambda$). The following table describes these slots. A
+complete description of the slots can be found in the R-documentation
+(type \verb=?fit.schwartz2factor-class=
 in the R-console).\\[1ex]
 \begin{center}
   \begin{tabular}{llll}
@@ -196,7 +197,7 @@ and \verb=alphaT= is redundant according to equation \ref{eq:Q-drift}.
 % <------------------------------------------------------------>
 As mentioned earlier all functions listed in section
 \ref{sec:functions} (except \verb=fit2factor=) are set to generic.
-The idea is to leave some freedom to the user, which can decide
+The idea is to leave some freedom to the user, who can decide
 whether he wants to use an object-oriented approach or provide a
 fairly large set of arguments for each function-call.
 
@@ -238,7 +239,7 @@ arguments, i.e. no object. Doing so, a repeated initialization of
 \section{Object Initialization}\label{sec:init}
 % <============================================================>
 A \verb=schwartz2factor= object with reasonable parameters is
-constructed in the following code junk.
+constructed in the following code chunk.
 <<>>=
 library(schwartz97)
 s0 <- 100
@@ -262,7 +263,7 @@ obj
 As soon as a \verb=schwartz2factor= object is constructed it can be
 passed to the functions \verb=dstate=, \verb=pstate=, \verb=qstate=,
 \verb=rstate=, and \verb=simstate=. As we know the distribution of the
-state variables for a given point of time in the future, once this
+state variables for a given point in time in the future, once this
 point is defined we can use the above functions as the standard \RR{}
 distribution functions for, e.g., the normal distribution
 (\verb=dnorm=, \verb=pnorm=, \verb=qnorm=, \verb=rnorm=).
@@ -361,8 +362,7 @@ legend("top", legend = "Risk-free rate", lty = 1, col = "blue")
   interest rate, the spot price is expected to decrease (under the
   risk-neutral dynamics, see eq. \ref{eq:Qdynamics-S} and
   \ref{eq:Qdynamics-delta}) and therefore the futures price lies below
-  the spot price. Such a situation is called
-  backwardation.}\label{fig:futures-trajectory}
+  the spot price.}\label{fig:futures-trajectory}
 \end{figure}
 % <============================================================>
 \section{Working with derivatives}\label{sec:derivatives}
@@ -374,7 +374,7 @@ $\lambda$, $\sigma_\epsilon$, $\rho$, $r$). While some parameters
 admit an intuitive interpretation (e.g. the volatility of the spot
 price $\sigma_S$), some parameters are rather abstract. Think about
 the market price of convenience yield risk $\lambda$ for instance: At
-a first glance, it is difficult to assign a value to a parameter which
+first glance, it is difficult to assign a value to a parameter which
 enters a stochastic differential equation of a non-observable process
 (the convenience yield process). However, the parameters can be
 estimated by the function \verb=fit2factor= (see section
@@ -384,14 +384,14 @@ computed.\\[2ex]
 \textbf{Example:}\\
 Assume the current two years futures price for a bushel of soybeans is
 USD 370. Assume further that the annualized soybean volatility is
-30\%. The convenience yield is expected to decrease fastly to its
-long-term average. ``Decrease fastly'' is reflected in a $\kappa$ of
+30\%. The convenience yield is expected to decrease rapidly to its
+long-term average. ``Rapid decrease'' is reflected in a $\kappa$ of
 2. The volatility of the convenience yield is guessed to be
 50\%. Finally, we observe a risk-free rate of 4\%.
 
 Now, we want to price a European call option written on a two years
 soybean futures contract with strike price USD 390. The option expires
-in one year. The following code-junk shows how the arbitrage-free
+in one year. The following code-chunk shows how the arbitrage-free
 price can be computed:
 
 <<>>=
@@ -405,12 +405,13 @@ priceoption("call", time = 1, Time = 2, K = 390, g0 = 370,
 As mentioned in section \ref{sec:intro}, we think that the most
 valuable piece of code of the package~\Rpackage~is in the function
 \verb=fit2factor=. This function can estimate all the nine parameters
-involved in equations \ref{eq:Pdynamics-S} - \ref{eq:Qdynamics-delta}
-(including the initial values of the state variables $s_0$ and
-$\delta_0$). The estimation procedure is based on the Kalman filter.
-Because the log-futures prices linearly depend on two Gaussian random
-variables (the log-spot price and the convenience yield), it is the
-most straightforward way to use a linear state-space model.
+involved in equations (\ref{eq:Pdynamics-S}) -
+(\ref{eq:Qdynamics-delta}) (including the initial values of the state
+variables $s_0$ and $\delta_0$). The estimation procedure is based on
+the Kalman filter.  Because the log-futures prices linearly depend on
+two Gaussian random variables (the log-spot price and the convenience
+yield), it is the most straightforward way to use a linear state-space
+model.
 
 The header of the function \verb=fit2factor= looks like
 
@@ -429,7 +430,7 @@ measurement error standard deviation associated to each futures
 series\footnote{For a detailed explanation consult the other package
   vignette \emph{Technical Document} or the article
   \cite{Schwartz1997}.}. \verb=opt.pars= is a vector of logicals
-stating which parameters shall be fitted. The argument
+stating which parameters should be fitted. The argument
 \verb=opt.meas.sd= defines how the measurement error standard
 deviation will be treated. If \verb+opt.meas.sd == "scalar"+ it means
 that \verb=meas.sd= is scaled by a single factor, which enters the
@@ -465,7 +466,7 @@ values of the state variables were not estimated, the first parameter
 to discuss is the drift parameter of the spot price process
 $\mu$. A value of approx. 20\% was estimated, which seems to be
 reasonable. The volatility of the spot price process $\sigma_S$ was
-found to be 37\%. This value makes sense too.
+found to be 37\%. This value makes sense, too.
 
 Then, regarding the convenience yield process, three parameters were
 estimated: The speed of mean-reversion parameter $\kappa$, the

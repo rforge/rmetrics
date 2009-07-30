@@ -121,7 +121,7 @@ with parameters
   \sigma_{X\delta} &= \frac{1}{\kappa}\left\{\left(\sigmaS\sigmaE\rho -
       \frac{\sigmaE^2}{\kappa}\right)\left(1 - e^{-\kappa t}\right) +
     \frac{\sigmaE^2}{2\kappa}\left(1 - e^{-2\kappa
-        t}\right)\right\}\label{eq:spot-cov}
+        t}\right)\right\}\label{eq:spot-cov}.
 \end{align}
 The mean-parameters given in equations \ref{eq:spot-mu} and
 \ref{eq:cy-mu} refer to the $\mathbb{P}$-dynamics. To obtain the
@@ -143,7 +143,7 @@ under the spot martingale measure $\mathbb{Q}$. Let's start at time
 zero:
 \begin{equation}
   \label{futuresPrice}
-  G(S_0, \delta_0, T) = \mathbb{E}^{\mathbb{Q}}(S_T)
+  G(S_0, \delta_0, T) = \mathbb{E}^{\mathbb{Q}}(S_T).
 \end{equation}
 From the previous section \ref{sec:distributions} we know that
 $\log(S_T)$ is a Gaussian random variable. Hence we can easily
@@ -286,10 +286,10 @@ contract with maturity $T$ becomes
 \end{equation}
 
 Remark: For the special case when the exercise time $t$ of the option
-and the maturity $T$ of the futures contract coincide formulas
+and the maturity $T$ of the futures contract coincide, formulas
 (\ref{callF}) and (\ref{putF}) still hold. However, the options we
 price for $t=T$ are no longer options written on futures contracts
-with maturity $T$ but rather options with exercise time $T$ written on
+with maturity $T$ but rather options with exercise time $T$, written on
 a commodity \textit{spot} contract.
 
 
@@ -301,9 +301,9 @@ multi-factor model. That is estimating the model parameters by
 applying the Kalman filter methodology. Subsection
 \ref{sec:stateSpace} contains a documentation of how the Schwartz
 two-factor model can be expressed in state space form. Once the model
-has been cast in this form one can compute MLE estimates of arbitrary
-model parameters by numerically maximizing the Kalman-filter
-likelihood function.
+has been cast in this form one can compute maximum likelihood
+estimates of arbitrary model parameters by numerically maximizing the
+Kalman filter likelihood function.
 % <============================================================>
 \subsection{State Space Representation}
 \label{sec:stateSpace}
@@ -435,7 +435,7 @@ order of integration:
   &=& \int_0^t \frac{1}{\kappa}\left(1 - e^{-\kappa (t - s)}\right)
   dW_s^2 \label{eq:fubini}
 \end{eqnarray}
-Plugging eq. \ref{eq:fubini} into eq. \ref{eq:integra-deltat} and
+Plugging eq. (\ref{eq:fubini}) into eq. (\ref{eq:integra-deltat}) and
 solving the Riemann integrals yields
 \begin{equation}\label{eq:integra-deltat-fubini}
 \begin{split}
