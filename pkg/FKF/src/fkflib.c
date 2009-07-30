@@ -247,7 +247,7 @@ void cfkf(/* inputs */
       F77_NAME(dpotrf)(upper_triangle, &d,
 		       tmpFt_inv, &d, &potrf_info);
       if(potrf_info != 0)
-	Rprintf("Warning: Cholesky factorization (inverse) 'dpotrf' exited with status: %d\n", potrf_info);
+	Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n", potrf_info);
 
       strcpy(dpotri_uplo, "U");
       /* Computes the inverse using the Cholesky factorization */
@@ -258,7 +258,7 @@ void cfkf(/* inputs */
       FKFmirrorLU(tmpFt_inv, d, dpotri_uplo);
 
       if(potri_info != 0)
-	Rprintf("Warning: 'dpotri' exited with status: %d\n", potri_info);
+	Rprintf("Warning: 'dpotri' exited with status: %d\nVariance of the prediction error can not be computed.\n", potri_info);
     }
 
 
@@ -400,7 +400,7 @@ void cfkf(/* inputs */
 		       tmpdxd, &d, &det_potrf_info);
 
       if(det_potrf_info != 0)
-	Rprintf("Warning: Cholesky factorization (determinant) 'dpotrf' exited with status: %d\n", det_potrf_info);
+	Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nDeterminant of the variance of the prediction error can not be computed.\n", det_potrf_info);
 
       /* Take the product of the squared diagonal elements to get the determinant*/
       det = tmpdxd[0];
@@ -419,7 +419,9 @@ void cfkf(/* inputs */
       *loglik -= 0.5 * (mahalanobis + logDet);
     }else{
       *loglik = NA_REAL;
+#ifdef DEBUG_PRINT
       Rprintf("logDet or mahalanobis is NaN\n");
+#endif
     }
 
 #ifdef DEBUG_PRINT
