@@ -82,7 +82,7 @@ coef.fit.schwartz2factor <- function(object)
                 rho = object@rhoSE,
                 r = object@r,
                 lambda = object@lambdaE,
-                alphaT = object@alphaE.Q))
+                alphaT = object@alphaT))
 }
 ### <---------------------------------------------------------------------->
 setMethod("coef", signature(object = "fit.schwartz2factor"),
