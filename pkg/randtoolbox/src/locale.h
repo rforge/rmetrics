@@ -1,6 +1,6 @@
 /** 
- * @file  SFMT-sse2.h
- * @brief header file for SFMT algorithm
+ * @file  locale.h
+ * @brief header file for error messages
  *
  * @author Christophe Dutang
  *

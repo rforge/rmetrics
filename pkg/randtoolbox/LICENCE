@@ -16,10 +16,10 @@ http://www.opensource.org/licenses/bsd-license.php
 ----------------------------------------------------------------------
 
 -- all the code except the ones listed below was written by Yohan Chalabi,
-Christophe Dutang, Petr Savicky and Diethelm Wuertz
+Christophe Dutang, Petr Savicky and Diethelm Wuertz.
 
--- the code for SF-Mersenne Twister belongs to Hiroshima, Matsumoto 
-and Saito and is under the new BSD licence. 
+-- the code for SF-Mersenne Twister belongs to M. Matsumoto and M. Saito, 
+which is under the new BSD licence. 
 
--- the code for Knuth-TAOCP-2002 generator belongs to Donald E. Knuth. 
+-- the code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth. 
 This code is in the public domain and freely copyable.

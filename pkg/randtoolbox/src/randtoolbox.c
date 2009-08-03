@@ -111,7 +111,7 @@ SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed)
     
 	
     //allocate result
-    double *u = (double *) R_alloc(nb * dim, sizeof(double));
+    double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
@@ -206,7 +206,7 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
     unsigned long long incr = asInteger( increment ); //modulus    
 	
     //result
-    double *u = (double *) R_alloc(nb * dim, sizeof(double));
+    double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
@@ -285,7 +285,7 @@ SEXP doSFMersenneTwister(SEXP n, SEXP d, SEXP mersexpo, SEXP paramset)
     int usepset = asLogical( paramset ); //use param sets
     
     //result
-    double *u = (double *) R_alloc(nb * dim, sizeof(double));
+    double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
@@ -414,7 +414,7 @@ SEXP doWELL(SEXP n, SEXP d, SEXP order, SEXP tempering, SEXP version)
     int theversion = asInteger( version ); //1 for 'a' version and 2 for 'b'
     
     //result
-    double *u = (double *) R_alloc(nb * dim, sizeof(double));
+    double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
@@ -446,7 +446,7 @@ SEXP doKnuthTAOCP(SEXP n, SEXP d)
     int dim  = asInteger( d ); //dimension of vector
 
     //result
-    double *u = (double *) R_alloc(nb * dim, sizeof(double));
+    double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
