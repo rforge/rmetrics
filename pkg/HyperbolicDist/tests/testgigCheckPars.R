@@ -1,8 +1,4 @@
-### Read all files into directory
-fileList <- list.files("../../HyperbolicDist/R/")
-fileList <- fileList[fileList!="zzz.R"]
-fileNames <- paste("../../HyperbolicDist/R/", fileList, sep = "")
-lapply(fileNames, source)
+library(HyperbolicDist)
 
 ### Test gigCheckPars
 Theta <- c(-0.5,5,2.5)

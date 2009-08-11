@@ -8,7 +8,7 @@
 
 \description{
   This function computes all of the moments coffecicients by resursion based on
-  Scott, W\"{u}rtz and Tran (2008, working paper). See \bold{Details} for the
+  Scott, W\"urtz and Tran (2008, working paper). See \bold{Details} for the
   formula.
 }
 
@@ -32,7 +32,7 @@
     where \eqn{k}{k} = \code{order}, \eqn{\ell}{l} is equal to the integers from
     \eqn{(k+1)/2}{(k + 1)/2} to \eqn{k}{k}.
 
-  This formula is given in Scott, W\"{u}rtz and Tran (2008, working paper).
+  This formula is given in Scott, W\"urtz and Tran (2008, working paper).
 
   The function also calculates M which is equal to \eqn{2\ell - k}{2l - k}.
   It is a common term which will appear in the formulee
@@ -52,7 +52,7 @@
 }
 
 \references{
-  Scott, D. J., Diethelm, W. and Tran, T. T. (2008, working paper)
+  Scott, D. J., W\"urtz, D. and Tran, T. T. (2008, working paper)
   Moments of the Generalized Hyperbolic Distribution.
 }
 

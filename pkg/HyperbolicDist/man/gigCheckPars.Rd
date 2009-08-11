@@ -61,4 +61,4 @@ gigCheckPars(c(-0.5,0,0))        # error
 gigCheckPars(c(0.5,5,0))         # error
 gigCheckPars(c(-0.5,5,0))        # invgamma
 }
-\keyword{distribution}\name{gigCheckPars}
+\keyword{distribution}
