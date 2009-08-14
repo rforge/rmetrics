@@ -72,7 +72,7 @@ window.timeSeries <- function(x, ...) .window.timeSeries(x, ...)
 # ------------------------------------------------------------------------------
 
 
-cut.timeSeries <- function (x, from, to, ...)
+.cut.timeSeries <- function (x, from, to, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
