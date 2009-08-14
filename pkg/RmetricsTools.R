@@ -447,13 +447,6 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     all <- all[!(all %in% no)]
 
     ##
-    # depends packages
-    hh <- library(help=pkg, character.only = TRUE)
-    descr <- hh$info[[1]]
-    deps <- unlist(strsplit(descr[grep("Depends", descr)], ","))
-    deps <- sub("[[:space:]]+", "", deps[-1])
-
-    ##
     # S3
     cc <- unique(unlist(strsplit(all, "\\.")))
     cc <- cc[!(cc %in% "")]
@@ -525,88 +518,99 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     ### new <- new[-idx]
 
 
-    ## Not only check function definitions, but also S4 methods
-    ## [a version of this should be part of codetools eventually] :
-    findMethodGlobalEnv <- function(env)
-    {
-        globals <- NULL
-        for (g in methods::getGenerics(where = env))
-	    for (m in methods::findMethods(g, where = env)) {
-		fun <- methods::getDataPart(m)
-                globals <- c(globals, findGlobals(fun))
-	    }
-        unique(globals)
-    }
-    findMethodGlobalsPackage <- function(pname)
-    {
-        pname <- paste("package", pname, sep = ":")
-        if (!pname %in% search())
-            stop("package must be loaded")
-        if (pname %in% loadedNamespaces())
-            findGlobalsEnv(getNamespace(pname))
-        else
-            findGlobalsEnv(as.environment(pname))
-    }
+    ## ## Not only check function definitions, but also S4 methods
+    ## ## [a version of this should be part of codetools eventually] :
+    ## findMethodGlobalEnv <- function(env)
+    ## {
+    ##     globals <- NULL
+    ##     for (g in methods::getGenerics(where = env))
+    ##         for (m in methods::findMethods(g, where = env)) {
+    ##     	fun <- methods::getDataPart(m)
+    ##             globals <- c(globals, findGlobals(fun))
+    ##         }
+    ##     unique(globals)
+    ## }
+    ## findMethodGlobalsPackage <- function(pname)
+    ## {
+    ##     pname <- paste("package", pname, sep = ":")
+    ##     if (!pname %in% search())
+    ##         stop("package must be loaded")
+    ##     if (pname %in% loadedNamespaces())
+    ##         findGlobalsEnv(getNamespace(pname))
+    ##     else
+    ##         findGlobalsEnv(as.environment(pname))
+    ## }
 
 
-    ##
-    # search for all globals in order to include them in import
-    globals <- unique(c(findGlobalsPackage(pkg), findMethodGlobalsPackage(pkg)))
-    impGlobals <- sapply(globals, function(x) {
-        ans <- sub("package:", "", find(x)[1])
-        if (!is.na(ans) && ans == ".GlobalEnv") {
-            ans <- sub("package:", "", find(x)[2])
-        }
-        ans})
-    # remove all entries from base package
-    impGlobals <- impGlobals[!(impGlobals %in% "base")]
-    globalsPkg <- data.frame(pkg = impGlobals, func = names(impGlobals))
-    rownames(globalsPkg) <- NULL
+    ## ##
+    ## # search for all globals in order to include them in import
+    ## globals <- unique(c(findGlobalsPackage(pkg), findMethodGlobalsPackage(pkg)))
+    ## impGlobals <- sapply(globals, function(x) {
+    ##     ans <- sub("package:", "", find(x)[1])
+    ##     if (!is.na(ans) && ans == ".GlobalEnv") {
+    ##         ans <- sub("package:", "", find(x)[2])
+    ##     }
+    ##     ans})
+    ## # remove all entries from base package
+    ## impGlobals <- impGlobals[!(impGlobals %in% "base")]
+    ## globalsPkg <- data.frame(pkg = impGlobals, func = names(impGlobals))
+    ## rownames(globalsPkg) <- NULL
 
 
-    ## ## check if a function has been defined as generic in Rmetrics
-    ## ## and remove its definition from the other package
-    ## duplicated(globalsPkg$func)
+    ## ## ## check if a function has been defined as generic in Rmetrics
+    ## ## ## and remove its definition from the other package
+    ## ## duplicated(globalsPkg$func)
 
 
-    ##
-    # list of function to import
-    imp <- unique(rbind(S3pkg, S4pkg, globalsPkg,
-                        data.frame(pkg ="timeDate", func ="setRmetricsOptions"),
-                        data.frame(pkg ="timeDate", func ="getRmetricsOptions")))
-    if (any(is.na(imp))) {
-        print(pkg)
-        print(imp[is.na(imp),])
-        warnings("there are functions not available")
-        imp <- imp[!is.na(imp[,1]),]
-    }
-    # remove base, pkg and some special functions (plot and summary from urca)
-    imp <- imp[!(imp$pkg %in% c("base", pkg)),]
-    # put Rmetrics pkgs at the end of list
-    imp <- rbind(imp[!(imp$pkg %in% RmetricsPkgs),],
-                 imp[(imp$pkg %in% RmetricsPkgs),])
-    # remove duplicated entries. It should use first the definition
-    # from Rmetrics
-    # imp <- imp[!duplicated(imp$func),]
-    imp <- imp[!rev(duplicated(rev(imp$func))),]
-
-
-
-    ###     for (idx in match("urca", imp$pkg))
-    ###         if (imp$func[idx] %in% c("plot", "summary"))
-    ###             imp <- imp[-idx,]
-
-    imp <- tapply(imp$func, as.character(imp$pkg), function(x)
-                  paste("\"", x, "\"", sep = "", collapse = ",\n           "))
-    if (any(names(imp) == ".GlobalEnv"))
-        stop("there are functions defined in '.GlobalEnv'")
-    # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
-    imp <- imp[((names(imp) %in% RmetricsPkgs) ||
-               packageHasNamespace(names(imp), file.path(R.home(), "library")))]
+    ## ##
+    ## # list of function to import
+    ## imp <- unique(rbind(S3pkg, S4pkg, globalsPkg,
+    ##                     data.frame(pkg ="timeDate", func ="setRmetricsOptions"),
+    ##                     data.frame(pkg ="timeDate", func ="getRmetricsOptions")))
+    ## if (any(is.na(imp))) {
+    ##     print(pkg)
+    ##     print(imp[is.na(imp),])
+    ##     warnings("there are functions not available")
+    ##     imp <- imp[!is.na(imp[,1]),]
+    ## }
+    ## # remove base, pkg and some special functions (plot and summary from urca)
+    ## imp <- imp[!(imp$pkg %in% c("base", pkg)),]
+    ## # put Rmetrics pkgs at the end of list
+    ## imp <- rbind(imp[!(imp$pkg %in% RmetricsPkgs),],
+    ##              imp[(imp$pkg %in% RmetricsPkgs),])
+    ## # remove duplicated entries. It should use first the definition
+    ## # from Rmetrics
+    ## # imp <- imp[!duplicated(imp$func),]
+    ## imp <- imp[!rev(duplicated(rev(imp$func))),]
 
 
 
-    # import only ones if generic was defined in one of the Rmetrics package
+    ## ###     for (idx in match("urca", imp$pkg))
+    ## ###         if (imp$func[idx] %in% c("plot", "summary"))
+    ## ###             imp <- imp[-idx,]
+
+    ## imp <- tapply(imp$func, as.character(imp$pkg), function(x)
+    ##               paste("\"", x, "\"", sep = "", collapse = ",\n           "))
+    ## if (any(names(imp) == ".GlobalEnv"))
+    ##     stop("there are functions defined in '.GlobalEnv'")
+    ## # check if package in imp has a NAMESPACE and make sure to keep Rmetrics pkg
+    ## imp <- imp[((names(imp) %in% RmetricsPkgs) ||
+    ##            packageHasNamespace(names(imp), file.path(R.home(), "library")))]
+
+
+    # import naively complete namespace of depended packages and
+    # ensure that Rmetrics packages are ordered and are at the end to
+    # avoid other package to overwrite a generic
+
+    # depends packages
+    hh <- library(help=pkg, character.only = TRUE)
+    descr <- hh$info[[1]]
+    deps <- unlist(strsplit(descr[grep("Depends", descr)], ","))
+    deps <- sub("[[:space:]]+", "", deps[-1])
+    deps <- sub("\\(.*\\)", "", deps)
+    # order depend package such that Rmetrics are at the end and in right order
+    deps <- c(deps[!(deps %in% RmetricsPkgs)], RmetricsPkgs[RmetricsPkgs %in% deps])
+    imp <- deps[packageHasNamespace(deps, file.path(R.home(), "library"))]
 
     ##
     # should we include C or Fortran code ?
@@ -623,15 +627,20 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 ################################################
 \n", file = out)
 
-    impR <- imp[!(names(imp) %in% RmetricsPkgs)]
-    impRmetrics <- imp[(names(imp) %in% RmetricsPkgs)]
-    if (ln <- length(impR))
-        for (i in seq(ln))
-            cat("importFrom(", "\"", names(impR)[i], "\",\n           ",
-                impR[[i]], ")\n", sep = "", file = out)
-    if (length(names(impRmetrics)))
-        for (impPkg in names(impRmetrics))
+    ## impR <- imp[!(names(imp) %in% RmetricsPkgs)]
+    ## impRmetrics <- imp[(names(imp) %in% RmetricsPkgs)]
+    ## if (ln <- length(impR))
+    ##     for (i in seq(ln))
+    ##         cat("importFrom(", "\"", names(impR)[i], "\",\n           ",
+    ##             impR[[i]], ")\n", sep = "", file = out)
+    ## if (length(names(impRmetrics)))
+    ##     for (impPkg in names(impRmetrics))
+    ##         cat("import(", "\"", impPkg, "\")\n", sep = "", file = out)
+
+    if (length(imp))
+        for (impPkg in imp)
             cat("import(", "\"", impPkg, "\")\n", sep = "", file = out)
+
 
     if (SRC) {
         cat("

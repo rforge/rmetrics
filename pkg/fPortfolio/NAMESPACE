@@ -3,42 +3,14 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "legend",
-           "par",
-           "polygon",
-           "text",
-           "axis",
-           "mtext",
-           "pie",
-           "barplot",
-           "title",
-           "grid")
-importFrom("grDevices",
-           "rainbow")
-importFrom("methods",
-           "show",
-           "@<-",
-           "new",
-           "is")
-importFrom("robustbase",
-           "scaleTau2")
-importFrom("slam",
-           "colMeans",
-           "rowSums")
-importFrom("stats",
-           "cov",
-           "ts.plot",
-           "weights",
-           "pnorm",
-           "sd",
-           "optimize",
-           "rcauchy",
-           "rnorm")
-import("fAssets")
-import("fBasics")
+import("methods")
+import("MASS")
+import("quadprog")
+import("robustbase")
+import("Rglpk")
 import("timeDate")
 import("timeSeries")
+import("fBasics")
 
 ################################################
 ## S4 classes

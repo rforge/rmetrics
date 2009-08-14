@@ -3,52 +3,9 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "grid",
-           "hist",
-           "par",
-           "title")
-importFrom("methods",
-           "show",
-           "@<-",
-           "new",
-           "slotNames",
-           "slot")
-importFrom("stats",
-           "coef",
-           "fitted",
-           "formula",
-           "predict",
-           "residuals",
-           "update",
-           "integrate",
-           "dnorm",
-           "dt",
-           "as.formula",
-           "terms",
-           "pnorm",
-           "sd",
-           "arima",
-           "var",
-           "model.frame",
-           "optim",
-           "nlminb",
-           "rnorm",
-           "pgamma",
-           "acf",
-           "ccf",
-           "pt",
-           "qgamma",
-           "ppoints",
-           "qnorm",
-           "qt",
-           "rgamma",
-           "runif",
-           "rt")
-importFrom("utils",
-           "capture.output",
-           "menu")
-import("fBasics")
+import("stats")
+import("graphics")
+import("methods")
 import("timeDate")
 import("timeSeries")
 

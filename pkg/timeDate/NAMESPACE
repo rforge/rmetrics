@@ -3,25 +3,10 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "abline",
-           "lines",
-           "plot",
-           "points",
-           "axis.POSIXct")
-importFrom("methods",
-           "coerce",
-           "initialize",
-           "show",
-           "is",
-           "@<-",
-           "new")
-importFrom("stats",
-           "end",
-           "start",
-           "window",
-           "approx",
-           "var")
+import("graphics")
+import("utils")
+import("stats")
+import("methods")
 
 ################################################
 ## S4 classes

@@ -3,69 +3,11 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "grid",
-           "title",
-           "axis",
-           "box",
-           "par",
-           "plot.new",
-           "plot.window",
-           "segments",
-           "axis.POSIXct",
-           "layout",
-           "mtext",
-           "plot.default",
-           "text")
-importFrom("grDevices",
-           "xy.coords")
-importFrom("methods",
-           "cbind2",
-           "coerce",
-           "getDataPart",
-           "initialize",
-           "rbind2",
-           "setDataPart",
-           "show",
-           "@<-",
-           "is",
-           "slot",
-           "validObject",
-           "setOldClass",
-           "slotNames",
-           "as",
-           "new")
-importFrom("stats",
-           "aggregate",
-           "as.ts",
-           "end",
-           "lag",
-           "na.omit",
-           "quantile",
-           "start",
-           "time",
-           "window",
-           "approx",
-           "deltat",
-           "frequency",
-           "ts",
-           "rnorm",
-           "runif",
-           "median",
-           "qt",
-           "var",
-           "dist",
-           "hclust",
-           "cor",
-           "is.mts")
-importFrom("utils",
-           "head",
-           "str",
-           "tail",
-           "head.matrix",
-           "read.table",
-           "tail.matrix")
-import("timeDate")
+import("graphics")
+import("grDevices")
+import("methods")
+import("stats")
+import("utils")
 
 ################################################
 ## S4 classes
@@ -200,6 +142,7 @@ export(
     "colVars",
     "countMonthlyRecords",
     "cumulated",
+    ".cut.timeSeries",
     "cut.timeSeries",
     "description",
     ".description",

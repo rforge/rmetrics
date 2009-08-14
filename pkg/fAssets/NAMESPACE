@@ -3,70 +3,13 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "text",
-           "axis",
-           "polygon",
-           "boxplot",
-           "arrows",
-           "mtext",
-           "box",
-           "image",
-           "title",
-           "pairs",
-           "par",
-           "grid",
-           "hist",
-           "stars",
-           "Axis",
-           "strwidth",
-           "legend",
-           "rect",
-           "segments",
-           "plot.xy")
-importFrom("grDevices",
-           "rgb",
-           "palette",
-           "rainbow",
-           "cm.colors",
-           "xy.coords")
-importFrom("methods",
-           "show",
-           "new")
-importFrom("robustbase",
-           "scaleTau2",
-           "covMcd")
-importFrom("sn",
-           "msn.quantities")
-importFrom("stats",
-           "cov",
-           "approx",
-           "median",
-           "cor",
-           "cor.test",
-           "lowess",
-           "symnum",
-           "dist",
-           "hclust",
-           "density",
-           "dnorm",
-           "sd",
-           "cov2cor",
-           "mahalanobis",
-           "pchisq",
-           "qchisq",
-           "rchisq",
-           "rnorm",
-           "var",
-           "mad",
-           "runif",
-           "qf",
-           "kmeans",
-           "shapiro.test")
-import("fBasics")
-import("fCopulae")
+import("methods")
+import("sn")
+import("MASS")
+import("robustbase")
 import("timeDate")
 import("timeSeries")
+import("fBasics")
 
 ################################################
 ## useDynLib

@@ -3,37 +3,11 @@
 ## import name space
 ################################################
 
-importFrom("graphics",
-           "grid",
-           "legend",
-           "mtext",
-           "title",
-           "par",
-           "plot.new",
-           "plot.window",
-           "axis",
-           "layout",
-           "lcm",
-           "rect",
-           "text")
-importFrom("methods",
-           "show",
-           "new",
-           "slot",
-           "@<-")
-importFrom("slam",
-           "colSums")
-importFrom("stats",
-           "filter",
-           "sd",
-           "quantile.default")
-importFrom("utils",
-           "capture.output")
-import("fAssets")
-import("fBasics")
-import("fPortfolio")
+import("methods")
 import("timeDate")
 import("timeSeries")
+import("fBasics")
+import("fAssets")
 
 ################################################
 ## S4 classes

@@ -3,6 +3,10 @@
 ## import name space
 ################################################
 
+import("sn")
+import("methods")
+import("timeDate")
+import("timeSeries")
 
 ################################################
 ## S4 classes
