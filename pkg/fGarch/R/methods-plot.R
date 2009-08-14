@@ -32,19 +32,19 @@
 #  plot                      Plot method for an object of class 'fGARCH'
 #  .interactiveGarchPlot     Plot interactively
 #  .multGarchPlot            Arrange multivariate Plots
-#  .plot.garch.1               Plot Time Series                         
-#  .plot.garch.2               Plot Conditional SD                          
+#  .plot.garch.1               Plot Time Series
+#  .plot.garch.2               Plot Conditional SD
 #  .plot.garch.3               Plot Series with 2 Conditional SD Superimposed
-#  .plot.garch.4               Plot ACF of Observations                     
-#  .plot.garch.5               Plot ACF of Squared Observations       
-#  .plot.garch.6               Plot Cross Correlation                    
-#  .plot.garch.7               Plot Residuals                          
-#  .plot.garch.8               Plot Conditional SDs                         
-#  .plot.garch.9               Plot Standardized Residuals                  
-#  .plot.garch.10              Plot ACF of Standardized Residuals            
-#  .plot.garch.11              Plot ACF of Squared Standardized Residuals    
-#  .plot.garch.12              Plot Cross Correlation between r^2 and r      
-#  .plot.garch.13              Plot QQ-Plot of Standardized Residuals"       
+#  .plot.garch.4               Plot ACF of Observations
+#  .plot.garch.5               Plot ACF of Squared Observations
+#  .plot.garch.6               Plot Cross Correlation
+#  .plot.garch.7               Plot Residuals
+#  .plot.garch.8               Plot Conditional SDs
+#  .plot.garch.9               Plot Standardized Residuals
+#  .plot.garch.10              Plot ACF of Standardized Residuals
+#  .plot.garch.11              Plot ACF of Squared Standardized Residuals
+#  .plot.garch.12              Plot Cross Correlation between r^2 and r
+#  .plot.garch.13              Plot QQ-Plot of Standardized Residuals"
 #   .qqDist                     Quantile-Quantile Points
 #   .qqLine                     Quantile-Quantile Line
 ################################################################################
@@ -230,8 +230,8 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     ci = 2
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
         main = "Series with 2 Conditional SD Superimposed")
-    lines(+ci * xcsd, col = "grey")
-    lines(-ci * xcsd, col = "grey")
+    lines(mean(xseries) + ci * xcsd, col = "grey") # or simply xseries ?
+    lines(mean(xseries) - ci * xcsd, col = "grey")
     abline(h = 0, col = "grey", lty = 3)
     grid()
 }
@@ -450,17 +450,17 @@ function(x, ...)
 
     if (cond.dist == "qnorm" || cond.dist == "qQMLE")
         .qqDist(sres, dist = "qnorm")
-        
+
     if (cond.dist == "qstd" | cond.dist == "qged")
         .qqDist(sres, dist = cond.dist, nu = shape)
-        
+
     if (cond.dist == "qsnorm")
         .qqDist(sres, dist = cond.dist, xi = skew)
-        
+
     if (cond.dist == "qsstd" | cond.dist == "qsged")
         .qqDist(sres, dist = cond.dist, xi = skew, nu = shape)
-       
-    if (cond.dist == "qsnig") 
+
+    if (cond.dist == "qsnig")
         .qqDist(sres, dist = ".qsnigC", rho = skew, zeta = shape)
 
 }
