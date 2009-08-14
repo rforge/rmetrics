@@ -144,7 +144,7 @@ Lehmann E.L. (1986);
 \seealso{
 
     \code{\link{locationTest}},
-    \code{\linl{scaleTest}},
+    \code{\link{scaleTest}},
     \code{\link{varianceTest}}.
     
 }
