@@ -8,6 +8,7 @@ import("graphics")
 import("methods")
 import("timeDate")
 import("timeSeries")
+import("fBasics")
 
 ################################################
 ## useDynLib

@@ -607,7 +607,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     descr <- hh$info[[1]]
     deps <- unlist(strsplit(descr[grep("Depends", descr)], ","))
     deps <- sub("[[:space:]]+", "", deps[-1])
-    deps <- sub("\\(.*\\)", "", deps)
+    deps <- sub("[[:space:]]?\\(.*\\)", "", deps)
     # order depend package such that Rmetrics are at the end and in right order
     deps <- c(deps[!(deps %in% RmetricsPkgs)], RmetricsPkgs[RmetricsPkgs %in% deps])
     imp <- deps[packageHasNamespace(deps, file.path(R.home(), "library"))]

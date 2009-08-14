@@ -8,6 +8,7 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 import("fAssets")
+import("fPortfolio")
 
 ################################################
 ## S4 classes

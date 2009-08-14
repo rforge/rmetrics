@@ -6,6 +6,7 @@
 import("MASS")
 import("methods")
 import("timeDate")
+import("timeSeries")
 
 ################################################
 ## useDynLib

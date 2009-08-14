@@ -11,6 +11,7 @@ import("Rglpk")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
+import("fAssets")
 
 ################################################
 ## S4 classes

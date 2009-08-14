@@ -7,6 +7,7 @@ import("sn")
 import("methods")
 import("timeDate")
 import("timeSeries")
+import("fBasics")
 
 ################################################
 ## S4 classes
