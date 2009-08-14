@@ -25,37 +25,46 @@
 
 
 \arguments{
+  
+  \item{n.ahead}{ an integer value, denoting the number of steps to be
+    forecasted, by default 10.}
+  
+  \item{object}{ an object of class \code{fGARCH} as returned by the
+    function \code{garchFit}.}
+  
+  \item{trace}{ a logical flag. Should the prediction process be traced?
+    By default \code{trace=FALSE}.}
+  
+  \item{mse}{ If set to \code{"cond"}, \code{meanError} is defined as
+    the conditional mean errors
+    \eqn{\sqrt{E_t[x_{t+h}-E_t(x_{t+h})]^2}}. If set to \code{"uncond"},
+    it is defined as \eqn{\sqrt{E[x_{t+h}-E_t(x_{t+h})]^2}}.}
+  
+  \item{plot}{If set to \code{TRUE}, the confidence intervals are
+    computed and plotted}
+  
+  \item{nx}{The number of observations to be plotted along with the
+    predictions. The default is \code{round(n*0.25)}, where n is the
+    sample size.}
 
-    \item{n.ahead}{
-        an integer value, denoting the number of steps to be forecasted,  
-        by default 10.
-        }
-    \item{object}{
-        an object of class \code{fGARCH} as returned by the function
-        \code{garchFit}.
-        }   
-    \item{trace}{
-        a logical flag. Should the prediction process be traced? By 
-        default \code{trace=FALSE}.
-        }  
-     \item{mse}{
-	If set to \code{"cond"}, \code{meanError} is defined as the conditional mean errors 
-	\eqn{\sqrt{E_t[x_{t+h}-E_t(x_{t+h})]^2}}. If set to \code{"uncond"}, it is defined as 
-	\eqn{\sqrt{E[x_{t+h}-E_t(x_{t+h})]^2}}.
-	}
-      \item{plot}{If set to \code{TRUE}, the confidence intervals are computed and plotted}
-      \item{nx}{The number of observations to be plotted along with the predictions. The default is \code{round(n*0.25)}, where n is the 	sample size.}
-      \item{crit_val}{The critical values for the confidence intervals when \code{plot} is set to \code{TRUE}. The intervals are defined 	as \eqn{\hat{x}_{t+h}} + \code{crit_val[2] * meanError} and \eqn{\hat{x}_{t+h}} + \code{crit_val[1] * meanError} if two critical 	values are provided and \eqn{\hat{x}_{t+h} \pm}  \code{crit_val * meanError} if only one is given. If you do not provide critical 	values, they will be computed automatically.
-	}	
-	\item{conf}{The confidence level for the confidence intervals if \code{crit_val} is not provided. 
-	By default it is set to 0.95. The critical values are then computed using the conditional distribution 
-	that was chosen to create the \code{object} with \code{garchFit} using the same \code{shape} and \code{skew} 
-	parameters. If the conditionnal distribution was set to code{"QMLE"}, the critical values are computed using 
-	the empirical distribution of the standardized residuals.
-	 }
-    \item{\dots}{
-        additional arguments to be passed.
-        }   
+  \item{crit_val}{The critical values for the confidence intervals when
+    \code{plot} is set to \code{TRUE}. The intervals are defined as
+    \eqn{\hat{x}_{t+h}} + \code{crit_val[2] * meanError} and
+    \eqn{\hat{x}_{t+h}} + \code{crit_val[1] * meanError} if two critical
+    values are provided and \eqn{\hat{x}_{t+h} \pm} \code{crit_val *
+    meanError} if only one is given. If you do not provide critical
+    values, they will be computed automatically.  }
+      
+  \item{conf}{The confidence level for the confidence intervals if
+    \code{crit_val} is not provided.  By default it is set to 0.95. The
+    critical values are then computed using the conditional distribution
+    that was chosen to create the \code{object} with \code{garchFit}
+    using the same \code{shape} and \code{skew} parameters. If the
+    conditionnal distribution was set to \code{"QMLE"}, the critical
+    values are computed using the empirical distribution of the
+    standardized residuals.  }
+
+  \item{\dots}{ additional arguments to be passed.  }
 
 }
 
