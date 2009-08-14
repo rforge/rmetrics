@@ -187,7 +187,7 @@ title = NULL, description = NULL)
 
     # Add title and description:
     if (is.null(title)) title = "Extremal Index from Block Method"
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
     # Return Value:
     new("fTHETA",
@@ -256,7 +256,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title))
         title = "Extremal Index from Reciprocal Cluster Method"
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
     # Return Value:
     new("fTHETA",
@@ -326,7 +326,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title))
         title = "Extremal Index from Run Method"
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
     # Return Value:
     new("fTHETA",
@@ -417,7 +417,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title))
         title = "Extremal Index from Ferro-Segers Method"
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
     # Return Value:
     new("fTHETA",

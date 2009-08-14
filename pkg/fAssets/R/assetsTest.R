@@ -19,54 +19,54 @@
 # FUNCTION:                   DESCRIPTION:
 #  assetsTest                  Tests for multivariate Normal Assets
 #  .mvshapiroTest              Multivariate Shapiro Test
-#  .mvenergyTest               Multivariate E-Statistic (Energy) Test   
+#  .mvenergyTest               Multivariate E-Statistic (Energy) Test
 ################################################################################
 
 
 assetsTest =
-function(x, method = c("shapiro", "energy"), Replicates = 100, 
+function(x, method = c("shapiro", "energy"), Replicates = 100,
 title = NULL, description = NULL)
 {
     # Description:
     #   Tests for multivariate Normal Assets
-    
+
     # Example:
     #   .mvnormTest(x = assetsSim(100))
     #   .mvnormTest(x = assetsSim(100), method = "e", Replicates = 99)
-    
+
     # FUNCTION:
-    
+
     # Test:
     method = match.arg(method)
     if (method == "shapiro") {
         test = .mvshapiroTest(x)
-    } 
+    }
     if (method == "energy") {
         test = .mvenergyTest(x, Replicates = Replicates)
     }
-    
+
     # Return Value:
-    test    
+    test
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.mvshapiroTest = 
+.mvshapiroTest =
 function(x, title = NULL, description = NULL)
-{   
+{
     # Description:
     #   Computes Shapiro's normality test for multivariate variables
-    
+
     # Note:
-    #   Reimplemented function, doesn't require the contributed R package 
+    #   Reimplemented function, doesn't require the contributed R package
     #   mvnormtest
-    
-    # Author: 
+
+    # Author:
     #   Slawomir Jarek
     #   License: GPL
-    
+
     # Source:
     #   Package: mvnormtest
     #   Version: 0.1-6
@@ -74,14 +74,14 @@ function(x, title = NULL, description = NULL)
     #   Title: Normality test for multivariate variables
     #   Author: Slawomir Jarek
     #   Maintainer: Slawomir Jarek <slawomir.jarek@gallus.edu.pl>
-    #   Description: Generalization of shapiro-wilk test for 
+    #   Description: Generalization of shapiro-wilk test for
     #       multivariate variables.
-    
+
     # Example:
     #   .mvshapiroTest(x = assetsSim(100))
-    
+
     # FUNCTION:
-    
+
     # Transform:
     U = t(as.matrix(x))
 
@@ -101,17 +101,17 @@ function(x, title = NULL, description = NULL)
     test = shapiro.test(Z)
     names(test$p.value) = ""
     class(test) = "list"
-    
+
     # Add title and description:
     if (is.null(title)) title = "Multivariate Shapiro Test"
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Return Value:
-    new("fHTEST", 
-        call = match.call(), 
-        data = list(x = x), 
-        test = test, 
-        title = title, 
+    new("fHTEST",
+        call = match.call(),
+        data = list(x = x),
+        test = test,
+        title = title,
         description = description)
 }
 
@@ -124,33 +124,33 @@ function(x, Replicates = 99, title = NULL, description = NULL)
 {
     # Description:
     #   Computes E-statistics test for multivariate variables
-    
+
     # Note:
-    #   Reimplemented function, doesn't require the contributed 
+    #   Reimplemented function, doesn't require the contributed
     #   R package energy, we only use the C Program here.
-    
+
     # Source:
-    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and 
+    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and
     #   Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
     #   License: GPL 2.0 or later
-    
+
     # Example:
     #   .mvenergyTest(x = assetsSim(100), 99)
-    
+
     # FUNCTION:
-    
+
     # Transform:
     if (class(x) == "timeSeries") x = series(x)
     x = as.matrix(x)
-    
-    # Test: 
-    R = Replicates 
-    
+
+    # Test:
+    R = Replicates
+
     # RVs:
     n <- nrow(x)
     d <- ncol(x)
     ran.gen = function(x, y) return(matrix(rnorm(n * d), nrow = n, ncol = d))
-    
+
     # Parametric Mini Boot:
     strata = rep(1, n)
     n <- nrow(x)
@@ -161,7 +161,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     t.star <- matrix(NA, sum(R), lt0)
     pred.i <- NULL
     for(r in 1:R) t.star[r, ] <- .mvnorm.e(ran.gen(x, NULL))
-    
+
     # Result:
     test <- list(
         statistic = c("E-Statistic" = t0),
@@ -169,12 +169,12 @@ function(x, Replicates = 99, title = NULL, description = NULL)
         method = "Energy Test",
         data.name = paste("x, obs ", n, ", dim ", d, ", reps ", R, sep = ""))
     names(test$p.value) = ""
-    class(test) = "list" 
-    
+    class(test) = "list"
+
     # Add:
     if (is.null(title)) title = test$method
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Return Value:
     new("fHTEST",
         call = match.call(),

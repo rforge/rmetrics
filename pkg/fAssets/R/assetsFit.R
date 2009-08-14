@@ -27,7 +27,7 @@
 assetsFit =
     function(x, method = c("st", "snorm", "norm"), title = NULL,
     description = NULL, fixed.df = NA, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -109,7 +109,7 @@ assetsFit =
 
     # Add Description:
     if (is.null(description))
-        description = .description()
+        description = description()
 
     # Return Value:
     new("fASSETS",
@@ -129,7 +129,7 @@ assetsFit =
 
 .mvnormFit =
     function(x, title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -182,7 +182,7 @@ assetsFit =
 
     # Add Description:
     if (is.null(description))
-        description = .description()
+        description = description()
 
     # Return Value:
     new("fASSETS",
@@ -202,7 +202,7 @@ assetsFit =
 
 mvsnormFit =
     function(x, title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -244,8 +244,8 @@ mvsnormFit =
     alpha = as.vector(fit@fit$dp$alpha)
     df = Inf
     fit = fit@fit
-    
-    
+
+
     # Add Names:
     names(mu) = colNames
     names(alpha) = colNames
@@ -258,7 +258,7 @@ mvsnormFit =
 
     # Add Description:
     if (is.null(description))
-        description = .description()
+        description = description()
 
     # Return Value:
     new("fASSETS",
@@ -278,7 +278,7 @@ mvsnormFit =
 
 .mvstFit =
     function(x, title = NULL, description = NULL, fixed.df = NA, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -334,7 +334,7 @@ mvsnormFit =
 
     # Add Description:
     if (is.null(description))
-        description = .description()
+        description = description()
 
     # Return Value:
     new("fASSETS",

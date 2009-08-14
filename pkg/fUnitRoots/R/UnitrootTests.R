@@ -190,7 +190,7 @@ description = NULL)
         data = list(x = x),
         test = test,
         title = as.character(title),
-        description = .description()
+        description = description()
         )
 }
 
@@ -325,7 +325,7 @@ description = NULL)
         data = list(x = x),
         test = test,
         title = as.character(title),
-        description = .description()
+        description = description()
         )
 }
 
@@ -351,7 +351,7 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
 
     # Add:
     if (!is.null(title)) ans@title = as.character(title)
-    if (!is.null(description)) ans@description = .description()
+    if (!is.null(description)) ans@description = description()
 
     # Return Value:
     ans

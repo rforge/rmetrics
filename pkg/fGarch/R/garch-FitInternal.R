@@ -27,26 +27,26 @@
 
 .garchFit <-
 function(
-    formula.mean = ~arma(0, 0), 
+    formula.mean = ~arma(0, 0),
     formula.var = ~garch(1, 1),
     series,
     init.rec = c("mci", "uev"),
-    delta = 2, 
-    skew = 1, 
+    delta = 2,
+    skew = 1,
     shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", "QMLE"),
-    include.mean = TRUE, 
-    include.delta = NULL, 
+    include.mean = TRUE,
+    include.delta = NULL,
     include.skew = NULL,
-    include.shape = NULL, 
+    include.shape = NULL,
     leverage = NULL,
     trace = TRUE,
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"),
     hessian = c("ropt", "rcd"),
     robust.cvar,
     control = list(),
-    title = NULL, 
-    description = NULL, 
+    title = NULL,
+    description = NULL,
     ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -82,7 +82,7 @@ function(
 
     # Debug Mode:
     DEBUG <- FALSE
-    
+
     # Allow only full formula specification:
     if(DEBUG) print("Formula Specification ...")
     fcheck = rev(all.names(formula.mean))[1]
@@ -115,12 +115,12 @@ function(
     series <- series/scale
     .series <- .garchInitSeries(
         formula.mean = formula.mean,
-        formula.var = formula.var, 
+        formula.var = formula.var,
         cond.dist = cond.dist[1],
-        series = series, 
+        series = series,
         scale = scale,
-        init.rec = init.rec[1], 
-        h.start = NULL, 
+        init.rec = init.rec[1],
+        h.start = NULL,
         llh.start = NULL,
         trace = trace)
     .setfGarchEnv(.series = .series)
@@ -129,17 +129,17 @@ function(
     if(DEBUG) print("Initialize Model Parameters ...")
     .params <- .garchInitParameters(
         formula.mean = formula.mean,
-        formula.var = formula.var, 
-        delta = delta, 
+        formula.var = formula.var,
+        delta = delta,
         skew = skew,
-        shape = shape, 
+        shape = shape,
         cond.dist = cond.dist[1],
-        include.mean = include.mean, 
+        include.mean = include.mean,
         include.delta = include.delta,
-        include.skew = include.skew, 
+        include.skew = include.skew,
         include.shape = include.shape,
-        leverage = leverage, 
-        algorithm = algorithm[1], 
+        leverage = leverage,
+        algorithm = algorithm[1],
         control = con,
         trace = trace)
     .setfGarchEnv(.params = .params)
@@ -191,7 +191,7 @@ function(
     # Add Title and Description:
     if (DEBUG) print("Add Title and Description ...")
     if(is.null(title)) title = "GARCH Modelling"
-    if(is.null(description)) description = .description()
+    if(is.null(description)) description = description()
 
     # Total Execution Time:
     Time =  Sys.time() - .StartFit
@@ -317,9 +317,9 @@ function (formula, data, fake = FALSE, lhs = FALSE)
 
     # Description:
     #   Composes model series like in lm fits
-    
+
     # Arguments:
-    
+
     # Note:
     #   ... have a look on model.frame()
 
@@ -331,19 +331,19 @@ function (formula, data, fake = FALSE, lhs = FALSE)
             collapse = ""))
         stopifnot(!missing(data))
     }
-    
+
     # Missing Data ?
     if (missing(data)) {
         data = eval(parse(text = search()[2]), parent.frame())
     }
-    
+
     # Numeric Data ?
     if (is.numeric(data)) {
         data = data.frame(data)
         colnames(data) = all.vars(formula)[1]
         lhs = TRUE
     }
-    
+
     # Faked Formula ?
     if (fake) {
         response = as.character(formula)[2]
@@ -352,7 +352,7 @@ function (formula, data, fake = FALSE, lhs = FALSE)
         predictors = Call[2]
         formula = as.formula(paste(response, "~", predictors))
     }
-    
+
     # Left-Hand-Side Formula ?
     if (lhs) {
         response = as.character(formula)[2]
@@ -366,7 +366,7 @@ function (formula, data, fake = FALSE, lhs = FALSE)
     if (class(data) == "timeSeries") {
         x = timeSeries(x)
     }
-    
+
     # Add control atrribute:
     if (fake) {
         attr(x, "control") <- method
@@ -393,7 +393,7 @@ function(algorithm, cond.dist)
     #   none
 
     # FUNCTION:
-    
+
     # Check llh for the standardized NIG Distribution:
     llh = "internal"
     if (cond.dist == "snig") llh = "filter"
@@ -438,7 +438,7 @@ function(algorithm, cond.dist)
         TOLD = 1.0e-6,
         TOLS = 1.0e-4,
         RPF  = 1.0e-2) # 1.0e-4)
-        
+
     # Return Value:
     con
 }

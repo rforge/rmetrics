@@ -205,7 +205,7 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
 
     # Add title and desription:
     if (is.null(title)) title = "ARIMA Modelling"
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
 
     # Parameters:

@@ -63,7 +63,7 @@ function()
     # FUNCTION:
     
     # Deprecated:
-    .Deprecated(".descripion")
+    .Deprecated("description")
     
     # Description String:
     ans = description()

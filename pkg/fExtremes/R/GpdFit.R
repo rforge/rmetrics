@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -39,35 +39,35 @@
 ################################################################################
 
 
-gpdSim <- 
+gpdSim <-
     function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates random variates from a GPD distribution
-    
+
     # FUNCTION:
-    
+
     # Seed:
     if (is.null(seed)) seed = NA else set.seed(seed)
-    
+
     # Simulate:
-    ans = rgpd(n = n, xi = model$xi, mu = model$mu, beta = model$beta)  
+    ans = rgpd(n = n, xi = model$xi, mu = model$mu, beta = model$beta)
     ans = as.ts(ans)
 
     # Control:
-    attr(ans, "control") = 
+    attr(ans, "control") =
         data.frame(t(unlist(model)), seed = seed, row.names = "")
-        
+
     # Return Value:
-    ans 
+    ans
 }
 
 
 ################################################################################
 
 
-setClass("fGPDFIT", 
+setClass("fGPDFIT",
     representation(
         call = "call",
         method = "character",
@@ -77,46 +77,46 @@ setClass("fGPDFIT",
         residuals = "numeric",
         title = "character",
         description = "character"
-    )  
+    )
 )
 
 
 # ------------------------------------------------------------------------------
 
 
-gpdFit <- 
+gpdFit <-
     function(x, u = quantile(x, 0.95), type = c("mle", "pwm"),
-    information = c("observed", "expected"), 
+    information = c("observed", "expected"),
     title = NULL, description = NULL, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits a generalized Pareto model to excesses
-    
+
     # Arguments:
-    
+
     # Details:
     #   Returns an object of class "fGPDFIT" representing the fit of a
     #   generalized Pareto model to excesses over a high threshold
-    
+
     # Notes:
     #   This is a wrapper to EVIR's 'gpd' function.
 
     # FUNCTION:
-    
+
     # Settings:
     call = match.call()
     type = match.arg(type)
     information = match.arg(information)
-    
+
     # Check Type and Convert:
-    X = x  
+    X = x
     xClass = class(x)
     if (xClass == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
     N = length(x)
-    
+
     # Compute Exceedances:
     exceedances = x[x > u]
     Names = as.character((1:N)[x > u])
@@ -136,24 +136,24 @@ gpdFit <-
     fit$p.less.thresh = fit$prob = 1 - length(x[x > u]) / length(x)
     fit$threshold = u
     fit$data = x
-   
+
     # Compute Residuals:
     xi = fit$par.ests["xi"]
     beta = fit$par.ests["beta"]
     residuals = log(1 + (xi * (as.vector(exceedances)-u))/beta)/xi
-    
+
     # Add title and description:
     if (is.null(title)) title = "GPD Parameter Estimation"
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Compose Parameter List:
     parameter = list(u = u, type = type)
     if (information == "mle") parameter$information = information
-    
+
     # Return Value:
     new("fGPDFIT",
         call = call,
-        method = c("gpd", type), 
+        method = c("gpd", type),
         parameter = parameter,
         data = list(x = X, exceedances = exceedances),
         fit = fit,
@@ -167,24 +167,24 @@ gpdFit <-
 
 
 .gpdmleFit <-
-    function (x, u, information = c("observed", "expected"), ...) 
+    function (x, u, information = c("observed", "expected"), ...)
 {
     # A Copy from Evir
-    
+
     data = x
     threshold = u
-    
+
     exceedances <- data[data > threshold]
     excess <- exceedances - threshold
     Nu <- length(excess)
     xbar <- mean(excess)
-    
+
     s2 <- var(excess)
     xi0 <- -0.5 * (((xbar * xbar)/s2) - 1)
     beta0 <- 0.5 * xbar * (((xbar * xbar)/s2) + 1)
     theta <- c(xi0, beta0)
-    
-    negloglik <- function(theta, tmp) 
+
+    negloglik <- function(theta, tmp)
     {
         xi <- theta[1]
         beta <- theta[2]
@@ -197,19 +197,19 @@ gpdFit <-
             y <- y/xi
             f <- length(tmp) * logb(beta) + (1 + xi) * sum(y)
         }
-        f 
+        f
     }
-        
+
     fit <- optim(theta, negloglik, hessian = TRUE, ..., tmp = excess)
     names(fit$par) = c("xi", "beta")
-    
+
     if (fit$convergence) warning("Optimization may not have been succeeded.")
     par.ests <- fit$par
     converged <- fit$convergence
     nllh.final <- fit$value
-    
+
     information <- match.arg(information)
-    if (information == "observed") 
+    if (information == "observed")
         varcov <- solve(fit$hessian)
     if (information == "expected") {
         one <- (1 + par.ests[1])^2/Nu
@@ -217,10 +217,10 @@ gpdFit <-
         cov <- -((1 + par.ests[1]) * par.ests[2])/Nu
         varcov <- matrix(c(one, cov, cov, two), 2)
     }
-    
+
     par.ses <- sqrt(diag(varcov))
     names(par.ses) = c("xi", "beta")
-    
+
     list(par.ests = par.ests, par.ses = par.ses, fit = fit, varcov = varcov)
 }
 
@@ -228,25 +228,25 @@ gpdFit <-
 # ------------------------------------------------------------------------------
 
 
-.gpdmleFitCheck = 
-    function(x, u = quantile(x, 0.95), 
-    information = c("observed", "expected"), ...) 
-{   
+.gpdmleFitCheck =
+    function(x, u = quantile(x, 0.95),
+    information = c("observed", "expected"), ...)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits GPD with max log-likelihood approach
-    
+
     # FUNCTION:
-    
+
     x = as.vector(x)
     excess = x[x > u] - u
     theta = .gpdpwmFit(x = x, u = u)$par.ests
-    
+
     # Parameter Estimation:
     fit = optim(theta, .gpdLLH, hessian = TRUE, excess = excess)
     names(fit$par.ests) = c("xi", "beta")
-    
+
     # Error Estimates:
     if (information[1] == "observed") {
         varcov = solve(fit$hessian)
@@ -259,8 +259,8 @@ gpdFit <-
         varcov = matrix(c(one, cov, cov, two), 2)
     }
     par.ses = sqrt(diag(varcov))
-    names(par.ses) = c("xi", "beta")  
-    
+    names(par.ses) = c("xi", "beta")
+
     # Return Value:
     list(par.ests = fit$par, par.ses = par.ses, fit = fit, varcov = varcov)
 }
@@ -270,20 +270,20 @@ gpdFit <-
 
 
 .gpdpwmFit <-
-    function (x, u) 
+    function (x, u)
 {
     # A Copy from Evir
-    
+
     data = x
     threshold = u
-    
+
     data <- as.numeric(data)
     n <- length(data)
     exceedances <- data[data > threshold]
     excess <- exceedances - threshold
     Nu <- length(excess)
     xbar <- mean(excess)
-   
+
     a0 <- xbar
     gamma <- -0.35
     delta <- 0
@@ -293,7 +293,7 @@ gpdFit <-
     beta <- (2 * a0 * a1)/(a0 - 2 * a1)
     par.ests <- c(xi, beta)
     names(par.ests) = c("xi", "beta")
-    
+
     denom <- Nu * (1 - 2 * xi) * (3 - 2 * xi)
     if (xi > 0.5) {
         denom <- NA
@@ -306,9 +306,9 @@ gpdFit <-
     information <- "expected"
     converged <- NA
     nllh.final <- NA
-    par.ses <- sqrt(diag(varcov)) 
+    par.ses <- sqrt(diag(varcov))
     names(par.ses) = c("xi", "beta")
-    
+
     list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
 }
 
@@ -317,19 +317,19 @@ gpdFit <-
 # ------------------------------------------------------------------------------
 
 
-.gpdpwmFitCheck <- 
-    function(x, u = quantile(x, 0.95)) 
-{   
+.gpdpwmFitCheck <-
+    function(x, u = quantile(x, 0.95))
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits GPD with probability weighted moments
-    
+
     # FUNCTION:
-    
+
     # PWM Fit:
     x = as.vector(x)
-    excess = x[x > u] - u 
+    excess = x[x > u] - u
     Nu = length(excess)
     a0 = mean(excess)
     pvec = ((1:Nu) - 0.35)/Nu
@@ -340,7 +340,7 @@ gpdFit <-
     names(par.ests) = c("xi", "beta")
     par.ses = c(xi = NA, beta = NA)
     names(par.ses) = c("xi", "beta")
-    
+
     # Return Value:
     list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
 }
@@ -351,14 +351,14 @@ gpdFit <-
 
 .gpdLLH =
 function(theta, excess)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes GPD log-likelihood function
-    
+
     # FUNCTION:
-    
+
     # LLH:
     xi = theta[1]
     beta = theta[2]
@@ -369,7 +369,7 @@ function(theta, excess)
         y = log(1+(xi*excess)/beta) / xi
         func = length(excess) * log(beta) + (1+xi)*sum(y)
     }
-    
+
     # Return Value:
     func
 }

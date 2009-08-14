@@ -12,10 +12,10 @@
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA. 
+# Suite 330, Boston, MA  02111-1307  USA.
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -52,7 +52,7 @@
 #  Depends: R (>= 1.9.0), quadprog
 #  License: GPL (see file COPYING)
 #  Packaged: Thu Apr 22 16:32:16 2004; hornik
-#  Notes: The runs.test is available as dependency test in the fBasics 
+#  Notes: The runs.test is available as dependency test in the fBasics
 #    Package runs.test = function (x)
 #    Most of the functions are BUILTIN from Adrian Trapletti's R package
 #    tseries
@@ -65,66 +65,66 @@
 ################################################################################
 
 
-tsTest = 
-function(x, 
+tsTest =
+function(x,
 method = c("bds", "tnn", "wnn"), ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Load Library:
     # require(tseries)
-    
+
     # Check Type:
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
     }
     x = as.vector(x)
-    
+
     # Settings:
     method = match.arg(method)
     test = paste(method, "Test", sep = "")
-    fun = match.fun(test)  
-        
+    fun = match.fun(test)
+
     # Test:
     ans = fun(x = x, ...)
-    
+
     # Return Value:
     ans
-    
+
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-bdsTest = 
+bdsTest =
 function(x, m = 3, eps = NULL, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Brock-Dechert-Scheinkman test for iid series
-    
+
     # Notes:
     #   This function is a slightly modified copy of Adrian Trapletti's
     #   contributed function from his 'tseries' package.
-       
+
     # FUNCTION:
-    
+
     # Call:
     call = match.call()
-    
-    # Test 
+
+    # Test
     test = list()
-    
+
     # Data Set Name:
     DNAME = deparse(substitute(x))
-    test$data.name = DNAME   
-    
+    test$data.name = DNAME
+
     # Check Type:
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
     }
     x = as.vector(x)
-    
+
     # Test:
     if (is.null(eps)) eps = seq(0.5*sd(x), 2*sd(x), length = 4)
     if (m < 2) stop("m is less than 2")
@@ -134,16 +134,16 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     k = length(eps)
     cc = double(m+1)
     cstan = double(m+1)
-    
+
     # Statistic:
     STATISTIC = NULL
     NAMES = NULL
     for(i in (1:k)) {
         res = .C("bdstest_main", as.integer(n), as.integer(m),
-            as.double(x), as.double(cc), cstan = as.double(cstan), 
+            as.double(x), as.double(cc), cstan = as.double(cstan),
             as.double(eps[i]), as.integer(0), PACKAGE = "fNonlinear")
         ans = res$cstan[2:m+1]
-        STATISTIC = c(STATISTIC, ans)   
+        STATISTIC = c(STATISTIC, ans)
         names.1 = rep(paste("eps[", i, "]", sep = ""), times = length(ans))
         names.2 = paste("m=", as.character(2:m), sep = "")
         NAMES = c(NAMES, paste(names.1, names.2))
@@ -159,62 +159,62 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     # colnames(PVAL) = as.character(eps)
     # rownames(PVAL) = as.character(2:m)
     test$p.value = PVAL
-    
+
     # METHOD = "BDS Test"
-    
+
     PARAMETER = c(m, eps)
     names(PARAMETER) = c(
-        "Max Embedding Dimension", 
+        "Max Embedding Dimension",
         paste("eps[", 1:length(eps), "]", sep = "") )
     test$parameter = PARAMETER
-    
+
     # Add:
     if (is.null(title)) title = "BDS Test"
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Return Value:
-    new("fHTEST",     
+    new("fHTEST",
         call = call,
-        data = list(x = x), 
+        data = list(x = x),
         test = test,
-        title = as.character(title), 
-        description = as.character(description) ) 
+        title = as.character(title),
+        description = as.character(description) )
 }
 
 
 # ------------------------------------------------------------------------------
 
-    
-wnnTest = 
-function(x, lag = 1, qstar = 2, q = 10, range = 4, 
-title = NULL, description = NULL) 
+
+wnnTest =
+function(x, lag = 1, qstar = 2, q = 10, range = 4,
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   White's Neural Network Test for Nonlinearity
-    
+
     # Notes:
     #   This function is a slightly modified copy of Adrian Trapletti's
     #   contributed function from his 'tseries' package.
-    
+
     # FUNCTION:
-    
+
     # Call:
     CALL = match.call()
-    
-    # Test 
+
+    # Test
     test = list()
-    
+
     # Data Set Name:
     DNAME = deparse(substitute(x))
-    test$data.name = DNAME   
-    
+    test$data.name = DNAME
+
     # Check Type:
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
     }
     x = as.vector(x)
-         
+
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
     t = length(x)
@@ -226,7 +226,7 @@ title = NULL, description = NULL)
     ssr0 = sum(u^2)
     max = range/2
     gamma = matrix(runif ((lag+1)*q, -max, max), lag+1, q)
-    phantom = (1 + exp(-(cbind(rep(1, t-lag), y[, 2:(lag+1)]) %*% gamma)))^(-1) 
+    phantom = (1 + exp(-(cbind(rep(1, t-lag), y[, 2:(lag+1)]) %*% gamma)))^(-1)
     # Changed to be compatible with SPlus:
     # phantomstar = as.matrix(prcomp(phantom, scale = TRUE)$x[, 2:(qstar+1)])
     phantomstar = as.matrix(prcomp(scale(phantom))$x[, 2:(qstar+1)])
@@ -237,72 +237,72 @@ title = NULL, description = NULL)
     rr = lm(fmla)
     v = residuals(rr)
     ssr = sum(v^2)
-    
+
     # Statistic:
     STATISTIC1 = t * log(ssr0/ssr)
     STATISTIC2 = ((ssr0-ssr)/qstar)/(ssr/(t-lag-qstar))
     STATISTIC = c(STATISTIC1, STATISTIC2)
     names(STATISTIC) = c("Chi-squared", "F")
     test$statistic = STATISTIC
-    
+
     # P Values:
     PVAL1 = 1 - pchisq(STATISTIC1, qstar)
-    PVAL2 = 1 - pf(STATISTIC2, qstar, t-lag-qstar)   
-    PVAL = c(PVAL1, PVAL2)   
-    names(PVAL) = c("Chi-squared", "F") 
+    PVAL2 = 1 - pf(STATISTIC2, qstar, t-lag-qstar)
+    PVAL = c(PVAL1, PVAL2)
+    names(PVAL) = c("Chi-squared", "F")
     test$p.value = PVAL
-    
+
     # Parameter:
     PARAMETER = c(lag, q, range, qstar, t-lag-qstar)
-    names(PARAMETER) = c("lag", "q", "range", "qstar|df", "t-lag-qstar|df") 
-    test$parameter = PARAMETER    
-          
+    names(PARAMETER) = c("lag", "q", "range", "qstar|df", "t-lag-qstar|df")
+    test$parameter = PARAMETER
+
     # Add:
     if (is.null(title)) title = "White Neural Network Test"
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Return Value:
-    new("fHTEST",     
+    new("fHTEST",
         call = CALL,
-        data = list(x = x, y = y), 
+        data = list(x = x, y = y),
         test = test,
-        title = as.character(title), 
-        description = as.character(description) ) 
+        title = as.character(title),
+        description = as.character(description) )
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-tnnTest = 
-function(x, lag = 1, title = NULL, description = NULL) 
+tnnTest =
+function(x, lag = 1, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Teraesvirta's Neural Network Test for Nonlinearity
-    
+
     # Notes:
     #   This function is a slightly modified copy of Adrian Trapletti's
     #   contributed function from his 'tseries' package.
-    
+
     # FUNCTION:
-    
+
     # Call:
     call = match.call()
-    
-    # Test 
+
+    # Test
     test = list()
-    
+
     # Data Set Name:
     DNAME = deparse(substitute(x))
-    test$data.name = DNAME   
-    
+    test$data.name = DNAME
+
     # Check Type:
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
     }
     x = as.vector(x)
-        
+
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
     t = length(x)
@@ -317,19 +317,19 @@ function(x, lag = 1, title = NULL, description = NULL)
     for (i in (1:lag)) {
         for (j in (i:lag)) {
             xnam2 = c(xnam2, paste("I(y[,",i+1, "]*y[, ",j+1,"])", sep = ""))
-            m = m+1 
-        } 
+            m = m+1
+        }
     }
     xnam2 = paste(xnam2, collapse="+")
     xnam3 = NULL
     for (i in (1:lag)) {
         for (j in (i:lag)) {
             for (k in (j:lag)) {
-                xnam3 = c(xnam3, 
+                xnam3 = c(xnam3,
                 paste("I(y[,", i+1, "]*y[,", j+1, "]*y[,", k+1, "])", sep = ""))
-                m = m+1 
-            } 
-        } 
+                m = m+1
+            }
+        }
     }
     xnam3 = paste(xnam3,collapse="+")
     fmla = as.formula(paste("u~", paste(paste(xnam, collapse = "+"),
@@ -337,21 +337,21 @@ function(x, lag = 1, title = NULL, description = NULL)
     rr = lm(fmla)
     v = residuals(rr)
     ssr = sum(v^2)
-    
-    #Statistic:  
+
+    #Statistic:
     STATISTIC1 = t*log(ssr0/ssr)
     STATISTIC2 = ((ssr0-ssr)/m)/(ssr/(t-lag-m))
     STATISTIC = c(STATISTIC1, STATISTIC2)
     names(STATISTIC) = c("Chi-squared", "F")
     test$statistic = STATISTIC
-    
+
     # P Value:
     PVAL1 = 1 - pchisq(STATISTIC1, m)
     PVAL2 = 1 - pf(STATISTIC2, m, t-lag-m)
     PVAL = c(PVAL1, PVAL2)
     names(PVAL) = c("Chi-squared", "F")
     test$p.value = PVAL
-    
+
     # PARAMETER:
     PARAMETER = c(lag, m, t-lag-m)
     names(PARAMETER) = c("lag", "m|df", "t-lag-m|df")
@@ -359,47 +359,47 @@ function(x, lag = 1, title = NULL, description = NULL)
 
     # Add:
     if (is.null(title)) title = "Teraesvirta Neural Network Test"
-    if (is.null(description)) description = .description()
-    
+    if (is.null(description)) description = description()
+
     # Return Value:
-    new("fHTEST",     
+    new("fHTEST",
         call = call,
-        data = list(x = x), 
+        data = list(x = x),
         test = test,
-        title = as.character(title), 
-        description = as.character(description) )  
+        title = as.character(title),
+        description = as.character(description) )
 }
 
 
 ################################################################################
 
 
-runsTest = 
+runsTest =
 function(x)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Performs a runs test
-    
+
     # Arguments:
     #   x - a numeric vector of data values.
-    
+
     # Notes:
     #   Implementing Trapletti's tseries R-Package
 
     # Note:
-    #   We consider the signs of x in the series, the zeros will be 
+    #   We consider the signs of x in the series, the zeros will be
     #   discarded. In addition we have to factor the data for runs.test().
 
     # FUNCTION:
-    
+
     # Convert Type:
     if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
-    
+
     # runs.test() copied from A. Traplettis tseries package
-    runs.test = 
-    function (x, alternative = c("two.sided", "less", "greater")) 
+    runs.test =
+    function (x, alternative = c("two.sided", "less", "greater"))
     {
         if (!is.factor(x)) stop("x is not a factor")
         if (any(is.na(x))) stop("NAs in x")
@@ -411,32 +411,32 @@ function(x)
         n1 = sum(levels(x)[1] == x)
         n2 = sum(levels(x)[2] == x)
         m = 1 + 2 * n1 * n2/(n1 + n2)
-        s = sqrt(2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)/((n1 + n2)^2 * 
+        s = sqrt(2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)/((n1 + n2)^2 *
             (n1 + n2 - 1)))
         STATISTIC = (R - m)/s
         METHOD = "Runs Test"
-        if (alternative == "two.sided") 
+        if (alternative == "two.sided")
             PVAL = 2 * pnorm(-abs(STATISTIC))
-        else if (alternative == "less") 
+        else if (alternative == "less")
             PVAL = pnorm(STATISTIC)
-        else if (alternative == "greater") 
+        else if (alternative == "greater")
             PVAL = pnorm(STATISTIC, lower.tail = FALSE)
         else stop("irregular alternative")
         names(STATISTIC) = "Standard Normal"
         structure(list(
-            statistic = STATISTIC, 
-            alternative = alternative, 
-            p.value = PVAL, 
-            method = METHOD, 
-            data.name = DNAME), 
+            statistic = STATISTIC,
+            alternative = alternative,
+            p.value = PVAL,
+            method = METHOD,
+            data.name = DNAME),
             class = "htest") }
-            
+
     # Result:
     x = sign(x)
     x = x[x != 0]
     x = factor(x)
-    ans = runs.test(x = x) 
-    
+    ans = runs.test(x = x)
+
     # Return Value:
     ans
 }

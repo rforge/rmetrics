@@ -100,7 +100,7 @@ description = NULL, trace = FALSE, ...)
     }
 
     # Description Slot:
-    if (is.null(description)) description = .description()
+    if (is.null(description)) description = description()
 
     # Return Value:
     new("fMV",

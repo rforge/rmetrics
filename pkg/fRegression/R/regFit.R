@@ -106,7 +106,7 @@ regFit <-
 
     # Description:
     if (is.null(description)) {
-        description = .description()
+        description = description()
     }
 
     # Compose Command to be Called:
