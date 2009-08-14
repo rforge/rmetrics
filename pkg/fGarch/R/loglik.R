@@ -23,7 +23,7 @@
 
 
 .garchLLH <-
-function(params, trace = TRUE, fGarchEnv = FALSE)
+    function(params, trace = TRUE, fGarchEnv = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -51,30 +51,30 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
     .params <- .getfGarchEnv(".params")
     .garchDist <- .getfGarchEnv(".garchDist")
     .llh <- .getfGarchEnv(".llh")
-    
+
     # How to calculate the LLH Function?
     if (DEBUG) print(.params$control$llh)
 
     if(.params$control$llh == "internal")  {
-    
+
         if (DEBUG) print("internal")
-        return(.aparchLLH.internal(params, trace = TRUE, fGarchEnv = FALSE))
-        
+        return(.aparchLLH.internal(params, trace = trace, fGarchEnv = fGarchEnv))
+
     } else if (.params$control$llh == "filter")  {
-    
+
         if (DEBUG) print("filter")
-        return(.aparchLLH.filter(params, trace = TRUE, fGarchEnv = FALSE))
-        
+        return(.aparchLLH.filter(params, trace = trace, fGarchEnv = fGarchEnv))
+
     } else if (.params$control$llh == "testing")  {
-    
+
         if (DEBUG) print("testing")
-        return(.aparchLLH.testing(params, trace = TRUE, fGarchEnv = FALSE))  
-     
+        return(.aparchLLH.testing(params, trace = trace, fGarchEnv = fGarchEnv))
+
     } else {
-    
+
         stop("LLH is neither internal, testing, nor filter!")
-    }   
-        
+    }
+
 }
 
 
@@ -116,7 +116,7 @@ function(hessian = hessian, robust.cvar, trace)
         cat("\nSelected Algorithm:", algorithm, "\n")
     }
 
-    # First Method: 
+    # First Method:
     # Two Step Apparoach > Trust Region + Nelder-Mead Simplex
     if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
         fit <- .garchRnlminb(.params, .series, .garchLLH, trace)
@@ -204,7 +204,7 @@ function(hessian = hessian, robust.cvar, trace)
     if (robust.cvar)
         fit$gradient <- - .garchRCDAGradient(
             par = fit$par, .params = .params, .series = .series)
-            
+
     # Compute Information Criterion Statistics:
     N = length(.series$x)
     NPAR = length(fit$par)
