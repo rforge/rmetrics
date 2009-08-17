@@ -31,9 +31,17 @@ setMethod("apply", "timeSeries",
         FinCenter <- finCenter(X)
         X <- getDataPart(X)
         ans <- callGeneric()
-        if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
+
+        # special treatment of timeSeries with one row because apply
+        # returns a vector
+        if (is.null(dim(ans)) && MARGIN == 2 && NCOL(X) == length(ans))
+            ans <- timeSeries(data = matrix(ans, ncol = NCOL(X)),
+                              charvec = pos, units = names(ans),
+                              zone = FinCenter, FinCenter = FinCenter)
+        else if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
             ans <- timeSeries(data = ans, charvec = pos,
-                zone = FinCenter, FinCenter = FinCenter)
+                              zone = FinCenter, FinCenter = FinCenter)
+
         ans
     }
 )
@@ -113,7 +121,7 @@ applySeries <-
     ###     j.pos = as.POSIXct(time(x))
     ###     j.from = as.POSIXct(from)
     ###     j.to = as.POSIXct(to)
-    
+
     # Blocks:
     j.pos = time(x)
     if (is(j.pos, "timeDate")) {
