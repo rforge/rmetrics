@@ -16,304 +16,126 @@
 ################################################################################
 # FUNCTION:                 COLUMN CUMULATIVE SUMS:
 #  colCumsums                Computes sample cumulated sums by column
-#  colCumsums.default        S3 default method (for matrix objects)
-#  colCumsums.timeSeries     S3 method for timeSeries objects
+#  colCumsums,matrix         S3 default method (for matrix objects)
+#  colCumsums,timeSeries     S3 method for timeSeries objects
 # FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
 #  colCummaxs                Computes cumulated maximum values
-#  colCummaxs.default        S3 default method (for matrix objects)
-#  colCummaxs.timeSeries     S3 method for timeSeries objects
+#  colCummaxs,matrix         S3 default method (for matrix objects)
+#  colCummaxs,timeSeries     S3 method for timeSeries objects
 # FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
 #  colCummins                Computes cumulated maximum values
-#  colCummins.default        S3 default method (for matrix objects)
-#  colCummins.timeSeries     S3 method for timeSeries objects
+#  colCummins,matrix         S3 default method (for matrix objects)
+#  colCummins,timeSeries     S3 method for timeSeries objects
 # FUNCTION:                 COLUMN CUMULATIVE MINIMA:
 #  colCumprods               Computes cumulated product values
-#  colCumprods.default       S3 default method (for matrix objects)
-#  colCumprods.timeSeries    S3 method for timeSeries objects
+#  colCumprods,matrix        S3 default method (for matrix objects)
+#  colCumprods,timeSeries    S3 method for timeSeries objects
 # FUNCTION:                 COLUMN CUMULATIVE RETURNS:
 #  colCumreturns             Computes cumulated product values
-#  colCumreturns.default     S3 default method (for matrix objects)
-#  colCumreturns.timeSeries  S3 method for timeSeries objects
+#  colCumreturns,matrix      S3 default method (for matrix objects)
+#  colCumreturns,timeSeries  S3 method for timeSeries objects
 ################################################################################
 
-
-# .conflicts.OK = TRUE
-
-
 # ------------------------------------------------------------------------------
-
 
 setMethod("colCumsums", "matrix",
     function(x, na.rm = FALSE, ...)
-    {
-        # A function implemented by Diethelm Wuertz
-        
-        # Description:
-        #   Computes sample cumulated sums by column (for matrix objects)
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Transform:
-        X = as.matrix(x, ...)
-        
-        # Statistics:
-        if (na.rm) {
-            result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
-        } else {
-            result = apply(X, MARGIN = 2, FUN = cumsum, ...)
-        }
-        colnames(result) = paste(1:NCOL(x))
-        
-        # Statistics:
-        result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
-        
-        # Return Value:
-        result
-    }
-)
-
+          apply(if (na.rm) na.omit(x) else x, 2, cumsum, ...))
 
 # ------------------------------------------------------------------------------
-
 
 setMethod("colCumsums", "timeSeries",
-    function(x, na.rm = FALSE, ...)
-    {
-        # A function implemented by Diethelm Wuertz
-    
-        # Description:
-        #   Computes sample cumulated sums by column for timeSeries objects
-    
-        # Arguments:
-    
-        # FUNCTION:
-    
-        # Cumulative Sums:
-        X = colCumsums(as.matrix(x, ...))
-    
-        # Time Series Input ?
-        if (class(x) == "timeSeries") {
-            series(x) = X
-        }
-    
-        # Return Value:
-        x
-    }
-)
-
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cumsum, ...))
 
 # ------------------------------------------------------------------------------
-# DW: moved from BasicExtensions ...
-
 
 setMethod("colCummaxs", "matrix",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
-    
-        # Arguments:
-    
-        # FUNCTION:
-    
-        # Cumulated Maxima:
-        ans = apply(as.matrix(x), 2, cummax, ...)
-        colnames(ans) = colnames(x)
-    
-        # Return Value:
-        ans
-    }
-)
-
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cummax, ...))
 
 # ------------------------------------------------------------------------------
-
 
 setMethod("colCummaxs", "timeSeries",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cummax, ...))
 
-        # Arguments:
-
-        # FUNCTION:
-
-        # Cumulated Maxima:
-        ans = colCummaxs(as.matrix(x, ...), ...)
-
-        # Time Series Input ?
-        if (class(x) == "timeSeries") {
-            series(x) = ans
-            ans = x
-        }
-
-        # Return Value:
-        ans
-    }
-)
-
-
-################################################################################
-
+# ------------------------------------------------------------------------------
 
 setMethod("colCummins", "matrix",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Cumulated minima:
-        ans = apply(as.matrix(x), 2, cummin, ...)
-        colnames(ans) = colnames(x)
-        
-        # Return Value:
-        ans
-    }
-)
-
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cummin, ...))
 
 # ------------------------------------------------------------------------------
-
 
 setMethod("colCummins", "timeSeries",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Cumulated minima:
-        ans = colCummins(as.matrix(x, ...), ...)
-        
-        # Time Series Input ?
-        if (class(x) == "timeSeries") {
-            series(x) = ans
-            ans = x
-        }
-        
-        
-        # Return Value:
-        ans
-    }
-)
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cummin, ...))
 
-
-################################################################################
-
+# ------------------------------------------------------------------------------
 
 setMethod("colCumprods", "matrix",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Cumulated Maxima:
-        ans = apply(as.matrix(x, ...), 2, cumprod, ...)
-        colnames(ans) = colnames(x)
-        
-        # Return Value:
-        ans
-    }
-)
-
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cumprod, ...))
 
 # ------------------------------------------------------------------------------
-
 
 setMethod("colCumprods", "timeSeries",
-    function(x, na.rm = FALSE, ...)
-    {
-        # Description:
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Cumulated Maxima:
-        ans = colCumprods(as.matrix(x, ...), na.rm, ...)
-        
-        # Time Series Input ?
-        if (class(x) == "timeSeries") {
-            series(x) = ans
-            ans = x
-        }
-        
-        # Return Value:
-        ans
-    })
-
-
-################################################################################
-
-
-setMethod("colCumreturns", "matrix",
-    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-    {
-        # A function implemented by Diethelm Wuertz
-        
-        # Description:
-        #   Cumulates Returns from a stream of returns
-        
-        # Arguments:
-        #   x - a vector, matrix, data frame and timeSeries.
-        #       asset returns.}
-        #   method - generate geometric (TRUE) or simple (FALSE) returns,
-        #       default "geometric".
-        
-        # FUNCTION:
-        
-        # Handle Missing Values:
-        if (na.rm) x = na.omit(x, ...)
-        method <- match.arg(method)
-        
-        # Cumulative Returns:
-        if (method == "geometric") {
-            ans = colCumsums(x)
-        } else if (method == "simple") {
-            ans = colCumprods(1+x) - 1
-        }
-        colnames(ans) = colnames(x)
-        
-        # Return Value:
-        ans
-    })
-
+          function(x, na.rm = FALSE, ...)
+          apply(if (na.rm) na.omit(x) else x, 2, cumprod, ...))
 
 # ------------------------------------------------------------------------------
 
+setMethod("colCumreturns", "matrix",
+          function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+      {
+          # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
+          # Description:
+          #   Cumulates Returns from a stream of returns
+
+          # Arguments:
+          #   x      : a matrix object
+          #   method : generate geometric or simple returns,
+          #            default "geometric".
+
+          # FUNCTION:
+
+          # Handle Missing Values:
+          if (na.rm) x <- na.omit(x, ...)
+          method <- match.arg(method)
+
+          # Return Value
+          switch(method,
+                 "geometric" = colCumsums(x),
+                 "simple" = colCumprods(1+x) - 1)
+      })
+
+# ------------------------------------------------------------------------------
 
 setMethod("colCumreturns", "timeSeries",
-    function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
-    {
-        # Description:
-        
-        # Arguments:
-        
-        # FUNCTION:
-        
-        # Cumulated Maxima:
-        ans <- colCumreturns(as.matrix(x), method = method, na.rm = na.rm, ...)
-        
-        # Time Series Input ?
-        if (class(x) == "timeSeries") {
-            series(x) = ans
-            ans = x
-        }
-        
-        # Return Value:
-        ans
-    }
-)
+          function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+      {
+          # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
+          # Description:
+          #   Cumulates Returns from a stream of returns
+
+          # Arguments:
+          #   x      : a timeSeries object
+          #   method : generate geometric or simple returns,
+          #            default "geometric".
+
+          # FUNCTION:
+
+          # Handle Missing Values:
+          if (na.rm) x <- na.omit(x, ...)
+          method <- match.arg(method)
+
+          # Return Value
+          switch(method,
+                 "geometric" = colCumsums(x),
+                 "simple" = colCumprods(1+x) - 1)
+      })
 
 ################################################################################
-
