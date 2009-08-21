@@ -64,26 +64,32 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
 
     # FUNCTION:
 
-    # Plot:
-    .interactiveGarchPlot(
-        x,
-        choices = c(
-            "Time Series",
-            "Conditional SD",
-            "Series with 2 Conditional SD Superimposed",
-            "ACF of Observations",
-            "ACF of Squared Observations",
-            "Cross Correlation",
-            "Residuals",
-            "Conditional SDs",
-            "Standardized Residuals",
-            "ACF of Standardized Residuals",
-            "ACF of Squared Standardized Residuals",
-            "Cross Correlation between r^2 and r",
-            "QQ-Plot of Standardized Residuals"),
-        plotFUN = paste(".plot.garch", 1:13, sep = "."),
-        which = which, ...)
-
+    if (as.character(x@call[1]) == ".gogarchFit") 
+    {
+        # Plot multivariate GO-Garch model:
+        print("GO-Garch Plot Not Yet Implemented")
+    } else {
+        # Plot univariate Models:
+        .interactiveGarchPlot(
+            x,
+            choices = c(
+                "Time Series",
+                "Conditional SD",
+                "Series with 2 Conditional SD Superimposed",
+                "ACF of Observations",
+                "ACF of Squared Observations",
+                "Cross Correlation",
+                "Residuals",
+                "Conditional SDs",
+                "Standardized Residuals",
+                "ACF of Standardized Residuals",
+                "ACF of Squared Standardized Residuals",
+                "Cross Correlation between r^2 and r",
+                "QQ-Plot of Standardized Residuals"),
+            plotFUN = paste(".plot.garch", 1:13, sep = "."),
+            which = which, ...)
+    }
+    
     # Return Value:
     invisible(x)
 })

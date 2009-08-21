@@ -63,36 +63,59 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
     print(Formula)
     cat(" [", Name, "]\n", sep = "")
 
-    # Conditional Distribution:
-    cat("\nConditional Distribution:\n ")
-    cat(object@fit$params$cond.dist, "\n")
+    # Univariate or Multivariate Modeling ?
+    if (as.character(object@call[1]) == ".gogarchFit") 
+    {
+        # For multivariate Garch Models ...
+        #   extract information from first fitted instrument.
+        object@fit[[1]]@fit$params$cond.dist
+        
+        # Conditional Distribution:
+        cat("\nConditional Distribution:\n ")
+        cat(object@fit[[1]]@fit$params$cond.dist, "\n")
+        
+        # Number of Margins:
+        cat("\nNumber of Margins:\n ")
+        cat(length(object@fit), "\n")
+        
+    } else {
+    
+        # For univariate Garch Models ...
+        
+        # Conditional Distribution:
+        cat("\nConditional Distribution:\n ")
+        cat(object@fit$params$cond.dist, "\n")
+    
+        # Coefficients:
+        cat("\nCoefficient(s):\n")
+        digits = max(5, getOption("digits") - 4)
+        print.default(format(object@fit$par, digits = digits), print.gap = 2,
+             quote = FALSE)
+    
+        # Std. Errors:
+        cat("\nStd. Errors:\n ")
+        if (object@fit$params$cond.dist == "QMLE")
+        {
+            cat("robust", "\n")
+        } else {
+            cat("based on Hessian", "\n")
+        }
+        
+        # Error Analysis:
+        digits = max(4, getOption("digits") - 5)
+        fit = object@fit
+        signif.stars = getOption("show.signif.stars")
+        cat("\nError Analysis:\n")
+        printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars)
+    
+        # Log Likelihood:
+        cat("\nLog Likelihood:\n ")
+        LLH = - object@fit$value
+        N = NROW(object@data)
+        cat(LLH, "   normalized: ", LLH/N, "\n")
 
-    # Coefficients:
-    cat("\nCoefficient(s):\n")
-    digits = max(5, getOption("digits") - 4)
-    print.default(format(object@fit$par, digits = digits), print.gap = 2,
-         quote = FALSE)
-
-    # Std. Errors:
-    cat("\nStd. Errors:\n ")
-    if (object@fit$params$cond.dist == "QMLE")
-        cat("robust", "\n")
-    else
-        cat("based on Hessian", "\n")
-
-    # Error Analysis:
-    digits = max(4, getOption("digits") - 5)
-    fit = object@fit
-    signif.stars = getOption("show.signif.stars")
-    cat("\nError Analysis:\n")
-    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars)
-
-    # Log Likelihood:
-    cat("\nLog Likelihood:\n ")
-    LLH = - object@fit$value
-    N = NROW(object@data)
-    cat(LLH, "   normalized: ", LLH/N, "\n")
-
+    }
+    
     # Description:
     cat("\nDescription:\n ")
     cat(object@description, "\n")
