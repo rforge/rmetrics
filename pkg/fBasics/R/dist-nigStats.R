@@ -27,6 +27,7 @@
 #  .nigVar             Computes the variance of the normal inverse Gaussian PDF
 #  .nigSkew            Computes the skewness of the normal inverse Gaussian PDF
 #  .nigKurt            Computes the kurtosis of the normal inverse Gaussian PDF
+#  nigShapeTriangle    Plots NIG Shape Triangle
 ################################################################################
 
 
@@ -110,6 +111,72 @@
     # Skewness:
     gamma = sqrt(alpha^2 - beta^2)
     ans = 3 * ( 1 + 4 * beta^2 / alpha^2) / (delta * gamma)
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+   
+nigShapeTriangle <- 
+    function(object, add = FALSE, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plots NIG Shape Triangle
+    
+    # Arguments:
+    #   object - an object of class 'fDISTFIT' as returned by the
+    #       function nigFit()
+    
+    # Example:
+    #   nigShapeTriangle(nigFit(rnig(100), doplot = FALSE))
+    
+    # FUNCTION:
+    
+    # Settings:
+    stopifnot(class(object) == "fDISTFIT")
+    
+    # Plot Frame:
+    if (labels) {
+        xlab = "Asymmetry: chi"
+        ylab = "Steepness: zeta"
+        main = "NIG Shape Traingle"
+    } else {
+        xlab = ylab = main = ""
+    }
+    if (!add) {
+        x = c(-1, 0, 1, -1)
+        y = c( 1, 0, 1,  1)
+        plot(x, y, type = "l", xlab = xlab, ylab = ylab, main = main, ...)
+        for (s in c(0.8, 0.6, 0.4, 0.2)) 
+            lines(c(-s, s), c(s, s), lty = 3, col = "grey")  
+        lines(c(0, 0), c(0, 1), lty = 3, col = "grey")
+    }
+    
+    # Transform:
+    par = object@fit$estimate
+    names(par) = c("alpha", "beta", "delta", "mu")
+    alpha = par[1] 
+    beta = par[2]
+    delta = par[3]
+    mu = par[4]   
+    
+    # Add Points:
+    zeta = 1/sqrt(1+delta*sqrt(alpha^2-beta^2))
+    chi = zeta*(beta/alpha)
+    if (labels) {
+        points(chi, zeta, pch = 19, ...)
+    } else {
+        points(chi, zeta, ...)
+    }   
+    
+    # Result:
+    ans = list(chi = chi[[1]], zeta = zeta[[1]])
+    attr(ans, "control")<-par
     
     # Return Value:
     ans
