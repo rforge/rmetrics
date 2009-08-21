@@ -46,11 +46,26 @@ dnig <-
     # Description:
     #   Returns density for inverse Gaussian DF
     
+    # Example:
+    #   x = rnorm(1000); u = dgh(x, 1.1, 0.2, 0.8, 0.4, -0.5)
+    #   v = dnig(rnorm(x), 1.1, 0.2, 0.8, 0.4); u -v
+    
     # FUNCTION:
     
     # Density:
-    dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-        lambda = -0.5, log = log)
+    #   dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+    #   lambda = -0.5, log = log)
+    
+    log.a = delta*sqrt(alpha^2-beta^2) + log(delta*alpha/pi)
+    Sqrt = sqrt(delta^2+(x-mu)^2) 
+    log.Sqrt = -log(Sqrt)
+    log.K1 = log(besselK(alpha * Sqrt, 1, expon.scaled = TRUE)) - alpha*Sqrt
+    log.Exp = beta*(x-mu)   
+    dnig = log.a + log.Sqrt + log.K1 + log.Exp
+    if (!log) dnig = exp(dnig)
+    
+    # Return Value:
+    dnig
 }
 
 
@@ -68,8 +83,22 @@ pnig <-
     # Function:
     
     # Probability:
-    pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-        lambda = -0.5)
+    #   pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+    #   lambda = -0.5)
+    
+    if (alpha <= 0) 
+        stop("alpha must be greater than zero")
+    if (delta <= 0) 
+        stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) 
+        stop("abs value of beta must be less than alpha")
+    ans = NULL
+    for (Q in q) {
+        Integral = integrate(dnig, -Inf, Q, stop.on.error = FALSE, 
+            alpha = alpha, beta = beta, delta = delta, mu = mu)
+        ans = c(ans, as.numeric(unlist(Integral)[1]))
+    }
+    ans
 }
 
 
@@ -87,8 +116,42 @@ qnig <-
     # FUNCTION:
     
     # Quantiles:
-    qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-        lambda = -0.5)
+    # qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+    #   lambda = -0.5)
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+
+    # Internal Function:
+    .froot <-
+    function(x, alpha, beta, delta, mu, p)
+    {
+        pnig(q = x, alpha = alpha, beta = beta, delta = delta,
+            mu = mu) - p
+    }
+
+    # Quantiles:
+    result = NULL
+    for (pp in p) {
+        lower = -1
+        upper = +1
+        counter = 0
+        iteration = NA
+        while (is.na(iteration)) {
+            iteration = .unirootNA(f = .froot, interval = c(lower,
+                upper), alpha = alpha, beta = beta, delta = delta,
+                mu = mu, p = pp)
+            counter = counter + 1
+            lower = lower - 2^counter
+            upper = upper + 2^counter
+        }
+        result = c(result, iteration)
+    }
+
+    # Return Value:
+    result
 }
 
 
