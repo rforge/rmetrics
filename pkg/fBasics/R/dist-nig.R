@@ -35,7 +35,6 @@
 # FUNCTION:             DESCRIPTION:
 #  .pnigC                Fast C implementation (fails)
 #  .qnigC                Fast C implementation
-#  .CArrange             Arranges input matrices and vectors for C
 ################################################################################
 
 
@@ -161,29 +160,31 @@ rnig <-
     # Description:
     #   Returns quantiles for for inverse Gaussian DF
     
+    # Example:
+    #   p = runif(10); .qnigC(p)
+    
     # FUNCTION:
     
     # Checks:
-    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.\n")
-    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.\n")
-    if(delta <= 0) stop("Invalid parameters: delta <= 0.\n")
+    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.0\n")
+    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.0\n")
+    if(delta <= 0) stop("Invalid parameters: delta <= 0.0\n")
     if((sum(is.na(p)) > 0)) 
         stop("Invalid probabilities:\n",p,"\n")
     else 
         if(sum(p < 0)+sum(p > 1) > 0) stop("Invalid probabilities:\n",p,"\n")
-              
-    n <- length(p)
-    q <- rep(0, n)
     
     # Evaluate NIG cdf by calling C function
+    n <- length(p)
+    q <- rep(0, n)
     retValues <- .C("qNIG",
-        .CArrange(p,1,1,n),
+        as.double(p),
         as.double(mu),
         as.double(delta),
         as.double(alpha),
         as.double(beta),
         as.integer(n),
-        .CArrange(q, 1, 1, n),
+        as.double(q),
         PACKAGE = "fBasics")
     quantiles <- retValues[[7]]
     quantiles[quantiles <= -1.78e+308] <- -Inf
@@ -204,79 +205,35 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   Returns probabilities for for inverse Gaussian DF
     
     # IMPORTANT NOTE:
-    #   DW: C program fails
+    #   DW: C program fails, remains to check
     
     # Example:
-    #   .pnigC(runif(10))
-    
+    #   q = sort(rnorm(10)); .pnigC(q) # FAILS
+        
     # FUNCTION:
     
     # Checks:
-    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.\n")
-    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.\n")
-    if(delta <= 0) stop("Invalid parameters: delta <= 0.\n")
+    if(alpha <= 0) stop("Invalid parameters: alpha <= 0.0\n")
+    if(alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.0\n")
+    if(delta <= 0) stop("Invalid parameters: delta <= 0.0\n")
     if(sum(is.na(q)) > 0) stop("Invalid quantiles:\n", q)
     
+    # Evaluate NIG cdf by calling C function
     n <- length(q)
     p <- rep(0, n)
-    
-    # Evaluate NIG cdf by calling C function
     retValues <- .C("pNIG",
-        .CArrange(q, 1, 1, n),
+        as.double(q),
         as.double(mu),
         as.double(delta),
         as.double(alpha),
         as.double(beta),
         as.integer(n),
-        .CArrange(p, 1, 1, n),
+        as.double(p),
         PACKAGE = "fBasics")
     probs <- retValues[[7]]   
     
     # Return Value:
     probs
-}
-
-
-# ------------------------------------------------------------------------------
- 
-    
-.CArrange <-
-    function(obj, i, j, n)
-{
-    # Description:
-    #   Arrange input matrices and vectors in a suitable way for the C program
-    #   Matrices are transposed because the C program stores matrices by row 
-    #   while R stores matrices by column
-    
-    # Arguments:
-    #   i - length of first dimension
-    #   j - length of second dimension
-    #   n - length of third dimension
-    
-    # Value:
-    #   out - transformed data set
-    
-    # Author: 
-    #   Daniel Berg <daniel at nr.no> (Kjersti Aas <Kjersti.Aas at nr.no>)
-    #   Date: 12 May 2005
-    #   Version: 1.0.2
-   
-    # FUNCTION:
-        
-    if(is.null(obj)) stop("Missing data")
-  
-    if(is.vector(obj)) {
-        if(i==1 & j==1 & length(obj)==n) out <- as.double(obj)
-        else stop("Unexpected length of vector")
-    } else if(is.matrix(obj)) {
-        if(nrow(obj) == i && ncol(obj) == j) out <- as.double(rep(t(obj), n))
-        else stop("Unexpected dimensions of matrix")
-    } else {
-        stop("Unexpected object")
-    }
-  
-    # Return Value:
-    out 
 }
 
 
