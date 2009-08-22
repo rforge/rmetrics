@@ -35,6 +35,19 @@ S3method("volatility", "default")
 ################################################
 
 export(
+    ".aRecursionGH",
+    ".besselZ",
+    ".ghRawMoments",
+    ".ghRawMomentsIntegrated",
+    ".checkGHRawMoments",
+    ".ghMuMoments",
+    ".ghMuMomentsIntegrated",
+    ".checkGHMuMoments",
+    #
+    ".nigFit.mle",
+    ".nigFit.gmm",
+    ".nigFit.mps",
+    #
     "acfPlot",
     ".acfPlot",
     "adTest",
