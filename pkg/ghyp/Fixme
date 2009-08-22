@@ -3,4 +3,4 @@
 => q/p.default: nur einmal warnen
 => Student-t: wenn dof >= z.B. 1e5 mit gauss arbeiten
 => vignette: stable property of NIG.
-
+=> Use \texorpdfstring{TEX text}{Bookmark Text} in vignette for parametrizatino subsections.
