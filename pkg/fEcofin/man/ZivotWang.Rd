@@ -29,39 +29,29 @@
 \alias{yhoo.df}
 
 
-\title{Time Series Data Sets} 
+\title{Selected Data Sets from Zivot and Wang} 
 
 
 \description{
 
-    A collection and description of data sets 
-    used in the examples of the Rmetrics packages.
-    \cr
+    Data sets from the textbook "Modeling Financial Time Series 
+    with S-PLUS" written by Eric Zivot and jiahui Wang.
     
     The data sets are:
     
     \tabular{ll}{   
-    \code{bmwRet} \tab Daily BMW Stock Returns, \cr
     \code{CPI.dat} \tab US Consumer Price Index, \cr
-    \code{IP.dat} \tab US Industrial Production Index, \cr
-    \code{danishClaims} \tab Danish Fire Losses, \cr
-    \code{dem2gbp} \tab DEM/GBP Foreign Exchange Rate, \cr
-    \code{DEM98NYC} \tab BID prices of USDDEM FX rates recorded at NYC, \cr
-    \code{DEM98ZRH} \tab BID prices of USDDEM FX rates recorded at ZRH, \cr
     \code{DowJones30} \tab Down Jones 30 Stocks, \cr
     \code{ford.s} \tab Daily Ford Stock Prices, \cr
     \code{hp.s} \tab Daily Hewlett-Packard Stock Prices, \cr
-    \code{klein} \tab Klein's US Economic Data Set, \cr
-    \code{kmenta} \tab Kmenta's US Economic Data Set, \cr
+    \code{IP.dat} \tab US Industrial Production Index, \cr
     \code{msft.dat} \tab Microsoft Stock Prices, \cr
     \code{nelsonplosser} \tab Nelson-Plosser US Economic Time Series, \cr
     \code{nyse} \tab NYSE Composite Index, \cr
-    \code{recession} \tab US Recession Data Set, \cr
     \code{shiller.dat} \tab Shiller's Data Set, \cr
     \code{shiller.annual} \tab Shiller's Annual Data Set, \cr
     \code{singleIndex.dat} \tab US Index and Price Data Records, \cr
     \code{sp500dge} \tab Daily DGE SP500 Returns, \cr
-    \code{sp500index} \tab Daily SP500 Index Returns, \cr
     \code{surex1.ts.dat} \tab Exchange Rate Spot Returns, \cr
     \code{yhoo.df} \tab Yahoo Stock Prices.}
    
@@ -69,16 +59,6 @@
     
     
 \details{
-
-       
-    \bold{Daily BMW Stock Returns:}\cr
-    \cr
-    \code{bmwRet}
-    is a daily data set of the German BMW tock returns.\cr
-    The data set ranges from 1973-01-03 to 1996-07-23.\cr
-    The columns are named: BMW.RET.\cr
-    Source:\cr
-    
     
     \bold{US Consumer Price Index:}\cr
     \cr
@@ -87,55 +67,15 @@
         Production Index.\cr 
     The data set ranges from  \cr
     The columns are named: \cr
-    Source:\cr
     
     
-    \bold{Industrial Production Index::}\cr
+    \bold{Industrial Production Index:}\cr
     \cr
     \code{IP.dat}\cr
     contains data representing seasonally adjusted US Consumer 
         Price Index.\cr   
     The data set ranges from\cr 
     The columns are named:\cr 
-    Source:\cr
-    
-    
-    \bold{Danish Fire Losses:}\cr
-    \cr
-    \code{danishClaims}
-    contains data representing daily 
-        danish fire losses in Million Danish Kronors.\cr 
-    The data set ranges from 1980-01-03 to 1990-12-31.\cr
-    The columns are named:\cr 
-    Source:\cr
- 
-       
-    \bold{DEM/GBP Foreign Exchange Rate:}\cr
-    \cr
-    \code{dem2gbp}
-    contains daily observations of the 
-        Deutschmark / British Pound foreign exchange log returns. 
-        This data set has been promoted as an informal benchmark 
-        for GARCH time-series software validation. See McCullough and 
-        Renfro [1991], and Brooks, Burke, and Persand (2001) for details.
-        The nominal returns are expressed in percent, as published in 
-        Bollerslev and Ghysels (2001).\cr  
-    The data set ranges from 1984-01-03 to 1991-12-31.\cr
-    The columns are named: \cr
-    Source: Journal of Business and Economic Statistics, 
-    \emph{ftp://www.amstat.org}.\cr
-    
-    
-    \bold{BID Prices of USDDEM FX Rates:}\cr
-    \cr
-    \code{DEM98NYC} and  \code{DEM98ZRH}
-    contain intra-daily foreign exchange bid prices for the USDDEM
-        exchange rate for the third week in March 1998. One file is 
-        recorded in local New York City time, the other in local
-        Zurich time.
-    The data set ranges from:\cr
-    The columns are named: BID\cr 
-    Source: Diethelm Wuertz and Remo Schnidrig.\cr
     
     
     \bold{Down Jones 30 Stocks:}\cr
@@ -146,7 +86,6 @@
         of a stock in the Index.\cr
     The data set ranges from 1991-01-02 to 2001-01-02.\cr
     The columns are named: \cr
-    Source:\cr
     
     
     \bold{Daily Ford Stock Prices:}\cr
@@ -156,7 +95,6 @@
         shares traded at NYSE.\cr  
     The data set ranges from 1084-01-02 to 1991-12-31.\cr
     The columns are named:\cr
-    Source:\cr
     
     
     \bold{Daily Hewlett-Packard Stock Prices:}\cr
@@ -166,30 +104,8 @@
         shares traded at NYSE.\cr
     The data set ranges from 1084-01-02 to 1991-12-31.\cr  
     The columns are named:\cr 
-    Source:\cr
     
-    
-    \bold{Klein's US Economic Data Set:}\cr
-    \cr
-    \code{klein}
-    contains data for Klein's (1950) simple econometric model of the 
-        US economy. The Klein data frame has 22 rows and 10 columns.\cr 
-    The data set ranges from  
-    The columns are named: year, c, p, wp, i, k.lag, x, wg, g, tax.
-        They denote:\cr
-        \code{year} years 1921-1941, in the POSIX data format \%Y-\%m-\%d,  \cr
-        \code{c} the consumption, \cr 
-        \code{p} the private profits, \cr
-        \code{wp} the private wages, \cr
-        \code{i} the investment, \cr 
-        \code{k.lag} the capital stock, lagged one year, \cr 
-        \code{x} the equilibrium demand, \cr 
-        \code{wg} the government wages, \cr
-        \code{g} the government non-wage spending, \cr 
-        \code{tax} indirect business taxes and net exports. \cr
-    Source: Greene (1993)\cr
-    
-    
+
     \bold{Kmenta's US Economic Data Set:}\cr
     \cr
     \code{kmenta}
@@ -244,7 +160,6 @@
         \code{vel}-Velocity of Money, [1869-1970],\cr  
         \code{bnd}-Basic Yields 30-year Corporate Bonds, [\% pa], [1900-1970],\cr 
         \code{sp}-Stock Prices, [Index; 1941-43 = 100], [1871-1970].\cr
-    Source:\cr
       
     
     \bold{NYSE Composite Index:}\cr
@@ -253,20 +168,7 @@
     contains daily records of the NYSE Composite Index.\cr
     The data set ranges from  \cr
     The columns are named: \cr
-    Source: NYSE.\cr
 
-    
-    \bold{US Recession Data Set:}\cr
-    \cr
-    \code{recession}
-    holds the data set used in the regression analysis of US recession.
-        The data include short and long term interest rates from the US,
-        the 3 Month Tbills data from US FED,
-        the 10 Year Tbonds data from US FED, and also the 
-        Stock-Watson experimental recession index.\cr
-    The data set ranges from \cr 
-    The columns are named: cr
-    Source:\cr 
         
     \bold{Shiller's Data Set:}\cr
     \cr
@@ -327,16 +229,7 @@
     The data set ranges from\cr 
     The columns are named: 
     Source: Ding, Granger and Engle.\cr
-    
-    
-    \bold{Daily SP500 Index Returns:}\cr
-    \cr
-    \code{sp500index}
-    lists daily SP500 index values. \cr  
-    The data set ranges from January 1995 until December 1999.\cr   
-    The columns are named:\cr
-    Source:\cr 
-    
+     
     
     \bold{Exchange Rate Spot Returns:}\cr
     \cr
@@ -395,19 +288,6 @@ McCullough B.D., Renfro C.G. (1998);
 Greene W.H. (1993);
     \emph{Econometric Analysis},
     Second Edition, Macmillan. 
-
-Klein, L. (1950);
-     \emph{Economic Fluctuations in the United States 1921--1941},
-     Wiley. 
-
-Kmenta J. (1997); 
-    \emph{Elements of Econometrics}, 
-    Second Edition, University of Michigan Publishing. 
-    
-Laurent S., Peters J.P. (2002); 
-    \emph{G@RCH 2.2: An Ox Package for Estimating and Forecasting  
-    Various ARCH Models}, 
-    Journal of Economic Surveys 16, 447--485. 
     
 Nelson C.R., Plosser C.I. (1982); 
     \emph{Trends and Random Walks in Macroeconomic Time Series},
