@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   1999 - 2009, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -40,17 +40,8 @@
 #  .createIndicators         List of indicator for use with  Rmetrics
 ################################################################################
 
-
-################################################################################
-#  ciaCountries              Returns a list of CIA country codes
-#  print.ciaCountries        Print method for 'ciaIndicators'
-#  ciaIndicators             Returns a list of CIA indicator codes
-#  print.ciaIndicators       Print method for 'ciaIndicators'
-#  ciaByCountry              Returns all Indicators by country 
-#  ciaByIndicator            Returns for all countries indicator ranking
-
    
-ciaCountries = 
+ciaCountries <-  
 function()
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -59,9 +50,6 @@ function()
     
     # Arguments:
     #   - none -
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -323,7 +311,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-print.ciaCountries =
+print.ciaCountries <- 
 function(x, ...)
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -332,9 +320,6 @@ function(x, ...)
     
     # Arguments:
     #   x - an S3 object of class 'ciaCountries'
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -352,7 +337,7 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-ciaIndicators =
+ciaIndicators <- 
 function()
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -361,9 +346,6 @@ function()
     
     # Arguments:
     #   - none -
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -431,7 +413,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-print.ciaIndicators =
+print.ciaIndicators <- 
 function(x, ...)
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -440,9 +422,6 @@ function(x, ...)
     
     # Arguments:
     #   x - an S3 object of class 'ciaIndicators'
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -460,7 +439,7 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-ciaByCountry = 
+ciaByCountry <-  
 function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -475,9 +454,6 @@ function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
     #       names willl be a added
     #   details - a logical flag, if TRUE then details will 
     #       be printed
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -527,7 +503,7 @@ function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
 # ------------------------------------------------------------------------------
 
 
-ciaByIndicator = 
+ciaByIndicator <-  
 function(code = 2001, from = FALSE, details = FALSE)
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -540,9 +516,6 @@ function(code = 2001, from = FALSE, details = FALSE)
     #       data registration will be given
     #   details - a logical flag, if TRUE then details will 
     #       be printed
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -570,11 +543,9 @@ function(code = 2001, from = FALSE, details = FALSE)
 
     
 ################################################################################
-#  .createFactbook                Creates CIA Data for use with Rmetrics
-#  .createIndicators              List of indicator for use with  Rmetrics
-   
  
-.createFactbook = 
+
+.createFactbook <-  
 function()
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -586,9 +557,6 @@ function()
     
     # Note:
     #   For internal use only.
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -628,7 +596,7 @@ function()
 # ------------------------------------------------------------------------------
     
     
-.createIndicators = 
+.createIndicators <-  
 function()
 {   # A Function Implemented by Diethelm Wuertz
 
@@ -640,9 +608,6 @@ function()
     
     # Note:
     #   For internal use only.
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
