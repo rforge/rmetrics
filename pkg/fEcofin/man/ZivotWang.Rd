@@ -1,6 +1,6 @@
-\name{TimeSeriesData}
+\name{ZivotWangData}
 
-\alias{TimeSeriesData}
+\alias{ZivotWangData}
 
 \alias{bmwRet}
 \alias{CPI.dat}
@@ -35,7 +35,7 @@
 \description{
 
     Data sets from the textbook "Modeling Financial Time Series 
-    with S-PLUS" written by Eric Zivot and jiahui Wang.
+    with S-PLUS" written by Eric Zivot and Jiahui Wang.
     
     The data sets are:
     
@@ -66,7 +66,7 @@
     contains data representing seasonally adjusted US Industrial 
         Production Index.\cr 
     The data set ranges from  \cr
-    The columns are named: \cr
+    The columns are named:  
     
     
     \bold{Industrial Production Index:}\cr
@@ -74,8 +74,8 @@
     \code{IP.dat}\cr
     contains data representing seasonally adjusted US Consumer 
         Price Index.\cr   
-    The data set ranges from\cr 
-    The columns are named:\cr 
+    The data set ranges from \cr 
+    The columns are named: 
     
     
     \bold{Down Jones 30 Stocks:}\cr
@@ -85,7 +85,7 @@
         Each of the thirty columns represents the closing price 
         of a stock in the Index.\cr
     The data set ranges from 1991-01-02 to 2001-01-02.\cr
-    The columns are named: \cr
+    The columns are named: 
     
     
     \bold{Daily Ford Stock Prices:}\cr
@@ -94,7 +94,7 @@
     contains data representing 2000 daily stock returns for the Ford 
         shares traded at NYSE.\cr  
     The data set ranges from 1084-01-02 to 1991-12-31.\cr
-    The columns are named:\cr
+    The columns are named: 
     
     
     \bold{Daily Hewlett-Packard Stock Prices:}\cr
@@ -103,7 +103,7 @@
     contains data representing 2000 daily stock returns for the HP 
         shares traded at NYSE.\cr
     The data set ranges from 1084-01-02 to 1991-12-31.\cr  
-    The columns are named:\cr 
+    The columns are named: 
     
 
     \bold{Kmenta's US Economic Data Set:}\cr
@@ -125,7 +125,6 @@
         \code{f} ratio of preceding year's prices received by farmers 
             to general consumer prices, \cr
         \code{a} time in years (numbered from 1 to 20). \cr
-    Source:\cr
     
     
     \bold{Microsoft Stock Prices:}\cr
@@ -134,7 +133,7 @@
     contains daily stock prices and volumes for the the Microsoft stocks.
     The data set ranges from 2000-09-27 to 2001-09-27\cr 
     The columns are named: Open, High, Low, Close, Volume.\cr
-    Source: www.yahoo.com\cr
+    Source: www.yahoo.com 
 
   
     \bold{Nelson-Plosser US Economic Time Series:}\cr
@@ -167,7 +166,7 @@
     \code{nyse}
     contains daily records of the NYSE Composite Index.\cr
     The data set ranges from  \cr
-    The columns are named: \cr
+    The columns are named: 
 
         
     \bold{Shiller's Data Set:}\cr
@@ -186,7 +185,7 @@
         \code{real.dividend} - real SP Composite Index dividends,\cr
         \code{real.earnings} - real SP Composite Index earnings,\cr
         \code{pe.10} - price-earnings ratios.\cr
-    Source: Robert Shiller.\cr
+    Source: Robert Shiller. 
     
     
     \bold{Shiller's Annual Data Set:}\cr
@@ -208,7 +207,7 @@
         \code{pe.10} - price-earnings ratios,\cr
         \code{dp.ratio} - dividend-price ratios,\cr
         \code{dp.yield} - dividend-price yield.\cr
-    Source: Robert Shiller.\cr
+    Source: Robert Shiller. 
     
     
     \bold{US Index and Price Data Records:}\cr
@@ -218,7 +217,6 @@
         prices for Microsoft Corporation (MSFT) and SP500 Index (SP500).\cr
     The data set ranges from January 1990 to January 2001.\cr
     The columns are named: \cr 
-    Source: \cr
     
     
     \bold{Daily DGE SP500 Returns:}\cr
@@ -228,7 +226,7 @@
         the paper of Ding, Granger and Engle.\cr  
     The data set ranges from\cr 
     The columns are named: 
-    Source: Ding, Granger and Engle.\cr
+    Source: Ding, Granger and Engle. 
      
     
     \bold{Exchange Rate Spot Returns:}\cr
@@ -237,8 +235,7 @@
     contains exchange rate spot returns and forward premium data as used 
         in the article of Eric Zivot (2000).\cr
     The data set ranges from \cr 
-    The columns are named:\cr
-    Source:\cr
+    The columns are named: 
     
      
     \bold{Yahoo Stock Prices:}\cr
@@ -247,8 +244,7 @@
     contains data representing daily transaction information of Yahoo 
         stocks.\cr 
     The data set ranges from \cr
-    The columns are named: Date, Open, High, Low, Close, Volume.\cr
-    Source: \cr
+    The columns are named: Date, Open, High, Low, Close, Volume.
 
 }
 
@@ -302,8 +298,8 @@ Zivot E. (2000);
 
 \examples{
 ## Load Example Data Set:
-   data(kmenta)
-   kmenta
+   data(CPI.dat)
+   head(CPI.dat)
 }
  
  
