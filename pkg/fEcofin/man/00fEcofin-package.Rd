@@ -36,17 +36,38 @@
 
 \section{Overview of Topics:}{
 
-    1. Bond Market Data Sets\cr
-    2. Portfolio Data Sets\cr
-    3. Time Series Data Sets\cr
-    4. World Federation of Stock Exchanges Data Sets\cr
-    5. CIA Factbook Data Sets\cr
-    6. Performance Analytics Data Sets
+    1. CIA Factbook Data Sets\cr
+    2. Data Sets for the fBond Package\cr
+    3. Data Sets for the fPortfolio Package\cr
+    4. Data Sets from the PerformanceAnalytics Package\cr
+    5. Data Sets from the R for Quants Textbook\cr
+    6. Data Sets used in several Rmetrics Packages\cr
+    7. World Federation of Stock Exchanges Data Sets\cr
+    8. Data Sets from Zivot-Wang's Textbook.
     
 }
     
     
-\section{1. Bond Market Data Sets}{
+\section{1. CIA Factbook Data Sets}{
+
+    
+    A collection and description of functions to extract 
+    financial and economic market statistics from the
+    data available in the CIA World Factbook.
+    \cr
+    
+    The functions are:
+    
+    \tabular{ll}{
+    \code{ciaCountries} \tab Returns a list of CIA country codes, \cr
+    \code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
+    \code{ciaByCountry} \tab Returns all Indicators by country, \cr 
+    \code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
+    
+}
+
+
+\section{2. Data Sets for the fBond Package}{
 
     contains demo data sets from the Bond Market.
     
@@ -60,7 +81,7 @@
 }
 
 
-\section{2. Portfolio Data Sets}{
+\section{3. Data Sets for the fPortfolio Package}{
 
     contains demo data sets for portfolio optimization.
     
@@ -85,7 +106,57 @@
 }
 
 
-\section{3. Time Series Data Sets}{
+\section{4. Data Sets from the Performance Analytics Package}{
+
+
+    contains data sets for use in the examples of portfolio performance
+    analytics.
+    
+    The data sets are:
+    
+    \tabular{ll}{
+    \code{edhec.tS} \tab composite hedge fund style index returns, \cr
+    \code{managers.tS} \tab fixed income benchmarks. }
+   
+}    
+
+
+\section{5. Data Sets from the R for Quants Textbook}{
+
+    contains data sets from the book "Basic R for Quants".
+
+}
+
+
+\section{6. Data Sets used in several Rmetrics Packages}{
+
+    contains general data sets used in many Rmetrics packages.
+
+}
+
+
+\section{7. World Federation of Stock Exchanges Data Sets}{
+
+
+    contains data sets of financial and economic market 
+    statistics from exchange data collected by the World 
+    Federation of Stock Exchanges.
+    \cr
+    
+    The data sets are:
+    
+    \tabular{ll}{
+    \code{wfe1} \tab Market capitalization of domestic companies, \cr
+    \code{wfe2} \tab Total number of companies with shares listed, \cr
+    \code{wfe3} \tab Total value of share trading, \cr 
+    \code{wfe4} \tab Market value of bonds listed, \cr
+    \code{wfe5} \tab Total value of bond trading, and \cr
+    \code{wfe6} \tab Price earning ratio an gross dividend yield. }
+    
+}
+
+
+\section{8. Data Sets from Zivot-Wang's Textbook}{
 
     contains demo time series data sets for economic and 
     financial market analysis.
@@ -116,61 +187,6 @@
     \code{yhoo.df} \tab Yahoo Stock Prices.}
     
 }
-
-
-\section{4. World Federation of Stock Exchanges Data Sets}{
-
-
-    contains data sets of financial and economic market 
-    statistics from exchange data collected by the World 
-    Federation of Stock Exchanges.
-    \cr
-    
-    The data sets are:
-    
-    \tabular{ll}{
-    \code{wfe1} \tab Market capitalization of domestic companies, \cr
-    \code{wfe2} \tab Total number of companies with shares listed, \cr
-    \code{wfe3} \tab Total value of share trading, \cr 
-    \code{wfe4} \tab Market value of bonds listed, \cr
-    \code{wfe5} \tab Total value of bond trading, and \cr
-    \code{wfe6} \tab Price earning ratio an gross dividend yield. }
-    
-}
-
-
-\section{5. CIA Factbook Data Sets}{
-
-    
-    A collection and description of functions to extract 
-    financial and economic market statistics from the
-    data available in the CIA World Factbook.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{ciaCountries} \tab Returns a list of CIA country codes, \cr
-    \code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
-    \code{ciaByCountry} \tab Returns all Indicators by country, \cr 
-    \code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
-    
-}
-
-    
-\section{6. Performance Analytics Data Sets}{
-
-
-    contains data sets for use in the examples of portfolio performance
-    analytics.
-    
-    The data sets are:
-    
-    \tabular{ll}{
-    \code{edhec.tS} \tab composite hedge fund style index returns, \cr
-    \code{managers.tS} \tab fixed income benchmarks. }
-   
-}    
 
 
 \keyword{package}
