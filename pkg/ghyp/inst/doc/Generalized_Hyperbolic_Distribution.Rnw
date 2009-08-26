@@ -906,7 +906,7 @@ Gamma ($\Gamma$) distribution:
   \chi > 0
 \end{equation}
 The density of $X \sim \Gamma(\alpha, \beta)$ is
-\begin{equation}\nonumber \label{eq:fgamma}
+\begin{equation}\label{eq:fgamma}
   f_{\Gamma}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
   w^{\alpha-1}\exp\curlybrackets{-\beta w}.
 \end{equation}
@@ -932,7 +932,7 @@ Inverse Gamma ($\InvGamma$) distribution:
   \psi > 0
 \end{equation}
 The density of $X \sim \InvGamma(\alpha, \beta)$ is
-\begin{equation}\nonumber \label{eq:finversegamma}
+\begin{equation} \label{eq:finversegamma}
   f_{X}(w) = \frac{\beta^\alpha}{\Gamma(\alpha)}
   w^{-\alpha-1}\exp\curlybrackets{-\frac{\beta}{w}}.
 \end{equation}
@@ -1139,7 +1139,7 @@ the conditional density is derived.
 The mixing term $w$ is GIG distributed. By using (\ref{eq:fghyp}) and
 (\ref{eq:densgig}) the density of $w_i$ given $\x_i$ can be calculated to
 be again the GIG density with parameters
-$(\lambda - \dDivTwo,\QX + \chi, \psi + \GammaSigGamma)$.
+$\left(\lambda - \dDivTwo,\QX + \chi, \psi + \GammaSigGamma\right)$.
 \begin{eqnarray}\label{eq:conddistGIG}
   f_{w|\x}(w) &=& \nonumber
                   \frac{f_{\X,W}(\x,w)}{f_\X(\x)}\\
@@ -1161,7 +1161,7 @@ of $w_i$ given $\x_i$ results in the GIG density. The equations (\ref{eq:fghyp})
 (\ref{eq:finversegamma}) were used. The parameters of the GIG density are
 $(\lambda - \dDivTwo,\QX + \chi, \GammaSigGamma)$. When $\gamma$ becomes $0$ the
 conditional density reduces to the $\InvGamma$ density with parameters
-$(\dDivTwo - \lambda,\frac{\QX + \chi}{2})$.
+$\left(\dDivTwo - \lambda,\frac{\QX + \chi}{2}\right)$.
 \begin{eqnarray}\label{eq:conddistinversegamma}
   f_{w|\x}(w) &=& \nonumber
                   \frac{f_{\X,W}(\x,w)}{f_\X(\x)}\\
@@ -1179,7 +1179,7 @@ $(\dDivTwo - \lambda,\frac{\QX + \chi}{2})$.
 The mixing term $w$ is $\Gamma$ distributed. By using (\ref{eq:fghyp}) and
 (\ref{eq:fgamma}) the density of $w_i$ given $\x_i$ can be calculated to
 be again the GIG density with parameters
-$(\lambda - \dDivTwo,\QX, \psi + \GammaSigGamma )$.
+$\left(\lambda - \dDivTwo,\QX, \psi + \GammaSigGamma \right)$.
 \begin{eqnarray}\label{eq:conddistgamma}
   f_{w|\x}(w) &=& \nonumber
                   \frac{f_{\X,W}(\x,w)}{f_\X(\x)}\\
