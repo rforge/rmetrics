@@ -51,8 +51,17 @@
 
 
 \examples{
-## data -
-   x <- as.timeSeries(data(msft.dat))   
+## Load Microsoft Dataset - 
+   data(MSFT)
+   
+## Compute Sample Size - 
+   dim(MSFT)
+   
+## Align the Series - 
+   MSFT.AL = align(MSFT) 
+   
+## Show the Size of the Aligned Series - 
+   dim(MSFT.AL)
 }
 
 

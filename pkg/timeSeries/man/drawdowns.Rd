@@ -77,14 +77,17 @@ drawdownsStats(x, \dots)
 
 
 \examples{
-## data -
-   # Microsoft Data: 
+## Load Swiss Pension Fund Data Set -  
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
-   head(MSFT)
+   data(LPP2005REC)
+   head(LPP2005REC)
 
-## drawdownsStats -
-   drawdownsStats(as.timeSeries(data(LPP2005REC))[, "SPI"])
+## Compute Drawdowns Statistics - 
+   drawdownsStats(LPP2005REC[, "SPI"])
+   
+## Plot Drawdowns - 
+   dd = drawdowns(LPP2005REC[, "SPI"])
+   plot(dd)
 }
 
 

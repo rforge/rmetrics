@@ -113,15 +113,15 @@ applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
 
 
 \examples{
-## data - 
-   # Percentual Returns of Swiss Bond Index and Performance Index
-   LPP = 100 * as.timeSeries(data(LPP2005REC))[,c("SBI", "SPI")]
+## Percentual Returns of Swiss Bond Index and Performance Index - 
+   data(LPP2005REC)
+   LPP = 100 * LPP2005REC[, c("SBI", "SPI")]
    head(LPP, 20)
    
-## Aggregate Quarterly Returns
+## Aggregate Quarterly Returns -
    applySeries(LPP, by = "quarterly", FUN = colSums)
    
-## Aggregate Quarterly every last Friday in Quarter
+## Aggregate Quarterly every last Friday in Quarter -
    oneDay = 24*3600
    from = unique(timeFirstDayInQuarter(time(LPP))) - oneDay
    from = timeLastNdayInMonth(from, nday = 5)
@@ -130,10 +130,10 @@ applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"),
    data.frame(from = as.character(from), to = as.character(to))
    applySeries(LPP, from, to, FUN = colSums)
    
-## Alternative use 
+## Alternative Use - 
    fapply(LPP, from, to, FUN = colSums)
    
-## Count Trading Days per Month
+## Count Trading Days per Month - 
    colCounts = function(x) rep(NROW(x), times = NCOL(x))
    applySeries(LPP, FUN = colCounts, by = "monthly")
 }

@@ -73,11 +73,15 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
 
 
 \examples{
-## data - 
-   # Microsoft Daily Data Set:
-   x = as.timeSeries(data(msft.dat))
-   countMonthlyRecords(x)
-   isMonthly(x)
+## Load Microsoft Daily Data Set:
+   data(MSFT) 
+   
+## Count Monthly Records -
+   MSFT.CTS <- countMonthlyRecords(MSFT)
+   MSFT.CTS
+   
+## Show that this is a Monthly Series - 
+   isMonthly(MSFT.CTS)
 }
 
 

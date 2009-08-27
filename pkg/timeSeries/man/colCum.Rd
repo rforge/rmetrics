@@ -73,10 +73,10 @@
 
 
 \examples{
-## Simulated Monthly Return Data:
+## Simulated Return Data -
    x = matrix(rnorm(24), ncol = 2)
      
-## colStats -
+## Cumulative Sums Column by Column  -
    colCumsums(x)  
 }
 

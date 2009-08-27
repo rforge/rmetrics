@@ -80,14 +80,16 @@
 
 
 \examples{
-## data -
-   x = as.timeSeries(data(msft.dat))[, 1:4]
-   x = 100*returns(x)
+## Load Microsoft Data Set - 
+   data(MSFT)
+   X = MSFT[, 1:4]
+   X = 100 * returns(X)
 
-## cov -
-   cov(x[, "Open"], x[, "Close"])
-   cov(x)
+## Compute Covariance Matrix - 
+   cov(X[, "Open"], X[, "Close"])
+   cov(X)
 }
+
 
 \keyword{methods}
 \keyword{chron}

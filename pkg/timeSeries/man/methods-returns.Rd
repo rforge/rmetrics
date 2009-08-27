@@ -40,13 +40,17 @@ returnSeries(\dots)
         series will be expressed in percentage changes.
         }
     \item{method}{
-        ...
+        a character string. Which method should be used to compute
+        the returns, "continuous", "discrete", or "compound", "simple".
+        The second pair of methods is a synonyme for the first two
+        methods.
         }    
     \item{na.rm}{
-        ...
+        a logical value. Should NAs be removed? By Default \code{TRUE}.
         }    
     \item{trim}{
-        ...
+        a logical value. Should the time series be trimmed? By Default 
+        \code{TRUE}.
         }    
     \item{x}{
         an object of class \code{timeSeries}.
@@ -74,21 +78,23 @@ returnSeries(\dots)
     
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Microsoft Data - 
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
-   head(MSFT)
+   data(MSFT)
+   X = MSFT[1:10, 1:4]
+   X
 
-## returnSeries -  
-   # Continuous Returns:
-   returns(MSFT)
-   # Discrete Returns:
-   returns(MSFT, type = "discrete")
-   # Don't trim:
-   returns(MSFT, trim = FALSE)
-   # Use Percentage Values:
-   returns(MSFT, percentage = TRUE, trim = FALSE)
+## Continuous Returns - 
+   returns(X)
+  
+## Discrete Returns:
+   returns(X, type = "discrete")
+   
+## Don't trim:
+   returns(X, trim = FALSE)
+   
+## Use Percentage Values:
+   returns(X, percentage = TRUE, trim = FALSE)
 }
 
 

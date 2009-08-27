@@ -68,20 +68,19 @@
     
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Microsoft Data -
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:12, ]
+   data(MSFT)
+   X = MSFT[1:12, ]
 
-## model.frame -
-   # Extract High's and Low's:
-   model.frame( ~ High + Low, data = MSFT)
-   # Extract Open Prices and their log10's:
+## Extract High's and Low's:
+   model.frame( ~ High + Low, data = X)
+   
+## Extract Open Prices and their log10's:
    base = 10
-   Open = model.frame(Open ~ log(Open, base = `base`), data = MSFT)
-   colnames(Open) <- c("MSFT", "log10(MSFT)")
-   Open
-    
+   Open = model.frame(Open ~ log(Open, base = `base`), data = X)
+   colnames(Open) <- c("X", "log10(X)")
+   Open  
 }
 
 

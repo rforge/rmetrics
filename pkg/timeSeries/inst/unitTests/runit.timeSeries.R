@@ -14,15 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL, wuertz@phys.ethz.ch
-#   2008 - Rmetrics Foundation, GPL, <Rmetrics-core@r-project.org>
-#   www.rmetrics.org
-# Copyrights and Authors for code used from R's base packages, from
-#   contributed R-packages, and/or other sources is mentioned at the
-#   places  where used.
-
 
 ################################################################################
 
@@ -38,6 +29,10 @@ function()
     timeSeries:::.signalSeries(as.matrix(cbind(x,y)), 1:12)
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 test.timeSeries.Internal <-
 function()
 {
@@ -52,7 +47,6 @@ function()
     checkTrue(identical(as(z, "matrix"), as(t, "matrix")))
 
 }
-
 
 
 ################################################################################

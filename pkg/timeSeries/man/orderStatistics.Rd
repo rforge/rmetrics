@@ -36,12 +36,12 @@ orderStatistics(x)
 
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Swiss Pension Fund Benchmark Data -  
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))
-   head(MSFT)
-
+   data(LPP2005REC)
+   
+## Compute Order Statistics -
+   head(orderStatistics(LPP2005REC))
 }
 
 

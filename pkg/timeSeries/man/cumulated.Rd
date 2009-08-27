@@ -53,18 +53,19 @@ cumulated(x, \dots)
     
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Microsoft Data - 
+   data(MSFT)
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:10, "Close"]
+   MSFT <- MSFT[1:10, "Close"]
    MSFT
 
-## cumulated -  
-   # Index series to 100:
-   MSFT = 100 * MSFT/as.numeric(MSFT[1,1])
-   MSFT
+## Discrete Return Series  - 
+   MSFT = 100 * MSFT/as.numeric(MSFT[1, 1])
    MSFT.RET = returns(MSFT, method = "discrete")
-   cumulated(MSFT.RET, method = "discrete")  
+   MSFT.RET
+   
+## Cumulative Series, Indexed to 100 - 
+   cumulated(MSFT.RET, method = "discrete") 
 }
 
 

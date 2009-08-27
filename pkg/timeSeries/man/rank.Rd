@@ -41,12 +41,15 @@
 
 
 \examples{
-## data -
-   x = as.timeSeries(data(msft.dat))[, 1:4]
-   x = 100*returns(x)
+## Load Microsoft Data -
+   data(MSFT) 
+   X = 100 * returns(MSFT)
 
-## rank -
-   rank(x[, "Open"])
+## Compute the Ranks -
+   head(rank(X[, "Open"]), 10)
+   
+## Only Interested in the Vector, then use -
+   head(rank(series(X[, "Open"])), 10)
 }
 
 

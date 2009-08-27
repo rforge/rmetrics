@@ -95,21 +95,24 @@
 
 
 \examples{
-## data -
-   LPP = as.timeSeries(data(LPP2005REC))[1:12, 1:4]
+## Load Swiss Pension Fund Benchmark Data -  
+   LPP = LPP2005REC[1:12, 1:4]
    colnames(LPP) <- abbreviate(colnames(LPP), 2)
    finCenter(LPP) <- "GMT"
 
-## plot -  
+## Example Plot 1 - 
    plot(LPP[, 1], type = "o", col = "steelblue", 
      main = "LPP", xlab = "2005", ylab = "Return")
+   
+## Example Plot 2 - 
    plot(LPP[, 1:2], type = "o", col = "steelblue", 
      main = "LPP", xlab = "2005", ylab = "Return")
-   plot(LPP[, 1], LPP[, 2], type = "o", col = "steelblue", 
+   
+## Example Plot 3 - 
+   plot(LPP[, 1], LPP[, 2], type = "p", col = "steelblue", 
      main = "LPP", xlab = "Return 1", ylab = "Return 2")
      
-## plot -
-   # Example 1 - The wrong way to do it!
+## Example Plot 4a, The Wrong Way to do it! -
    LPP = as.timeSeries(data(LPP2005REC))
    ZRH = as.timeSeries(LPP[,"SPI"], zone = "Zurich", FinCenter = "Zurich")
    NYC = as.timeSeries(LPP[,"LMI"], zone = "NewYork", FinCenter = "NewYork")
@@ -118,8 +121,7 @@
    plot(ZRH, type = "p", pch = 19, col = "blue")
    points(NYC, pch = 19, col = "red")
  
-## plot - 
-   # Example 2 - Convert NYC to Zurich Time
+## Example Plot 4b, Convert NYC to Zurich Time - 
    finCenter(ZRH) <- "Zurich"
    finCenter(NYC) <- "Zurich"
    at = unique(round(time(ZRH)))
@@ -127,8 +129,7 @@
        xlab = paste(ZRH@FinCenter, "local Time"), main = ZRH@FinCenter)
    points(NYC, pch = 19, col = "red")
   
-## plot - 
-   # Example 3 - Forced everything to GMT using "FinCenter" argument
+## Example 4c, Force Everything to GMT Using "FinCenter" Argument - 
    finCenter(ZRH) <- "Zurich"
    finCenter(NYC) <- "NewYork"
    at = unique(round(time(ZRH)))

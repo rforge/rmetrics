@@ -56,11 +56,10 @@
 
 
 \examples{
-## data -
-   x = as.timeSeries(data(msft.dat))[1:20, "Open"]
+## Load Micsrosoft Data Set -
+   x = MSFT[1:20, "Open"]
    
-## lag -
-   # Lag the timeSeries Object:
+## Lag the timeSeries Object:
    lag(x, k = -1:1)
 }
 

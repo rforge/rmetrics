@@ -20,7 +20,7 @@ description()
 
 
 \examples{
-## description:
+## Show Default Description String - 
    description()
 }
 

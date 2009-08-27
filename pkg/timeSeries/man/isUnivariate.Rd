@@ -51,15 +51,16 @@ isMultivariate(x)
 
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Microsoft Data - 
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))
+   data(MSFT)
    Open = MSFT[, "Open"]
-   
+  
+## Is the timeSeries Univariate - 
    isUnivariate(MSFT)
    isUnivariate(Open)
-   
+
+## Is the timeSeries Multivariate -   
    isMultivariate(MSFT)
    isMultivariate(Open)
 }

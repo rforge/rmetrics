@@ -14,46 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
-# METHODS:             MODIFICATION METHODS:
-#  diff.timeSeries      S3: Differences a 'timeSeries' object
-#  lag.timeSeries       S3: Lags a 'timeSeries' object
-#  merge.timeSeries     S3: Merges two 'timeSeries' objects
-#  scale.timeSeries     S3: Centers and/or scales a 'timeSeries' object
-#  summary.timeSeries   S3: Summarizes a 'timeDate' object
-#  var.timeSeries       S3: Returns variance for a 'timeSeries' object
-# METHODS:             MATHEMATICAL OPERATIONS ON DATA:
-#  Ops.timeSeries       S3: Arith method for a 'timeSeries' object
-#  abs.timeSeries       S3: Returns abolute values of a 'timeSeries' object
-#  sqrt.timeSeries      S3: Returns sqrt values of a 'timeSeries' object
-#  exp.timeSeries       S3: Returns exponentials of a 'timeSeries' object
-#  log.timeSeries       S3: Returns logarithms of a 'timeSeries' object
-#  quantile.timeSeries  S3: produces sample quantiles of a 'timeSeries' object
-# METHODS:             SUBSETTING METHODS ON DATA:
-#  [.timeSeries         S3: subsets of a 'timeSeries' object
-#  cut.timeSeries       S3: cuts a block from a 'timeSeries' object
-#  head.timeSeries      S3: returns the head of a 'timeSeries' object
-#  tail.timeSeries      S3: returns the tail of a 'timeSeries' object
-#  outlier.timeSeries   S3: Removes outliers from a 'timeSeries' object
-# METHODS:             DIM OPERATIONS ON DATA:
-#  dim                  Returns the dimension of a 'timeSeries' object
-#  dimnames             Returns the dimension names of a 'timeSeries' object
-#  colnames<-.timeS*    Assigns column names to a 'timeSeries' object
-#  rownames<-.timeS*    Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries  Allows that NCOL and NROW work properly
 ################################################################################
 
 

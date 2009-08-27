@@ -56,21 +56,21 @@
 
 
 \examples{
-## data -
-   x <- as.timeSeries(data(msft.dat))
+## Load Microsoft Data Set -
+   data(MSFT)
+   x <- MSFT
 
-## aggregate by weeks
+## Aggregate by Weeks - 
    by <- timeSequence(from = start(x),  to = end(x), by = "week")
    aggregate(x, by, mean)
 
-## aggregate to last Friday of month -
+## Aggregate to Last Friday of Month -
    by <- unique(timeLastNdayInMonth(time(x), 5))
    aggregate(x, by, mean)
 
-## aggregate to last day of quarter -
+## Aggregate to Last Day of Quarter -
    by <- unique(timeLastDayInQuarter(time(x)))
    aggregate(x, by, mean)
-
 }
 
 

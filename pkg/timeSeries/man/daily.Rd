@@ -151,30 +151,27 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
-## data - Data Frame:
-   # To work with daily data, the best choice is "GMT"
+## Load Microsoft Data - 
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))
+   data(MSFT)
    head(MSFT)   
    
     
-## Align Daily Series - 
-   # Cut out April Data from 2001:
+## Cut out April Data from 2001 - 
    Close = MSFT[, "Close"]
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01    
-   # Align with NA:
+   
+## Align with NA - 
    tsRet = returns(tsApril01, trim = TRUE)
    GoodFriday(2001)   
    EasterMonday(2001) 
    alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)
    alignDailySeries(tsRet, method = "fillNA", include.weekends = TRUE)
-   # Interpolate:
+   
+## Interpolate - 
    alignDailySeries(tsRet, method = "interp", include.weekend = FALSE)
    alignDailySeries(tsRet, method = "interp", include.weekend = TRUE)
-   
-## ohlcDailyPlot -
-   # ohlcDailyPlot(Close)
 }
 
 

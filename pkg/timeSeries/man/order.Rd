@@ -111,16 +111,18 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 
 
 \examples{
-## data -
-   MSFT = as.timeSeries(data(msft.dat))
-   colnames(MSFT) = abbreviate(colnames(MSFT), 2)
+## Load Swiss Pension Fund Benchmark Data -
+   data(LPP2005REC)
+   
+## Abbreviate Column Names -
+   colnames(LPP2005REC)
 
-## sortColnames -
-   # Sort alphabetically
-   sortColnames(MSFT)
+## Sort Alphabetically - 
+   sortColnames(LPP2005REC)
   
-## hclustColnames -
-   head(MSFT[, hclustColnames(MSFT)])  
+## Sort by Column Names by Hierarchical Clustering -
+   hclustColnames(LPP2005REC)
+   head(LPP2005REC[, hclustColnames(LPP2005REC)])
 }
 
 

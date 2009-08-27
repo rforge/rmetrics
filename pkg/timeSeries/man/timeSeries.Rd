@@ -181,41 +181,41 @@ seriesData(object)
 
 
 \examples{
-## data -
+## Load Microsoft Data -
    # Microsoft Data: 
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))
+   data(MSFT)
    head(MSFT)
 
-## timeSeries -  
-   # Create a timeSeries Objec - The Direct Way ...
+## Create a timeSeries Object, The Direct Way ...
    Close = MSFT[, 5]
    head(Close)
-   # From Scratch ...
+   
+## Create a timeSeries Object from Scratch - 
    data = as.matrix(MSFT[, 4])
    charvec = rownames(MSFT)
    Close = timeSeries(data, charvec, units = "Close")
    head(Close)
    c(start(Close), end(Close))
     
-## window  -    
-   # Cut out April Data from 2001:
+## Cut out April Data from 2001 - 
    tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
-## returns -  
-   # Continuous Returns:
+## Compute Continuous Returns - 
    returns(tsApril01)
-   # Discrete Returns:
+   
+## Compute Discrete Returns - 
    returns(tsApril01, type = "discrete")
-   # Don't trim:
+   
+## Compute Discrete Returns, Don't trim -
    returns(tsApril01, trim = FALSE)
-   # Use Percentage Values:
+   
+## Compute Discrete Returns, Use Percentage Values - 
    tsRet = returns(tsApril01, percentage = TRUE, trim = FALSE)
    tsRet
      
-## applySeries -   
-   # Aggregate weekly:
+## Aggregate Weekly - 
    GoodFriday(2001)
    to = timeSequence(from = "2001-04-11", length.out = 3, by = "week") 
    from = to - 6*24*3600
@@ -223,7 +223,7 @@ seriesData(object)
    to
    applySeries(tsRet, from, to, FUN = sum)
 
-## create large timeSeries objects with different 'charvec' object classes
+## Create large timeSeries objects with different 'charvec' object classes - 
    # charvec is a 'timeDate' object
    head(timeSeries(1:1e6L, timeSequence(length.out = 1e6L, by = "sec")))
    head(timeSeries(1:1e6L, seq(Sys.timeDate(), length.out = 1e6L, by = "sec")))

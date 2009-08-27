@@ -83,7 +83,21 @@
 
 
 \examples{
-## NYI
+## Load Swiss Pension Fund Benchmark Data -
+   data(LPP2005REC)
+   X = LPP2005REC[1:10, 1:3]
+   
+## Get Dimension - 
+   dim(X)
+   
+## Get Column and Row Names -
+   dimnames(X)
+   
+## Get Column Names -
+   colnames(X)
+   
+## Get Row Names -
+   rownames(X) 
 }
 
 

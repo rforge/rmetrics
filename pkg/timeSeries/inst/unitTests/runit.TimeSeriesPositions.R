@@ -14,30 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
-# METHOS:              POSITIONS:
-#  time                 Extracts positions slot from 'timeSeries' object
-#  newPositions<-       Modifies positions of a 'timeSeries' object
-#  time<-               Modifies positions of a 'timeSeries' object
-# METHODS:             ORDERING:
-#  sample.timeSeries    S3: Resamples a 'timeSeries' object in time
-#  sort.timeSeries      S3: Sorts reverts a 'timeSeries' object in time
-#  rev.timeSeries       S3: Reverts a 'timeSeries' object in time
-#  start.timeSeries     S3: Extracts start date of a 'timeSeries' object
-#  end.timeSeries       S3: Extracts end date of a 'timeSeries' object
 ################################################################################
 
 

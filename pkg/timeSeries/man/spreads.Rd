@@ -68,16 +68,21 @@ spreadSeries(\dots)
    
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load the Microsoft Data -  
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:10, 1:4]
-   head(MSFT)
+   data(MSFT)
+   X = MSFT[1:10, ]
+   head(X)
 
-## midquotes -
+## Compute Open/Close Midquotes -
+   X.MID <- midquotes(X, which = c("Close", "Open"))
+   colnames(X.MID) <- "X.MID"
+   X.MID
 
-## spreads -
-
+## Compute Open/Close Spreads -
+   X.SPREAD <- spreads(X, which = c("Close", "Open"))
+   colnames(X.SPREAD) <- "X.SPREAD"
+   X.SPREAD
 }
 
 

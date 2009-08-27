@@ -37,18 +37,22 @@ series(x) <- value
 \seealso{timeSeries()}
 
 \examples{
-# A timeSeries object
-ts <- timeSeries()
-ts
+## A Dummy timeSeries Object
+   ts <- timeSeries()
+   ts
 
-# 
-mat <- series(ts)
-class(mat)
-mat
+## Get the Matrix Part - 
+   mat <- series(ts)
+   class(mat)
+   mat
 
-# assign new series
-series(ts) <- rnorm(12)
-ts
+## Assign a New Univariate Series - 
+   series(ts) <- rnorm(12)
+   ts
+   
+## Assign a New Bivariate Series - 
+   series(ts) <- rnorm(12)
+   ts
 }
 
 

@@ -67,10 +67,11 @@
 
 
 \examples{
-## data -
-   x = as.timeSeries(data(msft.dat))[1:10, ]
+## Load Microsoft Data Set - 
+   data(MSFT)
+   x <- MSFT[1:10, ]
    
-## attach -
+## Attach the Series and Compute the Range - 
    attach(x)
    High - Low
 }

@@ -128,8 +128,7 @@
 
 
 \examples{
-## data - 
-   # Create an artificial timeSeries object:
+## Create an Artificial timeSeries Object - 
    setRmetricsOptions(myFinCenter = "GMT")
    charvec = timeCalendar()
    set.seed(4711)
@@ -137,8 +136,7 @@
    TS = timeSeries(data, charvec, units = "TS")
    TS
 
-## Ops | +/- * ^ ...
-   # Mathematical Operations:
+## Mathematical Operations: | +/- * ^ ... - 
    TS^2
    TS[2:4]
    OR = returns(TS)
@@ -149,3 +147,4 @@
 
 \keyword{chron}
 \keyword{methods}
+

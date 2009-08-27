@@ -103,13 +103,13 @@ colAvgs(x,  \dots)
 
 
 \examples{
-## Simulated Return Data in Matrix Form:
+## Simulated Return Data in Matrix Form -
    x = matrix(rnorm(252), ncol = 2)
      
-## colStats -
+## Mean Columnwise Statistics -
    colStats(x, FUN = mean)
    
-## colQuantiles -
+## Quantiles Column by Column -
    colQuantiles(x, prob = 0.10, type = 1)  
 }
 

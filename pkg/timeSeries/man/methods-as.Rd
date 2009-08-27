@@ -132,21 +132,23 @@
 
 
 \examples{
-## data - timeSeries:
-   # Create an artificial timeSeries object:
+## Create an Artificial timeSeries Object - 
    setRmetricsOptions(myFinCenter = "GMT")
    charvec = timeCalendar()
    data = matrix(rnorm(12))
    TS = timeSeries(data, charvec, units = "RAND")
    TS
 
-## As Vector:
+## Coerce to Vector - 
    as.vector(TS)
    
-## As Matrix or Data Frame:
+## Coerce to Matrix - 
    as.matrix(TS)
+  
+## Coerce to Data Frame - 
    as.data.frame(TS)
 }
 
 
 \keyword{chron}
+

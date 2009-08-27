@@ -36,11 +36,18 @@
 
 
 \examples{
-## print -
+## Load Micsrosoft Data - 
    setRmetricsOptions(myFinCenter = "GMT")
-   LPP = as.timeSeries(data(LPP2005REC))[1:12, 1:4]
+   LPP = MSFT[1:12, 1:4]
+
+## Abbreviate Column Names - 
    colnames(LPP) <- abbreviate(colnames(LPP), 6)
+   
+## Print Data Set -
    print(LPP)
+   
+## Alternative Use, Show Data Set - 
+   show(LPP)
 }
 
 

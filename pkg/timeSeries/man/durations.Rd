@@ -18,6 +18,7 @@
 
 \usage{  
 durations(x, trim = FALSE, units = c("secs", "mins", "hours"))   
+
 durationSeries(\dots)
 }
 
@@ -52,14 +53,13 @@ durationSeries(\dots)
 
 
 \examples{
-## data -  
-   # Microsoft Data:
+## Load Microsoft Data - 
+   data(MSFT) 
    setRmetricsOptions(myFinCenter = "GMT")
-   MSFT = as.timeSeries(data(msft.dat))[1:20, "Open"]
-   head(MSFT)
+   MSFT = MSFT[1:20, "Open"]
+   MSFT
 
-## durations -  
-   # Durations in hours: Continuous Returns:
+## Compute Durations in hours, Use Continuous Returns - 
    durations(MSFT, units = "hours")
 }
 

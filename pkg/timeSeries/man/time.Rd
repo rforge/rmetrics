@@ -32,6 +32,7 @@
 \alias{end,timeSeries-method}
 \alias{end.timeSeries}
 
+
 \description{
     
     Functions and methods extracting and modifying positions 
@@ -85,34 +86,33 @@
 
 \arguments{
 
-  %     \item{method}{ 
-  %         [alignDailySeries] - \cr
-  %         the method to be used for the alignment. A character string, one
-  %         of \code{"before"}, use the data from the row whose position is
-  %         just before the unmatched position, or \code{"after"}, use the 
-  %         data from the row whose position is just after the unmatched 
-  %         position, or \code{"linear"}, interpolate linearly between 
-  %         \code{"before"} and \code{"after"}. 
-  %       }
-  
-  \item{decreasing}{
-    logical.  Should the sort be increasing or decreasing? Not
-    available for partial sorting.
-  }
-  \item{value}{
-    a valid value for the component of \code{time(x)}.
-  }
-  \item{x}{
-    [as] - \cr   
-    a \code{matrix} type object to be converted.\cr
-    [as.vector][as.matrix][as.data.frame] -\cr
-    [applySeries] - \cr
-    [cut][end][mergeSeries][plot][print][rev][start] - \cr
-    an object of class \code{timeSeries}.
-  } 
-  \item{\dots}{
-    arguments passed to other methods.
-  }
+%   \item{method}{ 
+%       [alignDailySeries] - \cr
+%       the method to be used for the alignment. A character string, one
+%       of \code{"before"}, use the data from the row whose position is
+%       just before the unmatched position, or \code{"after"}, use the 
+%       data from the row whose position is just after the unmatched 
+%       position, or \code{"linear"}, interpolate linearly between 
+%       \code{"before"} and \code{"after"}. 
+%   }
+    \item{decreasing}{
+        logical. Should the sort be increasing or decreasing? Not
+        available for partial sorting.
+    }
+    \item{value}{
+        a valid value for the component of \code{time(x)}.
+    }
+    \item{x}{
+        [as] - \cr   
+        a \code{matrix} type object to be converted.\cr
+        [as.vector][as.matrix][as.data.frame] -\cr
+        [applySeries] - \cr
+        [cut][end][mergeSeries][plot][print][rev][start] - \cr
+        an object of class \code{timeSeries}.
+    } 
+    \item{\dots}{
+        arguments passed to other methods.
+    }
 }
 
 
@@ -178,10 +178,10 @@
 
 
 \examples{   
-## Create dummy timeSeries:     
+## Create Dummy timeSeries:     
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
-## series positions -
+## Return Series Positions -
    time(X)
 }
 

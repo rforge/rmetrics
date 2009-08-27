@@ -7,9 +7,10 @@
 \alias{str}
 \alias{str,timeSeries-method}
 
+
 \description{
     
-    Produce a result str for a time series.         
+    Compactly Display the Structure of a 'timeSeries' Object.        
     
 }
 
@@ -39,12 +40,13 @@
 
 
 \examples{
-## data -
-   MSFT = as.timeSeries(data(msft.dat))[1:12, 1:4]
-   colnames(MSFT) <- abbreviate(colnames(MSFT), 4)
+## Load Microsoft Data Set -
+   data(MSFT)
+   X = MSFT[1:12, 1:4]
+   colnames(X) <- abbreviate(colnames(X), 4)
     
-## str -
-   str(MSFT)
+## Display Structure - 
+   str(X)
 }
 
 

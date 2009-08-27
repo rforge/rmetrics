@@ -38,7 +38,7 @@
 \alias{rbind2,timeSeries,timeSeries-method}
 
 
-  \description{
+\description{
   
   Binds two 'timeSeries' objects either by column or row.        
   
@@ -80,15 +80,18 @@
 
 
 \examples{
-## data -
-   x = as.timeSeries(data(msft.dat))[1:12, ]
+## Load Microsoft Data Set -
+   data(MSFT)
+   x = MSFT[1:12, ]
 
-## cbind -
-   x1 <- cbind(x[, "Open"], returns(x[, "Open"]))
-   colnames(x1) <- c("Open", "Return")
+## Bind Columnwise -
+   X <- cbind(x[, "Open"], returns(x[, "Open"]))
+   colnames(X) <- c("Open", "Return")
+   X
 
-## rbind -
-   rbind(x[1:3, "Open"], x[10:12, "Open"])
+## Bind Rowwise - 
+   Y <- rbind(x[1:3, "Open"], x[10:12, "Open"])
+   Y
 }
 
 

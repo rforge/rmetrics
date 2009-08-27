@@ -130,35 +130,37 @@ Troyanskaya O., Cantor M., Sherlock G., Brown P., Hastie T.,
 
 
 \examples{
-## Create a Matrix with NAs:
+## Create a Matrix -
    X = matrix(rnorm(100), ncol = 5)
-   # a single NA inside:
+   
+## Replace a Single NA Inside - 
    X[3, 5] = NA
-   # three in a row inside:
+   
+## Replace Three in a Row Inside - 
    X[17, 2:4] = c(NA, NA, NA)
-   # three in a column inside:
+   
+## Replace Three in a Column Inside - 
    X[13:15, 4] = c(NA, NA, NA)
-   # two at the right border:
+   
+## Replace Two at the Right Border - 
    X[11:12, 5] = c(NA, NA)
-   # one in the lower left corner:
+   
+## Replace One in the Lower Left Corner - 
    X[20, 1] = NA
    print(X)
      
-## removeNA -
-   # Remove rows with NA's
+## Remove Rows with NAs - 
    removeNA(X)
-   # Now we have only 12 lines!
    
-## substiuteNA -
-   # Subsitute NA's by zeros or column mean
+## Subsitute NA's by Zeros or Column Mean - 
    substituteNA(X, type = "zeros")
    substituteNA(X, type = "mean")
    
-## interpNA - 
-   # Interpolate NA's liearily:
+## Interpolate NA's Linearily - 
    interpNA(X, method = "linear")
    # Note the corner missing value cannot be interpolated!
-   # Take previous values in a column:
+   
+## Take Previous Values in a Column - 
    interpNA(X, method = "before")
    # Also here, the corner value is excluded
 }

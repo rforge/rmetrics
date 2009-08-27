@@ -14,35 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
-# METHODS:             CREATE A TIMESERIES FROM OTHER OBJECTS:
-#  is.timeSeries        S3: Tests for a 'timeSeries' object
-#  as.timeSeries        S3: Defines method for a 'timeSeries' object
-#  as.timeS*.default    S3: Returns the input
-#  as.timeS*.numeric    S3: Transforms a numeric vector into a 'timeSeries'
-#  as.timeS*.data.frame S3: Transformas a 'data.frame' into a 'timeSeries'
-#  as.timeS*.matrix     S3: Transformas a 'matrix' into a 'timeSeries'
-#  as.timeS*.ts         S3: Transforms a 'ts' object into a 'timeSeries'
-#  as.timeS*.character  S3: Loads and transformas from a demo file
-#  as.timeS*.zoo        S3: Transforms a 'zoo' object into a 'timeSeries'
-# METHODS:             TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
-#  as.vector.timeS*     S3: Converts a univariate 'timeSeries' to a vector
-#  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
-#  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
-#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'
 ################################################################################
 
 
@@ -89,32 +61,32 @@ function()
     head(tS)
 
     # Data Inpiut is a data.frame:
-    data(msft.dat)
-    x.df = msft.dat
+    data(MSFT)
+    x.df = as.data.frame(MSFT)
     head(x.df)
     # First Column holds Positions:
-    tS = as.timeSeries(x.df)
+    tS = MSFT
     head(tS)
     # Missing Positions - return signal series
-    x.df = msft.dat[, -1]
-    head(x.df)
-    tS = as.timeSeries(x.df)
-    head(tS)
+    # x.df = msft.dat[, -1]
+    # head(x.df)
+    # tS = as.timeSeries(x.df)
+    # head(tS)
 
     # Data Input is a Matrix:
-    data(msft.dat)
-    x.mat = as.matrix(msft.dat)
+    data(MSFT)
+    x.mat = as.matrix(MSFT)
     # tS = as.timeSeries(x.mat)
     # head(tS)                              # CHECK
 
     # Data Input is an Univariate/Muiltivariate timeSeries:
-    x = as.timeSeries(msft.dat)
+    x = MSFT
     class(x)
     tS = as.timeSeries(x)
     head(tS)
 
     # Note, data is a demo file ...
-    tS = as.timeSeries(msft.dat)
+    tS = MSFT
     head(tS)
 
     # Return Value:

@@ -48,11 +48,11 @@
 
 
 \examples{
-## Simulated Monthly Return Data:
-   x = matrix(rnorm(24), ncol = 2)
+## Simulated Monthly Return Data - 
+   X = matrix(rnorm(24), ncol = 2)
      
-## colStats -
-   rowCumsums(x)  
+## Compute cumulated Sums -
+   rowCumsums(X)  
 }
 
 

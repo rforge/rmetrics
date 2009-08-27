@@ -19,10 +19,8 @@
 
 
 \usage{
-
 is.timeSeries(x)
 is.signalSeries(x)
-
 }
 
 
@@ -44,17 +42,15 @@ is.signalSeries(x)
 
 
 \examples{
-## data - timeSeries:
-   # Create an artificial timeSeries object:
+## Create an Artificial timeSeries Object - 
    setRmetricsOptions(myFinCenter = "GMT")
    charvec = timeCalendar()
    data = matrix(rnorm(12))
    TS = timeSeries(data, charvec, units = "RAND")
    TS
 
-## Test for timeSeries:
+## Test for timeSeries - 
    is.timeSeries(TS)
-
 }
 
 

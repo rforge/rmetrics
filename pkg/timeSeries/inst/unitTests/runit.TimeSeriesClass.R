@@ -14,40 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
-# FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
-#  'timeSeries'         S4 Class definition for a 'timeSeries' object
-#  timeSeries           Creates a 'timeSeries' object from scratch
-#  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timeSeries' object
-#  applySeries          Applies a function to blocks of a 'timeSeries'
-#  orderStatistics      Compute order statistic of a 'timeSeries'
-# FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
-#  seriesData           Extracts data slot from 'timeSeries' object
-#  isUnivariate         Tests if an object of class 'timeSeries' is univariate
-#  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
-# METHODS:             PRINT AND PLOT FUNCTIONS:
-#  print.timeSeries     S3: Print method for a 'timeSeries' object
-#  plot.timeSeries      S3: Plot method for a 'timeSeries' object
-#  lines.timeSeries     S3: Lines method for a 'timeSeries' object
-#  points.timeSeries    S3: Points method for a 'timeSeries' object
-# FUNCTION:            FOR DAILY OPERATIONS:
-#  dummyDailySeries     Creates a dummy daily 'timeSeries' object
-#  alignDailySeries     Aligns a 'timeSeries' object to new positions
-#  ohlcDailyPlot        Plots open–high–low–close bar chart
 ################################################################################
 
 
@@ -78,12 +45,6 @@ function()
     timeSeries(data, charvec, units = "uTS", zone = "GMT", FinCenter = "Zurich")
     timeSeries(data, charvec, units = "uTS", zone = "Zurich", FinCenter = "GMT")
 
-    # Load Microsoft Data:
-    data(msft.dat)
-    MSFT.df = msft.dat
-    X = as.timeSeries(MSFT.df)
-    print(X)
-
     # Return Value:
     return()
 }
@@ -97,23 +58,23 @@ function()
 {
     #  readSeries - Reads from a spreadsheet and creates a 'timeSeries'
 
-    # Microsoft Data:
-    data(msft.dat)
-    MSFT.df = msft.dat
+    # Load Microsoft Data:
+    data(MSFT)
+    MSFT.df = as.data.frame(MSFT)
 
     # Read Data Frame:
     write.table(MSFT.df, file = "msft.dat.csv", sep = ";")
     read.table("msft.dat.csv", sep = ";")
 
     # Read Time Series:
-    X = readSeries("msft.dat.csv")
-    X = X[1:12, ]
-    class(X)
+    # X = readSeries("msft.dat.csv")
+    # X = X[1:12, ]
+    # class(X)
 
     # Show Part of Series:
-    head(X)[, 1:5]
-    head(X[, 1:5])
-    head(X[, 1:5], 2)
+    # head(X)[, 1:5]
+    # head(X[, 1:5])
+    # head(X[, 1:5], 2)
 
     # Return Value:
     return()
@@ -129,7 +90,7 @@ function()
     #  returns - Computes returns from a 'timeSeries' object
 
     # Load Time Series:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     head(X)
 
     # returns :
@@ -167,7 +128,7 @@ function()
     #  orderStatistics - Compute order statistic of a 'timeSeries'
 
     # Load Data:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     head(X)
 
     # returns:
@@ -193,7 +154,7 @@ function()
     #  series - Extracts data slot from 'timeSeries' object
 
     # Load Microsoft Data:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     X = X[1:12, ]
     class(X)
 
@@ -235,7 +196,7 @@ function()
     #  isUnivariate     Tests if an object of class 'timeSeries' is univariate
 
     # Load Microsoft Data:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     OPEN = X[, 1]
 
     # Is Univariate?
@@ -260,7 +221,7 @@ function()
     #  isMultivariate - Tests if an object of class 'timeSeries' is multivariate
 
     # Load Microsoft Data:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     OPEN = X[, 1]
 
     # Is Multivariate?
@@ -320,7 +281,7 @@ function()
 ##     colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
 
     # Data:
-    X = as.timeSeries(msft.dat)
+    X = MSFT
     X = X[1:12, ]
     OPEN = X[, 1]
 
@@ -385,7 +346,7 @@ function()
 
     # Time Series:
     setRmetricsOptions(myFinCenter = "GMT")
-    tS = as.timeSeries(data(msft.dat))[1:25, ]
+    tS = MSFT[1:25, ]
     print(tS)
     dim(tS)
 
@@ -413,7 +374,7 @@ function()
 
     # Price or Incdex Series:
     setRmetricsOptions(myFinCenter = "GMT")
-    tS = as.timeSeries(data(msft.dat))[1:25, ]
+    tS = MSFT[1:25, ]
     print(tS)
     dim(tS)
     colnames(tS)

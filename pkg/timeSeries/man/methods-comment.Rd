@@ -5,8 +5,9 @@
 
 \title{comment for timeSeries objects}
 
+
 \description{
-  Print or assign new comment to a \code{timeSeries} object.
+    Print or assign new comment to a \code{timeSeries} object.
 }
 
 \usage{
@@ -24,3 +25,16 @@
     a character string.
   }
 }
+
+
+\examples{
+## Load Swiss Pension Fund Benchmark -
+   data(LPP2005REC)
+   
+## Get Description from timeSeries -
+   comment(LPP2005REC)
+}
+
+
+\keyword{chron}
+
