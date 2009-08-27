@@ -1,4 +1,15 @@
 
+////////////////////////////////////////////////////////////////////////////////
+//
+// pnigC and qnigC Code
+//
+// Author:  Kjersti Aas, 2000
+//          Diethelm Wuertz, added to fBasics
+//          Nikolai Eurich, bug fixed which appeared in R 2.7
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -325,12 +336,12 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
 ////////////////////////////////////////////////////////////////////////////////
 
 
-void pNIG(double *x, double mu, double delta, double alpha, double beta, 
-    int n, double *p)
+void pNIG(double *x, double *mu, double *delta, double *alpha, double *beta, 
+    int *n, double *p)
 {
   int i;
   double err, v;
-  for(i = 0; i < n; i++)
+  for(i = 0; i < *n; i++)
   {
     // Special cases (-Inf, Inf)
     if(x[i] <= -XINF)
@@ -345,7 +356,7 @@ void pNIG(double *x, double mu, double delta, double alpha, double beta,
     else
     {
       // printf("intdei\n");
-      intdei(x[i], mu, delta, alpha, beta, &v, &err);
+      intdei(x[i], *mu, *delta, *alpha, *beta, &v, &err);
       // Check that 0 <= v <= 1
       if(v < 0.0) v = 0.0;
       if(v > 1.0) v = 1.0;
@@ -368,7 +379,8 @@ double fpNIG(double x, double mu, double delta, double alpha, double beta,
     double sp)
 {
   double f;
-  pNIG(&x, mu, delta, alpha, beta, 1, &f);
+  int i = 1;
+  pNIG(&x, &mu, &delta, &alpha, &beta, &i, &f);
   f -= sp;
   return(f);
 }
