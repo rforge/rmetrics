@@ -83,6 +83,11 @@ S3method("window", "timeDate")
 ################################################
 
 export(
+    "isRegular",
+    "isDaily",
+    "isMonthly",
+    "isQuarterly",
+    "frequency",
     "Abidjan",
     "Accra",
     "Adak",
