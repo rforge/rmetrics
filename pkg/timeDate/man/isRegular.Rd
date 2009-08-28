@@ -23,19 +23,22 @@
 
 \usage{
 isDaily(x)
-isMonthly()
+isMonthly(x)
 isQuarterly(x)
 
 isRegular(x)
 
-frequency(x)
+frequency(x, \dots)
 }
 
 
 \arguments{
 
     \item{x}{  
-        an R object of class \class{timeSeries}.
+        an R object of class \code{timeSeries}.
+    }
+    \item{\dots}{
+        arguments to be passed
     }
   
 }

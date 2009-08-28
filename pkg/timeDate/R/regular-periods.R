@@ -81,9 +81,9 @@ periods <-
 
     # Rolling Periods:
     if (periodUnit == "m" & byUnit == "m") {
-        ans = .monthlyRolling(x, period, by)
+        ans = monthlyRolling(x, period, by)
     } else {
-        ans = .periodicallyRolling(x, period, by)
+        ans = periodicallyRolling(x, period, by)
     }
 
     # Return Value:
@@ -117,7 +117,7 @@ periodicallyRolling <-
     #   for seconds.
 
     # Example:
-    #   .periodicallyRolling((time(as.timeSeries(data(smallcap.ts)))))
+    #   periodicallyRolling((time(as.timeSeries(data(smallcap.ts)))))
 
     # FUNCTION:
 
@@ -190,7 +190,7 @@ monthlyRolling <-
     #   by "6m", a year by "12m" etc.
 
     # Example:
-    #   .monthlyRolling((time(as.timeSeries(data(smallcap.ts)))))
+    #   monthlyRolling((time(as.timeSeries(data(smallcap.ts)))))
 
     # FUNCTION:
 
