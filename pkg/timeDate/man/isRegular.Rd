@@ -11,6 +11,13 @@
 \alias{frequency}
 
 
+\alias{isDaily.timeDate}
+\alias{isMonthly.timeDate}
+\alias{isQuarterly.timeDate}
+\alias{isRegular.timeDate}
+\alias{frequency.timeDate}
+
+
 \description{
 
     Checks if a date/time vector is regular. i.e. if it is 
@@ -22,13 +29,13 @@
 
 
 \usage{
-isDaily(x)
-isMonthly(x)
-isQuarterly(x)
+\method{isDaily}{timeDate}(x)
+\method{isMonthly}{timeDate}(x)
+\method{isQuarterly}{timeDate}(x)
 
-isRegular(x)
+\method{isRegular}{timeDate}(x)
 
-frequency(x, \dots)
+\method{frequency}{timeDate}(x, \dots)
 }
 
 
@@ -45,6 +52,7 @@ frequency(x, \dots)
 
 
 \details{
+
     A date/time vector is defined as daily if the vector has not more 
     than one date/time stamp per day.
     
@@ -60,6 +68,7 @@ frequency(x, \dots)
     A regular date/time vector is either a monthly or a quarterly vector.
     
     NOT yet implemented is the case of weekly vectors.
+    
 }
 
 

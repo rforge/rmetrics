@@ -22,7 +22,7 @@
 
 
 frequency.timeDate <-
-    function(x)
+    function(x, ...)
 {
     # Descriptions:
     #   Returns the frequency of a timeDate vector
