@@ -89,6 +89,14 @@ function(lib, pkg)
             mm <- ".__T__"
             seq_along(impvars)[substr(impvars, 1L, nchar(mm, type = "c")) == mm]
         }
+
+        # ---------------
+        # YC
+        if (getRversion() < "2.9.1") #-> anyDuplicated introduced in r48558
+            anyDuplicated <- function(...)
+                any(duplicated(...))
+        # ---------------
+
         if (is.character(self))
             self <- getNamespace(self)
         ns <- asNamespace(ns)
@@ -154,6 +162,9 @@ function(lib, pkg)
                 impnames <- impnames[-delete]
             }
         }
+
+        # --------
+        # YC :
         for (n in impnames)
             if (exists(n, envir = impenv, inherits = FALSE)) {
                 if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
@@ -164,6 +175,8 @@ function(lib, pkg)
                         warning("replacing previous generic import: ", n)
                 } else warning(msg, " ", n)
             }
+        # --------
+
         importIntoEnv(impenv, impnames, ns, impvars)
         if (register) {
             addImports(self, ns,
