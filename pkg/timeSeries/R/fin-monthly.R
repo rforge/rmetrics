@@ -16,7 +16,6 @@
 ################################################################################
 # FUNCTION:                 FOR MONTHLY OPERATIONS:
 #  countMonthlyRecords       Returns a series with monthly counts of records
-#  isMonthly                 Decides if the series consists of monthly records
 #  rollMonthlyWindows        Returns start/end dates for rolling time windows
 #  rollMonthlySeries         Rolls Monthly a 'timeSeries' on a given period
 ################################################################################
@@ -47,37 +46,6 @@ function(x)
 
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-isMonthly <-
-function(x)
-{   
-    # A function implemented by  Diethelm Wuertz and Yohan Chalabi
-
-    # Description:
-    #   Decides if the series consists of monthly records
-
-    # Example:
-    #   x = as.timeSeries(data(msft.dat)); isMonthly(x)
-    #   x = as.timeSeries(data(edhec)); isMonthly(x)
-
-    # FUNCTION:
-    stopifnot(is(x, "timeSeries"))
-    if (x@format == "counts")
-        stop(as.character(match.call())[1],
-             " is for time series and not for signal series.")
-
-    # Compare Counts wit Number of Records:
-    Counts <- colSums(countMonthlyRecords(x))[[1]]
-    Months <- NROW(x) - 1
-
-
-    # Return Value:
-    Counts == Months
 }
 
 

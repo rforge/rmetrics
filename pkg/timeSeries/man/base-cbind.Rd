@@ -40,7 +40,7 @@
 
 \description{
   
-  Binds two 'timeSeries' objects either by column or row.        
+    Binds two 'timeSeries' objects either by column or row.        
   
 }
 
