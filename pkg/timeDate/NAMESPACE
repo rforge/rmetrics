@@ -467,7 +467,7 @@ export(
     "Montevideo",
     ".month.day.year",
     "monthlyRolling",
-    ".monthlyRolling",
+    # ".monthlyRolling", obsolete
     "Monticello",
     "Montreal",
     "Montserrat",
@@ -510,9 +510,9 @@ export(
     "Pentecost",
     "PentecostMonday",
     "periodicallyRolling",
-    ".periodicallyRolling",
+    # ".periodicallyRolling", obsolete
     "periods",
-    ".periods",
+    # ".periods", obsolete
     "Perth",
     "Petersburg",
     "Phnom_Penh",
