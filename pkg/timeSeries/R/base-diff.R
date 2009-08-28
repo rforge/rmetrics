@@ -19,8 +19,10 @@
 ################################################################################
 
 
-.diff.timeSeries <- function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
-{   # A function implemented by Diethelm Wuertz
+.diff.timeSeries <- 
+function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     # Modified by Yohan Chalabi
 
     # Description:
