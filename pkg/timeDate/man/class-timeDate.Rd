@@ -246,13 +246,13 @@
    timeDate("1/31/2004") # auto-detect American format
 
    ## ... from POSIX?t, and Using NAs:
-   lsec <- as.POSIXlt(.leap.seconds) 
-   lsec[c(2,4:6)] <- NA
-   timeDate(lsec)
+   ## lsec <- as.POSIXlt(.leap.seconds) 
+   ## lsec[c(2,4:6)] <- NA
+   ## timeDate(lsec)
 
-   dtms <- paste(dts,tms)
-   dtms[2:3] <- NA
-   timeDate(dtms, FinCenter = "Europe/Zurich") # but in GMT
+   ## dtms <- paste(dts,tms)
+   ## dtms[2:3] <- NA
+   ## timeDate(dtms, FinCenter = "Europe/Zurich") # but in GMT
 
 % would need  change in R :
 %    tms[3] <- dts[2] <- NA
