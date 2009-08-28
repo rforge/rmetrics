@@ -34,7 +34,7 @@
 ################################################################################
 
 
-isBizday = 
+isBizday <-  
     function(x, holidays = holidayNYSE()) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -74,7 +74,7 @@ isBizday =
 # ------------------------------------------------------------------------------
 
 
-isHoliday = 
+isHoliday <-  
     function(x, holidays = holidayNYSE()) 
 {   
     # A function implemented by Diethelm Wuertz
