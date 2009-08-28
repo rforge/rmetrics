@@ -14,89 +14,85 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  plot,timeDate-method      Plots 'timeDate' object
+#  plot,timeDate-method      Plots a 'timeDate' object
 #  points,timeDate-method    Adds points to a 'timeDate' plot
 #  lines,timeDate-method     Adds lines to a 'timeDate' plot
-#  axis.timeDate             Adds an Axis to a Plot
-#  abline,timeDate-method    Tests for a 'timeSeries' object
+#  axis.timeDate             Adds an axis to a 'timeDate' plot
+#  abline,timeDate-method    Adds an abline to a 'timeDate' plot
 ################################################################################
 
 
 setMethod("plot", "timeDate",
-          function(x, y, ...)
-      {
-          # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    function(x, y, ...)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-          # Note:
-          #   Doesn't yet support the features of timeDate objects ...
+    # Description:
+    #   Plots a 'timeDate' object
+    
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Plot:
-          plot(as.POSIXct(x), y, ...)
-      })
+    # Plot:
+    plot(as.POSIXct(x), y, ...)
+})
 
 
 # ------------------------------------------------------------------------------
 
 
 setMethod("points", "timeDate",
-          function(x, y, ...)
-      {
-          # A function implemented by Diethelm Wuertz
+    function(x, y, ...)
+{
+    # A function implemented by Diethelm Wuertz
 
-          # FUNCTION:
+    # FUNCTION:
 
-          # Note:
-          #   Doesn't yet support the features of timeDate objects ...
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
 
-          # Add Points:
-          points(as.POSIXct(x), y, ...)
-      })
+    # Add Points:
+    points(as.POSIXct(x), y, ...)
+})
 
 
 # ------------------------------------------------------------------------------
 
 
 setMethod("lines", "timeDate",
-          function(x, y, ...)
-      {
-          # A function implemented by Diethelm Wuertz
+    function(x, y, ...)
+{
+    # A function implemented by Diethelm Wuertz
 
-          # FUNCTION:
+    # Description:
+    #   Adds lines to a 'timeDate' plot
+    
+    # FUNCTION:
 
-          # Note:
-          #   Doesn't yet support the features of timeDate objects ...
+    # Note:
+    #   Doesn't yet support the features of timeDate objects ...
 
-          # Add Lines:
-          lines(as.POSIXct(x), y, ...)
-      })
+    # Add Lines:
+    lines(as.POSIXct(x), y, ...)
+})
 
 
 # ------------------------------------------------------------------------------
 
-# Note that axis.timeDate is not an S3 method !
-# cannot hence be defined as a S4 method
+
 axis.timeDate <-
     function(side, x, at, format = NULL, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Adds an axis to a 'timeDate' lot
+    
     # Arguments:
     #   side - an integer specifying which side of the plot the axis
     #       is to be drawn on. The axis is placed as follows:
@@ -111,6 +107,10 @@ axis.timeDate <-
     #       typically graphical parameters or arguments of plot.default.
     #       For the plot methods, also format.
 
+    # Notes:
+    #   Note that axis.timeDate is not an S3 method !
+    #   cannot hence be defined as a S4 method
+
     # FUNCTION:
 
     # Format:
@@ -118,7 +118,7 @@ axis.timeDate <-
 
     # Add Axis:
     axis.POSIXct(side = side, x = as.POSIXct(x), at = as.POSIXct(at),
-                 format = format, labels = TRUE, ...)
+        format = format, labels = TRUE, ...)
 
     # Return Value:
     invisible()
@@ -129,9 +129,14 @@ axis.timeDate <-
 
 
 setMethod("abline", signature(v = "timeDate"),
-          function(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
-                   coef = NULL, untf = FALSE, ...)
-          callGeneric(a = a, b = b, h = h, v = as.POSIXct(v), reg = reg,
-                      coef = coef, untf = untf, ...))
+    function(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
+        coef = NULL, untf = FALSE, ...)
+    {
+        # Adds an abline to a 'timeDate' plot
+        callGeneric(a = a, b = b, h = h, v = as.POSIXct(v), reg = reg,
+            coef = coef, untf = untf, ...)
+    }
+)
+
 
 ################################################################################
