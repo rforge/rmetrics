@@ -19,9 +19,9 @@
 
 setMethod("finCenter", "timeDate", 
     function(x) 
-    {
-        x@FinCenter
-    }
+{
+    x@FinCenter
+}
 )
    
 
@@ -30,9 +30,9 @@ setMethod("finCenter", "timeDate",
     
 setMethod("finCenter<-", "timeDate", 
     function(x, value) 
-    {
-        x@FinCenter <- value; x
-    }
+{
+    x@FinCenter <- value; x
+}
 )
 
 

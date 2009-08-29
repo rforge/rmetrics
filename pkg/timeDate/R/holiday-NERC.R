@@ -32,7 +32,6 @@ function (year = getRmetricsOptions("currentYear"), FinCenter = "Eastern")
     #  for the region are recognized as off peak hours.
 
     # Details:
-    #
     #   Contributed by Joe W Byers:
     #   
     #   I have created a calendar function to build out the NERC holidays for

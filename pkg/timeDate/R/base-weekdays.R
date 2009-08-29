@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DATE FUNCTIONS:
@@ -128,32 +117,27 @@
     .R = TRUE
     .S = FALSE
 
-    # Implementation under R:
-    if(.R) {
-        only.origin = all(missing(m), missing(d), missing(y))
-        if(only.origin) m = d = y = NULL    # return days since origin
-        nms = names(d)
-        max.len = max(length(m), length(d), length(y))
-        # prepend new origin value and rep out to common max. length:
-        m = c(origin[1], rep(m, length = max.len))
-        d = c(origin[2], rep(d, length = max.len))
-        y = c(origin[3], rep(y, length = max.len))
-        # code from julian date in the S book (p.269)
-        y = y + ifelse(m > 2, 0, -1)
-        m = m + ifelse(m > 2, -3, 9)
-        c = y %/% 100
-        ya = y - 100 * c
-        out = (146097 * c) %/% 4 + (1461 * ya) %/% 4 +
-            (153 * m + 2) %/% 5 + d + 1721119
-        # now subtract the new origin from all dates
-        if(!only.origin) {
-            if(all(origin == 0)) out = out[-1] else out = out[-1] - out[1] }
-        names(out) = nms
-        result = out }
-
-    # Synonyme for S:
-    if(.S) {
-        result = julian(m = m, d = d, y = y, origin. = origin)}
+    # Implementation:
+    only.origin = all(missing(m), missing(d), missing(y))
+    if(only.origin) m = d = y = NULL    # return days since origin
+    nms = names(d)
+    max.len = max(length(m), length(d), length(y))
+    # prepend new origin value and rep out to common max. length:
+    m = c(origin[1], rep(m, length = max.len))
+    d = c(origin[2], rep(d, length = max.len))
+    y = c(origin[3], rep(y, length = max.len))
+    # code from julian date in the S book (p.269)
+    y = y + ifelse(m > 2, 0, -1)
+    m = m + ifelse(m > 2, -3, 9)
+    c = y %/% 100
+    ya = y - 100 * c
+    out = (146097 * c) %/% 4 + (1461 * ya) %/% 4 +
+        (153 * m + 2) %/% 5 + d + 1721119
+    # now subtract the new origin from all dates
+    if(!only.origin) {
+        if(all(origin == 0)) out = out[-1] else out = out[-1] - out[1] }
+    names(out) = nms
+    result = out  
 
     # Return Value:
     result

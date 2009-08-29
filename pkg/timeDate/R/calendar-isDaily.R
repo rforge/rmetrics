@@ -18,7 +18,7 @@
 ################################################################################
 # FUNCTION:                DESCRIPTION:
 #  isDaily                  Tests if a date/time vector has daily time stamps
-#  isDaily.timedate         Tests if a timeDate object has daily time stamps
+#  isDaily.timeDate         Tests if a timeDate object has daily time stamps
 ################################################################################
 
 

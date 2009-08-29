@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # METHOD:                   DESCRIPTION:
@@ -42,18 +30,22 @@
 #  as.Date.timeDate          Returns a 'timeDate' object as 'Date' object
 ################################################################################
 
+
 as.timeDate <-
     function(x, zone = NULL, FinCenter = NULL)
 {
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
     UseMethod("as.timeDate")
 }
 
 # ------------------------------------------------------------------------------
 
+
 as.timeDate.default <-
     function(x, zone = "", FinCenter = "")
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns default object as 'timeDate' object
@@ -76,14 +68,17 @@ as.timeDate.default <-
     timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
+
 setAs("ANY", "timeDate", function(from) as.timeDate.default(from))
 
+
 # ------------------------------------------------------------------------------
+
 
 as.timeDate.timeDate <-
     function(x, zone = x@FinCenter, FinCenter = "")
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns default object as 'timeDate' object
@@ -106,14 +101,16 @@ as.timeDate.timeDate <-
     timeDate(as.character(x), zone = zone, FinCenter = FinCenter)
 }
 
+
 # setAs("timeDate", "timeDate", function(from) as.timeDate.timeDate(from))
+
 
 # ------------------------------------------------------------------------------
 
 
 as.timeDate.Date <- function(x, zone = "", FinCenter = "")
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'Date' object as 'timeDate' object
@@ -134,22 +131,38 @@ as.timeDate.Date <- function(x, zone = "", FinCenter = "")
     timeDate(x, zone = zone, FinCenter = FinCenter)
 }
 
+
 setAs("Date", "timeDate", function(from) as.timeDate.Date(from))
 
+
 # ------------------------------------------------------------------------------
+
 
 as.timeDate.POSIXt <- function(x, zone = "", FinCenter = "")
 {
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
     timeDate(x, zone = zone, FinCenter = FinCenter)
 }
 
+
 setAs("POSIXt", "timeDate", function(from) as.timeDate.POSIXt(from))
+
 
 # ------------------------------------------------------------------------------
 
-as.character.timeDate <- function(x, ...) format(x, ...)
+
+as.character.timeDate <- 
+function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
+    format(x, ...)
+}
+
 
 setAs("timeDate", "character", function(from) as.character.timeDate(from))
+
 
 # ------------------------------------------------------------------------------
 
@@ -158,7 +171,7 @@ as.double.timeDate <-
     function(x,
     units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'timeDate' object as 'numeric' vector
@@ -195,7 +208,9 @@ as.double.timeDate <-
     ans
 }
 
+
 setAs("timeDate", "numeric", function(from) as.double.timeDate(from))
+
 
 # ------------------------------------------------------------------------------
 
@@ -229,9 +244,12 @@ as.data.frame.timeDate <-
     ans
 }
 
+
 setAs("timeDate", "data.frame", function(from) as.data.frame.timeDate(from))
 
+
 # ------------------------------------------------------------------------------
+
 
 as.list.timeDate <-
     function(x, ...)
@@ -262,14 +280,17 @@ as.list.timeDate <-
     ans
 }
 
+
 setAs("timeDate", "list", function(from) as.list.timeDate(from))
 
+
 # ------------------------------------------------------------------------------
+
 
 as.POSIXct.timeDate <-
     function(x, tz = "", ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'timeDate' object as POSIXct object
@@ -301,12 +322,11 @@ setAs("timeDate", "POSIXct", function(from) as.POSIXct.timeDate(from))
 
 # ------------------------------------------------------------------------------
 
-### be careful if S4 method are defined because arguments of generic
-### function has changed for as.POSIXlt since R-2.6
+
 as.POSIXlt.timeDate  <-
     function(x, tz = "", ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'timeDate' object as 'POSIXlt' object
@@ -318,6 +338,10 @@ as.POSIXlt.timeDate  <-
 
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
+    
+    # Note:
+    #   be careful if S4 method are defined because arguments of generic
+    #   function has changed for as.POSIXlt since R-2.6
 
     # FUNCTION:
 
@@ -328,7 +352,9 @@ as.POSIXlt.timeDate  <-
     ans
 }
 
+
 setAs("timeDate", "POSIXlt", function(from) as.POSIXlt.timeDate(from))
+
 
 # ------------------------------------------------------------------------------
 
@@ -336,7 +362,7 @@ setAs("timeDate", "POSIXlt", function(from) as.POSIXlt.timeDate(from))
 as.Date.timeDate <-
     function(x, method = c("trunc", "round", "next"), ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
     #   Returns a 'timeDate' object as 'Date' object
@@ -354,15 +380,16 @@ as.Date.timeDate <-
     # as Date:
     method = match.arg(method)
 
-    ###  # Note: one must be careful when converting to Date with tzone.
-    ###  td <- timeDate("2008-12-11 00:00:01", zone = "Zurich", FinCenter = "Zurich")
-    ###  ct <- td@Data
-    ###  attr(ct, "tzone") <- "Europe/Zurich"
-    ###  # ct and td should be identical
-    ###  ct; td
-    ###  # but
-    ###  as.Date(ct) # trunc on previous day because trunc in GMT
-    ###  as.Date(td) # trunc in the current FinCenter !
+    # Note:
+    #   # Note: one must be careful when converting to Date with tzone.
+    #   td <- timeDate("2008-12-11 00:00:01", zone = "Zurich", FinCenter = "Zurich")
+    #   ct <- td@Data
+    #   attr(ct, "tzone") <- "Europe/Zurich"
+    #   # ct and td should be identical
+    #   ct; td
+    #   # but
+    #   as.Date(ct) # trunc on previous day because trunc in GMT
+    #   as.Date(td) # trunc in the current FinCenter !
 
     ans <- switch(method,
                   trunc = as.Date(format(trunc(x)), ...),
@@ -376,7 +403,9 @@ as.Date.timeDate <-
     ans
 }
 
+
 setAs("timeDate", "Date", function(from) as.Date.timeDate(from))
+
 
 ################################################################################
 

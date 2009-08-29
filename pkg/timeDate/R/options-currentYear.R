@@ -14,21 +14,9 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTION:                 SETTINGS:
+# DEPRECATED:               SETTINGS:
 #  currentYear               Sets date of the current year
 #  .currentYear              Returns the the current year
 ################################################################################
@@ -49,7 +37,7 @@
 ## }
 
 
-## # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 ## currentYear <- .currentYear()

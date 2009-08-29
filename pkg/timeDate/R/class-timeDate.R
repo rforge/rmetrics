@@ -28,8 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
-#  'timeDate'                S4 Class representation for timeDate objects
+# FUNCTION:                GENERATION OF TIMEDATE OBJECTS:
+#  setClass                 'timeDate' S4 Class representation  
+#  setMethod inti           'initialize', 'timeDate
 ################################################################################
 
 

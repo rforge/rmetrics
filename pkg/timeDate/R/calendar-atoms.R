@@ -15,11 +15,12 @@
 # MA  02111-1307  USA
 
 
-
 ################################################################################
 # METHOD:                   DESCRIPTION:
 #  atoms,timeDate            Returns date/time atoms from a 'timeDate' object
+#  atoms,timeDate
 ################################################################################
+
 
 setMethod("atoms", "timeDate",
     function(x, ...)
@@ -62,6 +63,7 @@ setMethod("atoms", "timeDate",
 
 # ------------------------------------------------------------------------------
 
+
 setMethod("atoms", "ANY",
     function(x, ...)
 {
@@ -73,4 +75,6 @@ setMethod("atoms", "ANY",
     invisible(x)
 })
 
+
 ################################################################################
+

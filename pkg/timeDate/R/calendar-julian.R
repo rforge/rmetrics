@@ -17,7 +17,7 @@
 
 ################################################################################
 # METHOD:                   DESCRIPTION:
-#  julian.timeDate           Returns Julian day counts since 1970-01-01
+#  julian,timeDate           Returns Julian day counts since 1970-01-01
 ################################################################################
 
 
@@ -62,4 +62,7 @@ setMethod("julian", "timeDate",
     # Return Value:
     structure(res, origin = origin)
 })
+
+
+################################################################################
 

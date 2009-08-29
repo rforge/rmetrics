@@ -38,10 +38,12 @@ sort.timeDate <-
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
+    # Description:
+    #   Sorts a 'timeDate' object
+    
     # FUNCTION:
 
     # Return Value:
-    # fast
     x[order(x@Data, ...)]
 }
 

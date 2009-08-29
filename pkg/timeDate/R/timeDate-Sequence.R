@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
@@ -113,12 +101,17 @@ timeSequence <-
     tseq
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 seq.timeDate <-
     function (from, to, by, length.out = NULL, along.with = NULL,  ...)
 {
-
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
+    # FUNCTION:
+    
     # This function is the same as seq.POSIXt form the base package.
 
     # Modifications by Yohan Chalabi marked with ##
@@ -190,7 +183,7 @@ seq.timeDate <-
         if (length(by2) > 2 || length(by2) < 1)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)], c("secs", "mins", "hours",
-                                            "days", "weeks", "months", "years", "DSTdays"))
+            "days", "weeks", "months", "years", "DSTdays"))
         if (is.na(valid))
             stop("invalid string for 'by'")
         if (valid <= 5) {
@@ -258,4 +251,6 @@ seq.timeDate <-
     }
 }
 
+
 ################################################################################
+

@@ -14,23 +14,13 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # MEHODS:                   DESCRIPTION:
 #  start.timeDate            Extracts the first entry of a 'timeDate' object
 #  end.timeDate              Extracts the last entry of a 'timeDate' object
+#  min.timeDate              Extracts the smallest entry of a 'timeDate' object
+#  max.timeDate              Extracts the largest entry of a 'timeDate' object
 #  range.timeDate            Extracts range of a 'timeDate' object
 ################################################################################
 
@@ -84,11 +74,36 @@ end.timeDate <-
 # ------------------------------------------------------------------------------
 
 
-min.timeDate <- function(..., na.rm = FALSE) start.timeDate(...)
-max.timeDate <- function(..., na.rm = FALSE) end.timeDate(...)
+min.timeDate <- 
+    function(..., na.rm = FALSE) 
+{
+    # DW: is this ok ??
+    
+    start.timeDate(...)
+}
 
-range.timeDate <- function(..., na.rm = FALSE) {
-    c(start(..., na.rm = na.rm), end(..., na.rm = na.rm)) }
+
+# ------------------------------------------------------------------------------
+
+
+
+max.timeDate <- 
+    function(..., na.rm = FALSE) 
+{
+    # DW: is this ok ??
+    
+    end.timeDate(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+range.timeDate <- 
+    function(..., na.rm = FALSE) 
+{
+    c(start(..., na.rm = na.rm), end(..., na.rm = na.rm)) 
+}
 
 
 ################################################################################

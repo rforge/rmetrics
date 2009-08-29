@@ -14,22 +14,11 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  listHolidays              Lists Holidays
+# DEPRECATED:               DESCRIPTION:
 #  .holidayList              Prints all public and ecclestical holidays
 ################################################################################
 
@@ -174,6 +163,8 @@ listHolidays <-
 
 
 # Keep for compatibility of older Rmetrics versions ...
+
+
 .holidayList <- listHolidays()
 
 

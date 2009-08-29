@@ -32,7 +32,7 @@ function (x, on = c("months", "years", "qaurters", "weeks", "days",
     #   x - an object of class(timeDate)
     
     # Note:
-    #   Behaves like entpoints() from xts package
+    #   Behaves like function entpoints() from R package xts
     #   The Index rules are borrowed from Jeff Ryans endpoints() function
     
     # FUNCTION:

@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # MEHODS:                   DESCRIPTION:
@@ -34,86 +22,114 @@
 #  -.timeDate                Performs - operation on 'timeDate' objects
 ################################################################################
 
+
 setMethod("Ops", c("timeDate", "timeDate"),
-        function(e1, e2)
-    {
-        # A function implemented by Diethelm Wuertz
+    function(e1, e2)
+{
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Uses group 'Ops' generic functions for 'timeDate' objects
+    # Description:
+    #   Uses group 'Ops' generic functions for 'timeDate' objects
 
-        # Arguments:
-        #   e1 - an object of class 'timeDate'
-        #   e2 - an object of class 'timeDate'
+    # Arguments:
+    #   e1 - an object of class 'timeDate'
+    #   e2 - an object of class 'timeDate'
 
-        # Value:
-        #   Returns the 'Ops' grouped object.
+    # Value:
+    #   Returns the 'Ops' grouped object.
 
-        # FUNCTION:
-        ans <- callGeneric(e1@Data, e2@Data)
+    # FUNCTION:
+    ans <- callGeneric(e1@Data, e2@Data)
 
-        if (inherits(ans, "POSIXt"))
-            ans <- timeDate(as.character(ans),
-                            zone = "GMT", FinCenter = e1@FinCenter)
+    if (inherits(ans, "POSIXt"))
+        ans <- timeDate(as.character(ans),
+                        zone = "GMT", FinCenter = e1@FinCenter)
 
-        # Return Value:
-        ans
-    })
+    # Return Value:
+    ans
+})
+
 
 # ------------------------------------------------------------------------------
 
+
 setMethod("+", c("timeDate", "numeric"),
-          function(e1, e2)
-      {
-
-          ans <- callGeneric(e1@Data, e2)
-          ans <- timeDate(ans, zone = "GMT", FinCenter = e1@FinCenter)
-
-          # Return Value:
-          ans
-      })
+    function(e1, e2)
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    ans <- callGeneric(e1@Data, e2)
+    ans <- timeDate(ans, zone = "GMT", FinCenter = e1@FinCenter)
+    
+    # Return Value:
+    ans
+})
 
 # ------------------------------------------------------------------------------
 
 setMethod("+", c("numeric", "timeDate"),
-          function(e1, e2)
-      {
+    function(e1, e2)
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    ans <- callGeneric(e1, e2@Data)
+    ans <- timeDate(ans, zone = "GMT", FinCenter = e2@FinCenter)
 
-          ans <- callGeneric(e1, e2@Data)
-          ans <- timeDate(ans, zone = "GMT", FinCenter = e2@FinCenter)
+    # Return Value:
+    ans
+})
 
-          # Return Value:
-          ans
-      })
 
 # ------------------------------------------------------------------------------
+
 
 setMethod("+", c("timeDate", "timeDate"),
-          function(e1, e2)
-          stop("binary '+' is not defined for \"timeDate\" objects"))
+    function(e1, e2) 
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    stop("binary '+' is not defined for \"timeDate\" objects")
+})
+
 
 # ------------------------------------------------------------------------------
+
 
 setMethod("-", c("timeDate", "numeric"),
-          function(e1, e2)
-      {
+    function(e1, e2)
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    ans <- callGeneric(e1@Data, e2)
+    ans <- timeDate(ans, zone = "GMT", FinCenter = e1@FinCenter)
+    
+    # Return Value:
+    ans
+})
 
-          ans <- callGeneric(e1@Data, e2)
-          ans <- timeDate(ans, zone = "GMT", FinCenter = e1@FinCenter)
-
-          # Return Value:
-          ans
-      })
 
 # ------------------------------------------------------------------------------
+
 
 setMethod("-", c("numeric", "timeDate"),
-          function(e1, e2)
-          stop("Can only subtract from timeDate objects"))
+    function(e1, e2)
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    stop("Can only subtract from timeDate objects")
+})
+
 
 # ------------------------------------------------------------------------------
 
-setMethod("-", c("timeDate", "timeDate"),
-          function(e1, e2) callGeneric(e1@Data, e2@Data))
 
+setMethod("-", c("timeDate", "timeDate"),
+    function(e1, e2) 
+{
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
+    callGeneric(e1@Data, e2@Data)
+})
+
+          
 ################################################################################

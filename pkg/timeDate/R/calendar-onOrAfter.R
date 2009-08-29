@@ -14,23 +14,22 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER
 #  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE
+# DEPRECATED:               
+#  .on.or.after
+#  .on.or.before
+#  .nth.of.nday
+#  .sdate
+#  .month.day.year
+#  .sjulian
+#  .JULIAN
+#  .sday.of.week
+#  .day.of.week
+#  .sleap.year
 ################################################################################
 
 
@@ -70,7 +69,6 @@ timeNdayOnOrAfter <-
         zone <- getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
         FinCenter <- getRmetricsOptions("myFinCenter")
-
 
     # timeDate:
     lt <- strptime(charvec, format, tz = "GMT")
@@ -140,25 +138,37 @@ timeNdayOnOrBefore <-
 ##  replace them with 'timeDate' objects ...
 
 
-.on.or.after <- function(year, month, day, nday) {
+.on.or.after <- 
+function(year, month, day, nday) 
+{
     .sdate <- year*10000+month*100+day
-    .sdate(.sjulian(.sdate)+(nday-.day.of.week(month, day, year)) %% 7) }
-
-.on.or.before <- function(year, month, day, nday) {
-    .sdate <- year*10000+month*100+day
-    .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,day,year))) %% 7) }
-
-.nth.of.nday <- function(year, month, nday, nth) {
-    .sdate <- year*10000+month*100+1
-    .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-.day.of.week(month,1,year)) %% 7)
+    .sdate(.sjulian(.sdate)+(nday-.day.of.week(month, day, year)) %% 7) 
 }
 
-.last.of.nday <- function(year, month, lastday, nday) {
+.on.or.before <- 
+function(year, month, day, nday) 
+{
+    .sdate <- year*10000+month*100+day
+    .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,day,year))) %% 7) 
+}
+
+.nth.of.nday <- 
+function(year, month, nday, nth) 
+{
+    .sdate <- year*10000+month*100+1
+    .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-.day.of.week(month,1,year)) %% 7) 
+}
+
+.last.of.nday <- 
+function(year, month, lastday, nday) 
+{
     .sdate <- year*10000 + month*100 + lastday
     .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,lastday,year))) %% 7)
 }
 
-.sdate <- function (julians, origin = 19600101) {
+.sdate <- 
+function (julians, origin = 19600101) 
+{
     year0 <- origin %/% 10000
     month0 <- (origin-10000*year0) %/% 100
     day0 <- origin-10000*year0-100*month0
@@ -168,7 +178,9 @@ timeNdayOnOrBefore <-
     ans
 }
 
-.month.day.year <- function(jul, origin = c(1, 1, 1960)) {
+.month.day.year <- 
+function(jul, origin = c(1, 1, 1960)) 
+{
     # shift = .julian(1, 1, 1960, 0)
     shift <- 2436935
     j <- jul + shift
@@ -188,7 +200,9 @@ timeNdayOnOrBefore <-
     list(month = m, day = d, year = y)
 }
 
-.sjulian <- function (.sdates, origin = 19600101) {
+.sjulian <- 
+function (.sdates, origin = 19600101) 
+{
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
     year <- .sdates %/% 10000
@@ -200,7 +214,9 @@ timeNdayOnOrBefore <-
     .JULIAN(month, day, year, origin = c(month0, day0, year0))
 }
 
-.JULIAN <- function(m, d, y, origin = c(month = 1, day = 1, year = 1960)) {
+.JULIAN <- 
+function(m, d, y, origin = c(month = 1, day = 1, year = 1960)) 
+{
     only.origin <- all(missing(m), missing(d), missing(y))
     if (only.origin) m = d = y = NULL
     nms <- names(d)
@@ -220,7 +236,9 @@ timeNdayOnOrBefore <-
     out
 }
 
-.sday.of.week <- function(.sdates) {
+.sday.of.week <- 
+function(.sdates) 
+{
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
     year <- .sdates %/% 10000
@@ -232,11 +250,15 @@ timeNdayOnOrBefore <-
     (day + y + y %/% 4 - y %/% 100 + y %/% 400 + (31*m) %/% 12) %% 7
 }
 
-.day.of.week <- function (month, day, year) {
+.day.of.week <- 
+function (month, day, year) 
+{
     .sday.of.week(year * 10000 + month * 100 + day)
 }
 
-.sleap.year <- function(.sdates) {
+.sleap.year <- 
+function(.sdates) 
+{
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
     year <- .sdates %/% 10000

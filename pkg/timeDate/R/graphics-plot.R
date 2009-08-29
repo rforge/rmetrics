@@ -17,11 +17,11 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  plot,timeDate-method      Plots a 'timeDate' object
-#  points,timeDate-method    Adds points to a 'timeDate' plot
-#  lines,timeDate-method     Adds lines to a 'timeDate' plot
-#  axis.timeDate             Adds an axis to a 'timeDate' plot
-#  abline,timeDate-method    Adds an abline to a 'timeDate' plot
+#  plot,timeDate             Plots a 'timeDate' object
+#  points,timeDate           Adds points to a 'timeDate' plot
+#  lines,timeDate            Adds lines to a 'timeDate' plot
+#  axis.timeDate             S3 Adds an axis to a 'timeDate' plot
+#  abline,timeDate           Adds an abline to a 'timeDate' plot
 ################################################################################
 
 

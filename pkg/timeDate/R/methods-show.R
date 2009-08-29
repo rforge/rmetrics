@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
@@ -34,8 +22,10 @@
 
 
 setMethod("show", "timeDate",
-          function (object)
+    function (object)
 {
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
+    
     # when creating empty new("timeDate")
     if (!length(slot(object, "Data")))
         return(str(object))
@@ -43,11 +33,11 @@ setMethod("show", "timeDate",
     output <- format(object)
     layout <- paste("[", output, "]", sep = "")
 
-    # print results
+    # Print Results:
     cat(object@FinCenter, "\n", sep = "")
     print(layout, quote = FALSE)
 
-    # Return
+    # Return Value:
     invisible(NULL) # 'show' returns an invisible 'NULL'. (cf. ?show)
 })
 

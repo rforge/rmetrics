@@ -14,66 +14,73 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
-#  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
+# MEHODS:                  SUBSETTING TIMEDATE OBJECTS:
+#  setMethod                Extracts/replaces subsets from 'timeDate' objects
+#                             signature   missing - missing - ANY
+#                             signature   numeric - missing - ANY
+#                             signature   logical - missing - ANY
+#                             signature   character - missing - ANY
+#                             signature   ANY - missing ANY
+# "[<-.timeDate"            Extracts/replaces subsets from 'timeDate' objects
+# FUNCTION:                DESCRIPTION:
+# .subsetCode               Defines codes for different types of subsettings
+# .subsetByPython           Subsets a 'timeDate' object by python like indexing
+# .subsetBySpan             Subsets a 'timeDate' object by span indexing
 ################################################################################
 
-# functions implemented by Yohan Chalabi and Diethelm Wuertz
+
+# Functions implemented by Yohan Chalabi and Diethelm Wuertz
+
 
 setMethod("[", signature(x="timeDate", i="missing", j="missing", drop="ANY"),
-          function(x, i, j, ..., drop = TRUE) x)
+    function(x, i, j, ..., drop = TRUE) x)
 
+    
 setMethod("[", signature(x="timeDate", i="numeric", j="missing", drop="ANY"),
-          function(x, i, j, ..., drop = TRUE)
-      {
-          x@Data <- callGeneric(x@Data, i)
-          x
-      })
+    function(x, i, j, ..., drop = TRUE)
+    {
+        x@Data <- callGeneric(x@Data, i)
+        x
+    })
 
+    
 setMethod("[", signature(x="timeDate", i="logical", j="missing", drop="ANY"),
-          function(x, i, j, ..., drop = TRUE)
-      {
-          x@Data <- callGeneric(x@Data, i)
-          x
-      })
+    function(x, i, j, ..., drop = TRUE)
+    {
+        x@Data <- callGeneric(x@Data, i)
+        x
+    }
+)
 
+    
 setMethod("[", signature(x="timeDate", i="character", j="missing", drop="ANY"),
-          function(x, i, j, ..., drop = TRUE)
-      {
+    function(x, i, j, ..., drop = TRUE)
+    {
+        if (length(i) > 1) {
+            lt <- lapply(i, function(i, x) "["(x, i), x)
+            num <- unlist(lapply(lt, function(td) unclass(td@Data)))
+            return(timeDate(num, zone = "GMT", FinCenter = x@FinCenter))
+        }
+        if (.subsetCode(i) == "SPAN") {
+            # Subsetting by Span Indexing:
+            return(.subsetBySpan(x, i))
+        } else {
+            # Subsetting by Python Indexing:
+            return(.subsetByPython(x, i))
+        }
+    }
+)
 
-          if (length(i) > 1) {
-              lt <- lapply(i, function(i, x) "["(x, i), x)
-              num <- unlist(lapply(lt, function(td) unclass(td@Data)))
-              return(timeDate(num, zone = "GMT", FinCenter = x@FinCenter))
-          }
-          if (.subsetCode(i) == "SPAN") {
-              # Subsetting by Span Indexing:
-              return(.subsetBySpan(x, i))
-          } else {
-              # Subsetting by Python Indexing:
-              return(.subsetByPython(x, i))
-          }
-      })
 
 setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
           function(x, i, j, ..., drop = TRUE)
           stop("Not Yet implemented"))
 
+          
 #-------------------------------------------------------------------------------
+
 
 "[<-.timeDate" <-
     function(x, ..., value)
@@ -108,6 +115,7 @@ setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
 }
 
 ################################################################################
+
 
 .subsetCode <-
 function(subset)
@@ -157,7 +165,9 @@ function(subset)
     code
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 .subsetByPython <-
 function(x = timeCalendar(), subset = "::")
@@ -165,19 +175,19 @@ function(x = timeCalendar(), subset = "::")
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Subsets a timeDate object by python like indexing
+    #   Subsets a 'timeDate' object by python like indexing
 
     # Arguments:
     #   x - a timeDate object
     #   subset - a python like subset string
 
     # Example:
-    #   .subsetByPython(subset = "2008")
-    #   .subsetByPython(subset = "2008-07")
-    #   .subsetByPython(subset = "::")
-    #   .subsetByPython(subset = "2008-07::2008-09")
-    #   .subsetByPython(subset = "2008-07::")
-    #   .subsetByPython(subset = "::2008-06")
+    #   .subsetByPython(x, subset = "2008")
+    #   .subsetByPython(x, subset = "2008-07")
+    #   .subsetByPython(x, subset = "::")
+    #   .subsetByPython(x, subset = "2008-07::2008-09")
+    #   .subsetByPython(x, subset = "2008-07::")
+    #   .subsetByPython(x, subset = "::2008-06")
 
     # FUNCTION:
     stopifnot(length(subset) == 1)
@@ -241,7 +251,7 @@ function(x = timeCalendar(), subset = "last 3 Months")
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Subsets a timeDate object by span indexing
+    #   Subsets a 'timeDate' object by span indexing
 
     # Arguments:
     #   x - a timeDate object

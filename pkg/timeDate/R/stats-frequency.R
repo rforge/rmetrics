@@ -24,7 +24,9 @@
 frequency.timeDate <-
     function(x, ...)
 {
-    # Descriptions:
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
     #   Returns the frequency of a timeDate vector
     
     # Arguments:

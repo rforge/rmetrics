@@ -18,7 +18,9 @@
 ################################################################################
 # FUNCTION:               DESCRIPTION:
 #  align,timeDate          Aligns a 'timeDate' object to regular time stamps
+#  align,ANY
 ################################################################################
+
 
 setMethod("align", "timeDate",
     function(x, by = "1d", offset = "0s")
@@ -60,22 +62,25 @@ setMethod("align", "timeDate",
     x
 })
 
+
 # ------------------------------------------------------------------------------
 
+
 setMethod("align", "ANY",
-     function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, ties = mean, ...)
- {
-     # A function implemented by Diethelm Wuertz
+    function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, 
+    ties = mean, ...)
+{
+    # A function implemented by Diethelm Wuertz
 
-     # FUNCTION:
+    # FUNCTION:
 
-     # Align by Approximation:
-     ans = approx(x = x, y = y, xout = xout, method = method, n = n,
-         rule = rule, f = f, ties = ties, ...)
+    # Align by Approximation:
+    ans = approx(x = x, y = y, xout = xout, method = method, n = n,
+        rule = rule, f = f, ties = ties, ...)
 
-     # Return Value:
-     ans
- })
+    # Return Value:
+    ans
+})
 
 
 ################################################################################

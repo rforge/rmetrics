@@ -32,37 +32,17 @@
 #  format.timeDate           Formats 'timeDate' as ISO conform string
 ################################################################################
 
-## format.timeDate <-
-##     function(x, format = "", tz = "", usetz = FALSE, ...)
-## {
-##     if (!inherits(x, "timeDate"))
-##         stop("wrong class")
-
-##     isoFormat <- "%Y-%m-%d %H:%M:%S"
-##     isoDate <- "%Y-%m-%d"
-##     FinCenter <- if (tz != "") tz else x@FinCenter
-
-##     # tz = "GMT" important to avoid confusion when DST in force
-##     charvec <- format(x@Data, isoFormat, tz = "GMT")
-
-##     ans <- .formatFinCenter(charvec, FinCenter, type = "gmt2any")
-
-##     # tz = "GMT" important to avoid confusion when DST in force
-##     ans <- format(as.POSIXct(ans, isoFormat, tz = "GMT"),
-##                   format = format, tz = "GMT")
-
-##     # should add tz from table in formatFinCenter
-##     if (usetz)
-##         ans <- paste(ans, x@FinCenter)
-
-##     # Return
-##     ans
-## }
-
 
 format.timeDate <-
     function(x, format = "", tz = "", usetz = FALSE, ...)
 {
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
+    # Description:
+    #   Formats 'timeDate' as ISO conform string   
+    
+    # FUNCTION:
+    
     if (!inherits(x, "timeDate"))
         stop("wrong class")
 
@@ -72,11 +52,11 @@ format.timeDate <-
     ans <- format(as.POSIXct(num, origin = "1970-01-01", tz = "GMT"),
                   tz = "GMT", format = format)
 
-    # should add tz from table in formatFinCenter
+    # Should add tz from table in formatFinCenter
     if (usetz)
         ans <- paste(ans, x@FinCenter)
 
-    # Return
+    # Return Value:
     ans
 }
 

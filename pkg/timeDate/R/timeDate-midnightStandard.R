@@ -30,6 +30,8 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  midnightStandard          Corrects midnight standard called by 'timeDate'
+# DEPRECATED:
+#  .midnightStandard
 ################################################################################
 
 

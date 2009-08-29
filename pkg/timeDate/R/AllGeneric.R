@@ -1,3 +1,4 @@
+
 # This R package is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -14,7 +15,17 @@
 # MA  02111-1307  USA
 
 
+################################################################################
+
+
 setGeneric("align", function(x, ...) standardGeneric("align"))
+
 setGeneric("atoms", function(x, ...) standardGeneric("atoms"))
+
 setGeneric("finCenter", function(x) standardGeneric("finCenter"))
+
 setGeneric("finCenter<-", function(x, value) standardGeneric("finCenter<-"))
+
+
+################################################################################
+
