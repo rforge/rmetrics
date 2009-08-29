@@ -54,6 +54,11 @@ S3method("cut", "timeDate")
 S3method("diff", "timeDate")
 S3method("end", "timeDate")
 S3method("format", "timeDate")
+S3method("frequency", "timeDate")
+S3method("isDaily", "timeDate")
+S3method("isMonthly", "timeDate")
+S3method("isQuarterly", "timeDate")
+S3method("isRegular", "timeDate")
 S3method("kurtosis", "data.frame")
 S3method("kurtosis", "default")
 S3method("kurtosis", "POSIXct")
@@ -83,16 +88,6 @@ S3method("window", "timeDate")
 ################################################
 
 export(
-    "isRegular",
-    "isDaily",
-    "isMonthly",
-    "isQuarterly",
-    "isRegular.timeDate",
-    "isDaily.timeDate",
-    "isMonthly.timeDate",
-    "isQuarterly.timeDate",
-    "frequency",
-    "frequency.timeDate",
     "Abidjan",
     "Accra",
     "Adak",
@@ -325,9 +320,13 @@ export(
     "Iqaluit",
     "Irkutsk",
     "isBizday",
+    "isDaily",
     "isHoliday",
     "Isle_of_Man",
+    "isMonthly",
     ".isPOSIX",
+    "isQuarterly",
+    "isRegular",
     "Istanbul",
     "isWeekday",
     "isWeekend",
@@ -472,7 +471,6 @@ export(
     "Montevideo",
     ".month.day.year",
     "monthlyRolling",
-    # ".monthlyRolling", obsolete
     "Monticello",
     "Montreal",
     "Montserrat",
@@ -515,9 +513,7 @@ export(
     "Pentecost",
     "PentecostMonday",
     "periodicallyRolling",
-    # ".periodicallyRolling", obsolete
     "periods",
-    # ".periods", obsolete
     "Perth",
     "Petersburg",
     "Phnom_Penh",

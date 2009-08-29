@@ -105,10 +105,27 @@ S3method("as.timeSeries", "ts")
 S3method("as.timeSeries", "zoo")
 S3method("cbind", "timeSeries")
 S3method("cumulated", "default")
+S3method("frequency", "timeSeries")
+S3method("isDaily", "timeSeries")
+S3method("isMonthly", "timeSeries")
+S3method("isQuarterly", "timeSeries")
+S3method("isRegular", "timeSeries")
 S3method("lines", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("points", "timeSeries")
 S3method("rbind", "timeSeries")
+S3method("rollmax", "default")
+S3method("rollmax", "matrix")
+S3method("rollmax", "timeSeries")
+S3method("rollmean", "default")
+S3method("rollmean", "matrix")
+S3method("rollmean", "timeSeries")
+S3method("rollmedian", "default")
+S3method("rollmedian", "matrix")
+S3method("rollmedian", "timeSeries")
+S3method("rollmin", "default")
+S3method("rollmin", "matrix")
+S3method("rollmin", "timeSeries")
 S3method("str", "timeSeries")
 S3method("time<-", "timeSeries")
 
@@ -165,29 +182,14 @@ export(
     "fapply",
     ".fapply",
     ".findIndex",
-    #".frequency.timeDate",
-    "frequency.timeSeries",
     "getReturns",
     "hclustColnames",
     ".head.timeSeries",
     "head.timeSeries",
     "interpNA",
-    #"isDaily",
-    #"isDaily.default",
-    #"isDaily.timeDate",
-    "isDaily.timeSeries",
-    #"isMonthly",
-    #"isMonthly",
-    #"isMonthly.default",
-    #"isMonthly.timeDate",
-    "isMonthly.timeSeries",
     "isMultivariate",
     ".isOHLC",
     ".isOHLCV",
-    #"isQuarterly",
-    #"isQuarterly.default",
-    #"isQuarterly.timeDate",
-    "isQuarterly.timeSeries",
     "is.signalSeries",
     "is.timeSeries",
     "isUnivariate",
@@ -220,6 +222,10 @@ export(
     ".rev.timeSeries",
     "rev.timeSeries",
     "rollDailySeries",
+    "rollmax",
+    "rollmean",
+    "rollmedian",
+    "rollmin",
     "rollMonthlySeries",
     "rollMonthlyWindows",
     "sampleColnames",
