@@ -25,73 +25,70 @@
 
 
 setMethod("apply", "timeSeries",
-function(X, MARGIN, FUN, ...)
-{
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
-    # Description:
-    #   Returns a 'timeSeries' of values obtained by applying a function 
-    #   to the margins of the series. 
+    function(X, MARGIN, FUN, ...)
+    {
+        pos <- X@positions
+        FinCenter <- finCenter(X)
+        X <- getDataPart(X)
+        ans <- callGeneric()
 
-    # FUNCTION:
-    
-    # Call Generic:
-    ans <- callGeneric(series(X), MARGIN, FUN)
-    
-    # Return as timeSeries object with proper dimensions:
-    if (length(MARGIN) == 1 && MARGIN == 1) {
-        # Rowwise:
-        series(X) <- ans
-        colnames(X) = substitute(FUN)
-    } else if (length(MARGIN) == 1 && MARGIN == 2) {
-        # Columnwise:
-        X = X[which.max(time(X)), ]
-        series(X) <- t(ans)
-    } else if (length(MARGIN) == 2 && MARGIN == c(1, 2)) {
-        # Row- and Columnwise:
-        X = apply(X, MARGIN = 1, FUN)
-        X = apply(X, MARGIN = 2, FUN)
-        colnames(X) = substitute(FUN)
-    } else if (length(MARGIN) == 2 &&  MARGIN == c(2, 1)) {
-        # Column- and Rowwise:
-        X = apply(X, MARGIN = 2, FUN)
-        X = apply(X, MARGIN = 1, FUN)
-        colnames(X) = substitute(FUN)
+        # special treatment of timeSeries with one row because apply
+        # returns a vector
+        if (is.null(dim(ans)) && MARGIN == 2 && NCOL(X) == length(ans))
+            ans <- timeSeries(data = matrix(ans, ncol = NCOL(X)),
+                              charvec = pos, units = names(ans),
+                              zone = FinCenter, FinCenter = FinCenter)
+        else if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
+            ans <- timeSeries(data = ans, charvec = pos,
+                              zone = FinCenter, FinCenter = FinCenter)
+
+        ans
     }
-    
-    # Return Value:
-    X
-})
+)
 
 
 # ------------------------------------------------------------------------------
 
 
-## DW 200-08-30: Does not produce the correct result in all cases
-## The previous code is a replacement (hopefully) working in all cases
-
 ## setMethod("apply", "timeSeries",
-##     function(X, MARGIN, FUN, ...)
-##     {
-##         pos <- X@positions
-##         FinCenter <- finCenter(X)
-##         X <- getDataPart(X)
-##         ans <- callGeneric()
+## function(X, MARGIN, FUN, ...)
+## {
+##     # A function implemented by Diethelm Wuertz and Yohan Chalabi
+##     
+##     # Description:
+##     #   Returns a 'timeSeries' of values obtained by applying a function 
+##     #   to the margins of the series. 
 ## 
-##         # special treatment of timeSeries with one row because apply
-##         # returns a vector
-##         if (is.null(dim(ans)) && MARGIN == 2 && NCOL(X) == length(ans))
-##             ans <- timeSeries(data = matrix(ans, ncol = NCOL(X)),
-##                               charvec = pos, units = names(ans),
-##                               zone = FinCenter, FinCenter = FinCenter)
-##         else if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
-##             ans <- timeSeries(data = ans, charvec = pos,
-##                               zone = FinCenter, FinCenter = FinCenter)
-## 
-##         ans
+##     # FUNCTION:
+##     
+##     # Call Generic:
+##     ans <- callGeneric(series(X), MARGIN, FUN)
+##     
+##     # Return as timeSeries object with proper dimensions:
+##    if (length(MARGIN) == 1 && MARGIN == 1) {
+##        # Rowwise:
+##        series(X) <- ans
+##        colnames(X) = substitute(FUN)
+##    } else if (length(MARGIN) == 1 && MARGIN == 2) {
+##        # Columnwise:
+##        X = X[which.max(time(X)), ]
+##         series(X) <- t(ans)
+##     } else if (length(MARGIN) == 2 && MARGIN == c(1, 2)) {
+##         # Row- and Columnwise:
+##         X = apply(X, MARGIN = 1, FUN)
+##         X = apply(X, MARGIN = 2, FUN)
+##         colnames(X) = substitute(FUN)
+##     } else if (length(MARGIN) == 2 &&  MARGIN == c(2, 1)) {
+##         # Column- and Rowwise:
+##         X = apply(X, MARGIN = 2, FUN)
+##         X = apply(X, MARGIN = 1, FUN)
+##         colnames(X) = substitute(FUN)
 ##     }
-## )
-## 
+##     
+##     # Return Value:
+##     X
+## })
+
 
 # ------------------------------------------------------------------------------
 
