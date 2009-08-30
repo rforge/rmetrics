@@ -4,13 +4,13 @@
 \title{Checks if a time series is regular}
 
 
-\alias{isDaily.timeSeries}
-\alias{isMonthly.timeSeries}
-\alias{isQuarterly.timeSeries}
+\alias{isDaily,timeSeries-method}
+\alias{isMonthly,timeSeries-method}
+\alias{isQuarterly,timeSeries-method}
 
-\alias{isRegular.timeSeries}
+\alias{isRegular,timeSeries-method}
 
-\alias{frequency.timeSeries}
+\alias{frequency,timeSeries-method}
 
 
 \description{
@@ -24,13 +24,13 @@
 
 
 \usage{
-\method{isDaily}{timeSeries}(x)
-\method{isMonthly}{timeSeries}(x)
-\method{isQuarterly}{timeSeries}(x)
+\S4method{isDaily}{timeSeries}(x)
+\S4method{isMonthly}{timeSeries}(x)
+\S4method{isQuarterly}{timeSeries}(x)
 
-\method{isRegular}{timeSeries}(x)
+\S4method{isRegular}{timeSeries}(x)
 
-\method{frequency}{timeSeries}(x, \dots)
+\S4method{frequency}{timeSeries}(x, \dots)
 }
 
 
