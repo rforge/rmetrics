@@ -10,12 +10,11 @@
 \alias{isRegular}
 \alias{frequency}
 
-
-\alias{isDaily.timeDate}
-\alias{isMonthly.timeDate}
-\alias{isQuarterly.timeDate}
-\alias{isRegular.timeDate}
-\alias{frequency.timeDate}
+\alias{isDaily,timeDate-method}
+\alias{isMonthly,timeDate-method}
+\alias{isQuarterly,timeDate-method}
+\alias{isRegular,timeDate-method}
+\alias{frequency,timeDate-method}
 
 
 \description{
@@ -29,20 +28,20 @@
 
 
 \usage{
-\method{isDaily}{timeDate}(x)
-\method{isMonthly}{timeDate}(x)
-\method{isQuarterly}{timeDate}(x)
+\S4method{isDaily}{timeDate}(x)
+\S4method{isMonthly}{timeDate}(x)
+\S4method{isQuarterly}{timeDate}(x)
 
-\method{isRegular}{timeDate}(x)
+\S4method{isRegular}{timeDate}(x)
 
-\method{frequency}{timeDate}(x, \dots)
+\S4method{frequency}{timeDate}(x, \dots)
 }
 
 
 \arguments{
 
     \item{x}{  
-        an R object of class \code{timeSeries}.
+        an R object of class \code{timeDate}.
     }
     \item{\dots}{
         arguments to be passed
