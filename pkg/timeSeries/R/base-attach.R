@@ -20,20 +20,23 @@
 
 
 setMethod("attach", "timeSeries",
-    function(what, pos = 2, name = deparse(substitute(what)),
-        warn.conflicts = TRUE)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
+function(what, pos = 2, name = deparse(substitute(what)),
+    warn.conflicts = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
-        # Description:
-        #   Attaches a 'timeSeries' object
+    # Description:
+    #   Attaches a 'timeSeries' object
+    
+    # Details:
+    #   The function works in the same way as in the case of a 
+    #   data.frame, i.e. the return value are vectors.
 
-        # FUNCTION:
+    # FUNCTION:
 
-        callGeneric(as.data.frame(what), pos, name, warn.conflicts)
-
-    }
-)
+    # Return Value:
+    callGeneric(as.data.frame(what), pos, name, warn.conflicts)
+})
 
 
 ################################################################################
