@@ -6,12 +6,12 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 
@@ -21,55 +21,37 @@
 #  isMonthly.timeDate        Tests if a timeDate object has monthly time stamps
 ################################################################################
 
+setMethod("isMonthly", "timeDate", function(x)
+      {
+          # A function implemented by Diethelm Wuertz
 
-isMonthly <- 
-function(x) 
-{
-    # A function implemented by Diethelm Wuertz
-    
-    UseMethod("isMonthly")
-}
+          # Descriptions:
+          #   Tests if a timeDate object has monthly time stamps
 
+          # Arguments:
+          #   x - an object of class timeDate
 
-# ------------------------------------------------------------------------------
+          # Details:
+          #   Definition: A timeDate Object is a Monthly timeDate object
+          #   if we have not more than one date/time stamp per month.
+          #   Note a monthly series is also a daily series.
 
+          # Example:
+          #   isMonthly(timeSequence(by = "day", length.out = 20))
+          #   isMonthly(timeCalendar())
+          #   isDaily(timeCalendar())
+          #   isMonthly(timeSequence(by = "hour", length.out = 100))
 
-isMonthly.timeDate <-
-function(x)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Descriptions:
-    #   Tests if a timeDate object has monthly time stamps
-    
-    # Arguments:
-    #   x - an object of class timeDate
-    
-    # Details:
-    #   Definition: A timeDate Object is a Monthly timeDate object 
-    #   if we have not more than one date/time stamp per month.
-    #   Note a monthly series is also a daily series.
-    
-    # Example:
-    #   isMonthly(timeSequence(by = "day", length.out = 20))
-    #   isMonthly(timeCalendar())
-    #   isDaily(timeCalendar())
-    #   isMonthly(timeSequence(by = "hour", length.out = 100))
-    
-    # FUNCTION:
-    
-    # Monthly ?
-    isMonthly = FALSE
-    charvec = as.character(x)
-    s = substr(charvec, 1, 7)
-    test = length(s)/length(unique(sort(s))) 
-    if(test == 1) isMonthly = TRUE
-    
-    # Return Value:
-    isMonthly
-}
+          # FUNCTION:
 
+          # Monthly ?
+          m <- c(timeDate::months(x)) #-> c() to remove attributes
+          # (m[1] -1) -> shift vector to match first entry in m
+          monthly <- seq(from = m[1]-1, length.out=length(m)) %% 12 + 1
 
+          # Return
+          (identical(monthly, m))
+      })
 
 ################################################################################
 
