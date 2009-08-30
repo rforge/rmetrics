@@ -135,7 +135,7 @@ setMethod("timeDate", "timeDate",
 {
     # Description:
     #   timeDate
-
+    
     # if zone not provided, change only the FinCenter in charvec (timeDate)
     if (zone == "") {
         if (FinCenter != "")
@@ -155,8 +155,8 @@ setMethod("timeDate", "POSIXt",
     function(charvec, format = NULL, zone = "", FinCenter = "")
 {
     # Description:
-    #   POSIXt
-
+    #   POSIXt   
+    
     if (!(zone %in% c("", "GMT", "UTC"))) {
         callGeneric(format(charvec), zone = zone, FinCenter = FinCenter)
     } else {
@@ -186,8 +186,8 @@ setMethod("timeDate", "Date",
     function(charvec, format = NULL, zone = "", FinCenter = "")
 {
     # Description:
-    #   Date
-
+    #   Date 
+    
     charvec <- format(charvec)
     format <- "%Y-%m-%d"
 
@@ -203,25 +203,32 @@ setMethod("timeDate", "numeric",
 {
     # Description:
     #   numeric
-
+    
     # DW: Modification of setMethod("timeDate", "numeric") to handle
     #   decimal like inputs (exactly that what "yearmon" does)
 
-    if (!is.null(format) & (format == "%Y" || format == "yearmon" )) {
-        # DW: Handels what is known as yearmon format
-        # Example:     timeDate(2008+seq(0, 23, by = 1)/12, "yearmon")
-        #   Quarterly: timeDate(2008+seq(2, 23, by = 3)/12, format = "%Y")
-        # The next 4 lines are borrowed from Zeileis' yearmon()
-        year <- floor(charvec + 0.001)
-        month <- floor(12 * (charvec - year) + 1 + 0.5 + 0.001)
-        dd.start <- as.Date(paste(year, month, 1, sep = "-"))
-        # here we concentrate to the end of month date ...
-        dd.end <- dd.start + 32 - as.numeric(format(dd.start + 32, "%d"))
-        charvec <- as.POSIXct(dd.end, origin = "1970-01-01", tz = "GMT")
+    if (is.null(format)) {
+        # No format (NULL) specified ...
+        charvec <- as.POSIXct(as.numeric(charvec),
+            origin = "1970-01-01", tz = "GMT")
     } else {
-        charvec <- as.POSIXct(charvec, origin = "1970-01-01", tz = "GMT")
+        # Format specified ...
+        if (format == "%Y" || format == "yearmon" ) {
+            # DW: Handels what is known as yearmon format
+            # Example:     timeDate(2008+seq(0, 23, by = 1)/12, "yearmon")
+            #   Quarterly: timeDate(2008+seq(2, 23, by = 3)/12, format = "%Y")
+            # The next 4 lines are borrowed from Zeileis' yearmon()
+            year <- floor(charvec + 0.001)
+            month <- floor(12 * (charvec - year) + 1 + 0.5 + 0.001)
+            dd.start <- as.Date(paste(year, month, 1, sep = "-"))
+            # here we concentrate to the end of month date ...
+            dd.end <- dd.start + 32 - as.numeric(format(dd.start + 32, "%d"))
+            charvec = as.POSIXct(dd.end, origin = "1970-01-01", tz = "GMT")
+        } else {
+            charvec <- as.POSIXct(as.numeric(charvec),
+                origin = "1970-01-01", tz = "GMT")
+        }
     }
-
     callGeneric()
 }
 )
@@ -235,7 +242,7 @@ setMethod("timeDate", "missing",
 {
     # Description:
     #   missing
-
+    
     callGeneric(Sys.time(), format, zone, FinCenter)
 }
 )
@@ -249,7 +256,7 @@ setMethod("timeDate", "ANY",
 {
     # Description:
     #   ANY
-
+    
     callGeneric(as.character(charvec), format, zone, FinCenter)
 }
 )
@@ -296,7 +303,7 @@ function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
 {
     # A function implemented by Diethelm Wuertz
     #   thanks to contributions from Martin Maechler
-
+    
     # Description:
     #   Internal function used by function timeDate()
 
