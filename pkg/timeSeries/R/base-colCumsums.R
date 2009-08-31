@@ -38,51 +38,76 @@
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCumsums", "matrix",
-    function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cumsum, ...))
+setMethod("colCumsums", "matrix", function(x, na.rm = FALSE, ...)
+      {
+          if (na.rm)
+              x <- na.omit(x)
+          ans <- apply(x, 2, cumsum, ...)
+          # special treatment when x has one row because apply returns a vector
+          if (NROW(x) == 1)
+              ans <- matrix(ans, nrow = 1, dimnames = dimnames(x))
+          ans
+      })
+
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCumsums", "timeSeries",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cumsum, ...))
+setMethod("colCumsums", "timeSeries", function(x, na.rm = FALSE, ...)
+          setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCummaxs", "matrix",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cummax, ...))
+setMethod("colCummaxs", "matrix", function(x, na.rm = FALSE, ...)
+      {
+          if (na.rm)
+              x <- na.omit(x)
+          ans <- apply(x, 2, cummax, ...)
+          # special treatment when x has one row because apply returns a vector
+          if (NROW(x) == 1)
+              ans <- matrix(ans, nrow = 1, dimnames = dimnames(x))
+          ans
+      })
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCummaxs", "timeSeries",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cummax, ...))
+setMethod("colCummaxs", "timeSeries", function(x, na.rm = FALSE, ...)
+          setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCummins", "matrix",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cummin, ...))
+setMethod("colCummins", "matrix", function(x, na.rm = FALSE, ...)
+      {
+          if (na.rm)
+              x <- na.omit(x)
+          ans <- apply(x, 2, cummin, ...)
+          # special treatment when x has one row because apply returns a vector
+          if (NROW(x) == 1)
+              ans <- matrix(ans, nrow = 1, dimnames = dimnames(x))
+          ans
+      })
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCummins", "timeSeries",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cummin, ...))
+setMethod("colCummins", "timeSeries", function(x, na.rm = FALSE, ...)
+          setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCumprods", "matrix",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cumprod, ...))
+setMethod("colCumprods", "matrix", function(x, na.rm = FALSE, ...)
+      {
+          if (na.rm)
+              x <- na.omit(x)
+          ans <- apply(x, 2, cumprod, ...)
+          # special treatment when x has one row because apply returns a vector
+          if (NROW(x) == 1)
+              ans <- matrix(ans, nrow = 1, dimnames = dimnames(x))
+          ans
+      })
 
 # ------------------------------------------------------------------------------
 
-setMethod("colCumprods", "timeSeries",
-          function(x, na.rm = FALSE, ...)
-          apply(if (na.rm) na.omit(x) else x, 2, cumprod, ...))
+setMethod("colCumprods", "timeSeries", function(x, na.rm = FALSE, ...)
+          setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
 # ------------------------------------------------------------------------------
 

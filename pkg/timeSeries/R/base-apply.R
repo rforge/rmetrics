@@ -23,7 +23,6 @@
 #  .fapply                old and obsolete ...
 ################################################################################
 
-
 setMethod("apply", "timeSeries",
     function(X, MARGIN, FUN, ...)
     {
@@ -32,20 +31,11 @@ setMethod("apply", "timeSeries",
         X <- getDataPart(X)
         ans <- callGeneric()
 
-        # special treatment of timeSeries with one row because apply
-        # returns a vector
-        if (is.null(dim(ans)) && MARGIN == 2 && NCOL(X) == length(ans))
-            ans <- timeSeries(data = matrix(ans, ncol = NCOL(X)),
-                              charvec = pos, units = names(ans),
-                              zone = FinCenter, FinCenter = FinCenter)
-        else if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
+        if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
             ans <- timeSeries(data = ans, charvec = pos,
                               zone = FinCenter, FinCenter = FinCenter)
-
         ans
-    }
-)
-
+    })
 
 # ------------------------------------------------------------------------------
 
