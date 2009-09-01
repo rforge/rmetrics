@@ -1,0 +1,51 @@
+=== randtoolbox: TODO list ===
+
+(order/numbers mean nothing)
+
+1. Add the character representation to the R interface of congruRand.
+  Then, for example, the user may specify the modulus 2^64 in R
+  as "18446744073709551616" and state, e.g. "12345678901234567890".
+  Character representation is the simplest solution, if we want
+  to allow moduli, which are powers of 2 larger than 2^53 and allow
+  to set any initial state of such a generator from the R level.
+
+2. Add further recurrences for congruRand into the C code. Currently,
+  we have the recurrence
+     congru_seed  = (mult * congru_seed + incr) % mod
+  If mod = 2^k then
+     congru_seed  = (mult * congru_seed + incr) & mask
+  with mask = 2^k - 1 is faster. If mod = 2^64, then even
+     congru_seed  = (mult * congru_seed + incr)
+  is sufficient.
+
+3. Add runif() interface for WELL generators. Currently, it is implemented
+  only for congruRand.
+
+4. Allow seeding of WELL generators by a seed, which is a vector of
+  arbitray length. The typical usage would use a vector of length
+  between, say, 3 and 10. In this way, much larger number of initial
+  states are available than if the seed is just a single 32 bit number.
+  A working prototype is contained in rngwell19937 as set.vector.seed().
+  It may be proved that seeding by any two different vectors of length
+  at most 3 leads to a different initial state. I am now trying to 
+  extend the proof to length 4. On the other hand, in length 10, we
+  get collisions (different seeds leading to the same initial state),
+  but it is quite hard to find them. Similarity of bit patterns is
+  irrelevant here (does not help to find collisions). This is important
+  since this allows to get rid of the traditional suggestion for seeds:
+  "use numbers with sufficiently random bit patterns, in particular, not 0".
+  Using MRG32k5a for initialization allows that any seed is good.
+  There is no problem to use, for example, seeds 0, 1, 2, ...
+  since they produce completely different sequences.
+
+5. Add runif() interface to all generators.
+
+6. implement the spectral test (only for LCG?) with the code available
+on http://random.mat.sbg.ac.at/results/karl/spectraltest . there might be some licence problems.
+
+7. implement the Wichman Hill RNG of 2006. paper available here 
+http://www.sciencedirect.com/science/article/B6V8V-4K7F86W-2/2/a3a33291b8264e4c882a8f21b6e43351 . 
+implementation may be found on the web.
+
+8. add a global man page ?randtoolbox like the ChainLadder package.
+
