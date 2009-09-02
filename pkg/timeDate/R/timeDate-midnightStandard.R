@@ -68,14 +68,15 @@ midnightStandard <-
 
     # ISO-8601 Midnight Standard:
     if (length(grep("%H:%M:%S", format, fixed = TRUE)) == 1) {
-        if(length(ii <- grep("24:00:00", charvec, fixed=TRUE)) > 0) {
+        ii <- grep("24:00:00", charvec, fixed=TRUE, useBytes=TRUE)
+        if (length(ii) > 0) {
             s[ii] <- 1
             charvec[ii] <- gsub("24:00:00", "23:59:59", charvec[ii], fixed=TRUE)
         }
     } else if (length(grep("%H%M%S$", format)) == 1) {
         ## format *ends* in  %H%M%S, i.e. last 6 chars are time
         ch.time <- substr(charvec, nch-6+1, nch)
-        if(length(ii <- grep("240000$", ch.time)) > 0) {
+        if (length(ii <- grep("240000$", ch.time)) > 0) {
             s[ii] <- 1
             charvec[ii] <- paste(substr(charvec[ii], 1, nch-6),
                 gsub("240000$", "235959", ch.time[ii]), sep = "")
