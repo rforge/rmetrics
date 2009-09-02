@@ -45,6 +45,8 @@ if (getRversion() < "2.8.0") {
     setMethod("setDataPart", "timeSeries",
         function(object, value)
         {
+            #-> Note : do not use as.matrix because ts objects might
+            #-> not be coerced properly
             value <- as(value, "matrix")
 
             supplied <- attributes(object)
@@ -63,6 +65,8 @@ if (getRversion() < "2.8.0") {
     setMethod("setDataPart", "timeSeries",
         function(object, value, check = TRUE)
         {
+            #-> Note : do not use as.matrix because ts objects might
+            #-> not be coerced properly
             if (check) value <- as(value, "matrix")
 
             supplied <- attributes(object)
