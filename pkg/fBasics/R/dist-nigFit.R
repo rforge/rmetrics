@@ -102,7 +102,7 @@ nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     # Optional Plot:
     if (doplot) {
         x = as.vector(x.orig)
-        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        if (span == "auto") span = seq(min(x), max(x), length = 501)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -252,7 +252,7 @@ nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     mps = function(x, y = x, trace) {
         if (abs(x[2]) >= x[1]) return(1e99)
         
-        DH = diff(c(0, na.omit(pnig(sort(y), x[1], x[2], x[3], x[4])), 1))
+        DH = diff(c(0, na.omit(.pnigC(sort(y), x[1], x[2], x[3], x[4])), 1))
         f = -mean(log(DH[DH > 0]))*length(y)
 
         # Print Iteration Path:
@@ -281,7 +281,7 @@ nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     # Optional Plot:
     if (doplot) {
         x = as.vector(x.orig)
-        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        if (span == "auto") span = seq(min(x), max(x), length = 501)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -310,3 +310,4 @@ nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
 
 ################################################################################
 
+   
