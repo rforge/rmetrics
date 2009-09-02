@@ -188,12 +188,25 @@ setMethod("timeDate", "Date",
     # Description:
     #   Date
 
-    charvec <- format(charvec)
-    format <- "%Y-%m-%d"
+    if (!(zone %in% c("", "GMT", "UTC"))) {
+        callGeneric(format(charvec), zone = zone, FinCenter = FinCenter)
+    } else {
 
-    callGeneric()
-}
-)
+        # Since zone is not provided consider that charvec is in GMT
+        charvec <- as.POSIXct(charvec)
+        attr(charvec, "tzone") <- "GMT"
+
+        # FinCenter
+        if (FinCenter == "")
+            FinCenter = getRmetricsOptions("myFinCenter")
+
+        new("timeDate",
+            Data = charvec,
+            # Note format is automatically created in
+            # initialize,timeDate-method
+            FinCenter = as.character(FinCenter))
+    }
+})
 
 # ------------------------------------------------------------------------------
 
