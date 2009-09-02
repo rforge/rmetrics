@@ -32,11 +32,13 @@ setMethod("show", "timeSeries",
         # FUNCTION:
 
         # Check records to get printed:
-        if (ptest <- (is.numeric(max <- getRmetricsOptions("max.print")) &&
-                      # Do not print reached limit message if default R max.print is reached
-                      max < getOption("max.print") &&
-                      ((omitted <- NROW(object) - max) > 0)))
+        maxRmetrics <- if (!is.null(max <- getRmetricsOptions("max.print"))) max  else Inf
+        maxR        <- if (!is.null(max <- getOption("max.print")))         max  else Inf
+        max <- min(c(maxRmetrics, maxR))
+
+        if (ptest <- ((omitted <- NROW(object) - max) > 0))
             object <- object[seq.int(max),]
+
         data <- as(object, "matrix")
         recordIDs <- object@recordIDs
         FinCenter <- finCenter(object)
@@ -55,7 +57,7 @@ setMethod("show", "timeSeries",
 
         # print message
         if (ptest)
-            cat(gettextf("...\n [ reached getRmetricsOptions('max.print') -- omitted %i rows ]]\n", omitted))
+            cat(gettextf("...\n [ reached getRmetricsOptions('max.print') | getOption('max.print') -- omitted %i rows ]]\n", omitted))
 
         # Return Value:
         invisible(NULL) # as specified in ?show
