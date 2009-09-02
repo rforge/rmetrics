@@ -28,11 +28,12 @@
 # index
 ################################################################################
 
+# Note : no "character" -> because needs to be coerced to timeDate object.
+setClassUnion("index_timeSeries", members =  c("numeric", "logical"))
 
-setClassUnion("index_timeSeries",
-    members =  c("numeric", "logical"))
+setClassUnion("time_timeSeries", members =  c("POSIXt", "Date"))
 
-# no "character" -> because needs to be coerced to timeDate object.
+
 
 
 # ------------------------------------------------------------------------------
@@ -153,6 +154,19 @@ function(x, i, j)
 ## 29          missing              ANY
 ## 30              ANY              ANY
 
+
+## YC : Added i=time_timeSeries
+
+i <- "time_timeSeries"
+j <- c("index_timeSeries", "character", "timeSeries",
+       "missing", "ANY")
+expand.grid(i = i, j = j)
+
+## 1 time_timeSeries index_timeSeries
+## 2 time_timeSeries        character
+## 3 time_timeSeries       timeSeries
+## 4 time_timeSeries          missing
+## 5 time_timeSeries              ANY
 
 # ------------------------------------------------------------------------------
 
@@ -481,6 +495,50 @@ setMethod("[",
           function(x,i,j, ..., drop = FALSE)
           stop("invalid or not-yet-implemented 'timeSeries' subsetting"))
 
+
+# ------------------------------------------------------------------------------
+## 1 time_timeSeries index_timeSeries
+
+setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
+                         j = "index_timeSeries"),
+          function(x,i,j, ..., drop = FALSE)
+      {
+          i <- timeDate(i)
+          callGeneric(x=x, i=i, j=j, drop=drop)
+      })
+
+# ------------------------------------------------------------------------------
+## 2 time_timeSeries        character
+
+setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
+                         j = "character"),
+          function(x,i,j, ..., drop = FALSE)
+      {
+          i <- timeDate(i)
+          callGeneric(x=x, i=i, j=j, drop=drop)
+      })
+
+# ------------------------------------------------------------------------------
+## 4 time_timeSeries          missing
+
+setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
+                         j = "missing"),
+          function(x,i,j, ..., drop = FALSE)
+      {
+          i <- timeDate(i)
+          callGeneric(x=x, i=i, drop=drop)
+      })
+
+# ------------------------------------------------------------------------------
+## 5 time_timeSeries              ANY
+
+setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
+                         j = "ANY"),
+          function(x,i,j, ..., drop = FALSE)
+      {
+          i <- timeDate(i)
+          callGeneric(x=x, i=i, j=j, drop=drop)
+      })
 
 ################################################################################
 #  $,timeSeries            Subset by column names

@@ -21,6 +21,11 @@
 \alias{[,timeSeries,timeSeries,index_timeSeries-method}
 \alias{[,timeSeries,timeSeries,missing-method}
 
+\alias{[,timeSeries,time_timeSeries,ANY-method}
+\alias{[,timeSeries,time_timeSeries,character-method}
+\alias{[,timeSeries,time_timeSeries,index_timeSeries-method}
+\alias{[,timeSeries,time_timeSeries,missing-method}
+
 \alias{$,timeSeries,ANY-method}
 \alias{$,timeSeries,character-method}
 

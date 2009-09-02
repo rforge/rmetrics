@@ -19,8 +19,10 @@
 \alias{timeSeries,matrix,numeric-method}
 
 \alias{index_timeSeries}
+\alias{time_timeSeries}
 \alias{timeSeries-class}
 \alias{index_timeSeries-class}
+\alias{time_timeSeries-class}
 \alias{initialize,timeSeries-method}
 
 \alias{readSeries}

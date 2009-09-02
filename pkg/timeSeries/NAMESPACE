@@ -15,7 +15,8 @@ import("timeDate")
 ################################################
 
 exportClasses("index_timeSeries",
-              "timeSeries" )
+              "timeSeries",
+              "time_timeSeries" )
 export("colCummaxs",
         "colCummins",
         "colCumprods",
