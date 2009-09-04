@@ -342,7 +342,7 @@ pfutures.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, r = 0.05, l
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(pfutures.default(q, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho, r = r,
                             alphaT = alphaT, ...))
@@ -366,7 +366,7 @@ pfutures.fit.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, ...)
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    return(pfutures.default(q, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho,
                             r = r, alphaT = alphaT, ...))
@@ -432,7 +432,7 @@ dfutures.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, r = 0.05, l
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(dfutures.default(x, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho, r = r,
                             alphaT = alphaT, ...))
@@ -457,7 +457,7 @@ dfutures.fit.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, ...)
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    return(dfutures.default(x, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho,
                             r = r, alphaT = alphaT, ...))
@@ -524,7 +524,7 @@ qfutures.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, r = 0.05, l
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(qfutures.default(p, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho,
                             r = r, alphaT = alphaT, ...))
@@ -549,7 +549,7 @@ qfutures.fit.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, ...)
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    return(qfutures.default(p, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+    return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho,
                             r = r, alphaT = alphaT, ...))
@@ -618,7 +618,7 @@ rfutures.schwartz2factor <- function(n, time = 0.1, ttm = 1, object, r = 0.05, l
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(rfutures.default(n, ttm = ttm, s0 = s0, delta0 = delta0,
+    return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho, r = r,
                             alphaT = alphaT))
@@ -644,7 +644,7 @@ rfutures.fit.schwartz2factor <- function(n, time = 0.1, ttm = 1, object)
     r <- tmp.coef$r
     alphaT <- tmp.coef$alphaT
 
-    return(rfutures.default(n, ttm = ttm, s0 = s0, delta0 = delta0,
+    return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
                             mu = mu, sigmaS = sigmaS, kappa = kappa,
                             sigmaE = sigmaE, rho = rho,
                             r = r, alphaT = alphaT))
