@@ -19,12 +19,19 @@ VaRfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50, delta
         alphaT <- alpha - lambda / kappa
     }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(g0), delta0, mu, sigmaS,
+    ## compute spot log-price x0 (inverting futures pricing formula)
+    compA <- .A.schwartz2factor(kappa = kappa, sigmaS = sigmaS,
+                                sigmaE = sigmaE, rho = rho,
+                                alphaT = alphaT, r = r, ttm = ttm)
+    compB <- .B.schwartz2factor(kappa = kappa, ttm = ttm)
+    x0 <- log(g0) - compA - compB * delta0
+
+    ## compute and return VaR
+    mu.fut <- .mu.fut.schwartz2factor(x0, delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
                                       alphaT, r, time, ttm)
-
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho,
-                                            time, ttm)
+    sigma.fut <- sqrt(.sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE,
+                                                 rho, time, ttm))
 
     return(g0 * (log(g0) - mu.fut + sigma.fut * qnorm(level)))
 }
@@ -113,12 +120,20 @@ ESfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50, delta0
         alphaT <- alpha - lambda / kappa
     }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(g0), delta0, mu, sigmaS,
+    ## compute spot log-price x0 (inverting futures pricing formula)
+    compA <- .A.schwartz2factor(kappa = kappa, sigmaS = sigmaS,
+                                sigmaE = sigmaE, rho = rho,
+                                alphaT = alphaT, r = r, ttm = ttm)
+    compB <- .B.schwartz2factor(kappa = kappa, ttm = ttm)
+    x0 <- log(g0) - compA - compB * delta0
+
+    ## compute and return VaR
+    mu.fut <- .mu.fut.schwartz2factor(x0, delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
                                       alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE,
-                                            rho, time, ttm)
+    sigma.fut <- sqrt(.sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE,
+                                                 rho, time, ttm))
 
     return(g0 * (log(g0) - mu.fut +
                  sigma.fut * dnorm(qnorm(level)) / (1 - level)))

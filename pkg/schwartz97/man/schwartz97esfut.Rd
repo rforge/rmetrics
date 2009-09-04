@@ -11,8 +11,8 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  A function to compute the Expected Shortfall (ES) for futures contracts
-  for arbitrary confidence levels.
+  A function to approximate the Expected Shortfall (ES) for futures
+  contracts for arbitrary confidence levels.
 
 }
 
@@ -81,10 +81,10 @@
 % <---------------------------------------------------------------------->
 \value{
 
-  Expected shortfall (ES) (\code{numeric}) for arbitrary confidence
-  levels. \code{ESfutures} computes the potential conditional loss of a
-  futures contract for a time horizon \code{time} at the confidence
-  level \code{level}. See package vignette for details.
+  Approximative Expected shortfall (ES) (\code{numeric}) for arbitrary
+  confidence levels. \code{ESfutures} computes the potential conditional
+  loss of a futures contract for a time horizon \code{time} at the
+  confidence level \code{level}. See package vignette for details.
 
 }
 

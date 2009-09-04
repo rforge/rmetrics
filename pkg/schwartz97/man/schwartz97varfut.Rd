@@ -11,7 +11,7 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  A function to compute the Value at Risk (VaR) for futures contracts
+  A function to approximate Value at Risk (VaR) for futures contracts
   for arbitrary confidence levels.
 
 }
@@ -79,10 +79,10 @@
 % <---------------------------------------------------------------------->
 \value{
 
-  Value at Risk (VaR) (\code{numeric}) for arbitrary confidence
-  levels. \code{VaRfutures} computes the potential loss of a futures
-  contract for a time horizon \code{time} at the confidence level
-  \code{level}. See package vignette for details.
+  Approximate Value at Risk (VaR) (\code{numeric}) for arbitrary
+  confidence levels. \code{VaRfutures} computes the potential loss of a
+  futures contract for a time horizon \code{time} at the confidence
+  level \code{level}. See package vignette for details.
 
 }
 
