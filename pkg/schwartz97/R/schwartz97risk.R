@@ -2,11 +2,11 @@
 ## Compute risk measures
 
 setGeneric("VaRfutures",
-           function(level = 0.95, ttm = 1, object, ...)
+           function(level = 0.95, time = 0.1, ttm = 1, object, ...)
            standardGeneric("VaRfutures"),
            package = "schwartz97")
 
-VaRfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, delta0 = 0,
+VaRfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50, delta0 = 0,
                                mu = 0.1, sigmaS = 0.3, kappa = 1,
                                alpha = 0, sigmaE = 0.5, rho = 0.75,
                                r = 0.05, lambda = 0, alphaT = NULL)
@@ -16,24 +16,24 @@ VaRfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, del
                 "The mean-level of the convenience yield is set to zero.")
         alphaT <- 0
     }else if(missing(alphaT)){
-        alphaT = alpha - lambda / kappa
+        alphaT <- alpha - lambda / kappa
     }
 
     mu.fut <- .mu.fut.schwartz2factor(log(g0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm - deltat)
+                                      alphaT, r, time, ttm)
 
     sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho,
-                                            ttm - deltat)
+                                            time, ttm)
 
     return(g0 * (log(g0) - mu.fut + sigma.fut * qnorm(level)))
 }
 
-setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
-                                  object = "missing"),
+setMethod("VaRfutures", signature(level = "ANY", time = "ANY",
+                                  ttm = "ANY", object = "missing"),
           VaRfutures.default)
 
-VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object, r = 0.05,
+VaRfutures.schwartz2factor <- function(level = 0.95, time = 0.1, ttm = 1, object, r = 0.05,
                                        lambda = 0, alphaT = NULL)
 {
     tmp.coef <- coef(object)
@@ -45,7 +45,7 @@ VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, obje
     }else if(missing(alphaT)){
         alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
     }
-    g0 <- pricefutures(ttm, object, r = 0.05, alphaT = alphaT)
+    g0 <- pricefutures(ttm, object, r = r, alphaT = alphaT)
 
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
@@ -54,18 +54,19 @@ VaRfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, obje
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(VaRfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
+    return(VaRfutures(level = level, time = time, ttm = ttm, g0 = g0,
                       delta0 = delta0,
                       mu = mu, sigmaS = sigmaS, kappa = kappa,
                       sigmaE = sigmaE, rho = rho,
                       r = r, alphaT = alphaT))
 }
 
-setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
+setMethod("VaRfutures", signature(level = "ANY", time = "ANY",
+                                  ttm = "ANY",
                                   object = "schwartz2factor"),
           VaRfutures.schwartz2factor)
 
-VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object)
+VaRfutures.fit.schwartz2factor <- function(level = 0.95, time = 0.1, ttm = 1, object)
 {
     tmp.coef <- coef(object)
 
@@ -80,25 +81,26 @@ VaRfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, 
 
     g0 <- pricefutures(ttm, object)
 
-    return(VaRfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
+    return(VaRfutures(level = level, time = time, ttm = ttm, g0 = g0,
                       delta0 = delta0,
                       mu = mu, sigmaS = sigmaS, kappa = kappa,
                       sigmaE = sigmaE, rho = rho, r = r,
                       alphaT = alphaT))
 }
 
-setMethod("VaRfutures", signature(level = "ANY", ttm = "ANY",
+setMethod("VaRfutures", signature(level = "ANY", time = "ANY",
+                                  ttm = "ANY",
                                   object = "fit.schwartz2factor"),
           VaRfutures.fit.schwartz2factor)
 
 
 ## <---------- ---------- ---------- ---------- ---------- ---------->
 setGeneric("ESfutures",
-           function(level = 0.95, ttm = 1, object, ...)
+           function(level = 0.95, time = 0.1, ttm = 1, object, ...)
            standardGeneric("ESfutures"),
            package = "schwartz97")
 
-ESfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, delta0 = 0,
+ESfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50, delta0 = 0,
                               mu = 0.1, sigmaS = 0.3, kappa = 1,
                               alpha = 0, sigmaE = 0.5, rho = 0.75,
                               r = 0.05, lambda = 0, alphaT = NULL)
@@ -108,25 +110,25 @@ ESfutures.default <- function(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50, delt
                 "The mean-level of the convenience yield is set to zero.")
         alphaT <- 0
     }else if(missing(alphaT)){
-        alphaT = alpha - lambda / kappa
+        alphaT <- alpha - lambda / kappa
     }
 
     mu.fut <- .mu.fut.schwartz2factor(log(g0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm - deltat)
+                                      alphaT, r, time, ttm)
 
     sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE,
-                                            rho, ttm - deltat)
+                                            rho, time, ttm)
 
     return(g0 * (log(g0) - mu.fut +
                  sigma.fut * dnorm(qnorm(level)) / (1 - level)))
 }
 
-setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
-                                 object = "missing"),
+setMethod("ESfutures", signature(level = "ANY", time = "ANY",
+                                 ttm = "ANY", object = "missing"),
           ESfutures.default)
 
-ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object, r = 0.05,
+ESfutures.schwartz2factor <- function(level = 0.95, time = 0.1, ttm = 1, object, r = 0.05,
                                       lambda = 0, alphaT = NULL)
 {
     tmp.coef <- coef(object)
@@ -138,7 +140,7 @@ ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, objec
     }else if(missing(alphaT)){
         alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
     }
-    g0 <- pricefutures(ttm, object, r = 0.05, alphaT = alphaT)
+    g0 <- pricefutures(ttm, object, r = r, alphaT = alphaT)
 
     delta0 <- tmp.coef$delta0
     mu <- tmp.coef$mu
@@ -147,18 +149,18 @@ ESfutures.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, objec
     sigmaE <- tmp.coef$sigmaE
     rho <- tmp.coef$rho
 
-    return(ESfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
+    return(ESfutures(level = level, time = time, ttm = ttm, g0 = g0,
                      delta0 = delta0,
                      mu = mu, sigmaS = sigmaS, kappa = kappa,
                      sigmaE = sigmaE, rho = rho,
                      r = r, alphaT = alphaT))
 }
 
-setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
-                                  object = "schwartz2factor"),
+setMethod("ESfutures", signature(level = "ANY", time = "ANY",
+                                 ttm = "ANY", object = "schwartz2factor"),
           ESfutures.schwartz2factor)
 
-ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, object)
+ESfutures.fit.schwartz2factor <- function(level = 0.95, time = 0.1, ttm = 1, object)
 {
     tmp.coef <- coef(object)
 
@@ -173,13 +175,14 @@ ESfutures.fit.schwartz2factor <- function(level = 0.95, deltat = 0.1, ttm = 1, o
 
     g0 <- pricefutures(ttm, object)
 
-    return(ESfutures(level = level, deltat = deltat, ttm = ttm, g0 = g0,
+    return(ESfutures(level = level, time = time, ttm = ttm, g0 = g0,
                      delta0 = delta0,
                      mu = mu, sigmaS = sigmaS, kappa = kappa,
                      sigmaE = sigmaE, rho = rho, r = r,
                      alphaT = alphaT))
 }
 
-setMethod("ESfutures", signature(level = "ANY", ttm = "ANY",
+setMethod("ESfutures", signature(level = "ANY", time = "ANY",
+                                 ttm = "ANY",
                                  object = "fit.schwartz2factor"),
           ESfutures.fit.schwartz2factor)

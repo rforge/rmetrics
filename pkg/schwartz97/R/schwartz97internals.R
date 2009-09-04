@@ -62,15 +62,15 @@
 
 .mu.fut.schwartz2factor <- function(x0, delta0, mu, sigmaS,
                                     kappa, sigmaE, rho,
-                                    alpha, alphaT, r, ttm)
+                                    alpha, alphaT, r, time, ttm)
 {
   compA <- .A.schwartz2factor(kappa, sigmaS, sigmaE, rho,
-                              alphaT, r, ttm)
+                              alphaT, r, ttm - time)
 
-  compB <- .B.schwartz2factor(kappa, ttm)
+  compB <- .B.schwartz2factor(kappa, ttm - time)
 
   mu.state <- .mu.state.schwartz2factor(x0, delta0, mu, sigmaS, kappa,
-                                        alpha, sigmaE, rho, ttm)
+                                        alpha, sigmaE, rho, time)
 
   prod1 <- matrix(c(mu.state, 1), nrow = 1)
   prod2 <- matrix(c(1, compB, compA), ncol = 1)
@@ -78,11 +78,11 @@
   return(as.numeric(prod1 %*% prod2))
 }
 
-.sigma.fut.schwartz2factor <- function(sigmaS, kappa, sigmaE, rho, ttm)
+.sigma.fut.schwartz2factor <- function(sigmaS, kappa, sigmaE, rho, time, ttm)
 {
-    compB <- .B.schwartz2factor(kappa, ttm)
+    compB <- .B.schwartz2factor(kappa, ttm - time)
     sigma.state <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE,
-                                                rho, ttm)
+                                                rho, time)
 
     prod <- matrix(c(1, compB), ncol = 1)
     return(as.numeric(t(prod) %*% sigma.state %*% prod))

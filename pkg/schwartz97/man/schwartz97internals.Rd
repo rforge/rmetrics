@@ -28,9 +28,9 @@
 .B.schwartz2factor(kappa, ttm)
 
 .mu.fut.schwartz2factor(x0, delta0, mu, sigmaS, kappa, sigmaE, rho,
-                        alpha, alphaT, r, ttm)
+                        alpha, alphaT, r, time, ttm)
 
-.sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, ttm)
+.sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
 
 .sigma.opt.schwartz2factor(time = 0.5, Time = 1, kappa = 1,
                            sigmaS = 0.3, sigmaE = 0.5, rho = 0.75)

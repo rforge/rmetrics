@@ -2,12 +2,14 @@
 show.schwartz2factor <- function(object)
 {
     cat("\n----------------------------------------------------------------\n")
-    cat("Schwartz97 2 factor model:\n\n")
+    cat("Schwartz97 two-factor model:\n\n")
+    cat("SDE\n")
     cat("d S_t     = S_t   * (mu - delta_t)    * dt + S_t * sigmaS * dW_1\n")
     cat("d delta_t = kappa * (alpha - delta_t) * dt + sigmaE * dW_2\n")
     cat("E(dW_1 * dW_2) = rho * dt\n\n")
     tmp.coef <- coef(object)
     ## tmp.coef.formatted <- sapply(tmp.coef, function(x)sprintf("% .3E", x))
+    cat("Parameters\n")
     tmp.coef.formatted <- sapply(tmp.coef, as.character)
     invisible(apply(cbind(names(tmp.coef), tmp.coef.formatted), 1,
                     function(x, max.len)cat(x[1], rep(" ", max.len - nchar(x[1])), ": ", x[2], "\n", sep = ""),
@@ -23,12 +25,14 @@ setMethod("show", signature(object = "schwartz2factor"), show.schwartz2factor)
 show.fit.schwartz2factor <- function(object)
 {
     cat("\n----------------------------------------------------------------\n")
-    cat("Fitted Schwartz97 2 factor model:\n\n")
+    cat("Fitted Schwartz97 two-factor model:\n\n")
+    cat("SDE\n")
     cat("d S_t     = S_t   * (mu - delta_t)    * dt + S_t * sigmaS * dW_1\n")
     cat("d delta_t = kappa * (alpha - delta_t) * dt + sigmaE * dW_2\n")
     cat("E(dW_1 * dW_2) = rho * dt\n\n")
     tmp.coef <- coef(object)
     ## tmp.coef.formatted <- sapply(tmp.coef, function(x)sprintf("% .3E", x))
+    cat("Parameters\n")
     tmp.coef.formatted <- sapply(tmp.coef, as.character)
     invisible(apply(cbind(names(tmp.coef), tmp.coef.formatted), 1,
                     function(x, max.len)cat(x[1], rep(" ", max.len - nchar(x[1])), ": ", x[2], "\n", sep = ""),

@@ -3,24 +3,24 @@
 \title{Schwartz two-factor Model: Distribution of Futures Prices}
 
 \alias{pfutures}
-\alias{pfutures,ANY,ANY,missing-method}
-\alias{pfutures,ANY,ANY,schwartz2factor-method}
-\alias{pfutures,ANY,ANY,fit.schwartz2factor-method}
+\alias{pfutures,ANY,ANY,ANY,missing-method}
+\alias{pfutures,ANY,ANY,ANY,schwartz2factor-method}
+\alias{pfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{dfutures}
-\alias{dfutures,ANY,ANY,missing-method}
-\alias{dfutures,ANY,ANY,schwartz2factor-method}
-\alias{dfutures,ANY,ANY,fit.schwartz2factor-method}
+\alias{dfutures,ANY,ANY,ANY,missing-method}
+\alias{dfutures,ANY,ANY,ANY,schwartz2factor-method}
+\alias{dfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{qfutures}
-\alias{qfutures,ANY,ANY,missing-method}
-\alias{qfutures,ANY,ANY,schwartz2factor-method}
-\alias{qfutures,ANY,ANY,fit.schwartz2factor-method}
+\alias{qfutures,ANY,ANY,ANY,missing-method}
+\alias{qfutures,ANY,ANY,ANY,schwartz2factor-method}
+\alias{qfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
 
 \alias{rfutures}
-\alias{rfutures,ANY,ANY,missing-method}
-\alias{rfutures,ANY,ANY,schwartz2factor-method}
-\alias{rfutures,ANY,ANY,fit.schwartz2factor-method}
+\alias{rfutures,ANY,ANY,ANY,missing-method}
+\alias{rfutures,ANY,ANY,ANY,schwartz2factor-method}
+\alias{rfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
 
 
 % <---------------------------------------------------------------------->
@@ -34,41 +34,41 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{dfutures}{ANY,ANY,missing}(x, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{dfutures}{ANY,ANY,ANY,missing}(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{dfutures}{ANY,ANY,schwartz2factor}(x, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{dfutures}{ANY,ANY,ANY,schwartz2factor}(x, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{dfutures}{ANY,ANY,fit.schwartz2factor}(x, ttm = 1, object, \dots)
+\S4method{dfutures}{ANY,ANY,ANY,fit.schwartz2factor}(x, time = 0.1, ttm = 1, object, \dots)
 
 
-\S4method{pfutures}{ANY,ANY,missing}(q, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{pfutures}{ANY,ANY,ANY,missing}(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{pfutures}{ANY,ANY,schwartz2factor}(q, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{pfutures}{ANY,ANY,ANY,schwartz2factor}(q, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{pfutures}{ANY,ANY,fit.schwartz2factor}(q, ttm = 1, object, \dots)
+\S4method{pfutures}{ANY,ANY,ANY,fit.schwartz2factor}(q, time = 0.1, ttm = 1, object, \dots)
 
-\S4method{qfutures}{ANY,ANY,missing}(p, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{qfutures}{ANY,ANY,ANY,missing}(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, \dots)
 
-\S4method{qfutures}{ANY,ANY,schwartz2factor}(p, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
+\S4method{qfutures}{ANY,ANY,ANY,schwartz2factor}(p, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, \dots)
 
-\S4method{qfutures}{ANY,ANY,fit.schwartz2factor}(p, ttm = 1, object, \dots)
+\S4method{qfutures}{ANY,ANY,ANY,fit.schwartz2factor}(p, time = 0.1, ttm = 1, object, \dots)
 
-\S4method{rfutures}{ANY,ANY,missing}(n, ttm = 1, s0 = 50, delta0 = 0,
+\S4method{rfutures}{ANY,ANY,ANY,missing}(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0,
          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{rfutures}{ANY,ANY,schwartz2factor}(n, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL)
+\S4method{rfutures}{ANY,ANY,ANY,schwartz2factor}(n, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{rfutures}{ANY,ANY,fit.schwartz2factor}(n, ttm = 1, object)
+\S4method{rfutures}{ANY,ANY,ANY,fit.schwartz2factor}(n, time = 0.1, ttm = 1, object)
 
 }
 
@@ -78,6 +78,8 @@
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
+  \item{time}{Time where the futures process is evaluated
+    (relative to time zero).}
   \item{ttm}{Time to maturity.}
   \item{object}{An object inheriting from class
     \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
@@ -98,7 +100,7 @@
   \item{r}{Instantaneous risk-free interest rate.}
   \item{\dots}{Arguments to be passed to the functions
     \code{\link[dnorm]{d/p/q-norm}}.}
-  
+
 }
 
 % <---------------------------------------------------------------------->
@@ -148,16 +150,16 @@
 model <- schwartz2factor()
 
 ## Probability
-pfutures(q = 10 * 3:9, ttm = 2, model, lambda = 0.01)
+pfutures(q = 10 * 3:9, time = 0.5, ttm = 2, model, lambda = 0.01)
 
 ## Density
-dfutures(x = c(20, 40, 100), ttm = 2, model, lambda = 0.01)
+dfutures(x = c(20, 40, 100), time = 0.5, ttm = 2, model, lambda = 0.01)
 
 ## Quantile
-qfutures(p = 0.1 * 2:5, ttm = 10, model, lambda = 0.01)
+qfutures(p = 0.1 * 2:5, time = 0.5, ttm = 10, model, lambda = 0.01)
 
 ## Sample
-sim <- rfutures(n = 1000, ttm = 5, model, lambda = 0.01)
+sim <- rfutures(n = 1000, time = 0.5, ttm = 5, model, lambda = 0.01)
 hist(sim)
 
 }

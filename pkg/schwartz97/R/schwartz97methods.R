@@ -288,11 +288,11 @@ setMethod("simstate", signature(n = "ANY", time = "ANY",
 
 ### < ====================================================================== >
 setGeneric("pfutures",
-           function(q, ttm = 1, object, ...)
+           function(q, time = 0.1, ttm = 1, object, ...)
            standardGeneric("pfutures"))
 
 ### < ---------------------------------------------------------------------- >
-pfutures.default <- function(q, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
+pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75,
                              r = 0.05, lambda = 0, alphaT = NULL, ...)
@@ -309,18 +309,18 @@ pfutures.default <- function(q, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
     mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm)
+                                      alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, ttm)
+    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
 
     return(pnorm(log(q), mean = mu.fut, sd = sqrt(sigma.fut), ...))
 }
 
-setMethod("pfutures", signature(q = "ANY", ttm = "ANY", object = "missing"),
+setMethod("pfutures", signature(q = "ANY", time ="ANY", ttm = "ANY", object = "missing"),
           pfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-pfutures.schwartz2factor <- function(q, ttm = 1, object, r = 0.05, lambda = 0,
+pfutures.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
                                      alphaT = NULL, ...)
 {
     tmp.coef <- coef(object)
@@ -348,12 +348,12 @@ pfutures.schwartz2factor <- function(q, ttm = 1, object, r = 0.05, lambda = 0,
                             alphaT = alphaT, ...))
 }
 
-setMethod("pfutures", signature(q = "ANY", ttm = "ANY",
+setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
                                 object = "schwartz2factor"),
           pfutures.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
-pfutures.fit.schwartz2factor <- function(q, ttm = 1, object, ...)
+pfutures.fit.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, ...)
 {
     tmp.coef <- coef(object)
 
@@ -372,17 +372,17 @@ pfutures.fit.schwartz2factor <- function(q, ttm = 1, object, ...)
                             r = r, alphaT = alphaT, ...))
 }
 
-setMethod("pfutures", signature(q = "ANY", ttm = "ANY",
+setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
                                 object = "fit.schwartz2factor"),
           pfutures.fit.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("dfutures",
-           function(x, ttm = 1, object, ...)
+           function(x, time = 0.1, ttm = 1, object, ...)
            standardGeneric("dfutures"))
 
-dfutures.default <- function(x, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
+dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
                              lambda = 0, alphaT = NULL, ...)
@@ -399,18 +399,18 @@ dfutures.default <- function(x, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
     mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm)
+                                      alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, ttm)
+    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
 
     return(dnorm(log(x), mean = mu.fut, sd = sqrt(sigma.fut), ...) / x)
 }
 
-setMethod("dfutures", signature(x = "ANY", ttm = "ANY", object = "missing"),
+setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
           dfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-dfutures.schwartz2factor <- function(x, ttm = 1, object, r = 0.05, lambda = 0,
+dfutures.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
                                      alphaT = NULL, ...)
 {
     tmp.coef <- coef(object)
@@ -439,12 +439,12 @@ dfutures.schwartz2factor <- function(x, ttm = 1, object, r = 0.05, lambda = 0,
 
 }
 
-setMethod("dfutures", signature(x = "ANY", ttm = "ANY",
+setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
                                 object = "schwartz2factor"),
           dfutures.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
-dfutures.fit.schwartz2factor <- function(x, ttm = 1, object, ...)
+dfutures.fit.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, ...)
 {
     tmp.coef <- coef(object)
 
@@ -463,18 +463,18 @@ dfutures.fit.schwartz2factor <- function(x, ttm = 1, object, ...)
                             r = r, alphaT = alphaT, ...))
 }
 
-setMethod("dfutures", signature(x = "ANY", ttm = "ANY",
+setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
                                 object = "fit.schwartz2factor"),
           dfutures.fit.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("qfutures",
-           function(p, ttm = 1, object, ...)
+           function(p, time = 0.1, ttm = 1, object, ...)
            standardGeneric("qfutures"),
            package = "schwartz97")
 
-qfutures.default <- function(p, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
+qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75,
                              r = 0.05, lambda = 0, alphaT = NULL, ...)
@@ -491,18 +491,18 @@ qfutures.default <- function(p, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
     mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm)
+                                      alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, ttm)
+    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
 
     return(exp(qnorm(p = p, mean = mu.fut, sd = sqrt(sigma.fut), ...)))
 }
 
-setMethod("qfutures", signature(p = "ANY", ttm = "ANY", object = "missing"),
+setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
           qfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-qfutures.schwartz2factor <- function(p, ttm = 1, object, r = 0.05, lambda = 0,
+qfutures.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
                                      alphaT = NULL, ...)
 {
     tmp.coef <- coef(object)
@@ -531,12 +531,12 @@ qfutures.schwartz2factor <- function(p, ttm = 1, object, r = 0.05, lambda = 0,
 
 
 }
-setMethod("qfutures", signature(p = "ANY", ttm = "ANY",
+setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
                                 object = "schwartz2factor"),
           qfutures.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
-qfutures.fit.schwartz2factor <- function(p, ttm = 1, object, ...)
+qfutures.fit.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, ...)
 {
     tmp.coef <- coef(object)
 
@@ -555,7 +555,7 @@ qfutures.fit.schwartz2factor <- function(p, ttm = 1, object, ...)
                             r = r, alphaT = alphaT, ...))
 }
 
-setMethod("qfutures", signature(p = "ANY", ttm = "ANY",
+setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
                                 object = "fit.schwartz2factor"),
           qfutures.fit.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
@@ -563,11 +563,11 @@ setMethod("qfutures", signature(p = "ANY", ttm = "ANY",
 
 ### < ====================================================================== >
 setGeneric("rfutures",
-           function(n, ttm = 1, object, ...)
+           function(n, time = 0.1, ttm = 1, object, ...)
            standardGeneric("rfutures"),
            package = "schwartz97")
 
-rfutures.default <- function(n, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
+rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
                              lambda = 0, alphaT = NULL)
@@ -584,18 +584,18 @@ rfutures.default <- function(n, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
     mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
                                       kappa, sigmaE, rho, alpha,
-                                      alphaT, r, ttm)
+                                      alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, ttm)
+    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
 
     return(exp(rnorm(n = n, mean = mu.fut, sd = sqrt(sigma.fut))))
 }
 
-setMethod("rfutures", signature(n = "ANY", ttm = "ANY", object = "missing"),
+setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
           rfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-rfutures.schwartz2factor <- function(n, ttm = 1, object, r = 0.05, lambda = 0,
+rfutures.schwartz2factor <- function(n, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
                                      alphaT = NULL)
 {
     tmp.coef <- coef(object)
@@ -625,12 +625,12 @@ rfutures.schwartz2factor <- function(n, ttm = 1, object, r = 0.05, lambda = 0,
 
 }
 
-setMethod("rfutures", signature(n = "ANY", ttm = "ANY",
+setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY",
                                 object = "schwartz2factor"),
           rfutures.schwartz2factor)
 ### < ---------------------------------------------------------------------- >
 
-rfutures.fit.schwartz2factor <- function(n, ttm = 1, object)
+rfutures.fit.schwartz2factor <- function(n, time = 0.1, ttm = 1, object)
 {
     tmp.coef <- coef(object)
 
@@ -651,7 +651,7 @@ rfutures.fit.schwartz2factor <- function(n, ttm = 1, object)
 
 }
 
-setMethod("rfutures", signature(n = "ANY", ttm = "ANY",
+setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY",
                                 object = "fit.schwartz2factor"),
           rfutures.fit.schwartz2factor)
 ### < ---------------------------------------------------------------------- >

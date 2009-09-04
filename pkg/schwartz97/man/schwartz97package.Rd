@@ -11,13 +11,13 @@
 \description{
   
   This package contains an implementation of the Schwartz' two-factor
-  commodity model. The model gives the joint dynamics of the the spot
-  price and the spot convenience yield. The parameter estimation
-  function constitutes the core of this package. Once the parameters are
-  known, futures and European call and put options can be priced, risk
-  measures can be calculated and the usual distribution operations
-  d/p/q/r can be carried out on the state varibles as well as on the
-  futures price.
+  commodity model, that is, the joint dynamics of the the spot price and
+  the spot convenience according to Schwartz (1997). The parameter
+  estimation function constitutes the core of this package. Once the
+  parameters are known, futures and European call and put options can be
+  priced, risk measures can be calculated and the usual distribution
+  operations d/p/q/r can be carried out on the state varibles as well as
+  on the futures price.
 
 }
 % <---------------------------------------------------------------------->
@@ -26,7 +26,7 @@
 Package: \tab schwartz97\cr
 Type: \tab Package\cr
 Version: \tab 0.0.1\cr
-Date: \tab 2009-06-29\cr
+Date: \tab 2009-09-03\cr
 License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 }
 % <---------------------------------------------------------------------->

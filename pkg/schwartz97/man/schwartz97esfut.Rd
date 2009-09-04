@@ -3,9 +3,9 @@
 \title{Schwartz two-factor Model: Expected Shortfall for Futures Prices}
 
 \alias{ESfutures}
-\alias{ESfutures,ANY,ANY,missing-method}
-\alias{ESfutures,ANY,ANY,schwartz2factor-method}
-\alias{ESfutures,ANY,ANY,fit.schwartz2factor-method}
+\alias{ESfutures,ANY,ANY,ANY,missing-method}
+\alias{ESfutures,ANY,ANY,ANY,schwartz2factor-method}
+\alias{ESfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
 
 
 % <---------------------------------------------------------------------->
@@ -19,22 +19,22 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{ESfutures}{ANY,ANY,missing}(level = 0.95, deltat = 0.1, ttm = 1, g0 = 50,
+\S4method{ESfutures}{ANY,ANY,ANY,missing}(level = 0.95, time = 0.1, ttm = 1, g0 = 50,
           delta0 = 0, mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
           sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{ESfutures}{ANY,ANY,schwartz2factor}(level = 0.95, deltat = 0.1, ttm = 1, object, r = 0.05,
+\S4method{ESfutures}{ANY,ANY,ANY,schwartz2factor}(level = 0.95, time = 0.1, ttm = 1, object, r = 0.05,
           lambda = 0, alphaT = NULL)
 
-\S4method{ESfutures}{ANY,ANY,fit.schwartz2factor}(level = 0.95,
-          deltat = 0.1, ttm = 1, object)
+\S4method{ESfutures}{ANY,ANY,ANY,fit.schwartz2factor}(level = 0.95,
+          time = 0.1, ttm = 1, object)
 
 }
 
 % <---------------------------------------------------------------------->
 \arguments{
   \item{level}{Vector containing confidence levels.}
-    \item{deltat}{Time horizon for ES-analysis (see package vignette).}
+  \item{time}{Time horizon for ES-analysis (see package vignette).}
   \item{ttm}{Time to maturity of the futures contract.}
   \item{object}{An object of class
     \code{\link[=schwartz2factor-class]{schwartz2factor}} or
@@ -59,7 +59,7 @@
 
 % <---------------------------------------------------------------------->
 \details{
-  
+
   The market price of convenience yield risk can either be specified
   explicitly by \code{lambda} or implicitly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
@@ -83,7 +83,7 @@
 
   Expected shortfall (ES) (\code{numeric}) for arbitrary confidence
   levels. \code{ESfutures} computes the potential conditional loss of a
-  futures contract for a time horizon \code{deltat} at the confidence
+  futures contract for a time horizon \code{time} at the confidence
   level \code{level}. See package vignette for details.
 
 }
@@ -110,11 +110,11 @@
 }
 % <---------------------------------------------------------------------->
 \examples{
-ESfutures(level = 0.95, deltat = 0.1, ttm = 0.5, g0 = 45, alphaT = 0)
+ESfutures(level = 0.95, time = 0.1, ttm = 0.5, g0 = 45, alphaT = 0)
 
-## Create a "schwartz2factor"-obect
+## Create a "schwartz2factor"-object
 model <- schwartz2factor()
-ESfutures(level = c(0.9, 0.95, 0.99), deltat = 0.1, ttm = 0.5,
+ESfutures(level = c(0.9, 0.95, 0.99), time = 0.1, ttm = 0.5,
           object = model, alphaT = 0)
 
 }
