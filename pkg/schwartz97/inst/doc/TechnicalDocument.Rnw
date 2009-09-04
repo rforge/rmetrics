@@ -193,8 +193,10 @@ for the distribution (\ref{distrG}) of the futures price become
 % <============================================================>
 The log-returns of futures contracts are normally distributed since in
 our model the futures prices are log-normal. Using this fact,
-closed-form solutions can be obtained for both, value at risk (VaR)
-and expected shortfall (ES).
+closed-form solutions can be obtained for both, approximate value at
+risk (VaR) and approximate expected shortfall (ES)\footnote{It is an
+  approximation in the sense that the calculations are based on
+  \textit{log}-returns.}.
 
 At time zero and considering a time period $\Delta t$, the
 \textit{negative} log-return or loss $l$ of a futures contract with
