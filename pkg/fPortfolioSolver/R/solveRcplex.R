@@ -27,6 +27,7 @@
 solveRcplex <-
     function(data, spec, constraints)
 {
+    # implemented by Stefan Theussl <stefan.theussl AT wu.ac.at>
     # Description:
     #   Portfolio interface to solver Rcplex
 
@@ -48,12 +49,18 @@ solveRcplex <-
 
     # Solve:
     if(nAssets == 2) {
-
-        # Solve two Assets Portfolio Analytically:
-        ans = .mvSolveTwoAssets(Data, spec, constraints)
-        # ... this is only  for 'unlimited' LongOnly constraints,
-        # box and group constraints are discarded here.
-
+       if(getType(spec) == "MV"){
+         # Solve two Assets Portfolio Analytically:
+         ans = .mvSolveTwoAssets(Data, spec, constraints)
+         # ... this is only  for 'unlimited' LongOnly constraints,
+         # box and group constraints are discarded here.
+       }
+       else {
+         # Solve two Assets Portfolio Analytically:
+         # ... this is only thhought for 'unlimited' LongOnly Constraints
+         # box and group constraints are discarded here.
+         ans = .cvarSolveTwoAssets(Data, spec, constraints)
+       }
     } else {
 
         # Compile Arguments for Solver:
@@ -65,7 +72,17 @@ solveRcplex <-
             dvec = args$dvec,
             Amat = args$Amat,
             bvec = args$bvec,
-            dir = args$dir)
+            dir = args$dir,
+            lb = args$lb,
+            ub = args$ub,
+            types = args$types,
+            objsense = args$objsense,
+            nScenarios = args$nScenarios,
+            nAssets = args$nAssets,
+            targetReturn = args$targetReturn,
+            Alpha = args$Alpha,
+            spec = spec
+          )
 
         # Save Arguments:
         ans$optim$args = args
@@ -98,46 +115,160 @@ solveRcplex <-
     # FUNCTION:
 
     # Data and Constraints as S4 Objects:
+    # Almost as usual
     Data = portfolioData(data, spec)
     data <- getSeries(Data)
-    Sigma = getSigma(Data)
     nAssets = getNAssets(Data)
 
-    # Set up A_mat of Constraints:
-    eqsumW = eqsumWConstraints(Data, spec, constraints)
-    minsumW = minsumWConstraints(Data, spec, constraints)
-    maxsumW = maxsumWConstraints(Data, spec, constraints)
-    Amat = rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
-    if(!is.null(minsumW)) Amat = rbind(Amat, minsumW[, -1])
-    if(!is.null(maxsumW)) Amat = rbind(Amat, -maxsumW[, -1])
+    # What variable Types, All Continuous:
+    types = NULL
+    
+    # Additionally for LP problems
+    nScenarios = nrow(getSeries(Data))
+    targetReturn = getTargetReturn(spec)
+    Alpha = getAlpha(spec)
 
-    # Set up Vector A_mat >= bvec of Constraints:
-    minW = minWConstraints(Data, spec, constraints)
-    maxW = maxWConstraints(Data, spec, constraints)
-    bvec = c(eqsumW[, 1], minW, -maxW)
-    if(!is.null(minsumW)) bvec = c(bvec, minsumW[, 1])
-    if(!is.null(maxsumW)) bvec = c(bvec, -maxsumW[, 1])
+    # get optimization type
+    optType <- getType(spec)
 
-    # Part (meq=1) or Full (meq=2) Investment, the Default ?
-    meq = nrow(eqsumW)
+    if(optType == "MV"){
 
-    # Directions:
-    dir = c(
-        rep("E", times = meq),
-        rep("G", times = length(bvec) - meq))
+      # for QP problems we also need the covariance matrix
+      Sigma = getSigma(Data)
+    
+      # Set up A_mat of Constraints:
+      eqsumW = eqsumWConstraints(Data, spec, constraints)
+      minsumW = minsumWConstraints(Data, spec, constraints)
+      maxsumW = maxsumWConstraints(Data, spec, constraints)
+      mat = rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
+      if(!is.null(minsumW)) mat = rbind(mat, minsumW[, -1])
+      if(!is.null(maxsumW)) mat = rbind(mat, -maxsumW[, -1])
 
+      # Set up Vector mat >= rhs of Constraints:
+      minW = minWConstraints(Data, spec, constraints)
+      maxW = maxWConstraints(Data, spec, constraints)
+      rhs = c(eqsumW[, 1], minW, -maxW)
+      if(!is.null(minsumW)) rhs = c(rhs, minsumW[, 1])
+      if(!is.null(maxsumW)) rhs = c(rhs, -maxsumW[, 1])
+
+      # Part (meq=1) or Full (meq=2) Investment, the Default ?
+      meq = nrow(eqsumW)
+
+      # Directions:
+      dir = c(
+        rep("==", times = meq),
+        rep(">=", times = length(rhs) - meq))
+
+      # additional in objective function set linear objectives to 0
+      obj <- rep(0, nAssets)
+
+      # Should I minimize or maximize ?
+      objsense = "min"
+
+      # use standard bounds
+      bounds <- NULL
+
+    } else {
+      # CVaR
+      # FIXME: if(optType == "xxxx") { ?
+
+      # Objective Function:
+      objNames = c("VaR", paste("e", 1:nScenarios, sep = ""), colnames(data))
+      obj = c(1, -rep(1/(Alpha*nScenarios), nScenarios), rep(0, nAssets))
+      names(obj) = objNames
+  
+      # The A_equal Equation Constraints: A_eq %*% x == a_eq
+      eqsumW = eqsumWConstraints(Data, spec, constraints)
+      Aeq = cbind(matrix(0, ncol = 1+nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+      aeq = eqsumW[, 1]
+      deq = rep("==", nrow(eqsumW))
+  
+      # The VaR Equation Constraints:  (1 + diag + Returns) %*% (VaR,es,W)  >= 0
+      Avar = cbind(
+          matrix(rep(-1, nScenarios), ncol = 1),
+          diag(nScenarios),
+          getDataPart(getSeries(Data)) )
+      avar = rep(0, nrow(Avar))
+      dvar = rep(">=", nrow(Avar))
+  
+      # The e_s > = 0 Equation Constraints:
+      Aes = cbind(
+          matrix(rep(0, nScenarios), ncol = 1),
+          diag(nScenarios),
+          matrix(0, nrow = nScenarios, ncol = nAssets) )
+      aes = rep(0, nrow(Aes))
+      des = rep(">=", nrow(Aes))
+  
+      # Group Constraints: A W >= a
+      minsumW = minsumWConstraints(Data, spec, constraints)
+      if (is.null(minsumW)){
+          Aminsum = NULL
+          aminsum = NULL
+          dminsum = NULL
+      } else {
+          Aminsum = cbind(
+              matrix(0, nrow = nrow(minsumW), ncol = 1+nScenarios),
+              minsumW[, -1, drop = FALSE] )
+          aminsum = minsumW[, 1]
+          dminsum  = rep(">=", nrow(minsumW))
+      }
+  
+      # Group Constraints: A W <= b
+      maxsumW = maxsumWConstraints(Data, spec, constraints)
+      if (is.null(maxsumW)){
+          Amaxsum = NULL
+          amaxsum = NULL
+          dmaxsum = NULL
+      } else {
+          Amaxsum = cbind(
+              matrix(0, nrow = nrow(maxsumW), ncol = 1+nScenarios),
+              maxsumW[, -1, drop = FALSE] )
+          amaxsum = maxsumW[, 1]
+          dmaxsum  = rep("<=", nrow(maxsumW))
+      }
+  
+      # Putting all together:
+      mat = rbind(Aeq, Avar, Aes, Aminsum, Amaxsum)
+      rhs = c(aeq, avar, aes, aminsum, amaxsum)
+      dir = c(deq, dvar, des, dminsum, dmaxsum)
+  
+      # Box Constraints: Upper and Lower Bounds as listn required ...
+      minW = minWConstraints(Data, spec, constraints)
+      maxW = maxWConstraints(Data, spec, constraints)
+      nInd = 1:(1+nScenarios+nAssets)
+      bounds = list(
+          lower = list(ind = nInd, val = c(rep(-Inf, 1+nScenarios), minW)),
+          upper = list(ind = nInd, val = c(rep( Inf, 1+nScenarios), maxW)) )
+    
+      # Should I minimize or maximize ?
+      objsense = "max"
+
+      # Further arguments
+      Sigma <- NULL
+    }
+
+    .as_Rcplex_sense <- function(x) {
+      TABLE <- c("L", "L", "G", "G", "E")
+      names(TABLE) <- c("<", "<=", ">", ">=", "==")
+      TABLE[x]
+    }
+    
     # Return Value:
+    ## FIXME: bound length is equal to the number of declared objective variables
     list(
-        Dmat = Sigma, dvec = rep(0, nAssets),
-        Amat = Amat, bvec = bvec, dir = dir)
+         dvec = obj, Amat = mat, bvec = rhs, Dmat = Sigma,
+         lb = Rglpk:::as.glp_bounds.list(bounds, length(obj))$lower,
+         ub = Rglpk:::as.glp_bounds.list(bounds, length(obj))$upper,
+         dir = .as_Rcplex_sense(dir), objsense = objsense, types = types,
+         nScenarios = nScenarios, nAssets = nAssets,
+         targetReturn = targetReturn, Alpha = Alpha)
 }
 
 
 ################################################################################
 
-
 .rcplex <-
-    function(Dmat, dvec, Amat, bvec, dir)
+    function(Dmat, dvec, Amat, bvec, dir, lb, ub, types, objsense, nScenarios, nAssets, targetReturn, Alpha, spec)
 {
     # Description:
     #   CPLEX solver function
@@ -189,12 +320,12 @@ solveRcplex <-
                             bvec = bvec,
                             Qmat = Dmat,
                             sense = dir,
+                            objsense = objsense,
+                            vtype = types,
+                            lb = lb,
+                            ub = ub,
                             control = list(trace = 0, round = 1)
                             )
-
-    # Set Tiny Weights to Zero:
-    weights = .checkWeights(optim$xopt)
-    attr(weights, "invest") = sum(weights)
 
     ## Simple db for "ok" status results:
     ok_status_db <-
@@ -218,9 +349,18 @@ solveRcplex <-
                                         # tolerance specified by paramaters
           )
     status <- ifelse(optim$status %in% ok_status_db, 0, status)
-    
-    # Compose Output List:
-    ans = list(
+
+    ## return depends on what we want to optimize (for the time being this is an 'if' clause)
+    optType <- getType(spec)
+
+    if(optType == "MV"){
+
+      # Set Tiny Weights to Zero:
+      weights = .checkWeights(optim$xopt)
+      attr(weights, "invest") = sum(weights)
+
+      # Compose Output List:
+      ans = list(
         type = "MV",
         solver = "solveRcplex",
         optim = optim,
@@ -230,7 +370,25 @@ solveRcplex <-
         objective = sqrt(weights %*% Dmat %*% weights)[[1,1]],
         status = status,
         message = NA)
+      
+    } else {
+     # Result:
+     # Extract Weights:
+      weights = .checkWeights(optim$xopt[-(1:(nScenarios+1))])
+      attr(weights, "invest") = sum(weights)
 
+      ans <- list(
+        solver = "solveRcplex",
+        optim = optim,
+        weights = weights,
+        targetReturn = targetReturn,
+        targetRisk = -optim$obj,
+        objective = -optim$obj,
+        status = status,
+        message = NA)
+
+    }
+    
     # Return Value:
     ans
 }
