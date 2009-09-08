@@ -63,6 +63,8 @@ int check_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
 void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
 		unsigned long long inp_incr, unsigned long long inp_seed);
 void get_seed_congruRand(unsigned long long *out_seed);
-void get_state_congru(double *pmod, double *pmult, double *pincr, double *pseed);
-void put_state_congru(double *pmod, double *pmult, double *pincr, double *pseed);
+
+void get_state_congru(char **params, char **seed);
+void check_state_congru(char **params, char **seed, int *err);
+void put_state_congru(char **params, char **seed);
 

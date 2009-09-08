@@ -119,33 +119,33 @@ void get_seed_congruRand(unsigned long long *out_seed)
 }
 
 // .C entry point
-void get_state_congru(double *pmod, double *pmult, double *pincr, double *pseed)
+void get_state_congru(char **params, char **seed)
 {
-	*pmod = (double) mod;
-	*pmult = (double) mult;
-	*pincr = (double) incr;
-	*pseed = (double) congru_seed;
+	sprintf(params[0], "%lld", mod);
+	sprintf(params[1], "%lld", mult);
+	sprintf(params[2], "%lld", incr);
+	sprintf(seed[0], "%lld", congru_seed);
 }
 
 // .C entry point
-void check_state_congru(double *pmod, double *pmult, double *pincr, double *pseed, int *err)
+void check_state_congru(char **params, char **seed, int *err)
 {
 	unsigned long long inp_mod, inp_mult, inp_incr, inp_seed;
-	inp_mod = (unsigned long long) *pmod;
-	inp_mult = (unsigned long long) *pmult;
-	inp_incr = (unsigned long long) *pincr;
-	inp_seed = (unsigned long long) *pseed;
+	sscanf(params[0], "%lld", &inp_mod);
+	sscanf(params[1], "%lld", &inp_mult);
+	sscanf(params[2], "%lld", &inp_incr);
+	sscanf(seed[0], "%lld", &inp_seed);
 	*err = check_congruRand(inp_mod, inp_mult, inp_incr, inp_seed);
 }
 
 // .C entry point
-void put_state_congru(double *pmod, double *pmult, double *pincr, double *pseed)
+void put_state_congru(char **params, char **seed)
 {
 	unsigned long long inp_mod, inp_mult, inp_incr, inp_seed;
-	inp_mod = (unsigned long long) *pmod;
-	inp_mult = (unsigned long long) *pmult;
-	inp_incr = (unsigned long long) *pincr;
-	inp_seed = (unsigned long long) *pseed;
+	sscanf(params[0], "%lld", &inp_mod);
+	sscanf(params[1], "%lld", &inp_mult);
+	sscanf(params[2], "%lld", &inp_incr);
+	sscanf(seed[0], "%lld", &inp_seed);
 	set_congruRand(inp_mod, inp_mult, inp_incr, inp_seed);
 }
 

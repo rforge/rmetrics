@@ -57,7 +57,7 @@ set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed
 			parameters <- c(mod=dots$mod, mult=dots$mult, incr=dots$incr)
 		}
 		if (length(parameters) == 0) {
-			parameters <- c(mod=2147483647, mult=16807, incr=0)
+			parameters <- c(mod="2147483647", mult="16807", incr="0")
 		}
 		if (!identical(names(parameters), c("mod", "mult", "incr"))) {
 			param.names <- paste(names(parameters),collapse=" ")
@@ -65,6 +65,12 @@ set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed
 		}
 		if (is.null(seed)) {
 			seed <- floor(as.double(parameters["mod"]) * runif(1))
+		}
+		if (is.numeric(parameters)) {
+			parameters <- formatC(parameters, format="f", digits=0)
+		}
+		if (is.numeric(seed)) {
+			seed <- formatC(seed, format="f", digits=0)
 		}
 		state <- c(seed=seed)
 		description <- list(name=name, parameters=parameters, state=state)
@@ -91,10 +97,8 @@ put.state <- function(description)
 	state <- description$state
 	if (name == "congruRand") {
 		aux <- .C("check_state_congru",
-			as.double(parameters["mod"]),
-			as.double(parameters["mult"]),
-			as.double(parameters["incr"]),
-			as.double(state["seed"]),
+			parameters,
+			state,
 			err = integer(1),
 			PACKAGE="randtoolbox")
 		if (aux$err != 0) {
@@ -108,10 +112,8 @@ put.state <- function(description)
 			as.integer(1),
 			PACKAGE="randtoolbox")
 		.C("put_state_congru",
-			as.double(parameters["mod"]),
-			as.double(parameters["mult"]),
-			as.double(parameters["incr"]),
-			as.double(state["seed"]),
+			parameters,
+			state,
 			PACKAGE="randtoolbox")
 	} else {
 		stop("unsupported generator: ", name)
@@ -129,26 +131,26 @@ get.state <- function()
 		PACKAGE="randtoolbox")[[1]]
 	if (generator == 1) {
 		name <- "congruRand"
+		outspace <- "18446744073709551616" # 2^64
 		aux <- .C("get_state_congru",
-			mod=double(1),
-			mult=double(1),
-			incr=double(1),
-			seed=double(1),
+			parameters=rep(outspace, times=3),
+			seed=outspace,
 			PACKAGE="randtoolbox")
-		parameters <- c(mod=aux$mod, mult=aux$mult, incr=aux$incr)
+		parameters <- aux$parameters
+		seed <- aux$seed
 		state <- c(seed=aux$seed)
-                  if(parameters[1] == 2^32 && parameters[2] == 1664525 && parameters[3] == 1013904223)
-                  	literature <- "Knuth - Lewis"
-                  else if(parameters[1] == 2^48 && parameters[2] == 31167285 && parameters[3] == 1)
-                           literature <- "Lavaux - Jenssens"
-                  else if(parameters[1] == 2^64 && parameters[2] == 636412233846793005 && parameters[3] == 1)
-                           literature <- "Haynes"
-                  else if(parameters[1] == 2^32 && parameters[2] == 69069 && parameters[3] == 0) 
-                           literature <- "Marsiglia"
-                  else if(parameters[1] == 2^31-1 && parameters[2] == 16807 && parameters[3] == 0) 
-                           literature <- "Park - Miller"
-                  else 
-                           literature <- "Unknown"    
+		if(parameters[1] == "4294967296" && parameters[2] == "1664525" && parameters[3] == "1013904223")
+			literature <- "Knuth - Lewis"
+		else if(parameters[1] == "281474976710656" && parameters[2] == "31167285" && parameters[3] == "1")
+			literature <- "Lavaux - Jenssens"
+		else if(parameters[1] == "18446744073709551616" && parameters[2] == "636412233846793005" && parameters[3] == "1")
+			literature <- "Haynes"
+		else if(parameters[1] == "4294967296" && parameters[2] == "69069" && parameters[3] == "0") 
+			literature <- "Marsaglia"
+		else if(parameters[1] == "4294967295" && parameters[2] == "16807" && parameters[3] == "0") 
+			literature <- "Park - Miller"
+		else 
+			literature <- "Unknown"
 	} else {
 		stop("internal error of randtoolbox")
 	}
