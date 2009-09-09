@@ -96,22 +96,26 @@ put.description <- function(description)
 	parameters <- description$parameters
 	state <- description$state
 	if (name == "congruRand") {
-		aux <- .C("check_state_congru",
+		aux <- .C("put_state_congru",
 			parameters,
 			state,
 			err = integer(1),
 			PACKAGE="randtoolbox")
-		if (aux$err != 0) {
+		if (aux$err != 0)
 			stop("check congruRand error: ", aux$err)
-		}
-		.C("set_user_unif_init",
+		.C("set_generator",
 			as.integer(1),
 			PACKAGE="randtoolbox")
-		RNGkind("user-supplied")
-		.C("put_state_congru",
-			parameters,
-			state,
-			PACKAGE="randtoolbox")
+		if (RNGkind()[1] != "user-supplied") {
+			RNGkind("user-supplied")
+			aux <- .C("put_state_congru",
+				parameters,
+				state,
+				err = integer(1),
+				PACKAGE="randtoolbox")
+			if (aux$err != 0)
+				stop("check congruRand error: ", aux$err)
+		}
 	} else {
 		stop("unsupported generator: ", name)
 	}

@@ -242,7 +242,7 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
     //i.e. u_ij = [ ( mult * x_{n-1}  + incr ) % mod ] / mod
     //u is stored column by column
     if (mod > 0) seed = seed % mod;
-    err = check_congruRand(mod, mult, incr, (unsigned long long) seed);
+    err = check_congruRand(mod, 0, mult, incr, (unsigned long long) seed);
     if (err)
         error(_("incorrect parameters of the generator %u"), err);
     set_congruRand(mod, mult, incr, (unsigned long long) seed);

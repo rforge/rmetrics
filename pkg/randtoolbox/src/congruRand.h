@@ -58,13 +58,14 @@ double user_unif_rand_congru();
 void user_unif_init_congru(unsigned int seed);
 
 double get_congruRand();
-int check_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
-		unsigned long long inp_incr, unsigned long long inp_seed);
+int check_congruRand(unsigned long long mod, unsigned long long mask,
+	unsigned long long mult, unsigned long long incr,
+	unsigned long long seed);
 void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
 		unsigned long long inp_incr, unsigned long long inp_seed);
 void get_seed_congruRand(unsigned long long *out_seed);
 
 void get_state_congru(char **params, char **seed);
 void check_state_congru(char **params, char **seed, int *err);
-void put_state_congru(char **params, char **seed);
+void put_state_congru(char **params, char **seed, int *err);
 

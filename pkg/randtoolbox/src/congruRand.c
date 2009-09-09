@@ -55,16 +55,40 @@
 
 // general linear congruential generator
 
-unsigned long long mod, mult, incr, congru_seed;
+unsigned long long mod, mask, mult, incr, congru_seed;
 
 // possible value of user_unif_rand_selected in runifInterface.c
-double user_unif_rand_congru()
+double user_unif_rand_congru_0()
 {
 	double x;
 	congru_seed  = (mult * congru_seed + incr) % mod;
 	x = (double) congru_seed / (double) mod;
 	if (x == 0.0) {
 		x = 0.5 / (double) mod;
+	}
+	return x;
+}
+
+// possible value of user_unif_rand_selected in runifInterface.c
+double user_unif_rand_congru_1()
+{
+	double x;
+	congru_seed  = (mult * congru_seed + incr) & mask;
+	x = (double) congru_seed / (double) mod;
+	if (x == 0.0) {
+		x = 0.5 / (double) mod;
+	}
+	return x;
+}
+
+// possible value of user_unif_rand_selected in runifInterface.c
+double user_unif_rand_congru_2()
+{
+	double x;
+	congru_seed  = (mult * congru_seed + incr);
+	x = (double) congru_seed / 18446744073709551616.0;
+	if (x == 0.0) {
+		x = 0.5 / 18446744073709551616.0;
 	}
 	return x;
 }
@@ -88,19 +112,24 @@ double get_congruRand()
 }
 
 // check several criteria on parameters
-int check_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
-		unsigned long long inp_incr, unsigned long long inp_seed)
+int check_congruRand(unsigned long long mod, unsigned long long mask,
+	unsigned long long mult, unsigned long long incr,
+	unsigned long long seed)
 {
-	int ok;
-	ok = 0 < inp_mult && inp_mult < inp_mod && inp_incr < inp_mod;
-	if (!ok) return 1;
-	ok = inp_mod - 1 <= (18446744073709551615ULL - inp_incr) / inp_mult;
-	if (!ok) return 2;
-	ok = inp_seed < inp_mod;
-	if (!ok) return 3;
-	ok = (inp_mult * inp_seed + inp_incr) % inp_mod != inp_seed;
-	if (!ok) return 4;
-	return 0;
+	if (mult == 0LL) return - 1;
+	if (mask == 0LL) {
+		if (mult >= mod) return - 2;
+		if (incr >= mod) return - 3;
+		if (mod - 1 > (18446744073709551615ULL - incr) / mult) return - 4;
+		if (seed >= mod) return - 5;
+		return 0;
+	} else {
+		if (mult > mask) return - 12;
+		if (incr > mask) return - 13;
+		if (seed > mask) return - 14;
+		if (mask == 0xffffffffffffffff) return 2;
+		return 1;
+	}
 }
 
 // set parameters
@@ -119,35 +148,73 @@ void get_seed_congruRand(unsigned long long *out_seed)
 	*out_seed = congru_seed;
 }
 
+void test_power_of_two(unsigned long long *mod, unsigned long long *mask)
+{
+	unsigned long long aux;
+	*mask = 0;
+	if (*mod == 0) {
+		return;
+	}
+	aux = *mod;
+	while ((aux & 1LL) == 0) {
+		aux >>= 1;
+		(*mask) <<= 1;
+		(*mask) |= 1LL;
+	}
+	if (aux == 1LL) {
+		return;
+	} else {
+		*mask = 0;
+		return;
+	}
+}
+
 // .C entry point
 void get_state_congru(char **params, char **seed)
 {
-	sprintf(params[0], "%lld", mod);
+	if (mod != 0LL) {
+		sprintf(params[0], "%lld", mod);
+	} else {
+		strcpy(params[0], "18446744073709551616");
+	}
 	sprintf(params[1], "%lld", mult);
 	sprintf(params[2], "%lld", incr);
 	sprintf(seed[0], "%lld", congru_seed);
 }
 
 // .C entry point
-void check_state_congru(char **params, char **seed, int *err)
+void put_state_congru(char **params, char **seed, int *err)
 {
-	unsigned long long inp_mod, inp_mult, inp_incr, inp_seed;
-	sscanf(params[0], "%lld", &inp_mod);
+	unsigned long long inp_mod, inp_mask, inp_mult, inp_incr, inp_seed;
+	if (strcmp(params[0], "18446744073709551616") == 0) {
+		inp_mod = 0;
+		inp_mask = 0xffffffffffffffff;
+	} else {
+		sscanf(params[0], "%lld", &inp_mod);
+		test_power_of_two(&inp_mod, &inp_mask);
+	}
 	sscanf(params[1], "%lld", &inp_mult);
 	sscanf(params[2], "%lld", &inp_incr);
 	sscanf(seed[0], "%lld", &inp_seed);
-	*err = check_congruRand(inp_mod, inp_mult, inp_incr, inp_seed);
-}
-
-// .C entry point
-void put_state_congru(char **params, char **seed)
-{
-	unsigned long long inp_mod, inp_mult, inp_incr, inp_seed;
-	sscanf(params[0], "%lld", &inp_mod);
-	sscanf(params[1], "%lld", &inp_mult);
-	sscanf(params[2], "%lld", &inp_incr);
-	sscanf(seed[0], "%lld", &inp_seed);
-	set_congruRand(inp_mod, inp_mult, inp_incr, inp_seed);
-	user_unif_rand_selected = user_unif_rand_congru;
+	*err = check_congruRand(inp_mod, inp_mask, inp_mult, inp_incr, inp_seed);
+	//Rprintf("mod = %llu, mask = %llu, err = %d\n", inp_mod, inp_mask, *err);
+	if (*err < 0) return;
+	mod = inp_mod;
+	mask = inp_mask;
+	mult = inp_mult;
+	incr = inp_incr;
+	congru_seed = inp_seed;
+	user_unif_init_selected = user_unif_init_congru; 
+	switch (*err) {
+	case 0:
+		user_unif_rand_selected = user_unif_rand_congru_0;
+		break;
+	case 1:
+		user_unif_rand_selected = user_unif_rand_congru_1;
+		break;
+	case 2:
+		user_unif_rand_selected = user_unif_rand_congru_2;
+	}
+	*err = 0;
 }
 

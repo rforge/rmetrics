@@ -79,16 +79,16 @@ void current_generator(int *pgener)
 	*pgener = generator;
 }
 
+// this will be called by RNGkind("user-supplied")
+void no_operation(unsigned int seed)
+{
+    ;
+}
+
 // .C entry point
-void set_user_unif_init(int *pgener)
+void set_generator(int *pgener)
 {
 	generator = *pgener;
-	switch (generator) {
-		case 1:
-			user_unif_init_selected = user_unif_init_congru;
-			break;
-		default:
-			Rprintf("UNKNOWN GENERATOR\n");
-	}
+	user_unif_init_selected = no_operation;
 }
 
