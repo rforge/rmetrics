@@ -5,7 +5,7 @@ export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
 
 export(trueRNG)
 
-export(set.generator, put.state, get.state)
+export(set.generator, put.description, get.description)
 
 export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 

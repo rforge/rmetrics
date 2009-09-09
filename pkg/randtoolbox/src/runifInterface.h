@@ -47,7 +47,7 @@
  *
  */
 
-void current_generator(int *pgener);
-void set_user_unif_init(int *pgener);
-void set_user_unif_rand(int *pgener);
+extern int generator;
+extern double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
+extern void (*user_unif_init_selected) (unsigned int seed);
 

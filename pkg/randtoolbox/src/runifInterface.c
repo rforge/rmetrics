@@ -52,11 +52,11 @@
 #include <R_ext/Random.h>
 
 #include "congruRand.h"
-#include "runifInterface.h"
 
-static int generator;
-static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
-static void (*user_unif_init_selected) (unsigned int seed);
+int generator;
+double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
+void (*user_unif_init_selected) (unsigned int seed);
+
 double x;
 
 // R_ext/Random.h entry point
@@ -86,21 +86,6 @@ void set_user_unif_init(int *pgener)
 	switch (generator) {
 		case 1:
 			user_unif_init_selected = user_unif_init_congru;
-			break;
-		default:
-			Rprintf("UNKNOWN GENERATOR\n");
-	}
-}
-
-// .C entry point
-void set_user_unif_rand(int *pgener)
-{
-	if (generator != *pgener) {
-		Rprintf("INTERNAL ERROR of randtoolbox\n");
-	}
-	switch (generator) {
-		case 1:
-			user_unif_rand_selected = user_unif_rand_congru;
 			break;
 		default:
 			Rprintf("UNKNOWN GENERATOR\n");

@@ -51,6 +51,7 @@
 
 
 #include "congruRand.h"
+#include "runifInterface.h"
 
 // general linear congruential generator
 
@@ -147,5 +148,6 @@ void put_state_congru(char **params, char **seed)
 	sscanf(params[2], "%lld", &inp_incr);
 	sscanf(seed[0], "%lld", &inp_seed);
 	set_congruRand(inp_mod, inp_mult, inp_incr, inp_seed);
+	user_unif_rand_selected = user_unif_rand_congru;
 }
 

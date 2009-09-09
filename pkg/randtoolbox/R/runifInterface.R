@@ -77,7 +77,7 @@ set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed
 		if (only.description) {
 			return(description)
 		} else {
-			put.state(description)
+			put.description(description)
 		}
 	} else if (name == "default") {
 		RNGkind("default")
@@ -90,7 +90,7 @@ set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed
 	invisible(NULL)
 }
 
-put.state <- function(description)
+put.description <- function(description)
 {
 	name <- description$name
 	parameters <- description$parameters
@@ -108,9 +108,6 @@ put.state <- function(description)
 			as.integer(1),
 			PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
-		.C("set_user_unif_rand",
-			as.integer(1),
-			PACKAGE="randtoolbox")
 		.C("put_state_congru",
 			parameters,
 			state,
@@ -121,7 +118,7 @@ put.state <- function(description)
 	invisible(NULL)
 }
 
-get.state <- function()
+get.description <- function()
 {
 	if (RNGkind(NULL)[1] != "user-supplied") {
 		stop("For R base generators, use .Random.seed, not get.state()")
