@@ -1,3 +1,15 @@
+2009-09-09    <d.scott@auckland.ac.nz>
+
+	* momRecursion.Rd dropped \seealso to vgMom
+
+	* testmomIntegrated.R changed so tests involving VarianceGamma
+	only run if testVG set to true at top of file
+
+	* safeIntegrate.Rd change to remove [integrate] in
+	\link[integrate]{integrate} instances
+
+	
+
 2009-07-24    <d.scott@auckland.ac.nz>
 
 	* momChangeAbout.R and momChangeAbout.Rd altered to allow

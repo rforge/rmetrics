@@ -1,4 +1,5 @@
 library(HyperbolicDist)
+testVG <- FALSE
 
 ### Test ghyp
 m1 <- momIntegrated("ghyp", order = 1, param = c(1/2,3,1,1,0), about = 0)
@@ -69,23 +70,24 @@ gigMom(order = -2, c(shape, 0, 2*rate))
 m2 - m1^2
 momIntegrated("invgamma", order = 2, param = c(3,4), about = m1)
 
-### Test vg
-library(VarianceGamma)
-m1 <- momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = 0)
-m1
-vgMean(param = c(2,0.5,0,3))
-momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = m1)
-m2 <- momIntegrated("vg", order = 2, param = c(2,0.5,0,3), about = 0)
-m2
-m2 - m1^2
-momIntegrated("vg", order = 2, param = c(2,0.5,0,3), about = m1)
-momIntegrated("Variance Gamma", order = 2, param = c(2,0.5,0,3),
-              about = m1)
-vgVar(param = c(2,0.5,0,3))
+### Test vg if available
+if (testVG){
+    library(VarianceGamma)
+    m1 <- momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = 0)
+    m1
+    vgMean(param = c(2,0.5,0,3))
+    momIntegrated("vg", order = 1, param = c(2,0.5,0,3), about = m1)
+    m2 <- momIntegrated("vg", order = 2, param = c(2,0.5,0,3), about = 0)
+    m2
+    m2 - m1^2
+    momIntegrated("vg", order = 2, param = c(2,0.5,0,3), about = m1)
+    momIntegrated("Variance Gamma", order = 2, param = c(2,0.5,0,3),
+                  about = m1)
+    vgVar(param = c(2,0.5,0,3))
 
-m3 <- momIntegrated("vg", order = 3, param = c(2,0.5,0,3), about = 0)
-cm3 <- m3 - 3*m2*m1 + 2*m1^3
-s <- sqrt(m2 - m1^2)
-cm3/(s^3)
-vgSkew(param = c(2,0.5,0,3))
-
+    m3 <- momIntegrated("vg", order = 3, param = c(2,0.5,0,3), about = 0)
+    cm3 <- m3 - 3*m2*m1 + 2*m1^3
+    s <- sqrt(m2 - m1^2)
+    cm3/(s^3)
+    vgSkew(param = c(2,0.5,0,3))
+}

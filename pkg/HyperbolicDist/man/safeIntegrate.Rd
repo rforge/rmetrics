@@ -30,9 +30,9 @@ safeIntegrate(f, lower, upper, subdivisions=100,
 }
 \details{
   This function is just a wrapper around
-  \code{\link[integrate]{integrate}} to check for equality of
+  \code{\link{integrate}} to check for equality of
   \code{upper} and \code{lower}. A check is made using
-  \code{\link[integrate]{all.equal}}. When numerical equality is
+  \code{\link{all.equal}}. When numerical equality is
   detected, if \code{lower} (and hence \code{upper}) is infinite, the
   value of the integral and the absolute error are both set to 0. When
   \code{lower} is finite, the value of the integral is set to 0, and the
@@ -40,7 +40,7 @@ safeIntegrate(f, lower, upper, subdivisions=100,
   \code{lower} times the difference between \code{upper} and \code{lower}.
 
   When \code{upper} and \code{lower} are determined to be different, the
-  result is exactly as given by  \code{\link[integrate]{integrate}}.
+  result is exactly as given by  \code{\link{integrate}}.
 }
 \value{
   A list of class \code{"integrate"} with components:
@@ -52,8 +52,8 @@ safeIntegrate(f, lower, upper, subdivisions=100,
   \item{call}{The matched call.}
 }
 \seealso{
-  The function \code{\link[integrate]{integrate}} and
-  \code{\link[integrate]{all.equal}}.
+  The function \code{\link{integrate}} and
+  \code{\link{all.equal}}.
 }
 \examples{
 integrate(dnorm, -1.96, 1.96)
