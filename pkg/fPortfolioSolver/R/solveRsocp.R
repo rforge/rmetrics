@@ -97,7 +97,7 @@ solveRsocp <-
     Data = portfolioData(data, spec)
     nAssets = getNAssets(Data)
     Scale = 1.0e6 * sd(as.vector(data))
-    mu = getMu(Data) /Scale
+    mu = getMu(Data) / Scale
     Sigma = getSigma(Data) / Scale^2
     targetRisk = getTargetRisk(spec) / Scale
     
@@ -135,8 +135,8 @@ solveRsocp <-
     # Combine Constraints for SOCP:
     A <- rbind(A1, A2, A3)
     b <- c(b1, b2, b3)
-    C <- rbind(C1, -C2, C3)  
-    d <- c(d1, d2, -d3)  
+    C <- rbind(C1, C2, C3)  
+    d <- c(d1, -d2, -d3)  
     N <- c(N1, N2, N3)      
 
     # Return Value:
