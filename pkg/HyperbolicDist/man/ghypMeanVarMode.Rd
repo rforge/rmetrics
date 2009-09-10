@@ -1,15 +1,19 @@
-\name{Generalized Hyperbolic Moments and Mode}
+\name{Specific Generalized Hyperbolic Moments and Mode}
 \alias{ghypMean}
 \alias{ghypVar}
+\alias{ghypSkew}
+\alias{ghypKurt}
 \alias{ghypMode}
 \title{Moments and Mode of the Generalized Hyperbolic Distribution}
 \description{
-  Functions to calculate the mean, variance, and mode of a specific
-  generalized hyperbolic distribution.
+  Functions to calculate the mean, variance, skewness, kurtosis and mode
+  of a specific generalized hyperbolic distribution.
 }
 \usage{
 ghypMean(Theta)
 ghypVar(Theta)
+ghypSkew(Theta)
+ghypKurt(Theta)
 ghypMode(Theta)
 }
 \arguments{
@@ -18,14 +22,21 @@ ghypMode(Theta)
 
 \value{
   \code{ghypMean} gives the mean of the generalized hyperbolic distribution,
-  \code{ghypVar} the variance, and \code{ghypMode} the mode. 
-  The formulae used for the mean and variance are as given in
-  Prause (1999). The mode is found by a numerical optimisation using
-  \code{\link{optim}}.
+  \code{ghypVar} the variance, \code{ghypSkew} the skewness,
+  \code{ghypKurt} the kurtosis, and \code{ghypMode} the mode. The
+  formulae used for the mean is given in Prause (1999). The variance,
+  skewness and kurtosis are obtained using the recursive formula
+  implemented in \code{\link{ghypMom}} which can calculate moments of
+  all orders about any point.
   
-  The parameterisation of the generalized hyperbolic distribution used
+  The mode is found by a numerical optimisation using
+  \code{\link{optim}}. For the special case of the hyperbolic
+  distribution a formula for the mode is available, see
+  \code{\link{hyperbMode}}.
+   
+  The parameterization of the generalized hyperbolic distribution used
   for these functions is the \eqn{(\alpha,\beta)}{(alpha,beta)} one. See
-  \code{\link{ghypChangePars}} to transfer between parameterisations.
+  \code{\link{ghypChangePars}} to transfer between parameterizations.
 }
 \references{
   Prause, K. (1999) \emph{The generalized hyperbolic models: Estimation,
@@ -44,6 +55,8 @@ ghypMode(Theta)
 Theta <- c(2,2,1,2,2)
 ghypMean(Theta)
 ghypVar(Theta)
+ghypSkew(Theta)
+ghypKurt(Theta)
 ghypMode(Theta)
 maxDens <- dghyp(ghypMode(Theta), Theta)
 ghypRange <- ghypCalcRange(Theta, tol = 10^(-3)*maxDens)

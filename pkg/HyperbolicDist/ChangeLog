@@ -1,3 +1,18 @@
+2009-09-10  David Local  <d.scott@auckland.ac.nz>
+
+	* updated all .R and .Rd files to do with moments. Changed
+	variance, skewness and kurtosis to use xxxMom.R. Changed mean
+	functions to use besselRatio because it has protection against
+	large x values
+
+	* ghypMom.Rd created
+
+	* Terminology: decided on xxxMom.Rd for recursive moments
+	approach, xxxMeanVarMode.Rd for mean, variance, skewness, kurtosis
+	and mode. Implemented for ghypMom.Rd and ghypMeanVarMode.Rd. Note
+	that kurtosis is *excess* kurtosis.
+	
+
 2009-09-09    <d.scott@auckland.ac.nz>
 
 	* ghypMomentsAndMode.R added. Uses iterative algorithm to obtain

@@ -1,4 +1,4 @@
-\name{Generalized Inverse Gaussian Moments and Mode}
+\name{Specific Generalized Inverse Gaussian Moments and Mode}
 \alias{gigMean}
 \alias{gigVar}
 \alias{gigSkew}

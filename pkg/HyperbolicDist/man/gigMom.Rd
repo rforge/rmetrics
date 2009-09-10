@@ -33,7 +33,7 @@ gammaRawMom(order, shape = 1, rate = 1, scale = 1/rate)
 }
 \details{
   The vector \code{Theta} of parameters is examined using
-  \code{\link{gigCheckPars}} to see if the paramters are valid for the GIG
+  \code{\link{gigCheckPars}} to see if the parameters are valid for the GIG
   distribution and if they correspond to the special cases which are the
   gamma and inverse gamma distributions. Checking of special cases and
   valid parameter vector values is carried out using the function

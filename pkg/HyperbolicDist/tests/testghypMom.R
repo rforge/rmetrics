@@ -1,9 +1,10 @@
 library(HyperbolicDist)
-### fileList <- list.files("../R/")
-### fileList <- fileList[-grep(".+~",fileList)]
-### fileNames <- paste("../R/", fileList, sep = "")
-### lapply(fileNames,source)
-
+if (FALSE){
+  fileList <- list.files("../R/")
+  fileList <- fileList[-grep(".+~",fileList)]
+  fileNames <- paste("../R/", fileList, sep = "")
+  lapply(fileNames,source)
+}
 
 Theta <- c(2,2,1,2,1)
 mu <- Theta[5]

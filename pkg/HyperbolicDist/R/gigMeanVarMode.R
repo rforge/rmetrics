@@ -7,43 +7,31 @@ gigMean <- function (Theta) {
   psi <- Theta[3]
   omega <- sqrt(chi*psi)
   eta <- sqrt(chi/psi)
-  eta*RLambda(omega, lambda)
+  eta*besselRatio(omega, lambda, 1)
 }## End of gigMean() 
 
 ### Function to calculate the theoretical variance of a 
 ### generalized inverse Gaussian distribution given its parameters.
 gigVar <- function(Theta){
-  Theta <- as.numeric(Theta)
-  lambda <- Theta[1]
-  chi <- Theta[2]
-  psi <- Theta[3]
-  omega <- sqrt(chi*psi)
-  eta <- sqrt(chi/psi)
-  eta^2*WLambda2(omega, lambda)
+  m1 <- gigMean(Theta)
+  var <- gigMom(2, Theta, about = m1)
+  return(var)
 } ## End of gigVar()
 
 ### Function to calculate the theoretical skewness of a 
 ### generalized inverse Gaussian distribution given its parameters.
 gigSkew <- function(Theta){
-  Theta <- as.numeric(Theta)
-  lambda <- Theta[1]
-  chi <- Theta[2]
-  psi <- Theta[3]
-  omega <- sqrt(chi*psi)
-  eta <- sqrt(chi/psi)
-  WLambda3(omega, lambda)/WLambda2(omega, lambda)^(3/2)
+  m1 <- gigMean(Theta)
+  skew <- gigMom(3, Theta, about = m1)/(gigVar(Theta)^(3/2))
+  return(skew)
 } ## End of gigSkew()
 
 ### Function to calculate the theoretical kurtosis of a 
 ### generalized inverse Gaussian distribution given its parameters.
 gigKurt <- function(Theta){
-  Theta <- as.numeric(Theta)
-  lambda <- Theta[1]
-  chi <- Theta[2]
-  psi <- Theta[3]
-  omega <- sqrt(chi*psi)
-  eta <- sqrt(chi/psi)
-  WLambda4(omega, lambda)/WLambda2(omega, lambda)^2
+  m1 <- gigMean(Theta)
+  kurt <- gigMom(4, Theta, about = m1)/(gigVar(Theta)^2) - 3
+  return(kurt)
 } ## End of gigKurt()
 
 
