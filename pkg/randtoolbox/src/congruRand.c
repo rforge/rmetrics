@@ -148,38 +148,17 @@ void get_seed_congruRand(unsigned long long *out_seed)
 	*out_seed = congru_seed;
 }
 
-void test_power_of_two(unsigned long long *mod, unsigned long long *mask)
-{
-	unsigned long long aux;
-	*mask = 0;
-	if (*mod == 0) {
-		return;
-	}
-	aux = *mod;
-	while ((aux & 1LL) == 0) {
-		aux >>= 1;
-		(*mask) <<= 1;
-		(*mask) |= 1LL;
-	}
-	if (aux == 1LL) {
-		return;
-	} else {
-		*mask = 0;
-		return;
-	}
-}
-
 // .C entry point
 void get_state_congru(char **params, char **seed)
 {
 	if (mod != 0LL) {
-		sprintf(params[0], "%lld", mod);
+		sprintf(params[0], "%llu", mod);
 	} else {
 		strcpy(params[0], "18446744073709551616");
 	}
-	sprintf(params[1], "%lld", mult);
-	sprintf(params[2], "%lld", incr);
-	sprintf(seed[0], "%lld", congru_seed);
+	sprintf(params[1], "%llu", mult);
+	sprintf(params[2], "%llu", incr);
+	sprintf(seed[0], "%llu", congru_seed);
 }
 
 // .C entry point
@@ -190,12 +169,16 @@ void put_state_congru(char **params, char **seed, int *err)
 		inp_mod = 0;
 		inp_mask = 0xffffffffffffffff;
 	} else {
-		sscanf(params[0], "%lld", &inp_mod);
-		test_power_of_two(&inp_mod, &inp_mask);
+		sscanf(params[0], "%llu", &inp_mod);
+		if ((inp_mod & (inp_mod - 1)) == 0) {
+			inp_mask = inp_mod - 1;
+		} else {
+			inp_mask = 0;
+		}
 	}
-	sscanf(params[1], "%lld", &inp_mult);
-	sscanf(params[2], "%lld", &inp_incr);
-	sscanf(seed[0], "%lld", &inp_seed);
+	sscanf(params[1], "%llu", &inp_mult);
+	sscanf(params[2], "%llu", &inp_incr);
+	sscanf(seed[0], "%llu", &inp_seed);
 	*err = check_congruRand(inp_mod, inp_mask, inp_mult, inp_incr, inp_seed);
 	//Rprintf("mod = %llu, mask = %llu, err = %d\n", inp_mod, inp_mask, *err);
 	if (*err < 0) return;
