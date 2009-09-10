@@ -201,9 +201,9 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
     int dim  = asInteger( d ); //dimension of vector
     int show =  asLogical( echo ); //to show the seed
     
-    unsigned long long mod = asInteger( modulus ); //modulus
-    unsigned long long mult = asInteger( multiplier ); //modulus
-    unsigned long long incr = asInteger( increment ); //modulus    
+    unsigned long long mod = asReal( modulus ); //modulus
+    unsigned long long mult = asReal( multiplier ); //modulus
+    unsigned long long incr = asReal( increment ); //modulus    
 	
     //result
     double *u ; //result in C
@@ -244,7 +244,7 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
     if (mod > 0) seed = seed % mod;
     err = check_congruRand(mod, 0, mult, incr, (unsigned long long) seed);
     if (err)
-        error(_("incorrect parameters of the generator %u"), err);
+        error(_("incorrect parameters of the generator %d"), err);
     set_congruRand(mod, mult, incr, (unsigned long long) seed);
 
     if(!show) 
