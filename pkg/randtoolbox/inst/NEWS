@@ -5,7 +5,9 @@ Version 1.09
 
 NEW FEATURES
 
-- start to test true randomness.
+- start runif interface for congruential generator and WELL RNG
+- vignette contains two chapters.
+- start to test true randomness (not included in this version)
 
 STRUCTURAL CHANGE
 
@@ -74,7 +76,8 @@ Version 1.04
 
 BUG REPORT
 
-- the package does not compil on Fedora 8 x86_64 boxes.
+- the package does not compil on Fedora 8 x86_64 boxes,
+reported by Brian Ripley.
 
 
 Version 1.03
