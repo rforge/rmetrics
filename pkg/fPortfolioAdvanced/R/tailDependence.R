@@ -30,9 +30,12 @@
 # FUNCTION:                    NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
 #  .cfgTDE                      Estimates non-parametrically tail dependence
 # FUNCTION:                    COPULA FIT WITH NORM, NIG OR  GHT MARGINALS:
+#  .empiricalDependencyFit      Estimates tail dependence with empirical marginals
 #  .normDependencyFit           Estimates tail dependence with normal marginals
 #  .nigDependencyFit            Estimates tail dependence with NIG marginals  
-#  .ghtDependencyFit            Estimates tail dependence with GHT marginals   
+#  .ghtDependencyFit            Estimates tail dependence with GHT marginals 
+# FUNCTION:                    DESCRIPTION:
+#  .tailDependenceCoeffs        Returns Lower and Upper Tail Dependence Coeffs     
 ################################################################################
 
  
@@ -255,7 +258,7 @@
         lambda = c(lambda,
             log(sqrt(log(1/x[i])*log(1/y[i]))/log(1/max(x[i],y[i])^2)))
     }
-    upper = 2-2*exp(sum(lambda/n))
+    upper <- 2 - 2*exp(sum(lambda/n))
     
     # Lower Tail:
     x = 1-x
@@ -266,7 +269,7 @@
         lambda = c(lambda,
             log(sqrt(log(1/x[i])*log(1/y[i]))/log(1/max(x[i],y[i])^2)))
     }
-    lower = 2-2*exp(sum(lambda/n))
+    lower <- 2 - 2*exp(sum(lambda/n))
     
     # Return Value:
     c(lower = lower, upper = upper)
@@ -277,7 +280,7 @@
 
 
 .empiricalDependencyFit <- 
-    function(x, doplot = TRUE, trace = TRUE)
+    function(x, doplot = TRUE, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -311,7 +314,6 @@
             estim2 = fit2$estimate      
             p2 = pnorm(r2, estim2[1], estim2[2]) 
             Main2 = assetsNames[j]
-            
             # Optional Plot:
             if (doplot) 
             {
@@ -327,7 +329,7 @@
             }
             
             # Fit GSG copula parameters:
-            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
             if (trace)
                 cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
             
@@ -351,7 +353,7 @@
 
 
 .normDependencyFit <- 
-    function(x, doplot = TRUE, trace = TRUE)
+    function(x, doplot = TRUE, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -385,7 +387,6 @@
             estim2 = fit2$estimate      
             p2 = pnorm(r2, estim2[1], estim2[2]) 
             Main2 = assetsNames[j]
-            
             # Optional Plot:
             if (doplot) 
             {
@@ -393,7 +394,6 @@
                 MainR = paste("Distribution:", Main1, "-", Main2)
                 plot(r1, r2, pch = 19, main = MainR)
                 grid()
-                
                 # Plot Copula:
                 MainP = paste("Copula:", Main1, "-", Main2)
                 plot(p1, p2, pch = 19, main = MainP)
@@ -401,11 +401,10 @@
             }
             
             # Fit GSG copula parameters:
-            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
             if (trace)
                 cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
-            
-                # Compose lambda Matrix:
+            # Compose lambda Matrix:
             lowerLambda[i, j] = lowerLambda[j, i] = fit$lambda[1]
             upperLambda[i, j] = upperLambda[j, i] = fit$lambda[2]
         }
@@ -425,7 +424,7 @@
 
 
 .nigDependencyFit <- 
-    function(x, doplot = TRUE, trace = TRUE)
+    function(x, doplot = TRUE, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -446,17 +445,17 @@
     for (i in 1:(N-1)) {
         # First asset:
         r1 = as.vector(x[, i])
-        fit1 = nigFit(r1, doplot = FALSE)
+        fit1 = nigFit(r1, doplot = FALSE, trace = trace)
         estim1 = fit1@fit$estimate
-        p1 = pnig(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
+        p1 = .pnigC(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
         Main1 = assetsNames[i]
         P = cbind(P, p1)
         for (j in (i+1):N) {  
             # Second asset:
             r2 = as.vector(x[, j])
-            fit2 = nigFit(r2, doplot = FALSE) 
+            fit2 = nigFit(r2, doplot = FALSE, trace = trace) 
             estim2 = fit2@fit$estimate      
-            p2 = pnig(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
+            p2 = .pnigC(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
             Main2 = assetsNames[j]
             # Optional Plot:
             if (doplot) {
@@ -468,7 +467,7 @@
                 grid()
             }
             # Fit GSG copula parameters:
-            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
             if (trace)
                 cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
             # Compose lambda Matrix:
@@ -491,7 +490,7 @@
 
 
 .ghtDependencyFit <- 
-    function(x, doplot = TRUE, trace = TRUE)
+    function(x, doplot = TRUE, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -512,17 +511,17 @@
     for (i in 1:(N-1)) {
         # First asset:
         r1 = as.vector(x[, i])
-        fit1 = nigFit(r1, doplot = FALSE)
+        fit1 = ghtFit(r1, doplot = FALSE, trace = trace)
         estim1 = fit1@fit$estimate
-        p1 = pnig(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
+        p1 = pght(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
         Main1 = assetsNames[i]
         P = cbind(P, p1)
         for (j in (i+1):N) {  
             # Second asset:
             r2 = as.vector(x[, j])
-            fit2 = nigFit(r2, doplot = FALSE) 
+            fit2 = ghtFit(r2, doplot = FALSE, trace = trace) 
             estim2 = fit2@fit$estimate      
-            p2 = pnig(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
+            p2 = pght(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
             Main2 = assetsNames[j]
             # Optional Plot:
             if (doplot) {
@@ -534,7 +533,7 @@
                 grid()
             }
             # Fit GSG copula parameters:
-            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
             if (trace)
                 cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
             # Compose lambda Matrix:
@@ -550,6 +549,34 @@
      
     # Return Value:
     ans 
+}
+
+
+################################################################################
+
+
+.tailDependenceCoeffs <-
+function(x, method = "nig", doplot = TRUE, trace = FALSE)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns a list with lower and upper bivariate tail depenence matrixes
+    
+    # Example:
+    #   data(LPP2005REC); x = 100 * as.timeSeries(LPP2005REC)[, 1:6] 
+    #   .tailDependenceCoeffs(x)
+    
+    # Notes:
+    #   Tested only for NIG marginal distributions.
+    
+    # FUNCTION:
+    
+    # Compute Coeffs with NIG Marginals:
+    coeffs = .nigDependencyFit(x, doplot = doplot, trace = trace) 
+    
+    # Return Value:
+    coeffs
 }
 
 
