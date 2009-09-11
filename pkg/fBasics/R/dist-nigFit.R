@@ -36,11 +36,20 @@
 
 
 nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE,
-    title = NULL, description = NULL, ...)
+    method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
+    span = "auto", trace = TRUE, title = NULL, description = NULL, ...)
 {
-    .nigFit.mle(x, alpha, beta, delta, mu, scale, doplot, span, trace, 
-        title, description, ...)
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION: 
+    
+    # MLE:
+    fit = .nigFit.mle(x = x, alpha = alpha, beta = beta, delta = delta, 
+        mu = mu , scale = scale, doplot = doplot, span = span, 
+        trace = trace, title = title, description = description, ...)
+        
+    # Return Value:
+    fit
 }
 
 

@@ -15,8 +15,8 @@
 
 \usage{   
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
-    title = NULL, description = NULL, \dots) 
+    method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
+    span = "auto", trace = TRUE, title = NULL, description = NULL, \dots) 
 }
 
 
@@ -49,6 +49,12 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         }
     \item{doplot}{
         a logical flag. Should a plot be displayed?
+        }
+    \item{method}{
+        a character string. Either \code{"mle"}, Maximum Likelihood
+        Estimation, the default, \code{"gmm"} Gemeralized Method of 
+        Moments Estimation, or \code{"mps"} Maximum Product Spacings 
+        Estimation.
         }
     \item{scale}{
         a logical flag, by default \code{TRUE}. Should the time series
