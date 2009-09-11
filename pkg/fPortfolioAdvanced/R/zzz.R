@@ -13,19 +13,21 @@
 # Public License along with this library; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
+
+
 ################################################################################
 
 
 ## .First.lib =
 ## function(lib, pkg)
 ## {
-## ###     # Startup Mesage and Desription:
-## ###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-## ###     dsc <- packageDescription(pkg)
-## ###     if(interactive() || getOption("verbose")) {
-## ###         # not in test scripts
-## ###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-## ###     }
+## ##     # Startup Mesage and Desription:
+## ##     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+## ##     dsc <- packageDescription(pkg)
+## ##     if(interactive() || getOption("verbose")) {
+## ##         # not in test scripts
+## ##         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+## ##     }
 
 ## }
 
