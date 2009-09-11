@@ -53,6 +53,11 @@
 #include "congruRand.h"
 #include "runifInterface.h"
 
+#define two_64_d 18446744073709551616.0
+#define two_64m1 18446744073709551615ULL
+#define two_64_s "18446744073709551616"
+#define two_64m1_h 0xffffffffffffffff
+
 // general linear congruential generator
 
 unsigned long long mod, mask, mult, incr, congru_seed;
@@ -86,9 +91,9 @@ double user_unif_rand_congru_2()
 {
 	double x;
 	congru_seed  = (mult * congru_seed + incr);
-	x = (double) congru_seed / 18446744073709551616.0;
+	x = (double) congru_seed / two_64_d;
 	if (x == 0.0) {
-		x = 0.5 / 18446744073709551616.0;
+		x = 0.5 / two_64_d;
 	}
 	return x;
 }
@@ -99,7 +104,7 @@ void user_unif_init_congru(unsigned int seed)
 	congru_seed = seed;
 }
 
-// called from randtoolbox.c
+// called from randtoolbox.c from congruRand function
 double get_congruRand()
 {
 	double x;
@@ -120,14 +125,14 @@ int check_congruRand(unsigned long long mod, unsigned long long mask,
 	if (mask == 0LL) {
 		if (mult >= mod) return - 2;
 		if (incr >= mod) return - 3;
-		if (mod - 1 > (18446744073709551615ULL - incr) / mult) return - 4;
+		if (mod - 1 > (two_64m1 - incr) / mult) return - 4;
 		if (seed >= mod) return - 5;
 		return 0;
 	} else {
 		if (mult > mask) return - 12;
 		if (incr > mask) return - 13;
 		if (seed > mask) return - 14;
-		if (mask == 0xffffffffffffffff) return 2;
+		if (mask == two_64m1_h) return 2;
 		return 1;
 	}
 }
@@ -148,26 +153,26 @@ void get_seed_congruRand(unsigned long long *out_seed)
 	*out_seed = congru_seed;
 }
 
-// .C entry point
+// .C entry point used by get.description
 void get_state_congru(char **params, char **seed)
 {
 	if (mod != 0LL) {
 		sprintf(params[0], "%llu", mod);
 	} else {
-		strcpy(params[0], "18446744073709551616");
+		strcpy(params[0], two_64_s);
 	}
 	sprintf(params[1], "%llu", mult);
 	sprintf(params[2], "%llu", incr);
 	sprintf(seed[0], "%llu", congru_seed);
 }
 
-// .C entry point
+// .C entry point used by put.description
 void put_state_congru(char **params, char **seed, int *err)
 {
 	unsigned long long inp_mod, inp_mask, inp_mult, inp_incr, inp_seed;
-	if (strcmp(params[0], "18446744073709551616") == 0) {
+	if (strcmp(params[0], two_64_s) == 0) {
 		inp_mod = 0;
-		inp_mask = 0xffffffffffffffff;
+		inp_mask = two_64m1_h;
 	} else {
 		sscanf(params[0], "%llu", &inp_mod);
 		if ((inp_mod & (inp_mod - 1)) == 0) {

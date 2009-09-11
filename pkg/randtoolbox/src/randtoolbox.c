@@ -66,7 +66,7 @@ static unsigned int seedArray[LENSEEDARRAY];
 //a pseudo boolean to initiate the seed array
 static int isInitByArray=0;
 
-//the first 100 000 prime numbers taken from http://primes.utm.edu/ included at the end of the file
+//the first 100 000 prime numbers computed from their differences stored in primes.h included at the end of this file
 static int primeNumber[100000];
 
 // pi
@@ -119,7 +119,8 @@ SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed)
     R_CheckStack();
 	
     //computation step
-    if(prime == NULL) {
+    if(prime == NULL)
+    {
         if (primeNumber[2] == 1)
             reconstruct_primes();
         torus(u, nb, dim, primeNumber, seqstart, mixed, usetime);
@@ -421,12 +422,8 @@ SEXP doWELL(SEXP n, SEXP d, SEXP order, SEXP tempering, SEXP version)
     
     R_CheckStack();
     
-//    Rprintf("call wellrng\n");
-    
     //computation step
     WELLrng(u, nb, dim, degree, dotemper, theversion);
-    
-  //  Rprintf("fin WELLrng\n");
     
     UNPROTECT(1);
     
