@@ -1,0 +1,161 @@
+
+Random simulation or Monte-Carlo methods rely on the fact we have access to random numbers. Even if nowadays having random sequence is no longer a problem, for many years producing random numbers was a big challenge. According to \cite{ripleybook}, simulation started in 1940s with physical devices. It brings us to a point we need to take care is the kind simulation we deal with. Using physical phenomena to get random numbers is referred in the literature as true randomness. However in our computers we use another type randomness: pseudo-randomness.
+
+We define a sequence of pseudo-random numbers as a deterministic sequence of numbers in $[0,1]$ having the same relevant statistical properties as a sequence of random numbers. One may wonder with this definition how two calls to random number generator (RNG) can produce two different numbers. By default, a RNG is initialized by the machine time, i.e. the starting point is computed with the seconds, miliseconds of the machine clock. Then from this point (called the seed), we use deterministic algorithms to build the sequence.
+
+Since we use fake random numbers as a proxy for random numbers, one important question is the desired properties of RNG. \cite{ripleybook} lists the following properties
+\begin{itemize}
+\item output numbers are almost uniformly distributed,
+\item output numbers are independent,
+\item the period between two identical numbers is sufficiently long,
+\item unless a seed is given, output numbers should be unpredictable.
+\end{itemize}
+Those properties seem obvious but \cite{mccullough08} proves that neither Excel 2003 nor Excel 2007 implements a RNG having the four properties. 
+
+Of course in the statistical software \soft{R}, we have a RNG meeting the above properties called Mersenne-Twister. But this package aims to provide better and more recent RNGs as well as classic statistical tests to quantify their property. The rest of this chapter is two-folded: first we present the use of RNGs through the \code{runif} interface, second we present the same use with dedicated functions.
+
+
+
+\section{The \code{runif} interface}
+
+In \soft{R}, the default setting for random generation are (i) uniform numbers are produced by the Mersenne-Twister algorithm and (ii) normal numbers are computing through the numerical inversion of the standard normal distribution function. This can be checked by the following code
+%%% R code
+<<check, fig=FALSE, echo=TRUE, eval=TRUE>>=
+RNGkind()
+@
+%%%
+The function \code{RNGkind} can also be used to set other RNGs, such as Wichmann-Hill, Marsaglia-Multicarry, Super-Duper, Knuth-TAOCP or Knuth-TAOCP-2002 plus a user-supplied RNG. See the help page for details. The function \code{set.generator} eases the process to set a new RNG in \soft{R}.
+
+\subsection{Linear Congruential Generators}
+Despite they are very old and quite poor RNGs, linear congruential random generators can still be useful. We denote $x_n$ the $n$th integer of the sequence. LCG are based on the following recurrence
+$$
+x_n = (a x_{n-1} + c) \mod m.
+$$
+where $a$ is the multiplier, $c$ the increment and $m$ the modulus and $x, a, c, m \in \mathbb N$. To get float numbers in the unit interval we simply use one of the following functions:
+\begin{itemize*}
+\item $g: \mathbb N \mapsto [0,1[$, and $g(x) = \frac{x}{m}$, 
+\item $g: \mathbb N \mapsto ]0,1]$, and $ g(x) = \frac{x}{m-1}$,
+\item $g: \mathbb N \mapsto ]0,1[$, and $ g(x) = \frac{x+1/2}{m}$.
+\end{itemize*}
+
+\initFmark
+Here is a example list of RNGs computable with \code{congruRand}:
+\begin{table}[!htb]
+\center
+\begin{tabular}{llll}
+\hline
+RNG &\code{mod} & \code{mult} &\code{incr}\\
+\hline
+Knuth - Lewis & $2^{32}$ & $1664525$ & $1.01e9\fmark $\\
+Lavaux - Jenssens & $2^{48}$ & $31167285$ & $1$\\
+Haynes & $2^{64}$ & $6.36e17\fmark $ & $1$\\
+Marsaglia & $2^{32}$ & $69069$ & $0$\\
+Park - Miller & $2^{31}-1$ & $16807$ & $0$\\
+\hline
+\end {tabular}
+\caption{some linear RNGs}
+%\label{parkmiller}
+\end{table}
+
+%initialiser le compteur avec \initFmark avant d'utilise
+%placer \fmark a l'endroit de la legende
+%en dehors du tableau/legende, mettre a jour le compteur footnote avec \updateFtext
+%placer \ftext{...le texte de la legende... } en dehors du tableau ou de la legende
+\updateFtext
+\ftext{1013904223.}
+
+\ftext{636412233846793005.}
+
+\subsubsection{Park-Miller}
+
+The default argument of function \code{}
+
+%%% R code
+<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
+library(randtoolbox)
+p1 <- c(mod=2^(31-1), mult=16807, incr=0)
+set.generator(name="congruRand", parameters=p1, seed=1)
+x1 <- runif(10)
+print(x1)
+@
+%%%
+
+We can check that those integers are the 10 first terms are listed in table \ref{parkmiller},
+coming from \url{http://www.firstpr.com.au/dsp/rand31/}.
+\begin{table}[!htb]
+\center
+\begin{tabular}{llll}
+\hline
+$n$&$x_n$ & $n$ &$x_n$\\
+\hline
+1 & 16807          &6 & 470211272         \\
+2 & 282475249   &7 & 101027544         \\       
+3 & 1622650073   &8 & 1457850878         \\       
+4 & 984943658      &9 & 1458777923          \\
+5 & 1144108930     &10 & 2007237709         \\
+\hline
+\end {tabular}
+\caption{10 first integers of \cite{parkmiller} sequence}
+\label{parkmiller}
+\end{table}
+
+%%% R code
+<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
+y1 <- c(16807, 
+282475249,
+1622650073,
+984943658,
+1144108930,
+470211272,
+101027544,
+1457850878,
+1458777923,
+2007237709)/2^(31-1)
+print(y1)
+@
+%%%
+
+
+
+\subsubsection{Other LCGs}
+
+Of course we can use other LCGs, here is an example with $a= 3120690619012$, $c= 1752073$, $m=7320110364297$.
+
+%%% R code
+<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
+setSeed(12345)
+p2 <- c(mod= 7320110364297, mult= 1752073, incr= 3120690619012)
+set.generator(name="congruRand", parameters=p2, seed=12345)
+x2 <- runif(10)
+y2 <- c(3142319960197,
+4953559254941,
+6853178859516,
+572628290719,
+2681475346976,
+1683052349799,
+441206598859,
+3675172447628,
+1854017874321,
+5604545399725)/7320110364297
+print(x2 - y2)
+@
+%%%
+
+To get back to the original setting of RNGs in \soft{R}, we just need to call \code{set.generator} with \code{default} RNG.
+%%% R code
+<<undo, fig=FALSE, echo=TRUE, eval=TRUE>>=
+RNGkind()
+set.generator("default")
+RNGkind()
+@
+%%%
+
+
+
+TODO : well RNG
+
+question: are rexp, rnorm... affected by the runif interface
+
+\section{Dedicated functions}
+
+TODO
