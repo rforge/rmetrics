@@ -192,16 +192,15 @@ void put_state_congru(char **params, char **seed, int *err)
 	mult = inp_mult;
 	incr = inp_incr;
 	congru_seed = inp_seed;
-	user_unif_init_selected = user_unif_init_congru; 
 	switch (*err) {
 	case 0:
-		user_unif_rand_selected = user_unif_rand_congru_0;
+		user_unif_put_entry_points(user_unif_init_congru, user_unif_rand_congru_0);
 		break;
 	case 1:
-		user_unif_rand_selected = user_unif_rand_congru_1;
+		user_unif_put_entry_points(user_unif_init_congru, user_unif_rand_congru_1);
 		break;
 	case 2:
-		user_unif_rand_selected = user_unif_rand_congru_2;
+		user_unif_put_entry_points(user_unif_init_congru, user_unif_rand_congru_2);
 	}
 	*err = 0;
 }

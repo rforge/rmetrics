@@ -53,9 +53,15 @@
 
 #include "congruRand.h"
 
-int generator;
-double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
-void (*user_unif_init_selected) (unsigned int seed);
+static int generator;
+static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
+static void (*user_unif_init_selected) (unsigned int seed);
+
+void user_unif_put_entry_points(void * selected_init, void * selected_rand)
+{
+	user_unif_init_selected = selected_init;
+	user_unif_rand_selected = selected_rand;
+}
 
 double x;
 
