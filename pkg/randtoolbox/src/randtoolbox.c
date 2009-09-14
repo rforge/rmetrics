@@ -45,7 +45,7 @@
 /*****************************************************************************
  *  various Random Number Generators
  *
- *		C functions	
+ *		C functions
  *  
  *	Many ideas are taken from <Rsource>/src/main/RNG.c
  *
@@ -66,7 +66,7 @@ static unsigned int seedArray[LENSEEDARRAY];
 //a pseudo boolean to initiate the seed array
 static int isInitByArray=0;
 
-//the first 100 000 prime numbers computed from their differences stored in primes.h included at the end of this file
+//the first 100 000 prime numbers computed from their differences stored in primes.h
 static int primeNumber[100000];
 
 // pi
@@ -109,15 +109,15 @@ SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed)
     else 
         prime  = INTEGER( p ); 
     
-	
+
     //allocate result
     double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
-	
+
     R_CheckStack();
-	
+
     //computation step
     if(prime == NULL)
     {
@@ -126,9 +126,9 @@ SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed)
         torus(u, nb, dim, primeNumber, seqstart, mixed, usetime);
     } else
         torus(u, nb, dim, prime, seqstart, mixed, usetime);
-	
+
     UNPROTECT(1);
-	
+
     return resultinR;
 }
 
@@ -137,7 +137,7 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
 {
     int i, j;
     unsigned long state;
-	
+
     if (!R_FINITE(nb) || !R_FINITE(dim))
         error(_("non finite argument"));
     
@@ -150,7 +150,7 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
     
     //init the seed of Torus algo
     if(!isInit) 
-        randSeed();	
+        randSeed();
     
     //init the state of SF Mersenne Twister algo
     if(ismixed)        
@@ -184,7 +184,7 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
                 u[i + j * nb] = fracPart( ( state + i ) * sqrt( prime[j] ) ) ;                
     }
     
-    isInit = 0;		
+    isInit = 0;
 }
 
 
@@ -196,7 +196,7 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
 {
     if (!isNumeric(n) || !isNumeric(d))
         error(_("invalid argument"));
-	
+
     //temporary working variables
     int nb = asInteger( n ); //number of random vectors
     int dim  = asInteger( d ); //dimension of vector
@@ -205,20 +205,20 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
     unsigned long long mod = asReal( modulus ); //modulus
     unsigned long long mult = asReal( multiplier ); //modulus
     unsigned long long incr = asReal( increment ); //modulus    
-	
+
     //result
     double *u ; //result in C
     SEXP resultinR; //result in R
     PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
     u = REAL( resultinR ); //plug the C pointer on the R type
-	
+
     R_CheckStack();
-	
+
     //computation step
     congruRand(u, nb, dim, mod, mult, incr, show);
-	
+
     UNPROTECT(1);
-	
+
     return resultinR;
 }
 
@@ -227,10 +227,10 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
 {
     int i, j, err;
     unsigned long long temp;
-	
+
     if (!R_FINITE(nb) || !R_FINITE(dim))
         error(_("non finite argument"));
-	
+
     //initiate the seed with the machine time
     // and ensure it is positive
     if(!isInit) 
@@ -238,7 +238,7 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
         do randSeed() ; 
         while ( seed <= 0 );
     }
-	
+
     //u_ij is the nth (n = i + j * nb) term of a general congruential linear generator
     //i.e. u_ij = [ ( mult * x_{n-1}  + incr ) % mod ] / mod
     //u is stored column by column
@@ -270,7 +270,7 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
         }
     }
     
-    isInit = 0;		
+    isInit = 0;
 }
 
 //main function used .Call()
@@ -398,7 +398,7 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
 #endif
     
     
-    isInit = 0;	    
+    isInit = 0;
 }
 
 //main function used .Call()
@@ -497,7 +497,7 @@ void knuthTAOCP(double *u, int nb, int dim)
     
     //Rprintf("1st term %.20f --- seed  %u\n", u[0], seed);
         
-    isInit = 0;	    
+    isInit = 0;
 }
 
 
@@ -511,17 +511,17 @@ SEXP doSetSeed(SEXP s)
 {
     if (!isNumeric(s))
         error(_("invalid argument"));
-	
+
     setSeed( (long) asInteger(s) );
     
-    return R_NilValue;	
+    return R_NilValue;
 }
 
 void setSeed(long s)
 {
     if (!R_FINITE(s))
-	error(_("non finite seed"));
-	
+    error(_("non finite seed"));
+
     seed = s;
     isInit = 1;
     isInitByArray = 0;
@@ -676,22 +676,22 @@ void randSeedByArray(int length)
 
 void reconstruct_primes()
 {
-	int i;
-	if (primeNumber[2] == 1) {
-		for (i = 2; i < 100000; i++) {
-			primeNumber[i] = primeNumber[i-1] + 2*primeNumber[i];
-		}
-	}
+    int i;
+    if (primeNumber[2] == 1) {
+        for (i = 2; i < 100000; i++) {
+            primeNumber[i] = primeNumber[i-1] + 2*primeNumber[i];
+        }
+    }
 }
 
 void get_primes(int *n, int *pri)
 {
-	int i;
-	if (primeNumber[2] == 1) {
-		reconstruct_primes();
-	}
-	for (i = 0; i < *n; i++) {
-		pri[i] = primeNumber[i];
-	}
+    int i;
+    if (primeNumber[2] == 1) {
+        reconstruct_primes();
+    }
+    for (i = 0; i < *n; i++) {
+        pri[i] = primeNumber[i];
+    }
 }
 
