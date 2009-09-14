@@ -677,21 +677,17 @@ void randSeedByArray(int length)
 void reconstruct_primes()
 {
     int i;
-    if (primeNumber[2] == 1) {
-        for (i = 2; i < 100000; i++) {
+    if (primeNumber[2] == 1)
+        for (i = 2; i < 100000; i++)
             primeNumber[i] = primeNumber[i-1] + 2*primeNumber[i];
-        }
-    }
 }
 
 void get_primes(int *n, int *pri)
 {
     int i;
-    if (primeNumber[2] == 1) {
+    if (primeNumber[2] == 1)
         reconstruct_primes();
-    }
-    for (i = 0; i < *n; i++) {
+    for (i = 0; i < *n; i++)
         pri[i] = primeNumber[i];
-    }
 }
 
