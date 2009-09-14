@@ -47,5 +47,5 @@
  *
  */
 
-void user_unif_put_entry_points(void * selected_init, void * selected_rand);
+void user_unif_put_entry_points(int gener, void * selected_init, void * selected_rand);
 

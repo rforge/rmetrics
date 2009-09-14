@@ -103,10 +103,8 @@ put.description <- function(description)
 			PACKAGE="randtoolbox")
 		if (aux$err != 0)
 			stop("check congruRand error: ", aux$err)
-		.C("set_generator",
-			as.integer(1),
-			PACKAGE="randtoolbox")
 		if (RNGkind()[1] != "user-supplied") {
+			.C("set_noop", PACKAGE="randtoolbox")
 			RNGkind("user-supplied")
 			aux <- .C("put_state_congru",
 				parameters,

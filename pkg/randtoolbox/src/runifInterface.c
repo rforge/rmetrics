@@ -57,8 +57,9 @@ static int generator;
 static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
 static void (*user_unif_init_selected) (unsigned int seed);
 
-void user_unif_put_entry_points(void * selected_init, void * selected_rand)
+void user_unif_put_entry_points(int gener, void * selected_init, void * selected_rand)
 {
+	generator = gener;
 	user_unif_init_selected = selected_init;
 	user_unif_rand_selected = selected_rand;
 }
@@ -92,9 +93,8 @@ void no_operation(unsigned int seed)
 }
 
 // .C entry point
-void set_generator(int *pgener)
+void set_noop(void)
 {
-	generator = *pgener;
 	user_unif_init_selected = no_operation;
 }
 
