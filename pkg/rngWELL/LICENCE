@@ -1,0 +1,20 @@
+----------------------------------------------------------------------
+-- LICENCE
+----------------------------------------------------------------------
+
+-- free for personal, academic, or non-commercial purposes. BUT for any
+commercial purposes (direct or indirect), the code is under the licence 
+of Université of Montreal. In this latter case, you MUST contact Pierre
+L'Ecuyer at: lecuyer@iro.UMontreal.ca  
+
+----------------------------------------------------------------------
+-- AUTHORS
+----------------------------------------------------------------------
+
+-- all the R code was written by Christophe Dutang and Petr Savicky, but
+the C code was written by Francois Panneton and Pierre L'Ecuyer. All the
+code of this package can be used freely for personal, academic, or 
+non-commercial purposes. BUT for any commercial purposes (direct or
+indirect), the code is under the licence of Université of Montreal. In 
+this latter case, you MUST contact Pierre L'Ecuyer at: 
+lecuyer@iro.UMontreal.ca  
