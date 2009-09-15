@@ -168,11 +168,15 @@ function(lib, pkg)
         for (n in impnames)
             if (exists(n, envir = impenv, inherits = FALSE)) {
                 if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
-                    # generics overwrite generics with warning but
-                    # generics overwrite their own function without
-                    # warning
-                    if (methods:::isGeneric(n, impenv))
-                        warning("replacing previous generic import: ", n)
+                    ## warning if generic overwrites a function which
+                    ## it was not derived from
+                    genNs <- methods:::slot(get(n, envir = ns), "package")
+                    genImpenv <- environmentName(environment(get(n, envir = impenv)))
+                    genWarn1 <- (!identical(genNs, genImpenv))
+                    ## warning if generic overwrites another generic
+                    genWarn2 <- methods:::isGeneric(n, impenv)
+                    if (genWarn1 || genWarn2)
+                        warning(msg, " ", n)
                 } else warning(msg, " ", n)
             }
         # --------
