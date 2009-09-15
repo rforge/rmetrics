@@ -105,11 +105,15 @@ setMethod("timeDate", "character",
         warning("'charvec' entries of different number of characters are replaced by NA's")
     }
 
-    # Midnight Standard & conversion to isoFormat:
-    charvec <- midnightStandard(charvec, format)
+    ## # YC :midnigStandard2 returns object in POSIXct which helps
+    ## # waisting time in strptime
+    ## # Midnight Standard & conversion to isoFormat:
+    ## charvec <- midnightStandard(charvec, format)
+    ## # convert to POSIXct as it is
+    ## ct <- as.POSIXct(charvec, format = isoFormat, tz="GMT")
 
-    # convert to POSIXct as it is
-    ct <- as.POSIXct(charvec, format = isoFormat, tz="GMT")
+    # Midnight Standard & conversion to isoFormat:
+    ct <- midnightStandard2(charvec, format)
 
     ## Do conversion
     ## YC: .formatFinCenterNum faster than .formatFinCenter

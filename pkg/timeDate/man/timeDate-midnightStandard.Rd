@@ -5,7 +5,7 @@
 
 
 \alias{midnightStandard}
-
+\alias{midnightStandard2}
 
 \description{
     
@@ -16,7 +16,8 @@
 
 
 \usage{
-midnightStandard(charvec, format)  
+midnightStandard(charvec, format)
+midnightStandard2(charvec, format)  
 }
 
 
@@ -34,7 +35,8 @@ midnightStandard(charvec, format)
 
 \value{
     
-    returns a \code{timeDate} object.
+     \code{midnightStandard} returns a \code{character} object and
+     \code{midnightStandard2} returns a \code{POSIXct} object.
     
 }
 
