@@ -32,8 +32,16 @@ setMethod("show", "timeSeries",
         # FUNCTION:
 
         # Check records to get printed:
-        maxRmetrics <- if (!is.null(max <- getRmetricsOptions("max.print"))) max  else Inf
-        maxR        <- if (!is.null(max <- getOption("max.print")))         max  else Inf
+        maxRmetrics <-
+            if (!is.null(max <- getRmetricsOptions("max.print")))
+                max
+            else
+                Inf
+        maxR <-
+            if (!is.null(max <- getOption("max.print") ))
+                floor(max / (NCOL(object) + NCOL(object@recordIDs)))
+            else
+                Inf
         max <- min(c(maxRmetrics, maxR))
 
         if (ptest <- ((omitted <- NROW(object) - max) > 0))
@@ -45,7 +53,7 @@ setMethod("show", "timeSeries",
 
         # Series:
         cat(FinCenter, "\n", sep = "")
-        if (prod(dim(recordIDs)) & (ncol(data == NCOL(recordIDs)))) {
+        if (prod(dim(recordIDs)) & (ncol(data) == NCOL(recordIDs))) {
             dataIDs <- as.matrix(recordIDs)
             colnames(dataIDs) <- paste(colnames(dataIDs), "*", sep = "")
             #-> use format(data) to have same number of digits when timeSeries
