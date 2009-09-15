@@ -774,7 +774,7 @@
         return(qnorm(p, mean = object@mu, sd = object@sigma))
     }else if(.is.student.t(object, symmetric = TRUE) & object@parametrization == "alpha.bar"){
         nu <- coef(object)$nu
-        return(qt(p, df = nu) * sqrt((nu - 2) / nu) * object@sigma + object@mu)
+        return(qt(p, df = nu) * sqrt((nu - 2) / nu) * as.numeric(object@sigma) + object@mu)
     }
 
     p.raw  <- .check.data(p, na.rm = FALSE, fit = FALSE, dim = 1)

@@ -263,4 +263,6 @@ ghyp V1.5.1
 ghyp V1.5.2
 
 	* Documentation and Vignette improved...
+	* 'qghyp': In case of student-t convert obj@sigma to 'numeric'
+	from 'matrix'.
 
