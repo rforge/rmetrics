@@ -58,143 +58,134 @@ function(lib, pkg)
                        currentYear = as.POSIXlt(Sys.time())$year + 1900,
                        myUnits = "days")
 
-    ## IMO it is normal that a function in a previous import is
-    ## replaced by its generic. It should not create a warning. But a
-    ## warning should be generated when a generic is replaced in a
-    ## previous import.
+    if (getRversion() < "2.10.0") {
+        # Introduction of new patch in 2.10.0 makes it now possible to
+        # use import in NAMESAPCE with S4 classes/methods. For
+        # backward compatibility, we add here the patch for previous R
+        # verison.
 
-    ## It would greatly help the maintanance of packages which import
-    ## S4 classes and generics because one could use the simple
-    ## "import" instruction rather than "importFrom" in the NAMESPACE.
+        tmp <- function(self, ns, vars, generics, packages) {
+            addImports <- function(ns, from, what) {
+                imp <- structure(list(what), names = getNamespaceName(from))
+                imports <- getNamespaceImports(ns)
+                setNamespaceInfo(ns, "imports", c(imports, imp))
+            }
+            namespaceIsSealed <- function(ns)
+                environmentIsLocked(ns)
+            makeImportExportNames <- function(spec) {
+                old <- as.character(spec)
+                new <- names(spec)
+                if (is.null(new)) new <- old
+                else new[new == ""] <- old[new == ""]
+                names(old) <- new
+                old
+            }
+            whichMethodMetaNames <- function(impvars) {
+                if(!.isMethodsDispatchOn())
+                    return(numeric())
+                mm <- ".__T__"
+                seq_along(impvars)[substr(impvars, 1L, nchar(mm, type = "c")) == mm]
+            }
 
-    tmp <- function(self, ns, vars, generics, packages) {
-        addImports <- function(ns, from, what) {
-            imp <- structure(list(what), names = getNamespaceName(from))
-            imports <- getNamespaceImports(ns)
-            setNamespaceInfo(ns, "imports", c(imports, imp))
-        }
-        namespaceIsSealed <- function(ns)
-            environmentIsLocked(ns)
-        makeImportExportNames <- function(spec) {
-            old <- as.character(spec)
-            new <- names(spec)
-            if (is.null(new)) new <- old
-            else new[new == ""] <- old[new == ""]
-            names(old) <- new
-            old
-        }
-        whichMethodMetaNames <- function(impvars) {
-            if(!.isMethodsDispatchOn())
-                return(numeric())
-            mm <- ".__T__"
-            seq_along(impvars)[substr(impvars, 1L, nchar(mm, type = "c")) == mm]
-        }
+            # ---------------
+            # YC
+            if (getRversion() < "2.9.1") #-> anyDuplicated introduced in r48558
+                anyDuplicated <- function(...)
+                    any(duplicated(...))
+            # ---------------
 
-        # ---------------
-        # YC
-        if (getRversion() < "2.9.1") #-> anyDuplicated introduced in r48558
-            anyDuplicated <- function(...)
-                any(duplicated(...))
-        # ---------------
-
-        if (is.character(self))
-            self <- getNamespace(self)
-        ns <- asNamespace(ns)
-        if (missing(vars)) impvars <- getNamespaceExports(ns)
-        else impvars <- vars
-        impvars <- makeImportExportNames(impvars)
-        impnames <- names(impvars)
-        if (anyDuplicated(impnames)) {
-            stop("duplicate import names ",
-                 paste(impnames[duplicated(impnames)], collapse = ", "))
-        }
-        if (isNamespace(self) && isBaseNamespace(self)) {
-            impenv <- self
-            msg <- "replacing local value with import:"
-            register <- FALSE
-        }
-        else if (isNamespace(self)) {
-            if (namespaceIsSealed(self))
-                stop("cannot import into a sealed name space")
-            impenv <- parent.env(self)
-            msg <- "replacing previous import:"
-            register <- TRUE
-        }
-        else if (is.environment(self)) {
-            impenv <- self
-            msg <- "replacing local value with import:"
-            register <- FALSE
-        }
-        else stop("invalid import target")
-        which <- whichMethodMetaNames(impvars)
-        if(length(which)) {
-            ## If methods are already in impenv, merge and don't import
-            delete <- integer()
-            for(i in which) {
-                methodsTable <- .mergeImportMethods(impenv, ns, impvars[[i]])
-                if(is.null(methodsTable))
-                {} ## first encounter, just import it
-                else { ##
-                    delete <- c(delete, i)
-                    ## eventually mlist objects will disappear, for now
-                    ## just don't import any duplicated names
-                    mlname = sub("__T__", "__M__", impvars[[i]], fixed=TRUE)
-                    ii = match(mlname, impvars, 0L)
-                    if(ii > 0)
-                        delete <- c(delete, ii)
-                    if(!missing(generics)) {
-                        genName <- generics[[i]]
-                        if(i > length(generics) || !nzchar(genName))
-                        {warning("got invalid index for importing ",mlname); next}
-                        fdef <- methods:::getGeneric(genName,
-                                                     where = impenv,
-                                                     package = packages[[i]])
-                        if(is.null(fdef))
-                            warning(gettextf("Found methods to import for function \"%s\" but not the generic itself",
-                                             genName))
-                        else
-                            methods:::.updateMethodsInTable(fdef, ns, TRUE)
+            if (is.character(self))
+                self <- getNamespace(self)
+            ns <- asNamespace(ns)
+            if (missing(vars)) impvars <- getNamespaceExports(ns)
+            else impvars <- vars
+            impvars <- makeImportExportNames(impvars)
+            impnames <- names(impvars)
+            if (anyDuplicated(impnames)) {
+                stop("duplicate import names ",
+                     paste(impnames[duplicated(impnames)], collapse = ", "))
+            }
+            if (isNamespace(self) && isBaseNamespace(self)) {
+                impenv <- self
+                msg <- "replacing local value with import:"
+                register <- FALSE
+            }
+            else if (isNamespace(self)) {
+                if (namespaceIsSealed(self))
+                    stop("cannot import into a sealed name space")
+                impenv <- parent.env(self)
+                msg <- "replacing previous import:"
+                register <- TRUE
+            }
+            else if (is.environment(self)) {
+                impenv <- self
+                msg <- "replacing local value with import:"
+                register <- FALSE
+            }
+            else stop("invalid import target")
+            which <- whichMethodMetaNames(impvars)
+            if(length(which)) {
+                ## If methods are already in impenv, merge and don't import
+                delete <- integer()
+                for(i in which) {
+                    methodsTable <- .mergeImportMethods(impenv, ns, impvars[[i]])
+                    if(is.null(methodsTable))
+                    {} ## first encounter, just import it
+                    else { ##
+                        delete <- c(delete, i)
+                        ## eventually mlist objects will disappear, for now
+                        ## just don't import any duplicated names
+                        mlname = sub("__T__", "__M__", impvars[[i]], fixed=TRUE)
+                        ii = match(mlname, impvars, 0L)
+                        if(ii > 0)
+                            delete <- c(delete, ii)
+                        if(!missing(generics)) {
+                            genName <- generics[[i]]
+                            if(i > length(generics) || !nzchar(genName))
+                            {warning("got invalid index for importing ",mlname); next}
+                            fdef <- methods:::getGeneric(genName,
+                                                         where = impenv,
+                                                         package = packages[[i]])
+                            if(is.null(fdef))
+                                warning(gettextf("Found methods to import for function \"%s\" but not the generic itself",
+                                                 genName))
+                            else
+                                methods:::.updateMethodsInTable(fdef, ns, TRUE)
+                        }
                     }
                 }
+                if(length(delete)) {
+                    impvars <- impvars[-delete]
+                    impnames <- impnames[-delete]
+                }
             }
-            if(length(delete)) {
-                impvars <- impvars[-delete]
-                impnames <- impnames[-delete]
+            for (n in impnames)
+                if (exists(n, envir = impenv, inherits = FALSE)) {
+                    if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
+                        ## warn only if generic overwrites a function which
+                        ## it was not derived from
+                        genNs <- methods:::slot(get(n, envir = ns), "package")
+                        genImpenv <- environmentName(environment(get(n, envir = impenv)))
+                        if (!identical(genNs, genImpenv) ||
+                            ## warning if generic overwrites another generic
+                            methods:::isGeneric(n, impenv))
+                            warning(msg, " ", n)
+                    } else warning(msg, " ", n)
+                }
+            importIntoEnv(impenv, impnames, ns, impvars)
+            if (register) {
+                addImports(self, ns,
+                           if (missing(vars)) TRUE else impvars)
             }
         }
 
-        # --------
-        # YC :
-        for (n in impnames)
-            if (exists(n, envir = impenv, inherits = FALSE)) {
-                if (.isMethodsDispatchOn() && methods:::isGeneric(n, ns)) {
-                    ## warning if generic overwrites a function which
-                    ## it was not derived from
-                    genNs <- methods:::slot(get(n, envir = ns), "package")
-                    genImpenv <- environmentName(environment(get(n, envir = impenv)))
-                    genWarn1 <- (!identical(genNs, genImpenv))
-                    ## warning if generic overwrites another generic
-                    genWarn2 <- methods:::isGeneric(n, impenv)
-                    if (genWarn1 || genWarn2)
-                        warning(msg, " ", n)
-                } else warning(msg, " ", n)
-            }
-        # --------
-
-        importIntoEnv(impenv, impnames, ns, impvars)
-        if (register) {
-            addImports(self, ns,
-                       if (missing(vars)) TRUE else impvars)
-        }
+        require(utils)
+        assignInNamespace("..Old..namespaceImportFrom", base::namespaceImportFrom,
+                          ns = "base")
+        environment(tmp) <- baseenv()
+        assignInNamespace("namespaceImportFrom", tmp, ns = "base")
     }
-
-    require(utils)
-    assignInNamespace("..Old..namespaceImportFrom", base::namespaceImportFrom,
-                      ns = "base")
-    environment(tmp) <- baseenv()
-    assignInNamespace("namespaceImportFrom", tmp, ns = "base")
 }
-
 
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
