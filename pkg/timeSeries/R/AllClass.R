@@ -64,19 +64,24 @@ setClass("timeSeries",
                         recordIDs = "data.frame",
                         title = "character",
                         documentation = "character"),
-         contains = "structure",
-         validity = function(object) {
-             if ((length(object@positions) > 0) &&
-                 NROW(object) != length(object@positions))
-                 return("length of '@positions' not equal to '@.Data' extent")
-             if (NCOL(object) != length(object@units))
-                 return("length of '@units' not equal to '@.Data' extent")
-             if (NROW(object@recordIDs) > 0 &
-                 NROW(object@recordIDs) != nrow(object))
-                 return("length of '@recordIDs' not equal to '@.Data' extent")
-             TRUE
-         })
+         contains = "structure")
 
+
+# ------------------------------------------------------------------------------
+
+.validity_timeSeries <- function(object) {
+    if ((length(object@positions) > 0) &&
+        NROW(object) != length(object@positions))
+        return("length of '@positions' not equal to '@.Data' extent")
+    if (NCOL(object) != length(object@units))
+        return("length of '@units' not equal to '@.Data' extent")
+    if (NROW(object@recordIDs) > 0 &
+        NROW(object@recordIDs) != nrow(object))
+        return("length of '@recordIDs' not equal to '@.Data' extent")
+    TRUE
+}
+
+setValidity("timeSeries", .validity_timeSeries)
 
 # ------------------------------------------------------------------------------
 
@@ -98,7 +103,7 @@ setMethod("initialize", "timeSeries",
           # as.double -> crucial for speed improvement in subsetting
           if (!is.double(positions)) positions <- as.double(positions)
 
-          .Object <- setDataPart(.Object, value = .Data)
+          .Object <- timeSeries::setDataPart(.Object, value = .Data)
           `slot<-`(.Object, "units", value = units)
           `slot<-`(.Object, "positions", value = positions)
           `slot<-`(.Object, "format", value = format)
@@ -106,7 +111,15 @@ setMethod("initialize", "timeSeries",
           `slot<-`(.Object, "recordIDs", value = recordIDs)
           `slot<-`(.Object, "title", value = title)
           `slot<-`(.Object, "documentation", value = documentation)
-          validObject(.Object)
+
+          # check only one we needs rather than using validObject
+          anyStrings <- function(x)
+              if (identical(x, TRUE))  character() else x
+          error <- anyStrings(.validity_timeSeries(.Object))
+          if (length(error) > 0)
+              stop(paste("Initialize timeSeries :", error, collapse = "\n"),
+                   call. = FALSE, domain = NA)
+
           .Object
       })
 

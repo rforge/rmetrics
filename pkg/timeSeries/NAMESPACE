@@ -263,5 +263,6 @@ export(
     ".turnpointsPastecs",
     ".turnpointsSeries",
     ".turnpointsStats",
+    ".validity_timeSeries",
     ".window.timeSeries",
     "window.timeSeries" )
