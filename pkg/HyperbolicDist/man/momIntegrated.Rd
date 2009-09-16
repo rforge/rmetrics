@@ -78,7 +78,7 @@ momIntegrated(densFn, order, param = NULL, about = 0, absolute = FALSE)
 
 \seealso{\code{\link{dghyp}}, \code{\link{dhyperb}},
   \code{\link{dgamma}}, \code{\link{dgig}},
-  \code{\link[VarianceGamma]{dvg}}
+  \code{\link[VarianceGamma]{VarianceGamma}}
 }
 \examples{
 ### Calculate the mean of a generalized hyperbolic distribution
