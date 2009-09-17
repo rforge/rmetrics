@@ -23,7 +23,7 @@
 
 setMethod("series", "timeSeries",
     function(x)
-    {   
+    {
         # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
         # Description:
@@ -45,12 +45,12 @@ setMethod("series", "timeSeries",
     }
 )
 
-      
+
 # ------------------------------------------------------------------------------
 
 
 setMethod("series<-", signature(x = "timeSeries", value = "ANY"),
-    function(x, value) 
+    function(x, value)
     {
         # Return Value:
         callGeneric(x, as(value, "matrix"))
@@ -60,47 +60,49 @@ setMethod("series<-", signature(x = "timeSeries", value = "ANY"),
 
 # ------------------------------------------------------------------------------
 
-   
+
 setMethod("series<-", signature(x = "timeSeries", value = "matrix"),
     function(x, value)
     {
         # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
         # Description:
         #    Assign the series Data to a timeSeries object.
-    
+
         # Arguments:
         #   object - a 'timeSeries' object
-    
+
         # Value:
         #    Assign to be assign as series Data of a timeSeries.
-    
+
         # FUNCTION:
-    
+
         # if value same dimension as time series
         # we we can assign the value directly to @.Data
         # This can speed up math Ops significantly
         if (identical(dim(x), dim(value))) {
             x@.Data <- value
+            if (!is.null(cn <- colnames(value)))
+                colnames(x) <- cn
             return(x)
         }
-    
+
         if (is.null(charvec <- rownames(value)))
             charvec <- rownames(x)
         if (is.null(units <- colnames(value)))
             units <- colnames(value)
-    
+
         # now that we have charvec and units, better to remove
         # dimnames of value to avoid problems
         attr(value, "dimnames") <- NULL
-    
+
         if (!identical(length(units), NCOL(value)))
             units <- NULL
-    
+
         # if now same dim , drop charvec and returns .signalSeries
         if (!identical(length(charvec), NROW(value)))
             return(.signalSeries(value, units))
-    
+
         format <- x@format
         zone <- FinCenter <- finCenter(x)
         title <- x@title
@@ -110,7 +112,7 @@ setMethod("series<-", signature(x = "timeSeries", value = "matrix"),
                 x@recordIDs
             else
                 data.frame()
-    
+
         # Return Value:
         timeSeries(data = value,
             charvec = charvec,
@@ -129,7 +131,7 @@ setMethod("series<-", signature(x = "timeSeries", value = "matrix"),
 
 seriesData <-
 function(object)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
