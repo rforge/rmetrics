@@ -46,7 +46,7 @@ function()
     # getReturns - Computes return series given a price series
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Get Returns:
@@ -71,7 +71,7 @@ function()
     # maxDrawDown - Computes the maximum drawdown
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Closing Prices:
@@ -99,7 +99,7 @@ function()
     # sharpeRatio - Calculates the Sharpe Ratio
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Get Returns:
@@ -122,7 +122,7 @@ function()
     # sterlingRatio - Calculates the Sterling Ratio
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Get Returns:
@@ -146,7 +146,7 @@ function()
 
     # Data from fEcofin:
     myFinCenter <<- "GMT"
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Get Returns:

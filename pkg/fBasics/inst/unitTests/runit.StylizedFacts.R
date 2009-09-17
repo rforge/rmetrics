@@ -44,7 +44,7 @@ test.acfPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -70,7 +70,7 @@ test.pacfPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -96,7 +96,7 @@ test.teffectPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -122,7 +122,7 @@ test.lmacfPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -158,7 +158,7 @@ test.lacfPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -178,7 +178,7 @@ test.logpdfPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -210,7 +210,7 @@ test.qqgausPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)
@@ -236,7 +236,7 @@ test.scalinglawPlot =
 function()
 {
     # MSFT Data:
-    msft.dat = as.timeSeries(data(msft.dat))
+    msft.dat = MSFT
     msft = msft.dat[, 1]
     msft.vol = msft.dat[ , 5]/10^6
     msft.ret = returns(msft)

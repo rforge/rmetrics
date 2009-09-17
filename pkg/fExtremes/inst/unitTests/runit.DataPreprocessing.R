@@ -44,7 +44,7 @@ function()
     # blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
 
     # Time Series Data:
-    x = as.timeSeries(data(msft.dat))[, "Close"]
+    x = MSFT[, "Close"]
     x.ret = 100*returns(x)
     head(x.ret)
     class(x.ret)
@@ -86,7 +86,7 @@ function()
     # findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
 
     # Time Series Data:
-    x = as.timeSeries(data(msft.dat))[, "Close"]
+    x = MSFT[, "Close"]
     x.ret = 100*returns(x)
     head(x.ret)
     class(x.ret)
@@ -125,7 +125,7 @@ function()
     # pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)
 
     # Time Series Data:
-    x = as.timeSeries(data(msft.dat))[, "Close"]
+    x = MSFT[, "Close"]
     x.ret = 100*returns(x)
     head(x.ret)
     class(x.ret)
@@ -162,7 +162,7 @@ function()
     # deCluster(x, run = 20, doplot = TRUE)
 
     # Time Series Data:
-    x = as.timeSeries(data(msft.dat))[, "Close"]
+    x = MSFT[, "Close"]
     x.ret = 100*returns(x)
     head(x.ret)
     class(x.ret)

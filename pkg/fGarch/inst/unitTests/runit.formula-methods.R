@@ -175,7 +175,7 @@ test.formula.methods.spread <-
     # MODELING HIGH/LOW SPREADS FROM MSFT PRICE SERIES:
 
     # Series:
-    X.tS = as.timeSeries(msft.dat)
+    X.tS = MSFT
 
     # Fit:
     fit = garchFit(Open ~ garch(1,1), data = returns(X.tS), trace = FALSE)

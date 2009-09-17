@@ -49,7 +49,7 @@ function()
     #   Returns a tailored return series plot
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))[, "Close"]
+    tS = MSFT[, "Close"]
 
     # Series Plot:
     par(mfrow = c(2, 1))
@@ -72,7 +72,7 @@ function()
     #   Returns a tailored histogram plot
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))[, "Close"]
+    tS = MSFT[, "Close"]
 
     # Histogram Plot:
     par(mfrow = c(1, 1))
@@ -94,7 +94,7 @@ function()
     #   Returns a tailored kernel density estimate plot
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))[, "Close"]
+    tS = MSFT[, "Close"]
 
     # Density Plot:
     par(mfrow = c(1, 1))
@@ -115,7 +115,7 @@ function()
     #   Returns a tailored normal quantile-quantile plot
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))[, "Close"]
+    tS = MSFT[, "Close"]
 
     # Quantile Plot:
     par(mfrow = c(1, 1))
@@ -137,7 +137,8 @@ function()
     #   Returns a basic statistics summary
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))
+    tS = MSFT
+
     Close = tS[, "Close"]
 
     # Univariate timeSeries - basicStats(x, ci = 0.95)
@@ -188,7 +189,7 @@ function()
     #   S-PLUS: Returns the standard deviation of a vector
 
     # Time Series:
-    tS = as.timeSeries(data(msft.dat))
+    tS = MSFT
 
     # stdev - Univariate:
     tU = tS[, 1]

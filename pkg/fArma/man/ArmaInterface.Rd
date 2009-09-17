@@ -561,7 +561,7 @@ armaFit(formula, data, method = c("mle", "ols"), include.mean = TRUE,
    
 ## armaFit -
    # Alternative Calls:
-   TS = as.timeSeries(data(msft.dat))
+   TS = MSFT
    armaFit(formula = diff(log(Close)) ~ ar(5), data = TS)
    armaFit(Close ~ ar(5), data = returns(TS, digits = 12))
    TS.RET = returns(TS, digits = 12)

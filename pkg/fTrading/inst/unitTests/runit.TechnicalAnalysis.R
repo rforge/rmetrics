@@ -91,7 +91,7 @@ function()
     #  oscTA - EMA-Oscillator
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Data Records:
@@ -155,7 +155,7 @@ function()
     #  vorTA - Volatility Ratio
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Data Records:
@@ -215,7 +215,7 @@ function()
     # rsiTA - Relative Strength Index
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Data Records:
@@ -294,7 +294,7 @@ function()
     # williamsrTA- Williams R%
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     x = close = X[, "Close"]
@@ -383,7 +383,7 @@ function()
     # EWMA - Computes Exponentially Weighted  Moving Average
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # Data Records:
@@ -423,7 +423,7 @@ function()
     #   Computes an indicator for technical analysis
 
     # Data from fEcofin:
-    X = as.timeSeries(data(msft.dat))
+    X = MSFT
     print(head(X))
 
     # EMA - Daily TA:

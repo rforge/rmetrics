@@ -204,7 +204,7 @@ EWMA(x, lambda, startup = 0)
 \examples{
 ## data -
    # Load MSFT Data:
-   x = as.timeSeries(data(msft.dat))
+   x = MSFT
    colnames(x)
    x = x[, "Close"]
    head(x)

@@ -353,7 +353,7 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd",
     
 ## MODELING HIGH/LOW RETURN SPREADS FROM MSFT PRICE SERIES:
     
-   X.timeSeries = as.timeSeries(msft.dat)
+   X.timeSeries = MSFT
    garchFit(Open ~ garch(1,1), data = returns(X.timeSeries)) 
    garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.timeSeries)) 
 }

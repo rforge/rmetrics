@@ -594,7 +594,7 @@ function()
     #   of the argument formula ...
 
     # Load From Ecofin Package:
-    TS = as.timeSeries(data(msft.dat))
+    TS = MSFT
     head(TS)
     class(TS)
     colnames(TS)
