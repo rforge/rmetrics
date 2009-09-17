@@ -499,7 +499,7 @@ type = c("fast", "slow"))
 
     # Indicator:
     if (TS) {
-        stochastic = merge(K, D)
+        stochastic = cbind(K, D)
         units = c(paste(type, "K", sep = ""), paste(type, "D", sep = ""))
         colnames(stochastic)<-units
     } else {
