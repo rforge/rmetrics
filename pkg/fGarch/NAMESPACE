@@ -83,7 +83,7 @@ export(
     ".gedCondDist",
     "gedFit",
     ".getfGarchEnv",
-    ".gogarchFit",                  # This line added DW
+    ".gogarchFit",
     ".hessian2sided",
     ".interactiveGarchPlot",
     ".multGarchPlot",
