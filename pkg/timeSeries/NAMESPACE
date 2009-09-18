@@ -118,18 +118,6 @@ S3method("lines", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("points", "timeSeries")
 S3method("rbind", "timeSeries")
-S3method("rollmax", "default")
-S3method("rollmax", "matrix")
-S3method("rollmax", "timeSeries")
-S3method("rollmean", "default")
-S3method("rollmean", "matrix")
-S3method("rollmean", "timeSeries")
-S3method("rollmedian", "default")
-S3method("rollmedian", "matrix")
-S3method("rollmedian", "timeSeries")
-S3method("rollmin", "default")
-S3method("rollmin", "matrix")
-S3method("rollmin", "timeSeries")
 S3method("str", "timeSeries")
 S3method("time<-", "timeSeries")
 
@@ -226,10 +214,10 @@ export(
     ".rev.timeSeries",
     "rev.timeSeries",
     "rollDailySeries",
-    "rollmax",
-    "rollmean",
-    "rollmedian",
-    "rollmin",
+    ".rollmax.timeSeries",
+    ".rollmean.timeSeries",
+    ".rollmedian.timeSeries",
+    ".rollmin.timeSeries",
     "rollMonthlySeries",
     "rollMonthlyWindows",
     "sampleColnames",
