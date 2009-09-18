@@ -40,6 +40,10 @@
     model <- .ghyp.model(lambda, chi, psi, gamma)
     if(length(mu)==1){
         ##  univariate case
+
+        mu <- as.vector(mu) # In case 'mu' is a 1x1 matrix
+        gamma <- as.vector(gamma) # In case 'gamma' is a matrix
+        
         if(length(gamma) != 1){
             stop("Parameter 'gamma' must have the same length as 'mu' !\n")
         }
@@ -79,6 +83,10 @@
         if(length(gamma)!=length(mu)){
             stop("Dimension mismatch ( length(gamma)!=length(mu) )!\n")
         }
+
+        mu <- as.vector(mu) # In case 'mu' is a matrix
+        gamma <- as.vector(gamma) # In case 'gamma' is a matrix
+        
         if(!is.null(data)){
             data <- .check.data(data = data, case = "mv", na.rm = FALSE, fit = FALSE)
         }else{
@@ -116,7 +124,7 @@
                alpha.bar = unname(alpha.bar),
                mu = mu,
                sigma = as.matrix(sigma),
-               gamma = unname(gamma),
+               gamma= unname(gamma),
                model = model,
                dimension = length(mu),
                expected.value = expected.value,

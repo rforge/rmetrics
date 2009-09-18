@@ -257,12 +257,18 @@ ghyp V1.5.1
 	* 'student.t' constructor and internals modified such that it
 	works for non-finite variance and Cauchy distribution in
 	particular.
+
 	* Documentation and Vignette improved...
 
 2009-08-26 David Luethi
 ghyp V1.5.2
 
 	* Documentation and Vignette improved...
+
 	* 'qghyp': In case of student-t convert obj@sigma to 'numeric'
 	from 'matrix'.
+
+	* Constructors 'ghyp', 'NIG', 'hyp', 'VG', 'student-t' now accept
+	matrices for 'mu' and 'gamma' and coerce them to vectors. 'Gauss'
+	accepts a matrix for 'mu'.
 
