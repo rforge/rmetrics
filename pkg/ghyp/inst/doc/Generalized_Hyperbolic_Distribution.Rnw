@@ -52,7 +52,7 @@
 \author{Wolfgang Breymann\footnote{Institute of Data Analysis and
     Process Design (www.idp.zhaw.ch), e-mail:
     wolfgang.breymann@zhaw.ch} \and David L\"uthi\footnote{Clariden
-    Leu Bank (www.claridenleu.com), e-mail: luethid@gmail.com}}
+    Leu SA (www.claridenleu.com), e-mail: luethid@gmail.com}}
 %\publishers{}
 \date{\today}
 \maketitle
