@@ -5,6 +5,7 @@ Title: The hyperbolic distribution
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
 Depends: R (>= 2.3.0)
+Suggests: VarianceGamma, actuar
 Encoding: latin1
 Description: This package provides functions for the hyperbolic and related 
 	distributions. Density, distribution and quantile functions and 
