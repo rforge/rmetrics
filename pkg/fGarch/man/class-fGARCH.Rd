@@ -5,6 +5,8 @@
 
 
 \alias{fGARCH-class}
+\alias{fUGARCHSPEC-class}
+
 \alias{update,fGARCH-method}
 
 
