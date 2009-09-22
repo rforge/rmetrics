@@ -96,14 +96,14 @@ setMethod("timeDate", "character",
     # Autodetect Format :
     if (is.null(format))
         format <- whichFormat(charvec[1])
-    if (identical(format,"unknown"))
+    if (format %in% c("unknown", "counts")) #-> "counts" catch potential problems from timeSeries
         return(timeDate(NA, zone = zone, FinCenter = FinCenter))
 
-    # if entries of charvec are not of same length, replace them with NA's
-    if (any(nc <- !(nchar(charvec) == nchar(charvec[1])))) {
-        is.na(charvec) <- nc
-        warning("'charvec' entries of different number of characters are replaced by NA's")
-    }
+    ## # if entries of charvec are not of same length, replace them with NA's
+    ## if (any(nc <- !(nchar(charvec) == nchar(charvec[1])))) {
+    ##     is.na(charvec) <- nc
+    ##     warning("'charvec' entries of different number of characters are replaced by NA's")
+    ## }
 
     ## # YC :midnigStandard2 returns object in POSIXct which helps
     ## # waisting time in strptime
@@ -113,17 +113,24 @@ setMethod("timeDate", "character",
     ## ct <- as.POSIXct(charvec, format = isoFormat, tz="GMT")
 
     # Midnight Standard & conversion to isoFormat:
-    ct <- midnightStandard2(charvec, format)
+    num <- midnightStandard2(charvec, format)
 
     ## Do conversion
     ## YC: .formatFinCenterNum faster than .formatFinCenter
-    num = .formatFinCenterNum(c(unclass(ct)), zone, type = "any2gmt")
+    # YC : uncomment following line if using midnightStandar()
+    # num <- .formatFinCenterNum(c(unclass(ct)), zone, type = "any2gmt")
+    num <- .formatFinCenterNum(num, zone, type = "any2gmt")
+
     # it is important to set manually the tzone flag,
-    Data <- as.POSIXct(num, origin = "1970-01-01", tz = "GMT")
-    attr(Data, "tzone") <- "GMT"
+    # num <- as.POSIXct(num, origin = "1970-01-01", tz = "GMT")
+
+    # faster to create manually the POSIXct object
+    # num <- structure(num, class = c("POSIXt", "POSIXct"))
+    class(num) <- c("POSIXt", "POSIXct")
+    attr(num, "tzone") <- "GMT"
 
     new("timeDate",
-        Data = as.POSIXct(Data),
+        Data = num,
         # Note format is automatically created in
         # initialize,timeDate-method
         FinCenter = as.character(FinCenter))
