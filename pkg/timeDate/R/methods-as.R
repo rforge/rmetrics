@@ -35,7 +35,7 @@ as.timeDate <-
     function(x, zone = NULL, FinCenter = NULL)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     UseMethod("as.timeDate")
 }
 
@@ -141,7 +141,7 @@ setAs("Date", "timeDate", function(from) as.timeDate.Date(from))
 as.timeDate.POSIXt <- function(x, zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     timeDate(x, zone = zone, FinCenter = FinCenter)
 }
 
@@ -152,11 +152,11 @@ setAs("POSIXt", "timeDate", function(from) as.timeDate.POSIXt(from))
 # ------------------------------------------------------------------------------
 
 
-as.character.timeDate <- 
-function(x, ...) 
+as.character.timeDate <-
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     format(x, ...)
 }
 
@@ -188,12 +188,16 @@ as.double.timeDate <-
 
     units <- match.arg(units)
 
-    ct = as.POSIXct(x)
-    origin = as.POSIXct("1970-01-01", tz = "GMT")
-    dt = difftime(ct, origin, tz = "GMT", units = units)
-    ans = as.double(dt)
+    if (units == "secs") {
+        ans <- c(unclass(as.POSIXct(x)))
+    } else {
+        ct = as.POSIXct(x)
+        origin = as.POSIXct("1970-01-01", tz = "GMT")
+        dt = difftime(ct, origin, tz = "GMT", units = units)
+        units <- attr(dt, "units")
+        ans = as.double(dt)
+    }
 
-    units <- attr(dt, "units")
     attr(ans, "FinCenter") <- "GMT"
     attr(ans, "units") <- units
     attr(ans, "origin") <-
@@ -338,7 +342,7 @@ as.POSIXlt.timeDate  <-
 
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
-    
+
     # Note:
     #   be careful if S4 method are defined because arguments of generic
     #   function has changed for as.POSIXlt since R-2.6
