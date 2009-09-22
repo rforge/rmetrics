@@ -105,21 +105,38 @@ exportMethods("aggregate",
 ## S3 classes
 ################################################
 
+S3method("aggregate", "timeSeries")
 S3method("as.data.frame", "timeSeries")
+S3method("as.list", "timeSeries")
 S3method("as.matrix", "timeSeries")
 S3method("as.timeSeries", "character")
 S3method("as.timeSeries", "data.frame")
 S3method("as.timeSeries", "default")
 S3method("as.timeSeries", "ts")
 S3method("as.timeSeries", "zoo")
+S3method("as.ts", "timeSeries")
 S3method("cbind", "timeSeries")
 S3method("cumulated", "default")
+S3method("cut", "timeSeries")
+S3method("diff", "timeSeries")
+S3method("end", "timeSeries")
+S3method("head", "timeSeries")
+S3method("lag", "timeSeries")
 S3method("lines", "timeSeries")
+S3method("merge", "timeSeries")
+S3method("na.omit", "timeSeries")
 S3method("plot", "timeSeries")
 S3method("points", "timeSeries")
 S3method("rbind", "timeSeries")
+S3method("rev", "timeSeries")
+S3method("scale", "timeSeries")
+S3method("sort", "timeSeries")
+S3method("start", "timeSeries")
 S3method("str", "timeSeries")
+S3method("tail", "timeSeries")
 S3method("time<-", "timeSeries")
+S3method("time", "timeSeries")
+S3method("window", "timeSeries")
 
 ################################################
 ## functions
@@ -127,18 +144,15 @@ S3method("time<-", "timeSeries")
 
 export(
     ".aggregate.timeSeries",
-    "aggregate.timeSeries",
     "alignDailySeries",
     ".align.timeSeries",
     "applySeries",
     ".applySeries",
     ".as.data.frame.timeSeries",
     ".as.list.timeSeries",
-    "as.list.timeSeries",
     ".as.matrix.timeSeries",
     "as.timeSeries",
     ".as.ts.timeSeries",
-    "as.ts.timeSeries",
     "colAvgs",
     "colKurtosis",
     "colMaxs",
@@ -153,11 +167,9 @@ export(
     "countMonthlyRecords",
     "cumulated",
     ".cut.timeSeries",
-    "cut.timeSeries",
     "description",
     ".description",
     ".diff.timeSeries",
-    "diff.timeSeries",
     ".dollar_assign",
     "drawdowns",
     "drawdownsStats",
@@ -169,7 +181,6 @@ export(
     ".endOfPeriodSeries",
     ".endOfPeriodStats",
     ".end.timeSeries",
-    "end.timeSeries",
     ".extract.turnpointsPastecs",
     "fapply",
     ".fapply",
@@ -177,7 +188,6 @@ export(
     "getReturns",
     "hclustColnames",
     ".head.timeSeries",
-    "head.timeSeries",
     "interpNA",
     "isMultivariate",
     ".isOHLC",
@@ -185,16 +195,13 @@ export(
     "is.signalSeries",
     "is.timeSeries",
     "isUnivariate",
-    "lag.timeSeries",
     ".lines.timeSeries",
     ".lowessSmoother",
     ".merge.timeSeries",
-    "merge.timeSeries",
     "midquotes",
     "midquoteSeries",
     ".naOmitMatrix",
     ".na.omit.timeSeries",
-    "na.omit.timeSeries",
     "newPositions<-",
     "ohlcDailyPlot",
     ".old2newRda",
@@ -212,7 +219,6 @@ export(
     "removeNA",
     "returnSeries",
     ".rev.timeSeries",
-    "rev.timeSeries",
     "rollDailySeries",
     ".rollmax.timeSeries",
     ".rollmean.timeSeries",
@@ -222,19 +228,16 @@ export(
     "rollMonthlyWindows",
     "sampleColnames",
     ".scale.timeSeries",
-    "scale.timeSeries",
     "seriesData",
     "seriesPositions",
     ".signalCounts",
     ".signalSeries",
     "sortColnames",
     ".sort.timeSeries",
-    "sort.timeSeries",
     ".splineSmoother",
     "spreads",
     "spreadSeries",
     ".start.timeSeries",
-    "start.timeSeries",
     "statsColnames",
     ".str.timeSeries",
     ".subset_timeSeries",
@@ -242,15 +245,12 @@ export(
     ".summary.turnpointsPastecs",
     ".supsmuSmoother",
     ".tail.timeSeries",
-    "tail.timeSeries",
     "time<-",
     ".timeSeries",
     ".time.timeSeries",
-    "time.timeSeries",
     ".turnpoints2",
     ".turnpointsPastecs",
     ".turnpointsSeries",
     ".turnpointsStats",
     ".validity_timeSeries",
-    ".window.timeSeries",
-    "window.timeSeries" )
+    ".window.timeSeries" )
