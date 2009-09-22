@@ -21,12 +21,12 @@
 ################################################################################
 
 
-setMethod("is.na", "timeDate", 
-    function(x) 
+setMethod("is.na", "timeDate",
+    function(x)
 {
     # A function implemented by Yohan Chalabi
-    
-    is.na(as.POSIXct(x)) 
+
+    is.na(x@Data)
 })
 
 
