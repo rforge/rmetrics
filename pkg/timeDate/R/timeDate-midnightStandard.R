@@ -43,6 +43,7 @@ midnightStandard2 <-
 {
     # A function written by Diethelm Wuertz
     # and entirely rewritten by Martin Maechler
+    # modifications for speed improvement by Yohan Chalabi
 
     # Description:
     #   Midnight Standard & conversion to isoFormat:
@@ -51,7 +52,7 @@ midnightStandard2 <-
 
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
     ##         In that case, subtract 1 seconds convert and re-add it
-    if(all(is.na(charvec))) return(NA)
+    if(all(is.na(charvec))) return(as.numeric(NA))
     paste0 <- function(...) paste(..., sep = '')
 
     # Missing Format:
@@ -135,7 +136,8 @@ midnightStandard2 <-
 
     ## Convert "charvec" to standard ISO format:
     ## YC: added tz = "GMT" to avoid confusion when DST is active
-    ans <- s + strptime(charvec, format, tz = "GMT")
+    ## YC : works now with numeric because faster
+    ans <- s + c(unclass(as.POSIXct(strptime(charvec, format, tz = "GMT"))))
 
     # Return Value:
     ans
