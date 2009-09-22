@@ -64,7 +64,15 @@ setClass("timeSeries",
                         recordIDs = "data.frame",
                         title = "character",
                         documentation = "character"),
-         contains = "structure")
+         contains = "structure",
+         prototype(matrix(NA),
+                   units = character(0),
+                   positions = numeric(0),
+                   format = character(0),
+                   FinCenter = character(0),
+                   recordIDs = data.frame(),
+                   title = character(0),
+                   documentation = character(0)))
 
 
 # ------------------------------------------------------------------------------
