@@ -18,14 +18,14 @@
 #  alignDailySeries          Aligns a 'timeSeries' object to new positions
 #  rollDailySeries           Rolls daily a 'timeSeries' on a given period
 #  ohlcDailyPlot             Plots open high low close bar chart
-#  .plotOHLC                 Plots open high low close bar chart   
+#  .plotOHLC                 Plots open high low close bar chart
 ################################################################################
 
 
 alignDailySeries <-
 function (x, method = c("before", "after", "interp", "fillNA"),
     include.weekends = FALSE, units = NULL, zone = "", FinCenter = "")
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -57,6 +57,10 @@ function (x, method = c("before", "after", "interp", "fillNA"),
         stop(as.character(match.call())[1], " is for time series and not for signal series.")
 
     method = match.arg(method)
+
+    # check if series sorted
+    if (is.unsorted(x))
+        x <- sort(x)
 
     # Internal Function
     # Univariate Time Series Alignment:
@@ -161,7 +165,7 @@ function (x, method = c("before", "after", "interp", "fillNA"),
 
 rollDailySeries <-
 function(x, period = "7d", FUN, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -178,7 +182,7 @@ function(x, period = "7d", FUN, ...)
     #       passed through the \code{\dots} argument.
 
     # FUNCTION:
-    
+
     stopifnot(is.timeSeries(x))
     if (x@format == "counts")
         stop(as.character(match.call())[1], " is for time series and not for signal series.")
@@ -209,9 +213,9 @@ function(x, period = "7d", FUN, ...)
 
 ohlcDailyPlot <-
 function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab =
-    c("Date", "Date"), ylab = c("Price", "Volume"), 
+    c("Date", "Date"), ylab = c("Price", "Volume"),
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -228,7 +232,7 @@ function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab =
     # FUNCTION:
     stopifnot(is.timeSeries(x))
     if (x@format == "counts")
-        stop(as.character(match.call())[1], 
+        stop(as.character(match.call())[1],
             " is for time series and not for signal series.")
 
     # Next:
@@ -263,7 +267,7 @@ function (x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     bg = par("bg"), axes = TRUE, frame.plot = axes, ann = par("ann"),
     main = NULL, date = c("calendar", "julian"), format = "%Y-%m-%d",
     origin = "1899-12-30", ...)
-{   
+{
     # A Copy from Contributed R Package 'tseries'
 
     # Description:
