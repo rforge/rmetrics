@@ -111,7 +111,7 @@ function(rate, maturity, doplot = TRUE)
 
     # Plot Curve if desired:
     if (doplot) {
-        yfit = fx(maturity, gvec)
+        yfit = fx(maturity, fit$par)
         plot(maturity, rate,
             ylim = c(min(c(rate, yfit)), max(c(rate, yfit)) ),
             main = "Nelson-Siegel" )
@@ -270,7 +270,7 @@ function(rate, maturity, doplot = TRUE)
 
     # Plot Curve if desired:
     if (doplot) {
-        yfit = fx(maturity, gvec)
+        yfit = fx(maturity, fit$par)
         plot(maturity, rate,
             ylim = c(min(c(rate, yfit)), max(c(rate, yfit))),
             main = "Nelson-Siegel-Svensson" )
