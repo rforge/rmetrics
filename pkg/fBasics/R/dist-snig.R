@@ -33,6 +33,7 @@
 #  qsnig                Returns quantiles of the SNIG distribution
 #  rsnig                Generates SNIG distributed random variates
 # FUNCTION:            DESCRIPTION:
+#  .psnigC              Fast psnig from C code
 #  .qsnigC              Fast qsnig from C code
 ################################################################################
 
@@ -46,7 +47,10 @@ dsnig <-
     # FUNCTION:
  
     # Compute Density - Quick and Dirty:
-    dsgh(x, zeta, rho, lambda = -0.5, log = log)
+    ans = dsgh(x, zeta, rho, lambda = -0.5, log = log)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -62,7 +66,10 @@ psnig <-
     # FUNCTION:
     
     # Compute Probabilities - Quick and Dirty:
-    psgh(q, zeta, rho, lambda = -0.5)
+    ans = psgh(q, zeta, rho, lambda = -0.5)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -78,7 +85,10 @@ qsnig <-
     # FUNCTION:
     
     # Compute Quantiles:
-    qsgh(p, zeta, rho, lambda = -0.5)
+    ans = qsgh(p, zeta, rho, lambda = -0.5)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -94,11 +104,36 @@ rsnig <-
     # FUNCTION:
     
     # Generate Random Numbers:
-    rsgh(n, zeta, rho, lambda = -0.5)
+    ans = rsgh(n, zeta, rho, lambda = -0.5)
+    
+    # Return Value:
+    ans
 }
 
 
 ################################################################################
+
+
+.psnigC <-  
+    function(q, zeta = 1, rho = 0) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns quantiles of the snig distribution
+    
+    # FUNCTION:
+      
+    # Compute Quantiles:
+    param = .paramGH(zeta, rho, lambda = -0.5)
+    ans = .pnigC(q, param[1], param[2], param[3], param[4])
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .qsnigC <-  
@@ -113,7 +148,10 @@ rsnig <-
       
     # Compute Quantiles:
     param = .paramGH(zeta, rho, lambda = -0.5)
-    .qnigC(p, param[1], param[2], param[3], param[4])
+    ans = .qnigC(p, param[1], param[2], param[3], param[4])
+    
+    # Return Value:
+    ans
 }
 
 

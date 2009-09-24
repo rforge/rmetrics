@@ -51,7 +51,10 @@ dsgh <-
     
     # Compute Density:
     param = .paramGH(zeta, rho, lambda)
-    dgh(x, param[1], param[2], param[3], param[4], lambda, log)
+    ans = dgh(x, param[1], param[2], param[3], param[4], lambda, log)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -70,7 +73,10 @@ psgh <-
     
     # Compute Probabilities:
     param = .paramGH(zeta, rho, lambda)
-    pgh(q, param[1], param[2], param[3], param[4], lambda)
+    ans = pgh(q, param[1], param[2], param[3], param[4], lambda)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -89,7 +95,10 @@ qsgh <-
       
     # Compute Quantiles:
     param = .paramGH(zeta, rho, lambda)
-    qgh(p, param[1], param[2], param[3], param[4], lambda)
+    ans = qgh(p, param[1], param[2], param[3], param[4], lambda)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -108,7 +117,10 @@ rsgh <-
     
     # Generate Random Numbers:
     param = .paramGH(zeta, rho, lambda)
-    rgh(n, param[1], param[2], param[3], param[4], lambda)
+    ans = rgh(n, param[1], param[2], param[3], param[4], lambda)
+    
+    # Return Value:
+    ans
 }
 
 
