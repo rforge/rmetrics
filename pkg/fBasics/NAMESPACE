@@ -240,6 +240,7 @@ export(
     "print.control",
     "psgh",
     "psnig",
+    ".psnigC",
     "pstable",
     ".purple2greenPalette",
     "qgh",
