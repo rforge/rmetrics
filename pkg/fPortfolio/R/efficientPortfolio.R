@@ -233,7 +233,7 @@ minriskPortfolio <-
 
     # Minimal Risk:
     portfolio <- optimize(targetRiskFun, interval = range(getMu(Data)),
-        data = Data, spec = spec, constraints = constraints)
+        data = Data, spec = spec, constraints = constraints, tol = .Machine$double.eps^0.5)
         
     ## 2009-04-19 DW:
     ## It may happen, that the minimum risk protfolio cannot be computed.

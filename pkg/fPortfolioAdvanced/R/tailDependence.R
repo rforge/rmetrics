@@ -24,9 +24,9 @@
 ################################################################################
 # FUNCTION:                    MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
 #  .rgsgnormCopula              Generates G-SG-NORM copula random variates
-#  .dgsgnormCopula              Computes G-SG-NORM copula probability
+#  .dgsgnormCopula              Computes G-SG-NORM copula density
 # FUNCTION:                    MIXED G-SG-NORM COPULA FIT:
-#  .gsgnormCopulaFit            Computes G-SG-NORM copula probability
+#  .gsgnormCopulaFit            Estimates the parameters of the G-SG-NORM copula
 # FUNCTION:                    NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
 #  .cfgTDE                      Estimates non-parametrically tail dependence
 # FUNCTION:                    COPULA FIT WITH NORM, NIG OR  GHT MARGINALS:
