@@ -16,21 +16,28 @@
 <h3>Description</h3>
 
 <p>
-This function interchanges between the following 3 parameterizations
+This function interchanges between the following 4 parameterizations
 of the variance gamma distribution:
 </p>
 <p>
-1. <i>c,sigma,theta,nu</i>
+1. <i>c, sigma, theta, nu</i>
 </p>
 <p>
-2. <i>theta,sigma,mu,tau</i>
+2. <i>theta, sigma, mu, tau</i>
 </p>
 <p>
-3. <i>theta,sigma,kappa,tau</i>
+3. <i>theta, sigma, kappa, tau</i>
 </p>
 <p>
-The first set of parameterizations are given in Seneta (2004). The other two 
-are the parameterizations given in Kotz <i>et al</i>. (2001).
+4. <i>lambda, alpha, beta, mu</i>
+</p>
+<p>
+The first set of parameterizations is given in Seneta (2004). The second and
+third ones are the parameterizations given in Kotz <i>et al</i>. (2001). The
+last set takes the form of the generalized hyperbolic distribution
+parameterization. <i>delta</i> is not included since the
+variance gamma distribution is a limiting case of generalized
+hyperbolic distribution with <i>delta</i> always equal to 0.
 </p>
 
 
@@ -73,6 +80,13 @@ In the 3 parameterizations, the following must be positive:
 <p>
 3. <i>sigma, tau</i>
 </p>
+<p>
+4. <i>lambda, alpha</i>
+</p>
+<p>
+In addition in the 4th parameterization, the absolute value of
+<i>beta</i> must be less than <i>alpha</i>.
+</p>
 
 
 <h3>Value</h3>
@@ -85,24 +99,26 @@ A numerical vector of length 4 representing <code>param</code> in the
 
 <p>
 David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>,
-Christine Yang Dong
+Christine Yang Dong <a href="mailto:c.dong@auckland.ac.nz">c.dong@auckland.ac.nz</a>
 </p>
 
 
 <h3>References</h3>
 
 <p>
-E. Seneta. (2004). Fitting the variance-gamma model to financial data. 
-emph {J. Appl. Prob.},41A:177-187.
-S. Kotz, T. J. Kozubowski, and K. Podgorski. (2001). The Laplace 
-Distribution and Generalizations. <EM>Birkh"{a}user</EM>, Boston, 349 p.
+Seneta, E. (2004). Fitting the variance-gamma model to financial data.
+<EM>J. Appl. Prob.</EM>, 41A:177&ndash;187.
+Kotz, S, Kozubowski, T. J., and Podgórski,
+K. (2001).
+The Laplace Distribution and Generalizations. <EM>Birkhauser</EM>,
+Boston, 349 p.
 </p>
 
 
 <h3>See Also</h3>
 
 <p>
-<code><a href="VarianceGamma.html">dvg</a></code>
+<code><a href="VarianceGamma.html">dvg</a></code>, code{vgMom}
 </p>
 
 
@@ -116,12 +132,12 @@ vgChangePars(2, 1, as.numeric(param2)) # Convert back to parameterization 1
 
 param3 &lt;- c(1,2,0,0.5)                 # Parameterization 3
 param1 &lt;- vgChangePars(3, 1, param3)   # Convert to parameterization 1
-param1                                 # Parameterization 1    
+param1                                 # Parameterization 1
 vgChangePars(1, 3, as.numeric(param1)) # Convert back to parameterization 3
 </pre>
 
 
 
-<hr><div align="center">[Package <em>VarianceGamma</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+<hr><div align="center">[Package <em>VarianceGamma</em> version 0.2-1 <a href="00Index.html">Index]</a></div>
 
 </body></html>

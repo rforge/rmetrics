@@ -8,11 +8,10 @@ vgCheckPars <- function(param, ...){
     nu <- param[4]
     case <- "normal"
     errMessage <- ""
-     if (length(param) != 4) {
+    if (length(param) != 4) {
       case <- "error"
       errMessage <- "param vector must contain 4 values"
-    }
-     else if (sigma <= 0 ) {
+    } else if (sigma <= 0 ) {
          case <- "error"
          errMessage <- "sigma must be greater than zero"
      } else if (nu <= 0 ) {

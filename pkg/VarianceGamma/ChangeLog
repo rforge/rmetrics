@@ -1,3 +1,23 @@
+2009-09-24    <d.scott@auckland.ac.nz>
+
+	* vgMom.R added to VarianceGamma/R
+
+	* Started substituting functions from vg0.2-1 into current
+	VarianceGamma
+
+	vgParam.R, DESCRIPTION, NAMESPACE, dvg.R, summary.vgFit.R,
+	vgCalcRange.R, vgChangePars.R, vgChangePars.R, vgCheckPars.R,
+	vgFit.R, vgFitStart.R, vgMeanVarMode.R (was vgMomentsAndMode),
+	vgPlots.R
+
+	still need to check man files
+
+2009-09-09    <d.scott@auckland.ac.nz>
+
+	* vgMomentsAndMode.R needs to have vgMom added and then to be
+	updated. This code to come from vg0.2-1 submitted by
+	Christine. Have already made some minor changes to this code.
+
 2009-07-21    <d.scott@auckland.ac.nz>
 
 	* Checked code submitted by Christine: vgChangePars.R,

@@ -1,4 +1,4 @@
-qqvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
+qqvg <- function (y, vgC = NULL, sigma = NULL, theta = NULL, nu = NULL,
                   param = c(vgC,sigma,theta,nu),
                   main = "Variance Gamma Q-Q Plot",
                   xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
@@ -13,19 +13,17 @@ qqvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
   }
 
   if (length(param) > 0) {
+    #check parameters
+    parResult <- vgCheckPars(param = param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if (case == "error"){
+      stop(errMessage)
+    }
     vgC <- param[1]
     sigma <- param[2]
     theta <- param[3]
     nu <- param[4]
-    if  (length(param) != 4) {
-      stop("please specify all 4 parameters values")
-    }
-    if (sigma <= 0) {
-      stop("sigma must be greater than zero")
-    }
-    if (nu <= 0) {
-      stop("nu must be greater than zero")
-    }
   } else {
     fitResults <- vgFit(y, freq = NULL, breaks = NULL, paramStart = NULL,
                         startMethod = "Nelder-Mead", startValues = "SL",
@@ -60,7 +58,7 @@ qqvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
   invisible(list(x = x, y = y))
 }
 
-ppvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
+ppvg <- function (y, vgC = NULL, sigma = NULL, theta = NULL, nu = NULL,
                   param = c(vgC,sigma,theta,nu),
                   main = "Variance Gamma P-P Plot",
                   xlab = "Uniform Quantiles",
@@ -75,18 +73,17 @@ ppvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
   }
 
   if (length(param) > 0) {
+    #check parameters
+    parResult <- vgCheckPars(param = param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if (case == "error"){
+      stop(errMessage)
+    }
     vgC <- param[1]
     sigma <- param[2]
     theta <- param[3]
     nu <- param[4]
-    if  (length(param) != 4) {
-      stop("please specify all 4 parameters values")
-    }
-    if (sigma <= 0) {
-      stop("sigma must be greater than zero")
-    }
-    if (nu <= 0) {
-      stop("nu must be greater than zero")
     }
   } else {
     fitResults <- vgFit(y, freq = NULL, breaks = NULL, paramStart = NULL,
@@ -94,7 +91,8 @@ ppvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
                         method = "Nelder-Mead", hessian = FALSE,
                         plots = FALSE, printOut = FALSE,
                         controlBFGS = list(maxit = 200),
-                        controlNM = list(maxit = 1000), maxitNLM = 1500, ...)
+                        controlNM = list(maxit = 1000),
+                        maxitNLM = 1500, ...)
     param <- fitResults$param
     names(param) = NULL
     vgC <- param[1]
@@ -123,4 +121,6 @@ ppvg <- function (y, vgC = 0, sigma = 1, theta = 0, nu = 1,
   if (line) abline(0, 1)
   invisible(list(x = xvals, y = yvals))
 }
+
+
 

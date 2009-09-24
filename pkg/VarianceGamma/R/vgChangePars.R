@@ -1,4 +1,4 @@
-vgChangePars <- function (from, to, param, noNames=FALSE) {
+vgChangePars <- function (from, to, param, noNames = FALSE) {
   if (length(param)!=4) {
     stop("parameter vector must contain 4 values")
   }
@@ -80,7 +80,7 @@ vgChangePars <- function (from, to, param, noNames=FALSE) {
     beta <- vgTheta1/sigma1^2
     alpha <- sqrt(2/(nu*sigma1^2) + vgTheta1^2/sigma1^4)
     mu <- vgC
-    output = c(lambda=lambda,alpha=alpha,beta=beta,mu=mu)
+    output = c(lambda = lambda,alpha = alpha,beta = beta,mu = mu)
   }
 
   if (from == 2 && to == 1) {
@@ -156,7 +156,7 @@ vgChangePars <- function (from, to, param, noNames=FALSE) {
     tau2 <- 1/nu
     sigma2 <- sigma1*sqrt(nu)
     vgTheta2 <- vgC
-    output = c(theta= vgTheta2,sigma = sigma2,mu = mu,tau = tau2)
+    output = c(theta = vgTheta2,sigma = sigma2,mu = mu,tau = tau2)
   }
 
   if (from == 4 && to == 3) {
