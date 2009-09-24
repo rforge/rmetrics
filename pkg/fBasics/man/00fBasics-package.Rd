@@ -114,7 +114,7 @@
     of distribution functions which are important in the investigation
     of financial returns and related time series.
     
-    %\emph{Normal Student-t Distribution}
+    %\emph{Normal and Student-t Distribution}
     
     %The normal distribution, definitely the most important distribution
     %in finance, is part of R's base package. We have added the function
@@ -124,9 +124,10 @@
     %for an additional location, scale, and skewness parameter in constrast
     %to the function \code{[dpqr]t} from R's base package.
     
+    % nFit
+    
     
     \emph{Stable and Skew-Stable Distribution}
-    
     
     \tabular{ll}{
     \code{[dpqr]stable} \tab the stable and skew-stable distribution, \cr
@@ -141,6 +142,8 @@
     \code{[dpqr]gh} \tab GH, Generlized hyperbolic distribution, \cr
     \code{ghFit} \tab GH parameter estimation, \cr
     \code{ghMode} \tab mode of the GH distribution, \cr
+    \code{ghMoments} \tab moments of the GH distribution, \cr
+    \code{ghSlider} \tab HYP distribution Slider, \cr
     \tab \cr
     \bold{HYP:} \tab \cr
     \code{[dpqr]hyp} \tab HYP, hyperbolic distribution, \cr
@@ -160,8 +163,18 @@
     \code{ghtMode} \tab mode of the GHT distribution, \cr
     \code{ghtSlider} \tab GHT distribution Slider.}
 
-
-
+    
+    \emph{The family of Standardized Distributions}
+    
+    \tabular{ll}{
+    \bold{SGH:} \tab \cr
+    \code{[dpqr]sgh} \tab Standardized GH distribution, \cr
+    \code{sghFit} \tab Standardized GH parameter estimation, \cr
+    \tab \cr
+    \bold{SNIG:} \tab \cr
+    \code{[dpq]snig} \tab Standardized NIG distribution, \cr
+    \code{snigFit} \tab Standardized NIG parameter estimation.}
+    
         
     \emph{The max-Drawdown Distribution}
 
