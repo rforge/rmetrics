@@ -62,15 +62,11 @@ vgMom <- function(order, vgC = 0, sigma = 1, theta = 0, nu = 1,
             } else {
                 if (momType == "mu") {
                   mom = muMom[order]
-                }
-
-                else if (momType == "raw") {
+                } else if (momType == "raw") {
                   about = 0
                   mom <- momChangeAbout(order = order, oldMom = muMom,
                                         oldAbout = vgC, newAbout = about)
-                }
-
-                else if (momType == "central") {
+                } else if (momType == "central") {
                   about = vgMean (param = param)
                   mom <- momChangeAbout(order = order, oldMom = muMom,
                                         oldAbout = vgC, newAbout = about)

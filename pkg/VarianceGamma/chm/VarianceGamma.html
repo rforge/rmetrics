@@ -262,7 +262,8 @@ The mode of the given variance gamma distribution.</td></tr>
 <h3>Author(s)</h3>
 
 <p>
-David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Christine Yang Dong
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, 
+Christine Yang Dong <a href="mailto:c.dong@auckland.ac.nz">c.dong@auckland.ac.nz</a>
 </p>
 
 
@@ -289,7 +290,6 @@ Boston, 349 p.
 <h3>Examples</h3>
 
 <pre>
-
 ## Use the following rules for vgCalcRange when plotting graphs for dvg,
 ## ddvg and pvg.
 ## if nu &lt; 2, use:
@@ -403,8 +403,7 @@ curve(dvg(x, param = param), from = vgRange[1], to = vgRange[2],
       n = 1000)
 bks &lt;- vgBreaks(param = param)
 abline(v = bks)
-title("Density of the Variance Gamma Distribution with breaks")
-
+title("Density of the Variance Gamma Distribution with breaks")  
 </pre>
 
 <script Language="JScript">

@@ -150,7 +150,7 @@ vgChangePars <- function (from, to, param, noNames = FALSE) {
   if (from == 4 && to == 2) {
     sigma1 <- sqrt(2*lambda/(alpha^2 - beta^2))
     nu <- 1/lambda
-    theta1 <- beta*sigma1^2
+    vgTheta1 <- beta*sigma1^2
     vgC <- mu
     mu <- vgTheta1*nu
     tau2 <- 1/nu
@@ -162,7 +162,7 @@ vgChangePars <- function (from, to, param, noNames = FALSE) {
   if (from == 4 && to == 3) {
     sigma1 <- sqrt(2*lambda/(alpha^2 - beta^2))
     nu <- 1/lambda
-    theta1 <- beta*sigma1^2
+    vgTheta1 <- beta*sigma1^2
     vgC <- mu
     kappa <- (sqrt(2*(sigma1*sqrt(nu))^2 + (vgTheta1*nu)^2) - vgTheta1*nu)/
       (sigma1*sqrt(nu)*sqrt(2))

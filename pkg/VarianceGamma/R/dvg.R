@@ -24,16 +24,20 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
           (1/nu - 1/2))*besselK(x = ((1/sigma^2)*abs(x - vgC)*
           sqrt((2*sigma^2/nu) + theta^2)), nu = (1/nu - 1/2)))
     } else {
-    if(nu < 2) {
-        vgDens <- ifelse(abs(x - vgC) < tolerance, gamma(1/nu - 1/2)/(sigma*
-          sqrt(2*pi)*nu^(1/nu)*gamma(1/nu))*((2*sigma^2/
-          (2*sigma^2/nu + theta^2))^(1/nu - 1/2)),
-          ((2*exp(theta*(x - vgC)/sigma^2))/(nu^(1/nu)*sqrt(2*pi)*
-          sigma*gamma(1/nu)))*((abs(x - vgC)/sqrt(2*(sigma^2)/nu + theta^2))^
-          (1/nu - 1/2))*besselK(x = ((1/sigma^2)*abs(x - vgC)*
-          sqrt((2*sigma^2/nu) + theta^2)), nu = (1/nu - 1/2)))
+      if(nu < 2) {
+        if (nu^(1/nu)- 0 < tolerance) {
+          vgDens <- NA
+        } else {
+          vgDens <- ifelse(abs(x - vgC) < tolerance, gamma(1/nu - 1/2)/(sigma*
+            sqrt(2*pi)*nu^(1/nu)*gamma(1/nu))*((2*sigma^2/
+            (2*sigma^2/nu + theta^2))^(1/nu - 1/2)),
+            ((2*exp(theta*(x - vgC)/sigma^2))/(nu^(1/nu)*sqrt(2*pi)*
+            sigma*gamma(1/nu)))*((abs(x - vgC)/sqrt(2*(sigma^2)/nu + theta^2))^
+            (1/nu - 1/2))*besselK(x = ((1/sigma^2)*abs(x - vgC)*
+            sqrt((2*sigma^2/nu) + theta^2)), nu = (1/nu - 1/2)))
+        }
       }
-    if (nu > 2) {
+      if (nu > 2) {
         vgDens <- ifelse(abs(x - vgC) < tolerance, Inf,
           ((2*exp(theta*(x - vgC)/sigma^2))/(nu^(1/nu)*sqrt(2*pi)*
           sigma*gamma(1/nu)))*((abs(x - vgC)/sqrt(2*(sigma^2)/nu + theta^2))^

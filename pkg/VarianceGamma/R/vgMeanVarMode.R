@@ -79,33 +79,33 @@ vgKurt <- function (vgC = 0, sigma = 1, theta = 0, nu = 1,
 vgMode <- function (vgC = 0, sigma = 1, theta = 0, nu = 1,
                     param = c(vgC,sigma,theta,nu)) {
 
-  #check parameters
-  parResult <- vgCheckPars(param = param)
-  case <- parResult$case
-  errMessage <- parResult$errMessage
-  if (case == "error"){
-    stop(errMessage)
-  }
-  vgC <- param[1]
-  sigma <- param[2]
-  theta <- param[3]
-  nu <- param[4]
-  if (nu >= 2){
-    distMode <- vgC
-  } else {
-  modeFun <- function(x) {
-    log(dvg(x, param = param, log = FALSE))
-  }
-  start <- vgC
-  optResult <- optim(start, modeFun,
-                     control = list(fnscale = -1, maxit = 1000),
-                     method = "BFGS")
-  if (optResult$convergence == 0) {
-    distMode <- optResult$par
-  } else {
-    distMode <- NA
-  }
-  }
-  return(distMode)
+    ##check parameters
+    parResult <- vgCheckPars(param = param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if (case == "error"){
+        stop(errMessage)
+    }
+    vgC <- param[1]
+    sigma <- param[2]
+    theta <- param[3]
+    nu <- param[4]
+    if (nu >= 2){
+        distMode <- vgC
+    } else {
+        modeFun <- function(x) {
+            log(dvg(x, param = param, log = FALSE))
+        }
+        start <- vgC
+        optResult <- optim(start, modeFun,
+                           control = list(fnscale = -1, maxit = 1000),
+                           method = "BFGS")
+        if (optResult$convergence == 0) {
+            distMode <- optResult$par
+        } else {
+            distMode <- NA
+        }
+    }
+    return(distMode)
 }
 

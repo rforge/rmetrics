@@ -1,4 +1,4 @@
-<html><head><title>Summarizing Variance Gamme Distribution Fit</title>
+<html><head><title>Summarizing Variance Gamma Distribution Fit</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="Rchm.css">
 </head>
@@ -7,11 +7,11 @@
 <table width="100%"><tr><td>summary.vgFit(VarianceGamma)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   summary.vgFit">
 <param name="keyword" value="R:   print.summary.vgFit">
-<param name="keyword" value=" Summarizing Variance Gamme Distribution Fit">
+<param name="keyword" value=" Summarizing Variance Gamma Distribution Fit">
 </object>
 
 
-<h2>Summarizing Variance Gamme Distribution Fit</h2>
+<h2>Summarizing Variance Gamma Distribution Fit</h2>
 
 
 <h3>Description</h3>
@@ -54,14 +54,15 @@ Further arguments passed to or from other methods.</td></tr>
 <h3>Details</h3>
 
 <p>
-<code>summary.vgFit</code> calculates standard errors for the estimates
-of <i>c</i>, <i>sigma</i>, <i>theta</i>, and
-<i>nu</i> of the variance gamma distribution parameter vector param if
-the Hessian from the call to <code><a onclick="findlink('stats', 'optim.html')" style="text-decoration: underline; color: blue; cursor: hand">optim</a></code> or <code><a onclick="findlink('stats', 'nlm.html')" style="text-decoration: underline; color: blue; cursor: hand">nlm</a></code>
-is available. Because the parameters in the call to the optimiser are
-<i>c</i>, <i>log(sigma)</i>, <i>theta</i> and
-<i>log(nu)</i>, the delta method is used to obtain the
-standard errors for <i>sigma</i> and <i>nu</i>.
+<code>summary.vgFit</code> calculates standard errors for the estimates of
+<i>c</i>, <i>sigma</i>, <i>theta</i>, and
+<i>nu</i> of the variance gamma distribution parameter vector
+<code>param</code> if the Hessian from the call to <code><a onclick="findlink('stats', 'optim.html')" style="text-decoration: underline; color: blue; cursor: hand">optim</a></code> or
+<code><a onclick="findlink('stats', 'nlm.html')" style="text-decoration: underline; color: blue; cursor: hand">nlm</a></code> is available. Because the parameters in the call to
+the optimiser are <i>c</i>, <i>log(sigma)</i>,
+<i>theta</i> and <i>log(nu)</i>, the delta method is
+used to obtain the standard errors for <i>sigma</i> and
+<i>nu</i>.
 </p>
 
 

@@ -19,6 +19,7 @@ vgChangePars.html
 vgCheckPars.html
 vgFit.html
 vgFitStart.html
-vgMomentsAndMode.html
+vgMeanVarMode.html
+vgMom.html
 vgParam.html
 vgPlots.html

@@ -1,8 +1,15 @@
 2009-09-25    <d.scott@auckland.ac.nz>
 
+	* dvg.R changed only code checking on nu, otherwise mine seemed
+	newer compared to version in email 23/09/2009
+
+	* vgFit.R changed following email from Christine 23/09/2009
+
+	* vgChangePars.R updated following email from Christine 20/09/2009
+
 	* check the man files: summary.vgFit.Rd, VarianceGamma.Rd,
 	vgCalcRange.Rd, vgChangePars.Rd, vgCheckPars.Rd, vgFit.Rd,
-	vgFitStart.Rd, vgParam.Rd, vgPlots.Rd, 
+	vgFitStart.Rd, vgParam.Rd, vgPlots.Rd, vgMom.Rd
 
 2009-09-24    <d.scott@auckland.ac.nz>
 
@@ -45,7 +52,7 @@
 	address in. And the moments Rd files are new. I think I corrected
 	a typo in momChangeAbout.Rd, but nothing has been changed in
 	momIntegrated or is.wholenumber.
-	
+
 
 2009-04-15    <d.scott@auckland.ac.nz>
 
@@ -63,6 +70,6 @@
 	* vgParam.Rd
 	Added data(vgParam) statement in examples section to avoid error
 	the smallParam was not found
-	
-	
+
+
 

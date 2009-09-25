@@ -79,7 +79,7 @@
 
   where \eqn{k = \code{order}}{k = order} and \eqn{k > 0}{k > 0} and
   \eqn{a_{k, \ell}}{a_{k, l}} is the recursive coefficient
-  (see \code{\link{momRecursion}} for details).
+  (see \code{\link[HyperbolicDist]{momRecursion}} for details).
 
   This formula is developed from the mu moments formula of the
   generalized hyperbolic distribution given in Scott,
@@ -109,6 +109,7 @@
   \code{\link{vgMean}},
   \code{\link{vgVar}}, \code{\link{vgSkew}}, \code{\link{vgKurt}},
   \code{\link[HyperbolicDist]{is.wholenumber}},
+  \code{\link[HyperbolicDist]{momRecursion}},
   \code{\link[HyperbolicDist]{momChangeAbout}} and
   \code{\link[HyperbolicDist]{momIntegrated}}.}
 

@@ -84,7 +84,6 @@ ppvg <- function (y, vgC = NULL, sigma = NULL, theta = NULL, nu = NULL,
     sigma <- param[2]
     theta <- param[3]
     nu <- param[4]
-    }
   } else {
     fitResults <- vgFit(y, freq = NULL, breaks = NULL, paramStart = NULL,
                         startMethod = "Nelder-Mead", startValues = "SL",

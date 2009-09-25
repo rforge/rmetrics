@@ -83,7 +83,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgKurt">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgLargeParam">
@@ -95,15 +95,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgMean">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgMode">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="vgMom">
+<param name="Local" value="vgMom.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgSkew">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgSmallParam">
@@ -115,13 +119,17 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="vgVar">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
 </OBJECT>
 </UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Package VarianceGamma:  Titles">
 </OBJECT>
 <UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Calculate Moments of the Variance Gamma Distribution">
+<param name="Local" value="vgMom.html">
+</OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Change Parameterizations of the Variance Gamma Distribution">
 <param name="Local" value="vgChangePars.html">
@@ -140,7 +148,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Moments and Mode of the Variance Gamma Distribution">
-<param name="Local" value="vgMomentsAndMode.html">
+<param name="Local" value="vgMeanVarMode.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Parameter Sets for Variance Gamma Distribution">
@@ -151,7 +159,7 @@
 <param name="Local" value="vgCalcRange.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Summarizing Variance Gamme Distribution Fit">
+<param name="Name" value="Summarizing Variance Gamma Distribution Fit">
 <param name="Local" value="summary.vgFit.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

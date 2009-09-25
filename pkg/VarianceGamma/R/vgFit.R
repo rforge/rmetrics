@@ -27,6 +27,15 @@ vgFit <- function (x, freq = NULL, breaks = NULL, paramStart = NULL,
       sigma <- exp(logParam[2])
       theta <- logParam[3]
       nu <- exp(logParam[4])
+      ## added by Christine, email 23/09/2009
+      adjust <- 0.001
+      if (sigma < 0 | (abs(sigma - 0) < adjust)) {
+        sigma <- adjust
+      }
+      if (nu < 0 | (abs(nu - 0) < adjust)) {
+        nu <- adjust
+      }
+      ## end of addition
       return(-sum(log(dvg(x = x, param = c(vgC, sigma, theta, nu)))))
     }
     output <- numeric(7)

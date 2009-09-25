@@ -51,4 +51,3 @@
 }
 
 \keyword{distribution}
-\name{vgCheckPars}
