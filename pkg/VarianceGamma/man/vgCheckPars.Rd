@@ -18,21 +18,22 @@
   \item{...}{Further arguments for calls to \code{all.equal}.}
 }
 
-\details{
+\details{  
   The vector \code{param} takes the form \code{c(c, sigma, theta, nu)}.
-  If either \code{sigma} or \code{nu} is negative, then an error message is
-  returned.
-
-  If the vector \code{param} has a length not equal to 4, then an error message
+  If either \code{sigma} or \code{nu} is negative, then an error message
   is returned.
+
+  If the vector \code{param} has a length not equal to 4, then an error
+  message is returned.
 }
 
 \value{
   A list with components:
-  \item{case}{Whichever of \code{'error'} or \code{'normal'} is identified by
-    the function.}
+  \item{case}{Whichever of \code{'error'} or \code{'normal'} is
+    identified by the function.}
+
   \item{errMessage}{An appropriate error message if an error was found,
-  the empty string \code{""} otherwise.}
+    the empty string \code{""} otherwise.}
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz},

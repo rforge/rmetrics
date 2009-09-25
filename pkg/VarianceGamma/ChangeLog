@@ -1,3 +1,9 @@
+2009-09-25    <d.scott@auckland.ac.nz>
+
+	* check the man files: summary.vgFit.Rd, VarianceGamma.Rd,
+	vgCalcRange.Rd, vgChangePars.Rd, vgCheckPars.Rd, vgFit.Rd,
+	vgFitStart.Rd, vgParam.Rd, vgPlots.Rd, 
+
 2009-09-24    <d.scott@auckland.ac.nz>
 
 	* vgMom.R added to VarianceGamma/R

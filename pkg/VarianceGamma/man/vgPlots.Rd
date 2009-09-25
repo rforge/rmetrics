@@ -1,4 +1,4 @@
-% --- Source file: qqvg.Rd ---
+% --- Source file: vgPlots.Rd ---
 \name{VarianceGammaPlots}
 \alias{qqvg}
 \alias{ppvg}
@@ -59,6 +59,7 @@
   \item{x}{The x coordinates of the points that are to be plotted.}
   \item{y}{The y coordinates of the points that are to be plotted.}
 }
+
 \references{
   Wilk, M. B. and Gnanadesikan, R. (1968)
   Probability plotting methods for the analysis of data.
@@ -66,7 +67,8 @@
   \bold{55}, 1--17.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
+\author{David Scott \email{d.scott@auckland.ac.nz}, 
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 \seealso{
   \code{\link{ppoints}}, \code{\link{dvg}}.

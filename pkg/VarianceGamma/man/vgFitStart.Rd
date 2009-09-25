@@ -1,3 +1,4 @@
+% --- Source file: vgFitStart.Rd ---
 \name{vgFitStart}
 \alias{vgFitStart}
 \alias{vgFitStartMoM}
@@ -50,7 +51,6 @@
   optimisations call \code{\link{optim}}.
 }
 
-
 \value{
   \code{vgFitStart} returns a list with components:
     \item{vgStart}{A vector with elements \code{vgC}, \code{lSigma} (log
@@ -74,8 +74,8 @@
   \emph{J. Appl. Prob.}, 41A:177--187.
 }
 
-
-\author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
+\author{David Scott \email{d.scott@auckland.ac.nz}, 
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 
 \seealso{

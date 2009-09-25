@@ -56,7 +56,6 @@
 \value{
   A two-component vector giving the lower and upper ends of the range.
 }
-
 \references{
   Seneta, E. (2004). Fitting the variance-gamma model to financial data.
   \emph{J. Appl. Prob.}, 41A:177--187.
@@ -66,7 +65,8 @@
   Boston, 349 p.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
+\author{David Scott \email{d.scott@auckland.ac.nz}, 
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 \seealso{
   \code{\link{dvg}}, \code{\link{vgChangePars}}

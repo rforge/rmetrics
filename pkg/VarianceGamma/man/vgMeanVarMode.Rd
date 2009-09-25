@@ -1,5 +1,5 @@
-% --- Source file: vgMean.Rd ---
-\name{Variance Gamma Moments and Mode}
+% --- Source file: vgMeanVarMode.Rd ---
+\name{Variance Gamma Mean, Variance, Skewness, Kurtosis and Mode}
 \alias{vgMean}
 \alias{vgVar}
 \alias{vgSkew}
@@ -51,10 +51,11 @@ vgMode(vgC = 0, sigma = 1, theta = 0, nu = 1, param = c(vgC,sigma,theta,nu))
   Kotz, S, Kozubowski, T. J., and \enc{Podgórski}{Podgorski},
   K. (2001). 
   The Laplace Distribution and Generalizations. \emph{Birkhauser},
-  Boston, 349 p.
+  Boston, 349 p.          
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
+\author{David Scott \email{d.scott@auckland.ac.nz},
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 \seealso{
   \code{\link{dvg}}, \code{\link{vgChangePars}},\code{\link{vgCalcRange}},

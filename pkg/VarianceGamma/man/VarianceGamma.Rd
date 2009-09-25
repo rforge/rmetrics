@@ -195,25 +195,23 @@
      \code{tiny}.}
    \item{modeDist}{The mode of the given variance gamma distribution.}
   }
-
-\references{
+ 
+ \references{
   Seneta, E. (2004). Fitting the variance-gamma model to financial data.
   \emph{J. Appl. Prob.}, 41A:177--187.
   Kotz, S, Kozubowski, T. J., and \enc{Podgórski}{Podgorski},
   K. (2001). 
   The Laplace Distribution and Generalizations. \emph{Birkhauser},
   Boston, 349 p.
-}
-
- \author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
-
+  }  
+ \author{David Scott \email{d.scott@auckland.ac.nz}, 
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
  \seealso{
   \code{\link{vgChangePars}},
   \code{\link{vgCalcRange}}
- }
-
+ } 
+ 
 \examples{
-
 ## Use the following rules for vgCalcRange when plotting graphs for dvg,
 ## ddvg and pvg.
 ## if nu < 2, use:
@@ -328,6 +326,5 @@ curve(dvg(x, param = param), from = vgRange[1], to = vgRange[2],
       n = 1000)
 bks <- vgBreaks(param = param)
 abline(v = bks)
-title("Density of the Variance Gamma Distribution with breaks")
-
+title("Density of the Variance Gamma Distribution with breaks")  
 }

@@ -2,7 +2,7 @@
 \name{summary.vgFit}
 \alias{summary.vgFit}
 \alias{print.summary.vgFit}
-\title{Summarizing Variance Gamme Distribution Fit}
+\title{Summarizing Variance Gamma Distribution Fit}
 \usage{
 \method{summary}{vgFit}(object, ...)
 
@@ -20,15 +20,16 @@
 \description{
   \code{summary} Method for class \code{"vgFit"}.
 }
-\details{
-  \code{summary.vgFit} calculates standard errors for the estimates
-  of \eqn{c}{c}, \eqn{\sigma}{sigma}, \eqn{\theta}{theta}, and
-  \eqn{\nu}{nu} of the variance gamma distribution parameter vector param if
-  the Hessian from the call to \code{\link{optim}} or \code{\link{nlm}}
-  is available. Because the parameters in the call to the optimiser are
-  \eqn{c}{c}, \eqn{\log(\sigma)}{log(sigma)}, \eqn{\theta}{theta} and
-  \eqn{\log(\nu)}{log(nu)}, the delta method is used to obtain the
-  standard errors for \eqn{\sigma}{sigma} and \eqn{\nu}{nu}.
+\details{ 
+  \code{summary.vgFit} calculates standard errors for the estimates of
+  \eqn{c}{c}, \eqn{\sigma}{sigma}, \eqn{\theta}{theta}, and
+  \eqn{\nu}{nu} of the variance gamma distribution parameter vector
+  \code{param} if the Hessian from the call to \code{\link{optim}} or
+  \code{\link{nlm}} is available. Because the parameters in the call to
+  the optimiser are \eqn{c}{c}, \eqn{\log(\sigma)}{log(sigma)},
+  \eqn{\theta}{theta} and \eqn{\log(\nu)}{log(nu)}, the delta method is
+  used to obtain the standard errors for \eqn{\sigma}{sigma} and
+  \eqn{\nu}{nu}.
 }
 \value{
   If the Hessian is available, \code{summary.vgFit} computes

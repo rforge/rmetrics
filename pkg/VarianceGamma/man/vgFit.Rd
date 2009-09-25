@@ -1,5 +1,4 @@
-
-% --- Source file: dvg.Rd ---
+% --- Source file: vgFit.Rd ---
 \name{vgFit}
 \alias{vgFit}
 \alias{print.vgFit}
@@ -126,17 +125,16 @@
     \item{midpoints}{The cell midpoints found by a call to
       \code{\link{hist}}.}
     \item{empDens}{The estimated density found by a call to
-      \code{\link{hist}}.}
-
-  }
+      \code{\link{hist}}.}       
+}
 
 \references{
   Seneta, E. (2004). Fitting the variance-gamma model to financial data.
   \emph{J. Appl. Prob.}, 41A:177--187.
 }
 
-
-\author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
+\author{David Scott \email{d.scott@auckland.ac.nz}, 
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
 
 \seealso{
