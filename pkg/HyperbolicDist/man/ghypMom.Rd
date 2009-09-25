@@ -1,14 +1,14 @@
 \name{ghypMom}
-
 \alias{ghypMom}
 
-
 \title{Calculate Moments of the Generalized Hyperbolic Distribution}
+
 \description{
-  Function to calculate raw moments, mu moments, central moments and
-  moments about any other given location for the generalized hyperbolic
-  distribution. 
+  This function can be used to calculate raw moments, mu moments,
+  central moments and moments about any other given location for the
+  generalized hyperbolic distribution.
 }
+
 \usage{
 ghypMom(order, Theta, momType = "raw", about = 0)
 }
@@ -20,10 +20,12 @@ ghypMom(order, Theta, momType = "raw", about = 0)
   \item{Theta}{Numeric. The parameter vector specifying the GIG
     distribution. Of the form \code{c(lambda, alpha, beta, delta, mu)}
     (see \code{\link{dghyp}}).}
-  \item{momType}{Common types of moments to be calculated, default is "raw". 
-    See \bold{Details}.}  
+  \item{momType}{Common types of moments to be calculated, default is "raw".
+    See \bold{Details}.}
   \item{about}{Numeric. The point around which the moment is to be
-    calculated.}}
+    calculated, default is 0. See \bold{Details}.}
+}
+
 \details{
   Checking whether \code{order} is a whole number is carried out using
   the function \code{\link{is.wholenumber}}.
@@ -38,29 +40,31 @@ ghypMom(order, Theta, momType = "raw", about = 0)
   \code{momType}.
 
   To calculate moments of the generalized hyperbolic distribution, the
-  function firstly calculates mu moments by formula defined below and
+  function first calculates mu moments by the formula defined below and
   then transforms mu moments to central moments or raw moments or
-  moments about any other locations as required by calling
+  moments about any other location as required by calling
   \code{momChangeAbout}.
 
   The mu moments are obtained from the recursion formula given in Scott,
-  \enc{WÃ¼rtz}{Wuertz} and Tran (2008). 
+  \enc{Würtz}{Wuertz} and Tran (2008).
 }
+
 \value{
   The moment specified.
 }
-\references{
-  Scott, D. J., \enc{WÃ¼rtz}{Wuertz}, D. and Tran, T. T. (2008) 
-  Moments of the Generalized Hyperbolic Distribution. Preprint.
 
+\references{
+  Scott, D. J., \enc{Würtz}{Wuertz}, D. and Tran, T. T. (2008)
+  Moments of the Generalized Hyperbolic Distribution. Preprint.
 }
+
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
 \seealso{\code{\link{ghypChangePars}}, \code{\link{is.wholenumber}},
   \code{\link{momChangeAbout}}, \code{\link{momIntegrated}},
   \code{\link{ghypMean}}, \code{\link{ghypVar}}, \code{\link{ghypSkew}},
-  \code{\link{ghypKurt}}.}
-
+  \code{\link{ghypKurt}}.
+}
 
 \examples{
 Theta <- c(2,2,1,2,1)
