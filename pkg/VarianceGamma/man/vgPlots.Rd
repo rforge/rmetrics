@@ -17,12 +17,12 @@
 
 \usage{
 
-  qqvg(y, vgC = 0, sigma = 1, theta = 0, nu = 1,
+  qqvg(y, vgC = NULL, sigma = NULL, theta = NULL, nu = NULL,
     param = c(vgC, sigma, theta, nu), main = "Variance Gamma Q-Q Plot",
     xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
     plot.it = TRUE, line = TRUE, \dots)
 
-  ppvg(y, vgC = 0, sigma = 1, theta = 0, nu = 1,
+  ppvg(y, vgC = NULL, sigma = NULL, theta = NULL, nu = NULL,
     param = c(vgC, sigma, theta, nu), main = "Variance Gamma P-P Plot",
     xlab = "Uniform Quantiles",
     ylab = "Probability-integral-transformed Data", plot.it = TRUE,
