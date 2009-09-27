@@ -1,7 +1,15 @@
 
-Random simulation or Monte-Carlo methods rely on the fact we have access to random numbers. Even if nowadays having random sequence is no longer a problem, for many years producing random numbers was a big challenge. According to \cite{ripleybook}, simulation started in 1940s with physical devices. It brings us to a point we need to take care is the kind simulation we deal with. Using physical phenomena to get random numbers is referred in the literature as true randomness. However in our computers we use another type randomness: pseudo-randomness.
+Random simulation or Monte-Carlo methods rely on the fact we have access to random numbers. Even if nowadays having random sequence is no longer a problem, for many years producing random numbers was a big challenge. According to \cite{ripleybook}, simulation started in 1940s with physical devices. It brings us to a point we need to take care is the kind simulation we deal with. Using physical phenomena to get random numbers is referred in the literature as true randomness.
+However in our computers we use more frequently pseudo-random numbers, which 
+are defined as deterministic sequences, which mimic a sequence of
+i.i.d. random numbers chosen from the uniform distribution on the interval
+$[0,1]$ and have the same relevant statistical properties. Random number generators
+used for this purpose receive as input an initial information, which is called a user
+specified seed, and allow to obtain different output sequences of numbers from $[0,1]$
+depending on the seed. If the user does not specify the seed, then it is obtained from
+the machine time, i.e. the seed is computed with the seconds, miliseconds of the machine clock.
 
-We define a sequence of pseudo-random numbers as a deterministic sequence of numbers in $[0,1]$ having the same relevant statistical properties as a sequence of random numbers. One may wonder with this definition how two calls to random number generator (RNG) can produce two different numbers. By default, a RNG is initialized by the machine time, i.e. the starting point is computed with the seconds, miliseconds of the machine clock. Then from this point (called the seed), we use deterministic algorithms to build the sequence.
+
 
 Since we use fake random numbers as a proxy for random numbers, one important question is the desired properties of RNG. \cite{ripleybook} lists the following properties
 \begin{itemize}
@@ -10,9 +18,10 @@ Since we use fake random numbers as a proxy for random numbers, one important qu
 \item the period between two identical numbers is sufficiently long,
 \item unless a seed is given, output numbers should be unpredictable.
 \end{itemize}
-Those properties seem obvious but \cite{mccullough08} proves that neither Excel 2003 nor Excel 2007 implements a RNG having the four properties. 
 
-Of course in the statistical software \soft{R}, we have a RNG meeting the above properties called Mersenne-Twister. But this package aims to provide better and more recent RNGs as well as classic statistical tests to quantify their property. The rest of this chapter is two-folded: first we present the use of RNGs through the \code{runif} interface, second we present the same use with dedicated functions.
+The statistical software \soft{R} provides several random number generators described
+in '?RNGkind()'. The default generator is called Mersenne-Twister and achieves high
+quality. Still, there are reasons to provide better and more recent RNGs as well as classic statistical tests to quantify their property. The rest of this chapter is two-folded: first we present the use of RNGs through the \code{runif} interface, second we present the same use with dedicated functions.
 
 
 
