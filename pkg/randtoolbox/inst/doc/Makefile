@@ -1,4 +1,4 @@
-TEXI2DVI = texi2dvi --pdf
+TEXI2DVI = R CMD texi2dvi --pdf
 SWEAVE = R CMD Sweave
 RM = rm -rf
 
@@ -6,7 +6,7 @@ all: randtoolbox.pdf clean
 
 noclean: randtoolbox.pdf
 
-randtoolbox.pdf : randtoolbox.Rnw
+randtoolbox.pdf : randtoolbox.Rnw src/shortintro.Rnw src/fullpres.Rnw
 	$(SWEAVE) randtoolbox.Rnw
 	$(TEXI2DVI) randtoolbox.tex
 
