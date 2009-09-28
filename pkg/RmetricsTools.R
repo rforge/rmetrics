@@ -768,10 +768,11 @@ checkVersion <- function(pkgs = pkgsRmetricsDev())
 }
 
 buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
-                          update.version = FALSE, ...)
+                          update.version = FALSE, vcs = c("svn", "git svn"), ...)
 {
 
     stopifnot(is.character(pkgs))
+    vcs <- match.arg(vcs)
 
     ## extract list of Rmetrics packages
     pkgsRmetrics <- pkgsRmetricsDev()
@@ -781,8 +782,11 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     pkgs <- pkgsRmetrics[pkgsRmetrics %in% pkgs]
 
     # Update svn version important to have up-dated Changelog and rev number in DCF
-    message("\nUpdating svn version ... ")
-    try(system("svn update"))
+    vcsCheck <- readline(paste("Are you using", vcs, "and is your local copy up-to-date ? [Y/n] "))
+    if (substr(vcsCheck, 1, 1) == "n")
+        return("Exciting function")
+    ## message("\nUpdating svn version ... ")
+    ## try(system("svn update"))
 
     # update Date and revision number in DESCRIPTION file
     message("\nUpdating Date and Revision in DCF ... ")
@@ -795,7 +799,7 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
         dcf[,"Date"] <- format(Sys.Date())
 
         # get svn rev number
-        cmd <- paste("svn info", pkg)
+        cmd <- paste(vcs, "info", file.path("pkg", pkg))
         t <- try(svn <- system(cmd, intern = TRUE))
         if (inherits(t, "try-error"))
             warning("Could not update svn revision number in DESC file")
@@ -823,18 +827,20 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     for (pkg in pkgs) {
         message(pkg, " ... ", appendLF = FALSE)
         svn2cl <- file.path("..", "share", "svn2cl.sh")
-        if (file.exists(svn2cl)) {
-            cmd <- paste(svn2cl, pkg,
-                         "--ignore-message-starting !",
-                         "-o", file.path(pkg, "ChangeLog"))
-            t <- try(system(cmd))
-            if (inherits(t, "try-error"))
-                stop("Could not generate ChageLog file")
-            message("OK")
-        } else {
-            message("ERROR")
-            warning("Could not locate svn2cl.sh script")
-        }
+        cmd <- switch(vcs,
+                      "svn" = { paste(svn2cl, pkg,
+                                      "--ignore-message-starting !",
+                                      "-o", file.path(pkg, "ChangeLog"))
+                            },
+                      "git svn" = { paste("git log --stat=30 --since='2009-01-01'",
+                                          "--grep='^[:space:][^\\!]' --date=short",
+                                          "--name-only --pretty=format:'%ad %an%n%n        * %s%n'",
+                                          pkg, ">", file.path(pkg, "ChangeLog"))
+                                })
+        t <- try(system(cmd))
+        if (inherits(t, "try-error"))
+            stop("Could not generate ChageLog file")
+        message("OK")
     }
 
     # build package
