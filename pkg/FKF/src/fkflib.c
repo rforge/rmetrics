@@ -239,7 +239,7 @@ void cfkf(/* inputs */
 
   double mahalanobis, det, logDet;
 
-  char  *transpose = "T", *dont_transpose = "N";
+  char *transpose = "T", *dont_transpose = "N";
   char *upper_triangle = "U";
   char *dpotri_uplo = "U";
 

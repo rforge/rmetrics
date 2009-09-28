@@ -75,7 +75,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   Note that \code{fkf} takes as input \code{HHt} and \code{GGt} which
   corresponds to \eqn{H_t H_t'}{H[t] \%*\% t(H[t])} and \eqn{G_t
     G_t'}{G[t] \%*\% t(G[t])}. \cr
-  
+
   \dQuote{NA}-values in the vector of response variables \code{yt} are
   supported. In the filter recursions the observation vector \code{yt}
   with missing values will be reduced to the vector \code{yt*} without
@@ -182,7 +182,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   \code{logLik} \tab The log-likelihood. \cr
   \code{status} \tab A \code{vector} which contains the status of LAPACK's
   \code{dpotri} and \code{dpotrf}. \eqn{(0, 0)} means sucessful exit.\cr
-  \code{sys.time} \tab The time elapsed as an object of class \dQuote{proc\_time}. 
+  \code{sys.time} \tab The time elapsed as an object of class \dQuote{proc\_time}.
 }
 
 The first element of both \code{at} and \code{Pt} is filled with the
@@ -217,7 +217,7 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 % <---------------------------------------------------------------------->
 \examples{
 ## This example shows how to fit an ARMA(2, 1) model using the Kalman filter.
-n <- 200
+n <- 1000
 
 ## Set the AR parameters
 ar1 <- 0.6
