@@ -1,6 +1,5 @@
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added explicit version number in Depends field for key packages
 
 pkg/fCopulae/DESCRIPTION

@@ -1,50 +1,43 @@
+2009-05-06 wuertz
 
-Author: wuertz 
-
-    shrink from tawny added als builtin
+        * shrink from tawny added als builtin
 
 pkg/fAssets/R/builtin-shrinkTawny.R
 
+2009-04-29 wuertz
 
-Author: wuertz 
-
-    comment added
+        * comment added
 
 pkg/fAssets/R/assetsMeanCov.R
 
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added explicit version number in Depends field for key packages
 
 pkg/fAssets/DESCRIPTION
 
+2009-04-08 ellis
 
-Author: ellis 
-
-    added function to compute color space for correlation matrix plot
+        * added function to compute color space for correlation matrix plot
 
 pkg/fAssets/R/plot-pairs.R
 
+2009-03-13 wuertz
 
-Author: wuertz 
-
-    small fix done
+        * small fix done
 
 pkg/fAssets/R/assetsTest.R
 
+2009-02-08 wuertz
 
-Author: wuertz 
-
-    package reorganized, script files
+        * package reorganized, script files
 
 pkg/fAssets/R/builtin-corrgram.R
 pkg/fAssets/R/buitin-corrgram.R
 
+2009-02-08 wuertz
 
-Author: wuertz 
-
-    script files reorganized
+        * script files reorganized
 
 pkg/fAssets/R/assetsArrange.R
 pkg/fAssets/R/assetsFit.R
@@ -61,10 +54,9 @@ pkg/fAssets/R/plot-panels.R
 pkg/fAssets/R/plot-qqplot.R
 pkg/fAssets/R/zzz.Deprecated.R
 
+2009-02-08 wuertz
 
-Author: wuertz 
-
-    script files freorganisation
+        * script files freorganisation
 
 pkg/fAssets/R/assetsFit.R
 pkg/fAssets/R/assetsPfolio.R
@@ -79,9 +71,8 @@ pkg/fAssets/R/plot-pairs.R
 pkg/fAssets/R/plot-panels.R
 pkg/fAssets/R/plotPanels.R
 
+2009-01-02 wuertz
 
-Author: wuertz 
-
-    stars plot, plot argument corrected
+        * stars plot, plot argument corrected
 
 pkg/fAssets/R/plot-stars.R

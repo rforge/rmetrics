@@ -1,15 +1,13 @@
+2009-08-28 wuertz
 
-Author: wuertz 
-
-    comments added
+        * comments added
 
 pkg/timeDate/R/class-timeDate.R
 pkg/timeDate/R/graphics-plot.R
 
+2009-08-28 wuertz
 
-Author: wuertz 
-
-    script files renamed
+        * script files renamed
 
 pkg/timeDate/man/DaylightSavingTime.Rd
 pkg/timeDate/man/Easter.Rd
@@ -114,19 +112,17 @@ pkg/timeDate/man/unique.Rd
 pkg/timeDate/man/whichFormat.Rd
 pkg/timeDate/man/window.Rd
 
+2009-08-28 wuertz
 
-Author: wuertz 
-
-    periodical rolling updated
+        * periodical rolling updated
 
 pkg/timeDate/R/regular-periods.R
 pkg/timeDate/man/isRegular.Rd
 pkg/timeDate/man/periods.Rd
 
+2009-08-28 wuertz
 
-Author: wuertz 
-
-    script files for special dates renamed
+        * script files for special dates renamed
 
 pkg/timeDate/R/Easter.R
 pkg/timeDate/R/firstDay.R
@@ -137,64 +133,54 @@ pkg/timeDate/R/specialDates-firstDay.R
 pkg/timeDate/R/specialDates-nDay.R
 pkg/timeDate/R/specialDates-onOrAfter.R
 
+2009-06-24 Chalabi
 
-Author: Chalabi 
-
-    added abline,timeDate-method
+        * added abline,timeDate-method
 
 pkg/timeDate/NAMESPACE
 pkg/timeDate/R/methods-plot.R
 pkg/timeDate/man/methods-plot.Rd
 
+2009-05-13 wuertz
 
-Author: wuertz 
-
-    Modification of setMethod("timeDate", "numeric") to handle
-    decimal date like inputs (exactly that what "yearmon" does)
-    also implemented in the ISO Standard
+        * Modification of setMethod("timeDate", "numeric") to handle  
 
 pkg/timeDate/R/timeDate.R
 
+2009-05-13 wuertz
 
-Author: wuertz 
-
-    endpoints added to namespace
+        * endpoints added to namespace
 
 pkg/timeDate/NAMESPACE
 
+2009-02-23 chalabi
 
-Author: chalabi 
-
-    added functions monthlyRolling, periodicallyRolling and periods
+        * added functions monthlyRolling, periodicallyRolling and periods
 
 pkg/timeDate/NAMESPACE
 pkg/timeDate/R/periods.R
 pkg/timeDate/man/periods.Rd
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    added subset RUnit tests
+        * added subset RUnit tests
 
 pkg/timeDate/inst/unitTests/runit.Subsets.R
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    added help page for is.na method of timeDate
+        * added help page for is.na method of timeDate
 
 pkg/timeDate/man/methods-na.Rd
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    added is.na methods for timeDate objects
+        * added is.na methods for timeDate objects
 
 pkg/timeDate/NAMESPACE
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    added 'is.na' method for timeDate objects
+        * added 'is.na' method for timeDate objects
 
 pkg/timeDate/R/methods-na.R

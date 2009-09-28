@@ -1,39 +1,34 @@
+2009-08-14 chalabi
 
-Author: chalabi 
-
-    cosmetic changes in help page
+        * cosmetic changes in help page
 
 pkg/fGarch/man/methods-predict.Rd
 
+2009-05-20 wuertz
 
-Author: wuertz 
-
-    alternative garchFit interface (still hidden) now runs
+        * alternative garchFit interface (still hidden) now runs
 
 pkg/fGarch/R/garch-FitFromFormula.R
 pkg/fGarch/R/garch-FitFromSpec.R
 pkg/fGarch/R/garch-FitInternal.R
 
+2009-05-20 wuertz
 
-Author: wuertz 
-
-    script file renamed
+        * script file renamed
 
 pkg/fGarch/R/garch-FitFromFormula.R
 
+2009-05-20 wuertz
 
-Author: wuertz 
-
-    some smaller fixes and NAMESPACE adapted
+        * some smaller fixes and NAMESPACE adapted
 
 pkg/fGarch/NAMESPACE
 pkg/fGarch/R/garch-Distribution.R
 pkg/fGarch/R/garch-LogLik.R
 
+2009-05-20 wuertz
 
-Author: wuertz 
-
-    script file renamed and disentangled
+        * script file renamed and disentangled
 
 pkg/fGarch/R/dist-sged.R
 pkg/fGarch/R/dist-snig.R
@@ -60,39 +55,34 @@ pkg/fGarch/R/sged.R
 pkg/fGarch/R/snorm.R
 pkg/fGarch/R/sstd.R
 
+2009-05-15 chaussep
 
-Author: chaussep 
-
-    added a plot option to predict and adapted the manual
+        * added a plot option to predict and adapted the manual
 
 pkg/fGarch/R/methods-predict.R
 pkg/fGarch/man/methods-predict.Rd
 
+2009-05-15 chalabi
 
-Author: chalabi 
-
-    added Pierre Chausse in DESC file for contribution
-
-pkg/fGarch/DESCRIPTION
-
-
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added Pierre Chausse in DESC file for contribution
 
 pkg/fGarch/DESCRIPTION
 
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    changed version number to match version on CRAN + 1
+        * added explicit version number in Depends field for key packages
 
 pkg/fGarch/DESCRIPTION
 
+2009-01-28 chalabi
 
-Author: chalabi 
+        * changed version number to match version on CRAN + 1
 
-    added update method for fGARCH and fGARCHSPEC object
+pkg/fGarch/DESCRIPTION
+
+2009-01-12 chalabi
+
+        * added update method for fGARCH and fGARCHSPEC object
 
 pkg/fGarch/NAMESPACE
 pkg/fGarch/R/methods-update.R

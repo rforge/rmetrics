@@ -1,127 +1,110 @@
+2009-09-24 stefan7th
 
-Author: stefan7th 
-
-    committed all minor local changes
+        * committed all minor local changes
 
 pkg/fPortfolio/R/efficientPortfolio.R
 
+2009-05-07 wuertz
 
-Author: wuertz 
-
-    printing of warning removed, we have to find for this a practicle solution ...
-
-pkg/fPortfolio/R/solveRquadprog.R
-
-
-Author: wuertz 
-
-    prints now warning when solver Rquadprog does not end with status 0, but still continues operations ...
+        * printing of warning removed, we have to find for this a practicle solution ...
 
 pkg/fPortfolio/R/solveRquadprog.R
 
+2009-05-06 wuertz
 
-Author: wuertz 
+        * prints now warning when solver Rquadprog does not end with status 0, but still continues operations ...
 
-    symphony deleted
+pkg/fPortfolio/R/solveRquadprog.R
+
+2009-04-29 wuertz
+
+        * symphony deleted
 
 pkg/fPortfolio/man/solveRsymphony.Rd
 
+2009-04-29 wuertz
 
-Author: wuertz 
-
-    small solver updates
+        * small solver updates
 
 pkg/fPortfolio/R/solveRglpk.R
 pkg/fPortfolio/R/solveRquadprog.R
 pkg/fPortfolio/R/solveRshortExact.R
 pkg/fPortfolio/R/solveRsymphony.R
 
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added explicit version number in Depends field for key packages
 
 pkg/fPortfolio/DESCRIPTION
 
+2009-04-03 chalabi
 
-Author: chalabi 
-
-    added 'length.print' in Rmetrics global envir. It is used in show method.
+        * added 'length.print' in Rmetrics global envir. It is used in show method.
 
 pkg/fPortfolio/R/methods-show.R
 pkg/fPortfolio/R/zzz.R
 
+2009-04-03 wuertz
 
-Author: wuertz 
-
-    prepared for subset printing
+        * prepared for subset printing
 
 pkg/fPortfolio/R/methods-show.R
 
+2009-02-10 wuertz
 
-Author: wuertz 
-
-    empty \details removed
+        * empty \details removed
 
 pkg/fPortfolio/man/dataSets.Rd
 
+2009-02-02 chalabi
 
-Author: chalabi 
-
-    added Rsymphony to fPortfolio
+        * added Rsymphony to fPortfolio
 
 pkg/fPortfolio/DESCRIPTION
 pkg/fPortfolio/NAMESPACE
 pkg/fPortfolio/R/solveRsymphony.R
 pkg/fPortfolio/man/solveRsymphony.Rd
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    changed tailoredFrontierPlot to avoid warnings
+        * changed tailoredFrontierPlot to avoid warnings
 
 pkg/fPortfolio/R/frontierPlot.R
 
+2009-01-25 wuertz
 
-Author: wuertz 
-
-    print function extended to non-linear constraints
-
-pkg/fPortfolio/R/methods-show.R
-
-
-Author: wuertz 
-
-    print function extended
+        * print function extended to non-linear constraints
 
 pkg/fPortfolio/R/methods-show.R
 
+2009-01-25 wuertz
 
-Author: wuertz 
+        * print function extended
 
-    print functions for portfolio spec improved
+pkg/fPortfolio/R/methods-show.R
+
+2009-01-24 wuertz
+
+        * print functions for portfolio spec improved
 
 pkg/fPortfolio/R/methods-show.R
 pkg/fPortfolio/R/portfolioSpec.R
 
+2009-01-24 wuertz
 
-Author: wuertz 
-
-    example modified
+        * example modified
 
 pkg/fPortfolio/R/efficientPortfolio.R
 pkg/fPortfolio/man/efficientPortfolio.Rd
 
+2009-01-23 wuertz
 
-Author: wuertz 
-
-    some checks added
+        * some checks added
 
 pkg/fPortfolio/R/setSpec.R
 
+2009-01-16 chalabi
 
-Author: chalabi 
-
-    added timeSeries data
+        * added timeSeries data
 
 pkg/fPortfolio/data/SMALLCAP.RET.rda

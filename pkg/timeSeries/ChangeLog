@@ -1,112 +1,98 @@
+2009-09-02 chalabi
 
-Author: chalabi 
-
-    added methods to subset timeSeries object with POSIXt and Date time stamps
+        * added methods to subset timeSeries object with POSIXt and Date time stamps
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/base-Extract.R
 pkg/timeSeries/man/base-subset.Rd
 pkg/timeSeries/man/timeSeries.Rd
 
+2009-09-02 chalabi
 
-Author: chalabi 
-
-    added filter,timeSeries-method
+        * added filter,timeSeries-method
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/stats-filter.R
 pkg/timeSeries/man/stats-filter.Rd
 
+2009-08-31 chalabi
 
-Author: chalabi 
-
-    added t,timeSeries-method
+        * added t,timeSeries-method
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/base-t.R
 pkg/timeSeries/man/base-t.Rd
 
+2009-08-31 chalabi
 
-Author: chalabi 
-
-    added na.contiguous,timeSeries-method.
+        * added na.contiguous,timeSeries-method.
 
 pkg/timeSeries/R/stats-na.contiguous.R
 pkg/timeSeries/inst/unitTests/runit.na.contiguous.R
 pkg/timeSeries/man/stats-na.contiguous.Rd
 
+2009-08-30 wuertz
 
-Author: wuertz 
-
-    apply should work now in all cases
+        * apply should work now in all cases
 
 pkg/timeSeries/R/base-apply.R
 
+2009-08-27 wuertz
 
-Author: wuertz 
-
-    csv and rda files deleted
+        * csv and rda files deleted
 
 pkg/timeSeries/data/MSFT.rda
 pkg/timeSeries/data/msft.dat.csv
 pkg/timeSeries/data/usdchf.csv
 
+2009-07-14 chalabi
 
-Author: chalabi 
-
-    show,timeSeries-method is now more friendly with default "max.print" R option.
+        * show,timeSeries-method is now more friendly with default "max.print" R option.
 
 pkg/timeSeries/R/methods-show.R
 
+2009-06-17 Chalabi
 
-Author: Chalabi 
-
-    as.data.frame,timeSeries-method now also returns @recordIDs
+        * as.data.frame,timeSeries-method now also returns @recordIDs
 
 pkg/timeSeries/R/methods-as.R
 
+2009-06-17 Chalabi
 
-Author: Chalabi 
-
-    added quantile,timeSeries-method
+        * added quantile,timeSeries-method
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/methods-Ops.R
 
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added explicit version number in Depends field for key packages
 
 pkg/timeSeries/DESCRIPTION
 
+2009-04-04 chalabi
 
-Author: chalabi 
-
-    added colMeans and colSums,timeSeries-method because default function is unefficient with large timeSeries objects.
+        * added colMeans and colSums,timeSeries-method because default function is unefficient with large timeSeries objects.
 
 pkg/timeSeries/R/colStats.R
 
+2009-03-31 chalabi
 
-Author: chalabi 
-
-    small changes to make timeSeries work with R-2.7.0.
+        * small changes to make timeSeries work with R-2.7.0.
 
 pkg/timeSeries/R/AllClass.R
 pkg/timeSeries/R/is.R
 pkg/timeSeries/R/methods-DataPart.R
 
+2009-03-30 chalabi
 
-Author: chalabi 
-
-    added MSFT (timeSeries version of mstf.dat) in data folder.
+        * added MSFT (timeSeries version of mstf.dat) in data folder.
 
 pkg/timeSeries/man/data.Rd
 
+2009-03-30 chalabi
 
-Author: chalabi 
-
-    added explicit methods for Ops with 'ts' and 'timeSeries' arguments.
+        * added explicit methods for Ops with 'ts' and 'timeSeries' arguments.
 
 pkg/timeSeries/R/methods-mathOps.R
 pkg/timeSeries/R/timeSeries.R
@@ -114,115 +100,98 @@ pkg/timeSeries/inst/unitTests/runit.mathOps.R
 pkg/timeSeries/inst/unitTests/runit.timeSeries.R
 pkg/timeSeries/man/methods-mathOps.Rd
 
+2009-03-25 chalabi
 
-Author: chalabi 
-
-    added timeSeries version of msft.dat dataset
+        * added timeSeries version of msft.dat dataset 
 
 pkg/timeSeries/data/MSFT.rda
 
+2009-02-23 chalabi
 
-Author: chalabi 
-
-    added functions to convert old timeSeries format to new class 'timeSeries'
+        * added functions to convert old timeSeries format to new class 'timeSeries'
 
 pkg/timeSeries/R/old2new.R
 
+2009-02-23 chalabi
 
-Author: chalabi 
-
-    added getRmetricsOptions("max.print")
+        * added getRmetricsOptions("max.print")
 
 pkg/timeSeries/R/methods-show.R
 pkg/timeSeries/R/zzz.R
 
+2009-02-23 chalabi
 
-Author: chalabi 
-
-    added function is.signalSeries
+        * added function is.signalSeries
 
 pkg/timeSeries/R/is.R
 
+2009-02-10 chalabi
 
-Author: chalabi 
-
-    series<-,matrix-method uses now the new timeSeires() methods.
+        * series<-,matrix-method uses now the new timeSeires() methods.
 
 pkg/timeSeries/R/methods-series.R
 
+2009-02-10 chalabi
 
-Author: chalabi 
-
-    timeSeries() is now a generic function with methods. timeSeries()
-    should now take advantage of new implementation of timeDate() and
-    should be faster in creating new timeSeries objects.
+        * timeSeries() is now a generic function with methods. timeSeries()
 
 pkg/timeSeries/R/AllClass.R
 pkg/timeSeries/R/AllGeneric.R
 pkg/timeSeries/R/timeSeries.R
 pkg/timeSeries/man/timeSeries.Rd
 
+2009-02-05 chalabi
 
-Author: chalabi 
-
-    added $,timeSeries method with auto-completion of column names
+        * added $,timeSeries method with auto-completion of column names
 
 pkg/timeSeries/R/methods-subset.R
 
+2009-02-05 chalabi
 
-Author: chalabi 
-
-    added name,timeSeries method which return the column names
+        * added name,timeSeries method which return the column names
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/methods-dim.R
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    small changed in plot,timeSeries to avoid warning when dealing with signal series
+        * small changed in plot,timeSeries to avoid warning when dealing with signal series
 
 pkg/timeSeries/R/methods-plot.R
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    added RUnit test with subsetting
+        * added RUnit test with subsetting
 
 pkg/timeSeries/inst/unitTests/runit.subset.R
 
+2009-01-12 chalabi
 
-Author: chalabi 
-
-    change as.matrix to use the getDatPart method
+        * change as.matrix to use the getDatPart method
 
 pkg/timeSeries/R/methods-as.R
 
+2009-01-12 chalabi
 
-Author: chalabi 
-
-    added getDataPart,timeSeries method
+        * added getDataPart,timeSeries method
 
 pkg/timeSeries/NAMESPACE
 pkg/timeSeries/R/methods-DataPart.R
 
+2009-01-11 wuertz
 
-Author: wuertz 
-
-    align established as method filename renamed
+        * align established as method filename renamed
 
 pkg/timeSeries/R/methods-align.R
 
+2009-01-06 wuertz
 
-Author: wuertz 
-
-    example modified was not working for 2009
+        * example modified was not working for 2009
 
 pkg/timeSeries/R/methods-aggregate.R
 
+2009-01-06 wuertz
 
-Author: wuertz 
-
-    example modified
+        * example modified
 
 pkg/timeSeries/R/methods-lag.R

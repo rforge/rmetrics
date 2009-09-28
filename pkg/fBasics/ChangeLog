@@ -1,32 +1,28 @@
+2009-05-18 wuertz
 
-Author: wuertz 
-
-    stable dist fit improved
+        * stable dist fit improved
 
 pkg/fBasics/NAMESPACE
 pkg/fBasics/R/dist-stableFit.R
 pkg/fBasics/man/dist-DistributionFits.Rd
 
+2009-05-18 wuertz
 
-Author: wuertz 
-
-    stable distribution nlminb added
+        * stable distribution nlminb added
 
 pkg/fBasics/R/dist-stable.R
 pkg/fBasics/R/dist-stableFit.R
 pkg/fBasics/man/dist-DistributionFits.Rd
 
+2009-05-18 wuertz
 
-Author: wuertz 
-
-    a useful counts plot
+        * a useful counts plot
 
 pkg/fBasics/R/plot-counts.R
 
+2009-04-29 wuertz
 
-Author: wuertz 
-
-    color script files renamed in color-foo
+        * color script files renamed in color-foo
 
 pkg/fBasics/R/color-Locator.R
 pkg/fBasics/R/color-Palettes.R
@@ -39,10 +35,9 @@ pkg/fBasics/R/matrix-pdl.R
 pkg/fBasics/R/pdl.R
 pkg/fBasics/R/rgb.R
 
+2009-04-29 wuertz
 
-Author: wuertz 
-
-    plot files renamed as plot-foo to find them better
+        * plot files renamed as plot-foo to find them better
 
 pkg/fBasics/R/plot-acfPlot.R
 pkg/fBasics/R/plot-boxPlot.R
@@ -53,16 +48,14 @@ pkg/fBasics/R/plot-seriesPlot.R
 pkg/fBasics/R/plot-subPlot.R
 pkg/fBasics/R/plot-subStars.R
 
+2009-04-19 chalabi
 
-Author: chalabi 
-
-    added explicit version number in Depends field for key packages
+        * added explicit version number in Depends field for key packages
 
 pkg/fBasics/DESCRIPTION
 
+2009-01-28 chalabi
 
-Author: chalabi 
-
-    changed version number to match version on CRAN + 1
+        * changed version number to match version on CRAN + 1
 
 pkg/fBasics/DESCRIPTION
