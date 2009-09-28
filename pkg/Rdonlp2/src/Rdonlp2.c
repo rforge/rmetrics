@@ -57,7 +57,7 @@ copy_bounds(Rdonlp2Info *info, SEXP lbd, SEXP ubd)
 
   if (length(lbd)!=length(ubd)){
     error("call_donlp2: length of bounds differ (%d != %d)",
-	  length(lbd), length(ubd));
+      length(lbd), length(ubd));
   }
   len = length(lbd);
   big = 1.0e20;
@@ -80,16 +80,16 @@ copy_bounds(Rdonlp2Info *info, SEXP lbd, SEXP ubd)
 /*** 'main' function ***/
 SEXP
 call_donlp2(SEXP par,            /* initial parameter vector        */
-	    SEXP num_lin,        /* number of linear constraints    */
-	    SEXP num_nonlin,     /* number of nonlinear constraints */
-	    SEXP fsilent,        /* output to .[mes|pro] file ?     */
-	    SEXP rident,         /* identifier of the optimization  */
-	    SEXP num_rident,     /* number of characters in identifier */
-	    SEXP lbd, SEXP ubd,  /* bounds for constraint: par->nlin->nonlin */
-	    SEXP A,              /* coef matrix for lin constraint */
-	    SEXP control,        /* list of control variables */
-	    SEXP accfun,         /* parses accumlated information */
-	    SEXP confun,SEXP Renv/* evaluation context  */  )
+        SEXP num_lin,        /* number of linear constraints    */
+        SEXP num_nonlin,     /* number of nonlinear constraints */
+        SEXP fsilent,        /* output to .[mes|pro] file ?     */
+        SEXP rident,         /* identifier of the optimization  */
+        SEXP num_rident,     /* number of characters in identifier */
+        SEXP lbd, SEXP ubd,  /* bounds for constraint: par->nlin->nonlin */
+        SEXP A,              /* coef matrix for lin constraint */
+        SEXP control,        /* list of control variables */
+        SEXP accfun,         /* parses accumlated information */
+        SEXP confun,SEXP Renv/* evaluation context  */  )
 {
   int i;
   int npar, len;
@@ -343,7 +343,7 @@ econ(int type, int liste[], double x[], double con[], int err[])
       REAL(tmp_x)[1] = i;
       PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
       if (length(ans)>1){
-	confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
+    confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
       }
       con[i] = REAL(ans)[0];
       UNPROTECT(1);
@@ -354,7 +354,7 @@ econ(int type, int liste[], double x[], double con[], int err[])
       REAL(tmp_x)[1] = liste[i];
       PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
       if (length(ans)>1){
-	confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
+    confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
       }
       con[liste[i]] = REAL(ans)[0];
       UNPROTECT(1);
@@ -386,7 +386,7 @@ econgrad(int liste[], int shift, double x[], double **grad)
     PROTECT(ans = coerceVector(ans, REALSXP));
     if (length(ans)!=n){
       error("constraint #%d: length of gradient vector must equal to %d",
-	    liste[i],n);
+        liste[i],n);
     }
     for (j=0; j<n; j++){
       grad[j+1][liste[i]+shift] = REAL(ans)[j];
@@ -421,8 +421,8 @@ static char *tagname[] = {
 
 static SEXP
 init_Raccinf(int it, double **accinf,
-	     double *x, double *gradf, double *u, double *w,
-	     double **a, double **hess, char *line, double rt)
+         double *x, double *gradf, double *u, double *w,
+         double **a, double **hess, char *line, double rt)
 {
   int i, j, n, nlin, nonlin;
   SEXP Raccinf, Rpar, Rgrad, Ru, Rw, Rnrupd, Rhess, Rmes, Rtagname, Rruntime;
@@ -461,7 +461,7 @@ init_Raccinf(int it, double **accinf,
     int p = 0;    
     for (i=1; i<=n; i++){
       for (j=1; j<=n; j++){
-	REAL(Rnrupd)[p++] = a[j][i]/info->fnscale;
+    REAL(Rnrupd)[p++] = a[j][i]/info->fnscale;
       }
     }
   }
@@ -470,7 +470,7 @@ init_Raccinf(int it, double **accinf,
     int p = 0;
     for (i=1; i<=n; i++){
       for (j=1; j<=n; j++){
-	REAL(Rhess)[p++] = hess[j][i]/info->fnscale;
+    REAL(Rhess)[p++] = hess[j][i]/info->fnscale;
       }
     }
   }
@@ -495,7 +495,8 @@ init_Raccinf(int it, double **accinf,
 
   PROTECT(Rtagname = allocVector(STRSXP,40)); /*4+32+4*/
   for (i=0; i<40; i++){
-    SET_VECTOR_ELT(Rtagname, i, mkChar(tagname[i]));
+    /* DW: SET_VECTOR_ELT replaced by SET_STRING_ELT */
+    SET_STRING_ELT(Rtagname, i, mkChar(tagname[i]));
   }
   setAttrib(Raccinf, R_NamesSymbol, Rtagname);
 
@@ -519,8 +520,8 @@ newx(double x[], double u[], int itstep, double **accinf, int *cont)
     SEXP ans, Raccinf;
     if ((itstep == 1) | (itstep % info->rep_freq == 0)){
       PROTECT(Raccinf = init_Raccinf(itstep, accinf, x, gradf, u, w,
-				     (double **)NULL, (double **)NULL,
-				     (char *)NULL, 0.0));
+                     (double **)NULL, (double **)NULL,
+                     (char *)NULL, 0.0));
       PROTECT(ans = eval(lang2(info->accfn, Raccinf), info->env));
       *cont = INTEGER(ans)[0];
       UNPROTECT(2);
@@ -579,7 +580,7 @@ solchk()
   /* NOTE: In o8fin(), 'itstep = itstep -1' is stated *after*
      solchk() is invoked. */
   PROTECT(info->ret = init_Raccinf(itstep-1, accinf, x, gradf, u, w,
-				   a, hess, line, runtim));
+                   a, hess, line, runtim));
   PROTECT(tmp = ScalarReal(fx/info->fnscale));
   SET_VECTOR_ELT(info->ret, 5, tmp);
   UNPROTECT(2);
