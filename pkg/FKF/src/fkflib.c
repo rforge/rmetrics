@@ -12,7 +12,6 @@
 /* Macros for debugging Kalman filter cfkf */
 /*******************************************/
 /* #define DEBUG_PRINT  */
-/* NA_DETECTION_DEBUG_PRINT
 /* #define NA_DETECTION_DEBUG_PRINT */
 /* #define NA_REDUCED_ARRAYS_DEBUG_PRINT */
 
