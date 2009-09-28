@@ -1,36 +1,68 @@
-2009-04-19  chalabi
 
-	* DESCRIPTION: added explicit version number in Depends field for
-	  key packages
+Author: wuertz 
 
-2009-04-02  chalabi
+    stable dist fit improved
 
-	* DESCRIPTION: more explicit depends and suggests field in DESC
-	  file.
+pkg/fBasics/NAMESPACE
+pkg/fBasics/R/dist-stableFit.R
+pkg/fBasics/man/dist-DistributionFits.Rd
 
-2009-04-01  chalabi
 
-	* DESCRIPTION: updated DESC file
+Author: wuertz 
 
-2009-03-13  chalabi
+    stable distribution nlminb added
 
-	* R/qqPlot.R:
+pkg/fBasics/R/dist-stable.R
+pkg/fBasics/R/dist-stableFit.R
+pkg/fBasics/man/dist-DistributionFits.Rd
 
-2009-02-09  wuertz
 
-	* R/qqPlot.R:
+Author: wuertz 
 
-2009-01-28  chalabi
+    a useful counts plot
 
-	* DESCRIPTION: updated version number
+pkg/fBasics/R/plot-counts.R
 
-2009-01-28  chalabi
 
-	* DESCRIPTION: changed version number to match version on CRAN + 1
+Author: wuertz 
 
-2009-01-12  chalabi
+    color script files renamed in color-foo
 
-	* man/NormalityTests.Rd, man/correlationTest.Rd, man/fHTEST.Rd,
-	  man/ks2Test.Rd, man/locationTest.Rd, man/scaleTest.Rd,
-	  man/varianceTest.Rd: fixed warning with new Rd parser
+pkg/fBasics/R/color-Locator.R
+pkg/fBasics/R/color-Palettes.R
+pkg/fBasics/R/color-RGB.R
+pkg/fBasics/R/color-Table.R
+pkg/fBasics/R/colorLocator.R
+pkg/fBasics/R/colorPalette.R
+pkg/fBasics/R/colorTable.R
+pkg/fBasics/R/matrix-pdl.R
+pkg/fBasics/R/pdl.R
+pkg/fBasics/R/rgb.R
 
+
+Author: wuertz 
+
+    plot files renamed as plot-foo to find them better
+
+pkg/fBasics/R/plot-acfPlot.R
+pkg/fBasics/R/plot-boxPlot.R
+pkg/fBasics/R/plot-histPlot.R
+pkg/fBasics/R/plot-qqPlot.R
+pkg/fBasics/R/plot-scalinglawPlot.R
+pkg/fBasics/R/plot-seriesPlot.R
+pkg/fBasics/R/plot-subPlot.R
+pkg/fBasics/R/plot-subStars.R
+
+
+Author: chalabi 
+
+    added explicit version number in Depends field for key packages
+
+pkg/fBasics/DESCRIPTION
+
+
+Author: chalabi 
+
+    changed version number to match version on CRAN + 1
+
+pkg/fBasics/DESCRIPTION

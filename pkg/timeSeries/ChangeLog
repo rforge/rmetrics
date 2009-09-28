@@ -1,242 +1,228 @@
-2009-04-19  chalabi
 
-	* DESCRIPTION: added explicit version number in Depends field for
-	  key packages
+Author: chalabi 
 
-2009-04-17  chalabi
+    added methods to subset timeSeries object with POSIXt and Date time stamps
 
-	* R/methods-aggregate.R: fixed colnames in
-	  aggregate,timeSeries-method
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/base-Extract.R
+pkg/timeSeries/man/base-subset.Rd
+pkg/timeSeries/man/timeSeries.Rd
 
-2009-04-15  chalabi
 
-	* R/AllClass.R: initialize,timeSeries-method checks object with
-	  validObject
+Author: chalabi 
 
-2009-04-04  chalabi
+    added filter,timeSeries-method
 
-	* R/colStats.R: added colMeans and colSums,timeSeries-method
-	  because default function is unefficient with large timeSeries
-	  objects.
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/stats-filter.R
+pkg/timeSeries/man/stats-filter.Rd
 
-2009-04-02  chalabi
 
-	* NAMESPACE: updated NAMESPACE
+Author: chalabi 
 
-2009-04-02  chalabi
+    added t,timeSeries-method
 
-	* DESCRIPTION: more explicit depends and suggests field in DESC
-	  file.
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/base-t.R
+pkg/timeSeries/man/base-t.Rd
 
-2009-04-01  chalabi
 
-	* DESCRIPTION: updated DESC file
+Author: chalabi 
 
-2009-03-31  chalabi
+    added na.contiguous,timeSeries-method.
 
-	* R/AllClass.R, R/is.R, R/methods-DataPart.R: small changes to make
-	  timeSeries work with R-2.7.0.
+pkg/timeSeries/R/stats-na.contiguous.R
+pkg/timeSeries/inst/unitTests/runit.na.contiguous.R
+pkg/timeSeries/man/stats-na.contiguous.Rd
 
-2009-03-30  chalabi
 
-	* man/data.Rd: added MSFT (timeSeries version of mstf.dat) in data
-	  folder.
+Author: wuertz 
 
-2009-03-30  chalabi
+    apply should work now in all cases
 
-	* NAMESPACE, R/AllClass.R, R/zzz.R: define S4 class 'difftime' with
-	  'setOldClass()'. We will keep it until
-	  'methods' pkg will define it alongside the other old 'base'
-	  classes.
+pkg/timeSeries/R/base-apply.R
 
-2009-03-30  chalabi
 
-	* R/methods-mathOps.R, R/timeSeries.R,
-	  inst/unitTests/runit.mathOps.R,
-	  inst/unitTests/runit.timeSeries.R, man/methods-mathOps.Rd: added
-	  explicit methods for Ops with 'ts' and 'timeSeries' arguments.
+Author: wuertz 
 
-2009-03-25  chalabi
+    csv and rda files deleted
 
-	* data/MSFT.rda: added timeSeries version of msft.dat dataset
+pkg/timeSeries/data/MSFT.rda
+pkg/timeSeries/data/msft.dat.csv
+pkg/timeSeries/data/usdchf.csv
 
-2009-03-19  chalabi
 
-	* R/is.R, R/methods-aggregate.R, R/methods-as.R, R/methods-bind.R,
-	  R/methods-dim.R, R/methods-head.R, R/methods-lag.R,
-	  R/methods-mathOps.R, R/methods-merge.R, R/methods-na.R,
-	  R/methods-plot.R, R/methods-str.R, R/methods-tail.R,
-	  R/methods-window.R, R/model.frame.R, R/time.R, man/lag.Rd,
-	  man/methods-aggregate.Rd, man/methods-as.Rd, man/methods-bind.Rd,
-	  man/methods-mathOps.Rd, man/methods-na.Rd, man/methods-subset.Rd,
-	  man/time.Rd: 'base' generics have now S3 and S4 methods. S3
-	  methods are used
-	  because 'UseMethod' does not dispatch S4 methods in 'base'
-	  functions. For example 'base' functions starting with something
-	  like
-	  'as.list' would failed without the S3 method.
+Author: chalabi 
 
-2009-02-23  chalabi
+    show,timeSeries-method is now more friendly with default "max.print" R option.
 
-	* R/old2new.R: added functions to convert old timeSeries format to
-	  new class 'timeSeries'
+pkg/timeSeries/R/methods-show.R
 
-2009-02-23  chalabi
 
-	* R/methods-subset.R, R/time.R, R/timeSeries.R: @positions is
-	  numeric and makes timeSeries object much faster.
+Author: Chalabi 
 
-2009-02-23  chalabi
+    as.data.frame,timeSeries-method now also returns @recordIDs
 
-	* R/methods-show.R, R/zzz.R: added getRmetricsOptions("max.print")
+pkg/timeSeries/R/methods-as.R
 
-2009-02-23  chalabi
 
-	* R/methods-bind.R, R/methods-merge.R: new implementation of
-	  [cb]bind and merge functions
+Author: Chalabi 
 
-2009-02-23  chalabi
+    added quantile,timeSeries-method
 
-	* R/is.R: added function is.signalSeries
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/methods-Ops.R
 
-2009-02-23  chalabi
 
-	* R/methods-tail.R: optimized tail for large timeSeries
+Author: chalabi 
 
-2009-02-11  chalabi
+    added explicit version number in Depends field for key packages
 
-	* R/methods-as.R, man/methods-as.Rd: new as.list.timeSeries S3
-	  methods. This means that functions like sapply and lapply can now
-	  work with timeSeries objects.
+pkg/timeSeries/DESCRIPTION
 
-2009-02-11  chalabi
 
-	* R/methods-bind.R, man/methods-bind.Rd: new cbind and rbind
-	  implementation in S3 method since methods:::bind_activation might
-	  create problems. Names of arguments are now supported.
+Author: chalabi 
 
-2009-02-10  chalabi
+    added colMeans and colSums,timeSeries-method because default function is unefficient with large timeSeries objects.
 
-	* R/methods-series.R: series<-,matrix-method uses now the new
-	  timeSeires() methods.
+pkg/timeSeries/R/colStats.R
 
-2009-02-10  chalabi
 
-	* R/methods-as.R: new implementation of as.timeSeries.data.frame.
-	  Should has the same
-	  features as the previous implementation.
+Author: chalabi 
 
-2009-02-10  chalabi
+    small changes to make timeSeries work with R-2.7.0.
 
-	* R/daily.R, R/methods-dim.R: improved handling of colnames and
-	  unit. functions like var() should
-	  now returns with the appropriate colnames.
+pkg/timeSeries/R/AllClass.R
+pkg/timeSeries/R/is.R
+pkg/timeSeries/R/methods-DataPart.R
 
-2009-02-10  chalabi
 
-	* R/AllClass.R, R/AllGeneric.R, R/timeSeries.R, man/timeSeries.Rd:
-	  timeSeries() is now a generic function with methods. timeSeries()
-	  should now take advantage of new implementation of timeDate() and
-	  should be faster in creating new timeSeries objects.
+Author: chalabi 
 
-2009-02-05  chalabi
+    added MSFT (timeSeries version of mstf.dat) in data folder.
 
-	* R/methods-subset.R: added $,timeSeries method with
-	  auto-completion of column names
+pkg/timeSeries/man/data.Rd
 
-2009-02-05  chalabi
 
-	* NAMESPACE, R/methods-dim.R: added name,timeSeries method which
-	  return the column names
+Author: chalabi 
 
-2009-02-04  chalabi
+    added explicit methods for Ops with 'ts' and 'timeSeries' arguments.
 
-	* ChangeLog:
+pkg/timeSeries/R/methods-mathOps.R
+pkg/timeSeries/R/timeSeries.R
+pkg/timeSeries/inst/unitTests/runit.mathOps.R
+pkg/timeSeries/inst/unitTests/runit.timeSeries.R
+pkg/timeSeries/man/methods-mathOps.Rd
 
-2009-02-04  chalabi
 
-	* inst/NEWS:
+Author: chalabi 
 
-2009-02-04  chalabi
+    added timeSeries version of msft.dat dataset
 
-	* DESCRIPTION: updated version number
+pkg/timeSeries/data/MSFT.rda
 
-2009-01-29  chalabi
 
-	* R/methods-aggregate.R, man/methods-aggregate.Rd: improved
-	  aggregate,timeSeries-method
+Author: chalabi 
 
-2009-01-28  chalabi
+    added functions to convert old timeSeries format to new class 'timeSeries'
 
-	* R/methods-plot.R: small changed in plot,timeSeries to avoid
-	  warning when dealing with signal series
+pkg/timeSeries/R/old2new.R
 
-2009-01-28  chalabi
 
-	* R/methods-subset.R: timeSeries()[''] now returns a nuermic(NA)
-	  instead of logical(NA)
+Author: chalabi 
 
-2009-01-28  chalabi
+    added getRmetricsOptions("max.print")
 
-	* inst/unitTests/runit.subset.R: added RUnit test with subsetting
+pkg/timeSeries/R/methods-show.R
+pkg/timeSeries/R/zzz.R
 
-2009-01-12  chalabi
 
-	* man/apply.Rd: fixed warning with new Rd parser
+Author: chalabi 
 
-2009-01-12  chalabi
+    added function is.signalSeries
 
-	* R/AllClass.R: use getDataPart method
+pkg/timeSeries/R/is.R
 
-2009-01-12  chalabi
 
-	* R/is.R: use getDataPart method
+Author: chalabi 
 
-2009-01-12  chalabi
+    series<-,matrix-method uses now the new timeSeires() methods.
 
-	* R/methods-as.R: change as.matrix to use the getDatPart method
+pkg/timeSeries/R/methods-series.R
 
-2009-01-12  chalabi
 
-	* R/methods-subset.R: improved speed of sub-setting and
-	  sub-assignment and fixed problem
-	  when sub-setting with character argument without comma.
+Author: chalabi 
 
-2009-01-12  chalabi
+    timeSeries() is now a generic function with methods. timeSeries()
+    should now take advantage of new implementation of timeDate() and
+    should be faster in creating new timeSeries objects.
 
-	* R/methods-dim.R, R/methods-head.R, R/methods-show.R,
-	  R/methods-tail.R: faster method
+pkg/timeSeries/R/AllClass.R
+pkg/timeSeries/R/AllGeneric.R
+pkg/timeSeries/R/timeSeries.R
+pkg/timeSeries/man/timeSeries.Rd
 
-2009-01-12  chalabi
 
-	* R/methods-bind.R: fixed colnames problem with c,rbind
+Author: chalabi 
 
-2009-01-12  chalabi
+    added $,timeSeries method with auto-completion of column names
 
-	* NAMESPACE, R/methods-DataPart.R: added getDataPart,timeSeries
-	  method
+pkg/timeSeries/R/methods-subset.R
 
-2009-01-11  wuertz
 
-	* R/align.R: old align.R script removed
+Author: chalabi 
 
-2009-01-11  wuertz
+    added name,timeSeries method which return the column names
 
-	* R/methods-align.R: align established as method filename renamed
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/methods-dim.R
 
-2009-01-07  wuertz
 
-	* NAMESPACE, R/align.R, inst/unitTests/runit.aggregate.R,
-	  inst/unitTests/runit.subset.R, man/methods-align.Rd: unit tests
-	  which failed from the change 2008 to 2009 repaired, function
-	  align added the same as .align.timeSeries and documented, added
-	  to namespace
+Author: chalabi 
 
-2009-01-06  wuertz
+    small changed in plot,timeSeries to avoid warning when dealing with signal series
 
-	* R/methods-aggregate.R: example modified was not working for 2009
+pkg/timeSeries/R/methods-plot.R
 
-2009-01-06  wuertz
 
-	* R/methods-lag.R: example modified
+Author: chalabi 
 
+    added RUnit test with subsetting
+
+pkg/timeSeries/inst/unitTests/runit.subset.R
+
+
+Author: chalabi 
+
+    change as.matrix to use the getDatPart method
+
+pkg/timeSeries/R/methods-as.R
+
+
+Author: chalabi 
+
+    added getDataPart,timeSeries method
+
+pkg/timeSeries/NAMESPACE
+pkg/timeSeries/R/methods-DataPart.R
+
+
+Author: wuertz 
+
+    align established as method filename renamed
+
+pkg/timeSeries/R/methods-align.R
+
+
+Author: wuertz 
+
+    example modified was not working for 2009
+
+pkg/timeSeries/R/methods-aggregate.R
+
+
+Author: wuertz 
+
+    example modified
+
+pkg/timeSeries/R/methods-lag.R

@@ -1,247 +1,127 @@
-2009-04-19  chalabi
 
-	* DESCRIPTION: added explicit version number in Depends field for
-	  key packages
+Author: stefan7th 
 
-2009-04-17  wuertz
+    committed all minor local changes
 
-	* R/solveRglpk.R: Problems with Rglpk solver now solved.
+pkg/fPortfolio/R/efficientPortfolio.R
 
-2009-04-17  wuertz
 
-	* R/portfolioSpec.R: New internal function .checkSpec() introduced.
-	  Stops execution when we have specified a linear solver forgot
-	  that we have still a quadratic programming problem. Not yet all
-	  cases to be checked are already implemented.
-	* R/methods-show.R: A bug introduced when printing option
-	  introduced for n (=5) lines, has been removed.
-	* R/efficientPortfolio.R: The compution of the portfolio now stops
-	  and returns an error if the minrisk and/or maxratio portfolios do
-	  not exist.
+Author: wuertz 
 
-2009-04-04  chalabi
+    printing of warning removed, we have to find for this a practicle solution ...
 
-	* NAMESPACE, R/covEstimator.R, R/efficientPortfolio.R,
-	  R/feasiblePortfolio.R, R/portfolioConstraints.R,
-	  R/portfolioData.R, R/portfolioFrontier.R, R/portfolioRisk.R,
-	  R/solveRglpk.R, R/solveRquadprog.R, R/solveRshortExact.R,
-	  R/solveRsymphony.R, R/solveTwoAssets.R: improved speed of some
-	  key functions
+pkg/fPortfolio/R/solveRquadprog.R
 
-2009-04-03  chalabi
 
-	* R/methods-show.R, R/zzz.R: added 'length.print' in Rmetrics
-	  global envir. It is used in show method.
+Author: wuertz 
 
-2009-04-03  wuertz
+    prints now warning when solver Rquadprog does not end with status 0, but still continues operations ...
 
-	* R/methods-show.R: prepared for subset printing
+pkg/fPortfolio/R/solveRquadprog.R
 
-2009-04-02  chalabi
 
-	* DESCRIPTION: more explicit depends and suggests field in DESC
-	  file.
+Author: wuertz 
 
-2009-04-01  chalabi
+    symphony deleted
 
-	* DESCRIPTION: updated DESC file
+pkg/fPortfolio/man/solveRsymphony.Rd
 
-2009-03-31  chalabi
 
-	* DESCRIPTION: update R version to 2.7.0 in DESC file because Rglpk
-	  depends (>= 2.7.0)
+Author: wuertz 
 
-2009-03-13  chalabi
+    small solver updates
 
-	* R/getDefault.R: removed already present method getModel
+pkg/fPortfolio/R/solveRglpk.R
+pkg/fPortfolio/R/solveRquadprog.R
+pkg/fPortfolio/R/solveRshortExact.R
+pkg/fPortfolio/R/solveRsymphony.R
 
-2009-02-10  wuertz
 
-	* R/getPortfolioVal.R: getPortfolioVal committed
+Author: chalabi 
 
-2009-02-10  wuertz
+    added explicit version number in Depends field for key packages
 
-	* man/dataSets.Rd: empty \details removed
+pkg/fPortfolio/DESCRIPTION
 
-2009-02-10  wuertz
 
-	* man/00fPortfolio-package.Rd, man/class-fPFOLIOCON.Rd,
-	  man/class-fPFOLIOSPEC.Rd, man/class-fPFOLIOVAL.Rd,
-	  man/covEstimator.Rd, man/dataSets.Rd, man/efficientPortfolio.Rd,
-	  man/feasiblePortfolio.Rd, man/frontierPlot.Rd,
-	  man/frontierPoints.Rd, man/getData.Rd, man/getDefault.Rd,
-	  man/getPortfolio.Rd, man/getSpec.Rd, man/portfolioConstraints.Rd,
-	  man/portfolioFrontier.Rd, man/portfolioRisk.Rd,
-	  man/portfolioSpec.Rd, man/weightsLinePlot.Rd, man/weightsPie.Rd,
-	  man/weightsPlot.Rd: man pages improved
+Author: chalabi 
 
-2009-02-09  wuertz
+    added 'length.print' in Rmetrics global envir. It is used in show method.
 
-	* R/getPortfolio.R, inst/unitTests/runit.weightsPie.R,
-	  man/getDefault.Rd, man/setSpec.Rd, man/solveRglpk.Rd,
-	  man/solveRquadprog.Rd, man/solveRshortExact.Rd,
-	  man/solveRsymphony.Rd, man/weightsPlot.Rd, man/weightsSlider.Rd:
-	  more docu minor modifications
+pkg/fPortfolio/R/methods-show.R
+pkg/fPortfolio/R/zzz.R
 
-2009-02-09  wuertz
 
-	* NAMESPACE, R/efficientPortfolio.R, R/feasiblePortfolio.R,
-	  R/frontierPlot.R, R/getData.R, R/getPortfolio.R,
-	  R/methods-show.R, R/portfolioConstraints.R, R/portfolioData.R,
-	  R/portfolioFrontier.R, R/portfolioRisk.R, R/portfolioSpec.R,
-	  R/weightsPie.R, man/00fPortfolio-package.Rd,
-	  man/class-fPFOLIOCON.Rd, man/class-fPFOLIODATA.Rd,
-	  man/class-fPFOLIOSPEC.Rd, man/class-fPORTFOLIO.Rd,
-	  man/covEstimator.Rd, man/efficientPortfolio.Rd,
-	  man/feasiblePortfolio.Rd, man/frontierPlot.Rd,
-	  man/frontierPlotControl.Rd, man/frontierPoints.Rd,
-	  man/getData.Rd, man/getDefault.Rd, man/getPortfolio.Rd,
-	  man/getSpec.Rd, man/methods-plot.Rd, man/methods-show.Rd,
-	  man/methods-summary.Rd, man/portfolioConstraints.Rd,
-	  man/portfolioData.Rd, man/portfolioFrontier.Rd,
-	  man/portfolioRisk.Rd, man/portfolioRolling.Rd,
-	  man/portfolioSpec.Rd, man/setSpec.Rd, man/solveRglpk.Rd,
-	  man/solveRquadprog.Rd, man/solveRshortExact.Rd,
-	  man/solveRsymphony.Rd, man/weightsLinePlot.Rd, man/weightsPie.Rd,
-	  man/weightsPlot.Rd, man/weightsSlider.Rd: working on help pages,
-	  also some script files and code reorganized
+Author: wuertz 
 
-2009-02-04  chalabi
+    prepared for subset printing
 
-	* R/portfolioConstraints.R:
+pkg/fPortfolio/R/methods-show.R
 
-2009-02-03  chalabi
 
-	* man/solveRsymphony.Rd: fixed man pages Rsymphony with new Rdparse
+Author: wuertz 
 
-2009-02-02  chalabi
+    empty \details removed
 
-	* DESCRIPTION, NAMESPACE, R/solveRsymphony.R,
-	  man/solveRsymphony.Rd: added Rsymphony to fPortfolio
+pkg/fPortfolio/man/dataSets.Rd
 
-2009-01-30  wuertz
 
-	* R/class-fPFOLIOVAL.R: new class for portffolio values on the
-	  frontier
+Author: chalabi 
 
-2009-01-30  wuertz
+    added Rsymphony to fPortfolio
 
-	* NAMESPACE, R/class-fPORTFOLIO.R, R/feasiblePortfolio.R,
-	  R/frontierPlot.R, R/frontierPoints.R, R/getPortfolio.R,
-	  R/methods-show.R, R/portfolioFrontier.R, R/weightsPlot.R,
-	  man/weightsPie.Rd: many small but significant changes
+pkg/fPortfolio/DESCRIPTION
+pkg/fPortfolio/NAMESPACE
+pkg/fPortfolio/R/solveRsymphony.R
+pkg/fPortfolio/man/solveRsymphony.Rd
 
-2009-01-30  wuertz
 
-	* R/getPortfolio.R, R/methods-show.R: get / set functions checked,
-	  print function for the free risk rate fixed
+Author: chalabi 
 
-2009-01-29  wuertz
+    changed tailoredFrontierPlot to avoid warnings
 
-	* R/getData.R, R/getDefault.R, R/getPortfolio.R, R/getSpec.R,
-	  R/methods-show.R, R/portfolioSpec.R, man/getSpec.Rd,
-	  man/portfolioSpec.Rd: not yet implemented set and get functions
-	  added
+pkg/fPortfolio/R/frontierPlot.R
 
-2009-01-28  chalabi
 
-	* R/frontierPlot.R: changed tailoredFrontierPlot to avoid warnings
+Author: wuertz 
 
-2009-01-26  chalabi
+    print function extended to non-linear constraints
 
-	* data/GCCINDEX.RET.rda, data/GCCINDEX.rda, data/LPP2005.RET.rda,
-	  data/LPP2005.rda, data/SMALLCAP.RET.rda, data/SMALLCAP.rda,
-	  data/SPISECTOR.RET.rda, data/SPISECTOR.rda, data/SWX.RET.rda,
-	  data/SWX.rda: removed user name in documetation slot of
-	  timeSeries data
+pkg/fPortfolio/R/methods-show.R
 
-2009-01-26  wuertz
 
-	* R/class-fPORTFOLIO.R, R/feasiblePortfolio.R, R/frontierPlot.R,
-	  R/getPortfolio.R, man/portfolioSpec.Rd: fPORTFOLIO class
-	  representation modified for the slots data, spec, and constraints
+Author: wuertz 
 
-2009-01-25  wuertz
+    print function extended
 
-	* R/methods-show.R:
+pkg/fPortfolio/R/methods-show.R
 
-2009-01-25  wuertz
 
-	* R/methods-show.R: print function extended to non-linear
-	  constraints
+Author: wuertz 
 
-2009-01-25  wuertz
+    print functions for portfolio spec improved
 
-	* R/methods-show.R, R/portfolioData.R: rownames colnames added
+pkg/fPortfolio/R/methods-show.R
+pkg/fPortfolio/R/portfolioSpec.R
 
-2009-01-25  wuertz
 
-	* R/methods-show.R: names added to print function
+Author: wuertz 
 
-2009-01-25  wuertz
+    example modified
 
-	* R/methods-show.R: print function extended
+pkg/fPortfolio/R/efficientPortfolio.R
+pkg/fPortfolio/man/efficientPortfolio.Rd
 
-2009-01-24  wuertz
 
-	* R/methods-show.R, R/portfolioSpec.R: print functions for
-	  portfolio spec improved
+Author: wuertz 
 
-2009-01-24  wuertz
+    some checks added
 
-	* R/efficientPortfolio.R: Comment added
+pkg/fPortfolio/R/setSpec.R
 
-2009-01-24  wuertz
 
-	* R/efficientPortfolio.R, man/efficientPortfolio.Rd: example
-	  modified
+Author: chalabi 
 
-2009-01-23  wuertz
+    added timeSeries data
 
-	* R/setSpec.R: some checks added
-
-2009-01-23  wuertz
-
-	* R/portfolioConstraints.R: missing target return specified to NA
-
-2009-01-23  wuertz
-
-	* R/methods-show.R: rownames added to print method
-
-2009-01-20  chalabi
-
-	* data/GCCINDEX.RET.rda, data/GCCINDEX.rda, data/LPP2005.RET.rda,
-	  data/LPP2005.rda, data/SMALLCAP.RET.rda, data/SMALLCAP.rda,
-	  data/SPISECTOR.RET.rda, data/SPISECTOR.rda, data/SWX.RET.rda,
-	  data/SWX.rda: datasets as they used to be generated in old zzz.R
-	  file
-
-2009-01-20  wuertz
-
-	* data/GCCINDEX.RET.rda, data/GCCINDEX.rda, data/LPP2005.RET.rda,
-	  data/SPISECTOR.rda, data/SWX.RET.rda, data/SWX.rda: I put for the
-	  moment the data back to fPortfolio, still missing are
-	  SPISECTOR.RET and LPP2005. so we have not to build and load every
-	  time the whole bundle, when we have a small error in the
-	  packages. And the person who uses fPortfolio standalone has also
-	  the data. we should build the bundle at the very end identical
-	  with the packages in CRAN/R-forge.
-
-2009-01-16  chalabi
-
-	* data/SMALLCAP.RET.rda: added timeSeries data
-
-2009-01-16  chalabi
-
-	* NAMESPACE, R/zzz.R, data/GCCINDEX.DF.CSV,
-	  data/LPP2005.RET.DF.CSV, data/SMALLCAP.RET.DF.CSV,
-	  data/SPISECTOR.DF.CSV, data/SWX.DF.CSV,
-	  man/00fPortfolio-package.Rd, man/solveRglpk.Rd,
-	  man/solveRquadprog.Rd, man/solveRshortExact.Rd: fixed warning
-	  with new Rd parser and changes data set form csv to timeSeries
-	  format
-
-2009-01-12  wuertz
-
-	* R/efficientPortfolio.R: title modified
-
+pkg/fPortfolio/data/SMALLCAP.RET.rda
