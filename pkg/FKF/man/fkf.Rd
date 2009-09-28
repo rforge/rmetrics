@@ -1,6 +1,6 @@
 \name{fkf}
 \alias{fkf}
-\alias{FKF}
+%\alias{FKF}
 \title{Fast Kalman filter}
 % <---------------------------------------------------------------------->
 \description{
