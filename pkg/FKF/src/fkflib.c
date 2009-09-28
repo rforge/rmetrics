@@ -5,28 +5,48 @@
 #include <R_ext/BLAS.h>
 #include <R_ext/Lapack.h>
 
-/* Macro to transform an index of a 2-dimensional array into an index
-   of a vector */
+/* Macro to transform an index of a 2-dimensional array into an index of a vector */
 #define IDX(i,j,dim0) (i) + (j) * (dim0)
 
-/* If DEBUG_PRINT is defined all inputs and outputs will be printed */
+/*******************************************/
+/* Macros for debugging Kalman filter cfkf */
+/*******************************************/
 /* #define DEBUG_PRINT  */
+/* NA_DETECTION_DEBUG_PRINT
+/* #define NA_DETECTION_DEBUG_PRINT */
+/* #define NA_REDUCED_ARRAYS_DEBUG_PRINT */
 
-/* Function to print a 2-dimensional array */
+/*******************************************/
+/* Functions to print 2-dimensional arrays */
+/*******************************************/
 void print_array(double * data, int i, int j, const char * lab)
 {
     int icnt, jcnt;
     Rprintf("\n'%s':\n", lab);
     for(icnt = 0; icnt < i; icnt++){
 	for(jcnt = 0; jcnt < j; jcnt++){
-/* 	    Rprintf("\nIDX(icnt, jcnt, j) = %d\n", IDX(icnt, jcnt, i)); */
-	    Rprintf("%3.5f   ", data[IDX(icnt, jcnt, i)]);
+            /* Rprintf("\nIDX(icnt, jcnt, j) = %d\n", IDX(icnt, jcnt, i)); */
+	    Rprintf("%3.6f   ", data[IDX(icnt, jcnt, i)]);
 	}
 	Rprintf("\n");
     }
-
 }
 
+void print_int_array(int * data, int i, int j, const char * lab)
+{
+    int icnt, jcnt;
+    Rprintf("\n'%s':\n", lab);
+    for(icnt = 0; icnt < i; icnt++){
+	for(jcnt = 0; jcnt < j; jcnt++){
+	    Rprintf("%i   ", data[IDX(icnt, jcnt, i)]);
+	}
+	Rprintf("\n");
+    }
+}
+
+/*******************************/
+/* Mirror 2-dimensional arrays */
+/*******************************/
 void FKFmirrorLU(double * data, int dim, char * uplo)
 {
     int i, j;
@@ -37,9 +57,9 @@ void FKFmirrorLU(double * data, int dim, char * uplo)
 		data[IDX(j, i, dim)] = data[IDX(i, j, dim)];
 	    }
 	}
-/* 	Rprintf("FKFmirrorLU '%s'\n", uplo); */
+        /* Rprintf("FKFmirrorLU '%s'\n", uplo); */
     }else{
-/* 	Rprintf("FKFmirrorLU must not be 'U' '%s'\n", uplo); */
+        /* Rprintf("FKFmirrorLU must not be 'U' '%s'\n", uplo); */
 	for(j = 1; j < dim; j++){
 	    for(i = 0; i < j; i++){
 		data[IDX(i, j, dim)] = data[IDX(j, i, dim)];
@@ -48,6 +68,87 @@ void FKFmirrorLU(double * data, int dim, char * uplo)
     }
 }
 
+/*****************************************/
+/* Locate and count NA's in observations */
+/*****************************************/
+void locateNA(double *vec, int *NAindices, int *positions, int len)
+{
+    int j = 0;
+    for(int i=0; i < len; i++)
+    {
+	if(ISNAN(vec[i]))
+	    NAindices[i] = 1;
+	else{
+	    NAindices[i] = 0;
+	    positions[j] = i;
+	    j++;
+	}
+    }
+}
+
+int numberofNA(double *vec, int *NAindices, int *positions, int len)
+{
+    locateNA(vec, NAindices, positions, len);
+    
+    int sum = 0;
+    for(int i=0; i < len; i++)
+	sum += NAindices[i];
+
+    return sum;
+}
+
+/**************************************************************************/
+/* In case numberofNA(yt[,i]) > 0 && < d: Create temporary reduced arrays */
+/**************************************************************************/
+void reduce_array(double *array_full, int dim0, int dim1,
+		  double *array_reduced, int *pos, int len)
+{
+    for(int i=0; i < len; i++){
+	for(int j=0; j < dim1; j++)
+	    array_reduced[IDX(i,j,len)] = array_full[IDX(pos[i],j,dim0)];
+    }
+}
+
+void reduce_GGt(double *array_full, int dim0,
+		double *array_reduced, int *pos, int len)
+{
+    for(int i=0; i < len; i++){
+	for(int j=0; j < len; j++)
+	    array_reduced[IDX(j,i,len)] = array_full[IDX(pos[j],pos[i],dim0)];
+    }
+}
+
+/**************************************************************************/
+/* In case numberofNA(yt[,i]) > 0 && < d: Fill results in original arrays */
+/**************************************************************************/
+void fill_vt(double *array_full, int dim0,
+	     double *array_reduced, int *pos, int len)
+{
+    for(int i=0; i < len; i++)
+	array_full[IDX(pos[i],0,dim0)] = array_reduced[IDX(i,0,len)];
+}
+
+void fill_Ft(double *array_full, int dim0,
+	     double *array_reduced, int *pos, int len)
+{
+    for(int i=0; i < len; i++){
+	for(int j=0; j < len; j++)
+	    array_full[IDX(pos[j],pos[i],dim0)] = array_reduced[IDX(j,i,len)];
+    }
+}
+
+void fill_Kt(double *array_full, int dim0,
+	     double *array_reduced, int *pos, int len)
+{
+    for(int i=0; i < len; i++){
+	for(int j=0; j < dim0; j++)
+	    array_full[IDX(j,pos[i],dim0)] = array_reduced[IDX(j,i,dim0)];
+    }
+}
+
+/***********************************************************************************/
+/* ---------- ---------- ---------- Kalman filter ---------- ---------- ---------- */
+/***********************************************************************************/
 void cfkf(/* inputs */
 	  int m, int d, int n,
 	  double * a0, double * P0,
@@ -125,6 +226,7 @@ void cfkf(/* inputs */
   int m_x_m = m * m;
   int d_x_d = d * d;
   int m_x_d = m * d;
+  int NAsum;
 
   int j;
   int i = 0;
@@ -144,12 +246,28 @@ void cfkf(/* inputs */
 
   strcpy(dpotri_uplo, "U");
 
-  /* Temporary arrays */
+  /* temporary arrays */
   double *tmpdxm = (double *) Calloc(m_x_d, double);
   double *tmpmxm = (double *) Calloc(m_x_m, double);
   double *tmptmpmxm = (double *) Calloc(m_x_m, double);
   double *tmpdxd = (double *) Calloc(d_x_d, double);
   double *tmpFt_inv = (double *) Calloc(d_x_d, double);
+
+  /* NA detection */
+  int *NAindices = malloc(sizeof(int) * d);
+  int *positions = malloc(sizeof(int) * d);
+
+  /* create reduced arrays for case 3 (see below) */
+  double *yt_temp = malloc(sizeof(double) * (d - 1));
+  double *ct_temp = malloc(sizeof(double) * (d - 1));
+  double *Zt_temp = malloc(sizeof(double) * (d - 1) * m);
+  double *GGt_temp = malloc(sizeof(double) * (d - 1) * (d - 1));
+
+  double *vt_temp = malloc(sizeof(double) * (d - 1));
+  double *Ft_temp = malloc(sizeof(double) * (d - 1) * (d - 1));
+  double *It_temp = malloc(sizeof(double) * (d - 1) * (d - 1));
+  double *Kt_temp = malloc(sizeof(double) * (d - 1) * m);
+
 
   /* at = a0 */
   F77_NAME(dcopy)(&m, a0, &intone, at, &intone);
@@ -168,281 +286,585 @@ void cfkf(/* inputs */
   /* Initialize the logLikelihood: loglik = - n * d * log(sqrt(2 * pi)) */
   *loglik = - (double)(n * d) *  M_LN_SQRT_2PI;
 
-  /* ======================================================================  */
-  /* Start filtering */
-  /* ======================================================================  */
+
+  /****************************************************************/
+  /* ---------- ---------- start recursions ---------- ---------- */
+  /****************************************************************/
   while(i < n && potrf_info == 0 && potri_info == 0){
-    /* potri_info and potrf_info are 0 as long as matrix inversion and
-       and Cholesky factorization exit successfully */
+      /* potri_info and potrf_info are 0 as long as matrix inversion and
+	 and Cholesky factorization exit successfully */
 
 #ifdef DEBUG_PRINT
-    Rprintf("\n\nLoop Nr.:  %d\n", i);
-#endif
-
-    /* ---------------------------------------------------------------------- */
-    /* Compute vt[,i] = yt[,i] - ct[,i * incct] - Zt[,,i * incZt] %*% at[,i] */
-    /* ---------------------------------------------------------------------- */
-
-    /* vt[,i] = yt[,i] */
-    F77_NAME(dcopy)(&d, &yt[d * i], &intone, &vt[d * i], &intone);
-
-#ifdef DEBUG_PRINT
-    print_array(&vt[d * i], 1, d, "yt[,i]:");
-#endif
-
-    /* vt[,i] = vt[,i] - ct[i * incct,] */
-    F77_NAME(daxpy)(&d, &dblminusone, &ct[d * i * incct], &intone, &vt[d * i], &intone);
-
-#ifdef DEBUG_PRINT
-    print_array(&ct[d * i * incct], 1, d, "ct:");
+      Rprintf("\n\nLoop Nr.:  %d\n", i);
 #endif
 
 
-    /* vt[,i] = vt[,i] - Zt[,,i * incZt] %*% at[,i] */
-#ifdef DEBUG_PRINT
-    print_array(&Zt[m_x_d * i * incZt], d, m, "Zti:");
-#endif
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
-		    &intone, &m, &dblminusone,
-		    &Zt[m_x_d * i * incZt], &d,
-		    &at[m * i], &m,
-		    &dblone, &vt[d * i], &d);
+      /****************************************/
+      /* check for NA's in observation yt[,i] */
+      /****************************************/
+      NAsum = numberofNA(&yt[d * i], NAindices, positions, d);
 
-    /* ---------------------------------------------------------------------- */
-    /* Compute Ft[,,i] = Zt[,,i * incZt] %*% Pt[,,i] %*% t(Zt[,,i * incZt]) + GGt[,,i * incGt] */
-    /* ---------------------------------------------------------------------- */
-    /* Zt[,,i] = Zt[,,i] %*% Pt[,,i] */
-
-    /* tmpdxm = Zt[,,i] %*% Pt[,,i]*/
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
-		    &m, &m, &dblone,
-		    &Zt[m_x_d * i * incZt], &d,
-		    &Pt[m_x_m * i], &m,
-		    &dblzero, tmpdxm, &d);
-    /* Ft[,,i] = Gt[,,i * incGGt] */
-    F77_NAME(dcopy)(&d_x_d, &GGt[d_x_d * i * incGGt], &intone, &Ft[d_x_d * i], &intone);
-
-#ifdef DEBUG_PRINT
-    print_array(&Ft[d_x_d * i], d, d, "GGt:");
+#ifdef NA_DETECTION_DEBUG_PRINT
+      Rprintf("\nNumber of NAs in iter %i: %i\n", i, NAsum);
+      print_int_array(NAindices, 1, d, "NAindices");
+      print_array(&yt[d * i], 1, d, "yt[,i]");
 #endif
 
-    /* Ft[,,i] = tmpdxm %*% t(Zt[,,i * incZt]) + Ft[,,i] */
 
-    F77_NAME(dgemm)(dont_transpose, transpose, &d,
-		    &d, &m, &dblone,
-		    tmpdxm, &d,
-		    &Zt[m_x_d * i * incZt], &d,
-		    &dblone, &Ft[d_x_d * i], &d);
+      /*********************************************************************************/
+      /* ---------- ---------- ---------- filter step ---------- ---------- ---------- */
+      /*********************************************************************************/
 
-    /* ---------------------------------------------------------------------- */
-    /* Invert Ft[,,i] */
-    /* ---------------------------------------------------------------------- */
-    if(d == 1){
-      tmpFt_inv[0] = 1/Ft[i];
-    }else{
-      /* tmpFt_inv = Ft[,,i] */
-      F77_NAME(dcopy)(&d_x_d, &Ft[d_x_d * i], &intone, tmpFt_inv, &intone);
+      /***************************************************************************/
+      /* ---------- case 1: no NA's: filtering using full information ---------- */
+      /***************************************************************************/
+      if(NAsum == 0)
+      {
+	  /* ---------------------------------------------------------------------- */
+	  /* Compute vt[,i] = yt[,i] - ct[,i * incct] - Zt[,,i * incZt] %*% at[,i]  */
+	  /* ---------------------------------------------------------------------- */
 
-      /* Cholesky factorization */
-      F77_NAME(dpotrf)(upper_triangle, &d,
-		       tmpFt_inv, &d, &potrf_info);
-      if(potrf_info != 0)
-	Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n", potrf_info);
+	  /* vt[,i] = yt[,i] */
+	  F77_NAME(dcopy)(&d, &yt[d * i], &intone, &vt[d * i], &intone);
 
-      strcpy(dpotri_uplo, "U");
-      /* Computes the inverse using the Cholesky factorization */
-      F77_NAME(dpotri)(dpotri_uplo, &d,
-		       tmpFt_inv, &d, &potri_info);
-
-      /* As 'dpotri' returns a lower or upper tringle -> mirror the matrix */
-      FKFmirrorLU(tmpFt_inv, d, dpotri_uplo);
-
-      if(potri_info != 0)
-	Rprintf("Warning: 'dpotri' exited with status: %d\nVariance of the prediction error can not be computed.\n", potri_info);
-    }
-
-
-    /* ---------------------------------------------------------------------- */
-    /* Kt[,,i] = Pt[,,i] %*% t(Zt[,,i * incZt]) %*% tmpFt_inv */
-    /* ---------------------------------------------------------------------- */
-
-    /* tmpdxm = Pt[,,i] %*% t(Zt[,,i * incZt]) */
-    F77_NAME(dgemm)(dont_transpose, transpose, &m,
-		    &d, &m, &dblone,
-		    &Pt[m_x_m * i], &m,
-		    &Zt[m_x_d * i * incZt], &d,
-		    &dblzero, tmpdxm, &m);
-
-    /* Kt[,,i] = tmpdxm %*% tmpFt_inv */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
-		    &d, &d, &dblone,
-		    tmpdxm, &m,
-		    tmpFt_inv, &d,
-		    &dblzero, &Kt[m_x_d * i], &m);
-
-    /* ---------------------------------------------------------------------- */
-    /* att[,i] = at[,i] + Kt[,,i] %*% vt[,i] */
-    /* ---------------------------------------------------------------------- */
-
-    /* att[,i] = at[,i] */
-    F77_NAME(dcopy)(&m, &at[m * i], &intone, &att[m * i], &intone);
-
-    /* att[,i] = Kt[,,i] %*% vt[,i] + att[,i] */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
-		    &intone, &d, &dblone,
-		    &Kt[m_x_d * i], &m,
-		    &vt[d * i], &d,
-		    &dblone, &att[m * i], &m);
-
-    /* ---------------------------------------------------------------------- */
-    /* Ptt[,,i] = Pt[,,i] - Pt[,,i] %*% t(Zt[,,i * incZt]) %*% t(Kt[,,i]) */
-    /* ---------------------------------------------------------------------- */
-
-    /* tmpmxm = t(Zt[,,i * incZt]) %*% t(Kt[,,i]) */
-    F77_NAME(dgemm)(transpose, transpose, &m,
-		    &m, &d, &dblone,
-		    &Zt[m_x_d * i * incZt], &d,
-		    &Kt[m_x_d * i], &m,
-		    &dblzero, tmpmxm, &m);
-
-    /* Ptt[,i] = Pt[,i] */
-    F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, &Ptt[m_x_m * i], &intone);
-
-    /* tmptmpmxm = Pt[,i] */
-    F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, tmptmpmxm, &intone);
-
-    /* Ptt[,,i] = - Ptt[,,i]  %*% tmptmpmxm + tmpmxm */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
-		    &m, &m, &dblminusone,
-		    tmptmpmxm, &m,
-		    tmpmxm, &m,
-		    &dblone, &Ptt[m_x_m * i], &m);
-
-
-    /* ---------------------------------------------------------------------- */
-    /* a[,i] = dt[,i * incdt] + Tt[,,i * incTt] %*% att[,i] */
-    /* ---------------------------------------------------------------------- */
-
-    /* at[,i] = dt[,i] */
-   F77_NAME(dcopy)(&m, &dt[m * i * incdt], &intone, &at[m * (i + 1)], &intone);
 #ifdef DEBUG_PRINT
-    print_array(&at[m * (i + 1)], 1, m, "dt:");
+	  print_array(&vt[d * i], 1, d, "yt[,i]:");
+#endif
+
+	  /* vt[,i] = vt[,i] - ct[i * incct,] */
+	  F77_NAME(daxpy)(&d, &dblminusone, &ct[d * i * incct], &intone, &vt[d * i], &intone);
+
+#ifdef DEBUG_PRINT
+	  print_array(&ct[d * i * incct], 1, d, "ct:");
+#endif
+
+
+	  /* vt[,i] = vt[,i] - Zt[,,i * incZt] %*% at[,i] */
+#ifdef DEBUG_PRINT
+	  print_array(&Zt[m_x_d * i * incZt], d, m, "Zti:");
+#endif
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
+			  &intone, &m, &dblminusone,
+			  &Zt[m_x_d * i * incZt], &d,
+			  &at[m * i], &m,
+			  &dblone, &vt[d * i], &d);
+
+	  /* --------------------------------------------------------------------------------------- */
+	  /* Compute Ft[,,i] = Zt[,,i * incZt] %*% Pt[,,i] %*% t(Zt[,,i * incZt]) + GGt[,,i * incGt] */
+	  /* --------------------------------------------------------------------------------------- */
+	  /* Zt[,,i] = Zt[,,i] %*% Pt[,,i] */
+
+	  /* tmpdxm = Zt[,,i] %*% Pt[,,i]*/
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
+			  &m, &m, &dblone,
+			  &Zt[m_x_d * i * incZt], &d,
+			  &Pt[m_x_m * i], &m,
+			  &dblzero, tmpdxm, &d);
+	  /* Ft[,,i] = Gt[,,i * incGGt] */
+	  F77_NAME(dcopy)(&d_x_d, &GGt[d_x_d * i * incGGt], &intone, &Ft[d_x_d * i], &intone);
+
+#ifdef DEBUG_PRINT
+	  print_array(&Ft[d_x_d * i], d, d, "GGt:");
+#endif
+
+	  /* Ft[,,i] = tmpdxm %*% t(Zt[,,i * incZt]) + Ft[,,i] */
+
+	  F77_NAME(dgemm)(dont_transpose, transpose, &d,
+			  &d, &m, &dblone,
+			  tmpdxm, &d,
+			  &Zt[m_x_d * i * incZt], &d,
+			  &dblone, &Ft[d_x_d * i], &d);
+
+	  /* ---------------------------------------------------------------------- */
+	  /* Invert Ft[,,i]                                                         */
+	  /* ---------------------------------------------------------------------- */
+	  if(d == 1){
+	      tmpFt_inv[0] = 1/Ft[i];
+	  }else{
+	      /* tmpFt_inv = Ft[,,i] */
+	      F77_NAME(dcopy)(&d_x_d, &Ft[d_x_d * i], &intone, tmpFt_inv, &intone);
+
+	      /* Cholesky factorization */
+	      F77_NAME(dpotrf)(upper_triangle, &d,
+			       tmpFt_inv, &d, &potrf_info);
+	      if(potrf_info != 0)
+		  Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n",
+			  potrf_info);
+
+	      strcpy(dpotri_uplo, "U");
+	      /* Computes the inverse using the Cholesky factorization */
+	      F77_NAME(dpotri)(dpotri_uplo, &d,
+			       tmpFt_inv, &d, &potri_info);
+
+	      /* As 'dpotri' returns a lower or upper tringle -> mirror the matrix */
+	      FKFmirrorLU(tmpFt_inv, d, dpotri_uplo);
+
+	      if(potri_info != 0)
+		  Rprintf("Warning: 'dpotri' exited with status: %d\nVariance of the prediction error can not be computed.\n",
+			  potri_info);
+	  }
+
+
+	  /* ---------------------------------------------------------------------- */
+	  /* Kt[,,i] = Pt[,,i] %*% t(Zt[,,i * incZt]) %*% tmpFt_inv                 */
+	  /* ---------------------------------------------------------------------- */
+
+	  /* tmpdxm = Pt[,,i] %*% t(Zt[,,i * incZt]) */
+	  F77_NAME(dgemm)(dont_transpose, transpose, &m,
+			  &d, &m, &dblone,
+			  &Pt[m_x_m * i], &m,
+			  &Zt[m_x_d * i * incZt], &d,
+			  &dblzero, tmpdxm, &m);
+
+	  /* Kt[,,i] = tmpdxm %*% tmpFt_inv */
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			  &d, &d, &dblone,
+			  tmpdxm, &m,
+			  tmpFt_inv, &d,
+			  &dblzero, &Kt[m_x_d * i], &m);
+
+	  /* ---------------------------------------------------------------------- */
+	  /* att[,i] = at[,i] + Kt[,,i] %*% vt[,i]                                  */
+	  /* ---------------------------------------------------------------------- */
+
+	  /* att[,i] = at[,i] */
+	  F77_NAME(dcopy)(&m, &at[m * i], &intone, &att[m * i], &intone);
+
+	  /* att[,i] = Kt[,,i] %*% vt[,i] + att[,i] */
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			  &intone, &d, &dblone,
+			  &Kt[m_x_d * i], &m,
+			  &vt[d * i], &d,
+			  &dblone, &att[m * i], &m);
+
+	  /* ---------------------------------------------------------------------- */
+	  /* Ptt[,,i] = Pt[,,i] - Pt[,,i] %*% t(Zt[,,i * incZt]) %*% t(Kt[,,i])     */
+	  /* ---------------------------------------------------------------------- */
+
+	  /* tmpmxm = t(Zt[,,i * incZt]) %*% t(Kt[,,i]) */
+	  F77_NAME(dgemm)(transpose, transpose, &m,
+			  &m, &d, &dblone,
+			  &Zt[m_x_d * i * incZt], &d,
+			  &Kt[m_x_d * i], &m,
+			  &dblzero, tmpmxm, &m);
+
+	  /* Ptt[,i] = Pt[,i] */
+	  F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, &Ptt[m_x_m * i], &intone);
+
+	  /* tmptmpmxm = Pt[,i] */
+	  F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, tmptmpmxm, &intone);
+
+	  /* Ptt[,,i] = - Ptt[,,i]  %*% tmptmpmxm + tmpmxm */
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			  &m, &m, &dblminusone,
+			  tmptmpmxm, &m,
+			  tmpmxm, &m,
+			  &dblone, &Ptt[m_x_m * i], &m);
+
+	  /* ================================================================================== */
+	  /* logLik = logLik - 0.5 * log(det(Ft[,,i])) - 0.5 t(vt[,i]) %*% tmpFt_inv %*% vt[,i] */
+	  /* ================================================================================== */
+	  /* ---------------------------------------------------------------------- */
+	  /* Compute the mahalanobis distance first: t(vt) %*% tmpFt_inv %*% vt     */
+	  /* ---------------------------------------------------------------------- */
+	  /* tmpdxd = tmpFt_inv %*% vt[,i] */
+	  F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
+			  &intone, &d, &dblone,
+			  tmpFt_inv, &d,
+			  &vt[d * i], &d,
+			  &dblzero, tmpdxd, &d);
+
+	  /* mahalanobis = t(vt[,i]) %*% tmpdxd */
+	  mahalanobis = 0;
+	  F77_NAME(dgemm)(transpose, dont_transpose, &intone,
+			  &intone, &d, &dblone,
+			  &vt[d * i], &d,
+			  tmpdxd, &d,
+			  &dblone, &mahalanobis, &intone);
+
+	  /* ---------------------------------------------------------------------- */
+	  /* Compute the determinant of Fti employing a Cholesky decomposition      */
+	  /* ---------------------------------------------------------------------- */
+	  if(d == 1){
+	      det = Ft[i];
+	  }else{
+	      /* tmpdxd = Ft[,,i] */
+	      F77_NAME(dcopy)(&d_x_d, &Ft[d_x_d * i], &intone, tmpdxd, &intone);
+
+	      /* Compute the Cholesky factorization */
+	      F77_NAME(dpotrf)(upper_triangle, &d,
+			       tmpdxd, &d, &det_potrf_info);
+
+	      if(det_potrf_info != 0)
+		  Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nDeterminant of the variance of the prediction error can not be computed.\n",
+			  det_potrf_info);
+
+	      /* Take the product of the squared diagonal elements to get the determinant */
+	      det = tmpdxd[0];
+	      for(j = 1; j < d; j++)
+		  det *= tmpdxd[IDX(j, j, d)];
+
+	      det = det * det;
+	  }
+
+	  /* ------------------------------------------------------------------------ */
+	  /* Sum it up:                                                               */
+	  /* log(density) = -d / 2 * log(2 * pi) - 0.5 * log(det) - 0.5 * mahalanbois */
+	  /* ------------------------------------------------------------------------ */
+	  logDet = log(det);
+	  if(R_finite(logDet) && R_finite(mahalanobis)){
+	      *loglik -= 0.5 * (mahalanobis + logDet);
+	  }else{
+	      *loglik = NA_REAL;
+#ifdef DEBUG_PRINT
+	      Rprintf("logDet or mahalanobis is NaN\n");
+#endif
+	  }
+
+#ifdef DEBUG_PRINT
+	  Rprintf("\n\nlogDet:   %3.9f;   maha:   %3.9f\n", logDet, mahalanobis);
+#endif
+
+      }
+      else
+      {
+
+	  /******************************************************/
+	  /* ---------- case 2: d NA's: no filtering ---------- */
+	  /******************************************************/
+	  if(NAsum == d)
+	  {
+	      /* att[,i] = at[,i] */
+	      F77_NAME(dcopy)(&m, &at[m * i], &intone, &att[m * i], &intone);
+
+	      /* Ptt[,i] = Pt[,i] */
+	      F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, &Ptt[m_x_m * i], &intone);
+	  }
+
+	  /*****************************************************************************/
+	  /* ---------- case 3: some NA's: filter using partial information ---------- */
+	  /*****************************************************************************/
+	  else
+	  {
+	      int d_reduced = d - NAsum;
+	      int d_red_x_d_red = d_reduced * d_reduced;
+
+	      reduce_array(&yt[d * i], d, 1, yt_temp, positions, d_reduced);
+	      reduce_array(&ct[d * i * incct], d, 1, ct_temp, positions, d_reduced);
+	      reduce_array(&Zt[m_x_d * i * incZt], d, m, Zt_temp, positions, d_reduced);
+	      reduce_GGt(&GGt[d_x_d * i * incGGt], d, GGt_temp, positions, d_reduced);
+
+#ifdef NA_DETECTION_DEBUG_PRINT
+              /* print_int_array(positions, 1, d_reduced, "positions"); */
+              /* print_array(&yt[d * 1], 1, d, "yt"); */
+              /* print_array(yt_temp, 1, d_reduced, "yt_temp"); */
+              /* print_array(&ct[d * i * incct], 1, d, "ct"); */
+              /* print_array(ct_temp, 1, d_reduced, "ct_temp"); */
+	      print_array(&Zt[m_x_d * i * incZt], d, m, "Zt");
+	      print_array(Zt_temp, d_reduced, m, "Zt_temp");
+              /* print_array(&GGt[d_x_d * i * incGGt], d, d, "GGt"); */
+              /* print_array(GGt_temp, d_reduced, d_reduced, "GGt_temp"); */
+#endif
+
+	      /* ---------------------------------------------------------------------- */
+	      /* Compute vt[,i] = yt[,i] - ct[,i * incct] - Zt[,,i * incZt] %*% at[,i]  */
+	      /* ---------------------------------------------------------------------- */
+
+	      /* vt[,i] = yt[,i] */
+	      F77_NAME(dcopy)(&d_reduced, yt_temp, &intone, vt_temp, &intone);
+
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+	      print_array(vt_temp, 1, d_reduced, "yt reduced");
+#endif
+
+	      /* vt[,i] = vt[,i] - ct[i * incct,] */
+	      F77_NAME(daxpy)(&d_reduced, &dblminusone, ct_temp, &intone, vt_temp, &intone);
+
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+	      print_array(ct_temp, 1, d_reduced, "ct reduced");
+#endif
+
+	      /* vt[,i] = vt[,i] - Zt[,,i * incZt] %*% at[,i] */
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+	      print_array(Zt_temp, d_reduced, m, "Zt reduced");
+#endif
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &d_reduced,
+			      &intone, &m, &dblminusone,
+			      Zt_temp, &d_reduced,
+			      &at[m * i], &m,
+			      &dblone, vt_temp, &d_reduced);
+
+	      /* --------------------------------------------------------------------------------------- */
+	      /* Compute Ft[,,i] = Zt[,,i * incZt] %*% Pt[,,i] %*% t(Zt[,,i * incZt]) + GGt[,,i * incGt] */
+	      /* --------------------------------------------------------------------------------------- */
+	      /* Zt[,,i] = Zt[,,i] %*% Pt[,,i] */
+
+	      /* tmpdxm = Zt[,,i] %*% Pt[,,i]*/
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &d_reduced,
+			      &m, &m, &dblone,
+			      Zt_temp, &d_reduced,
+			      &Pt[m_x_m * i], &m,
+			      &dblzero, tmpdxm, &d_reduced);
+	      /* Ft[,,i] = Gt[,,i * incGGt] */
+	      F77_NAME(dcopy)(&d_red_x_d_red, GGt_temp, &intone, Ft_temp, &intone);
+
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+	      print_array(GGt_temp, d_reduced, d_reduced, "GGt reduced");
+#endif
+
+	      /* Ft[,,i] = tmpdxm %*% t(Zt[,,i * incZt]) + Ft[,,i] */
+	      F77_NAME(dgemm)(dont_transpose, transpose, &d_reduced,
+			      &d_reduced, &m, &dblone,
+			      tmpdxm, &d_reduced,
+			      Zt_temp, &d_reduced,
+			      &dblone, Ft_temp, &d_reduced);
+
+	      /* ---------------------------------------------------------------------- */
+	      /* Invert Ft[,,i]                                                         */
+	      /* ---------------------------------------------------------------------- */
+	      if(d_reduced == 1){
+		  It_temp[0] = 1 / Ft_temp[0];
+	      }else{
+		  /* tmpFt_inv = Ft[,,i] */
+		  F77_NAME(dcopy)(&d_red_x_d_red, Ft_temp, &intone, It_temp, &intone);
+
+		  /* Cholesky factorization */
+		  F77_NAME(dpotrf)(upper_triangle, &d_reduced,
+				   It_temp, &d_reduced, &potrf_info);
+		  if(potrf_info != 0)
+		      Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n",
+			      potrf_info);
+
+		  strcpy(dpotri_uplo, "U");
+		  /* Computes the inverse using the Cholesky factorization */
+		  F77_NAME(dpotri)(dpotri_uplo, &d_reduced,
+				   It_temp, &d_reduced, &potri_info);
+
+		  /* As 'dpotri' returns a lower or upper tringle -> mirror the matrix */
+		  FKFmirrorLU(It_temp, d_reduced, dpotri_uplo);
+
+		  if(potri_info != 0)
+		      Rprintf("Warning: 'dpotri' exited with status: %d\nVariance of the prediction error can not be computed.\n",
+			      potri_info);
+	      }
+
+
+	      /* ---------------------------------------------------------------------- */
+	      /* Kt[,,i] = Pt[,,i] %*% t(Zt[,,i * incZt]) %*% tmpFt_inv                 */
+	      /* ---------------------------------------------------------------------- */
+
+	      /* tmpdxm = Pt[,,i] %*% t(Zt[,,i * incZt]) */
+	      F77_NAME(dgemm)(dont_transpose, transpose, &m,
+			      &d_reduced, &m, &dblone,
+			      &Pt[m_x_m * i], &m,
+			      Zt_temp, &d_reduced,
+			      &dblzero, tmpdxm, &m);
+
+	      /* Kt[,,i] = tmpdxm %*% tmpFt_inv */
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			      &d_reduced, &d_reduced, &dblone,
+			      tmpdxm, &m,
+			      It_temp, &d_reduced,
+			      &dblzero, Kt_temp, &m);
+
+	      /* ---------------------------------------------------------------------- */
+	      /* att[,i] = at[,i] + Kt[,,i] %*% vt[,i]                                  */
+	      /* ---------------------------------------------------------------------- */
+
+	      /* att[,i] = at[,i] */
+	      F77_NAME(dcopy)(&m, &at[m * i], &intone, &att[m * i], &intone);
+
+	      /* att[,i] = Kt[,,i] %*% vt[,i] + att[,i] */
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			      &intone, &d_reduced, &dblone,
+			      Kt_temp, &m,
+			      vt_temp, &d_reduced,
+			      &dblone, &att[m * i], &m);
+
+	      /* ---------------------------------------------------------------------- */
+	      /* Ptt[,,i] = Pt[,,i] - Pt[,,i] %*% t(Zt[,,i * incZt]) %*% t(Kt[,,i])     */
+	      /* ---------------------------------------------------------------------- */
+
+	      /* tmpmxm = t(Zt[,,i * incZt]) %*% t(Kt[,,i]) */
+	      F77_NAME(dgemm)(transpose, transpose, &m,
+			      &m, &d_reduced, &dblone,
+			      Zt_temp, &d_reduced,
+			      Kt_temp, &m,
+			      &dblzero, tmpmxm, &m);
+
+	      /* Ptt[,i] = Pt[,i] */
+	      F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, &Ptt[m_x_m * i], &intone);
+
+	      /* tmptmpmxm = Pt[,i] */
+	      F77_NAME(dcopy)(&m_x_m, &Pt[m_x_m * i], &intone, tmptmpmxm, &intone);
+
+	      /* Ptt[,,i] = - Ptt[,,i]  %*% tmptmpmxm + tmpmxm */
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+			      &m, &m, &dblminusone,
+			      tmptmpmxm, &m,
+			      tmpmxm, &m,
+			      &dblone, &Ptt[m_x_m * i], &m);
+
+	      /* ================================================================================== */
+	      /* logLik = logLik - 0.5 * log(det(Ft[,,i])) - 0.5 t(vt[,i]) %*% tmpFt_inv %*% vt[,i] */
+	      /* ================================================================================== */
+	      /* ---------------------------------------------------------------------- */
+	      /* Compute the mahalanobis distance first: t(vt) %*% tmpFt_inv %*% vt     */
+	      /* ---------------------------------------------------------------------- */
+	      /* tmpdxd = tmpFt_inv %*% vt[,i] */
+	      F77_NAME(dgemm)(dont_transpose, dont_transpose, &d_reduced,
+			      &intone, &d_reduced, &dblone,
+			      It_temp, &d_reduced,
+			      vt_temp, &d_reduced,
+			      &dblzero, tmpdxd, &d_reduced);
+
+	      /* mahalanobis = t(vt[,i]) %*% tmpdxd */
+	      mahalanobis = 0;
+	      F77_NAME(dgemm)(transpose, dont_transpose, &intone,
+			      &intone, &d_reduced, &dblone,
+			      vt_temp, &d_reduced,
+			      tmpdxd, &d_reduced,
+			      &dblone, &mahalanobis, &intone);
+
+	      /* ---------------------------------------------------------------------- */
+	      /* Compute the determinant of Fti employing a Cholesky decomposition      */
+	      /* ---------------------------------------------------------------------- */
+	      if(d == 1){
+		  det = Ft_temp[0];
+	      }else{
+		  /* tmpdxd = Ft[,,i] */
+		  F77_NAME(dcopy)(&d_red_x_d_red, Ft_temp, &intone, tmpdxd, &intone);
+
+		  /* Compute the Cholesky factorization */
+		  F77_NAME(dpotrf)(upper_triangle, &d_reduced,
+				   tmpdxd, &d_reduced, &det_potrf_info);
+
+		  if(det_potrf_info != 0)
+		      Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nDeterminant of the variance of the prediction error can not be computed.\n",
+			      det_potrf_info);
+
+		  /* Take the product of the squared diagonal elements to get the determinant */
+		  det = tmpdxd[0];
+		  for(j = 1; j < d_reduced; j++)
+		      det *= tmpdxd[IDX(j, j, d_reduced)];
+
+		  det = det * det;
+	      }
+
+	      /* ------------------------------------------------------------------------ */
+	      /* Sum it up:                                                               */
+	      /* log(density) = -d / 2 * log(2 * pi) - 0.5 * log(det) - 0.5 * mahalanbois */
+	      /* ------------------------------------------------------------------------ */
+	      logDet = log(det);
+	      if(R_finite(logDet) && R_finite(mahalanobis)){
+		  *loglik -= 0.5 * (mahalanobis + logDet);
+	      }else{
+		  *loglik = NA_REAL;
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+		  Rprintf("logDet or mahalanobis is NaN\n");
+#endif
+	      }
+
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+	      Rprintf("\n\nlogDet:   %3.9f;   maha:   %3.9f\n", logDet, mahalanobis);
+#endif
+
+
+	      /* fill arrays to be returned */
+	      fill_vt(&vt[d * i], d, vt_temp, positions, d_reduced);
+	      fill_Ft(&Ft[d_x_d * i], d, Ft_temp, positions, d_reduced);
+	      fill_Kt(&Kt[m_x_d * i], m, Kt_temp, positions, d_reduced);
+
+#ifdef NA_DETECTION_DEBUG_PRINT
+              /* print_array(&vt[d * i], d, 1, "vt"); */
+              /* print_array(vt_temp, d_reduced, 1, "vt_temp"); */
+              /* print_array(&Ft[d_x_d * i], d, d, "Ft"); */
+              /* print_array(Ft_temp, d_reduced, d_reduced, "Ft_temp"); */
+	      print_array(&Kt[m_x_d * i], m, d, "Kt");
+	      print_array(Kt_temp, m, d_reduced, "Kt_temp");
+#endif
+
+	  }
+      }
+    
+
+      /**************************************************************************************/
+      /*  ---------- ---------- ---------- prediction step ---------- ---------- ---------- */
+      /**************************************************************************************/
+
+      /* ---------------------------------------------------------------------- */
+      /* a[,i] = dt[,i * incdt] + Tt[,,i * incTt] %*% att[,i]                   */
+      /* ---------------------------------------------------------------------- */
+
+      /* at[,i] = dt[,i] */
+      F77_NAME(dcopy)(&m, &dt[m * i * incdt], &intone, &at[m * (i + 1)], &intone);
+#ifdef DEBUG_PRINT
+      print_array(&at[m * (i + 1)], 1, m, "dt:");
 #endif
 
 #ifdef DEBUG_PRINT
-    print_array(&Tt[m_x_m * i * incTt], m, m, "Tt:");
+      print_array(&Tt[m_x_m * i * incTt], m, m, "Tt:");
 #endif
 
-    /* at[,i] = Tt[,,i * incTt] %*% att[,i] + at[,i] */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
-		    &intone, &m, &dblone,
-		    &Tt[m_x_m * i * incTt], &m,
-		    &att[m * i], &m,
-		    &dblone, &at[m * (i + 1)], &m);
+      /* at[,i] = Tt[,,i * incTt] %*% att[,i] + at[,i] */
+      F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+		      &intone, &m, &dblone,
+		      &Tt[m_x_m * i * incTt], &m,
+		      &att[m * i], &m,
+		      &dblone, &at[m * (i + 1)], &m);
 
-    /* ---------------------------------------------------------------------- */
-    /* Pt[,,i] = Tt[,,i * incTt] %*% Ptt[,,i] %*% t(Tt[,,i * incTt]) + HHt[,,i * incHHt] */
-    /* ---------------------------------------------------------------------- */
+      /* --------------------------------------------------------------------------------- */
+      /* Pt[,,i] = Tt[,,i * incTt] %*% Ptt[,,i] %*% t(Tt[,,i * incTt]) + HHt[,,i * incHHt] */
+      /* --------------------------------------------------------------------------------- */
 
-    /* tmpmxm = Ptt[,,i] %*% t(Tt[,,i * incTt]) */
-    F77_NAME(dgemm)(dont_transpose, transpose, &m,
-		    &m, &m, &dblone,
-		    &Ptt[m_x_m * i], &m,
-		    &Tt[m_x_m * i * incTt], &m,
-		    &dblzero, tmpmxm, &m);
+      /* tmpmxm = Ptt[,,i] %*% t(Tt[,,i * incTt]) */
+      F77_NAME(dgemm)(dont_transpose, transpose, &m,
+		      &m, &m, &dblone,
+		      &Ptt[m_x_m * i], &m,
+		      &Tt[m_x_m * i * incTt], &m,
+		      &dblzero, tmpmxm, &m);
 
-    /* Pt[,,i] = HHt[,,i * incHHt] */
-    F77_NAME(dcopy)(&m_x_m, &HHt[m_x_m * i * incHHt], &intone, &Pt[m_x_m * (i + 1)], &intone);
+      /* Pt[,,i] = HHt[,,i * incHHt] */
+      F77_NAME(dcopy)(&m_x_m, &HHt[m_x_m * i * incHHt], &intone, &Pt[m_x_m * (i + 1)], &intone);
 
 #ifdef DEBUG_PRINT
-    print_array(&HHt[m_x_m * i * incHHt], m, m, "HHt:");
+      print_array(&HHt[m_x_m * i * incHHt], m, m, "HHt:");
 #endif
 
-    /* Pt[,,i] = Tt[,,i * incTt] %*% tmpmxm + Pt[,,i] */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
-		    &m, &m, &dblone,
-		    &Tt[m_x_m * i * incTt], &m,
-		    tmpmxm, &m,
-		    &dblone, &Pt[m_x_m * (i + 1)], &m);
-
-    /* ====================================================================== */
-    /* logLik = logLik - 0.5 * log(det(Ft[,,i])) - 0.5 t(vt[,i]) %*% tmpFt_inv %*% vt[,i] */
-    /* ====================================================================== */
-    /* ---------------------------------------------------------------------- */
-    /* Compute the mahalanobis distance first: t(vt) %*% tmpFt_inv %*% vt */
-    /* ---------------------------------------------------------------------- */
-    /* tmpdxd = tmpFt_inv %*% vt[,i] */
-    F77_NAME(dgemm)(dont_transpose, dont_transpose, &d,
-		    &intone, &d, &dblone,
-		    tmpFt_inv, &d,
-		    &vt[d * i], &d,
-		    &dblzero, tmpdxd, &d);
-
-    /* mahalanobis = t(vt[,i]) %*% tmpdxd */
-    mahalanobis = 0;
-    F77_NAME(dgemm)(transpose, dont_transpose, &intone,
-		    &intone, &d, &dblone,
-		    &vt[d * i], &d,
-		    tmpdxd, &d,
-		    &dblone, &mahalanobis, &intone);
-
-    /* ---------------------------------------------------------------------- */
-    /* Compute the determinant of Fti employing a Cholesky decomposition */
-    /* ---------------------------------------------------------------------- */
-    if(d == 1){
-      det = Ft[i];
-    }else{
-      /* tmpdxd = Ft[,,i] */
-      F77_NAME(dcopy)(&d_x_d, &Ft[d_x_d * i], &intone, tmpdxd, &intone);
-
-      /* Compute the Cholesky factorization */
-      F77_NAME(dpotrf)(upper_triangle, &d,
-		       tmpdxd, &d, &det_potrf_info);
-
-      if(det_potrf_info != 0)
-	Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nDeterminant of the variance of the prediction error can not be computed.\n", det_potrf_info);
-
-      /* Take the product of the squared diagonal elements to get the determinant*/
-      det = tmpdxd[0];
-      for(j = 1; j < d; j++)
-	det *= tmpdxd[IDX(j, j, d)];
-
-      det = det * det;
-    }
-
-    /* ---------------------------------------------------------------------- */
-    /* Sum it up: */
-    /* log(density) = -d / 2 * log(2 * pi) - 0.5 * log(det) - 0.5 * mahalanbois */
-    /* ---------------------------------------------------------------------- */
-    logDet = log(det);
-    if(R_finite(logDet) && R_finite(mahalanobis)){
-      *loglik -= 0.5 * (mahalanobis + logDet);
-    }else{
-      *loglik = NA_REAL;
-#ifdef DEBUG_PRINT
-      Rprintf("logDet or mahalanobis is NaN\n");
-#endif
-    }
+      /* Pt[,,i] = Tt[,,i * incTt] %*% tmpmxm + Pt[,,i] */
+      F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
+		      &m, &m, &dblone,
+		      &Tt[m_x_m * i * incTt], &m,
+		      tmpmxm, &m,
+		      &dblone, &Pt[m_x_m * (i + 1)], &m);
+    
 
 #ifdef DEBUG_PRINT
-    Rprintf("\n\nlogDet:   %3.9f;   maha:   %3.9f\n", logDet, mahalanobis);
+      print_array(&vt[d * i], 1, d, "vt:");
+      print_array(&Ft[d_x_d * i], d, d, "Ft:");
+      print_array(&Kt[m_x_d * i], m, d, "Kt:");
+      print_array(&at[m * (i + 1)], 1, m, "at:");
+      print_array(&att[m * i], 1, m, "att:");
+      print_array(&Pt[m_x_m * (i + 1)], m, m, "Pt:");
+      print_array(&Ptt[m_x_m * i], m, m, "Ptt:");
 #endif
 
-#ifdef DEBUG_PRINT
-    print_array(&vt[d * i], 1, d, "Vt:");
-    print_array(&Ft[d_x_d * i], d, d, "Ft:");
-    print_array(&Kt[m_x_d * i], m, d, "Kt:");
-    print_array(&at[m * (i + 1)], 1, m, "at:");
-    print_array(&att[m * i], 1, m, "att:");
-    print_array(&Pt[m_x_m * (i + 1)], m, m, "Pt:");
-    print_array(&Ptt[m_x_m * i], m, m, "Ptt:");
+#ifdef NA_REDUCED_ARRAYS_DEBUG_PRINT
+      print_array(&vt[d * i], 1, d, "vt:");
+      print_array(&Ft[d_x_d * i], d, d, "Ft:");
+      print_array(&Kt[m_x_d * i], m, d, "Kt:");
+      print_array(&at[m * (i + 1)], 1, m, "at:");
+      print_array(&att[m * i], 1, m, "att:");
+      print_array(&Pt[m_x_m * (i + 1)], m, m, "Pt:");
+      print_array(&Ptt[m_x_m * i], m, m, "Ptt:");
+      Rprintf("\n---------- iteration nr. %i ----------\n", i+1);
 #endif
 
-    i++;
+      i++;
   }
-  /* ======================================================================  */
-  /* End of filtering loop */
-  /* ======================================================================  */
+  /**************************************************************/
+  /* ---------- ---------- end recursions ---------- ---------- */
+  /**************************************************************/
 
   status[0] = potri_info;
   status[1] = potrf_info;
@@ -454,6 +876,17 @@ void cfkf(/* inputs */
   Free(tmpFt_inv);
 
 
+  free(NAindices);
+  free(positions);
+
+  free(yt_temp);
+  free(ct_temp);
+  free(Zt_temp);
+  free(GGt_temp);
+  free(Kt_temp);
+  free(vt_temp);
+  free(Ft_temp);
+  free(It_temp);
 }
 
 

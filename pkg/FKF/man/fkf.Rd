@@ -1,5 +1,6 @@
 \name{fkf}
 \alias{fkf}
+\alias{FKF}
 \title{Fast Kalman filter}
 % <---------------------------------------------------------------------->
 \description{
@@ -7,7 +8,8 @@
   This function allows for fast and flexible Kalman filtering. The
   state-space parameters are allowed to be time-varying and intercepts
   are supported in both, the transition equation and the measurement
-  equation. \code{fkf} wraps the \code{C}-function \code{FKF} which
+  equation. In addition \dQuote{NA}-values in the observations are
+  supported. \code{fkf} wraps the \code{C}-function \code{FKF} which
   fully relies on linear algebra subroutines contained in BLAS and
   LAPACK.
 
@@ -34,11 +36,11 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
     the transition equation (see \bold{Details}).}
   \item{GGt}{An \code{array} giving the variance of the disturbances of
     the measurement equation (see \bold{Details}).}
-  \item{yt}{A \code{matrix} containing the observations. \code{yt} must
-    not contain \dQuote{NA}-values (see \bold{Details}).}
+  \item{yt}{A \code{matrix} containing the
+    observations. \dQuote{NA}-values are allowed (see \bold{Details}).}
   \item{check.input}{A \code{logical} stating whether the input shall be
-    checked for consistency (\dQuote{storage.mode}, \dQuote{class},
-    dimensionality, and \dQuote{NA's}) (see \bold{Details}).}
+    checked for consistency (\dQuote{storage.mode}, \dQuote{class}, and
+    dimensionality) (see \bold{Details}).}
 }
 % <---------------------------------------------------------------------->
 \details{
@@ -72,7 +74,13 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 
   Note that \code{fkf} takes as input \code{HHt} and \code{GGt} which
   corresponds to \eqn{H_t H_t'}{H[t] \%*\% t(H[t])} and \eqn{G_t
-  G_t'}{G[t] \%*\% t(G[t])}. \cr
+    G_t'}{G[t] \%*\% t(G[t])}. \cr
+  
+  \dQuote{NA}-values in the vector of response variables \code{yt} are
+  supported. In the filter recursions the observation vector \code{yt}
+  with missing values will be reduced to the vector \code{yt*} without
+  missing values and the measurement equation will be adjusted
+  accordingly.
 
 % <------------------------------------->
 \strong{Parameters:}
@@ -104,7 +112,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 
   \code{check.input} should always be \code{TRUE} unless the performance
   becomes crucial and correctness of the arguments concerning
-  dimensions, class, storage.mode and absence of 'NA's is ensured.
+  dimensions, class, and storage.mode is ensured.
 
   \bold{Note:}\cr
   The class of the arguments if of importance. For instance, to check

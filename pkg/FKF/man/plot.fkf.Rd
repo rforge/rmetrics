@@ -6,8 +6,8 @@
 
   Plotting method for objects of class \code{\link{fkf}}. This function
   provides tools for graphical analysis of the Kalman filter output:
-  Visualization of the state vector, Q-Q plot of the individual
-  residuals, Q-Q plot of the Mahalanobis distance, auto- as well as
+  Visualization of the state vector, QQ-plot of the individual
+  residuals, QQ-plot of the Mahalanobis distance, auto- as well as
   crosscorrelation function of the residuals.
 
 }
@@ -41,8 +41,8 @@
       arguments \code{at.idx} and \code{att.idx}, the user can specify
       which of the predicted (\eqn{a_{t}}{at}) and filtered
       (\eqn{a_{t|t}}{att}) state variables will be drawn.}
-      \item{\code{resid.qq}}{Draws a Q-Q plot for each row of the residuals \code{vt}.}
-      \item{\code{qqchisq}}{A Chi-Squared Q-Q plot will be drawn to graphically
+      \item{\code{resid.qq}}{Draws a QQ-plot for each row of the residuals \code{vt}.}
+      \item{\code{qqchisq}}{A Chi-Squared QQ-plot will be drawn to graphically
 	test for multivariate normality of the residuals based on the
 	Mahalanobis distance.}
       \item{\code{acf}}{Creates a pairs plot with the autocorrelation
