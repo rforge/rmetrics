@@ -208,7 +208,7 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 
 }
 % <---------------------------------------------------------------------->
-\author{David Luethi, Philipp Erb}
+\author{David Luethi, Philipp Erb, Simon Otziger}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link[=plot.fkf]{plot}} to visualize and analyze
   \code{fkf}-objects,
@@ -216,62 +216,61 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
   \link[sspir]{kfilter} from package \code{sspir}.}
 % <---------------------------------------------------------------------->
 \examples{
-## This example shows how to fit an AR(2) model using the Kalman filter.
-
+## This example shows how to fit an ARMA(2, 1) model using the Kalman filter.
 n <- 200
 
 ## Set the AR parameters
-ar1 <- -0.24
-ar2 <- 0.6
-sigma <- .4
+ar1 <- 0.6
+ar2 <- 0.2
+ma1 <- -0.2
+sigma <- sqrt(0.2)
 
-## Sample from an AR(2) process
-a <- arima.sim(model = list(ar = c(ar1, ar2)),
-               n = n, innov = rnorm(n) * sigma)
+## Sample from an ARMA(2, 1) process
+a <- arima.sim(model = list(ar = c(ar1, ar2), ma = ma1), n = n,
+               innov = rnorm(n) * sigma)
 
-## Create a state space representation out of the three AR parameters
-ar2.to.state.space <- function(ar1, ar2, sigma){
-    Tt <- matrix(c(ar1, 1, ar2, 0), ncol = 2)
+## Create a state space representation out of the four ARMA parameters
+arma21ss <- function(ar1, ar2, ma1, sigma) {
+    Tt <- matrix(c(ar1, ar2, 1, 0), ncol = 2)
     Zt <- matrix(c(1, 0), ncol = 2)
-    ct <- matrix(0.0)
-    dt <- matrix(0.0, nrow = 2)
-    GGt <- matrix(0.0)
-    HHt <- matrix(c(sigma^2, 0, 0, 0), ncol = 2)
-    a0 <- as.numeric(c(0, 0))
-    P0 <- matrix(c(100,0,0,100), ncol = 2)
-    return(list(a0 = a0, P0 = P0, ct = ct, dt = dt,
-                Zt = Zt, Tt = Tt, GGt = GGt, HHt = HHt))
+    ct <- matrix(0)
+    dt <- matrix(0, nrow = 2)
+    GGt <- matrix(0)
+    H <- matrix(c(1, ma1), nrow = 2) * sigma
+    HHt <- H %*% t(H)
+    a0 <- c(0, 0)
+    P0 <- matrix(1e6, nrow = 2, ncol = 2)
+    return(list(a0 = a0, P0 = P0, ct = ct, dt = dt, Zt = Zt, Tt = Tt, GGt = GGt,
+                HHt = HHt))
 }
 
 ## The objective function passed to 'optim'
-objective <- function(theta, yt)
-{
-    sp <- ar2.to.state.space(theta["ar1"], theta["ar2"], theta["sigma"])
-
-    ans <- fkf(a0 = sp$a0, P0 = sp$P0,
-               dt = sp$dt, ct = sp$ct, Tt = sp$Tt, Zt = sp$Zt,
-               HHt = sp$HHt, GGt = sp$GGt, yt = yt, check.input = FALSE)
-
+objective <- function(theta, yt) {
+    sp <- arma21ss(theta["ar1"], theta["ar2"], theta["ma1"], theta["sigma"])
+    ans <- fkf(a0 = sp$a0, P0 = sp$P0, dt = sp$dt, ct = sp$ct, Tt = sp$Tt,
+               Zt = sp$Zt, HHt = sp$HHt, GGt = sp$GGt, yt = yt)
     return(-ans$logLik)
 }
 
-theta <- c(ar1 = 0, ar2 = 0, sigma = 1)
-fit <- optim(theta, objective, yt = rbind(a))
+theta <- c(ar = c(0, 0), ma1 = 0, sigma = 1)
+fit <- optim(theta, objective, yt = rbind(a), hessian = TRUE)
 fit
 
-## Filter the series with estimated parameter values
-sp <- ar2.to.state.space(fit$par["ar1"], fit$par["ar2"], fit$par["sigma"])
+## Confidence intervals
+rbind(fit$par - qnorm(0.975) * sqrt(diag(solve(fit$hessian))),
+      fit$par + qnorm(0.975) * sqrt(diag(solve(fit$hessian))))
 
-ans <- fkf(a0 = sp$a0, P0 = sp$P0,
-           dt = sp$dt, ct = sp$ct, Tt = sp$Tt, Zt = sp$Zt,
-           HHt = sp$HHt, GGt = sp$GGt, yt = rbind(a))
+## Filter the series with estimated parameter values
+sp <- arma21ss(fit$par["ar1"], fit$par["ar2"], fit$par["ma1"], fit$par["sigma"])
+ans <- fkf(a0 = sp$a0, P0 = sp$P0, dt = sp$dt, ct = sp$ct, Tt = sp$Tt,
+           Zt = sp$Zt, HHt = sp$HHt, GGt = sp$GGt, yt = rbind(a))
 
 ## Compare the prediction with the realization
-plot(ans, at.idx=1, att.idx = NA, CI = NA)
+plot(ans, at.idx = 1, att.idx = NA, CI = NA)
 lines(a, lty = "dotted")
 
 ## Compare the filtered series with the realization
-plot(ans, at.idx=NA, att.idx = 1, CI = NA)
+plot(ans, at.idx = NA, att.idx = 1, CI = NA)
 lines(a, lty = "dotted")
 
 ## Check whether the residuals are Gaussian
@@ -279,11 +278,8 @@ plot(ans, type = "resid.qq")
 
 ## Check for linear serial dependence through 'acf'
 plot(ans, type = "acf")
-
 }
 % <---------------------------------------------------------------------->
 \keyword{algebra}
 \keyword{models}
 \keyword{multivariate}
-
-

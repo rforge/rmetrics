@@ -65,7 +65,7 @@ where \eqn{d} denotes the dimension of the data and \eqn{n} the number
 of observations.
 }
 % <---------------------------------------------------------------------->
-\author{David Luethi, Philipp Erb}
+\author{David Luethi, Philipp Erb, Simon Otziger}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{fkf}}}
 % <---------------------------------------------------------------------->
