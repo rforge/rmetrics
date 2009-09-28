@@ -237,7 +237,7 @@ arma21ss <- function(ar1, ar2, ma1, sigma) {
     dt <- matrix(0, nrow = 2)
     GGt <- matrix(0)
     H <- matrix(c(1, ma1), nrow = 2) * sigma
-    HHt <- H %*% t(H)
+    HHt <- H \%*\% t(H)
     a0 <- c(0, 0)
     P0 <- matrix(1e6, nrow = 2, ncol = 2)
     return(list(a0 = a0, P0 = P0, ct = ct, dt = dt, Zt = Zt, Tt = Tt, GGt = GGt,
