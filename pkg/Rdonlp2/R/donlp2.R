@@ -25,7 +25,9 @@ function(
 {
     # use analytical gradients?
     if (is.function(attr(fn, "gr")) &
-        all(lapply(nlin, function(e)is.function(attr(e,"gr"))))){
+        # DW:
+        # all(lapply(nlin, function(e) is.function(attr(e,"gr"))))){
+        all(unlist(lapply(nlin, function(e)is.function(attr(e,"gr")))))) {
         control["analyt"] = TRUE
     } else {
         control["analyt"] = FALSE
@@ -54,6 +56,7 @@ function(
     num.nlin <- length(nlin)
     if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
         stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
+    
     # concatenate bounds for internal use
     lbd <- c(par.lower, lin.lower, nlin.lower)
     ubd <- c(par.upper, lin.upper, nlin.upper)
