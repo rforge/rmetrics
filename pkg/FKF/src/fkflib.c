@@ -241,9 +241,7 @@ void cfkf(/* inputs */
 
   char  *transpose = "T", *dont_transpose = "N";
   char *upper_triangle = "U";
-  char dpotri_uplo[1];
-
-  strcpy(dpotri_uplo, "U");
+  char *dpotri_uplo = "U";
 
   /* temporary arrays */
   double *tmpdxm = (double *) Calloc(m_x_d, double);
@@ -390,7 +388,6 @@ void cfkf(/* inputs */
 		  Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n",
 			  potrf_info);
 
-	      strcpy(dpotri_uplo, "U");
 	      /* Computes the inverse using the Cholesky factorization */
 	      F77_NAME(dpotri)(dpotri_uplo, &d,
 			       tmpFt_inv, &d, &potri_info);
@@ -634,7 +631,6 @@ void cfkf(/* inputs */
 		      Rprintf("Warning: Cholesky factorization 'dpotrf' exited with status: %d\nVariance of the prediction error can not be computed.\n",
 			      potrf_info);
 
-		  strcpy(dpotri_uplo, "U");
 		  /* Computes the inverse using the Cholesky factorization */
 		  F77_NAME(dpotri)(dpotri_uplo, &d_reduced,
 				   It_temp, &d_reduced, &potri_info);
