@@ -167,7 +167,7 @@ par(mfrow = c(2, 2), cex = 0.75)
 hist(halton(n = 5000, dim = 1), main = "Uniform Halton", 
   xlab = "x", col = "steelblue3", border = "white")
 
-hist(halton(n = 5000, dim = 1), main = "Normal Halton", 
+hist(halton(n = 5000, dim = 1, norm = TRUE), main = "Normal Halton", 
   xlab = "x", col = "steelblue3", border = "white")
    
 # (3) Sobol sequences
