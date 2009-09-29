@@ -784,7 +784,7 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     # Update svn version important to have up-dated Changelog and rev number in DCF
     vcsCheck <- readline(paste("Are you using", vcs, "and is your local copy up-to-date ? [Y/n] "))
     if (substr(vcsCheck, 1, 1) == "n")
-        return("Exciting function")
+        return("stopped")
     ## message("\nUpdating svn version ... ")
     ## try(system("svn update"))
 
@@ -826,20 +826,34 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
     message("\nUpdating ChangeLog ... ")
     for (pkg in pkgs) {
         message(pkg, " ... ", appendLF = FALSE)
-        svn2cl <- file.path("..", "share", "svn2cl.sh")
-        cmd <- switch(vcs,
-                      "svn" = { paste(svn2cl, pkg,
-                                      "--ignore-message-starting !",
-                                      "-o", file.path(pkg, "ChangeLog"))
-                            },
-                      "git svn" = { paste("git log --stat=30 --since='2009-01-01'",
-                                          "--grep='^[:space:][^\\!]' --date=short",
-                                          "--name-only --pretty=format:'%ad %an%n%n        * %s%n'",
-                                          pkg, ">", file.path(pkg, "ChangeLog"))
-                                })
-        t <- try(system(cmd))
-        if (inherits(t, "try-error"))
-            stop("Could not generate ChageLog file")
+
+        if (vcs == "svn") {
+            svn2cl <- file.path("..", "share", "svn2cl.sh")
+            cmd <- paste(svn2cl, pkg,
+                         "--ignore-message-starting !",
+                         "-o", file.path(pkg, "ChangeLog"))
+            t <- try(system(cmd))
+            if (inherits(t, "try-error"))
+                stop("Could not generate ChageLog file")
+            message("OK")
+        }
+
+        if (vcs == "git svn") {
+            cmd <- paste("git log --raw --date=short ", pkg,
+                         "| perl -ne 'BEGIN { $/ = \"commit \" } print if (/\n\\s+\\!/ - 1)'")
+            raw <- try(system(cmd, intern = TRUE))
+            if (inherits(raw, "try-error"))
+                stop("Could not run command :", cmd)
+
+            cl1 <- raw[-grep("^commit ", raw)] #-> remove commit number and add seperator
+            cl2 <- sub(" <.*@.*>", "", cl1)    #-> remove email address
+            idx3 <- grep("git.*id", cl2) #-> remove line with git-svn-id
+            cl3 <- cl2[-sort(c(idx3, idx3 + 1))]  #-> remove line with git-svn-id
+            cl4 <- sub("^:.*\\.\\.\\..*\\.\\.\\.", "   ", cl3)  #-> remove details in before filenames
+            cl <- sub("\\t", " ", cl4) #-> replace tab with one space
+            # add separator : -------
+        }
+        cat(cl, file = file.path(pkg, "ChangeLog"), sep = "\n")
         message("OK")
     }
 
