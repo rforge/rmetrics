@@ -1,9 +1,5 @@
-2009-04-02  chalabi
+2009-09-17 chalabi
 
-	* DESCRIPTION: more explicit depends and suggests field in DESC
-	  file.
+        * stochasticTA uses now 'cbind' rather than 'merge' to bind result.
 
-2009-04-01  chalabi
-
-	* DESCRIPTION: updated DESC file
-
+pkg/fTrading/R/TechnicalAnalysis.R

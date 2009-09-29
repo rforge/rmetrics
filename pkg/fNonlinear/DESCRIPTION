@@ -1,7 +1,7 @@
 Package: fNonlinear
 Version: 2100.76
-Revision: 4033
-Date: 2009-04-15
+Revision: 4277
+Date: 2009-09-28
 Title: Nonlinear and Chaotic Time Series Modelling
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics, fGarch

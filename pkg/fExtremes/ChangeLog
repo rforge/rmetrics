@@ -1,22 +1,5 @@
-2009-04-09  wuertz
+2009-05-21 chalabi
 
-	* R/DataPreprocessing.R, R/GevDistribution.R, R/GevFit.R,
-	  R/GevPrintPlotSummary.R, R/GevSim.R, R/GpdDistribution.R,
-	  R/GpdSim.R, R/GpdSow.R, R/MeanExcessFit.R, R/ValueAtRisk.R,
-	  man/DataPreprocessing.Rd, man/GevDistribution.Rd,
-	  man/GevModelling.Rd: The *Sim functions now return signal
-	  timeSeries, and some smaller beautifies
+        * assignment beta = fit$par.ests["xi"] should read : beta =
 
-2009-04-02  chalabi
-
-	* DESCRIPTION: more explicit depends and suggests field in DESC
-	  file.
-
-2009-04-01  chalabi
-
-	* DESCRIPTION: updated DESC file
-
-2009-01-28  chalabi
-
-	* man/ExtremeIndex.Rd: updated manual pages to new Rd parser
-
+pkg/fExtremes/R/GevFit.R
