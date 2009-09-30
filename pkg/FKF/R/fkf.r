@@ -9,13 +9,9 @@ fkf <- function(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 
     ## 'check.input' should always be 'TRUE' unless the performance
     ## becomes crucial and correctness of the arguments concerning
-    ## dimensions, class, storage.mode and absence of 'NA's is ensured.
+    ## dimensions, class and storage.mode is ensured.
     if(check.input){
 
-        ## Check for NA's
-        if(any(is.na(yt))){
-            stop("Data 'yt' contains NA(s)!\n")
-        }
         ## Check the storage mode: Must be 'double' for all arguments
         stor.mode <- c(storage.mode(a0), storage.mode(P0), storage.mode(dt),
                        storage.mode(ct), storage.mode(Tt), storage.mode(Zt),
