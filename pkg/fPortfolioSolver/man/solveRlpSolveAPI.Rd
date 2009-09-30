@@ -50,7 +50,7 @@ solveRlpSolveAPI(data, spec, constraints)
   # Load Data:
    Data <- as.timeSeries(data(smallcap.ts))
    Data <- Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
+   head(Data)
    
 ## solveRlpSolveAPI - 
    # Portfolio specification and constraints:
@@ -59,7 +59,7 @@ solveRlpSolveAPI(data, spec, constraints)
    setTargetReturn(Spec) <- mean(colMeans(Data))
    Constraints <- "LongOnly"
 
-   # Optimize:
+## Optimize:
    solveRlpSolveAPI(Data, Spec, Constraints)
 }
 

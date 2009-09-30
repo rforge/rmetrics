@@ -47,16 +47,16 @@ solveRdonlp2(data, spec, constraints)
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
+   head(Data)
    
 ## solveRdonlp2 - 
-    # Portfolio specification and constraints:
+   # Portfolio specification and constraints:
    Spec <- portfolioSpec()
    setTargetReturn(Spec) <- mean(colMeans(Data))
    Constraints <- "LongOnly"
 
-   # Optimize:
-   solveRdonlp2(Data, Spec, Constraints)
+## Optimize:
+   # solveRdonlp2(Data, Spec, Constraints)
 
 }
 

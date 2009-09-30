@@ -47,7 +47,7 @@ solveRsocp(data, spec, constraints)
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
+   head(Data)
    
 ## solveRsocp - 
    # Portfolio specification and constraints:
@@ -55,10 +55,9 @@ solveRsocp(data, spec, constraints)
    setOptimize(Spec) <- "maxReturn"
    setTargetReturn(Spec) <- NA
    setTargetRisk(Spec) <- sd(Data[,"BKE"])
-
    Constraints <- "LongOnly"
 
-   # Optimize:
+## Optimize:
    solveRsocp(Data, Spec, Constraints)
 }
 

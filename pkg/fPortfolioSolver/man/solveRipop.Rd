@@ -47,7 +47,7 @@ solveRipop(data, spec, constraints)
    # Load Data:
    Data <- as.timeSeries(data(smallcap.ts))
    Data <- Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
+   head(Data)
    
 ## solveRipop - 
    # Portfolio specification and constraints:
@@ -55,7 +55,7 @@ solveRipop(data, spec, constraints)
    setTargetReturn(Spec) <- mean(colMeans(Data))
    Constraints <- "LongOnly"
 
-   # Optimize:
+## Optimize:
    solveRipop(Data, Spec, Constraints)
 }
 
