@@ -96,12 +96,8 @@ function(data, spec, constraints)
     #                     par.lower <= x <= par.upper
     #                  lin.lower <= A %*% x <= lin.upper
     #                 nlin.lower <= nlin(x) <= nlin.upper  
-    
-    # Example:
-    #   .rdonlp2Arguments(.lppData, .mvSpec, "LongOnly") 
-    #   .rdonlp2Arguments(.lppData, .mvSpec, .BoxGroup)
-    #   .rdonlp2Arguments(.lppData, .mvSpec, .CovBudgets)
-    #   .rdonlp2Arguments(.lppData, .mvSpec, c("minB[2:3]=-Inf", "maxB[3:5]=0.9"))    
+ 
+    # FUNCTION:  
 
     DEBUG = FALSE
     
@@ -204,10 +200,10 @@ function(data, spec, constraints)
 {
     # Description:
     #   Rdonlp2 Wrapper    
-	
-	# FUNCTION:
-	
-	# Solve:
+    
+    # FUNCTION:
+    
+    # Solve:
     optim <- Rdonlp2::donlp2(
         par = par,
         fn = fn, 
