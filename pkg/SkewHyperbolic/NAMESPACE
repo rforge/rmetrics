@@ -1,0 +1,6 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(HyperbolicDist, skewness, kurtosis)
+importFrom(HyperbolicDist, logHist, safeIntegrate)
+S3method(print,skewhypFit)
+S3method(plot,skewhypFit)
+S3method(summary,skewhypFit)
