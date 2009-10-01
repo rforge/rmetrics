@@ -23,7 +23,24 @@ function(
     env = .GlobalEnv, 
     name = NULL)
 {
-    # use analytical gradients?
+    # DESCRIPTION:
+    #   R Interface to donlp2 Solver
+        
+    # DETAILS:
+    #
+    #             minimize f(x)
+    # s.t.
+    #       a_lower <=   x  <= a_upper
+    #       b_lower <=  Ax  <= b_upper
+    #       c_lower <= g(x) <= c_upper
+    #
+    #   To describe equality constraint or parameter constancy, 
+    #   let lower and upper bounds for constraint be equal. 
+    #   http://arumat.net/Rdonlp2/tutorial.html
+    
+    # FUNCTION:
+    
+    # Use analytical gradients?
     if (is.function(attr(fn, "gr")) &
         # DW:
         # all(lapply(nlin, function(e) is.function(attr(e,"gr"))))){
@@ -33,12 +50,12 @@ function(
         control["analyt"] = FALSE
     }
   
-    # check parameter and its box constraints
+    # Check parameter and its box constraints
     if (length(par)!=length(par.upper) | length(par)!=length(par.lower) ){
         stop("# of elements for box constraints != # of parameters")
     }
 
-    # check linear constraints matrix A
+    # Check linear constraints matrix A:
     if (is.null(A)){
         num.lin <- 0
         conmat <- c()
@@ -52,16 +69,16 @@ function(
         conmat <- t(A)
     }
   
-    # nonlinear constraints
+    # Nonlinear constraints:
     num.nlin <- length(nlin)
     if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
         stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
     
-    # concatenate bounds for internal use
+    # Concatenate bounds for internal use:
     lbd <- c(par.lower, lin.lower, nlin.lower)
     ubd <- c(par.upper, lin.upper, nlin.upper)
 
-    # the wrapper for objective and constraint function 
+    # The wrapper for objective and constraint function 
     # (called from eval_extern())
     # mode == 0: EVAL_FN(evaluate objective and constraint function)
     # mode == 1: EVAL_GR(evaluate gr of objective and constraint function)
@@ -96,7 +113,7 @@ function(
         fsilent <- TRUE; name="dummy"
     }
     
-    # start donlp2
+    # Start donlp2:
     tryCatch(
        # start donlp2
        ans <- .Call("call_donlp2",
@@ -126,3 +143,4 @@ function(
 
 
 ################################################################################
+
