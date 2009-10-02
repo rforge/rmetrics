@@ -39,9 +39,7 @@
 \author{David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
-\seealso{\code{\link{dvg}}, code{\link{vgMom}}}
-
-\reference{}
+\seealso{\code{\link{dvg}}, \code{\link{vgMom}}}
 
 \examples{
  vgCheckPars(c(0,1,0,1))      # normal

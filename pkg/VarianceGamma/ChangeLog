@@ -1,3 +1,8 @@
+2009-10-02    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION, vgChangePars.Rd, vgCheckPars.Rd changed to correct
+	minor errors. Now passes R2.9.2 CMD CHECK 
+
 2009-09-25    <d.scott@auckland.ac.nz>
 
 	* dvg.R changed only code checking on nu, otherwise mine seemed

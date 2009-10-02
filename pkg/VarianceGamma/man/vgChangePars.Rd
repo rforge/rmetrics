@@ -69,7 +69,7 @@ vgChangePars(from, to, param, noNames = FALSE)
 \author{David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
-\seealso{\code{\link{dvg}}, code{\link{vgMom}}}
+\seealso{\code{\link{dvg}}, \code{\link{vgMom}}}
 
 \examples{
 param1 <- c(2,2,1,3)                   # Parameterization 1
