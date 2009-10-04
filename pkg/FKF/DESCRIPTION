@@ -7,7 +7,7 @@ Author: David Luethi, Philipp Erb, Simon Otziger
 Maintainer: David Luethi <luethid@gmail.com>
 LazyLoad: yes
 Depends:  R(>= 2.8)
-Description: This is a flexible implementation of the Kalman filter. It is entirely written in C and relies fully on linear algebra subroutines contained in BLAS and LAPACK. Due to the speed of the filter, the fitting of high-dimensional linear state space models to large datasets becomes possible. This package also contains a plot function for the visualization of the state vector and graphical diagnostics of the residuals.
+Description: This is a fast and flexible implementation of the Kalman filter, which can deal with NAs. It is entirely written in C and relies fully on linear algebra subroutines contained in BLAS and LAPACK. Due to the speed of the filter, the fitting of high-dimensional linear state space models to large datasets becomes possible. This package also contains a plot function for the visualization of the state vector and graphical diagnostics of the residuals.
 Imports: graphics
 License: GPL (>= 2)
 Encoding: latin1

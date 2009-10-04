@@ -76,19 +76,21 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   corresponds to \eqn{H_t H_t'}{H[t] \%*\% t(H[t])} and \eqn{G_t
     G_t'}{G[t] \%*\% t(G[t])}. \cr
 
-  \dQuote{NA}-values in the vector of response variables \code{yt} are
-  supported. In the filter recursions the observation vector \code{yt}
-  with missing values will be reduced to the vector \code{yt*} without
-  missing values and the measurement equation will be adjusted
-  accordingly.
+% <------------------------------------->
+\strong{NA-values:}
+
+  NA-values in the observation matrix \code{yt} are supported.  If
+  particular observations \code{yt[,i]} contain NAs, the NA-values are
+  removed and the measurement equation is adjusted accordingly.
 
 % <------------------------------------->
 \strong{Parameters:}
 
   The parameters can either be constant or deterministic
   time-varying. Assume the number of observations is \eqn{n}
-  (i.e. \eqn{y = (y_t)_{t = 1, \ldots, n}}{y = y[,1:n]}). Then, the
-  parameters admit the following classes and dimensions:
+  (i.e. \eqn{y = (y_t)_{t = 1, \ldots, n}, y_t = (y_{t1}, \ldots,
+  y_{td})}{y = y[,1:n]}). Then, the parameters admit the following
+  classes and dimensions:
 
   \tabular{ll}{
     \code{dt} \tab either a \eqn{m \times n}{m * n} (time-varying) or a \eqn{m \times
