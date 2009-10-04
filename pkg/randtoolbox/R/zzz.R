@@ -48,7 +48,11 @@
 
 .onUnload <- function(lib) library.dynam.unload(c("randtoolbox"), lib)
 
-.onLoad <- function(lib, pkg) library.dynam("randtoolbox", pkg, lib)
+.onLoad <- function(lib, pkg)
+{
+	library.dynam("randtoolbox", pkg, lib)
+	.C("put_user_unif_set_generator", PACKAGE="randtoolbox")
+}
 
 .onAttach <- function(lib, pkg)
 {

@@ -53,6 +53,8 @@
 
 #include "congruRand.h"
 
+void (*WELL_get_set_entry_point)(void * user_unif_set_generator);
+
 static int generator;
 static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
 static void (*user_unif_init_selected) (unsigned int seed);
@@ -62,6 +64,12 @@ void user_unif_set_generator(int gener, void * selected_init, void * selected_ra
 	generator = gener;
 	user_unif_init_selected = selected_init;
 	user_unif_rand_selected = selected_rand;
+}
+
+// .C entry point called from randtoolbox initialization (.onLoad)
+void put_user_unif_set_generator()
+{
+	WELL_get_set_entry_point((void *)user_unif_set_generator);
 }
 
 double x;
