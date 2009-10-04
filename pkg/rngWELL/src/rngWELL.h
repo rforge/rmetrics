@@ -76,3 +76,7 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version);
 void setSeed4WELL(long s);
 void randSeedByArray(int length);
 void randSeed();
+
+void WELL_get_set_entry_point(void * p_user_unif_set_generator);
+void setRngWELL();
+

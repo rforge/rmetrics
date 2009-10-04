@@ -33,4 +33,7 @@ void R_init_rngWELL(DllInfo *info)
         //make rngWELL C functions available from other packages
         R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
         R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
+        R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
+        R_RegisterCCallable("rngWELL", "setRngWELL", (DL_FUNC) setRngWELL);
 }
+
