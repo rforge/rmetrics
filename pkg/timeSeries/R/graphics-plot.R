@@ -232,7 +232,7 @@ function(x, y = NULL, plot.type = c("multiple",
         ylab <- colnames(x)
         if (length(ylab) != 1) ylab <- xlabel
     }
-    if (is.null(ylim)) ylim <- range(x)
+    if (is.null(ylim)) ylim <- range(x, na.rm = TRUE)
     i = 1
     X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
     plot(X, series(x)[, i], ylim = ylim,
