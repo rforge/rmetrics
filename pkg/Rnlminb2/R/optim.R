@@ -1,26 +1,15 @@
 
-# Log
-# .nlminb2
+
 # .optim2
+
 
 ################################################################################
 
-
-Log = function(x) {
-    x[x < 0] <- 0
-    ans = log(x)
-    ans[is.infinite(ans)] <- -10
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.nlminb2 <- 
+    
+.optim2 <- 
 function(start, objective, eqFun = NULL, leqFun = NULL, 
     lower = -Inf, upper = Inf,
-    gradient = NULL, hessian = NULL, scale = 1, 
+    gradient = NULL, 
     R = 1, beta = 0.01, trace = FALSE, control = list())
 {
     # DESCRIPTION:
@@ -69,21 +58,35 @@ function(start, objective, eqFun = NULL, leqFun = NULL,
     
     # Composed Objective Function:
     if (is.null(eqFun(start))) {
-        type = "leq"
+        type = "leq" 
         fun <- function(x, r) { 
-            objective(x) - 
-                r * sum(Log(leqFun(x))) }  
+            ans = objective(x) - r * sum(Log(leqFun(x))) 
+            if(is.infinite(ans)) {
+                print(ans)
+                ans = 2*abs(objective(x))
+            }
+            ans }  
     } else if (is.null(leqFun(start))) {
         type = "eq"
         fun <- function(x, r) { 
-            objective(x) +
-                sum((eqFun(x))^2 / r) } 
+            ans = objective(x) + sum((eqFun(x))^2 / r) 
+            if(is.infinite(ans)) {
+                print(ans)
+                ans = 2*abs(objective(x))
+            }
+            ans }   
     } else {
         type = "both"
         fun <- function(x, r) { 
-            objective(x) +
-                sum((eqFun(x))^2 / r) - 
-                r * sum(Log(leqFun(x))) } 
+            ans1 = objective(x) 
+            ans2 = sum((eqFun(x))^2 / r) 
+            ans3 = r * sum(Log(leqFun(x))) 
+            ans = ans1 + ans2 - ans3
+            if(is.infinite(ans)) {
+                print(c(ans1, ans2, ans3))
+                ans = 2*abs(objective(x))
+            }
+            ans }  
     }
     .setnlminb2Env(fun = fun)
     if (DEBUG) {
@@ -92,33 +95,44 @@ function(start, objective, eqFun = NULL, leqFun = NULL,
     }
        
     # Minimization:
-    iterations = Inf
-    while (iterations > 1) {
-        result = nlminb(
-            start = start, objective = fun, 
-            gradient = gradient, hessian = hessian, 
-            scale = scale, control = control, lower = lower, upper = upper,
-            r = R)
-        if(result$iterations > 1) ans = result
+    counts = 0
+    test = 0
+    while (counts < 10 && test == 0) {
+        counts = counts + 1
+        ans = optim(
+            par = start, fn = fun, 
+            method = "L-BFGS-B",
+            gr = gradient, 
+            control = control, lower = lower, upper = upper,
+            r = R)    
         start = ans$par
-        iterations = result$iterations
-        R = beta * R
+        control$parscale = rep(mean(start), times = length(start))
+        control$fnscale = abs(objective(start))
+        tol = abs((fun(ans$par, R)-objective(ans$par))/objective(ans$par))
+        if(tol < 1e-6) test = 1
         if (trace) {
-            print(paste("iterations:", iterations, "R:", signif(R, 3)))
+            print(paste("counts:", counts, "R:", R))
+            print(paste("   ", ans$convergence))
             print(paste("   ", ans$message))
             print(ans$par)
+            print(fun(ans$par, R))
+            print(objective(ans$par))
+            print(tol)
         }
-    }
+        R = beta * R
+    } 
     
     if (trace) {
         print(paste("type:", type))
+        print(fun(ans$par, R/beta))
+        print(objective(ans$par))
         cat("\n\n") 
-    } 
+    }
     
     # Return Value:
     ans
-} 
-    
+}   
+
 
 ################################################################################
 
