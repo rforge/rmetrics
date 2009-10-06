@@ -1,0 +1,39 @@
+From: Yinyu Ye [yinyu-ye AT stanford.edu]
+Sent: Wednesday, May 20, 2009 3:10 PM
+To: Ghalanos, Alexios
+Cc: Veinott Jr. Veinott; Yinyu Ye
+Subject: Re: solnp
+
+This is fine to me.
+
+Regards,
+Yinyu
+
+At 01:51 AM 5/20/2009, Ghalanos, Alexios wrote:
+ 
+> Dear Professor Ye,
+>
+> We would like to obtain your permission, if possible, to release
+> under the GPL license our translation of your solnp solver into R
+> (www.r-project.org).
+> We have found it to be quite robust in financial optimization and
+> time series likelihood problems, and given that R does not benefit    
+> from a general
+ 
+> non linear solver we would like to release a package based on solnp.
+> We have already translated the routines into R and we would also be looking to
+> possibly translate them into C as well for greater speed (interfaced via R).
+>
+> The R community is made up of diverse researchers across many
+> disciplines from around the world and depends on the contribution of others to
+> enable open source research in science and academia.
+>
+> We greatly appreciate you consideration of this request.
+>
+> With kind regards,
+>
+> Alexios Ghalanos
+> for the
+> Integer and Nonlinear Optimization in R (RINO) project
+> https://r-forge.r-project.org/projects/rino/
+>     

@@ -1,0 +1,15 @@
+Package: Rsolnp2
+Type: Package
+Title: Non-linear Programming with non-linear Constraints
+Version: 0.3
+Date: 2009-09-15
+Author: Alexios Ghalanos and Stefan Theussl, this port configured for 
+    portfolio optimization by Diethelm Wuertz
+Maintainer: Alexios Ghalanos <alexios@4dscape.com>
+Depends: stats
+Description: Non-linear Optimization Using Augmented Lagrange Multiplier 
+    Method Version for Rmetrics Portfolio Optimization. This package will 
+    become obsolete when the original package Rsolnp will be released to 
+    CRAN
+LazyLoad: yes
+License: GPL
