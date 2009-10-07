@@ -256,7 +256,7 @@ function(
         hessian = NULL, 
         scale = scale, 
         trace = trace,
-        control = list())
+        control = control)
     
     # Return Value:
     list(
@@ -360,6 +360,102 @@ function(
         objective = fun(ans$par), 
         convergence = ans$convergence)
 }    
+
+
+# ------------------------------------------------------------------------------
+    
+    
+bboptNLP <- 
+function(
+    par, fun, 
+    par.lower = NULL, par.upper = NULL,
+    eqA = NULL, eqA.bound = NULL,
+    ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,
+    eqFun = list(), eqFun.bound = NULL,
+    ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL,
+    trace = FALSE, R = 1, beta = 0.1, control = NULL)
+{
+    # Description:
+    #   Universal function wrapper for solver solnp().
+    
+    # Details:
+    #   .bb2 <- function(
+    #       start, objective, 
+    #       eqFun = NULL, 
+    #       leqFun = NULL, 
+    #       lower = -Inf, upper = Inf,
+    #       gradient = NULL, hessian = NULL, scale = 1, 
+    #       R = R, beta = beta, control = list())
+    
+    # FUNCTION:
+    
+    .setnlminb2Env(eqA = eqA)
+    .setnlminb2Env(eqA.bound = eqA.bound)
+    
+    .setnlminb2Env(eqFun = eqFun)
+    .setnlminb2Env(eqFun.bound = eqFun.bound)
+    
+    .setnlminb2Env(ineqA = ineqA)
+    .setnlminb2Env(ineqA.lower = ineqA.lower)
+    .setnlminb2Env(ineqA.upper = ineqA.upper)
+    
+    .setnlminb2Env(ineqFun = ineqFun)
+    .setnlminb2Env(ineqFun.lower = ineqFun.lower)
+    .setnlminb2Env(ineqFun.upper = ineqFun.upper)
+    
+    # Box Constraints:
+    if (is.null(par.lower)) par.lower = -Inf
+    if (is.null(par.upper)) par.upper = Inf
+    
+    # Equality Constraints:
+    eqfun = function(x) {
+        ans = NULL
+        if(!is.null(eqA)) {
+            ans = c(ans, eqA %*% x - eqA.bound)
+            ans = c(ans, eqA %*% x)
+        }
+        if (length(eqFun) > 0) 
+            for (i in 1:length(eqFun)) 
+                ans = c(ans, eqFun[[i]](x) - eqFun.bound[i])
+        ans
+    }
+    .setnlminb2Env(eqfun = eqfun)
+    
+    # Inequality Constraints:
+    leqfun = function(x) {
+        ans = NULL
+        if(!is.null(ineqA)) ans = c(ans, ineqA %*% x)
+        if (length(ineqFun) > 0) 
+            for (i in 1:length(ineqFun)) 
+                ans = c(ans, ineqFun[[i]](x) - ineqFun.upper[i])
+        if (length(ineqFun) > 0) 
+            for (i in 1:length(ineqFun)) 
+                ans = c(ans, -ineqFun[[i]](x) + ineqFun.lower[i])
+        ans
+    }
+    .setnlminb2Env(leqfun = leqfun)
+    
+       
+    # Solve:
+    ans = .bb2(
+        start = par, 
+        objective = fun, 
+        eqFun = eqfun, 
+        leqFun = leqfun, 
+        lower = par.lower, 
+        upper = par.upper,
+        gradient = NULL, 
+        R = R,
+        beta = beta,
+        trace = trace, 
+        control = list())
+    
+    # Return Value:
+    list(
+        par = ans$par, 
+        objective = fun(ans$par), 
+        convergence = ans$convergence)
+}    
     
    
     
@@ -388,28 +484,34 @@ function()
         eqFun = eqFun, eqFun.bound = eqFun.bound)
     
     ans.nlminb = nlminbNLP(start, fun, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = 1, beta = 0.01)
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
         
-    ctrl <- list(
-        trace = 0, fnscale = 1, parscale = rep.int(1, length(par)), 
-        ndeps = rep.int(1e-6, length(start)), maxit = 1000L, 
-        abstol = -Inf, reltol = .Machine$double.eps, alpha = 1, 
-        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 15, 
-        factr = 10000, pgtol = 0, tmax = 10, temp = 10)
     ans.optim = optimNLP(start, fun, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = abs(fun(start)), beta = 0.01, trace = TRUE, control = ctrl)
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
         
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
-    cbind(result.par, result.fun) 
+    ans.bbopt = bboptNLP(start, fun, 
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
+    
+    result.par = 100*round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par, 
+        ans.optim$par, 
+        ans.bbopt$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par), 
+        fun(ans.optim$par), 
+        fun(ans.bbopt$par))
+    cbind(result.par, result.fun)   
     
     rbind(
         signif(c(eqFun[[1]](ans.donlp$par), eqFun[[2]](ans.donlp$par), eqFun[[3]](ans.donlp$par)), 10),
         signif(c(eqFun[[1]](ans.solnp$par), eqFun[[2]](ans.solnp$par), eqFun[[3]](ans.solnp$par)), 10),
         signif(c(eqFun[[1]](ans.nlminb$par), eqFun[[2]](ans.nlminb$par), eqFun[[3]](ans.nlminb$par)), 10),
-        signif(c(eqFun[[1]](ans.optim$par), eqFun[[2]](ans.optim$par), eqFun[[3]](ans.optim$par)), 10))
+        signif(c(eqFun[[1]](ans.optim$par), eqFun[[2]](ans.optim$par), eqFun[[3]](ans.optim$par)), 10),
+        signif(c(eqFun[[1]](ans.bbopt$par), eqFun[[2]](ans.bbopt$par), eqFun[[3]](ans.bbopt$par)), 10))
     
 }
 
@@ -440,16 +542,25 @@ function()
         eqFun = eqFun, eqFun.bound = eqFun.bound)
        
     ans.nlminb = nlminbNLP(start, fun, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = 1, beta = 0.1, trace = TRUE)
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
         
     ans.optim = optimNLP(start, fun, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = abs(fun(start)), beta = 0.1, trace = TRUE)
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
         
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
-    cbind(result.par, result.fun) 
+    result.par = 100*round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par, 
+        ans.optim$par, 
+        ans.bbopt$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par), 
+        fun(ans.optim$par), 
+        fun(ans.bbopt$par))
+    cbind(result.par, result.fun)   
+    
     
     rbind(
         signif(c(eqFun[[1]](ans.donlp$par), eqFun[[2]](ans.donlp$par), eqFun[[3]](ans.donlp$par)), 10),
@@ -488,23 +599,36 @@ function()
         
     ans.nlminb = nlminbNLP(start, fun, 
         par.lower = par.lower, par.upper = par.upper, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = 1, beta = 0.1)  
+        eqFun = eqFun, eqFun.bound = eqFun.bound)  
         
     ans.optim = optimNLP(start, fun, 
         par.lower = par.lower, par.upper = par.upper, 
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        R = abs(fun(start)), beta = 0.1)  
+        eqFun = eqFun, eqFun.bound = eqFun.bound) 
         
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
-    cbind(result.par, result.fun) 
+    ans.bbopt = bboptNLP(start, fun, 
+        par.lower = par.lower, par.upper = par.upper, 
+        eqFun = eqFun, eqFun.bound = eqFun.bound)  
+        
+    result.par = round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par, 
+        ans.optim$par, 
+        ans.bbopt$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par), 
+        fun(ans.optim$par), 
+        fun(ans.bbopt$par))
+    cbind(result.par, result.fun)   
     
     rbind(
         signif(eqFun[[1]](ans.donlp$par), 10),
         signif(eqFun[[1]](ans.solnp$par), 10),
         signif(eqFun[[1]](ans.nlminb$par),10),
-        signif(eqFun[[1]](ans.optim$par), 10))
+        signif(eqFun[[1]](ans.optim$par), 10),
+        signif(eqFun[[1]](ans.bbopt$par), 10))
          
 }
 
@@ -515,6 +639,8 @@ function()
 .wright9 <-
 function()
 {
+    # OK 1, 2, 3
+    
     start = c(1, 1, 1, 1, 1)
     
     fun <- function(x){
@@ -536,16 +662,9 @@ function()
         ineqFun = ineqFun, 
         ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
     
-    start = ans.solnp$par
     ans.nlminb = nlminbNLP(start, fun = fun, 
         ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper, 
-        R = 1, beta = 0.1, trace = TRUE)
-        
-    ans.optim = optimNLP(start, fun = fun, 
-        ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper, 
-        R = 1, beta = 0.1, trace = TRUE)
+        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
         
     result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par), 6)
     result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par))
@@ -560,7 +679,14 @@ function()
 .alkylation <-
 function()
 {
-    start = c(17.45, 12, 110, 30, 19.74, 89.2, 92.8, 8, 3.6, 155)
+    # OK 1, 2, (3)
+    
+    start = c(17.45, 12, 110, 30.5, 19.74, 89.2, 92.8, 8, 3.6, 145.2)
+    x = start
+    (1.12*x[1]+0.13167*x[1]*x[8]-0.00667*x[1]*x[8]*x[8])/x[4]
+    (1.098*x[8]-0.038*x[8]*x[8]+0.325*x[6]+57.25)/x[7]
+    (-0.222*x[10]+35.82)/x[9]
+    (3*x[7]-133)/x[10]
     
     fun <- function(x) { -0.63*x[4]*x[7]+50.4*x[1]+3.5*x[2]+x[3]+33.6*x[5] }
     par.lower = c( 0,  0,   0, 10,  0, 85, 10, 3, 1, 145)
@@ -586,7 +712,7 @@ function()
         ineqFun = ineqFun, 
         ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
     
-    ctrl = list(rho = 0, trace = 0)
+    ctrl = list(rho = 0)
     ans.solnp = solnpNLP(start, fun = fun, 
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound,
@@ -598,19 +724,18 @@ function()
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound,
         ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper,
-        R = 1, beta = 0.1, trace = TRUE)
+        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
         
-    ans.optim = optimNLP(start, fun = fun, 
-        par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper,
-        R = abs(fun(start)), beta = 0.1)
     
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
-    cbind(result.par, result.fun)   
+    result.par = round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par), 1)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par))
+    cbind(result.par, result.fun)     
     
 }
 
@@ -621,12 +746,14 @@ function()
 .entropy <- 
 function()
 {
+    # OK 1, 2, 3 
+    
     set.seed(1953)
     start = runif(10, 0, 1)
     
     fun <- function(x) {
         m = length(x)
-        f = -sum(log(x[i]))
+        f = -sum(log(x))
         vnorm = sum((x-1)^2)^(1/2) 
         f - log(vnorm + 0.1) 
         }
@@ -648,12 +775,9 @@ function()
         par.lower = par.lower,  
         eqFun = eqFun, eqFun.bound = eqFun.bound)   
         
-    ans.optim = optimNLP(start, fun, 
-        par.lower = par.lower,  
-        eqFun = eqFun, eqFun.bound = eqFun.bound)   
         
-    result.par = round(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 8)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
+    result.par = round(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par), 3)
+    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par))
     cbind(result.par, result.fun)     
 
 }
@@ -665,7 +789,13 @@ function()
 .rosensuzuki <- 
 function()
 {
-    start = 2*c(1, 1, 1, 1)
+    # OK 1, 2, 3
+    
+    start = c(1, 1, 1, 1)
+    x = start
+    8-x[1]*x[1]-x[2]*x[2]-x[3]*x[3]-x[4]*x[4]-x[1]+x[2]-x[3]+x[4]
+    10-x[1]*x[1]-2*x[2]*x[2]-x[3]*x[3]-2*x[4]*x[4]+x[1]+x[4]
+    5-2*x[1]*x[1]-x[2]*x[2]-x[3]*x[3]-2*x[1]+x[2]+x[4]
     
     fun <- function(x) 
         x[1]*x[1]+x[2]*x[2]+2*x[3]*x[3]+x[4]*x[4]-5*x[1]-5*x[2]-21*x[3]+7*x[4]
@@ -675,7 +805,7 @@ function()
         function(x) 10-x[1]*x[1]-2*x[2]*x[2]-x[3]*x[3]-2*x[4]*x[4]+x[1]+x[4],
         function(x) 5-2*x[1]*x[1]-x[2]*x[2]-x[3]*x[3]-2*x[1]+x[2]+x[4] )
     ineqFun.lower = rep(   0, 3)
-    ineqFun.upper = rep(1000, 3)
+    ineqFun.upper = rep(10, 3)
     
     ans.donlp = donlpNLP(start, fun,  
         ineqFun = ineqFun, 
@@ -687,23 +817,16 @@ function()
         
     ans.nlminb = nlminbNLP(start, fun,  
         ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper, 
-        trace = TRUE)     
+        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)     
         
-    ans.optim = optimNLP(start, fun,  
-        ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper, 
-        trace = TRUE)     
-        
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
+    result.par = round(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par), 4)
+    result.fun = signif(c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par)), 4)
     cbind(result.par, result.fun) 
     
     rbind(
         signif(c(ineqFun[[1]](ans.donlp$par), ineqFun[[2]](ans.donlp$par), ineqFun[[3]](ans.donlp$par)), 10),
         signif(c(ineqFun[[1]](ans.solnp$par), ineqFun[[2]](ans.solnp$par), ineqFun[[3]](ans.solnp$par)), 10),
-        signif(c(ineqFun[[1]](ans.nlminb$par),ineqFun[[2]](ans.nlminb$par),ineqFun[[3]](ans.nlminb$par)), 10),
-        signif(c(ineqFun[[1]](ans.optim$par), ineqFun[[2]](ans.optim$par), ineqFun[[3]](ans.optim$par)), 10))  
+        signif(c(ineqFun[[1]](ans.nlminb$par),ineqFun[[2]](ans.nlminb$par),ineqFun[[3]](ans.nlminb$par)), 10))  
 
 }
 
@@ -711,7 +834,7 @@ function()
 #-------------------------------------------------------------------------------
 
 
-.sharperatio <-
+.sharpe <-
 function()
 {
     # Sharpe ratio
@@ -729,6 +852,7 @@ function()
     r = runif(6)
     start = r/sum(r)
     
+
     fun <- function(x) {
         return = (Mean %*% x)[[1]]
         risk = (t(x) %*% Cov %*% x)[[1]]
@@ -737,38 +861,36 @@ function()
     par.upper = rep(1, 6)  
     
     eqFun <- list(
-        function(x) { sum(x) } )
+        function(x) sum(x) )
     eqFun.bound = 1
        
     ans.donlp = donlpNLP(start, fun,  
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound )
       
-    ctrl = list(delta = 1e-10, tol = 1e-8, trace = 0)  
     ans.solnp = solnpNLP(start, fun,  
         par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound, control = ctrl )
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
           
     ans.nlminb = nlminbNLP(start, fun,  
         par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound, 
-        scale = 1, trace = FALSE,
-        control = list() )  
+        eqFun = eqFun, eqFun.bound = eqFun.bound)  
         
-    ans.optim = optimNLP(start, fun,  
-        par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound, 
-        trace = FALSE )  
-        
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
-    cbind(result.par, result.fun)  
+    
+    result.par = round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par))
+    cbind(result.par, result.fun)     
     
     rbind(
         signif(eqFun[[1]](ans.donlp$par), 10),
         signif(eqFun[[1]](ans.solnp$par), 10),
-        signif(eqFun[[1]](ans.nlminb$par),10),
-        signif(eqFun[[1]](ans.optim$par), 10))
+        signif(eqFun[[1]](ans.nlminb$par),10))
         
 }
 
@@ -776,6 +898,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
+.rachev <-
+function()
+{
+    # Rachev Ratio:
+    
     require(fEcofin)
     data(LPP2005REC)
     ret = as.matrix(LPP2005REC[, 2:7])
@@ -796,7 +923,8 @@ function()
         VaR - 0.5 * mean(((VaR-ret) + abs(VaR-ret))) / 0.05 }     
     fun <- function(x) {
         port = as.vector(ret %*% x)
-        (-.CVaR(-port) / .CVaR(port))[[1]] }
+        ans = (-.CVaR(-port) / .CVaR(port))[[1]] 
+        ans}
     par.lower = rep(0, 6)
     par.upper = rep(1, 6)  
     
@@ -809,77 +937,36 @@ function()
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound )
       
-    ctrl = list(delta = 1e-10, tol = 1e-8, trace = 0)  
+    ctrl = list(rho = 0)
     ans.solnp = solnpNLP(start, fun,  
         par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound, control = ctrl )
+        eqFun = eqFun, eqFun.bound = eqFun.bound, control = ctrl)
           
     ans.nlminb = nlminbNLP(start, fun,  
         par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound )  
+        eqFun = eqFun, eqFun.bound = eqFun.bound,
+        R = 1, beta = 0.01)    
         
-    ans.optim = optimNLP(start, fun,  
-        par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound )  
-        
-    result.par = signif(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 6)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
+    result.par = round(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par), 3)
+    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par))
     cbind(result.par, result.fun)
     
     rbind(
-        signif(eqFun[[1]](ans.donlp$par), 10),
-        signif(eqFun[[1]](ans.solnp$par), 10),
-        signif(eqFun[[1]](ans.nlminb$par), 10),
-        signif(eqFun[[1]](ans.optim$par), 10))
-
-
-#-------------------------------------------------------------------------------
-
-
-.kapparatio <- 
-function()
-{
-    data(dji30ret)
-    dj30=as.matrix(dji30ret)
-    
-    .kappa <- function(port, r, n)
-    {
-        z = mean((port< r) * (r-port)^n)
-        sg = sign(z)
-        (mean(port) - r) / (sg*abs(z)^(1/n))
-    }
-    
-    
-    .fn1 <- function(x, ret, r, n)
-    {
-        port = ret%*%x
-        obj = -.kappa(port,r,n)
-        return(obj)
-    }
-    
-    # abs(sum) of weights ==1
-    .eqn1  <- function(x, ret, r, n)
-    {
-        sum(abs(x))
-    }
-    
-    LB = rep(0,30)
-    UB = rep(0.1,30)    
-    .x0 = rep(1/30,30)
-    ctrl = list(delta = 1e-10, tol = 1e-8, trace = 0)
-    ans = solnp(.x0, fun = .fn1, eqfun = .eqn1, eqB = 1, LB = LB, UB = UB, 
-        control=ctrl, ret=dj30, r = 0, n = 2)
-   
+        signif(eqFun[[1]](ans.donlp$par), 12),
+        signif(eqFun[[1]](ans.solnp$par), 12),
+        signif(eqFun[[1]](ans.nlminb$par),12))
 
 }
+        
 
-
-################################################################################
+#-------------------------------------------------------------------------------
 
 
 .markowitz <-
 function()
 {
+    # OK 1, 2, 3 
+    
     # Markowitz Portfolio:
     
     require(fEcofin)
@@ -894,10 +981,80 @@ function()
     .setnlminb2Env(targetReturn = targetReturn)
     
 
-    # start = rep(1/6, times = 6)
-    start = Mean/sum(Mean)
-    # start = rep(0, times = 6); start[which.max(Mean)] = 1
+    start = rep(1/6, times = 6)
     
+    fun <- function(x) {
+        risk = (t(x) %*% Cov %*% x)[[1]]
+        risk }
+    par.lower = rep(0, 6)
+    par.upper = rep(1, 6)  
+    
+    eqFun <- list(
+        function(x) sum(x), 
+        function(x) (Mean %*% x)[[1]] )
+    eqFun.bound = c(1, targetReturn)
+    
+    ans.donlp = donlpNLP(start, fun = fun, 
+        par.lower = par.lower, par.upper = par.upper,
+        eqFun = eqFun, eqFun.bound = eqFun.bound)
+    
+    ctrl = list(rho = 0)
+    ans.solnp = solnpNLP(start, fun = fun, 
+        par.lower = par.lower, par.upper = par.upper,
+        eqFun = eqFun, eqFun.bound = eqFun.bound,
+        control = ctrl)
+        
+    ans.nlminb = nlminbNLP(start, fun = fun, 
+        par.lower = par.lower, par.upper = par.upper,
+        eqFun = eqFun, eqFun.bound = eqFun.bound,
+        R = 1, beta = 0.01)
+
+    
+    result.par = 100*round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par))
+    cbind(result.par, result.fun)   
+
+}
+
+
+#-------------------------------------------------------------------------------
+
+
+.groupMarkowitz <-
+function()
+{
+    # OK 1, 2, 3 
+    
+    # Markowitz Portfolio:
+    
+    require(fEcofin)
+    data(LPP2005REC)
+    ret = 100 * as.matrix(LPP2005REC[, 2:7])
+    .setnlminb2Env(ret = ret)
+    Mean = colMeans(ret)
+    Cov = cov(ret)
+    targetReturn = mean(Mean)
+    .setnlminb2Env(Mean = colMeans(ret))
+    .setnlminb2Env(Cov = cov(ret))
+    .setnlminb2Env(targetReturn = targetReturn)
+    
+    start = rep(1/6, times = 6)
+    start[1]+start[4]
+    start[2]+start[5]+start[6]
+    
+    # Must be feasible for nlminb !!!
+    start2 = c(0, 0, 0.3, 0.3, 0, 0.4)
+    start2 = start/sum(start2)
+    sum(start2)
+    start2[1]+start2[4]
+    start2[2]+start2[5]+start2[6]
+
     fun <- function(x) {
         risk = (t(x) %*% Cov %*% x)[[1]]
         risk }
@@ -913,7 +1070,7 @@ function()
         function(x) x[1]+x[4],
         function(x) x[2]+x[5]+x[6])
     ineqFun.lower = c( 0.2,   0)
-    ineqFun.upper = c( 1.0, 0.8)
+    ineqFun.upper = c( 1.0, 0.51)
     
     ans.donlp = donlpNLP(start, fun = fun, 
         par.lower = par.lower, par.upper = par.upper,
@@ -921,39 +1078,33 @@ function()
         ineqFun = ineqFun, 
         ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
     
-    ctrl = list(rho = 0, trace = 0)
+    ctrl = list(rho = 0)
     ans.solnp = solnpNLP(start, fun = fun, 
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound,
         ineqFun = ineqFun, 
         ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper,
         control = ctrl)
-        
+       
     ans.nlminb = nlminbNLP(start, fun = fun, 
         par.lower = par.lower, par.upper = par.upper,
         eqFun = eqFun, eqFun.bound = eqFun.bound,
         ineqFun = ineqFun, 
         ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper,
-        R = 1, beta = 0.1, trace = TRUE)
-        
-    ctrl <- list(
-        trace = 0, fnscale = 1, parscale = rep.int(1, length(par)), 
-        ndeps = rep.int(1e-6, length(start)), maxit = 1000L, 
-        abstol = -Inf, reltol = .Machine$double.eps, alpha = 1, 
-        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 15, 
-        factr = 10000, pgtol = 0, tmax = 10, temp = 10)
-    #ctrl = list()
-    ans.optim = optimNLP(start, fun = fun, 
-        par.lower = par.lower, par.upper = par.upper,
-        eqFun = eqFun, eqFun.bound = eqFun.bound,
-        ineqFun = ineqFun, 
-        ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper,
-        R = fun(start), beta = 0.1, trace = TRUE, control = ctrl)
-    
-    result.par = 100*round(rbind(ans.donlp$par, ans.solnp$par, ans.nlminb$par, ans.optim$par), 3)
-    result.fun = c(fun(ans.donlp$par), fun(ans.solnp$par), fun(ans.nlminb$par), fun(ans.optim$par))
+        R = 1, beta = 0.01)
+
+    result.par = 100*round(rbind(
+        ans.donlp$par, 
+        ans.solnp$par, 
+        ans.nlminb$par), 3)
+    result.fun = c(
+        fun(ans.donlp$par), 
+        fun(ans.solnp$par), 
+        fun(ans.nlminb$par))
     cbind(result.par, result.fun)   
-    sum(ans.optim$par)
-    (Mean %*% ans.optim$par)[[1]] - targetReturn
 
 }
+
+
+################################################################################
+
