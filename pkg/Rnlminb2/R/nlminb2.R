@@ -7,9 +7,20 @@
 
 
 Log = function(x) {
-    x[x < 0] <- 0
+    print(paste("LOG", x))
+    x[abs(x) < sqrt(.Machine$double.eps)] <-  sqrt(.Machine$double.eps)
     ans = log(x)
     ans[is.infinite(ans)] <- -10
+    ans
+}
+
+
+Log = function(x) {
+    x[x < 0] <- 0
+    # print("LOG")
+    # print(x)
+    ans = log(x)
+    # print(x)
     ans
 }
 
@@ -72,7 +83,7 @@ function(start, objective, eqFun = NULL, leqFun = NULL,
         type = "leq"
         fun <- function(x, r) { 
             objective(x) - 
-                r * sum(Log(leqFun(x))) }  
+                r * sum(Log(-leqFun(x))) }  
     } else if (is.null(leqFun(start))) {
         type = "eq"
         fun <- function(x, r) { 
@@ -83,7 +94,7 @@ function(start, objective, eqFun = NULL, leqFun = NULL,
         fun <- function(x, r) { 
             objective(x) +
                 sum((eqFun(x))^2 / r) - 
-                r * sum(Log(leqFun(x))) } 
+                r * sum(Log(-leqFun(x))) }  
     }
     .setnlminb2Env(fun = fun)
     if (DEBUG) {
@@ -92,23 +103,30 @@ function(start, objective, eqFun = NULL, leqFun = NULL,
     }
        
     # Minimization:
-    iterations = Inf
-    while (iterations > 1) {
-        result = nlminb(
+    counts = 0
+    test = 0
+    while (counts < 10 && test == 0) {
+        counts = counts + 1
+        ans = nlminb(
             start = start, objective = fun, 
             gradient = gradient, hessian = hessian, 
             scale = scale, control = control, lower = lower, upper = upper,
             r = R)
-        if(result$iterations > 1) ans = result
         start = ans$par
-        iterations = result$iterations
-        R = beta * R
+        tol = abs((fun(ans$par, R)-objective(ans$par))/objective(ans$par))
+        if (!is.na(tol)) 
+            if (tol < 1e-6) test = 1
         if (trace) {
-            print(paste("iterations:", iterations, "R:", signif(R, 3)))
+            print(paste("counts:", counts, "R:", R))
+            print(paste("   ", ans$convergence))
             print(paste("   ", ans$message))
             print(ans$par)
+            print(fun(ans$par, R))
+            print(objective(ans$par))
+            print(tol)
         }
-    }
+        R = beta * R
+    } 
     
     if (trace) {
         print(paste("type:", type))
