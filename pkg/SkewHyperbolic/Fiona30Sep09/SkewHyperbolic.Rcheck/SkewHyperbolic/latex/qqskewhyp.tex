@@ -1,0 +1,75 @@
+\HeaderA{qqskewhyp}{Skew Hyperbolic Student's t-Distribution Quantile-Quantile and
+Percent-Percent Plots}{qqskewhyp}
+\aliasA{ppskewhyp}{qqskewhyp}{ppskewhyp}
+\keyword{distribution}{qqskewhyp}
+\keyword{hplot}{qqskewhyp}
+\begin{Description}\relax
+\code{qqskewhyp} produces a skew hyperbolic t-distribution Q-Q plot
+of the values in \code{y}, \code{ppskewhyp} produces a skew
+hyperbolic t-distribution P-P (percent-percent) plot or probability
+plot of the values in \code{y}.
+Graphical parameters may be given as arguments to \code{qqskewhyp} and
+\code{ppskewhyp}.
+\end{Description}
+\begin{Usage}
+\begin{verbatim}
+qqskewhyp(y, mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+beta, nu), main = "Skew Hyperbolic Student's-t QQ Plot", xlab =
+"Theoretical Quantiles", ylab = "Sample Quantiles", plot.it = TRUE, line
+= TRUE, ...)
+ppskewhyp(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL, param =
+c(mu, delta, beta, nu), main = "Skew Hyperbolic Student's-t P-P Plot",
+xlab = "Uniform Quantiles", ylab =
+"Probability-integral-transformed Data", plot.it = TRUE, line = TRUE, ...)
+
+\end{verbatim}
+\end{Usage}
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{y}] The sample data.
+\item[\code{mu}] Location parameter \eqn{\mu}{}, default is 0.
+\item[\code{delta}] Peakedness parameter \eqn{\delta}{}, default is 1.
+\item[\code{beta}] Skewness parameter \eqn{\beta}{}, default is 1.
+\item[\code{nu}] Shape parameter \eqn{\nu}{}, default is 1.
+\item[\code{param}] Specifying the parameters as a vector of the form
+\code{c(mu, delta, beta, nu)}.
+\item[\code{main,xlab,ylab}] Plot labels.
+\item[\code{plot.it}] Logical; if \code{plot.it = TRUE} the results will be plotted.
+\item[\code{line}] Logical; if \code{line = TRUE} a line is added through the
+origin with unit slope.
+\item[\code{...}] Further graphical parameters.
+\end{ldescription}
+\end{Arguments}
+\begin{Details}\relax
+Users may either specify the values of the parameters individually or
+as a vector. If both forms are specified, then the values specified by
+the vector \code{param} will overwrite the other ones.
+\end{Details}
+\begin{Value}
+For \code{qqskewhyp} and \code{ppskewhyp}, a list with components:
+\begin{ldescription}
+\item[\code{x}] The x coordinates of the points to be plotted.
+\item[\code{y}] The y coordinates of the points to be plotted.
+\end{ldescription}
+\end{Value}
+\begin{Author}\relax
+David Scott \email{d.scott@auckland.ac.nz}, Fiona Grimson
+\end{Author}
+\begin{References}\relax
+Aas, K. and Haff, I. H. (2006).
+The Generalised Hyperbolic Skew Student's \emph{t}-distribution,
+\emph{Journal of Financial Econometrics}, \bold{4}, 275--309.
+\end{References}
+\begin{SeeAlso}\relax
+\code{\LinkA{ppoints}{ppoints}}, \code{\LinkA{qqplot}{qqplot}}, \code{\LinkA{dskewhyp}{dskewhyp}}
+\end{SeeAlso}
+\begin{Examples}
+\begin{ExampleCode}
+par(mfrow = c(1,2))
+param <- c(0,1,20,10)
+y <- rskewhyp(500, param=param)
+qqskewhyp(y, param=param, main="Skew Hyperbolic\n Q-Q Plot")
+ppskewhyp(y, param=param, main="Skew Hyperbolic\n P-P Plot")
+\end{ExampleCode}
+\end{Examples}
+

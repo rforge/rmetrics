@@ -1,0 +1,96 @@
+skewhypBreaks        package:SkewedHyperbolic        R Documentation
+
+_B_r_e_a_k _p_o_i_n_t_s _f_o_r _t_h_e _S_k_e_w_e_d _H_y_p_e_r_b_o_l_i_c _S_t_u_d_e_n_t'_s _t-_D_i_s_t_r_i_b_u_i_t_o_n
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Utility routines that calculate suitable breakpoints for use in
+     determining the distribution function, and the derivative of the
+     density function.
+
+_U_s_a_g_e:
+
+     skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1, param =
+       c(mu, delta, beta, nu), small = 10^(-6), tiny = 10^(-10),
+       deriv = 0.3, ...)
+     skewhypCalcRange(mu = 0, delta = 1, beta = 1, nu = 1,
+       param = c(mu,delta,beta,nu), tol= 10^(-5), ...)
+     ddskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1, param =
+       c(mu,delta,beta,nu),log = FALSE, tolerance =
+       .Machine$double.eps ^ 0.5)
+
+_A_r_g_u_m_e_n_t_s:
+
+       x: Vector of quantiles
+
+      mu: Location parameter mu, default is 0.
+
+   delta: Peakedness parameter delta, default is 1.
+
+    beta: Skewness parameter beta, default is 1.
+
+      nu: Shape parameter nu, default is 1.
+
+   param: Specifying the parameters as a vector of the form 'c(mu,
+          delta, beta, nu)'.
+
+   small: Size of a small difference between the distribution function
+          and 0 or 1.
+
+    tiny: Size of a tiny difference between the distribution function
+          and 0 or 1.
+
+   deriv: Value between 0 and 1 which determines the point at which the
+          value of the derivative becomes substantial compared to its
+          maximal value, see *Details*.
+
+     log: Logical; if 'log = TRUE', probabilities are given as log(p).
+
+tolerance: Specified level of tolerance when checking if parameter beta
+          is equal to 0 in 'ddskewhyp'.
+
+     tol: Tolerance used in 'skewhypCalcRange', see *Details*.
+
+     ...: Passes additional arguments to 'uniroot'.
+
+_V_a_l_u_e:
+
+     'ddskewhyp' gives the derivative of 'dskewhyp'.
+
+     'skewhypBreaks' returns a list with components: 
+
+   xTiny: Value such that the probabilities to the left are less than
+          'tiny'.
+
+  xSmall: Value such that probabilities to the left are less than
+          'small'.
+
+lowBreak: Point to the left of the mode such that the derivative of the
+          density at that point is 'deriv' times its maximum value on
+          that side of the mode.
+
+highBreak: Point to the right of the mode such that the derivative of
+          the density at that point is 'deriv' times the value of the
+          maximum value on that side of the mode.
+
+  xLarge: Value such that the probabities to the right are less than
+          'xSmall'.
+
+   xHuge: Value such that probability to the right is less than 'tiny'.
+
+modeDist: The mode of the given skewed hyperbolic distribution,
+          calculated by 'skewhypMode'.
+
+
+     'skewhypCalcRange' returns the quantile values at the endpoints of
+     the region of the density function where the probablity is greater
+     than 'tol'.
+
+_A_u_t_h_o_r(_s):
+
+     David Scott d.scott@auckland.ac.nz, Fiona Grimson
+
+_S_e_e _A_l_s_o:
+
+     'uniroot', 'dskewhyp', 'skewhypMode'
+

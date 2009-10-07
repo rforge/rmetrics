@@ -1,0 +1,40 @@
+lrnokeur           package:SkewHyperbolic           R Documentation
+
+_L_o_g _R_e_t_u_r_n_s _o_f _t_h_e _N_O_K/_E_U_R _E_x_c_h_a_n_g_e _R_a_t_e
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Log returns of daily closing value data of the NOK/EUR (Norwegian
+     Kroner/Euro) exchange rate, from 04/JAN/1999 to 08/JUL/2003. The
+     original data was downloaded from the oanda website. The data was
+     selected to be as similar as possible to the data used in the Aas
+     & Haff article (see References).
+
+_U_s_a_g_e:
+
+     data(lrnokeur)
+
+_F_o_r_m_a_t:
+
+     A vector of 1647 observations.
+
+_A_u_t_h_o_r(_s):
+
+     David Scott d.scott@auckland.ac.nz, Fiona Grimson
+
+_S_o_u_r_c_e:
+
+     http://www.oanda.com
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Aas, K. and Haff, I. H. (2006). The Generalised Hyperbolic Skew
+     Student's _t_-distribution, _Journal of Financial Econometrics_,
+     *4*, 275-309.
+
+_E_x_a_m_p_l_e_s:
+
+     ##Fit the skew hyperbolic students-t distribution to the data
+     data(lrnokeur)
+     fit <- skewhypFit(lrnokeur, method="nlm", plot=TRUE, print=TRUE)
+

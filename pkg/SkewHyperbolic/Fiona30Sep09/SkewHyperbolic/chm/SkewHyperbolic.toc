@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package SkewHyperbolic:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package SkewHyperbolic:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="SkewHyperbolic-package">
+<param name="Local" value="SkewHyperbolic-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ddskewhyp">
+<param name="Local" value="skewhypBreaks.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dskewhyp">
+<param name="Local" value="dskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lrdji">
+<param name="Local" value="lrdji.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lrnokeur">
+<param name="Local" value="lrnokeur.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot.skewhypFit">
+<param name="Local" value="skewhypFit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ppskewhyp">
+<param name="Local" value="qqskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.skewhypFit">
+<param name="Local" value="skewhypFit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pskewhyp">
+<param name="Local" value="dskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qqskewhyp">
+<param name="Local" value="qqskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qskewhyp">
+<param name="Local" value="dskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rskewhyp">
+<param name="Local" value="dskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhyp">
+<param name="Local" value="SkewHyperbolic-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypBreaks">
+<param name="Local" value="skewhypBreaks.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypCalcRange">
+<param name="Local" value="skewhypBreaks.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="SkewHyperbolic">
+<param name="Local" value="SkewHyperbolic-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypFit">
+<param name="Local" value="skewhypFit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypFitStart">
+<param name="Local" value="skewhypFitStart.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypFitStartLA">
+<param name="Local" value="skewhypFitStart.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypKurt">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypMean">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypMeanVarMode">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypMode">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypSkew">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewhypVar">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="summary.skewhypFit">
+<param name="Local" value="skewhypFit.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package SkewHyperbolic:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Break points for the Skew Hyperbolic Student's t-Distribuiton ">
+<param name="Local" value="skewhypBreaks.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Dow Jones Log Return Data">
+<param name="Local" value="lrdji.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Find Starting Values for Fittting a Skew Hyperbolic Student's t-Distribution ">
+<param name="Local" value="skewhypFitStart.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Fit the Skew Hyperbolic Student's t-Distribution to Data ">
+<param name="Local" value="skewhypFit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Log Returns of the NOK/EUR Exchange Rate">
+<param name="Local" value="lrnokeur.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Moments and Mode of the Skew Hyperbolic Student's t-Distribution. ">
+<param name="Local" value="skewhypMeanVarMode.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Skew Hyperbolic Student's t-Distribution Quantile-Quantile and   Percent-Percent Plots ">
+<param name="Local" value="qqskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Skewed Hyperbolic Student's t-Distribution ">
+<param name="Local" value="dskewhyp.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="The Package 'SkewHyperbolic': Summary Information ">
+<param name="Local" value="SkewHyperbolic-package.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

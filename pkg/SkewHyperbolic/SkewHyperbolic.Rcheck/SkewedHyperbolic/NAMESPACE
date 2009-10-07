@@ -1,0 +1,3 @@
+exportPattern("^[[:alpha:]]+")
+importFrom(HyperbolicDist, skewness, kurtosis)
+importFrom(HyperbolicDist, logHist, safeIntegrate)

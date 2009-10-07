@@ -1,0 +1,72 @@
+skewhypMean         package:SkewedHyperbolic         R Documentation
+
+_M_o_m_e_n_t_s _a_n_d _M_o_d_e _o_f _t_h_e _S_k_e_w_e_d _H_y_p_e_r_b_o_l_i_c _S_t_u_d_e_n_t'_s _t-_D_i_s_t_r_i_b_u_t_i_o_n.
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Functions to calculate the mean, variance, skewness and kurtosis
+     of a specified skewed hyperbolic t-distribution.
+
+_U_s_a_g_e:
+
+     skewhypMean(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+       beta, nu))
+     skewhypVar(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+       beta, nu))
+     skewhypSkew(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+       beta, nu))
+     skewhypKurt(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+       beta, nu))
+     skewhypMode(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+       beta, nu), tolerance = .Machine$double.eps ^ 0.5)
+
+_A_r_g_u_m_e_n_t_s:
+
+      mu: Location parameter mu, default is 0.
+
+   delta: Peakedness parameter sigma, default is 1.
+
+    beta: Skewness parameter beta, default is 1. Negative values give a
+          negative skew, positive values give a positive skew.
+
+      nu: Shape parameter nu, default is 1.
+
+   param: Specifying the parameters as a vector of the form 'c(mu,
+          delta, beta, nu)'.
+
+tolerance: A difference smaller than this value is taken to be zero.
+
+_D_e_t_a_i_l_s:
+
+     Users may either specify the values of the parameters individually
+     or as a vector. If both forms are specified, then the values
+     specified by the vector 'param' will overwrite the other ones.
+
+     The moments are calculated as per formulae in Aas&Haff(2006) and
+     the mode is calculated by numerical optimisation of the density
+     function using 'optim'.
+
+     Note that the mean does not exist when nu = 2, the variance does
+     not exist for nu <= 4, the skewness does not exist for nu <= 6,
+     and the kurtosis does not exist for nu <= 8.
+
+_V_a_l_u_e:
+
+     'skewhypMean' gives the mean of the skewed hyperbolic
+     t-distribution, 'skewhypVar' the variance, 'skewhypSkew' the
+     skewness, 'skewhypKurt' the kurtosis and 'skewhypMode' the mode.
+
+_A_u_t_h_o_r(_s):
+
+     David Scott d.scott@auckland.ac.nz, Fiona Grimson
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Aas, K. and Haff, I. H. (2006). The Generalised Hyperbolic Skew
+     Student's t-Distribution. In _Jorunal of Financial Econometrics_,
+     26-Jan-2006
+
+_S_e_e _A_l_s_o:
+
+     'dskewhyp', 'optim'
+

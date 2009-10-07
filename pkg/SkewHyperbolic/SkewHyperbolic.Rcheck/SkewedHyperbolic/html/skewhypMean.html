@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Moments and Mode of the Skewed Hyperbolic Student's t-Distribution.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+
+<table width="100%" summary="page for skewhypMean {SkewedHyperbolic}"><tr><td>skewhypMean {SkewedHyperbolic}</td><td align="right">R Documentation</td></tr></table>
+<h2>Moments and Mode of the Skewed Hyperbolic Student's t-Distribution.</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Functions to calculate the mean, variance, skewness and kurtosis of a
+specified skewed hyperbolic t-distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+skewhypMean(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+  beta, nu))
+skewhypVar(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+  beta, nu))
+skewhypSkew(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+  beta, nu))
+skewhypKurt(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+  beta, nu))
+skewhypMode(mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+  beta, nu), tolerance = .Machine$double.eps ^ 0.5)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>mu</code></td>
+<td>
+Location parameter <i>mu</i>, default is 0.</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+Peakedness parameter <i>sigma</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>beta</code></td>
+<td>
+Skewness parameter <i>beta</i>, default is 1. Negative
+values give a negative skew, positive values give a positive skew.</td></tr>
+<tr valign="top"><td><code>nu</code></td>
+<td>
+Shape parameter <i>nu</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+Specifying the parameters as a vector of the form
+<code>c(mu, delta, beta, nu)</code>.</td></tr>
+<tr valign="top"><td><code>tolerance</code></td>
+<td>
+A difference smaller than this value is taken to be zero.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Users may either specify the values of the parameters individually or
+as a vector. If both forms are specified, then the values specified by
+the vector <code>param</code> will overwrite the other ones.
+</p>
+<p>
+The moments are calculated as per formulae in Aas&amp;Haff(2006) and the
+mode is calculated by numerical optimisation of the density function
+using <code><a href="../../stats/html/optim.html">optim</a></code>.
+</p>
+<p>
+Note that the mean does not exist when <i>nu = 2</i>, the
+variance does not exist for <i>nu &lt;= 4</i>, the skewness does
+not exist for <i>nu &lt;= 6</i>, and the kurtosis does not exist
+for <i>nu &lt;= 8</i>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>skewhypMean</code> gives the mean of the skewed hyperbolic
+t-distribution, <code>skewhypVar</code> the variance, <code>skewhypSkew</code> the
+skewness, <code>skewhypKurt</code> the kurtosis and <code>skewhypMode</code> the
+mode.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Fiona Grimson
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Aas, K. and Haff, I. H. (2006).
+The Generalised Hyperbolic Skew Student's t-Distribution.
+In <EM>Jorunal of Financial Econometrics</EM>, 26-Jan-2006
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="dskewhyp.html">dskewhyp</a></code>, <code><a href="../../stats/html/optim.html">optim</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>SkewedHyperbolic</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

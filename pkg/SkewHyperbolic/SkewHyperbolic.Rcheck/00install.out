@@ -1,0 +1,37 @@
+installing R.css in C:/Users/dsco036/Documents/Research/Packages/SkewHyperbolicDevel/SkewedHyperbolic.Rcheck
+
+
+---------- Making package SkewedHyperbolic ------------
+  adding build stamp to DESCRIPTION
+  installing NAMESPACE file and metadata
+  installing R files
+  preparing package SkewedHyperbolic for lazy loading
+Loading required package: HyperbolicDist
+  installing man source files
+  installing indices
+  installing help
+ >>> Building/Updating help pages for package 'SkewedHyperbolic'
+     Formats: text html latex example chm 
+Note: removing empty section \examples in file 'SkewedHyperbolic-package.Rd'
+  SkewedHyperbolic-package          text    html    latex
+Note: removing empty section \note in file 'dskewhyp.Rd'
+Note: removing empty section \examples in file 'dskewhyp.Rd'
+  dskewhyp                          text    html    latex
+Note: removing empty section \references in file 'qqskewhyp.Rd'
+Note: removing empty section \examples in file 'qqskewhyp.Rd'
+  qqskewhyp                         text    html    latex
+Note: removing empty section \references in file 'skewhypBreaks.Rd'
+Note: removing empty section \examples in file 'skewhypBreaks.Rd'
+  skewhypBreaks                     text    html    latex
+Note: removing empty section \references in file 'skewhypFit.Rd'
+Note: removing empty section \examples in file 'skewhypFit.Rd'
+  skewhypFit                        text    html    latex
+Note: removing empty section \examples in file 'skewhypFitStart.Rd'
+  skewhypFitStart                   text    html    latex
+Note: removing empty section \examples in file 'skewhypMean.Rd'
+  skewhypMean                       text    html    latex
+hhc: not found
+CHM compile failed: HTML Help Workshop not installed?
+  adding MD5 sums
+
+* DONE (SkewedHyperbolic)

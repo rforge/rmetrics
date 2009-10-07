@@ -1,0 +1,133 @@
+<html><head><title>Skewed Hyperbolic Student's t-Distribution Quantile-Quantile and
+Percent-Percent Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>qqskewhyp(SkewedHyperbolic)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   qqskewhyp">
+<param name="keyword" value="R:   ppskewhyp">
+<param name="keyword" value=" Skewed Hyperbolic Student's t-Distribution Quantile-Quantile and
+Percent-Percent Plots">
+</object>
+
+
+<h2>Skewed Hyperbolic Student's t-Distribution Quantile-Quantile and
+Percent-Percent Plots</h2>
+
+
+<h3>Description</h3>
+
+<p>
+<code>qqskewhyp</code> produces a skewed hyperbolic t-distribution Q-Q plot
+of the values in <code>y</code>, <code>ppskewhyp</code> produces a skewed
+hyperbolic t-distribution P-P (percent-percent) plot or probability
+plot of the values in <code>y</code>.
+Graphical parameters may be given as arguments to <code>qqskewhyp</code> and
+<code>ppskewhyp</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+qqskewhyp(y, mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+beta, nu), main = "Skewed Hyperbolic Student's-t QQ Plot", xlab =
+"Theoretical Quantiles", ylab = "Sample Quantiles", plot.it = TRUE, line
+= TRUE, ...)
+ppskewhyp(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL, param =
+c(mu, delta, beta, nu), main = "Skewed Hyperbolic Student's-t P-P Plot",
+xlab = "Uniform Quantiles", ylab =
+"Probability-integral-transformed Data", plot.it = TRUE, line = TRUE, ...)
+
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>y</code></td>
+<td>
+The sample data.</td></tr>
+<tr valign="top"><td><code>mu</code></td>
+<td>
+Location parameter <i>mu</i>, default is 0.</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+Peakedness parameter <i>delta</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>beta</code></td>
+<td>
+Skewness parameter <i>beta</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>nu</code></td>
+<td>
+Shape parameter <i>nu</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+Specifying the parameters as a vector of the form
+<code>c(mu, delta, beta, nu)</code>.</td></tr>
+<tr valign="top"><td><code>main,xlab,ylab</code></td>
+<td>
+Plot labels.</td></tr>
+<tr valign="top"><td><code>plot.it</code></td>
+<td>
+Logical; if <code>plot.it = TRUE</code> the results will be plotted.</td></tr>
+<tr valign="top"><td><code>line</code></td>
+<td>
+Logical; if <code>line = TRUE</code> a line is added through the
+origin with unit slope.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Further graphical parameters.</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Users may either specify the values of the parameters individually or
+as a vector. If both forms are specified, then the values specified by
+the vector <code>param</code> will overwrite the other ones.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+For <code>qqskewhyp</code> and <code>ppskewhyp</code>, a list with components:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+The x coordinates of the points to be plotted.</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+The y coordinates of the points to be plotted.</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Fiona Grimson
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a onclick="findlink('stats', 'ppoints.html')" style="text-decoration: underline; color: blue; cursor: hand">ppoints</a></code>, <code><a onclick="findlink('stats', 'qqnorm.html')" style="text-decoration: underline; color: blue; cursor: hand">qqplot</a></code>, <code><a href="dskewhyp.html">dskewhyp</a></code>
+</p>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>SkewedHyperbolic</em> version 0.1-1 <a href="00Index.html">Index]</a></div>
+
+</body></html>

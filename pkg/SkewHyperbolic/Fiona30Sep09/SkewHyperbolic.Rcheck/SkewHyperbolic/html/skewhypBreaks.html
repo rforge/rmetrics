@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Break points for the Skew Hyperbolic Student's t-Distribuiton</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+
+<table width="100%" summary="page for skewhypBreaks {SkewHyperbolic}"><tr><td>skewhypBreaks {SkewHyperbolic}</td><td align="right">R Documentation</td></tr></table>
+<h2>Break points for the Skew Hyperbolic Student's t-Distribuiton</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Utility routines that calculate suitable breakpoints for use in
+determining the distribution function, and the derivative of the
+density function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1, param =
+  c(mu, delta, beta, nu), small = 10^(-6), tiny = 10^(-10),
+  deriv = 0.3, ...)
+skewhypCalcRange(mu = 0, delta = 1, beta = 1, nu = 1,
+  param = c(mu,delta,beta,nu), tol= 10^(-5), ...)
+ddskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1, param =
+  c(mu,delta,beta,nu),log = FALSE, tolerance =
+  .Machine$double.eps ^ 0.5)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+Vector of quantiles</td></tr>
+<tr valign="top"><td><code>mu</code></td>
+<td>
+Location parameter <i>mu</i>, default is 0.</td></tr>
+<tr valign="top"><td><code>delta</code></td>
+<td>
+Peakedness parameter <i>delta</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>beta</code></td>
+<td>
+Skewness parameter <i>beta</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>nu</code></td>
+<td>
+Shape parameter <i>nu</i>, default is 1.</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+Specifying the parameters as a vector of the form
+<code>c(mu, delta, beta, nu)</code>.</td></tr>
+<tr valign="top"><td><code>small</code></td>
+<td>
+Size of a small difference between the distribution
+function and 0 or 1.</td></tr>
+<tr valign="top"><td><code>tiny</code></td>
+<td>
+Size of a tiny difference between the distribution
+function and 0 or 1.</td></tr>
+<tr valign="top"><td><code>deriv</code></td>
+<td>
+Value between 0 and 1 which determines the point at which
+the value of the derivative becomes substantial compared to its
+maximal value, see <B>Details</B>.</td></tr>
+<tr valign="top"><td><code>log</code></td>
+<td>
+Logical; if <code>log = TRUE</code>, probabilities are given as log(p).</td></tr>
+<tr valign="top"><td><code>tolerance</code></td>
+<td>
+Specified level of tolerance when checking if parameter beta
+is equal to 0 in <code>ddskewhyp</code>.</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+Tolerance used in <code>skewhypCalcRange</code>, see
+<B>Details</B>.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Passes additional arguments to <code><a href="../../stats/html/uniroot.html">uniroot</a></code>.</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>ddskewhyp</code> gives the derivative of <code><a href="dskewhyp.html">dskewhyp</a></code>.
+<br>
+<code>skewhypBreaks</code> returns a list with components:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>xTiny</code></td>
+<td>
+Value such that the probabilities to the left are less
+than <code>tiny</code>.</td></tr>
+<tr valign="top"><td><code>xSmall</code></td>
+<td>
+Value such that probabilities to the left are less
+than <code>small</code>.</td></tr>
+<tr valign="top"><td><code>lowBreak</code></td>
+<td>
+Point to the left of the mode such that the
+derivative of the density at that point is <code>deriv</code> times its
+maximum value on that side of the mode.</td></tr>
+<tr valign="top"><td><code>highBreak</code></td>
+<td>
+Point to the right of the mode such that the derivative
+of the density at that point is <code>deriv</code> times the value of the
+maximum value on that side of the mode.</td></tr>
+<tr valign="top"><td><code>xLarge</code></td>
+<td>
+Value such that the probabities to the right are less than
+<code>xSmall</code>.</td></tr>
+<tr valign="top"><td><code>xHuge</code></td>
+<td>
+Value such that probability to the right is less than
+<code>tiny</code>.</td></tr>
+<tr valign="top"><td><code>modeDist</code></td>
+<td>
+The mode of the given skewed hyperbolic distribution,
+calculated by <code><a href="skewhypMeanVarMode.html">skewhypMode</a></code>.</td></tr>
+</table>
+<p>
+
+<br>
+<code>skewhypCalcRange</code> returns the quantile values at the
+endpoints of the region of the density function where the probablity
+is greater than <code>tol</code>.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+David Scott <a href="mailto:d.scott@auckland.ac.nz">d.scott@auckland.ac.nz</a>, Fiona Grimson
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Aas, K. and Haff, I. H. (2006).
+The Generalised Hyperbolic Skew Student's <EM>t</EM>-distribution,
+<EM>Journal of Financial Econometrics</EM>, <B>4</B>, 275&ndash;309.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="../../stats/html/uniroot.html">uniroot</a></code>, <code><a href="dskewhyp.html">dskewhyp</a></code>, <code><a href="skewhypMeanVarMode.html">skewhypMode</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+param &lt;- c(0,1,10,10)
+range &lt;- skewhypCalcRange(param=param, tol=10^(-3))
+
+#plots of density and derivative
+par(mfrow=c(2,1))
+curve(dskewhyp(x, param=param), range[1], range[2], n=1000)
+title("Density of the Skew\n Hyperbolic Distribution")
+curve(ddskewhyp(x, param=param), range[1], range[2], n=1000)
+title("Derivative of the Density\n of the Skew Hyperbolic Distribution")
+
+#plot of the density marking the break points
+par(mfrow=c(1,1))
+range &lt;- skewhypCalcRange(param=param, tol=10^(-6))
+curve(dskewhyp(x, param=param), range[1], range[2], n=1000)
+title("Density of the Skew Hyperbolic Distribution\n with Breakpoints")
+breaks &lt;- skewhypBreaks(param=param)
+abline(v=breaks)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>SkewHyperbolic</em> version 0.1-1 <a href="00Index.html">Index</a>]</div>
+
+</body></html>

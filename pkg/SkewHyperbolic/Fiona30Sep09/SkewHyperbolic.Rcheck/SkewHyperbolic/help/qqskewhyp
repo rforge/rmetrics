@@ -1,0 +1,84 @@
+qqskewhyp           package:SkewHyperbolic           R Documentation
+
+_S_k_e_w _H_y_p_e_r_b_o_l_i_c _S_t_u_d_e_n_t'_s _t-_D_i_s_t_r_i_b_u_t_i_o_n _Q_u_a_n_t_i_l_e-_Q_u_a_n_t_i_l_e _a_n_d
+_P_e_r_c_e_n_t-_P_e_r_c_e_n_t _P_l_o_t_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     'qqskewhyp' produces a skew hyperbolic t-distribution Q-Q plot of
+     the values in 'y', 'ppskewhyp' produces a skew hyperbolic
+     t-distribution P-P (percent-percent) plot or probability plot of
+     the values in 'y'. Graphical parameters may be given as arguments
+     to 'qqskewhyp' and 'ppskewhyp'.
+
+_U_s_a_g_e:
+
+     qqskewhyp(y, mu = 0, delta = 1, beta = 1, nu = 1, param = c(mu, delta,
+     beta, nu), main = "Skew Hyperbolic Student's-t QQ Plot", xlab =
+     "Theoretical Quantiles", ylab = "Sample Quantiles", plot.it = TRUE, line
+     = TRUE, ...)
+     ppskewhyp(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL, param =
+     c(mu, delta, beta, nu), main = "Skew Hyperbolic Student's-t P-P Plot",
+     xlab = "Uniform Quantiles", ylab =
+     "Probability-integral-transformed Data", plot.it = TRUE, line = TRUE, ...)
+
+_A_r_g_u_m_e_n_t_s:
+
+       y: The sample data.
+
+      mu: Location parameter mu, default is 0.
+
+   delta: Peakedness parameter delta, default is 1.
+
+    beta: Skewness parameter beta, default is 1.
+
+      nu: Shape parameter nu, default is 1.
+
+   param: Specifying the parameters as a vector of the form 'c(mu,
+          delta, beta, nu)'.
+
+main,xlab,ylab: Plot labels.
+
+ plot.it: Logical; if 'plot.it = TRUE' the results will be plotted.
+
+    line: Logical; if 'line = TRUE' a line is added through the origin
+          with unit slope.
+
+     ...: Further graphical parameters.
+
+_D_e_t_a_i_l_s:
+
+     Users may either specify the values of the parameters individually
+     or as a vector. If both forms are specified, then the values
+     specified by the vector 'param' will overwrite the other ones.
+
+_V_a_l_u_e:
+
+     For 'qqskewhyp' and 'ppskewhyp', a list with components: 
+
+       x: The x coordinates of the points to be plotted.
+
+       y: The y coordinates of the points to be plotted.
+
+_A_u_t_h_o_r(_s):
+
+     David Scott d.scott@auckland.ac.nz, Fiona Grimson
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     Aas, K. and Haff, I. H. (2006). The Generalised Hyperbolic Skew
+     Student's _t_-distribution, _Journal of Financial Econometrics_,
+     *4*, 275-309.
+
+_S_e_e _A_l_s_o:
+
+     'ppoints', 'qqplot', 'dskewhyp'
+
+_E_x_a_m_p_l_e_s:
+
+     par(mfrow = c(1,2))
+     param <- c(0,1,20,10)
+     y <- rskewhyp(500, param=param)
+     qqskewhyp(y, param=param, main="Skew Hyperbolic\n Q-Q Plot")
+     ppskewhyp(y, param=param, main="Skew Hyperbolic\n P-P Plot")
+

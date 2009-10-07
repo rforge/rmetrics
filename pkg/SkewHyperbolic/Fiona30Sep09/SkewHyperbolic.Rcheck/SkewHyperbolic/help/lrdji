@@ -1,0 +1,38 @@
+lrdji             package:SkewHyperbolic             R Documentation
+
+_D_o_w _J_o_n_e_s _L_o_g _R_e_t_u_r_n _D_a_t_a
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Log returns of daily closing value data from the dow jones index,
+     from 04/JAN/1999 to 08/JUL/2003. The original data used to
+     calculate these was the dji data set available in the QRMlib
+     package.
+
+_U_s_a_g_e:
+
+     data(lrdji)
+
+_F_o_r_m_a_t:
+
+     A vector of 1132 observations.
+
+_A_u_t_h_o_r(_s):
+
+     David Scott d.scott@auckland.ac.nz, Fiona Grimson
+
+_S_o_u_r_c_e:
+
+     library(QRMlib) data(dji)
+
+_R_e_f_e_r_e_n_c_e_s:
+
+     McNeil, A. & Ulman, S. (2008). QRMlib
+     _http://cran.r-project.org/web/packages/QRMlib/index.html_
+
+_E_x_a_m_p_l_e_s:
+
+     data(lrdji)
+     ##fit a skew hyperbolic students t-distribution to the data
+     fit<-skewhypFit(lrdji, plot=TRUE, print=TRUE)
+
