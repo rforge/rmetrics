@@ -6,7 +6,7 @@
   Kroner/Euro) exchange rate, from 04/JAN/1999 to 08/JUL/2003. The
   original data was downloaded from the oanda website. The data was
   selected to be as similar as possible to the data used in the Aas &
-  Haff article (see References).
+  Haff article (see \bold{References}).
 }
 \usage{
 data(lrnokeur)
@@ -25,7 +25,7 @@ data(lrnokeur)
 \examples{
 ##Fit the skew hyperbolic students-t distribution to the data
 data(lrnokeur)
-fit <- skewhypFit(lrnokeur, method="nlm", plot=TRUE, print=TRUE)
+fit <- skewhypFit(lrnokeur, method = "nlm", plot = TRUE, print = TRUE)
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz}, Fiona Grimson

@@ -3,64 +3,49 @@ dskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
                       param = c(mu,delta,beta,nu),
                       log = FALSE, tolerance = .Machine$double.eps ^ 0.5){
 
-    if (length(param) !=4) stop("param vector must contain 4 values")
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
 
-    param<-as.numeric(param)
-
-    mu<-param[1]
-    delta<-param[2]
-    beta<-param[3]
-    nu<-param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
-
-    if (log == FALSE){
-        if (abs(beta) > tolerance) {         #beta !=0
-           dskewhyp <-(2^((1-nu)/2)*delta^nu*abs(beta)^((nu+1)/2)*
-                       besselK(x=sqrt(beta^2*(delta^2+(x-mu)^2)),nu=(nu+1)/2 )*
-                      exp(beta*(x-mu)))/ (gamma(nu/2)*sqrt(pi)*
-                                           (sqrt(delta^2+(x-mu)^2))^((nu+1)/2))
-       } else  {
-            dskewhyp <-((gamma((nu+1)/2))/(sqrt(pi)*delta*gamma(nu/2)))*
-               (1+((x-mu)^2)/(delta^2))^(-(nu+1)/2)
-        }
-    }
-
-    if (log == TRUE){
+    #calculate log density to avoid numerical errors
         if(abs(beta) > tolerance){
-            dskewhyp <- ((1-nu)/2)*log(2) + nu*log(delta) +
+            ldskewhyp <- ((1-nu)/2)*log(2) + nu*log(delta) +
                 ((nu+1)/2)*log(abs(beta)) + log(besselK(x=sqrt(beta^2*
-                (delta^2+(x-mu)^2)),nu=(nu+1)/2)) +
+                (delta^2+(x-mu)^2)),nu=(nu+1)/2, expon.scaled = TRUE)) -
+                sqrt(beta^2*(delta^2+(x-mu)^2)) +
                 beta*(x-mu) - lgamma(nu/2) - log(sqrt(pi)) -
                 ((nu+1)/2)*log(sqrt(delta^2 + (x - mu)^2))
-    }else{
-        dskewhyp <- lgamma((nu+1)/2) - log(sqrt(pi)) - log(delta) -
-            lgamma(nu/2) - ((nu+1)/2)*log(1 + ((x - mu)^2)/delta^2)
-    }
-    dskewhyp <- replace(dskewhyp,dskewhyp == -Inf, NA)
-}
-return(dskewhyp)
-}
+        }else{
+            ldskewhyp <- lgamma((nu+1)/2) - log(sqrt(pi)) - log(delta) -
+                lgamma(nu/2) - ((nu+1)/2)*log(1 + ((x - mu)^2)/delta^2)
+        }
 
+    #exponentiate if necessary
+    if(log == TRUE) return(ldskewhyp)
+    else return(exp(ldskewhyp))
 
+}
 ######Distribution function##############################################
 pskewhyp <- function(q, mu = 0, delta = 1, beta = 1, nu = 1,
                      param = c(mu,delta,beta,nu), log = FALSE,
                      lower.tail = TRUE, small = 10^(-6), tiny = 10^(-10),
                      subdivisions = 100, accuracy = FALSE, ...){
 
-    if (length(param) != 4) stop("param vector must contain 4 values")
-
-    param <- as.numeric(param)
-
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
     mu <- param[1]
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
 
     if (log == TRUE) stop("This function is not yet implemented")
 
@@ -171,17 +156,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
                      tiny = 10^(-10), deriv = 0.3, nInterpol = 100,
                      subdivisions = 100, ...) {
 
-    if (length(param) != 4) stop("param vector must contain 4 values")
-
-    param <- as.numeric(param)
-
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
     mu <- param[1]
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
 
     invalid <- which( p<0 | p>1)
     if( length(invalid)>0 ) stop("must provide values between 0 and 1")
@@ -197,13 +180,13 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
     modeDist <- bks$modeDist
 
     #y values
-    yTiny <- pskewhyp(xTiny, param=param)
-    ySmall <- pskewhyp(xSmall, param=param)
-    yLowBreak <- pskewhyp(lowBreak, param=param)
-    yModeDist <- pskewhyp(modeDist, param=param)
-    yHighBreak <- pskewhyp(highBreak, param=param)
-    yLarge <- pskewhyp(xLarge, param=param)
-    yHuge <- pskewhyp(xLarge, param=param)
+    yTiny <- pskewhyp(xTiny, param=param, small=small, tiny=tiny)
+    ySmall <- pskewhyp(xSmall, param=param, small=small, tiny=tiny)
+    yLowBreak <- pskewhyp(lowBreak, param=param, small=small, tiny=tiny)
+    yModeDist <- pskewhyp(modeDist, param=param, small=small, tiny=tiny)
+    yHighBreak <- pskewhyp(highBreak, param=param, small=small, tiny=tiny)
+    yLarge <- pskewhyp(xLarge, param=param, small=small, tiny=tiny)
+    yHuge <- pskewhyp(xLarge, param=param, small=small, tiny=tiny)
 
     #divide into intervals
     pSort <- sort(p)
@@ -349,17 +332,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
 rskewhyp <- function (n, mu = 0, delta = 1, beta = 1, nu = 1,
                        param = c(mu,delta,beta,nu), log = FALSE) {
 
-    if (length(param) !=4) stop("param vector must contain 4 values")
-
-    param<-as.numeric(param)
-
-    mu<-param[1]
-    delta<-param[2]
-    beta<-param[3]
-    nu<-param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
 
     if (log==TRUE) stop("This function is not yet implemented")
 
@@ -372,4 +353,111 @@ rskewhyp <- function (n, mu = 0, delta = 1, beta = 1, nu = 1,
 
     #return the results
     return(rskewhyp)
+}
+######Derivative function#################################################
+ddskewhyp <- function(x, mu = 0, delta = 1, beta = 1, nu = 1,
+                      param = c(mu,delta,beta,nu),log = FALSE,
+                      tolerance = .Machine$double.eps ^ 0.5) {
+
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
+
+    if (log==TRUE) stop("This function is not yet implemented")
+
+    if (abs(beta) > tolerance) { #beta != 0
+        ddskewhyp <- 1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2*nu + 1/2)*
+            (-besselK(nu = 1/2*nu + 3/2, x = (beta^2*(delta^2 + (x-mu)^2))^
+            (1/2)) + (1/2*nu + 1/2)/(beta^2*(delta^2 + (x - mu)^2))^(1/2)*
+            besselK(nu = 1/2*nu + 1/2, x = (beta^2*(delta^2 + (x - mu)^2))^
+            (1/2)))/(beta^2*(delta^2 + (x - mu)^2))^(1/2)*beta^2*(2*x - 2*mu)*
+            exp(beta*(x - mu))/gamma(1/2*nu)/pi^(1/2)/(((delta^2 + x^2 -
+            2*x*mu + mu^2)^(1/2))^(1/2*nu + 1/2)) + 2^(1/2 - 1/2*nu)*
+            delta^nu*abs(beta)^(1/2*nu + 1/2)*besselK(nu = 1/2*nu + 1/2,
+            x=(beta^2*(delta^2 + (x - mu)^2))^(1/2))*beta*exp(beta*(x - mu))/
+            gamma(1/2*nu)/pi^(1/2)/(((delta^2 + x^2 - 2*x*mu + mu^2)^(1/2))^
+            (1/2*nu + 1/2)) - 1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2*
+            nu + 1/2)*besselK(nu = 1/2*nu + 1/2, x = (beta^2*(delta^2 +
+            (x - mu)^2))^(1/2))*exp(beta*(x - mu))/gamma(1/2*nu)/pi^(1/2)/
+            (((delta^2 + x^2 - 2*x*mu + mu^2)^(1/2))^(1/2*nu + 1/2))*
+            (1/2*nu + 1/2)/(delta^2 + x^2 - 2*x*mu + mu^2)*(2*x - 2*mu)
+
+    }else{ #beta = 0
+        ddskewhyp <- 2*gamma(1/2*nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2*nu)*
+            (1 + (x - mu)^2/delta^2)^(-1/2*nu - 1/2)*(-1/2*nu - 1/2)*
+            (x - mu)/(1 + (x - mu)^2/delta^2)
+    }
+    return(ddskewhyp)
+}
+
+#####Break function#######################################################
+skewhypBreaks <- function(mu = 0, delta = 1, beta = 1, nu = 1,
+                          param = c(mu,delta,beta,nu), small = 10^(-6),
+                          tiny = 10^(-10), deriv=0.3,...) {
+
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
+
+    #Calculate the more extreme breaks
+    CalcRange <- skewhypCalcRange(param=param, tol=tiny,...)
+    xTiny <- CalcRange[1]
+    xHuge <- CalcRange[2]
+    CalcRange <- skewhypCalcRange(param=param, tol=small,...)
+    xSmall <- CalcRange[1]
+    xLarge <- CalcRange[2]
+    modeDist <- skewhypMode(param = param)
+
+    #find low break
+    xDeriv <- seq(from = xSmall, to = modeDist, length.out = 101)
+    derivVals <- ddskewhyp(x = xDeriv, param = param)
+    maxDeriv <- max(derivVals)
+
+    breaksize <- deriv*maxDeriv
+
+    breakFun <- function(x) ddskewhyp(x, param=param) - breaksize
+
+    if( (maxDeriv < breaksize) || (derivVals[1] > breaksize)) {
+        lowBreak <- xSmall
+    }else{
+        whichMax <- which.max(derivVals)
+        lowBreak <- uniroot(breakFun, c(xSmall, xDeriv[whichMax]),...)$root
+    }
+
+    #find high break
+    xDeriv <- seq(from = modeDist, to = xLarge, length.out = 101)
+    derivVals <- -ddskewhyp(x = xDeriv, param = param)
+    maxDeriv <- max(derivVals)
+
+    breaksize <- deriv*maxDeriv
+
+    breakFun <- function(x) -ddskewhyp(x,param = param) - breaksize
+
+    if( (maxDeriv < breaksize) || (derivVals[101] > breaksize)) {
+        highBreak <- xLarge
+    }else{
+        whichMax <- which.max(derivVals)
+        highBreak <- uniroot(breakFun, c(xDeriv[whichMax], xLarge),...)$root
+    }
+
+    #list of the breaks
+    breaks <- c(xTiny,xSmall,lowBreak,highBreak,xLarge,xHuge,modeDist)
+    breaks <- list(xTiny = breaks[1], xSmall = breaks[2],
+                   lowBreak = breaks[3], highBreak = breaks[4],
+                   xLarge = breaks[5], xHuge = breaks[6],
+                   modeDist = breaks[7])
+
+    return(breaks)
 }

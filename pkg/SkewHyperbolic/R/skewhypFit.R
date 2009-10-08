@@ -14,8 +14,6 @@ skewhypFit <- function (x, freq = NULL, breaks = NULL, startValues = "LA",
         x <- rep(x, freq)
     }
 
-    x <- as.numeric(na.omit(x))
-
     #get the starting value information
     if (startValues == "US") {
         startInfo <- skewhypFitStart(x, breaks = breaks,

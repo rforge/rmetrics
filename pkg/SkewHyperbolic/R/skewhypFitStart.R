@@ -4,12 +4,15 @@ skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
 
     if (startValues == "US") {
     #user supplied starting values
+        x <- as.numeric(na.omit(x))
         svName <- "User Specified"
         if (is.null(paramStart))  stop("paramStart must be specified")
         if (!is.null(paramStart)) {
-            if (length(paramStart) != 4) stop("paramStart must have 4 values")
-            if( paramStart[2] < 0) stop("Delta must be greater than 0")
-            if( paramStart[4] < 0 ) stop("Nu must be greater than 0")
+            #check parameters
+            parResult <- skewhypCheckPars(paramStart)
+            case <- parResult$case
+            errMessage <- parResult$errMessage
+            if(case == "error") stop(errMessage)
             paramStart <- c(beta = paramStart[1], delta = log(paramStart[2]),
                             mu = paramStart[3], nu = log(paramStart[4]))
         }
@@ -29,6 +32,7 @@ skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
 
     if(startValues == "LA"){
     #combination of moments and linear approx to log density
+        x <- as.numeric(na.omit(x))
         svName <- "Linear Approximation"
         start <- skewhypFitStartLA(x, breaks=breaks)
         param <- c(start$param[1], log(start$param[2]), start$param[3],

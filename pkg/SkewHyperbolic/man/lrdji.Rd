@@ -23,8 +23,8 @@ data(lrdji)
 }
 \examples{
 data(lrdji)
-##fit a skew hyperbolic students t-distribution to the data
-fit<-skewhypFit(lrdji, plot=TRUE, print=TRUE)
+##fit a skew hyperbolic student t-distribution to the data
+fit <- skewhypFit(lrdji, plot = TRUE, print = TRUE)
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz}, Fiona Grimson

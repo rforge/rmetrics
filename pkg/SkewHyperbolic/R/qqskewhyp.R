@@ -1,7 +1,7 @@
 ####### QQ Plot function ##################################################
 qqskewhyp <- function(y, mu = 0, delta = 1, beta = 1, nu = 1,
                       param = c(mu,delta,beta,nu),
-                      main="Skew Hyperbolic Student's-t QQ Plot",
+                      main="Skew Hyperbolic Student-t QQ Plot",
                       xlab="Theoretical Quantiles",
                       ylab="Sample Quantiles",
                       plot.it = TRUE, line = TRUE,...){
@@ -14,26 +14,23 @@ qqskewhyp <- function(y, mu = 0, delta = 1, beta = 1, nu = 1,
         stop("y is empty or has only NAs")
 
 
-    if (length(param) > 0) {
-        if (length(param) !=4) stop("param vector must contain 4 values")
-
-        param<-as.numeric(param)
-
-        mu<-param[1]
-        delta<-param[2]
-        beta<-param[3]
-        nu<-param[4]
-
-        if( delta < 0) stop("Delta must be greater than 0")
-        if( nu < 0 ) stop("Nu must be greater than 0")
-
+    if (length(param) > 0){
+        #check parameters
+        parResult <- skewhypCheckPars(param)
+        case <- parResult$case
+        errMessage <- parResult$errMessage
+        if(case == "error") stop(errMessage)
+        mu <- param[1]
+        delta <- param[2]
+        beta <- param[3]
+        nu <- param[4]
     } else {
         fitResults <- skewhypFit(y, freq = NULL, breaks = NULL,
             ParamStart = NULL, startMethod = "Nelder-Mead",
             startValues = "LA", method = "Nelder-Mead",
             hessian = FALSE, plots = FALSE, printOut = FALSE,
             controlBFGS = list(maxit = 200), controlNLM = list(maxit = 1000),
-            maxitNLM = 1500, ...)
+            maxitNLM = 1500)
         param <- fitResults$param
         names(param) = NULL
         mu <- param[1]
@@ -51,10 +48,10 @@ qqskewhyp <- function(y, mu = 0, delta = 1, beta = 1, nu = 1,
         y <- yN
     }
     if (plot.it) {
-        qqplot(x, y, main = main, xlab = xlab, ylab = ylab,...)
+        qqplot(x, y, main = main, xlab = xlab, ylab = ylab)
         title(sub = paste("mu = ", round(mu, 3), ", delta = ",
               round(delta, 3), ", beta = ", round(beta, 3),
-              ", nu = ", round(nu, 3), sep = ""))
+              ", nu = ", round(nu, 3), sep = ""), ...)
     }
     if (line)
         abline(0, 1)
@@ -66,7 +63,7 @@ qqskewhyp <- function(y, mu = 0, delta = 1, beta = 1, nu = 1,
 ###### PP Plot function ######################################################
 ppskewhyp <- function(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL,
                       param = c(mu,delta,beta,nu),
-                      main = "Skew Hyperbolic Student's-t P-P Plot",
+                      main = "Skew Hyperbolic Student-t P-P Plot",
                       xlab = "Uniform Quantiles",
                       ylab = "Probability-integral-transformed Data",
                       plot.it = TRUE, line = TRUE, ...) {
@@ -79,15 +76,15 @@ ppskewhyp <- function(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL,
         stop("data is empty")
 
     if (length(param) > 0) {
+        #check parameters
+        parResult <- skewhypCheckPars(param)
+        case <- parResult$case
+        errMessage <- parResult$errMessage
+        if(case == "error") stop(errMessage)
         mu <- param[1]
         delta <- param[2]
         beta <- param[3]
         nu <- param[4]
-
-        if  (length(param) != 4) stop("please specify all 4 parameters values")
-
-        if( delta < 0) stop("Delta must be greater than 0")
-        if( nu < 0 ) stop("Nu must be greater than 0")
 
     } else {
         fitResults <- skewhypFit(y, freq = NULL, breaks = NULL,

@@ -89,21 +89,3 @@ print.skewhypFit <- function (x, digits = max(3, getOption("digits") - 3),...){
     cat("Iterations:        ", x$iter, "\n")
     invisible(x)
 }
-##### summary method for skewhypFit #######################################
-summary.skewhypFit <- function(object,...){
-
-    if (!class(object)=="skewhypFit")
-        stop("Object must belong to class skewhypFit")
-
-    if (!is.null(object$hessian)){
-        sds <- sqrt(diag(solve(object$hessian)))
-        sds[2] <- object$param[2]*sds[2]
-        sds[3] <- object$param[3]*sds[3]
-        names(sds) <- c("mu","delta","beta","nu")
-        object$sds <- sds
-    }
-
-    class(object) <- "summary.skewhypFit"
-    return(object)
-}
-

@@ -2,17 +2,15 @@
 skewhypMean <- function (mu = 0, delta = 1, beta = 1, nu = 1,
                   param = c(mu,delta,beta,nu)) {
 
-    if (length(param) != 4) stop("param vector must contain 4 values")
-
-    param<-as.numeric(param)
-
-    mu<-param[1]
-    delta<-param[2]
-    beta<-param[3]
-    nu<-param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
 
     skewhypMean <- mu + (beta*delta^2)/(nu-2)
 
@@ -24,17 +22,16 @@ skewhypMean <- function (mu = 0, delta = 1, beta = 1, nu = 1,
 skewhypVar<- function (mu = 0, delta = 1, beta = 1, nu = 1,
                      param = c(mu,delta,beta,nu)) {
 
-    if (length(param) != 4) stop ("param vector must contain 4 values")
-
-    param <- as.numeric(param)
-
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
     mu <- param[1]
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
 
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
     if (nu <= 4)stop ("variance does not exist when nu <= 4")
 
     skewhypVar<-((2*beta^2*delta^4)/((nu-2)^2*(nu-4)))+(delta^2)/(nu-2)
@@ -45,17 +42,16 @@ skewhypVar<- function (mu = 0, delta = 1, beta = 1, nu = 1,
 skewhypSkew<-function(mu = 0, delta = 1, beta = 1, nu = 1,
                    param = c(mu,delta,beta,nu)){
 
-    if (length(param) != 4) stop ("param vector must contain 4 values")
-
-    param <- as.numeric(param)
-
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
     mu <- param[1]
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
 
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
     if(nu <= 6)stop("skewness does not exist when nu <= 6")
 
     skewhypSkew<- ((2*(nu-4)^0.5*beta*delta)/
@@ -70,17 +66,16 @@ skewhypSkew<-function(mu = 0, delta = 1, beta = 1, nu = 1,
 skewhypKurt<- function (mu = 0, delta = 1, beta = 1, nu = 1,
                      param = c(mu,delta,beta,nu)) {
 
-    if (length(param) != 4) stop ("param vector must contain 4 values")
-
-    param <- as.numeric(param)
-
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
     mu <- param[1]
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
 
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
     if(nu <= 8)stop("kurtosis does not exist when nu <= 8")
 
     skewhypKurt <- (6/((2*beta^2*delta^2+(nu-2)*(nu-4))^2))*
@@ -96,17 +91,15 @@ skewhypMode <- function(mu = 0, delta = 1, beta = 1, nu = 1,
                   tolerance = .Machine$double.eps ^ 0.5){
 
 
-    if (length(param) !=4) stop("param vector must contain 4 values")
-
-    param<-as.numeric(param)
-
-    mu<-param[1]
-    delta<-param[2]
-    beta<-param[3]
-    nu<-param[4]
-
-    if( delta < 0) stop("Delta must be greater than 0")
-    if( nu < 0 ) stop("Nu must be greater than 0")
+    #check parameters
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if(case == "error") stop(errMessage)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
 
     if (abs(beta) > tolerance) { #beta != 0
 

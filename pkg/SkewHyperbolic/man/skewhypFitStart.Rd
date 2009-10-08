@@ -2,12 +2,12 @@
 \alias{skewhypFitStart}
 \alias{skewhypFitStartLA}
 \title{
-Find Starting Values for Fittting a Skew Hyperbolic Student's
+Find Starting Values for Fittting a Skew Hyperbolic Student
 t-Distribution
 }
 \description{
   Finds starting values for input to a maximum likelihood routine for
-  fitting a skew hyperbolic t-distribution to data.
+  fitting a skew hyperbolic \emph{t}-distribution to data.
 }
 \usage{
 skewhypFitStart(x, breaks = NULL, startValues = "LA", paramStart = NULL)
@@ -20,33 +20,33 @@ skewhypFitStartLA(x, breaks = NULL)
     \code{startValues = "LA"} then 30 breaks are used by default.}
   \item{startValues}{Code giving the method of determining starting
     values for finding the maximum likelihood estimates of the
-    parameters.}
+    parameters.} 
   \item{paramStart}{If \code{startValues = "US"} the user must specify a
-    vector of starting parameter values in the form \code{c(mu, delta,
-      beta, nu)}.}
+    vector of starting parameter values in the form
+    \code{c(mu,log(delta),beta,log(nu))}.}
 }
 \details{
   \code{startValues} can be either \code{"US"}(User-supplied) or
   \code{"LA"} (Linear approximation).
 
   If \code{startValues = "US"} then a value for \code{paramStart} must be
-  supplied.
+  supplied. The parameters are checked for validity by the function
+  \code{skewhypCheckPars}.
 
   If \code{startValues = "LA"} a linear approximation is made to the
   log-density in each of the tails, from which the estimates for
   \eqn{\nu}{nu} and \eqn{\beta}{beta} are found. The remaining two
   parameters, \eqn{\delta}{delta} and \eqn{\mu}{mu} are found by solving
-  the moment equations for mean and variance.
-  Since the variance does not exist for values of \eqn{\nu \le 4}{nu <=
-    4}, the estimate of \eqn{\nu}{nu} will be at least 4.1.
-  Note that if the distribution is too skewed, there are not enough
-  points in the lighter tail to fit the required linear model, and the
-  method will stop and return a warning. User supplied values will have
-  to be used in this case. 
+  the moment equations for mean and variance.  Since the variance does
+  not exist for values of \eqn{\nu \le 4}{nu <= 4}, the estimate of
+  \eqn{\nu}{nu} will be at least 4.1.  Note that if the distribution is
+  too skewed, there are not enough points in the lighter tail to fit the
+  required linear model, and the method will stop and return a
+  warning. User supplied values will have to be used in this case.
 }
 \value{
   \code{skewhypFitStart} returns a list with components:
-  \item{paramStart}{A vector of the form \code{c(mu, delta, beta, nu)}
+  \item{paramStart}{A vector of the form \code{c(mu,delta,beta,nu)}
     giving the generated starting values of the parameters.}
   \item{breaks}{The cell boundaries found by a call to \code{\link{hist}}.}
   \item{midpoints}{The cell midpoints found by a call to \code{\link{hist}}.}
@@ -66,15 +66,15 @@ skewhypFitStartLA(x, breaks = NULL)
 
 \seealso{
   \code{\link{hist}}, \code{\link{density}}, \code{\link{dskewhyp}},
-  \code{\link{skewhypFit}}
+  \code{\link{skewhypFit}}, \code{\link{skewhypCheckPars}}
 }
 \examples{
-#find starting values to feed to skewhypFit
+## find starting values to feed to skewhypFit
 data(lrnokeur)
 skewhypFitStart(lrnokeur, startValues="LA")$paramStart
-#user supplied values
+## user supplied values
 skewhypFitStart(lrnokeur, startValues="US",
-paramStart=c(0,0.01,0,5))$paramStart
+                paramStart=c(0,0.01,0,5))$paramStart
 }
 \keyword{distribution}
 
