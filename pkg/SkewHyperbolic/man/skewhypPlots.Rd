@@ -28,7 +28,7 @@ ppskewhyp(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL,
 \arguments{
   \item{y}{The sample data.}
   \item{mu}{Location parameter \eqn{\mu}{mu}, default is 0.}
-  \item{delta}{Location parameter \eqn{\delta}{delta}, default is 1.}
+  \item{delta}{Scale parameter \eqn{\delta}{delta}, default is 1.}
   \item{beta}{Skewness parameter \eqn{\beta}{beta}, default is 1.}
   \item{nu}{Shape parameter \eqn{\nu}{nu}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
