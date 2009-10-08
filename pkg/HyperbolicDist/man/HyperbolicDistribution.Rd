@@ -2,6 +2,7 @@
 \docType{package}
 \alias{HyperbolicDist-package}
 \alias{HyperbolicDistribution}
+\alias{HyperbolicDist}
 
 \title{
   The Package `HyperbolicDist': Summary Information

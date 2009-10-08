@@ -1,3 +1,9 @@
+2009-10-09    <d.scott@auckland.ac.nz>
+
+	* HyperbolicDistribution.Rd added alias so SkewHyperbolic link
+	works. Need a standard approach to documenting package and
+	distributions within the package
+
 2009-09-10  David Local  <d.scott@auckland.ac.nz>
 
 	* updated all .R and .Rd files to do with moments. Changed
