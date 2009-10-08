@@ -16,43 +16,41 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:    
-#  .nlminb2Env              Create NLMINB2 Environment
-#  .setnlminb2Env           Set NLMINB2 Environment       
-#  .getnlminb2Env           Get NLMINB2 Environment
+# FUNCTION:                DESCRIPTION:
+#  nlminb2Control           Returns control list
 ################################################################################
 
 
-.nlminb2Env <- 
-new.env(hash = TRUE)
-
-
-# ------------------------------------------------------------------------------
-
-
-.setnlminb2Env <-
-function(...)
+nlminb2Control <- 
+    function()         
 {
-    x <- list(...)
-    nm <- names(x)
-     if (is.null(nm) || "" %in% nm)
-        stop("all arguments must be named")
-    sapply(nm, function(nm) assign(nm, x[[nm]], envir = .nlminb2Env))
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.getnlminb2Env <-
-function(x = NULL, unset = "")
-{
-    if (is.null(x))
-        x <- ls(all.names = TRUE, envir = .nlminb2Env)
-        ###     unlist(mget(x, envir = .nlminb2Env, mode = "any",
-        ###         ifnotfound = as.list(unset)), recursive = FALSE)
-    get(x, envir = .nlminb2Env, mode = "any")
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns Control list
+    
+    # Arguments:
+    #   none
+    
+    # FUNCTION:
+    
+    # Control list:
+    ans = list(
+        eval.max = 500, 
+        iter.max = 400,
+        trace = 0,
+        abs.tol = 1e-20, 
+        rel.tol = 1e-10,
+        x.tol = 1.5e-8, 
+        step.min = 2.2e-14,
+        scale = 1,
+        R = 1,
+        beta = 0.01,
+        steps.max = 10,
+        steps.tol = 1e-6)
+        
+   # Return Value:
+   ans
 }
 
 
