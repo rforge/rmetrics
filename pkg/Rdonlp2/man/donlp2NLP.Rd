@@ -18,8 +18,10 @@
     
     An alternative interface which may be suite better for portfolio
     optimization compared with the default interface function 
-    \code{donlp2}
+    \code{donlp2}.
 
+}
+    
 
 \usage{
 donlp2NLP( 
@@ -29,7 +31,7 @@ donlp2NLP(
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,  
     eqFun = list(), eqFun.bound = NULL,
     ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL, 
-    control = donlp2NLPControl())
+    control = donlp2Control())
 }
 
 
@@ -67,19 +69,19 @@ donlp2NLP(
         list object whose elements are functions that represents
         nonlinear equality constraints.}
     
-    \item{eq.bound}{
+    \item{eqFun.bound}{
         equality bounds for nonlinear constraints, respectively.}
       
     \item{ineqFun}{
         list object whose elements are functions that represents
         nonlinear lower and upper constraints.}
  
-    \item{ineq.lower, ineq.upper}{
+    \item{ineqFun.lower, ineqFun.upper}{
         lower and upper bounds for nonlinear constraints, respectively.}
 
     \item{control}{
         list of control parameters that define the behaviour of the
-        solver. See \code{\link{donlp2NLPControl}} for details.}
+        solver. See \code{\link{donlp2Control}} for details.}
 }
 
 
@@ -120,17 +122,17 @@ donlp2NLP(
 
 \seealso{
 
-    \code{\link{donlp2NLPControl},
+    \code{\link{donlp2Control}},
     and packages \code{Rnlminb2} and \code{Rsolnp2}.
     
 }
 
 
-\example{
+\examples{
 ## Mean-Var Markowitz Portfolio with Extension Constraints
    
 ## Load Data -  
-   data(GCCRET)
+   data(GCCINDEX.RET)
    ret = 100 * as.matrix(GCCINDEX.RET[, c(2, 5, 8, 9)])
    Mean = colMeans(ret)
    Cov = cov(ret)
@@ -141,7 +143,7 @@ donlp2NLP(
 
 ## Objective Function -
    fun <- function(x) {
-     risk = (t(x) %*% Cov %*% x)[[1]]
+     risk = (t(x) \%*\% Cov \%*\% x)[[1]]
      risk }
    par.lower = rep(-0.3, times = 4)
    par.upper = rep( 1.3, times = 4)  
@@ -149,7 +151,7 @@ donlp2NLP(
 ## Full Investment and Target Return Spec -
    eqFun <- list(
      function(x) sum(x), 
-     function(x) (Mean %*% x)[[1]] )
+     function(x) (Mean \%*\% x)[[1]] )
    eqFun.bound = c(1, targetReturn)
  
 ## 30/130 Extension Constraints -    

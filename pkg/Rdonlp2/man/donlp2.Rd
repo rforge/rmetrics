@@ -141,7 +141,7 @@ donlp2(
         number of binding constraints.}
 
     \item{sing}{
-        value other than \texttt{-1} indicates working set is
+        value other than \code{-1} indicates working set is
         singular.}
 
     \item{umin}{
@@ -254,7 +254,7 @@ donlp2(
 
 
 \seealso{
-    \code{\link{donlp2Control},
+    \code{\link{donlp2Control}},
     and packages \code{Rnlminb2} and \code{Rsolnp2}.
 }
 

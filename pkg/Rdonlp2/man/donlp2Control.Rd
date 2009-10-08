@@ -45,16 +45,16 @@ donlp2Control(
 
     \item{tau0}{
         the positive amount how much any constaint other than
-        abound can be violated. A small \texttt{tau0} diminishes the
-        efficiency of DONLP2, while a large \texttt{tau0} may degarde the
+        abound can be violated. A small \code{tau0} diminishes the
+        efficiency of DONLP2, while a large \code{tau0} may degarde the
         reliability of the code.}
 	    
     \item{tau}{
-        gives a weight between descent for \texttt{fn} and
+        gives a weight between descent for \code{fn} and
         infeasibility and is also used as a safety parameter for chosing the
         penalty weigths. It can be chosen larger zero at will, but useful
         values are between 0.1 and 1. The smaller tau, the more may
-        \texttt{fn} be scaled down. Tau is also used as an additive increase
+        \code{fn} be scaled down. Tau is also used as an additive increase
         for the penalty-weights. Therefore it should not be chosen too
         large, since that degrades the performance.}
 
@@ -78,7 +78,7 @@ donlp2Control(
 
     \item{nreset.multiplier}{
         maximum number of steps
-        (\texttt{nreset.multiplier} times \texttt{n}) until a ``restart'' of
+        (\code{nreset.multiplier} times \code{n}) until a ``restart'' of
         the accumulated quasi-newton-update is tried. Value should be
         integer between 1 and 4.}
 

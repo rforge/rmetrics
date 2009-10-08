@@ -3,7 +3,7 @@
 
 \alias{dataSets}
 
-\alias{GCCRET}
+\alias{GCCINDEX.RET}
 
 
 \title{Assets Data Sets}
@@ -17,7 +17,7 @@
     
 
 \usage{
-GCCRET
+GCCINDEX.RET
 }
   
 
@@ -45,7 +45,8 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 \examples{
 ## Gulf Country Indices -
-   head(GCCRET)
+   data(GCCINDEX.RET)
+   head(GCCINDEX.RET)
 }
 
 
