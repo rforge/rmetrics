@@ -49,6 +49,8 @@ function(
     # Description:
     #   Function wrapper for solver donlp2
     
+    # Arguments:
+    
     # Details:
     #   donlp2 <- function (
     #       par, fn, 
@@ -111,10 +113,10 @@ function(
         
     # Return Value:
     list(
+        opt = ans,
         par = ans$par, 
         objective = fun(ans$par), 
-        convergence = NA,
-        opt = ans)
+        convergence = NA)
 }
 
 

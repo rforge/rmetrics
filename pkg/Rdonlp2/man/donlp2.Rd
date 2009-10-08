@@ -4,10 +4,14 @@
 \alias{donlp2}
 
 
-\title{
-    Solve constrained nonlinear minimization problem}
-    \description{Solve constrained nonlinear minimization 
-    problem}
+\title{Solve constrained nonlinear minimization problem}
+    
+
+\description{
+
+    Solve constrained nonlinear minimization problem
+    
+}
 
 
 \usage{
@@ -250,7 +254,8 @@ donlp2(
 
 
 \seealso{
-    \code{\link{donlp2Control}}
+    \code{\link{donlp2Control},
+    and packages \code{Rnlminb2} and \code{Rsolnp2}.
 }
 
 
