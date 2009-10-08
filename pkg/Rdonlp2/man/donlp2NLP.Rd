@@ -130,8 +130,7 @@ donlp2NLP(
 ## Mean-Var Markowitz Portfolio with Extension Constraints
    
 ## Load Data -  
-   require(fPortfolio)
-   data(GCCINDEX.RET)
+   data(GCCRET)
    ret = 100 * as.matrix(GCCINDEX.RET[, c(2, 5, 8, 9)])
    Mean = colMeans(ret)
    Cov = cov(ret)
