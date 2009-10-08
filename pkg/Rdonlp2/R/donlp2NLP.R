@@ -17,11 +17,11 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-#  .donlp2NLP               Function wrapper for solver donlp2()
+#  donlp2NLP               Function wrapper for solver donlp2()
 ################################################################################
 
 
-.donlp2NLP <- 
+donlp2NLP <- 
 function(
     par, fun, 
     
@@ -42,8 +42,7 @@ function(
     ineqFun.lower = NULL, 
     ineqFun.upper = NULL,
     
-    trace = FALSE, 
-    control = list())
+    control = donlp2Control())
 {
     # A function implemented by Diethelm Wuertz
     
