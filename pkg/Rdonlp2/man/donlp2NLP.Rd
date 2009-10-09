@@ -10,6 +10,7 @@
 \description{
 
     Solve constrained nonlinear minimization problem.
+    An alternative R interface
     
 }
 
@@ -31,7 +32,7 @@ donlp2NLP(
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,  
     eqFun = list(), eqFun.bound = NULL,
     ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL, 
-    control = donlp2Control())
+    control = list())
 }
 
 
@@ -131,48 +132,29 @@ donlp2NLP(
 
 
 \examples{
-## Mean-Var Markowitz Portfolio with Extension Constraints
-   
-## Load Data -  
-   data(GCCINDEX.RET)
-   ret = 100 * as.matrix(GCCINDEX.RET[, c(2, 5, 8, 9)])
-   Mean = colMeans(ret)
-   Cov = cov(ret)
-   targetReturn = 4 * mean(Mean)
-  
-## Feasible Start Solution -
-   start = rep(1/4, times = 4)
+## Example:
 
-## Objective Function -
-   fun <- function(x) {
-     risk = (t(x) \%*\% Cov \%*\% x)[[1]]
-     risk }
-   par.lower = rep(-0.3, times = 4)
-   par.upper = rep( 1.3, times = 4)  
+   # Feasible Start Solution:
+   start = c(10, 10)
+   
+   # Objective Function: x^2 + y^2 
+   fun <- function(x) sum(x^2)
+   
+   # Bounds: -100 <= x,y <= 100
+   par.lower = c(-100, -100)
+   par.upper = c(100, 100)
     
-## Full Investment and Target Return Spec -
+   # Equality Constraints: x*y = 2
    eqFun <- list(
-     function(x) sum(x), 
-     function(x) (Mean \%*\% x)[[1]] )
-   eqFun.bound = c(1, targetReturn)
- 
-## 30/130 Extension Constraints -    
-   ineqFun <- list(
-     function(x) sum(x[x < 0]),
-     function(x) sum(x[x > 1]))
-   ineqFun.lower = c(-0.3, 0.0)
-   ineqFun.upper = c( 0.0, 1.3)
+     function(x) x[1]*x[2])
+   eqFun.bound = 2
   
-## Solve -  
-   ans = donlp2NLP(par = start, fun = fun, 
+   # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
+   donlp2NLP(par = start, fun = fun, 
      par.lower = par.lower, par.upper = par.upper,
-     eqFun = eqFun, eqFun.bound = eqFun.bound,
-     ineqFun = ineqFun, 
-     ineqFun.lower = ineqFun.lower, ineqFun.upper = ineqFun.upper)
-    
-## Solution, Percentual Weights - 
-   100 * round(ans$par, 2)
+     eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
 }
+
 
 \keyword{optimize}
 

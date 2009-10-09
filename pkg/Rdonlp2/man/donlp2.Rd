@@ -244,18 +244,26 @@ donlp2(
 
 
 \author{ 
+
     Rdonlp2(R port) is copyrighted by Ryuichi Tamura. Original
-    DONLP2 is copyrighted software written by Peter Sperucci.}
+    DONLP2 is copyrighted software written by Peter Sperucci.
+    
+}
+
 
 \references{
+
     \url{http://plato.la.asu.edu/donlp2.html}(original DONLP2),
     \url{http://arumat.net/Rdonlp2/}(Rdonlp2)
+    
 }
 
 
 \seealso{
-    \code{\link{donlp2Control}},
+
+    \code{donlp2Control}, \code{donlp2NLP},
     and packages \code{Rnlminb2} and \code{Rsolnp2}.
+    
 }
 
 

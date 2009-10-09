@@ -11,19 +11,17 @@ Collection of Control Variables}
 
 \usage{
 donlp2Control( 
-    iterma = 4000, nstep = 20,fnscale = 1,
-    report = FALSE, rep.freq = 1,
-    tau0 = 1.0, tau = 0.1, del0 = 1.0,
-    epsx = 1e-5, delmin = 0.1*del0,
-    epsdif=1e-8, nreset.multiplier = 1,
-    difftype=3, epsfcn = 1e-16,taubnd = 1.0,
-    hessian = FALSE,
+    iterma = 4000, nstep = 20,fnscale = 1, report = FALSE, 
+    rep.freq = 1, tau0 = 1.0, tau = 0.1, del0 = 1.0, epsx = 1e-5, 
+    delmin = 0.1*del0, epsdif=1e-8, nreset.multiplier = 1,
+    difftype=3, epsfcn = 1e-16,taubnd = 1.0, hessian = FALSE,
     te0 = TRUE, te1 = FALSE, te2 = FALSE, te3 = FALSE,
     silent = FALSE, intakt = TRUE)
 }
 
 
 \arguments{
+
     \item{iterma}{
         maximum number of iterations}
   
@@ -48,7 +46,7 @@ donlp2Control(
         abound can be violated. A small \code{tau0} diminishes the
         efficiency of DONLP2, while a large \code{tau0} may degarde the
         reliability of the code.}
-	    
+    
     \item{tau}{
         gives a weight between descent for \code{fn} and
         infeasibility and is also used as a safety parameter for chosing the
@@ -124,7 +122,10 @@ donlp2Control(
 
 
 \seealso{
-  \code{\link{donlp2}}
+
+  \code{donlp2}, \code{donlp2NLP},
+  and packages \code{Rnlminb2} and \code{Rsolnp2}.
+  
 }
 
 
