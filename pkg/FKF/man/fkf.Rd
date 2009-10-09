@@ -198,15 +198,19 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 % <---------------------------------------------------------------------->
 \references{
 
-  Harvey, Andrew C. (1990) \emph{Forecasting, Structural Time Series
+  Harvey, Andrew C. (1990). \emph{Forecasting, Structural Time Series
     Models and the Kalman Filter}.  Cambridge University Press.
 
   Hamilton, James D. (1994). \emph{Time Series Analysis}.  Princeton
   University Press.
 
-  Zivot, E. and Wang, J. (2005). \emph{Modeling Financial Time
-    Series with S-PLUS}.
-  Springer-Verlag, New York.
+  Koopman S. J. \& Shephard N. \& Doornik J. A. (1999).
+  \emph{Statistical algorithms for models in state space using SsfPack
+  2.2}. Econometrics Journal, Royal Economic Society, vol. 2(1), pages
+  107-160.
+
+  Zivot, E. and Wang, J. (2005). \emph{Modeling Financial Time Series
+    with S-PLUS}.  Springer-Verlag, New York.
 
 }
 % <---------------------------------------------------------------------->
