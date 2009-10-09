@@ -4,7 +4,7 @@ fkf <- function(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
              missing(Zt), missing(HHt), missing(GGt), missing(yt)))){
 
       stop("None of the input arguments 'a0', 'P0', 'dt', 'ct', 'Tt', 'Zt',",
-           "'HHt', 'GGt', and 'yt' must be misssing.")
+           "'HHt', 'GGt', and 'yt' must be missing.")
     }
 
     ## 'check.input' should always be 'TRUE' unless the performance

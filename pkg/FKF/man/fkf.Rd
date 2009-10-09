@@ -83,6 +83,11 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   particular observations \code{yt[,i]} contain NAs, the NA-values are
   removed and the measurement equation is adjusted accordingly.
 
+  When the full vector \code{yt[,i]} is missing the Kalman filter
+  reduces to a prediction step.
+
+  See package vignette for details.
+
 % <------------------------------------->
 \strong{Parameters:}
 
@@ -126,35 +131,35 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   1}-array.\cr
 
   % <------------------------------------->
-  \strong{BLAS and LAPACK routines used:}
+%   \strong{BLAS and LAPACK routines used:}
 
-  The \R function \code{fkf} basically wraps the \code{C}-function
-  \code{FKF}, which entirely relies on linear algebra subroutines
-  provided by BLAS and LAPACK. The following functions are used:
+%   The \R function \code{fkf} basically wraps the \code{C}-function
+%   \code{FKF}, which entirely relies on linear algebra subroutines
+%   provided by BLAS and LAPACK. The following functions are used:
 
-  \tabular{rl}{
-    BLAS: \tab \code{dcopy}, \code{dgemm}, \code{daxpy}. \cr
-    LAPACK: \tab \code{dpotri}, \code{dpotrf}.
-  }
+%   \tabular{rl}{
+%     BLAS: \tab \code{dcopy}, \code{dgemm}, \code{daxpy}. \cr
+%     LAPACK: \tab \code{dpotri}, \code{dpotrf}.
+%   }
 
-  \code{FKF} is called through the \code{.Call} interface.  Internally,
-  \code{FKF} extracts the dimensions, allocates memory, and initializes
-  the \R-objects to be returned. \code{FKF} subsequently calls
-  \code{cfkf} which performs the Kalman filtering.
+%   \code{FKF} is called through the \code{.Call} interface.  Internally,
+%   \code{FKF} extracts the dimensions, allocates memory, and initializes
+%   the \R-objects to be returned. \code{FKF} subsequently calls
+%   \code{cfkf} which performs the Kalman filtering.
 
-  The only critical part is to compute the inverse of \eqn{F_t}{F[,,t]}
-  and the determinant of \eqn{F_t}{F[,,t]}. If the inverse can not be
-  computed, the filter stops and returns the corresponding message in
-  \code{status} (see \bold{Value}). If the computation of the
-  determinant fails, the filter will continue, but the log-likelihood in
-  \code{logLik} will be \dQuote{NA}.
+%   The only critical part is to compute the inverse of \eqn{F_t}{F[,,t]}
+%   and the determinant of \eqn{F_t}{F[,,t]}. If the inverse can not be
+%   computed, the filter stops and returns the corresponding message in
+%   \code{status} (see \bold{Value}). If the computation of the
+%   determinant fails, the filter will continue, but the log-likelihood in
+%   \code{logLik} will be \dQuote{NA}.
 
-  The inverse is computed in
-  two steps: First, the Cholesky factorization of \eqn{F_t}{F[,,t]} is
-  calculated by \code{dpotrf}. Second, \code{dpotri} calculates the
-  inverse based on the output of \code{dpotrf}. \cr
-  The determinant of \eqn{F_t}{F[,,t]} is computed using again the
-  Cholesky decomposition.
+%   The inverse is computed in
+%   two steps: First, the Cholesky factorization of \eqn{F_t}{F[,,t]} is
+%   calculated by \code{dpotrf}. Second, \code{dpotri} calculates the
+%   inverse based on the output of \code{dpotrf}. \cr
+%   The determinant of \eqn{F_t}{F[,,t]} is computed using again the
+%   Cholesky decomposition.
 
 }
 % <---------------------------------------------------------------------->
@@ -180,10 +185,10 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   \code{Ft} \tab A \eqn{d \times d \times n}{d * d * n}-array which
   contains the variances of \code{vt}, i.e. \eqn{F_t = var(v_t)}{Ft[,,t]
     = var(v[,t])}.\cr
-  \code{Kt} \tab A \eqn{m \times d \times n}-array containing the \dQuote{Kalman gain}. \cr
+  \code{Kt} \tab A \eqn{m \times d \times n}{m * d * n}-array containing the \dQuote{Kalman gain}. \cr
   \code{logLik} \tab The log-likelihood. \cr
   \code{status} \tab A \code{vector} which contains the status of LAPACK's
-  \code{dpotri} and \code{dpotrf}. \eqn{(0, 0)} means sucessful exit.\cr
+  \code{dpotri} and \code{dpotrf}. \eqn{(0, 0)} means successful exit.\cr
   \code{sys.time} \tab The time elapsed as an object of class \dQuote{proc\_time}.
 }
 
