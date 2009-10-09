@@ -81,12 +81,9 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 
   NA-values in the observation matrix \code{yt} are supported.  If
   particular observations \code{yt[,i]} contain NAs, the NA-values are
-  removed and the measurement equation is adjusted accordingly.
-
-  When the full vector \code{yt[,i]} is missing the Kalman filter
-  reduces to a prediction step.
-
-  See package vignette for details.
+  removed and the measurement equation is adjusted accordingly.  When
+  the full vector \code{yt[,i]} is missing the Kalman filter reduces to
+  a prediction step.  See package vignette for details.
 
 % <------------------------------------->
 \strong{Parameters:}
@@ -205,21 +202,27 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 
   Harvey, Andrew C. (1990). \emph{Forecasting, Structural Time Series
     Models and the Kalman Filter}.  Cambridge University Press.
-
+  
   Hamilton, James D. (1994). \emph{Time Series Analysis}.  Princeton
   University Press.
 
-  Koopman S. J. \& Shephard N. \& Doornik J. A. (1999).
+  Koopman, S. J. \& Shephard, N. \& Doornik, J. A. (1999).
   \emph{Statistical algorithms for models in state space using SsfPack
   2.2}. Econometrics Journal, Royal Economic Society, vol. 2(1), pages
   107-160.
 
-  Zivot, E. and Wang, J. (2005). \emph{Modeling Financial Time Series
-    with S-PLUS}.  Springer-Verlag, New York.
+%   Zivot, E. \& Wang, J. (2005). \emph{Modeling Financial Time Series
+%     with S-PLUS}.  Springer-Verlag, New York.
 
 }
 % <---------------------------------------------------------------------->
-\author{David Luethi, Philipp Erb, Simon Otziger}
+\author{
+David Luethi, Philipp Erb, Simon Otziger \cr
+Institute of Data Analysis and Process Design
+(\url{http://www.idp.zhaw.ch}) \cr
+
+Maintainer: Philipp Erb <erb.philipp@gmail.com>
+}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link[=plot.fkf]{plot}} to visualize and analyze
   \code{fkf}-objects,
