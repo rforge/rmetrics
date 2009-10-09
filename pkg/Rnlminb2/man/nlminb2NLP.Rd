@@ -80,150 +80,29 @@ nlminb2NLP(
 
 \value{
 
-    For \code{n=length(par)} parameters, \code{lin} linear constraints,
-    and \code{nlin} nonlinear constraints, a list with following elements:
+    A list with following elements:
   
     \item{par}{
-        parameters returned by nlminb2NLP.}
+        a numeric vector, the best set of parameters found.}
     
-    \item{gradf}{
-        gradient evaluated at \code{par}.}
+    \item{objective}{
+        a numeric value, the value of \code{objective} corresponding 
+        to \code{par}.}
   
-    \item{u}{
-        \code{2*(n+lin+nlin)} vector of lagrange multipliers for
-        constraints.}
+    \item{convergence}{
+        an integer code, 0 indicates successful convergence.}
   
-    \item{w}{
-        \code{2*(n+lin+nlin)} vector of  penalty term.}
-
-    \item{step.nr}{
-        total number of iterations.}
-
-    \item{fx}{
-        the value of objective function \code{fn}.}
-
-    \item{sci}{
-        scaling of \code{fn}.}
-
-    \item{psi}{
-        psi the weighted penalty term.}
-
-    \item{upsi}{
-        the unweighted penalty term(L1 norm of constraint
-        vector).}
-
-    \item{del.k.1}{
-        bound for the last active constraints.}
-
-    \item{b2n0}{
-        weighted L2 norm of projected gradients.}
-
-    \item{b2n}{
-        L2norm of gradients based on \code{del.k.1}.}
-
-    \item{nr}{
-        number of binding constraints.}
-
-    \item{sing}{
-        value other than \code{-1} indicates working set is
-        singular.}
-
-    \item{umin}{
-        infinity norm of negative part of inequalities
-        multipliers.}
-
-    \item{not.used}{always \code{0}(currently not used)}
-
-    \item{cond.r}{
-        condition number of diagonal part of qr decomposition of
-        normalized gradients of binding constraints}
-
-    \item{cond.h}{
-        condition number of diagonal of cholesky factor
-        of updated full Hessian.}
-
-    \item{scf0}{
-        the relative damping of tangential component if
-        \code{upsi > tau0/2}.}
-  
-    \item{xnorm}{
-        L2 norm of \code{par}.}
-
-    \item{dnorm}{
-        unsclaed norm of \code{d}, correction from eqp/qp
-        subproblem.}
-
-    \item{phase}{
-        \code{-1}:infeasibility improvement phase, \code{0}:
-        initial optimization, \code{1}:binding constraints unchanged,
-        \code{2}:\code{d} small, maratos correction is in use.}
-
-    \item{c.k}{
-        number of decreases of penalty weights.}
-
-    \item{wmax}{
-        infinity norm of weights.}
-
-    \item{sig.k}{
-        stepsize from uidimensional minimization(backgracking).}
-
-    \item{cfincr}{
-        number of objective function evaluations for stepsize
-        algorithm.}
-
-    \item{dirder}{
-        scaled derectional derivative of penalty function along
-        \code{d}.}
-
-    \item{dscal}{
-        scaling factor for \code{d}.}
-
-    \item{cosphi}{
-        cosine of arc between \code{d} and previous \code{d}.}
-
-    \item{violis}{
-        number of constraints not binding at current values of
-        \code{par} but hit during line search.}
-
-    \item{hesstype}{
-        one of 4 values indicating type of update for
-        Hessian. \code{1}: normal P&M-BFGS update, \code{0}:update suppressed,
-        \code{-1}:restart with scaled unit matrix, \code{2}:standard BFGS,
-        \code{3}: BFGS modified by Powell's Device.}
-
-    \item{modbifgs}{
-        modification factor for damping the projector into the
-        BFGS or pantoja-mayne update.}
-
-    \item{modnr}{
-        modification factor for daming the quasi-newton-relation
-        in BFGS.}
-
-    \item{qpterm}{
-        \code{0}:if \code{sing==-1}, termination indicator of
-        the QP solver, \code{1}:successful, \code{-1}:\code{\tau} becomes
-        larger than \code{tauqp} without slack variables becoming sufficiently
-        small.}
-
-    \item{tauqp}{
-        weight of slack variables in QP solver.}
-
-    \item{infeas}{
-        L1 norm of  slack variables in QP solver.}
-
-    \item{nr.update}{
-        the approximated newton-raphson update in upper
-        trianglar form.}
-
-    \item{hessian}{
-        numeric Hessian matrix if \code{hessian=TRUE} in 
-        \code{nlminb2NLPControl}.}
-
-    \item{runtime}{
-        the elapsed time for the optimization.}
-
     \item{message}{
-        the termination message.}
+        a character string giving any additional information returned 
+        by the optimizer, or NULL. For details, see PORT documentation.}
+
+    \item{iterations}{
+        am integer value, the number of iterations performed.}
+
+    \item{evaluations}{
+        an integer value, the number of objective function and gradient 
+        function evaluations.}
+        
 }
 
 
@@ -237,6 +116,7 @@ nlminb2NLP(
 
 
 \references{
+
 Paul A. Jensen & Jonathan F. Bard, 
 Operations Research Models and Methods, 2001
 Appendix A, Algorithms for Constrained Optimization,
@@ -244,6 +124,7 @@ Appendix A, Algorithms for Constrained Optimization,
 
 PORT Library,
 \url{http://netlib.bell-labs.com/netlib/port/}.
+
 }
 
 
@@ -272,11 +153,6 @@ PORT Library,
      function(x) x[1]*x[2])
    eqFun.bound = 2
   
-   # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
-   nlminb2NLP(par = start, fun = fun, 
-     par.lower = par.lower, par.upper = par.upper,
-     eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
-     
    # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
    nlminb2NLP(par = start, fun = fun, 
      par.lower = par.lower, par.upper = par.upper,
