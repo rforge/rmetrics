@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                DESCRIPTION:
+# FUNCTION:               DESCRIPTION:
 #  donlp2                  Nonlinear programming with nonlinear constraints
 ################################################################################
 
