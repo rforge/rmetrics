@@ -22,7 +22,19 @@
 
 
 nlminb2Control <- 
-    function()         
+function(
+    eval.max = 500, 
+    iter.max = 400,
+    trace = 0,
+    abs.tol = 1e-20, 
+    rel.tol = 1e-10,
+    x.tol = 1.5e-8, 
+    step.min = 2.2e-14,
+    scale = 1,
+    R = 1,
+    beta = 0.01,
+    steps.max = 10,
+    steps.tol = 1e-6)         
 {
     # A function implemented by Diethelm Wuertz
     
@@ -36,18 +48,18 @@ nlminb2Control <-
     
     # Control list:
     ans = list(
-        eval.max = 500, 
-        iter.max = 400,
-        trace = 0,
-        abs.tol = 1e-20, 
-        rel.tol = 1e-10,
-        x.tol = 1.5e-8, 
-        step.min = 2.2e-14,
-        scale = 1,
-        R = 1,
-        beta = 0.01,
-        steps.max = 10,
-        steps.tol = 1e-6)
+        eval.max = eval.max, 
+        iter.max = iter.max,
+        trace = trace,
+        abs.tol = abs.tol, 
+        rel.tol = rel.tol,
+        x.tol = x.tol, 
+        step.min = step.min,
+        scale = scale,
+        R = R,
+        beta = beta,
+        steps.max = steps.max,
+        steps.tol = steps.tol)
         
    # Return Value:
    ans

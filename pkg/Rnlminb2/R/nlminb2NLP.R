@@ -21,7 +21,7 @@
 ################################################################################
 
 
-.nlminb2NLP <- 
+nlminb2NLP <- 
 function(
     par, fun, 
     
@@ -42,7 +42,6 @@ function(
     ineqFun.lower = NULL, 
     ineqFun.upper = NULL,
     
-    trace = FALSE,
     control = nlminb2Control())
 {
     # A function implemented by Diethelm Wuertz
@@ -109,9 +108,11 @@ function(
     
     # Return Value:
     list(
+        opt = ans,
         par = ans$par, 
         objective = fun(ans$par), 
-        convergence = ans$convergence)
+        convergence = ans$convergence,
+        message = ans$message)
 }        
    
 
