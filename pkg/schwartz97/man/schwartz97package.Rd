@@ -42,10 +42,6 @@ A \emph{User Guide} with explanations and some examples.
 }
 % <---------------------------------------------------------------------->
 \author{
-Philipp Erb \cr
-Institute of Data Analyses and Process Design
-(\url{http://www.idp.zhaw.ch}) \cr
-
 David Luethi \cr
 Clariden Leu SA
 (\url{http://www.claridenleu.com}) \cr
@@ -54,7 +50,15 @@ Juri Hinz \cr
 National University of Singapore
 (\url{http://www.math.nus.edu.sg}) \cr
 
-Maintainer: Philipp Erb <philipp.erb@zhaw.ch>
+Philipp Erb \cr
+Zurich Global Corporate Switzerland
+(\url{http://www.zurich.ch}) \cr
+
+Simon Otziger \cr
+Institute of Data Analysis and Process Design
+(\url{http://www.idp.zhaw.ch}) \cr
+
+Maintainer: Simon Otziger <otis@zhaw.ch>
 }
 % <---------------------------------------------------------------------->
 \references{

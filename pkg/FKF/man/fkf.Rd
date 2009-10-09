@@ -217,7 +217,15 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 }
 % <---------------------------------------------------------------------->
 \author{
-David Luethi, Philipp Erb, Simon Otziger \cr
+David Luethi \cr
+Clariden Leu SA
+(\url{http://www.claridenleu.com}) \cr
+
+Philipp Erb \cr
+Zurich Global Corporate Switzerland
+(\url{http://www.zurich.ch}) \cr
+
+Simon Otziger \cr
 Institute of Data Analysis and Process Design
 (\url{http://www.idp.zhaw.ch}) \cr
 
