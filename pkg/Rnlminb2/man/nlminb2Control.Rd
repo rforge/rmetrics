@@ -65,7 +65,10 @@ nlminb2Control(eval.max = 500, iter.max = 400, trace = 0, abs.tol = 1e-20,
 
 
 \seealso{
-    \code{nlminb2}, \code{nlminb2NLP}, and \code{nlminb2Control}.
+
+    \code{nlminb2}, \code{nlminb2NLP},
+    and packages \code{Rdonlp2} and \code{Rsolnp2}. 
+    
 }
 
 

@@ -35,7 +35,7 @@ function(
     gradient = NULL, 
     hessian = NULL, 
     
-    control = nlminb2Control(),
+    control = list(),
     
     env = .GlobalEnv)
 {
@@ -77,6 +77,12 @@ function(
     
     # Debug:
     DEBUG = FALSE
+    
+    # Control List:
+    ctrl = nlminb2Control()
+    if (length(control) > 0)
+        for (name in names(control)) ctrl[name] = control[name]
+    control = ctrl
     
     # Arg Functions:
     if (DEBUG) {

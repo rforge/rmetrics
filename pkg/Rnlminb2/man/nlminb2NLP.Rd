@@ -24,7 +24,7 @@ nlminb2NLP(
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,   
     eqFun = list(), eqFun.bound = NULL,
     ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL,
-    control = nlminb2Control())
+    control = list())
 }
 
 
@@ -228,17 +228,59 @@ nlminb2NLP(
 
 
 \author{ 
-    Rnlminb2NLP(R port) is copyrighted by Ryuichi Tamura. Original
-    nlminb2NLP is copyrighted software written by Peter Sperucci.}
+
+    For the R port of \code{nlminb} Douglas Bates and Deepayan Sarkar,
+    for the R/Rmetrics port of \code{nlminb2} Diethelm Wuertz,
+    for the PORT library netlib.bell-labs.com.
+    
+}
+
 
 \references{
-    \url{http://plato.la.asu.edu/nlminb2NLP.html}(original nlminb2NLP),
-    \url{http://arumat.net/Rnlminb2NLP/}(Rnlminb2NLP)
+Paul A. Jensen & Jonathan F. Bard, 
+Operations Research Models and Methods, 2001
+Appendix A, Algorithms for Constrained Optimization,
+\url{http://www.me.utexas.edu/~jensen/ORMM/supplements/index.html}.
+
+PORT Library,
+\url{http://netlib.bell-labs.com/netlib/port/}.
 }
 
 
 \seealso{
-    \code{nlminb2NLPControl}
+
+    \code{nlminb2}, \code{nlminb2Control},
+    and packages \code{Rdonlp2} and \code{Rsolnp2}. 
+}
+
+
+\examples{
+## Example:
+
+   # Feasible Start Solution:
+   start = c(10, 10)
+   
+   # Objective Function: x^2 + y^2 
+   fun <- function(x) sum(x^2)
+   
+   # Bounds: -100 <= x,y <= 100
+   par.lower = c(-100, -100)
+   par.upper = c(100, 100)
+    
+   # Equality Constraints: x*y = 2
+   eqFun <- list(
+     function(x) x[1]*x[2])
+   eqFun.bound = 2
+  
+   # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
+   nlminb2NLP(par = start, fun = fun, 
+     par.lower = par.lower, par.upper = par.upper,
+     eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
+     
+   # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
+   nlminb2NLP(par = start, fun = fun, 
+     par.lower = par.lower, par.upper = par.upper,
+     eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
 }
 
 

@@ -19,7 +19,7 @@
 \usage{
 nlminb2(start, objective, eqFun = NULL, leqFun = NULL,  
     lower = -Inf, upper = Inf, gradient = NULL, hessian = NULL, 
-    control = nlminb2Control(), env = .GlobalEnv)
+    control = list(), env = .GlobalEnv)
 }
 
 
@@ -98,18 +98,30 @@ nlminb2(start, objective, eqFun = NULL, leqFun = NULL,
 
 
 \author{ 
+
     For the R port of \code{nlminb} Douglas Bates and Deepayan Sarkar,
-    for the R/Rmetrics port of \code{nlminbw} Diethelm Wuertz,
-    for the PORT library netlib.bell-labs.com.}
+    for the R/Rmetrics port of \code{nlminb2} Diethelm Wuertz,
+    for the PORT library netlib.bell-labs.com.
+    
+}
+
 
 \references{
-    \url{http://netlib.bell-labs.com/netlib/port/}.
+Paul A. Jensen & Jonathan F. Bard, 
+Operations Research Models and Methods, 2001
+Appendix A, Algorithms for Constrained Optimization,
+\url{http://www.me.utexas.edu/~jensen/ORMM/supplements/index.html}.
+
+PORT Library,
+\url{http://netlib.bell-labs.com/netlib/port/}.
 }
 
 
 \seealso{
-    \code{nlminb2Control},
+
+    \code{nlminb2Control}, \code{nlminb2NLP},
     and packages \code{Rdonlp2} and \code{Rsolnp2}. 
+    
 }
 
 

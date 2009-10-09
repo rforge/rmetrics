@@ -42,7 +42,7 @@ function(
     ineqFun.lower = NULL, 
     ineqFun.upper = NULL,
     
-    control = nlminb2Control())
+    control = list())
 {
     # A function implemented by Diethelm Wuertz
     
@@ -63,6 +63,12 @@ function(
     # Environment Setting:
     env = .GlobalEnv
     
+    # Control List:
+    ctrl = nlminb2Control()
+    if (length(control) > 0)
+        for (name in names(control)) ctrl[name] = control[name]
+    control = ctrl
+
     # Box Constraints:
     if (is.null(par.lower)) par.lower = -Inf
     if (is.null(par.upper)) par.upper = Inf
