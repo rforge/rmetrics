@@ -153,11 +153,13 @@ function(
         # ensure to free memory and close .mes .pro files if opened
         finally=.Call("teardown", 0, PACKAGE = "Rdonlp2"))
             
-    ans$nr.update <- matrix(ans$nr.update, nr=length(par))
+    ans$nr.update <- matrix(ans$nr.update, nr = length(par))
     if (control$hessian)
-        ans$hessian = matrix(ans$hessian, nr=length(par))
+        ans$hessian = matrix(ans$hessian, nr = length(par))
     else
         ans$hessian = NULL
+        
+    # Return Value:
     ans
 }
 

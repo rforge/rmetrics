@@ -102,6 +102,9 @@ donlp2NLP(
   
     \item{convergence}{
         not used, returns NA.}
+        
+    \item{message}{
+        a character string, the convergence message.}
 
 }
 

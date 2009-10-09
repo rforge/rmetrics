@@ -70,7 +70,7 @@ function(
     # FUNCTION:
     
     # Control List:
-    ctrl = nlminb2Control()
+    ctrl = donlp2Control()
     if (length(control) > 0)
         for (name in names(control)) ctrl[name] = control[name]
     control = ctrl
@@ -122,7 +122,8 @@ function(
         opt = ans,
         par = ans$par, 
         objective = fun(ans$par), 
-        convergence = NA)
+        convergence = NA,
+        message = ans$message)
 }
 
 
