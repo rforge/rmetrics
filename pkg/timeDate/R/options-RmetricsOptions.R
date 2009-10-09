@@ -31,7 +31,7 @@ setRmetricsOptions <-
     function(...)
 {
     # A function implemented by Yohan Chalabi
-    
+
     x <- list(...)
     nm <- names(x)
      if (is.null(nm) || "" %in% nm)
@@ -45,17 +45,20 @@ setRmetricsOptions <-
 # ------------------------------------------------------------------------------
 
 
-getRmetricsOptions <-
+getRmetricsOption <-
     function(x = NULL, unset = "")
 {
     # A function implemented by Yohan Chalabi
-    
+
     if (is.null(x))
         x <- ls(all.names = TRUE, envir = .RmetricsOptions)
     unlist(mget(x, envir = .RmetricsOptions, mode = "any",
         ifnotfound = as.list(unset)))
 }
 
+# YC : 2009-10-06
+# kept for compatibility purpose but should be eventually deprecated
+getRmetricsOptions <- getRmetricsOption
 
 ################################################################################
 
