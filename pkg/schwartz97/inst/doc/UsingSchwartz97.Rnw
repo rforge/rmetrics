@@ -29,7 +29,7 @@ pdfstartpage={1}
 \SweaveOpts{engine=R,eps=FALSE}
 %%\VignetteIndexEntry{User Guide}
 \title{Using the \Rpackage~package}
-\author{Philipp Erb \and David L\"{u}thi}%\\\email{philipp.erb@zhaw.org}}
+\author{David L\"{u}thi, Simon Otziger \& Philipp Erb}%\\\email{otis@zhaw.ch}}
 \date{\today}
 \begin{document}
 \maketitle
