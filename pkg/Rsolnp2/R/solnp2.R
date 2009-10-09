@@ -1,4 +1,25 @@
 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+
+################################################################################
+# FUNCTION:                DESCRIPTION:
+#  solnp2                   Nonlinear programming with nonlinear constraints
+################################################################################
+
 
 # Package: Rsolnp
 # Type: Package
@@ -54,20 +75,24 @@
 
 
 # control list
-#           RHO  : penalty parameter
-#           MAJIT: maximum number of major iterations
-#           MINIT: maximum number of minor iterations
-#           DELTA: relative step size in forward difference evaluation
-#           TOL  : tolerance on feasibility and optimality
-# defaults RHO=1, MAJIT=10, MINIT=10, DELTA=1.0e-5, TOL=1.0e-4
+#   RHO  : penalty parameter
+#   MAJIT: maximum number of major iterations
+#   MINIT: maximum number of minor iterations
+#   DELTA: relative step size in forward difference evaluation
+#   TOL  : tolerance on feasibility and optimality
+# defaults  RHO=1, MAJIT=10, MINIT=10, DELTA=1.0e-5, TOL=1.0e-4
 
 
-solnp <-
+# ------------------------------------------------------------------------------
+
+
+solnp2 <-
 function(pars, fun, grad = NULL, eqfun = NULL, eqB = NULL, 
     eqgrad = NULL, ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, 
     ineqgrad = NULL, LB = NULL, UB = NULL, 
     trace = FALSE, control = list(), ...)
 {
+    trace = FALSE
     TRACE = trace
     
     # start timer
@@ -1108,11 +1133,11 @@ function(pars, fun, ...)
             grd[i] = (fun(pars, ...) - y0) / deltax
             pars[i] = init
         }
-    }
-    else
+    } else
     {
         grd = 0
     }
+    
     return(grd)
 }
 
@@ -1141,6 +1166,7 @@ function(pars, fun, ...)
     } else{
         jac = rep(0, nx)
     }
+    
     return(jac)
 }
 
@@ -1186,6 +1212,7 @@ function(pars, .env, ...)
     .solnp_ineqfun = get(".solnp_ineqfun", envir = .env)
     res = c(pars - LB,  UB - pars)
     if(!is.null(.solnp_ineqfun)) res = c(.solnp_ineqfun(pars, ...), res)
+    
     res
 }
 
@@ -1200,6 +1227,7 @@ function(pars, .env, ...)
     n = length(pars)
     res = rbind(diag(n), -diag(n))
     if(!is.null(.solnp_ineqjac)) res = rbind(.solnp_ineqjac(pars, ...), res)
+    
     res
 }
 
@@ -1223,13 +1251,32 @@ function(control)
     } else{
         npar = tolower(names(unlist(control)))
         names(params) = npar
-        if(any(substr(npar, 1, 3) == "rho")) ans$rho = as.numeric(params["rho"]) else ans$rho = 1
-        if(any(substr(npar, 1, 10) == "outer.iter")) ans$outer.iter = as.numeric(params["outer.iter"]) else ans$outer.iter = 400
-        if(any(substr(npar, 1, 10) == "inner.iter")) ans$inner.iter = as.numeric(params["inner.iter"]) else ans$inner.iter = 800
-        if(any(substr(npar, 1, 5) == "delta")) ans$delta = as.numeric(params["delta"]) else ans$delta = 1.0e-8
-        if(any(substr(npar, 1, 3) == "tol")) ans$tol = as.numeric(params["tol"]) else ans$tol = 1.0e-6
-        if(any(substr(npar, 1, 5) == "trace")) ans$trace = as.numeric(params["trace"]) else ans$trace = 1
+        if(any(substr(npar, 1, 3) == "rho")) 
+            ans$rho = as.numeric(params["rho"]) 
+        else 
+            ans$rho = 1
+        if(any(substr(npar, 1, 10) == "outer.iter")) 
+            ans$outer.iter = as.numeric(params["outer.iter"]) 
+        else 
+            ans$outer.iter = 400
+        if(any(substr(npar, 1, 10) == "inner.iter")) 
+            ans$inner.iter = as.numeric(params["inner.iter"]) 
+        else 
+            ans$inner.iter = 800
+        if(any(substr(npar, 1, 5) == "delta")) 
+            ans$delta = as.numeric(params["delta"]) 
+        else 
+            ans$delta = 1.0e-8
+        if(any(substr(npar, 1, 3) == "tol")) 
+            ans$tol = as.numeric(params["tol"]) 
+        else 
+            ans$tol = 1.0e-6
+        if(any(substr(npar, 1, 5) == "trace")) 
+            ans$trace = as.numeric(params["trace"]) 
+        else 
+            ans$trace = 1
     }
+    
     return(ans)
 }
 
@@ -1242,6 +1289,7 @@ function( n = 1, m = 1)
 {
     if(missing(m)) m = n
     sol = matrix(0, nrow = n, ncol = m)
+    
     return(sol)
 }
 
@@ -1254,6 +1302,7 @@ function(n = 1, m = 1)
 {
     if(missing(m)) m = n
     sol = matrix(1, nrow = n, ncol = m)
+    
     return(sol)
 }
 
@@ -1276,6 +1325,7 @@ function(x)
 {
     z = svd(x)$d
     if(any( z == 0 )) ret = Inf else ret = max( z ) / min( z )
+    
     return(ret)
 }
 
