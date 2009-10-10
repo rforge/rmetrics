@@ -21,7 +21,7 @@
 ################################################################################
 
 
-solnpNLP <- 
+solnp2NLP <- 
 function(
     par, fun, 
     par.lower = NULL, par.upper = NULL,
@@ -78,7 +78,7 @@ function(
     if(is.null(control)) control = list()
 
     # Solve:
-    ans = solnp(
+    ans = solnp2(
         pars = par, 
         fun = fun, 
         grad = NULL, 

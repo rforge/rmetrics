@@ -23,14 +23,9 @@
 
 
 \usage{
-    solnp2(
-        pars, fun, grad = NULL, 
-        eqfun = NULL, eqB = NULL, 
-        eqgrad = NULL, 
-        ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, 
-        ineqgrad = NULL, LB = NULL, UB = NULL, 
-        control = solnp2Control(),
-        env = )
+solnp2(pars, fun, grad = NULL, eqfun = NULL, eqB = NULL, eqgrad = NULL, 
+    ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, ineqgrad = NULL, 
+    LB = NULL, UB = NULL, control = list(), env = ,GlobalEnv)
 }
 
 

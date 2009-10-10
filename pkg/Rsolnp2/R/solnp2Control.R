@@ -16,45 +16,26 @@
 
 
 ################################################################################
-# FUNCTION:                DESCRIPTION:
-#  solnp2Control            Returns control list
-################################################################################
-
-
-# Package: Rsolnp
-# Type: Package
-# Title: Non-linear Programming with non-linear Constraints
-# Version: 0.3
-# Date: 2009-09-15
-# Author: Alexios Ghalanos and Stefan Theussl
-# Maintainer: Alexios Ghalanos <alexios@4dscape.com>
-# Depends: stats
-# Description: Non-linear Optimization Using Augmented Lagrange Multiplier 
-#    Method Version for Rmetrics Portfolio Optimization
-# LazyLoad: yes
-# License: GPL
-
-
-################################################################################
-
-
-# control list
-#   RHO  : penalty parameter
-#   MAJIT: maximum number of major iterations
-#   MINIT: maximum number of minor iterations
-#   DELTA: relative step size in forward difference evaluation
-#   TOL  : tolerance on feasibility and optimality
-# defaults RHO=1, MAJIT=10, MINIT=10, DELTA=1.0e-5, TOL=1.0e-4
-
-
+# FUNCTION:                  DESCRIPTION
+#  solnp2Control              Returns control list
 ################################################################################
 
 
 solnp2Control <-
 function(rho = 1, majit = 10, minit = 10, delta = 1e-5, tol = 1e-4)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Returns control list
+    
+    # Arguments:
+    #   rho - a numeric value. The penalty parameter 
+    #   majit - an integer value. The maximum number of major iterations 
+    #   minit - an integer value. The maximum number of minor iterations 
+    #   delta - a numeric value. The relative step size in forward 
+    #       difference evaluation 
+    #   tol - a numeric value. The tolerance on feasibility and optimality 
     
     # FUNCTION:
     
