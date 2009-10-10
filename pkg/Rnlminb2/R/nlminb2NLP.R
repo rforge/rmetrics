@@ -24,24 +24,11 @@
 nlminb2NLP <- 
 function(
     par, fun, 
-    
-    par.lower = NULL, 
-    par.upper = NULL,
-    
-    eqA = NULL, 
-    eqA.bound = NULL,
-    
-    ineqA = NULL, 
-    ineqA.lower = NULL, 
-    ineqA.upper = NULL,
-    
-    eqFun = list(), 
-    eqFun.bound = NULL,
-    
-    ineqFun = list(), 
-    ineqFun.lower = NULL, 
-    ineqFun.upper = NULL,
-    
+    par.lower = NULL, par.upper = NULL,
+    eqA = NULL, eqA.bound = NULL,
+    ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,
+    eqFun = list(), eqFun.bound = NULL,
+    ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL,
     control = list())
 {
     # A function implemented by Diethelm Wuertz
