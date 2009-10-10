@@ -1,13 +1,71 @@
 \name{solnp2}
 
-
 \alias{solnp2}
-
 
 \title{Nonlinear optimization using augmented lagrange method.}
 
 
 \description{
+
+    Solve constrained nonlinear minimization problem with nonlinear 
+    constraints.
+    
+}
+
+
+\usage{
+solnp2(par, fun, grad = NULL, eqfun = NULL, eqB = NULL, eqgrad = NULL, 
+    ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, ineqgrad = NULL, 
+    LB = NULL, UB = NULL, control = list(), ...)
+}
+
+
+\arguments{
+
+    \item{par}{
+        a numeric vector, parameter vector(vector object).}
+        
+    \item{fun}{
+        the objective function to be minimized.}
+  
+    \item{grad}{
+        a function, tue gradient of \code{fun}.}
+  
+    \item{eqfun}{
+        the equality constraint function returning the vector of evaluated 
+        equality constraints.}
+  
+    \item{eqB}{
+        the equality constraints.}
+    
+    \item{eqgrad}{
+        the equality constraints gradient function, not currently 
+        implemented.}
+
+    \item{ineqfun}{
+        the inequality constraint function returning the vector of evaluated 
+        inequality constraints.}
+    
+    \item{ineqLB, ineqUB}{
+        the lower and upper bounds of the inequality constraints.}    
+       
+    \item{ineqgrad}{
+        the inequality constraints grdient function, not currently 
+        implemented.}
+ 
+    \item{LB, UB}{
+        the lower and upper bounds of the inequality constraints.}
+        
+    \item{control}{
+        list of control parameters that define the behaviour of the
+        solver. See \code{solnp2Control} for details.}
+        
+    \item{...}{
+        optional arguments.}
+}
+
+
+\details{
 
     The solnp function is based on the solver by Yinyu Ye which solves 
     the general nonlinear programming problem:\cr
@@ -19,72 +77,12 @@
             \eqn{l_x \le x \le u_x}\cr
 
     where, \eqn{f(x)}, \eqn{g(x)} and \eqn{g(x)} are smooth functions.
-}
 
-
-\usage{
-solnp2(pars, fun, grad = NULL, eqfun = NULL, eqB = NULL, eqgrad = NULL, 
-    ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, ineqgrad = NULL, 
-    LB = NULL, UB = NULL, control = list(), env = ,GlobalEnv)
-}
-
-
-\arguments{
-
-    \item{par}{
-        parameter vector(vector object).}
-        
-    \item{fun}{
-        the objective function to be minimized. Currently, \code{fn}
-        must take only one argument, and the parameter vector(\code{par})
-        will be passed to \code{fn} during the optimization. The first
-        element of return value must be the evaluated value.}
-  
-    \item{par.lower, par.upper}{
-        upper and lower bounds for parameter vector,
-        respectively. Their length must equal to
-        \code{length(par)}.}
-  
-    \item{eqA, ineqA}{
-        the matrix objects that represents linear constraints. Its
-        columns must be equal to \code{length(par)}, and its rows
-        must be equal to the number of linear constraints.}
-  
-    \item{eqA.bound}{
-        equality bounds for linear constraints, respectively. Their 
-        length must equal to the number of linear constraints.}
-    
-    \item{ineqA.lower, ineqA.upper}{
-        upper and lower bounds for linear constraints,
-        respectively. Their length must equal to the number of linear
-        constraints.}
-
-    \item{eqFun}{
-        list object whose elements are functions that represents
-        nonlinear equality constraints.}
-    
-    \item{eqFun.bound}{
-        equality bounds for nonlinear constraints, respectively.}
-      
-    \item{ineqFun}{
-        list object whose elements are functions that represents
-        nonlinear lower and upper constraints.}
- 
-    \item{ineqFun.lower, ineqFun.upper}{
-        lower and upper bounds for nonlinear constraints, respectively.}
-
-    \item{control}{
-        list of control parameters that define the behaviour of the
-        solver. See \code{\link{solnp2Control}} for details.}
-}
-
-
-\details{
 
     The solver belongs to the class of indirect solvers and implements 
     the augmented Lagrange multiplier method with an SQP interior algorithm.
 
-    }
+}
 
 
 \value{

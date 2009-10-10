@@ -31,7 +31,7 @@ solnp2NLP(
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,  
     eqFun = list(), eqFun.bound = NULL,
     ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL, 
-    control = solnp2Control())
+    control = list())
 }
 
 

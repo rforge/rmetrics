@@ -29,7 +29,7 @@ function(
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,
     eqFun = list(), eqFun.bound = NULL,
     ineqFun = list(), ineqFun.lower = NULL, ineqFun.upper = NULL,
-    control = NULL)
+    control = list())
 {
     # A function implemented by Diethelm Wuertz
     
@@ -45,6 +45,15 @@ function(
     #       control = list(), ...) 
     
     # FUNCTION:
+    
+    # Environment Setting:
+    env = .GlobalEnv
+    
+    # Control List:
+    ctrl = solnp2Control()
+    if (length(control) > 0)
+        for (name in names(control)) ctrl[name] = control[name]
+    control = ctrl
     
     # Equality Function Constraints:
     if (length(eqFun) > 0) {
@@ -69,8 +78,7 @@ function(
             ans }
     } else {
         ineqfun = NULL
-    }
-    
+    }  
     ineqLB = c(ineqA.lower, ineqFun.lower)
     ineqUB = c(ineqA.upper, ineqFun.upper)
     
@@ -79,7 +87,7 @@ function(
 
     # Solve:
     ans = solnp2(
-        pars = par, 
+        par = par, 
         fun = fun, 
         grad = NULL, 
         eqfun = eqfun, 
@@ -91,7 +99,6 @@ function(
         ineqgrad = NULL, 
         LB = par.lower, 
         UB = par.upper, 
-        trace = trace,
         control = control) 
         
     # Return Value:

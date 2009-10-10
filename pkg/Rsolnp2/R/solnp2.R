@@ -87,11 +87,11 @@
 
 
 solnp2 <-
-function(pars, fun, grad = NULL, eqfun = NULL, eqB = NULL, 
+function(par, fun, grad = NULL, eqfun = NULL, eqB = NULL, 
     eqgrad = NULL, ineqfun = NULL, ineqLB = NULL, ineqUB = NULL, 
-    ineqgrad = NULL, LB = NULL, UB = NULL, 
-    trace = FALSE, control = list(), ...)
+    ineqgrad = NULL, LB = NULL, UB = NULL, control = list(), ...)
 {
+    pars = par
     trace = FALSE
     TRACE = trace
     
