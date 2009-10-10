@@ -87,7 +87,7 @@ skewhypMom(order, mu = 0, delta = 1, beta = 1, nu = 1,
   \code{\link[HyperbolicDist]{is.wholenumber}},
   \code{\link[HyperbolicDist]{momRecursion}},
   \code{\link[HyperbolicDist]{momChangeAbout}} and
-  \code{\link[HyperbolicDist]{gammaRawMoments}}.
+  \code{\link[HyperbolicDist]{gigMom}}.
 }
 \examples{
 param = c(1,2,3,10)

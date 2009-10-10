@@ -44,5 +44,5 @@ of \code{skwewhypFit}.
   \code{\link{skewhypMean}},\code{\link{skewhypMom}}, 
   \code{\link{skewhypFit}}, \code{\link{skewhypFitStart}},
   \code{\link{skewhypBreaks}}, \code{\link{qqskewhyp}},
-  \code{\link[HyperbolicDist]{HyperbolicDist}}.
+  \code{\link[HyperbolicDist]{HyperbolicDistribution}}.
 }
