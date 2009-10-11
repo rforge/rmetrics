@@ -29,10 +29,10 @@
            an object of class \code{\link[=ghyp-class]{ghyp}} and a data matrix.}
   \item{data}{An object coercible to a \code{matrix}.}
   \item{main}{The title of the plot.}
-  \item{nbins}{The number of bins passed to \code{\link[pkg:gplots]{hist2d}}.}
+  \item{nbins}{The number of bins passed to \code{\link[gplots]{hist2d}}.}
   \item{qq}{If \code{TRUE} qq-plots are drawn.}
   \item{gaussian}{If \code{TRUE} qq-plots with the normal distribution are plotted.}
-  \item{hist.col}{A vector of colors passed to \code{\link[pkg:gplots]{hist2d}}.}
+  \item{hist.col}{A vector of colors passed to \code{\link[gplots]{hist2d}}.}
   \item{spline.points}{The number of support points when computing the quantiles used by the
                        qq-plot. Passed to \code{\link{qqghyp}}.}
   \item{root.tol}{The tolerance of the quantiles. Passed to \code{\link{uniroot}} via \code{\link{qqghyp}}.}
@@ -44,7 +44,7 @@
 \author{David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{pairs}}, \code{\link{fit.ghypmv}},
-         \code{\link{qqghyp}}, \code{\link[pkg:gplots]{hist2d}}}
+         \code{\link{qqghyp}}, \code{\link[gplots]{hist2d}}}
 % <---------------------------------------------------------------------->
 \examples{
   data(smi.stocks)

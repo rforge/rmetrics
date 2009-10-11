@@ -260,7 +260,7 @@ ghyp V1.5.1
 
 	* Documentation and Vignette improved...
 
-2009-08-26 David Luethi
+2009-10-11 David Luethi
 ghyp V1.5.2
 
 	* Documentation and Vignette improved...
@@ -272,3 +272,4 @@ ghyp V1.5.2
 	matrices for 'mu' and 'gamma' and coerce them to vectors. 'Gauss'
 	accepts a matrix for 'mu'.
 
+	* Warning issues for Rd-files under R-2.11.0 resolved.

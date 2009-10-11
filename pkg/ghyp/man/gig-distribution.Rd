@@ -74,8 +74,13 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
    parameters \code{rel.tol}, \code{abs.tol}, \code{root.tol} and
    \code{spline.points}. \cr
 
-   \code{rgig} uses the random number generator from the \R package
-   \emph{fBasics}.
+   \code{rgig} uses the code from the GIG-random number generator from
+   the \R package \emph{fBasics}.\cr
+   
+   \code{Egig} with \code{func = "log x"} uses
+   \code{\link[numDeriv]{grad}} from the \R package \emph{numDeriv}. See
+   the package vignette for details regarding the expectation of GIG
+   random variables.
 
 }
 % <---------------------------------------------------------------------->
