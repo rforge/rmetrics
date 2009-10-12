@@ -15,20 +15,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m3-1   case6
- *  R-m3       case5
- *  ...              ...
- *  R-m2-1   case5
- *  R-m2       case4
- *  ...              ...
- *  R-m1-1   case4
- *  R-m1       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M1-1      case6
+ *  R-M1        case5
+ *  ...         ...
+ *  R-M2-1      case5
+ *  R-M2        case4
+ *  ...         ...
+ *  R-M3-1      case4
+ *  R-M3        case3
+ *  ...         ...
+ *  R-1         case3
  */
 
 
@@ -155,7 +155,7 @@ static double case_2(void)
     return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M1 >= R
+// state_i+M3 >= R
 static double case_3(void)
 {
     //Rprintf("c3 state_i = i mod r : %u\n", state_i);
@@ -166,7 +166,7 @@ static double case_3(void)
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(13,z0) ^ MAT3NEG(-10,z1) ^ MAT3NEG(-5,z2) ^ MAT0POS(13,newV1);
     state_i--;
-    if(state_i+M1<R)
+    if(state_i+M3<R)
         WELLRNG521b = case_4;
         
     return ((double) STATE[state_i] * FACT);
@@ -189,7 +189,7 @@ static double case_4(void)
     return ((double) STATE[state_i] * FACT);
 }
 
-//state_i+M3 >= R
+//state_i+M1 >= R
 static double case_5(void)
 {
     //Rprintf("c5 state_i = i mod r : %u\n", state_i);
@@ -199,13 +199,13 @@ static double case_5(void)
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(13,z0) ^ MAT3NEG(-10,z1) ^ MAT3NEG(-5,z2) ^ MAT0POS(13,newV1);
     state_i--;
-    if(state_i+M3 < R)
+    if(state_i+M1 < R)
         WELLRNG521b = case_6;
         
     return ((double) STATE[state_i] * FACT);
 }
 
-// 2 <= state_i <= R-M3-1
+// 2 <= state_i <= R-M1-1
 static double case_6(void)
 {
     //Rprintf("c6 state_i = i mod r : %u\n", state_i);

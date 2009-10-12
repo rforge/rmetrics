@@ -139,7 +139,7 @@ static double case_3 (void)
     
    state_i--;
    if (state_i + M3 < R)
-      WELLRNG19937bTemp = case_5;
+      WELLRNG19937bTemp = case_4;
 
        y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
        y =              y ^ ((             y << 15) & TEMPERC);

@@ -134,7 +134,7 @@ static double case_3 (void)
     
    state_i--;
    if (state_i + M3 < R)
-      WELLRNG19937b = case_5;
+      WELLRNG19937b = case_4;
 
        return ((double) STATE[state_i] * FACT);
 }

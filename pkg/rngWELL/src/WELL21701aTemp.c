@@ -16,20 +16,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m2-1   case6
- *  R-m2       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m1-1   case4
- *  R-m1       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M2-1      case6
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M1-1      case5
+ *  R-M1        case4
+ *  ...         ...
+ *  R-M3-1      case4
+ *  R-M3        case3
+ *  ...         ...
+ *  R-1         case3
  */
  
 
@@ -199,7 +199,7 @@ static double case_4(void)
    return ((double) y * FACT);
 }
 
-//state_i+M3 >= R
+//state_i+M2 >= R
 static double case_5(void)
 {
    //     Rprintf("c5 state_i = i mod r : %u\n", state_i);
@@ -212,7 +212,7 @@ static double case_5(void)
     newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,10,27,0x86a9d87e,z2) ^ MAT0NEG(-16,newV1);
     
   state_i--;
-  if(state_i+M3 < R)
+  if(state_i+M2 < R)
     WELLRNG21701aTemp = case_6;
 
    y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
@@ -220,7 +220,7 @@ static double case_5(void)
    return ((double) y * FACT);
 }
 
-// 2 <= state_i <= R-M3-1
+// 2 <= state_i <= R-M2-1
 static double case_6(void)
 {
    //     Rprintf("c6 state_i = i mod r : %u\n", state_i);

@@ -15,20 +15,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m1-1   case6
- *  R-m1       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m2-1   case4
- *  R-m2       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M3-1      case6
+ *  R-M3        case5
+ *  ...         ...
+ *  R-M1-1      case5
+ *  R-M1        case4
+ *  ...         ...
+ *  R-M2-1      case4
+ *  R-M2        case3
+ *  ...         ...
+ *  R-1         case3
  */
 
 
@@ -193,7 +193,7 @@ static double case_4(void)
     newV0 = MAT0NEG(-26,z0) ^ MAT1(z1) ^ MAT7(z2) ^ MAT0POS(16,newV1);
             
     state_i--;
-    if (state_i+M3< R)
+    if (state_i+M1< R)
         WELLRNG23209bTemp = case_5;
 
         y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
