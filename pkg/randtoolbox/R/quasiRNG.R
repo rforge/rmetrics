@@ -136,8 +136,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
     qn = rep(0, ifelse(length(n)>1, length(n), n) * dim)
     
 # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
-    if( !normal )
-        result = .Fortran("halton",
+    result <- .Fortran("halton",
                           as.double( qn ),
                           as.integer( ifelse(length(n)>1, length(n), n) ),
                           as.integer( dim ),
@@ -145,24 +144,17 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
                           as.integer( .getrandtoolboxEnv(".runif.halton.seed")$offset ),
                           as.integer( init ),
                           as.integer( 0 ),
-                          PACKAGE = "randtoolbox")
-    else
-        result = .Fortran("halton",
-                          as.double( qn ),
-                          as.integer( ifelse(length(n)>1, length(n), n) ),
-                          as.integer( dim ),
-                          as.integer( .getrandtoolboxEnv(".runif.halton.seed")$base ),
-                          as.integer( .getrandtoolboxEnv(".runif.halton.seed")$offset ),
-                          as.integer( init ),
-                          as.integer( 1 ),
-                          PACKAGE = "randtoolbox")
-    
+                          PACKAGE = "randtoolbox")    
         
 # For the next numbers save:
     .setrandtoolboxEnv(.runif.halton.seed = list(base = result[[4]], offset = result[[5]]))
     
 # Deviates:
     result = matrix(result[[1]], ncol = dim)
+
+## Normal transformation
+    if(normal)
+	result <- qnorm(result)
     
 # Return Value:
     if(dim == 1)
@@ -207,35 +199,19 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     qn = rep(0.0, ifelse(length(n)>1, length(n), n) * dim)
     
 # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-    if( !normal )
-        result = .Fortran("sobol",
-                          as.double( qn ),
-                          as.integer( ifelse(length(n)>1, length(n), n) ),
-                          as.integer( dim ),
-                          as.double ( .getrandtoolboxEnv(".runif.sobol.seed")$quasi ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$ll ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$count ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$sv ),
-                          as.integer( scrambling ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$seed ),
-                          as.integer( init ),
-                          as.integer( 0 ),
-                          PACKAGE = "randtoolbox")
-    else
-        result = .Fortran("sobol",
-                          as.double( qn ),
-                          as.integer( ifelse(length(n)>1, length(n), n) ),
-                          as.integer( dim ),
-                          as.double ( .getrandtoolboxEnv(".runif.sobol.seed")$quasi ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$ll ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$count ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$sv ),
-                          as.integer( scrambling ),
-                          as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$seed ),
-                          as.integer( init ),
-                          as.integer( 1 ),
-                          PACKAGE = "randtoolbox")
-    
+	result = .Fortran("sobol",
+					  as.double( qn ),
+					  as.integer( ifelse(length(n)>1, length(n), n) ),
+					  as.integer( dim ),
+					  as.double ( .getrandtoolboxEnv(".runif.sobol.seed")$quasi ),
+					  as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$ll ),
+					  as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$count ),
+					  as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$sv ),
+					  as.integer( scrambling ),
+					  as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$seed ),
+					  as.integer( init ),
+					  as.integer( 0 ),
+					  PACKAGE = "randtoolbox")
     
 # For the next numbers save:
     .setrandtoolboxEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
@@ -243,7 +219,11 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     
 # Deviates:
     result = matrix(result[[1]], ncol = dim)
-    
+
+## Normal transformation
+    if(normal)
+	result <- qnorm(result)   
+	
 # Return Value:
     if(dim == 1)
         as.vector(result)

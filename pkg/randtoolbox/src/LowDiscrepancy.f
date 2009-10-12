@@ -11,9 +11,11 @@ C @file  LowDiscrepancy.f
 C @brief Halton sequence
 C
 C @author Diethelm Wuertz 
+C @author Christophe Dutang
 C
 C
 C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
 C
 C The new BSD License is applied to this software.
 C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
@@ -28,7 +30,7 @@ C          - Redistributions in binary form must reproduce the above
 C         Copyright notice, this list ofConditions and the following
 C          disclaimer in the documentation and/or other materials provided
 C          with the distribution.
-C          - Neither the name of the ETH Zurich nor the names of itsContributors 
+C          - Neither the name of the ETH Zurich nor the names of its Contributors 
 C          may be used to endorse or promote products derived from this software 
 C          without specific prior written permission.
 C     
@@ -63,7 +65,7 @@ C     INITIALIZE THE HALTON LOW DISCREPANCY SEQUENCE.
 C     THE BASE IS CALCULATED FROM PRIMES
 
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
-      REAL*8 QUASI(DIMEN), HALF
+      DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
  
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
@@ -116,13 +118,13 @@ C     GENERATE THE NEXT POINT IN HALTON'S LOW DISCREPANCY SEQUENCE
 C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
 
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
-      REAL*8 QUASI(DIMEN), HALF
+      DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
            
       DO NB = 1, DIMEN      
       ITER(NB) = OFFSET
       QUASI(NB) = 0.0D0
-      HALF = 1.0 / BASE(NB)
+      HALF = 1.0D0 / BASE(NB)
       DO WHILE (ITER(NB).NE.0)
          DIGIT = MOD ( ITER(NB), BASE(NB) )
          QUASI(NB) = QUASI(NB) + DIGIT * HALF
@@ -156,27 +158,30 @@ C       TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
-      REAL*8 QN(N,DIMEN), QUASI(DIMEN)
+      DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
-      CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
+		  CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
-      DO I=1, N
-         CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-      IF (TRANSFORM.EQ.1) THEN
-         DO J = 1, DIMEN
-            QN(I, J) = HQNORM(QUASI(J))
-         ENDDO
-      ELSE
-         DO J = 1, DIMEN
-            QN(I, J) = QUASI(J)        
-         ENDDO
-      ENDIF
-      ENDDO
-
+      IF (TRANSFORM.EQ.0) THEN
+		  DO I=1, N
+			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+			 DO J = 1, DIMEN
+				QN(I, J) = QUASI(J)        
+			 ENDDO
+		  ENDDO
+	  ELSE
+		  DO I=1, N
+			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+			 DO J = 1, DIMEN
+				QN(I, J) = HQNORM(QUASI(J))
+			 ENDDO
+		  ENDDO
+	  ENDIF
+	   
       RETURN
       END
 
@@ -184,10 +189,10 @@ C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
 C ------------------------------------------------------------------------------
 
 
-      REAL*8 FUNCTION HQNORM(P)
+      DOUBLE PRECISION FUNCTION HQNORM(P)
 
 C     USED TO CALCULATE HALTON NORMAL DEVIATES:
-      REAL*8 P,R,T,A,B, EPS
+      DOUBLE PRECISION P,R,T,A,B, EPS
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
      &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -223,7 +228,7 @@ C -----------------------------------------------------------------------------
       INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
       PARAMETER (N1=20,N2=N1/2,DIMEN=5)
       INTEGER BASE(DIMEN)
-      REAL*8 QN1(N1,DIMEN),QN2(N2,DIMEN)
+      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
 
       TRANSFORM = 0
       
@@ -302,7 +307,10 @@ C       R/SPLUS FUNCTION.
 C     SEE:
 C       http://www.acm.org/pubs/copyright_policy/softwareCRnotice.html
 C
+C @author Christophe Dutang
+C
 C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
 C
 C The new BSD License is applied to this software.
 C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
@@ -374,25 +382,30 @@ C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER MAXBIT,N,DIMEN,INIT,TRANSFORM
       PARAMETER (MAXBIT=30)
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
-      REAL*8 QN(N,DIMEN), QUASI(DIMEN)
+      DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
       INTEGER iSEED
 
       IF (INIT.EQ.1) THEN
-      CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
+		  CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
       ENDIF
 
-      DO I=1, N
-         CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
-      IF (TRANSFORM.EQ.1) THEN
-        DO J = 1, DIMEN
-               QN(I, J) = SQNORM(QUASI(J))
-        ENDDO
-      ELSE
-            DO J = 1, DIMEN
-               QN(I, J) = QUASI(J)         
-        ENDDO
-      ENDIF
-      ENDDO
+C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
+      
+	  IF (TRANSFORM.EQ.0) THEN
+		  DO I=1, N
+			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)      
+			 DO J = 1, DIMEN
+				   QN(I, J) = QUASI(J)         
+			 ENDDO
+		  ENDDO
+	  ELSE
+		  DO I=1, N
+			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
+			 DO J = 1, DIMEN
+				   QN(I, J) = SQNORM(QUASI(J))
+			 ENDDO
+		  ENDDO
+	  ENDIF
 
       RETURN
       END
@@ -401,10 +414,10 @@ C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 C ------------------------------------------------------------------------------
 
 
-      REAL*8 FUNCTION SQNORM(P)
+      DOUBLE PRECISION FUNCTION SQNORM(P)
 
 C     USED TO CALCULATE SOBOL NORMAL DEVIATES
-      REAL*8 P,R,T,A,B, EPS
+      DOUBLE PRECISION P,R,T,A,B, EPS
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
      &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -421,7 +434,7 @@ C     POINT WITH A POINT FAR IN THE TAILS.
       SQNORM = 0.0D0
       RETURN
 150   R = P 
-      IF (P.GT.0.5D0) R = 1.0 - R
+      IF (P.GT.0.5D0) R = 1.0D0 - R
       T = DSQRT(-2.0*DLOG(R))
       A = ((((T*P4 + P3)*T+P2)*T + P1)*T + P0)
       B = ((((T*Q4 + Q3)*T+Q2)*T + Q1)*T + Q0)
@@ -473,7 +486,7 @@ CC      DW ADDED FOLLOWING LINE:
 CC      INTEGER TEMP1,TEMP2,TEMP4
       INTEGER TEMP1,TEMP2,TEMP3,TEMP4
       INTEGER SHIFT(1111),LSM(1111,31),TV(1111,31,31)
-      REAL*8 QUASI(DIMEN),RECIPD
+      DOUBLE PRECISION QUASI(DIMEN),RECIPD
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
       INTRINSIC MOD, IEOR
@@ -1444,7 +1457,7 @@ C>>> SCRAMBLING START
 C <<< END OF SCRAMBLING
 
 C     RECIPD IS 1/(COMMON DENOMINATOR OF THE ELEMENTS IN SV)
-      RECIPD = 1.0 / LL
+      RECIPD = 1.0D0 / LL
 
 C     SET UP FIRST VECTOR AND VALUES FOR "GOSOBL"
       COUNT = 0
@@ -1461,7 +1474,7 @@ C ------------------------------------------------------------------------------
       SUBROUTINE SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
 
 C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
-      REAL*4 UNIS
+      DOUBLE PRECISION UNIS
       INTEGER S,MAXCOL,P,I,J,MAX,TEMP,STEMP,L,LL
       INTEGER SHIFT(1111),LSM(1111,31)
       INTEGER iSEED
@@ -1471,7 +1484,7 @@ C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
          L = 1
          DO I = MAX, 1, -1
             LSM(P, I) = 0
-            STEMP =  MOD((INT(UNIS(iSEED)*1000.0)), 2)
+            STEMP =  MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
             SHIFT(P) = SHIFT(P) + STEMP*L
             L = 2 * L
             LL = 1
@@ -1479,7 +1492,7 @@ C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
                IF (J .EQ. I) THEN
                   TEMP = 1
                ELSEIF (J .LT. I)  THEN 
-                  TEMP = MOD((INT(UNIS(iSEED)*1000.0)), 2)
+                  TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
                ELSE
                   TEMP = 0
                ENDIF
@@ -1498,19 +1511,19 @@ C ------------------------------------------------------------------------------
       SUBROUTINE SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
 
 C     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND SHIFT VECTORS.
-      REAL*4 UNIS
+      DOUBLE PRECISION UNIS
       INTEGER USM(31,31),MAXCOL,I,J
       INTEGER USHIFT(31),S,TEMP,STEMP
       INTEGER iSEED
       
       DO I = 1, MAXCOL
-         STEMP =  MOD((INT(UNIS(iSEED)*1000.0)), 2)
+         STEMP =  MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
          USHIFT(I) = STEMP               
          DO J = 1, MAXCOL
             IF (J .EQ. I) THEN
                TEMP = 1
             ELSEIF (J .GT. I)  THEN 
-               TEMP = MOD((INT(UNIS(iSEED)*1000.0)), 2)
+               TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
             ELSE
                TEMP = 0
             ENDIF
@@ -1524,7 +1537,7 @@ C     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND SHIFT VECTORS.
 C-------------------------------------------------------------------------------
       
       
-      REAL*4 FUNCTION UNIS(IX)
+      DOUBLE PRECISION FUNCTION UNIS(IX)
 C       PORTABLE PSEUDORANDOM NUMBER
 C       GENERATOR IMPLEMENTING THE RECURSION
 C       IX=16807*IX MOD(2**31-1)
@@ -1545,7 +1558,7 @@ C      SPRINGER-VERLAG, PAGES 201-202
       K1 = IX/127773
       IX = 16807*(IX-K1*127773)-K1*2836
       IF (IX.LT.0) IX=IX+2147483647
-      UNIS = IX*4.656612875E-10
+      UNIS = IX*4.656612875D-10
       RETURN
       END
 
@@ -1567,7 +1580,7 @@ C       COUNT     - SEQUENCE NUMBER OF THE CALL
       INTEGER DIMEN,MAXBIT,I,L,COUNT
       PARAMETER (MAXBIT=30)
       INTEGER SV(DIMEN,MAXBIT)
-      REAL*8 QUASI(DIMEN)
+      DOUBLE PRECISION QUASI(DIMEN)
       INTRINSIC MOD, IEOR
       
       L = 0
@@ -1598,7 +1611,7 @@ C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       INTEGER MAXBIT,DIMEN,TRANSFORM
       PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
-      REAL*8 QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
+      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
       INTEGER iSEED, iSEED1
 
       TRANSFORM = 1

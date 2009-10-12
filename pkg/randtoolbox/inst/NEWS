@@ -7,7 +7,8 @@ NEW FEATURES
 
 - start runif interface for congruential generator and WELL RNG
 - vignette contains two chapters.
-- start to test true randomness (not included in this version)
+- start to test true randomness (not included in this version).
+- increase the speed and accuracy of Halton and Sobol sequences.
 
 STRUCTURAL CHANGE
 
@@ -16,6 +17,14 @@ put it in a dedicated package rngWELL
 - change the licence of randtoolbox from GPL to BSD licence
 - depends now on rngWELL.
 
+BUG FIXES
+- normal transformation of Halton and Sobol sequences is correct.
+
+BUG REPORT
+
+- Halton and Sobol sequences did not work on 64bit architecture when
+using normal transformation reported by Anirban Mukherjee.
+- Sobol sequences for dimension > 2 are wrong.
 
 Version 1.08 (never released on CRAN)
 =============
