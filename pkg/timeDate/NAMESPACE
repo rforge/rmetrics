@@ -284,6 +284,7 @@ export(
     "GBMilleniumDay",
     "GBSummerBankHoliday",
     ".genDaylightSavingTime",
+    "getRmetricsOption",
     "getRmetricsOptions",
     "Gibraltar",
     "Glace_Bay",
