@@ -80,7 +80,7 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
 ##       dnorm(x[,2], mean[2], sqrt(sigma[2,2])) /
 ##         dnorm(qnorm(uniform.margins[,1]))/ dnorm(qnorm(uniform.margins[,2]))
 
-  dens <- dmvnorm(x, mean = mean, sigma = sigma) / exp(x[,1])
+  dens <- dmvnorm(x, mean = mean, sigma = sigma) / exp(x[,1], ...)
 
   return(dens)
 }
