@@ -4,6 +4,11 @@ MS_Regress_Fit<-function(dep,indep,S,k=2,distIn="Normal")
 {
 # Error Checking on arguments
 
+verStruc<-version
+
+if (verStruc$minor>"8.1")
+	stop('The optimizer behind MS_Regress_Fit, Rdnlop2, is not compatible with R>2.8. Previous versions of R can be found in R website and should work fine.')
+
 dep<-as.matrix(dep)
 indep<-as.matrix(indep)
 
