@@ -154,7 +154,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 
 ## Normal transformation
     if(normal)
-	result <- qnorm(result)
+		result <- qnorm(result)
     
 # Return Value:
     if(dim == 1)
@@ -222,7 +222,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
 
 ## Normal transformation
     if(normal)
-	result <- qnorm(result)   
+		result <- qnorm(result)   
 	
 # Return Value:
     if(dim == 1)
