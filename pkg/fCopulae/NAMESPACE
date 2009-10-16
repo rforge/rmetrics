@@ -7,7 +7,12 @@ import("sn")
 import("methods")
 import("timeDate")
 import("timeSeries")
-import("fBasics")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fCopulae")
 
 ################################################
 ## S4 classes
@@ -31,6 +36,7 @@ S3method("summary", "fMV")
 ################################################
 
 export(
+    "adapt",
     "Afunc",
     ".AfuncFirstDer",
     ".AfuncSecondDer",
@@ -185,6 +191,7 @@ export(
     "pnorm2d",
     ".pnorm2d",
     ".pnormCopula",
+    "print.integration",
     "pt2d",
     ".ptCopula",
     ".qelliptical",
