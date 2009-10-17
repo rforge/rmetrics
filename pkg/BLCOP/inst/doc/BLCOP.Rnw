@@ -96,7 +96,7 @@ we shall set it to $1/2$.
 
 <<echo=TRUE,print=TRUE>>=
 marketPosterior <- posteriorEst(views = views, sigma = priorVarcov, 
- alpha = priorMeans, tau = 1/2)
+ mu = priorMeans, tau = 1/2)
 @
 Now suppose that we wish to add another view, this time on the average of the three financial stocks.  This can be done
 conveniently with \rfun{addBLViews} as in the following example:
