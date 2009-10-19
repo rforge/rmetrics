@@ -128,35 +128,35 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   1}-array.\cr
 
   % <------------------------------------->
-%   \strong{BLAS and LAPACK routines used:}
+  \strong{BLAS and LAPACK routines used:}
 
-%   The \R function \code{fkf} basically wraps the \code{C}-function
-%   \code{FKF}, which entirely relies on linear algebra subroutines
-%   provided by BLAS and LAPACK. The following functions are used:
+  The \R function \code{fkf} basically wraps the \code{C}-function
+  \code{FKF}, which entirely relies on linear algebra subroutines
+  provided by BLAS and LAPACK. The following functions are used:
 
-%   \tabular{rl}{
-%     BLAS: \tab \code{dcopy}, \code{dgemm}, \code{daxpy}. \cr
-%     LAPACK: \tab \code{dpotri}, \code{dpotrf}.
-%   }
+  \tabular{rl}{
+    BLAS: \tab \code{dcopy}, \code{dgemm}, \code{daxpy}. \cr
+    LAPACK: \tab \code{dpotri}, \code{dpotrf}.
+  }
 
-%   \code{FKF} is called through the \code{.Call} interface.  Internally,
-%   \code{FKF} extracts the dimensions, allocates memory, and initializes
-%   the \R-objects to be returned. \code{FKF} subsequently calls
-%   \code{cfkf} which performs the Kalman filtering.
+  \code{FKF} is called through the \code{.Call} interface.  Internally,
+  \code{FKF} extracts the dimensions, allocates memory, and initializes
+  the \R-objects to be returned. \code{FKF} subsequently calls
+  \code{cfkf} which performs the Kalman filtering.
 
-%   The only critical part is to compute the inverse of \eqn{F_t}{F[,,t]}
-%   and the determinant of \eqn{F_t}{F[,,t]}. If the inverse can not be
-%   computed, the filter stops and returns the corresponding message in
-%   \code{status} (see \bold{Value}). If the computation of the
-%   determinant fails, the filter will continue, but the log-likelihood in
-%   \code{logLik} will be \dQuote{NA}.
+  The only critical part is to compute the inverse of \eqn{F_t}{F[,,t]}
+  and the determinant of \eqn{F_t}{F[,,t]}. If the inverse can not be
+  computed, the filter stops and returns the corresponding message in
+  \code{status} (see \bold{Value}). If the computation of the
+  determinant fails, the filter will continue, but the log-likelihood in
+  \code{logLik} will be \dQuote{NA}.
 
-%   The inverse is computed in
-%   two steps: First, the Cholesky factorization of \eqn{F_t}{F[,,t]} is
-%   calculated by \code{dpotrf}. Second, \code{dpotri} calculates the
-%   inverse based on the output of \code{dpotrf}. \cr
-%   The determinant of \eqn{F_t}{F[,,t]} is computed using again the
-%   Cholesky decomposition.
+  The inverse is computed in
+  two steps: First, the Cholesky factorization of \eqn{F_t}{F[,,t]} is
+  calculated by \code{dpotrf}. Second, \code{dpotri} calculates the
+  inverse based on the output of \code{dpotrf}. \cr
+  The determinant of \eqn{F_t}{F[,,t]} is computed using again the
+  Cholesky decomposition.
 
 }
 % <---------------------------------------------------------------------->
@@ -223,7 +223,7 @@ Clariden Leu SA
 
 Philipp Erb \cr
 Zurich Global Corporate Switzerland
-(\url{http://www.zurich.ch}) \cr
+(\url{http://www.zurich.com}) \cr
 
 Simon Otziger \cr
 Institute of Data Analysis and Process Design
