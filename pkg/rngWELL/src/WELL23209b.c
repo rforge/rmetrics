@@ -189,7 +189,7 @@ static double case_4(void)
     //Rprintf("c4 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT2(0xa8c296d1,V0) ^ MAT1(VM1Over);
-    z2 = MAT5(15,30,15,0x5d6b45cc,VM2Over) ^ MAT0NEG(-24,VM3);
+    z2 = MAT5(15,30,15,0x5d6b45cc,VM2) ^ MAT0NEG(-24,VM3Over);
     newV1  = z1 ^ z2;
     newV0 = MAT0NEG(-26,z0) ^ MAT1(z1) ^ MAT7(z2) ^ MAT0POS(16,newV1);
             
@@ -206,7 +206,7 @@ static double case_5(void)
     //Rprintf("c5 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT2(0xa8c296d1,V0) ^ MAT1(VM1);
-    z2 = MAT5(15,30,15,0x5d6b45cc,VM2Over) ^ MAT0NEG(-24,VM3);
+    z2 = MAT5(15,30,15,0x5d6b45cc,VM2) ^ MAT0NEG(-24,VM3Over);
     newV1  = z1 ^ z2;
     newV0 = MAT0NEG(-26,z0) ^ MAT1(z1) ^ MAT7(z2) ^ MAT0POS(16,newV1);
         

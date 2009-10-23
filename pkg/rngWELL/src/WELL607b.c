@@ -15,20 +15,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m1-1   case6
- *  R-m1       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m2-1   case4
- *  R-m2       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M1-1      case6
+ *  R-M1        case5
+ *  ...         ...
+ *  R-M3-1      case5
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M2-1      case4
+ *  R-M2        case3
+ *  ...         ...
+ *  R-1         case3
  */
 
 
@@ -187,8 +187,8 @@ static double case_4(void)
 {
     //Rprintf("c4 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-    z1 = MAT0NEG(-18,V0) ^ MAT0NEG(-14,VM1);
-    z2 = MAT7(VM2Over) ^ MAT0POS(18,VM3Over);
+    z1 = MAT0NEG(-18,V0) ^ MAT0NEG(-14,VM1Over);
+    z2 = MAT7(VM2) ^ MAT0POS(18,VM3Over);
     newV1  = z1 ^ z2;
     newV0 = MAT0NEG(-24,z0) ^ MAT0POS(5,z1) ^ MAT0NEG(-1,z2) ^ MAT7(newV1);
         
@@ -203,9 +203,9 @@ static double case_4(void)
 static double case_5(void)
 {
     //Rprintf("c5 state_i = i mod r : %u\n", state_i);
-    z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
-    z1 = MAT0NEG(-18,V0) ^ MAT0NEG(-14,VM1);
-    z2 = MAT7(VM2Over) ^ MAT0POS(18,VM3);
+    z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+    z1 = MAT0NEG(-18,V0) ^ MAT0NEG(-14,VM1Over);
+    z2 = MAT7(VM2) ^ MAT0POS(18,VM3);
     newV1  = z1 ^ z2;
     newV0 = MAT0NEG(-24,z0) ^ MAT0POS(5,z1) ^ MAT0NEG(-1,z2) ^ MAT7(newV1);
         

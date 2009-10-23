@@ -50,11 +50,25 @@ void seedWELLRNG521a(unsigned int seed)
 	InitWELLRNG521a( seedArray );
 }
 
+void seedWELLRNG521b(unsigned int seed)
+{
+	int i, n=17;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG521b( seedArray );
+}
+
 void seedWELLRNG607a(unsigned int seed)
 {
 	int i, n=19;
 	initMT2002(&seed, &n, seedArray);
 	InitWELLRNG607a( seedArray );
+}
+
+void seedWELLRNG607b(unsigned int seed)
+{
+	int i, n=19;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG607b( seedArray );
 }
 
 void seedWELLRNG800a(unsigned int seed)
@@ -64,6 +78,13 @@ void seedWELLRNG800a(unsigned int seed)
 	InitWELLRNG800a( seedArray );
 }
 
+void seedWELLRNG800b(unsigned int seed)
+{
+	int i, n=25;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG800b( seedArray );
+}
+
 void seedWELLRNG1024a(unsigned int seed)
 {
 	int i, n=32;
@@ -71,11 +92,25 @@ void seedWELLRNG1024a(unsigned int seed)
 	InitWELLRNG1024a( seedArray );
 }
 
+void seedWELLRNG1024b(unsigned int seed)
+{
+	int i, n=32;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG1024b( seedArray );
+}
+
 void seedWELLRNG19937a(unsigned int seed)
 {
 	int i, n=624;
 	initMT2002(&seed, &n, seedArray);
 	InitWELLRNG19937a( seedArray );
+}
+
+void seedWELLRNG19937b(unsigned int seed)
+{
+	int i, n=624;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG19937b( seedArray );
 }
 
 void seedWELLRNG21701a(unsigned int seed)
@@ -90,6 +125,13 @@ void seedWELLRNG23209a(unsigned int seed)
 	int i, n=726;
 	initMT2002(&seed, &n, seedArray);
 	InitWELLRNG23209a( seedArray );
+}
+
+void seedWELLRNG23209b(unsigned int seed)
+{
+	int i, n=726;
+	initMT2002(&seed, &n, seedArray);
+	InitWELLRNG23209b( seedArray );
 }
 
 void seedWELLRNG44497a(unsigned int seed)
@@ -109,9 +151,19 @@ double generateWELLRNG521a()
 	return WELLRNG521a();
 }
 
+double generateWELLRNG521b()
+{
+	return WELLRNG521b();
+}
+
 double generateWELLRNG607a()
 {
 	return WELLRNG607a();
+}
+
+double generateWELLRNG607b()
+{
+	return WELLRNG607b();
 }
 
 double generateWELLRNG800a()
@@ -119,14 +171,29 @@ double generateWELLRNG800a()
 	return WELLRNG800a();
 }
 
+double generateWELLRNG800b()
+{
+	return WELLRNG800b();
+}
+
 double generateWELLRNG1024a()
 {
 	return WELLRNG1024a();
 }
 
+double generateWELLRNG1024b()
+{
+	return WELLRNG1024b();
+}
+
 double generateWELLRNG19937a()
 {
 	return WELLRNG19937a();
+}
+
+double generateWELLRNG19937b()
+{
+	return WELLRNG19937b();
 }
 
 double generateWELLRNG21701a()
@@ -139,6 +206,11 @@ double generateWELLRNG23209a()
 	return WELLRNG23209a();
 }
 
+double generateWELLRNG23209b()
+{
+	return WELLRNG23209b();
+}
+
 double generateWELLRNG44497a()
 {
 	return WELLRNG44497a();
@@ -148,56 +220,116 @@ double generateWELLRNG44497a()
 
 void putRngWELL512(unsigned int *state)
 {
-	InitWELLRNG512a( state );
-	user_unif_set_generator(2, seedWELLRNG512a, generateWELLRNG512a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG512a( state );
+		user_unif_set_generator(2, seedWELLRNG512a, generateWELLRNG512a);
+	}
 }
 
 void putRngWELL521(unsigned int *state)
 {
-	InitWELLRNG521a( state );
-	user_unif_set_generator(2, seedWELLRNG521a, generateWELLRNG521a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG521a( state );
+		user_unif_set_generator(2, seedWELLRNG521a, generateWELLRNG521a);
+		break;
+	case 2:
+		InitWELLRNG521b( state );
+		user_unif_set_generator(2, seedWELLRNG521b, generateWELLRNG521b);
+	}
 }
 
 void putRngWELL607(unsigned int *state)
 {
-	InitWELLRNG607a( state );
-	user_unif_set_generator(2, seedWELLRNG607a, generateWELLRNG607a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG607a( state );
+		user_unif_set_generator(2, seedWELLRNG607a, generateWELLRNG607a);
+		break;
+	case 2:
+		InitWELLRNG607b( state );
+		user_unif_set_generator(2, seedWELLRNG607b, generateWELLRNG607b);
+	}
 }
 
 void putRngWELL800(unsigned int *state)
 {
-	InitWELLRNG800a( state );
-	user_unif_set_generator(2, seedWELLRNG800a, generateWELLRNG800a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG800a( state );
+		user_unif_set_generator(2, seedWELLRNG800a, generateWELLRNG800a);
+		break;
+	case 2:
+		InitWELLRNG800b( state );
+		user_unif_set_generator(2, seedWELLRNG800b, generateWELLRNG800b);
+	}
 }
 
 void putRngWELL1024(unsigned int *state)
 {
-	InitWELLRNG1024a( state );
-	user_unif_set_generator(2, seedWELLRNG1024a, generateWELLRNG1024a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG1024a( state );
+		user_unif_set_generator(2, seedWELLRNG1024a, generateWELLRNG1024a);
+		break;
+	case 2:
+		InitWELLRNG1024b( state );
+		user_unif_set_generator(2, seedWELLRNG1024b, generateWELLRNG1024b);
+	}
 }
 
 void putRngWELL19937(unsigned int *state)
 {
-	InitWELLRNG19937a( state );
-	user_unif_set_generator(2, seedWELLRNG19937a, generateWELLRNG19937a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG19937a( state );
+		user_unif_set_generator(2, seedWELLRNG19937a, generateWELLRNG19937a);
+		break;
+	case 2:
+		InitWELLRNG19937b( state );
+		user_unif_set_generator(2, seedWELLRNG19937b, generateWELLRNG19937b);
+	}
 }
 
 void putRngWELL21701(unsigned int *state)
 {
-	InitWELLRNG21701a( state );
-	user_unif_set_generator(2, seedWELLRNG21701a, generateWELLRNG21701a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG21701a( state );
+		user_unif_set_generator(2, seedWELLRNG21701a, generateWELLRNG21701a);
+	}
 }
 
 void putRngWELL23209(unsigned int *state)
 {
-	InitWELLRNG23209a( state );
-	user_unif_set_generator(2, seedWELLRNG23209a, generateWELLRNG23209a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG23209a( state );
+		user_unif_set_generator(2, seedWELLRNG23209a, generateWELLRNG23209a);
+		break;
+	case 2:
+		InitWELLRNG23209b( state );
+		user_unif_set_generator(2, seedWELLRNG23209b, generateWELLRNG23209b);
+	}
 }
 
 void putRngWELL44497(unsigned int *state)
 {
-	InitWELLRNG44497a( state );
-	user_unif_set_generator(2, seedWELLRNG44497a, generateWELLRNG44497a);
+	switch (version)
+	{
+	case 1:
+		InitWELLRNG44497a( state );
+		user_unif_set_generator(2, seedWELLRNG44497a, generateWELLRNG44497a);
+	}
 }
 
 void putRngWELL(int *porder, int *pversion, int *ptemp, unsigned int *state)
@@ -223,47 +355,101 @@ void putRngWELL(int *porder, int *pversion, int *ptemp, unsigned int *state)
 
 void getRngWELL512(unsigned int *state)
 {
-	GetWELLRNG512a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG512a( state );
+	}
 }
 
 void getRngWELL521(unsigned int *state)
 {
-	GetWELLRNG521a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG521a( state );
+		break;
+	case 2:
+		GetWELLRNG521b( state );
+	}
 }
 
 void getRngWELL607(unsigned int *state)
 {
-	GetWELLRNG607a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG607a( state );
+		break;
+	case 2:
+		GetWELLRNG607b( state );
+	}
 }
 
 void getRngWELL800(unsigned int *state)
 {
-	GetWELLRNG800a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG800a( state );
+		break;
+	case 2:
+		GetWELLRNG800b( state );
+	}
 }
 
 void getRngWELL1024(unsigned int *state)
 {
-	GetWELLRNG1024a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG1024a( state );
+		break;
+	case 2:
+		GetWELLRNG1024b( state );
+	}
 }
 
 void getRngWELL19937(unsigned int *state)
 {
-	GetWELLRNG19937a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG19937a( state );
+		break;
+	case 2:
+		GetWELLRNG19937b( state );
+	}
 }
 
 void getRngWELL21701(unsigned int *state)
 {
-	GetWELLRNG21701a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG21701a( state );
+	}
 }
 
 void getRngWELL23209(unsigned int *state)
 {
-	GetWELLRNG23209a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG23209a( state );
+		break;
+	case 2:
+		GetWELLRNG23209b( state );
+	}
 }
 
 void getRngWELL44497(unsigned int *state)
 {
-	GetWELLRNG44497a( state );
+	switch (version)
+	{
+	case 1:
+		GetWELLRNG44497a( state );
+	}
 }
 
 void getRngWELL(int *porder, int *pversion, int *ptemp, unsigned int *state)

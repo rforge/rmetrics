@@ -11,6 +11,24 @@
  * code to interface with R and add some comments on #define's.
  */
 
+/* functions work like this :
+ * state_i      function
+ *
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M2-1      case6
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M1-1      case5
+ *  R-M1        case4
+ *  ...         ...
+ *  R-M3-1      case4
+ *  R-M3        case3
+ *  ...         ...
+ *  R-1         case3
+ */
 
 
 #define W 32
@@ -153,8 +171,8 @@ static double case_4 (void)
 {
    
     z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-    z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3Over);
+    z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
+    z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
     newV1      = z1 ^ z2;
     newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
     
@@ -171,7 +189,7 @@ static double case_5 (void)
    
     z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
     z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-    z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
+    z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
     newV1      = z1 ^ z2;
     newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
     
