@@ -193,18 +193,15 @@ for the distribution (\ref{distrG}) of the futures price become
 % <============================================================>
 The log-returns of futures contracts are normally distributed since in
 our model the futures prices are log-normal. Using this fact,
-closed-form solutions can be obtained for both, approximate value at
-risk (VaR) and approximate expected shortfall (ES)\footnote{It is an
-  approximation in the sense that the calculations are based on
-  \textit{log}-returns.}.
+closed-form solutions can be obtained for both, value at risk (VaR)
+and expected shortfall (ES).
 
 At time zero and considering a time period $\Delta t$, the
-\textit{negative} log-return or loss $l$ of a futures contract with
+\textit{negative} log-return or loss $l$ of a futures price with
 maturity $T$ is defined to be
 \begin{equation}
   l(\Delta t, T) := \log{G(0,T)} - \log{G(\Delta t,T)}
 \end{equation}
-
 According to (\ref{distrG}) -- (\ref{varG}) the potential loss during
 time period $\Delta t$ is given by
 \begin{equation}
@@ -213,29 +210,50 @@ time period $\Delta t$ is given by
   t,T),\sigma_G^2(\Delta t,T)\right).
 \end{equation}
 
+\subsection{Log-Returns of Futures Price}
 The VaR for the normally distributed negative log-return $l(\Delta
-t,T)$ times the futures price at time zero $G(0,T)$ gives us the VaR
-for the futures contract. The VaR at the confidence level
-$\alpha$\footnote{For a 95\%-VaR one sets $\alpha = 0.95$.} for the
-futures contract $G(0,T)$ at time zero thus becomes
+t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
+  $\alpha = 0.95$.} becomes
 \begin{equation}
   \label{VaRG}
-  VaR_\alpha^G = G(0,T) \left(\log{G(0,T)} - \mu_G +
+  VaR_\alpha^G = \left(\log{G(0,T)} - \mu_G +
   \sigma_G\Phi^{-1}\left(\alpha\right)\right)
 \end{equation}
 where $\Phi$ denotes the standard normal distribution function and
 $\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
 
-Similarly the ES at the confidence level $\alpha$ for the futures
-contract $G(0,T)$ at time is then given by
+Similarly the ES for the negative log-return at the confidence level
+$\alpha$ is given by
 \begin{equation}
   \label{ESG}
-  ES_\alpha^G = G(0,T)\left(\log{G(0,T)} - \mu_G +
+  ES_\alpha^G = \left(\log{G(0,T)} - \mu_G +
     \sigma_G\frac{\phi\left(\Phi^{-1}(\alpha)\right)}{1 -
       \alpha}\right)
 \end{equation}
 where $\phi$ is the density of the standard normal distribution.
 
+\subsection{Nominal Futures Price}
+The VaR for the log-normally distributed futures price $G(\Delta
+t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
+  $\alpha = 0.05$.} becomes
+\begin{equation}
+  \label{VaRG}
+  VaR_\alpha^G = e^{\mu_G +
+    \frac{1}{2}\sigma_G^2} e^{\sigma_G\left(\Phi^{-1}(\alpha) -
+      \frac{\sigma_G}{2}\right)}
+\end{equation}
+where $\Phi$ denotes the standard normal distribution function and
+$\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
+
+Similarly the ES for the futures price at the confidence level
+$\alpha$ is given by
+\begin{equation}
+  \label{ESG}
+  ES_\alpha^G = \frac{1}{1 - \alpha}e^{\mu_G +
+    \frac{1}{2}\sigma_G^2}\left[1 -
+    \Phi\left(\Phi^{-1}(\alpha)-\sigma_G\right)\right]
+\end{equation}
+where $\phi$ is the density of the standard normal distribution.
 
 
 % <============================================================>

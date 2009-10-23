@@ -19,14 +19,17 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{VaRfutures}{ANY,ANY,ANY,missing}(level = 0.95, time = 0.1, ttm = 1, g0 = 50, delta0 = 0,
+\S4method{VaRfutures}{ANY,ANY,ANY,missing}(level = 0.95, time = 0.1, ttm
+           = 1, g0 = 50, type = c("return", "nominal"), delta0 = 0,
            mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
            rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{VaRfutures}{ANY,ANY,ANY,schwartz2factor}(level = 0.95, time = 0.1, ttm = 1, object, r = 0.05,
+\S4method{VaRfutures}{ANY,ANY,ANY,schwartz2factor}(level = 0.95, time =
+           0.1, ttm = 1, object, type = c("return", "nominal"), r = 0.05,
            lambda = 0, alphaT = NULL)
 
-\S4method{VaRfutures}{ANY,ANY,ANY,fit.schwartz2factor}(level = 0.95, time = 0.1, ttm = 1, object)
+\S4method{VaRfutures}{ANY,ANY,ANY,fit.schwartz2factor}(level = 0.95,
+          time = 0.1, ttm = 1, object, type = c("return", "nominal"))
 
 }
 
@@ -40,6 +43,9 @@
     \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}.}
   \item{g0}{A \code{numeric} representing the initial value of the
     \bold{futures price}.}
+  \item{type}{Either \code{"return"} (VaR of negative futures price
+    log-return) or \code{"nominal"} (VaR of futures price). For details
+    see package vignette.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{Drift term of commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
@@ -108,12 +114,13 @@
 }
 % <---------------------------------------------------------------------->
 \examples{
-VaRfutures(level = 0.95, time = 0.1, ttm = 0.5, g0 = 45, alphaT = 0)
+VaRfutures(level = 0.95, time = 0.1, ttm = 0.5, g0 = 45, type =
+           "return", alphaT = 0)
 
 ## Create a "schwartz2factor"-obect
 model <- schwartz2factor()
 VaRfutures(level = c(0.9, 0.95, 0.99), time = 0.1, ttm = 0.5,
-           object = model, alphaT = 0)
+           object = model, type = "nominal", alphaT = 0)
 
 }
 
