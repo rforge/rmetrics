@@ -14,20 +14,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m1-1   case6
- *  R-m1       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m2-1   case4
- *  R-m2       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M2-1      case6
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M3-1      case5
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M1-1      case4
+ *  R-M1        case3
+ *  ...         ...
+ *  R-1         case3
  */
 
 
@@ -117,6 +117,16 @@ void InitWELLRNG800a(unsigned int *init )
         STATE[j]=init[j];
 }
 
+void GetWELLRNG800a (unsigned int *state)
+{
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 
 
 
@@ -162,7 +172,7 @@ static double case_3(void)
 {
     //Rprintf("c3 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
+    z0 = Vrm2;
     z1 = MAT1(V0) ^ MAT0NEG(-15,VM1Over);
     z2 = MAT0POS(10,VM2Over) ^ MAT0NEG(-11,VM3Over);
     newV1  = z1 ^ z2;
@@ -180,9 +190,9 @@ static double case_4(void)
 {
     //Rprintf("c4 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
-    z1 = MAT1(V0) ^ MAT0NEG(-15,VM1Over);
-    z2 = MAT0POS(10,VM2) ^ MAT0NEG(-11,VM3Over);
+    z0 = Vrm2;
+    z1 = MAT1(V0) ^ MAT0NEG(-15,VM1);
+    z2 = MAT0POS(10,VM2Over) ^ MAT0NEG(-11,VM3Over);
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(16,z0) ^ MAT3POS(20,z1) ^ MAT1(z2) ^ MAT0NEG(-28,newV1);    
         
@@ -198,9 +208,9 @@ static double case_5(void)
 {
     //Rprintf("c5 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
-    z1 = MAT1(V0) ^ MAT0NEG(-15,VM1Over);
-    z2 = MAT0POS(10,VM2) ^ MAT0NEG(-11,VM3);
+    z0 = Vrm2;
+    z1 = MAT1(V0) ^ MAT0NEG(-15,VM1);
+    z2 = MAT0POS(10,VM2Over) ^ MAT0NEG(-11,VM3);
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(16,z0) ^ MAT3POS(20,z1) ^ MAT1(z2) ^ MAT0NEG(-28,newV1);    
             
@@ -216,7 +226,7 @@ static double case_6(void)
 {
     //Rprintf("c6 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
+    z0 = Vrm2;
     z1 = MAT1(V0) ^ MAT0NEG(-15,VM1);
     z2 = MAT0POS(10,VM2) ^ MAT0NEG(-11,VM3);
     newV1  = z1 ^ z2;

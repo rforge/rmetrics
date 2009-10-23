@@ -111,6 +111,15 @@ void InitWELLRNG21701a(unsigned int *init ){
       STATE[j]=init[j];
 }
 
+void GetWELLRNG21701a (unsigned int *state){
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 // state_i == 0
 double case_1(void)
 {
@@ -153,7 +162,7 @@ static double case_3(void)
     //    Rprintf("c3 state_i = i mod r : %u\n", state_i);
     
   
-    z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+    z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
     z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3Over);
     newV1  = z1 ^ z2;
@@ -172,9 +181,9 @@ static double case_4(void)
     //    Rprintf("c4 state_i = i mod r : %u\n", state_i);
     
   
-    z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+    z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
-    z2 = MAT0POS(19,VM2) ^ MAT7(VM3Over);
+    z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,10,27,0x86a9d87e,z2) ^ MAT0NEG(-16,newV1);
     
@@ -191,9 +200,9 @@ static double case_5(void)
    //     Rprintf("c5 state_i = i mod r : %u\n", state_i);
     
   
-    z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+    z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
-    z2 = MAT0POS(19,VM2) ^ MAT7(VM3Over);
+    z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
     newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,10,27,0x86a9d87e,z2) ^ MAT0NEG(-16,newV1);
     
@@ -210,7 +219,7 @@ static double case_6(void)
    //     Rprintf("c6 state_i = i mod r : %u\n", state_i);
     
     
-    z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+    z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
     z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
     newV1  = z1 ^ z2;

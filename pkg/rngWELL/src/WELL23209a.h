@@ -17,5 +17,6 @@
 void InitWELLRNG23209a (unsigned int *init);
 extern double (*WELLRNG23209a)(void);
 
+void GetWELLRNG23209a (unsigned int *state);
 #endif
 

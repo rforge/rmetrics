@@ -34,6 +34,8 @@ void R_init_rngWELL(DllInfo *info)
         R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
         R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
         R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
-        R_RegisterCCallable("rngWELL", "setRngWELL", (DL_FUNC) setRngWELL);
+        R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
+        R_RegisterCCallable("rngWELL", "putRngWELL", (DL_FUNC) putRngWELL);
+        R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);
 }
 

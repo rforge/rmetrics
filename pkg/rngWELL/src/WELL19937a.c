@@ -67,6 +67,15 @@ void InitWELLRNG19937a (unsigned int *init){
      STATE[j] = init[j];
 }
 
+void GetWELLRNG19937a (unsigned int *state){
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 double case_1 (void){
    // state_i == 0
    z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);

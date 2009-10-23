@@ -57,6 +57,15 @@ void InitWELLRNG1024b (unsigned int *init){
      STATE[j] = init[j];
 }
 
+void GetWELLRNG1024b (unsigned int *state){
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 double WELLRNG1024b (void){
   z0    = VRm1;
   z1    = MAT0NEG(-21,V0)       ^ MAT0POS (17, VM1);

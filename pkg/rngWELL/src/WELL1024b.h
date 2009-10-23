@@ -17,5 +17,6 @@
 void InitWELLRNG1024b (unsigned int *init);
 double WELLRNG1024b (void);
 
+void GetWELLRNG1024b (unsigned int *state);
 #endif
 

@@ -104,6 +104,16 @@ void InitWELLRNG44497a(unsigned int *init ){
       STATE[j]=init[j];
 }
 
+void GetWELLRNG44497a (unsigned int *state)
+{
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 double case_1(void){
 //        Rprintf("c1 state_i = i mod r : %u\n", state_i);
     

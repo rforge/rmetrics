@@ -17,5 +17,6 @@
 void InitWELLRNG521b (unsigned int *init);
 extern double (*WELLRNG521b)(void);
 
+void GetWELLRNG521b (unsigned int *state);
 #endif
 

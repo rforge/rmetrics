@@ -78,5 +78,7 @@ void randSeedByArray(int length);
 void randSeed();
 
 void WELL_get_set_entry_point(void * p_user_unif_set_generator);
-void setRngWELL();
+void initMT2002(unsigned int *seed, int *n, unsigned int *state);
+void putRngWELL(int *order, unsigned int *state);
+void getRngWELL(int *order, unsigned int *state);
 

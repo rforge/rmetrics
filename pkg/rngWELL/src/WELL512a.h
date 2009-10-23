@@ -12,5 +12,6 @@
 void InitWELLRNG512a (unsigned int *init);
 double WELLRNG512a (void);
 
+void GetWELLRNG512a (unsigned int *state);
 #endif
 

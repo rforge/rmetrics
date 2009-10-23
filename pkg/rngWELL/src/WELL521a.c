@@ -118,6 +118,16 @@ void InitWELLRNG521a(unsigned int *init )
 }
 
 
+void GetWELLRNG521a (unsigned int *state)
+{
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
+}
+
 
 
 // state_i == 0
