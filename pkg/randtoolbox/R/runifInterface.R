@@ -47,46 +47,61 @@
 ### 
 
 
-set.generator <- function(name=c("congruRand", "default"), parameters=NULL, seed=NULL, ...,
+set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NULL, seed=NULL, ...,
 		only.description=FALSE)
 {
 	name <- match.arg(name)
 	dots <- list(...)
-	if (name == "congruRand") {
-		if (is.null(parameters)) {
+	if (name == "congruRand")
+	{
+		if (is.null(parameters))
 			parameters <- c(mod=dots$mod, mult=dots$mult, incr=dots$incr)
-		}
-		if (length(parameters) == 0) {
+		if (length(parameters) == 0)
 			parameters <- c(mod="2147483647", mult="16807", incr="0")
-		}
-		if (!identical(names(parameters), c("mod", "mult", "incr"))) {
+		if (!identical(names(parameters), c("mod", "mult", "incr")))
+		{
 			param.names <- paste(names(parameters),collapse=" ")
 			stop("parameter list \"", param.names, "\" is not correct for congruRand")
 		}
-		if (is.null(seed)) {
+		if (is.null(seed))
 			seed <- floor(as.double(parameters["mod"]) * runif(1))
-		}
-		if (is.numeric(parameters)) {
+		if (is.numeric(parameters))
 			parameters <- formatC(parameters, format="f", digits=0)
-		}
-		if (is.numeric(seed)) {
+		if (is.numeric(seed))
 			seed <- formatC(seed, format="f", digits=0)
-		}
 		state <- c(seed=seed)
 		description <- list(name=name, parameters=parameters, state=state)
-		if (only.description) {
-			return(description)
-		} else {
-			put.description(description)
+	} else if (name == "WELL")
+	{
+		if (is.null(parameters))
+			parameters <- c(order=dots$order, version=dots$version)
+		if (length(parameters) == 0)
+			parameters <- c(order=19937, version=1)
+		if (!identical(names(parameters), c("order", "version")))
+		{
+			param.names <- paste(names(parameters),collapse=" ")
+			stop("parameter list \"", param.names, "\" is not correct for WELL")
 		}
-	} else if (name == "default") {
+		if (is.null(seed))
+			seed <- floor(2^31 * runif(1))
+		size <- ceiling(parameters["order"]/32)
+		state <- .C("initMT2002",
+					as.integer(seed),
+					as.integer(size),
+					integer(size),
+					PACKAGE="rngWELL")[[3]]
+		description <- list(name=name, parameters=parameters, state=state)
+	} else if (name == "default")
+	{
 		RNGkind("default")
-		if (!is.null(seed)) {
+		if (!is.null(seed))
 			set.seed(seed)
-		}
-	} else {
+		return(invisible(NULL))
+	} else
 		stop("unsupported generator: ", name)
-	}
+	if (only.description)
+		return(description)
+	put.description(description)
 	invisible(NULL)
 }
 
@@ -95,7 +110,8 @@ put.description <- function(description)
 	name <- description$name
 	parameters <- description$parameters
 	state <- description$state
-	if (name == "congruRand") {
+	if (name == "congruRand")
+	{
 		aux <- .C("put_state_congru",
 			parameters,
 			state,
@@ -103,7 +119,8 @@ put.description <- function(description)
 			PACKAGE="randtoolbox")
 		if (aux$err != 0)
 			stop("check congruRand error: ", aux$err)
-		if (RNGkind()[1] != "user-supplied") {
+		if (RNGkind()[1] != "user-supplied")
+		{
 			.C("set_noop", PACKAGE="randtoolbox")
 			RNGkind("user-supplied")
 			aux <- .C("put_state_congru",
@@ -114,21 +131,30 @@ put.description <- function(description)
 			if (aux$err != 0)
 				stop("check congruRand error: ", aux$err)
 		}
-	} else {
+	} else if (name == "WELL")
+	{
+		.C("set_noop", PACKAGE="randtoolbox")
+		RNGkind("user-supplied")
+		.C("putRngWELL",
+			as.integer(parameters["order"]),
+			as.integer(parameters["version"]),
+			as.integer(0),
+			as.integer(state),
+			PACKAGE="rngWELL")
+	} else 
 		stop("unsupported generator: ", name)
-	}
 	invisible(NULL)
 }
 
 get.description <- function()
 {
-	if (RNGkind(NULL)[1] != "user-supplied") {
-		stop("For R base generators, use .Random.seed, not get.state()")
-	}
+	if (RNGkind(NULL)[1] != "user-supplied")
+		stop("For R base generators, use .Random.seed, not get.description()")
 	generator <- .C("current_generator",
 		integer(1),
 		PACKAGE="randtoolbox")[[1]]
-	if (generator == 1) {
+	if (generator == 1)
+	{
 		name <- "congruRand"
 		outspace <- "18446744073709551616" # 2^64
 		aux <- .C("get_state_congru",
@@ -150,9 +176,21 @@ get.description <- function()
 			literature <- "Park - Miller"
 		else 
 			literature <- "Unknown"
-	} else {
+	} else if (generator == 2)
+	{
+		name <- "WELL"
+		tmp <- .C("getRngWELL",
+			order = integer(1),
+			version = integer(1),
+			temp = integer(1),
+			state = integer(2000),
+			PACKAGE="rngWELL")
+		parameters <- c(order=tmp$order, version=tmp$version)
+		size <- ceiling(parameters["order"]/32)
+		state <- tmp$state[1:size]
+		literature <- "Panneton - L'Ecuyer - Matsumoto"
+	} else
 		stop("internal error of randtoolbox")
-	}
 	list(name=name, authors=literature, parameters=parameters, state=state)
 }
 
