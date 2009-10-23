@@ -249,9 +249,9 @@ Similarly the ES for the futures price at the confidence level
 $\alpha$ is given by
 \begin{equation}
   \label{ESG}
-  ES_\alpha^G = \frac{1}{1 - \alpha}e^{\mu_G +
-    \frac{1}{2}\sigma_G^2}\left[1 -
-    \Phi\left(\Phi^{-1}(\alpha)-\sigma_G\right)\right]
+  ES_\alpha^G = \frac{1}{\alpha}e^{\mu_G +
+    \frac{1}{2}\sigma_G^2}\Phi\left(\Phi^{-1}(\alpha) -
+      \sigma_G\right)
 \end{equation}
 where $\phi$ is the density of the standard normal distribution.
 
