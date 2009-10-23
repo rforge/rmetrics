@@ -1,5 +1,1549 @@
-2009-04-19 chalabi
+Author: chalabi
+Date:   2009-10-16
 
-        * added explicit version number in Depends field for key packages
+    updated NAMESPACE
+    
+    M pkg/fCopulae/NAMESPACE
 
-pkg/fCopulae/DESCRIPTION
+Author: wuertz
+Date:   2009-10-16
+
+    adapt added
+    
+    M pkg/fCopulae/DESCRIPTION
+    A pkg/fCopulae/R/builtin-adapt.R
+    A pkg/fCopulae/man/builtin-adapt.Rd
+    A pkg/fCopulae/src/adapt2.f
+    A pkg/fCopulae/src/adapt_callback.c
+
+Author: chalabi
+Date:   2009-09-28
+
+    updated version number
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-09-28
+
+    updated DESCR and ChangeLog
+    
+    M pkg/fCopulae/ChangeLog
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-08-14
+
+    new NAMESPACE structure which should ease maintenance of packages.
+    
+    M pkg/fCopulae/NAMESPACE
+
+Author: Chalabi
+Date:   2009-06-24
+
+    updated NAMESPACE
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-19
+
+    added explicit version number in Depends field for key packages
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-02
+
+    more explicit depends and suggests field in DESC file.
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-01
+
+    updated NAMESPACE
+    
+    
+    M pkg/fCopulae/NAMESPACE
+
+Author: chalabi
+Date:   2009-04-01
+
+    updated DESC file
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2009-01-28
+
+    updated manual pages to new Rd parser
+    
+    M pkg/fCopulae/man/ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/ArchimedeanDependency.Rd
+    M pkg/fCopulae/man/ArchimedeanModelling.Rd
+    M pkg/fCopulae/man/EmpiricalCopulae.Rd
+    M pkg/fCopulae/man/ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/ExtremeValueDependency.Rd
+    M pkg/fCopulae/man/ExtremeValueGenerator.Rd
+    M pkg/fCopulae/man/ExtremeValueModelling.Rd
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated RUnit test files to make it run on Mac OS X
+    
+    M pkg/fCopulae/inst/unitTests/runTests.R
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated version number
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-24
+
+    updated version number
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-22
+
+    updated DESCRIPTION files
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-10
+
+    updated DESC files
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-09-25
+
+    checking all packages before sending to CRAN - fBasics & fPortfolio need further work
+    
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/R/zzz.R
+
+Author: chalabi
+Date:   2008-08-22
+
+    M pkg/fCopulae/R/fCopulaeEnv.R
+    M pkg/fCopulae/man/CopulaeClass.Rd
+    M pkg/fCopulae/man/mvdist.Rd
+
+Author: chalabi
+Date:   2008-08-18
+
+    D pkg/fCopulae/NAMESPACE
+    D pkg/fCopulae/NAMESPACE.dev
+
+Author: wuertz
+Date:   2008-08-18
+
+    multivariate distributions added from fMultivar which is now obsolete
+    
+    M pkg/fCopulae/DESCRIPTION
+    A pkg/fCopulae/R/biv-binning.R
+    A pkg/fCopulae/R/biv-density.R
+    A pkg/fCopulae/R/biv-gridding.R
+    A pkg/fCopulae/R/bv-dcauchy.R
+    A pkg/fCopulae/R/bv-delliptical.R
+    A pkg/fCopulae/R/bv-dnorm.R
+    A pkg/fCopulae/R/bv-dt.R
+    A pkg/fCopulae/R/mv-distributions.R
+    A pkg/fCopulae/R/mv-dsnorm.R
+    A pkg/fCopulae/R/mv-dst.R
+    A pkg/fCopulae/inst/unitTests/runit.BivariateBinning.R
+    A pkg/fCopulae/inst/unitTests/runit.BivariateDistributions.R
+    A pkg/fCopulae/inst/unitTests/runit.BivariateGridding.R
+    A pkg/fCopulae/inst/unitTests/runit.MultivariateDistributions.R
+    A pkg/fCopulae/man/cauchy2d.Rd
+    A pkg/fCopulae/man/density2.Rd
+    A pkg/fCopulae/man/elliptical2d.Rd
+    A pkg/fCopulae/man/gridData.Rd
+    A pkg/fCopulae/man/mvdist.Rd
+    A pkg/fCopulae/man/norm2d.Rd
+    A pkg/fCopulae/man/squareBinning.Rd
+    A pkg/fCopulae/man/t2d.Rd
+
+Author: chalabi
+Date:   2008-08-16
+
+    A pkg/fCopulae/NAMESPACE
+
+Author: chalabi
+Date:   2008-08-16
+
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/R/zzz.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    M pkg/fCopulae/NAMESPACE.dev
+
+Author: chalabi
+Date:   2008-07-26
+
+    added global env for NAMESPACE, but still need some work to change the code
+    
+    A pkg/fCopulae/R/fCopulaeEnv.R
+
+Author: chalabi
+Date:   2008-07-23
+
+    NAMEPSACE file but not used as default yet becuase more changes are needed in the package
+    
+    A pkg/fCopulae/NAMESPACE.dev
+
+Author: chalabi
+Date:   2008-07-23
+
+    some modification to work with NAMESPACE
+    
+    M pkg/fCopulae/R/ArchimedeanGenerator.R
+    M pkg/fCopulae/R/CopulaeClass.R
+    M pkg/fCopulae/R/EllipticalCopulae.R
+    M pkg/fCopulae/R/EllipticalGenerator.R
+    M pkg/fCopulae/R/ExtremeValueCopulae.R
+    M pkg/fCopulae/R/ExtremeValueDependency.R
+    M pkg/fCopulae/R/ExtremeValueGenerator.R
+    M pkg/fCopulae/R/zzz.R
+
+Author: chalabi
+Date:   2008-07-18
+
+    use of timeSeries and timeDate
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-06-11
+
+    pkgs adapted to new timeSeries pkg
+    
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/inst/unitTests/Makefile
+
+Author: chalabi
+Date:   2008-06-10
+
+    renamed files in unitTests
+    
+    M pkg/fCopulae/inst/unitTests/runTests.R
+    A pkg/fCopulae/inst/unitTests/runit.ArchimedeanCopulae.R
+    A pkg/fCopulae/inst/unitTests/runit.ArchimedeanDependency.R
+    A pkg/fCopulae/inst/unitTests/runit.ArchimedeanGenerator.R
+    A pkg/fCopulae/inst/unitTests/runit.ArchimedeanModelling.R
+    A pkg/fCopulae/inst/unitTests/runit.CopulaClass.R
+    A pkg/fCopulae/inst/unitTests/runit.EllipticalCopulae.R
+    A pkg/fCopulae/inst/unitTests/runit.EllipticalDependency.R
+    A pkg/fCopulae/inst/unitTests/runit.EllipticalGenerator.R
+    A pkg/fCopulae/inst/unitTests/runit.EllipticalModelling.R
+    A pkg/fCopulae/inst/unitTests/runit.EmpiricalCopulae.R
+    A pkg/fCopulae/inst/unitTests/runit.ExtremeValueCopulae.R
+    A pkg/fCopulae/inst/unitTests/runit.ExtremeValueDependency.R
+    A pkg/fCopulae/inst/unitTests/runit.ExtremeValueModelling.R
+    A pkg/fCopulae/inst/unitTests/runit.ExtrmeValueGenerator.R
+    A pkg/fCopulae/inst/unitTests/runit.MixedCopulae.R
+    D pkg/fCopulae/inst/unitTests/runitArchimedeanCopulae.R
+    D pkg/fCopulae/inst/unitTests/runitArchimedeanDependency.R
+    D pkg/fCopulae/inst/unitTests/runitArchimedeanGenerator.R
+    D pkg/fCopulae/inst/unitTests/runitArchimedeanModelling.R
+    D pkg/fCopulae/inst/unitTests/runitCopulaClass.R
+    D pkg/fCopulae/inst/unitTests/runitEllipticalCopulae.R
+    D pkg/fCopulae/inst/unitTests/runitEllipticalDependency.R
+    D pkg/fCopulae/inst/unitTests/runitEllipticalGenerator.R
+    D pkg/fCopulae/inst/unitTests/runitEllipticalModelling.R
+    D pkg/fCopulae/inst/unitTests/runitEmpiricalCopulae.R
+    D pkg/fCopulae/inst/unitTests/runitExtremeValueCopulae.R
+    D pkg/fCopulae/inst/unitTests/runitExtremeValueDependency.R
+    D pkg/fCopulae/inst/unitTests/runitExtremeValueModelling.R
+    D pkg/fCopulae/inst/unitTests/runitExtrmeValueGenerator.R
+    D pkg/fCopulae/inst/unitTests/runitMixedCopulae.R
+
+Author: chalabi
+Date:   2008-05-27
+
+    updated DESCR file
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-05-13
+
+    updated DESCRIPTION files
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-05-09
+
+    added reference to ArchimedeanGenerator man page
+    
+    
+    M pkg/fCopulae/man/ArchimedeanGenerator.Rd
+
+Author: chalabi
+Date:   2008-04-22
+
+    changed depends section in DESCRIPTION files
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-02-08
+
+    changed version number of packages
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: chalabi
+Date:   2008-02-07
+
+    change License sectino in DESCRIPTION to the canonical
+    License : GPL (>=2)
+    
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2008-02-06
+
+    zzz output shortened
+    
+    M pkg/fCopulae/R/zzz.R
+
+Author: chalabi
+Date:   2008-01-09
+
+    added tcltk required in examples
+    
+    
+    M pkg/fCopulae/man/ExtremeValueModelling.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    added tcltk required package in example
+    
+    
+    M pkg/fCopulae/man/ExtremeValueGenerator.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    added tcltk required package in example
+    
+    
+    M pkg/fCopulae/man/ExtremeValueDependency.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    added tcltk required package
+    
+    
+    M pkg/fCopulae/man/ExtremeValueCopulae.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    commented out old example
+    
+    
+    M pkg/fCopulae/man/EmpiricalCopulae.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    added required tcltk package
+    
+    
+    M pkg/fCopulae/man/EllipticalGenerator.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    commented out old example
+    
+    
+    M pkg/fCopulae/man/ArchimedeanDependency.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    commented out unrelevant examples
+    
+    
+    M pkg/fCopulae/man/ArchimedeanCopulae.Rd
+
+Author: chalabi
+Date:   2008-01-09
+
+    commented out examples which are not anymore relevant
+    
+    
+    M pkg/fCopulae/man/ArchimedeanModelling.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fCopulae/man/EmpiricalCopulae.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fCopulae/man/EllipticalCopulae.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fCopulae/man/EllipticalModelling.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fCopulae/man/EllipticalDependency.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    comment gfuncSlider() to be sure that tests pass when package tcltk is
+    not available.
+    
+    
+    M pkg/fCopulae/man/EllipticalGenerator.Rd
+
+Author: wuertz
+Date:   2008-01-07
+
+    mixed copula enhanced
+    
+    M pkg/fCopulae/R/ArchimedeanCopulae.R
+    M pkg/fCopulae/R/MixedCopulae.R
+
+Author: wuertz
+Date:   2008-01-07
+
+    mixed copulae enhanced
+    
+    M pkg/fCopulae/inst/unitTests/runitMixedCopulae.R
+
+Author: wuertz
+Date:   2008-01-05
+
+    zzz.R and Description files updated
+    
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/R/zzz.R
+
+Author: wuertz
+Date:   2007-12-30
+
+    MixedCopulae.R still in test
+    
+    M pkg/fCopulae/R/MixedCopulae.R
+
+Author: wuertz
+Date:   2007-12-10
+
+    mixwd copula modified
+    
+    M pkg/fCopulae/R/MixedCopulae.R
+
+Author: wuertz
+Date:   2007-10-15
+
+    match.arg functions added
+    
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/R/ArchimedeanSlider.R
+    M pkg/fCopulae/R/EllipticalCopulae.R
+    M pkg/fCopulae/R/ExtremeValueCopulae.R
+
+Author: wuertz
+Date:   2007-10-03
+
+    Version numbers DESCRIPTION file updateDescription.sh
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-10-01
+
+    Archimedean Sliders disentangled
+    
+    A pkg/fCopulae/R/ArchimedeanSlider.R
+
+Author: wuertz
+Date:   2007-10-01
+
+    Version Numbers updated
+    
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/R/ArchimedeanCopulae.R
+
+Author: wuertz
+Date:   2007-09-30
+
+    Archimedean Copulae disentangled
+    
+    M pkg/fCopulae/R/ArchimedeanCopulae.R
+
+Author: wuertz
+Date:   2007-09-24
+
+    archmTailPlot parameters now selective
+    
+    M pkg/fCopulae/R/ArchimedeanDependency.R
+
+Author: wuertz
+Date:   2007-09-09
+
+    unit tests fixed
+    
+    M pkg/fCopulae/R/ArchimedeanDependency.R
+    M pkg/fCopulae/inst/unitTests/runitArchimedeanCopulae.R
+    M pkg/fCopulae/inst/unitTests/runitMixedCopulae.R
+
+Author: wuertz
+Date:   2007-09-08
+
+    in inst missing doc dirs and in unitTests missing makefiles added
+    
+    M pkg/fCopulae/inst/unitTests/runitArchimedeanCopulae.R
+    M pkg/fCopulae/inst/unitTests/runitArchimedeanGenerator.R
+    M pkg/fCopulae/inst/unitTests/runitEllipticalCopulae.R
+    M pkg/fCopulae/inst/unitTests/runitEllipticalGenerator.R
+    M pkg/fCopulae/inst/unitTests/runitExtremeValueCopulae.R
+    M pkg/fCopulae/inst/unitTests/runitExtremeValueDependency.R
+    M pkg/fCopulae/inst/unitTests/runitExtrmeValueGenerator.R
+
+Author: wuertz
+Date:   2007-09-07
+
+    minor changes in the DESCRIPTION files
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-06
+
+    unitTests files renamed
+    
+    D pkg/fCopulae/inst/unitTests/runit3D.R
+    D pkg/fCopulae/inst/unitTests/runit4D.R
+    A pkg/fCopulae/inst/unitTests/runitArchimedeanGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitArchimedeanModelling.R
+    D pkg/fCopulae/inst/unitTests/runitArchmGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitExtremeValueModelling.R
+
+Author: wuertz
+Date:   2007-09-06
+
+    unitTests files renamed
+    
+    D pkg/fCopulae/inst/unitTests/runit3B.R
+    D pkg/fCopulae/inst/unitTests/runit3C.R
+    D pkg/fCopulae/inst/unitTests/runit4A.R
+    D pkg/fCopulae/inst/unitTests/runit4B.R
+    D pkg/fCopulae/inst/unitTests/runit4C.R
+    A pkg/fCopulae/inst/unitTests/runitArchimedeanCopulae.R
+    A pkg/fCopulae/inst/unitTests/runitArchimedeanDependency.R
+    A pkg/fCopulae/inst/unitTests/runitArchmGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitExtremeValueCopulae.R
+    A pkg/fCopulae/inst/unitTests/runitExtremeValueDependency.R
+    D pkg/fCopulae/inst/unitTests/runitExtremeValueGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitExtrmeValueGenerator.R
+
+Author: wuertz
+Date:   2007-09-06
+
+    unitTests files renamed
+    
+    D pkg/fCopulae/inst/unitTests/runit1A.R
+    D pkg/fCopulae/inst/unitTests/runit2A.R
+    D pkg/fCopulae/inst/unitTests/runit2B.R
+    D pkg/fCopulae/inst/unitTests/runit2C.R
+    D pkg/fCopulae/inst/unitTests/runit2D.R
+    D pkg/fCopulae/inst/unitTests/runit3A.R
+    D pkg/fCopulae/inst/unitTests/runit5A.R
+    D pkg/fCopulae/inst/unitTests/runit6A.R
+    D pkg/fCopulae/inst/unitTests/runit9X.R
+    A pkg/fCopulae/inst/unitTests/runitCopulaClass.R
+    A pkg/fCopulae/inst/unitTests/runitEllipticalCopulae.R
+    A pkg/fCopulae/inst/unitTests/runitEllipticalDependency.R
+    A pkg/fCopulae/inst/unitTests/runitEllipticalGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitEllipticalModelling.R
+    A pkg/fCopulae/inst/unitTests/runitEmpiricalCopulae.R
+    A pkg/fCopulae/inst/unitTests/runitExtremeValueGenerator.R
+    A pkg/fCopulae/inst/unitTests/runitMixedCopulae.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    .Rd scripts renamed
+    
+    D pkg/fCopulae/man/1A-CopulaeClass.Rd
+    D pkg/fCopulae/man/2A-EllipticalGenerator.Rd
+    D pkg/fCopulae/man/2B-EllipticalCopulae.Rd
+    D pkg/fCopulae/man/2C-EllipticalDependency.Rd
+    D pkg/fCopulae/man/2D-EllipticalModelling.Rd
+    D pkg/fCopulae/man/3A-ArchimedeanGenerator.Rd
+    D pkg/fCopulae/man/3B-ArchimedeanCopulae.Rd
+    D pkg/fCopulae/man/3C-ArchimedeanDependency.Rd
+    D pkg/fCopulae/man/3D-ArchimedeanModelling.Rd
+    D pkg/fCopulae/man/4A-ExtremeValueGenerator.Rd
+    D pkg/fCopulae/man/4B-ExtremeValueCopulae.Rd
+    D pkg/fCopulae/man/4C-ExtremeValueDependency.Rd
+    D pkg/fCopulae/man/4D-ExtremeValueModelling.Rd
+    D pkg/fCopulae/man/6A-EmpiricalCopulae.Rd
+    A pkg/fCopulae/man/ArchimedeanCopulae.Rd
+    A pkg/fCopulae/man/ArchimedeanDependency.Rd
+    A pkg/fCopulae/man/ArchimedeanGenerator.Rd
+    A pkg/fCopulae/man/ArchimedeanModelling.Rd
+    A pkg/fCopulae/man/CopulaeClass.Rd
+    A pkg/fCopulae/man/EllipticalCopulae.Rd
+    A pkg/fCopulae/man/EllipticalDependency.Rd
+    A pkg/fCopulae/man/EllipticalGenerator.Rd
+    A pkg/fCopulae/man/EllipticalModelling.Rd
+    A pkg/fCopulae/man/EmpiricalCopulae.Rd
+    A pkg/fCopulae/man/ExtremeValueCopulae.Rd
+    A pkg/fCopulae/man/ExtremeValueDependency.Rd
+    A pkg/fCopulae/man/ExtremeValueGenerator.Rd
+    A pkg/fCopulae/man/ExtremeValueModelling.Rd
+
+Author: wuertz
+Date:   2007-09-05
+
+    zzz.R's modified
+    
+    M pkg/fCopulae/R/zzz.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    email <Rmetrics-core...> changed in all DESCRIPTIONs
+    
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-05
+
+    D pkg/fCopulae/R/1A-CopulaeClass.R
+    D pkg/fCopulae/R/2A-EllipticalGenerator.R
+    D pkg/fCopulae/R/2B-EllipticalCopulae.R
+    D pkg/fCopulae/R/2C-EllipticalDependency.R
+    D pkg/fCopulae/R/2D-EllipticalModelling.R
+    D pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    D pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    D pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    D pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    D pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    D pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    D pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    D pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    D pkg/fCopulae/R/6A-EmpiricalCopulae.R
+    D pkg/fCopulae/R/9X-MixedCopulae.R
+    A pkg/fCopulae/R/ArchimedeanCopulae.R
+    A pkg/fCopulae/R/ArchimedeanDependency.R
+    A pkg/fCopulae/R/ArchimedeanGenerator.R
+    A pkg/fCopulae/R/ArchimedeanModelling.R
+    A pkg/fCopulae/R/CopulaeClass.R
+    A pkg/fCopulae/R/EllipticalCopulae.R
+    A pkg/fCopulae/R/EllipticalDependency.R
+    A pkg/fCopulae/R/EllipticalGenerator.R
+    A pkg/fCopulae/R/EllipticalModelling.R
+    A pkg/fCopulae/R/EmpiricalCopulae.R
+    A pkg/fCopulae/R/ExtremeValueCopulae.R
+    A pkg/fCopulae/R/ExtremeValueDependency.R
+    A pkg/fCopulae/R/ExtremeValueGenerator.R
+    A pkg/fCopulae/R/ExtremeValueModelling.R
+    A pkg/fCopulae/R/MixedCopulae.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fCopulae/R/1A-CopulaeClass.R
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+    M pkg/fCopulae/R/2C-EllipticalDependency.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    M pkg/fCopulae/R/9X-MixedCopulae.R
+    M pkg/fCopulae/inst/unitTests/runit9X.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-03
+
+    D pkg/fCopulae/INDEX
+
+Author: wuertz
+Date:   2007-09-03
+
+    M pkg/fCopulae/inst/unitTests/runTests.R
+    M pkg/fCopulae/inst/unitTests/runit1A.R
+    M pkg/fCopulae/inst/unitTests/runit2A.R
+    M pkg/fCopulae/inst/unitTests/runit2B.R
+    M pkg/fCopulae/inst/unitTests/runit2C.R
+    M pkg/fCopulae/inst/unitTests/runit2D.R
+    M pkg/fCopulae/inst/unitTests/runit3A.R
+    M pkg/fCopulae/inst/unitTests/runit3B.R
+    M pkg/fCopulae/inst/unitTests/runit3C.R
+    M pkg/fCopulae/inst/unitTests/runit3D.R
+    M pkg/fCopulae/inst/unitTests/runit4A.R
+    M pkg/fCopulae/inst/unitTests/runit4B.R
+    M pkg/fCopulae/inst/unitTests/runit4C.R
+    M pkg/fCopulae/inst/unitTests/runit4D.R
+    M pkg/fCopulae/inst/unitTests/runit5A.R
+    M pkg/fCopulae/inst/unitTests/runit6A.R
+    M pkg/fCopulae/inst/unitTests/runit9X.R
+
+Author: wuertz
+Date:   2007-08-28
+
+    A pkg/fCopulae/tests/doRUnit.R
+
+Author: wuertz
+Date:   2007-08-28
+
+    D pkg/fCopulae/tests/runit.R
+    D pkg/fCopulae/tests/runit1A.R
+    D pkg/fCopulae/tests/runit2A.R
+    D pkg/fCopulae/tests/runit2B.R
+    D pkg/fCopulae/tests/runit2C.R
+    D pkg/fCopulae/tests/runit2D.R
+    D pkg/fCopulae/tests/runit3A.R
+    D pkg/fCopulae/tests/runit3B.R
+    D pkg/fCopulae/tests/runit3C.R
+    D pkg/fCopulae/tests/runit3D.R
+    D pkg/fCopulae/tests/runit4A.R
+    D pkg/fCopulae/tests/runit4B.R
+    D pkg/fCopulae/tests/runit4C.R
+    D pkg/fCopulae/tests/runit4D.R
+    D pkg/fCopulae/tests/runit5A.R
+    D pkg/fCopulae/tests/runit6A.R
+    D pkg/fCopulae/tests/runit9X.R
+
+Author: wuertz
+Date:   2007-08-28
+
+    M pkg/fCopulae/inst/unitTests/runit1A.R
+    M pkg/fCopulae/inst/unitTests/runit2A.R
+    M pkg/fCopulae/inst/unitTests/runit2B.R
+    M pkg/fCopulae/inst/unitTests/runit2C.R
+    M pkg/fCopulae/inst/unitTests/runit2D.R
+    M pkg/fCopulae/inst/unitTests/runit3A.R
+    M pkg/fCopulae/inst/unitTests/runit3B.R
+    M pkg/fCopulae/inst/unitTests/runit3C.R
+    M pkg/fCopulae/inst/unitTests/runit3D.R
+    M pkg/fCopulae/inst/unitTests/runit4A.R
+    M pkg/fCopulae/inst/unitTests/runit4B.R
+    M pkg/fCopulae/inst/unitTests/runit4C.R
+    M pkg/fCopulae/inst/unitTests/runit4D.R
+    M pkg/fCopulae/inst/unitTests/runit5A.R
+    M pkg/fCopulae/inst/unitTests/runit6A.R
+    M pkg/fCopulae/inst/unitTests/runit9X.R
+
+Author: wuertz
+Date:   2007-08-28
+
+    A pkg/fCopulae/inst/unitTests/Makefile
+    A pkg/fCopulae/inst/unitTests/runTests.R
+    A pkg/fCopulae/inst/unitTests/runit1A.R
+    A pkg/fCopulae/inst/unitTests/runit2A.R
+    A pkg/fCopulae/inst/unitTests/runit2B.R
+    A pkg/fCopulae/inst/unitTests/runit2C.R
+    A pkg/fCopulae/inst/unitTests/runit2D.R
+    A pkg/fCopulae/inst/unitTests/runit3A.R
+    A pkg/fCopulae/inst/unitTests/runit3B.R
+    A pkg/fCopulae/inst/unitTests/runit3C.R
+    A pkg/fCopulae/inst/unitTests/runit3D.R
+    A pkg/fCopulae/inst/unitTests/runit4A.R
+    A pkg/fCopulae/inst/unitTests/runit4B.R
+    A pkg/fCopulae/inst/unitTests/runit4C.R
+    A pkg/fCopulae/inst/unitTests/runit4D.R
+    A pkg/fCopulae/inst/unitTests/runit5A.R
+    A pkg/fCopulae/inst/unitTests/runit6A.R
+    A pkg/fCopulae/inst/unitTests/runit9X.R
+
+Author: wuertz
+Date:   2007-08-28
+
+    M pkg/fCopulae/R/9X-MixedCopulae.R
+
+Author: wuertz
+Date:   2007-07-18
+
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/INDEX
+
+Author: wuertz
+Date:   2007-07-18
+
+    M pkg/fCopulae/tests/runit4D.R
+
+Author: wuertz
+Date:   2007-07-05
+
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+
+Author: wuertz
+Date:   2007-07-04
+
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/tests/runit3C.R
+    M pkg/fCopulae/tests/runit4D.R
+    M pkg/fCopulae/tests/runit6A.R
+
+Author: wuertz
+Date:   2007-07-03
+
+    M pkg/fCopulae/tests/runit2A.R
+    M pkg/fCopulae/tests/runit2B.R
+    M pkg/fCopulae/tests/runit2C.R
+    M pkg/fCopulae/tests/runit2D.R
+    M pkg/fCopulae/tests/runit3A.R
+    M pkg/fCopulae/tests/runit3B.R
+    M pkg/fCopulae/tests/runit3C.R
+    M pkg/fCopulae/tests/runit3D.R
+    M pkg/fCopulae/tests/runit4A.R
+    M pkg/fCopulae/tests/runit4B.R
+    M pkg/fCopulae/tests/runit4C.R
+    M pkg/fCopulae/tests/runit4D.R
+    M pkg/fCopulae/tests/runit5A.R
+    M pkg/fCopulae/tests/runit6A.R
+    M pkg/fCopulae/tests/runit9X.R
+
+Author: wuertz
+Date:   2007-07-03
+
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/tests/runit3D.R
+    M pkg/fCopulae/tests/runit4D.R
+
+Author: wuertz
+Date:   2007-07-03
+
+    M pkg/fCopulae/tests/runit.R
+
+Author: wuertz
+Date:   2007-07-02
+
+    D pkg/fCopulae/test/runit.R
+    D pkg/fCopulae/test/runit1A.R
+    D pkg/fCopulae/test/runit2A.R
+    D pkg/fCopulae/test/runit2B.R
+    D pkg/fCopulae/test/runit2C.R
+    D pkg/fCopulae/test/runit2D.R
+    D pkg/fCopulae/test/runit3A.R
+    D pkg/fCopulae/test/runit3B.R
+    D pkg/fCopulae/test/runit3C.R
+    D pkg/fCopulae/test/runit3D.R
+    D pkg/fCopulae/test/runit4A.R
+    D pkg/fCopulae/test/runit4B.R
+    D pkg/fCopulae/test/runit4C.R
+    D pkg/fCopulae/test/runit4D.R
+    D pkg/fCopulae/test/runit5A.R
+    D pkg/fCopulae/test/runit6A.R
+    D pkg/fCopulae/test/runit9X.R
+
+Author: wuertz
+Date:   2007-07-02
+
+    A pkg/fCopulae/tests/runit.R
+    A pkg/fCopulae/tests/runit1A.R
+    A pkg/fCopulae/tests/runit2A.R
+    A pkg/fCopulae/tests/runit2B.R
+    A pkg/fCopulae/tests/runit2C.R
+    A pkg/fCopulae/tests/runit2D.R
+    A pkg/fCopulae/tests/runit3A.R
+    A pkg/fCopulae/tests/runit3B.R
+    A pkg/fCopulae/tests/runit3C.R
+    A pkg/fCopulae/tests/runit3D.R
+    A pkg/fCopulae/tests/runit4A.R
+    A pkg/fCopulae/tests/runit4B.R
+    A pkg/fCopulae/tests/runit4C.R
+    A pkg/fCopulae/tests/runit4D.R
+    A pkg/fCopulae/tests/runit5A.R
+    A pkg/fCopulae/tests/runit6A.R
+    A pkg/fCopulae/tests/runit9X.R
+
+Author: wuertz
+Date:   2007-07-02
+
+    D pkg/fCopulae/inst/CHANGES.html
+    D pkg/fCopulae/inst/COPYING.html
+    D pkg/fCopulae/inst/DocClassification.pdf
+    D pkg/fCopulae/inst/DocFactSheet.pdf
+    D pkg/fCopulae/inst/DocRefcard.pdf
+    D pkg/fCopulae/inst/DocRmetrics.pdf
+    D pkg/fCopulae/inst/FAQ.html
+    D pkg/fCopulae/inst/FAQ.pdf
+    D pkg/fCopulae/inst/README.html
+
+Author: wuertz
+Date:   2007-06-25
+
+    A pkg/fCopulae/R/9X-MixedCopulae.R
+    A pkg/fCopulae/test/runit9X.R
+
+Author: wuertz
+Date:   2007-06-22
+
+    M pkg/fCopulae/R/6A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2007-06-19
+
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/test/runit1A.R
+    M pkg/fCopulae/test/runit2A.R
+    M pkg/fCopulae/test/runit2B.R
+    M pkg/fCopulae/test/runit2C.R
+    M pkg/fCopulae/test/runit2D.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit3B.R
+    M pkg/fCopulae/test/runit3C.R
+    M pkg/fCopulae/test/runit3D.R
+    M pkg/fCopulae/test/runit4A.R
+    M pkg/fCopulae/test/runit4B.R
+    M pkg/fCopulae/test/runit4C.R
+    M pkg/fCopulae/test/runit4D.R
+    M pkg/fCopulae/test/runit5A.R
+    M pkg/fCopulae/test/runit6A.R
+
+Author: wuertz
+Date:   2007-06-19
+
+    M pkg/fCopulae/man/3B-ArchimedeanCopulae.Rd
+
+Author: wuertz
+Date:   2007-06-11
+
+    M pkg/fCopulae/test/runit.R
+
+Author: wuertz
+Date:   2007-06-05
+
+    M pkg/fCopulae/man/2A-EllipticalGenerator.Rd
+    M pkg/fCopulae/man/2B-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/2C-EllipticalDependency.Rd
+    M pkg/fCopulae/man/2D-EllipticalModelling.Rd
+    M pkg/fCopulae/man/3A-ArchimedeanGenerator.Rd
+    M pkg/fCopulae/man/3B-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/3C-ArchimedeanDependency.Rd
+    M pkg/fCopulae/man/3D-ArchimedeanModelling.Rd
+    M pkg/fCopulae/man/4B-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/4C-ExtremeValueDependency.Rd
+    M pkg/fCopulae/man/4D-ExtremeValueModelling.Rd
+
+Author: wuertz
+Date:   2007-06-05
+
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+
+Author: wuertz
+Date:   2007-04-16
+
+    M pkg/fCopulae/R/1A-CopulaeClass.R
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+    M pkg/fCopulae/R/2B-EllipticalCopulae.R
+    M pkg/fCopulae/R/2D-EllipticalModelling.R
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/test/runit1A.R
+    M pkg/fCopulae/test/runit2A.R
+    M pkg/fCopulae/test/runit2B.R
+    M pkg/fCopulae/test/runit2C.R
+    M pkg/fCopulae/test/runit2D.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit3B.R
+    M pkg/fCopulae/test/runit3C.R
+    M pkg/fCopulae/test/runit3D.R
+    M pkg/fCopulae/test/runit4A.R
+    M pkg/fCopulae/test/runit4B.R
+    M pkg/fCopulae/test/runit4C.R
+    M pkg/fCopulae/test/runit4D.R
+    M pkg/fCopulae/test/runit5A.R
+    M pkg/fCopulae/test/runit6A.R
+
+Author: wuertz
+Date:   2007-04-12
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/man/2A-EllipticalGenerator.Rd
+    M pkg/fCopulae/man/3A-ArchimedeanGenerator.Rd
+    M pkg/fCopulae/man/4A-ExtremeValueGenerator.Rd
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/man/2A-EllipticalGenerator.Rd
+    M pkg/fCopulae/man/2B-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/2C-EllipticalDependency.Rd
+    M pkg/fCopulae/man/2D-EllipticalModelling.Rd
+    M pkg/fCopulae/man/3A-ArchimedeanGenerator.Rd
+    M pkg/fCopulae/man/3B-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/3C-ArchimedeanDependency.Rd
+    M pkg/fCopulae/man/3D-ArchimedeanModelling.Rd
+    M pkg/fCopulae/man/4A-ExtremeValueGenerator.Rd
+    M pkg/fCopulae/man/4B-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/4C-ExtremeValueDependency.Rd
+    M pkg/fCopulae/man/4D-ExtremeValueModelling.Rd
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+
+Author: wuertz
+Date:   2007-04-08
+
+    A pkg/fCopulae/man/2A-EllipticalGenerator.Rd
+    A pkg/fCopulae/man/2C-EllipticalDependency.Rd
+    A pkg/fCopulae/man/2D-EllipticalModelling.Rd
+    A pkg/fCopulae/man/3A-ArchimedeanGenerator.Rd
+    A pkg/fCopulae/man/3C-ArchimedeanDependency.Rd
+    A pkg/fCopulae/man/3D-ArchimedeanModelling.Rd
+    A pkg/fCopulae/man/4A-ExtremeValueGenerator.Rd
+    A pkg/fCopulae/man/4C-ExtremeValueDependency.Rd
+    A pkg/fCopulae/man/4D-ExtremeValueModelling.Rd
+
+Author: wuertz
+Date:   2007-04-08
+
+    D pkg/fCopulae/man/2A-EllipticalCopulae.Rd
+    A pkg/fCopulae/man/2B-EllipticalCopulae.Rd
+    D pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    A pkg/fCopulae/man/3B-ArchimedeanCopulae.Rd
+    D pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+    A pkg/fCopulae/man/4B-ExtremeValueCopulae.Rd
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/R/1A-CopulaeClass.R
+    M pkg/fCopulae/R/2A-EllipticalGenerator.R
+    M pkg/fCopulae/R/2B-EllipticalCopulae.R
+    M pkg/fCopulae/R/2C-EllipticalDependency.R
+    M pkg/fCopulae/R/2D-EllipticalModelling.R
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    M pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/R/6A-EmpiricalCopulae.R
+    M pkg/fCopulae/man/2A-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/test/runit1A.R
+    M pkg/fCopulae/test/runit2A.R
+    M pkg/fCopulae/test/runit2B.R
+    M pkg/fCopulae/test/runit2C.R
+    M pkg/fCopulae/test/runit2D.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit3B.R
+    M pkg/fCopulae/test/runit3C.R
+    M pkg/fCopulae/test/runit3D.R
+    M pkg/fCopulae/test/runit4A.R
+    M pkg/fCopulae/test/runit4B.R
+    M pkg/fCopulae/test/runit4C.R
+    M pkg/fCopulae/test/runit4D.R
+    M pkg/fCopulae/test/runit5A.R
+    M pkg/fCopulae/test/runit6A.R
+
+Author: wuertz
+Date:   2007-04-08
+
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/R/6A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2007-04-06
+
+    M pkg/fCopulae/R/1A-CopulaeClass.R
+    M pkg/fCopulae/R/2B-EllipticalCopulae.R
+
+Author: wuertz
+Date:   2007-04-06
+
+    M pkg/fCopulae/test/runit1A.R
+    M pkg/fCopulae/test/runit2A.R
+    A pkg/fCopulae/test/runit2B.R
+    A pkg/fCopulae/test/runit2C.R
+    A pkg/fCopulae/test/runit2D.R
+    A pkg/fCopulae/test/runit3B.R
+    A pkg/fCopulae/test/runit3C.R
+    A pkg/fCopulae/test/runit3D.R
+    A pkg/fCopulae/test/runit4B.R
+    A pkg/fCopulae/test/runit4C.R
+    A pkg/fCopulae/test/runit4D.R
+
+Author: wuertz
+Date:   2007-04-06
+
+    M pkg/fCopulae/R/2C-EllipticalDependency.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit4A.R
+
+Author: wuertz
+Date:   2007-04-04
+
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    M pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/test/runit3A.R
+
+Author: wuertz
+Date:   2007-04-02
+
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+
+Author: wuertz
+Date:   2007-04-02
+
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+
+Author: wuertz
+Date:   2007-03-28
+
+    M pkg/fCopulae/INDEX
+
+Author: wuertz
+Date:   2007-03-25
+
+    M pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+
+Author: wuertz
+Date:   2007-03-25
+
+    M pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    M pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    M pkg/fCopulae/R/4D-ExtremeValueModelling.R
+    M pkg/fCopulae/R/6A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2007-03-25
+
+    M pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    M pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    M pkg/fCopulae/R/3D-ArchimedeanModelling.R
+    D pkg/fCopulae/R/4A-ExtremeValueCopulae.R
+    A pkg/fCopulae/R/4A-ExtremeValueGenerator.R
+    A pkg/fCopulae/R/4B-ExtremeValueCopulae.R
+    A pkg/fCopulae/R/4C-ExtremeValueDependency.R
+    A pkg/fCopulae/R/4D-ExtremeValueModelling.R
+
+Author: wuertz
+Date:   2007-03-25
+
+    D pkg/fCopulae/R/3A-ArchimedeanCopulae.R
+    A pkg/fCopulae/R/3A-ArchimedeanGenerator.R
+    A pkg/fCopulae/R/3B-ArchimedeanCopulae.R
+    A pkg/fCopulae/R/3C-ArchimedeanDependency.R
+    A pkg/fCopulae/R/3D-ArchimedeanModelling.R
+
+Author: wuertz
+Date:   2007-03-25
+
+    D pkg/fCopulae/R/2A-EllipticalCopulae.R
+    A pkg/fCopulae/R/2A-EllipticalGenerator.R
+    A pkg/fCopulae/R/2B-EllipticalCopulae.R
+    A pkg/fCopulae/R/2C-EllipticalDependency.R
+    A pkg/fCopulae/R/2D-EllipticalModelling.R
+
+Author: wuertz
+Date:   2007-03-25
+
+    M pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/6A-EmpiricalCopulae.Rd
+    M pkg/fCopulae/test/runit2A.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit4A.R
+
+Author: wuertz
+Date:   2007-03-24
+
+    M pkg/fCopulae/R/3A-ArchimedeanCopulae.R
+    M pkg/fCopulae/man/1A-CopulaeClass.Rd
+    M pkg/fCopulae/man/2A-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/6A-EmpiricalCopulae.Rd
+
+Author: wuertz
+Date:   2007-03-18
+
+    D pkg/fCopulae/demo/00Index
+    D pkg/fCopulae/demo/xmpBivariateCopulae.R
+    D pkg/fCopulae/demo/xmpCompareEvanesce.R
+    D pkg/fCopulae/demo/xmpDWChapter61.R
+    D pkg/fCopulae/demo/xmpDWChapter62.R
+
+Author: wuertz
+Date:   2007-03-18
+
+    D pkg/fCopulae/inst/demoIndex
+
+Author: wuertz
+Date:   2007-02-28
+
+    M pkg/fCopulae/test/runit2A.R
+    M pkg/fCopulae/test/runit3A.R
+    M pkg/fCopulae/test/runit4A.R
+    M pkg/fCopulae/test/runit5A.R
+    M pkg/fCopulae/test/runit6A.R
+
+Author: wuertz
+Date:   2007-02-28
+
+    M pkg/fCopulae/test/runit.R
+
+Author: wuertz
+Date:   2007-02-28
+
+    A pkg/fCopulae/test/runit.R
+
+Author: wuertz
+Date:   2007-02-28
+
+    A pkg/fCopulae/INDEX
+
+Author: wuertz
+Date:   2007-02-28
+
+    A pkg/fCopulae/test/runit1A.R
+    A pkg/fCopulae/test/runit2A.R
+    A pkg/fCopulae/test/runit3A.R
+    A pkg/fCopulae/test/runit4A.R
+    A pkg/fCopulae/test/runit5A.R
+    A pkg/fCopulae/test/runit6A.R
+
+Author: wuertz
+Date:   2007-02-27
+
+    M pkg/fCopulae/DESCRIPTION
+
+Author: wuertz
+Date:   2006-12-01
+
+    D pkg/fCopulae/R/5A-ArchmaxCopulae.R
+
+Author: wuertz
+Date:   2006-12-01
+
+    D pkg/fCopulae/R/061A-CopulaeClass.R
+    D pkg/fCopulae/R/062A-EllipticalCopulae.R
+    D pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    D pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+    D pkg/fCopulae/R/065A-ArchmaxCopulae.R
+    D pkg/fCopulae/R/066A-EmpiricalCopulae.R
+    A pkg/fCopulae/R/1A-CopulaeClass.R
+    A pkg/fCopulae/R/2A-EllipticalCopulae.R
+    A pkg/fCopulae/R/3A-ArchimedeanCopulae.R
+    A pkg/fCopulae/R/4A-ExtremeValueCopulae.R
+    A pkg/fCopulae/R/5A-ArchmaxCopulae.R
+    A pkg/fCopulae/R/6A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2006-12-01
+
+    D pkg/fCopulae/man/061A-CopulaeClass.Rd
+    D pkg/fCopulae/man/062A-EllipticalCopulae.Rd
+    D pkg/fCopulae/man/063A-ArchimedeanCopulae.Rd
+    D pkg/fCopulae/man/064A-ExtremeValueCopulae.Rd
+    A pkg/fCopulae/man/1A-CopulaeClass.Rd
+    A pkg/fCopulae/man/2A-EllipticalCopulae.Rd
+    A pkg/fCopulae/man/3A-ArchimedeanCopulae.Rd
+    A pkg/fCopulae/man/4A-ExtremeValueCopulae.Rd
+    A pkg/fCopulae/man/6A-EmpiricalCopulae.Rd
+
+Author: wuertz
+Date:   2006-11-26
+
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+    M pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+
+Author: wuertz
+Date:   2006-11-26
+
+    M pkg/fCopulae/R/061A-CopulaeClass.R
+    M pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/065A-ArchmaxCopulae.R
+
+Author: wuertz
+Date:   2006-11-26
+
+    M pkg/fCopulae/man/061A-CopulaeClass.Rd
+
+Author: wuertz
+Date:   2006-11-26
+
+    M pkg/fCopulae/man/062A-EllipticalCopulae.Rd
+
+Author: wuertz
+Date:   2006-11-15
+
+    M pkg/fCopulae/demo/xmpBivariateCopulae.R
+
+Author: wuertz
+Date:   2006-11-06
+
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+
+Author: wuertz
+Date:   2006-11-05
+
+    D pkg/fCopulae/R/069A-CopulaeTools.R
+
+Author: wuertz
+Date:   2006-11-05
+
+    D pkg/fCopulae/man/069A-CopulaeTools.Rd
+
+Author: wuertz
+Date:   2006-11-05
+
+    D pkg/fCopulae/data/qlogisticTable.R
+
+Author: wuertz
+Date:   2006-11-05
+
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+
+Author: wuertz
+Date:   2006-11-05
+
+    M pkg/fCopulae/R/061A-CopulaeClass.R
+
+Author: wuertz
+Date:   2006-11-05
+
+    D pkg/fCopulae/chm/00Index.html
+    D pkg/fCopulae/chm/061A-CopulaeClass.html
+    D pkg/fCopulae/chm/062A-EllipticalCopulae.html
+    D pkg/fCopulae/chm/063A-ArchimedeanCopulae.html
+    D pkg/fCopulae/chm/064A-ExtremeValueCopulae.html
+    D pkg/fCopulae/chm/069A-CopulaeTools.html
+    D pkg/fCopulae/chm/Rchm.css
+    D pkg/fCopulae/chm/fCopulae.chm
+    D pkg/fCopulae/chm/fCopulae.hhp
+    D pkg/fCopulae/chm/fCopulae.toc
+    D pkg/fCopulae/chm/logo.jpg
+
+Author: wuertz
+Date:   2006-11-05
+
+    M pkg/fCopulae/chm/fCopulae.hhp
+
+Author: wuertz
+Date:   2006-11-05
+
+    M pkg/fCopulae/chm/fCopulae.chm
+
+Author: wuertz
+Date:   2006-07-18
+
+    D pkg/fCopulae/R/065A-ArchimaxCopulae.R
+
+Author: wuertz
+Date:   2006-07-18
+
+    A pkg/fCopulae/R/065A-ArchmaxCopulae.R
+
+Author: wuertz
+Date:   2006-07-18
+
+    M pkg/fCopulae/R/061A-CopulaeClass.R
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+    M pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/066A-EmpiricalCopulae.R
+    M pkg/fCopulae/chm/00Index.html
+    M pkg/fCopulae/chm/061A-CopulaeClass.html
+    M pkg/fCopulae/chm/062A-EllipticalCopulae.html
+    M pkg/fCopulae/chm/063A-ArchimedeanCopulae.html
+    M pkg/fCopulae/chm/064A-ExtremeValueCopulae.html
+    M pkg/fCopulae/chm/069A-CopulaeTools.html
+    M pkg/fCopulae/chm/fCopulae.chm
+    M pkg/fCopulae/chm/fCopulae.hhp
+    M pkg/fCopulae/chm/fCopulae.toc
+    M pkg/fCopulae/data/qlogisticTable.R
+    M pkg/fCopulae/demo/xmpCompareEvanesce.R
+    M pkg/fCopulae/man/061A-CopulaeClass.Rd
+    M pkg/fCopulae/man/062A-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/063A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/064A-ExtremeValueCopulae.Rd
+    M pkg/fCopulae/man/069A-CopulaeTools.Rd
+
+Author: wuertz
+Date:   2006-06-12
+
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+    M pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+    M pkg/fCopulae/R/065A-ArchimaxCopulae.R
+    M pkg/fCopulae/R/066A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2006-06-12
+
+    A pkg/fCopulae/demo/xmpCompareEvanesce.R
+
+Author: wuertz
+Date:   2006-06-12
+
+    A pkg/fCopulae/R/065A-ArchimaxCopulae.R
+    A pkg/fCopulae/R/066A-EmpiricalCopulae.R
+
+Author: wuertz
+Date:   2006-06-12
+
+    M pkg/fCopulae/R/061A-CopulaeClass.R
+    M pkg/fCopulae/R/062A-EllipticalCopulae.R
+    M pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    M pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+    M pkg/fCopulae/inst/demoIndex
+
+Author: wuertz
+Date:   2006-06-12
+
+    M pkg/fCopulae/chm/00Index.html
+    M pkg/fCopulae/chm/061A-CopulaeClass.html
+    M pkg/fCopulae/chm/062A-EllipticalCopulae.html
+    M pkg/fCopulae/chm/063A-ArchimedeanCopulae.html
+    M pkg/fCopulae/chm/064A-ExtremeValueCopulae.html
+    M pkg/fCopulae/chm/fCopulae.chm
+    M pkg/fCopulae/chm/fCopulae.toc
+    M pkg/fCopulae/demo/00Index
+    M pkg/fCopulae/man/061A-CopulaeClass.Rd
+    M pkg/fCopulae/man/062A-EllipticalCopulae.Rd
+    M pkg/fCopulae/man/063A-ArchimedeanCopulae.Rd
+    M pkg/fCopulae/man/064A-ExtremeValueCopulae.Rd
+
+Author: wuertz
+Date:   2006-06-07
+
+    A pkg/fCopulae/DESCRIPTION
+    A pkg/fCopulae/R/061A-CopulaeClass.R
+    A pkg/fCopulae/R/062A-EllipticalCopulae.R
+    A pkg/fCopulae/R/063A-ArchimedeanCopulae.R
+    A pkg/fCopulae/R/064A-ExtremeValueCopulae.R
+    A pkg/fCopulae/R/069A-CopulaeTools.R
+    A pkg/fCopulae/R/zzz.R
+    A pkg/fCopulae/chm/00Index.html
+    A pkg/fCopulae/chm/061A-CopulaeClass.html
+    A pkg/fCopulae/chm/062A-EllipticalCopulae.html
+    A pkg/fCopulae/chm/063A-ArchimedeanCopulae.html
+    A pkg/fCopulae/chm/064A-ExtremeValueCopulae.html
+    A pkg/fCopulae/chm/069A-CopulaeTools.html
+    A pkg/fCopulae/chm/Rchm.css
+    A pkg/fCopulae/chm/fCopulae.chm
+    A pkg/fCopulae/chm/fCopulae.hhp
+    A pkg/fCopulae/chm/fCopulae.toc
+    A pkg/fCopulae/chm/logo.jpg
+    A pkg/fCopulae/data/qlogisticTable.R
+    A pkg/fCopulae/demo/00Index
+    A pkg/fCopulae/demo/xmpBivariateCopulae.R
+    A pkg/fCopulae/demo/xmpDWChapter61.R
+    A pkg/fCopulae/demo/xmpDWChapter62.R
+    A pkg/fCopulae/inst/CHANGES.html
+    A pkg/fCopulae/inst/COPYING.html
+    A pkg/fCopulae/inst/COPYRIGHT.html
+    A pkg/fCopulae/inst/DocClassification.pdf
+    A pkg/fCopulae/inst/DocCopying.pdf
+    A pkg/fCopulae/inst/DocFactSheet.pdf
+    A pkg/fCopulae/inst/DocRefcard.pdf
+    A pkg/fCopulae/inst/DocRmetrics.pdf
+    A pkg/fCopulae/inst/FAQ.html
+    A pkg/fCopulae/inst/FAQ.pdf
+    A pkg/fCopulae/inst/README.html
+    A pkg/fCopulae/inst/demoIndex
+    A pkg/fCopulae/man/061A-CopulaeClass.Rd
+    A pkg/fCopulae/man/062A-EllipticalCopulae.Rd
+    A pkg/fCopulae/man/063A-ArchimedeanCopulae.Rd
+    A pkg/fCopulae/man/064A-ExtremeValueCopulae.Rd
+    A pkg/fCopulae/man/069A-CopulaeTools.Rd
