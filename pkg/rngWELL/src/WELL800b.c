@@ -139,7 +139,7 @@ double case_1(void)
     
     
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
+    z0 = Vrm1Under;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
@@ -157,7 +157,7 @@ static double case_2(void)
     
     //Rprintf("c2 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2Under;
+    z0 = Vrm1;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
@@ -174,7 +174,7 @@ static double case_3(void)
 {
     //Rprintf("c3 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2;
+    z0 = Vrm1;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
     z2 = MAT1(VM2Over) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
@@ -192,7 +192,7 @@ static double case_4(void)
 {
     //Rprintf("c4 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2;
+    z0 = Vrm1;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
@@ -210,7 +210,7 @@ static double case_5(void)
 {
     //Rprintf("c5 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2;
+    z0 = Vrm1;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
@@ -228,7 +228,7 @@ static double case_6(void)
 {
     //Rprintf("c6 state_i = i mod r : %u\n", state_i);
     // do not need (Vrm1Under & MASKL) | (Vrm2Under & MASKU)
-    z0 = Vrm2;
+    z0 = Vrm1;
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
