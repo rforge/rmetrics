@@ -63,7 +63,7 @@ riskBudgets(data, weights = NULL, FUN = "cov", ...)
 
 \value{
 
-    \code{covRisk}
+    \code{covarRisk}
     \cr
     returns the covariance risk (standard deviation), a numeric value.
     \cr
@@ -137,7 +137,7 @@ Scherer B., (2004);
    # Marginal Risk Contributions
    # RC = Sum_i ( W_i MCR )
    riskContributions(data)
-   sum(riskContributions(data)) - covRisk(data)
+   sum(riskContributions(data)) - covarRisk(data)
    
 ## riskBudgets -  
    # Marginal Risk Budgets
