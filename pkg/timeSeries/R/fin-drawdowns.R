@@ -90,7 +90,7 @@ function(x, ...)
     #   <sankalp.upadhyay [at] gmail [dot] com>
 
     # Examples:
-    #   x = asDrawdowns(as.timeSeries(data(edhec))[,1])
+    #   x = drawdownsStats(as.timeSeries(data(edhec))[,1])
 
     # FUNCTION:
 
