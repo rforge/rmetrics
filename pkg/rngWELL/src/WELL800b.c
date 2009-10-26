@@ -143,7 +143,7 @@ double case_1(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
-    newV0Under = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0Under = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
 
     state_i = R-1;
     WELLRNG800b = case_3;
@@ -161,7 +161,7 @@ static double case_2(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
     
     state_i=0;
     WELLRNG800b = case_1;
@@ -178,7 +178,7 @@ static double case_3(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
     z2 = MAT1(VM2Over) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
-    newV0 = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
             
     state_i--;
     if(state_i+M2<R)
@@ -196,7 +196,7 @@ static double case_4(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
-    newV0 = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
         
     state_i--;
     if (state_i+M1< R)
@@ -214,7 +214,7 @@ static double case_5(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
     newV1  = z1 ^ z2;
-    newV0 = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
             
     state_i--;
     if(state_i+M3 < R)
@@ -232,7 +232,7 @@ static double case_6(void)
     z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
     z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT1(z0) ^ MAT3POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
+    newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
         
     state_i--;
     if(state_i == 1 )
