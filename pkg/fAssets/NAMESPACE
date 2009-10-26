@@ -37,6 +37,11 @@ S3method("summary", "fASSETS")
 ################################################
 
 export(
+    "covarRisk",
+    "mcr",
+    "mcrBeta",
+    "riskContributions",
+    "riskBudgets",
     ".abcArrange",
     ".arwMeanCov",
     "assetsArrange",
