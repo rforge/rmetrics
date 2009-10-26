@@ -14,14 +14,10 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-
 
 ################################################################################
+# FUNCTION:                    DESCRIPTION:
+#  tailDependenceCoeffs         Returns Lower and Upper Tail Dependence Coeffs 
 # FUNCTION:                    MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
 #  .rgsgnormCopula              Generates G-SG-NORM copula random variates
 #  .dgsgnormCopula              Computes G-SG-NORM copula density
@@ -33,12 +29,37 @@
 #  .empiricalDependencyFit      Estimates tail dependence with empirical marginals
 #  .normDependencyFit           Estimates tail dependence with normal marginals
 #  .nigDependencyFit            Estimates tail dependence with NIG marginals  
-#  .ghtDependencyFit            Estimates tail dependence with GHT marginals 
-# FUNCTION:                    DESCRIPTION:
-#  .tailDependenceCoeffs        Returns Lower and Upper Tail Dependence Coeffs     
+#  .ghtDependencyFit            Estimates tail dependence with GHT marginals     
 ################################################################################
 
  
+tailDependenceCoeffs <-
+    function(x, method = "nig", trace = FALSE, doplot = TRUE)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns a list with lower and upper bivariate tail depenence matrixes
+    
+    # Example:
+    #   x = 100 * LPP2005.RET[, 1:6]; tailDependenceCoeffs(x)
+    
+    # Notes:
+    #   Tested only for NIG marginal distributions.
+    
+    # FUNCTION:
+    
+    # Compute Coeffs with NIG Marginals:
+    coeffs = .nigDependencyFit(x, doplot = doplot, trace = trace) 
+    
+    # Return Value:
+    coeffs
+}
+
+
+################################################################################
+
+
 .rgsgnormCopula <- 
     function(n = 1000, alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3))
 {   
@@ -104,7 +125,7 @@
     #   Computes mixed Gumbel-SurvivalGumbel-Normal Copula density
     
     # Example:
-    #   .perspPlot(.dgsgnormCopula(u = grid2d()$x, v = grid2d()$y, output = "list"))
+    #   .perspPlot(.dgsgnormCopula(u=grid2d()$x, v=grid2d()$y, output = "list"))
    
     # FUNCTION:
     
@@ -146,7 +167,8 @@
 
 .gsgnormCopulaFit <- 
     function(u, v =  NULL, trace = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits parameters for a mixed GSG copula
@@ -394,6 +416,7 @@
                 MainR = paste("Distribution:", Main1, "-", Main2)
                 plot(r1, r2, pch = 19, main = MainR)
                 grid()
+                
                 # Plot Copula:
                 MainP = paste("Copula:", Main1, "-", Main2)
                 plot(p1, p2, pch = 19, main = MainP)
@@ -459,11 +482,11 @@
             Main2 = assetsNames[j]
             # Optional Plot:
             if (doplot) {
-                MainR = paste("Distribution:", Main1, "-", Main2)
-                plot(r1, r2, pch = 19, main = MainR)
-                grid()
+                ## MainR = paste("Distribution:", Main1, "-", Main2)
+                ## plot(r1, r2, pch = 19, main = MainR)
+                ## grid()
                 MainP = paste("Copula:", Main1, "-", Main2)
-                plot(p1, p2, pch = 19, main = MainP)
+                plot(p1, p2, pch = 19, main = MainP, xlab = "", ylab = "")
                 grid()
             }
             # Fit GSG copula parameters:
@@ -549,34 +572,6 @@
      
     # Return Value:
     ans 
-}
-
-
-################################################################################
-
-
-.tailDependenceCoeffs <-
-function(x, method = "nig", doplot = TRUE, trace = FALSE)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns a list with lower and upper bivariate tail depenence matrixes
-    
-    # Example:
-    #   data(LPP2005REC); x = 100 * as.timeSeries(LPP2005REC)[, 1:6] 
-    #   .tailDependenceCoeffs(x)
-    
-    # Notes:
-    #   Tested only for NIG marginal distributions.
-    
-    # FUNCTION:
-    
-    # Compute Coeffs with NIG Marginals:
-    coeffs = .nigDependencyFit(x, doplot = doplot, trace = trace) 
-    
-    # Return Value:
-    coeffs
 }
 
 

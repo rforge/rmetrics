@@ -1,19 +1,19 @@
-\name{fPortfolioPlus-package}
+\name{fPortfolioAdvanced-package}
 
 
-\alias{fPortfolioPlus}
+\alias{fPortfolioAdvanced}
 
 
 \docType{package}
 
 
-\title{Portfolio Modelling, Additional Packages}
+\title{Advanced Portfolio Optimization}
 
 
 \description{
 
-    The Rmetrics "fPortfolioPlus" is a package which adds 
-    additional functionality to to the Rmetrics "fPortfolio" 
+    The Rmetrics "fPortfolioAdvanced" is a package which adds 
+    advanced functionality to to the Rmetrics "fPortfolio" 
     package
 
 }
@@ -22,7 +22,7 @@
 \details{
 
     \tabular{ll}{
-        Package:    \tab fPortfolioPlus\cr
+        Package:    \tab fPortfolioAdvanced\cr
         Type:       \tab Package\cr
         Date:       \tab 2009\cr
         License:    \tab GPL Version 2 or later\cr
