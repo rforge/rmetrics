@@ -1,6 +1,19 @@
 #include "S.h"
 #include "Rinternals.h"
 
+/* Added declaration of FORTRAN by Yohan Chalabi  */
+void F77_NAME(adapt)(int*,    /* ndim */     
+		     double*, /* lower */    
+		     double*, /* upper */    
+		     int*,    /* minpts */   
+		     int*,    /* maxpts */   
+		     double*, /* eps */      
+		     double*, /* relerr */   
+		     int*,    /* lenwrk */   
+		     double*, /* wrkstr */   
+		     double*, /* finest */   
+		     int*);   /* ifail */    
+
 static SEXP rho;
 static SEXP f;
 
@@ -14,6 +27,7 @@ void cadapt(int *ndim, double *lower, double *upper,
 	    int *lenwrk, double *finest, int *ifail)
 {
   double *wrkstr;
+
   wrkstr = (double *) S_alloc(*lenwrk, sizeof(double));
 
   /* store the R function and its environment */
