@@ -1,7 +1,7 @@
 Package: fCopulae
 Version: 2110.78
 Revision:
-Date: 2009-10-23
+Date: 2009-10-27
 Title: Rmetrics - Dependence Structures with Copulas
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), sn, methods, timeDate, timeSeries, fBasics (>=

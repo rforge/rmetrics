@@ -1,4 +1,12 @@
 Author: chalabi
+Date:   2009-10-27
+
+    added declaration of FORTRAN routine in C before use
+
+    M pkg/fCopulae/DESCRIPTION
+    M pkg/fCopulae/src/adapt_callback.c
+
+Author: chalabi
 Date:   2009-10-16
 
     updated NAMESPACE
