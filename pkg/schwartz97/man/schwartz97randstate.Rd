@@ -43,8 +43,8 @@
 \arguments{
 
   \item{n}{Number of observations.}
-  \item{method}{See \code{\link[mvtnorm:Mvnorm]{rmvnorm}} of package
-    \code{\link[mvtnorm:00Index]{mvtnorm}}.}
+  \item{method}{See \code{\link[mvtnorm]{rmvnorm}} of package
+    \code{mvtnorm}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
   \item{object}{An object inheriting from class
@@ -65,11 +65,11 @@
 \details{
 
   The above methods rely on the functions
-  \code{\link[mvtnorm:pmvnrom]{pmvnorm}},
-  \code{\link[mvtnorm:Mvnrom]{dmvnorm}},
-  \code{\link[mvtnorm:qmvnrom]{qmvnorm}} and
-  \code{\link[mvtnorm:Mvnrom]{rmvnorm}} of the package
-  \code{\link[mvtnorm:00Index]{mvtnorm}}.
+  \code{\link[mvtnorm]{pmvnorm}},
+  \code{\link[mvtnorm]{dmvnorm}},
+  \code{\link[mvtnorm]{qmvnorm}} and
+  \code{\link[mvtnorm]{rmvnorm}} of the package
+  \code{mvtnorm}.
 
 }
 

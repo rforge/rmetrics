@@ -17,11 +17,12 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{pricefutures}{ANY,missing}(ttm = 1, s0 = 50, delta0 = 0, sigmaS = 0.6,
-             kappa = 1, alpha = 0, sigmaE = 0.3, rho = 0.75,
+\S4method{pricefutures}{ANY,missing}(ttm = 1, s0 = 50, delta0 = 0, sigmaS = 0.3,
+             kappa = 1, alpha = 0, sigmaE = 0.5, rho = 0.75,
              r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{pricefutures}{ANY,schwartz2factor}(ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL)
+\S4method{pricefutures}{ANY,schwartz2factor}(ttm = 1, object, r = 0.05,
+             lambda = 0, alphaT = NULL)
 
 \S4method{pricefutures}{ANY,fit.schwartz2factor}(ttm = 1, object)
 
@@ -48,7 +49,7 @@
   \item{alphaT}{Mean-level of the convenience yield process with
     respect to the equivalent martingale measure (see \bold{Details}).}
   \item{\dots}{Arguments to be passed to methods of package
-    \code{\link[stats:00Index]{stats}}.}
+    \code{\link[stats]{stats}}.}
 
 }
 

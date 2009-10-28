@@ -21,11 +21,12 @@
               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
               rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL,
               deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
-              P0 = 0.5 * diag(c(log(s0), delta0)))
+              P0 = 0.5 * diag(c(log(s0), abs(delta0))))
 
-\S4method{filter2factor}{ANY,ANY,schwartz2factor}(data, ttm, object, r = 0.05, lambda = 0, alphaT = NULL,
-             deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
-             P0 = 0.5 * diag(c(log(s0), delta0)))
+\S4method{filter2factor}{ANY,ANY,schwartz2factor}(data, ttm, object,
+              r = 0.05, lambda = 0, alphaT = NULL, deltat = 1/260,
+              meas.sd = rep(1e-3, ncol(data)),
+              P0 = 0.1 * diag(2))
 
 \S4method{filter2factor}{ANY,ANY,fit.schwartz2factor}(data, ttm, object)
 
@@ -108,9 +109,9 @@
 
 }
 % <---------------------------------------------------------------------->
-\examples{
+% \examples{
 
-}
+% }
 
 % <---------------------------------------------------------------------->
 \keyword{iteration}

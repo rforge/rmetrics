@@ -99,7 +99,7 @@
     respect to the equivalent martingale measure (see \bold{Details}).}
   \item{r}{Instantaneous risk-free interest rate.}
   \item{\dots}{Arguments to be passed to the functions
-    \code{\link[dnorm]{d/p/q-norm}}.}
+    \code{\link[stats:dnorm]{d/p/q-norm}}.}
 
 }
 

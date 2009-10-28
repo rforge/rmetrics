@@ -61,8 +61,8 @@
   \item{x}{Vector or matrix of quantiles. If \code{x} is
     a matrix, each row is taken to be a quantile.}
   \item{p}{Probability.}
-  \item{tail}{See \code{\link[mvtnorm:qmvnorm]{qmvnorm}} of package
-    \code{\link[mvtnorm:00Index]{mvtnorm}}.}
+  \item{tail}{See \code{\link[mvtnorm]{qmvnorm}} of package
+    \code{mvtnorm}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
   \item{object}{An object inheriting from class
@@ -78,18 +78,18 @@
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
   \item{\dots}{Further arguments to be passed to methods of package
-    \code{\link[mvtnorm:00Index]{mvtnorm}}.}
+    \code{mvtnorm}.}
 }
 
 % <---------------------------------------------------------------------->
 \details{
 
   The above methods rely on the functions
-  \code{\link[mvtnorm:pmvnrom]{pmvnorm}},
-  \code{\link[mvtnorm:Mvnrom]{dmvnorm}},
-  \code{\link[mvtnorm:qmvnrom]{qmvnorm}} and
-  \code{\link[mvtnorm:Mvnrom]{rmvnorm}} of the package
-  \code{\link[mvtnorm:00Index]{mvtnorm}}.
+  \code{\link[mvtnorm]{pmvnorm}},
+  \code{\link[mvtnorm]{dmvnorm}},
+  \code{\link[mvtnorm]{qmvnorm}} and
+  \code{\link[mvtnorm]{rmvnorm}} of the package
+  \code{mvtnorm}.
 
 }
 

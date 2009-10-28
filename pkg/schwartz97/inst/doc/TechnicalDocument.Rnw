@@ -27,7 +27,7 @@ pdfstartpage={1}
 \newcommand{\sigmaE}{\sigma_\epsilon}
 %%\VignetteIndexEntry{Technical Document}
 \title{Schwartz 1997 Two-Factor Model\\Technical Document}
-\author{Philipp Erb \and David L\"{u}thi}%\\\email{philipp.erb@zhaw.org}}
+\author{Philipp Erb, David L\"{u}thi \& Simon Otziger}%\\\email{philipp.erb@zhaw.org}}
 \date{\today}
 \begin{document}
 \maketitle
