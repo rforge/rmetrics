@@ -15,20 +15,20 @@
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m2-1   case6
- *  R-m2       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m1-1   case4
- *  R-m1       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M2-1      case6
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M3-1      case5
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M1-1      case4
+ *  R-M1        case3
+ *  ...         ...
+ *  R-1         case3
  */
 
 #define W 32
@@ -97,6 +97,16 @@ void InitWELLRNG44497aTemp(unsigned int *init ){
    WELLRNG44497aTemp = case_1;
    for(j=0;j<R;j++)
       STATE[j]=init[j];
+}
+
+void GetWELLRNG44497aTemp (unsigned int *state)
+{
+   int j, k;
+   j = 0;
+   for (k = state_i; k < R; k++)
+     state[j++] = STATE[k];
+   for (k = 0; k < state_i; k++)
+     state[j++] = STATE[k];
 }
 
 double case_1(void){

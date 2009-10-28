@@ -130,7 +130,7 @@ double case_1(void)
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
   z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
-  newV0Under = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+  newV0Under = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
 
     state_i = R-1;
   WELLRNG21701a = case_3;
@@ -148,7 +148,7 @@ static double case_2(void)
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
     z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
     
   state_i=0;
   WELLRNG21701a = case_1;
@@ -166,7 +166,7 @@ static double case_3(void)
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
     z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3Over);
     newV1  = z1 ^ z2;
-    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
     
   state_i--;
   if(state_i+M3<R)
@@ -185,7 +185,7 @@ static double case_4(void)
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
     z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
     
   state_i--;
   if (state_i+M1 < R)
@@ -204,7 +204,7 @@ static double case_5(void)
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
     z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
     
   state_i--;
   if(state_i+M2 < R)
@@ -223,7 +223,7 @@ static double case_6(void)
     z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
     z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
     newV1  = z1 ^ z2;
-    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffdfffff,0x00000010,z2) ^ MAT0NEG(-16,newV1);
+    newV0 = MAT0POS(27,z0) ^ MAT0NEG(-11,z1) ^  MAT5(15,0x86a9d87e,0xffffffef,0x00200000,z2) ^ MAT0NEG(-16,newV1);
     
   state_i--;
   if(state_i == 1 )

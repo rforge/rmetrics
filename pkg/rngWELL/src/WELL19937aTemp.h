@@ -12,5 +12,6 @@
 void InitWELLRNG19937aTemp (unsigned int *);
 extern double (*WELLRNG19937aTemp) (void);
 
+void GetWELLRNG19937aTemp (unsigned int *);
 #endif
 
