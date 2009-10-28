@@ -75,11 +75,14 @@ set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NU
 	{
 		if (is.null(parameters))
 		{
+			order <- as.character(dots$order)
+			version <- as.character(dots$version)
 			if (is.null(dots$temp))
 				dots$temp <- ""
-			if (dots$temp == "temp")
-				dots$temp <- "Temp"
-			parameters <- c(order=dots$order, version=dots$version, temp=dots$temp)
+			temp <- as.character(dots$temp)
+			if (temp == "temp")
+				temp <- "Temp"
+			parameters <- c(order=order, version=version, temp=temp)
 		}
 		if (identical(names(parameters), c("order", "version")))
 			parameters <- c(parameters, temp="")
