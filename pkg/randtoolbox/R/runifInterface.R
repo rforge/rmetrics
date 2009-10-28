@@ -48,7 +48,7 @@
 
 
 set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NULL, seed=NULL, ...,
-		only.description=FALSE)
+		only.dsc=FALSE)
 {
 	name <- match.arg(name)
 	dots <- list(...)
@@ -74,17 +74,28 @@ set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NU
 	} else if (name == "WELL")
 	{
 		if (is.null(parameters))
-			parameters <- c(order=dots$order, version=dots$version)
-		if (length(parameters) == 0)
-			parameters <- c(order=19937, version=1)
-		if (!identical(names(parameters), c("order", "version")))
+		{
+			if (is.null(dots$temp))
+				dots$temp <- ""
+			if (dots$temp == "temp")
+				dots$temp <- "Temp"
+			parameters <- c(order=dots$order, version=dots$version, temp=dots$temp)
+		}
+		if (identical(names(parameters), c("order", "version")))
+			parameters <- c(parameters, temp="")
+		if (!identical(names(parameters), c("order", "version", "temp")))
 		{
 			param.names <- paste(names(parameters),collapse=" ")
-			stop("parameter list \"", param.names, "\" is not correct for WELL")
+			cat("parameters required for WELL: order, version, temp\n")
+			cat("parameters provided: ", param.names, "\n")
+			stop("parameter list is not correct for WELL")
 		}
+		if (! paste(parameters, collapse="") %in% c("512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
+			"19937a", "19937aTemp", "19937b", "21701a", "23209a", "23209b", "44497a", "44497aTemp"))
+			stop("unsupported parameters for WELL")
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
-		size <- ceiling(parameters["order"]/32)
+		size <- ceiling(as.numeric(parameters["order"])/32)
 		state <- .C("initMT2002",
 					as.integer(seed),
 					as.integer(size),
@@ -99,7 +110,7 @@ set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NU
 		return(invisible(NULL))
 	} else
 		stop("unsupported generator: ", name)
-	if (only.description)
+	if (only.dsc)
 		return(description)
 	put.description(description)
 	invisible(NULL)
@@ -137,8 +148,8 @@ put.description <- function(description)
 		RNGkind("user-supplied")
 		.C("putRngWELL",
 			as.integer(parameters["order"]),
-			as.integer(parameters["version"]),
-			as.integer(0),
+			match(parameters["version"], c("a", "b")),
+			as.integer(parameters["temp"] == "Temp"),
 			as.integer(state),
 			PACKAGE="rngWELL")
 	} else 
@@ -185,8 +196,11 @@ get.description <- function()
 			temp = integer(1),
 			state = integer(2000),
 			PACKAGE="rngWELL")
-		parameters <- c(order=tmp$order, version=tmp$version)
-		size <- ceiling(parameters["order"]/32)
+		order <- as.character(tmp$order)
+		version <- letters[tmp$version]
+		temp <- if (tmp$temp == 1) "Temp" else ""
+		parameters <- c(order=order, version=version, temp=temp)
+		size <- ceiling(tmp$order/32)
 		state <- tmp$state[1:size]
 		literature <- "Panneton - L'Ecuyer - Matsumoto"
 	} else
