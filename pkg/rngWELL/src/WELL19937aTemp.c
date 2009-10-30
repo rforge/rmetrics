@@ -56,7 +56,7 @@ void GetWELLRNG19937aTemp (unsigned int *state){
 
 // state_i == 0
 double case_1 (void){
-  z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
+  z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
   z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
   newV1      = z1 ^ z2;
@@ -71,7 +71,7 @@ double case_1 (void){
 
 // state_i == 1
 static double case_2 (void){
-  z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
+  z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
   z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
   newV1 = z1 ^ z2;
@@ -86,7 +86,7 @@ static double case_2 (void){
 
 // R-1 >= state_i >= R-M1
 static double case_3 (void){
-  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1Over);
   z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
   newV1 = z1 ^ z2;
@@ -102,7 +102,7 @@ static double case_3 (void){
 
 // R-M2-1 >= state_i >= R-M3
 static double case_4 (void){
-  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
   z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3Over);
   newV1 = z1 ^ z2;
@@ -118,7 +118,7 @@ static double case_4 (void){
 
 // R-M1-1 >= state_i >= R-M2
 static double case_5 (void){
-  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
   z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
   newV1 = z1 ^ z2;
@@ -134,7 +134,7 @@ static double case_5 (void){
 
 // R-M3-1 >= state_i >= 2
 static double case_6 (void){
-  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
   z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
   newV1 = z1 ^ z2;

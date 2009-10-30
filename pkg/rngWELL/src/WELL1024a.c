@@ -18,7 +18,7 @@
 #define VM1           STATE[(state_i+M1) & 0x0000001fU]
 #define VM2           STATE[(state_i+M2) & 0x0000001fU]
 #define VM3           STATE[(state_i+M3) & 0x0000001fU]
-#define VRm1          STATE[(state_i+31) & 0x0000001fU]
+#define Vrm1          STATE[(state_i+31) & 0x0000001fU]
 #define newV0         STATE[(state_i+31) & 0x0000001fU]
 #define newV1         STATE[state_i                   ]
 
@@ -45,7 +45,7 @@ void GetWELLRNG1024a (unsigned int *state){
 }
 
 double WELLRNG1024a (void){
-  z0    = VRm1;
+  z0    = Vrm1;
   z1    = MAT1(V0)       ^ MAT0POS (8, VM1);
   z2    = MAT0NEG (-19, VM2) ^ MAT0NEG(-14,VM3);
   newV1 = z1                 ^ z2; 

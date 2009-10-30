@@ -20,11 +20,11 @@
 #define VM3Over       STATE[state_i+M3-R]
 #define VM3           STATE[state_i+M3]
 //v_i,r-1, second when i < R
-#define VRm1          STATE[state_i-1]
-#define VRm1Under     STATE[state_i+R-1]
+#define Vrm1          STATE[state_i-1]
+#define Vrm1Under     STATE[state_i+R-1]
 //v_i,r-2, second when i < R
-#define VRm2          STATE[state_i-2]
-#define VRm2Under     STATE[state_i+R-2]
+#define Vrm2          STATE[state_i-2]
+#define Vrm2Under     STATE[state_i+R-2]
 //v_i+1,0, second when i < R
 #define newV0         STATE[state_i-1]
 #define newV0Under    STATE[state_i-1+R]
