@@ -20,24 +20,7 @@
 #define TEMPERC 0x9b868000U
 
 #include "WELLmatrices.h"
-
-#define V0            STATE[state_i]
-#define VM1Over       STATE[state_i+M1-R]
-#define VM1           STATE[state_i+M1]
-#define VM2Over       STATE[state_i+M2-R]
-#define VM2           STATE[state_i+M2]
-#define VM3Over       STATE[state_i+M3-R]
-#define VM3           STATE[state_i+M3]
-#define VRm1          STATE[state_i-1]
-#define VRm1Under     STATE[state_i+R-1]
-#define VRm2          STATE[state_i-2]
-#define VRm2Under     STATE[state_i+R-2]
-
-#define newV0         STATE[state_i-1]
-#define newV0Under    STATE[state_i-1+R]
-#define newV1         STATE[state_i]
-#define newVRm1       STATE[state_i-2]
-#define newVRm1Under  STATE[state_i-2+R]
+#include "WELLindexing.h"
 
 #define FACT 2.32830643653869628906e-10
 

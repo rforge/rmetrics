@@ -42,34 +42,7 @@
 #define M3 84
 
 #include "WELLmatrices.h"
-
-//details of the algorithm figure 1 of Panneton et al. (2006)
-// state_i is       i mod R
-//v_i,0
-#define V0            STATE[state_i]
-//v_i,m1, first when i > r-m1
-#define VM1Over       STATE[state_i+M1-R]
-#define VM1           STATE[state_i+M1]
-//v_i,m2, first when i > r-m2
-#define VM2Over       STATE[state_i+M2-R]
-#define VM2           STATE[state_i+M2]
-//v_i,m3, first when i > r-m3
-#define VM3Over       STATE[state_i+M3-R]
-#define VM3           STATE[state_i+M3]
-//v_i,r-1, second when i < R
-#define Vrm1          STATE[state_i-1]
-#define Vrm1Under     STATE[state_i+R-1]
-//v_i,r-2, second when i < R
-#define Vrm2          STATE[state_i-2]
-#define Vrm2Under     STATE[state_i+R-2]
-//v_i+1,0, second when i < R
-#define newV0         STATE[state_i-1]
-#define newV0Under    STATE[state_i-1+R]
-//v_i+1,1
-#define newV1         STATE[state_i]
-//v_i+1,r-1
-#define newVRm1       STATE[state_i-2]
-#define newVRm1Under  STATE[state_i-2+R]
+#include "WELLindexing.h"
 
 #define FACT 2.32830643653869628906e-10
 
@@ -106,7 +79,7 @@ void GetWELLRNG21701a (unsigned int *state){
 // state_i == 0
 double case_1(void)
 {
-  z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
+  z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
   z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
@@ -120,7 +93,7 @@ double case_1(void)
 // state_i == 1
 static double case_2(void)
 {
-  z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+  z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
   z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
@@ -134,7 +107,7 @@ static double case_2(void)
 // R-1 >= state_i >= R-M3
 static double case_3(void)
 {
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
   z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3Over);
   newV1  = z1 ^ z2;
@@ -149,7 +122,7 @@ static double case_3(void)
 // R_M3-1 >= state_i >= R-M1
 static double case_4(void)
 {
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1Over);
   z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
@@ -164,7 +137,7 @@ static double case_4(void)
 // R-M1-1 >= state_i >= R-M2
 static double case_5(void)
 {
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
   z2 = MAT0POS(19,VM2Over) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
@@ -179,7 +152,7 @@ static double case_5(void)
 // R-M2-1 >= state_i >= 2
 static double case_6(void)
 {
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
   z1 = MAT1(V0) ^ MAT0NEG(-26,VM1);
   z2 = MAT0POS(19,VM2) ^ MAT7(VM3);
   newV1  = z1 ^ z2;
