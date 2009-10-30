@@ -117,7 +117,7 @@ void GetWELLRNG19937b (unsigned int *state){
      state[j++] = STATE[k];
 }
 
-   // state_i == 0
+// state_i == 0
 double case_1 (void)
 {
 
@@ -136,7 +136,6 @@ double case_1 (void)
 // state_i == 1
 static double case_2 (void)
 {
-
     z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
     z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
     z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
@@ -149,7 +148,7 @@ static double case_2 (void)
        return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M3>= R
+// R-1 >= state_i >= R-M3
 static double case_3 (void)
 {
    
@@ -166,10 +165,9 @@ static double case_3 (void)
        return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M1 >= R
+// R-M3-1 >= state_i >= R-M1
 static double case_4 (void)
 {
-   
     z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
     z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
     z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
@@ -183,10 +181,9 @@ static double case_4 (void)
        return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M2 >= R
+// R-M1-1 >= state_i >= R-M2
 static double case_5 (void)
 {
-   
     z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
     z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
     z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
@@ -200,10 +197,9 @@ static double case_5 (void)
        return ((double) STATE[state_i] * FACT);
 }
 
-// 2 <= state_i <= (R - M2 - 1)
+// R-M2-1 >= state_i >= 2
 static double case_6 (void)
 {
-   
     z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
     z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
     z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);

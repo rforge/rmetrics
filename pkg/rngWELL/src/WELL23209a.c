@@ -11,8 +11,6 @@
  * code to interface with R and add some comments on #define's.
  */
 
-
-
 /* functions work like this :
  * state_i      function
  *
@@ -92,7 +90,6 @@
 
 #define FACT 2.32830643653869628906e-10
 
-//array with the last R v_i,j's
 static unsigned int STATE[R];
 static unsigned int z0,z1,z2,y;
 static int state_i=0;
@@ -105,9 +102,6 @@ static double case_5(void);
 static double case_6(void);
 
 double (*WELLRNG23209a)(void);
-
-
-//#include <Rinternals.h>
 
 
 void InitWELLRNG23209a(unsigned int *init )
@@ -129,15 +123,9 @@ void GetWELLRNG23209a (unsigned int *state)
      state[j++] = STATE[k];
 }
 
-
-
-
 // state_i == 0
 double case_1(void)
 {
-    
-    //Rprintf("c1 state_i = i mod r : %u\n", state_i);
-    
     z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1);
     z2 = MAT0POS(18,VM2) ^ MAT0POS(3,VM3);
@@ -153,8 +141,6 @@ double case_1(void)
 // state_i == 1
 static double case_2(void)
 {
-    
-    //Rprintf("c2 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1);
     z2 = MAT0POS(18,VM2) ^ MAT0POS(3,VM3);
@@ -167,10 +153,9 @@ static double case_2(void)
     return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M2 >= R
+// R-1 >= state_i >= R-M2
 static double case_3(void)
 {
-    //Rprintf("c3 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1Over);
     z2 = MAT0POS(18,VM2Over) ^ MAT0POS(3,VM3Over);
@@ -184,10 +169,9 @@ static double case_3(void)
         return ((double) STATE[state_i] * FACT);
 }
 
-// state_i+M3 >= R
+// R-M2-1 >= state_i >= R-M3
 static double case_4(void)
 {
-    //Rprintf("c4 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1Over);
     z2 = MAT0POS(18,VM2) ^ MAT0POS(3,VM3Over);
@@ -201,10 +185,9 @@ static double case_4(void)
         return ((double) STATE[state_i] * FACT);
 }
 
-//state_i+M1 >= R
+// R-M3-1 >= state_i >= R-M1
 static double case_5(void)
 {
-    //Rprintf("c5 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1Over);
     z2 = MAT0POS(18,VM2) ^ MAT0POS(3,VM3);
@@ -218,10 +201,9 @@ static double case_5(void)
         return ((double) STATE[state_i] * FACT);
 }
 
-// 2 <= state_i <= R-M1-1
+// R-M1-1 >= state_i >= 2
 static double case_6(void)
 {
-    //Rprintf("c6 state_i = i mod r : %u\n", state_i);
     z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
     z1 = MAT0POS(28,V0) ^ MAT1(VM1);
     z2 = MAT0POS(18,VM2) ^ MAT0POS(3,VM3);

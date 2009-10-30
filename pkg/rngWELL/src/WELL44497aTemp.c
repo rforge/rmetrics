@@ -41,9 +41,6 @@
 #define M2 481
 #define M3 229
 
-/* To obtain the WELL44497b, uncomment the following line */
-/*#define TEMPERING                                       */
-
 #define TEMPERB 0x93dd1400U
 #define TEMPERC 0xfa118000U
 
@@ -99,8 +96,7 @@ void InitWELLRNG44497aTemp(unsigned int *init ){
       STATE[j]=init[j];
 }
 
-void GetWELLRNG44497aTemp (unsigned int *state)
-{
+void GetWELLRNG44497aTemp (unsigned int *state){
    int j, k;
    j = 0;
    for (k = state_i; k < R; k++)
@@ -109,10 +105,8 @@ void GetWELLRNG44497aTemp (unsigned int *state)
      state[j++] = STATE[k];
 }
 
+// state_i == 0
 double case_1(void){
-//        Rprintf("c1 state_i = i mod r : %u\n", state_i);
-    
-  // state_i == 0
   z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
@@ -126,10 +120,8 @@ double case_1(void){
    return ((double) y * FACT);
 }
 
+// state_i == 1
 static double case_2(void){
-  //      Rprintf("c2 state_i = i mod r : %u\n", state_i);
-    
-  // state_i == 1
   z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
@@ -143,10 +135,8 @@ static double case_2(void){
    return ((double) y * FACT);
 }
 
+// R-1 >= state_i >= R-M1
 static double case_3(void){
-    //    Rprintf("c3 state_i = i mod r : %u\n", state_i);
-    
-  // state_i+M1 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1Over);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
@@ -161,10 +151,8 @@ static double case_3(void){
    return ((double) y * FACT);
 }
 
+// R-M1-1 >= state_i >= R-M3
 static double case_4(void){
-    //    Rprintf("c4 state_i = i mod r : %u\n", state_i);
-    
-  // state_i+M3 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
@@ -179,10 +167,8 @@ static double case_4(void){
    return ((double) y * FACT);
 }
 
+// R-M3-1 >= state_i >= R-M2
 static double case_5(void){
-   //     Rprintf("c5 state_i = i mod r : %u\n", state_i);
-    
-  //state_i+M2 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3);
@@ -197,10 +183,8 @@ static double case_5(void){
    return ((double) y * FACT);
 }
 
+// R-M2-1 >= state_i >= 2
 static double case_6(void){
-   //     Rprintf("c6 state_i = i mod r : %u\n", state_i);
-    
-    // 2 <= state_i <= R-M2-1
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);

@@ -6,36 +6,24 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
-
-/*
- * code of Christophe Dutang 
- * added to interface with R 
- */
-/* ===================  my code  =================== */
-
 /* functions work like this :
  * state_i      function
  *
- *  0               case1
- *  1               case2
- *  2               case6
- *  ...              ...
- *  R-m2-1   case6
- *  R-m2       case5
- *  ...              ...
- *  R-m3-1   case5
- *  R-m3       case4
- *  ...              ...
- *  R-m1-1   case4
- *  R-m1       case3
- *  ...              ...
- *  R-1          case3
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M2-1      case6
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M3-1      case5
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M1-1      case4
+ *  R-M1        case3
+ *  ...         ...
+ *  R-1         case3
  */
- 
-/* ===================  end of my code
-      + ifthenelse structure below =================== */
-
-
 
 #define W 32
 #define R 1391
@@ -46,11 +34,6 @@
 #define M1 23
 #define M2 481
 #define M3 229
-
-/* To obtain the WELL44497b, uncomment the following line */
-/*#define TEMPERING                                       
-#define TEMPERB 0x93dd1400U
-#define TEMPERC 0xfa118000U             */
 
 #define MAT0POS(t,v) (v^(v>>t))
 #define MAT0NEG(t,v) (v^(v<<(-(t))))
@@ -104,8 +87,7 @@ void InitWELLRNG44497a(unsigned int *init ){
       STATE[j]=init[j];
 }
 
-void GetWELLRNG44497a (unsigned int *state)
-{
+void GetWELLRNG44497a (unsigned int *state){
    int j, k;
    j = 0;
    for (k = state_i; k < R; k++)
@@ -114,10 +96,8 @@ void GetWELLRNG44497a (unsigned int *state)
      state[j++] = STATE[k];
 }
 
+// state_i == 0
 double case_1(void){
-//        Rprintf("c1 state_i = i mod r : %u\n", state_i);
-    
-  // state_i == 0
   z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
@@ -129,10 +109,8 @@ double case_1(void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// state_i == 1
 static double case_2(void){
-  //      Rprintf("c2 state_i = i mod r : %u\n", state_i);
-    
-  // state_i == 1
   z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
@@ -144,10 +122,8 @@ static double case_2(void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-1 >= state_i >= R-M1
 static double case_3(void){
-    //    Rprintf("c3 state_i = i mod r : %u\n", state_i);
-    
-  // state_i+M1 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1Over);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
@@ -160,10 +136,8 @@ static double case_3(void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M1-1 >= state_i >= R-M3
 static double case_4(void){
-    //    Rprintf("c4 state_i = i mod r : %u\n", state_i);
-    
-  // state_i+M3 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
@@ -176,10 +150,8 @@ static double case_4(void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M3-1 >= state_i >= R-M2
 static double case_5(void){
-   //     Rprintf("c5 state_i = i mod r : %u\n", state_i);
-    
-  //state_i+M2 >= R
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3);
@@ -192,10 +164,8 @@ static double case_5(void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M2-1 >= state_i >= 2
 static double case_6(void){
-   //     Rprintf("c6 state_i = i mod r : %u\n", state_i);
-    
-    // 2 <= state_i <= R-M2-1
   z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
   z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
   z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);

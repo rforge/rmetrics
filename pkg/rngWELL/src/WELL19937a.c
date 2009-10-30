@@ -6,6 +6,25 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
+/* functions work like this :
+ * state_i      function
+ *
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M3-1      case6
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M2-1      case4
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M1-1      case5
+ *  R-M1        case3
+ *  ...         ...
+ *  R-1         case3
+ */
+
 
 #define W 32
 #define R 624
@@ -20,11 +39,6 @@
 #define MAT0NEG(t,v) (v^(v<<(-(t))))
 #define MAT1(v) v
 #define MAT3POS(t,v) (v>>t)
-
-/* To obtain the WELL19937c, uncomment the following line */
-/* #define TEMPERING                                      
-#define TEMPERB 0xe46e1700U
-#define TEMPERC 0x9b868000U     */
 
 #define V0            STATE[state_i]
 #define VM1Over       STATE[state_i+M1-R]
@@ -76,8 +90,8 @@ void GetWELLRNG19937a (unsigned int *state){
      state[j++] = STATE[k];
 }
 
+// state_i == 0
 double case_1 (void){
-   // state_i == 0
    z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
@@ -89,8 +103,8 @@ double case_1 (void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// state_i == 1
 static double case_2 (void){
-   // state_i == 1
    z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
@@ -102,8 +116,8 @@ static double case_2 (void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-1 >= state_i >= R-M1
 static double case_3 (void){
-   // state_i+M1 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1Over);
    z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
@@ -116,8 +130,8 @@ static double case_3 (void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M2-1 >= state_i >= R-M3
 static double case_4 (void){
-   // state_i+M3 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3Over);
@@ -130,8 +144,8 @@ static double case_4 (void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M1-1 >= state_i >= R-M2
 static double case_5 (void){
-   // state_i+M2 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
@@ -144,8 +158,8 @@ static double case_5 (void){
    return ((double) STATE[state_i] * FACT);
 }
 
+// R-M3-1 >= state_i >= 2
 static double case_6 (void){
-   // 2 <= state_i <= (R - M3 - 1)
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);

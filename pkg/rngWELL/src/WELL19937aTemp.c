@@ -21,8 +21,6 @@
 #define MAT1(v) v
 #define MAT3POS(t,v) (v>>t)
 
-/* To obtain the WELL19937c, uncomment the following line */
-/* #define TEMPERING                                      */
 #define TEMPERB 0xe46e1700U
 #define TEMPERC 0x9b868000U
 
@@ -76,8 +74,8 @@ void GetWELLRNG19937aTemp (unsigned int *state){
      state[j++] = STATE[k];
 }
 
+// state_i == 0
 double case_1 (void){
-   // state_i == 0
    z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
@@ -92,8 +90,8 @@ double case_1 (void){
    return ((double) y * FACT);
 }
 
+// state_i == 1
 static double case_2 (void){
-   // state_i == 1
    z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
@@ -107,8 +105,8 @@ static double case_2 (void){
    return ((double) y * FACT);
 }
 
+// R-1 >= state_i >= R-M1
 static double case_3 (void){
-   // state_i+M1 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1Over);
    z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
@@ -123,8 +121,8 @@ static double case_3 (void){
    return ((double) y * FACT);
 }
 
+// R-M2-1 >= state_i >= R-M3
 static double case_4 (void){
-   // state_i+M3 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3Over);
@@ -139,8 +137,8 @@ static double case_4 (void){
    return ((double) y * FACT);
 }
 
+// R-M1-1 >= state_i >= R-M2
 static double case_5 (void){
-   // state_i+M2 >= R
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
@@ -155,8 +153,8 @@ static double case_5 (void){
    return ((double) y * FACT);
 }
 
+// R-M3-1 >= state_i >= 2
 static double case_6 (void){
-   // 2 <= state_i <= (R - M3 - 1)
    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
    z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
    z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
