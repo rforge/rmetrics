@@ -40,25 +40,7 @@
 #define M2 613
 #define M3 123
 
-//Mi matrices defined in table 1 of Panneton et al (2006)
-//matrix M3(t)
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-//matrix M1
-#define MAT1(v) v
-//matrix M4(a)
-#define MAT2(a,v) ((v & 1U)?((v>>1)^a):(v>>1))
-//matrix M2(t)
-#define MAT3POS(t,v) (v>>t)
-#define MAT3NEG(t,v) (v<<(-(t)))
-//matrix M5(t,b)
-#define MAT4POS(t,b,v) (v ^ ((v>>  t ) & b))
-#define MAT4NEG(t,b,v) (v ^ ((v<<(-(t))) & b))
-//matrix M6(q,s,t,a)
-#define MAT5(r,a,ds,dt,v) ((v & dt)?((((v<<r)^(v>>(W-r)))&ds)^a):(((v<<r)^(v>>(W-r)))&ds))
-//matrix M0
-#define MAT7(v) 0
-
+#include "WELLmatrices.h"
 
 //details of the algorithm figure 1 of Panneton et al. (2006)
 // state_i is       i mod R
@@ -101,115 +83,108 @@ double (*WELLRNG19937b) (void);
 static unsigned int y;
 
 void InitWELLRNG19937b (unsigned int *init){
-   int j;
-   state_i = 0;
-   WELLRNG19937b = case_1;
-   for (j = 0; j < R; j++)
-     STATE[j] = init[j];
+  int j;
+  state_i = 0;
+  WELLRNG19937b = case_1;
+  for (j = 0; j < R; j++)
+    STATE[j] = init[j];
 }
 
 void GetWELLRNG19937b (unsigned int *state){
-   int j, k;
-   j = 0;
-   for (k = state_i; k < R; k++)
-     state[j++] = STATE[k];
-   for (k = 0; k < state_i; k++)
-     state[j++] = STATE[k];
+  int j, k;
+  j = 0;
+  for (k = state_i; k < R; k++)
+    state[j++] = STATE[k];
+  for (k = 0; k < state_i; k++)
+    state[j++] = STATE[k];
 }
 
 // state_i == 0
 double case_1 (void)
 {
+  z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
+  z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
+  newV1      = z1 ^ z2;
+  newV0Under = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
+  state_i = R - 1;
+  WELLRNG19937b = case_3;
 
-   z0 = (VRm1Under & MASKL) | (VRm2Under & MASKU);
-   z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-   z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
-   newV1      = z1 ^ z2;
-   newV0Under = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
-  
-    state_i = R - 1;
-   WELLRNG19937b = case_3;
-    
-       return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // state_i == 1
 static double case_2 (void)
 {
-    z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-    z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
-    newV1      = z1 ^ z2;
-    newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
-    
-   state_i = 0;
-   WELLRNG19937b = case_1;
+  z0 = (VRm1 & MASKL) | (VRm2Under & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
+  z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
+  newV1      = z1 ^ z2;
+  newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
+  state_i = 0;
+  WELLRNG19937b = case_1;
 
-       return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-1 >= state_i >= R-M3
 static double case_3 (void)
 {
-   
-    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
-    z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3Over);
-    newV1      = z1 ^ z2;
-    newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
-    
-   state_i--;
-   if (state_i + M3 < R)
-      WELLRNG19937b = case_4;
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
+  z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3Over);
+  newV1      = z1 ^ z2;
+  newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
+  state_i--;
+  if (state_i + M3 < R)
+     WELLRNG19937b = case_4;
 
-       return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-M3-1 >= state_i >= R-M1
 static double case_4 (void)
 {
-    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
-    z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
-    newV1      = z1 ^ z2;
-    newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
-    
-   state_i--;
-   if (state_i + M1 < R)
-      WELLRNG19937b = case_5;
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1Over);
+  z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
+  newV1      = z1 ^ z2;
+  newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
+  state_i--;
+  if (state_i + M1 < R)
+    WELLRNG19937b = case_5;
 
-       return ((double) STATE[state_i] * FACT);
+   return ((double) STATE[state_i] * FACT);
 }
 
 // R-M1-1 >= state_i >= R-M2
 static double case_5 (void)
 {
-    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-    z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
-    newV1      = z1 ^ z2;
-    newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
-    
-   state_i--;
-   if (state_i + M2 < R)
-      WELLRNG19937b = case_6;
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
+  z2 = MAT0POS (12, VM2Over) ^ MAT0NEG (-10, VM3);
+  newV1      = z1 ^ z2;
+  newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
+  state_i--;
+  if (state_i + M2 < R)
+    WELLRNG19937b = case_6;
 
-       return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-M2-1 >= state_i >= 2
 static double case_6 (void)
 {
-    z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
-    z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
-    z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
-    newV1      = z1 ^ z2;
-    newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
- 
-    state_i--;
-   if (state_i == 1)
-      WELLRNG19937b = case_2;
+  z0 = (VRm1 & MASKL) | (VRm2 & MASKU);
+  z1 = MAT0POS (7, V0) ^ MAT1 (VM1);
+  z2 = MAT0POS (12, VM2) ^ MAT0NEG (-10, VM3);
+  newV1      = z1 ^ z2;
+  newV0 = MAT0NEG (-19,z0) ^ MAT3NEG (-11, z1) ^ MAT0POS (4, z2) ^ MAT0NEG (-10, newV1);
 
-       return ((double) STATE[state_i] * FACT);
+  state_i--;
+  if (state_i == 1)
+    WELLRNG19937b = case_2;
+
+  return ((double) STATE[state_i] * FACT);
 }
 

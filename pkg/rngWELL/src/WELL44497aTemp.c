@@ -89,20 +89,20 @@ static double case_6(void);
 double (*WELLRNG44497aTemp)(void);
 
 void InitWELLRNG44497aTemp(unsigned int *init ){
-   int j;
-   state_i=0;
-   WELLRNG44497aTemp = case_1;
-   for(j=0;j<R;j++)
-      STATE[j]=init[j];
+  int j;
+  state_i=0;
+  WELLRNG44497aTemp = case_1;
+  for(j=0;j<R;j++)
+    STATE[j]=init[j];
 }
 
 void GetWELLRNG44497aTemp (unsigned int *state){
-   int j, k;
-   j = 0;
-   for (k = state_i; k < R; k++)
-     state[j++] = STATE[k];
-   for (k = 0; k < state_i; k++)
-     state[j++] = STATE[k];
+  int j, k;
+  j = 0;
+  for (k = state_i; k < R; k++)
+    state[j++] = STATE[k];
+  for (k = 0; k < state_i; k++)
+    state[j++] = STATE[k];
 }
 
 // state_i == 0
@@ -115,9 +115,9 @@ double case_1(void){
   state_i = R-1;
   WELLRNG44497aTemp = case_3;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
 
 // state_i == 1
@@ -130,9 +130,9 @@ static double case_2(void){
   state_i=0;
   WELLRNG44497aTemp = case_1;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
 
 // R-1 >= state_i >= R-M1
@@ -146,9 +146,9 @@ static double case_3(void){
   if(state_i+M1<R)
     WELLRNG44497aTemp = case_4;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
 
 // R-M1-1 >= state_i >= R-M3
@@ -162,9 +162,9 @@ static double case_4(void){
   if (state_i+M3 < R)
     WELLRNG44497aTemp = case_5;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
 
 // R-M3-1 >= state_i >= R-M2
@@ -178,9 +178,9 @@ static double case_5(void){
   if(state_i+M2 < R)
     WELLRNG44497aTemp = case_6;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
 
 // R-M2-1 >= state_i >= 2
@@ -194,7 +194,8 @@ static double case_6(void){
   if(state_i == 1 )
     WELLRNG44497aTemp = case_2;
 
-   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
-   y =              y ^ ((             y << 15) & TEMPERC);
-   return ((double) y * FACT);
+  y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
+  y =              y ^ ((             y << 15) & TEMPERC);
+  return ((double) y * FACT);
 }
+

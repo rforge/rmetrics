@@ -51,19 +51,19 @@ static unsigned int STATE[R];
 static unsigned int z0, z1, z2;
 
 void InitWELLRNG1024b (unsigned int *init){
-   int j;
-   state_i = 0;
-   for (j = 0; j < R; j++)
-     STATE[j] = init[j];
+  int j;
+  state_i = 0;
+  for (j = 0; j < R; j++)
+    STATE[j] = init[j];
 }
 
 void GetWELLRNG1024b (unsigned int *state){
-   int j, k;
-   j = 0;
-   for (k = state_i; k < R; k++)
-     state[j++] = STATE[k];
-   for (k = 0; k < state_i; k++)
-     state[j++] = STATE[k];
+  int j, k;
+  j = 0;
+  for (k = state_i; k < R; k++)
+    state[j++] = STATE[k];
+  for (k = 0; k < state_i; k++)
+    state[j++] = STATE[k];
 }
 
 double WELLRNG1024b (void){
@@ -73,5 +73,7 @@ double WELLRNG1024b (void){
   newV1 = z1                 ^ z2; 
   newV0 = MAT0NEG (-14,z0)   ^ MAT0NEG(-21,z1)    ^ MAT1(z2) ;
   state_i = (state_i + 31) & 0x0000001fU;
+
   return ((double) STATE[state_i]  * FACT);
 }
+

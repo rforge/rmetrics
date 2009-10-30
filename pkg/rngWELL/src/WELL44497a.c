@@ -80,20 +80,20 @@ static double case_6(void);
 double (*WELLRNG44497a)(void);
 
 void InitWELLRNG44497a(unsigned int *init ){
-   int j;
-   state_i=0;
-   WELLRNG44497a = case_1;
-   for(j=0;j<R;j++)
-      STATE[j]=init[j];
+  int j;
+  state_i=0;
+  WELLRNG44497a = case_1;
+  for(j=0;j<R;j++)
+    STATE[j]=init[j];
 }
 
 void GetWELLRNG44497a (unsigned int *state){
-   int j, k;
-   j = 0;
-   for (k = state_i; k < R; k++)
-     state[j++] = STATE[k];
-   for (k = 0; k < state_i; k++)
-     state[j++] = STATE[k];
+  int j, k;
+  j = 0;
+  for (k = state_i; k < R; k++)
+    state[j++] = STATE[k];
+  for (k = 0; k < state_i; k++)
+    state[j++] = STATE[k];
 }
 
 // state_i == 0
@@ -105,8 +105,8 @@ double case_1(void){
   newV0Under = MAT1(z0) ^ MAT0POS(20,z1) ^  MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i = R-1;
   WELLRNG44497a = case_3;
-    
-   return ((double) STATE[state_i] * FACT);
+
+  return ((double) STATE[state_i] * FACT);
 }
 
 // state_i == 1
@@ -119,7 +119,7 @@ static double case_2(void){
   state_i=0;
   WELLRNG44497a = case_1;
 
-   return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-1 >= state_i >= R-M1
@@ -132,8 +132,8 @@ static double case_3(void){
   state_i--;
   if(state_i+M1<R)
     WELLRNG44497a = case_4;
-    
-   return ((double) STATE[state_i] * FACT);
+
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-M1-1 >= state_i >= R-M3
@@ -147,7 +147,7 @@ static double case_4(void){
   if (state_i+M3 < R)
     WELLRNG44497a = case_5;
 
-   return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-M3-1 >= state_i >= R-M2
@@ -161,7 +161,7 @@ static double case_5(void){
   if(state_i+M2 < R)
     WELLRNG44497a = case_6;
 
-   return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
 
 // R-M2-1 >= state_i >= 2
@@ -175,5 +175,6 @@ static double case_6(void){
   if(state_i == 1 )
     WELLRNG44497a = case_2;
 
-   return ((double) STATE[state_i] * FACT);
+  return ((double) STATE[state_i] * FACT);
 }
+
