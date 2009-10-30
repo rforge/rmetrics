@@ -25,7 +25,6 @@
  *  R-1         case3
  */
 
-
 #define W 32
 #define R 624
 #define P 31
@@ -35,10 +34,7 @@
 #define M2 179
 #define M3 449
 
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-#define MAT1(v) v
-#define MAT3POS(t,v) (v>>t)
+#include "WELLmatrices.h"
 
 #define V0            STATE[state_i]
 #define VM1Over       STATE[state_i+M1-R]

@@ -12,9 +12,7 @@
 #define M2 24
 #define M3 10
 
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-#define Identity(v) (v)
+#include "WELLmatrices.h"
 
 #define V0            STATE[state_i                   ]
 #define VM1           STATE[(state_i+M1) & 0x0000001fU]
@@ -48,7 +46,7 @@ void GetWELLRNG1024a (unsigned int *state){
 
 double WELLRNG1024a (void){
   z0    = VRm1;
-  z1    = Identity(V0)       ^ MAT0POS (8, VM1);
+  z1    = MAT1(V0)       ^ MAT0POS (8, VM1);
   z2    = MAT0NEG (-19, VM2) ^ MAT0NEG(-14,VM3);
   newV1 = z1                 ^ z2; 
   newV0 = MAT0NEG (-11,z0)   ^ MAT0NEG(-7,z1)    ^ MAT0NEG(-13,z2) ;

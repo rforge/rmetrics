@@ -13,10 +13,7 @@
 #define M2 9
 #define M3 5
 
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-#define MAT3NEG(t,v) (v<<(-(t)))
-#define MAT4NEG(t,b,v) (v ^ ((v<<(-(t))) & b))
+#include "WELLmatrices.h"
 
 #define V0            STATE[state_i                   ]
 #define VM1           STATE[(state_i+M1) & 0x0000000fU]

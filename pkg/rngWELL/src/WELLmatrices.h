@@ -1,3 +1,11 @@
+/* ***************************************************************************** */
+/* Copyright:      Francois Panneton and Pierre L'Ecuyer, University of Montreal */
+/*                 Makoto Matsumoto, Hiroshima University                        */
+/* Notice:         This code can be used freely for personal, academic,          */
+/*                 or non-commercial purposes. For commercial purposes,          */
+/*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
+/* ***************************************************************************** */
+
 //Mi matrices defined in table 1 of Panneton et al (2006)
 //matrix M3(t)
 #define MAT0POS(t,v) (v^(v>>t))

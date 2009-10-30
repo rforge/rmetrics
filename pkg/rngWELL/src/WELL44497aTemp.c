@@ -44,16 +44,7 @@
 #define TEMPERB 0x93dd1400U
 #define TEMPERC 0xfa118000U
 
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-#define MAT1(v) v
-#define MAT2(a,v) ((v & 1U)?((v>>1)^a):(v>>1))
-#define MAT3POS(t,v) (v>>t)
-#define MAT3NEG(t,v) (v<<(-(t)))
-#define MAT4POS(t,b,v) (v ^ ((v>>  t ) & b))
-#define MAT4NEG(t,b,v) (v ^ ((v<<(-(t))) & b))
-#define MAT5(r,a,ds,dt,v) ((v & dt)?((((v<<r)^(v>>(W-r)))&ds)^a):(((v<<r)^(v>>(W-r)))&ds))
-#define MAT7(v) 0
+#include "WELLmatrices.h"
 
 #define V0            STATE[state_i]
 #define VM1Over       STATE[state_i+M1-R]

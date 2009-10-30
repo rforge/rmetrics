@@ -16,13 +16,10 @@
 #define M2 179
 #define M3 449
 
-#define MAT0POS(t,v) (v^(v>>t))
-#define MAT0NEG(t,v) (v^(v<<(-(t))))
-#define MAT1(v) v
-#define MAT3POS(t,v) (v>>t)
-
 #define TEMPERB 0xe46e1700U
 #define TEMPERC 0x9b868000U
+
+#include "WELLmatrices.h"
 
 #define V0            STATE[state_i]
 #define VM1Over       STATE[state_i+M1-R]
