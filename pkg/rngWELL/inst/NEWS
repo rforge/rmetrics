@@ -1,8 +1,9 @@
 === rngWELL: WELL random number generators ===
 
 
-Version 1.00
+Version 0.9
 =============
 
-- extract Pierre L'Ecuyer's C code from randtoolbox.
+- extract Pierre L'Ecuyer's C code from randtoolbox,
+- rename and comment C macros as well as split C files of P. L'Ecuyer.
 
