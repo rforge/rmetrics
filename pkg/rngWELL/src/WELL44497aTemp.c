@@ -5,11 +5,12 @@
 /*                 or non-commercial purposes. For commercial purposes,          */
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
-/*
- * WELL44497b is __entirely__ based on the code of WELL44497a by P. L'Ecuyer.
- * we just change constants, parameters to get WELL44497b, add some
- * code to interface with R and add some comments on #define's.
- */
+
+// This file is a copy of the file
+//   http://www.iro.umontreal.ca/~panneton/well/WELL44497a.c
+// modified as if #define TEMPERING is in effect and with further minor formatting
+// modifications and extended with the function GetWELLRNG44497aTemp()
+// for interface to R package randtoolbox/rngWELL by Ch. Dutang and P. Savicky.
 
 /* the assignment of cases is as follows
  * state_i      function

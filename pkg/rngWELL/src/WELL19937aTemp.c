@@ -6,6 +6,12 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
+// This file is a copy of the file
+//   http://www.iro.umontreal.ca/~panneton/well/WELL19937a.c
+// modified as if #define TEMPERING is in effect and with further minor formatting
+// modifications and extended with the function GetWELLRNG19937aTemp()
+// for interface to R package randtoolbox/rngWELL by Ch. Dutang and P. Savicky.
+
 /* the assignment of cases is as follows
  * state_i      function
  *

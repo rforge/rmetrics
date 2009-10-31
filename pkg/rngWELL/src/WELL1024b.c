@@ -5,11 +5,13 @@
 /*                 or non-commercial purposes. For commercial purposes,          */
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
-/*
- * WELL1024b is __entirely__ based on the code of WELL1024a by P. L'Ecuyer.
- * we just change constants, parameters to get WELL1024b, add some
- * code to interface with R and add some comments on #define's.
- */
+
+// This file is entirely based on the source files at
+//   http://www.iro.umontreal.ca/~panneton/WELLRNG.html
+// The parameters of the generator in this file are replaced by the parameters
+// from Tables I and II in the original paper by F. Panneton, P. L'Ecuyer and M. Matsumoto.
+// The function GetWELLRNG1024b() was add for interface to R package randtoolbox/rngWELL
+// by Ch. Dutang and P. Savicky.
 
 #define W 32
 #define R 32

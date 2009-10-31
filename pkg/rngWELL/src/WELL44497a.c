@@ -6,6 +6,11 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
+// This file is a copy of the file
+//   http://www.iro.umontreal.ca/~panneton/well/WELL44497a.c
+// with minor formatting modifications and extended with the function GetWELLRNG44497a()
+// for interface to R package randtoolbox/rngWELL by Ch. Dutang and P. Savicky.
+
 /* the assignment of cases is as follows
  * state_i      function
  *
