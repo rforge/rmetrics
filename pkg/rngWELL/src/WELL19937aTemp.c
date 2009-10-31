@@ -6,12 +6,31 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
+/* the assignment of cases is as follows
+ * state_i      function
+ *
+ *  0           case1
+ *  1           case2
+ *  2           case6
+ *  ...         ...
+ *  R-M3-1      case6
+ *  R-M3        case4
+ *  ...         ...
+ *  R-M2-1      case4
+ *  R-M2        case5
+ *  ...         ...
+ *  R-M1-1      case5
+ *  R-M1        case3
+ *  ...         ...
+ *  R-1         case3
+ */
 
 #define W 32
 #define R 624
 #define P 31
 #define MASKU (0xffffffffU>>(W-P))
 #define MASKL (~MASKU)
+
 #define M1 70
 #define M2 179
 #define M3 449
@@ -56,11 +75,11 @@ void GetWELLRNG19937aTemp (unsigned int *state){
 
 // state_i == 0
 double case_1 (void){
-  z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
-  z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
+  z0         = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
+  z1         = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1);
+  z2         = MAT3POS(9,VM2) ^ MAT0POS(1,VM3);
   newV1      = z1 ^ z2;
-  newV0Under = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0Under = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i = R - 1;
   WELLRNG19937aTemp = case_3;
 
@@ -71,11 +90,11 @@ double case_1 (void){
 
 // state_i == 1
 static double case_2 (void){
-  z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
-  z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
+  z0    = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+  z1    = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1);
+  z2    = MAT3POS(9,VM2) ^ MAT0POS(1,VM3);
   newV1 = z1 ^ z2;
-  newV0 = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0 = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i = 0;
   WELLRNG19937aTemp = case_1;
 
@@ -86,11 +105,11 @@ static double case_2 (void){
 
 // R-1 >= state_i >= R-M1
 static double case_3 (void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1Over);
-  z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1Over);
+  z2    = MAT3POS(9,VM2Over) ^ MAT0POS(1,VM3Over);
   newV1 = z1 ^ z2;
-  newV0 = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0 = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i--;
   if (state_i + M1 < R)
     WELLRNG19937aTemp = case_5;
@@ -102,11 +121,11 @@ static double case_3 (void){
 
 // R-M2-1 >= state_i >= R-M3
 static double case_4 (void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
-  z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3Over);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1);
+  z2    = MAT3POS(9,VM2) ^ MAT0POS(1,VM3Over);
   newV1 = z1 ^ z2;
-  newV0 = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0 = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i--;
   if (state_i + M3 < R)
     WELLRNG19937aTemp = case_6;
@@ -118,11 +137,11 @@ static double case_4 (void){
 
 // R-M1-1 >= state_i >= R-M2
 static double case_5 (void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
-  z2 = MAT3POS (9, VM2Over) ^ MAT0POS (1, VM3Over);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1);
+  z2    = MAT3POS(9,VM2Over) ^ MAT0POS(1,VM3Over);
   newV1 = z1 ^ z2;
-  newV0 = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0 = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i--;
   if (state_i + M2 < R)
     WELLRNG19937aTemp = case_4;
@@ -134,11 +153,11 @@ static double case_5 (void){
 
 // R-M3-1 >= state_i >= 2
 static double case_6 (void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG (-25, V0) ^ MAT0POS (27, VM1);
-  z2 = MAT3POS (9, VM2) ^ MAT0POS (1, VM3);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-25,V0) ^ MAT0POS(27,VM1);
+  z2    = MAT3POS(9,VM2) ^ MAT0POS(1,VM3);
   newV1 = z1 ^ z2;
-  newV0 = MAT1 (z0) ^ MAT0NEG (-9, z1) ^ MAT0NEG (-21, z2) ^ MAT0POS (21, newV1);
+  newV0 = MAT1(z0) ^ MAT0NEG(-9,z1) ^ MAT0NEG(-21,z2) ^ MAT0POS(21,newV1);
   state_i--;
   if (state_i == 1)
     WELLRNG19937aTemp = case_2;

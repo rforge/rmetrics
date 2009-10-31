@@ -8,6 +8,7 @@
 
 #define W 32
 #define R 32
+
 #define M1 3
 #define M2 24
 #define M3 10
@@ -46,11 +47,12 @@ void GetWELLRNG1024a (unsigned int *state){
 
 double WELLRNG1024a (void){
   z0    = Vrm1;
-  z1    = MAT1(V0)       ^ MAT0POS (8, VM1);
-  z2    = MAT0NEG (-19, VM2) ^ MAT0NEG(-14,VM3);
-  newV1 = z1                 ^ z2; 
-  newV0 = MAT0NEG (-11,z0)   ^ MAT0NEG(-7,z1)    ^ MAT0NEG(-13,z2) ;
+  z1    = MAT1(V0) ^ MAT0POS(8,VM1);
+  z2    = MAT0NEG(-19,VM2) ^ MAT0NEG(-14,VM3);
+  newV1 = z1 ^ z2; 
+  newV0 = MAT0NEG(-11,z0) ^ MAT0NEG(-7,z1) ^ MAT0NEG(-13,z2) ;
   state_i = (state_i + 31) & 0x0000001fU;
+
   return ((double) STATE[state_i]  * FACT);
 }
 

@@ -11,8 +11,7 @@
  * code to interface with R and add some comments on #define's.
  */
 
-
-/* functions work like this :
+/* the assignment of cases is as follows
  * state_i      function
  *
  *  0           case1
@@ -30,7 +29,6 @@
  *  ...         ...
  *  R-1         case3
  */
-
 
 #define W 32
 #define R 25
@@ -83,10 +81,10 @@ void GetWELLRNG800b (unsigned int *state)
 // state_i == 0
 double case_1(void)
 {
-  z0 = Vrm1Under;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
-  z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
-  newV1  = z1 ^ z2;
+  z0         = Vrm1Under;
+  z1         = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
+  z2         = MAT1(VM2) ^ MAT3POS(19,VM3);
+  newV1      = z1 ^ z2;
   newV0Under = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i = R-1;
   WELLRNG800b = case_3;
@@ -97,10 +95,10 @@ double case_1(void)
 // state_i == 1
 static double case_2(void)
 {
-  z0 = Vrm1;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
-  z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
-  newV1  = z1 ^ z2;
+  z0    = Vrm1;
+  z1    = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
+  z2    = MAT1(VM2) ^ MAT3POS(19,VM3);
+  newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i=0;
   WELLRNG800b = case_1;
@@ -111,10 +109,10 @@ static double case_2(void)
 // R-1 >= state_i >= R-M2
 static double case_3(void)
 {
-  z0 = Vrm1;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
-  z2 = MAT1(VM2Over) ^ MAT3POS(19,VM3Over);
-  newV1  = z1 ^ z2;
+  z0    = Vrm1;
+  z1    = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
+  z2    = MAT1(VM2Over) ^ MAT3POS(19,VM3Over);
+  newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i--;
   if(state_i+M2<R)
@@ -126,10 +124,10 @@ static double case_3(void)
 // R-M2-1 >= state_i >= R-M1
 static double case_4(void)
 {
-  z0 = Vrm1;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
-  z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
-  newV1  = z1 ^ z2;
+  z0    = Vrm1;
+  z1    = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1Over);
+  z2    = MAT1(VM2) ^ MAT3POS(19,VM3Over);
+  newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i--;
   if (state_i+M1< R)
@@ -141,10 +139,10 @@ static double case_4(void)
 // R-M1-1 >= state_i >= R-M3
 static double case_5(void)
 {
-  z0 = Vrm1;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
-  z2 = MAT1(VM2) ^ MAT3POS(19,VM3Over);
-  newV1  = z1 ^ z2;
+  z0    = Vrm1;
+  z1    = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
+  z2    = MAT1(VM2) ^ MAT3POS(19,VM3Over);
+  newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i--;
   if(state_i+M3 < R)
@@ -156,15 +154,15 @@ static double case_5(void)
 // R-M3-1 >= state_i >= 2
 static double case_6(void)
 {
-  z0 = Vrm1;
-  z1 = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
-  z2 = MAT1(VM2) ^ MAT3POS(19,VM3);
-  newV1  = z1 ^ z2;
+  z0    = Vrm1;
+  z1    = MAT0NEG(-29,V0) ^ MAT3NEG(-14,VM1);
+  z2    = MAT1(VM2) ^ MAT3POS(19,VM3);
+  newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(10,z1) ^ MAT2(0xd3e43ffd,z2) ^ MAT0NEG(-25,newV1);
   state_i--;
   if(state_i == 1 )
     WELLRNG800b = case_2;
 
-  return ((double) STATE[state_i] * FACT); 
+  return ((double) STATE[state_i] * FACT);
 }
 

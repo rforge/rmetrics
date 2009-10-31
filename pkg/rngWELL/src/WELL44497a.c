@@ -6,7 +6,7 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 
-/* functions work like this :
+/* the assignment of cases is as follows
  * state_i      function
  *
  *  0           case1
@@ -72,11 +72,11 @@ void GetWELLRNG44497a (unsigned int *state){
 
 // state_i == 0
 double case_1(void){
-  z0 = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
-  z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
-  newV1  = z1 ^ z2;
-  newV0Under = MAT1(z0) ^ MAT0POS(20,z1) ^  MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
+  z0         = (Vrm1Under & MASKL) | (Vrm2Under & MASKU);
+  z1         = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
+  z2         = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
+  newV1      = z1 ^ z2;
+  newV0Under = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i = R-1;
   WELLRNG44497a = case_3;
 
@@ -85,11 +85,11 @@ double case_1(void){
 
 // state_i == 1
 static double case_2(void){
-  z0 = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
-  z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
+  z0    = (Vrm1 & MASKL) | (Vrm2Under & MASKU);
+  z1    = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
+  z2    = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
   newV1 = z1 ^ z2;
-  newV0 =  MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
+  newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i=0;
   WELLRNG44497a = case_1;
 
@@ -98,9 +98,9 @@ static double case_2(void){
 
 // R-1 >= state_i >= R-M1
 static double case_3(void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1Over);
-  z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1Over);
+  z2    = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
   newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
@@ -112,9 +112,9 @@ static double case_3(void){
 
 // R-M1-1 >= state_i >= R-M3
 static double case_4(void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
-  z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
+  z2    = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3Over);
   newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
@@ -126,9 +126,9 @@ static double case_4(void){
 
 // R-M3-1 >= state_i >= R-M2
 static double case_5(void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
-  z2 = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
+  z2    = MAT0NEG(-10,VM2Over) ^ MAT3NEG(-26,VM3);
   newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
@@ -140,9 +140,9 @@ static double case_5(void){
 
 // R-M2-1 >= state_i >= 2
 static double case_6(void){
-  z0 = (Vrm1 & MASKL) | (Vrm2 & MASKU);
-  z1 = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
-  z2 = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
+  z0    = (Vrm1 & MASKL) | (Vrm2 & MASKU);
+  z1    = MAT0NEG(-24,V0) ^ MAT0POS(30,VM1);
+  z2    = MAT0NEG(-10,VM2) ^ MAT3NEG(-26,VM3);
   newV1 = z1 ^ z2;
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
