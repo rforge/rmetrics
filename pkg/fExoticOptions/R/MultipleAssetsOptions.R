@@ -41,8 +41,8 @@
 
 
 TwoAssetCorrelationOption =
-function(TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2,
-sigma1, sigma2, rho, title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2,
+             sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -60,13 +60,15 @@ sigma1, sigma2, rho, title = NULL, description = NULL)
 
     # Calculate Call and Put:
     if (TypeFlag == "c")
-    TwoAssetCorrelation = S2 * exp ((b2 - r) * Time) *
-        CBND(y2 + sigma2 * sqrt(Time), y1 + rho * sigma2 * sqrt(Time), rho) -
-        X2 * exp (-r * Time) * CBND(y2, y1, rho)
+        TwoAssetCorrelation = (S2 * exp ((b2 - r) * Time) * CBND(y2 +
+                               sigma2 * sqrt(Time), y1 + rho * sigma2
+                               * sqrt(Time), rho) - X2 * exp (-r *
+                               Time) * CBND(y2, y1, rho))
     if (TypeFlag == "p")
-    TwoAssetCorrelation = X2 * exp (-r * Time) * CBND(-y2, -y1, rho) -
-        S2 * exp ((b2 - r) * Time) *
-        CBND(-y2 - sigma2 * sqrt(Time), -y1 - rho * sigma2 * sqrt(Time), rho)
+        TwoAssetCorrelation = (X2 * exp (-r * Time) * CBND(-y2, -y1,
+                               rho) - S2 * exp ((b2 - r) * Time) *
+                               CBND(-y2 - sigma2 * sqrt(Time), -y1 -
+                               rho * sigma2 * sqrt(Time), rho))
 
     # Parameters:
     # TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2, sigma1,
@@ -104,8 +106,8 @@ sigma1, sigma2, rho, title = NULL, description = NULL)
 
 
 EuropeanExchangeOption =
-function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho,
-title = NULL, description = NULL)
+    function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho,
+             title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -123,8 +125,8 @@ title = NULL, description = NULL)
     d2 = d1 - sigma * sqrt (Time)
 
     # calculate Price:
-    EuropeanExchange = Q1 * S1 * exp ((b1 - r) * Time) * CND(d1) -
-        Q2 * S2 * exp((b2 - r) * Time) * CND(d2)
+    EuropeanExchange = (Q1 * S1 * exp ((b1 - r) * Time) * CND(d1) -
+                        Q2 * S2 * exp((b2 - r) * Time) * CND(d2))
 
     # Parameters:
     # S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho
@@ -160,8 +162,8 @@ title = NULL, description = NULL)
 
 
 AmericanExchangeOption =
-function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho,
-title = NULL, description = NULL)
+    function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho,
+             title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -178,7 +180,7 @@ title = NULL, description = NULL)
 
     # Calculate Price:
     AmericanExchange = BSAmericanApproxOption("c", Q1*S1, Q2*S2,
-        Time, r-b2, b1-b2, sigma)
+    Time, r-b2, b1-b2, sigma)
 
     # Parameters:
     # S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, rho
@@ -214,8 +216,8 @@ title = NULL, description = NULL)
 
 
 ExchangeOnExchangeOption =
-function(TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r,
-b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+    function(TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r,
+             b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -240,11 +242,9 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
         id = 2 }
     I = .EOnEOption.CriticalPrice(id, I1, time1, Time2, v, q)
 
-    d1 = (log(S1 / (I * S2)) + (b1 - b2 + v ^ 2 / 2) * time1) /
-        (v * sqrt(time1))
+    d1 = (log(S1 / (I * S2)) + (b1 - b2 + v ^ 2 / 2) * time1) / (v * sqrt(time1))
     d2 = d1 - v * sqrt(time1)
-    d3 = (log((I * S2) / S1) + (b2 - b1 + v ^ 2 / 2) * time1) /
-        (v * sqrt(time1))
+    d3 = (log((I * S2) / S1) + (b2 - b1 + v ^ 2 / 2) * time1) / (v * sqrt(time1))
     d4 = d3 - v * sqrt(time1)
     y1 = (log(S1 / S2) + (b1 - b2 + v ^ 2 / 2) * Time2) / (v * sqrt(Time2))
     y2 = y1 - v * sqrt(Time2)
@@ -253,25 +253,29 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 
     # Calculate Price:
     if (TypeFlag == "1")
-        ExchangeOnExchange = -S2 * exp((b2 - r) * Time2) *
-            CBND(d2, y2, sqrt(time1/Time2)) + S1 * exp((b1-r) * Time2) *
-            CBND(d1, y1, sqrt(time1/Time2)) - q * S2 * exp((b2-r) * time1) *
-            CND(d2)
+        ExchangeOnExchange = (-S2 * exp((b2 - r) * Time2) * CBND(d2,
+                              y2, sqrt(time1/Time2)) + S1 * exp((b1-r)
+                              * Time2) * CBND(d1, y1,
+                              sqrt(time1/Time2)) - q * S2 * exp((b2-r)
+                              * time1) * CND(d2))
     if (TypeFlag == "2")
-        ExchangeOnExchange = S2 * exp((b2 - r) * Time2) *
-            CBND(d3, y2, -sqrt(time1/Time2)) - S1 * exp((b1-r) * Time2) *
-            CBND(d4, y1, -sqrt(time1/Time2)) + q * S2 * exp((b2 - r) * time1) *
-            CND(d3)
+        ExchangeOnExchange = (S2 * exp((b2 - r) * Time2) * CBND(d3,
+                              y2, -sqrt(time1/Time2)) - S1 *
+                              exp((b1-r) * Time2) * CBND(d4, y1,
+                              -sqrt(time1/Time2)) + q * S2 * exp((b2 -
+                              r) * time1) * CND(d3))
     if (TypeFlag == "3")
-        ExchangeOnExchange = S2 * exp((b2 - r) * Time2) *
-            CBND(d3, y3, sqrt(time1/Time2)) - S1 * exp((b1-r) * Time2) *
-            CBND(d4, y4, sqrt(time1/Time2)) - q * S2 * exp((b2-r) * time1) *
-            CND(d3)
+        ExchangeOnExchange = (S2 * exp((b2 - r) * Time2) * CBND(d3,
+                              y3, sqrt(time1/Time2)) - S1 * exp((b1-r)
+                              * Time2) * CBND(d4, y4,
+                              sqrt(time1/Time2)) - q * S2 * exp((b2-r)
+                              * time1) * CND(d3))
     if (TypeFlag == "4")
-        ExchangeOnExchange = -S2 * exp((b2 - r) * Time2) *
-            CBND(d2, y3, -sqrt(time1/Time2)) + S1 * exp((b1-r) * Time2) *
-            CBND(d1, y4, -sqrt(time1/Time2)) + q * S2 * exp((b2-r) * time1) *
-            CND(d2)
+        ExchangeOnExchange = (-S2 * exp((b2 - r) * Time2) * CBND(d2,
+                              y3, -sqrt(time1/Time2)) + S1 *
+                              exp((b1-r) * Time2) * CBND(d1, y4,
+                              -sqrt(time1/Time2)) + q * S2 *
+                              exp((b2-r) * time1) * CND(d2))
 
     # Parameters:
     # TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r,
@@ -306,7 +310,7 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 
 
 .EOnEOption.CriticalPart3 <-
-function(id, I, time1, Time2, v)
+    function(id, I, time1, Time2, v)
 {
     if (id == 1) {
         z1 = (log(I)+v^2/2*(Time2 - time1))/(v*sqrt(Time2-time1))
@@ -321,7 +325,7 @@ function(id, I, time1, Time2, v)
 
 
 .EOnEOption.CriticalPart2 <-
-function(id, I, time1, Time2, v)
+    function(id, I, time1, Time2, v)
 {
     if (id == 1) {
         z1 = (log(I)+v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
@@ -334,7 +338,7 @@ function(id, I, time1, Time2, v)
 
 
 .EOnEOption.CriticalPrice =
-function(id, I1, time1, Time2, v, q)
+    function(id, I1, time1, Time2, v, q)
 {
     # Numerical search algorithm to find critical price I
     Ii = I1
@@ -349,7 +353,7 @@ function(id, I1, time1, Time2, v, q)
         # cat("\n.EOnEOption.CriticalPart3: ", yi)
         di = .EOnEOption.CriticalPart2(id, Ii, time1, Time2, v)
         # cat("\n.EOnEOption.CriticalPart2: ", di)
-        }
+    }
     .EOnEOption.CriticalPrice = Ii
     .EOnEOption.CriticalPrice
 }
@@ -359,8 +363,8 @@ function(id, I1, time1, Time2, v, q)
 
 
 TwoRiskyAssetsOption =
-function(TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time,
-r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+    function(TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time,
+             r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -383,27 +387,29 @@ r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
     # Calculate Price:
     OnTheMaxMin = NA
     if (TypeFlag == "cmin")
-        OnTheMaxMin = S1 * exp((b1 - r) * Time) *
-            CBND(y1, -d, -rho1) + S2 * exp((b2 - r) * Time) *
-            CBND(y2, d - v * sqrt(Time), -rho2) - X * exp(-r * Time) *
-            CBND(y1 - sigma1 * sqrt(Time), y2 - sigma2 * sqrt(Time), rho)
+        OnTheMaxMin = (S1 * exp((b1 - r) * Time) * CBND(y1, -d, -rho1)
+                      + S2 * exp((b2 - r) * Time) * CBND(y2, d - v *
+                      sqrt(Time), -rho2) - X * exp(-r * Time) *
+                      CBND(y1 - sigma1 * sqrt(Time), y2 - sigma2 *
+                      sqrt(Time), rho))
     if (TypeFlag == "cmax")
-        OnTheMaxMin = S1 * exp((b1 - r) * Time) *
-            CBND(y1, d, rho1) + S2 * exp((b2 - r) * Time) *
-            CBND(y2, -d + v * sqrt(Time), rho2) - X * exp(-r * Time) *
-            (1 - CBND(-y1 + sigma1*sqrt(Time), -y2 + sigma2 * sqrt(Time), rho))
+        OnTheMaxMin = (S1 * exp((b1 - r) * Time) * CBND(y1, d, rho1) +
+                      S2 * exp((b2 - r) * Time) * CBND(y2, -d + v *
+                      sqrt(Time), rho2) - X * exp(-r * Time) * (1 -
+                      CBND(-y1 + sigma1*sqrt(Time), -y2 + sigma2 *
+                      sqrt(Time), rho)))
     if (TypeFlag == "pmin")
-        OnTheMaxMin = X * exp(-r * Time) - S1 * exp((b1 - r) * Time) +
-            EuropeanExchangeOption(S1, S2, 1, 1, Time, r, b1, b2,
-                sigma1, sigma2, rho)@price +
-            TwoRiskyAssetsOption("cmin", S1, S2, X, Time, r, b1, b2,
-                sigma1, sigma2, rho)@price
+        OnTheMaxMin = (X * exp(-r * Time) - S1 * exp((b1 - r) * Time)
+                       + EuropeanExchangeOption(S1, S2, 1, 1, Time, r,
+                       b1, b2, sigma1, sigma2, rho)@price +
+                       TwoRiskyAssetsOption("cmin", S1, S2, X, Time,
+                       r, b1, b2, sigma1, sigma2, rho)@price)
     if (TypeFlag == "pmax")
-        OnTheMaxMin = X * exp(-r * Time) - S2 * exp((b2 - r) * Time) -
-            EuropeanExchangeOption(S1, S2, 1, 1, Time, r, b1, b2,
-                sigma1, sigma2, rho)@price +
-            TwoRiskyAssetsOption("cmax", S1, S2, X, Time, r, b1, b2,
-                sigma1, sigma2, rho)@price
+        OnTheMaxMin = (X * exp(-r * Time) - S2 * exp((b2 - r) * Time)
+                       - EuropeanExchangeOption(S1, S2, 1, 1, Time, r,
+                       b1, b2, sigma1, sigma2, rho)@price +
+                       TwoRiskyAssetsOption("cmax", S1, S2, X, Time,
+                       r, b1, b2, sigma1, sigma2, rho)@price)
 
     # Parameters:
     # TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time, r,
@@ -440,8 +446,8 @@ r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 
 
 SpreadApproxOption =
-function(TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho,
-title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho,
+             title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -457,12 +463,12 @@ title = NULL, description = NULL)
     F1 = S1
     F2 = S2
     sigma = sqrt(sigma1 ^ 2 + (sigma2 * F2 / (F2 + X)) ^ 2 - 2 * rho *
-        sigma1 * sigma2 * F2 / (F2 + X))
+    sigma1 * sigma2 * F2 / (F2 + X))
     FF = F1 / (F2 + X)
 
     # Calculate Price
-    SpreadApproximation <-
-        GBSOption(TypeFlag, FF, 1, Time, r, 0, sigma)@price * (F2 + X)  * exp(-r * Time)
+    SpreadApproximation <- (GBSOption(TypeFlag, FF, 1, Time, r, 0, sigma)@price *
+                            (F2 + X)  * exp(-r * Time))
 
     # Parameters:
     # TypeFlag = c("c", "p"), S1, S2, X, Time, r, sigma1, sigma2, rho

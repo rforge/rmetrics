@@ -40,8 +40,8 @@
 
 
 GapOption =
-function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma,
-title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma,
+             title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -57,11 +57,9 @@ title = NULL, description = NULL)
     d1 = (log(S/X1) + (b + sigma^2 / 2) * Time) / (sigma * sqrt(Time))
     d2 = d1 - sigma*sqrt (Time)
     if (TypeFlag == "c")
-        GapOption =
-            S*exp((b-r)*Time)*CND(d1) - X2*exp(-r*Time)*CND(d2)
+        GapOption = S*exp((b-r)*Time)*CND(d1) - X2*exp(-r*Time)*CND(d2)
     if (TypeFlag == "p")
-        GapOption =
-            X2*exp(-r*Time)*CND(-d2) - S*exp((b-r)*Time)*CND(-d1)
+        GapOption = X2*exp(-r*Time)*CND(-d2) - S*exp((b-r)*Time)*CND(-d1)
 
     # Parameters:
     # TypeFlag = c("c", "p"), S, X1, X2, Time, r, b, sigma
@@ -94,8 +92,8 @@ title = NULL, description = NULL)
 
 
 CashOrNothingOption =
-function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma,
-title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p"), S, X, K, Time, r, b, sigma,
+             title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -145,8 +143,8 @@ title = NULL, description = NULL)
 
 
 TwoAssetCashOrNothingOption =
-function(TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r,
-b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r,
+             b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -174,23 +172,19 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 
     # Compute Price:
     TypeFlag = TypeFlag[1]
-    d11 = (log(S1/X1) + (b1 - sigma1^2/2) * Time) /
-        (sigma1*sqrt(Time))
-    d22 = (log(S2/X2) + (b2 - sigma2^2/2) * Time) /
-        (sigma2*sqrt(Time))
+    d11 = ((log(S1/X1) + (b1 - sigma1^2/2) * Time) /
+           (sigma1*sqrt(Time)))
+    d22 = ((log(S2/X2) + (b2 - sigma2^2/2) * Time) /
+           (sigma2*sqrt(Time)))
     # Select:
     if (TypeFlag == "c")
-        TwoAssetCashOrNothing = K * exp (-r * Time) *
-            CBND( d11,  d22,  rho)
+        TwoAssetCashOrNothing = K * exp (-r * Time) * CBND( d11,  d22,  rho)
     if (TypeFlag == "p")
-        TwoAssetCashOrNothing = K * exp (-r * Time) *
-            CBND(-d11, -d22,  rho)
+        TwoAssetCashOrNothing = K * exp (-r * Time) * CBND(-d11, -d22,  rho)
     if (TypeFlag == "ud")
-        TwoAssetCashOrNothing = K * exp (-r * Time) *
-            CBND( d11, -d22, -rho)
+        TwoAssetCashOrNothing = K * exp (-r * Time) * CBND( d11, -d22, -rho)
     if (TypeFlag == "du")
-        TwoAssetCashOrNothing = K * exp (-r * Time) *
-            CBND(-d11,  d22, -rho)
+        TwoAssetCashOrNothing = K * exp (-r * Time) * CBND(-d11,  d22, -rho)
 
     # Parameters:
     # TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r,
@@ -229,8 +223,8 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 
 
 AssetOrNothingOption =
-function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma,
-title = NULL, description = NULL)
+    function(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma,
+             title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -246,9 +240,9 @@ title = NULL, description = NULL)
     TypeFlag = TypeFlag[1]
     d = (log(S/X) + (b + sigma^2 / 2) * Time) / (sigma * sqrt(Time))
     if (TypeFlag == "c")
-            AssetOrNothing = S * exp ((b - r) * Time) * CND( d)
+        AssetOrNothing = S * exp ((b - r) * Time) * CND( d)
     if (TypeFlag == "p")
-            AssetOrNothing = S * exp ((b - r) * Time) * CND(-d)
+        AssetOrNothing = S * exp ((b - r) * Time) * CND(-d)
 
     # Parameters:
     # # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
@@ -280,7 +274,7 @@ title = NULL, description = NULL)
 
 
 SuperShareOption =
-function(S, XL, XH, Time, r, b, sigma, title = NULL, description = NULL)
+    function(S, XL, XH, Time, r, b, sigma, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -327,8 +321,8 @@ function(S, XL, XH, Time, r, b, sigma, title = NULL, description = NULL)
 
 
 BinaryBarrierOption =
-function(TypeFlag = as.character(1:28), S, X, H, K, Time, r, b, sigma,
-eta, phi, title = NULL, description = NULL)
+    function(TypeFlag = as.character(1:28), S, X, H, K, Time, r, b, sigma,
+             eta, phi, title = NULL, description = NULL)
 {   # A function imlemented by Diethelm Wuertz
 
     # Description:
@@ -346,7 +340,7 @@ eta, phi, title = NULL, description = NULL)
     #         1  2  3  4  5  6  7  8  9 10 11 12 13 14
     #        15 16 17 18 19 20 21 22 23 24 25 26 27 28
     phi = c(+0,+0,+0,+0,-1,+1,-1,+1,+1,-1,+1,-1,+1,+1,
-             +1,+1,-1,-1,-1,-1,+1,+1,+1,+1,-1,-1,-1,-1)[TypeFlag]
+            +1,+1,-1,-1,-1,-1,+1,+1,+1,+1,-1,-1,-1,-1)[TypeFlag]
     v = sigma
     mu = (b - v ^ 2 / 2) / v ^ 2
     lambda = sqrt(mu ^ 2 + 2 * r / v ^ 2)
@@ -361,17 +355,17 @@ eta, phi, title = NULL, description = NULL)
     b1 = K * exp(-r * Time) * CND(phi * X1 - phi * v * sqrt(Time))
     a2 = S * exp((b - r) * Time) * CND(phi * X2)
     b2 = K * exp(-r * Time) * CND(phi * X2 - phi * v * sqrt(Time))
-    a3 = S * exp((b - r) * Time) * (H / S) ^ (2 * (mu + 1)) *
-        CND(eta * y1)
-    b3 = K * exp(-r * Time) * (H / S) ^ (2 * mu) *
-        CND(eta * y1 - eta * v * sqrt(Time))
-    a4 = S * exp((b - r) * Time) * (H / S) ^ (2 * (mu + 1)) *
-        CND(eta * y2)
-    b4 = K * exp(-r * Time) * (H / S) ^ (2 * mu) *
-        CND(eta * y2 - eta * v * sqrt(Time))
-    a5 = K * ((H / S) ^ (mu + lambda) *
-        CND(eta * Z) + (H / S) ^ (mu - lambda) *
-        CND(eta * Z - 2 * eta * lambda * v * sqrt(Time)))
+    a3 = (S * exp((b - r) * Time) * (H / S) ^ (2 * (mu + 1)) *
+          CND(eta * y1))
+    b3 = (K * exp(-r * Time) * (H / S) ^ (2 * mu) *
+          CND(eta * y1 - eta * v * sqrt(Time)))
+    a4 = (S * exp((b - r) * Time) * (H / S) ^ (2 * (mu + 1)) *
+          CND(eta * y2))
+    b4 = (K * exp(-r * Time) * (H / S) ^ (2 * mu) *
+          CND(eta * y2 - eta * v * sqrt(Time)))
+    a5 = (K * ((H / S) ^ (mu + lambda) *
+               CND(eta * Z) + (H / S) ^ (mu - lambda) *
+               CND(eta * Z - 2 * eta * lambda * v * sqrt(Time))))
     # Select:
     BinaryBarrier = NA
     if (X > H) {
