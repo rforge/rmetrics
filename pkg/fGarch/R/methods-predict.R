@@ -182,20 +182,18 @@ setMethod(f = "predict", signature(object = "fGARCH"), definition =
         meanError = as.vector(prediction$se)
     } else {
 	# coefficients of h(t+1)
-	a_vec <- rep(0,(n.ahead-1))
-	hhat <- h[-(1:N)]^(2/delta)
+	a_vec <- rep(0,(n.ahead))
+	hhat <- h[-(1:N)]^(2/delta[[1]]) #-> [[1]] to omit name of delta
 	u2 <- length(ar)
 	meanError <- hhat[1]
-	for( i in 1:(n.ahead-1))
-        {
-            if(i==1) {
-                a_vec[i] = ar[1]+ma[1]
-                meanError <- c(meanError,sum(hhat[1:2]*c(a_vec[1]^2,1)))
-            }
-            if(i>1) {
+        a_vec[1] = ar[1] + ma[1]
+        meanError <- na.omit(c(meanError,sum(hhat[1:2]*c(a_vec[1]^2,1))))
+        if ((n.ahead - 1) > 1) {
+            for( i in 2:(n.ahead - 1)) {
                 a_vec[i] <- ar[1:min(u2,i-1)]*a_vec[(i-1):(i-u2)] +
                     ifelse(i>u,0,ar[i]) + ifelse(i>v,0,ma[i])
-                meanError <- c(meanError,sum(hhat[1:(i+1)]*c(a_vec[i:1]^2,1)))
+                meanError <- na.omit(c(meanError,
+                                       sum(hhat[1:(i+1)]*c(a_vec[i:1]^2,1))))
             }
         }
 	meanError <- sqrt(meanError)
