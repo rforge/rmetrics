@@ -1,0 +1,379 @@
+Author: chalabi
+Date:   2009-11-03
+
+    Fixed wrong split of commands.
+    
+    M pkg/fExoticOptions/R/AsianOptions.R
+    M pkg/fExoticOptions/R/BarrierOptions.R
+    M pkg/fExoticOptions/R/BinaryOptions.R
+    M pkg/fExoticOptions/R/CurrencyTranslatedOptions.R
+    M pkg/fExoticOptions/R/LookbackOptions.R
+    M pkg/fExoticOptions/R/MultipleAssetsOptions.R
+    M pkg/fExoticOptions/R/MultipleExercisesOptions.R
+
+Author: chalabi
+Date:   2009-11-03
+
+    Removed message on startup.
+    
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: chalabi
+Date:   2009-09-30
+
+    updated version number
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2009-09-29
+
+    updated DESC and ChangeLog
+    
+    M pkg/fExoticOptions/ChangeLog
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-02
+
+    more explicit depends and suggests field in DESC file.
+    
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-01
+
+    updated DESC file
+    
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated RUnit test files to make it run on Mac OS X
+    
+    M pkg/fExoticOptions/inst/unitTests/runTests.R
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated version number
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-24
+
+    updated version number
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-22
+
+    updated DESCRIPTION files
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-09-25
+
+    checking all packages before sending to CRAN - fBasics & fPortfolio need further work
+    
+    M pkg/fExoticOptions/R/BinaryOptions.R
+
+Author: chalabi
+Date:   2008-08-16
+
+    D pkg/fExoticOptions/NAMESPACE
+
+Author: chalabi
+Date:   2008-08-16
+
+    M pkg/fExoticOptions/DESCRIPTION
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    M pkg/fExoticOptions/NAMESPACE
+
+Author: chalabi
+Date:   2008-07-23
+
+    more NAMESPACE files
+    
+    A pkg/fExoticOptions/NAMESPACE
+
+Author: chalabi
+Date:   2008-07-23
+
+    some modification to work with NAMESPACE
+    
+    M pkg/fExoticOptions/DESCRIPTION
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: chalabi
+Date:   2008-07-18
+
+    use of timeSeries and timeDate
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-06-13
+
+    M pkg/fExoticOptions/R/BinaryOptions.R
+
+Author: chalabi
+Date:   2008-06-11
+
+    pkgs adapted to new timeSeries pkg
+    
+    M pkg/fExoticOptions/DESCRIPTION
+    M pkg/fExoticOptions/inst/unitTests/Makefile
+
+Author: chalabi
+Date:   2008-06-10
+
+    renamed files in unitTests
+    
+    M pkg/fExoticOptions/inst/unitTests/runTests.R
+    A pkg/fExoticOptions/inst/unitTests/runit.BarrierOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.BasicAsianOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.BinaryOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.CurrencyTranslatedOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.LookbackOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.MultipleAssetsOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runit.MultipleExercisesOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitBarrierOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitBasicAsianOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitBinaryOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitCurrencyTranslatedOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitLookbackOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitMultipleAssetsOptions.R
+    D pkg/fExoticOptions/inst/unitTests/runitMultipleExercisesOptions.R
+
+Author: chalabi
+Date:   2008-05-27
+
+    updated DESCR file
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-04-22
+
+    changed depends section in DESCRIPTION files
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-03-11
+
+    "Joe W. Byers" writes:
+    
+    > Yohan,
+    >
+    > I have been updating the multiassetoptions for the 2nd edition of Haug.  Would
+    > you review the spreadapproximation in fExoticOptions?  According to the formula
+    > on page 59 of Haug(1997) there should be a exp(-rt) in the formula.
+    >
+    > SpreadApproximation = GBSOption(TypeFlag, FF, 1, Time, r,
+    >         0, sigma)@price * (F2 + X)
+    >
+    > This should be
+    > SpreadApproximation = GBSOption(TypeFlag, FF, 1, Time, r,
+    >         0, sigma)@price * (F2 + X) * exp(-r *T)
+    >
+    > Thank you
+    > Joe
+    
+    
+    M pkg/fExoticOptions/R/MultipleAssetsOptions.R
+
+Author: chalabi
+Date:   2008-02-08
+
+    changed version number of packages
+    
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: chalabi
+Date:   2008-02-07
+
+    change License sectino in DESCRIPTION to the canonical
+    License : GPL (>=2)
+    
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2008-02-06
+
+    zzz output shortened
+    
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: wuertz
+Date:   2008-01-05
+
+    zzz.R and Description files updated
+    
+    M pkg/fExoticOptions/DESCRIPTION
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: wuertz
+Date:   2007-10-03
+
+    Version numbers DESCRIPTION file updateDescription.sh
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2007-10-01
+
+    Version Numbers updated
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-10
+
+    some unit test updates
+    
+    M pkg/fExoticOptions/inst/unitTests/runitBarrierOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitBasicAsianOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitBinaryOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitCurrencyTranslatedOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitLookbackOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitMultipleAssetsOptions.R
+    M pkg/fExoticOptions/inst/unitTests/runitMultipleExercisesOptions.R
+
+Author: wuertz
+Date:   2007-09-07
+
+    minor changes in the DESCRIPTION files
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-06
+
+    fExoticOptions unitTests renamed
+    
+    D pkg/fExoticOptions/inst/unitTests/runit2A.R
+    D pkg/fExoticOptions/inst/unitTests/runit2B.R
+    D pkg/fExoticOptions/inst/unitTests/runit2C.R
+    D pkg/fExoticOptions/inst/unitTests/runit2D.R
+    D pkg/fExoticOptions/inst/unitTests/runit2E.R
+    D pkg/fExoticOptions/inst/unitTests/runit2F.R
+    D pkg/fExoticOptions/inst/unitTests/runit2G.R
+    A pkg/fExoticOptions/inst/unitTests/runitBarrierOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitBasicAsianOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitBinaryOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitCurrencyTranslatedOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitLookbackOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitMultipleAssetsOptions.R
+    A pkg/fExoticOptions/inst/unitTests/runitMultipleExercisesOptions.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    .R and .Rd scripts renamed
+    
+    D pkg/fExoticOptions/R/2A-MultipleExercisesOptions.R
+    D pkg/fExoticOptions/R/2B-MultipleAssetsOptions.R
+    D pkg/fExoticOptions/R/2C-LookbackOptions.R
+    D pkg/fExoticOptions/R/2D-BarrierOptions.R
+    D pkg/fExoticOptions/R/2E-BinaryOptions.R
+    D pkg/fExoticOptions/R/2F-AsianOptions.R
+    D pkg/fExoticOptions/R/2G-CurrencyTranslatedOptions.R
+    A pkg/fExoticOptions/R/AsianOptions.R
+    A pkg/fExoticOptions/R/BarrierOptions.R
+    A pkg/fExoticOptions/R/BinaryOptions.R
+    A pkg/fExoticOptions/R/CurrencyTranslatedOptions.R
+    A pkg/fExoticOptions/R/LookbackOptions.R
+    A pkg/fExoticOptions/R/MultipleAssetsOptions.R
+    A pkg/fExoticOptions/R/MultipleExercisesOptions.R
+    D pkg/fExoticOptions/man/2A-MultipleExercisesOptions.Rd
+    D pkg/fExoticOptions/man/2B-MultipleAssetsOptions.Rd
+    D pkg/fExoticOptions/man/2C-LookbackOptions.Rd
+    D pkg/fExoticOptions/man/2D-BarrierOptions.Rd
+    D pkg/fExoticOptions/man/2E-BinaryOptions.Rd
+    D pkg/fExoticOptions/man/2F-AsianOptions.Rd
+    D pkg/fExoticOptions/man/2G-CurrencyTranslatedOptions.Rd
+    A pkg/fExoticOptions/man/AsianOptions.Rd
+    A pkg/fExoticOptions/man/BarrierOptions.Rd
+    A pkg/fExoticOptions/man/BinaryOptions.Rd
+    A pkg/fExoticOptions/man/CurrencyTranslatedOptions.Rd
+    A pkg/fExoticOptions/man/LookbackOptions.Rd
+    A pkg/fExoticOptions/man/MultipleAssetsOptions.Rd
+    A pkg/fExoticOptions/man/MultipleExercisesOptions.Rd
+
+Author: wuertz
+Date:   2007-09-05
+
+    zzz.R's modified
+    
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    email <Rmetrics-core...> changed in all DESCRIPTIONs
+    
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fExoticOptions/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-03
+
+    M pkg/fExoticOptions/R/2A-MultipleExercisesOptions.R
+    M pkg/fExoticOptions/R/2D-BarrierOptions.R
+    M pkg/fExoticOptions/R/zzz.R
+
+Author: wuertz
+Date:   2007-09-03
+
+    M pkg/fExoticOptions/inst/unitTests/Makefile
+    M pkg/fExoticOptions/tests/doRUnit.R
+
+Author: wuertz
+Date:   2007-09-03
+
+    A pkg/fExoticOptions/DESCRIPTION
+    A pkg/fExoticOptions/R/2A-MultipleExercisesOptions.R
+    A pkg/fExoticOptions/R/2B-MultipleAssetsOptions.R
+    A pkg/fExoticOptions/R/2C-LookbackOptions.R
+    A pkg/fExoticOptions/R/2D-BarrierOptions.R
+    A pkg/fExoticOptions/R/2E-BinaryOptions.R
+    A pkg/fExoticOptions/R/2F-AsianOptions.R
+    A pkg/fExoticOptions/R/2G-CurrencyTranslatedOptions.R
+    A pkg/fExoticOptions/R/zzz.R
+    A pkg/fExoticOptions/inst/COPYRIGHT.html
+    A pkg/fExoticOptions/inst/DocCopying.pdf
+    A pkg/fExoticOptions/inst/unitTests/Makefile
+    A pkg/fExoticOptions/inst/unitTests/runTests.R
+    A pkg/fExoticOptions/inst/unitTests/runit2A.R
+    A pkg/fExoticOptions/inst/unitTests/runit2B.R
+    A pkg/fExoticOptions/inst/unitTests/runit2C.R
+    A pkg/fExoticOptions/inst/unitTests/runit2D.R
+    A pkg/fExoticOptions/inst/unitTests/runit2E.R
+    A pkg/fExoticOptions/inst/unitTests/runit2F.R
+    A pkg/fExoticOptions/inst/unitTests/runit2G.R
+    A pkg/fExoticOptions/man/2A-MultipleExercisesOptions.Rd
+    A pkg/fExoticOptions/man/2B-MultipleAssetsOptions.Rd
+    A pkg/fExoticOptions/man/2C-LookbackOptions.Rd
+    A pkg/fExoticOptions/man/2D-BarrierOptions.Rd
+    A pkg/fExoticOptions/man/2E-BinaryOptions.Rd
+    A pkg/fExoticOptions/man/2F-AsianOptions.Rd
+    A pkg/fExoticOptions/man/2G-CurrencyTranslatedOptions.Rd
+    A pkg/fExoticOptions/tests/doRUnit.R
