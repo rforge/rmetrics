@@ -142,7 +142,6 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
     n.iter <- mle$counts[1]
     message <- NULL
     ## Constrain rho to [-1, 1]
-    print(theta.backup)
     rho <- thetaOpt["rho"]
     if(!is.na(rho) & (rho < -1 | rho > 1))
     {
@@ -150,7 +149,6 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
         mle$par[rho.pos] <- 2 * atan(mle$par[rho.pos]) / pi
     }
     thetaOpt <- mle$par
-    print(thetaOpt)
   }
 
   theta <- c(thetaOpt, thetaConst)
