@@ -30,6 +30,13 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
                                 data, ttm, deltat, r, d, n,
                                 meas.sd, opt.meas.sd, silent)
     {
+      ## Constrain rho to [-1, 1]
+      rho <- thetaOpt["rho"]
+      if(!is.na(rho) & (rho < -1 | rho > 1))
+      {
+          thetaOpt["rho"] <- 2 * atan(thetaOpt["rho"]) / pi
+      }
+
       theta <- c(thetaOpt, thetaConst)
       theta <- theta[thetaNames]
 
@@ -134,7 +141,16 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
     convergence <- mle$convergence
     n.iter <- mle$counts[1]
     message <- NULL
+    ## Constrain rho to [-1, 1]
+    print(theta.backup)
+    rho <- thetaOpt["rho"]
+    if(!is.na(rho) & (rho < -1 | rho > 1))
+    {
+        rho.pos <- which(names(thetaOpt) == "rho")
+        mle$par[rho.pos] <- 2 * atan(mle$par[rho.pos]) / pi
+    }
     thetaOpt <- mle$par
+    print(thetaOpt)
   }
 
   theta <- c(thetaOpt, thetaConst)
@@ -193,4 +209,3 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
              meas.sd = abs(gg),
              deltat = deltat))
 }
-

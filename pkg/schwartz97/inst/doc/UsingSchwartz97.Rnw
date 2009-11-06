@@ -434,7 +434,8 @@ stating which parameters should be fitted. The argument
 \verb=opt.meas.sd= defines how the measurement error standard
 deviation will be treated. If \verb+opt.meas.sd == "scalar"+ it means
 that \verb=meas.sd= is scaled by a single factor, which enters the
-optimization procedure. Finally, the risk-free rate must be
+optimization procedure. During the optimization \verb=rho= is 
+constrained to [-1, 1]. Finally, the risk-free rate must be
 given.\\[2ex]
 \textbf{Example:}\\
 We have around 7000 daily observations from Jan. 1989 to Jan. 2009 of
