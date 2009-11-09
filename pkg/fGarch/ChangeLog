@@ -1,90 +1,2532 @@
-2009-08-14 chalabi
+Author: chalabi
+Date:   2009-11-05
 
-        * cosmetic changes in help page
+    small changes in predict,fGARCH-method to correct its output when n.ahead=1 since addition of conditional errors.
+    
+    M pkg/fGarch/R/methods-predict.R
 
-pkg/fGarch/man/methods-predict.Rd
+Author: chalabi
+Date:   2009-09-28
 
-2009-05-20 wuertz
+    updated version number
+    
+    M pkg/fGarch/DESCRIPTION
 
-        * alternative garchFit interface (still hidden) now runs
+Author: chalabi
+Date:   2009-09-28
 
-pkg/fGarch/R/garch-FitFromFormula.R
-pkg/fGarch/R/garch-FitFromSpec.R
-pkg/fGarch/R/garch-FitInternal.R
+    updated DESCR and ChangeLog
+    
+    M pkg/fGarch/ChangeLog
+    M pkg/fGarch/DESCRIPTION
 
-2009-05-20 wuertz
+Author: wuertz
+Date:   2009-08-21
 
-        * script file renamed
+    .gogarchFit function added, show and plot adapted, NAMESPACE and DESCRIPTION updated
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/methods-plot.R
+    M pkg/fGarch/R/methods-show.R
+    A pkg/fGarch/R/mgarch-FitFromFormula.R
 
-pkg/fGarch/R/garch-FitFromFormula.R
+Merge: 6ac0e8e ca073e3
+Author: chalabi
+Date:   2009-08-14
 
-2009-05-20 wuertz
+    Merge branch 'devel-fGarch'
+    
+Author: chalabi
+Date:   2009-08-14
 
-        * some smaller fixes and NAMESPACE adapted
+    cosmetic changes in help page
+    
+    M pkg/fGarch/man/methods-predict.Rd
 
-pkg/fGarch/NAMESPACE
-pkg/fGarch/R/garch-Distribution.R
-pkg/fGarch/R/garch-LogLik.R
+Author: chalabi
+Date:   2009-08-14
 
-2009-05-20 wuertz
+    new NAMESPACE structure which should ease maintenance of packages.
+    
+    M pkg/fGarch/NAMESPACE
 
-        * script file renamed and disentangled
+Author: Chalabi
+Date:   2009-06-24
 
-pkg/fGarch/R/dist-sged.R
-pkg/fGarch/R/dist-snig.R
-pkg/fGarch/R/dist-snorm.R
-pkg/fGarch/R/dist-sstd.R
-pkg/fGarch/R/garch-Distribution.R
-pkg/fGarch/R/garch-Fit.R
-pkg/fGarch/R/garch-FitControl.R
-pkg/fGarch/R/garch-Gradient.R
-pkg/fGarch/R/garch-Hessian.R
-pkg/fGarch/R/garch-Sim.R
-pkg/fGarch/R/garch-Solver.R
-pkg/fGarch/R/garch-Spec.R
-pkg/fGarch/R/garch-Stats.R
-pkg/fGarch/R/garchFit.R
-pkg/fGarch/R/garchFitControl.R
-pkg/fGarch/R/garchGradient.R
-pkg/fGarch/R/garchHessian.R
-pkg/fGarch/R/garchSim.R
-pkg/fGarch/R/garchSolver.R
-pkg/fGarch/R/garchSpec.R
-pkg/fGarch/R/garchStats.R
-pkg/fGarch/R/sged.R
-pkg/fGarch/R/snorm.R
-pkg/fGarch/R/sstd.R
+    updated NAMESPACE
 
-2009-05-15 chaussep
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/NAMESPACE
 
-        * added a plot option to predict and adapted the manual
+Author: Chalabi
+Date:   2009-06-13
 
-pkg/fGarch/R/methods-predict.R
-pkg/fGarch/man/methods-predict.Rd
+    2*Sigma around mean of time series
 
-2009-05-15 chalabi
+    M pkg/fGarch/R/methods-plot.R
 
-        * added Pierre Chausse in DESC file for contribution
+Author: wuertz
+Date:   2009-05-21
 
-pkg/fGarch/DESCRIPTION
+    working on new specification
+    
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/garch-Distribution.R
+    M pkg/fGarch/R/garch-FitFromFormula.R
+    M pkg/fGarch/R/garch-FitFromSpec.R
+    M pkg/fGarch/R/garch-FitInternal.R
+    D pkg/fGarch/R/garch-LogLik.R
+    A pkg/fGarch/R/loglik-aparch.R
+    A pkg/fGarch/R/loglik-egarch.R
+    A pkg/fGarch/R/loglik.R
+    M pkg/fGarch/man/garchFit.Rd
 
-2009-04-19 chalabi
+Author: wuertz
+Date:   2009-05-21
 
-        * added explicit version number in Depends field for key packages
+    different recursion methods added, new method to calculate hessian added
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/R/garch-Distribution.R
+    M pkg/fGarch/R/garch-FitFromFormula.R
+    M pkg/fGarch/R/garch-FitInternal.R
+    M pkg/fGarch/R/garch-Hessian.R
+    M pkg/fGarch/R/garch-LogLik.R
+    M pkg/fGarch/R/garch-Solver.R
+    M pkg/fGarch/man/garchFit.Rd
 
-pkg/fGarch/DESCRIPTION
+Author: wuertz
+Date:   2009-05-21
 
-2009-01-28 chalabi
+    LLH function disentangled in shorter parts
+    
+    M pkg/fGarch/R/garch-FitInternal.R
+    M pkg/fGarch/R/garch-LogLik.R
 
-        * changed version number to match version on CRAN + 1
+Author: wuertz
+Date:   2009-05-20
 
-pkg/fGarch/DESCRIPTION
+    alternative garchFit interface (still hidden) now runs
+    
+    M pkg/fGarch/R/garch-FitFromFormula.R
+    M pkg/fGarch/R/garch-FitFromSpec.R
+    M pkg/fGarch/R/garch-FitInternal.R
 
-2009-01-12 chalabi
+Author: wuertz
+Date:   2009-05-20
 
-        * added update method for fGARCH and fGARCHSPEC object
+    NAMESPACE updated
+    
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/fGarchEnv.R
+    M pkg/fGarch/R/garch-FitFromFormula.R
 
-pkg/fGarch/NAMESPACE
-pkg/fGarch/R/methods-update.R
-pkg/fGarch/man/class-fGARCH.Rd
-pkg/fGarch/man/class-fGARCHSPEC.Rd
+Author: wuertz
+Date:   2009-05-20
+
+    R scripts disentangled and renamed
+    
+    D pkg/fGarch/R/garch-FitFormula.R
+    M pkg/fGarch/R/garch-FitFromFormula.R
+    M pkg/fGarch/R/garch-FitInternal.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    script file renamed
+    
+    
+    A pkg/fGarch/R/garch-FitFromFormula.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    new interface for garchFit added, spec() based
+    
+    D pkg/fGarch/R/garch-Fit.R
+    D pkg/fGarch/R/garch-FitControl.R
+    A pkg/fGarch/R/garch-FitFormula.R
+    A pkg/fGarch/R/garch-FitFromSpec.R
+    A pkg/fGarch/R/garch-FitInternal.R
+    A pkg/fGarch/R/garch-GlobalVars.R
+    A pkg/fGarch/R/garch-SolverControl.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    some smaller fixes and NAMESPACE adapted
+    
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/garch-Distribution.R
+    M pkg/fGarch/R/garch-LogLik.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    garchLogLIk disentangled from script file garch-Fit.R
+    
+    M pkg/fGarch/R/garch-Fit.R
+    A pkg/fGarch/R/garch-LogLik.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    Initialization disentangled from garch-Fit script file
+    
+    M pkg/fGarch/R/garch-Distribution.R
+    M pkg/fGarch/R/garch-Fit.R
+    A pkg/fGarch/R/garch-Initialization.R
+
+Author: wuertz
+Date:   2009-05-20
+
+    script file renamed and disentangled
+    
+    A pkg/fGarch/R/dist-sged.R
+    A pkg/fGarch/R/dist-snig.R
+    A pkg/fGarch/R/dist-snorm.R
+    A pkg/fGarch/R/dist-sstd.R
+    A pkg/fGarch/R/garch-Distribution.R
+    A pkg/fGarch/R/garch-Fit.R
+    A pkg/fGarch/R/garch-FitControl.R
+    A pkg/fGarch/R/garch-Gradient.R
+    A pkg/fGarch/R/garch-Hessian.R
+    A pkg/fGarch/R/garch-Sim.R
+    A pkg/fGarch/R/garch-Solver.R
+    A pkg/fGarch/R/garch-Spec.R
+    A pkg/fGarch/R/garch-Stats.R
+    D pkg/fGarch/R/garchFit.R
+    D pkg/fGarch/R/garchFitControl.R
+    D pkg/fGarch/R/garchGradient.R
+    D pkg/fGarch/R/garchHessian.R
+    D pkg/fGarch/R/garchSim.R
+    D pkg/fGarch/R/garchSolver.R
+    D pkg/fGarch/R/garchSpec.R
+    D pkg/fGarch/R/garchStats.R
+    D pkg/fGarch/R/sged.R
+    D pkg/fGarch/R/snorm.R
+    D pkg/fGarch/R/sstd.R
+
+Author: chaussep
+Date:   2009-05-15
+
+    added a plot option to predict and adapted the manual
+    
+    M pkg/fGarch/R/methods-predict.R
+    M pkg/fGarch/man/methods-predict.Rd
+
+Author: chalabi
+Date:   2009-05-15
+
+    added Pierre Chausse in DESC file for contribution
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chaussep
+Date:   2009-05-14
+
+    Just changed the definition of mu. It is the intercept, not the mean
+    
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/man/garchSim.Rd
+
+Author: chaussep
+Date:   2009-05-14
+
+    Added conditional errors to predict and updated nthe manual
+    
+    M pkg/fGarch/R/methods-predict.R
+    M pkg/fGarch/man/methods-predict.Rd
+
+Author: chalabi
+Date:   2009-04-19
+
+    added explicit version number in Depends field for key packages
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-02
+
+    more explicit depends and suggests field in DESC file.
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2009-04-01
+
+    updated DESC file
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2009-01-30
+
+    M pkg/fGarch/R/garchSpec.R
+
+Author: chalabi
+Date:   2009-01-28
+
+    updated version number
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2009-01-28
+
+    changed version number to match version on CRAN + 1
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2009-01-12
+
+    added update method for fGARCH and fGARCHSPEC object
+    
+    M pkg/fGarch/NAMESPACE
+    A pkg/fGarch/R/methods-update.R
+    M pkg/fGarch/man/class-fGARCH.Rd
+    M pkg/fGarch/man/class-fGARCHSPEC.Rd
+
+Author: chalabi
+Date:   2009-01-07
+
+    fixed conditional distribution thanks to comments of Michal Miklovic.
+    
+    
+    M pkg/fGarch/src/dist.f
+
+Author: wuertz
+Date:   2008-12-14
+
+    snig plot added
+    
+    M pkg/fGarch/R/methods-plot.R
+
+Author: wuertz
+Date:   2008-12-14
+
+    zzz.R fGarch Library modified, I think we dont need this file at all, we have a namespace
+    
+    
+    M pkg/fGarch/R/zzz.R
+
+Author: wuertz
+Date:   2008-12-14
+
+    Standardized NIG as cond.dist added
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/fGarchEnv.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchHessian.R
+    M pkg/fGarch/R/garchSolver.R
+    M pkg/fGarch/R/garchStats.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/man/garchFit.Rd
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/sged.Rd
+    M pkg/fGarch/man/snorm.Rd
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated RUnit test files to make it run on Mac OS X
+    
+    M pkg/fGarch/inst/unitTests/runTests.R
+
+Author: chalabi
+Date:   2008-10-27
+
+    updated version number
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-24
+
+    updated version number
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-10-24
+
+    fixed code/documentation mismatches
+    
+    M pkg/fGarch/man/methods-residuals.Rd
+
+Author: chalabi
+Date:   2008-10-10
+
+    updated DESC files
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-09-26
+
+    fixed QQ-plot when cond.dist == 'QMLE'
+    
+    M pkg/fGarch/R/methods-plot.R
+
+Author: chalabi
+Date:   2008-09-26
+
+    input data were wrongly scaled at the end of function
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-09-25
+
+    checking all packages before sending to CRAN - fBasics & fPortfolio need further work
+    
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/inst/unitTests/runit.garchFit.algorithm.R
+    M pkg/fGarch/inst/unitTests/runit.garchSolver.R
+
+Author: chalabi
+Date:   2008-09-24
+
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/R/fGarchEnv.R
+    M pkg/fGarch/R/garchFit.R
+    A pkg/fGarch/R/garchGradient.R
+    M pkg/fGarch/R/garchHessian.R
+    D pkg/fGarch/R/garchOxFit.R
+    M pkg/fGarch/R/garchSolver.R
+    M pkg/fGarch/R/methods-show.R
+    M pkg/fGarch/R/methods-summary.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/inst/unitTests/Makefile
+    M pkg/fGarch/inst/unitTests/runit.garchFit.algorithm.R
+    M pkg/fGarch/inst/unitTests/runit.garchSolver.R
+    M pkg/fGarch/man/garchFit.Rd
+    D pkg/fGarch/man/garchOxFit.Rd
+    M pkg/fGarch/man/methods-summary.Rd
+    M pkg/fGarch/man/methods-volatility.Rd
+    A pkg/fGarch/src/Makevars
+    A pkg/fGarch/src/dist.f
+    A pkg/fGarch/src/llhGarch.f
+    A pkg/fGarch/src/math.f
+
+Author: chalabi
+Date:   2008-08-21
+
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/fGarchEnv.R
+    M pkg/fGarch/R/garchFit.R
+    A pkg/fGarch/man/data.Rd
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-08-19
+
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-08-18
+
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-08-16
+
+    A pkg/fGarch/data/dem2gbp.csv
+    A pkg/fGarch/data/sp500dge.csv
+
+Author: chalabi
+Date:   2008-08-16
+
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/NAMESPACE
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchHessian.R
+    M pkg/fGarch/R/garchSolver.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/inst/unitTests/runit.garchSolver.R
+    D pkg/fGarch/src/Makevars
+    D pkg/fGarch/src/garchHessian.f
+    D pkg/fGarch/src/nlminbGarchA.f
+    D pkg/fGarch/src/nlminbGarchB.f
+    D pkg/fGarch/src/sqpGarchA.f
+    D pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-08-04
+
+    fixed typo
+    
+    M pkg/fGarch/R/garchOxFit.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    global env needed for NAMESPACE
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    M pkg/fGarch/inst/unitTests/runit.garchFit.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.faked.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    fixed problem with R-devel
+    
+    M pkg/fGarch/R/methods-volatility.R
+
+Author: chalabi
+Date:   2008-08-04
+
+    M pkg/fGarch/NAMESPACE
+
+Author: chalabi
+Date:   2008-07-23
+
+    global env in fGarch - needed because of NAMESPACE
+    
+    A pkg/fGarch/R/fGarchEnv.R
+
+Author: chalabi
+Date:   2008-07-23
+
+    more NAMESPACE files
+    
+    A pkg/fGarch/NAMESPACE
+
+Author: chalabi
+Date:   2008-07-23
+
+    some modification to work with NAMESPACE
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchHessian.R
+    M pkg/fGarch/R/sstd.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/src/nlminbGarchA.f
+    M pkg/fGarch/src/sqpGarchA.f
+
+Author: chalabi
+Date:   2008-07-18
+
+    use of timeSeries and timeDate
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-06-11
+
+    pkgs adapted to new timeSeries pkg
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/inst/unitTests/Makefile
+    M pkg/fGarch/inst/unitTests/runTests.R
+    M pkg/fGarch/inst/unitTests/runit.formula-methods.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.algorithm.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.aparch.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.faked.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.garch.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.init.R
+    D pkg/fGarch/inst/unitTests/runit.garchOxInterface.R
+    M pkg/fGarch/inst/unitTests/runit.garchSolver.R
+    M pkg/fGarch/man/methods-formula.Rd
+
+Author: chalabi
+Date:   2008-06-03
+
+    added THANKS file
+    
+    A pkg/fGarch/inst/THANKS
+
+Author: chalabi
+Date:   2008-05-27
+
+    updated DESCR file
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-05-13
+
+    updated DESCRIPTION files
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-05-09
+
+    added description of 'extention' argument in help page of garchSim
+    
+    
+    M pkg/fGarch/man/garchSim.Rd
+
+Author: chalabi
+Date:   2008-05-08
+
+    *** empty log message ***
+    
+    M pkg/fGarch/R/methods-plot.R
+
+Author: chalabi
+Date:   2008-05-06
+
+    as pointed out by Michal, there was a problem in .plot.garch.13
+    
+    michal miklovic
+    
+    I was wondering why qq plots for my models with cond.dist = std suggest that standardised residuals have thinner tails than the student distribution with the estimated shape parameter. Then, I found a possible bug in .plot.garch.13,
+    
+    
+    M pkg/fGarch/R/methods-plot.R
+
+Author: chalabi
+Date:   2008-04-22
+
+    changed depends section in DESCRIPTION files
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-04-22
+
+    changed manual page to old version and exported new content to a User Guide
+    
+    
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-04-22
+
+    remove ox folder in inst
+    
+    D pkg/fGarch/inst/ox/GarchOxModelling.ox
+    D pkg/fGarch/inst/ox/GarchOxModelling30.ox
+
+Author: chalabi
+Date:   2008-04-21
+
+    changed warning message
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-04-02
+
+    bug fixed thanks to Michal Miklovic:
+    
+    Hi,
+    
+    I wanted to estimate a garch-gjr model without leverage (which is, in fact, a garch model) using the following code:
+    
+    arma11gjr11n <- garchFit(~ arma(1,1) + aparch(1,1), data, delta=2,
+                include.delta=FALSE, leverage=FALSE, algorithm="nlminb", hessian="rcd")
+    summary(arma11gjr11n)
+    
+    and obtained the following error:
+    
+    --- START OF TRACE ---
+    
+    R coded nlminb Solver:
+    
+    Error in gamma[i] : object is not subsettable
+    
+    
+    I would suggest to copy the below line from .garchInitParameters into .garchLLH:
+    
+    if(p > 0 & !leverage) gamma = rep(0, times = p)
+    
+    I tried this, recompiled the fGarch package and it worked fine.
+    
+    
+    Best regards,
+    
+    Michal Miklovic
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-03-25
+
+    changed deprecated functions with new ones
+    
+    
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/methods-formula.Rd
+
+Author: chalabi
+Date:   2008-03-17
+
+    changed charvec of simulated time series
+    
+    
+    M pkg/fGarch/R/garchSim.R
+
+Author: chalabi
+Date:   2008-03-08
+
+    all functions in fGarch returns a timeSeries.
+    changed slot data of GARCHSPEC to numeric
+    
+    
+    M pkg/fGarch/R/class-fGARCH.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/methods-fitted.R
+    M pkg/fGarch/R/methods-plot.R
+    M pkg/fGarch/R/methods-predict.R
+    M pkg/fGarch/R/methods-residuals.R
+    M pkg/fGarch/R/methods-show.R
+    M pkg/fGarch/R/methods-summary.R
+    M pkg/fGarch/R/methods-volatility.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.faked.R
+    M pkg/fGarch/man/garchFit.Rd
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/methods-coef.Rd
+
+Author: chalabi
+Date:   2008-03-08
+
+    *** empty log message ***
+    
+    M pkg/fGarch/inst/unitTests/runit.formula-methods.R
+
+Author: chalabi
+Date:   2008-03-01
+
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/R/methods-show.R
+    M pkg/fGarch/man/garchSpec.Rd
+
+Author: chalabi
+Date:   2008-03-01
+
+    *** empty log message ***
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-02-29
+
+    garchFit can now handle APARCH/GARCH(p,q) when q = 0 and give an error message for p = 0.
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-02-25
+
+    removed garchOx interface
+    
+    
+    M pkg/fGarch/R/garchOxFit.R
+    M pkg/fGarch/man/00fGarch-package.Rd
+    M pkg/fGarch/man/garchOxFit.Rd
+
+Author: chalabi
+Date:   2008-02-25
+
+    *** empty log message ***
+    
+    M pkg/fGarch/man/00fGarch-package.Rd
+
+Author: chalabi
+Date:   2008-02-25
+
+    *** empty log message ***
+    
+    M pkg/fGarch/man/00fGarch-package.Rd
+
+Author: chalabi
+Date:   2008-02-25
+
+    *** empty log message ***
+    
+    M pkg/fGarch/man/00fGarch-package.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    D pkg/fGarch/man/class-fGarch.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    D pkg/fGarch/man/class-fGARCHx.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    misprints removed
+    
+    M pkg/fGarch/man/class-fGARCH.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    sorry didnt take care on lower and upper case
+    
+    
+    A pkg/fGarch/man/class-fGARCH.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    A pkg/fGarch/man/class-fGARCHx.Rd
+
+Author: wuertz
+Date:   2008-02-22
+
+    file fGARCH-class.Rd renamed to class-fGARCH.Rd, same for fGARCHSPEC
+    
+    A pkg/fGarch/man/class-fGARCHSPEC.Rd
+    A pkg/fGarch/man/class-fGarch.Rd
+    D pkg/fGarch/man/fGARCH-class.Rd
+    D pkg/fGarch/man/fGARCHSPEC-class.Rd
+
+Author: chalabi
+Date:   2008-02-20
+
+    "h = c(rev(spec@presample[, 2]), rep(NA, times = n)) That is, the
+    second column in presample should not be raised to the power of delta
+    because it is conditional variance and not conditional sigma as I
+    inferred from the garchSpec function." michal miklovic
+    
+    
+    M pkg/fGarch/R/garchSim.R
+
+Author: chalabi
+Date:   2008-02-19
+
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/methods-predict.R
+    A pkg/fGarch/man/00fGarch-package.Rd
+    D pkg/fGarch/man/fGarch-package.Rd
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-02-15
+
+    *** empty log message ***
+    
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-02-14
+
+    A pkg/fGarch/man/methods-formula.Rd
+    D pkg/fGarch/man/methods-forumla.Rd
+
+Author: chalabi
+Date:   2008-02-14
+
+    D pkg/fGarch/man/coef-methods.Rd
+    D pkg/fGarch/man/fitted-methods.Rd
+    D pkg/fGarch/man/formula-methods.Rd
+    A pkg/fGarch/man/methods-coef.Rd
+    A pkg/fGarch/man/methods-fitted.Rd
+    A pkg/fGarch/man/methods-forumla.Rd
+    A pkg/fGarch/man/methods-plot.Rd
+    A pkg/fGarch/man/methods-predict.Rd
+    A pkg/fGarch/man/methods-residuals.Rd
+    A pkg/fGarch/man/methods-show.Rd
+    A pkg/fGarch/man/methods-summary.Rd
+    A pkg/fGarch/man/methods-volatility.Rd
+    D pkg/fGarch/man/plot-methods.Rd
+    D pkg/fGarch/man/predict-methods.Rd
+    D pkg/fGarch/man/residuals-methods.Rd
+    D pkg/fGarch/man/show-methods.Rd
+    D pkg/fGarch/man/summary-methods.Rd
+    D pkg/fGarch/man/volatility-methods.Rd
+
+Author: chalabi
+Date:   2008-02-12
+
+    corrected typo in man page
+    
+    
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-02-12
+
+    changed name of file to be sure defined classes are loaded before their methods
+    
+    
+    A pkg/fGarch/R/class-fGARCH.R
+    A pkg/fGarch/R/class-fGARCHSPEC.R
+    D pkg/fGarch/R/coef-methods.R
+    D pkg/fGarch/R/fGARCH-class.R
+    D pkg/fGarch/R/fGARCHSPEC-class.R
+    D pkg/fGarch/R/fitted-methods.R
+    D pkg/fGarch/R/formula-methods.R
+    A pkg/fGarch/R/methods-coef.R
+    A pkg/fGarch/R/methods-fitted.R
+    A pkg/fGarch/R/methods-formula.R
+    A pkg/fGarch/R/methods-plot.R
+    A pkg/fGarch/R/methods-predict.R
+    A pkg/fGarch/R/methods-residuals.R
+    A pkg/fGarch/R/methods-show.R
+    A pkg/fGarch/R/methods-summary.R
+    A pkg/fGarch/R/methods-volatility.R
+    D pkg/fGarch/R/plot-methods.R
+    D pkg/fGarch/R/predict-methods.R
+    D pkg/fGarch/R/residuals-methods.R
+    D pkg/fGarch/R/show-methods.R
+    D pkg/fGarch/R/summary-methods.R
+    D pkg/fGarch/R/volatility-methods.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    garchLLH now returns the non normalized LLH
+    
+    
+    M pkg/fGarch/src/nlminbGarchA.f
+    M pkg/fGarch/src/sqpGarchA.f
+
+Author: chalabi
+Date:   2008-02-12
+
+    fixed trace argument when optim is called
+    
+    
+    M pkg/fGarch/R/garchSolver.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    fixed some formating
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    fixed some formating
+    
+    
+    M pkg/fGarch/R/garchSolver.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    trace argument was not in control list when nlminb function is called
+    
+    
+    M pkg/fGarch/R/garchSolver.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    removed garchfhess subroutine. Acutally it was there only for some testing
+    
+    
+    M pkg/fGarch/src/garchHessian.f
+
+Author: chalabi
+Date:   2008-02-12
+
+    fixed small bugs in normalized log likelihood and in printing Call function
+    
+    
+    M pkg/fGarch/R/summary-methods.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    make .plot.garch.10&11 work with zoo time series
+    
+    
+    M pkg/fGarch/R/plot-methods.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    default hessian approximation calculation is now cda because fda seems
+    to have problems in some cases
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-02-12
+
+    calculate explicitly the diagonal element in garchhess subroutine.
+    added garchfhess subroutine for test purpose
+    
+    
+    M pkg/fGarch/src/garchHessian.f
+
+Author: chalabi
+Date:   2008-02-08
+
+    changed version number of packages
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: chalabi
+Date:   2008-02-07
+
+    change License sectino in DESCRIPTION to the canonical
+    License : GPL (>=2)
+    
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2008-02-06
+
+    zzz output shortened
+    
+    M pkg/fGarch/R/zzz.R
+
+Author: chalabi
+Date:   2008-02-03
+
+    r.s = object@residuals/sqrt(object@h.t) is wrong for aparch models, in which it does not hold that sigma = h^(1/2). The correct expression that holds in general is: sigma = h^(1/delta)
+    
+    
+    M pkg/fGarch/R/summary-methods.R
+
+Author: chalabi
+Date:   2008-02-03
+
+    sigma.t were calculated as (.series$h)^deltainv, where deltainv =
+    1/fit$params$delta. However, fit$params$delta does not get updated
+    with coefficient estimates and thus is always equal to 2. This leads
+    to wrong calculation of sigma.t when delta is included in the optimisation.
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-01-29
+
+    removed /STAT/ common block
+    
+    
+    M pkg/fGarch/src/sqpGarchA.f
+
+Author: chalabi
+Date:   2008-01-29
+
+    * - added IMPLICIT NONE statement in all subroutines and functions
+    * - removed common block /STAT/ and added array STAT as an argument in
+    *   subroutines :
+    *   VARIABLES IN ARRAY STAT (STATISTICS) :
+    *    IO  STAT(1) NRES  NUMBER OF RESTARTS.
+    *    IO  STAT(2) NDEC  NUMBER OF MATRIX DECOMPOSITION.
+    *    IO  STAT(3) NREM  NUMBER OF CONSTRAINT DELETIONS.
+    *    IO  STAT(4) NADD  NUMBER OF CONSTRAINT ADDITIONS.
+    *    IO  STAT(5) NIT  NUMBER OF ITERATIONS.
+    *    IO  STAT(6) NFV  NUMBER OF FUNCTION EVALUATIONS.
+    *    IO  STAT(7) NFG  NUMBER OF GRADIENT EVALUATIONS.
+    *    IO  STAT(8) NFH  NUMBER OF HESSIAN EVALUATIONS.
+    
+    
+    M pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-01-29
+
+    changed name of common block /STAT/
+    
+    
+    M pkg/fGarch/src/sqpGarchA.f
+
+Author: chalabi
+Date:   2008-01-29
+
+    allow interrupts from R in sqp routine
+    
+    
+    M pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-01-28
+
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSolver.R
+    M pkg/fGarch/src/sqpGarchA.f
+    M pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-01-28
+
+    removed print statements
+    
+    
+    M pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-01-28
+
+    changes to make sqp work under linux
+    
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSolver.R
+
+Author: chalabi
+Date:   2008-01-28
+
+    sqp is now running under Linux!
+    
+    
+    M pkg/fGarch/src/sqpGarchA.f
+    M pkg/fGarch/src/sqpGarchB.f
+
+Author: chalabi
+Date:   2008-01-25
+
+    installRmetrics.R : script to install Rmetrics packages from source and its dependencies.
+    
+    
+    
+    M pkg/fGarch/src/Makevars
+
+Author: chalabi
+Date:   2008-01-22
+
+    fixed typo in error message
+    
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: wuertz
+Date:   2008-01-15
+
+    mnfb added to the argument list of garchFit()
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: chalabi
+Date:   2008-01-15
+
+    *** empty log message ***
+    
+    M pkg/fGarch/src/nlminbGarchA.f
+
+Author: chalabi
+Date:   2008-01-15
+
+    bug when calling function DBLEPR to print results of the
+    optimization. changed argument P to NF.
+    
+    
+    M pkg/fGarch/src/nlminbGarchA.f
+
+Author: chalabi
+Date:   2008-01-15
+
+    .Fortran was calling the wrong subroutine,
+    
+    
+    M pkg/fGarch/R/garchSolver.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    using garchfit for garchfit2 Fortran code
+    
+    M pkg/fGarch/R/garchSolver.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    new unit tests added
+    
+    A pkg/fGarch/inst/unitTests/runit.garchHessian.R
+    A pkg/fGarch/inst/unitTests/runit.garchSolver.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    garchSolver.R added
+    
+    A pkg/fGarch/R/garchSolver.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    hessian argument added
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    garchFit hessian argument added
+    
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: wuertz
+Date:   2008-01-14
+
+    Hessian modified
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchHessian.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    source reference added
+    
+    M pkg/fGarch/R/garchHessian.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    misprint removed
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    GarchHessian added
+    
+    A pkg/fGarch/R/garchHessian.R
+
+Author: wuertz
+Date:   2008-01-14
+
+    nlminb full Fortran version added
+    
+    D pkg/fGarch/src/GarchModellingA.f
+    D pkg/fGarch/src/GarchModellingB.f
+    D pkg/fGarch/src/GarchModellingC.f
+    A pkg/fGarch/src/garchHessian.f
+    A pkg/fGarch/src/sqpGarchA.f
+    A pkg/fGarch/src/sqpGarchB.f
+
+Author: wuertz
+Date:   2008-01-14
+
+    FDA Hessian implemented
+    
+    M pkg/fGarch/src/GarchModellingC.f
+
+Author: wuertz
+Date:   2008-01-13
+
+    algorithm="NLMINB" full fortran version added!
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: wuertz
+Date:   2008-01-13
+
+    full nlminb fortran implemented, now speeds
+    up by a factor of about 20!
+    
+    M pkg/fGarch/src/GarchModellingC.f
+    M pkg/fGarch/src/Makevars
+    A pkg/fGarch/src/nlminbGarchA.f
+    A pkg/fGarch/src/nlminbGarchB.f
+
+Author: wuertz
+Date:   2008-01-11
+
+    Rdonlp2 added as suggested
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2008-01-11
+
+    Internally donlp2 added, not yet documented
+    
+    M pkg/fGarch/R/garchFit.R
+
+Author: chalabi
+Date:   2008-01-09
+
+    fixed bug when testing class of original data
+    
+    
+    M pkg/fGarch/R/volatility-methods.R
+
+Author: chalabi
+Date:   2008-01-08
+
+    fixed typo
+    
+    
+    M pkg/fGarch/R/residuals-methods.R
+
+Author: chalabi
+Date:   2008-01-08
+
+    changed argument "standardize" of residual() function to proper value
+    fixed title of graph from selection 11 (added "Squared")
+    
+    
+    M pkg/fGarch/R/plot-methods.R
+
+Author: chalabi
+Date:   2008-01-08
+
+    added \dontrun{} for specific examples which create an error
+    
+    
+    M pkg/fGarch/man/formula-methods.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fGarch/man/sged.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fGarch/man/formula-methods.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fGarch/man/garchSim.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fGarch/man/snorm.Rd
+
+Author: chalabi
+Date:   2008-01-08
+
+    removed \dontrun{}
+    
+    
+    M pkg/fGarch/man/garchSpec.Rd
+
+Author: wuertz
+Date:   2008-01-07
+
+    plot methods fixed for faked formula and data input
+    
+    M pkg/fGarch/R/plot-methods.R
+
+Author: wuertz
+Date:   2008-01-07
+
+    plot methods for faked formulas and data fixed
+    
+    M pkg/fGarch/inst/unitTests/runit.plot-methods.R
+
+Author: wuertz
+Date:   2008-01-07
+
+    faked models fixed
+    
+    
+    A pkg/fGarch/inst/unitTests/runit.garchFit.faked.R
+    M pkg/fGarch/inst/unitTests/runit.plot-methods.R
+
+Author: wuertz
+Date:   2008-01-07
+
+    faked formula and fake data input fixed
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/show-methods.R
+    M pkg/fGarch/man/coef-methods.Rd
+
+Author: wuertz
+Date:   2008-01-07
+
+    S3 -> S4 continued
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchStats.R
+    M pkg/fGarch/R/plot-methods.R
+    M pkg/fGarch/man/garchFit.Rd
+    M pkg/fGarch/man/garchSpec.Rd
+    M pkg/fGarch/man/plot-methods.Rd
+
+Author: wuertz
+Date:   2008-01-07
+
+    further unit tests added
+    
+    M pkg/fGarch/inst/unitTests/runit.formula-methods.R
+    M pkg/fGarch/inst/unitTests/runit.garch-methods.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.algorithm.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.aparch.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.dist.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.garch.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.init.R
+    M pkg/fGarch/inst/unitTests/runit.garchSim.R
+    M pkg/fGarch/inst/unitTests/runit.garchSpec.R
+    M pkg/fGarch/inst/unitTests/runit.plot-methods.R
+    M pkg/fGarch/inst/unitTests/runit.predict-methods.R
+    M pkg/fGarch/inst/unitTests/runit.sged.R
+    M pkg/fGarch/inst/unitTests/runit.snorm.R
+    M pkg/fGarch/inst/unitTests/runit.sstd.R
+
+Author: wuertz
+Date:   2008-01-05
+
+    examples added and tested, opt control added
+    
+    D pkg/fGarch/R/GarchOxInterface.R
+    M pkg/fGarch/R/coef-methods.R
+    M pkg/fGarch/R/fitted-methods.R
+    M pkg/fGarch/R/formula-methods.R
+    M pkg/fGarch/R/garchFit.R
+    A pkg/fGarch/R/garchFitControl.R
+    A pkg/fGarch/R/garchOxFit.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/R/predict-methods.R
+    M pkg/fGarch/R/residuals-methods.R
+    M pkg/fGarch/R/show-methods.R
+    M pkg/fGarch/R/volatility-methods.R
+    D pkg/fGarch/man/GarchOxInterface.Rd
+    M pkg/fGarch/man/coef-methods.Rd
+    M pkg/fGarch/man/fitted-methods.Rd
+    M pkg/fGarch/man/formula-methods.Rd
+    M pkg/fGarch/man/garchFit.Rd
+    A pkg/fGarch/man/garchFitControl.Rd
+    A pkg/fGarch/man/garchOxFit.Rd
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/garchSpec.Rd
+    M pkg/fGarch/man/plot-methods.Rd
+    M pkg/fGarch/man/predict-methods.Rd
+    M pkg/fGarch/man/residuals-methods.Rd
+    M pkg/fGarch/man/sged.Rd
+    M pkg/fGarch/man/show-methods.Rd
+    M pkg/fGarch/man/snorm.Rd
+    M pkg/fGarch/man/sstd.Rd
+    M pkg/fGarch/man/summary-methods.Rd
+    M pkg/fGarch/man/volatility-methods.Rd
+
+Author: wuertz
+Date:   2008-01-04
+
+    misprint removed
+    
+    M pkg/fGarch/man/predict-methods.Rd
+
+Author: wuertz
+Date:   2008-01-04
+
+    examples added and modified
+    
+    M pkg/fGarch/R/show-methods.R
+    M pkg/fGarch/R/summary-methods.R
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/plot-methods.Rd
+    M pkg/fGarch/man/predict-methods.Rd
+    M pkg/fGarch/man/residuals-methods.Rd
+    M pkg/fGarch/man/sged.Rd
+    M pkg/fGarch/man/show-methods.Rd
+
+Author: wuertz
+Date:   2008-01-04
+
+    unit tests extended and minor modifications
+    
+    M pkg/fGarch/R/fGARCH-class.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/sged.R
+    M pkg/fGarch/R/snorm.R
+    M pkg/fGarch/R/sstd.R
+    A pkg/fGarch/inst/unitTests/runit.formula-methods.R
+    M pkg/fGarch/inst/unitTests/runit.garch-methods.R
+    M pkg/fGarch/inst/unitTests/runit.garchFit.R
+    M pkg/fGarch/inst/unitTests/runit.plot-methods.R
+    M pkg/fGarch/inst/unitTests/runit.predict-methods.R
+    M pkg/fGarch/inst/unitTests/runit.sged.R
+    M pkg/fGarch/inst/unitTests/runit.snorm.R
+    M pkg/fGarch/inst/unitTests/runit.sstd.R
+    M pkg/fGarch/man/coef-methods.Rd
+    M pkg/fGarch/man/fGARCH-class.Rd
+    M pkg/fGarch/man/fitted-methods.Rd
+    M pkg/fGarch/man/formula-methods.Rd
+    M pkg/fGarch/man/garchSim.Rd
+    M pkg/fGarch/man/garchSpec.Rd
+    M pkg/fGarch/man/plot-methods.Rd
+    M pkg/fGarch/man/predict-methods.Rd
+    M pkg/fGarch/man/residuals-methods.Rd
+    M pkg/fGarch/man/sged.Rd
+    M pkg/fGarch/man/show-methods.Rd
+    M pkg/fGarch/man/snorm.Rd
+    M pkg/fGarch/man/summary-methods.Rd
+    M pkg/fGarch/man/volatility-methods.Rd
+
+Author: wuertz
+Date:   2008-01-03
+
+    unit tests renamed
+    
+    A pkg/fGarch/inst/unitTests/runit.garch-methods.R
+    A pkg/fGarch/inst/unitTests/runit.garchFit.R
+    A pkg/fGarch/inst/unitTests/runit.garchOxInterface.R
+    A pkg/fGarch/inst/unitTests/runit.garchSim.R
+    A pkg/fGarch/inst/unitTests/runit.garchSpec.R
+    A pkg/fGarch/inst/unitTests/runit.plot-methods.R
+    A pkg/fGarch/inst/unitTests/runit.predict-methods.R
+    A pkg/fGarch/inst/unitTests/runit.sged.R
+    A pkg/fGarch/inst/unitTests/runit.snorm.R
+    A pkg/fGarch/inst/unitTests/runit.sstd.R
+    D pkg/fGarch/inst/unitTests/runitGED.R
+    D pkg/fGarch/inst/unitTests/runitGallery.R
+    D pkg/fGarch/inst/unitTests/runitGarchFit.R
+    D pkg/fGarch/inst/unitTests/runitGarchMethods.R
+    D pkg/fGarch/inst/unitTests/runitGarchSim.R
+    D pkg/fGarch/inst/unitTests/runitGarchSpec.R
+    D pkg/fGarch/inst/unitTests/runitNorm.R
+    D pkg/fGarch/inst/unitTests/runitOxInterface.R
+    D pkg/fGarch/inst/unitTests/runitPredict-Methods.R
+    D pkg/fGarch/inst/unitTests/runitStudent.R
+
+Author: wuertz
+Date:   2008-01-03
+
+    runit files extended
+    
+    M pkg/fGarch/inst/unitTests/runitGallery.R
+    M pkg/fGarch/inst/unitTests/runitGarchSim.R
+    M pkg/fGarch/inst/unitTests/runitGarchSpec.R
+
+Author: wuertz
+Date:   2007-12-30
+
+    more unit tests
+    
+    D pkg/fGarch/inst/unitTests/runitDistributions.R
+    D pkg/fGarch/inst/unitTests/runitGarchForecasting.R
+    D pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    D pkg/fGarch/inst/unitTests/runitGarchSimulation.R
+    M pkg/fGarch/inst/unitTests/runitNorm.R
+
+Author: wuertz
+Date:   2007-12-29
+
+    RunitDistribution test disentangled
+    
+    A pkg/fGarch/inst/unitTests/runitGED.R
+    A pkg/fGarch/inst/unitTests/runitNorm.R
+    A pkg/fGarch/inst/unitTests/runitStudent.R
+
+Author: wuertz
+Date:   2007-12-29
+
+    runit Test files renamed
+    
+    A pkg/fGarch/inst/unitTests/runitGarchFit.R
+    A pkg/fGarch/inst/unitTests/runitGarchSim.R
+    A pkg/fGarch/inst/unitTests/runitPredict-Methods.R
+
+Author: wuertz
+Date:   2007-12-29
+
+    coef-methods updated, but still warnings
+    
+    M pkg/fGarch/man/coef-methods.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    fGARCHSPEC updated
+    
+    A pkg/fGarch/R/fGarch-package.R
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/R/show-methods.R
+
+Author: wuertz
+Date:   2007-12-29
+
+    garchSpec replaced by fGARCHSPEC
+    
+    A pkg/fGarch/R/fGARCHSPEC-class.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/man/fGARCH-class.Rd
+    A pkg/fGarch/man/fGARCHSPEC-class.Rd
+    M pkg/fGarch/man/garchFit.Rd
+    M pkg/fGarch/man/garchSpec.Rd
+    M pkg/fGarch/man/show-methods.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    S3 to S4, continued
+    
+    M pkg/fGarch/man/coef-methods.Rd
+    M pkg/fGarch/man/fGARCH-class.Rd
+    M pkg/fGarch/man/fitted-methods.Rd
+    M pkg/fGarch/man/formula-methods.Rd
+    M pkg/fGarch/man/predict-methods.Rd
+    M pkg/fGarch/man/residuals-methods.Rd
+    M pkg/fGarch/man/show-methods.Rd
+    M pkg/fGarch/man/summary-methods.Rd
+    M pkg/fGarch/man/volatility-methods.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    fGARCH-class.Rd corrected
+    
+    M pkg/fGarch/man/fGARCH-class.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    fGARCH-class misprint removed
+    
+    
+    M pkg/fGarch/man/fGARCH-class.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    fGARCH-class.Rd code beautified
+    
+    M pkg/fGarch/man/fGARCH-class.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    fGARCH-class descriotion enhanced
+    
+    
+    M pkg/fGarch/R/fGARCH-class.R
+
+Author: wuertz
+Date:   2007-12-29
+
+    predict.Rd moved
+    
+    D pkg/fGarch/man/predict.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    predict to predict-methods.Rd
+    
+    A pkg/fGarch/man/predict-methods.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    more S3 to S4
+    
+    
+    M pkg/fGarch/R/fitted-methods.R
+    M pkg/fGarch/R/formula-methods.R
+    M pkg/fGarch/R/predict-methods.R
+    M pkg/fGarch/R/residuals-methods.R
+    M pkg/fGarch/R/volatility-methods.R
+    M pkg/fGarch/man/fitted-methods.Rd
+    M pkg/fGarch/man/formula-methods.Rd
+    M pkg/fGarch/man/predict.Rd
+    M pkg/fGarch/man/residuals-methods.Rd
+    M pkg/fGarch/man/volatility-methods.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    files renamed in xxx-methods.R and xxx-methods.Rd
+    
+    A pkg/fGarch/R/coef-methods.R
+    D pkg/fGarch/R/coef.R
+    A pkg/fGarch/R/fitted-methods.R
+    D pkg/fGarch/R/fitted.R
+    A pkg/fGarch/R/formula-methods.R
+    D pkg/fGarch/R/formula.R
+    A pkg/fGarch/R/predict-methods.R
+    D pkg/fGarch/R/predict.R
+    A pkg/fGarch/R/residuals-methods.R
+    D pkg/fGarch/R/residuals.R
+    A pkg/fGarch/R/volatility-methods.R
+    D pkg/fGarch/R/volatility.R
+    A pkg/fGarch/man/coef-methods.Rd
+    D pkg/fGarch/man/coef.Rd
+    A pkg/fGarch/man/fGARCH-class.Rd
+    A pkg/fGarch/man/fitted-methods.Rd
+    D pkg/fGarch/man/fitted.Rd
+    A pkg/fGarch/man/formula-methods.Rd
+    D pkg/fGarch/man/formula.Rd
+    A pkg/fGarch/man/residuals-methods.Rd
+    D pkg/fGarch/man/residuals.Rd
+    A pkg/fGarch/man/volatility-methods.Rd
+    D pkg/fGarch/man/volatility.Rd
+
+Author: wuertz
+Date:   2007-12-29
+
+    moving from S3 to S4 methods
+    
+    M pkg/fGarch/R/coef.R
+    M pkg/fGarch/R/fitted.R
+    M pkg/fGarch/R/formula.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/R/garchStats.R
+    M pkg/fGarch/R/plot-methods.R
+    M pkg/fGarch/R/predict.R
+    D pkg/fGarch/R/print.R
+    M pkg/fGarch/R/residuals.R
+    M pkg/fGarch/R/sged.R
+    M pkg/fGarch/R/show-methods.R
+    M pkg/fGarch/R/snorm.R
+    M pkg/fGarch/R/sstd.R
+    M pkg/fGarch/R/summary-methods.R
+    M pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    M pkg/fGarch/man/coef.Rd
+    M pkg/fGarch/man/plot-methods.Rd
+    M pkg/fGarch/man/show-methods.Rd
+    M pkg/fGarch/man/summary-methods.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    xxx-methods.Rd added
+    
+    D pkg/fGarch/man/GarchReports.Rd
+    A pkg/fGarch/man/plot-methods.Rd
+    A pkg/fGarch/man/show-methods.Rd
+    A pkg/fGarch/man/summary-methods.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    update GarchReports.Rd
+    
+    M pkg/fGarch/man/GarchReports.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    xxx-method scripts added
+    
+    A pkg/fGarch/R/fGARCH-class.R
+    A pkg/fGarch/R/plot-methods.R
+    A pkg/fGarch/R/show-methods.R
+    A pkg/fGarch/R/summary-methods.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    print.R updated
+    
+    M pkg/fGarch/R/print.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    garchReport.R moved to print.R
+    
+    
+    D pkg/fGarch/R/garchReport.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    garchReport.R renamed in print.R
+    
+    A pkg/fGarch/R/print.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    summary made S4
+    
+    M pkg/fGarch/R/garchReport.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    several minor updates
+    
+    M pkg/fGarch/R/formula.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/predict.R
+    M pkg/fGarch/man/GarchOxInterface.Rd
+    M pkg/fGarch/man/absMoments.Rd
+    M pkg/fGarch/man/fGarch-package.Rd
+    M pkg/fGarch/man/formula.Rd
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    formula method and examples added
+    
+    M pkg/fGarch/man/coef.Rd
+    M pkg/fGarch/man/fitted.Rd
+    A pkg/fGarch/man/formula.Rd
+    M pkg/fGarch/man/residuals.Rd
+    M pkg/fGarch/man/volatility.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    formula method added
+    
+    
+    A pkg/fGarch/R/formula.R
+    M pkg/fGarch/R/garchReport.R
+    M pkg/fGarch/R/garchStats.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    misprint in residuals.Rd removed
+    
+    M pkg/fGarch/R/residuals.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    methods extended for zoo, ts time series objects
+    
+    M pkg/fGarch/R/fitted.R
+    M pkg/fGarch/R/residuals.R
+    M pkg/fGarch/R/volatility.R
+
+Author: wuertz
+Date:   2007-12-28
+
+    fGarch-package.Rd added
+    
+    A pkg/fGarch/man/fGarch-package.Rd
+
+Author: wuertz
+Date:   2007-12-28
+
+    sstd.Rd misprints removed
+    
+    M pkg/fGarch/man/sstd.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    DESCRIPTION file updated
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-12-26
+
+    cond dist Sliders added and distFit disentangled
+    
+    D pkg/fGarch/R/distFit.R
+    M pkg/fGarch/R/sged.R
+    M pkg/fGarch/R/snorm.R
+    M pkg/fGarch/R/sstd.R
+    M pkg/fGarch/man/sged.Rd
+    M pkg/fGarch/man/snorm.Rd
+    M pkg/fGarch/man/sstd.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    distFit disentangled
+    
+    M pkg/fGarch/R/distFit.R
+
+Author: wuertz
+Date:   2007-12-26
+
+    absMoments and snorm modified
+    
+    M pkg/fGarch/man/absMoments.Rd
+    M pkg/fGarch/man/snorm.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    garchPredict removed
+    
+    D pkg/fGarch/R/garchPredict.R
+
+Author: wuertz
+Date:   2007-12-26
+
+    garchPredict renamed to predict
+    
+    A pkg/fGarch/R/predict.R
+
+Author: wuertz
+Date:   2007-12-26
+
+    absMoments updated
+    
+    M pkg/fGarch/R/absMoments.R
+
+Author: wuertz
+Date:   2007-12-26
+
+    volatility.R and coef.R added
+    
+    A pkg/fGarch/R/coef.R
+    A pkg/fGarch/R/volatility.R
+
+Author: wuertz
+Date:   2007-12-26
+
+    GarchDistributions disentangled and removed
+    
+    D pkg/fGarch/man/GarchDistributions.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    absMoments.Rd added
+    
+    A pkg/fGarch/man/absMoments.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    garchDistribution.R file entangled
+    
+    M pkg/fGarch/man/sged.Rd
+    A pkg/fGarch/man/snorm.Rd
+    A pkg/fGarch/man/sstd.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    sged disentangled
+    
+    M pkg/fGarch/man/garchFit.Rd
+    A pkg/fGarch/man/sged.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    coef.Rd misprints removed
+    
+    
+    M pkg/fGarch/man/coef.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    date 2007 -> 2008 changed
+    
+    M pkg/fGarch/R/GarchOxInterface.R
+    M pkg/fGarch/R/absMoments.R
+    M pkg/fGarch/R/distFit.R
+    M pkg/fGarch/R/fitted.R
+    D pkg/fGarch/R/garchExtractors.R
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchPredict.R
+    M pkg/fGarch/R/garchReport.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/garchSpec.R
+    M pkg/fGarch/R/garchStats.R
+    M pkg/fGarch/R/residuals.R
+    M pkg/fGarch/R/sged.R
+    M pkg/fGarch/R/snorm.R
+    M pkg/fGarch/R/sstd.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/inst/unitTests/runitDistributions.R
+    M pkg/fGarch/inst/unitTests/runitGallery.R
+    M pkg/fGarch/inst/unitTests/runitGarchForecasting.R
+    M pkg/fGarch/inst/unitTests/runitGarchMethods.R
+    M pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    M pkg/fGarch/inst/unitTests/runitGarchSimulation.R
+    M pkg/fGarch/inst/unitTests/runitGarchSpec.R
+    M pkg/fGarch/inst/unitTests/runitOxInterface.R
+    D pkg/fGarch/man/GarchPredictor.Rd
+    M pkg/fGarch/man/GarchReports.Rd
+    M pkg/fGarch/man/coef.Rd
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    garchPredictor.Rd renamed in predict.Rd
+    
+    A pkg/fGarch/man/predict.Rd
+
+Author: wuertz
+Date:   2007-12-26
+
+    several updates in help pages
+    
+    D pkg/fGarch/man/GarchExtractors.Rd
+    M pkg/fGarch/man/GarchPredictor.Rd
+    A pkg/fGarch/man/coef.Rd
+    M pkg/fGarch/man/garchFit.Rd
+    M pkg/fGarch/man/volatility.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    misprint removed
+    
+    M pkg/fGarch/man/residuals.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    notes added to residuals.Rd
+    
+    M pkg/fGarch/man/residuals.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    updated residuals, fitted and volatility Rd's
+    
+    A pkg/fGarch/man/fitted.Rd
+    M pkg/fGarch/man/garchFit.Rd
+    A pkg/fGarch/man/residuals.Rd
+    A pkg/fGarch/man/volatility.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    GarchExtractors disentangled
+    
+    M pkg/fGarch/man/GarchExtractors.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    volatility added to GarchExtractors.Rd
+    
+    M pkg/fGarch/man/GarchExtractors.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    disentangled methods fitted and resiudals updated
+    
+    M pkg/fGarch/R/fitted.R
+    M pkg/fGarch/R/residuals.R
+
+Author: wuertz
+Date:   2007-12-25
+
+    garchExtractor disentangled
+    
+    A pkg/fGarch/R/fitted.R
+    A pkg/fGarch/R/residuals.R
+
+Author: wuertz
+Date:   2007-12-25
+
+    fitted and residuals methods now can return timeSeries objects
+    
+    M pkg/fGarch/R/garchExtractors.R
+
+Author: wuertz
+Date:   2007-12-25
+
+    garchFit, garchSim and garchSpec renaming scripts
+    
+    D pkg/fGarch/man/GarchFitting.Rd
+    D pkg/fGarch/man/GarchSimulation.Rd
+    D pkg/fGarch/man/GarchSpecification.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    small update in garchFit.RD
+    
+    M pkg/fGarch/man/garchFit.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    smaller updates in garchSpec, garchSim, and garchFit
+    
+    M pkg/fGarch/R/garchFit.R
+    M pkg/fGarch/R/garchSim.R
+    M pkg/fGarch/R/garchSpec.R
+
+Author: wuertz
+Date:   2007-12-25
+
+    manual pages in garchFit, garchSim and garchSpec renamed
+    
+    A pkg/fGarch/man/garchFit.Rd
+    A pkg/fGarch/man/garchSim.Rd
+    A pkg/fGarch/man/garchSpec.Rd
+
+Author: wuertz
+Date:   2007-12-25
+
+    man page garchSimulation and garchFitting updated
+    
+    M pkg/fGarch/man/GarchFitting.Rd
+    M pkg/fGarch/man/GarchSimulation.Rd
+
+Author: boudt
+Date:   2007-12-04
+
+    M pkg/fGarch/R/garchFit.R
+
+Author: wuertz
+Date:   2007-11-13
+
+    runit Tests added
+    
+    A pkg/fGarch/inst/unitTests/runitGallery.R
+
+Author: wuertz
+Date:   2007-10-08
+
+    R files untangled
+    
+    D pkg/fGarch/R/GarchDistributions.R
+    D pkg/fGarch/R/GarchMethods.R
+    D pkg/fGarch/R/GarchSpecs.R
+    A pkg/fGarch/R/absMoments.R
+    A pkg/fGarch/R/distFit.R
+    A pkg/fGarch/R/garchReport.R
+    A pkg/fGarch/R/garchSpec.R
+    A pkg/fGarch/R/sged.R
+    A pkg/fGarch/R/snorm.R
+    A pkg/fGarch/R/sstd.R
+
+Author: wuertz
+Date:   2007-10-08
+
+    garch file untangled
+    
+    D pkg/fGarch/R/GarchForecasting.R
+    M pkg/fGarch/R/GarchMethods.R
+    D pkg/fGarch/R/GarchModelling.R
+    D pkg/fGarch/R/GarchSimulation.R
+    D pkg/fGarch/R/GarchSpec.R
+    A pkg/fGarch/R/GarchSpecs.R
+    A pkg/fGarch/R/garchExtractors.R
+    A pkg/fGarch/R/garchFit.R
+    A pkg/fGarch/R/garchPredict.R
+    A pkg/fGarch/R/garchSim.R
+    A pkg/fGarch/R/garchStats.R
+
+Author: wuertz
+Date:   2007-10-03
+
+    Version numbers DESCRIPTION file updateDescription.sh
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-10-01
+
+    Version Numbers updated
+    
+    M pkg/fGarch/DESCRIPTION
+    M pkg/fGarch/inst/unitTests/runitGarchModelling.R
+
+Author: wuertz
+Date:   2007-09-30
+
+    Unit Tests added and smaller modifications
+    
+    M pkg/fGarch/R/GarchModelling.R
+    M pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    M pkg/fGarch/inst/unitTests/runitGarchSimulation.R
+
+Author: wuertz
+Date:   2007-09-11
+
+    SQP Makevars added
+    
+    A pkg/fGarch/src/Makevars
+
+Author: wuertz
+Date:   2007-09-11
+
+    sqp code added
+    
+    A pkg/fGarch/src/GarchModellingA.f
+    A pkg/fGarch/src/GarchModellingB.f
+    A pkg/fGarch/src/GarchModellingC.f
+
+Author: wuertz
+Date:   2007-09-11
+
+    help pages dis-entangled
+    
+    A pkg/fGarch/man/GarchExtractors.Rd
+    A pkg/fGarch/man/GarchFitting.Rd
+    D pkg/fGarch/man/GarchModelling.Rd
+    A pkg/fGarch/man/GarchPredictor.Rd
+    A pkg/fGarch/man/GarchReports.Rd
+    A pkg/fGarch/man/GarchSimulation.Rd
+    A pkg/fGarch/man/GarchSpecification.Rd
+
+Author: wuertz
+Date:   2007-09-10
+
+    unit tests fixed modified SQP re-added
+    
+    M pkg/fGarch/R/GarchMethods.R
+    M pkg/fGarch/R/GarchModelling.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    M pkg/fGarch/man/GarchModelling.Rd
+
+Author: wuertz
+Date:   2007-09-09
+
+    unit tests fixed
+    
+    
+    M pkg/fGarch/R/GarchMethods.R
+    M pkg/fGarch/inst/unitTests/runitGarchMethods.R
+
+Author: wuertz
+Date:   2007-09-08
+
+    in inst missing doc dirs and in unitTests missing makefiles added
+    
+    M pkg/fGarch/inst/unitTests/runitDistributions.R
+
+Author: wuertz
+Date:   2007-09-07
+
+    minor changes in the DESCRIPTION files
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-07
+
+    a link which has nothing to do here
+    
+    D pkg/fGarch/unitTests.lnk
+
+Author: wuertz
+Date:   2007-09-06
+
+    fGarch unit tests renamed
+    
+    A pkg/fGarch/inst/unitTests/runitDistributions.R
+    D pkg/fGarch/inst/unitTests/runitDistributionsTest.R
+    A pkg/fGarch/inst/unitTests/runitGarchSpec.R
+    D pkg/fGarch/inst/unitTests/runitGarchSpecTest.R
+
+Author: wuertz
+Date:   2007-09-06
+
+    fGarch unit tests renamed
+    
+    D pkg/fGarch/inst/unitTests/DistributionsTest.R
+    D pkg/fGarch/inst/unitTests/GarchForecastingTest.R
+    D pkg/fGarch/inst/unitTests/GarchMethodsTest.R
+    D pkg/fGarch/inst/unitTests/GarchModellingTest.R
+    D pkg/fGarch/inst/unitTests/GarchSimulationTest.R
+    D pkg/fGarch/inst/unitTests/GarchSpecTest.R
+    D pkg/fGarch/inst/unitTests/OxInterfaceTest.R
+    A pkg/fGarch/inst/unitTests/runitDistributionsTest.R
+    A pkg/fGarch/inst/unitTests/runitGarchForecasting.R
+    A pkg/fGarch/inst/unitTests/runitGarchMethods.R
+    A pkg/fGarch/inst/unitTests/runitGarchModelling.R
+    A pkg/fGarch/inst/unitTests/runitGarchSimulation.R
+    A pkg/fGarch/inst/unitTests/runitGarchSpecTest.R
+    A pkg/fGarch/inst/unitTests/runitOxInterface.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    Class representation moved
+    
+    M pkg/fGarch/R/GarchMethods.R
+    M pkg/fGarch/R/GarchModelling.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    OX Path changed
+    
+    M pkg/fGarch/R/GarchOxInterface.R
+
+Author: wuertz
+Date:   2007-09-05
+
+    codoc mismatch removed
+    
+    M pkg/fGarch/man/GarchModelling.Rd
+
+Author: wuertz
+Date:   2007-09-05
+
+    R and Rd script names modified
+    
+    D pkg/fGarch/R/2A-GarchDistributions.R
+    D pkg/fGarch/R/4A-GarchSpec.R
+    D pkg/fGarch/R/4B-GarchSimulation.R
+    D pkg/fGarch/R/4C-GarchModelling.R
+    D pkg/fGarch/R/4D-GarchMethods.R
+    D pkg/fGarch/R/4E-GarchForecasting.R
+    D pkg/fGarch/R/6A-GarchOxInterface.R
+    A pkg/fGarch/R/GarchDistributions.R
+    A pkg/fGarch/R/GarchForecasting.R
+    A pkg/fGarch/R/GarchMethods.R
+    A pkg/fGarch/R/GarchModelling.R
+    A pkg/fGarch/R/GarchOxInterface.R
+    A pkg/fGarch/R/GarchSimulation.R
+    A pkg/fGarch/R/GarchSpec.R
+    D pkg/fGarch/man/2A-GarchDistributions.Rd
+    D pkg/fGarch/man/4C-GarchModelling.Rd
+    D pkg/fGarch/man/6A-GarchOxInterface.Rd
+    A pkg/fGarch/man/GarchDistributions.Rd
+    A pkg/fGarch/man/GarchModelling.Rd
+    A pkg/fGarch/man/GarchOxInterface.Rd
+
+Author: wuertz
+Date:   2007-09-05
+
+    email <Rmetrics-core...> changed in all DESCRIPTIONs
+    
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+    M pkg/fGarch/R/zzz.R
+    M pkg/fGarch/inst/unitTests/GarchModellingTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+    M pkg/fGarch/inst/unitTests/GarchModellingTest.R
+    D pkg/fGarch/src/GarchModellingA.f
+    D pkg/fGarch/src/GarchModellingB.f
+    D pkg/fGarch/src/GarchModellingC.f
+    D pkg/fGarch/src/Makevars
+    D pkg/fGarch/src/fGarch.dll
+    D pkg/fGarch/src/fGarch_res.rc
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4D-GarchMethods.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/inst/unitTests/GarchModellingTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/inst/unitTests/DistributionsTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/inst/unitTests/GarchForecastingTest.R
+    M pkg/fGarch/inst/unitTests/GarchMethodsTest.R
+    M pkg/fGarch/inst/unitTests/GarchModellingTest.R
+    M pkg/fGarch/inst/unitTests/GarchSimulationTest.R
+    M pkg/fGarch/inst/unitTests/GarchSpecTest.R
+    D pkg/fGarch/inst/unitTests/runit4C.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/inst/unitTests/DistributionsTest.R
+    A pkg/fGarch/inst/unitTests/GarchForecastingTest.R
+    A pkg/fGarch/inst/unitTests/GarchMethodsTest.R
+    A pkg/fGarch/inst/unitTests/GarchModellingTest.R
+    D pkg/fGarch/inst/unitTests/GarchOxInterfaceTest.R
+    A pkg/fGarch/inst/unitTests/GarchSimulationTest.R
+    A pkg/fGarch/inst/unitTests/GarchSpecTest.R
+    A pkg/fGarch/inst/unitTests/OxInterfaceTest.R
+    D pkg/fGarch/inst/unitTests/runit4A.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/inst/unitTests/GarchOxInterfaceTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    D pkg/fGarch/inst/unitTests/garchOxInterfaceTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/inst/unitTests/garchOxInterfaceTest.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    D pkg/fGarch/inst/unitTests/runit4D.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/R/4A-GarchSpec.R
+    A pkg/fGarch/R/4B-GarchSimulation.R
+    A pkg/fGarch/R/4D-GarchMethods.R
+    A pkg/fGarch/R/4E-GarchForecasting.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+    D pkg/fGarch/R/4D-GarchOxInterface.R
+    A pkg/fGarch/R/6A-GarchOxInterface.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    D pkg/fGarch/man/4D-GarchOxInterface.Rd
+    A pkg/fGarch/man/6A-GarchOxInterface.Rd
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/man/2A-GarchDistributions.Rd
+    D pkg/fGarch/man/A-GarchDistributions.Rd
+
+Author: wuertz
+Date:   2007-09-04
+
+    A pkg/fGarch/R/2A-GarchDistributions.R
+    D pkg/fGarch/R/4A-GarchDistributions.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    D pkg/fGarch/man/4A-GarchDistributions.Rd
+    A pkg/fGarch/man/A-GarchDistributions.Rd
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/R/4C-GarchModelling.R
+    M pkg/fGarch/R/4D-GarchOxInterface.R
+
+Author: wuertz
+Date:   2007-09-04
+
+    M pkg/fGarch/DESCRIPTION
+
+Author: wuertz
+Date:   2007-09-03
+
+    D pkg/fGarch/INDEX
+    D pkg/fGarch/chm/00Index.html
+    D pkg/fGarch/chm/4A-GarchDistributions.html
+    D pkg/fGarch/chm/4C-GarchModelling.html
+    D pkg/fGarch/chm/4D-GarchOxInterface.html
+    D pkg/fGarch/chm/Rchm.css
+    D pkg/fGarch/chm/fGarch.chm
+    D pkg/fGarch/chm/fGarch.hhp
+    D pkg/fGarch/chm/fGarch.toc
+    D pkg/fGarch/chm/fSeries.chm
+    D pkg/fGarch/chm/fSeries.hhp
+    D pkg/fGarch/chm/fSeries.toc
+    D pkg/fGarch/chm/logo.jpg
+
+Author: wuertz
+Date:   2007-09-03
+
+    A pkg/fGarch/DESCRIPTION
+    A pkg/fGarch/INDEX
+    A pkg/fGarch/R/4A-GarchDistributions.R
+    A pkg/fGarch/R/4C-GarchModelling.R
+    A pkg/fGarch/R/4D-GarchOxInterface.R
+    A pkg/fGarch/R/zzz.R
+    A pkg/fGarch/chm/00Index.html
+    A pkg/fGarch/chm/4A-GarchDistributions.html
+    A pkg/fGarch/chm/4C-GarchModelling.html
+    A pkg/fGarch/chm/4D-GarchOxInterface.html
+    A pkg/fGarch/chm/Rchm.css
+    A pkg/fGarch/chm/fGarch.chm
+    A pkg/fGarch/chm/fGarch.hhp
+    A pkg/fGarch/chm/fGarch.toc
+    A pkg/fGarch/chm/fSeries.chm
+    A pkg/fGarch/chm/fSeries.hhp
+    A pkg/fGarch/chm/fSeries.toc
+    A pkg/fGarch/chm/logo.jpg
+    A pkg/fGarch/inst/COPYRIGHT.html
+    A pkg/fGarch/inst/DocCopying.pdf
+    A pkg/fGarch/inst/ox/GarchOxModelling.ox
+    A pkg/fGarch/inst/ox/GarchOxModelling30.ox
+    A pkg/fGarch/inst/unitTests/Makefile
+    A pkg/fGarch/inst/unitTests/runTests.R
+    A pkg/fGarch/inst/unitTests/runit4A.R
+    A pkg/fGarch/inst/unitTests/runit4C.R
+    A pkg/fGarch/inst/unitTests/runit4D.R
+    A pkg/fGarch/man/4A-GarchDistributions.Rd
+    A pkg/fGarch/man/4C-GarchModelling.Rd
+    A pkg/fGarch/man/4D-GarchOxInterface.Rd
+    A pkg/fGarch/src/GarchModellingA.f
+    A pkg/fGarch/src/GarchModellingB.f
+    A pkg/fGarch/src/GarchModellingC.f
+    A pkg/fGarch/src/Makevars
+    A pkg/fGarch/src/fGarch.dll
+    A pkg/fGarch/src/fGarch_res.rc
+    A pkg/fGarch/tests/doRUnit.R
+    A pkg/fGarch/unitTests.lnk
