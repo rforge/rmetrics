@@ -30,9 +30,7 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
                                 data, ttm, deltat, r, d, n,
                                 meas.sd, opt.meas.sd, silent)
     {
-      ## Constrain rho to [-1, 1]
-      rho <- thetaOpt["rho"]
-      if(!is.na(rho) & (rho < -1 | rho > 1))
+      if(!is.na(thetaOpt["rho"]))
       {
           thetaOpt["rho"] <- 2 * atan(thetaOpt["rho"]) / pi
       }
@@ -67,6 +65,12 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
                            Zt = stateSpace$Zt,
                            ct = stateSpace$ct,
                            GGt = stateSpace$GGt)$logLik
+
+      if(!is.na(thetaOpt["rho"]))
+      {
+          thetaOpt["rho"] <- tan(thetaOpt["rho"] * pi / 2)
+      }
+
 
       theta.backup <<- rbind(theta.backup, c(logLikelihood, theta))
 
@@ -122,6 +126,12 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
   thetaOpt <- theta[opt.pars]
   thetaConst <- theta[!opt.pars]
 
+  if(!is.na(thetaOpt["rho"]))
+  {
+      thetaOpt["rho"] <- tan(thetaOpt["rho"] * pi / 2)
+      theta["rho"] <- tan(theta["rho"] * pi / 2)
+  }
+
   theta.backup <- rbind(c(NA, unname(theta)))
   colnames(theta.backup) <- c("logLik", thetaNames)
 
@@ -141,14 +151,15 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
     convergence <- mle$convergence
     n.iter <- mle$counts[1]
     message <- NULL
-    ## Constrain rho to [-1, 1]
-    rho <- thetaOpt["rho"]
-    if(!is.na(rho) & (rho < -1 | rho > 1))
+    if(!is.na(thetaOpt["rho"]))
     {
         rho.pos <- which(names(thetaOpt) == "rho")
         mle$par[rho.pos] <- 2 * atan(mle$par[rho.pos]) / pi
     }
     thetaOpt <- mle$par
+    print(theta.backup)
+    print(thetaOpt)
+    print(mle$par)
   }
 
   theta <- c(thetaOpt, thetaConst)
