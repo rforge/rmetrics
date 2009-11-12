@@ -157,9 +157,6 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
         mle$par[rho.pos] <- 2 * atan(mle$par[rho.pos]) / pi
     }
     thetaOpt <- mle$par
-    print(theta.backup)
-    print(thetaOpt)
-    print(mle$par)
   }
 
   theta <- c(thetaOpt, thetaConst)
