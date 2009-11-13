@@ -35,6 +35,7 @@ S3method("volatility", "default")
 ################################################
 
 export(
+    ".sampleLmoments",
     ".nigMED", 
     ".nigIQR", 
     ".nigSKEW",
