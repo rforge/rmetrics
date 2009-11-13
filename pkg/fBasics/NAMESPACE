@@ -35,6 +35,11 @@ S3method("volatility", "default")
 ################################################
 
 export(
+    ".dgld", 
+    ".xgld",
+    ".pgld", 
+    ".qgld", 
+    ".rgld", 
     ".sampleMED",     
     ".sampleIQR",  
     ".sampleSKEW", 
