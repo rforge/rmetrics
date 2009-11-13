@@ -35,6 +35,10 @@ S3method("volatility", "default")
 ################################################
 
 export(
+    ".sampleMED",     
+    ".sampleIQR",  
+    ".sampleSKEW", 
+    ".sampleKURT", 
     "acfPlot",
     ".acfPlot",
     "adTest",
