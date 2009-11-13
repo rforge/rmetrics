@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:            GENERALIZED DISTRIBUTION:
@@ -35,7 +24,8 @@
 ################################################################################
 
 
-nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+nigFit <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
     span = "auto", trace = TRUE, title = NULL, description = NULL, ...)
 {
@@ -43,11 +33,27 @@ nigFit <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     
     # FUNCTION: 
     
-    # MLE:
-    fit = .nigFit.mle(x = x, alpha = alpha, beta = beta, delta = delta, 
-        mu = mu , scale = scale, doplot = doplot, span = span, 
-        trace = trace, title = title, description = description, ...)
-        
+    # Settings:
+    method = match.args(method)
+    
+    # Select:
+    if (method == "mle") {
+        # MLE:
+        fit = .nigFit.mle(x = x, alpha = alpha, beta = beta, delta = delta, 
+            mu = mu , scale = scale, doplot = doplot, span = span, 
+            trace = trace, title = title, description = description, ...)
+    } else if (method == "gmm") {
+        # GMM:
+        fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
+            mu = mu , scale = scale, doplot = doplot, span = span, 
+            trace = trace, title = title, description = description, ...)
+    } else if (method == "mps") {
+        # MPS:
+        fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
+            mu = mu , scale = scale, doplot = doplot, span = span, 
+            trace = trace, title = title, description = description, ...)
+    } 
+    
     # Return Value:
     fit
 }
