@@ -34,7 +34,7 @@ nigFit <-
     # FUNCTION: 
     
     # Settings:
-    method = match.args(method)
+    method = match.arg(method)
     
     # Select:
     if (method == "mle") {
