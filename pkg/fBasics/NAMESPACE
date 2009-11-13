@@ -35,6 +35,14 @@ S3method("volatility", "default")
 ################################################
 
 export(
+    ".nigMED", 
+    ".nigIQR", 
+    ".nigSKEW",
+    ".nigKURT",
+    ".gldMED", 
+    ".gldIQR", 
+    ".gldSKEW",
+    ".gldKURT",
     ".dgld", 
     ".xgld",
     ".pgld", 
