@@ -33,7 +33,7 @@
 
 
 ghFit <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -56,7 +56,7 @@ ghFit <-
     CALL = match.call()
 
     # Log-likelihood Function:
-    eghmle = function(x, y = x, trace){
+    obj = function(x, y = x, trace){
         if (NA %in% x) return(1e99)
         if (abs(x[2]) >= x[1]) return(1e99)
         f = -sum(dgh(y, x[1], x[2], x[3], x[4], x[5], log = TRUE))
@@ -72,8 +72,8 @@ ghFit <-
     r = # Variable Transformation and Minimization:
     eps = 1e-10
     BIG = 1000
-    f = eghmle(x = c(alpha, beta, delta, mu, lambda), y = x, trace = FALSE)
-    r = nlminb(start = c(alpha, beta, delta, mu, lambda), objective = eghmle,
+    f = obj(x = c(alpha, beta, delta, mu, lambda), y = x, trace = FALSE)
+    r = nlminb(start = c(alpha, beta, delta, mu, lambda), objective = obj,
         lower = c(eps, -BIG, eps, -BIG, -BIG), upper = BIG, y = x,
         trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu", "lambda")
@@ -81,7 +81,7 @@ ghFit <-
     # Result:
     if (scale) {
         r$par = r$par / c(SD, SD, 1/SD, 1/SD, 1)
-        r$objective = eghmle(r$par, y = as.vector(x.orig), trace = trace)
+        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
 
     # Optional Plot:

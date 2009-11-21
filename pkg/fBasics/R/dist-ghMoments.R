@@ -14,13 +14,13 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2009, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-
 
 ################################################################################
+# FUNCTION:                    DESCRIPTION:
+#  rhRawMean                    Returns raw mean
+#  ghRawVar                     Returns raw variance
+#  ghRawSkew                    Returns raw skewness
+#  ghRawKurt                    Returns raw kurtosis
 # FUNCTION:                    UTILITY FUNCTION:
 #  .aRecursionGH                Computes the moment coefficients a recursively
 #  .besselZ                     Computes Bessel/Power Function ratio
@@ -34,8 +34,68 @@
 ################################################################################
 
 
+ghRawMean <-
+function(alpha=1, beta=0, delta=1, lambda=-1/2)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
+    # Return Value:
+    .ghRawMoments(k=1, alpha=1, beta=0, delta=1, lambda=-1/2)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghRawVar <- 
+function(alpha=1, beta=0, delta=1, lambda=-1/2)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
+    # Return Value:
+    .ghRawMoments(k=2, alpha=1, beta=0, delta=1, lambda=-1/2)[[2]]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghRawSkew <- 
+function(alpha=1, beta=0, delta=1, lambda=-1/2)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
+    # Return Value:
+    .ghRawMoments(k=3, alpha=1, beta=0, delta=1, lambda=-1/2)[[3]]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghRawKurt <- 
+function(alpha=1, beta=0, delta=1, lambda=-1/2)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
+    # Return Value:
+    .ghRawMoments(k=4, alpha=1, beta=0, delta=1, lambda=-1/2)[[4]]
+}
+
+
+################################################################################
+
+
 .aRecursionGH <- 
-    function(k = 12, trace = FALSE)
+function(k = 12, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -109,7 +169,7 @@
  
 
 .besselZ <- 
-    function(x, lambda) 
+function(x, lambda) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -128,7 +188,7 @@
 
     
 .ghRawMoments <- 
-    function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
+function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -165,7 +225,7 @@
 
 
 .ghRawMomentsIntegrated <- 
-    function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
+function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -196,7 +256,7 @@
 
 
 .checkGHRawMoments <-
-    function(K = 10)
+function(K = 10)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -229,7 +289,7 @@
 
 
 .ghMuMoments <-
-    function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
+function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -256,7 +316,7 @@
 
 
 .ghMuMomentsIntegrated <- 
-    function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
+function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     

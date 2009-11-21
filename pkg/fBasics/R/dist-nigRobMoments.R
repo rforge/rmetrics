@@ -16,15 +16,15 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  .nigMED               Returns true NIG median
-#  .nigIQR               Returns true NIG inter quartal range
-#  .nigSKEW              Returns true NIG robust skewness
-#  .nigKURT              Returns true NIG robust kurtosis
+# FUNCTION:            DESCRIPTION:
+#  nigMED               Returns true NIG median
+#  nigIQR               Returns true NIG inter quartal range
+#  nigSKEW              Returns true NIG robust skewness
+#  nigKURT              Returns true NIG robust kurtosis
 ################################################################################
  
 
-.nigMED <-  
+nigMED <-  
     function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
@@ -46,7 +46,7 @@
 # ------------------------------------------------------------------------------
  
     
-.nigIQR <- 
+nigIQR <- 
     function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
@@ -70,7 +70,7 @@
 # ------------------------------------------------------------------------------
  
   
-.nigSKEW <- 
+nigSKEW <- 
     function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
@@ -95,7 +95,7 @@
 # ------------------------------------------------------------------------------
  
 
-.nigKURT <- 
+nigKURT <- 
     function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz

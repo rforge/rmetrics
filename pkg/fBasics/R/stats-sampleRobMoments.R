@@ -17,15 +17,15 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  .sampleMED             Returns sample median
-#  .sampleIQR             Returns sample inter quartal range
-#  .sampleSKEW            Returns robust sample skewness
-#  .sampleKURT            Returns robust sample kurtosis
+#  sampleMED             Returns sample median
+#  sampleIQR             Returns sample inter quartal range
+#  sampleSKEW            Returns robust sample skewness
+#  sampleKURT            Returns robust sample kurtosis
 ################################################################################
 
 
-.sampleMED <-
-    function(x)
+sampleMED <-
+function(x)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -46,8 +46,8 @@
 # ------------------------------------------------------------------------------
 
 
-.sampleIQR = 
-    function(x) 
+sampleIQR = 
+function(x) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -68,8 +68,8 @@
 # ------------------------------------------------------------------------------
 
 
-.sampleSKEW = 
-    function(x) 
+sampleSKEW = 
+function(x) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -91,8 +91,8 @@
 # ------------------------------------------------------------------------------
 
 
-.sampleKURT = 
-    function(x) 
+sampleKURT = 
+function(x) 
 {
     # A function implemented by Diethelm Wuertz
     

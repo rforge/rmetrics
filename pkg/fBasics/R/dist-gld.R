@@ -17,21 +17,14 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  .dgld                 Returns density for Generalized Lambda DF
-#   .xgld                 Utility function
-#  .pgld                 Returns probability for Generalized Lambda DF
-#  .qgld                 Returns quantiles for Generalized Lambda DF 
-#  .rgld                 Returns random variates for Generalized Lambda DF
+#  dgld                 Returns density for Generalized Lambda DF
+#  pgld                 Returns probability for Generalized Lambda DF
+#  qgld                 Returns quantiles for Generalized Lambda DF 
+#  rgld                 Returns random variates for Generalized Lambda DF
 ################################################################################
 
 
-# DW:
-#   This a simple implementation for the GLD using the RS parameterisation.
-#   Note it doe not check for parameter consistency.
-#   See also the packages gld,  GLDEX, and Davies for GLD functions
-
-
-.dgld <-
+dgld <-
     function (x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
@@ -39,14 +32,34 @@
     # Description:
     #   Returns density for Generalized Lambda DF 
     
+    # Arguments:
+    #   lambda1 - a numeric value, the location parameter
+    #   lambda2 - a numeric value, the scale parameter
+    #   lambda3 - a numeric value, the first shape parameter
+    #   lambda4 - a numeric value, the second parameter
+    
+    # Details:
+    #   This a simple wrapper for the GLD using the RS parameterisation 
+    #   in Region 4. The parameter range is restricted to negative lambda3 
+    #   and lambda4 parameters
+
+    # Note:
+    #   Uses gld functions from package gld
+    
     # Example:
-    #   .dgld( (-25:25)/10 )
+    #   dgld( (-25:25)/10 )
     
     # FUNCTION:
     
+    # Check Parameters:
+    stopifnot (lambda2 < 0)
+    stopifnot (lambda3 < 0)
+    stopifnot (lambda4 < 0)
+    
     # Density:
-    p = .pgld(x, lambda1, lambda2, lambda3, lambda4)
-    d = .xgld(p, lambda2, lambda3, lambda4)
+    d = .dglD(x, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        param="rs")
     
     # Return Value:
     d
@@ -56,28 +69,7 @@
 # ------------------------------------------------------------------------------
 
 
-.xgld <-
-    function (x, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Utility Function
-      
-    # FUNCTION:
-    
-    # Density:
-    d = 1 / (lambda3*x^(lambda3-1) + lambda4*(1-x)^(lambda4-1)) / lambda2
-      
-    # Return Value:
-    d
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pgld <-
+pgld <-
     function (q, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
@@ -85,21 +77,30 @@
     # Description:
     #   Returns probability for Generalized Lambda DF
      
+    # Arguments:
+    #   lambda1 - a numeric value, the location parameter
+    #   lambda2 - a numeric value, the scale parameter
+    #   lambda3 - a numeric value, the first shape parameter
+    #   lambda4 - a numeric value, the second parameter
+    
+    # Note:
+    #   Uses gld functions from package gld
+    
     # Example:
-    #   .pgld( (-25:25)/10 )
+    #   pgld( (-25:25)/10 )
     
     # FUNCTION:
     
-    # Probability:
-    f <- function(p, lambda1, lambda2, lambda3, lambda4, q) { 
-        .qgld(p = p, lambda1, lambda2, lambda3, lambda4)  - q }
-    p = rep(NA, times = length(q))
-    for (i in 1:length(q))
-    p[i] = uniroot(f, c(0, 1), tol = 1e-06, 
-        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4,
-        q=q[i])$root
-
+    # Check Parameters:
+    stopifnot (lambda2 < 0)
+    stopifnot (lambda3 < 0)
+    stopifnot (lambda4 < 0)
     
+    # Probability:
+    p = .pglD(q, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        param="rs")
+
     # Return Value:
     p
 }
@@ -108,7 +109,7 @@
 # ------------------------------------------------------------------------------
 
 
-.qgld <-
+qgld <-
     function (p, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -116,13 +117,29 @@
     # Description:
     #   Returns quantiles for Generalized Lambda DF 
       
+    # Arguments:
+    #   lambda1 - a numeric value, the location parameter
+    #   lambda2 - a numeric value, the scale parameter
+    #   lambda3 - a numeric value, the first shape parameter
+    #   lambda4 - a numeric value, the second parameter
+    
+    # Note:
+    #   Uses gld functions from package gld
+    
     # Example:
-    #   .qgld((1:99)/100)
+    #   qglD((1:99)/100)
     
     # FUNCTION:
     
+    # Check Parameters:
+    stopifnot (lambda2 < 0)
+    stopifnot (lambda3 < 0)
+    stopifnot (lambda4 < 0)
+    
     # Quantiles:
-    q = lambda1 + (p^lambda3 - (1 - p)^lambda4) / lambda2
+    q = .qglD(p, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        param="rs")
     
     # Return Value:
     q
@@ -132,18 +149,34 @@
 # ------------------------------------------------------------------------------
 
 
-.rgld <-
+rgld <-
     function (n = 100, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns random variates for Generalized Lambda DF 
+    
+    # Arguments:
+    #   lambda1 - a numeric value, the location parameter
+    #   lambda2 - a numeric value, the scale parameter
+    #   lambda3 - a numeric value, the first shape parameter
+    #   lambda4 - a numeric value, the second parameter
+    
+    # Note:
+    #   Uses gld functions from package gld
       
     # FUNCTION:
     
+    # Check Parameters:
+    stopifnot (lambda2 < 0)
+    stopifnot (lambda3 < 0)
+    stopifnot (lambda4 < 0)
+    
     # Random Variates:
-    r = .qgld(runif(n), lambda1, lambda2, lambda3, lambda4)
+    r = .rglD(n, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        param="rs")
     
     # Return Value:
     r    

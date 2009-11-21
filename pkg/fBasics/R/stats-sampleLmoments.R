@@ -17,11 +17,11 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  .sampleLmoments        Computes sample L-moments
+#  sampleLmoments        Computes sample L-moments
 ################################################################################
 
 
-.sampleLmoments <- 
+sampleLmoments <- 
     function(x, rmax=4) 
 {
     # A function implemented by Diethelm Wuertz
