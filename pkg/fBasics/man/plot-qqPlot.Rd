@@ -3,6 +3,7 @@
 \alias{qqnormPlot}
 \alias{qqnigPlot}
 \alias{qqghtPlot}
+\alias{qqgldPlot}
 
 \title{Quantile-Quantile Plots}
 
@@ -10,8 +11,9 @@
 \description{
     
     Returns quantile-quantile plots for the normal,
-    the normal inverse Gaussian, and the generalized 
-    hyperbolic Student-t distribution.
+    the normal inverse Gaussian, the generalized 
+    hyperbolic Student-t and the generalized lambda
+    distribution.
     \cr
 
     List of Functions:
@@ -19,7 +21,8 @@
     \tabular{ll}{
     \code{qqnormPlot} \tab Returns a tailored Normal quantile-quantile plot, \cr
     \code{qqnigPlot} \tab Returns a tailored NIG quantile-quantile plot, \cr
-    \code{qqghtPlot} \tab Returns a tailored GHT quantile-quantile plot.}
+    \code{qqghtPlot} \tab Returns a tailored GHT quantile-quantile plot, \cr
+    \code{qqgldPlot} \tab Returns a tailored GLD quantile-quantile plot.}
     
 }
     
@@ -34,6 +37,9 @@ qqnigPlot(x, labels = TRUE, col = "steelblue", pch = 19,
 qqghtPlot(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, 
     scale = TRUE, \dots) 
+qqgldPlot(x, labels = TRUE, col = "steelblue", pch = 19,
+    title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, 
+    scale = TRUE, \dots)
 }
 
 
@@ -90,8 +96,7 @@ qqghtPlot(x, labels = TRUE, col = "steelblue", pch = 19,
 
 \value{
     
-    displays a time series plot.
-    
+    displays a quantile-quantile plot.
 }
 
 
@@ -103,7 +108,8 @@ qqghtPlot(x, labels = TRUE, col = "steelblue", pch = 19,
 
 
 \examples{
-## qqPlot - 
+## qqPlot -
+   qqnormPlot(rnorm(100)) 
 }
 
 

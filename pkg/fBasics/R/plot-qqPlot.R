@@ -14,23 +14,13 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTION:                 TAILORED QUANTILE PLOTS:
+# FUNCTION:                DESCRIPTION
 #  qqnormPlot               Returns a tailored normal quantile-quantile plot
 #  qqnigPlot                Returns a tailored NIG quantile-quantile plot
-#  qqghtPlot               Returns a tailored GHT quantile-quantile plot
+#  qqghtPlot                Returns a tailored GHT quantile-quantile plot
+#  qqgldPlot                Returns a tailored LD quantile-quantile plot
 ################################################################################
 
 
@@ -317,3 +307,91 @@ function(x, labels = TRUE, col = "steelblue", pch = 19,
 
 ################################################################################
 
+
+qqgldPlot <-
+function(x, labels = TRUE, col = "steelblue", pch = 19,
+    title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays a Generalized lambda Distribution quantile-quantile Plot
+
+    # Arguments:
+    #   x - an univariate return series of class 'timeSeries'
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+
+    # Example:
+    #   qqgldPlot(rgld(100))
+
+    # FUNCTION:
+
+    # Settings:
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    stopifnot(isUnivariate(x))
+    Units = x@units
+    x = as.vector(x)
+    n = length(x)
+
+    ## YC: no scaling
+    ## FIXME: should take care of too small time series
+
+    # Fit:
+    fit = gldFit(x, doplot = FALSE, trace = FALSE)
+    par = fit@fit$estimate
+    names(par) = c("lambda1", "lambda2", "lambda3", "lambda4")
+
+    # Quantiles:
+    x = sort(x)
+    p = ppoints(x)
+
+    z = qgld(p, par[1], par[2], par[3], par[4])
+
+    # Plot:
+    if (labels) {
+        xlab = "Theoretical Quantiles"
+        ylab = "Sample Quantiles"
+        plot(z, x, xlab = xlab, ylab = ylab, col = col, pch = pch, ...)
+    } else {
+        plot(z, x, ...)
+    }
+
+    # Title:
+    if (title) {
+        title(main = "NIG QQ Plot")
+    }
+
+    # Margin Text:
+    rpar = signif(par, 3)
+    text = paste(
+        "lambda1 =", rpar[1],
+        "| lambda2 =", rpar[2],
+        "| lambda3 =", rpar[3],
+        "| lambda4 =", rpar[4])
+    mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+
+    # Grid:
+    if (grid) {
+        grid()
+    }
+
+    # Add Fit:
+    abline(lsfit(z, x))
+
+    # Add Rugs:
+    if(rug) {
+        rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
+        rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
+    }
+
+    # Result:
+    ans = list(x = z, y = x)
+    attr(ans, "control") <- par
+
+    # Return Value:
+    invisible(ans)
+}
+
+
+################################################################################
