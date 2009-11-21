@@ -33,7 +33,7 @@
 
 
 nFit <-
-    function(x, doplot = TRUE, span = "auto", title = NULL,
+function(x, doplot = TRUE, span = "auto", title = NULL,
     description = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz

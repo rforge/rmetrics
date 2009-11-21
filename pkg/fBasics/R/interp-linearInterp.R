@@ -34,7 +34,7 @@
 
 
 linearInterp <-
-    function(x, y = NULL, z = NULL, gridPoints = 21,
+function(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
     yo = seq(min(y), max(y), length = gridPoints))
 {
@@ -100,7 +100,7 @@ linearInterp <-
 
 
 linearInterpp <-
-    function(x, y = NULL, z = NULL, xo, yo)
+function(x, y = NULL, z = NULL, xo, yo)
 {
     # A function implemented by Diethelm Wuertz
 

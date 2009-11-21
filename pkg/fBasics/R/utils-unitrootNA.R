@@ -33,7 +33,7 @@
 
 
 .unirootNA <- 
-    function(f, interval, lower = min(interval), upper = max(interval),
+function(f, interval, lower = min(interval), upper = max(interval),
     tol = .Machine$double.eps^0.25, ...)
 {   
     # A function implemented by Diethelm Wuertz

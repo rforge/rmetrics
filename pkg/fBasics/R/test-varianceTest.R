@@ -36,7 +36,7 @@
 
 
 varianceTest <- 
-    function(x, y, method = c("varf", "bartlett", "fligner"), 
+function(x, y, method = c("varf", "bartlett", "fligner"), 
     title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -67,7 +67,7 @@ varianceTest <-
 
 
 .varfTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -169,7 +169,7 @@ varianceTest <-
 
 
 .bartlett2Test <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -235,7 +235,7 @@ varianceTest <-
   
 
 .fligner2Test <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 

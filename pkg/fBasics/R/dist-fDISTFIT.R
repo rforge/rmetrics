@@ -48,7 +48,7 @@ setClass("fDISTFIT",
 # ------------------------------------------------------------------------------
 
 setMethod("show", "fDISTFIT",
-          function(object)
+      function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

@@ -55,7 +55,7 @@
 
 
 rainbowPalette <- 
-    function(n = 64, ...) 
+function(n = 64, ...) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -70,7 +70,7 @@ rainbowPalette <-
 
 
 heatPalette <- 
-    function(n = 64, ...) 
+function(n = 64, ...) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -85,7 +85,7 @@ heatPalette <-
 
 
 terrainPalette <- 
-    function(n = 64, ...) 
+function(n = 64, ...) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -100,7 +100,7 @@ terrainPalette <-
 
 
 topoPalette <- 
-    function(n = 64, ...) 
+function(n = 64, ...) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -115,7 +115,7 @@ topoPalette <-
 
 
 cmPalette <- 
-    function(n = 64, ...) 
+function(n = 64, ...) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -133,7 +133,7 @@ cmPalette <-
 
 
 greyPalette <- 
-    function(n = 64, ...)
+function(n = 64, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -164,7 +164,7 @@ greyPalette <-
 
 
 timPalette <- 
-    function (n = 64)
+function(n = 64)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -226,7 +226,7 @@ timPalette <-
 
 
 .blue2redPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -247,7 +247,7 @@ timPalette <-
 
 
 .green2redPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -268,7 +268,7 @@ timPalette <-
 
 
 .blue2greenPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -289,7 +289,7 @@ timPalette <-
 
 
 .purple2greenPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -309,7 +309,7 @@ timPalette <-
 
 
 .blue2yellowPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -329,7 +329,7 @@ timPalette <-
 
 
 .cyan2magentaPalette <-  
-    function(n)
+function(n)
 {
     # A copy from contributed R-package colorRamps
     
@@ -349,7 +349,7 @@ timPalette <-
 
 
 rampPalette <-
-    function(n, name = c("blue2red", "green2red", "blue2green",     
+function(n, name = c("blue2red", "green2red", "blue2green",     
     "purple2green", "blue2yellow", "cyan2magenta"))
 {
     # Description:
@@ -381,7 +381,7 @@ rampPalette <-
 
             
 seqPalette <-
-    function(n, name = c("Blues", "BuGn", "BuPu", "GnBu", "Greens", 
+function(n, name = c("Blues", "BuGn", "BuPu", "GnBu", "Greens", 
     "Greys", "Oranges", "OrRd", "PuBu", "PuBuGn", "PuRd", "Purples", 
     "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd"))
 {
@@ -496,7 +496,7 @@ seqPalette <-
             
 
 divPalette <-
-    function(n, name = c("BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", 
+function(n, name = c("BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", 
     "RdYlBu", "RdYlGn", "Spectral"))
 {
     # A function implemented by Diethelm Wuertz
@@ -569,7 +569,7 @@ divPalette <-
 
 
 qualiPalette <-
-    function(n, name = c("Accent", "Dark2", "Paired", "Pastel1", 
+function(n, name = c("Accent", "Dark2", "Paired", "Pastel1", 
     "Pastel2", "Set1", "Set2", "Set3"))
 {
     # A function implemented by Diethelm Wuertz
@@ -654,7 +654,7 @@ qualiPalette <-
 
         
 focusPalette <-
-    function(n, name = c("redfocus", "greenfocus", "bluefocus"))
+function(n, name = c("redfocus", "greenfocus", "bluefocus"))
 {
     # A function implemented by Diethelm Wuertz
     
@@ -727,7 +727,7 @@ focusPalette <-
 
 
 monoPalette <-
-    function(n, name = c("redmono", "greenmono", "bluemono"))
+function(n, name = c("redmono", "greenmono", "bluemono"))
 {
     # A function implemented by Diethelm Wuertz
     

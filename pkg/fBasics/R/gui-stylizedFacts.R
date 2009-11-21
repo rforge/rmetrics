@@ -37,7 +37,7 @@
 
 
 .lmacfPlot <-
-    function(x, lag.max = max(2, floor(10*log10(length(x)))),
+function(x, lag.max = max(2, floor(10*log10(length(x)))),
     ci = 0.95, type = c("both", "acf", "hurst"), labels = TRUE,
     trace = TRUE, ...)
 {
@@ -303,7 +303,7 @@ doplot = TRUE, labels = TRUE, ...)
 
 
 .qqgaussPlot <-
-    function(x, span = 5, col = "steelblue", labels = TRUE, ...)
+function(x, span = 5, col = "steelblue", labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -372,7 +372,7 @@ doplot = TRUE, labels = TRUE, ...)
 
 
 .ccfPlot <-
-    function(x, y, lag.max = max(2, floor(10*log10(length(x)))),
+function(x, y, lag.max = max(2, floor(10*log10(length(x)))),
     type = c("correlation", "covariance", "partial"), labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -422,7 +422,7 @@ doplot = TRUE, labels = TRUE, ...)
 
 
 .stylizedFactsGUI <-
-    function(x, mfrow = c(3, 3))
+function(x, mfrow = c(3, 3))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -433,7 +433,7 @@ doplot = TRUE, labels = TRUE, ...)
 
     # Refresh Code:
     stylizedFactsRefreshCode <-
-    function(...)
+function(...)
     {
         # Settings:
         selectedAsset  = .tdSliderMenu(no = 1)
@@ -564,34 +564,34 @@ doplot = TRUE, labels = TRUE, ...)
         starts      = c(      0),
 
         but.functions = list(
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "1")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "2")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "3")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "4")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "5")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "6")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "7")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "8")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "9")
                 stylizedFactsRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "stylizedFactsType", obj.value = "10")
                 stylizedFactsRefreshCode()}
         ),

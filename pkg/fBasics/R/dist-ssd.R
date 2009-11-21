@@ -25,7 +25,7 @@
 
 
 dssd <- 
-    function(x, param) 
+function(x, param) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -44,7 +44,7 @@ dssd <-
 
  
 pssd <- 
-    function(q, param) 
+function(q, param) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -63,7 +63,7 @@ pssd <-
 
 
 qssd <- 
-    function(p, param) 
+function(p, param) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -82,7 +82,7 @@ qssd <-
 
 
 rssd <-  
-    function(n, param) 
+function(n, param) 
 {   
     # A function implemented by Diethelm Wuertz
 

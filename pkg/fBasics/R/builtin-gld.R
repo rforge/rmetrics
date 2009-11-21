@@ -69,7 +69,7 @@
 
 
 .dglD <- 
-    function(x, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, param="fmkl", 
+function(x, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, param="fmkl", 
     lambda5=NULL, inverse.eps=1e-8, max.iterations=500)
 {
     # Tidy the parameters so gl.check.lambda will work
@@ -103,7 +103,7 @@
 
 
 .pglD <- 
-    function(q, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
+function(q, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
     param="fmkl", lambda5=NULL, inverse.eps=1e-8, max.iterations=500)
 {
     # Thanks to Steve Su, <s.su@qut.edu.au>, for improvements to this code
@@ -194,7 +194,7 @@
 
 
 .qglD <- 
-    function(p, lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
+function(p, lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
     param="fmkl", lambda5=NULL)
 {
     lambdas <- 
@@ -226,7 +226,7 @@
 
 
 .qgl.fmkl <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     # No checking - use qgl if you want that
     lambda4 = lambdas[4]
@@ -276,7 +276,7 @@
 
 
 .qgl.fm5 <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     # No parameter value checking. If you want that, use qgl!
     lambda5 = as.double(lambdas[5])
@@ -329,7 +329,7 @@
 
 
 .qgl.rs <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     u <- p
     # No parameter value checking - use qgl!
@@ -349,7 +349,7 @@
 
 
 .qdglD <- 
-    function(p, lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
+function(p, lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
     param="fmkl", lambda5=NULL)
 {
     # Don't allow characters in lambda5 - 
@@ -389,7 +389,7 @@
 
 
 .qdgl.rs <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     # Check the values are OK)
     if(!.gl.check.lambda(lambdas, param="rs", vect=TRUE)) {
@@ -412,7 +412,7 @@
 
 
 .qdgl.fmkl <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     # Check the values are OK)
     if(!.gl.check.lambda(lambdas, param="fmkl", vect=TRUE)) {
@@ -436,7 +436,7 @@
 
 
 .qdgl.fm5 <- 
-    function(p, lambdas)
+function(p, lambdas)
 {
     # Check the values are OK)
     if(!.gl.check.lambda(lambdas, param="fm5", vect=TRUE)) {
@@ -461,7 +461,7 @@
 
 
 .rglD <- 
-    function(n, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
+function(n, lambda1=0, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
     param="fmkl", lambda5=NULL)
 {
     # Check the parameters
@@ -488,7 +488,7 @@
 
 
 .gl.parameter.tidy <- 
-    function(lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, param="fmkl", 
+function(lambda1, lambda2=NULL, lambda3=NULL, lambda4=NULL, param="fmkl", 
     lambda5=NULL) 
 {   
     # Don't allow characters in lambda5 - common error with parameterisation stuff
@@ -561,7 +561,7 @@
 
 
 .gl.check.lambda <-  
-    function(lambdas, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
+function(lambdas, lambda2=NULL, lambda3=NULL, lambda4=NULL, 
     param="fmkl", lambda5=NULL, vect=FALSE)
 {
     # Checks to see that the lambda values given are allowed.

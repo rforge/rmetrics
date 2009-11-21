@@ -34,7 +34,7 @@
 
 
 akimaInterp <-
-    function(x, y = NULL, z = NULL, gridPoints = 21,
+function(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
     yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
 {
@@ -100,7 +100,7 @@ akimaInterp <-
 
 
 akimaInterpp <-
-    function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
+function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -170,7 +170,7 @@ akimaInterpp <-
 
 
 .interp.old <-
-    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
+function(x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
     max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error",
     dupfun = NULL)
 {
@@ -234,7 +234,7 @@ akimaInterpp <-
 
 
 .interp.new <-
-    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
+function(x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
     max(y), length = 40), linear = FALSE, ncp = NULL, extrap = FALSE,
     duplicate = "error", dupfun = NULL)
 {
@@ -305,7 +305,7 @@ akimaInterpp <-
 
 
 .interpp.old <-
-    function (x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error",
+function(x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error",
     dupfun = NULL)
 {
     # A copy from contributed package akima
@@ -378,7 +378,7 @@ akimaInterpp <-
 
 
 .interpp.new <-
-    function (x, y, z, xo, yo, extrap = FALSE, duplicate = "error",
+function(x, y, z, xo, yo, extrap = FALSE, duplicate = "error",
     dupfun = NULL)
 {
     # A copy from contributed package akima

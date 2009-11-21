@@ -33,7 +33,7 @@
 
 
 norm <-
-    function(x, p = 2)
+function(x, p = 2)
 {
     # A function implemented by Diethelm Wuertz
 

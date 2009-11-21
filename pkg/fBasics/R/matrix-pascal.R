@@ -33,7 +33,7 @@
 
 
 pascal <-
-    function(n)
+function(n)
 {
     # A function implemented by Diethelm Wuertz
 

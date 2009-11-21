@@ -36,7 +36,7 @@
 
 
 seriesPlot <- 
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
+function(x, labels = TRUE, type = "l", col = "steelblue", 
     title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 
 {   
@@ -89,7 +89,7 @@ seriesPlot <-
 
 
 cumulatedPlot <-  
-    function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
+function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
     title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -114,7 +114,7 @@ cumulatedPlot <-
 
 
 returnPlot <-  
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
+function(x, labels = TRUE, type = "l", col = "steelblue", 
     title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -139,7 +139,7 @@ returnPlot <-
 
 
 drawdownPlot <-  
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
+function(x, labels = TRUE, type = "l", col = "steelblue", 
     title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz

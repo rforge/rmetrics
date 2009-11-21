@@ -33,7 +33,7 @@
 
 
 gldMode <- 
-    function(lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
+function(lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
 {   
     # A function implemented by Diethelm Wuertz
     

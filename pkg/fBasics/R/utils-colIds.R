@@ -36,7 +36,7 @@
 
 
 colIds <-
-    function(x, ...)
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -57,7 +57,7 @@ colIds <-
 
 
 rowIds <-
-    function(x, ...)
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -77,7 +77,7 @@ rowIds <-
 
 
 "colIds<-" <-
-    function(x, value)
+function(x, value)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -108,7 +108,7 @@ rowIds <-
 
 
 "rowIds<-" <-
-    function(x, value)
+function(x, value)
 {
     # A function implemented by Diethelm Wuertz
 

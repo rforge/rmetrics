@@ -39,7 +39,7 @@
 
 
 interactivePlot <-
-    function(x, choices = paste("Plot", 1:9),
+function(x, choices = paste("Plot", 1:9),
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -74,14 +74,14 @@ interactivePlot <-
         stop("Sorry, only 9 plots at max are supported.")
 
     # Internal "askPlot" Function:
-    multPlot = function (x, choices, ...)
+    multPlot = function(x, choices, ...)
     {
         # Selective Plot:
         selectivePlot <-
-        function (x, choices, FUN, which){
+    function(x, choices, FUN, which){
             # Internal Function:
             askPlot <-
-            function (x, choices, FUN) {
+        function(x, choices, FUN) {
                 # Pick and Plot:
                 pick = 1
                 setRmetricsOptions(n.plots = length(choices))

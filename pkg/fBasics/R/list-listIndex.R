@@ -33,7 +33,7 @@
 
 
 listIndex <-
-    function(package, character.only = FALSE)
+function(package, character.only = FALSE)
 {
     # A function implemented by Diethelm Wuertz & Yohan Chalabi
 

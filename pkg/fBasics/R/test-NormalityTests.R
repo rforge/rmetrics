@@ -48,7 +48,7 @@
 
 
 ksnormTest <- 
-    function(x, title = NULL, description = NULL)
+function(x, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -101,7 +101,7 @@ ksnormTest <-
 
 
 .shapiro.test <- 
-    function (x) 
+function(x) 
 {   
     # A copy from R:
 
@@ -146,7 +146,7 @@ ksnormTest <-
 
 
 shapiroTest <- 
-    function(x, title = NULL, description = NULL)
+function(x, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -194,7 +194,7 @@ shapiroTest <-
 
 
 jarqueberaTest <- 
-    function(x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -268,7 +268,7 @@ jarqueberaTest <-
 
 
 .skewness.test <- 
-    function(x) 
+function(x) 
 {   
     # Internal Function for D'Agostino Normality Test:
 
@@ -326,7 +326,7 @@ jarqueberaTest <-
 
 
 .kurtosis.test <- 
-    function(x) 
+function(x) 
 {   
     # Internal Function for D'Agostino Normality Test:
     
@@ -372,7 +372,7 @@ jarqueberaTest <-
 
 
 .omnibus.test <- 
-    function(x) 
+function(x) 
 {   
     # Internal Function for D'Agostino Normality Test:
 
@@ -426,7 +426,7 @@ jarqueberaTest <-
        
 
 dagoTest =
-    function(x, title = NULL, description = NULL)  
+function(x, title = NULL, description = NULL)  
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -494,7 +494,7 @@ dagoTest =
 
 
 adTest <- 
-    function (x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -591,7 +591,7 @@ adTest <-
 
 
 cvmTest <- 
-    function(x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -677,7 +677,7 @@ cvmTest <-
 
 
 lillieTest <- 
-    function(x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -774,7 +774,7 @@ lillieTest <-
 
 
 pchiTest <- 
-    function (x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -867,7 +867,7 @@ pchiTest <-
 
 
 sfTest <- 
-    function(x, title = NULL, description = NULL) 
+function(x, title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -945,7 +945,7 @@ sfTest <-
 
 
 .jb.test <- 
-    function(x)
+function(x)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -1022,7 +1022,7 @@ sfTest <-
 
 
 jbTest <- 
-    function(x, title = NULL, description = NULL)
+function(x, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

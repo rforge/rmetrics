@@ -25,7 +25,7 @@
 
 
 nigFit <- 
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
     span = "auto", trace = TRUE, title = NULL, description = NULL, ...)
 {
@@ -63,7 +63,7 @@ nigFit <-
 
 
 .nigFit.mle <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     scale = TRUE, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -148,7 +148,7 @@ nigFit <-
 
 
 .nigFit.gmm <-
-    function(x, 
+function(x, 
     scale = TRUE, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -239,7 +239,7 @@ nigFit <-
 
 
 .nigFit.mps <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
     scale = TRUE, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {

@@ -33,7 +33,7 @@
 
 
 gridVector <-  
-    function(x, y = NULL)
+function(x, y = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 

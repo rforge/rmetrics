@@ -33,7 +33,7 @@
 
 
 kron <-
-    function(x, y)
+function(x, y)
 {
     # A function implemented by Diethelm Wuertz
 

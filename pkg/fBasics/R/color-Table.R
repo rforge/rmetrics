@@ -33,7 +33,7 @@
 
 
 colorTable <- 
-    function(cex = 0.7) 
+function(cex = 0.7) 
 {   
     # A function implemented by Diethelm Wuertz
     

@@ -39,7 +39,7 @@
 
 
 dnig <- 
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -73,7 +73,7 @@ dnig <-
 
 
 pnig <- 
-    function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -106,7 +106,7 @@ pnig <-
 
 
 qnig <- 
-    function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -126,7 +126,7 @@ qnig <-
 
     # Internal Function:
     .froot <-
-    function(x, alpha, beta, delta, mu, p)
+function(x, alpha, beta, delta, mu, p)
     {
         pnig(q = x, alpha = alpha, beta = beta, delta = delta,
             mu = mu) - p
@@ -159,7 +159,7 @@ qnig <-
 
 
 rnig <- 
-    function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -218,7 +218,7 @@ rnig <-
 
 
 .qnigC <-
-    function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # Description:
     #   Returns quantiles for for inverse Gaussian DF

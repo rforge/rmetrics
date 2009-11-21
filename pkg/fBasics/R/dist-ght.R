@@ -63,7 +63,7 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
 
 
 pght <-
-    function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
+function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -94,7 +94,7 @@ pght <-
 
 
 qght <-
-    function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
+function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
 

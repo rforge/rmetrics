@@ -49,7 +49,7 @@
 
 
 set.lcgseed <-
-    function(seed = 4711)
+function(seed = 4711)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -85,7 +85,7 @@ set.lcgseed <-
 
 
 get.lcgseed <-
-    function()
+function()
 {
     # A function implemented by Diethelm Wuertz
 
@@ -107,7 +107,7 @@ get.lcgseed <-
 
 
 runif.lcg <-
-    function(n, min = 0, max = 1)
+function(n, min = 0, max = 1)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -154,7 +154,7 @@ runif.lcg <-
 
 
 rnorm.lcg <-
-    function(n, mean = 0, sd = 1)
+function(n, mean = 0, sd = 1)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -173,7 +173,7 @@ rnorm.lcg <-
 
 
 rt.lcg <-
-    function(n, df)
+function(n, df)
 {
     # A function implemented by Diethelm Wuertz
 

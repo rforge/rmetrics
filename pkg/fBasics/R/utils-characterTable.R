@@ -33,7 +33,7 @@
 
 
 characterTable <-  
-    function(font = 1, cex = 0.7) 
+function(font = 1, cex = 0.7) 
 {   
     # A function implemented by Diethelm Wuertz
     

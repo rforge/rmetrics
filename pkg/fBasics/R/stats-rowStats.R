@@ -84,7 +84,7 @@ function(x, FUN, ...)
 
 
 ## rowMeans <-
-##     function(x, ...)
+## function(x, ...)
 ## {
 ##     # FUNCTION:
 
@@ -112,7 +112,7 @@ rowProds <- function(x, ...) { rowStats(x, "prod", ...) }
 
 
 rowQuantiles <-
-    function(x, prob = 0.05, ...)
+function(x, prob = 0.05, ...)
 {
     # FUNCTION:
 

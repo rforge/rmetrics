@@ -34,7 +34,7 @@
 
 
 triang <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -55,7 +55,7 @@ triang <-
 
 
 Triang <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 

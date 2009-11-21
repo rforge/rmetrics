@@ -36,7 +36,7 @@
 
 
 acfPlot <-
-    function(x, labels = TRUE, ...)
+function(x, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -81,7 +81,7 @@ acfPlot <-
 
 
 pacfPlot <-
-    function(x, labels = TRUE, ...)
+function(x, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -127,7 +127,7 @@ pacfPlot <-
 
 
 teffectPlot <-
-    function (x, deltas = seq(from = 0.2, to = 3.0, by = 0.2), lag.max = 10,
+function(x, deltas = seq(from = 0.2, to = 3.0, by = 0.2), lag.max = 10,
     ymax = NA, standardize = TRUE, labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -212,7 +212,7 @@ teffectPlot <-
 
 
 lacfPlot <-
-    function(x, n = 12, lag.max = 20, type = c("returns", "values"),
+function(x, n = 12, lag.max = 20, type = c("returns", "values"),
     labels = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz

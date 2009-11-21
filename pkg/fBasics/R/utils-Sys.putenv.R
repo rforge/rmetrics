@@ -42,7 +42,7 @@
 if (!exists("Sys.setenv"))
 {
     Sys.setenv =
-    function(...)
+function(...)
     {
         x <- list(...)
         nm <- names(x)
@@ -57,7 +57,7 @@ if (!exists("Sys.setenv"))
 
 
 ## head.ts <- 
-##     function(x, n = 6, ...)
+## function(x, n = 6, ...)
 ## {
     # A function implemented by Diethelm Wuertz
     

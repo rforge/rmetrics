@@ -35,7 +35,7 @@
 
 
 print.control <-
-    function(x, ...)
+function(x, ...)
 {
     # Return Value:
     print(unlist(x))
@@ -45,7 +45,7 @@ print.control <-
 ################################################################################
 
 .print <- 
-    function(x, ...)
+function(x, ...)
 {
     UseMethod(".print")
 }
@@ -55,7 +55,7 @@ print.control <-
 
 
 .plot <- 
-    function(x, ...)
+function(x, ...)
 {
     UseMethod(".plot")
 }
@@ -65,7 +65,7 @@ print.control <-
 
 
 .summary <- 
-    function(object, ...)
+function(object, ...)
 {
     UseMethod(".summary")
 }
@@ -75,7 +75,7 @@ print.control <-
 
 
 .predict <- 
-    function(object, ...)
+function(object, ...)
 {
     UseMethod(".predict")
 }

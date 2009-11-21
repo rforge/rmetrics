@@ -229,7 +229,7 @@
 
 
 .dssden <- ## Evaluate density estimate
-function (object,x) {
+function(object,x) {
     if (class(object)!=".ssden") stop("gss error in .dssden: not a .ssden object")
     if (dim(object$mf)[2]==1&is.vector(x)) {
         x <- data.frame(x)

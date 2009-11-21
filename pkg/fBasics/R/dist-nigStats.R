@@ -32,7 +32,7 @@
 
 
 .nigMean <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -54,7 +54,7 @@
 
 
 .nigVar <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -77,7 +77,7 @@
 
 
 .nigSkew <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -99,7 +99,7 @@
 
 
 .nigKurt <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -121,7 +121,7 @@
 
    
 nigShapeTriangle <- 
-    function(object, add = FALSE, labels = TRUE, ...)
+function(object, add = FALSE, labels = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -130,7 +130,7 @@ nigShapeTriangle <-
     
     # Arguments:
     #   object - an object of class 'fDISTFIT' as returned by the
-    #       function nigFit()
+    #   function nigFit()
     
     # Example:
     #   nigShapeTriangle(nigFit(rnig(100), doplot = FALSE))

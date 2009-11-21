@@ -33,7 +33,7 @@
 
 
 pdl <-
-    function(x, d = 2, q = 3, trim = FALSE)
+function(x, d = 2, q = 3, trim = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 

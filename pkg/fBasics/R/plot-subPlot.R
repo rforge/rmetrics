@@ -35,7 +35,7 @@
 
 
 .emptyPlot <- 
-    function()
+function()
 {
     # Description:
     #   Creates an empty plot page
@@ -81,7 +81,7 @@
 
 
 .subPlot <- 
-    function(fun, x, y = NULL, size = c(1, 1), vadj = 0.5, hadj = 0.5, 
+function(fun, x, y = NULL, size = c(1, 1), vadj = 0.5, hadj = 0.5, 
     pars = NULL)
 {
     # Description:
@@ -123,7 +123,7 @@
 
 
 .cnvrt.coords <- 
-    function(x,y=NULL,input=c('usr','plt','fig','dev','tdev')) 
+function(x,y=NULL,input=c('usr','plt','fig','dev','tdev')) 
 {
     # Description:
     #   Converts Coordinates

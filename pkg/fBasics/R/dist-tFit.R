@@ -33,7 +33,7 @@
 
 
 tFit <-
-    function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE,
+function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE,
     title = NULL, description = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz

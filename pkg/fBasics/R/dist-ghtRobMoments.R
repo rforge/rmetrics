@@ -25,7 +25,7 @@
  
 
 ghtMED <-  
-    function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
+function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -53,7 +53,7 @@ ghtMED <-
  
     
 ghtIQR <- 
-    function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
+function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -83,7 +83,7 @@ ghtIQR <-
  
   
 ghtSKEW <- 
-    function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
+function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -114,7 +114,7 @@ ghtSKEW <-
  
 
 ghtKURT <- 
-    function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
+function(beta = 0.1, delta = 1, mu = 0, nu = 10) 
 {
     # A function implemented by Diethelm Wuertz 
     

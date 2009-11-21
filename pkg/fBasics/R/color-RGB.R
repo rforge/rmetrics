@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 UTILITIES:
@@ -36,7 +25,7 @@
 
 
 .asRGB <- 
-    function (col = rainbowPalette(64), alpha = FALSE)
+function(col = rainbowPalette(64), alpha = FALSE)
 {   
     # A function implemented by Diethelm Wuertz  
      
@@ -65,7 +54,7 @@
 
 
 .chcode <- 
-    function(b, base.in = 2, base.out = 10, digits = "0123456789ABCDEF")
+function(b, base.in = 2, base.out = 10, digits = "0123456789ABCDEF")
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -94,9 +83,9 @@
     if (is.numeric(b))
         b = as.character(as.integer(b))
     b.num = lapply(strsplit(b, ""),
-        function(x) {match(x, digits)-1} )
+    function(x) {match(x, digits)-1} )
     result = lapply(b.num,
-        function(x) {cumprod(rev(c(base.in,1))[1:length(x)]) %*% rev(x)} )
+    function(x) {cumprod(rev(c(base.in,1))[1:length(x)]) %*% rev(x)} )
     number = unlist(result)
     # DW Print Output Suppressed
     # cat("decimal representation:",number,"\n")
@@ -121,7 +110,7 @@
 
 
 .hex.to.dec <- 
-    function(b)
+function(b)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -148,7 +137,7 @@
 
 
 .dec.to.hex <- 
-    function(b)
+function(b)
 {   
     # A function implemented by Diethelm Wuertz
 

@@ -33,7 +33,7 @@
 
 
 ghtFit <-
-    function(x, beta = 0.1, delta = 1, mu = 0, nu = 10,
+function(x, beta = 0.1, delta = 1, mu = 0, nu = 10,
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {

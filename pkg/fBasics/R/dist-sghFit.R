@@ -33,7 +33,7 @@
 
 
 sghFit =
-function (x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE, 
+function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, ...) 
 {

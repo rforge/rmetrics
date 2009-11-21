@@ -22,7 +22,7 @@
 
 
 sampleLmoments <- 
-    function(x, rmax=4) 
+function(x, rmax=4) 
 {
     # A function implemented by Diethelm Wuertz
     

@@ -25,7 +25,7 @@
 
 
 dgld <-
-    function (x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -70,7 +70,7 @@ dgld <-
 
 
 pgld <-
-    function (q, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(q, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -110,7 +110,7 @@ pgld <-
 
 
 qgld <-
-    function (p, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(p, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -150,7 +150,7 @@ qgld <-
 
 
 rgld <-
-    function (n = 100, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(n = 100, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz
     

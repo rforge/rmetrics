@@ -25,7 +25,7 @@
  
 
 nigMED <-  
-    function(alpha=1, beta=0, delta=1, mu=0) 
+function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -47,7 +47,7 @@ nigMED <-
  
     
 nigIQR <- 
-    function(alpha=1, beta=0, delta=1, mu=0) 
+function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -71,7 +71,7 @@ nigIQR <-
  
   
 nigSKEW <- 
-    function(alpha=1, beta=0, delta=1, mu=0) 
+function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -96,7 +96,7 @@ nigSKEW <-
  
 
 nigKURT <- 
-    function(alpha=1, beta=0, delta=1, mu=0) 
+function(alpha=1, beta=0, delta=1, mu=0) 
 {
     # A function implemented by Diethelm Wuertz
     

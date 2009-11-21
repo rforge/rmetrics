@@ -33,7 +33,7 @@
 
 
 .nigMode <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     

@@ -33,7 +33,7 @@
 
 
 normalTest <- 
-    function(x, method = c("sw", "jb"), na.rm = FALSE) 
+function(x, method = c("sw", "jb"), na.rm = FALSE) 
 {   
     # A function implemented by Diethelm Wuertz
 

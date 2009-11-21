@@ -35,7 +35,7 @@
 
 
 qqnormPlot <-
-    function(x, labels = TRUE, col = "steelblue", pch = 19,
+function(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -152,7 +152,7 @@ qqnormPlot <-
 
 
 qqnigPlot <-
-    function(x, labels = TRUE, col = "steelblue", pch = 19,
+function(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -241,7 +241,7 @@ qqnigPlot <-
 
 
 qqghtPlot <-
-    function(x, labels = TRUE, col = "steelblue", pch = 19,
+function(x, labels = TRUE, col = "steelblue", pch = 19,
     title = TRUE, mtext = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz

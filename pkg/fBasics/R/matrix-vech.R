@@ -34,7 +34,7 @@
 
 
 vec <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -59,7 +59,7 @@ vec <-
 
 
 vech <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 

@@ -34,7 +34,7 @@
 
 
 ## as.matrix.ts <-
-##     function(x, ...)
+## function(x, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -58,7 +58,7 @@
 
 
 ## as.matrix.mts <-
-##     function(x, ...)
+## function(x, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 

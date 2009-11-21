@@ -33,7 +33,7 @@
 
 
 returnSeriesGUI <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -53,7 +53,7 @@ returnSeriesGUI <-
     mfrow = c(N, N)
 
     returnSeriesRefreshCode =
-    function(...)
+function(...)
     {
         # Settings:
         selectedAsset  = .tdSliderMenu(no = 1)
@@ -139,22 +139,22 @@ returnSeriesGUI <-
         starts      = c(      0),
 
         but.functions = list(
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "1")
                 returnSeriesRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "2")
                 returnSeriesRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "3")
                 returnSeriesRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "4")
                 returnSeriesRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "5")
                 returnSeriesRefreshCode()},
-            function(...){
+        function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "6")
                 returnSeriesRefreshCode()}
         ),

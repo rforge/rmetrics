@@ -608,7 +608,7 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
 
 .integrateStable =
-function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
+function(f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 {
     # A function implemented by Diethelm Wuertz
 

@@ -96,7 +96,7 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 
 qgh <-
-function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -112,7 +112,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
     # Internal Function:
     .froot <-
-    function(x, alpha, beta, delta, mu, lambda, p)
+function(x, alpha, beta, delta, mu, lambda, p)
     {
         pgh(q = x, alpha = alpha, beta = beta, delta = delta,
             mu = mu, lambda = lambda) - p
@@ -145,7 +145,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 
 rgh <-
-function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 {
     # A function implemented by Diethelm Wuertz
 

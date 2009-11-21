@@ -34,7 +34,7 @@
 
 
 boxPlot <-
-    function(x, col = "steelblue", title = TRUE, ...) 
+function(x, col = "steelblue", title = TRUE, ...) 
 {   
     # A function Implemented by Diethelm Wuertz
 
@@ -81,7 +81,7 @@ boxPlot <-
 
 
 boxPercentilePlot <-  
-    function(x, col = "steelblue", title = TRUE, ...) 
+function(x, col = "steelblue", title = TRUE, ...) 
 {   
     # A modified copy from Hmisc
 

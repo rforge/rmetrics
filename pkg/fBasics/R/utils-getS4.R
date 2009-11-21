@@ -38,7 +38,7 @@
 
 
 ## isS4 <-
-##     function(object)
+## function(object)
 ## {
 ##     # A function implemented by Rmetrics
 
@@ -65,7 +65,7 @@
 
 
 getCall <-
-    function(object)
+function(object)
 {
     # A function implemented by Rmetrics
 
@@ -86,7 +86,7 @@ getCall <-
 
 
 getModel <-
-    function(object)
+function(object)
 {
     # A function implemented by Rmetrics
 
@@ -107,7 +107,7 @@ getModel <-
 
 
 getTitle <-
-    function(object)
+function(object)
 {
     # A function implemented by Rmetrics
 
@@ -128,7 +128,7 @@ getTitle <-
 
 
 getDescription <-
-    function(object)
+function(object)
 {
     # A function implemented by Rmetrics
 
@@ -149,7 +149,7 @@ getDescription <-
 
 
 getSlot <-
-    function(object, slotName)
+function(object, slotName)
 {
     # A function implemented by Rmetrics
 

@@ -73,7 +73,7 @@
 
 
 ## align <-
-##     function(x, y, xout, ...)
+## function(x, y, xout, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -88,7 +88,7 @@
 
 
 ## align.default <-
-##     function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
+## function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
 ##     ties = mean, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -108,7 +108,7 @@
 
 
 ## atoms <-
-##     function(x, ...)
+## function(x, ...)
 ## {
 ##     # A function implemented by Diethelm WUertz
 
@@ -123,7 +123,7 @@
 
 
 ## atoms.default <-
-##     function(x, ...)
+## function(x, ...)
 ## {
 ##     # A function implemented by Diethelm WUertz
 
@@ -138,7 +138,7 @@
 
 
 ## attach <-
-##     function(what, pos = 2, name = deparse(substitute(what)),
+## function(what, pos = 2, name = deparse(substitute(what)),
 ##     warn.conflicts = TRUE)
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -160,7 +160,7 @@
 
 
 ## "colnames<-" =
-##     function(x, value)
+## function(x, value)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -181,7 +181,7 @@
 
 
 ## cor <-
-##     function(x, y = NULL, use = "all.obs",
+## function(x, y = NULL, use = "all.obs",
 ##     method = c("pearson", "kendall", "spearman"))
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -203,7 +203,7 @@
 
 
 ## cov <-
-##     function(x, y = NULL, use = "all.obs",
+## function(x, y = NULL, use = "all.obs",
 ##     method = c("pearson", "kendall", "spearman"))
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -225,7 +225,7 @@
 
 
 ## log <-
-##     function(x, base = exp(1))
+## function(x, base = exp(1))
 ## {   # A function implemented by Diethelm Wuertz
 
 ##     # FUNCTION:
@@ -239,7 +239,7 @@
 
 
 ## log.default <-
-##     function(x, base = exp(1))
+## function(x, base = exp(1))
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -254,7 +254,7 @@
 
 
 ## rank <-
-##     function(x, na.last = TRUE,
+## function(x, na.last = TRUE,
 ##     ties.method = c("average", "first", "random", "max", "min"))
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -270,7 +270,7 @@
 
 
 ## rank.default <-
-##     function(x, na.last = TRUE,
+## function(x, na.last = TRUE,
 ##     ties.method = c("average", "first", "random", "max", "min"))
 ## {
 ##     # A function implemented by Diethelm Wuertz
@@ -286,7 +286,7 @@
 
 
 ## sample <-
-##     function(x, ...)
+## function(x, ...)
 ## {   # A function implemented by Diethelm Wuertz
 
 ##     # FUNCTION:
@@ -300,7 +300,7 @@
 
 
 ## sample.default <-
-##     function (x, size, replace = FALSE, prob = NULL, ...)
+## function(x, size, replace = FALSE, prob = NULL, ...)
 ## {
 ##     # FUNCTION:
 
@@ -317,7 +317,7 @@
 ##     # sort() has been S3 generic in 'base' since 2.4.0
 ##     # Otherwise use something that works here
 
-##     sort <- function (x, decreasing = FALSE, ...)
+##     sort <- function(x, decreasing = FALSE, ...)
 ##     {
 ##         if (!is.logical(decreasing) || length(decreasing) != 1)
 ##             stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
@@ -337,7 +337,7 @@
 
 
 ## outlier <-
-##     function(x, sd = 5, complement = TRUE, ...)
+## function(x, sd = 5, complement = TRUE, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -351,7 +351,7 @@
 
 
 ## outlier.default <-
-##     function(x, sd = 5, complement = TRUE, ...)
+## function(x, sd = 5, complement = TRUE, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -393,7 +393,7 @@
 
 
 ## "rownames<-" =
-##     function(x, value)
+## function(x, value)
 ## {   # A function implemented by Diethelm Wuertz
 
 ##     # FUNCTION:
@@ -413,7 +413,7 @@
 
 
 stdev.default <-
-    function(x, na.rm = FALSE)
+function(x, na.rm = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -434,7 +434,7 @@ stdev <- function(x, na.rm = FALSE)
 
 
 termPlot <-
-    function(model, ...)
+function(model, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -464,7 +464,7 @@ function(model, ...)
 
 
 ## var <-
-##     function(x, y = NULL, na.rm = FALSE, use)
+## function(x, y = NULL, na.rm = FALSE, use)
 ## {
 ##     # A function implemented by Diethelm Wuertz
 
@@ -484,7 +484,7 @@ function(model, ...)
 # ------------------------------------------------------------------------------
 
 volatility <-
-    function(object, ...)
+function(object, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -499,7 +499,7 @@ volatility <-
 
 
 volatility.default <-
-    function(object, ...)
+function(object, ...)
 {
     # A function implemented by Diethelm Wuertz
 

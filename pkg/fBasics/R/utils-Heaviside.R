@@ -37,7 +37,7 @@
 
 
 Heaviside <- 
-    function(x, a = 0) 
+function(x, a = 0) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -71,7 +71,7 @@ Heaviside <-
 
 
 Sign <- 
-    function(x, a = 0) 
+function(x, a = 0) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -100,7 +100,7 @@ Sign <-
 
 
 Delta <- 
-    function(x, a = 0) 
+function(x, a = 0) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -128,7 +128,7 @@ Delta <-
 
 
 Boxcar <- 
-    function(x, a = 0.5) 
+function(x, a = 0.5) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -157,7 +157,7 @@ Boxcar <-
 
 
 Ramp <- 
-    function(x, a = 0) 
+function(x, a = 0) 
 {   
     # A function implemented by Diethelm Wuertz
 

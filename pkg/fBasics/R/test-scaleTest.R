@@ -35,7 +35,7 @@
 
 
 scaleTest <- 
-    function(x, y, method = c("ansari", "mood"), 
+function(x, y, method = c("ansari", "mood"), 
     title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -63,7 +63,7 @@ scaleTest <-
 
 
 .ansariTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -166,7 +166,7 @@ scaleTest <-
 
 
 .ansari2Test <- 
-    function(x, y, alternative = c("two.sided", "less", "greater"),
+function(x, y, alternative = c("two.sided", "less", "greater"),
     exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -194,7 +194,7 @@ scaleTest <-
 
 
 .moodTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 

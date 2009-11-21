@@ -34,7 +34,7 @@
 
 
 tslag <-
-    function(x, k = 1, trim = FALSE)
+function(x, k = 1, trim = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -84,7 +84,7 @@ tslag <-
 
 
 .tslag1 <-
-    function(x, k)
+function(x, k)
 {
     # A function implemented by Diethelm Wuertz
 

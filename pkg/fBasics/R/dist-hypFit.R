@@ -33,7 +33,7 @@
 
 
 hypFit <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE,
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE,
     doplot = TRUE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {

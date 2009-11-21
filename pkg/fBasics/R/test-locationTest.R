@@ -35,7 +35,7 @@
 
 
 locationTest <-
-    function(x, y, method = c("t", "kw2"),
+function(x, y, method = c("t", "kw2"),
     title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
@@ -63,7 +63,7 @@ locationTest <-
 
 
 .tTest <-
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -183,7 +183,7 @@ locationTest <-
 
 
 .kw2Test <-
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 

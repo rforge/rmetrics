@@ -33,7 +33,7 @@
 
 
 distCheck <- 
-    function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
+function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
 {   
     # A function implemented by Diethelm Wuertz
 

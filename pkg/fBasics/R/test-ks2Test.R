@@ -33,7 +33,7 @@
 
 
 ks2Test <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 

@@ -33,7 +33,7 @@
 
 
 gldFit <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     method = c("mle", "mps", "ad", "cvm", "ks", "fd", "scott", "sturges", "rob"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
@@ -105,7 +105,7 @@ gldFit <-
 
 
 .gldFit.mle <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -202,7 +202,7 @@ gldFit <-
 
 
 .gldFit.mps <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     type = c("mean", "max"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
@@ -322,7 +322,7 @@ gldFit <-
 # ------------------------------------------------------------------------------   
 
 .gldFit.gof <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     type = c("ad", "ks", "cvm"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
@@ -426,7 +426,7 @@ gldFit <-
 
 
 .gldFit.hist <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     type = c("FD", "Sturges", "Scott"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
@@ -526,7 +526,7 @@ gldFit <-
 
 
 .gldFit.rob <-
-    function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
+function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {

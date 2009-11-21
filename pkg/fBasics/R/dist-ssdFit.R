@@ -23,7 +23,7 @@
 
 
 ssdFit <-  
-    function(x, type = c("cubic", "linear", "thin-plate"))
+function(x, type = c("cubic", "linear", "thin-plate"))
 {
     # A function implemented by Diethelm Wuertz
     
@@ -47,7 +47,7 @@ ssdFit <-
 
 
 print.ssd <- 
-    function(x, ...)
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
     

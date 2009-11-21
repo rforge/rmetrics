@@ -35,7 +35,7 @@
 
 
 hypMode <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -60,7 +60,7 @@ hypMode <-
 
 
 .hyp1Mode <- 
-    function(alpha = 1, beta = 0, delta = 1, mu = 0)
+function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -81,7 +81,7 @@ hypMode <-
 
 
 .hyp2Mode <- 
-    function(zeta = 1, rho = 0, delta = 1, mu = 0)
+function(zeta = 1, rho = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -104,7 +104,7 @@ hypMode <-
 
 
 .hyp3Mode <-  
-    function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -129,7 +129,7 @@ hypMode <-
 
 
 .hyp4Mode <-  
-    function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
+function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
     

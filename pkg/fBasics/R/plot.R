@@ -51,7 +51,7 @@
 
 
 .residualsPlot <- 
-    function(x, ...)
+function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -82,7 +82,7 @@
 
 
 .acfPlot <- 
-    function(x, ...)
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -103,7 +103,7 @@
 
 
 .pacfPlot <- 
-    function(x, ...)
+function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -124,7 +124,7 @@
 
 
 .mrlPlot <- 
-    function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100,
+function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100,
     doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -198,7 +198,7 @@
 
 
 .responsesPlot <- 
-    function(x, y = NULL, ...)
+function(x, y = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -234,7 +234,7 @@
 
 
 .firePlot <- 
-    function(x, y, method = c("scatter", "hist"), ...)
+function(x, y, method = c("scatter", "hist"), ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -325,7 +325,7 @@
 
 
 .circlesPlot <- 
-    function(x, y = NULL, z = NULL, scale = 1, points = TRUE,
+function(x, y = NULL, z = NULL, scale = 1, points = TRUE,
     labels = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -378,7 +378,7 @@
 
 
 .perspPlot <- 
-    function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...)
+function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -413,7 +413,7 @@
 
 
 .contourPlot <- 
-    function(x, y, z, ...)
+function(x, y, z, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -443,7 +443,7 @@
 
 
 .histStack <- 
-    function(x, y = NULL, space = 0, ylab = "frequency", ...)
+function(x, y = NULL, space = 0, ylab = "frequency", ...)
 {   
     # A function implemented by Diethelm Wuertz
 

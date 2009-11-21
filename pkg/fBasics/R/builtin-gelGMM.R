@@ -423,7 +423,7 @@ function(g,x,tet0,gradv=NULL,smooth=FALSE,type=c("EL","ET","CUE","ETEL"),
 
 
 .smooth_g <- 
-function (x, bw = .bwAndrews2, prewhite = 1, ar.method = "ols",
+function(x, bw = .bwAndrews2, prewhite = 1, ar.method = "ols",
     weights=.weightsAndrews2,
     kernel=c("Bartlett","Parzen","Truncated","Tukey-Hanning"), 
     approx = c("AR(1)","ARMA(1,1)"), tol = 1e-7) 
@@ -463,7 +463,7 @@ function (x, bw = .bwAndrews2, prewhite = 1, ar.method = "ols",
 
 
 .bwNeweyWest2 <- 
-function (x, kernel = c("Bartlett", "Parzen", 
+function(x, kernel = c("Bartlett", "Parzen", 
     "Quadratic Spectral", "Truncated", "Tukey-Hanning"), 
     prewhite = 1, ar.method = "ols",...) 
 {
@@ -578,7 +578,7 @@ function(object,interval=FALSE, ...)
 
 
 .get_dat <- 
-function (formula,h,intercept=TRUE) 
+function(formula,h,intercept=TRUE) 
 {
     cl <- match.call()
     mf <- match.call(expand.dots = FALSE)

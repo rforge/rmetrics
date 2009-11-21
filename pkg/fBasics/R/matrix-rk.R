@@ -33,7 +33,7 @@
 
 
 rk <-
-    function(x, method = c("qr", "chol"))
+function(x, method = c("qr", "chol"))
 {
     # A function implemented by Diethelm Wuertz
 

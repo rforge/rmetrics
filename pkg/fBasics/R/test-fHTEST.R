@@ -53,7 +53,7 @@ setClass("fHTEST",
 
 
 setMethod("show", "fHTEST",
-          function(object)
+      function(object)
 {
     # A function implemented by Diethelm Wuertz
 

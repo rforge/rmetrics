@@ -36,7 +36,7 @@
 
 
 histPlot <-
-    function(x, labels = TRUE, col = "steelblue", fit = TRUE,
+function(x, labels = TRUE, col = "steelblue", fit = TRUE,
     title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -120,7 +120,7 @@ histPlot <-
 
 
 densityPlot <-
-    function(x, labels = TRUE, col = "steelblue", fit = TRUE, hist = TRUE,
+function(x, labels = TRUE, col = "steelblue", fit = TRUE, hist = TRUE,
     title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -204,7 +204,7 @@ densityPlot <-
 
 
 logDensityPlot <-
-    function(x, labels = TRUE, col = "steelblue", robust = TRUE,
+function(x, labels = TRUE, col = "steelblue", robust = TRUE,
     title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE,  ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -296,7 +296,7 @@ logDensityPlot <-
 
 
 .plot.histogram <-
-function (x, freq = equidist, density = NULL, angle = 45,
+function(x, freq = equidist, density = NULL, angle = 45,
     col = NULL, border = "white", lty = NULL,
     main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
     xlim = range(x$breaks), ylim = NULL,

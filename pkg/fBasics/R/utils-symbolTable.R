@@ -33,7 +33,7 @@
 
 
 symbolTable <- 
-    function(font = par('font'), cex = 0.7) 
+function(font = par('font'), cex = 0.7) 
 {   
     # A function implemented by Diethelm Wuertz
 

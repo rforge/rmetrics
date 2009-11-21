@@ -33,7 +33,7 @@
 
 
 scalinglawPlot <- 
-    function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
+function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
     labels = TRUE, trace = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -83,7 +83,7 @@ scalinglawPlot <-
         logprices = cumsum(y)
 
         # Scaling Power Low:
-        scale = function (nx, logprices) {
+        scale = function(nx, logprices) {
             sum(abs(diff(logprices, lag = (2^nx))))}
         nx = 0:logtimesteps; x = nx*log(2)
         y = log(apply(matrix(nx), 1, scale, logprices))

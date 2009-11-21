@@ -40,7 +40,7 @@
 
 
 .sliderMenu <-
-    function(refresh.code, names, minima, maxima, resolutions, starts,
+function(refresh.code, names, minima, maxima, resolutions, starts,
     title = "Slider", no = 0, set.no.value = 0)
 {
     # A function implemented by Diethelm Wuertz
@@ -120,7 +120,7 @@
 
 
 .tdSliderMenu <-
-    function(sl.functions, names, minima, maxima, resolutions, starts,
+function(sl.functions, names, minima, maxima, resolutions, starts,
     but.functions, but.names, no, set.no.value, obj.name, obj.value,
     reset.function, title)
 {

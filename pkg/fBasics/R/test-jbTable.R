@@ -36,7 +36,7 @@
 
 
 .jbTable <- 
-    function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
+function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -103,7 +103,7 @@
 
 
 .jbPlot <- 
-    function(type = c("LM", "ALM"))
+function(type = c("LM", "ALM"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -132,7 +132,7 @@
 
 
 .pjb <- 
-    function(q, N = Inf, type = c("LM", "ALM"))
+function(q, N = Inf, type = c("LM", "ALM"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -191,7 +191,7 @@
 
 
 .qjb <- 
-    function(p, N = Inf, type = c("LM", "ALM"))
+function(p, N = Inf, type = c("LM", "ALM"))
 {   
     # A function implemented by Diethelm Wuertz
 

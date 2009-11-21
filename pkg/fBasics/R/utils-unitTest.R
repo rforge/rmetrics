@@ -35,7 +35,7 @@
 
 
 .runitTest <-
-    function(package = "Rmetrics")
+function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -116,7 +116,7 @@
 
 
 .rmetricsPackages <-
-    function()
+function()
 {
     # A function implemented by Diethelm Wuertz
 
@@ -157,7 +157,7 @@
 
 
 .rmetricsUnitTest =
-    function()
+function()
 {
     # A function implemented by Diethelm Wuertz
 

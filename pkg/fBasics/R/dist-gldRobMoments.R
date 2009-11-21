@@ -25,7 +25,7 @@
  
 
 gldMED <-  
-    function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -53,7 +53,7 @@ gldMED <-
  
     
 gldIQR <- 
-    function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -83,7 +83,7 @@ gldIQR <-
  
   
 gldSKEW <- 
-    function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -114,7 +114,7 @@ gldSKEW <-
  
 
 gldKURT <- 
-    function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
 {
     # A function implemented by Diethelm Wuertz 
     

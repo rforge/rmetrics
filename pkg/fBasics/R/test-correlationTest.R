@@ -36,7 +36,7 @@
 
 
 correlationTest <- 
-    function(x, y, method = c("pearson", "kendall", "spearman"), 
+function(x, y, method = c("pearson", "kendall", "spearman"), 
     title = NULL, description = NULL) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -67,7 +67,7 @@ correlationTest <-
 
 
 pearsonTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -165,7 +165,7 @@ pearsonTest <-
 
 
 kendallTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -290,7 +290,7 @@ kendallTest <-
 
 
 spearmanTest <- 
-    function(x, y, title = NULL, description = NULL)
+function(x, y, title = NULL, description = NULL)
 {   
     # A function implemented by Diethelm Wuertz
 

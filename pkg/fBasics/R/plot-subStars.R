@@ -33,7 +33,7 @@
 
 
 .subStars <- 
-    function (x, keyOffset = c(0, 0), loc = NULL, palette = NULL) 
+function(x, keyOffset = c(0, 0), loc = NULL, palette = NULL) 
 {
     # Description:
     #   Creates a sub stars plot
@@ -81,7 +81,7 @@
     
     angles <- seq.int(0, 2 * pi, length.out = n.seg + 1)[-(n.seg + 1)]
     x <- apply(x, 2, 
-        function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE)))
+    function(x) (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE)))
     
     mx <- max(x <- x * len)
     if (is.null(xlim)) xlim <- range(xloc) + c(-mx, mx)

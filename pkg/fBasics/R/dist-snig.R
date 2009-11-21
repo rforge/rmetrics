@@ -39,7 +39,7 @@
 
 
 dsnig <-  
-    function(x, zeta = 1, rho = 0, log = FALSE) 
+function(x, zeta = 1, rho = 0, log = FALSE) 
 {
     # Description:
     #   Returns density of the snig distribution
@@ -58,7 +58,7 @@ dsnig <-
 
 
 psnig <-  
-    function(q, zeta = 1, rho = 0) 
+function(q, zeta = 1, rho = 0) 
 {
     # Description:
     #   Returns probabilities of the snig distribution
@@ -77,7 +77,7 @@ psnig <-
 
 
 qsnig <-  
-    function(p, zeta = 1, rho = 0) 
+function(p, zeta = 1, rho = 0) 
 {
     # Description:
     #   Returns quantiles of the snig distribution
@@ -96,7 +96,7 @@ qsnig <-
 
 
 rsnig <-  
-    function(n, zeta = 1, rho = 0) 
+function(n, zeta = 1, rho = 0) 
 {
     # Description:
     #   Generates snig distributed random variates
@@ -115,7 +115,7 @@ rsnig <-
 
 
 .psnigC <-  
-    function(q, zeta = 1, rho = 0) 
+function(q, zeta = 1, rho = 0) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -137,7 +137,7 @@ rsnig <-
 
 
 .qsnigC <-  
-    function(p, zeta = 1, rho = 0) 
+function(p, zeta = 1, rho = 0) 
 {
     # A function implemented by Diethelm Wuertz
     

@@ -38,7 +38,7 @@
 
 
 dhyp <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -68,7 +68,7 @@ dhyp <-
 
 
 phyp <-
-    function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -98,7 +98,7 @@ phyp <-
 
 
 qhyp <-
-    function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -131,7 +131,7 @@ qhyp <-
 
 
 rhyp <-
-    function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -175,7 +175,7 @@ rhyp <-
 
 
 .rghyp <-
-    function(n, theta)
+function(n, theta)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -219,7 +219,7 @@ rhyp <-
 
 
 .rgigjd <-
-    function(n, theta)
+function(n, theta)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -286,7 +286,7 @@ rhyp <-
 
 
 .rgigjd1 <-
-    function(n, theta)
+function(n, theta)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -356,7 +356,7 @@ rhyp <-
 
 
 .dhyp1 <-
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -386,7 +386,7 @@ rhyp <-
 
 
 .dhyp2 <-
-    function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
+function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -414,7 +414,7 @@ rhyp <-
 
 
 .dhyp3 <-
-    function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -444,7 +444,7 @@ rhyp <-
 
 
 .dhyp4 <-
-    function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
+function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -472,7 +472,7 @@ rhyp <-
 
 
 .phyp1 <-
-    function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -504,7 +504,7 @@ rhyp <-
 
 
 .phyp2 <-
-    function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
+function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -532,7 +532,7 @@ rhyp <-
 
 
 .phyp3 <-
-    function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
+function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -562,7 +562,7 @@ rhyp <-
 
 
 .phyp4 <-
-    function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
+function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -590,7 +590,7 @@ rhyp <-
 
 
 .qhyp1 <-
-    function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -609,7 +609,7 @@ rhyp <-
 
     # Internal Functions:
     .froot <-
-    function(x, alpha, beta, delta, p)
+function(x, alpha, beta, delta, p)
     {
         phyp(q = x, alpha = alpha, beta = beta, delta = delta, mu = 0) - p
     }
@@ -641,7 +641,7 @@ rhyp <-
 
 
 .qhyp2 <-
-    function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
+function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -669,7 +669,7 @@ rhyp <-
 
 
 .qhyp3 <-
-    function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
+function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -699,7 +699,7 @@ rhyp <-
 
 
 .qhyp4 <-
-    function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
+function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -727,7 +727,7 @@ rhyp <-
 
 
 .rhyp1 <-
-    function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -763,7 +763,7 @@ rhyp <-
 
 
 .rhyperb <-
-    function (n, theta)
+function(n, theta)
 {
     # FUNCTION:
 
@@ -821,7 +821,7 @@ rhyp <-
 
 
 .hyperb.change.pars <-
-    function (from, to, theta)
+function(from, to, theta)
 {
     # FUNCTION:
 
@@ -850,7 +850,7 @@ rhyp <-
 
 
 .rhyp2 <-
-    function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
+function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -878,7 +878,7 @@ rhyp <-
 
 
 .rhyp3 <-
-    function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
+function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -908,7 +908,7 @@ rhyp <-
 
 
 .rhyp4 <-
-    function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
+function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 {
     # A function implemented by Diethelm Wuertz
 

@@ -33,7 +33,7 @@
 
 
 hypSlider <-
-    function()
+function()
 {
     # A function implemented by Diethelm Wuertz
 

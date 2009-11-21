@@ -34,7 +34,7 @@
 
 
 isPositiveDefinite <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -63,7 +63,7 @@ isPositiveDefinite <-
 
 
 .is.positive.definite <-
-    function (m, tol, method = c("eigen", "chol"))
+function(m, tol, method = c("eigen", "chol"))
 {
     # Author:
     #   Copyright 2003-05 Korbinian Strimmer
@@ -99,7 +99,7 @@ isPositiveDefinite <-
 
 
 makePositiveDefinite <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -125,7 +125,7 @@ makePositiveDefinite <-
 
 
 .make.positive.definite <-
-    function(m, tol)
+function(m, tol)
 {
     # Author:
     #   Copyright 2003-05 Korbinian Strimmer
