@@ -1,0 +1,101 @@
+
+
+________________________________________________________________________________
+Overview of Distribution:
+
+    # Exponentially Tailed
+    gh  hyp nig ght     
+    sgh snig
+    
+    # Power Law Tailed
+    stable
+    gld
+    t
+    
+    # Nonparametric:
+    ssd
+
+________________________________________________________________________________
+Available Functions:
+
+                                    | Standard 
+                    gh  hyp nig ght | sgh snig | stable gld t  | ssd
+                                    |          |               | 
+    Parameters      5   4   4   4   | 3   2    | 4      4   1  | spline                                                      
+    *                               |          |               | 
+        d           x   x   x   x   | x   x    | x      x   x  | x    
+        p           x   x   x   x   | x   x    | x      x   x  | x    
+        q           x   x   x   x   | x   x    | x      x   x  | x    
+        r           x   x   x   x   | x   x    | x      x   x  | x    
+        pqC         -   -   x   -   | -   x    | -      -   -  | -    
+    *Fit                            |          |               |      
+        mle         x   x   x   x   | x   x    | x      x   x  | -    
+        mps         -   -   x   -   | -   -    | -      x   -  | -    
+        gmm         -   -   x   -   | -   -    | -      -   -  | -    
+        lmoments    -   -   -   -   | -   -    | -      -   -  | -    
+        ks          -   -   -   -   | -   -    | -      x   -  | -    
+        cvm         -   -   -   -   | -   -    | -      x   -  | -    
+        ad          -   -   -   -   | -   -    | -      x   -  | -    
+        scott       -   -   -   -   | -   -    | -      x   -  | -    
+        fd          -   -   -   -   | -   -    | -      x   -  | -  
+        quantile    -   -   -   -   | -   -    | x      -   -  | - 
+        robMoments  -   -   -   -   | -   -    | -      x   -  | -
+        nonParamet  -   -   -   -   | -   -    | -      -   -  | x
+    *Mode                           |          |               |      
+        analytic    -   x   -   -   | -   -    | x      -   -  | -       
+        optimize    x   -   x   x   | -   -    | -      x   -  | -    
+    *Moments                        |          |               |      
+        rawMean     x   -   +   -   | -   -    | o      -   -  | -    
+        rawVar      x   -   +   -   | -   -    | o      -   -  | -    
+        rawSkew     x   -   +   -   | -   -    | o      -   -  | -    
+        rawKurt     x   -   +   -   | -   -    | o      -   -  | -    
+        rawMoments  x   -   +   -   | -   -    | o      -   -  | -    
+    *Lmoments                       |          |               |      
+        mean        -   -   -   -   | -   -    | -      -   -  | -    
+        var         -   -   -   -   | -   -    | -      -   -  | -    
+        skew        -   -   -   -   | -   -    | -      -   -  | -    
+        kurt        -   -   -   -   | -   -    | -      -   -  | -    
+    *RobMoments                     |          |               |      
+        MED         x   -   x   x   | -   -    | -      x   -  | o    
+        IQR         x   -   x   x   | -   -    | -      x   -  | o    
+        SKEW        x   -   x   x   | -   -    | -      x   -  | o    
+        KURT        x   -   x   x   | -   -    | -      x   -  | o    
+                                    |          | 
+                    gh  hyp nig ght | sgh snig | stable gld t  | ssd
+                                                         
+
+________________________________________________________________________________
+Parameter Names and default Settings:
+
+    gh
+    alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1
+    
+    ght
+    beta = 0.1, delta = 1, mu = 0, nu = 10
+    
+    hyp
+    alpha = 1, beta = 0, delta = 1, mu = 0
+    
+    nig
+    alpha = 1, beta = 0, delta = 1, mu = 0
+    
+    sgh
+    zeta = 1, rho = 0, lambda = 1
+    
+    snig
+    zeta = 1, rho = 0
+    
+    stable
+    alpha, beta, gamma = 1, delta = 0
+    
+    gld
+    lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8
+    
+    t
+    df = 4
+    
+    ssd
+    param
+    
+________________________________________________________________________________
+
