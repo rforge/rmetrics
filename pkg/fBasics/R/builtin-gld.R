@@ -16,21 +16,25 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
-#  .dglD                Returns GLD density
-#  .pglD                Returns GLD probabilities
-#  .qglD                Returns GLD quantiles
-#   .qgl.fmkl            Utility functions ...
+# FUNCTION:            
+#  .pglD                 
+#  .qglD                
+#   .qgl.fmkl             
 #   .qgl.fm5
 #   .qgl.rs
 #   .qdglD
 #   .qdgl.rs
 #   .qdgl.fmkl
 #   .qdgl.fm5
-#  .rglD                Returns GLD random variates
-#  .gl.parameter.tidy   Utility functions ...
+#  .rglD                 
+#  .gl.parameter.tidy    
 #  .gl.check.lambda
 ################################################################################
+
+
+
+# Code borrowed from 
+#   R's contributed package "gld" written by Robert King
 
 
 # Rmetrics:
@@ -39,30 +43,21 @@
 #   implemented here as a builtin.
 
 
-# Package: 
-#   gld
-# Version: 
-#   1.8.4
-# Date: 
-#   2008/10/01
-# Title: 
-#   Estimation and use of the generalised (Tukey) lambda distribution
-# Author: 
-#   Robert King <Robert.King@newcastle.edu.au>
-# Maintainer: 
-#   Robert King <Robert.King@newcastle.edu.au>
+# Package: gld
+# Version: 1.8.4
+# Date: 2008/10/01
+# Title: Estimation and use of the generalised (Tukey) lambda distribution
+# Author: Robert King <Robert.King@newcastle.edu.au>
+# Maintainer: Robert King <Robert.King@newcastle.edu.au>
 # Description: The generalised lambda distribution, or Tukey lambda
 #   distribution, provides a wide variety of shapes with one
 #   functional form.  This package provides random numbers, 
 #   quantiles, probabilities, densities and plots.  It also
 #   includes an implementation of the starship estimation method
 #   for the distribution.
-# License: 
-#   GPL (>= 2)
-# URL:
-#   http://tolstoy.newcastle.edu.au/~rking/publ/rprogs/information.html
-# Packaged: 
-#   2009-10-14  
+# License: GPL (>= 2)
+# URL: http://tolstoy.newcastle.edu.au/~rking/publ/rprogs/information.html
+# Packaged: 2009-10-14  
  
 
 ################################################################################

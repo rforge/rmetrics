@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
+# FUNCTION:            
 #  .rho
 #  .get_lamb
 #  .gel
@@ -25,6 +25,10 @@
 #  .summary.gel
 #  .get_dat
 ################################################################################
+
+
+# Code borrowed from 
+#   R's contributed package "gmm" written by Pierre Chausse.
 
 
 # Rmetrics:

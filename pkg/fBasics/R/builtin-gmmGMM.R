@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
+# FUNCTION:             
 #  .gmm
 #  .HAC
 #  .weightsAndrews2
@@ -24,6 +24,10 @@
 #  .summary.gmm
 #  .lintest
 ################################################################################
+
+
+# Code borrowed from 
+#   R's contributed package "gmm" written by Pierre Chausse.
 
 
 # Rmetrics:

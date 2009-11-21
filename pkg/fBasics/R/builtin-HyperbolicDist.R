@@ -16,14 +16,42 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  .[dpqr]hyp[1234]      Internal functions called by '*hyp'
+# FUNCTION:             
+#  .rghyp   
+#  .rgigjd    
+#  .rgigjd1
+#  .dhyp1
+#  .dhyp2
+#  .dhyp3
+#  .dhyp4
+#  .phyp1
+#  .phyp2
+#  .phyp3
+#  .phyp4
+#  .qhyp1
+#  .qhyp2
+#  .qhyp3
+#  .qhyp4
+#  .rhyp1
+#  .rhyperb
+#  .hyperb.change.pars
+#  .rhyp2
+#  .rhyp3
+#  .rhyp4
 ################################################################################
 
 
-# This is code borrowed from David Scott's website.
-# The functions are also part of previous versions of the R contributed
-#   package Hyperbolic Dist
+# This is code borrowed from 
+#   David Scott's website.
+#   The functions are also part of previous versions of the R contributed
+#   package Hyperbolic Dist.
+
+
+# Rmetrics:
+#   Note that these functions are not packaged and available on Debian 
+#   as of 2007-06-23. 
+#   To run these functions under Debian/Rmetrics we have them    
+#   implemented here as a builtin.
 
 
 ################################################################################

@@ -16,9 +16,14 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
+# FUNCTION:            
 #  .kweigths
 ################################################################################
+
+
+# Code borrowed from 
+#   R's contributed package "sandwich" written by Thomas Lumley
+#   and Achim Zeileis.
 
 
 # Rmetrics:
