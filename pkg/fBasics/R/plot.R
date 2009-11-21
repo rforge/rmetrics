@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 INTERNAL USED PLOT FUNCTIONS:
@@ -41,13 +30,6 @@
 #  .contourPlot              Returns a contour plot in 2 dimensions
 #  .histStack                Returns a stacked histogram plot
 ################################################################################
-
-
-################################################################################
-#  .residualsPlot            Returns a residual series plot
-#  .acfPlot                  Returns a autocorrelation function plot
-#  .pacfPlot                 Returns a partial ACF plot
-#  .mrlPlot                  Returns a mean residual life plot
 
 
 .residualsPlot <- 
@@ -193,8 +175,6 @@ function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100,
 
 
 ################################################################################
-#  .responsesPlot            Returns a response series plot
-#  .firePlot                 Returns a fitted values vs.residuals plot
 
 
 .responsesPlot <- 
@@ -318,10 +298,6 @@ function(x, y, method = c("scatter", "hist"), ...)
 
 
 ################################################################################
-#  .circlesPlot           Returns a scatterplot of circles indexing 3rd variable
-#  .perspPlot             Returns a perspective plot in 2 dimensions
-#  .contourPlot           Returns a contour plot in 2 dimensions
-#  .histStack             Returns a stacked histogram plot
 
 
 .circlesPlot <- 

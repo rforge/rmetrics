@@ -1,19 +1,25 @@
 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
 
 ################################################################################
-# Package: A2R
-# Type: Package
-# Title: Romain Francois misc functions
-# Version: 0.0-4
-# Date: 2005-08-05
-# Author: Romain Francois <francoisromain@free.fr>
-# Maintainer: Romain Francois <francoisromain@free.fr>
-# Description: Some functions of Romain Francois collection
-# License: GPL version 2 or newer
-# URL: http://addictedtor.free.fr/packages
-
-
-# ------------------------------------------------------------------------------
+# Function:             DESCRIPTION:
+# .varpiePlot            Plots a pie with variable radii
+# .varpieDemo            Creates some demo plots
+################################################################################
 
 
 .varpiePlot <- 
@@ -30,7 +36,19 @@ function(x, radius = 0.8, labels = names(x), edges = 200,
     # Note:
     #   The idea is given in:
     #   http://addictedtor.free.fr/packages/A2R/lastVersion/R/spieChart.R
-    
+  
+    # Source:
+    #   Package: A2R
+    #   Type: Package
+    #   Title: Romain Francois misc functions
+    #   Version: 0.0-4
+    #   Date: 2005-08-05
+    #   Author: Romain Francois <francoisromain@free.fr>
+    #   Maintainer: Romain Francois <francoisromain@free.fr>
+    #   Description: Some functions of Romain Francois collection
+    #   License: GPL version 2 or newer
+    #   URL: http://addictedtor.free.fr/packages
+  
     # FUNCTION:
     
     # Pie:
@@ -112,8 +130,12 @@ function(x, radius = 0.8, labels = names(x), edges = 200,
 .varpieDemo <- 
 function()
 {
-    # Demos:
+    $ Description:
+    #    Creates some demo plots
     
+    # FUNCTION:
+    
+    # Demos:
     par (ask = TRUE)
      
     n = 64; phi = seq(0, pi/4, length = n)
@@ -139,6 +161,7 @@ function()
     .varpiePlot(X, radius = Y, labels = "", col = heat.colors(n), 
         border = "white", init.angle = -90)
     points(0, 0, pch = 19, cex = 4)
+    
 }   
 
 
