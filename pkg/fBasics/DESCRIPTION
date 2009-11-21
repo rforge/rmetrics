@@ -3,13 +3,19 @@ Version: 2110.79
 Revision: 4425
 Date: 2009-09-28
 Title: Rmetrics - Markets and Basic Statistics
-Author: Diethelm Wuertz and many others, see the SOURCE file
+Author: Diethelm Wuertz and Rmetrics core team members, 
+    uses code builtin from the following R contributed packages: 
+    gmm from Pierre Chauss,
+    gld from Robert King,
+    gss from Chong Gu,
+    HyperbolicDist from David Scott
+    sandwich from Thomas Lumley and Achim Zeileis.
 Depends: R (>= 2.6.0), MASS, methods, timeDate, timeSeries (>= 2100.84)
 Suggests: akima, spatial, RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+Description: Environment for teaching 
+    "Financial Engineering and Computational Finance"
+    NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
         FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
         WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyLoad: yes
