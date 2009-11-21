@@ -88,7 +88,7 @@ rgld(n, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
    # Plot empirical density and compare with true density:
    hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    x = seq(-5, 5, 0.25)
-   lines(x, dgld(x, , lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8))
+   lines(x, dgld(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8))
  
 ## pgld -  
    # Plot df and compare with true df:
