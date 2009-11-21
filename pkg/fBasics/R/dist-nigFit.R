@@ -26,8 +26,9 @@
 
 nigFit <- 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    method = c("mle", "gmm", "obj"), scale = TRUE, doplot = TRUE, 
-    span = "auto", trace = TRUE, title = NULL, description = NULL, ...)
+    method = c("mle", "gmm", "mps"), 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -47,8 +48,8 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu , scale = scale, doplot = doplot, span = span, 
             trace = trace, title = title, description = description, ...)
-    } else if (method == "obj") {
-        # obj:
+    } else if (method == "mps") {
+        # MPS:
         fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu , scale = scale, doplot = doplot, span = span, 
             trace = trace, title = title, description = description, ...)
