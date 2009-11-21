@@ -26,7 +26,7 @@
 
 nigFit <- 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
+    method = c("mle", "gmm", "obj"), scale = TRUE, doplot = TRUE, 
     span = "auto", trace = TRUE, title = NULL, description = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -47,8 +47,8 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu , scale = scale, doplot = doplot, span = span, 
             trace = trace, title = title, description = description, ...)
-    } else if (method == "mps") {
-        # MPS:
+    } else if (method == "obj") {
+        # obj:
         fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu , scale = scale, doplot = doplot, span = span, 
             trace = trace, title = title, description = description, ...)
@@ -88,7 +88,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     CALL = match.call()
 
     # Parameter Estimation:
-    llh = function(x, y = x, trace) {
+    obj = function(x, y = x, trace) {
         if (abs(x[2]) >= x[1]) return(1e99)
         f = -sum(dnig(y, x[1], x[2], x[3], x[4], log = TRUE))
         # Print Iteration Path:
@@ -99,7 +99,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         f }
     eps = 1e-10
     BIG = 1000
-    r = nlminb(start = c(alpha, beta, delta, mu), objective = llh,
+    r = nlminb(start = c(alpha, beta, delta, mu), objective = obj,
         lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu")
 
@@ -110,7 +110,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     # Rescale Result:
     if (scale) {
         r$par = r$par / c(SD, SD, 1/SD, 1/SD)
-        r$objective = llh(r$par, y = as.vector(x.orig), trace = trace)
+        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
     fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
 
@@ -128,7 +128,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         } else {
             plot(x, log(y), xlim = c(span[1], span[length(span)]),
                 ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-            title("NIG Parameter Estimation")
+            title("NIG MLE Parameter Estimation")
             lines(x = span, y = log(y.points), col = "steelblue")
         }
     }
@@ -173,7 +173,7 @@ function(x,
     CALL = match.call()
 
     # Parameter Estimation:
-    nig.gmm <- function(Theta, x) {
+    obj <- function(Theta, x) {
         # Parameters:
         alpha = Theta[1]
         beta  = Theta[2]
@@ -191,7 +191,7 @@ function(x,
         f <- cbind(m1, m2, m3, m4)
         return(f)
     }
-    r <- .gmm(g = nig.gmm, x = x, t0 = c(1, 0, 1, 0)) 
+    r <- .gmm(g = obj, x = x, t0 = c(1, 0, 1, 0)) 
     names(r$par) <- c("alpha", "beta", "delta", "mu")
     
     # Add Title and Description:
@@ -219,7 +219,7 @@ function(x,
         } else {
             plot(x, log(y), xlim = c(span[1], span[length(span)]),
                 ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-            title("NIG Parameter Estimation")
+            title("NIG GMM Parameter Estimation")
             lines(x = span, y = log(y.points), col = "steelblue")
         }
     }
@@ -264,7 +264,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     CALL = match.call()
 
     # Parameter Estimation:
-    mps = function(x, y = x, trace) {
+    obj <- function(x, y = x, trace) {
         if (abs(x[2]) >= x[1]) return(1e99)
         
         DH = diff(c(0, na.omit(.pnigC(sort(y), x[1], x[2], x[3], x[4])), 1))
@@ -278,18 +278,18 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         f }
     eps = 1e-10
     BIG = 1000
-    r = nlminb(start = c(alpha, beta, delta, mu), objective = mps,
+    r = nlminb(start = c(alpha, beta, delta, mu), objective = obj,
         lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu")
 
     # Add Title and Description:
-    if (is.null(title)) title = "NIG MPS Parameter Estimation"
+    if (is.null(title)) title = "NIG mps Parameter Estimation"
     if (is.null(description)) description = description()
 
     # Result:
     if (scale) {
         r$par = r$par / c(SD, SD, 1/SD, 1/SD)
-        r$objective = mps(r$par, y = as.vector(x.orig), trace = trace)
+        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
     fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
 
@@ -307,7 +307,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         } else {
             plot(x, log(y), xlim = c(span[1], span[length(span)]),
                 ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-            title("NIG Parameter Estimation")
+            title("NIG MPS Parameter Estimation")
             lines(x = span, y = log(y.points), col = "steelblue")
         }
     }

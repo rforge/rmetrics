@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:            DESCRIPTION:
@@ -32,11 +21,12 @@
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
+# UTILITY FUNCTION      DESCRIPTION:
 #  .integrateStable      Integrates internal functions for *stable
 ################################################################################
 
 
-dstable =
+dstable <- 
 function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz
@@ -246,7 +236,7 @@ function(xarg, alpha, beta, tol, subdivisions)
 # ------------------------------------------------------------------------------
 
 
-pstable =
+pstable <- 
 function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz
@@ -430,7 +420,7 @@ function(xarg, alpha, beta, tol, subdivisions)
 # ------------------------------------------------------------------------------
 
 
-qstable =
+qstable <- 
 function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {
     # A function implemented by Diethelm Wuertz

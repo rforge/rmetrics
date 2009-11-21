@@ -34,7 +34,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     
     # FUNCTION:
     
-    # nig Median
+    # NIG Median:
     Q = .qnigC(p=0.5, alpha, beta, delta, mu)  
     med = c(MED = Q) 
     
@@ -56,7 +56,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     
     # FUNCTION:
     
-    # nig Inter Quartile Range
+    # NIG Inter Quartile Range:
     Q = numeric()
     Q[1] = .qnigC(p=0.25, alpha, beta, delta, mu)  
     Q[2] = .qnigC(p=0.75, alpha, beta, delta, mu) 
@@ -80,7 +80,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     
     # FUNCTION:
     
-    # nig Robust Skewness:
+    # NIG Robust Skewness:
     Q = numeric()
     Q[1] = .qnigC(p=0.25, alpha, beta, delta, mu)
     Q[2] = .qnigC(p=0.50, alpha, beta, delta, mu) 
@@ -105,7 +105,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     
     # FUNCTION:
     
-    # nig Robust Kurtosis:
+    # NIG Robust Kurtosis:
     Q = numeric()
     for (p in (1:7)/8) Q = c(Q, .qnigC(p, alpha, beta, delta, mu))
     kurt = c(KURT = (Q[[7]] - Q[[5]] + Q[[3]] - Q[[1]]) / (Q[[6]] - Q[[2]])) 

@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:            GENERALIZED DISTRIBUTION:
@@ -32,7 +21,7 @@
 ################################################################################
 
 
-sghFit =
+sghFit <- 
 function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, ...) 
@@ -47,7 +36,7 @@ function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     if (include.lambda) 
     {
         # LLH Function:
-        esghmle.include = function(x, y = x, trace) {
+        obj.include = function(x, y = x, trace) {
             f = -sum(log(dsgh(y, x[1], x[2], x[3], log = FALSE)))
             if (trace) {
                 cat("\n Objective Function Value:  ", -f)
@@ -58,7 +47,7 @@ function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
         # LLH Optimization:
         r = nlminb(
             start = c(zeta, rho, lambda), 
-            objective = esghmle.include, 
+            objective = obj.include, 
             lower = c(eps, -0.9999, -2), 
             upper = c(BIG, +0.9999, +5), 
             y = x, 
@@ -68,7 +57,7 @@ function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     } else {
     
         # LLH Function:
-        esghmle = function(x, y = x, lambda, trace) {
+        obj = function(x, y = x, lambda, trace) {
             f = -sum(log(dsgh(y, x[1], x[2], lambda, log = FALSE)))
             if (trace) {
                 cat("\n Objective Function Value:  ", -f)
@@ -79,7 +68,7 @@ function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
         # LLH Optimization:
         r = nlminb(
             start = c(zeta, rho), 
-            objective = esghmle, 
+            objective = obj, 
             lower = c(eps, -0.9999), 
             upper = c(BIG, +0.9999), 
             y = x, 

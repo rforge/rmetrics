@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:            STABLE DISTRIBUTION:
@@ -496,7 +485,7 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
     CALL = match.call()
 
     # Log-likelihood Function:
-    mle = function(x, y = x, trace = FALSE) {
+    obj = function(x, y = x, trace = FALSE) {
         f = -mean(log(dstable(y, 
             alpha = x[1], beta = x[2], gamma = x[3], delta = x[4])))
         # Print Iteration Path:
@@ -510,7 +499,8 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
     
     # Minimization:
     eps = 1e-4
-    r <- nlminb(objective = mle, 
+    r <- nlminb(
+        objective = obj, 
         start = c(alpha, beta, gamma, delta), 
         lower = c( eps, -1+eps, 0+eps, -Inf),
         upper = c(2-eps, 1-eps,  Inf,  Inf),

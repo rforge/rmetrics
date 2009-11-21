@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  rhRawMean                    Returns raw mean
+#  ghRawMean                    Returns raw mean
 #  ghRawVar                     Returns raw variance
 #  ghRawSkew                    Returns raw skewness
 #  ghRawKurt                    Returns raw kurtosis

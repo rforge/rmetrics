@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:            DESCRIPTION:
@@ -59,7 +48,7 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10,
     CALL = match.call()
 
     # Log-likelihood Function:
-    eghtmle <- function(x, y = x, trace){
+    obj <- function(x, y = x, trace){
         if (NA %in% x) return(1e99)
         ## if (abs(x[2]) >= x[1]) return(1e99)
         f = -sum(log(dght(y, x[1], x[2], x[3], x[4])))
@@ -74,8 +63,8 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10,
     # Variable Transformation and Minimization:
     eps = 1e-10
     BIG = 1000
-    f = eghtmle(x = c(beta, delta, mu, nu), y = x, trace = FALSE)
-    r = nlminb(start = c(beta, delta, mu, nu), objective = eghtmle,
+    f = obj(x = c(beta, delta, mu, nu), y = x, trace = FALSE)
+    r = nlminb(start = c(beta, delta, mu, nu), objective = obj,
         lower = c(-BIG, eps, -BIG, -BIG), upper = BIG, y = x,
         trace = trace)
     names(r$par) <- c("beta", "delta", "mu", "nu")
@@ -83,7 +72,7 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10,
     # Result:
     if (scale) {
         r$par = r$par / c(SD, 1/SD, 1/SD, 1)
-        r$objective = eghtmle(r$par, y = as.vector(x.orig), trace = trace)
+        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
 
     # Optional Plot:

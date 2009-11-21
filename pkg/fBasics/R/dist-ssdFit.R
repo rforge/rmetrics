@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTIONS:       DESCRIPTION
-#   .ssdFit         Estimate probability densities using smoothing spline ANOVA
+#   ssdFit          Estimate probability densities using smoothing spline ANOVA
 #   .print.ssd      S3 Print Method
 ################################################################################
 

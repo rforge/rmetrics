@@ -14,24 +14,18 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2009, Rmetrics Association, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-
 
 ################################################################################
 # FUNCTION:           DESCRIPTION:
-#  .nigMean            Computes the mean of the normal inverse Gaussian PDF
-#  .nigVar             Computes the variance of the normal inverse Gaussian PDF
-#  .nigSkew            Computes the skewness of the normal inverse Gaussian PDF
-#  .nigKurt            Computes the kurtosis of the normal inverse Gaussian PDF
+#  nigMean             Computes the mean of the normal inverse Gaussian PDF
+#  nigVar              Computes the variance of the normal inverse Gaussian PDF
+#  nigSkew             Computes the skewness of the normal inverse Gaussian PDF
+#  nigKurt             Computes the kurtosis of the normal inverse Gaussian PDF
 #  nigShapeTriangle    Plots NIG Shape Triangle
 ################################################################################
 
 
-.nigMean <- 
+nigMean <- 
 function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
@@ -53,7 +47,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.nigVar <- 
+nigVar <- 
 function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
@@ -76,7 +70,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.nigSkew <- 
+nigSkew <- 
 function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
@@ -98,7 +92,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.nigKurt <- 
+nigKurt <- 
 function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   
     # A function implemented by Diethelm Wuertz
