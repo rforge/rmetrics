@@ -45,6 +45,7 @@ function(x)
     # FUNCTION:
     
     # Distance:
+    x = t(as.matrix(x))
     dist = as.dist(1-cor(x))
     
     # Return Value:
@@ -60,6 +61,7 @@ function(x)
     # FUNCTION:
     
     # Distance:
+    x = t(as.matrix(x))
     dist = as.dist(1-cor(x, method = "kendall"))
     
     # Return Value:
@@ -75,6 +77,7 @@ function(x)
     # FUNCTION:
     
     # Distance:
+    x = t(as.matrix(x))
     dist = as.dist(1-cor(x, method = "spearman"))
     
     # Return Value:
@@ -89,7 +92,7 @@ function(x, nbin=10)
     
     # FUNCTION:
     
-    # borrowed from R package bioDist
+    # borrowed from R package bioDist and slightly modified
     
     # Distance:
     x <- as.matrix(x)
@@ -100,15 +103,15 @@ function(x, nbin=10)
     ppfun <- function(pp) {pp<-pp[pp>0]; -sum(pp*log(pp ))}
     appfun <- function(x,y) {
         ppfun(table(x)/nc)+ppfun(table(y)/nc) - ppfun(c(table(x, y)/nc))}
-    rvec<-rep(NA, nr*(nr-1)/2)
-    ct <- 1
+    mat = matrix(rep(NA, nr*nr), ncol = nr)
     for(i in 1:(nr-1)) {
         for(j in (i+1):nr) {
-            rvec[ct] <- appfun(clist[[i]], clist[[j]])
-            ct <- ct+1
+            mat[i,j] <- mat[j,i]<- appfun(clist[[i]], clist[[j]])
         }
     }
-    dist = 1 - sqrt(1 - exp(-2*rvec)) 
+    mat = 1 - sqrt(1 - exp(-2*mat))
+    colnames(mat) = rownames(mat) = rownames(x)
+    dist = as.dist(mat)
         
     # Return Value:
     dist
