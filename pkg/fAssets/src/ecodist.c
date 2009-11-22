@@ -105,7 +105,9 @@ RANDOUT;
 }
 
 
-void permute(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
+/* DW renamed permute to permute2 */
+void permute2(double *x, double *y, int *n, int *xlen, int *nperm, 
+    double *zstats, double *tmat, int *rarray)
 
 {
 
@@ -430,7 +432,8 @@ RANDOUT;
 
 
 
-void xpermute(double *x, double *y, int *n, int *xlen, int *nperm, double *zstats, double *tmat, int *rarray)
+void xpermute(double *x, double *y, int *n, int *xlen, int *nperm, 
+    double *zstats, double *tmat, int *rarray)
 
 {
 
