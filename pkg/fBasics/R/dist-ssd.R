@@ -35,7 +35,6 @@ function(x, param)
     # FUNCTION:
     
     # Return Value:
-    class(param) = "ssden"
     .dssden(object = param, x = x) 
 }    
 
@@ -54,7 +53,6 @@ function(q, param)
     # FUNCTION:
     
     # Return Value:
-    class(param) = "ssden"
     .pssden(object = param, q = q) 
 }
 
@@ -73,7 +71,6 @@ function(p, param)
     # FUNCTION:
     
     # Return Value:
-    class(param) = "ssden"
     .qssden(object = param, p = p) 
 }
 
@@ -92,7 +89,6 @@ function(n, param)
     # FUNCTION:
     
     # Return Value:
-    class(param) = "ssden"
     .qssden(object = param, p = runif(n)) 
 }
 

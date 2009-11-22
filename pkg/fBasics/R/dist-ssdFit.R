@@ -23,7 +23,7 @@
 
 
 ssdFit <-  
-function(x, type = c("cubic", "linear", "thin-plate"))
+function(x)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -35,8 +35,7 @@ function(x, type = c("cubic", "linear", "thin-plate"))
     # FUNCTION:
     
     # Parameter Fit: 
-    ans = .ssden(~x, type = type[1])
-    class(ans) = "ssd"
+    ans = .ssden(~x)
     
     # Return Value:
     ans  
@@ -46,7 +45,7 @@ function(x, type = c("cubic", "linear", "thin-plate"))
 # ------------------------------------------------------------------------------
 
 
-print.ssd <- 
+.print.ssd <- 
 function(x, ...)
 {
     # A function implemented by Diethelm Wuertz

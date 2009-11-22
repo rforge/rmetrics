@@ -130,7 +130,7 @@ function(x, radius = 0.8, labels = names(x), edges = 200,
 .varpieDemo <- 
 function()
 {
-    $ Description:
+    # Description:
     #    Creates some demo plots
     
     # FUNCTION:

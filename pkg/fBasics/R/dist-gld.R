@@ -58,7 +58,7 @@ function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     
     # Density:
     d = .dglD(x, 
-        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4, 
         param="rs")
     
     # Return Value:
@@ -98,7 +98,7 @@ function(q, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     
     # Probability:
     p = .pglD(q, 
-        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4, 
         param="rs")
 
     # Return Value:
@@ -138,7 +138,7 @@ function(p, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     
     # Quantiles:
     q = .qglD(p, 
-        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4, 
         param="rs")
     
     # Return Value:
@@ -175,7 +175,7 @@ function(n = 100, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     
     # Random Variates:
     r = .rglD(n, 
-        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4= lambda4, 
+        lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4, 
         param="rs")
     
     # Return Value:

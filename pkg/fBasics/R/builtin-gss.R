@@ -3,7 +3,6 @@
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
 # version 2 of the License, or (at your option) any later version.
-#
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
@@ -460,7 +459,7 @@ function(d, k) {
                         as.double(prec), as.integer(maxiter),
                         as.double(.Machine$double.eps),
                         wk=double(2*(nqd+nobs)+nxis*(nxis+4)+max(nxis,3)),
-                        info=integer(1),PACKAGE="gss")
+                        info=integer(1),PACKAGE="fBasics")
         if (fit$info==1) stop("gss error in .ssden: Newton iteration diverges")
         if (fit$info==2) warning("gss warning in .ssden: Newton iteration fails to converge")
         assign("cd",fit$cd,inherit=TRUE)
@@ -527,7 +526,7 @@ function(d, k) {
                         as.double(prec), as.integer(maxiter),
                         as.double(.Machine$double.eps),
                         wk=double(2*(nqd+nobs)+nxis*(nxis+4)+max(nxis,3)),
-                        info=integer(1),PACKAGE="gss")
+                        info=integer(1),PACKAGE="fBasics")
         if (fit$info==1) stop("gss error in .ssden: Newton iteration diverges")
         if (fit$info==2) warning("gss warning in .ssden: Newton iteration fails to converge")
         assign("cd",fit$cd,inherit=TRUE)

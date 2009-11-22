@@ -116,7 +116,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=.rgld(5000); fit=.gldFit.mle(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=gldFit.mle(x)@fit$estimate; fit
     
     # FUNCTION:
 
@@ -214,7 +214,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=.rgld(5000); fit=.gldFit.mps(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=gldFit.mps(x)@fit$estimate; fit
     
     # FUNCTION:
 
@@ -308,13 +308,18 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 # ------------------------------------------------------------------------------
 
 
-.ksGLD <- function(N, PFGL) {
+.ksGLD <- 
+function(N, PFGL) {
     D = 1/(2*N)  + max ( abs( PFGL - ((1:N)-0.5)/N ) )
     D }
-.cvmGLD <- function(N, PFGL) {
+    
+.cvmGLD <- 
+function(N, PFGL) {
     W2 = 1/(12*N)  + sum ( PFGL - ((1:N)-0.5)/N  )^2
-    W2 }    
-.adGLD <- function(N, PFGL) {
+    W2 } 
+       
+.adGLD <- 
+function(N, PFGL) {
     A2 = -N -(1/N) * sum( (2*(1:N)-1) * ( log(PFGL) + log(1-rev(PFGL)) ) )
     A2 }        
      
@@ -438,7 +443,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=rgld(5000); fit=.gldFit.hist(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=gldFit.hist(x)@fit$estimate; fit
     
     # FUNCTION:
 
@@ -537,7 +542,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=rgld(5000); fit=.gldFit.rquant(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=gldFit.rquant(x)@fit$estimate; fit
     
     # FUNCTION:
 
@@ -557,8 +562,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     xIQR = sampleIQR(x)
     xSKEW = sampleSKEW(x)
     xKURT = sampleKURT(x)
-    # c(xMED, xIQR, xSKEW, xKURT)
-    # xLim = c(xMED - 5*xIQR, xMED + 5*xIQR)
 
     # Objective Function:
     obj = function(x, xMED, xIQR, xSKEW, xKURT, trace)
@@ -579,7 +582,8 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
         if (trace) {
             cat("\n Objective Function Value:  ", f)
             cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
-        f }
+        }
+        f
     }
   
     # Parameter Estimation:
@@ -593,7 +597,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
         xMED = xMED, xIQR = xIQR, xSKEW = xSKEW, xKURT = xKURT,
         trace = trace)
     names(r$par) <- c("lambda1", "lambda2", "lambda3", "lambda4")
-
+    
     # Add Title and Description:
     if (is.null(title)) title = "GLD Region 4 Robust Moment Estimation"
     if (is.null(description)) description = description()
@@ -615,7 +619,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
         y.points = dgld(span, r$par[1], r$par[2], r$par[3], r$par[4])
         ylim = log(c(min(y.points), max(y.points)))
         if (add) {
-            lines(x = span, y = log(y.points), col = "steelblue")
+            lines(x = span, y = log(y.points), ...)
         } else {
             plot(x, log(y), xlim = c(span[1], span[length(span)]),
                 ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
