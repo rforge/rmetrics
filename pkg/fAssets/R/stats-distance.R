@@ -22,7 +22,7 @@
 function(x)
 {
     # Distance:
-    dist = as.dist(1-cor(x)))
+    dist = as.dist(1-cor(x))
     
     # Return Value:
     dist
