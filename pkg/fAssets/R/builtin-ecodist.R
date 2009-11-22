@@ -42,7 +42,7 @@
 
 
 # distance <- 
-.ecoDist <-
+.ecodist <-
 function(x, method="euclidean")
 {
     # calculates similarity and dissimilarity coefficients
