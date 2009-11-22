@@ -85,7 +85,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A
@@ -102,7 +102,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A
@@ -119,7 +119,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A
@@ -136,7 +136,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A
@@ -153,7 +153,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A
@@ -170,7 +170,7 @@ function(x, method="euclidean")
             as.integer(N),
             as.integer(P),
             A = as.double(A),
-            PACKAGE = "ecodist")$A
+            PACKAGE = "fAssets")$A
          
          A <- array(A, dim=c(N, N, P))
         A

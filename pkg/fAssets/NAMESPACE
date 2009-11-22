@@ -37,6 +37,23 @@ S3method("summary", "fASSETS")
 ################################################
 
 export(
+    ".corDist",
+    ".kendallDist",
+    ".spearmanDist",
+    ".mutinfoDist",
+    ".ecodist",
+    ".euclideanDist",
+    ".maximumDist",
+    ".manhattanDist", 
+    ".canberraDist",
+    ".binaryDist",
+    ".minkowskiDist", 
+    ".braycurtisDist",
+    ".mahalanobisDist",
+    ".jaccardDist",
+    ".differenceDist",
+    ".sorensenDist",
+
     "covarRisk",
     "mcr",
     "mcrBeta",

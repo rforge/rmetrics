@@ -16,11 +16,34 @@
 
 
 ################################################################################
+# FUNCTION:
+#  .corDist
+#  .kendallDist
+#  .spearmanDist
+#  .mutinfoDist
+# FUNCTION:
+#  .euclideanDist
+#  .maximumDist
+#  .manhattanDist 
+#  .canberraDist
+#  .binaryDist
+#  .minkowskiDist 
+# FUNCTION:
+#  .braycurtisDist
+#  .mahalanobisDist
+#  .jaccardDist
+#  .differenceDist
+#  .sorensenDist
+################################################################################
 
 
 .corDist <-
 function(x)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = as.dist(1-cor(x))
     
@@ -32,6 +55,10 @@ function(x)
 .kendallDist <-
 function(x)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = as.dist(1-cor(x, method = "kendall"))
     
@@ -43,6 +70,10 @@ function(x)
 .spearmanDist <-
 function(x)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = as.dist(1-cor(x, method = "spearman"))
     
@@ -52,8 +83,12 @@ function(x)
 
 
 .mutinfoDist <-
-function(x)
+function(x, nbin=10)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # borrowed from R package bioDist
     
     # Distance:
@@ -89,6 +124,10 @@ function(x)
 .euclideanDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = dist(x, "euclidean")
     
@@ -100,6 +139,10 @@ function(x)
 .maximumDist <-
 function(x)
 {   
+    # FUNCTION:
+    
+    # A function implemented by Diethelm Wuertz
+    
     # Distance:
     dist = dist(x, "maximum")
     
@@ -111,6 +154,10 @@ function(x)
 .manhattanDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = dist(x, "manhattan")
     
@@ -122,6 +169,10 @@ function(x)
 .canberraDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = dist(x, "canberra")
     
@@ -144,6 +195,10 @@ function(x)
 .minkowskiDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = dist(x, "minkowski")
     
@@ -164,6 +219,10 @@ function(x)
 .braycurtisDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = .ecodist(x, "braycurtis")
     
@@ -175,6 +234,10 @@ function(x)
 .mahalanobisDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = .ecodist(x, "mahalanobis")
     
@@ -186,6 +249,10 @@ function(x)
 .jaccardDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = .ecodist(x, "jaccard")
     
@@ -197,6 +264,10 @@ function(x)
 .differenceDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = .ecodist(x, "difference")
     
@@ -208,6 +279,10 @@ function(x)
 .mahalanobisDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
     dist = .ecodist(x, "mahalanobis")
     
@@ -216,11 +291,15 @@ function(x)
 }
 
 
-.sorensonDist <-
+.sorensenDist <-
 function(x)
 {   
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
     # Distance:
-    dist = .ecodist(x, "sorenson")
+    dist = .ecodist(x, "sorensen")
     
     # Return Value:
     dist 
