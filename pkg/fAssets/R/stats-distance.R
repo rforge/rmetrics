@@ -224,7 +224,7 @@ function(x)
     # FUNCTION:
     
     # Distance:
-    dist = .ecodist(x, "braycurtis")
+    dist = .ecodist(x, "bray-curtis")
     
     # Return Value:
     dist
