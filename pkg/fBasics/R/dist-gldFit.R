@@ -237,10 +237,8 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
         typeFun = mean 
     } else if (type == "max") {
         typeFun = function(x) -max(x)
-    }
     } else if (type == "var") {
-        typeFun = function(x) var(x)
-    }
+        typeFun = function(x) var(x) }
     obj = function(x, y = x, typeFun, trace) { 
         PGLD = try(pgld(sort(y), x[1], x[2], x[3], x[4]), silent = TRUE)
         if (class(PGLD) == "try-error") return(1e9) 
