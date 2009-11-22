@@ -21,12 +21,13 @@
 #  .nigFit.mle          max Log-likelihood Estimation
 #  .nigFit.gmm          gemeralized method of moments estimation
 #  .nigFit.mps          maximum product spacings estimation
+#  .nigFit.vmps         minimum variance product spacings estimation
 ################################################################################
 
 
 nigFit <- 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    method = c("mle", "gmm", "mps"), 
+    method = c("mle", "gmm", "mps", "vmps"), 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, ...)
 {
@@ -50,10 +51,15 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
             trace = trace, title = title, description = description, ...)
     } else if (method == "mps") {
         # MPS:
-        fit = .nigFit.gmm(x = x, alpha = alpha, beta = beta, delta = delta, 
+        fit = .nigFit.mps(x = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu , scale = scale, doplot = doplot, span = span, 
             trace = trace, title = title, description = description, ...)
-    } 
+    } else if (method == "vmps") {
+        # MPS:
+        fit = .nigFit.vmps(x = x, alpha = alpha, beta = beta, delta = delta, 
+            mu = mu , scale = scale, doplot = doplot, span = span, 
+            trace = trace, title = title, description = description, ...)
+    }  
     
     # Return Value:
     fit
@@ -90,7 +96,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
 
     # Parameter Estimation:
     obj = function(x, y = x, trace) {
-        if (abs(x[2]) >= x[1]) return(1e99)
+        if (abs(x[2]) >= x[1]) return(1e9)
         f = -sum(dnig(y, x[1], x[2], x[3], x[4], log = TRUE))
         # Print Iteration Path:
         if (trace) {
@@ -266,11 +272,9 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
 
     # Parameter Estimation:
     obj <- function(x, y = x, trace) {
-        if (abs(x[2]) >= x[1]) return(1e99)
-        
+        if (abs(x[2]) >= x[1]) return(1e9)
         DH = diff(c(0, na.omit(.pnigC(sort(y), x[1], x[2], x[3], x[4])), 1))
         f = -mean(log(DH[DH > 0]))*length(y)
-
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
@@ -324,6 +328,98 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.nigFit.vmps  <- 
+function (x, alpha = 1, beta = 0, delta = 1, mu = 0,
+    scale = TRUE, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE, 
+    title = NULL,description = NULL, ...)
+{
+    # A function implemented by Yohan Chalabi
+
+    # Description:
+    #   Fits parameters of a NIG using maximum product spacings  
+
+    # Example:
+    #   set.seed(4711); x = rnig(500); vmps = .nigFit.vmps(x)@fit$estimate; vmps
+    
+    # FUNCTION:
+
+    # Transform:
+    x.orig = x
+    x = as.vector(x)
+    if (scale) {
+        SD = sd(x)
+        x = x/SD
+    }
+    
+    # Settings:
+    CALL = match.call()
+    
+    # Parameter Estimation:
+    obj <- function(x, y = x, trace) {
+        if (abs(x[2]) >= x[1]) return(1e+9)
+        DH = diff(c(0, na.omit(.pnigC(sort(y), x[1], x[2], x[3], x[4])), 1))
+        # f = log(var(DH[DH > 0]))  # YC
+        f = var(log(DH[DH > 0]))    # DW ?  
+        if (trace) {
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
+        }
+        f
+    }
+    eps = 1e-10
+    BIG = 1000
+    r = nlminb(
+        start = c(alpha, beta, delta, mu), 
+        objective = obj,
+        lower = c(eps, -BIG, eps, -BIG), 
+        upper = BIG, y = x,
+        trace = trace)
+    names(r$par) <- c("alpha", "beta", "delta", "mu")
+    
+    # Add Title and Description:
+    if (is.null(title)) title = "NIG varMPS Parameter Estimation"
+    if (is.null(description)) description = description()
+    
+    # Result:
+    if (scale) {
+        r$par = r$par/c(SD, SD, 1/SD, 1/SD)
+        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
+    }
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+    
+    # Optional Plot:
+    if (doplot) {
+        x = as.vector(x.orig)
+        if (span == "auto") span = seq(min(x), max(x), length = 501)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
+        ylim = log(c(min(y.points), max(y.points)))
+        if (add) {
+            lines(x = span, y = log(y.points), col = "steelblue")
+        } else {
+            plot(x, log(y), xlim = c(span[1], span[length(span)]),
+                ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+            title("NIG varMPS Parameter Estimation")
+            lines(x = span, y = log(y.points), col = "steelblue")
+        }
+    }
+    
+    
+    # Return Value:
+    new("fDISTFIT",
+        call = as.call(CALL),
+        model = "Normal Inverse Gaussian Distribution",
+        data = as.data.frame(x.orig),
+        fit = fit,
+        title = as.character(title),
+        description = description() )
+}
+
+
 ################################################################################
 
-   

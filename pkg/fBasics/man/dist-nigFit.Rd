@@ -15,7 +15,7 @@
 
 \usage{   
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
-    method = c("mle", "gmm", "mps"), scale = TRUE, doplot = TRUE, 
+    method = c("mle", "gmm", "mps", "vmps"), scale = TRUE, doplot = TRUE, 
     span = "auto", trace = TRUE, title = NULL, description = NULL, \dots) 
 }
 
@@ -51,10 +51,11 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         a logical flag. Should a plot be displayed?
         }
     \item{method}{
-        a character string. Either \code{"mle"}, Maximum Likelihood
-        Estimation, the default, \code{"gmm"} Gemeralized Method of 
-        Moments Estimation, or \code{"mps"} Maximum Product Spacings 
-        Estimation.
+        a character string. Either 
+        \code{"mle"}, Maximum Likelihood Estimation, the default, 
+        \code{"gmm"} Gemeralized Method of Moments Estimation, 
+        \code{"mps"} Maximum Product Spacings Estimation, or
+        \code{"vmps"} Minimum Variance Product Spacings Estimation.
         }
     \item{scale}{
         a logical flag, by default \code{TRUE}. Should the time series

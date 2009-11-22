@@ -273,9 +273,12 @@ export(
     ".mrlPlot",
     "nFit",
     "nigFit",
+    
     ".nigFit.gmm",
     ".nigFit.mle",
     ".nigFit.mps",
+    ".nigFit.vmps",
+    
     "nigKurt",
     "nigMean",
     "nigMode",

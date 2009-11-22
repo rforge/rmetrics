@@ -30,7 +30,8 @@ Available Functions:
         pqC         -   -   x   -   | -   x    | -      -   -  | -    
     *Fit                            |          |               |      
         mle         x   x   x   x   | x   x    | x      x   x  | -    
-        mps         -   -   x   -   | -   -    | -      x   -  | -    
+        mps         -   -   x   -   | -   -    | -      x   -  | -  
+        vmps        -   -   x   -   | -   -    | -      -   -  | -  
         gmm         -   -   x   -   | -   -    | -      -   -  | -    
         lmoments    -   -   -   -   | -   -    | -      -   -  | -    
         ks          -   -   -   -   | -   -    | -      x   -  | -    

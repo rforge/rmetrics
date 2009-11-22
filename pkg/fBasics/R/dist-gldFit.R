@@ -20,7 +20,7 @@
 #  gldFit               Fits parameters of a GLD
 #  .gldFit.mle          Fits parameters of a GLD using maximum log-likelihood
 #  .gldFit.mps          Fits parameters of a GLD using maximum product spacings
-#                         types  = mean, max  
+#                         types  = mean, max, var  
 #  .gldFit.gof          Fits parameters of a GLD using GoF Statistics
 #                         types = ad, cvm, ks
 #   .ksGLD               Returns Kolmogorov Smirnov Statistics
@@ -69,7 +69,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
             scale, doplot, add, span, trace, title, description) 
     } else if (method == "mps") {
         ans = .gldFit.mps(x, lambda1, lambda2, lambda3, lambda4, 
-            scale, doplot, add, span, trace, title, description) 
+            scale, doplot, add, span, trace, title, description, ...) 
     } else if (method == "ad") {
         ans = .gldFit.gof(x, lambda1, lambda2, lambda3, lambda4, 
             type = "ad",
@@ -232,18 +232,22 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Objective Function:
     TYPE = toupper(type)
+    signType = c(mean = 1, max = -1, var = 1)
     if(type == "mean") {
         typeFun = mean 
     } else if (type == "max") {
         typeFun = function(x) -max(x)
     }
+    } else if (type == "var") {
+        typeFun = function(x) var(x)
+    }
     obj = function(x, y = x, typeFun, trace) { 
         PGLD = try(pgld(sort(y), x[1], x[2], x[3], x[4]), silent = TRUE)
         if (class(PGLD) == "try-error") return(1e9) 
         DH = diff(c(0, na.omit(PGLD), 1))
-        f = -mean(log(DH[DH > 0])) 
+        # f = -mean(log(DH[DH > 0])) 
         # f = max(log(DH[DH > 0]))
-        # f = -typeFun(log(DH[DH > 0]))
+        f = -typeFun(log(DH[DH > 0]))
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", f)
