@@ -361,8 +361,7 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0,
     obj <- function(x, y = x, trace) {
         if (abs(x[2]) >= x[1]) return(1e+9)
         DH = diff(c(0, na.omit(.pnigC(sort(y), x[1], x[2], x[3], x[4])), 1))
-        # f = log(var(DH[DH > 0]))  # YC
-        f = var(log(DH[DH > 0]))    # DW ?  
+        f = log(var(DH[DH > 0]))    
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
             cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
