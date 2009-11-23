@@ -19,22 +19,22 @@
 # FUNCTION:            DESCRIPTION:
 #  gldFit               Fits parameters of a GLD
 #  .gldFit.mle          Fits parameters of a GLD using maximum log-likelihood
-#  .gldFit.mps          Fits parameters of a GLD using maximum product spacings
-#                         types  = mean, max, var  
+#  .gldFit.mps          Fits parameters of a GLD using maximum product spacings 
 #  .gldFit.gof          Fits parameters of a GLD using GoF Statistics
-#                         types = ad, cvm, ks
-#   .ksGLD               Returns Kolmogorov Smirnov Statistics
-#   .cvmGLD              Returns Cramer von Mise Statistics
-#   .adGLD               Returns Anderson Darling Statistics
+#   .ksGLD               Kolmogorov Smirnov Statistics
+#   .cvmGLD              Cramer von Mise Statistics
+#   .adGLD               Anderson Darling Statistics
 #  .gldFit.hist         Fits parameters of a GLD using a histogram fit
-#                         types = sturges, scott, fd
+#   type="fd"            Freedman-Diaconis binning
+#   type="scott"         Scott binning
+#   type="sturges"       Sturges binning
 #  .gldFit.rob          Fits parameters of a GLD using robust moments fit  
 ################################################################################
 
 
 gldFit <-
 function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
-    method = c("mle", "mps", "ad", "cvm", "ks", "fd", "scott", "sturges", "rob"),
+    method = c("mle", "mps", "gof", "hist", "rob"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -66,34 +66,19 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     # Parameter Fit:
     if (method == "mle") { 
         ans = .gldFit.mle(x, lambda1, lambda2, lambda3, lambda4, 
-            scale, doplot, add, span, trace, title, description) 
+            scale, doplot, add, span, trace, title, description, ...) 
     } else if (method == "mps") {
         ans = .gldFit.mps(x, lambda1, lambda2, lambda3, lambda4, 
             scale, doplot, add, span, trace, title, description, ...) 
-    } else if (method == "ad") {
+    } else if (method == "gof") {
         ans = .gldFit.gof(x, lambda1, lambda2, lambda3, lambda4, 
-            type = "ad",
-            scale, doplot, add, span, trace, title, description) 
-    } else if (method == "cvm") {
-        ans = .gldFit.gof(x, lambda1, lambda2, lambda3, lambda4, 
-            type = "cvm",
-            scale, doplot, add, span, trace, title, description) 
-    } else if (method == "ks") {
-        ans = .gldFit.gof(x, lambda1, lambda2, lambda3, lambda4, 
-            type = "ks",
-            scale, doplot, add, span, trace, title, description) 
-    } else if (method == "fd") {
+            scale, doplot, add, span, trace, title, description, ...) 
+    } else if (method == "hist") {
         ans = .gldFit.hist(x, lambda1, lambda2, lambda3, lambda4, 
-            type = "fd",
-            scale, doplot, add, span, trace, title, description) 
-    } else if (method == "scott") {
-        ans = .gldFit.hist (x, lambda1, lambda2, lambda3, lambda4, 
-            type = "scott",
-            scale, doplot, add, span, trace, title, description) 
-    } else if (method == "sturges") {
-        ans = .gldFit.hist (x, lambda1, lambda2, lambda3, lambda4,
-            type = "sturges",
-            scale, doplot, add, span, trace, title, description) 
+            scale, doplot, add, span, trace, title, description, ...) 
+    } else if (method == "rob") {
+        ans = .gldFit.rob (x, lambda1, lambda2, lambda3, lambda4, 
+            scale, doplot, add, span, trace, title, description, ...) 
     }
        
     # Return Value:
@@ -203,7 +188,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
 .gldFit.mps <-
 function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
-    type = c("mean", "max"),
+    type = c("sum", "mean", "max", "median", "var"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -214,7 +199,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=rgld(5000); fit=gldFit.mps(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=.gldFit.mps(x)@fit$estimate; fit
     
     # FUNCTION:
 
@@ -232,20 +217,22 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Objective Function:
     TYPE = toupper(type)
-    signType = c(mean = 1, max = -1, var = 1)
-    if(type == "mean") {
+    if(type == "sum") {
+        typeFun = sum 
+    } else if (type == "mean") {
         typeFun = mean 
+    } else if (type == "median") {
+        typeFun = median 
     } else if (type == "max") {
         typeFun = function(x) -max(x)
     } else if (type == "var") {
-        typeFun = function(x) var(x) }
+        typeFun = function(x) -var(x) }
     obj = function(x, y = x, typeFun, trace) { 
         PGLD = try(pgld(sort(y), x[1], x[2], x[3], x[4]), silent = TRUE)
         if (class(PGLD) == "try-error") return(1e9) 
         DH = diff(c(0, na.omit(PGLD), 1))
-        # f = -mean(log(DH[DH > 0])) 
-        # f = max(log(DH[DH > 0]))
-        f = -typeFun(log(DH[DH > 0]))
+        f = try(-typeFun(log(DH[DH > 0])), silent = TRUE)
+        if (class(PGLD) == "try-error") return(1e9) 
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", f)
@@ -327,6 +314,7 @@ function(N, PFGL) {
      
     
 # ------------------------------------------------------------------------------   
+
 
 .gldFit.gof <-
 function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
@@ -434,7 +422,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
 .gldFit.hist <-
 function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
-    type = c("FD", "Sturges", "Scott"),
+    type = c("fd", "sturges", "scott"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {
@@ -452,6 +440,10 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     # Settings:
     scale = FALSE
     CALL = match.call()
+    type = match.arg(type)
+    if (type == "fd") type = "FD"
+    else if (type == "scott") type = "Scott"
+    else if (type == "sturges") type = "Sturges"
     
     # Transform:
     x.orig = x
@@ -544,7 +536,7 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
 
     # Example:
     #   require(fBasics)
-    #   set.seed(4711); x=rgld(5000); fit=gldFit.rquant(x)@fit$estimate; fit
+    #   set.seed(4711); x=rgld(5000); fit=.gldFit.rob(x)@fit$estimate; fit
     
     # FUNCTION:
 

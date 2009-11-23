@@ -17,7 +17,7 @@
 
 \usage{
 gldFit(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, 
-    method = c("mle", "mps", "ad", "cvm", "ks", "fd", "scott", "sturges", "rob"),
+    method = c("mle", "mps", "gof", "hist", "rob"),
     scale = NA, doplot = TRUE, add = FALSE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
 }
@@ -123,17 +123,15 @@ gldFit(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     
     \code{"mps"}, maximum product spacing estimation.
     
-    \code{"ad"}, Anderson-Darling goodness of fit approach.
+    \code{"gof"}, goodness of fit approaches, 
+        \code{type="ad"} Anderson-Darling, 
+        \code{type="cvm"} Cramer-vonMise,
+        \code{type="ks"} Kolmogorov-Smirnov.
     
-    \code{"cvm"}, Cramer-vonMises goodness of fit approach.
-    
-    \code{"ks"}, Kolmogorov Smirnov goodness of fit approach.
-    
-    \code{"fd"}, Freedman-Diaconis histogram binning approach.
-    
-    \code{"scott"}, Scott histogram binning approach.
-    
-    \code{"sturges"}, Sturges histogram binning approach.
+    \code{"hist"}, histogram binning approaches,   
+        \code{"fd"} Freedman-Diaconis binning,
+        \code{"scott"}, Scott histogram binning,
+        \code{"sturges"}, Sturges histogram binning.
     
     \code{"rob"}, robust moment matching.
        
