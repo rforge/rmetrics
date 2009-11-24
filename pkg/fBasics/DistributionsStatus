@@ -18,51 +18,51 @@ Overview of Distribution:
 ________________________________________________________________________________
 Available Functions:
 
-                                    | Standard 
-                    gh  hyp nig ght | sgh snig | stable gld t  | ssd
-                                    |          |               | 
-    Parameters      5   4   4   4   | 3   2    | 4      4   1  | spline                                                      
-    *                               |          |               | 
-        d           x   x   x   x   | x   x    | x      x   x  | x    
-        p           x   x   x   x   | x   x    | x      x   x  | x    
-        q           x   x   x   x   | x   x    | x      x   x  | x    
-        r           x   x   x   x   | x   x    | x      x   x  | x    
-        pqC         -   -   x   -   | -   x    | -      -   -  | -    
-    *Fit                            |          |               |      
-        mle         x   x   x   x   | x   x    | x      x   x  | -    
-        mps         -   -   x   -   | -   -    | -      x   -  | -  
-        vmps        -   -   x   -   | -   -    | -      -   -  | -  
-        gmm         -   -   x   -   | -   -    | -      -   -  | -    
-        lmoments    -   -   -   -   | -   -    | -      -   -  | -    
-        ks          -   -   -   -   | -   -    | -      x   -  | -    
-        cvm         -   -   -   -   | -   -    | -      x   -  | -    
-        ad          -   -   -   -   | -   -    | -      x   -  | -    
-        scott       -   -   -   -   | -   -    | -      x   -  | -    
-        fd          -   -   -   -   | -   -    | -      x   -  | -  
-        quantile    -   -   -   -   | -   -    | x      -   -  | - 
-        robMoments  -   -   -   -   | -   -    | -      x   -  | -
-        nonParamet  -   -   -   -   | -   -    | -      -   -  | x
-    *Mode                           |          |               |      
-        analytic    -   x   -   -   | -   -    | x      -   -  | -       
-        optimize    x   -   x   x   | -   -    | -      x   -  | -    
-    *Moments                        |          |               |      
-        rawMean     x   -   +   -   | -   -    | o      -   -  | -    
-        rawVar      x   -   +   -   | -   -    | o      -   -  | -    
-        rawSkew     x   -   +   -   | -   -    | o      -   -  | -    
-        rawKurt     x   -   +   -   | -   -    | o      -   -  | -    
-        rawMoments  x   -   +   -   | -   -    | o      -   -  | -    
-    *Lmoments                       |          |               |      
-        mean        -   -   -   -   | -   -    | -      -   -  | -    
-        var         -   -   -   -   | -   -    | -      -   -  | -    
-        skew        -   -   -   -   | -   -    | -      -   -  | -    
-        kurt        -   -   -   -   | -   -    | -      -   -  | -    
-    *RobMoments                     |          |               |      
-        MED         x   -   x   x   | -   -    | -      x   -  | o    
-        IQR         x   -   x   x   | -   -    | -      x   -  | o    
-        SKEW        x   -   x   x   | -   -    | -      x   -  | o    
-        KURT        x   -   x   x   | -   -    | -      x   -  | o    
-                                    |          | 
-                    gh  hyp nig ght | sgh snig | stable gld t  | ssd
+                         |                 | Standard 
+                    norm | gh  hyp nig ght | sgh snig | stable gld t  | ssd
+                         |                 |          |               | 
+    Parameters           | 5   4   4   4   | 3   2    | 4      4   1  | spline                                                      
+    *                    |                 |          |               | 
+        d           x    | x   x   x   x   | x   x    | x      x   x  | x    
+        p           x    | x   x   x   x   | x   x    | x      x   x  | x    
+        q           x    | x   x   x   x   | x   x    | x      x   x  | x    
+        r           x    | x   x   x   x   | x   x    | x      x   x  | x    
+        pqC         -    | -   -   x   -   | -   x    | -      -   -  | -    
+    *Fit                 |                 |          |               |      
+        mle         x    | x   x   x   x   | x   x    | x      x   x  | -    
+        mps         -    | -   -   x   -   | -   -    | -      x   -  | -  
+        vmps        -    | -   -   x   -   | -   -    | -      -   -  | -  
+        gmm         -    | -   -   x   -   | -   -    | -      -   -  | -    
+        lmoments    -    | -   -   -   -   | -   -    | -      -   -  | -    
+        ks          -    | -   -   -   -   | -   -    | -      x   -  | -    
+        cvm         -    | -   -   -   -   | -   -    | -      x   -  | -    
+        ad          -    | -   -   -   -   | -   -    | -      x   -  | -    
+        scott       -    | -   -   -   -   | -   -    | -      x   -  | -    
+        fd          -    | -   -   -   -   | -   -    | -      x   -  | -  
+        quantile    -    | -   -   -   -   | -   -    | x      -   -  | - 
+        robMoments  -    | -   -   -   -   | -   -    | -      x   -  | -
+        nonParamet  -    | -   -   -   -   | -   -    | -      -   -  | x
+    *Mode                |                 |          |               |      
+        analytic    -    | -   x   -   -   | -   -    | x      -   -  | -       
+        optimize    -    | x   -   x   x   | -   -    | -      x   -  | -    
+    *Moments             |                 |          |               |      
+        rawMean     -    | x   -   +   -   | -   -    | o      -   -  | -    
+        rawVar      -    | x   -   +   -   | -   -    | o      -   -  | -    
+        rawSkew     -    | x   -   +   -   | -   -    | o      -   -  | -    
+        rawKurt     -    | x   -   +   -   | -   -    | o      -   -  | -    
+        rawMoments  -    | x   -   +   -   | -   -    | o      -   -  | -    
+    *Lmoments            |                 |          |               |      
+        mean        -    | -   -   -   -   | -   -    | -      -   -  | -    
+        var         -    | -   -   -   -   | -   -    | -      -   -  | -    
+        skew        -    | -   -   -   -   | -   -    | -      -   -  | -    
+        kurt        -    | -   -   -   -   | -   -    | -      -   -  | -    
+    *RobMoments          |                 |          |               |      
+        MED         -    | x   -   x   x   | -   -    | -      x   -  | o    
+        IQR         -    | x   -   x   x   | -   -    | -      x   -  | o    
+        SKEW        -    | x   -   x   x   | -   -    | -      x   -  | o    
+        KURT        -    | x   -   x   x   | -   -    | -      x   -  | o    
+                    -    |                 |          | 
+                    norm | gh  hyp nig ght | sgh snig | stable gld t  | ssd
                                                          
 
 ________________________________________________________________________________

@@ -271,7 +271,10 @@ export(
     "monoPalette",
     ".moodTest",
     ".mrlPlot",
+    
     "nFit",
+    "normFit",
+    
     "nigFit",
     
     ".nigFit.gmm",
