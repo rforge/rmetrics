@@ -1364,6 +1364,10 @@ traditional Monte Carlo. The results are sensitive to the barrier level $H$, the
 (being in or out the money has a strong impact), the asset volatility $\sigma$ and
 the time point number $d$.
 
+Actuaries or readers with actuarial background can find an example of actuarial applications of
+QMC methods in \cite{albrecher}. This article focuses on simulation methods in ruin models 
+with non-linear dividend barriers.
+
 \section{Random generation tests\label{rngtest}}
 Tests of random generators aim to check if the output $u_1,\dots, u_n,\dots$ could be 
 considered as independent and identically distributed (i.i.d.) uniform variates for

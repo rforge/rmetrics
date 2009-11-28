@@ -5,16 +5,16 @@ Version 1.09
 
 NEW FEATURES
 
-- start runif interface for congruential generator and WELL RNG
-- vignette contains two chapters.
-- start to test true randomness (not included in this version).
+- start runif interface for congruential generator and WELL RNG,
+- vignette contains two chapters,
+- start to test true randomness (not included in this version),
 - increase the speed and accuracy of Halton and Sobol sequences.
 
 STRUCTURAL CHANGE
 
 - extract Pierre L'Ecuyer's code from randtoolbox and 
-put it in a dedicated package rngWELL
-- change the licence of randtoolbox from GPL to BSD licence
+put it in a dedicated package rngWELL,
+- change the licence of randtoolbox from GPL to BSD licence,
 - depends now on rngWELL.
 
 BUG FIXES
@@ -23,18 +23,18 @@ BUG FIXES
 BUG REPORT
 
 - Halton and Sobol sequences did not work on 64bit architecture when
-using normal transformation reported by Anirban Mukherjee.
-- Sobol sequences for dimension > 2 are wrong.
+using normal transformation reported by Anirban Mukherjee,
+- Sobol sequences for dimension > 2 need to be tested.
 
 Version 1.08 (never released on CRAN)
 =============
 
 NEW FEATURES
 
-- add function get.primes
+- add function get.primes,
 - table of primes moved from randtoolbox.c to primes.h and compressed
   by storing half difference from the previous prime instead of each
-  prime at least 5
+  prime (except for 2 and 3),
 - start runifinterface.
 
 Version 1.07
@@ -42,13 +42,13 @@ Version 1.07
 
 NEW FEATURES
 
-- integrate code for Halton, Sobol sequence from fBasics (Rmetrics)
-- randoolbox is now part of Rmetrics project (available on R-forge)
+- integrate code for Halton, Sobol sequence from fBasics (Rmetrics),
+- randoolbox is now part of Rmetrics project (available on R-forge),
 - increase the speed of congruRand.
 
 BUG FIXES
 
-- fix setSeed function.
+- fix setSeed function,
 - a warning shows up on 64 bit architecture.
 
 BUG REPORT
@@ -73,7 +73,7 @@ Version 1.05
 
 NEW FEATURES
 
-- add new WELL generators based on L'Ecuyer's code.
+- add new WELL generators based on L'Ecuyer's code,
 - add the Sobol and Halton sequences from fOptions package.
 
 BUG FIXES
@@ -94,11 +94,11 @@ Version 1.03
 
 NEW FEATURES
 
-- add the WELL generator thanks to the code of P. L'Ecuyer.
-- SFMT now allows for different mersenne exponents as well as parameter sets.
-- increase the possible dimension for Torus algorithm from 1000 to 100 000.
-- add the RAN_ARRAY generator of Knuth TAOCP (2002)
-- the function setRandSeed has be renamed by setSeed.
+- add the WELL generator thanks to the code of P. L'Ecuyer,
+- SFMT now allows for different mersenne exponents as well as parameter sets,
+- increase the possible dimension for Torus algorithm from 1000 to 100 000,
+- add the RAN_ARRAY generator of Knuth TAOCP (2002),
+- the function setRandSeed has be renamed by setSeed,
 - update the vignette.
 
 
@@ -107,9 +107,9 @@ Version 1.02
 
 NEW FEATURES
 
-- more random generation tests such as collision test and order test.
-- poker test is generalized to any dimension.
-- some auxiliary functions.
+- more random generation tests such as collision test and order test,
+- poker test is generalized to any dimension,
+- some auxiliary functions,
 - a detailed vignette on generating and testing random generation.
 
 BUG FIXES
@@ -125,7 +125,7 @@ Version 1.01 (never released on CRAN)
 
 NEW FEATURES
 
-- add withtorus option for SFMT function.
+- add withtorus option for SFMT function,
 - improve output of tests.
 
 
