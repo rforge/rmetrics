@@ -56,3 +56,7 @@ on http://random.mat.sbg.ac.at/results/karl/spectraltest . there might be some l
 7. implement the Wichman Hill RNG of 2006. paper available here 
 http://www.sciencedirect.com/science/article/B6V8V-4K7F86W-2/2/a3a33291b8264e4c882a8f21b6e43351 . 
 implementation may be found on the web.
+
+8. implement Latin Hypercube Sampling (use in some way the lhs pkg)
+
+9. support SSE2 processor operation for SFMT RNG.
