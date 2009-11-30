@@ -84,7 +84,7 @@ x3 <- runif(10)
 print(version.randtoolbox())
 
 #set WELL RNGs
-set.generator("WELL", seed=12345, order=1024, version=1)
+set.generator("WELL", seed=12345, order=1024, version="a")
 get.description()
 
 x0 <- runif(10)
