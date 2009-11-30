@@ -12,7 +12,7 @@ export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 export(stirling, permut, get.primes)
 
 ### Debugging
-# export(version.randtoolbox)
+ export(version.randtoolbox)
 
 
 ### use dynamic library for C code

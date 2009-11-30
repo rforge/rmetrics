@@ -154,7 +154,7 @@ ones are hard to find}. Association for Computing Machinery, vol. 31, 10, pp 119
 Wikipedia (2008), \emph{a linear congruential generator}.
 }
 \seealso{
-    \code{\link{.Random.seed}} for what is done in R about random number generation. 
+    \code{\link{.Random.seed}} for what is done in R about random number generation and \code{\link{runifinterface}} for the \code{runif} interface.
 }
 \author{
  Christophe Dutang and Petr Savicky

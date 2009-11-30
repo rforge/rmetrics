@@ -1,14 +1,21 @@
 
 Random simulation or Monte-Carlo methods rely on the fact we have access to random numbers. Even if nowadays having random sequence is no longer a problem, for many years producing random numbers was a big challenge. According to \cite{ripleybook}, simulation started in 1940s with physical devices. It brings us to a point we need to take care is the kind simulation we deal with. Using physical phenomena to get random numbers is referred in the literature as true randomness.
-However in our computers we use more frequently pseudo-random numbers, which 
-are defined as deterministic sequences, which mimic a sequence of
-i.i.d. random numbers chosen from the uniform distribution on the interval
-$[0,1]$ and have the same relevant statistical properties. Random number generators
-used for this purpose receive as input an initial information, which is called a user
-specified seed, and allow to obtain different output sequences of numbers from $[0,1]$
-depending on the seed. If the user does not specify the seed, then it is obtained from
-the machine time, i.e. the seed is computed with the seconds, miliseconds of the machine clock.
+%However in our computers we use more frequently pseudo-random numbers, which 
+%are defined as deterministic sequences, which mimic a sequence of
+%i.i.d. random numbers chosen from the uniform distribution on the interval
+%$[0,1]$ and have the same relevant statistical properties. Random number generators
+%used for this purpose receive as input an initial information, which is called a user
+%specified seed, and allow to obtain different output sequences of numbers from $[0,1]$
+%depending on the seed. If the user does not specify the seed, then it is obtained from
+%the machine time, i.e. the seed is computed with the seconds, miliseconds of the machine clock.
 
+However, in our computers, we use more frequently pseudo-random numbers.
+These are defined as deterministic sequences, which mimic a sequence of
+i.i.d. random numbers chosen from the uniform distribution on the interval
+$[0,1]$. Random number generators used for this purpose receive as input
+an initial information, which is called a user specified seed, and allow
+to obtain different output sequences of numbers from $[0,1]$ depending
+on the seed. If no seed is supplied by the user, we use the machine time to initiate the sequence.
 
 
 Since we use fake random numbers as a proxy for random numbers, one important question is the desired properties of RNG. \cite{ripleybook} lists the following properties
@@ -21,8 +28,9 @@ Since we use fake random numbers as a proxy for random numbers, one important qu
 
 The statistical software \soft{R} provides several random number generators described
 in '?RNGkind()'. The default generator is called Mersenne-Twister and achieves high
-quality. Still, there are reasons to provide better and more recent RNGs as well as classic statistical tests to quantify their property. The rest of this chapter is two-folded: first we present the use of RNGs through the \code{runif} interface, second we present the same use with dedicated functions.
+quality. 
 
+Still, there are reasons to provide better and more recent RNGs as well as classic statistical tests to quantify their property. The rest of this chapter is two-folded: first we present the use of RNGs through the \code{runif} interface, second we present the same use with dedicated functions (not modifying base \soft{R} default RNGs). See the overall man page with this command \code{?randtoolbox}.
 
 
 \section{The \code{runif} interface}
@@ -33,24 +41,45 @@ In \soft{R}, the default setting for random generation are (i) uniform numbers a
 RNGkind()
 @
 %%%
-The function \code{RNGkind} can also be used to set other RNGs, such as Wichmann-Hill, Marsaglia-Multicarry, Super-Duper, Knuth-TAOCP or Knuth-TAOCP-2002 plus a user-supplied RNG. See the help page for details. The function \code{set.generator} eases the process to set a new RNG in \soft{R}.
+The function \code{RNGkind} can also be used to set other RNGs, such as Wichmann-Hill, Marsaglia-Multicarry, Super-Duper, Knuth-TAOCP or Knuth-TAOCP-2002 plus a user-supplied RNG. See the help page for details. 
 
-To get back to the original setting of RNGs in \soft{R}, we just need to call \code{set.generator} with \code{default} RNG.
+The function \code{set.generator} eases the process to set a new RNG in \soft{R}. Here is one short example on how to use \code{set.generator} (see the man page for detailed explanations).
+
+
 %%% R code
-<<undo, fig=FALSE, echo=TRUE, eval=TRUE>>=
-library(randtoolbox)
+<<example1, fig=FALSE, echo=TRUE, eval=TRUE>>=
 RNGkind()
+library(randtoolbox)
+paramParkMiller <- c(mod=2^31-1, mult=16807, incr=0)
+set.generator(name="congruRand", parameters=paramParkMiller, seed=1)
+get.description()
+RNGkind()
+runif(10)
+@
+%%%
+
+From the \code{runif} interface, you can use any other linear congruential generators (as long as the parameters can be set in \soft{R}) and Well-Equidistributed Long-period Linear generators (WELL).
+
+To get back to the original setting of RNGs in \soft{R}, we just need to call \code{set.generator} with \code{default} RNG. 
+%%% R code  
+<<undo, fig=FALSE, echo=TRUE, eval=TRUE>>=
 set.generator("default")
 RNGkind()
 @
 %%%
 
-
-
-TODO : well RNG
-
-question: are rexp, rnorm... affected by the runif interface
-
 \section{Dedicated functions}
+The other way to use RNGs is to directly use dedicated functions. For instance to get the previous example, we can simply use
+%%% R code
+<<example1, fig=FALSE, echo=TRUE, eval=TRUE>>=
+setSeed(1)
+congruRand(10, mod = 2^31-1, mult = 16807, incr = 0)
+@
+%%%
+where \code{setSeed} function initiates the seed for RNGs implemented in \pkg{randtoolbox} and \code{congruRand} calls the congruential generator.
 
-TODO
+They are many other RNGs provided by RNGs in addition to linear congruential generator, WELL generators, SFMersenne-Twister generators and Knuth-TAOCP double version. See \code{?pseudo.randtoolbox} for details.
+
+This package also implements usual quasi random generators such as Sobol or Halton sequences (see \code{?quasi.randtoolbox}). See the second chapter for an explanation on quasi RNGs.
+
+

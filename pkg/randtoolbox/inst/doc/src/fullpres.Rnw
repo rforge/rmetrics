@@ -107,123 +107,7 @@ Finally, we generally use one of the three types of \emph{output function}:
 %The last one has the good property to generate variate in $]0,1[$.
 Linear congruential generators are implemented in the \soft{R} function \code{congruRand}.
 
-%%%%%%%%%%%%%%%%%%% moved from short intro (beginnig) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Linear Congruential Generators II}
-Despite they are very old and quite poor RNGs, linear congruential random generators can still be useful. We denote $x_n$ the $n$th integer of the sequence. LCG are based on the following recurrence
-$$
-x_n = (a x_{n-1} + c) \mod m.
-$$
-where $a$ is the multiplier, $c$ the increment and $m$ the modulus and $x, a, c, m \in \mathbb N$. To get float numbers in the unit interval we simply use one of the following functions:
-\begin{itemize*}
-\item $g: \mathbb N \mapsto [0,1[$, and $g(x) = \frac{x}{m}$, 
-\item $g: \mathbb N \mapsto ]0,1]$, and $ g(x) = \frac{x}{m-1}$,
-\item $g: \mathbb N \mapsto ]0,1[$, and $ g(x) = \frac{x+1/2}{m}$.
-\end{itemize*}
 
-\initFmark
-Here is a example list of RNGs computable with \code{congruRand}:
-\begin{table}[!htb]
-\center
-\begin{tabular}{llll}
-\hline
-RNG &\code{mod} & \code{mult} &\code{incr}\\
-\hline
-Knuth - Lewis & $2^{32}$ & $1664525$ & $1.01e9\fmark $\\
-Lavaux - Jenssens & $2^{48}$ & $31167285$ & $1$\\
-Haynes & $2^{64}$ & $6.36e17\fmark $ & $1$\\
-Marsaglia & $2^{32}$ & $69069$ & $0$\\
-Park - Miller & $2^{31}-1$ & $16807$ & $0$\\
-\hline
-\end {tabular}
-\caption{some linear RNGs}
-%\label{parkmiller}
-\end{table}
-
-%initialiser le compteur avec \initFmark avant d'utilise
-%placer \fmark a l'endroit de la legende
-%en dehors du tableau/legende, mettre a jour le compteur footnote avec \updateFtext
-%placer \ftext{...le texte de la legende... } en dehors du tableau ou de la legende
-\updateFtext
-\ftext{1013904223.}
-
-\ftext{636412233846793005.}
-
-\subsubsection{Park-Miller}
-
-The default argument of function \code{}
-
-%%% R code
-<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
-library(randtoolbox)
-p1 <- c(mod=2^(31-1), mult=16807, incr=0)
-set.generator(name="congruRand", parameters=p1, seed=1)
-x1 <- runif(10)
-print(x1)
-@
-%%%
-
-We can check that those integers are the 10 first terms are listed in table \ref{parkmiller},
-coming from \url{http://www.firstpr.com.au/dsp/rand31/}.
-\begin{table}[!htb]
-\center
-\begin{tabular}{llll}
-\hline
-$n$&$x_n$ & $n$ &$x_n$\\
-\hline
-1 & 16807          &6 & 470211272         \\
-2 & 282475249   &7 & 101027544         \\       
-3 & 1622650073   &8 & 1457850878         \\       
-4 & 984943658      &9 & 1458777923          \\
-5 & 1144108930     &10 & 2007237709         \\
-\hline
-\end {tabular}
-\caption{10 first integers of \cite{parkmiller} sequence}
-\label{parkmiller}
-\end{table}
-
-%%% R code
-<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
-y1 <- c(16807, 
-282475249,
-1622650073,
-984943658,
-1144108930,
-470211272,
-101027544,
-1457850878,
-1458777923,
-2007237709)/2^(31-1)
-print(y1)
-@
-%%%
-
-
-
-\subsubsection{Other LCGs}
-
-Of course we can use other LCGs, here is an example with $a= 3120690619012$, $c= 1752073$, $m=7320110364297$.
-
-%%% R code
-<<testLCG, fig=FALSE, echo=TRUE, eval=TRUE>>=
-setSeed(12345)
-p2 <- c(mod= 7320110364297, mult= 1752073, incr= 3120690619012)
-set.generator(name="congruRand", parameters=p2, seed=12345)
-x2 <- runif(10)
-y2 <- c(3142319960197,
-4953559254941,
-6853178859516,
-572628290719,
-2681475346976,
-1683052349799,
-441206598859,
-3675172447628,
-1854017874321,
-5604545399725)/7320110364297
-print(x2 - y2)
-@
-%%%
-
-%%%%%%%%%%%%%%%%%%% moved from short intro (end) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsubsection{Multiple recursive generators}
 A generalisation of linear congruential generators are multiple recursive generators.
@@ -922,7 +806,7 @@ congruRand(10)
 @
 <<congrurand2, fig=FALSE, echo=FALSE>>=
 library(randtoolbox)
-options( width =40)
+options(width = 40)
 congruRand(10)
 @
 %%%
@@ -1652,7 +1536,8 @@ the second-kind Stirling numbers. For a demonstration, go to \cite{knuth02}.
 
 \section{Description of RNG test functions\label{rngtestfunc}}
 In this section, we will give usage examples of RNG test functions, in a similar way
-as section \ref{rngfunc} illustrates section \ref{rng}.
+as section \ref{rngfunc} illustrates section \ref{rng} - two first sub-sections. The last sub-section 
+focuses on detecting a particular RNG.
 
 %todo add comparison of mean, standard deviation kurtosis... from http://www.puc-rio.br/macro.ind/quasi_mc.html
 
@@ -1883,6 +1768,122 @@ res <- poker.test(SFMT(10000), echo=FALSE)
 @
 %%%
 
+
+\subsection{Hardness of detecting a difference from truly random numbers}
+
+Random number generators typically have an internal memory of fixed size,
+whose content is called the internal state. Since the number of possible
+internal states is finite, the output sequence is periodic. The length
+of this period is an important parametr of the random number generator.
+For example, Mersenne-Twister generator, which is the default in R, has
+its internal state stored in $624$ unsigned integers of $32$ bits each.
+So, the internal state consists of $19968$ bits, but only $19937$ are used.
+The period length is $2^{19937}-1$, which is a Mersenne prime.
+
+
+
+Large period is not the only important parameter of a generator. For a good
+generator, it is not computationally easy to distinguish the output of
+the generator from truly random numbers, if the seed or the index in the
+sequence is not known. Generators, which are good from this point of view,
+are used for cryptographic purposes. These generators are chosen so that
+there is no known procedure, which could distinguish their output from
+truly random numbers within practically available computation time. For
+simulations, this requirement is usually relaxed. 
+
+However, even for
+simulation purposes, considering the hardness of distinguishing the
+generated numbers from truly random ones is a good measure of the quality
+of the generator. In particular, the well-known empirical tests of random
+number generators such as Diehard\footnote{The Marsaglia Random Number CDROM
+including the Diehard Battery of Tests of Randomness, Research Sponsored by
+the National Science Foundation (Grants DMS-8807976 and DMS-9206972),
+copyright 1995 George Marsaglia.}
+or TestU01 \cite{lecuyer07} are based on comparing statistics computed for
+the generator with their values expected for truly random numbers.
+Consequently, if a generator fails an empirical test, then the output of
+the test provides a way to distinguish the generator from the truly random
+numbers.
+
+Besides of general purpose empirical tests constructed without the knowledge
+of a concrete generator, there are tests specific to a given generator, which
+allow to distinguish this particular generator from truly random numbers.
+
+An example of a generator, whose output may easily be distinguished from truly 
+random numbers, is the older version of Wichmann-Hill from 1982. For this
+generator, we can even predict the next number in the sequence, if we know the
+last already generated one. Verifying such a predicition is easy and it is,
+of course, not valid for truly random numbers. Hence, we can easily distinguish
+the output of the generator from truly random numbers. An implementation
+of this test in R derived from \cite{mccullough08} is as follows.
+
+%%% R code
+<<wh1, fig=FALSE, echo=TRUE, eval=TRUE>>=
+wh.predict <- function(x)
+{
+    M1 <- 30269
+    M2 <- 30307
+    M3 <- 30323
+    y <- round(M1*M2*M3*x)
+    s1 <- y %% M1
+    s2 <- y %% M2
+    s3 <- y %% M3
+    s1 <- (171*26478*s1) %% M1
+    s2 <- (172*26070*s2) %% M2
+    s3 <- (170*8037*s3) %% M3
+    (s1/M1 + s2/M2 + s3/M3) %% 1
+}
+
+RNGkind("Wichmann-Hill")
+xnew <- runif(1)
+err <- 0
+for (i in 1:1000) {
+    xold <- xnew
+    xnew <- runif(1)
+    err <- max(err, abs(wh.predict(xold) - xnew))
+}
+print(err)
+@
+%%%
+
+
+The printed error is $0$ on some machines and less than $5 \cdot 10^{-16}$ on
+other machines. This is clearly different from the error obtained for truly random
+numbers, which is close to $1$.
+
+The requirement that the output of a random number generator should not
+be distinguishable from the truly random numbers by a simple computation,
+is also directly related to the way, how a generator is used. Typically, we
+use the generated numbers as an input to a computation and we expect that
+the distribution of the output (for different seeds or for different
+starting indices in the sequence) is the same as if the input are truly
+random numbers. A failure of this assumption implies that observing the
+output of the computation allows to distinguish the output from the generator
+from truly random numbers. Hence, we want to use a generator, for which
+we may expect that the calculations used in the intended application cannot
+distinguish its output from truly random numbers.
+
+In this context, it has to be noted that many of the currently used generators
+for simulations can be distinguished from truly random numbers using the
+arithmetic mod 2 applied to individual bits of the output numbers. This is true
+for Mersenne Twister, SFMT and also all WELL generators. The basis for tolerating
+this is based on two facts. 
+
+First, the arithmetic mod 2 and extracting individual
+bits of real numbers is not directly used in typical simulation problems and
+real valued functions, which represent these operations are extremely discontinuous
+and such functions also do not typically occur in simulation problems. Another
+reason is that we need to observe quite a long history of the output to detect
+the difference from true randomness. For example, for Mersenne Twister, we
+need $624$ consecutive numbers.
+
+On the other hand, if we use a cryptographically strong pseudorandom number
+generator, we may avoid a difference from truly random numbers under any known
+efficient procedure. Such generators are typically slower than Mersenne
+Twister type generators. The factor of slow down may be, for example, 5.
+If the simulation problem requires intensive computation besides the
+generating random numbers, using slower, but better, generator may imply
+only negligible slow down of the computation as a whole.
 
 
 
