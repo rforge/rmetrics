@@ -21,10 +21,14 @@
 
 
 \usage{
-dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
-qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
-rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    pm = c("1", "2", "3", "4"), log = FALSE)
+phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    pm = c("1", "2", "3", "4"), \dots)
+qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    pm = c("1", "2", "3", "4"), \dots)
+rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    pm = c("1", "2", "3", "4"))
 }
 
 
@@ -63,6 +67,10 @@ rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
         }
     \item{x, q}{
         a numeric vector of quantiles.
+        }
+    \item{log}{
+        a logical, if TRUE, probabilities \code{p} are given as 
+        \code{log(p)}.
         }
     \item{\dots}{
         arguments to be passed to the function \code{integrate}.

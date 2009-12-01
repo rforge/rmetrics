@@ -81,6 +81,8 @@ function(x, zeta = 1, rho = 0, lambda = 1, include.lambda = TRUE,
     
     param = .paramGH(r$par[1], r$par[2], r$par[3])
     if (trace) {
+        cat("\n Standardized Parameters:", "\n ")
+        print(r$par)
         names(param) = c("alpha", "beta", "delta", "mu")
         cat("\n 1st Parameterization:", "\n ")
         print(param)         

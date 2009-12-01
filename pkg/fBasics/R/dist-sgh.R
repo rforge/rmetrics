@@ -38,6 +38,13 @@ function(x, zeta = 1, rho = 0, lambda = 1, log = FALSE)
     
     # FUNCTION:    
     
+    # Parameters:
+    if (length(zeta) == 3) {
+       lambda = zeta[3]
+       rho = zeta[2]
+       zeta = zeta[1]
+    } 
+    
     # Compute Density:
     param = .paramGH(zeta, rho, lambda)
     ans = dgh(x, param[1], param[2], param[3], param[4], lambda, log)

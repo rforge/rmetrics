@@ -25,7 +25,7 @@
 
 
 dgld <-
-function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8) 
+function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8, log = FALSE) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -51,6 +51,14 @@ function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     
     # FUNCTION:
     
+    # Parameters:
+    if (length(lambda1) == 4) {
+       lambda4 = lambda1[4]
+       lambda3 = lambda1[3]
+       lambda2 = lambda1[2]
+       lambda1 = lambda1[1]
+    } 
+    
     # Check Parameters:
     stopifnot (lambda2 < 0)
     stopifnot (lambda3 < 0)
@@ -60,6 +68,9 @@ function(x, lambda1=0, lambda2=-1, lambda3=-1/8, lambda4=-1/8)
     d = .dglD(x, 
         lambda1=lambda1, lambda2=lambda2, lambda3=lambda3, lambda4=lambda4, 
         param="rs")
+        
+    # Log:
+    if(log) d = log(d)
     
     # Return Value:
     d

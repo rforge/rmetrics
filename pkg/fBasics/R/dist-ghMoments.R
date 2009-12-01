@@ -17,10 +17,10 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  ghRawMean                    Returns raw mean
-#  ghRawVar                     Returns raw variance
-#  ghRawSkew                    Returns raw skewness
-#  ghRawKurt                    Returns raw kurtosis
+#  ghMean                       Returns raw mean
+#  ghVar                        Returns raw variance
+#  ghSkew                       Returns raw skewness
+#  ghKurt                       Returns raw kurtosis
 # FUNCTION:                    UTILITY FUNCTION:
 #  .aRecursionGH                Computes the moment coefficients a recursively
 #  .besselZ                     Computes Bessel/Power Function ratio
@@ -34,60 +34,72 @@
 ################################################################################
 
 
-ghRawMean <-
-function(alpha=1, beta=0, delta=1, lambda=-1/2)
+ghMean <-
+function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
     
     # Return Value:
-    .ghRawMoments(k=1, alpha=1, beta=0, delta=1, lambda=-1/2)
+    mean = .ghMuMoments(k=1, alpha, beta, delta, mu, lambda)[[1]]
+    mean
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-ghRawVar <- 
-function(alpha=1, beta=0, delta=1, lambda=-1/2)
+ghVar <- 
+function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
     
     # Return Value:
-    .ghRawMoments(k=2, alpha=1, beta=0, delta=1, lambda=-1/2)[[2]]
+    var = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
+    var
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-ghRawSkew <- 
-function(alpha=1, beta=0, delta=1, lambda=-1/2)
+ghSkew <- 
+function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
     
+    # Moments
+    k2 = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda)[[1]] 
+    k3 = .ghMuMoments(k=3, alpha, beta, delta, mu, lambda)[[1]]
+    
     # Return Value:
-    .ghRawMoments(k=3, alpha=1, beta=0, delta=1, lambda=-1/2)[[3]]
+    skew = k3/(k2^(3/2))     
+    skew          
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-ghRawKurt <- 
-function(alpha=1, beta=0, delta=1, lambda=-1/2)
+ghKurt <- 
+function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
     
+    # Moments:
+    k2 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
+    k4 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
+
     # Return Value:
-    .ghRawMoments(k=4, alpha=1, beta=0, delta=1, lambda=-1/2)[[4]]
+    kurt = k4/k2^2 - 3 
+    kurt
 }
 
 

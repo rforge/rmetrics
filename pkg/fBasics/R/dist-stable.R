@@ -27,7 +27,7 @@
 
 
 dstable <- 
-function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2), log = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -56,6 +56,14 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
     # FUNCTION:
 
+    # Parameters:
+    if (length(alpha) == 4) {
+       delta = alpha[4]
+       gamma = alpha[3]
+       beta = alpha[2]
+       alpha = alpha[1]
+    } 
+    
     # Settings:
     subdivisions = 1000
     tol = .Machine$double.eps
@@ -144,6 +152,9 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
         cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
             gamma = gamma, delta = delta, pm = pm, row.names = "")
 
+    # Log:
+    if (log) ans = log(ans)
+    
     # Return Value:
     ans
 }

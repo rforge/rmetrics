@@ -41,10 +41,24 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
     
     # FUNCTION:
     
+    # Parameters:
+    if (length(alpha) == 4) {
+       mu = alpha[4]
+       delta = alpha[3]
+       beta = alpha[2]
+       alpha = alpha[1]
+    } 
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
     # Density:
     #   dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-    #   lambda = -0.5, log = log)
+    #       lambda = -0.5, log = log)
     
+    # Compute:
     log.a = delta*sqrt(alpha^2-beta^2) + log(delta*alpha/pi)
     Sqrt = sqrt(delta^2+(x-mu)^2) 
     log.Sqrt = -log(Sqrt)

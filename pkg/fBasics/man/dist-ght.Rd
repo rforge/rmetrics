@@ -19,7 +19,7 @@
 
 
 \usage{
-dght(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
+dght(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
 pght(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 qght(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 rght(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
@@ -49,13 +49,10 @@ rght(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
     \item{nu}{
         a numeric value, the number of degrees of freedom.
         }
-    %\item{log}{
-    %    a logical flag by default \code{FALSE}. 
-    %    Should labels and a main title drawn to the plot?
-    %    }
-    %\item{\dots}{
-    %    arguments to be passed.
-    %    }
+    \item{log}{
+        a logical, if TRUE, probabilities \code{p} are given as 
+        \code{log(p)}.
+        }
     
 }
 

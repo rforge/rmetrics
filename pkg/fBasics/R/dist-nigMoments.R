@@ -21,6 +21,7 @@
 #  nigVar              Computes the variance of the normal inverse Gaussian PDF
 #  nigSkew             Computes the skewness of the normal inverse Gaussian PDF
 #  nigKurt             Computes the kurtosis of the normal inverse Gaussian PDF
+# FUNCTION:           DESCRIPTION:
 #  nigShapeTriangle    Plots NIG Shape Triangle
 ################################################################################
 
@@ -37,7 +38,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Mean:
     gamma = sqrt(alpha^2 - beta^2)
-    ans = mu + delta * beta / gamma
+    ans = c(mean = (mu + delta * beta / gamma)[[1]])
     
     # Return Value:
     ans
@@ -59,7 +60,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Variance:
     gamma = sqrt(alpha^2 - beta^2)
-    ans = delta * alpha^2 / gamma^3
+    ans = c(var = (delta * alpha^2 / gamma^3)[[1]])
     
     # Return Value:
     ans
@@ -82,7 +83,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Skewness:
     gamma = sqrt(alpha^2 - beta^2)
-    ans = 3*beta / ( alpha * sqrt(delta*gamma) ) 
+    ans = c(skew = (3*beta / ( alpha * sqrt(delta*gamma) ))[[1]] )
     
     # Return Value:
     ans
@@ -104,7 +105,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Skewness:
     gamma = sqrt(alpha^2 - beta^2)
-    ans = 3 * ( 1 + 4 * beta^2 / alpha^2) / (delta * gamma)
+    ans = c(kurt = (3 * ( 1 + 4 * beta^2 / alpha^2) / (delta * gamma))[[1]])
     
     # Return Value:
     ans

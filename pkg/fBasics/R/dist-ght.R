@@ -25,7 +25,7 @@
 
 
 dght <-
-function(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
+function(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -39,9 +39,17 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10)
 
     # FUNCTION:
 
+    # Parameters:
+    if (length(beta) == 4) {
+       nu = beta[4]
+       mu = beta[3]
+       delta = beta[2]
+       beta = beta[1]
+    } 
+    
     # Density:
     ans = dgh(x, alpha = abs(beta) + 1e-6, beta, delta, mu, lambda = -nu/2, 
-        log = FALSE)
+        log = log)
 
     # Return Value:
     ans

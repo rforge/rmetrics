@@ -21,7 +21,7 @@
 
 
 \usage{
-dgld(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
+dgld(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8, log = FALSE)
 pgld(q, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
 qgld(p, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
 rgld(n, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
@@ -45,6 +45,10 @@ rgld(n, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8)
         }
     \item{x, q}{
         a numeric vector of quantiles.
+        }
+    \item{log}{
+        a logical, if TRUE, probabilities \code{p} are given as 
+        \code{log(p)}.
         }
     
 }

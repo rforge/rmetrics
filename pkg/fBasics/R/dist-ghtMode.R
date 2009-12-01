@@ -30,10 +30,10 @@ function(beta = 0.1, delta = 1, mu = 0, nu = 10)
     #   Computes the mode of the Generalized Hyperbolic Student-t PDF
   
     # Arguments:
-    #   beta -
-    #   delta -
-    #   mu -
-    #   nu
+    #   beta - skewness parameter
+    #   delta - scale parameter
+    #   mu - location parameter
+    #   nu - shape parameter
      
     # Example:
     #   ghtMode()

@@ -33,7 +33,7 @@
 
 
 \usage{
-dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2), log = FALSE)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
@@ -65,6 +65,11 @@ stableSlider()
     \item{x, q}{
         a numeric vector of quantiles.
         }
+    \item{log}{
+        a logical, if TRUE, probabilities \code{p} are given as 
+        \code{log(p)}.
+        }
+    
     
 }
 

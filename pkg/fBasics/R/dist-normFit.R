@@ -17,11 +17,17 @@
 
 ################################################################################
 # FUNCTION:            DESCRIPTION:
-#  normFit              Fits parameters of a Normal density
+#  .normFit             Fits parameters of a Normal density
 ################################################################################
 
 
-normFit <-
+# normFit is now in fBasics
+
+
+# ------------------------------------------------------------------------------
+
+
+.normFit <-
 function(x, doplot = TRUE, span = "auto", title = NULL,
     description = NULL, ...)
 {
@@ -94,7 +100,7 @@ function(x, doplot = TRUE, span = "auto", title = NULL,
 # ------------------------------------------------------------------------------
 
 
-nFit <- normFit
+nFit <- .normFit
 
 
 ################################################################################

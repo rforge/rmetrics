@@ -25,7 +25,8 @@
 
 
 dhyp <-
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c("1", "2", "3", "4"), 
+    log = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -39,15 +40,34 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
     # FUNCTION:
 
+    # Parameters:
+    if (length(alpha) == 4) {
+       mu = alpha[4]
+       delta = alpha[3]
+       beta = alpha[2]
+       alpha = alpha[1]
+    } 
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
     # Settings:
-    pm = pm[1]
+    pm = match.arg(pm)
 
-    # Return Value:
+    # Density:
     ans = NA
-    if (pm == 1) return(.dhyp1(x, alpha, beta, delta, mu))
-    if (pm == 2) return(.dhyp2(x, alpha, beta, delta, mu))
-    if (pm == 3) return(.dhyp3(x, alpha, beta, delta, mu))
-    if (pm == 4) return(.dhyp4(x, alpha, beta, delta, mu))
+    if (pm == 1) ans = .dhyp1(x, alpha, beta, delta, mu)
+    if (pm == 2) ans = .dhyp2(x, alpha, beta, delta, mu)
+    if (pm == 3) ans = .dhyp3(x, alpha, beta, delta, mu)
+    if (pm == 4) ans = .dhyp4(x, alpha, beta, delta, mu)
+    
+    # Log:
+    if (log) ans = log(ans)
+    
+    # Return value:
+    ans
 }
 
 
@@ -55,7 +75,8 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
 
 phyp <-
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c("1", "2", "3", "4"), 
+    ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -69,8 +90,13 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 
     # FUNCTION:
 
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
     # Settings:
-    pm = pm[1]
+    pm = match.arg(pm)
 
     # Return Value:
     ans = NA
@@ -85,7 +111,8 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 
 
 qhyp <-
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c("1", "2", "3", "4"), 
+    ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -102,8 +129,13 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 
     # FUNCTION:
 
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
     # Settings:
-    pm = pm[1]
+    pm = match.arg(pm)
 
     # Return Value:
     ans = NA
@@ -118,7 +150,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 
 
 rhyp <-
-function(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c("1", "2", "3", "4"))
 {
     # A function implemented by Diethelm Wuertz
 
@@ -139,8 +171,13 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
     # FUNCTION:
 
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
     # Settings:
-    pm = pm[1]
+    pm = match.arg(pm)
 
     # Result:
     ans = NA

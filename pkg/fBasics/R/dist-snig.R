@@ -35,8 +35,17 @@ function(x, zeta = 1, rho = 0, log = FALSE)
     
     # FUNCTION:
  
+    # Parameters:
+    if (length(zeta) == 2) {
+       rho = zeta[2]
+       zeta = zeta[1]
+    } 
+    
     # Compute Density - Quick and Dirty:
     ans = dsgh(x, zeta, rho, lambda = -0.5, log = log)
+    
+    # Log:
+    if(log) ans = log(ans)
     
     # Return Value:
     ans

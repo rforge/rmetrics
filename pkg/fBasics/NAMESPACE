@@ -198,6 +198,17 @@ export(
     "getTitle",
     "ghFit",
     "ghMode",
+    
+    "ghMean",
+    "ghVar",
+    "ghSkew",
+    "ghKurt",
+    
+    "hypMean",
+    "hypVar",
+    "hypSkew",
+    "hypKurt",
+    
     ".ghMuMoments",
     ".ghMuMomentsIntegrated",
     ".ghRawMoments",
@@ -273,7 +284,7 @@ export(
     ".mrlPlot",
     
     "nFit",
-    "normFit",
+    ".normFit",
     
     "nigFit",
     
