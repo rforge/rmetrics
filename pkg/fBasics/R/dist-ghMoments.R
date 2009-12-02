@@ -24,13 +24,16 @@
 # FUNCTION:                    UTILITY FUNCTION:
 #  .aRecursionGH                Computes the moment coefficients a recursively
 #  .besselZ                     Computes Bessel/Power Function ratio
-# FUNCTION:                    MOMENTS AND RELATED EXPRESSIONS:
-#  .ghRawMoments                Computes raw moments from formula
-#  .ghRawMomentsIntegrated      Computes raw moments by Integration
-#  .checkGHRawMoments           Checks raw moments
+# FUNCTION:                    Moments ABOUT MU:
 #  .ghMuMoments                 Computes mu-moments from formula
 #  .ghMuMomentsIntegrated       Computes mu-moments by integration
 #  .checkGHMuMoments            Checks mu-moments
+# FUNCTION:                    MOMENTS ABOUT ZERO:
+#  .ghRawMoments                Computes raw moments from formula
+#  .ghRawMomentsIntegrated      Computes raw moments by Integration
+#  .checkGHRawMoments           Checks raw moments
+# FUNCTION:                    MOMENTS ABOUT Mean:
+#  .ghCentralMoments            Computes central moments from formula
 ################################################################################
 
 
@@ -42,7 +45,7 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Return Value:
-    mean = .ghMuMoments(k=1, alpha, beta, delta, mu, lambda)[[1]]
+    mean = .ghRawMoments(k=1, alpha, beta, delta, mu, lambda)[[1]]
     mean
 }
 
@@ -58,7 +61,7 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Return Value:
-    var = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
+    var = .ghRawMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
     var
 }
 
@@ -73,9 +76,9 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     
     # FUNCTION:
     
-    # Moments
-    k2 = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda)[[1]] 
-    k3 = .ghMuMoments(k=3, alpha, beta, delta, mu, lambda)[[1]]
+    # Moments:
+    k2 = .ghRawMoments(k=2, alpha, beta, delta, mu, lambda)[[1]] 
+    k3 = .ghRawMoments(k=3, alpha, beta, delta, mu, lambda)[[1]]
     
     # Return Value:
     skew = k3/(k2^(3/2))     
@@ -94,8 +97,8 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Moments:
-    k2 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
-    k4 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
+    k2 = .ghRawMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
+    k4 = .ghRawMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
 
     # Return Value:
     kurt = k4/k2^2 - 3 
@@ -199,13 +202,16 @@ function(x, lambda)
 ################################################################################
 
     
-.ghRawMoments <- 
-function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
+.ghMuMoments <-
+function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes raw moments from formula
+    #   Computes mu moments from formula
+    
+    # Note:
+    #   mu is not used.
     
     # FUNCTION:
     
@@ -236,13 +242,13 @@ function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
 # ------------------------------------------------------------------------------
 
 
-.ghRawMomentsIntegrated <- 
-function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
+.ghMuMomentsIntegrated <-
+function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes raw moments by integration
+    #   Computes mu moments by integration
     
     # FUNCTION:
     
@@ -267,40 +273,42 @@ function(k = 4, alpha = 1, beta = 0, delta = 1, lambda = -1/2)
 # ------------------------------------------------------------------------------
 
 
-.checkGHRawMoments <-
+.checkGHMuMoments <-
 function(K = 10)
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Checks raw moments
+    #   Checks mu moments
     
     # Example:
-    #   .checkGHRawMoments()
+    #   .checkGHMuMoments()
     
     # FUNCTION:
     
     # Compute Raw Moments:
-    raw = NULL
+    mu = NULL
     for (k in 1:K) {
-        raw = c(raw, .ghRawMoments(k))
+        mu = c(mu, 
+            .ghMuMoments(k, alpha = 1.1, beta = 0.1, delta = 0.9, mu = 0.1))
     }
-    names(raw) = 1:K
+    names(mu) = 1:K
     int = NULL
     for (k in 1:K) {
-        int = c(int, .ghRawMomentsIntegrated(k))
+        int = c(int, .ghMuMomentsIntegrated(k, 
+            alpha = 1.1, beta = 0.1, delta = 0.9, mu = 0.1))
     }
     names(int) = NULL
     
     # Return Value:
-    rbind(raw, int)
+    rbind(mu, int)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.ghMuMoments <-
+.ghRawMoments <-
 function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
@@ -315,7 +323,7 @@ function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
     
     # Compute Mu Moments:
     M = 1
-    for (l in 1:k) M = c(M, .ghRawMoments(l, alpha, beta, delta, lambda))
+    for (l in 1:k) M = c(M, .ghMuMoments(l, alpha, beta, delta, mu, lambda))
     muPower = mu^(k:0)
     muM = binomCoeff * muPower * M
     
@@ -327,7 +335,7 @@ function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 # ------------------------------------------------------------------------------
 
 
-.ghMuMomentsIntegrated <- 
+.ghRawMomentsIntegrated <- 
 function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
@@ -358,27 +366,29 @@ function(k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 # ------------------------------------------------------------------------------
 
 
-.checkGHMuMoments <-
+.checkGHRawMoments <-
 function(K = 10)
 {
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Checks mu-moments 
+    #   Checks raw-moments 
     
     # Example:
-    #   .checkGHMuMoments()
+    #   .checkGHRawMoments()
     
     # FUNCTION:
     
     raw = NULL
     for (k in 1:K) {
-        raw = c(raw, .ghMuMoments(k))
+        raw = c(raw, .ghRawMoments(k, 
+            alpha = 1.1, beta = 0.1, delta = 0.9, mu = 0.1))
     }
     names(raw) = 1:K
     int = NULL
     for (k in 1:K) {
-        int = c(int, .ghMuMomentsIntegrated(k))
+        int = c(int, .ghRawMomentsIntegrated(k, 
+            alpha = 1.1, beta = 0.1, delta = 0.9, mu = 0.1))
     }
     names(int) = NULL
     
@@ -389,4 +399,21 @@ function(K = 10)
 
 ################################################################################
     
-    
+  
+.ghCentralMoments <-
+function (k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
+{
+    mean = ghMean(alpha, beta, delta, mu, lambda)
+    M = 1
+    for (i in 1:k)
+        M = c(M, .ghMuMoments(i, alpha, beta, delta, mu, lambda)) 
+
+    binomCoeff <- choose(k, 0:k)
+    centralPower <- (mu - mean)^(k:0)
+    centralM <- binomCoeff * centralPower * M 
+    sum(centralM)
+}
+
+
+################################################################################
+
