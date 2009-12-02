@@ -17,10 +17,12 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  ghMean                       Returns raw mean
-#  ghVar                        Returns raw variance
-#  ghSkew                       Returns raw skewness
-#  ghKurt                       Returns raw kurtosis
+#  ghMean                       Returns GH mean
+#  ghVar                        Returns GH variance
+#  ghSkew                       Returns GH skewness
+#  ghKurt                       Returns GH kurtosis
+# FUNCTION:                    DESCRIPTION:
+#  ghMoments                    Returns GH moments
 # FUNCTION:                    UTILITY FUNCTION:
 #  .aRecursionGH                Computes the moment coefficients a recursively
 #  .besselZ                     Computes Bessel/Power Function ratio
@@ -103,6 +105,37 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # Return Value:
     kurt = k4/k2^2 - 3 
     kurt
+}
+
+
+################################################################################
+
+
+ghMoments <-
+function(order, type = c("raw", "central", "mu"),
+    alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns moments of the GH distribution
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = match.arg(type)
+    
+    # Moments:
+    if (type == "raw") {
+        ans = .ghRawMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "central") {
+        ans = .ghCentralMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "mu") {
+        ans = .ghMuMoments(order, alpha, beta, delta, mu, lambda)  
+    }
+    
+    # Return Value:
+    ans   
 }
 
 

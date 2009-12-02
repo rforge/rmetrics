@@ -40,16 +40,16 @@ Available Functions:
         scott       -    | -   -   -   -   | -   -    | -      x   -  | -    
         fd          -    | -   -   -   -   | -   -    | -      x   -  | -  
         quantile    -    | -   -   -   -   | -   -    | x      -   -  | - 
-        robMoments  -    | -   -   -   -   | -   -    | -      x   -  | -
+        robMoments  -    | x   x   x   x   | -   -    | -      x   -  | -
         nonParamet  -    | -   -   -   -   | -   -    | -      -   -  | x
     *Mode                |                 |          |               |      
         analytic    -    | -   x   -   -   | -   -    | x      -   -  | -       
         optimize    -    | x   -   x   x   | -   -    | -      x   -  | -    
     *Moments             |                 |          |               |      
-        rawMean     -    | x   -   +   -   | -   -    | o      -   -  | -    
-        rawVar      -    | x   -   +   -   | -   -    | o      -   -  | -    
-        rawSkew     -    | x   -   +   -   | -   -    | o      -   -  | -    
-        rawKurt     -    | x   -   +   -   | -   -    | o      -   -  | -    
+        rawMean     -    | x   x   +   -   | -   -    | o      -   -  | -    
+        rawVar      -    | x   x   +   -   | -   -    | o      -   -  | -    
+        rawSkew     -    | x   x   +   -   | -   -    | o      -   -  | -    
+        rawKurt     -    | x   x   +   -   | -   -    | o      -   -  | -    
         rawMoments  -    | x   -   +   -   | -   -    | o      -   -  | -    
     *Lmoments            |                 |          |               |      
         mean        -    | -   -   -   -   | -   -    | -      -   -  | -    

@@ -16,13 +16,15 @@
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:
-#  nigMean             Computes the mean of the normal inverse Gaussian PDF
-#  nigVar              Computes the variance of the normal inverse Gaussian PDF
-#  nigSkew             Computes the skewness of the normal inverse Gaussian PDF
-#  nigKurt             Computes the kurtosis of the normal inverse Gaussian PDF
-# FUNCTION:           DESCRIPTION:
-#  nigShapeTriangle    Plots NIG Shape Triangle
+# FUNCTION:                     DESCRIPTION:
+#  nigMean                       Returns NIG mean 
+#  nigVar                        Returns NIG variance 
+#  nigSkew                       Returns NIG skewness 
+#  nigKurt                       Returns NIG kurtosis 
+# FUNCTION:                     DESCRIPTION:
+#  nigMoments                    Returns the kurtosis 
+# FUNCTION:                     DESCRIPTION:
+#  nigShapeTriangle              Plots NIG Shape Triangle
 ################################################################################
 
 
@@ -109,6 +111,38 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans
+}
+
+
+###############################################################################
+
+
+nigMoments <-
+function(order, type = c("raw", "central", "mu"), 
+    alpha=1, beta=0, delta=1, mu=0)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns moments of the hyperbolic distribution
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = match.arg(type)
+    
+    # Moments:
+    lambda = -1/2
+    if (type == "raw") {
+        ans = .ghRawMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "central") {
+        ans = .ghCentralMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "central") {
+        ans = .ghMuMoments(order, alpha, beta, delta, mu, lambda)  
+    }
+    
+    # Return Value:
+    ans   
 }
 
 

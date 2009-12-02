@@ -213,6 +213,8 @@ export(
     ".ghMuMomentsIntegrated",
     ".ghRawMoments",
     ".ghRawMomentsIntegrated",
+    ".ghCentralMoments",
+    
     "ghSlider",
     "ghtFit",
     "ghtMode",
@@ -287,19 +289,24 @@ export(
     ".normFit",
     
     "nigFit",
-    
     ".nigFit.gmm",
     ".nigFit.mle",
     ".nigFit.mps",
     ".nigFit.vmps",
     
-    "nigKurt",
     "nigMean",
+    "nigVar",
+    "nigSkew",
+    "nigKurt",
+    "nigMoments",
+    
+    "hypMoments",
+    "ghMoments",
+    
     "nigMode",
     "nigShapeTriangle",
-    "nigSkew",
     "nigSlider",
-    "nigVar",
+    
     "norm",
     "normalTest",
     ".omnibus.test",

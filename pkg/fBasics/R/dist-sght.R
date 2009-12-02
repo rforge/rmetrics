@@ -17,14 +17,14 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  dght                  Density of the generalized hyperbolic Student-t 
-#  pght                  Probability of the GHT
-#  dght                  Quantiles of the GHT
-#  rght                  Random variates of the GHT
+#  dsght                  Standardized generalized hyperbolic Student-t 
+#  psght                  Probability of the Standardized GHT
+#  qsght                  Quantiles of the Standardized GHT
+#  rsght                  Random variates of the Standardized GHT
 ################################################################################
 
 
-dght <-
+dsght <-
 function(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
 {
     # A function implemented by Diethelm Wuertz
@@ -47,12 +47,9 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
        beta = beta[1]
     } 
     
-    # GH Parameters:
-    alpha = abs(beta) + 1e-6
-    lambda = -nu/2
-    
     # Density:
-    ans = dgh(x, alpha, beta, delta, mu, lambda, log = log)
+    ans = dgh(x, alpha = abs(beta) + 1e-6, beta, delta, mu, lambda = -nu/2, 
+        log = log)
 
     # Return Value:
     ans
@@ -62,7 +59,7 @@ function(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE)
 # ------------------------------------------------------------------------------
 
 
-pght <-
+psght <-
 function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
@@ -77,14 +74,6 @@ function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 
     # FUNCTION:
 
-    # Parameters:
-    if (length(beta) == 4) {
-       nu = beta[4]
-       mu = beta[3]
-       delta = beta[2]
-       beta = beta[1]
-    } 
-    
     # Cumulative Probability:
     ans = NULL
     for (Q in q) {
@@ -101,7 +90,7 @@ function(q, beta = 0.1, delta = 1, mu = 0, nu = 10)
 # ------------------------------------------------------------------------------
 
 
-qght <-
+qsght <-
 function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
@@ -116,14 +105,6 @@ function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 
     # FUNCTION:
 
-    # Parameters:
-    if (length(beta) == 4) {
-       nu = beta[4]
-       mu = beta[3]
-       delta = beta[2]
-       beta = beta[1]
-    } 
-    
     # Internal Functions:
     .froot <- function(x, beta = beta, delta = delta, mu = mu, nu = nu, p) 
     {
@@ -157,7 +138,7 @@ function(p, beta = 0.1, delta = 1, mu = 0, nu = 10)
 # ------------------------------------------------------------------------------
 
 
-rght <- 
+rsght <- 
 function(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
 {
     # A function implemented by Diethelm Wuertz
@@ -171,21 +152,10 @@ function(n, beta = 0.1, delta = 1, mu = 0, nu = 10)
     #   r = rght(10)
 
     # FUNCTION:
-    
-    # Parameters:
-    if (length(beta) == 4) {
-       nu = beta[4]
-       mu = beta[3]
-       delta = beta[2]
-       beta = beta[1]
-    } 
-    
-    # GH Parameters:
-    alpha = abs(beta) + 1e-6
-    lambda = -nu/2
 
     # Random Variates:
-    x = rgh(n, alpha, beta = beta, delta = delta, mu = mu, lambda) 
+    x = rgh(n, alpha = abs(beta) + 1e-6, beta = beta, delta = delta, mu = mu, 
+        lambda = -nu/2) 
 
     # Return Value:
     x

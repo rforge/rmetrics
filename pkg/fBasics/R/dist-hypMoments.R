@@ -17,10 +17,12 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
-#  hypMean                       Returns raw mean
-#  hypVar                        Returns raw variance
-#  hypSkew                       Returns raw skewness
-#  hypKurt                       Returns raw kurtosis
+#  hypMean                       Returns hyperbolic mean
+#  hypVar                        Returns hyperbolic variance
+#  hypSkew                       Returns hyperbolic skewness
+#  hypKurt                       Returns hyperbolic kurtosis
+# FUNCTION:                     DESCRIPTION:
+#  hypMoments                    Returns hyperbolic moments
 ################################################################################
 
 
@@ -32,8 +34,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     # FUNCTION:
     
     # Return Value:
-    mean = .ghMuMoments(k=1, alpha, beta, delta, mu, lambda=1)[[1]]
-    mean
+    ghMean(alpha, beta, delta, mu, lambda=1)
 }
 
 
@@ -48,8 +49,7 @@ function(alpha=1, beta=0, delta=1, mu=0)
     # FUNCTION:
     
     # Return Value:
-    var = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda=1)[[1]]
-    var
+    ghVar(alpha, beta, delta, mu, lambda=1)
 }
 
 
@@ -63,13 +63,8 @@ function(alpha=1, beta=0, delta=1, mu=0)
     
     # FUNCTION:
     
-    # Moments
-    k2 = .ghMuMoments(k=2, alpha, beta, delta, mu, lambda=1)[[1]] 
-    k3 = .ghMuMoments(k=3, alpha, beta, delta, mu, lambda=1)[[1]]
-    
     # Return Value:
-    skew = k3/(k2^(3/2))     
-    skew          
+    ghSkew(alpha, beta, delta, mu, lambda=1)      
 }
 
 
@@ -82,14 +77,41 @@ function(alpha=1, beta=0, delta=1, mu=0)
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
+   
+    # Return Value:
+    ghKurt(alpha, beta, delta, mu, lambda=1)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+hypMoments <-
+function(order, type = c("raw", "central", "mu"), 
+    alpha=1, beta=0, delta=1, mu=0)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns moments of the hyperbolic distribution
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = match.arg(type)
     
     # Moments:
-    k2 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda=1)[[1]]
-    k4 = .ghMuMoments(k=4, alpha, beta, delta, mu, lambda=1)[[1]]
-
+    lambda = 1
+    if (type == "raw") {
+        ans = .ghRawMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "central") {
+        ans = .ghCentralMoments(order, alpha, beta, delta, mu, lambda)
+    } else if (type == "central") {
+        ans = .ghMuMoments(order, alpha, beta, delta, mu, lambda)  
+    }
+    
     # Return Value:
-    kurt = k4/k2^2 - 3 
-    kurt
+    ans   
 }
 
 
