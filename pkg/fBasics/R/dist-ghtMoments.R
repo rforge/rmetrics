@@ -17,113 +17,123 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
-#  hypMean                       Returns true hyperbolic mean
-#  hypVar                        Returns true hyperbolic variance
-#  hypSkew                       Returns true hyperbolic skewness
-#  hypKurt                       Returns true hyperbolic kurtosis
+#  ghtMean                       Returns true GH Student-t mean
+#  ghtVar                        Returns true GH Student-t variance
+#  ghtSkew                       Returns true GH Student-t skewness
+#  ghtKurt                       Returns true GH Student-t kurtosis
 # FUNCTION:                     DESCRIPTION:
-#  hypMoments                    Returns true hyperbolic moments
+#  ghtMoments                    Returns true GH Student-t moments
 ################################################################################
 
 
-hypMean <-
-function(alpha=1, beta=0, delta=1, mu=0)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns true hyperbolic mean
-    
-    # FUNCTION:
-    
-    # Return Value:
-    ghMean(alpha, beta, delta, mu, lambda=1)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-hypVar <- 
-function(alpha=1, beta=0, delta=1, mu=0)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns true hyperbolic variance
-    
-    # FUNCTION:
-    
-    # Return Value:
-    ghVar(alpha, beta, delta, mu, lambda=1)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-hypSkew <- 
-function(alpha=1, beta=0, delta=1, mu=0)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns true hyperbolic skewness
-    
-    # FUNCTION:
-    
-    # Return Value:
-    ghSkew(alpha, beta, delta, mu, lambda=1)      
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-hypKurt <- 
-function(alpha=1, beta=0, delta=1, mu=0)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns true hyperbolic kurtosis
-    
-    # FUNCTION:
-   
-    # Return Value:
-    ghKurt(alpha, beta, delta, mu, lambda=1)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-hypMoments <-
-function(order, type = c("raw", "central", "mu"), 
-    alpha=1, beta=0, delta=1, mu=0)
+ghtMean <-
+function(beta=0.1, delta=1, mu=0, nu=10)
 {
     # A function implemented by Diethelm Wuertz
     
     # Descriptions:
-    #   Returns true moments of the hyperbolic distribution
+    #   Returns true Mean of the GH Student-t distribution
+    
+    # FUNCTION:
+    
+    # GH Parameters:
+    alpha = abs(beta) + 1e-6
+    lambda = -nu/2
+    
+    # Return Value:
+    ghMean(alpha, beta, delta, mu, lambda)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghtVar <- 
+function(beta=0.1, delta=1, mu=0, nu=10)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns true variance of the GH Student-t distribution
+    
+    # FUNCTION:
+    
+    # GH Parameters:
+    alpha = abs(beta) + 1e-6
+    lambda = -nu/2
+    
+    # Return Value:
+    ghVar(alpha, beta, delta, mu, lambda)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghtSkew <- 
+function(beta=0.1, delta=1, mu=0, nu=10)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns true Skewness of the GH Student-t distribution
+    
+    # FUNCTION:
+    
+    # GH Parameters:
+    alpha = abs(beta) + 1e-6
+    lambda = -nu/2
+    
+    # Return Value:
+    ghSkew(alpha, beta, delta, mu, lambda)          
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghtKurt <- 
+function(beta=0.1, delta=1, mu=0, nu=10)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns true Kurtosis of the GH Student-t distribution
+    
+    # FUNCTION:
+    
+    # GH Parameters:
+    alpha = abs(beta) + 1e-6
+    lambda = -nu/2
+    
+    # Return Value:
+    ghKurt(alpha, beta, delta, mu, lambda)
+}
+
+
+################################################################################
+
+
+ghtMoments <-
+function(order, type = c("raw", "central", "mu"),
+    beta=0.1, delta=1, mu=0, nu=10)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Returns moments of the GH Student-t distribution
     
     # FUNCTION:
     
     # Settings:
     type = match.arg(type)
     
-    # Moments:
-    lambda = 1
-    if (type == "raw") {
-        ans = .ghRawMoments(order, alpha, beta, delta, mu, lambda)
-    } else if (type == "central") {
-        ans = .ghCentralMoments(order, alpha, beta, delta, mu, lambda)
-    } else if (type == "central") {
-        ans = .ghMuMoments(order, alpha, beta, delta, mu, lambda)  
-    }
+    # GH Parameters:
+    alpha = abs(beta) + 1e-6
+    lambda = -nu/2
     
     # Return Value:
-    ans   
+    ghMoments(order, type, alpha, beta, delta, mu, lambda)   
 }
 
 

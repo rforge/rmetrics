@@ -17,12 +17,12 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
-#  nigMean                       Returns NIG mean 
-#  nigVar                        Returns NIG variance 
-#  nigSkew                       Returns NIG skewness 
-#  nigKurt                       Returns NIG kurtosis 
+#  nigMean                       Returns true NIG mean 
+#  nigVar                        Returns true NIG variance 
+#  nigSkew                       Returns true NIG skewness 
+#  nigKurt                       Returns true NIG kurtosis 
 # FUNCTION:                     DESCRIPTION:
-#  nigMoments                    Returns the kurtosis 
+#  nigMoments                    Returns true NIG moments 
 # FUNCTION:                     DESCRIPTION:
 #  nigShapeTriangle              Plots NIG Shape Triangle
 ################################################################################
@@ -34,7 +34,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes the mean of the Normal Inverse Gaussian PDF
+    #   Returns true NIG mean 
     
     # FUNCTION:
     
@@ -56,7 +56,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes the variance of the Normal Inverse Gaussian PDF
+    #   Returns true NIG variance
     
     # FUNCTION:
     
@@ -79,7 +79,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes the skewness of the Normal Inverse Gaussian PDF
+    #   Returns true NIG skewness
     
     # FUNCTION:
     
@@ -101,7 +101,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Computes the excess kurtosis of the Normal Inverse Gaussian PDF
+    #   Returns true NIG kurtosis
     
     # FUNCTION:
     
@@ -124,7 +124,7 @@ function(order, type = c("raw", "central", "mu"),
     # A function implemented by Diethelm Wuertz
     
     # Descriptions:
-    #   Returns moments of the hyperbolic distribution
+    #   Returns true moments of the NIG distribution
     
     # FUNCTION:
     

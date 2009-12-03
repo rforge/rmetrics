@@ -17,16 +17,16 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
-#  ghMean                       Returns GH mean
-#  ghVar                        Returns GH variance
-#  ghSkew                       Returns GH skewness
-#  ghKurt                       Returns GH kurtosis
+#  ghMean                       Returns true GH mean
+#  ghVar                        Returns true GH variance
+#  ghSkew                       Returns true GH skewness
+#  ghKurt                       Returns true GH kurtosis
 # FUNCTION:                    DESCRIPTION:
-#  ghMoments                    Returns GH moments
+#  ghMoments                    Returns true GH moments
 # FUNCTION:                    UTILITY FUNCTION:
 #  .aRecursionGH                Computes the moment coefficients a recursively
 #  .besselZ                     Computes Bessel/Power Function ratio
-# FUNCTION:                    Moments ABOUT MU:
+# FUNCTION:                    MOMENTS ABOUT MU:
 #  .ghMuMoments                 Computes mu-moments from formula
 #  .ghMuMomentsIntegrated       Computes mu-moments by integration
 #  .checkGHMuMoments            Checks mu-moments
@@ -34,7 +34,7 @@
 #  .ghRawMoments                Computes raw moments from formula
 #  .ghRawMomentsIntegrated      Computes raw moments by Integration
 #  .checkGHRawMoments           Checks raw moments
-# FUNCTION:                    MOMENTS ABOUT Mean:
+# FUNCTION:                    MOMENTS ABOUT MEAN:
 #  .ghCentralMoments            Computes central moments from formula
 ################################################################################
 
