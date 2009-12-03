@@ -13,43 +13,41 @@
 
 \description{
     
-    Density, distribution function, quantile function 
-    and random generation for the generalized
-    hyperbolic distribution.
+    Calculates moments of the generalized hyperbbolic
+    distribution function.
     
 }
 
 
 \usage{
-dgh(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
-pgh(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-qgh(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-rgh(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+dgh(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2, log = FALSE)
+pgh(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
+qgh(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
+rgh(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 }
 
 
 \arguments{
 
     \item{alpha, beta, delta, mu, lambda}{
-        shape parameter \code{alpha};
-        skewness parameter \code{beta}, \code{abs(beta)} is in the 
-        range (0, alpha);
-        scale parameter \code{delta}, \code{delta} must be zero or 
-        positive; 
-        location parameter \code{mu}, by default 0;
-        and lambda parameter \code{lambda}, by default 1.
-        These is the meaning of the parameters in the first 
-        parameterization \code{pm=1} which is the default 
-        parameterization selection.
+        numeric values.
+        \code{alpha} is the first shape parameter;
+        \code{beta} is the second shape parameter in the range \code{(0, alpha)};
+        \code{delta} is the scale parameter, must be zero or positive; 
+        \code{mu} is the location parameter, by default 0; and
+        \code{lambda} defines the sublclass, by default -1/2.
+        These are the meanings of the parameters in the first 
+            parameterization \code{pm=1} which is the default 
+            parameterization.
         In the second parameterization, \code{pm=2} \code{alpha}
-        and \code{beta} take the meaning of the shape parameters
-        (usually named) \code{zeta} and \code{rho}.
+            and \code{beta} take the meaning of the shape parameters
+            (usually named) \code{zeta} and \code{rho}.
         In the third parameterization, \code{pm=3} \code{alpha}
-        and \code{beta} take the meaning of the shape parameters
-        (usually named) \code{xi} and \code{chi}.
+            and \code{beta} take the meaning of the shape parameters
+            (usually named) \code{xi} and \code{chi}.
         In the fourth parameterization, \code{pm=4} \code{alpha}
-        and \code{beta} take the meaning of the shape parameters
-        (usually named) \code{a.bar} and \code{b.bar}.
+            and \code{beta} take the meaning of the shape parameters
+            (usually named) \code{a.bar} and \code{b.bar}.
         }
     \item{log}{
         a logical flag by default \code{FALSE}. 

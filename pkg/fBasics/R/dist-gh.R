@@ -25,7 +25,7 @@
 
 
 dgh <-
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2, log = FALSE)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -72,7 +72,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 
 
 pgh <-
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -104,7 +104,7 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 
 qgh <-
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -152,7 +152,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 
 rgh <-
-function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {
     # A function implemented by Diethelm Wuertz
 

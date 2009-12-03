@@ -54,9 +54,11 @@ nigKurt(alpha = 1, beta = 0, delta = 1, mu = 0)
 }
 
 
-%\references{
-%    go here ...
-%}
+\references{
+Scott, D. J., Wuertz, D. and Tran, T. T. (2008) 
+    \emph{Moments of the Generalized Hyperbolic Distribution}. 
+    Preprint. 
+}
 
 
 \author{

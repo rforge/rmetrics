@@ -25,7 +25,7 @@
  
 
 ghMED <-  
-function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -53,7 +53,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
  
     
 ghIQR <- 
-function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -83,7 +83,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
  
   
 ghSKEW <- 
-function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
 {
     # A function implemented by Diethelm Wuertz 
     
@@ -114,7 +114,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
  
 
 ghKURT <- 
-function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
 {
     # A function implemented by Diethelm Wuertz 
     

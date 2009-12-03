@@ -67,10 +67,12 @@ export(
     "pssd",
     "qssd",
     "rssd",
+    
     ".ssden",      
     ".dssden",
     ".pssden",
     ".qssden",
+    
     ".gauss.quad",
     ".smolyak.quad",
     ".smolyak.size",
@@ -203,17 +205,28 @@ export(
     "ghVar",
     "ghSkew",
     "ghKurt",
+    "ghMoments",
     
     "hypMean",
     "hypVar",
     "hypSkew",
     "hypKurt",
+    "hypMoments",
     
+    "ghtMean",
+    "ghtVar",
+    "ghtSkew",
+    "ghtKurt",
+    "ghtMoments",
+
     ".ghMuMoments",
     ".ghMuMomentsIntegrated",
     ".ghRawMoments",
     ".ghRawMomentsIntegrated",
     ".ghCentralMoments",
+    
+    ".distStandardErrors",
+    ".distFitPlot",
     
     "ghSlider",
     "ghtFit",
@@ -299,9 +312,6 @@ export(
     "nigSkew",
     "nigKurt",
     "nigMoments",
-    
-    "hypMoments",
-    "ghMoments",
     
     "nigMode",
     "nigShapeTriangle",

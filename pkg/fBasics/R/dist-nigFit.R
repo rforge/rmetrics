@@ -80,7 +80,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     #   Fits parameters of a NIG using maximum log-likelihood  
 
     # Example:
-    #   set.seed(4711); x = rnig(500); mle = .nigFit.mle(x)@fit$estimate; mle
+    #   set.seed(4711); x = rnig(500); mle = .nigFit.mle(x); mle@fit$estimate
     
     # FUNCTION:
 
@@ -91,74 +91,59 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         SD = sd(x)
         x = x / SD }
 
-    # Settings:
-    CALL = match.call()
-
-    # Parameter Estimation:
+    # Objective Function:
     obj = function(x, y = x, trace) {
         if (abs(x[2]) >= x[1]) return(1e9)
         f = -sum(dnig(y, x[1], x[2], x[3], x[4], log = TRUE))
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
+            cat("\n Parameter Estimates:       ", x, "\n")
         }
         f }
+        
+    # Parameter Estimation:
     eps = 1e-10
     BIG = 1000
-    r = nlminb(
+    fit = nlminb(
         start = c(alpha, beta, delta, mu), 
         objective = obj,
         lower = c(eps, -BIG, eps, -BIG), 
         upper = BIG, 
         y = x, 
         trace = trace)
-    names(r$par) <- c("alpha", "beta", "delta", "mu")
-    
-    # Standard Errors:
-    hessian = tsHessian(x = r$par, fun = obj, y = x, trace = FALSE)
-    colnames(hessian) = rownames(hessian) = names(r$par)
-    varcov = solve(hessian)
-    par.ses = sqrt(diag(varcov))
-    if (scale) par.ses = par.ses / c(SD, SD, 1/SD, 1/SD)
-    
+    names(fit$par) <- c("alpha", "beta", "delta", "mu")
+    # Rescale Result:
+    if (scale) {
+        fit$scaleParams = c(SD, SD, 1/SD, 1/SD)
+        fit$par = fit$par / fit$scaleParams
+        fit$objective = obj(fit$par, y = as.vector(x.orig), trace = trace)
+    } else {
+        fit$scaleParams = rep(1, time = length(fit$par))
+    }
+    fit$scale = scale
+    fit$estimate = fit$par
+    fit$minimum = -fit$objective
+    fit$code = fit$convergence
+       
+    # Standard Errors and t-Values:
+    fit = .distStandardErrors(fit, obj, x)
+
     # Add Title and Description:
     if (is.null(title)) title = "Normal Inverse Gaussian Parameter Estimation"
     if (is.null(description)) description = description()
 
-    # Rescale Result:
-    if (scale) {
-        r$par = r$par / c(SD, SD, 1/SD, 1/SD)
-        r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
-    }
-    fit = list(
-        estimate = r$par, 
-        error = par.ses,
-        minimum = -r$objective, 
-        code = r$convergence)
-
     # Optional Plot:
-    if (doplot) {
-        x = as.vector(x.orig)
-        if (span == "auto") span = seq(min(x), max(x), length = 501)
-        z = density(x, n = 100, ...)
-        x = z$x[z$y > 0]
-        y = z$y[z$y > 0]
-        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
-        ylim = log(c(min(y.points), max(y.points)))
-        if (add) {
-            lines(x = span, y = log(y.points), col = "steelblue")
-        } else {
-            plot(x, log(y), xlim = c(span[1], span[length(span)]),
-                ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-            title("NIG MLE Parameter Estimation")
-            lines(x = span, y = log(y.points), col = "steelblue")
-        }
-    }
+    if (doplot) .distFitPlot(
+        fit, 
+        x = x.orig, 
+        FUN = "dnig", 
+        main = "NIG Parameter Estimation", 
+        span = span, add = add, ...)
 
     # Return Value:
     new("fDISTFIT",
-        call = as.call(CALL),
+        call = match.call(),
         model = "Normal Inverse Gaussian Distribution",
         data = as.data.frame(x.orig),
         fit = fit,

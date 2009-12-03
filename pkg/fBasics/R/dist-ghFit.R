@@ -22,7 +22,7 @@
 
 
 ghFit <-
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2,
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE,
     title = NULL, description = NULL, ...)
 {

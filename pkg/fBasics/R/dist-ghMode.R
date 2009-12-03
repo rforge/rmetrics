@@ -22,7 +22,7 @@
 
 
 ghMode <- 
-function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2)
 {   
     # A function implemented by Diethelm Wuertz
     

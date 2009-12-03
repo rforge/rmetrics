@@ -16,7 +16,7 @@
 
 
 \usage{
-ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
+ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2, 
     scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, \dots) 
 }
@@ -36,7 +36,7 @@ ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
         scale parameter \code{delta}, \code{delta} must be zero or 
         positive; 
         location parameter \code{mu}, by default 0;
-        and lambda parameter \code{lambda}, by default 1.
+        and lambda parameter \code{lambda}, by default -1/2.
         }
     \item{scale}{
         a logical flag, by default \code{TRUE}. Should the time series

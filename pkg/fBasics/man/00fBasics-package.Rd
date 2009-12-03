@@ -58,12 +58,21 @@
 
 \section{Overview:}{
 
-    The following chapters give a brief introduction how to optimize
-    and analyze portfolios.
+    Basic Statistics Functions
     
-    1. Explorative Data Analysis\cr
-    2. Distributional Properties\cr
-    3. Hypthesis Testing
+    Financial Return Distributions
+    
+    Hypothesis Testing
+        
+    Linear Algebra and Matrix Computations
+
+    Bivariate Interpolation
+
+    Plotting Routines
+    
+    Color Utilities
+
+    Utility Functions
     
 }
 

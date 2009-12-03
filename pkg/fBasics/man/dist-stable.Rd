@@ -7,8 +7,6 @@
 \alias{qstable}
 \alias{rstable}
 
-\alias{stableMode}
-
 \alias{stableSlider}
 
 \title{Stable Distribution Function}
@@ -18,15 +16,13 @@
     
     A collection and description of functions to compute 
     density, distribution function, quantile function and 
-    to generate random variates, the stable distribution,
-    and the stable mode. 
+    to generate random variates of the stable distribution. 
     \cr
     
     The functions are:
     
     \tabular{ll}{
     \code{[dpqr]stable} \tab the skewed stable distribution, \cr
-    \code{stableMode} \tab the stable mode, \cr
     \code{stableSlider} \tab interactive stable distribution display. }
 
 }
@@ -37,8 +33,6 @@ dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2), log = FALSE)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
-
-stableMode(alpha, beta)
 
 stableSlider()
 }
@@ -83,8 +77,6 @@ stableSlider()
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates.
     
-    The function \code{stableMode} returns a numeric value, the
-    location of the stable mode.
     
     The function \code{stableSlider} 
     displays for educational purposes the densities and probabilities
@@ -163,6 +155,7 @@ Weron, A., Weron R. (1999);
     Preprint Technical Univeristy of Wroclaw, 13 pages.
     
 }
+
 
 \examples{    
 ## stable - 

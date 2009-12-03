@@ -23,15 +23,16 @@ ghtMode(beta = 0.1, delta = 1, mu = 0, nu = 10)
 \arguments{
 
     \item{beta, delta, mu}{
-        skewness parameter \code{beta}, \code{abs(beta)} is in the 
-        range (0, alpha);
-        scale parameter \code{delta}, \code{delta} must be zero or 
-        positive; 
-        location parameter \code{mu}, by default 0.
+        numeric values.
+        \code{beta} is the skewness parameter in the range \code{(0, alpha)};
+        \code{delta} is the scale parameter, must be zero or positive; 
+        \code{mu} is the location parameter, by default 0.
         These are the parameters in the first parameterization.
         }
     \item{nu}{
         a numeric value, the number of degrees of freedom.
+        Note, \code{alpha} takes the limit of \code{abs(beta)}, 
+        and \code{lambda=-nu/2}.
         }
     
 }

@@ -47,7 +47,8 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Return Value:
-    mean = .ghRawMoments(k=1, alpha, beta, delta, mu, lambda)[[1]]
+    zeta = delta * sqrt(alpha*alpha-beta*beta)
+    mean = mu + beta * delta^2 * .kappaGH(zeta, lambda)
     mean
 }
 
@@ -63,7 +64,7 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Return Value:
-    var = .ghRawMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
+    var = .ghCentralMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
     var
 }
 
@@ -79,8 +80,8 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Moments:
-    k2 = .ghRawMoments(k=2, alpha, beta, delta, mu, lambda)[[1]] 
-    k3 = .ghRawMoments(k=3, alpha, beta, delta, mu, lambda)[[1]]
+    k2 = .ghCentralMoments(k=2, alpha, beta, delta, mu, lambda)[[1]] 
+    k3 = .ghCentralMoments(k=3, alpha, beta, delta, mu, lambda)[[1]]
     
     # Return Value:
     skew = k3/(k2^(3/2))     
@@ -99,8 +100,8 @@ function(alpha=1, beta=0, delta=1, mu=0, lambda=-1/2)
     # FUNCTION:
     
     # Moments:
-    k2 = .ghRawMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
-    k4 = .ghRawMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
+    k2 = .ghCentralMoments(k=2, alpha, beta, delta, mu, lambda)[[1]]
+    k4 = .ghCentralMoments(k=4, alpha, beta, delta, mu, lambda)[[1]]
 
     # Return Value:
     kurt = k4/k2^2 - 3 
@@ -436,7 +437,8 @@ function(K = 10)
 .ghCentralMoments <-
 function (k = 4, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = -1/2) 
 {
-    mean = ghMean(alpha, beta, delta, mu, lambda)
+    zeta = delta * sqrt(alpha*alpha-beta*beta)
+    mean = mu + beta * delta^2 * .kappaGH(zeta, lambda)
     M = 1
     for (i in 1:k)
         M = c(M, .ghMuMoments(i, alpha, beta, delta, mu, lambda)) 
