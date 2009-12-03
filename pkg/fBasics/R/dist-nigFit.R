@@ -106,10 +106,22 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         f }
     eps = 1e-10
     BIG = 1000
-    r = nlminb(start = c(alpha, beta, delta, mu), objective = obj,
-        lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace)
+    r = nlminb(
+        start = c(alpha, beta, delta, mu), 
+        objective = obj,
+        lower = c(eps, -BIG, eps, -BIG), 
+        upper = BIG, 
+        y = x, 
+        trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu")
-
+    
+    # Standard Errors:
+    hessian = tsHessian(x = r$par, fun = obj, y = x, trace = FALSE)
+    colnames(hessian) = rownames(hessian) = names(r$par)
+    varcov = solve(hessian)
+    par.ses = sqrt(diag(varcov))
+    if (scale) par.ses = par.ses / c(SD, SD, 1/SD, 1/SD)
+    
     # Add Title and Description:
     if (is.null(title)) title = "Normal Inverse Gaussian Parameter Estimation"
     if (is.null(description)) description = description()
@@ -119,7 +131,11 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         r$par = r$par / c(SD, SD, 1/SD, 1/SD)
         r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
-    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+    fit = list(
+        estimate = r$par, 
+        error = par.ses,
+        minimum = -r$objective, 
+        code = r$convergence)
 
     # Optional Plot:
     if (doplot) {
@@ -286,6 +302,13 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
     r = nlminb(start = c(alpha, beta, delta, mu), objective = obj,
         lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu")
+    
+    # Standard Errors:
+    hessian = tsHessian(x = r$par, fun = obj, y = x, trace = FALSE)
+    colnames(hessian) = rownames(hessian) = names(r$par)
+    varcov = solve(hessian)
+    par.ses = sqrt(diag(varcov))
+    if (scale) par.ses = par.ses / c(SD, SD, 1/SD, 1/SD)
 
     # Add Title and Description:
     if (is.null(title)) title = "NIG mps Parameter Estimation"
@@ -296,7 +319,11 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0,
         r$par = r$par / c(SD, SD, 1/SD, 1/SD)
         r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
-    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+    fit = list(
+        estimate = r$par, 
+        minimum = -r$objective, 
+        error = par.ses,
+        code = r$convergence)
 
     # Optional Plot:
     if (doplot) {
@@ -378,6 +405,13 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0,
         trace = trace)
     names(r$par) <- c("alpha", "beta", "delta", "mu")
     
+    # Standard Errors:
+    hessian = tsHessian(x = r$par, fun = obj, y = x, trace = FALSE)
+    colnames(hessian) = rownames(hessian) = names(r$par)
+    varcov = solve(hessian)
+    par.ses = sqrt(diag(varcov))
+    if (scale) par.ses = par.ses / c(SD, SD, 1/SD, 1/SD)
+    
     # Add Title and Description:
     if (is.null(title)) title = "NIG varMPS Parameter Estimation"
     if (is.null(description)) description = description()
@@ -387,7 +421,11 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0,
         r$par = r$par/c(SD, SD, 1/SD, 1/SD)
         r$objective = obj(r$par, y = as.vector(x.orig), trace = trace)
     }
-    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+    fit = list(
+        estimate = r$par, 
+        minimum = -r$objective, 
+        error = par.ses,
+        code = r$convergence)
     
     # Optional Plot:
     if (doplot) {
