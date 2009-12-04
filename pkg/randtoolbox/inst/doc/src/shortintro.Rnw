@@ -69,7 +69,7 @@ optional component \code{authors}. The function \code{set.generator()} internall
 creates this list from the user supplied information and then runs \code{put.description()}
 on this list in order to really initialize the generator for the functions \code{runif()}
 and \code{set.seed()}. If \code{set.generator()} is called with the parameter
-\code{only.description=TRUE}, then the generator is not initialized and only
+\code{only.dsc=TRUE}, then the generator is not initialized and only
 its description is created. If the generator is initialized, then the function
 \code{get.description()} may be used to get the actual
 state of the generator, which may be stored and used later in \code{put.description()}
