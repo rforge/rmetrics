@@ -13,12 +13,12 @@
   here: \url{http://www.rmetrics.org/Meielisalp2009/Presentations/Dutang.pdf}.
    
   This package has currently implementations for 
-  state-of-the-art pseudo RNGs as well as the usual quasi RNGs.
-  There is also some RNG tests. See \code{?pseudo.randtoolbox}
+  state-of-the-art pseudo RNGs for simulations as well as the usual quasi RNGs.
+  There are also some RNG tests. See \code{?pseudo.randtoolbox}
   and \code{?quasi.randtoolbox}.
 
   We recommend first users to take a look at the first
-  part of the vignette, the second part for people who
+  part of the vignette. The second part is for people who
   want a deeper presentation of this topic.
   
   The stable version is available on CRAN 
