@@ -5,17 +5,13 @@
 /*                 or non-commercial purposes. For commercial purposes,          */
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
-/*
- * WELL19937 is __entirely__ based on the code of WELL44497 by P. L'Ecuyer.
- * we just change constants, parameters to get WELL19937, add some
- * code to interface with R and add some comments on #define's.
- */
 
-#ifndef WELL19937bTemp_H
-#define WELL19937bTemp_H
+#ifndef WELL19937c_H
+#define WELL19937c_H
 
-void InitWELLRNG19937bTemp (unsigned int *);
-extern double (*WELLRNG19937bTemp) (void);
+void InitWELLRNG19937c (unsigned int *);
+extern double (*WELLRNG19937c) (void);
 
+void GetWELLRNG19937c (unsigned int *);
 #endif
 

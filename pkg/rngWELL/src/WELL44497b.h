@@ -6,16 +6,17 @@
 /*                 please contact P. L'Ecuyer at: lecuyer@iro.UMontreal.ca       */
 /* ***************************************************************************** */
 /*
- * WELL800 is __entirely__ based on the code of WELL44497 by P. L'Ecuyer.
- * we just change constants, parameters to get WELL800, add some
+ * WELL44497b is __entirely__ based on the code of WELL44497a by P. L'Ecuyer.
+ * we just change constants, parameters to get WELL44497b, add some
  * code to interface with R and add some comments on #define's.
  */
 
-#ifndef WELL800aTemp_H
-#define WELL800aTemp_H
+#ifndef WELL44497b_H
+#define WELL44497b_H
 
-void InitWELLRNG800aTemp (unsigned int *init);
-extern double (*WELLRNG800aTemp)(void);
+void InitWELLRNG44497b(unsigned int *);
+extern double (*WELLRNG44497b)(void);
 
+void GetWELLRNG44497b (unsigned int *state);
 #endif
 

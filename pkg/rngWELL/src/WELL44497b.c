@@ -9,7 +9,7 @@
 // This file is a copy of the file
 //   http://www.iro.umontreal.ca/~panneton/well/WELL44497a.c
 // modified as if #define TEMPERING is in effect and with further minor formatting
-// modifications and extended with the function GetWELLRNG44497aTemp()
+// modifications and extended with the function GetWELLRNG44497b()
 // for interface to R package randtoolbox/rngWELL by Ch. Dutang and P. Savicky.
 
 /* the assignment of cases is as follows
@@ -60,17 +60,17 @@ static double case_4(void);
 static double case_5(void);
 static double case_6(void);
 
-double (*WELLRNG44497aTemp)(void);
+double (*WELLRNG44497b)(void);
 
-void InitWELLRNG44497aTemp(unsigned int *init ){
+void InitWELLRNG44497b(unsigned int *init ){
   int j;
   state_i=0;
-  WELLRNG44497aTemp = case_1;
+  WELLRNG44497b = case_1;
   for(j=0;j<R;j++)
     STATE[j]=init[j];
 }
 
-void GetWELLRNG44497aTemp (unsigned int *state){
+void GetWELLRNG44497b (unsigned int *state){
   int j, k;
   j = 0;
   for (k = state_i; k < R; k++)
@@ -87,7 +87,7 @@ double case_1(void){
   newV1  = z1 ^ z2;
   newV0Under = MAT1(z0) ^ MAT0POS(20,z1) ^  MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i = R-1;
-  WELLRNG44497aTemp = case_3;
+  WELLRNG44497b = case_3;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);
@@ -102,7 +102,7 @@ static double case_2(void){
   newV1 = z1 ^ z2;
   newV0 =  MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i=0;
-  WELLRNG44497aTemp = case_1;
+  WELLRNG44497b = case_1;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);
@@ -118,7 +118,7 @@ static double case_3(void){
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
   if(state_i+M1<R)
-    WELLRNG44497aTemp = case_4;
+    WELLRNG44497b = case_4;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);
@@ -134,7 +134,7 @@ static double case_4(void){
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
   if (state_i+M3 < R)
-    WELLRNG44497aTemp = case_5;
+    WELLRNG44497b = case_5;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);
@@ -150,7 +150,7 @@ static double case_5(void){
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
   if(state_i+M2 < R)
-    WELLRNG44497aTemp = case_6;
+    WELLRNG44497b = case_6;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);
@@ -166,7 +166,7 @@ static double case_6(void){
   newV0 = MAT1(z0) ^ MAT0POS(20,z1) ^ MAT5(9,0xb729fcecU,0xfbffffffU,0x00020000U,z2) ^ MAT1(newV1);
   state_i--;
   if(state_i == 1 )
-    WELLRNG44497aTemp = case_2;
+    WELLRNG44497b = case_2;
 
   y = STATE[state_i] ^ ((STATE[state_i] << 7) & TEMPERB);
   y =              y ^ ((             y << 15) & TEMPERC);

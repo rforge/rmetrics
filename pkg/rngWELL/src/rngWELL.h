@@ -32,21 +32,15 @@
 #include "WELL1024b.h"
 
 #include "WELL800a.h"
-#include "WELL800aTemp.h"
 #include "WELL800b.h"
-#include "WELL800bTemp.h"
 #include "WELL19937a.h"
-#include "WELL19937aTemp.h"
 #include "WELL19937b.h"
-#include "WELL19937bTemp.h"
+#include "WELL19937c.h"
 #include "WELL21701a.h"
-#include "WELL21701aTemp.h"
 #include "WELL23209a.h"
-#include "WELL23209aTemp.h"
 #include "WELL23209b.h"
-#include "WELL23209bTemp.h"
 #include "WELL44497a.h"
-#include "WELL44497aTemp.h"
+#include "WELL44497b.h"
 
 //time header files
 #if HAVE_TIME_H

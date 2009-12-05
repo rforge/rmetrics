@@ -192,47 +192,23 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
             if(!isInitByArray) 
                 randSeedByArray(25); 
             
-            if(temper == 0)
+            if(version == 1)
             {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800a( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800a(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800b( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800b(); // real on ]0,1[ interval
-                }
+                //init SFMT parameters
+                InitWELLRNG800a( seedArray );       
+                // compute u_ij
+                for(j = 0; j < dim; j++)
+                    for(i = 0; i < nb; i++) 
+                        u[i + j * nb] = WELLRNG800a(); // real on ]0,1[ interval
             }
             else
             {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG800bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG800bTemp(); // real on ]0,1[ interval
-                }
+                //init SFMT parameters
+                InitWELLRNG800b( seedArray );        
+                // compute u_ij
+                for(j = 0; j < dim; j++)
+                    for(i = 0; i < nb; i++) 
+                        u[i + j * nb] = WELLRNG800b(); // real on ]0,1[ interval
             }
             break;
             
@@ -265,24 +241,12 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
             }
             else
             {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG19937bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG19937bTemp(); // real on ]0,1[ interval
-                }
+                //init SFMT parameters
+                InitWELLRNG19937c( seedArray );       
+                // compute u_ij
+                for(j = 0; j < dim; j++)
+                    for(i = 0; i < nb; i++) 
+                        u[i + j * nb] = WELLRNG19937c(); // real on ]0,1[ interval
             }
             break;
         
@@ -292,25 +256,12 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
             if(!isInitByArray) 
                 randSeedByArray(679); 
             
-            if(temper == 0)
-            {                
-                //init SFMT parameters
-                InitWELLRNG21701a( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG21701a(); // real on ]0,1[ interval
-            }
-            else
-            {
-               
-                //init SFMT parameters
-                InitWELLRNG21701aTemp( seedArray );       
-                // compute u_ij
-                for(j = 0; j < dim; j++)
-                    for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG21701aTemp(); // real on ]0,1[ interval
-            }
+            //init SFMT parameters
+            InitWELLRNG21701a( seedArray );       
+            // compute u_ij
+            for(j = 0; j < dim; j++)
+                for(i = 0; i < nb; i++) 
+                    u[i + j * nb] = WELLRNG21701a(); // real on ]0,1[ interval
             break;
             
         case 23209:
@@ -319,47 +270,23 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
             if(!isInitByArray) 
                 randSeedByArray(726); 
             
-            if(temper == 0)
+            if(version == 1)
             {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209a( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209a(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209b( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209b(); // real on ]0,1[ interval
-                }
+                //init SFMT parameters
+                InitWELLRNG23209a( seedArray );       
+                // compute u_ij
+                for(j = 0; j < dim; j++)
+                    for(i = 0; i < nb; i++) 
+                        u[i + j * nb] = WELLRNG23209a(); // real on ]0,1[ interval
             }
             else
             {
-                if(version == 1)
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209aTemp( seedArray );       
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209aTemp(); // real on ]0,1[ interval
-                }
-                else
-                {
-                    //init SFMT parameters
-                    InitWELLRNG23209bTemp( seedArray );        
-                    // compute u_ij
-                    for(j = 0; j < dim; j++)
-                        for(i = 0; i < nb; i++) 
-                            u[i + j * nb] = WELLRNG23209bTemp(); // real on ]0,1[ interval
-                }
+                //init SFMT parameters
+                InitWELLRNG23209b( seedArray );        
+                // compute u_ij
+                for(j = 0; j < dim; j++)
+                    for(i = 0; i < nb; i++) 
+                        u[i + j * nb] = WELLRNG23209b(); // real on ]0,1[ interval
             }
             break;    
             
@@ -382,11 +309,11 @@ void WELLrng(double *u, int nb, int dim, int order, int temper, int version)
             {
                 
                 //init SFMT parameters
-                InitWELLRNG44497aTemp( seedArray );       
+                InitWELLRNG44497b( seedArray );       
                 // compute u_ij
                 for(j = 0; j < dim; j++)
                     for(i = 0; i < nb; i++) 
-                        u[i + j * nb] = WELLRNG44497aTemp(); // real on ]0,1[ interval
+                        u[i + j * nb] = WELLRNG44497b(); // real on ]0,1[ interval
             }
             break;
             

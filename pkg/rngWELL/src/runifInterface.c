@@ -9,13 +9,13 @@
 #include "WELL1024a.h"
 #include "WELL1024b.h"
 #include "WELL19937a.h"
-#include "WELL19937aTemp.h"
+#include "WELL19937c.h"
 #include "WELL19937b.h"
 #include "WELL21701a.h"
 #include "WELL23209a.h"
 #include "WELL23209b.h"
 #include "WELL44497a.h"
-#include "WELL44497aTemp.h"
+#include "WELL44497b.h"
 
 #define LENSEEDARRAY 1391
 static unsigned int seedArray[LENSEEDARRAY];
@@ -108,11 +108,11 @@ void seedWELLRNG19937a(unsigned int seed)
 	InitWELLRNG19937a( seedArray );
 }
 
-void seedWELLRNG19937aTemp(unsigned int seed)
+void seedWELLRNG19937c(unsigned int seed)
 {
 	int i, n=624;
 	initMT2002(&seed, &n, seedArray);
-	InitWELLRNG19937aTemp( seedArray );
+	InitWELLRNG19937c( seedArray );
 }
 
 void seedWELLRNG19937b(unsigned int seed)
@@ -150,11 +150,11 @@ void seedWELLRNG44497a(unsigned int seed)
 	InitWELLRNG44497a( seedArray );
 }
 
-void seedWELLRNG44497aTemp(unsigned int seed)
+void seedWELLRNG44497b(unsigned int seed)
 {
 	int i, n=1391;
 	initMT2002(&seed, &n, seedArray);
-	InitWELLRNG44497aTemp( seedArray );
+	InitWELLRNG44497b( seedArray );
 }
 
 double generateWELLRNG512a()
@@ -207,9 +207,9 @@ double generateWELLRNG19937a()
 	return WELLRNG19937a();
 }
 
-double generateWELLRNG19937aTemp()
+double generateWELLRNG19937c()
 {
-	return WELLRNG19937aTemp();
+	return WELLRNG19937c();
 }
 
 double generateWELLRNG19937b()
@@ -237,9 +237,9 @@ double generateWELLRNG44497a()
 	return WELLRNG44497a();
 }
 
-double generateWELLRNG44497aTemp()
+double generateWELLRNG44497b()
 {
-	return WELLRNG44497aTemp();
+	return WELLRNG44497b();
 }
 
 // put state functions
@@ -351,8 +351,8 @@ void putRngWELL19937(unsigned int *state)
 		user_unif_set_generator(2, seedWELLRNG19937b, generateWELLRNG19937b);
 		break;
 	case 3:
-		InitWELLRNG19937aTemp( state );
-		user_unif_set_generator(2, seedWELLRNG19937aTemp, generateWELLRNG19937aTemp);
+		InitWELLRNG19937c( state );
+		user_unif_set_generator(2, seedWELLRNG19937c, generateWELLRNG19937c);
 		break;
 	}
 }
@@ -405,8 +405,8 @@ void putRngWELL44497(unsigned int *state)
 	case 3:
 	case 4:
 		version = 1;
-		InitWELLRNG44497aTemp( state );
-		user_unif_set_generator(2, seedWELLRNG44497aTemp, generateWELLRNG44497aTemp);
+		InitWELLRNG44497b( state );
+		user_unif_set_generator(2, seedWELLRNG44497b, generateWELLRNG44497b);
 		break;
 	}
 }
@@ -500,7 +500,7 @@ void getRngWELL19937(unsigned int *state)
 		GetWELLRNG19937b( state );
 		break;
 	case 3:
-		GetWELLRNG19937aTemp( state );
+		GetWELLRNG19937c( state );
 	}
 }
 
@@ -533,7 +533,7 @@ void getRngWELL44497(unsigned int *state)
 		GetWELLRNG44497a( state );
 		break;
 	case 3:
-		GetWELLRNG44497aTemp( state );
+		GetWELLRNG44497b( state );
 	}
 }
 
