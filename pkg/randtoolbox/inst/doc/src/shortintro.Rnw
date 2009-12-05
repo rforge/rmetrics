@@ -15,9 +15,43 @@ to obtain different output sequences of numbers from $[0,1]$ depending
 on the seed. If no seed is supplied by the user, we use the machine time
 to initiate the sequence.
 
+Since we use pseudo-random numbers as a proxy for random numbers, an important
+question is, which properties the RNG should have to work as a good replacement of
+the truly random numbers. Essentially, we need that the applications, which we
+have, produce the same results, or results from the same distribution, no matter,
+whether we use pseudo-random numbers or truly random numbers. Hence, the
+required properties may be formulated in terms of computational indistinguishability
+of the output of the generator from the truly random numbers, if the seed
+is not known. The corresponding mathematical theory is developed in complexity
+theory. More about this may be found in the full presentation.
 
-Since we use fake random numbers as a proxy for random numbers, one important question
-is the desired properties of RNG. \cite{ripleybook} lists the following properties
+The best known random number generators are used for cryptographic purposes.
+These generators are chosen so that
+there is no known procedure, which could distinguish their output from
+truly random numbers within practically available computation time. For
+simulations, this requirement is usually relaxed. However, even for
+simulation purposes, considering the hardness of distinguishing the
+generated numbers from truly random ones is a good measure of the quality
+of the generator. In particular, the well-known empirical tests of random
+number generators such as Diehard\footnote{The Marsaglia Random Number CDROM
+including the Diehard Battery of Tests of Randomness, Research Sponsored by
+the National Science Foundation (Grants DMS-8807976 and DMS-9206972),
+copyright 1995 George Marsaglia.} or TestU01 \cite{lecuyer07} are based on
+statistics, which allow to distinguish bad generators from truly random
+numbers.
+
+A simple parameter of a generator is its period. Recent generators have
+huge periods, which cannot be exhausted by any practical computation.
+Another parameter, suitable mainly for linear generators, is so called
+equidistribution. This parameter measures the uniformity of several
+most significant bits of several consecutive numbers in the sequence
+over the whole period. If a generator has good equidistribution,
+then we have a reasonable guarantee of practical independence of several
+consecutive numbers in the sequence. For linear generators, determining
+equidistribution properties may be done by efficient algebraic algorithms
+and does not need to really generate the whole period. 
+
+\cite{ripleybook} lists the following properties
 \begin{itemize}
 \item output numbers are almost uniformly distributed,
 \item output numbers are independent,
@@ -28,12 +62,11 @@ is the desired properties of RNG. \cite{ripleybook} lists the following properti
 The statistical software \soft{R} provides several random number generators described
 in '?RNGkind()'. The default generator is called Mersenne-Twister and achieves high
 quality. 
-
 Still, there are reasons to provide better and more recent RNGs as well as classic
 statistical tests to quantify their property. The rest of this chapter is
-two-folded: first we present the use of RNGs through the \code{runif} interface,
+two-folded: first we present the use of RNGs through the \code{runif()} interface,
 second we present the same use with dedicated functions (not modifying base \soft{R}
-default RNGs). See the overall man page with this command \code{?randtoolbox}.
+default RNGs). See the overall man page with the command \code{?randtoolbox}.
 
 
 \section{The \code{runif} interface}
