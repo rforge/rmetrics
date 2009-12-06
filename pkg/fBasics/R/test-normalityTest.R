@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
@@ -35,6 +24,8 @@
 #   .skewness.test        ... internal function called by dagoTest
 #   .kurtosis.test        ... internal function called by dagoTest
 #   .omnibus.test         ... internal function called by dagoTest
+# FUNCTION:             DESCRIPTION:
+#  normalTest            Normality tests S-Plus compatible
 # FUNCTION:             FROM NORTEST PACKAGE:
 #  adTest                Anderson-Darling normality test
 #  cvmTest               Cramer-von Mises normality test
@@ -486,6 +477,54 @@ function(x, title = NULL, description = NULL)
         test = test,
         title = as.character(title), 
         description = as.character(description) ) 
+}
+
+
+################################################################################
+
+
+normalTest <- 
+function(x, method = c("sw", "jb"), na.rm = FALSE) 
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Shapiro-Wilk and Jarque-Bera Test
+    
+    # Notes:
+    #   This function is for S-Plus compatibility
+
+    # FUNCTION:
+    
+    # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
+    x = as.vector(x)
+    if (na.rm) x = x[!is.na(x)]
+    
+    # Method:
+    #   Don't use: method = match.arg(method)
+    method = method[1]
+    
+    # Test:
+    if (method == "sw") {
+        ans = shapiroTest(x) 
+    } else if (method == "jb") {
+       ans = jarqueberaTest(x)
+    }
+    
+    # Additional Tests:
+    if (method == "ks") {
+        ans = ksnormTest(x)
+    }
+    if (method == "da") {
+        ans = dagoTest(x)
+    }
+    if (method == "ad") {
+        ans = adTest(x)
+    }
+ 
+    # Return Value:
+    ans
 }
 
 
