@@ -72,9 +72,6 @@
 }
 
 
-%\code{} \tab \emph{File: }, \cr
-
-
    
 \section{1. Basic Statistics Functions}{
 
@@ -196,7 +193,7 @@
             \tab \emph{File: dist-ghFit.R} \cr
             
         \tab \cr
-        \emph{Function:} 
+        \emph{Function: ________________} 
         \tab Description ________________________________________________\cr
             \code{ghMode} \tab Computes mode of the GH distribution. \cr 
             \tab \emph{File: dist-ghMode.R} \cr
@@ -452,45 +449,72 @@
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
-            \tab \emph{File: test-normalityTest.R} \cr 
+            \code{ksnormTest} \tab One sample Kolmogorov-Smirnov normality test, \cr
+            \code{shapiroTest} \tab Shapiro-Wilk normality test, \cr
+            \code{jarqueberaTest} \tab Jarque-Bera normality test, \cr
+            \code{normalTest} \tab Normality tests S-Plus compatible call, \cr
+            \code{dagoTest} \tab D'Agostino normality test, \cr
+            \code{adTest} \tab Anderson-Darling normality test, \cr
+            \code{cvmTest} \tab Cramer-von Mises normality test, \cr
+            \code{lillieTest} \tab Lilliefors (KS) normality test, \cr 
+            \code{pchiTest} \tab Pearson chi-square normality test, \cr 
+            \code{sfTest} \tab Shapiro-Francia normality test, \cr     
+            \code{jbTest} \tab Finite sample adjusted JB LM and ALM test, \cr
+            \tab \emph{File: test-normalTest.R} \cr 
 
         \tab \cr
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
+            \code{locationTest} \tab Performs locations tests on two samples, \cr
+            \code{.tTest} \tab Unpaired t test for differences in mean, \cr
+            \code{.kw2Test} \tab Kruskal-Wallis test for differences in locations, \cr
             \tab \emph{File: test-locationTest.R} \cr 
 
         \tab \cr
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
+            \code{scaleTest} \tab Performs scale tests on two samples, \cr
+            \code{.ansariTest} \tab Ansari-Bradley test for differences in scale, \cr
+            \code{.moodTest} \tab Mood test for differences in scale, \cr
             \tab \emph{File: test-scaleTest.R} \cr 
 
         \tab \cr
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
+            \code{varianceTest} \tab Performs variance tests on two samples, \cr
+            \code{.varfTest} \tab F test for differences in variances, \cr
+            \code{.bartlett2Test} \tab Bartlett's test for differences in variances, \cr
+            \code{.fligner2Test} \tab Fligner-Killeen test for differences in variances, \cr
             \tab \emph{File: test-variance Test.R} }
       
           
     \bold{Two Sample Tests:}
-    
-        
+           
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
-            \tab \emph{File: test-ks2Test.R} \cr 
-        
+            \code{ks2Test} \tab Performs a two sample Kolmogorov-Smirnov test, \cr
+            \code{correlationTest} \tab Performs correlation tests on two samples, \cr
+            \code{pearsonTest} \tab Pearson product moment correlation coefficient, \cr
+            \code{kendallTest} \tab Kendall's tau correlation test, \cr
+            \code{spearmanTest} \tab Spearman's rho correlation test, \cr
+            \tab \emph{File: test-ks2Test.R} }
         
     \bold{Test Utilities:}
           
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
-            \code{a} \tab xxx.\cr
+            \code{'fHTEST'} \tab S4 Class Representation, \cr
+            \code{show.fHTEST} \tab S4 Print Method, \cr
+            \code{.jbALM} \tab Jarque Bera Augmented Lagrange Multiplier Data, \cr
+            \code{.jbLM} \tab Jarque-Bera Lagrange Multiplier Data, \cr
+            \code{.jbTable} \tab Finite sample p values for the Jarque Bera test, \cr
+            \code{.jbPlot} \tab Plots probabilities, \cr
+            \code{.pjb} \tab Returns probabilities for JB given quantiles, \cr
+            \code{.qjb} \tab Returns quantiles for JB given probabilities, \cr
             \tab \emph{File: test-fHTEST.R} }
+            
 }
 
 
@@ -530,7 +554,6 @@
             \code{densityPlot} \tab returns tailored density plot, \cr 
             \code{logDensityPlot} \tab returns tailored log density plot.\cr
             \tab \emph{File: plot-histPlot.R} \cr 
-            %code{.plot.histogram} \tab replaces here the function plot.histogram
 
         \tab \cr
         \emph{Function ________________}
@@ -638,7 +661,7 @@
         \tab Description ________________________________________________\cr
             \code{gridVector} \tab Creates from two vectors rectangular grid.\cr
             \tab \emph{File: matrix-gridVector.R} \cr 
-{
+
         \tab \cr
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
@@ -701,8 +724,7 @@
 
     
     \bold{Plot Utilities:}
-        
-        
+               
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
@@ -736,8 +758,7 @@
         
     
     \bold{Special Function Utilities:}
-    
-        
+           
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
@@ -756,8 +777,7 @@
         
         
     \bold{Other Utilities:}
-    
-        
+           
         \tabular{ll}{
         \emph{Function ________________}
         \tab Description ________________________________________________\cr
@@ -777,7 +797,7 @@
 }
 
 
-\section{B. Builtin Functions:}
+\section{B. Builtin Functions:}{
 
 
     Builtin functions are borrowed from contributed R packages and other 
@@ -819,8 +839,10 @@
         \code{ssdenGss}     \tab ssden from the gss package\cr
         \code{hypHyperbolicDist} \tab hyp from HyperbolicDist package.}
 
+}
+        
 
-\section{C. Compiled Fortran and C Code:}
+\section{C. Compiled Fortran and C Code:}{
 
 
     \tabular{ll}{
@@ -830,7 +852,25 @@
         \code{nig.c} \tab source code from Kersti Aas,\cr
         \code{gss.f} \tab source code fromsandwhich package.}
 
+}
 
-section
+
+\section{D. Copyright and Licencies:}{
+
+    Copyright
+    
+}
+
+
+\section{D. Contact Address:}{
+
+    www.rmetrics.org
+    
+    Addresses:
+    
+}
+
+
+
 \keyword{models}
 
