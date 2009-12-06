@@ -2,13 +2,12 @@
 Random simulation or Monte-Carlo methods rely on the fact we have access to random
 numbers. Even if nowadays having random sequence is no longer a problem, for many
 years producing random numbers was a big challenge. According to \cite{ripleybook},
-simulation started in 1940s with physical devices. It brings us to a point we need
-to take care is the kind simulation we deal with. Using physical phenomena to get
+simulation started in 1940s with physical devices. Using physical phenomena to get
 random numbers is referred in the literature as true randomness.
 
 However, in our computers, we use more frequently pseudo-random numbers.
 These are defined as deterministic sequences, which mimic a sequence of
-i.i.d. random numbers chosen from the uniform distribution on the interval
+i.i.d.~random numbers chosen from the uniform distribution on the interval
 $[0,1]$. Random number generators used for this purpose receive as input
 an initial information, which is called a user specified seed, and allow
 to obtain different output sequences of numbers from $[0,1]$ depending
@@ -23,22 +22,23 @@ whether we use pseudo-random numbers or truly random numbers. Hence, the
 required properties may be formulated in terms of computational indistinguishability
 of the output of the generator from the truly random numbers, if the seed
 is not known. The corresponding mathematical theory is developed in complexity
-theory. More about this may be found in the full presentation.
+theory, see \url{http://www.wisdom.weizmann.ac.il/~oded/c-indist.html}.
 
 The best known random number generators are used for cryptographic purposes.
-These generators are chosen so that
-there is no known procedure, which could distinguish their output from
-truly random numbers within practically available computation time. For
-simulations, this requirement is usually relaxed. However, even for
-simulation purposes, considering the hardness of distinguishing the
-generated numbers from truly random ones is a good measure of the quality
-of the generator. In particular, the well-known empirical tests of random
+These generators are chosen so that there is no known procedure, which could
+distinguish their output from truly random numbers within practically available
+computation time, if the seed is not known. For simulations, this requirement
+is usually relaxed. However, even for
+simulation purposes, considering the hardness of detecting the difference
+between the generated numbers and truly random ones is a good measure of the
+quality of the generator. In particular, the well-known empirical tests of random
 number generators such as Diehard\footnote{The Marsaglia Random Number CDROM
 including the Diehard Battery of Tests of Randomness, Research Sponsored by
 the National Science Foundation (Grants DMS-8807976 and DMS-9206972),
 copyright 1995 George Marsaglia.} or TestU01 \cite{lecuyer07} are based on
-statistics, which allow to distinguish bad generators from truly random
-numbers.
+relatively easy to compute statistics, which allow to distinguish the output of
+bad generators from truly random numbers. More about this may be found in section
+Examples of distinguishing from truly random numbers.
 
 A simple parameter of a generator is its period. Recent generators have
 huge periods, which cannot be exhausted by any practical computation.
@@ -49,7 +49,7 @@ over the whole period. If a generator has good equidistribution,
 then we have a reasonable guarantee of practical independence of several
 consecutive numbers in the sequence. For linear generators, determining
 equidistribution properties may be done by efficient algebraic algorithms
-and does not need to really generate the whole period. 
+and does not need to really generate the whole period.
 
 \cite{ripleybook} lists the following properties
 \begin{itemize}
@@ -60,10 +60,10 @@ and does not need to really generate the whole period.
 \end{itemize}
 
 The statistical software \soft{R} provides several random number generators described
-in '?RNGkind()'. The default generator is called Mersenne-Twister and achieves high
-quality. 
+in '?RNGkind()'. The default generator is called Mersenne-Twister and achieves
+high quality, although it fails some tests based on XOR operation.
 Still, there are reasons to provide better and more recent RNGs as well as classic
-statistical tests to quantify their property. The rest of this chapter is
+statistical tests to quantify their properties. The rest of this chapter is
 two-folded: first we present the use of RNGs through the \code{runif()} interface,
 second we present the same use with dedicated functions (not modifying base \soft{R}
 default RNGs). See the overall man page with the command \code{?randtoolbox}.
@@ -91,7 +91,7 @@ Instead, it is called from the functions \code{set.generator()} and \code{put.de
 for setting some of a larger collection of the supported generators.
 
 The function \code{set.generator()} eases the process to set a new RNG in \soft{R}.
-Here is one short example on how to use \code{set.generator} (see the man page
+Here is one short example on how to use \code{set.generator()} (see the man page
 for detailed explanations).
 
 %%% R code
@@ -120,8 +120,10 @@ to continue the sequence of the random numbers from the point, where \code{get.d
 was called. This may be used, for example, to alternate between the streams of random numbers
 generated by different generators.
 
-From the \code{runif} interface, you can use any other linear congruential
-generators (as long as the parameters can be set in \soft{R}) and
+From the \code{runif()} interface, you can use any other linear congruential
+generator with modulus at most $2^{64}$ and multiplier, which is either
+a power of $2$ or the product of the modulus and the multiplier is at 
+most $2^{64}$. The current version of the package also allows to use
 Well-Equidistributed Long-period Linear generators (WELL).
 
 To get back to the original setting of RNGs in \soft{R}, we just need to

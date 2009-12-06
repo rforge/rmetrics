@@ -58,7 +58,7 @@ and \code{put.description()} return \code{NULL}.
 \code{RNGkind}
 }
 \author{
- Petr Savicky
+ Petr Savicky and Christophe Dutang
 }
 \examples{
 RNGkind() # [1] "Mersenne-Twister" "Inversion"   
