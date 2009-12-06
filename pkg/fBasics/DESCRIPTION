@@ -8,8 +8,11 @@ Author: Diethelm Wuertz and Rmetrics core team members,
     gmm from Pierre Chauss,
     gld from Robert King,
     gss from Chong Gu,
-    HyperbolicDist from David Scott
-    sandwich from Thomas Lumley and Achim Zeileis.
+    nortest from Juergen Gross,
+    HyperbolicDist from David Scott,
+    sandwich from Thomas Lumley and Achim Zeileis,
+    and fortran/C code from Kersti Aas, and from the
+    contributed R packages gld and gss.
 Depends: R (>= 2.6.0), MASS, methods, timeDate, timeSeries (>= 2100.84)
 Suggests: akima, spatial, RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
@@ -18,6 +21,8 @@ Description: Environment for teaching
     NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
         FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
         WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+    Please donate, www.rmetrics.org, to support future activities of the
+    Rmetrics association.
 LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
