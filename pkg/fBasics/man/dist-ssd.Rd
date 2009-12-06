@@ -9,7 +9,7 @@
 \alias{rssd}
 
 
-\title{Normal Inverse Gaussian Distribution}
+\title{Spline Smoothed Distribution}
 
 
 \description{
