@@ -22,7 +22,7 @@
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
 # FUNCTION:             DESCRIPTION:
-#  .pnigC                Fast C implementation (fails)
+#  .pnigC                Fast C implementation 
 #  .qnigC                Fast C implementation
 ################################################################################
 

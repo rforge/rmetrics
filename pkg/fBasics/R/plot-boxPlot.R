@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                TAILORED BOX PLOTS:
+# FUNCTION:                DESCRIPTION:
 #  boxPlot                  Produces a side-by-side standard box plot
 #  boxPercentilePlot        Produces a side-by-side box-percentile plot
 ################################################################################

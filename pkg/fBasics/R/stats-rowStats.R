@@ -14,45 +14,30 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTION:                 row STATISTICS:
+# FUNCTION:                 DESCRIPTION:
 #  rowStats                  Computes sample statistics by row
-#  rowSums                   Computes sums of all values in each row
-#  rowMeans                  Computes means of all values in each row
-#  rowSds                    Computes standardard deviation of each row
+#  rowSums                   Computes sums of values in each row
+#  rowMeans                  Computes means of values in each row
+#  rowSds                    Computes standard deviation of each row
 #  rowVars                   Computes sample variance by row
 #  rowSkewness               Computes sample skewness by row
 #  rowKurtosis               Computes sample kurtosis by row
 #  rowMaxs                   Computes maximum values in each row
 #  rowMins                   Computes minimum values in each row
-#  rowProds                  Computes product of all values in each row
+#  rowProds                  Computes product of values in each row
+#  rowQuantiles              Computes product of values in each row
 # FUNCTION:                 NO LONGER USED:
 #  rowAvgs                   Computes sample mean by row
 #  rowStdevs                 Computes sample variance by row
 ################################################################################
 
 
-# .conflicts.OK = TRUE
-
-
-# ------------------------------------------------------------------------------
-
-
 rowStats <-
 function(x, FUN, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample statistics by row
@@ -67,33 +52,15 @@ function(x, FUN, ...)
 # ------------------------------------------------------------------------------
 
 
-## rowSums <-
-## function(x, ...)
-## {
-##     # FUNCTION:
-
-##     if (class(x) == "timeSeries") {
-##         return(rowStats(x, "sum", ...))
-##     } else {
-##         return(base::rowSums(x, ...))
-##     }
-## }
+# rowSums() 
+#   is part of R's base package  
 
 
 # ------------------------------------------------------------------------------
 
 
-## rowMeans <-
-## function(x, ...)
-## {
-##     # FUNCTION:
-
-##     if (class(x) == "timeSeries") {
-##         return(rowStats(x, "mean", ...))
-##     } else {
-##         return(base::rowMeans(x, ...))
-##     }
-## }
+# rowMeans <-
+#   is part of R's base package    
 
 
 # ------------------------------------------------------------------------------
@@ -114,14 +81,17 @@ rowProds <- function(x, ...) { rowStats(x, "prod", ...) }
 rowQuantiles <-
 function(x, prob = 0.05, ...)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
 
+    # Row Quantiles:
     stopifnot(length(prob) == 1)
     rowStats(x, "quantile", probs = prob, ...)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 rowAvgs <- function(x, ...) rowMeans(x, ...)

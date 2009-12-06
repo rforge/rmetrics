@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  ghMode                Computes the generalized hyperbolic mode
+#  ghMode                Computes mode of the generalized hyperbolic DF
 ################################################################################
 
 

@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                TAILORED SERIES PLOTS:     
+# FUNCTION:                DESCRIPTION:     
 #  seriesPlot               Dispalys a time Series Plot           
 #  cumulatedPlot            Displays a cumulated series given the returns
 #  returnPlot               Displays returns given the cumulated series

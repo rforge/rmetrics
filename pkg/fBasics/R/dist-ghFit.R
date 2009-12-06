@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:            GENERALIZED DISTRIBUTION:
-#  ghFit                Fits parameters of a generalized hyperbolic density
+#  ghFit                Fits parameters of a generalized hyperbolic DF
 ################################################################################
 
 

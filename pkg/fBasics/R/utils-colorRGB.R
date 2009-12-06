@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                 UTILITIES:
+# FUNCTION:                 DESCRIPTION:
 #  .asRGB                    Converts any R color to RGB (red/green/blue)
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers

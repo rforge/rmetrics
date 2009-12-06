@@ -14,14 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-# for code accessed (or partly included) from other sources:
-#   see Rmetric's copyright and license files
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
@@ -163,7 +155,6 @@ function(mu = 0, sigma = 1, horizon = 1000)
     
 
 ################################################################################
-# Distribution and Random Deviates
 
     
 dmaxdd <- 

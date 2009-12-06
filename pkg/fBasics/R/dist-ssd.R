@@ -17,10 +17,10 @@
 
 ################################################################################
 # FUNCTIONS:       DESCRIPTION:
-#  dssd             Returns density estimate
-#  pssd             Returns probability estimate
-#  qssd             Returns quantiles estimate
-#  rssd             Returns random variates 
+#  dssd             Returns spline smoothed density estimate
+#  pssd             Returns spline smoothed probability estimate
+#  qssd             Returns spline smoothed quantiles estimate
+#  rssd             Returns spline smoothed random variates 
 ################################################################################
 
 

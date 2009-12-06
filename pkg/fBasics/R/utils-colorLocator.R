@@ -50,16 +50,20 @@
 colorLocator <-
 function(locator = FALSE)
 {
-    # A copy from contributed R-package epitools
-
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Plots R's 657 named colors for selection
+    
+    # Source:
+    #   Code borrowed from contributed R-package epitools
 
     # FUNCTION:
 
     # Settings:
     cex.axis = 0.7
 
+    # Plot:
     xx <- rep(1:30, 22)
     yy <- rep(1:22, rep(30, 22))
     yyy <- matrix(yy, ncol = 22)
@@ -76,6 +80,7 @@ function(locator = FALSE)
     axis(2, at = 1:22, label = 1:22, cex.axis = cex.axis, tick = FALSE,
         las = 1)
 
+    # Locator:
     if (locator == TRUE) {
         lxy <- locator()
         xy <- round(data.frame(lxy))
@@ -85,6 +90,9 @@ function(locator = FALSE)
     } else {
         return(invisible(cm))
     }
+    
+    # Return Value:
+    invisible()
 }
 
 
@@ -94,17 +102,20 @@ function(locator = FALSE)
 colorMatrix <-
 function()
 {
-    # A copy from contributed R-package epitools
-
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Returns matrix of R's color names
 
+    # Source:
+    #   Code borrowed from contributed R-package epitools
+    
     # FUNCTION:
 
     # Color Names:
-    x <- matrix(c(colors(),NA,NA,NA), 30, 22)
+    x <- matrix(c(colors(), NA, NA, NA), 30, 22)
 
-    # return Value:
+    # Return Value:
     invisible(x)
 }
 

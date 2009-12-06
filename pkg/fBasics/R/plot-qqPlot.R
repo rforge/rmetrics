@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                DESCRIPTION
+# FUNCTION:                DESCRIPTION:
 #  qqnormPlot               Returns a tailored normal quantile-quantile plot
 #  qqnigPlot                Returns a tailored NIG quantile-quantile plot
 #  qqghtPlot                Returns a tailored GHT quantile-quantile plot

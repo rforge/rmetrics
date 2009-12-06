@@ -14,21 +14,10 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  symbolTable               Shows a table of plot symbols
+#  symbolTable               Shows a table of plot symbols from a given font
 ################################################################################
 
 
@@ -38,13 +27,13 @@ function(font = par('font'), cex = 0.7)
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Shows a table of plot characters.
+    #   Shows a table of plot characters from a given font
     
     # Example:
     #   symbolTable()
     
     # Author:
-    #   Unknown, pice of code found on the internet.
+    #   Unknown, piece of code found on the internet.
 
     # FUNCTION:
     
@@ -57,7 +46,7 @@ function(font = par('font'), cex = 0.7)
         if(i %% 25 == 0) {j = j+1; k = 26}
         k = k-1
         points(j, k, pch = i, font = font, cex = cex, col = 2)
-        text(j+0.50, k, i, cex = cex) 
+        text(j + 0.50, k, i, cex = cex) 
     }
     
     # Return Value:

@@ -19,9 +19,10 @@
 # FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density
 #  .phiStable            Creates contour table for McCulloch estimators
-#  .PhiStable            Contour table created by .phiStable()
-#  .qStableFit           Estimates stable parameters by McCulloch approach
+#  .PhiStable            Contour table created by function .phiStable()
+#  .qStableFit           Estimates parameters by McCulloch's approach
 #  .mleStableFit         Estimates stable parameters by MLE approach
+#  .stablePlot           Plots results of stable parameter estimates
 ################################################################################
 
 
@@ -538,6 +539,14 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
 .stablePlot <-
 function(x, alpha, beta, gamma, delta)
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Estimates stable parameters by MLE approach
+    
+    # FUNCTION:
+    
+    # Plot:
     span.min = qstable(0.01, alpha, beta, gamma, delta)
     span.max = qstable(0.99, alpha, beta, gamma, delta)
     span = seq(span.min, span.max, length = 100)
@@ -553,6 +562,7 @@ function(x, alpha, beta, gamma, delta)
     lines(x = span, y = log(y.points), col = "steelblue")
     grid()
     
+    # Return Value:
     invisible()
 }
 
