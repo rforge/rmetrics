@@ -11,8 +11,7 @@ Author: Diethelm Wuertz and Rmetrics core team members,
     nortest from Juergen Gross,
     HyperbolicDist from David Scott,
     sandwich from Thomas Lumley and Achim Zeileis,
-    and fortran/C code from Kersti Aas, and from the
-    contributed R packages gld and gss.
+    and fortran/C code from Kersti Aas.
 Depends: R (>= 2.6.0), MASS, methods, timeDate, timeSeries (>= 2100.84)
 Suggests: akima, spatial, RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
