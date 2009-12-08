@@ -34,7 +34,6 @@
 #  qsnorm                 Quantile function for the skew NORM
 #  rsnorm                 Random Number Generator for the skew NORM
 # FUNCTION:              PARAMETER ESTIMATION:
-#  normFit                Fit the parameters for a Normal distribution
 #  snormFit               Fit the parameters for a skew Normal distribution
 # FUNCTION:              SLIDER:
 #  snormSlider           Displays Normal Distribution and RVS
@@ -72,20 +71,7 @@ test.snormDist <-
 
 test.snormFit <- 
     function()
-{  
-    # Parameter Estimation:
-    #  normFit - Fit the parameters for a Normal distribution
-    
-    # Normal Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    
-    # Random Variates:
-    x = rnorm(n = 1000, mean = 0, sd = 1)
-    fit = normFit(x)
-    print(fit)
-
-      
+{      
     # Parameter Estimation:
     #  snormFit - Fit the parameters for a skew Normal distribution
     
