@@ -60,7 +60,7 @@ function(type = c("dist", "rand"))
 
         # Random Numbers:
         if (type[1] == "rand") {
-            x = rstd(N, mean, sd, nu, xi)
+            x = rstd(N, mean, sd, nu)
         }
 
         # Frame:

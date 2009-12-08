@@ -1,7 +1,7 @@
 \name{ged}
 
-\alias{ged}
 
+\alias{ged}
 \alias{dged}
 \alias{pged}
 \alias{qged}
@@ -30,11 +30,10 @@ rged(n, mean = 0, sd = 1, nu = 2)
 
 \arguments{
 
-    \item{mean, sd, nu, xi}{
+    \item{mean, sd, nu}{
         location parameter \code{mean},
         scale parameter \code{sd},
-        shape parameter \code{nu}, 
-        skewness parameter \code{xi}.
+        shape parameter \code{nu}.
         }
     \item{n}{
         the number of observations.

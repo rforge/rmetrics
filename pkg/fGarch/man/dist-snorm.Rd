@@ -2,51 +2,29 @@
 
 
 \alias{snorm}
-
 \alias{dsnorm}
 \alias{psnorm}
 \alias{qsnorm}
 \alias{rsnorm}
 
-\alias{normFit}
-\alias{snormFit}
 
-\alias{snormSlider}
-
-
-\title{Skew Normal Distribution and Parameter Estimation}
+\title{Skew Normal Distribution}
 
 
 \description{
     
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
-    for the skew normal distribution. In
-    addition maximum likelihood estimators are available to 
-    fit the parameters of the distribution.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{[dpqr]snorm} \tab Skew Normal Distribution, \cr
-    \code{normFit} \tab MLE parameter fit for Normal distribution, \cr
-    \code{snormFit} \tab MLE parameter fit for skew Normal distribution, \cr
-    \code{snormSlider} \tab Displays interactively skew Normal distribution. }
+    for the skew normal distribution. 
        
 }
 
 
 \usage{
-dsnorm(x, mean = 0, sd = 1, xi = 1.5)
+dsnorm(x, mean = 0, sd = 1, xi = 1.5, log = FALSE)
 psnorm(q, mean = 0, sd = 1, xi = 1.5)
 qsnorm(p, mean = 0, sd = 1, xi = 1.5)
 rsnorm(n, mean = 0, sd = 1, xi = 1.5)
-
-normFit(x, \dots)
-snormFit(x, \dots)
-
-snormSlider(type = c("dist", "rand"))
 }
 
 
@@ -63,18 +41,15 @@ snormSlider(type = c("dist", "rand"))
     \item{p}{
         a numeric vector of probabilities.
         }
-    \item{type}{
-        a character string denoting which interactive plot should
-        be displayed. Either a distribution plot \code{type="dist"},
-        the default value, or a random variates plot, \code{type="rand"}.
-        }
     \item{x, q}{
         a numeric vector of quantiles.
         }
     \item{\dots}{
         parameters parsed to the optimization function \code{nlm}.
         }
-    
+    \item{log}{
+        a logical; if TRUE, densities are given as log densities.
+        }
 }
 
 
@@ -85,58 +60,7 @@ snormSlider(type = c("dist", "rand"))
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
-    
-    \code{[s]normFit} returns a list with the following components: 
-    \cr
-    \item{par}{
-        The best set of parameters found. 
-        }
-    \item{objective}{
-        The value of objective corresponding to \code{par}.
-        }
-    \item{convergence}{
-        An integer code. 0 indicates successful convergence.
-        }  
-    \item{message}{
-        A character string giving any additional information 
-        returned by the optimizer, or NULL. For details, see 
-        PORT documentation.
-        }  
-    \item{iterations}{
-        Number of iterations performed.
-        } 
-    \item{evaluations}{
-        Number of objective function and gradient function 
-        evaluations.
-        } 
  
-}
-
-\details{
-  
-    \bold{Symmetric Normal Distibution:}
-    \cr\cr
-    The functions for the normal distribution are part of R's
-    base package. The functions for the symmetric Student-t 
-    distribution are rescaled in such a way that they have unit 
-    variance in contrast to the Student-t family \code{dt}, \code{pt}, 
-    \code{qt} and \code{rt} which are part of R's base package.
-    The generalized error distribution functions are defined as 
-    described by Nelson (1991).
-    \cr
-    
-    \bold{Skew Normal Distribution:}
-    \cr\cr
-    The skew normal distribution functions are defined as described
-    by Fernandez and Steel (2000).
-    cr
-    
-    \bold{Parameter Estimation:}
-    \cr\cr
-    The function \code{\link{nlm}} is used to minimize the "negative" maximum 
-    log-likelihood function. \code{nlm} carries out a minimization using 
-    a Newton-type algorithm.
-    
 }
 
 
@@ -158,7 +82,6 @@ Fernandez C., Steel M.F.J. (2000);
 
 \examples{
 ## snorm -
-   
    # Ranbdom Numbers:
    par(mfrow = c(2, 2))
    set.seed(1953)
@@ -178,17 +101,6 @@ Fernandez C., Steel M.F.J. (2000);
    
    # Compute quantiles:
    round(qsnorm(psnorm(q = seq(-1, 5, by = 1))), digits = 6)
-       
-## snormFit -
-   snormFit(r)
-   
-\dontrun{
-## snormSlider -
-   if (require(tcltk)) {
-   snormSlider("dist")
-   snormSlider("rand")
-   }
-}
 }
 
 

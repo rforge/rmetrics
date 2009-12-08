@@ -1,40 +1,39 @@
-\name{sged}
+\name{std}
 
 
-\alias{sged}
-\alias{dsged}
-\alias{psged}
-\alias{qsged}
-\alias{rsged}
+\alias{std}
+\alias{dstd}
+\alias{pstd}
+\alias{qstd}
+\alias{rstd}
 
 
-\title{Skew Generalized Error Distribution}
+\title{Student-t Distribution}
 
 
 \description{
     
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
-    for the skew generalized error distribution.
-          
+    for the Student-t distribution.
+       
 }
 
 
 \usage{
-dsged(x, mean = 0, sd = 1, nu = 2, xi = 1.5, log = FALSE)
-psged(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
-qsged(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
-rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
+dstd(x, mean = 0, sd = 1, nu = 5, log = FALSE)
+pstd(q, mean = 0, sd = 1, nu = 5)
+qstd(p, mean = 0, sd = 1, nu = 5)
+rstd(n, mean = 0, sd = 1, nu = 5)
 }
 
 
 \arguments{
 
-    \item{mean, sd, nu, xi}{
+    \item{mean, sd, nu}{
         location parameter \code{mean},
         scale parameter \code{sd},
-        shape parameter \code{nu}, 
-        skewness parameter \code{xi}.
+        shape parameter \code{nu}.
         }
     \item{n}{
         the number of observations.
@@ -48,7 +47,6 @@ rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
     \item{log}{
         a logical; if TRUE, densities are given as log densities.
         }
-    
 }
 
 
@@ -59,16 +57,12 @@ rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
-    
+ 
 }
 
 
 \references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
-    
+   
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
     Preprint, 31 pages. 
@@ -84,25 +78,25 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## sged -
+## std -
    par(mfrow = c(2, 2))
    set.seed(1953)
-   r = rsged(n = 1000)
-   plot(r, type = "l", main = "sged", col = "steelblue")
+   r = rstd(n = 1000)
+   plot(r, type = "l", main = "sstd", col = "steelblue")
    
    # Plot empirical density and compare with true density:
    hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    box()
    x = seq(min(r), max(r), length = 201)
-   lines(x, dsged(x), lwd = 2)
+   lines(x, dstd(x), lwd = 2)
    
    # Plot df and compare with true df:
    plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue",
      ylab = "Probability")
-   lines(x, psged(x), lwd = 2)
+   lines(x, pstd(x), lwd = 2)
    
    # Compute quantiles:
-   round(qsged(psged(q = seq(-1, 5, by = 1))), digits = 6)
+   round(qstd(pstd(q = seq(-1, 5, by = 1))), digits = 6)
 }
 
 

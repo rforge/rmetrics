@@ -4,72 +4,28 @@
 \alias{sgedSlider}
 
 
-\title{Skew GED Distribution and Parameter Estimation}
+\title{Skew GED Distribution Slider}
 
 
 \description{
     
-    Functions to compute density, distribution function, 
-    quantile function and to generate random variates 
-    for the generalized error distribution. In
-    addition maximum likelihood estimators are available 
-    to fit the parameters of the distribution.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{[dpqr]ged} \tab Symmetric GED Distribution, \cr
-    \code{[dpqr]sged} \tab Skew GED Distribution, \cr
-    \code{gedFit} \tab MLE parameter fit for a GED distribution, \cr
-    \code{sgedFit} \tab MLE parameter fit for a skew GED distribution, \cr
-    \code{sgedSlider} \tab Displays interactively skew GED distribution. }
+    Displays interactively the dependence of the skew GED 
+    distribution on its parameters. 
           
 }
 
 
 \usage{
-dged(x, mean = 0, sd = 1, nu = 2)
-pged(q, mean = 0, sd = 1, nu = 2)
-qged(p, mean = 0, sd = 1, nu = 2)
-rged(n, mean = 0, sd = 1, nu = 2)
-
-dsged(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
-psged(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
-qsged(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
-rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
-
-gedFit(x, \dots)
-sgedFit(x, \dots)
-
 sgedSlider(type = c("dist", "rand"))
 }
 
 
 \arguments{
 
-    \item{mean, sd, nu, xi}{
-        location parameter \code{mean},
-        scale parameter \code{sd},
-        shape parameter \code{nu}, 
-        skewness parameter \code{xi}.
-        }
-    \item{n}{
-        the number of observations.
-        } 
-    \item{p}{
-        a numeric vector of probabilities.
-        }
     \item{type}{
         a character string denoting which interactive plot should
         be displayed. Either a distribution plot \code{type="dist"},
         the default value, or a random variates plot, \code{type="rand"}.
-        }
-    \item{x, q}{
-        a numeric vector of quantiles.
-        }
-    \item{\dots}{
-        parameters parsed to the optimization function \code{nlm}. 
         }
     
 }
@@ -77,47 +33,8 @@ sgedSlider(type = c("dist", "rand"))
 
 \value{
 
-    \code{d*} returns the density,
-    \code{p*} returns the distribution function,
-    \code{q*} returns the quantile function, and
-    \code{r*} generates random deviates, \cr
-    all values are numeric vectors.
-    
-    \code{[s]gedFit} returns a list with the following components: 
-    \cr
-    \item{par}{
-        The best set of parameters found. 
-        }
-    \item{objective}{
-        The value of objective corresponding to \code{par}.
-        }
-    \item{convergence}{
-        An integer code. 0 indicates successful convergence.
-        }  
-    \item{message}{
-        A character string giving any additional information 
-        returned by the optimizer, or NULL. For details, see 
-        PORT documentation.
-        }  
-    \item{iterations}{
-        Number of iterations performed.
-        } 
-    \item{evaluations}{
-        Number of objective function and gradient function 
-        evaluations.
-        } 
+    a Tcl object.
  
-}
-
-
-\details{
-    
-    \bold{Parameter Estimation:}
-    \cr\cr
-    The function \code{\link{nlm}} is used to minimize the "negative" maximum 
-    log-likelihood function. \code{nlm} carries out a minimization using 
-    a Newton-type algorithm.
-    
 }
 
 
@@ -142,35 +59,11 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## sged -
-   par(mfrow = c(2, 2))
-   set.seed(1953)
-   r = rsged(n = 1000)
-   plot(r, type = "l", main = "sged", col = "steelblue")
-   
-   # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
-   box()
-   x = seq(min(r), max(r), length = 201)
-   lines(x, dsged(x), lwd = 2)
-   
-   # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue",
-     ylab = "Probability")
-   lines(x, psged(x), lwd = 2)
-   
-   # Compute quantiles:
-   round(qsged(psged(q = seq(-1, 5, by = 1))), digits = 6)
-       
-## sgedFit -
-   sgedFit(r)
-
 \dontrun{  
 ## sgedSlider -
-   if (require(tcltk)) {
+   require(tcltk)
    sgedSlider("dist")
    sgedSlider("rand")
-   }
 }
 }
 

@@ -1,21 +1,11 @@
 \name{sstd}
 
-\alias{std}
 
-\alias{dstd}
-\alias{pstd}
-\alias{qstd}
-\alias{rstd}
-
+\alias{sstd}
 \alias{dsstd}
 \alias{psstd}
 \alias{qsstd}
 \alias{rsstd}
-
-\alias{stdFit}
-\alias{sstdFit}
-
-\alias{sstdSlider}
 
 
 \title{Skew Student-t Distribution and Parameter Estimation}
@@ -25,38 +15,16 @@
     
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
-    for the standardized skew Student-t distribution. In
-    addition maximum likelihood estimators are available to 
-    fit the parameters of the distribution.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
-    \code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
-    \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
-    \code{sstdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
-    \code{sstdSlider} \tab Displays interactively skew GED distribution. }
+    for the skew Student-t distribution. 
        
 }
 
 
 \usage{
-dstd(x, mean = 0, sd = 1, nu = 5)
-pstd(q, mean = 0, sd = 1, nu = 5)
-qstd(p, mean = 0, sd = 1, nu = 5)
-rstd(n, mean = 0, sd = 1, nu = 5)
-
-dsstd(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
+dsstd(x, mean = 0, sd = 1, nu = 5, xi = 1.5, log = FALSE)
 psstd(q, mean = 0, sd = 1, nu = 5, xi = 1.5)
 qsstd(p, mean = 0, sd = 1, nu = 5, xi = 1.5)
 rsstd(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
-
-stdFit(x, \dots)
-sstdFit(x, \dots)
-
-sstdSlider(type = c("dist", "rand"))
 }
 
 
@@ -74,16 +42,11 @@ sstdSlider(type = c("dist", "rand"))
     \item{p}{
         a numeric vector of probabilities.
         }
-    \item{type}{
-        a character string denoting which interactive plot should
-        be displayed. Either a distribution plot \code{type="dist"},
-        the default value, or a random variates plot, \code{type="rand"}.
-        }
     \item{x, q}{
         a numeric vector of quantiles.
         }
-    \item{\dots}{
-        parameters parsed to the optimization function \code{nlm}. 
+    \item{log}{
+        a logical; if TRUE, densities are given as log densities.
         }
     
 }
@@ -96,41 +59,6 @@ sstdSlider(type = c("dist", "rand"))
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
-    
-    \code{[s]stdFit} returns a list with the following components: 
-    \cr
-    \item{par}{
-        The best set of parameters found. 
-        }
-    \item{objective}{
-        The value of objective corresponding to \code{par}.
-        }
-    \item{convergence}{
-        An integer code. 0 indicates successful convergence.
-        }  
-    \item{message}{
-        A character string giving any additional information 
-        returned by the optimizer, or NULL. For details, see 
-        PORT documentation.
-        }  
-    \item{iterations}{
-        Number of iterations performed.
-        } 
-    \item{evaluations}{
-        Number of objective function and gradient function 
-        evaluations.
-        } 
- 
-}
-
-
-\details{
-    
-    \bold{Parameter Estimation:}
-    \cr\cr
-    The function \code{\link{nlminb}} is used to minimize the "negative" 
-    maximum log-likelihood function. \code{nlminb} carries out a 
-    minimization using a Newton-type algorithm.
     
 }
 
@@ -171,9 +99,6 @@ Fernandez C., Steel M.F.J. (2000);
    
    # Compute quantiles:
    round(qsstd(psstd(q = seq(-1, 5, by = 1))), digits = 6)
-       
-## sstdFit -
-   sstdFit(r, print.level = 2)
 }
 
 

@@ -1,22 +1,21 @@
-\name{gedFit}
+\name{stdFit}
+
+\alias{stdFit}
 
 
-\alias{gedFit}
-
-
-\title{Generalized Error Distribution Parameter Estimation}
+\title{Student-t Distribution Parameter Estimation}
 
 
 \description{
     
-    Function to fit the parameters of the generalized error 
+    Function to fit the parameters of the Student-t  
     distribution. 
-    
+       
 }
 
 
 \usage{
-gedFit(x, \dots)
+stdFit(x, \dots)
 }
 
 
@@ -34,8 +33,7 @@ gedFit(x, \dots)
 
 \value{
 
-    
-    \code{gedFit} returns a list with the following components: 
+    \code{stdFit} returns a list with the following components: 
     \cr
     \item{par}{
         The best set of parameters found. 
@@ -63,11 +61,7 @@ gedFit(x, \dots)
 
 
 \references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
-    
+   
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
     Preprint, 31 pages. 
@@ -83,12 +77,13 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## rged -
+## std -
    set.seed(1953)
-   r = rged(n = 1000)
+   r = rstd(n = 1000)
+
        
-## gedFit -
-   gedFit(r)
+## stdFit -
+   stdFit(r)
 }
 
 

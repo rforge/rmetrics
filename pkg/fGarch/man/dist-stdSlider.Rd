@@ -1,22 +1,22 @@
-\name{gedSlider}
+\name{stdSlider}
 
 
-\alias{gedSlider}
+\alias{stdSlider}
 
 
-\title{Geeneralized Error Distribution Slider}
+\title{Student-t Distribution Slider}
 
 
 \description{
     
-    Displays interactively the dependence of the GED 
+    Displays interactively the dependence of the Student-t 
     distribution on its parameters. 
           
 }
 
 
 \usage{
-gedSlider(type = c("dist", "rand"))
+stdSlider(type = c("dist", "rand"))
 }
 
 
@@ -38,17 +38,8 @@ gedSlider(type = c("dist", "rand"))
 }
 
 
-\references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
-    
-Fernandez C., Steel M.F.J. (2000); 
-    \emph{On Bayesian Modelling of Fat Tails and Skewness},
-    Preprint, 31 pages. 
-    
-}
+%\references{    
+%}
 
 
 \author{
@@ -60,10 +51,10 @@ Fernandez C., Steel M.F.J. (2000);
 
 \examples{
 \dontrun{  
-## gedSlider -
+## stdSlider -
    require(tcltk)
-   gedSlider("dist")
-   gedSlider("rand")
+   stdSlider("dist")
+   stdSlider("rand")
 }
 }
 

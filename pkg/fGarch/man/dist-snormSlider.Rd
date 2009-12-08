@@ -1,22 +1,22 @@
-\name{gedSlider}
+\name{snormSlider}
 
 
-\alias{gedSlider}
+\alias{snormSlider}
 
 
-\title{Geeneralized Error Distribution Slider}
+\title{Skew Normal Distribution Slider}
 
 
 \description{
     
-    Displays interactively the dependence of the GED 
+    Displays interactively the dependence of the skew Normal 
     distribution on its parameters. 
           
 }
 
 
 \usage{
-gedSlider(type = c("dist", "rand"))
+snormSlider(type = c("dist", "rand"))
 }
 
 
@@ -39,10 +39,6 @@ gedSlider(type = c("dist", "rand"))
 
 
 \references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
     
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
@@ -60,10 +56,10 @@ Fernandez C., Steel M.F.J. (2000);
 
 \examples{
 \dontrun{  
-## gedSlider -
+## snormSlider -
    require(tcltk)
-   gedSlider("dist")
-   gedSlider("rand")
+   snormSlider("dist")
+   snormSlider("rand")
 }
 }
 

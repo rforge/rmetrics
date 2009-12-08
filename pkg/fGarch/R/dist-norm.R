@@ -1,8 +1,0 @@
-
-
-#
-# Normal Distribution
-#
-# base::norm
-#
-
