@@ -4,6 +4,8 @@
 Version 0.9
 =============
 
-- extract Pierre L'Ecuyer's C code from randtoolbox,
-- rename and comment C macros as well as split C files of P. L'Ecuyer.
+- extract from randtoolbox the C code of WELL generators by F. Panneton,
+  P. L'Ecuyer and M. Matsumoto.
+- the common parts of the C files for WELL generators are in common
+  header files included into each of the generators.
 
