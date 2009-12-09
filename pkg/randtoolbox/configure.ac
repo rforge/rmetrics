@@ -326,7 +326,7 @@ AC_OUTPUT
 ### http://www.gnu.org/software/autoconf/manual/autoconf-2.57/html_node/autoconf.html
 ### http://www.gnu.org/software/autoconf/manual/html_node/Autoconf-Language.html
 ###
-### to check the config file, use in this order the 3 following command in the top directory
+### to check the config file, use in this order the 3 following commands in the top directory
 ### >autoheader
 ### >autoconf
 ### >./configure
