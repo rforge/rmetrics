@@ -367,87 +367,6 @@ a better equidistribution\footnote{See linear algebra arguments of \cite{matsumo
 and a better recovery time from zeros-excess states\footnote{states with too many zeros.}.
 The function \code{SFMT} provides an interface to the \soft{C} code of Matsumoto and Saito.
 
-\subsubsection{Examples of distinguishing from truly random numbers}\label{distinguishing}
-
-For a good generator, it is not computationally easy to distinguish the output
-of the generator from truly random numbers, if the seed or the index in the
-sequence is not known. In this section, we present examples of generators,
-whose output may be easily distinguished from truly random numbers.
-
-An example of such a generator is the older version of Wichmann-Hill from 1982. For
-this generator, we can even predict the next number in the sequence, if we know the
-last already generated one. Verifying such a predicition is easy and it is,
-of course, not valid for truly random numbers. Hence, we can easily distinguish
-the output of the generator from truly random numbers. An implementation
-of this test in R derived from \cite{mccullough08} is as follows.
-%%% R code
-<<wh.predict, fig=FALSE, echo=TRUE, eval=TRUE>>=
-wh.predict <- function(x)
-{
-    M1 <- 30269
-    M2 <- 30307
-    M3 <- 30323
-    y <- round(M1*M2*M3*x)
-    s1 <- y %% M1
-    s2 <- y %% M2
-    s3 <- y %% M3
-    s1 <- (171*26478*s1) %% M1
-    s2 <- (172*26070*s2) %% M2
-    s3 <- (170*8037*s3) %% M3
-    (s1/M1 + s2/M2 + s3/M3) %% 1
-}
-
-RNGkind("Wichmann-Hill")
-xnew <- runif(1)
-maxerr <- 0
-for (i in 1:1000) {
-    xold <- xnew
-    xnew <- runif(1)
-	err <- abs(wh.predict(xold) - xnew)
-    maxerr <- max(err, maxerr)
-}
-print(maxerr)
-@
-%%%
-
-The printed error is $0$ on some machines and less than $5 \cdot 10^{-16}$ on
-other machines. This is clearly different from the error obtained for truly random
-numbers, which is close to $1$.
-
-The requirement that the output of a random number generator should not
-be distinguishable from the truly random numbers by a simple computation,
-is directly related to the way, how a generator is used. Typically, we
-use the generated numbers as an input to a computation and we expect that
-the distribution of the output (for different seeds or for different
-starting indices in the sequence) is the same as if the input are truly
-random numbers. A failure of this assumption implies, besides of a wrong result
-of our simulation, that observing the
-output of the computation allows to distinguish the output from the generator
-from truly random numbers. Hence, we want to use a generator, for which
-we may expect that the calculations used in the intended application cannot
-distinguish its output from truly random numbers.
-
-In this context, it has to be noted that many of the currently used generators
-for simulations can be distinguished from truly random numbers using the arithmetic
-mod 2 (XOR operation) applied to individual bits of the output numbers. This is true
-for Mersenne Twister, SFMT and also all WELL generators. The basis for tolerating
-this is based on two facts. First, the arithmetic mod 2 and extracting individual
-bits of real numbers is not directly used in typical simulation problems and
-real valued functions, which represent these operations, are extremely discontinuous
-and such functions also do not typically occur in simulation problems. Another
-reason is that we need to observe quite a long history of the output to detect
-the difference from true randomness. For example, for Mersenne Twister, we
-need $624$ consecutive numbers.
-
-On the other hand, if we use a cryptographically strong pseudorandom number
-generator, we may avoid distinguishing from truly random numbers under any known
-efficient procedure. Such generators are typically slower than Mersenne
-Twister type generators. The factor of slow down is, for example for AES,
-about 5. However, note that for simulation problems, which require intensive
-computation besides the generating random numbers, using slower, but better,
-generator implies only negligible slow down of the computation as a whole.
-
-
 \subsection{Quasi random generation}
 Before explaining and detailing quasi random generation, 
 we must (quickly) explain Monte-Carlo\footnote{according to wikipedia the name comes
@@ -853,6 +772,87 @@ Other studies look directly for the point $\alpha=\frac{g}{n}$
 e.g. $\alpha = \left(p^{\frac{1}{d+1}}, \dots, p^{\frac{d}{d+1}}\right)$
 or some cosinus functions. We let interested readers to 
 look for detailed information in \cite{niederreiter}.
+
+\section{Examples of distinguishing from truly random numbers}\label{distinguishing}
+
+For a good generator, it is not computationally easy to distinguish the output
+of the generator from truly random numbers, if the seed or the index in the
+sequence is not known. In this section, we present examples of generators,
+whose output may be easily distinguished from truly random numbers.
+
+An example of such a generator is the older version of Wichmann-Hill from 1982. For
+this generator, we can even predict the next number in the sequence, if we know the
+last already generated one. Verifying such a predicition is easy and it is,
+of course, not valid for truly random numbers. Hence, we can easily distinguish
+the output of the generator from truly random numbers. An implementation
+of this test in R derived from \cite{mccullough08} is as follows.
+%%% R code
+<<wh.predict, fig=FALSE, echo=TRUE, eval=TRUE>>=
+wh.predict <- function(x)
+{
+    M1 <- 30269
+    M2 <- 30307
+    M3 <- 30323
+    y <- round(M1*M2*M3*x)
+    s1 <- y %% M1
+    s2 <- y %% M2
+    s3 <- y %% M3
+    s1 <- (171*26478*s1) %% M1
+    s2 <- (172*26070*s2) %% M2
+    s3 <- (170*8037*s3) %% M3
+    (s1/M1 + s2/M2 + s3/M3) %% 1
+}
+
+RNGkind("Wichmann-Hill")
+xnew <- runif(1)
+maxerr <- 0
+for (i in 1:1000) {
+    xold <- xnew
+    xnew <- runif(1)
+	err <- abs(wh.predict(xold) - xnew)
+    maxerr <- max(err, maxerr)
+}
+print(maxerr)
+@
+%%%
+
+The printed error is $0$ on some machines and less than $5 \cdot 10^{-16}$ on
+other machines. This is clearly different from the error obtained for truly random
+numbers, which is close to $1$.
+
+The requirement that the output of a random number generator should not
+be distinguishable from the truly random numbers by a simple computation,
+is directly related to the way, how a generator is used. Typically, we
+use the generated numbers as an input to a computation and we expect that
+the distribution of the output (for different seeds or for different
+starting indices in the sequence) is the same as if the input are truly
+random numbers. A failure of this assumption implies, besides of a wrong result
+of our simulation, that observing the
+output of the computation allows to distinguish the output from the generator
+from truly random numbers. Hence, we want to use a generator, for which
+we may expect that the calculations used in the intended application cannot
+distinguish its output from truly random numbers.
+
+In this context, it has to be noted that many of the currently used generators
+for simulations can be distinguished from truly random numbers using the arithmetic
+mod 2 (XOR operation) applied to individual bits of the output numbers. This is true
+for Mersenne Twister, SFMT and also all WELL generators. The basis for tolerating
+this is based on two facts. First, the arithmetic mod 2 and extracting individual
+bits of real numbers is not directly used in typical simulation problems and
+real valued functions, which represent these operations, are extremely discontinuous
+and such functions also do not typically occur in simulation problems. Another
+reason is that we need to observe quite a long history of the output to detect
+the difference from true randomness. For example, for Mersenne Twister, we
+need $624$ consecutive numbers.
+
+On the other hand, if we use a cryptographically strong pseudorandom number
+generator, we may avoid distinguishing from truly random numbers under any known
+efficient procedure. Such generators are typically slower than Mersenne
+Twister type generators. The factor of slow down is, for example for AES,
+about 5. However, note that for simulation problems, which require intensive
+computation besides the generating random numbers, using slower, but better,
+generator implies only negligible slow down of the computation as a whole.
+
 
 
 
