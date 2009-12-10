@@ -532,13 +532,11 @@ setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
 # ------------------------------------------------------------------------------
 ## 5 time_timeSeries              ANY
 
-setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
-                         j = "ANY"),
-          function(x,i,j, ..., drop = FALSE)
-      {
-          i <- timeDate(i)
-          callGeneric(x=x, i=i, j=j, drop=drop)
-      })
+setMethod("[", signature(x = "timeSeries", i = "time_timeSeries", j = "ANY"),
+          function(x,i,j, ..., drop = FALSE) {
+              i <- timeDate(i)
+              callGeneric(x=x, i=i, j=j, drop=drop)
+          })
 
 ################################################################################
 #  $,timeSeries            Subset by column names
@@ -548,35 +546,26 @@ setMethod("[", signature(x = "timeSeries", i = "time_timeSeries",
 # should behave the same way as $,data.frame
 # if none or more than one match returns NULL
 
+setMethod("$", signature(x = "timeSeries"), function (x, name) {
 
-setMethod("$",
-          signature(x = "timeSeries", name = "character"),
-          function (x, name)
-      {
+    nc <- colnames(x)
+    nr <- names(x@recordIDs)
+    dataIdx <- pmatch(name, nc)
+    recordIDsIdx <- pmatch(name, nr)
 
-          nc <- colnames(x)
-          nr <- names(x@recordIDs)
-          dataIdx <- pmatch(name, nc)
-          recordIDsIdx <- pmatch(name, nr)
+    # if none or more than one match returns NULL
+    if ((is.na(dataIdx) && is.na(recordIDsIdx)) ||
+        (!is.na(dataIdx) && !is.na(recordIDsIdx)))
+        return(NULL)
 
-          # if none or more than one match returns NULL
-          if ((is.na(dataIdx) && is.na(recordIDsIdx)) ||
-              (!is.na(dataIdx) && !is.na(recordIDsIdx)))
-              return(NULL)
+    if (!is.na(dataIdx))
+        return(.subset(x, TRUE, dataIdx))
 
-          if (!is.na(dataIdx))
-              return(.subset(x, TRUE, dataIdx))
+    if (!is.na(recordIDsIdx))
+        return(x@recordIDs[[recordIDsIdx]])
 
-          if (!is.na(recordIDsIdx))
-              return(x@recordIDs[[recordIDsIdx]])
-
-          NULL
-      })
-
-setMethod("$",
-          signature(x = "timeSeries", name = "ANY"),
-          function(x, name)
-          NULL )
+    NULL
+})
 
 ################################################################################
 #  $<-,timeSeries            Subset by column names
@@ -608,9 +597,7 @@ setMethod("$",
     x
 }
 
-setReplaceMethod("$",
-                 signature(x = "timeSeries", name = "character",
-                           value = "numeric"),
+setReplaceMethod("$", signature(x = "timeSeries", value = "numeric"),
                  function(x, name, value)
              {
 
@@ -655,11 +642,11 @@ setReplaceMethod("$",
              })
 
 setReplaceMethod("$",
-          signature(x = "timeSeries", name = "character", value = "factor"),
+          signature(x = "timeSeries", value = "factor"),
                  function(x, name, value) .dollar_assign(x, name, value))
 
 setReplaceMethod("$",
-          signature(x = "timeSeries", name = "character", value = "ANY"),
+          signature(x = "timeSeries", value = "ANY"),
                  function(x, name, value) .dollar_assign(x, name, value))
 
 ################################################################################

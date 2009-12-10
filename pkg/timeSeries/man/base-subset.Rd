@@ -26,8 +26,7 @@
 \alias{[,timeSeries,time_timeSeries,index_timeSeries-method}
 \alias{[,timeSeries,time_timeSeries,missing-method}
 
-\alias{$,timeSeries,ANY-method}
-\alias{$,timeSeries,character-method}
+\alias{$,timeSeries-method}
 
 \alias{[<-,timeSeries,timeDate,index_timeSeries-method}
 \alias{[<-,timeSeries,timeDate,missing-method}
@@ -44,9 +43,9 @@
 \alias{[<-,timeSeries,character,ANY-method}
 \alias{[<-,timeSeries,timeDate,ANY-method}
 
-\alias{$<-,timeSeries,character,ANY-method}
-\alias{$<-,timeSeries,character,factor-method}
-\alias{$<-,timeSeries,character,numeric-method}
+\alias{$<-,timeSeries,ANY,ANY-method}
+\alias{$<-,timeSeries,ANY,factor-method}
+\alias{$<-,timeSeries,ANY,numeric-method}
 
 \alias{window,timeSeries-method}
 \alias{cut,timeSeries-method}
