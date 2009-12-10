@@ -43,9 +43,9 @@
 \alias{[<-,timeSeries,character,ANY-method}
 \alias{[<-,timeSeries,timeDate,ANY-method}
 
-\alias{$<-,timeSeries,ANY,ANY-method}
-\alias{$<-,timeSeries,ANY,factor-method}
-\alias{$<-,timeSeries,ANY,numeric-method}
+\alias{$<-,timeSeries,ANY-method}
+\alias{$<-,timeSeries,factor-method}
+\alias{$<-,timeSeries,numeric-method}
 
 \alias{window,timeSeries-method}
 \alias{cut,timeSeries-method}
