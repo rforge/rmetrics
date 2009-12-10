@@ -544,7 +544,6 @@ setMethod("[", signature(x = "timeSeries", i = "time_timeSeries", j = "ANY"),
 
 
 # should behave the same way as $,data.frame
-# if none or more than one match returns NULL
 
 setMethod("$", signature(x = "timeSeries"), function (x, name) {
 
@@ -566,6 +565,10 @@ setMethod("$", signature(x = "timeSeries"), function (x, name) {
 
     NULL
 })
+
+# methods to generate completion after $
+.DollarNames.timeSeries <- function(x, pattern)
+    grep(pattern, names(x), value = TRUE)
 
 ################################################################################
 #  $<-,timeSeries            Subset by column names
