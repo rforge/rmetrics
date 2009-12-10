@@ -7,7 +7,7 @@
 ## server. This is important to avoid compatibility problem between
 ## development packages and packages available on CRAN.
 ##
-## *An Example with fSeries*
+## *An Example with timeDate*
 ##
 ## _Local packages_
 ##
@@ -20,7 +20,19 @@
 ################################################################################
 
 pkgsRmetricsDev <- function()
-    c("fUtilities",
+    c("BLCOP",
+      "fACD",
+      "FKF",
+      "fMarkovSwitching",
+      "ghyp",
+      "HyperbolicDist",
+      "randtoolbox",
+      "rngWELL",
+      "schwartz97",
+      "SkewHyperbolic",
+      "VarianceGamma",
+
+      "fUtilities",
       "fEcofin",
       "fCalendar",
       "fSeries",
@@ -43,16 +55,19 @@ pkgsRmetricsDev <- function()
       "fAsianOptions",
       "fAssets",
       "fPortfolio",
-      "fPortfolioBacktest")
+      "fPortfolioBacktest",
 
-      ### "Rdonlp2",
-      ### "Ripop",
-      ### "RlpSolve",
-      ### "RlpSolveAPI",
-      ### "Rquadprog",
-      ### "Rsocp",
-      ### "fPortfolioSolver",
-      ### "fPortfolioBacktest")
+      "RlpSolve",
+      "RlpSolveAPI",
+      "Ripop",
+      "Rsocp",
+      "Rdonlp2",
+      "Rquadprog",
+      "fPortfolioSolver",
+      "fPortfolioAdvanced",
+
+      "Rsolnp2",
+      "Rnlminb2")
 
 # ------------------------------------------------------------------------------
 
