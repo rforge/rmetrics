@@ -47,6 +47,10 @@
 \alias{$<-,timeSeries,factor-method}
 \alias{$<-,timeSeries,numeric-method}
 
+\alias{$<-,timeSeries,ANY,ANY-method}
+\alias{$<-,timeSeries,ANY,factor-method}
+\alias{$<-,timeSeries,ANY,numeric-method}
+
 \alias{window,timeSeries-method}
 \alias{cut,timeSeries-method}
 \alias{head,timeSeries-method}
