@@ -1,4 +1,26 @@
 Author: chalabi
+Date:   2009-12-13
+
+    added aliased in manual pages
+    
+    M pkg/timeSeries/man/base-subset.Rd
+
+Author: chalabi
+Date:   2009-12-10
+
+    updated version number
+    
+    M pkg/timeSeries/DESCRIPTION
+
+Author: chalabi
+Date:   2009-12-10
+
+    updated Changelog and DESC file
+    
+    M pkg/timeSeries/ChangeLog
+    M pkg/timeSeries/DESCRIPTION
+
+Author: chalabi
 Date:   2009-12-10
 
     added completion method after the $ sign.
