@@ -143,6 +143,7 @@ S3method("window", "timeSeries")
 ################################################
 
 export(
+    ".runlengths",
     ".aggregate.timeSeries",
     "alignDailySeries",
     ".align.timeSeries",
