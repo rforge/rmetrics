@@ -4,30 +4,34 @@
 
 === short term ===
 
-1. Add the character representation to the R interface of congruRand.
-  Then, for example, the user may specify the modulus 2^64 in R
-  as "18446744073709551616" and state, e.g. "12345678901234567890".
-  Character representation is the simplest solution, if we want
-  to allow moduli, which are powers of 2 larger than 2^53 and allow
-  to set any initial state of such a generator from the R level.
+# Finished.
+# 1. Add the character representation to the R interface of congruRand.
+#   Then, for example, the user may specify the modulus 2^64 in R
+#   as "18446744073709551616" and state, e.g. "12345678901234567890".
+#   Character representation is the simplest solution, if we want
+#   to allow moduli, which are powers of 2 larger than 2^53 and allow
+#   to set any initial state of such a generator from the R level.
+# 
+# 2. Add further recurrences for congruRand into the C code. Currently,
+#   we have the recurrence
+#      congru_seed  = (mult * congru_seed + incr) % mod
+#   If mod = 2^k then
+#      congru_seed  = (mult * congru_seed + incr) & mask
+#   with mask = 2^k - 1 is faster. If mod = 2^64, then even
+#      congru_seed  = (mult * congru_seed + incr)
+#   is sufficient.
+# 
+# 3. Add runif() interface for WELL generators. Currently, it is implemented
+#   only for congruRand.
+# 
+# 8. add a global man page ?randtoolbox like the ChainLadder package.
+# 
+# 9. rewrite the vignette with two chapter, the first one will be a short
+#   introduction while the second one will a deep and exhaustive presentation
+#   of all the tools in randtoolbox.
 
-2. Add further recurrences for congruRand into the C code. Currently,
-  we have the recurrence
-     congru_seed  = (mult * congru_seed + incr) % mod
-  If mod = 2^k then
-     congru_seed  = (mult * congru_seed + incr) & mask
-  with mask = 2^k - 1 is faster. If mod = 2^64, then even
-     congru_seed  = (mult * congru_seed + incr)
-  is sufficient.
-
-3. Add runif() interface for WELL generators. Currently, it is implemented
-  only for congruRand.
-
-8. add a global man page ?randtoolbox like the ChainLadder package.
-
-9. rewrite the vignette with two chapter, the first one will be a short
-  introduction while the second one will a deep and exhaustive presentation
-  of all the tools in randtoolbox.
+Add runif() interface for SFMT.
+Include Matlab's default generator (MT with 53 bit resolution).
 
 === long term ===
 
