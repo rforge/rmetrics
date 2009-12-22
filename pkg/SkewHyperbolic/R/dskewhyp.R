@@ -16,19 +16,22 @@ dskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     #calculate log density to avoid numerical errors
         if(abs(beta) > tolerance){
             ldskewhyp <- ((1-nu)/2)*log(2) + nu*log(delta) +
-                ((nu+1)/2)*log(abs(beta)) + log(besselK(x=sqrt(beta^2*
-                (delta^2+(x-mu)^2)),nu=(nu+1)/2, expon.scaled = TRUE)) -
-                sqrt(beta^2*(delta^2+(x-mu)^2)) +
-                beta*(x-mu) - lgamma(nu/2) - log(sqrt(pi)) -
-                ((nu+1)/2)*log(sqrt(delta^2 + (x - mu)^2))
+                ((nu + 1)/2)*log(abs(beta)) + log(besselK(x = sqrt(beta^2*
+                (delta^2 + (x-mu)^2)), nu = (nu + 1)/2, expon.scaled = TRUE)) -
+                sqrt(beta^2*(delta^2 + (x - mu)^2)) +
+                beta*(x - mu) - lgamma(nu/2) - log(sqrt(pi)) -
+                ((nu + 1)/2)*log(sqrt(delta^2 + (x - mu)^2))
         }else{
-            ldskewhyp <- lgamma((nu+1)/2) - log(sqrt(pi)) - log(delta) -
-                lgamma(nu/2) - ((nu+1)/2)*log(1 + ((x - mu)^2)/delta^2)
+            ldskewhyp <- lgamma((nu + 1)/2) - log(sqrt(pi)) - log(delta) -
+                lgamma(nu/2) - ((nu + 1)/2)*log(1 + ((x - mu)^2)/delta^2)
         }
 
     #exponentiate if necessary
-    if(log == TRUE) return(ldskewhyp)
-    else return(exp(ldskewhyp))
+    if (log == TRUE) {
+        return(ldskewhyp)
+    } else {
+        return(exp(ldskewhyp))
+    }
 
 }
 ######Distribution function##############################################
@@ -50,7 +53,7 @@ pskewhyp <- function(q, mu = 0, delta = 1, beta = 1, nu = 1,
     if (log == TRUE) stop("This function is not yet implemented")
 
     #x values
-    bks <- skewhypBreaks(param=param,small=small,tiny=tiny,...)
+    bks <- skewhypBreaks(param = param, small = small, tiny = tiny,...)
     xTiny <- bks$xTiny
     xSmall <- bks$xSmall
     lowBreak <- bks$lowBreak
@@ -110,27 +113,27 @@ pskewhyp <- function(q, mu = 0, delta = 1, beta = 1, nu = 1,
     errHigh <- errLarge + resHigh$abs.error
 
     for (i in qSmall) {
-        intRes <- safeIntegrate(dskewhypInt, xTiny, qSort[i],subdivisions,...)
+        intRes <- safeIntegrate(dskewhypInt, xTiny, qSort[i], subdivisions,...)
         intFun[i] <- intRes$value
         intErr[i] <- intRes$abs.error + tiny
     }
     for (i in qLarge) {
-        intRes <- safeIntegrate(dskewhypInt, qSort[i], xHuge,subdivisions,...)
+        intRes <- safeIntegrate(dskewhypInt, qSort[i], xHuge, subdivisions,...)
         intFun[i] <- 1 - intRes$value
         intErr[i] <- intRes$abs.error + tiny
     }
     for (i in qLow) {
-        intRes <- safeIntegrate(dskewhypInt, xSmall,qSort[i],subdivisions,...)
+        intRes <- safeIntegrate(dskewhypInt, xSmall,qSort[i], subdivisions,...)
         intFun[i] <- intRes$value + intSmall
         intErr[i] <- intRes$abs.error + errSmall
     }
     for (i in qHigh) {
-        intRes <- safeIntegrate(dskewhypInt, qSort[i],xLarge,subdivisions,...)
+        intRes <- safeIntegrate(dskewhypInt, qSort[i],xLarge, subdivisions,...)
         intFun[i] <- 1 - intRes$value - intLarge
         intErr[i] <- intRes$abs.error + errLarge
     }
     for (i in qLessEqMode) {
-        intRes <- safeIntegrate(dskewhypInt,lowBreak,qSort[i],subdivisions,...)
+        intRes <- safeIntegrate(dskewhypInt,lowBreak,qSort[i], subdivisions,...)
         intFun[i] <- intRes$value + intLow
         intErr[i] <- intRes$abs.error + errLow
     }
@@ -145,7 +148,7 @@ pskewhyp <- function(q, mu = 0, delta = 1, beta = 1, nu = 1,
         ifelse((accuracy), return(list(value = intFun[rank(q)],
                 error = intErr[rank(q)])), return(intFun[rank(q)]))
     }else{
-        ifelse((accuracy),return(list(value = 1 - intFun[rank(q)],
+        ifelse((accuracy), return(list(value = 1 - intFun[rank(q)],
                 error = intErr[rank(q)])), return(1 - intFun[rank(q)]))
     }
 }
@@ -170,7 +173,8 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
     if( length(invalid)>0 ) stop("must provide values between 0 and 1")
 
     #x values
-    bks <- skewhypBreaks(param=param, small=small, tiny=tiny, deriv=deriv)
+    bks <- skewhypBreaks(param = param, small = small,
+                         tiny = tiny, deriv = deriv)
     xTiny <- bks$xTiny
     xSmall <- bks$xSmall
     lowBreak <- bks$lowBreak
@@ -180,13 +184,13 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
     modeDist <- bks$modeDist
 
     #y values
-    yTiny <- pskewhyp(xTiny, param=param, small=small, tiny=tiny)
-    ySmall <- pskewhyp(xSmall, param=param, small=small, tiny=tiny)
-    yLowBreak <- pskewhyp(lowBreak, param=param, small=small, tiny=tiny)
-    yModeDist <- pskewhyp(modeDist, param=param, small=small, tiny=tiny)
-    yHighBreak <- pskewhyp(highBreak, param=param, small=small, tiny=tiny)
-    yLarge <- pskewhyp(xLarge, param=param, small=small, tiny=tiny)
-    yHuge <- pskewhyp(xLarge, param=param, small=small, tiny=tiny)
+    yTiny <- pskewhyp(xTiny, param = param, small = small, tiny = tiny)
+    ySmall <- pskewhyp(xSmall, param = param, small = small, tiny = tiny)
+    yLowBreak <- pskewhyp(lowBreak, param = param, small = small, tiny = tiny)
+    yModeDist <- pskewhyp(modeDist, param = param, small = small, tiny = tiny)
+    yHighBreak <- pskewhyp(highBreak, param = param, small = small, tiny = tiny)
+    yLarge <- pskewhyp(xLarge, param = param, small = small, tiny = tiny)
+    yHuge <- pskewhyp(xLarge, param = param, small = small, tiny = tiny)
 
     #divide into intervals
     pSort <- sort(p)
@@ -213,7 +217,7 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
     #for each group work out quantiles
     if(length(pTiny > 0)){
         for(i in pTiny){
-            zeroFun <- function(x) pskewhyp(x, param=param) - pSort[i]
+            zeroFun <- function(x) pskewhyp(x, param = param) - pSort[i]
             interval <- c(xTiny - (xSmall - xTiny), xTiny)
             while(zeroFun(interval[1])*zeroFun(interval[2]) > 0){
                 interval[1] <- interval[1] - (xSmall - xTiny)
@@ -224,8 +228,9 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
 
     if(length(pSmall > 0)){
         xValues <- seq(xTiny,xSmall, length.out = nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny,subdivisions=subdivisions, accuracy=FALSE)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny,subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for(i in pSmall){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -233,14 +238,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(xSmall) <= 0) qSort[i] <- xSmall
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(xTiny,xSmall),...)$root
+                    uniroot(zeroFun, interval = c(xTiny,xSmall),...)$root
             }
         }
     }
     if(length(pLow > 0)){
-        xValues <- seq(xSmall, lowBreak, length.out=nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny, subdivisions=subdivisions, accuracy=FALSE)
+        xValues <- seq(xSmall, lowBreak, length.out = nInterpol)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny, subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for (i in pLow){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -248,14 +254,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(lowBreak) <= 0) qSort[i] <- lowBreak
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(xSmall,lowBreak),...)$root
+                    uniroot(zeroFun, interval = c(xSmall,lowBreak),...)$root
                }
         }
     }
     if(length(pLessMode > 0)){
-        xValues <- seq(lowBreak, modeDist, length.out=nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny, subdivisions=subdivisions, accuracy=FALSE)
+        xValues <- seq(lowBreak, modeDist, length.out = nInterpol)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny, subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for(i in pLessMode){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -263,15 +270,16 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(modeDist) <= 0) qSort[i] <- modeDist
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(lowBreak,modeDist),...)$root
+                    uniroot(zeroFun, interval = c(lowBreak,modeDist),...)$root
             }
         }
 
     }
     if(length(pGreatMode > 0)){
-        xValues <- seq(modeDist, highBreak, length.out=nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny, subdivisions=subdivisions, accuracy=FALSE)
+        xValues <- seq(modeDist, highBreak, length.out = nInterpol)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny, subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for(i in pGreatMode){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -279,14 +287,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(highBreak) <= 0) qSort[i] <- highBreak
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(modeDist,highBreak),...)$root
+                    uniroot(zeroFun, interval = c(modeDist,highBreak),...)$root
             }
         }
     }
     if(length(pHigh > 0)){
-        xValues <- seq(highBreak, xLarge, length.out=nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny, subdivisions=subdivisions, accuracy=FALSE)
+        xValues <- seq(highBreak, xLarge, length.out = nInterpol)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny, subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for(i in pHigh){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -294,14 +303,15 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(xLarge) <= 0) qSort[i] <- xLarge
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(highBreak,xLarge),...)$root
+                    uniroot(zeroFun, interval = c(highBreak,xLarge),...)$root
             }
         }
     }
     if(length(pLarge > 0)){
-        xValues <- seq(xLarge, xHuge, length.out=nInterpol)
-        pskewhypValues <- pskewhyp(xValues, param=param, small=small,
-                      tiny=tiny, subdivisions=subdivisions, accuracy=FALSE)
+        xValues <- seq(xLarge, xHuge, length.out = nInterpol)
+        pskewhypValues <- pskewhyp(xValues, param = param, small = small,
+                                   tiny = tiny, subdivisions = subdivisions,
+                                   accuracy = FALSE)
         pskewhypSpline <- splinefun(xValues, pskewhypValues)
         for(i in pLarge){
             zeroFun <- function(x) pskewhypSpline(x) - pSort[i]
@@ -309,13 +319,13 @@ qskewhyp <- function(p, mu = 0, delta = 1, beta = 1, nu = 1,
             else{
                 if(zeroFun(xHuge) <= 0) qSort[i] <- xHuge
                 else qSort[i] <-
-                    uniroot(zeroFun, interval=c(xLarge,xHuge),...)$root
+                    uniroot(zeroFun, interval = c(xLarge,xHuge),...)$root
             }
         }
     }
     if(length(pHuge > 0)){
         for(i in pHuge){
-            zeroFun <- function(x) pskewhyp(x,param=param) - pSort[i]
+            zeroFun <- function(x) pskewhyp(x,param = param) - pSort[i]
             interval <- c(xHuge, xHuge + (xHuge - xLarge))
             while(zeroFun(interval[1])*zeroFun(interval[2]) > 0){
                 interval[2] <- interval[2] + (xHuge - xLarge)
@@ -356,7 +366,7 @@ rskewhyp <- function (n, mu = 0, delta = 1, beta = 1, nu = 1,
 }
 ######Derivative function#################################################
 ddskewhyp <- function(x, mu = 0, delta = 1, beta = 1, nu = 1,
-                      param = c(mu,delta,beta,nu),log = FALSE,
+                      param = c(mu,delta,beta,nu), log = FALSE,
                       tolerance = .Machine$double.eps ^ 0.5) {
 
     #check parameters
@@ -399,7 +409,7 @@ ddskewhyp <- function(x, mu = 0, delta = 1, beta = 1, nu = 1,
 #####Break function#######################################################
 skewhypBreaks <- function(mu = 0, delta = 1, beta = 1, nu = 1,
                           param = c(mu,delta,beta,nu), small = 10^(-6),
-                          tiny = 10^(-10), deriv=0.3,...) {
+                          tiny = 10^(-10), deriv = 0.3,...) {
 
     #check parameters
     parResult <- skewhypCheckPars(param)
@@ -412,10 +422,10 @@ skewhypBreaks <- function(mu = 0, delta = 1, beta = 1, nu = 1,
     nu <- param[4]
 
     #Calculate the more extreme breaks
-    CalcRange <- skewhypCalcRange(param=param, tol=tiny,...)
+    CalcRange <- skewhypCalcRange(param = param, tol = tiny,...)
     xTiny <- CalcRange[1]
     xHuge <- CalcRange[2]
-    CalcRange <- skewhypCalcRange(param=param, tol=small,...)
+    CalcRange <- skewhypCalcRange(param = param, tol = small,...)
     xSmall <- CalcRange[1]
     xLarge <- CalcRange[2]
     modeDist <- skewhypMode(param = param)
@@ -427,7 +437,7 @@ skewhypBreaks <- function(mu = 0, delta = 1, beta = 1, nu = 1,
 
     breaksize <- deriv*maxDeriv
 
-    breakFun <- function(x) ddskewhyp(x, param=param) - breaksize
+    breakFun <- function(x) ddskewhyp(x, param = param) - breaksize
 
     if( (maxDeriv < breaksize) || (derivVals[1] > breaksize)) {
         lowBreak <- xSmall

@@ -8,10 +8,10 @@ skewhypCheckPars <- function(param){
         case <- "error"
         errMessage <- "param vector must contain 4 values"
     }else{
-        mu<-param[1]
-        delta<-param[2]
-        beta<-param[3]
-        nu<-param[4]
+        mu <- param[1]
+        delta <- param[2]
+        beta <- param[3]
+        nu <- param[4]
 
         case <- "normal"
         errMessage <- ""
