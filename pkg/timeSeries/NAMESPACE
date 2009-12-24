@@ -172,6 +172,7 @@ export(
     ".description",
     ".diff.timeSeries",
     ".dollar_assign",
+    ".DollarNames.timeSeries",
     "drawdowns",
     "drawdownsStats",
     "dummyDailySeries",
