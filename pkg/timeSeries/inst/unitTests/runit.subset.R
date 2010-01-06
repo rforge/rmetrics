@@ -23,8 +23,6 @@ function()
 {
 
 
-    ### DW Not this script will again fail on 2010-01-01
-
     ts <- dummySeries()
     mat <- as.matrix(ts)
 
@@ -78,9 +76,10 @@ function()
                    as.matrix(ts[rep(TRUE), ]),
                    mat[rep(TRUE), ,drop=FALSE ])
 
+    dd <- as.character(time(ts)[1])
     checkIdentical(
-                   as.matrix(ts["2009-01-01", ]),
-                   mat["2009-01-01", ,drop=FALSE])
+                   as.matrix(ts[dd, ]),
+                   mat[dd, ,drop=FALSE])
 
     checkIdentical(
                    as.matrix(ts[,2]),

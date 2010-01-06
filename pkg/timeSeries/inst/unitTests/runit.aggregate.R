@@ -49,20 +49,19 @@ function()
     aggregate(x, by, mean)
 
     x <- timeSeries(seq(12), timeCalendar())
-    # DW This will fail again next year
-    # by <- timeSequence(
-    #    from = "2008-01-01",
-    #    to = "2009-01-01",
-    #    by = "quarter")
+
+    # relative from and to to make test work for future years ...
+    from <- timeCalendar(y=getRmetricsOptions("currentYear") - 1, m=1, d=1)
+    to <- timeCalendar(y=getRmetricsOptions("currentYear") + 1, m=1, d=1)
     by <- timeSequence(
-        from = "2008-01-01",
-        to = "2010-01-01",
+        from = from,
+        to = to,
         by = "quarter")
-                       
+
     x
     a <- aggregate(x, by, sum)
     a
-    
+
     ### DW here are mismatches - corrected above ...
     checkEquals(sum(x[1]), a[1])
     checkEquals(sum(x[2:4]), a[2])
