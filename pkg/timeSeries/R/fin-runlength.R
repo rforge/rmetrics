@@ -33,10 +33,10 @@ function(x, ...)
 
     # Value:
     #   runlengths an object of class 'timeSeries'.
-    
+
     # Note:
     #   Zeroes are handled as NA.
-    
+
     # Example:
     #   x.tS = timeSeries(data = rnorm(12), charvec = timeCalendar())
     #   .runlengths(x.tS)
@@ -52,7 +52,7 @@ function(x, ...)
     n <- length(x.vec)
     y <- x.vec[-1L] != x.vec[-n]
     Index <- c(which(y | is.na(y)), n)
-    X = x[index, ]
+    X = x[Index, ]
     series(X) <- matrix(diff(c(0L, Index)), ncol = 1)
 
     # Return Value:
