@@ -1,4 +1,42 @@
 Author: chalabi
+Date:   2010-01-06
+
+    fixed unit tests for new years
+
+    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
+    M pkg/timeSeries/inst/unitTests/runit.subset.R
+
+Author: chalabi
+Date:   2009-12-24
+
+    updated NAMESPACE
+    
+    M pkg/timeSeries/NAMESPACE
+
+Author: wuertz
+Date:   2009-12-20
+
+    .runlengths() function added
+    
+    M pkg/timeSeries/NAMESPACE
+    A pkg/timeSeries/R/fin-runlength.R
+
+Author: chalabi
+Date:   2009-12-13
+
+    updated version number
+    
+    M pkg/timeSeries/DESCRIPTION
+
+Author: chalabi
+Date:   2009-12-13
+
+    updated Changelog and DESC file
+    
+    M pkg/timeSeries/ChangeLog
+    M pkg/timeSeries/DESCRIPTION
+
+Author: chalabi
 Date:   2009-12-13
 
     added aliased in manual pages
