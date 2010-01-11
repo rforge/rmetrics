@@ -1,3 +1,17 @@
+2010-01-11    <d.scott@auckland.ac.nz>
+
+	* SkewHyperbolic updated to 0.1-3
+
+	* ais (Australian Institute of Sport) data set added. Taken from
+	package sn
+
+	* plot.skewhypFit: dots added to curve function calls so
+	parameters can be supplied (e.g. n, the number of points)
+
+	* ppskewhyp and qqskewhyp subtitle default changed to match those
+	for hist and logHist (param = (parameter values vector))
+	
+
 2009-10-10    <d.scott@auckland.ac.nz>
 
 	* SkewHyperbolic-package.Rd and skewhypMom.Rd edited to fix

@@ -23,42 +23,47 @@ plot.skewhypFit <- function(x, which = 1:4,
     mipoints <- x$midpoints
     obs <- x$x
     obsName <- x$xName
-    skewhypDens <- function(obs) dskewhyp(obs, param = param,
-      tolerance = .Machine$double.eps ^ 0.5)
-    logskewhypDens <- function(obs) dskewhyp(obs, param = param,
-      tolerance = .Machine$double.eps ^ 0.5, log = TRUE)
+    skewhypDens <- function(obs) {
+        dskewhyp(obs, param = param, tolerance = .Machine$double.eps ^ 0.5)
+    }
+    logskewhypDens <- function(obs) {
+        dskewhyp(obs, param = param, tolerance = .Machine$double.eps ^ 0.5,
+                 log = TRUE)
+    }
     ymax <- 1.06 * max(skewhypDens(seq(min(breaks), max(breaks),
-        length=length(obs))), empDens, na.rm = TRUE)
+                                       length = length(obs))),
+                       empDens, na.rm = TRUE)
 
     if (show[1]) {#histogram
-        hist(obs,breaks=breaks,freq=FALSE,ylim=c(0,ymax),
-             main = paste(plotTitles[1],obsName), ...)
-        curve(skewhypDens(x),add=TRUE,col=2)
+        hist(obs, breaks = breaks, freq = FALSE, ylim = c(0,ymax),
+             main = paste(plotTitles[1], obsName), ...)
+        curve(skewhypDens(x), add = TRUE, col = 2,  ...)
         title(sub = paste("param = (", round(param[1], 3), ",",
               round(param[2], 3), ",", round(param[3], 3), ",",
-              round(param[4], 3), ")", sep = ""))
+              round(param[4], 3), ")", sep = ""), ...)
     }
     if (show[2]) {#log histogram
         logHist(obs, breaks, include.lowest = TRUE, right = FALSE,
-          main = paste(plotTitles[2],obsName), ...)
+                main = paste(plotTitles[2], obsName), ...)
         curve(logskewhypDens, min(breaks) - 1, max(breaks) + 1, add = TRUE,
-          ylab = NULL, xlab = NULL,col=2)
+              ylab = NULL, xlab = NULL, col = 2, ...)
         title(sub = paste("param = (", round(param[1], 3), ",",
-          round(param[2], 3), ",", round(param[3], 3), ",",
-          round(param[4], 3), ")", sep = ""))
+              round(param[2], 3), ",", round(param[3], 3), ",",
+              round(param[4], 3), ")", sep = ""), ...)
     }
     if (show[3]) {#qq
-        qqskewhyp(obs, param = param, main = paste(plotTitles[3],obsName),
-                line=TRUE, ...)
+        qqskewhyp(obs, param = param, main = paste(plotTitles[3], obsName),
+                  line = TRUE, ...)
     }
     if (show[4]) {#pp
-        ppskewhyp(obs, param = param, main = paste(plotTitles[4],obsName), ...)
+        ppskewhyp(obs, param = param, main = paste(plotTitles[4], obsName),
+                  line = TRUE, ...)
     }
     invisible()
 }
 ###### Print method for skewhypFit #####################################
-print.skewhypFit <- function (x, digits = max(3, getOption("digits") - 3),...){
-
+print.skewhypFit <- function (x, digits = max(3, getOption("digits") - 3), ...)
+{
     if (!class(x) == "skewhypFit")
         stop("Object must belong to class skewhypFit")
 

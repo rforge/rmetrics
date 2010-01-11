@@ -49,9 +49,9 @@ qqskewhyp <- function(y, mu = 0, delta = 1, beta = 1, nu = 1,
     }
     if (plot.it) {
         qqplot(x, y, main = main, xlab = xlab, ylab = ylab)
-        title(sub = paste("mu = ", round(mu, 3), ", delta = ",
-              round(delta, 3), ", beta = ", round(beta, 3),
-              ", nu = ", round(nu, 3), sep = ""), ...)
+        title(sub = paste("param = (", round(param[1], 3), ",",
+              round(param[2], 3), ",", round(param[3], 3), ",",
+              round(param[4], 3), ")", sep = ""), ...)
     }
     if (line)
         abline(0, 1)
@@ -114,8 +114,9 @@ ppskewhyp <- function(y, beta = NULL, delta = NULL, mu = NULL, nu = NULL,
     if (plot.it) {
         plot(xvals, yvals, main = main, xlab = xlab, ylab = ylab,
              ylim = c(0, 1), xlim = c(0, 1), ...)
-        title(sub = paste("mu=", round(mu, 3), ", delta=", round(delta, 3),
-              ", beta=", round(beta, 3), ", nu=", round(nu, 3), sep = ""))
+        title(sub = paste("param = (", round(param[1], 3), ",",
+              round(param[2], 3), ",", round(param[3], 3), ",",
+              round(param[4], 3), ")", sep = ""), ...)
     }
     if (line)
         abline(0, 1)
