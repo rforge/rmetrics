@@ -34,7 +34,8 @@
 
  
 tailDependenceCoeffs <-
-    function(x, method = "nig", trace = FALSE, doplot = TRUE)
+    function(x, method = c("nig", "norm", "ght"), 
+    trace = FALSE, doplot = TRUE)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -49,8 +50,13 @@ tailDependenceCoeffs <-
     
     # FUNCTION:
     
-    # Compute Coeffs with NIG Marginals:
-    coeffs = .nigDependencyFit(x, doplot = doplot, trace = trace) 
+    # Check Settings:
+    method = match.arg(method)
+    
+    # Compute Coeffs with desired Marginals:
+    fun = paste(".", method, "DependencyFit", sep = "")
+    funFit = match.fun(fun)
+    coeffs = funFit(x, doplot = doplot, trace = trace) 
     
     # Return Value:
     coeffs
@@ -324,7 +330,7 @@ tailDependenceCoeffs <-
         # First asset:
         r1 = as.vector(x[, i])
         fit1 = nFit(r1)
-        estim1 = fit1$estimate
+        estim1 = fit1@fit$estimate
         p1 = pnorm(r1, estim1[1], estim1[2]) 
         Main1 = assetsNames[i]
         P = cbind(P, p1)
@@ -333,7 +339,7 @@ tailDependenceCoeffs <-
             # Second asset:
             r2 = as.vector(x[, j])
             fit2 = nFit(r2) 
-            estim2 = fit2$estimate      
+            estim2 = fit2@fit$estimate      
             p2 = pnorm(r2, estim2[1], estim2[2]) 
             Main2 = assetsNames[j]
             # Optional Plot:
@@ -397,7 +403,7 @@ tailDependenceCoeffs <-
         # First asset:
         r1 = as.vector(x[, i])
         fit1 = nFit(r1)
-        estim1 = fit1$estimate
+        estim1 = fit1@fit$estimate
         p1 = pnorm(r1, estim1[1], estim1[2]) 
         Main1 = assetsNames[i]
         P = cbind(P, p1)
@@ -406,7 +412,7 @@ tailDependenceCoeffs <-
             # Second asset:
             r2 = as.vector(x[, j])
             fit2 = nFit(r2) 
-            estim2 = fit2$estimate      
+            estim2 = fit2@fit$estimate      
             p2 = pnorm(r2, estim2[1], estim2[2]) 
             Main2 = assetsNames[j]
             # Optional Plot:
