@@ -1,0 +1,21 @@
+Package: DistributionUtils
+Version: 0.1-0
+Date: 2010-01-22
+Title: Distribution Utilities
+Author: David Scott <d.scott@auckland.ac.nz>
+Maintainer: David Scott <d.scott@auckland.ac.nz>
+Depends: R (>= 2.3.0)
+Suggests: GeneralizedHyperbolic, VarianceGamma, SkewHyperbolic
+Encoding: latin1
+Description: This package contains utilities which are of use in the
+	     packages I have developed for dealing with
+	     distributions. Currently these packages are
+	     GeneralizedHyperbolic, VarianceGamma, and
+	     SkewHyperbolic. Additional packages are under
+	     development. Each of these packages requires
+	     DistributionUtils. Functionality includes sample skewness
+	     and kurtois, log-histogram, and moments by integration.
+License: GPL (>= 2)
+URL: http://www.r-project.org
+Repository: CRAN
+Repository/R-Forge/Project: rmetrics
