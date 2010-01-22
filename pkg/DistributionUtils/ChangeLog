@@ -1,0 +1,6 @@
+2010-01-22    <d.scott@auckland.ac.nz>
+
+	* inst created with test setup derived from that in gdata and
+	Rmetrics packages. Some enhancements to allow for different levels
+	of testing.
+
