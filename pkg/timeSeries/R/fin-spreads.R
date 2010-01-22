@@ -17,8 +17,6 @@
 # FUNCTION:                 DESCRIPTION:
 #  spreads                   Computes spreads from a 'timeSeries' object
 #  midquotes                 Computes mid quotes from a 'timeSeries' object
-#  midquoteSeries            Deprecated, use midquotes
-#  spreadSeries              Deprecated, use spreads
 ################################################################################
 
 
@@ -49,38 +47,6 @@ function(x, which = c("Bid", "Ask"))
 
     # Return Value:
     midQuotes
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-spreadSeries =
-function(...)
-{
-    # FUNCTION:
-    
-    # Deprecated:
-    .Deprecated("spreadSeries")
-    
-    # Return Value:
-    spreads(...)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-midquoteSeries =
-function(...)
-{
-    # FUNCTION:
-    
-    # Deprecated:
-    .Deprecated("midquoteSeries")
-    
-    # Return Value:
-    midquotes(...)
 }
 
 

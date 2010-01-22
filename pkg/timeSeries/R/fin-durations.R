@@ -16,7 +16,6 @@
 ################################################################################
 # FUNCTION:                 FINANCIAL TIME SERIES:
 #  durations                 Computes durations from a 'timeSeries' object
-#  durationsSeries           Deprecated, use durations
 ################################################################################
 
 
@@ -58,20 +57,6 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
     ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-durationSeries <- 
-function(...) 
-{
-    # Deprecated:
-    .Deprecated("returns", "timeSeries")
-    
-    # Durations
-    durations(...)
-}
-    
 
 ################################################################################
 
