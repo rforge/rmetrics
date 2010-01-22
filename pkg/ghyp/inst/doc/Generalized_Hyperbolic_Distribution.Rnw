@@ -599,7 +599,7 @@ MCECM algorithm are sketched as follows:
   }
 \item{Update $\MU$ and $\Sigma$:
     \begin{eqnarray}
-      \MU^{[k+1]} &=& \OneDivN \frac{\sumN \deltaIK (\x_i-\GAMMA^{[k+1]})}
+      \MU^{[k+1]} &=& \OneDivN \frac{\sumN \deltaIK \x_i-\GAMMA^{[k+1]}}
       {\bar{\delta}^{[k]}}\\
       \Sigma^{[k+1]} &=& \OneDivN \sumN \deltaIK (\x_i-\MU^{[k+1]})(\x_i-\MU^{[k+1]})'
       - \bar{\eta}^{[k]} \GAMMA^{[k+1]} \GAMMA^{[k+1]}\,'.

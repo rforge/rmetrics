@@ -273,3 +273,8 @@ ghyp V1.5.2
 	accepts a matrix for 'mu'.
 
 	* Warning issues for Rd-files under R-2.11.0 resolved.
+
+2010-10-11 David Luethi
+ghyp V1.5.3
+	* Vignette: Typo in eq. (5.8) removed in courtesy of Simon Keel.
+	
