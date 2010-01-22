@@ -19,7 +19,7 @@
 ################################################################################
 
 
-.runlengths <-
+runlengths <-
 function(x, ...)
 {
     # A function implemetned by Diethelm Wuertz
@@ -38,8 +38,9 @@ function(x, ...)
     #   Zeroes are handled as NA.
 
     # Example:
-    #   x.tS = timeSeries(data = rnorm(12), charvec = timeCalendar())
-    #   .runlengths(x.tS)
+    #   set.seed(4711)
+    #   x.tS = timeSeries(data=rnorm(12), charvec=timeCalendar(), units="x")
+    #   runlengths(x.tS)
 
     # FUNCTION:
 
