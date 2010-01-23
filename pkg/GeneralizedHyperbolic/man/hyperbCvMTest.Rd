@@ -1,0 +1,95 @@
+\name{hyperbCvMTest}
+\alias{hyperbCvMTest}
+\alias{hyperbCvMTestPValue}
+\alias{print.hyperbCvMTest}
+
+\title{Cramer-von~Mises Test of a Hyperbolic Distribution}
+\description{
+  Carry out a \enc{Crämer}{Cramer}-von~Mises test of a hyperbolic
+  distribution where the parameters of the distribution are estimated,
+  or calculate the p-value for such a test.
+}
+\usage{
+hyperbCvMTest(x, mu = 0, delta = 1, alpha = 1, beta = 0,
+              param = c(mu, delta, alpha, beta),
+              conf.level = 0.95, ...)
+hyperbCvMTestPValue(delta = 1, alpha = 1, beta = 0, Wsq, digits = 3)
+\method{print}{hyperbCvMTest}(x, prefix = "\t", ...)
+}
+\arguments{
+  \item{x}{A numeric vector of data values for \code{hyperbCvMTest}, or
+    object of class \code{"hyperbCvMTest"} for \code{print.hyperbCvMTest}.}
+  \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
+    set to 0.}
+  \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
+    A default value of 1 has been set.}
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
+  \item{param}{Parameters of the hyperbolic distribution taking the form
+    \code{c(mu, delta, alpha, beta)}.}
+  \item{conf.level}{Confidence level of the the confidence interval.}
+  \item{\dots}{Further arguments to be passed to or from methods.}
+  \item{Wsq}{Value of the test statistic in the
+    \enc{Crämer}{Cramer}-von~Mises test of the hyperbolic distribution.}
+  \item{digits}{Number of decimal places for p-value.}
+  \item{prefix}{Character(s) to be printed before the description of the
+    test.}
+}
+\details{
+  \code{hyperbCvMTest} carries out a \enc{Crämer}{Cramer}-von~Mises
+  goodness-of-fit test of the hyperbolic distribution. The parameter
+  \code{param} must be given in the \eqn{(\alpha, \beta)}{(alpha, beta)}
+  parameterisation.
+
+  \code{hyperbCvMTestPValue} calculates the p-value of the test, and is
+  not expected to be called by the user. The method used is
+  interpolation in Table 5 given in Puig & Stephens (2001), which
+  assumes all the parameters of the distribution are unknown. Since the
+  table used is limited, large p-values are simply given as
+  \dQuote{>~0.25} and very small ones as \dQuote{<~0.01}. The table is
+  created as the matrix \code{wsqTable} when the package
+  \code{GeneralizedHyperbolic} is invoked.
+
+  \code{print.hyperbCvMTest} prints the output
+  from the
+  \enc{Crämer}{Cramer}-von~Mises goodness-of-fit test for
+  the hyperbolic distribution in very similar format to that provided by
+  \code{print.htest}. The only reason for having a special print method
+  is that p-values can be given as less than some value or greater than
+  some value, such as \dQuote{<\ ~0.01}, or \dQuote{>\ ~0.25}.
+}
+\value{
+  \code{hyperbCvMTest} returns a list with class \code{hyperbCvMTest}
+    containing the following components:
+  \item{statistic}{The value of the test statistic.}
+  \item{method}{A character string with the value
+    \dQuote{\enc{Crämer}{Cramer}-von~Mises test of hyperbolic
+      distribution}.}
+  \item{data.name}{A character string giving the name(s) of the data.}
+  \item{parameter}{The value of the parameter param}
+  \item{p.value}{The p-value of the test.}
+  \item{warn}{A warning if the parameter values are outside the limits
+    of the table given in Puig & Stephens (2001).}
+
+  \code{hyperbCvMTestPValue} returns a list with the elements
+  \code{p.value} and \code{warn} only.
+
+}
+\author{David Scott, Thomas Tran}
+\references{
+  Puig, Pedro and Stephens, Michael A. (2001),
+  Goodness-of-fit tests for the hyperbolic distribution.
+  \emph{The Canadian Journal of Statistics/La Revue Canadienne de
+    Statistique}, \bold{29}, 309--320.
+}
+\examples{
+param <- c(2, 2, 2, 1.5)
+dataVector <- rhyperb(500, param = param)
+fittedparam <- hyperbFit(dataVector)$param
+hyperbCvMTest(dataVector, param = fittedparam)
+dataVector <- rnorm(1000)
+fittedparam <- hyperbFit(dataVector, startValues = "FN")$param
+hyperbCvMTest(dataVector, param = fittedparam)
+}
+\keyword{htest}
+\keyword{print}
