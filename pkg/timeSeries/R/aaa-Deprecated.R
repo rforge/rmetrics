@@ -3,12 +3,35 @@
 # deprecated functions moved to here ...
 
 
+# .description
 # durationSeries
 # midquoteSeries
 # spreadSeries
 
 
 ################################################################################
+
+
+.description <- 
+function()
+{
+    # Note:
+    #   # Keep it for older Rmetrics Versions
+    
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated("description")
+    
+    # Description String:
+    ans = description()
+    
+    # Return Value:
+    ans
+}
+    
+
+# ------------------------------------------------------------------------------
 
 
 durationSeries <- 
