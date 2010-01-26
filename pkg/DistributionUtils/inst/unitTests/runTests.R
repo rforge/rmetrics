@@ -24,8 +24,11 @@ if(require("RUnit", quietly = TRUE))
         testSuite <- defineTestSuite(name = paste(pkg, "level 2 testing"),
                                      testFuncRegexp = "^level2test.+",
                                      dirs = path)
+    } else if(level == "graphics"){
+        testSuite <- defineTestSuite(name = paste(pkg, "graphics testing"),
+                                     testFuncRegexp = "^graphicstest.+",
+                                     dirs = path)
     }
-
     if(interactive()) {
         cat("Now have RUnit Test Suite 'testSuite' for package '",
             pkg, "' :\n", sep='')
@@ -35,9 +38,8 @@ if(require("RUnit", quietly = TRUE))
             "\t  printTextProtocol(tests)", '', sep = "\n")
     } else {
         ## run from shell / Rscript / R CMD Batch / ...
-        ## Run
-        tests <- runTestSuite(testSuite)
 
+        
         if(file.access(path, 02) != 0) {
             ## cannot write to path -> use writable one
             tdir <- tempfile(paste(pkg, "unitTests", sep="_"))
@@ -48,6 +50,17 @@ if(require("RUnit", quietly = TRUE))
         } else {
             pathReport <- file.path(path, "report")
         }
+
+        if(level == "graphics"){
+          pdf(file = paste(pathReport, "Graphics.pdf", sep = ""))
+        }
+        ## Run
+        tests <- runTestSuite(testSuite)
+
+        if(level == "graphics"){
+          dev.off()
+        }
+        print(pathReport)
 
         ## Print Results:
         printTextProtocol(tests, showDetails = FALSE)
