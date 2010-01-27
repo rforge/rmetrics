@@ -4,23 +4,23 @@
 \description{
   Plots a log-histogram, as in for example Feiller, Flenley and Olbricht
   (1992).
-  
+
   The intended use of the log-histogram is to examine the fit of a
   particular density to a set of data, as an alternative to a histogram
   with a density curve. For this reason, only the log-density histogram
   is implemented, and it is not possible to obtain a log-frequency
   histogram.
-  
+
   The log-histogram can be plotted with histogram-like dashed vertical
   bars, or as points marking the tops of the log-histogram bars, or with
   both bars and points.
 }
 
 \usage{
-  logHist(x, breaks = "Sturges", 
-          include.lowest = TRUE, right = TRUE, 
-          main = paste("Log-Histogram of", xName), 
-          xlim = range(breaks), ylim = NULL, xlab = xName, 
+  logHist(x, breaks = "Sturges",
+          include.lowest = TRUE, right = TRUE,
+          main = paste("Log-Histogram of", xName),
+          xlim = range(breaks), ylim = NULL, xlab = xName,
           ylab = "Log-density", nclass = NULL, htype = "b", ...)
 
 }
@@ -61,14 +61,14 @@
 \details{
   Uses \code{\link{hist.default}} to determine the cells or classes and
   calculate counts.
-   
+
   To calculate \code{ylim} the following procedure is used. The upper
   end of the range is given by the maximum value of the log-density,
   plus 25\% of the absolute value of the maximum. The lower end of the
   range is given by the smallest (finite) value of the log-density, less
-  25\% of the difference between the largest and smallest (finite) values 
+  25\% of the difference between the largest and smallest (finite) values
   of the log-density.
-  
+
   A log-histogram in the form used by Feiller, Flenley and Olbricht (1992)
   is plotted. See also Barndorff-Nielsen (1977) for use of log-histograms.
 }
@@ -79,8 +79,8 @@
   \item{counts}{\eqn{n} integers; for each cell, the number of
     \code{x[]} inside.}
   \item{logDensity}{Log of \eqn{\hat f(x_i)}{f^(x[i])}, which are estimated
-    density values. 
-    
+    density values.
+
     If \code{all(diff(breaks) == 1)}, estimated density values are the
     relative frequencies \code{counts/n} and in general satisfy
     \eqn{\sum_i \hat f(x_i) (b_{i+1}-b_i) = 1}{sum[i; f^(x[i])
@@ -91,18 +91,18 @@
     in drawing the log-histogram.}
   \item{ylim}{The value of \code{ylim} calculated by \code{logHist}.}
 }
-\references{ 
+\references{
   Barndorff-Nielsen, O. (1977)
   Exponentially decreasing distributions for the logarithm of particle size,
   \emph{Proc. Roy. Soc. Lond.},
   A\bold{353}, 401--419.
-  
+
   Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
-  Hyperbolic distributions. 
-  In \emph{Encyclopedia of Statistical Sciences}, 
+  Hyperbolic distributions.
+  In \emph{Encyclopedia of Statistical Sciences},
   eds., Johnson, N. L., Kotz, S. and Read, C. B., Vol. 3,
   pp. 700--707. New York: Wiley.
-  
+
   Fieller, N. J., Flenley, E. C. and Olbricht, W. (1992)
   Statistics of particle size data.
   \emph{Appl. Statist.},
@@ -115,15 +115,14 @@
 \seealso{\code{\link{hist}}}
 
 \examples{
-data(SandP500)
-### Consider proportional changes in the index
-change <- SandP500[-length(SandP500)]/SandP500[-1]
-hist(change)
-logHist(change)
-### Show points only
-logHist(change, htype = "p", pch = 20, cex = 0.5)
-### Fit the hyperbolic distribution to the changes
-hyperbFit(change)
+x <- rnorm(200)
+hist(x)
+### default
+logHist(x)
+### log histogram only
+logHist(x, htype = "h")
+### points only, some options
+logHist(x, htype = "p", pch = 20, cex = 2, col = "steelblue")
 }
 \keyword{hplot}
 \keyword{distribution}

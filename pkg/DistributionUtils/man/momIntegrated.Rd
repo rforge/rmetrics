@@ -74,14 +74,19 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
   The value of the integral as specified in \bold{Details}.
 }
 
-\author{David Scott \email{d.scott@auckland.ac.nz}, 
+\author{David Scott \email{d.scott@auckland.ac.nz},
         Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 
-\seealso{\code{\link{dghyp}}, \code{\link{dhyperb}},
-  \code{\link{dgamma}}, \code{\link{dgig}},
-  \code{\link[VarianceGamma]{VarianceGamma}}
+\seealso{
+  \code{\link[GeneralizedHyperbolic]{dghyp}},
+  \code{\link[GeneralizedHyperbolic]{dhyperb}},
+  \code{\link[GeneralizedHyperbolic]{dgamma}},
+  \code{\link[GeneralizedHyperbolic]{dgig}},
+  \code{\link[VarianceGamma]{VarianceGamma}
+  }
 }
 \examples{
+require(GeneralizedHyperbolic)
 ### Calculate the mean of a generalized hyperbolic distribution
 ### Compare the use of integration and the formula for the mean
 m1 <- momIntegrated("ghyp", param = c(0, 1, 3, 1, 1 / 2), order = 1, about = 0)

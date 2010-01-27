@@ -1,11 +1,17 @@
-level <- 1
-
 if(require("RUnit", quietly = TRUE))
 {
-    ## If not running under R CMD check get test level
+    ## Coming from make test???
     if(Sys.getenv("RCMDCHECK") == "FALSE") {
         level <- Sys.getenv("LEVEL")
         pkg <- Sys.getenv("PKG")
+    } else {
+        ## Coming from R CMD check???
+        ## level and pkg should be set if sourcing runTests.R
+        ## from the command line
+        if (!interactive()){
+            pkg <- "DistributionUtils"
+            level <- 1
+        }
     }
 
     library(package=pkg, character.only = TRUE)
@@ -39,7 +45,6 @@ if(require("RUnit", quietly = TRUE))
     } else {
         ## run from shell / Rscript / R CMD Batch / ...
 
-        
         if(file.access(path, 02) != 0) {
             ## cannot write to path -> use writable one
             tdir <- tempfile(paste(pkg, "unitTests", sep="_"))

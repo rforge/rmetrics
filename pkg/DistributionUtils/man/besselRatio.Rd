@@ -46,7 +46,7 @@ besselRatio(x, nu, orderDiff, useExpScaled = 700)
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
 \seealso{
-  \code{\link{besselK}}, \code{\link{gigMom}}
+  \code{\link{besselK}}, \code{\link[GeneralizedHyperbolic]{gigMom}}
 }
 
 \examples{
