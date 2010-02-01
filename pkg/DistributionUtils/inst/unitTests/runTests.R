@@ -9,7 +9,7 @@ if(require("RUnit", quietly = TRUE))
         ## level and pkg should be set if sourcing runTests.R
         ## from the command line
         if (!interactive()){
-            pkg <- "DistributionUtils"
+            pkg <- sub("\\.Rcheck$", '', basename(dirname(wd)))
             level <- 1
         }
     }
