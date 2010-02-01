@@ -26,7 +26,7 @@ millsR(y, log = FALSE)
 
 \details{
   the function was written to allow us to calculate the mills ratio.
-  since the Mill's Ratio is not stable for z greater than 7
+  since the Mill's Ratio is not stable for \eqn{z}{z} greater than 7
   or so, we use the log function to get around the instability.
 
 
