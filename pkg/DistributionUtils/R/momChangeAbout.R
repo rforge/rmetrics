@@ -1,4 +1,4 @@
-## transfer moments about different locations for any distributions
+### transfer moments about different locations for any distributions
 momChangeAbout <- function(order = "all", oldMom, oldAbout, newAbout) {
 
   if (!is.vector(oldMom))

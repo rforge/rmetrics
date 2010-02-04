@@ -76,11 +76,10 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
 
 \author{David Scott \email{d.scott@auckland.ac.nz},
         Christine Yang Dong \email{c.dong@auckland.ac.nz}}
-
 \seealso{
+	
   \code{\link[GeneralizedHyperbolic]{dghyp}},
-  \code{\link[GeneralizedHyperbolic]{dhyperb}},
-  \code{\link[GeneralizedHyperbolic]{dgamma}},
+  \code{\link[GeneralizedHyperbolic]{dhyperb}}, \code{\link{dgamma}},
   \code{\link[GeneralizedHyperbolic]{dgig}},
   \code{\link[VarianceGamma]{VarianceGamma}
   }

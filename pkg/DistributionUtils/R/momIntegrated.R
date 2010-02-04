@@ -1,4 +1,5 @@
-momIntegrated <- function(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
+momIntegrated <- function(densFn =
+                          c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
                           order, param = NULL, about = 0,
                           absolute = FALSE) {
 
@@ -16,6 +17,8 @@ momIntegrated <- function(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma
       stop("unsupported distribution")
 
     if (distname == "ghyp" | distname == "generalized hyperbolic") {
+      if (!exists("dghyp", mode = "function"))
+        stop("package GeneralizedHyperbolic needs to be loaded")
       if (is.null(param))
         param <- c(0, 1, 1, 0, 1)
 
@@ -29,6 +32,8 @@ momIntegrated <- function(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma
         }
       }
     } else if (distname == "hyperb" | distname == "hyperbolic") {
+      if (!exists("dhyperb", mode = "function"))
+        stop("package GeneralizedHyperbolic needs to be loaded")
       if (is.null(param))
         param <- c(0, 1, 1, 0)
 
@@ -43,6 +48,8 @@ momIntegrated <- function(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma
       }
     } else  if (distname == "gig" |
                 distname == "generalized inverse gaussian") {
+      if (!exists("dgig", mode = "function"))
+        stop("package GeneralizedHyperbolic needs to be loaded")
       if (is.null(param))
         param <- c(1, 1, 1)
 
@@ -106,7 +113,7 @@ momIntegrated <- function(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma
       }
     } else if (distname == "vg" | distname == "variance gamma") {
       if (!exists("dvg", mode = "function"))
-        stop("package Variance Gamma needs to be loaded")
+        stop("package VarianceGamma needs to be loaded")
 
       if (is.null(param))
         param <- c(0, 1, 0, 1)

@@ -21,8 +21,9 @@ Date: \tab 2010-01-22\cr
 License: \tab GPL (>=2)\cr
 LazyLoad: \tab yes\cr
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
+Contains functions which are useful for packages implementing
+distributions. Designed to work with my packages GeneralizedHyperbolic,
+VarianceGamma and SkewHyperbolic.
 }
 \author{
 David Scott <d.scott@auckland.ac.nz>
@@ -30,14 +31,14 @@ David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
 
 }
-\references{
-~~ Literature or other references for background information ~~
+\references{ 
+  Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine
+  (2009) Software for Distributions in R. UseR: The R User
+  Conference 2009
+  \url{http://www.agrocampus-ouest.fr/math/useR-2009/slides/Scott+Wuertz+Dong.pdf}		  
 }
 
 \keyword{ package }
 \seealso{
-\code{\link[fBasics:fBasics-package]{fBasics}} 
-}
-\examples{
-is.wholenumber(-3:5)                           # TRUE
+\code{\link[GeneralizedHyperbolic]{GeneralizedHyperbolicDistribution}} 
 }
