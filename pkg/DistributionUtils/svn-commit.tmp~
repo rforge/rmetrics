@@ -1,8 +1,0 @@
-
---This line, and those below, will be ignored--
-
-M    R/momIntegrated.R
-M    R/momChangeAbout.R
-M    man/momIntegrated.Rd
-M    man/DistributionUtils-package.Rd
-M    inst/unitTests/runit.sampleMoments.R
