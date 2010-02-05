@@ -14,30 +14,51 @@ test.sampleMoments <- function()
   ## Author: David Scott, Date: 03 Feb 2010, 23:00
 
   ## Check sample moments from normal
-  n <- 10000
-  x <- rnorm(n)
+  sampSize <- 1000
+  x <- rnorm(sampSize)
   distSkew <- 0
   distKurt <- 0
   sampSkew <- skewness(x)
   sampKurt <- kurtosis(x)
   diffSkew <- abs(distSkew - sampSkew)
   diffKurt <- abs(distKurt - sampKurt)
-  tolSkew <- 0.04
-  tolKurt <- 0.1
+
+  ## Calculate tolerances
+  ## Central moments, standard normal
+  mom <- c(0,sigma^2,0,3*sigma^4,0,15*sigma^6,0,105*sigma^8)
+  s3SE <- momSE(3, sampSize, mom[1:6])
+  s4SE <- momSE(4, sampSize, mom)
+  tolSkew <- qnorm(0.995)*s3SE/(sigma^3)
+  tolKurt <- qnorm(0.995)*s4SE/(sigma^4)
   checkTrue(diffSkew < tolSkew)
   checkTrue(diffKurt < tolKurt)
 
   ## Check sample moments from gamma
-  n <- 10000
-  x <- rgamma(n, shape = 1)
-  distSkew <- 2
-  distKurt <- 6
+  sampSize <- 1000
+  shape <- 2
+  scale <- 1 
+  x <- rgamma(sampSize, shape = shape)
+  distSkew <- 2/sqrt(shape)
+  distKurt <- 6/shape
   sampSkew <- skewness(x)
   sampKurt <- kurtosis(x)
   diffSkew <- abs(distSkew - sampSkew)
   diffKurt <- abs(distKurt - sampKurt)
-  tolSkew <- 0.1
-  tolKurt <- 1
+  ## Calculate tolerances
+  ## Raw moments of gamma
+  rawMom <- numeric(8)
+  gammaMom <- function(order, shape, scale){
+    gMom <- (scale^order)*gamma(shape + order)/gamma(shape)
+    return(gMom)
+  }
+  rawMom <- sapply(1:8, gammaMom, shape = shape, scale = scale)
+  ## Central moments, gamma
+  centralMom <- momChangeAbout("all", rawMom, 0, rawMom[1])
+  distSD <- centralMom[2]
+  s3SE <- momSE(3, sampSize, centralMom[1:6])
+  s4SE <- momSE(4, sampSize, centralMom)
+  tolSkew <- qnorm(0.995)*s3SE/(distSD^3)
+  tolKurt <- qnorm(0.995)*s4SE/(distSD^4)
   checkTrue(diffSkew < tolSkew)
   checkTrue(diffKurt < tolKurt)
 

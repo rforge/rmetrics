@@ -18,9 +18,10 @@ test.momChangeAbout <- function()
   k <- 4
   shape <- 2
   old <- 0
-  new <- 1
+  new <- shape*scale         # central moments
   sampSize <- 1000000
   x <- rgamma(sampSize, shape)
+  
   
   ## Sample moments
   s4new <- mean((x - new)^k)
@@ -39,9 +40,19 @@ test.momChangeAbout <- function()
   ## Calculate 3rd about new
   m3new <- momChangeAbout(3, m, old, new)
 
+  ## Calculate standard errors for gamma
+  rawMom <- numeric(8)
+  gammaMom <- function(order, shape, scale){
+    gMom <- (scale^order)*gamma(shape + order)/gamma(shape)
+    return(gMom)
+  }
+  rawMom <- sapply(1:8, gammaMom, shape = shape, scale = scale)
+  centralMom <- momChangeAbout("all", rawMom, 0, rawMom[1])
+  s4SE <- momSE(4, sampSize, centralMom)
+  s3SE <- momSE(3, sampSize, centralMom[1:6])
   ## Compare with sample values
-  s4tol <- 0.01
-  s3tol <- 0.01
+  s4tol <- qnorm(0.995)*s4SE
+  s3tol <- qnorm(0.995)*s3SE
   checkTrue(abs(s4new - m4new) < s4tol)
   checkTrue(abs(s3new - s3new) < s3tol)
   
