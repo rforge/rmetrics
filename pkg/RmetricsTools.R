@@ -814,7 +814,10 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
         dcf[,"Date"] <- format(Sys.Date())
 
         # get svn rev number
-        cmd <- paste(vcs, "info", file.path("pkg", pkg))
+        cmd <- switch(vcs,
+                      "svn" = paste(vcs, "info", pkg),
+                      "git svn" = paste(vcs, "info", file.path("pkg", pkg)),
+                      " ")
         t <- try(svn <- system(cmd, intern = TRUE))
         if (inherits(t, "try-error"))
             warning("Could not update svn revision number in DESC file")
