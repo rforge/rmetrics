@@ -19,7 +19,7 @@
 
 \usage{ 
 colorLocator(locator = FALSE)
-colorMatrix(locator = TRUE)
+colorMatrix()
 }
 
 
