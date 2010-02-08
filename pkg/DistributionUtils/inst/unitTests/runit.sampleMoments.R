@@ -15,7 +15,8 @@ test.sampleMoments <- function()
 
   ## Check sample moments from normal
   sampSize <- 1000
-  x <- rnorm(sampSize)
+  sigma <- 2
+  x <- rnorm(sampSize, sd = sigma)
   distSkew <- 0
   distKurt <- 0
   sampSkew <- skewness(x)
@@ -36,7 +37,7 @@ test.sampleMoments <- function()
   ## Check sample moments from gamma
   sampSize <- 1000
   shape <- 2
-  scale <- 1 
+  scale <- 1
   x <- rgamma(sampSize, shape = shape)
   distSkew <- 2/sqrt(shape)
   distKurt <- 6/shape
@@ -121,7 +122,7 @@ graphicstest.sampleMoments <- function()
                      xlab = "Sample Size", ylab = "Sample Kurtosis")
                  lines(sampSizes, tku)})
   title("Sample and Theoretical Kurtosis: Gamma(1,1)")
- 
+
 
 
   return()

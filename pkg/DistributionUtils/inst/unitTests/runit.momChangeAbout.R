@@ -17,25 +17,26 @@ test.momChangeAbout <- function()
   ## Gamma distribution
   k <- 4
   shape <- 2
+  scale <- 1
   old <- 0
   new <- shape*scale         # central moments
   sampSize <- 1000000
   x <- rgamma(sampSize, shape)
-  
-  
+
+
   ## Sample moments
   s4new <- mean((x - new)^k)
   s3new <- mean((x - new)^3)
-  
 
-  ## Calculate 1st to 4th raw moments 
+
+  ## Calculate 1st to 4th raw moments
   m <- numeric(k)
   for (i in 1:k){
     m[i] <- gamma(shape + i)/gamma(shape)
   }
-  
-  
-  ## Calculate 4th moment about new 
+
+
+  ## Calculate 4th moment about new
   m4new <- momChangeAbout(k, m, old, new)
   ## Calculate 3rd about new
   m3new <- momChangeAbout(3, m, old, new)
@@ -55,6 +56,6 @@ test.momChangeAbout <- function()
   s3tol <- qnorm(0.995)*s3SE
   checkTrue(abs(s4new - m4new) < s4tol)
   checkTrue(abs(s3new - s3new) < s3tol)
-  
+
   return()
 }

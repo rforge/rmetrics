@@ -23,13 +23,14 @@ test.momIntegrated <- function()
   ## Calculate moments for particular gamma
   shape <- 2
   rate <- 3
+  scale <- 1
   rawMom <- sapply(1:8, gammaMom, shape = shape, scale = scale)
   ## Central moments, gamma
   centralMom <- momChangeAbout("all", rawMom, 0, rawMom[1])
   ## Moments about new value
-  new <- 1 
+  new <- 1
   newMom <- momChangeAbout("all", rawMom, 0, new)
-  
+
   ## Check integrated moments from gamma
   ## Raw moments
   m1 <- momIntegrated("gamma", order = 1, param = c(shape,scale), about = 0)
@@ -50,7 +51,7 @@ test.momIntegrated <- function()
                        about = new)
   checkEquals(newMom[1], nm1)
   checkEquals(newMom[8], nm8)
-  
+
   return()
 }
 
