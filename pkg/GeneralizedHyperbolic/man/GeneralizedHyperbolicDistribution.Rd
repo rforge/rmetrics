@@ -13,16 +13,17 @@ hyperbolic and related distributions.
 
 For the hyperbolic distribution functions are provided for the density
 function, distribution function, quantiles, random number generation and
-fitting the hyperbolic distribution to data (\code{hyperbFit}). The function
-\code{hyperbChangePars} will interchange parameter values between
-different parameterisations.  The mean, variance, skewness, kurtosis and
-mode of a given hyperbolic distribution are given by \code{hyperbMean},
-\code{hyperbVar}, \code{hyperbSkew}, \code{hyperbKurt}, and
-\code{hyperbMode} respectively. For assessing the fit of the hyperbolic
-distribution to a set of data, the log-histogram is useful. See
-\code{\link{logHist}}. Q-Q and P-P plots are also provided for assessing
-the fit of a hyperbolic distribution. A \enc{Crämer}{Cramer}-von~Mises
-test of the goodness of fit of data to a hyperbolic distribution is given by
+fitting the hyperbolic distribution to data (\code{hyperbFit}). The
+function \code{hyperbChangePars} will interchange parameter values
+between different parameterisations.  The mean, variance, skewness,
+kurtosis and mode of a given hyperbolic distribution are given by
+\code{hyperbMean}, \code{hyperbVar}, \code{hyperbSkew},
+\code{hyperbKurt}, and \code{hyperbMode} respectively. For assessing the
+fit of the hyperbolic distribution to a set of data, the log-histogram
+is useful. See \code{\link[DistributionUtils]{logHist}}. Q-Q and P-P
+plots are also provided for assessing the fit of a hyperbolic
+distribution. A \enc{Crämer}{Cramer}-von~Mises test of the goodness of
+fit of data to a hyperbolic distribution is given by
 \code{hyperbCvMTest}. S3 \code{print}, \code{plot} and \code{summary}
 methods are provided for the output of \code{hyperbFit}.
 

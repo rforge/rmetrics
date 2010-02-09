@@ -45,7 +45,7 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   \item{n}{Number of observations to be generated.}
   \item{chi}{A shape parameter that by default holds a value of 1.}
   \item{psi}{Another shape parameter that is set to 1 by default.}
-  \item{lambda}{Shape parameter of the GIG distribution. Common to all forms of 
+  \item{lambda}{Shape parameter of the GIG distribution. Common to all forms of
     parameterization. By default this is set to 1.}
   \item{param}{Parameter vector taking the form \code{c(chi, psi, lambda)}
     for \code{rgig}, or \code{c(chi, psi)} for \code{rgig1}.}
@@ -106,9 +106,9 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   variable \code{small}. The inner break point is where the derivative
   of the density function is \code{deriv} times the maximum value of the
   derivative on that side of the mode. In each of the 6 inner regions
-  the numerical integration routine \code{\link{safeIntegrate}} (which
-  is a wrapper for \code{\link{integrate}}) is used to integrate the
-  density \code{dgig}.
+  the numerical integration routine
+  \code{\link[DistributionUtils]{safeIntegrate}} (which is a wrapper for
+  \code{\link{integrate}}) is used to integrate the density \code{dgig}.
 
   \code{qgig} use the breakup of the real line into the same 8
   regions as \code{pgig}. For quantiles which fall in the 2 extreme
@@ -159,7 +159,7 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   Dagpunar, J.S. (1989). An easily implemented generalised inverse
   Gaussian generator. \emph{Commun. Statist. -Simula.}, \bold{18},
   703--710.
-  
+
   \enc{Jörgensen}{Jorgensen}, B. (1982). \emph{Statistical Properties of
   the Generalized Inverse Gaussian Distribution}. Lecture Notes in
   Statistics, Vol. 9, Springer-Verlag, New York.
@@ -169,11 +169,11 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   and Melanie Luen.}
 
 \seealso{
-  \code{\link{safeIntegrate}}, \code{\link{integrate}} for its
-  shortfalls, \code{\link{splinefun}}, \code{\link{uniroot}} and
-  \code{\link{gigChangePars}} for changing parameters to the
-  \eqn{(\chi,\psi)}{(chi,psi)} parameterisation, \code{\link{dghyp}} for
-  the generalized hyperbolic distribution.
+  \code{\link[DistributionUtils]{safeIntegrate}},
+  \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
+  \code{\link{uniroot}} and \code{\link{gigChangePars}} for changing
+  parameters to the \eqn{(\chi,\psi)}{(chi,psi)} parameterisation,
+  \code{\link{dghyp}} for the generalized hyperbolic distribution.
 }
 
 \examples{

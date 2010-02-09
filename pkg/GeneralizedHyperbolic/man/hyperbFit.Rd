@@ -142,9 +142,9 @@
 
 \seealso{
   \code{\link{optim}}, \code{\link{nlm}}, \code{\link{par}},
-  \code{\link{hist}}, \code{\link{logHist}}, \code{\link{qqhyperb}},
-  \code{\link{pphyperb}}, \code{\link{dskewlap}} and
-  \code{\link{hyperbFitStart}}.
+  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}},
+  \code{\link{qqhyperb}}, \code{\link{pphyperb}}, \code{\link{dskewlap}}
+  and \code{\link{hyperbFitStart}}.
 
 }
 

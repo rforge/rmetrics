@@ -7,7 +7,7 @@
 \description{
   Function to calculate raw moments, mu moments, central moments and
   moments about any other given location for the generalized hyperbolic
-  distribution. 
+  distribution.
 }
 \usage{
 ghypMom(order, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
@@ -23,20 +23,22 @@ ghypMom(order, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     set to 0.}
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
     A default value of 1 has been set.}
-  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
-  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
+    value of 1.}
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
+    this is 0.}
   \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and dictates the
     shape that the distribution shall take. Default value is 1.}
   \item{param}{Numeric. The parameter vector specifying the GHyp
     distribution. Of the form \code{c(mu, delta, alpha, beta, lambda)}
     (see \code{\link{dghyp}}).}
-  \item{momType}{Common types of moments to be calculated, default is "raw". 
-    See \bold{Details}.}  
+  \item{momType}{Common types of moments to be calculated, default is "raw".
+    See \bold{Details}.}
   \item{about}{Numeric. The point around which the moment is to be
     calculated.}}
 \details{
   Checking whether \code{order} is a whole number is carried out using
-  the function \code{\link{is.wholenumber}}.
+  the function \code{\link[DistributionUtils]{is.wholenumber}}.
 
   \code{momType} can be either "raw" (moments about zero), "mu" (moments
   about mu), or "central" (moments about mean). If one of these moment
@@ -54,20 +56,24 @@ ghypMom(order, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \code{momChangeAbout}.
 
   The mu moments are obtained from the recursion formula given in Scott,
-  \enc{WÃ¼rtz}{Wuertz} and Tran (2008). 
+  \enc{Würtz}{Wuertz} and Tran (2008).
 }
 \value{
   The moment specified.
 }
 \references{
-  Scott, D. J., \enc{WÃ¼rtz}{Wuertz}, D. and Tran, T. T. (2008) 
+  Scott, D. J., \enc{Würtz}{Wuertz}, D. and Tran, T. T. (2008)
   Moments of the Generalized Hyperbolic Distribution. Preprint.
 
 }
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
-\seealso{\code{\link{ghypChangePars}}, \code{\link{is.wholenumber}},
-  \code{\link{momChangeAbout}}, \code{\link{momIntegrated}},
+\seealso{
+
+  \code{\link{ghypChangePars}},
+  \code{\link[DistributionUtils]{is.wholenumber}},
+  \code{\link[DistributionUtils]{momChangeAbout}},
+  \code{\link[DistributionUtils]{momIntegrated}},
   \code{\link{ghypMean}}, \code{\link{ghypVar}}, \code{\link{ghypSkew}},
   \code{\link{ghypKurt}}.}
 

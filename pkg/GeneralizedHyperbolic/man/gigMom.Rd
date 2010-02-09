@@ -23,8 +23,8 @@ gammaRawMom(order, shape = 1, rate = 1, scale = 1 / rate)
     moments about zero.}
   \item{chi}{A shape parameter that by default holds a value of 1.}
   \item{psi}{Another shape parameter that is set to 1 by default.}
-  \item{lambda}{Shape parameter of the GIG distribution. Common to all forms of 
-    parameterization. By default this is set to 1.}
+  \item{lambda}{Shape parameter of the GIG distribution. Common to all
+    forms of parameterization. By default this is set to 1.}
   \item{param}{Numeric. The parameter vector specifying the GIG
     distribution. Of the form \code{c(chi, psi, lambda)} (see
     \code{\link{dgig}}).}
@@ -45,16 +45,16 @@ gammaRawMom(order, shape = 1, rate = 1, scale = 1 / rate)
   valid parameter vector values is carried out using the function
   \code{\link{gigCheckPars}}. Checking whether \code{order}
   is a whole number is carried out using the function
-  \code{\link{is.wholenumber}}.
+  \code{\link[DistributionUtils]{is.wholenumber}}.
 
-  Raw moments (moments about zero) are calculated using the
-  functions \code{gigRawMom} or \code{gammaRawMom}. For moments not
-  about zero, the function \code{\link{momChangeAbout}} is used to
-  derive moments about another point from raw moments. Note that raw moments
-  of the inverse gamma distribution can be obtained from the raw moments
-  of the gamma distribution because of the relationship between the two
-  distributions. An alternative implementation of raw moments of the gamma
-  and inverse gamma distributions may be found in the package
+  Raw moments (moments about zero) are calculated using the functions
+  \code{gigRawMom} or \code{gammaRawMom}. For moments not about zero,
+  the function \code{\link[DistributionUtils]{momChangeAbout}} is used
+  to derive moments about another point from raw moments. Note that raw
+  moments of the inverse gamma distribution can be obtained from the raw
+  moments of the gamma distribution because of the relationship between
+  the two distributions. An alternative implementation of raw moments of
+  the gamma and inverse gamma distributions may be found in the package
   \pkg{actuar} and these may be faster since they are written in C.
 
   To calculate the raw moments of the GIG distribution it is convenient to
@@ -91,10 +91,13 @@ gammaRawMom(order, shape = 1, rate = 1, scale = 1 / rate)
 }
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
-\seealso{\code{\link{gigCheckPars}}, \code{\link{gigChangePars}},
-  \code{\link{is.wholenumber}}, \code{\link{momChangeAbout}},
-  \code{\link{momIntegrated}}, \code{\link{gigMean}},
-  \code{\link{gigVar}}, \code{\link{gigSkew}}, \code{\link{gigKurt}}.}
+\seealso{
+  \code{\link{gigCheckPars}}, \code{\link{gigChangePars}},
+  \code{\link[DistributionUtils]{is.wholenumber}},
+  \code{\link[DistributionUtils]{momChangeAbout}},
+  \code{\link[DistributionUtils]{momIntegrated}}, \code{\link{gigMean}},
+  \code{\link{gigVar}}, \code{\link{gigSkew}}, \code{\link{gigKurt}}.
+}
 
 
 \examples{

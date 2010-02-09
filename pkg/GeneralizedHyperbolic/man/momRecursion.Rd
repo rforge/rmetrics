@@ -8,7 +8,7 @@
 
 \description{
   This function computes all of the moments coefficients by recursion based on
-  Scott, \enc{WÃ¼rtz}{Wuertz} and Tran (2008). See \bold{Details} for the
+  Scott, \enc{Würtz}{Wuertz} and Tran (2008). See \bold{Details} for the
   formula.
 }
 
@@ -32,7 +32,7 @@
     where \eqn{k}{k} = \code{order}, \eqn{\ell}{l} is equal to the integers from
     \eqn{(k+1)/2}{(k + 1)/2} to \eqn{k}{k}.
 
-  This formula is given in Scott, \enc{WÃ¼rtz}{Wuertz} and Tran (2008,
+  This formula is given in Scott, \enc{Würtz}{Wuertz} and Tran (2008,
   working paper).
 
   The function also calculates M which is equal to \eqn{2\ell - k}{2l - k}.
@@ -53,7 +53,7 @@
 }
 
 \references{
-  Scott, D. J., \enc{WÃ¼rtz}{Wuertz}, D. and Tran, T. T. (2008)
+  Scott, D. J., \enc{Würtz}{Wuertz}, D. and Tran, T. T. (2008)
   Moments of the Generalized Hyperbolic Distribution. Preprint.
 }
 

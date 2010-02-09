@@ -105,9 +105,10 @@ hyperbBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   2 below. On each side of the mode, the break point which forms the 2
   regions is where the derivative of the density function is
   \code{deriv} times the maximum value of the derivative on that side of
-  the mode. In each of the 4 inner regions the numerical integration routine
-  \code{\link{safeIntegrate}} (which is a wrapper for
-  \code{\link{integrate}}) is used to integrate the density \code{dhyperb}.
+  the mode. In each of the 4 inner regions the numerical integration
+  routine \code{\link[DistributionUtils]{safeIntegrate}} (which is a
+  wrapper for \code{\link{integrate}}) is used to integrate the density
+  \code{dhyperb}.
 
 
   \code{qhyperb} uses the breakup of the real line into the same 8
@@ -182,11 +183,12 @@ hyperbBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
 Ai-Wei Lee, Jennifer Tso, Richard Trendall}
 
 \seealso{
-  \code{\link{safeIntegrate}}, \code{\link{integrate}} for its
-  shortfalls, \code{\link{splinefun}}, \code{\link{uniroot}} and
-  \code{\link{hyperbChangePars}} for changing parameters to the
-  \eqn{(\alpha,\beta)}{(alpha, beta)} parameterisation, \code{\link{dghyp}} for
-  the generalized hyperbolic distribution.
+  \code{\link[DistributionUtils]{safeIntegrate}},
+  \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
+  \code{\link{uniroot}} and \code{\link{hyperbChangePars}} for changing
+  parameters to the \eqn{(\alpha,\beta)}{(alpha, beta)}
+  parameterisation, \code{\link{dghyp}} for the generalized hyperbolic
+  distribution.
 }
 
 \examples{

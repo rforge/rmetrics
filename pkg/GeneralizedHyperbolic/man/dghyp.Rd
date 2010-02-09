@@ -104,13 +104,14 @@ ghypBreaks(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   inner part of the distribution, the range is divided in 6 regions, 3
   above the mode, and 3 below. On each side of the mode, there are two
   break points giving the required three regions. The outer break point
-  is where the probability in the tail has the value given by the variable
-  \code{small}. The inner break point is where the derivative of the
-  density function is \code{deriv} times the maximum value of the
+  is where the probability in the tail has the value given by the
+  variable \code{small}. The inner break point is where the derivative
+  of the density function is \code{deriv} times the maximum value of the
   derivative on that side of the mode. In each of the 6 inner regions
-  the numerical integration routine \code{\link{safeIntegrate}} (which
-  is a wrapper for \code{\link{integrate}}) is used to integrate the
-  density \code{dghyp}.
+  the numerical integration routine
+  \code{\link[DistributionUtils]{safeIntegrate}} (which is a wrapper for
+  \code{\link{integrate}}) is used to integrate the density
+  \code{dghyp}.
 
   \code{qghyp} use the breakup of the real line into the same 8
   regions as \code{pghyp}. For quantiles which fall in the 2 extreme
@@ -187,8 +188,8 @@ ghypBreaks(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 \seealso{
   \code{\link{dhyperb}} for the hyperbolic distribution,
   \code{\link{dgig}} for the generalized inverse Gaussian distribution
-  \code{\link{safeIntegrate}}, \code{\link{integrate}} for its
-  shortfalls, \code{\link{splinefun}},
+  \code{\link[DistributionUtils]{safeIntegrate}},
+  \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
   \code{\link{uniroot}} and \code{\link{ghypChangePars}} for
   changing parameters to the \eqn{(\alpha,\beta)}{(alpha,beta)}
   parameterisation

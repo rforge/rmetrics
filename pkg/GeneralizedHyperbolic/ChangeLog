@@ -1,0 +1,7 @@
+2010-02-09    <d.scott@auckland.ac.nz>
+
+	* GeneralizedHyperbolic version 0.2-0 created. Eliminated
+	functions already in DistributionUtils and made depend on
+	DistributionUtils
+	
+
