@@ -1,3 +1,8 @@
+2010-02-09   <d.scott@auckland.ac.nz>
+
+	* added testing of distributions, unit tests for all
+	functions. Initial version of DistributionUtils prepared.	
+
 2010-01-22    <d.scott@auckland.ac.nz>
 
 	* inst created with test setup derived from that in gdata and

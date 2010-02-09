@@ -3,7 +3,7 @@
 \alias{integrateDens}
 
 \title{
- Integrates a density function over a range
+ Integrates a Density Function
 }
 \description{
   Given a density function specified by the root of the density function

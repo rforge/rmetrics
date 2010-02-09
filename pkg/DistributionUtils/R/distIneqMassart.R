@@ -38,7 +38,15 @@ distIneqMassart <- function(densFn = "norm", n = 10000,
   ## value of t for that probability bound
   tVal <- sqrt(log(probBound/2)/(-2*n))
 
-  results <- list(sup = sup, probBound = probBound, t = tVal, pVal = pVal)
+  ## check if inequality satisfied
+  if (sup < sqrt(log(probBound/2)/(-2*n))){
+    check <- TRUE
+  } else {
+    check <- FALSE
+  }
+
+  results <- list(sup = superror, probBound = probBound, t = tVal,
+                  pVal = pVal, check = check)
 
   return(results)
 }

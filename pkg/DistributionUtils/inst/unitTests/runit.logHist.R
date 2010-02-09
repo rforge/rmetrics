@@ -4,6 +4,9 @@
 ### LEVEL=1 in call to make
 ### Functions with name levelntest.* are run by make if
 ### LEVEL=n in call to make
+### Functions with name graphicstest.* are run by make if
+### LEVEL=graphics in call to make
+
 
 graphicstest.logHist <- function(pathReport = pathReport)
 {

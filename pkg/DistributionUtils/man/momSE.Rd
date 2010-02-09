@@ -2,7 +2,7 @@
 \alias{momSE}
 
 \title{
-  Standard errors of sample moments
+  Standard Errors of Sample Moments
 }
 \description{
   Calculates the approximate standard error of the sample variance,
@@ -27,7 +27,7 @@ momSE(order = 4, n, mom)
 }
 \references{
   Kendall, M. G. and Stuart, A. (1969).
-  The Advanced Theory of Statistics, Volume 1, 3rd Edition.
+  \emph{The Advanced Theory of Statistics, Volume 1, 3rd Edition}.
   London: Charles Griffin & Company.
 }
   

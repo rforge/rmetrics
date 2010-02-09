@@ -1,9 +1,11 @@
-### Unit tests of functions  in integrateDens
+### Unit tests of function integrateDens
 
 ### Functions with name test.* are run by R CMD check or by make if
 ### LEVEL=1 in call to make
 ### Functions with name levelntest.* are run by make if
 ### LEVEL=n in call to make
+### Functions with name graphicstest.* are run by make if
+### LEVEL=graphics in call to make
 
 test.integrateDens <- function()
 {

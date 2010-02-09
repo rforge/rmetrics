@@ -1,6 +1,6 @@
 Package: DistributionUtils
 Version: 0.1-0
-Date: 2010-01-22
+Date: 2010-02-09
 Title: Distribution Utilities
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
@@ -14,8 +14,8 @@ Description: This package contains utilities which are of use in the
 	     SkewHyperbolic. Additional packages are under
 	     development. Each of these packages requires
 	     DistributionUtils. Functionality includes sample skewness
-	     and kurtois, log-histogram, and moments by integration.
+	     and kurtosis, log-histogram, moments by integration,
+	     changing the pint about which a moment is calculated,
+	     functions for testing distributions using inversion tests
+	     and the Massart inequality.
 License: GPL (>= 2)
-URL: http://www.r-project.org
-Repository: CRAN
-Repository/R-Forge/Project: rmetrics
