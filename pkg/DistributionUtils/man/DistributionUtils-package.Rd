@@ -9,8 +9,8 @@
 }
 \description{
   The main functions calculate skewness and kurtosis, change the
-  centering of moments and calculate moments by integration. There is
-  also a general function for checking code for distributions.
+  centering of moments and calculate moments by integration. There are a
+  number of functions for checking code for distributions.
 }
 \details{
 \tabular{ll}{
@@ -32,7 +32,7 @@ Maintainer: David Scott <d.scott@auckland.ac.nz>
 
 }
 \references{ 
-  Scott, David J. and \enc{WÃ¼rtz}{Wuertz}, Diethelm and Dong, Christine
+  Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine
   (2009) Software for Distributions in R. UseR: The R User
   Conference 2009
   \url{http://www.agrocampus-ouest.fr/math/useR-2009/slides/Scott+Wuertz+Dong.pdf}		  

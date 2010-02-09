@@ -11,7 +11,6 @@
 \usage{
 momSE(order = 4, n, mom)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{order}{Integer: either 2, 3, or 4.}
   \item{n}{Integer: the sample size.}

@@ -57,7 +57,7 @@
 
 \references{
   Kendall, M. G. and Stuart, A. (1969).
-  The Advanced Theory of Statistics, Volume 1, 3rd Edition.
+  \emph{The Advanced Theory of Statistics, Volume 1, 3rd Edition}.
   London: Charles Griffin & Company.
 }
 
