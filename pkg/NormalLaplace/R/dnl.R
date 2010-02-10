@@ -50,8 +50,8 @@ rnl  <-  function (n, mu = 0, sigma = 1, alpha = 1, beta= 1,
     beta  <-  param[4]
 
     ##generate random variates
-    Theta <- c(1/beta,1/alpha,0)
-    w <- rskewlap(n,Theta)
+    skewLapParam <- c(0,1/beta,1/alpha)
+    w <- rskewlap(n, param = skewLapParam)
     z  <-  rnorm(n,0,sigma^2)
     rnl  <- z+w
 
@@ -61,23 +61,23 @@ rnl  <-  function (n, mu = 0, sigma = 1, alpha = 1, beta= 1,
 
 qnl  <-  function(p, mu = 0, sigma = 1, alpha = 1, beta= 1,
                   param = c(mu,sigma,alpha,beta), log = FALSE,
-                  tol = 10^(-5), nInterpol = 100, subdivisions = 100,...)      
+                  tol = 10^(-5), nInterpol = 100, subdivisions = 100,...)
 {
   if(length(param) < 4){
-    stop("parameter vector must contain 4 values") 
-  } 
-  
+    stop("parameter vector must contain 4 values")
+  }
+
   mu  <-  param[1]
-  sigma  <-  param[2] 
-  alpha  <-  param[3] 
+  sigma  <-  param[2]
+  alpha  <-  param[3]
   beta  <-  param[4]
-  
+
   maxp<-max(p[p < 1])
   upper <- mu+sigma
   while(pnl(upper, param ) < maxp){
     upper <- upper + sigma
   }
-  
+
   minp<-min(p[p > 0])
   lower <- mu-sigma
   while(pnl(lower, param )> minp){
@@ -88,17 +88,17 @@ qnl  <-  function(p, mu = 0, sigma = 1, alpha = 1, beta= 1,
 
 
 pnlValues  <-  pnl(xValues,param)
-pnlSpline  <-  splinefun(xValues,pnlValues) 
-q  <-  rep(NA,length(p)) 
-   for(i in 1:length(p)){ 
-     zeroFun <- function(x){ 
-       pnlSpline(x)-p[i] 
-     } 
-     if((0<p[i]) & (p[i]<1)) 
+pnlSpline  <-  splinefun(xValues,pnlValues)
+q  <-  rep(NA,length(p))
+   for(i in 1:length(p)){
+     zeroFun <- function(x){
+       pnlSpline(x)-p[i]
+     }
+     if((0<p[i]) & (p[i]<1))
     q[i]  <-  uniroot(zeroFun,interval=c(lower,upper),...)$root
      if(p[i]==0) q[i]  <-  -Inf
      if(p[i]==1) q[i]  <-  Inf
      if((p[i]<0)|(p[i]>1)) q[i]  <-  NA
-   } 
-   return(q) 
+   }
+   return(q)
 } # End of qnl()
