@@ -1,6 +1,6 @@
 \name{skewhypMom}
 \alias{skewhypMom}
-\title{Calculate Moments of the Skew Hyperbolic Stuent t-Distribution.}
+\title{Calculate Moments of the Skew Hyperbolic Student t-Distribution.}
 \description{
   This function can be used to calculate the raw moments, mu moments,
   central moments, and moments about any other given location for the
@@ -33,7 +33,7 @@ skewhypMom(order, mu = 0, delta = 1, beta = 1, nu = 1,
   \code{skewhypCheckPars} to see if they are valid.
 
   \code{order} is also checked by calling the function
-  \code{is.wholenumber} in the \code{HyperbolicDist} package to
+  \code{is.wholenumber} in the \code{DistributionUtils} package to
   see whether a whole number is given.
 
   \code{momType} can be either \code{"raw"} (moments about zero),
@@ -48,7 +48,7 @@ skewhypMom(order, mu = 0, delta = 1, beta = 1, nu = 1,
   To calculate the moments of the skew hyperbolic \emph{t}-distribution,
   the function first calculates the mu moments by the formula defined
   below, and then transforms them to any of the other types of moment by
-  calling \code{momChangeAbout} in the \code{HyperbolicDist}
+  calling \code{momChangeAbout} in the \code{DistributionUtils}
   package.
 
   The mu moments of the skew hyperbolic \emph{t}-distribution are given
@@ -63,12 +63,12 @@ skewhypMom(order, mu = 0, delta = 1, beta = 1, nu = 1,
 
   where \eqn{k = \code{order}}{k = order} and \eqn{k > 0}{k > 0} and
   \eqn{a_{k, \ell}}{a_{k, l}} is the recursive coefficient (see
-  \code{\link[HyperbolicDist]{momRecursion}} for details).
+  \code{\link[GeneralizedHyperbolic]{momRecursion}} for details).
 
   This formula is given in Scott, \enc{Würtz}{Wuertz} and Tran
   (2008). Note that the [.] part of this formula is actually equivalent
   to the formula for the raw moments of the inverse gamma distribution,
-  so the function calls \code{gammaRawMom} in the \code{HyperbolicDist}
+  so the function calls \code{gammaRawMom} in the \code{GeneralizedHyperbolic}
   package when implementing the computations.
 }
 \value{ 
@@ -84,10 +84,10 @@ skewhypMom(order, mu = 0, delta = 1, beta = 1, nu = 1,
   Moments of the Generalized Hyperbolic Distribution. Preprint.
 }
 \seealso{ \code{\link{skewhypCheckPars}}, \code{\link{skewhypMean}},
-  \code{\link[HyperbolicDist]{is.wholenumber}},
-  \code{\link[HyperbolicDist]{momRecursion}},
-  \code{\link[HyperbolicDist]{momChangeAbout}} and
-  \code{\link[HyperbolicDist]{gigMom}}.
+  \code{\link[DistributionUtils]{is.wholenumber}},
+  \code{\link[GeneralizedHyperbolic]{momRecursion}},
+  \code{\link[DistributionUtils]{momChangeAbout}} and
+  \code{\link[GeneralizedHyperbolic]{gigMom}}.
 }
 \examples{
 param = c(1,2,3,10)

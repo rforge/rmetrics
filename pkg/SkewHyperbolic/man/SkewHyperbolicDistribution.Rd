@@ -120,7 +120,7 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
   extreme tails of the distribution where the density is less than \code{tiny}
   the density is taken to be zero. In the remaining regions the
   integral of the density is calculated using the numerical routine
-  \code{\link[HyperbolicDist]{safeIntegrate}} (a wrapper for
+  \code{\link[DistributionUtils]{safeIntegrate}} (a wrapper for
   \code{\link{integrate}}).
 
   \code{qhyperb} uses the same breakup of the real line as
@@ -174,12 +174,13 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
 \author{
   David Scott \email{d.scott@auckland.ac.nz}, Fiona Grimson
 }
-\seealso{
-  \code{\link[HyperbolicDist]{safeIntegrate}}, \code{\link{integrate}} for
-  its shortfalls, \code{\link{skewhypBreaks}}, \code{\link{skewhypCheckPars}},
-  \code{\link[HyperbolicDist]{logHist}}. Also \code{\link{skewhypMean}}
-  for information on moments and mode, and \code{\link{skewhypFit}} for
-  fitting to data.
+\seealso{ 
+  \code{\link[DistributionUtils]{safeIntegrate}},
+  \code{\link{integrate}} for its shortfalls,
+  \code{\link{skewhypBreaks}}, \code{\link{skewhypCheckPars}},
+  \code{\link[DistributionUtils]{logHist}}. Also
+  \code{\link{skewhypMean}} for information on moments and mode, and
+  \code{\link{skewhypFit}} for fitting to data.
 }
 \examples{
 param <- c(0,1,40,10)

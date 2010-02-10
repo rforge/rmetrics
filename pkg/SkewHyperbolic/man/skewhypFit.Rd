@@ -54,7 +54,7 @@ skewhypFit(x, freq = NULL, breaks = NULL, startValues = "LA",
     change, see \code{\link{par}(ask = .)}.}
   \item{digits}{Desired number of digits when the object is printed.}
   \item{\dots}{Passes arguments to \code{\link{optim}}, \code{\link{nlm}},
-    \code{\link{hist}},\code{\link[HyperbolicDist]{logHist}},
+    \code{\link{hist}},\code{\link[DistributionUtils]{logHist}},
     \code{\link{qqskewhyp}} and \code{\link{ppskewhyp}}.}
 }
 \details{
@@ -111,7 +111,7 @@ skewhypFit(x, freq = NULL, breaks = NULL, startValues = "LA",
 \seealso{
   \code{\link{optim}}, \code{\link{nlm}}, \code{\link{par}},
   \code{\link{hist}}, \code{\link{density},}
-  \code{\link[HyperbolicDist]{logHist}},
+  \code{\link[DistributionUtils]{logHist}},
   \code{\link{qqskewhyp}}, \code{\link{ppskewhyp}},
   \code{\link{dskewhyp}} and \code{\link{skewhypFitStart}}.
 }
