@@ -1,3 +1,8 @@
+2010-02-12    <d.scott@auckland.ac.nz>
+
+	* Depends changed to DistributionUtils and
+	GeneralizedHyperbolic. Version 0.2-0 completed.
+
 2010-01-11    <d.scott@auckland.ac.nz>
 
 	* SkewHyperbolic updated to 0.1-3
