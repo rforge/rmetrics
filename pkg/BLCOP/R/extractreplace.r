@@ -63,21 +63,44 @@ assetSet <- function(views)
     views
 }   
 
+
 confidences <- function(views)
 {
     .assertClass(views, c("BLViews", "COPViews"))
     views@confidences
 }
 
-posteriorMeanCov <- function(BLposterior)
+# TODO: unit test
+
+posteriorMeanCov <- function(posterior)
 {
 	.assertClass(posterior, "BLResult")
 	list("covariance" = posterior@posteriorCovar, "mean" = posterior@posteriorMean)
 	
 }
 
+
+
+#' Extracts the matrix of posterior simulations from a COPPosterior object
+#' @param posterior The object of class COPPosterior
+#' @return A matrix with named columns
+#' @author Francisco
+#' @export
+
 posteriorSimulations <- function(posterior)
 {
 	.assertClass(posterior, "COPResult")
 	posterior@posteriorSims
+}
+
+numSimulations <- function(posterior)
+{
+	.assertClass(posterior, "COPResult")
+	nrow(posterior@posteriorSims)
+}
+
+priorViews <- function(posterior)
+{
+	.assertClass(posterior, "COPResult")
+	posterior@views
 }
