@@ -3,9 +3,13 @@
 \alias{PMatrix}
 \alias{confidences}
 \alias{viewMatrix}
-\title{Extract various fields of view objects}
+\alias{posteriorMeanCov}
+\alias{posteriorSimulations}
+\alias{numSimulations}
+\alias{priorViews}
+\title{Extract various fields of view or posterior objects}
 \description{
-    A collection of functions to extract several fields of BLViews and COPViews
+    A collection of functions to extract several fields of BLViews, COPViews, COPPosterior and BLPosterior
     objects.
 }
 \usage{
@@ -13,11 +17,17 @@ assetSet(views)
 viewMatrix(views, dropZeroColumns = TRUE)
 PMatrix(views)
 confidences(views)
+posteriorMeanCov(posterior)
+posteriorSimulations(posterior)
+numSimulations(posterior)
+priorViews(posterior)
 }
 
 \arguments{
   \item{views}{An object of class BLViews or COPViews}
-  \item{dropZeroColumns}{Logical flag}
+  \item{posterior}{An object of class BLPosterior (posteriorMeanCov) or COPPosterior (posteriorSimulations, priorViews)
+  , as appropriate}
+  \item{dropZeroColumns}{Logical flag.  If TRUE, columns of "view matrix" which only have zeros are dropped}
 }
 
 
@@ -26,6 +36,9 @@ confidences(views)
     \item{confidences}{The set of confidences in each view.}
     \item{PMatrix}{The 'pick' matrix}
     \item{viewMatrix}{The pick matrix augmented with the q vector of the BL model}
+    \item{posteriorMeanCov}{The posterior mean and covariance (in a list) of a BLPosterior object}
+    \item{posteriorSimulations}{ Matrix of posterior distribution simulations held in a COPPosterior object }
+    \item{numSimulations}{ Number of simulations in posterior COP distribution }
 }
 
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
