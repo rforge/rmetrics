@@ -7,9 +7,8 @@
 
 \title{Class "COPViews" (copula opinion pooling views)}
 \description{ An object that holds a set of analyst views, in the copula opinion pooling sense, on a set of assets}
-\section{Objects from the Class}{
-Objects can be created by calls of the form \code{new("COPViews", ...) or with the \code{COPViews} function.}. 
-}
+\section{Objects from the Class}{Objects can be created by calls of the form \code{new("COPViews", ...)} or with the \code{COPViews} function.} 
+
 \section{Slots}{
    \describe{
     \item{\code{pick}:}{Object of class \code{"matrix"}. The pick matrix}
