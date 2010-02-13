@@ -33,7 +33,5 @@ they are created by the function \code{\link{COPPosterior}}
 \seealso{
     \code{\link{COPPosterior}}, \code{\link{BLResult-class}}
 }
-\examples{
 
-}
 \keyword{classes}

@@ -27,7 +27,4 @@ Objects can be created by calls of the form \code{new("BLViews", ...)} or with t
 
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
 
-\examples{
-
-}
 \keyword{classes}

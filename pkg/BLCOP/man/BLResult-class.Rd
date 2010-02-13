@@ -30,7 +30,4 @@
 }
 \author{Francisco Gochez}
 
-\examples{
-
-}
 \keyword{classes}
