@@ -28,6 +28,16 @@ show.BLResult <- function(object)
     show(object@posteriorCovar)
 }
 
+show.COPResult <- function(object)
+{
+
+	cat(paste("Asset set: ", paste(assetSet(priorViews(object)), collapse = ","), "\n"))
+	cat("Views used to generate this posterior: \n")
+	show(priorViews(object))
+	cat("Number of simulations:", numSimulations(object), "\n" )
+	
+}
+
 show.COPViews <- function(object)
 {
     for(i in 1:nrow(object@pick))
@@ -44,3 +54,4 @@ show.COPViews <- function(object)
 setMethod("show", signature(object = "BLViews"), show.BLViews)
 setMethod("show", signature(object = "BLResult"), show.BLResult)
 setMethod("show", signature(object = "COPViews"), show.COPViews)
+setMethod("show", signature(object = "COPResult"), show.COPResult)
