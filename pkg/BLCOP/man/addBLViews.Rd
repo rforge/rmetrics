@@ -36,7 +36,7 @@ newPMatrix(assetNames, numViews, defaultValue = 0)
 }
 
 \author{Francisco Gochez}
-\seealso{\code{\link{createBLViews}, \code{\link{updateBLViews}}}}
+\seealso{\code{\link{createBLViews}}, \code{\link{updateBLViews}}}
 \examples{
     ### example from Thomas M. Idzorek's paper "A STEP-BY-STEP GUIDE TO THE BLACK-LITTERMAN MODEL"
  	\dontrun{
