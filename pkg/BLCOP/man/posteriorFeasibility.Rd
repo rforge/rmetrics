@@ -15,8 +15,8 @@ posteriorFeasibility(result)
   \item{result}{An object of class BLResult}  
 }
 \details{
-    The feasibility measure proposed by Meucci and Fusai (see the references below) is 1 - F(m), where m is the Mahalanobis distance of
-    m from the prior mean calculated respect to the prior distribution.  F is the chi-squared CDF of n-degrees of freedom, where
+    The feasibility measure proposed by Meucci and Fusai (see the references below) is 1 - F(m), where m is the Mahalanobis distance from
+    from the prior mean calculated with respect to the prior distribution.  F is the chi-squared CDF of n-degrees of freedom, where
     n is the number assets in one's universe.  It should be noted that in Meucci and Fusai's paper, a version of Black-Litterman is
     used in which the tau parameter is always set to 1.
 }

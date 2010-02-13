@@ -18,7 +18,7 @@
     \item{\code{priorCovar}:}{Object of class \code{"matrix"}: prior of the variance-covariance}
     \item{\code{posteriorMean}:}{Object of class \code{"numeric"}:  posterior mean}
     \item{\code{posteriorCovar}:}{Object of class \code{"matrix"}: posterior variance-covariance}
-    \item{\code{confIgnored}:}{Object of class \code{"logical"}: logical flag indicating whether or not confidences-in-views
+    \item{\code{kappa}:}{Object of class \code{"logical"}: logical flag indicating whether or not confidences-in-views
     were ignored.}
   }
 }

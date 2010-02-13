@@ -2,6 +2,8 @@
 \docType{class}
 \alias{COPResult-class}
 \alias{densityPlots,COPResult-method}
+\alias{show,COPResult-method}
+\alias{show.COPResult}
 % \alias{probDistance,COPResult-method}
 \alias{densityPlots.COPResult}
 
@@ -21,6 +23,7 @@ they are created by the function \code{\link{COPPosterior}}
 \section{Methods}{
   \describe{
     \item{densityPlots}{\code{signature(result = "COPResult")}: Generates density plots of the marginal prior and posterior distributions of each asset.}
+    \item{show}{\code{signature(result = "COPResult")}: Displays basic information about the posterior results}
     \item{probDistance}{\code{signature(result = "COPResult")}: Not yet finished}
 	 }
 }
