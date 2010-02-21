@@ -41,8 +41,8 @@ assetsPairsPlot <-
 
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
-    #   assetsPairsPlot(x) 
-   
+    #   assetsPairsPlot(x)
+
     # FUNCTION:
 
     # Settings:
@@ -77,6 +77,7 @@ assetsCorgramPlot <-
     #       into a numeric matrix.
     #   labels - a logical flag. Should default labels be printed?
     #       Not implemented.
+    #   Added in call to .corrgram by DJS, 20/02/2010
 
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
@@ -111,7 +112,7 @@ assetsCorgramPlot <-
     }
 
     # Plot Corellogram - Pies and Ellipses:
-    .corrgram(x,
+    .corrgram(x, labels = labels,
         lower.panel = .panel.lower,
         upper.panel = .panel.upper,
         text.panel = .panel.txt, ...)
@@ -142,7 +143,7 @@ assetsCorTestPlot <-
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
     #   assetsCorTestPlot(x)
-    
+
     # FUNCTION:
 
     # Settings:
@@ -188,9 +189,9 @@ assetsCorTestPlot <-
 
 
 assetsCorImagePlot <-
-  function(x, 
+  function(x,
            labels = TRUE,
-           show = c("cor", "test"), 
+           show = c("cor", "test"),
            use = c("pearson", "kendall", "spearman"),
            abbreviate = 3, ...)
 {
@@ -205,7 +206,7 @@ assetsCorImagePlot <-
     # Details:
     #   uses relative colors to indicate the strength of the pairwise
     #   correlation.
-    
+
     # Authors:
     #   Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
     #   modified by Peter Carl
@@ -247,9 +248,9 @@ assetsCorImagePlot <-
         stop("robust: Not Yet Implemented")
     }
 
-    
+
     ## compute colors for correlation matrix:
-    corrMatrixcolors <- function (ncolors) 
+    corrMatrixcolors <- function (ncolors)
       {
         k <- round(ncolors/2)
         r <- c(rep(0, k), seq(0, 1, length = k))
@@ -264,7 +265,7 @@ assetsCorImagePlot <-
     image(x = 1:n, y = 1:n, z = corr[, n:1],
           col = corrMatrixcolors(ncolors),
           axes = FALSE, main = "", xlab = "", ylab = "", ...)
-    
+
     # Add Text Values:
     if (show == "cor") X = t(corr) else X = t(test)
     coord = grid2d(1:n, 1:n)

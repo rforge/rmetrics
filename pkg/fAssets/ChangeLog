@@ -1,6 +1,16 @@
+2010-02-21    <d.scott@auckland.ac.nz>
+
+	* zzz.R, .First.lib altered to load dll to fix problem with
+	ecodist functions. Also added Makevars to src
+
+2010-02-20    <d.scott@auckland.ac.nz>
+
+	* plot-pairs.R added argument labels in call to .corrgram in
+	function assetsCorgramPlot to implement labels
+
 2009-05-06 wuertz
 
-        * shrink from tawny added als builtin
+        * shrink from tawny added as builtin
 
 pkg/fAssets/R/builtin-shrinkTawny.R
 

@@ -22,8 +22,8 @@
 function(lib, pkg)
 {
     ### Load dll:
-    ### library.dynam("fAssets", pkg, lib)
-    
+    library.dynam("fAssets", pkg, lib)
+
     invisible()
 }
 
