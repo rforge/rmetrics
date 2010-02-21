@@ -1,7 +1,7 @@
 2010-02-21    <d.scott@auckland.ac.nz>
 
-	* zzz.R, .First.lib altered to load dll to fix problem with
-	ecodist functions. Also added Makevars to src
+	* zzz.R altered to be the same as in fBasics to fix problem with
+	source code in ecodist functions. Also added Makevars to src
 
 2010-02-20    <d.scott@auckland.ac.nz>
 
