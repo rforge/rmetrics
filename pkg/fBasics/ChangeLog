@@ -1,3 +1,10 @@
+2010-02-20    <d.scott@auckland.ac.nz>
+
+	* builtin-glGld.R, dist-gld.R  changed all glD functions to gld
+	(e.g. .pgld, .qgld) and corrected exports in NAMESPACE
+
+	* .gldFit.gof corrected one line
+
 2009-05-18 wuertz
 
         * stable dist fit improved

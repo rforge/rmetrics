@@ -36,43 +36,43 @@ S3method("volatility", "default")
 
 export(
     "gldFit",
-    ".gldFit.mle",   
-    ".gldFit.mps",   
-    ".gldFit.gof", 
-    ".gldFit.hist", 
-    ".gldFit.rob", 
-    ".ksGLD",          
-    ".cvmGLD",        
-    ".adGLD",        
-    "dgld", 
-    "pgld", 
-    "qgld", 
+    ".gldFit.mle",
+    ".gldFit.mps",
+    ".gldFit.gof",
+    ".gldFit.hist",
+    ".gldFit.rob",
+    ".ksGLD",
+    ".cvmGLD",
+    ".adGLD",
+    "dgld",
+    "pgld",
+    "qgld",
     "rgld",
-    ".dglD",             
-    ".pglD",             
-    ".qglD",             
-    ".qgl.fmkl",        
-    ".qgl.fm5",      
-    ".qgl.rs",          
-    ".qdglD",           
-    ".qdgl.rs",        
-    ".qdgl.fmkl",       
-    ".qdgl.fm5",        
-    ".rglD",             
+    ".dgld",
+    ".pgld",
+    ".qgld",
+    ".qgl.fmkl",
+    ".qgl.fm5",
+    ".qgl.rs",
+    ".qdgld",
+    ".qdgl.rs",
+    ".qdgl.fmkl",
+    ".qdgl.fm5",
+    ".rgld",
     ".gl.parameter.tidy",
-    ".gl.check.lambda", 
-    
+    ".gl.check.lambda",
+
     "ssdFit",
     "dssd",
     "pssd",
     "qssd",
     "rssd",
-    
-    ".ssden",      
+
+    ".ssden",
     ".dssden",
     ".pssden",
     ".qssden",
-    
+
     ".gauss.quad",
     ".smolyak.quad",
     ".smolyak.size",
@@ -92,24 +92,24 @@ export(
     ".mkrk.cubic.per",
     ".mkrk.linear",
     ".mkrk.linear.per",
-     
+
     "sampleLmoments",
-    
-    "nigMED", 
-    "nigIQR", 
+
+    "nigMED",
+    "nigIQR",
     "nigSKEW",
     "nigKURT",
-    
-    "gldMED", 
-    "gldIQR", 
+
+    "gldMED",
+    "gldIQR",
     "gldSKEW",
     "gldKURT",
-    
-    "sampleMED",     
-    "sampleIQR",  
-    "sampleSKEW", 
-    "sampleKURT", 
-    
+
+    "sampleMED",
+    "sampleIQR",
+    "sampleSKEW",
+    "sampleKURT",
+
     "acfPlot",
     ".acfPlot",
     "adTest",
@@ -200,19 +200,19 @@ export(
     "getTitle",
     "ghFit",
     "ghMode",
-    
+
     "ghMean",
     "ghVar",
     "ghSkew",
     "ghKurt",
     "ghMoments",
-    
+
     "hypMean",
     "hypVar",
     "hypSkew",
     "hypKurt",
     "hypMoments",
-    
+
     "ghtMean",
     "ghtVar",
     "ghtSkew",
@@ -224,10 +224,10 @@ export(
     ".ghRawMoments",
     ".ghRawMomentsIntegrated",
     ".ghCentralMoments",
-    
+
     ".distStandardErrors",
     ".distFitPlot",
-    
+
     "ghSlider",
     "ghtFit",
     "ghtMode",
@@ -297,26 +297,26 @@ export(
     "monoPalette",
     ".moodTest",
     ".mrlPlot",
-    
+
     "nFit",
     ".normFit",
-    
+
     "nigFit",
     ".nigFit.gmm",
     ".nigFit.mle",
     ".nigFit.mps",
     ".nigFit.vmps",
-    
+
     "nigMean",
     "nigVar",
     "nigSkew",
     "nigKurt",
     "nigMoments",
-    
+
     "nigMode",
     "nigShapeTriangle",
     "nigSlider",
-    
+
     "norm",
     "normalTest",
     ".omnibus.test",
