@@ -1,20 +1,32 @@
 \name{optimalPortfolios}
 \alias{optimalPortfolios}
+\alias{optimalPortfolios.fPort}
 \title{Calculates optimal portfolios under prior and posterior distributions}
 \description{
-  This is a helper function that calculates optimal portfolios under the prior and posterior distributions
-  in the BL sense and then graphically compares the differences.  The user may supply and optimization
-  function he or she wishes, though simple Markowitz optimization is done with \code{solve.QP} from \code{quadprog} if none is supplied.
+  These are wrapper functions that calculate optimal portfolios under the prior and posterior return distributions.  
+  \code{optimalPortfolios} works with a user-supplied optimization  function, 
+  though simple Markowitz minimum-risk optimization is done with \code{solve.QP} from \code{quadprog} if none is supplied.
+  \code{optimalPortfolios.fPort} is a generic utility function which calculates optimal portfolios using routines from
+  the \code{fPortfolio} package.
   
 }
 \usage{
 optimalPortfolios(result, optimizer = .optimalWeights.simpleMV, ..., doPlot = TRUE, beside = TRUE)
+optimalPortfolios.fPort(result, spec = NULL, constraints = "LongOnly", optimizer = "minriskPortfolio", 
+    inputData = NULL, numSimulations = 100) 
 }
 
 \arguments{
   \item{result}{An object of class \code{BLResult}}
   \item{optimizer}{An optimization function.  It should take as arguments a vector of means and
-      a variance-covariance matrix, and shoulr return a vector of optimal weights.}
+      a variance-covariance matrix, and should return a vector of optimal weights.}
+  \item{spec}{Object of class \code{fPORTFOLIOSPEC}.  If NULL, will use a basic mean-variance spec for Black-Litterman
+  results, and a basic CVaR spec for COP results}
+  \item{inputData}{Time series data (any form that can be coerced into a \code{timeSeries} object)}
+  \item{constraints}{String of constraints that may be passed into \code{fPortfolio} optimization routines}
+  \item{optimizer}{Name of a \code{fPortfolio} function (or function) that performs portfolio optimization}
+  \item{numSimulations}{For COP results only - the number of posterior simulations to use in the optimization (large
+  	numbers here will likely cause the routine to fail)}
   \item{\dots}{ Additional arguments to the optimization function }
   \item{doPlot}{ A logical flag.  Should barplots of the optimal portfolio weights be produced? }
   \item{beside}{A logical flag. If a barplot is generated, should the bars appear side-by side? If \code{FALSE}, 
@@ -26,12 +38,17 @@ optimalPortfolios(result, optimizer = .optimalWeights.simpleMV, ..., doPlot = TR
     parameter that if supplied should hold a named list with all of the parameters that \code{solve.QP}
     takes.  
 }
-\value{
-  A list with the following items:
-  \item{priorPFolioWeights}{The optimal weights under the prior distribution}
-  \item{postPFolioWeights}{The optimal weights under the posterior distribution}
-  
+\note{ It is expected that \code{optimalPortfolios} will be deprecated in future releases in favour of 
+\code{optimalPortfolios.fPort}.
 }
+
+\value{
+  \code{optimalPortfolios} will return a list with the following items:
+  	\item{priorPFolioWeights}{The optimal weights under the prior distribution}
+  	\item{postPFolioWeights}{The optimal weights under the posterior distribution}
+  \code{optimalPortfolios.fPort} will return a similar list with 2 elements of class \code{fPORTFOLIO}.
+}
+
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
 \examples{
 	\dontrun{
@@ -54,6 +71,26 @@ optimalPortfolios(result, optimizer = .optimalWeights.simpleMV, ..., doPlot = TR
 	    views <- BLViews(pick, c(0.0525, 0.0025, 0.02), confidences, letters[1:8])
 	    posterior <- posteriorEst(views, tau = 0.025, mu, varcov )
 	    optimalPortfolios(posterior, doPlot = TRUE)
+    
+    	optimalPortfolios.fPort(posterior, optimizer = "tangencyPortfolio")
+    	
+    	# An example based on one found in "Beyond Black-Litterman:Views on Non-normal Markets"
+        dispersion <- c(.376,.253,.360,.333,.360,.600,.397,.396,.578,.775) / 1000
+        sigma <- BLCOP:::.symmetricMatrix(dispersion, dim = 4)
+        caps <- rep(1/4, 4)
+        mu <- 2.5 * sigma %*% caps
+        dim(mu) <- NULL
+        marketDistribution <- mvdistribution("mt", mean = mu, S = sigma, df = 5 )
+        pick <- matrix(0, ncol = 4, nrow = 1, dimnames = list(NULL, c("SP", "FTSE", "CAC", "DAX")))
+        pick[1,4] <- 1
+        vdist <- list(distribution("unif", min = -0.02, max = 0))
+    
+        views <- COPViews(pick, vdist, 0.2, c("SP", "FTSE", "CAC", "DAX"))
+        posterior <- COPPosterior(marketDistribution, views)
+    
+        optimalPortfolios.fPort(myPosterior, spec = NULL, optimizer = "minriskPortfolio", inputData = NULL, 
+			numSimulations  = 100	)
+	
     }
 }
 \keyword{utilities}

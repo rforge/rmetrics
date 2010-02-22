@@ -71,19 +71,19 @@ optimalPortfolios <- function
 	return(list(priorPfolioWeights = priorPortfolioWeights, postPfolioWeights = postPortfolioWeights ))    
 }
 
-#'  A utility function that calculates "optimal" portfolios with respect to a prior and (Black-Litterman) posterior distribution
-#' using the functionality of the Rmetrics fPortfolio package. 
-#' and then returns the weigh
-#' @param result BLPosterior result
+#' A utility function that calculates "optimal" portfolios with respect to a prior and (Black-Litterman) 
+#' posterior distribution using the functionality of the Rmetrics fPortfolio package, and then returns the weights
+#' @param result BLPosterior result object
 #' @param spec An object of class fPORTFOLIOSPEC containing the portfolio specification
-#' @param constraints A set of portfolio constraints
-#' @param optimizer 
-#' @title Optimal prior and posterior portfolios using fPortfolios
-#' @return A list with 2 elements: the prior and posterior portfolios (of class)
+#' @param constraints A set of portfolio constraints (as required by fPortfolio optimization routines)
+#' @param optimizer Function (or name of a function) that performs portfolio optimization, e.g. "minriskPortfolio"
+#' @title Calculate optimal prior and posterior portfolios using fPortfolios
+#' @return A list with 2 elements: the prior and posterior portfolios (of class fPORTFOLIO)
 #' @author fgochez
+#' @export
 #' @keywords
 
-optimalPortfolios.fPort <- function(result, spec, constraints = "LongOnly", optimizer = "minriskPortfolio", 
+optimalPortfolios.fPort <- function(result, spec = NULL, constraints = "LongOnly", optimizer = "minriskPortfolio", 
 			inputData = NULL, numSimulations = NA)
 {
 	stop("Not implemented for this class of result")
@@ -91,11 +91,23 @@ optimalPortfolios.fPort <- function(result, spec, constraints = "LongOnly", opti
 
 setGeneric("optimalPortfolios.fPort")
 
-optimalPortfolios.fPort.BL <- function(result, spec,constraints = "LongOnly", optimizer = "minriskPortfolio", 
+optimalPortfolios.fPort.BL <- function(result, spec = NULL ,constraints = "LongOnly", optimizer = "minriskPortfolio", 
 		inputData = NULL, numSimulations = NA)
 {
+	if(!require("fPortfolio"))
+		stop("The package fPortfolio is required to execute this function, but you do not have it installed.")
 	assets <- assetSet(result@views)
+	# create a "dummy" series that will only be used because the "optimizer" function requires it (but the mean and
+	# covariance will not be calculated using it
 	dmySeries <- as.timeSeries(matrix(0, nrow = 1, ncol = length(assets), dimnames = list(NULL, assets)))
+	numAssets <- length(assets)
+	if(is.null(spec))
+	{
+		spec <- portfolioSpec()
+		# # setType(spec) <- "MV"
+		# setWeights(spec) <- rep(1 / numAssets, times = numAssets)
+		 #setSolver(spec) <- "solveRquadprog"
+	}
 	
 	priorSpec <- spec
 	
@@ -107,19 +119,25 @@ optimalPortfolios.fPort.BL <- function(result, spec,constraints = "LongOnly", op
 	{
 		list(mu = result@posteriorMean, Sigma = result@posteriorCovar)
 	}
-	#
+	
+	# we must assign global estimator functions in order for the optimization routines to use them to extract
+	# the prior and posterior means and variances.  This code is not particularly elegant, but I know of no other way
+	# to do this at the moment
+	
 	if(exists(".priorEstim", envir = .GlobalEnv) | exists(".posteriorEstim", envir = .GlobalEnv))
 		stop("Unwilling to perform assignment of .priorEstim or .posteriorEstim because they already exist in the global environment.")
 	assign(".priorEstim", .priorEstim, envir = .GlobalEnv)
 	assign(".posteriorEstim", .posteriorEstim, envir = .GlobalEnv)
+	on.exit({
+				rm(.posteriorEstim, envir = .GlobalEnv)
+				rm(.priorEstim, envir = .GlobalEnv)
+			})
 	setEstimator(priorSpec) <- ".priorEstim"
 	posteriorSpec <- spec
 	setEstimator(posteriorSpec) <- ".posteriorEstim"
 	optimizer <- match.fun(optimizer)
 	priorOptimPortfolio <- optimizer(dmySeries, priorSpec, constraints)	
 	posteriorOptimPortfolio <- optimizer(dmySeries, posteriorSpec, constraints)
-	rm(.posteriorEstim, envir = .GlobalEnv)
-	rm(.priorEstim, envir = .GlobalEnv)
 	
 	x <- list(priorOptimPortfolio = priorOptimPortfolio, posteriorOptimPortfolio = posteriorOptimPortfolio)
 	class(x) <- "BLOptimPortfolios"
@@ -137,9 +155,24 @@ plot.BLOptimPortfolios <- function(x,...)
 
 setMethod("optimalPortfolios.fPort", signature(result = "BLResult"), optimalPortfolios.fPort.BL )
 
-optimalPortfolios.fPort.COP <- function(result, spec, constraints = "LongOnly", optimizer = "minriskPortfolio",
+#' A utility function that calculates "optimal" portfolios with respect to a prior and (COP) 
+#' posterior distribution using the functionality of the Rmetrics fPortfolio package, and then returns the weights
+#' @param result COPPosterior result object
+#' @param spec An object of class fPORTFOLIOSPEC containing the portfolio specification.  For COP optimization, the user
+#' will likely want to use something like a CVaR-type portfolio
+#' @param constraints A set of portfolio constraints (as required by fPortfolio optimization routines)
+#' @param optimizer Function (or name of a function) that performs portfolio optimization, e.g. "minriskPortfolio"
+#' @param inputData matrix, data.frame, or timeSeries class object of return data.  If NULL, a series of data
+#' will be simulated using the prior distribution of the COPPosterior object
+#' @param numSimulations  Number of posterior distribution simulations to use
+#' @return A list with 2 elements: the prior and posterior portfolios (of class fPORTFOLIO)
+#' @author Francisco
+#' @export
+
+optimalPortfolios.fPort.COP <- function(result, spec = NULL, constraints = "LongOnly", optimizer = "minriskPortfolio",
 			inputData = NULL, numSimulations = BLCOPOptions("numSimulations"))
 {
+
 	if(!require("fPortfolio"))
 		stop("The package fPortfolio is required to execute this function, but you do not have it installed.")
 	if(is.null(inputData))
@@ -149,8 +182,19 @@ optimalPortfolios.fPort.COP <- function(result, spec, constraints = "LongOnly", 
 		colnames(inputData) <- assetSet(result@views)
 		inputData <- as.timeSeries(inputData)
 	}
+	numAssets <- length(assetSet(result@views))
+	# missing portfolio spec, create mean-CVaR portfolio
+	if(is.null(spec))
+	{
+		spec <- portfolioSpec()
+		setType(spec) <- "CVAR"
+		setWeights(spec) <- rep(1 / numAssets, times = numAssets)
+		setSolver(spec) <- "solveRglpk"
+	}
+	
 	outData <- tail(posteriorSimulations(result), numSimulations)
 	colnames(outData) <- assetSet(result@views)
+	rownames(outData) <- NULL
 	outData <- as.timeSeries(outData)
 	optimizer <- match.fun(optimizer)
 	
