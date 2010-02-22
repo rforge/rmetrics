@@ -27,6 +27,7 @@ test.COPPosterior <- function()
     checkEquals(posterior@posteriorSims, testEnvironment$posteriorSims, tol = 1.5)
 	
 	checkEquals(colnames(posterior@posteriorSims), assetSet(views))
+	rm(testEnvironment)
 }
 
 test.COPPosteriorExtractors <- function()
