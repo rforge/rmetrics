@@ -14,7 +14,7 @@ gigRawMom(order, chi = 1, psi = 1, lambda = 1,
           param = c(chi, psi, lambda))
 gigMom(order, chi = 1, psi = 1, lambda = 1,
        param = c(chi, psi, lambda), about = 0)
-gammaRawMom(order, shape = 1, rate = 1, scale = 1 / rate)
+gammaRawMom(order, shape = 1, rate = 1, scale = 1/rate)
 }
 
 \arguments{

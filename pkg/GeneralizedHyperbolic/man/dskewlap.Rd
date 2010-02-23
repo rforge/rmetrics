@@ -7,12 +7,12 @@
 
 \title{Skew-Laplace Distribution}
 \description{
-  Density function, distribution function, quantiles and 
+  Density function, distribution function, quantiles and
   random number generation for the skew-Laplace distribution.
 }
 \usage{
 dskewlap(x, mu = 0, alpha = 1, beta = 1,
-         param = c(mu, alpha, beta))
+         param = c(mu, alpha, beta), logPars = FALSE)
 pskewlap(q, mu = 0, alpha = 1, beta = 1,
          param = c(mu, alpha, beta))
 qskewlap(p, mu = 0, alpha = 1, beta = 1,
@@ -28,16 +28,19 @@ rskewlap(n, mu = 0, alpha = 1, beta = 1,
   \item{alpha, beta}{The shape parameters, both set to 1 by default.}
   \item{param}{Vector of parameters of the skew-Laplace distribution:
     \eqn{\mu}{mu}, \eqn{\alpha}{alpha} and \eqn{\beta}{beta}}.
+  \item{logPars}{Logical. If \code{TRUE} the second and third components
+    of \code{param} are taken to be \eqn{log(\alpha)}{log(alpha)} and
+     \eqn{log(\beta)}{log(beta)} respectively.}
 }
 \details{
   The central skew-Laplace has mode zero, and is a mixture of a (negative)
-  exponential distribution with mean \eqn{\beta}{beta}, and the negative of an 
+  exponential distribution with mean \eqn{\beta}{beta}, and the negative of an
   exponential distribution with mean \eqn{\alpha}{alpha}. The weights of
   the positive and negative components are proportional to their means.
-  
+
   The general skew-Laplace distribution is a shifted central skew-Laplace
   distribution, where the mode is given by \eqn{\mu}{mu}.
-  
+
   The density is given by:
   \deqn{f(x)=\frac{1}{\alpha+\beta} e^{(x - \mu)/\alpha}}{ %
   f(x)=(1/(alpha+beta)) e^((x - mu)/alpha)}
@@ -47,8 +50,8 @@ rskewlap(n, mu = 0, alpha = 1, beta = 1,
   for \eqn{x\geq\mu}{x >= mu}
 }
 \value{
-  \code{dskewlap} gives the density, \code{pskewlap} gives the distribution 
-  function, \code{qskewlap} gives the quantile function and \code{rskewlap} 
+  \code{dskewlap} gives the density, \code{pskewlap} gives the distribution
+  function, \code{qskewlap} gives the quantile function and \code{rskewlap}
   generates random variates. The distribution function is obtained by
   elementary integration of the density function. Random variates are
   generated from exponential observations using the characterization of
@@ -60,7 +63,7 @@ rskewlap(n, mu = 0, alpha = 1, beta = 1,
   \emph{Appl. Statist.},
   \bold{41}, 127--146.
 }
-\author{David Scott \email{d.scott@auckland.ac.nz}, 
+\author{David Scott \email{d.scott@auckland.ac.nz},
 Ai-Wei Lee, Richard Trendall}
 
 \seealso{\code{\link{hyperbFitStart}}}
@@ -82,4 +85,4 @@ logHist(dataVector, main =
 curve(log(dskewlap(x, param = param)), add = TRUE,
       range(dataVector)[1], range(dataVector)[2], n = 500)
 }
-\keyword{distribution} 
+\keyword{distribution}

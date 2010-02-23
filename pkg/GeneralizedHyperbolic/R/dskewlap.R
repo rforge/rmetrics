@@ -1,13 +1,14 @@
 ### Density function for the skew-Laplace distribution
 dskewlap <- function(x, mu = 0, alpha = 1, beta = 1,
-                     param = c(mu, alpha, beta)) {
+                     param = c(mu, alpha, beta),
+                     logPars = FALSE) {
 
   if (length(param) != 3)
     stop("param vector must contain 3 values")
 
   mu <- param[1]
-  alpha <- param[2]
-  beta <- param[3]
+  alpha <- if(logPars == TRUE) exp(param[2]) else param[2]
+  beta <- if(logPars == TRUE) exp(param[3]) else param[3]
   ab <- alpha + beta
 
   belowMu <- (1 / ab) * exp((x - mu) / alpha)

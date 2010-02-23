@@ -72,12 +72,12 @@ gigMom <- function(order, chi = 1, psi = 1, lambda = 1,
 ### chi = 0, gamma; psi = 0, inverse gamma
 ### Inverse gamma raw moments can be obtained from gamma raw moments
 ### An alternative would be to use mgamma and minvgamma from actuar
-gammaRawMom <- function(order, shape = 1, rate = 1, scale = 1 / rate) {
+gammaRawMom <- function(order, shape = 1, rate = 1, scale = 1/rate) {
 
   if (order <= -shape) {
     mom <- Inf
   } else {
-    mom <- (scale^order) * gamma(shape + order) / gamma(shape)
+    mom <- (scale^order) * gamma(shape + order)/gamma(shape)
   }
 
   return(mom)
