@@ -1,5 +1,5 @@
 ###############################################################################
-# Mango Solutions, Chippenham SN14 0SQ 2008
+# Mango Solutions
 # posteriorEst
 # Author: Francisco
 # $Rev$
@@ -9,6 +9,16 @@
 # DESCRIPTION: Computes the Black-Litterman posterior estimate 
 # KEYWORDS: math
 ###############################################################################
+
+#' This function performs the "core" calculation of the Black-Litterman model.  
+#' @param views An object of class BLViews
+#' @param mu A vector of mean equilibrium returns 
+#' @param tau The "tau" parameter in the Black-Litterman model.
+#' @param sigma The variance-covariance matrix of the returns of the assets
+#' @param kappa if greater than 0, the confidences in each view are replaced.  See the online help for details
+#' @return An object of class BLResult holding the updated Black-Litterman posterior
+#' @author Francisco
+#' @export
 
 posteriorEst <- function
 (
@@ -59,14 +69,15 @@ posteriorEst <- function
 }
 
 #' 
-#' @param returns 
-#' @param views 
-#' @param tau 
-#' @param marketIndex 
-#' @param riskFree 
-#' @param kappa 
-#' @param covEstimator 
-#' @return 
+#' @param returns A matrix of time series of returns.  The columns should correspond to individual assets.
+#' @param views An object of class BLViews
+#' @param tau The "tau" parameter in the Black-Litterman model.
+#' @param marketIndex A set of returns of a market index.
+#' @param riskFree A time series of risk-free rates of return.  Defaults to 0
+#' @param kappa if greater than 0, the confidences in each view are replaced.  See the online help for details  
+#' @param covEstimator A string holding the name of the function that should be used to estimate the variance-covariance matrix.
+#'     This function should simply return a matrix.
+#' @return An object of class BLResult
 #' @author Francisco
 #' @export
 
