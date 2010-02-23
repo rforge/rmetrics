@@ -139,7 +139,7 @@
 
 \seealso{
   \code{\link{optim}}, \code{\link{nlm}}, \code{\link{par}},
-  \code{\link{hist}}, \code{\link[GeneralizedHyperbolic]{logHist}},
+  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}},
   \code{\link{qqvg}}, \code{\link{ppvg}},
   \code{\link[GeneralizedHyperbolic]{dskewlap}} and
   \code{\link{vgFitStart}}.

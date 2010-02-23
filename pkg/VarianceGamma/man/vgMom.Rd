@@ -108,10 +108,10 @@
 \seealso{\code{\link{vgCheckPars}}, \code{\link{vgChangePars}},
   \code{\link{vgMean}},
   \code{\link{vgVar}}, \code{\link{vgSkew}}, \code{\link{vgKurt}},
-  \code{\link[GeneralizedHyperbolic]{is.wholenumber}},
+  \code{\link[DistributionUtils]{is.wholenumber}},
   \code{\link[GeneralizedHyperbolic]{momRecursion}},
-  \code{\link[GeneralizedHyperbolic]{momChangeAbout}} and
-  \code{\link[GeneralizedHyperbolic]{momIntegrated}}.}
+  \code{\link[DistributionUtils]{momChangeAbout}} and
+  \code{\link[DistributionUtils]{momIntegrated}}.}
 
 
 \examples{
