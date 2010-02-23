@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<TITLE>Cheap HTML parser in perl</TITLE>
+</HEAD>
+
+<BODY>
+<H1>Cheap HTML parser<br>
+Jim Davis<br>
+davis@dri.cornell.edu<br>
+July 1994<br>
+</H1>
+
+<p>
+This is code for doing simple processing on HTML.  I know there are
+bugs and limitations in the code, but it suffices for simple purposes.
+Among the limitations: This is an HTML parser, not an SGML parser - it
+does not accept a DTD, rather the model of HTML is built into the
+code.  Also it does not validate the HTML - it will attempt to parse
+invalid documents, and the results are undefined if the document is in
+error.
+
+<p> The source code is available as <A
+HREF="ftp://dri.cornell.edu/pub/davis/html-parser.tar.Z"> a compressed
+Unix tar file</A>.  It runs under perl 4.0 patch level 36.  I don't
+know about other versions of perl.
+
+
+This directory contains:
+<DL>
+<DT><tt>parse-html.pl</tt>
+<DD>A simple HTML parser written in perl.  As it parses the HTML, it calls
+routines (which you may redefine) for each tag encountered, and for whitespace and content.
+You can redefine these routines so as to process the HTML document.
+
+<DT><tt>html-to-ascii.pl</tt>
+<DD>Uses the HTML parser to generate a plain ASCII version of an HTML document.
+
+<DT><tt>html-ascii.pl</tt>
+<DD>The actual routines to generate the ASCII.
+
+<DT><tt>tformat.pl</tt>
+<DD>A lowlevel text formatter used for generating ASCII.  More or less like
+a subset of <tt>nroff</tt>
+
+<DT><tt>html-to-rfc.pl</tt>
+
+<DD>Uses the HTML parser to generate a plain ASCII version of an HTML, with
+special formatting requirements for  <A HREF="ftp://nis.nsf.net/internet/documents/ietf/1id-guidelines.txt">Internet drafts</A> and <A HREF="ftp://nis.nsf.net/internet/documents/rfc/rfc1543.txt">RFCs</A>
+
+<DT><tt>rfc.pl</tt>
+<DD>Additional routines required for RFC formatting (e.g. page headers and footers)
+
+</DL>
+
+<h2>Generating RFCs from HTML</h2>
+
+The RFC format requires there be a header and footer containing, among
+other things, the name of the authors, a short title, and so on.  You
+specify values for these fields with META tags as shown
+by the following example.
+<pre>
+&lt;META name="status" content="Internet Draft"&gt;
+&lt;META name="title" content="Internet audio protocol"&gt;
+&lt;META name="date" content="July 1983"&gt;
+&lt;META name="author" content="Nixon, Haldeman"&gt;
+</pre>
+(The META tag is not officially part of HTML, it was proposed by Roy
+Fielding.)  The tags should be in the HEAD.
+
+<h2>Known bugs</h2>
+<ul>
+<li>It can't parse the prolog (or whatever you call it) because it
+does not know how to ensure that the square brackets match, e.g. the following
+<pre>
+   &lt;!DOCTYPE HTML [
+     &lt;!entity % HTML.Minimal "INCLUDE"&lt;
+     &lt;!-- Include standard HTML DTD --&lt;
+     &lt;!ENTITY % html PUBLIC "-//connolly hal.com//DTD WWW HTML 1.8//EN"&lt;
+     %html;
+     ]&lt;
+</pre>
+
+<li>font tags (e.g. CODE, EM) cause an extra whitespace in output e.g.
+<code>
+ &lt;TT&gt;foo&lt;/TT&gt;
+</code> yields "foo ,".
+
+
+</pre>
+</ul>
+
+</BODY>
+</HTML>

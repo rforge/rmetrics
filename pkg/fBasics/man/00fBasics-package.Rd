@@ -12,13 +12,14 @@
 
 \description{
 
-    The Rmetrics "fbasics" package is a collection of functions to 
+    The Rmetrics "fBasics" package is a collection of functions to 
     explore and to investigate basic properties of financial returns 
     and related quantities.
     
     The covered fields include techniques of explorative data analysis
     and the investigation of distributional properties, including
-    parameter estimation and hypothesis testing.
+    parameter estimation and hypothesis testing. Evenmore there are
+    several utility functions for data handling and managemnet.
     
 }
 
@@ -31,7 +32,7 @@
         Version:    \tab 270.73\cr
         Date:       \tab 2009\cr
         License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2009 Diethelm Wuertz and Rmetrics Foundation\cr
+        Copyright:  \tab (c) 1999-2010 Rmetrics Assiciation\cr
         URL:        \tab \url{http://www.rmetrics.org}
     }
     
@@ -50,7 +51,9 @@
         
     5. Matrix Computations and Linear Algebra
 
-    6. Utility Functions   
+    6. Utility Functions for Data Management
+    
+    7. Other Utility Functions   
 }
 
 
@@ -874,7 +877,7 @@
 
 \section{C. Copyright and Licencies:}{
 
-    Copyright
+    Copyright Rmetrics Association
     
 }
 
@@ -886,7 +889,6 @@
     Addresses:
     
 }
-
 
 
 \keyword{models}
