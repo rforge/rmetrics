@@ -24,7 +24,7 @@ posteriorEst(views, mu, tau = 0.5, sigma, kappa = 0)
   \item{sigma}{The variance-covariance matrix of the returns of the assets}
   \item{kappa}{If greater than 0, the confidences in each view are replaced.  See the details section
       for more information}
-  \item{covEstimator}{A string holding the name of the function that should be used to estimate the variance-covariance function.
+  \item{covEstimator}{A string holding the name of the function that should be used to estimate the variance-covariance matrix.
     This function should simply return a matrix.}
 }
 \details{
@@ -33,7 +33,7 @@ posteriorEst(views, mu, tau = 0.5, sigma, kappa = 0)
     means are computed with \code{\link{CAPMList}}.
 }
 \value{
-    An object of class BLResults
+    An object of class BLResult
 }
 
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
