@@ -37,16 +37,12 @@ test.sampleMoments <- function()
   checkTrue(diffKurt < tolKurt)
 
   ## Check sample moments from gamma
-  sampSize <- 1000
-  shape <- 2
-  scale <- 1
-  x <- rgamma(sampSize, shape = shape)
-  distSkew <- 2/sqrt(shape)
-  distKurt <- 6/shape
-  sampSkew <- skewness(x)
-  sampKurt <- kurtosis(x)
-  diffSkew <- abs(distSkew - sampSkew)
-  diffKurt <- abs(distKurt - sampKurt)
+  sampSize <- 10000
+  shape <- 8
+  scale <- 2
+  x <- rgamma(sampSize, shape = shape, scale = scale)
+  sampM3 <- skewness(x)*sd(x)^3
+  sampM4 <- (kurtosis(x) + 3)*sd(x)^4
   ## Calculate tolerances
   ## Raw moments of gamma
   rawMom <- numeric(8)
@@ -58,12 +54,17 @@ test.sampleMoments <- function()
   ## Central moments, gamma
   centralMom <- momChangeAbout("all", rawMom, 0, rawMom[1])
   distSD <- centralMom[2]
+  diffM3 <- abs(centralMom[3] - sampM3)
+  diffM4 <- abs(centralMom[4] - sampM4)
   s3SE <- momSE(3, sampSize, centralMom[1:6])
   s4SE <- momSE(4, sampSize, centralMom)
-  tolSkew <- qnorm(0.995)*s3SE/(distSD^3)
-  tolKurt <- qnorm(0.995)*s4SE/(distSD^4)
-  checkTrue(diffSkew < tolSkew)
-  checkTrue(diffKurt < tolKurt)
+  ## gamma is very skewed: need to allow large tolerance
+  tolM3 <- qnorm(0.999)*s3SE
+  tolM4 <- qnorm(0.995)*s4SE
+  checkTrue(diffM3 < tolM3,
+            msg = paste("tolM3 = ", tolM3, " diffM3 = ", diffM3))
+  checkTrue(diffM4 < tolM4,
+            msg = paste("tolM4 = ", tolM4, " diffM4 = ", diffM4))
 
   return()
 }

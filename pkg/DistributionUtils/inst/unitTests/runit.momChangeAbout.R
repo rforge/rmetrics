@@ -22,8 +22,8 @@ test.momChangeAbout <- function()
   scale <- 1
   old <- 0
   new <- shape*scale         # central moments
-  sampSize <- 1000000
-  x <- rgamma(sampSize, shape)
+  sampSize <- 10000
+  x <- rgamma(sampSize, shape, scale = scale)
 
 
   ## Sample moments
