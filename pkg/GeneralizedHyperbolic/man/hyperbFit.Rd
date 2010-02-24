@@ -2,6 +2,8 @@
 \alias{hyperbFit}
 \alias{print.hyperbFit}
 \alias{plot.hyperbFit}
+\alias{coef.hyperbFit}
+\alias{vcov.hyperbFit}
 
 \title{Fit the Hyperbolic Distribution to Data}
 \description{
@@ -26,6 +28,10 @@
                             "Q-Q Plot of ","P-P Plot of "), x$obsName,
                           sep = ""),
        ask = prod(par("mfcol")) < length(which) & dev.interactive(), ...)
+
+  \method{coef}{hyperbFit}(object, ...)
+
+  \method{vcov}{hyperbFit}(object, ...)
 }
 
 \arguments{
@@ -62,6 +68,8 @@
     each plot, see \code{\link{par}(ask = .)}.}
   \item{\dots}{Passes arguments to \code{par}, \code{hist},
 		\code{logHist}, \code{qqhyperb} and \code{pphyperb}.}
+  \item{object}{Object of class \code{"hyperbFit"} for \code{coef.hyperbFit}
+    and for \code{vcov.hyperbFit}.}
 }
 \details{
   \code{startMethod} can be either \code{"BFGS"} or

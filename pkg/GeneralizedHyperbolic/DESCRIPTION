@@ -1,11 +1,11 @@
 Package: GeneralizedHyperbolic
 Version: 0.2-0
-Date: 2010-02-09
+Date: 2010-02-24
 Title: The generalized hyperbolic distribution
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
 Depends: R (>= 2.3.0), DistributionUtils
-Suggests: VarianceGamma, actuar
+Suggests: VarianceGamma, actuar, SkewHyperbolic
 Encoding: latin1
 Description: This package provides functions for the hyperbolic and
         related distributions. Density, distribution and quantile
@@ -21,4 +21,4 @@ Repository: CRAN
 Repository/R-Forge/Project: rmetrics
 Repository/R-Forge/Revision: 4411
 Date/Publication: 2009-09-23 16:45:00
-Packaged: 2009-12-28 11:03:10 UTC; simon
+Packaged: 2010-01-21 03:52:30 UTC; simon

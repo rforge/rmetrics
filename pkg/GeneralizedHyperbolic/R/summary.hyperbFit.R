@@ -4,7 +4,7 @@
 ### DJS 11/08/06
 summary.hyperbFit <- function(object, ...) {
 
-  if (class(object) != "hyperbFit")
+  if (! "hyperbFit" %in% class(object))
     stop("Object must belong to class hyperbFit")
 
   if (!is.null(object$hessian)) {
@@ -22,7 +22,7 @@ print.summary.hyperbFit <- function(x,
                                     digits = max(3, getOption("digits") - 3),
                                     ...) {
 
-  if (!class(x) == "summary.hyperbFit")
+  if (class(x) != "summary.hyperbFit")
     stop("Object must belong to class summary.hyperbFit")
 
   cat("\nData:     ", x$obsName, "\n")

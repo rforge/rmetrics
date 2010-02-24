@@ -137,7 +137,7 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                      breaks = breaks, midpoints = midpoints,
                      empDens = empDens)
 
-  class(fitResults) <- "hyperbFit"
+  class(fitResults) <- c("hyperbFit", "distFit")
 
   if (printOut)
     print(fitResults, ...)
@@ -154,7 +154,7 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 print.hyperbFit <- function(x,
                             digits = max(3, getOption("digits") - 3), ...) {
 
-  if (!class(x) == "hyperbFit")
+  if (! "hyperbFit" %in% class(x))
     stop("Object must belong to class hyperbFit")
 
   cat("\nData:     ", x$obsName, "\n")
@@ -178,7 +178,7 @@ plot.hyperbFit <- function(x, which = 1:4,
                            ask = prod(par("mfcol")) < length(which) &
                                  dev.interactive(), ...) {
 
-  if (class(x) != "hyperbFit")
+  if (! "hyperbFit" %in% class(x))
     stop("Object must belong to class hyperbFit")
 
   if (ask) {
@@ -230,4 +230,17 @@ plot.hyperbFit <- function(x, which = 1:4,
     pphyperb(obs, param = param, main = plotTitles[4], ...)
 
   invisible()
+}
+
+coef.hyperbFit <- function(object, ...) {
+  object$param
+}
+
+vcov.hyperbFit <- function(object, ...) {
+
+  if (is.null(object$hessian))
+    stop("hyperbFit must be run again with the hessian parameter set to TRUE")
+
+  varcov <- solve(object$hessian)
+  varcov
 }
