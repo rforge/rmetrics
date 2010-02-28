@@ -1,0 +1,16 @@
+New in version 0.2.4:
+- Made corrections to the vignette, added examples using the new optimalPortfolios.fPort functionality
+- Added several extractor functions, including posteriorMeanCov, posteriorSimulations, numSimulations, 
+  and priorViews
+- Added optimalPortfolios.fPort generic function.  This function wraps fPortfolio functionality to allow
+  one to see the impact of view blending on optimal portfolios, and is meant to replace the old "toy"
+  optimizer.  
+- The BLPosterior function now allows one to choose which function is used for covariance estimation
+- The "alphas" parameter for BLPosterior was renamed to "mu" for consistency with other Rmetrics naming 
+  conventions 
+- densityPlots function generates an error when called on a class for which no method exists
+- densityPlots COPResults method allows one to select assets by name, not just numeric index
+- Modified the "show" method for objects of class BLViews, added a simple "show" method for COPResults
+  class objects
+- Renamed "runBLCOPTestSuite" to "runBLCOPTests", added several enhancements including the ability
+  to generate an RUnit HTML report
