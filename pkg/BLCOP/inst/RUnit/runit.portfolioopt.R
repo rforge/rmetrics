@@ -43,17 +43,33 @@ test.optimalPortfolios.BL <- function()
 							NULL, c("priorOptimPortfolio", "posteriorOptimPortfolio"))), 
 	   msg = " |minimum risk portfolios as expected")
 	
-	# set.seed(3)
+}
+
+# tests optimalPortfolios.fPort for COPResults objects
+
+test.optimalPortfolios.COP <- function()
+{
+
 	COPEx <- get(load( file.path(BLCOPOptions("unitTestPath"), "copexample.RData") ))
 	# Check optimization with COP
 	myPosterior <- COPEx$posterior
 	
 	res4 <- optimalPortfolios.fPort(myPosterior, spec = NULL, optimizer = "minriskPortfolio", inputData = NULL, 
-			numSimulations  = 100	)
+			numSimulations  = 100	) 
 	
-	# checkEqualsNumeric(getWeights(res4$priorOptimPortfolio), c(0.987263367282934, 0.0127366327170661, 0, 0)) 
-
 	checkEqualsNumeric(getWeights(res4$posteriorOptimPortfolio), c(0.534715878700172, 0.465284121299828, 0, 0))
 	
-
+	# second example, using input data
+	COPEx2 <- get(load( file.path(BLCOPOptions("unitTestPath"), "copexample2.RData") ))
+	
+	spec <- portfolioSpec()
+	setType(spec) <- "CVaR"
+	setWeights(spec) <- rep(1 / 6, times = 6)
+	setSolver(spec) <- "solveRglpk"
+	setTargetReturn(spec) <- 0.005
+	res5 <- optimalPortfolios.fPort( COPEx2, spec = spec, inputData = as.timeSeries(monthlyReturns), numSimulations  = nrow(monthlyReturns))
+	
+	checkEqualsNumeric(getWeights(res5$priorOptimPortfolio), c(0.0707149756584066, 2.67397784323004e-07, 0.0105900756464006, 
+					0.522435704424078, 0, 0.396258976873331))
+	checkEqualsNumeric(getWeights(res5$posteriorOptimPortfolio), c(0.513269493960045, 0, 0, 0, 0, 0.486730506039955))
 }
