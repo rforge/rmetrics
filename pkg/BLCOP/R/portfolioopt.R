@@ -83,7 +83,7 @@ optimalPortfolios <- function
 #' @export
 
 optimalPortfolios.fPort <- function(result, spec = NULL, constraints = "LongOnly", optimizer = "minriskPortfolio", 
-			inputData = NULL, numSimulations = NA)
+			inputData = NULL, numSimulations = BLCOPOptions("numSimulations"))
 {
 	stop("Not implemented for this class of result")
 }
@@ -91,7 +91,7 @@ optimalPortfolios.fPort <- function(result, spec = NULL, constraints = "LongOnly
 setGeneric("optimalPortfolios.fPort")
 
 optimalPortfolios.fPort.BL <- function(result, spec = NULL ,constraints = "LongOnly", optimizer = "minriskPortfolio", 
-		inputData = NULL, numSimulations = NA)
+		inputData = NULL, numSimulations = BLCOPOptions("numSimulations"))
 {
 	if(!require("fPortfolio"))
 		stop("The package fPortfolio is required to execute this function, but you do not have it installed.")
