@@ -17,6 +17,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 % Command for R functions
 \newcommand{\rfun}[1]{\texttt{#1}}
+\newcommand{\packversion}{0.2.4}
 \DefineVerbatimEnvironment{Code}{Verbatim}{commandchars=¬\{\}, frame = single, samepage = TRUE}
 \begin{document}
 \title{Notes on the BLCOP Package}
@@ -27,7 +28,7 @@
 
 \section{Introduction}
 \paragraph{} The BLCOP package is an implementation of the Black-Litterman and copula opinion pooling frameworks.
-The current release (0.2.2) should be considered as a beta version, and the main purpose of this release is to allow the community to use it and suggest improvements (any feedback would be greatly appreciated).  This vignette gives an overview of these two opinion-blending methods, briefly shows how they are implemented in this package, and closes with a short discussion of how the package may evolve in the future.
+The current release (\packversion{}) should be considered as a beta version(any feedback would be greatly appreciated).  This vignette gives an overview of these two opinion-blending methods, briefly shows how they are implemented in this package, and closes with a short discussion of how the package may evolve in the future.
 %%%%%
 %
 % Overview
@@ -48,7 +49,7 @@ equilibrium considerations that this should be obtained from the intercepts of t
 the analyst/portfolio manager to include his or her views.  BL proposed that views should be made on linear combinations (i.e. portfolios) of the asset 
 return variable means $\mu$.  Each view would take 
 the form of a ``mean plus error''.  Thus for example, a typical view would look as follows:
-$$ p_{i1} \mu_1 + p_{i2} \mu_2 + ... + p_{in} \mu_n = q_i + \epsilon_i$$, where $\epsilon_i \sim N(0, sigma_i^2) $.  The standard deviations $\sigma_i^2$ 
+$$ p_{i1} \mu_1 + p_{i2} \mu_2 + ... + p_{in} \mu_n = q_i + \epsilon_i$$, where $\epsilon_i \sim N(0, \sigma_i^2) $.  The standard deviations $\sigma_i^2$ 
 of each view could be taken as controlling the confidence in each view.  Collecting these views into a matrix we will call the ``pick'' matrix,
  we obtain the ``general'' view specification
 $$P \mu \sim N(\mu, \Omega).$$
@@ -67,26 +68,25 @@ Let us now see how these ideas are implemented in the \texttt{BLCOP} package.
 \section{Using the Black-Litterman model in \texttt{BLCOP} }
 The implementation of the Black-Litterman model in BLCOP is based on objects that represent views on the market and objects that represent the posterior
 distribution of the market after blending the views.  We will illustrate this with a simple example.  Suppose that an analyst wishes to form views on 6
-stocks, 3 of which are technology stocks and the other 3 of which are from the financial sector.  Intially, she has a view on the technology sector and believes that the average of 2 of the stocks will outperform the third, say $\frac{1}{2}( \textrm{MS} + \textrm{IBM}) - \textrm{DELL} \sim N(0.06,  0.01)$.  We will create a 
-\code{BLViews} class object with the \texttt{BLViews} constructor function.  Its arguments are the ``pick'' matrix, a vector of confidences, the vector ``q'', and the the names of the assets in one's ``universe''.  
+stocks, 2 of which are technology stocks and the other 4 of which are from the financial sector.  Intially, she believes that the average of the 2 tech stocks will outperform one of the financial stocks, say $\frac{1}{2}( \textrm{DELL} + \textrm{IBM}) - \textrm{MS} \sim N(0.06,  0.01)$.  
+We will create a \code{BLViews} class object with the \texttt{BLViews} constructor function.  Its arguments are the ``pick'' matrix, a vector of confidences, the vector ``q'', and the the names of the assets in one's ``universe''.  
 \SweaveOpts{keep.source=TRUE}
 <<echo=FALSE,print=FALSE>>=
 require(BLCOP)
 require("sn")
-require("corpcor")
 @
 <<echo=TRUE,print=FALSE>>=
-pickMatrix <- matrix(c(rep(1/2, 2), -1,  rep(0, 3)), nrow = 1, ncol = 6 )
+pickMatrix <- matrix(c(1/2, -1, 1/2, rep(0, 3)), nrow = 1, ncol = 6 )
 views <- BLViews(P = pickMatrix, q = 0.06,confidences =  100, 
 assetNames = colnames(monthlyReturns))
 views
 @
 Next, we need to determine the ``prior'' distribution of these assets.  The analyst may for instance decide to set these means to 0, and then 
 calculate the variance-covariance matrix of these through some standard estimation procedure (e.g. exponentially weighted moving average).
-Here we use \rfun{cov.shrink} from the \code{corpcov} package.
+Here we use \rfun{cov.mve} from the \code{MASS} package.
 <<echo=TRUE,print=FALSE>>=
 priorMeans <- rep(0, 6)
-priorVarcov <- unclass(cov.shrink(monthlyReturns))
+priorVarcov <- cov.mve(monthlyReturns)$cov
 @
 %$
 We can now calculate the posterior market distribution using the \rfun{posteriorEst}.  This takes as parameters
@@ -98,12 +98,12 @@ we shall set it to $1/2$.
 marketPosterior <- posteriorEst(views = views, sigma = priorVarcov, 
  mu = priorMeans, tau = 1/2)
 @
-Now suppose that we wish to add another view, this time on the average of the three financial stocks.  This can be done
+Now suppose that we wish to add another view, this time on the average of the four financial stocks.  This can be done
 conveniently with \rfun{addBLViews} as in the following example:
 
 <<echo=TRUE,print=FALSE>>=
-finViews <- matrix(ncol = 3, nrow = 1, dimnames = list(NULL, c("C","JPM","BAC")))
-finViews[,1:3] <- rep(1/3,3)
+finViews <- matrix(ncol = 4, nrow = 1, dimnames = list(NULL, c("C","JPM","BAC","MS")))
+finViews[,1:4] <- rep(1/4,4)
 views <- addBLViews(finViews, 0.15, 90, views)
 views
 @
@@ -114,32 +114,36 @@ as the variance-covariance matrix of a returns series, and will then call \rfun{
 
 <<echo=TRUE,print=TRUE>>=
 marketPosterior <- BLPosterior(as.matrix(monthlyReturns), views, tau = 1/2, 
-	marketIndex = as.matrix(sp500Returns), 
-	riskFree = as.matrix(US13wTB))
+	marketIndex = as.matrix(sp500Returns),riskFree = as.matrix(US13wTB))
 @
 
 Both \rfun{BLPosterior} and \rfun{posteriorEst} have a \code{kappa} parameter which may be used to replace the matrix $\Omega$ of confidences
 in the posterior calculation.  If it is greater than 0, then $\Omega$ is set to $\kappa P^{T} \Sigma P$ rather than 
 $diag(\sigma_1^2, \sigma_2^2, ..., \sigma_2^n)$.  This choice of $\Omega$ is suggested by several authors, and it leads to the confidences
 being determined by volatilities of the asset returns.
-A user may also be interested in comparing allocations that are optimal under the prior and posterior distributions.  A helper function is provided
-in the \texttt{BLCOP} package for doing this, and it can use any optimization routine that relies on a distribution's first and second moments.  This
-helper function is \rfun{optimalPortfolios}.  If no optimizing function is passed in, it will use \rfun{solve.QP} to perform basic Markowitz optimization
-(as shown below). A barplot that compares the portfolio weights is optionally produced.
+%%%%%
+%
+% Comparison of optimal portfolios
+%
+%%%%%
+\paragraph{} A user may also be interested in comparing allocations that are optimal under the prior and posterior distributions.  The \texttt{fPortfolio} package of
+the Rmetrics project (\cite{fPort}), for example, has a rich set of functionality available for portfolio optimization.  The helper function
+\rfun{optimalPortfolios.fPort} was created to wrap these functions for exploratory purposes.  
 
 <<echo=TRUE,print=TRUE,fig=TRUE>>=
-optPorts <- optimalPortfolios(marketPosterior, doPlot = TRUE)
+optPorts <- optimalPortfolios.fPort(marketPosterior, optimizer = "tangencyPortfolio")
+par(mfcol = c(2, 1))
+weightsPie(optPorts$priorOptimPortfolio)
+weightsPie(optPorts$posteriorOptimPortfolio)
 @
 
-Additional parameters may be passed into one's optimizer.  In the case of the default optimizer, one can pass in a \code{constraints} argument
-that is used to control the execution of \rfun{solve.QP}.  Thus we can remove the ``long only'' constraint as in the following example:
+Additional parameters may be passed into function to control the optimization process.  Users are referred to the \texttt{fPortfolio} package
+documentation for details.
 
-<<echo=TRUE,print=FALSE,fig=TRUE>>=
-constr <- list()
-constr$bvec <- 1
-constr$meq <- 1
-constr$Amat <- matrix(rep(1, 6), ncol = 1, nrow = 6)
-optimalPortfolios(marketPosterior, constraints = constr)
+<<echo=TRUE,print=FALSE,fig=FALSE>>=
+optPorts2 <- optimalPortfolios.fPort(marketPosterior, 
+		constraints = "minW[1:6]=0.1", optimizer = "minriskPortfolio")
+optPorts2
 @
 % $
 Finally, density plots of marginal prior and posterior distributions can be generated with \rfun{densityPlots}.  As we will see in the next section,
@@ -230,7 +234,7 @@ newPick[1,] <- c(1, -1) # add a relative view
 views <- addCOPViews(newPick, 
 	list(distribution("norm", mean = 0.05, sd = 0.02)), 0.5, views)
 @
-Finally, the posterior is calculated with \rfun{COPPosterior}, and the updated marginal distributions can be visualized with \rfun{densityPlots}
+The posterior is calculated with \rfun{COPPosterior}, and the updated marginal distributions can be visualized with \rfun{densityPlots}
 once again.  The calculation is performed by simulation, based on the ideas described in \cite{MeucciCOP2}. The simulations of the posterior distribution
 are stored in the \code{posteriorSims} of the class \code{COPResult} that is returned by \rfun{COPPosterior}.
 <<echo=TRUE,print=FALSE,fig=TRUE>>=
@@ -240,15 +244,17 @@ densityPlots(marketPosterior, assetsSel = 4)
 %
 %
 %
+
 \section{Future developments}
 \paragraph{} While mostly stable, the code is currently in need of some minor cleanup work and refactoring (e.g. pick matrices are referred to 
-as \code{P} in some places and \code{pick} in others) as well as improvements in the documentation and examples.  Aside from this, it would be natural to implement a version of the \rfun{optimalPortfolios} function for \code{COPResult} class objects, 
-possibly based on CVaR optimization.  Attilio Meucci has also very recently proposed an even more general view-blending method which 
+as \code{P} in some places and \code{pick} in others) as well as improvements in the documentation and examples. Attilio Meucci has also very recently proposed an even more general view-blending method which 
 he calls \emph{Entropy Pooling} and its inclusion would be another obvious extension of this package's functionality in the longer term.
 
 \begin{thebibliography}{110}
 \bibitem[Me05]{MeucciCOP} Meucci, Attilio. \textit{Beyond Black-Litterman: Views on Non-Normal Markets}. November 2005, Available at SSRN: http://ssrn.com/abstract=848407 
 \bibitem[Me06]{MeucciCOP2} Meucci, Attilio.  \textit{Beyond Black-Litterman in Practice: A Five-Step Recipe to Input Views on non-Normal Markets}. May 2006, Available at SSRN: http://papers.ssrn.com/sol3/papers.cfm?abstract\_id=872577
 \bibitem[Me08]{MeucciBL} Meucci, Attilio.  \textit{The Black-Litterman Approach: Original Model and Extensions}. April 2008, Available at SSRN: http://ssrn.com/abstract=1117574
+\bibitem[RmCTWu09]{fPort} Rmetrics Core Team, Diethelm Wuertz. \textit{The fPortfolio package}. September 2009, Available at cran.r-project.org
+\bibitem[WuChChEl09]{RmetricsPortfolioOpt} Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009); \textit{Portfolio Optimization with R/Rmetrics}, Rmetrics eBook, Rmetrics Association and Finance Online, Zurich. 
 \end{thebibliography}
 \end{document}
