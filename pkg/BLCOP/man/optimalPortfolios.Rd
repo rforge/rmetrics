@@ -13,18 +13,18 @@
 \usage{
 optimalPortfolios(result, optimizer = .optimalWeights.simpleMV, ..., doPlot = TRUE, beside = TRUE)
 optimalPortfolios.fPort(result, spec = NULL, constraints = "LongOnly", optimizer = "minriskPortfolio", 
-    inputData = NULL, numSimulations = 100) 
+    inputData = NULL, numSimulations = BLCOPOptions("numSimulations")) 
 }
 
 \arguments{
   \item{result}{An object of class \code{BLResult}}
-  \item{optimizer}{An optimization function.  It should take as arguments a vector of means and
-      a variance-covariance matrix, and should return a vector of optimal weights.}
+  \item{optimizer}{For \code{optimalPortfolios}, An optimization function.  It should take as arguments a vector of means and
+      a variance-covariance matrix, and should return a vector of optimal weights.  For \code{optimalPortfolios}, 
+      the name of a \code{fPortfolio} function that performs portfolio optimization}
   \item{spec}{Object of class \code{fPORTFOLIOSPEC}.  If NULL, will use a basic mean-variance spec for Black-Litterman
   results, and a basic CVaR spec for COP results}
   \item{inputData}{Time series data (any form that can be coerced into a \code{timeSeries} object)}
   \item{constraints}{String of constraints that may be passed into \code{fPortfolio} optimization routines}
-  \item{optimizer}{Name of a \code{fPortfolio} function (or function) that performs portfolio optimization}
   \item{numSimulations}{For COP results only - the number of posterior simulations to use in the optimization (large
   	numbers here will likely cause the routine to fail)}
   \item{\dots}{ Additional arguments to the optimization function }
