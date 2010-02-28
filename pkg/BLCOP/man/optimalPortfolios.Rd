@@ -50,6 +50,7 @@ optimalPortfolios.fPort(result, spec = NULL, constraints = "LongOnly", optimizer
 }
 
 \author{Francisco Gochez <fgochez@mango-solutions.com>}
+\references{Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009); Portfolio Optimization with R/Rmetrics, Rmetrics eBook, Rmetrics Association and Finance Online, Zurich. }
 \examples{
 	\dontrun{
 	    entries <- c(0.001005,0.001328,-0.000579,-0.000675,0.000121,0.000128,-0.000445,-0.000437 ,
