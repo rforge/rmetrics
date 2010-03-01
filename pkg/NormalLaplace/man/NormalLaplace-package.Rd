@@ -9,7 +9,7 @@ The Package `NormalLaplace': Summary Information
   
 This package provides a collection of functions for Normal Laplace
 distributions. Functions are provided for the density function,
-distribution function, quantiles and random number generation.The mean,
+distribution function, quantiles and random number generation. The mean,
 variance, skewness and kurtosis of a given Normal Laplace distribution
 are given by \code{nlMean}, \code{nlVar}, \code{nlSkew}, and
 \code{nlKurt} respectively.

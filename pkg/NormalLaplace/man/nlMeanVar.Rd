@@ -9,17 +9,17 @@
 Mean, Variance, Skewness and Kurtosis of the Normal Laplace Distribution.
 }
 \description{
-  Functions to calculate the mean, variance, skewness and kurtosis 
+  Functions to calculate the mean, variance, skewness and kurtosis
   of a specified normal Laplace distribution.
 
 }
 \usage{
 nlMean(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta),log = FALSE)
+         param = c(mu,sigma,alpha,beta), log = FALSE)
 nlVar(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta),log = FALSE)
+         param = c(mu,sigma,alpha,beta), log = FALSE)
 nlSkew(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta),log = FALSE)
+         param = c(mu,sigma,alpha,beta), log = FALSE)
 nlKurt(mu = 0, sigma = 1, alpha = 1, beta = 1,
          param = c(mu,sigma,alpha,beta), log = FALSE)
 
@@ -31,7 +31,7 @@ nlKurt(mu = 0, sigma = 1, alpha = 1, beta = 1,
   \item{beta}{Shape parameter \eqn{\beta}{beta}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,sigma,alpha,beta)}.}
-  \item{log}{Logical; if \code{log = TRUE}, probabilities are given as
+  \item{log}{Logical. If \code{log = TRUE}, probabilities are given as
     log(p).}
 }
 
@@ -40,29 +40,32 @@ nlKurt(mu = 0, sigma = 1, alpha = 1, beta = 1,
   as a vector. If both forms are specified, then the values specified by
   the vector \code{param} will overwrite the other ones.
 
-  the mean function is 
-  \deqn{E(Y)=\mu+1/\alpha-1/\beta}{E(Y)=mu+1/alpha-1/beta}%
-  
-  the variance function is 
-  \deqn{var(Y)=\sigma^2+1/\alpha^2+1/\beta^2}{var(Y)=sigma^2+1/sigma^2+1/beta^2}%
+  The mean function is
+  \deqn{E(Y)=\mu+1/\alpha-1/\beta.}{E(Y) = mu + 1/alpha - 1/beta.}%
 
-  the skewness function is 
-  \deqn{\Upsilon = [2/\alpha^3-2/\beta^3]/[\sigma^2+1/\alpha^2+1/\beta^2]^{3/2}}{skewness = [2/alpha^3-2/beta^3]/[sigma^2+1/alpha^2+1/beta^2]^3/2}%
+  The variance function is
+  \deqn{V(Y)=\sigma^2+1/\alpha^2+1/\beta^2.%
+  }{var(Y) = sigma^2 + 1/sigma^2 + 1/beta^2.}
 
-  the kurtosis function is 
-  \deqn{\Gamma = [6/\alpha^4 + 6/\beta^4]/[\sigma^2+1/\alpha^2+1/\beta^2]^2}{kurtosis = [6/alpha^4 + 6/beta^4]/[sigma^2+1/alpha^2+1/beta^2]^2}%
+  The skewness function is
+  \deqn{\Upsilon =
+    [2/\alpha^3-2/\beta^3]/[\sigma^2+1/\alpha^2+1/\beta^2]^{3/2}.%
+  }{skewness = [2/alpha^3 - 2/beta^3]/[sigma^2 + 1/alpha^2 + 1/beta^2]^3/2.}%
+
+  The kurtosis function is
+  \deqn{\Gamma = [6/\alpha^4 +
+    6/\beta^4]/[\sigma^2+1/\alpha^2+1/\beta^2]^2.}{%
+    kurtosis = [6/alpha^4 + 6/beta^4]/[sigma^2 + 1/alpha^2 + 1/beta^2]^2.}%
 
 }
 \value{
-  \code{nlMean} gives the mean of the skew hyperbolic
-  \code{nlVar} the variance,
-  \code{nlSkew} the skewness, 
-  \code{nlKurt} the kurtosis and
-  
+  \code{nlMean} gives the mean of the skew hyperbolic \code{nlVar} the
+  variance, \code{nlSkew} the skewness, and \code{nlKurt} the kurtosis.
+
 }
 
 \references{
-  
+
   William J. Reed. (2006) The Normal-Laplace Distribution and Its
   Relatives. In \emph{Advances in Distribution Theory, Order Statistics
   and Inference}, pp. 61--74.  \enc{Birkhäuser}{Birkhauser},  Boston.
