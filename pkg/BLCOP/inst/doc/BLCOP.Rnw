@@ -254,7 +254,7 @@ he calls \emph{Entropy Pooling} and its inclusion would be another obvious exten
 \bibitem[Me05]{MeucciCOP} Meucci, Attilio. \textit{Beyond Black-Litterman: Views on Non-Normal Markets}. November 2005, Available at SSRN: http://ssrn.com/abstract=848407 
 \bibitem[Me06]{MeucciCOP2} Meucci, Attilio.  \textit{Beyond Black-Litterman in Practice: A Five-Step Recipe to Input Views on non-Normal Markets}. May 2006, Available at SSRN: http://papers.ssrn.com/sol3/papers.cfm?abstract\_id=872577
 \bibitem[Me08]{MeucciBL} Meucci, Attilio.  \textit{The Black-Litterman Approach: Original Model and Extensions}. April 2008, Available at SSRN: http://ssrn.com/abstract=1117574
-\bibitem[RmCTWu09]{fPort} Rmetrics Core Team, Diethelm Wuertz. \textit{The fPortfolio package}. September 2009, Available at cran.r-project.org
+\bibitem[RmCTWu09]{fPort} Rmetrics Core Team, Wuertz, D. \textit{The fPortfolio package}. September 2009, Available at cran.r-project.org
 \bibitem[WuChChEl09]{RmetricsPortfolioOpt} Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009); \textit{Portfolio Optimization with R/Rmetrics}, Rmetrics eBook, Rmetrics Association and Finance Online, Zurich. 
 \end{thebibliography}
 \end{document}
