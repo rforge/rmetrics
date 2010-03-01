@@ -2,13 +2,13 @@ Package: BLCOP
 Type: Package
 Title: Black-Litterman and copula-opinion pooling frameworks
 Version: 0.2.4
-Date: 28/02/2010
+Date: 29/02/2010
 Author: Francisco Gochez <fgochez@mango-solutions.com>
 Maintainer: Mango Solutions <support@mango-solutions.com>
 Description: An implementation of the Black-Litterman Model and Atilio Meucci's 
  copula opinion pooling framework.  This should be regarded as a beta release.
-Depends: methods, MASS
-Suggests: RUnit, fPortfolio, sn, quadprog
+Depends: methods, MASS, quadprog
+Suggests: RUnit (>= 0.4.22), fPortfolio (>= 2100.78), sn
 License: GPL-3
 LazyData: yes
 LazyLoad: yes
