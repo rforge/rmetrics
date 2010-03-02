@@ -17,9 +17,9 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  .dQuote.ascii
-#  .xls2csv
-#  .read.xls
+#  .dQuote.ascii         Creates a temporary function to quote a string
+#  .xls2csv              Converts a xls file into acsv file
+#  .read.xls             reads low level a xls files
 ################################################################################
 
 
@@ -56,7 +56,7 @@ function(xls, sheet = 1, verbose = FALSE, ..., perl = "perl")
     # FUNCTION:
     
     # Directories:
-    package.dir <- .path.package('datafeed')
+    package.dir <- .path.package('fBasics')
     perl.dir <- file.path(package.dir,'perl')
 
     # Files:
