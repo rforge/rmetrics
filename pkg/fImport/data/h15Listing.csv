@@ -1,0 +1,40 @@
+Symbol; Description
+H15_NFCP_M2;     Commercial Paper 2M NonFin    
+H15_NFCP_M3;     Commercial Paper 3M NonFin    
+H15_FCP_M1;      Commercial Paper 1M Financial 
+H15_FCP_M2;      Commercial Paper 2M Financial 
+H15_FCP_M3;      Commercial Paper 3M Financial 
+H15_CPFFWOUT_M3; CP 3M CPFF without surcharge  
+H15_CPFFWITH_M3; CP 3M CPFF with  surcharge    
+H15_PRIME_NA;    Bank Prime Loan               
+H15_DWPC_NA;     Discount Window Primary Credit
+H15_TB_WK4;      Treasury Bill 4W              
+H15_TB_M3;       Treasury Bill 3M              
+H15_TB_M6;       Treasury Bill 6M              
+H15_TB_Y1;       Treasury Bill 1Y              
+H15_TCMNOM_M1;   TrConstMat Nominal 1M         
+H15_TCMNOM_M3;   TrConstMat Nominal 3M         
+H15_TCMNOM_M6;   TrConstMat Nominal 6M         
+H15_TCMNOM_Y1;   TrConstMat Nominal 1Y         
+H15_TCMNOM_Y2;   TrConstMat Nominal 2Y         
+H15_TCMNOM_Y3;   TrConstMat Nominal 3Y         
+H15_TCMNOM_Y5;   TrConstMat Nominal 5Y         
+H15_TCMNOM_Y7;   TrConstMat Nominal 7Y         
+H15_TCMNOM_Y10;  TrConstMat Nominal 10Y        
+H15_TCMNOM_Y20;  TrConstMat Nominal 20Y        
+H15_TCMNOM_Y30;  TrConstMat Nominal 30Y        
+H15_TCMII_Y5;    TrConstMat Inflation Idxd 5Y  
+H15_TCMII_Y7;    TrConstMat Inflation Idxd 7Y  
+H15_TCMII_Y10;   TrConstMat Inflation Idxd 10Y 
+H15_TCMII_Y20;   TrConstMat Inflation Idxd 20Y 
+H15_LTAVG_Y10P;  TrConstMat Inflation Idxd >20Y
+H15_SWAPS_Y1;    Interest Rate Swaps 1Y        
+H15_SWAPS_Y2;    Interest Rate Swaps 2Y        
+H15_SWAPS_Y3;    Interest Rate Swaps 3Y        
+H15_SWAPS_Y4;    Interest Rate Swaps 4Y        
+H15_SWAPS_Y5;    Interest Rate Swaps 5Y        
+H15_SWAPS_Y7;    Interest Rate Swaps 7Y        
+H15_SWAPS_Y10;   Interest Rate Swaps 10Y       
+H15_SWAPS_Y30;   Interest Rate Swaps 30Y       
+H15_AAA_NA;      Moodys Seasoned Aaa           
+H15_BAA_NA;      Moodys Seasoned Baa           
