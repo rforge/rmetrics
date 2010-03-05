@@ -6,6 +6,8 @@
 // Author:  Kjersti Aas, 2000
 //          Diethelm Wuertz, added to fBasics
 //          Nikolai Eurich, bug fixed which appeared in R 2.7
+//          Yohan Chalabi, changed XMAX for 64 bit compatiblitiy 
+//                         and removed unused headers
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -13,26 +15,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
+// #include <time.h>
 #include <math.h>
-#include <setjmp.h>
-#include <R.h>
-#include <Rdefines.h> 
-#include <Rmath.h>
-#include <Rinternals.h>
+// #include <setjmp.h>
+// #include <R.h>
+// #include <Rdefines.h> 
+// #include <Rinternals.h>
+// #include <Rmatch.h>
+// #include <R_ext/Constants.h>
+#include <R_ext/PrtUtil.h>
 
 #define  SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 #define  MIN(a, b) ((a) < (b) ? (a) : (b))
 #define  MAX(a, b) ((a) > (b) ? (a) : (b))
 
-#define  pi 3.14159265358979
-#define  EPS   1e-12
-#define  XLEAST 2.23e-308
-#define  XSMALL 1.11e-16
-#define  XINF 1.79e308 
-#define  XMAX 705.343 
-#define  MAX_ITER 5000
-#define  ITMAX 100
+#define  pi        3.141593
+#define  EPS       1e-12
+#define  XLEAST    2.23e-308
+#define  XSMALL    1.11e-16
+#define  XINF      1.79e308 
+#define  XMAX      704.78 // log(XINF) - 5
+#define  MAX_ITER  5000
+#define  ITMAX     100
 
 
 ////////////////////////////////////////////////////////////////////////////////
