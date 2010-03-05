@@ -6,7 +6,7 @@
 // Author:  Kjersti Aas, 2000
 //          Diethelm Wuertz, added to fBasics
 //          Nikolai Eurich, bug fixed which appeared in R 2.7
-//          Yohan Chalabi, changed XMAX for 64 bit compatiblitiy 
+//          Yohan Chalabi, changed XMAX for 64 bit compatibility
 //                         and removed unused headers
 //
 ////////////////////////////////////////////////////////////////////////////////
