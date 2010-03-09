@@ -54,7 +54,7 @@ locationTest(x, y, method = c("t", "kw2"),
         the data as specified by the input argument(s).
         }
     \item{@test}{
-        a list whose elements contail the results from the statistical
+        a list whose elements contain the results from the statistical
         test. The information provided is similar to a list object of
         class \code{"htest"}.
         }
