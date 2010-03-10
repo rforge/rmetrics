@@ -1,3 +1,9 @@
+2010-03-10    <d.scott@auckland.ac.nz>
+
+	* tailPlot, normTailPlotLine, tTailPlotLine, gammaTailPlotLine
+	added to allow shtTailPlotLine to be added to SkewHyperbolic to
+	satisfy referee request.
+
 2010-02-09   <d.scott@auckland.ac.nz>
 
 	* added testing of distributions, unit tests for all
