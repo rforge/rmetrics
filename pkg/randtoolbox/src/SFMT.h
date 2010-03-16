@@ -161,8 +161,8 @@ uint32_t gen_rand32(void);
 uint64_t gen_rand64(void);
 void fill_array32(uint32_t *array, int size);
 void fill_array64(uint64_t *array, int size);
-void init_gen_rand(uint32_t seed);
-void init_by_array(uint32_t *init_key, int key_length);
+void SFMT_init_gen_rand(uint32_t seed);
+void SFMT_init_by_array(uint32_t *init_key, int key_length);
 const char *get_idstring(void);
 int get_min_array_size32(void);
 int get_min_array_size64(void);
@@ -176,7 +176,7 @@ inline static double to_real1(uint32_t v)
 }
 
 /** generates a random number on [0,1]-real-interval */
-inline static double genrand_real1(void)
+inline static double SFMT_genrand_real1(void)
 {
     return to_real1(gen_rand32());
 }
@@ -189,7 +189,7 @@ inline static double to_real2(uint32_t v)
 }
 
 /** generates a random number on [0,1)-real-interval */
-inline static double genrand_real2(void)
+inline static double SFMT_genrand_real2(void)
 {
     return to_real2(gen_rand32());
 }
@@ -202,7 +202,7 @@ inline static double to_real3(uint32_t v)
 }
 
 /** generates a random number on (0,1)-real-interval */
-inline static double genrand_real3(void)
+inline static double SFMT_genrand_real3(void)
 {
     return to_real3(gen_rand32());
 }

@@ -2129,7 +2129,7 @@ void fill_array64(uint64_t *array, int size) {
  *
  * @param seed a 32-bit integer used as the seed.
  */
-void init_gen_rand(uint32_t seed) {
+void SFMT_init_gen_rand(uint32_t seed) {
     int i;
 
     psfmt32[idxof(0)] = seed;
@@ -2149,7 +2149,7 @@ void init_gen_rand(uint32_t seed) {
  * @param init_key the array of 32-bit integers, used as a seed.
  * @param key_length the length of init_key.
  */
-void init_by_array(uint32_t *init_key, int key_length) {
+void SFMT_init_by_array(uint32_t *init_key, int key_length) {
     int i, j, count;
     uint32_t r;
     int lag;

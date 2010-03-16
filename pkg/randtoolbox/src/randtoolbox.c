@@ -154,7 +154,7 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
     
     //init the state of SF Mersenne Twister algo
     if(ismixed)        
-        init_gen_rand(seed);
+        SFMT_init_gen_rand(seed);
     
     
     //u_ij is the Torus sequence term 
@@ -317,7 +317,7 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
     //init SFMT parameters
     init_SFMT(mexp, usepset);
     //init the seed of SFMT
-    init_gen_rand(seed);
+    SFMT_init_gen_rand(seed);
     
     //size of internal array
     int blocksize = get_min_array_size32();
@@ -391,7 +391,7 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
     // compute u_ij
     for(j = 0; j < dim; j++)
         for(i = 0; i < nb; i++) 
-            u[i + j * nb] = genrand_real3(); // real on ]0,1[ interval
+            u[i + j * nb] = SFMT_genrand_real3(); // real on ]0,1[ interval
 
 #if defined(HAVE_SSE2)
     }
