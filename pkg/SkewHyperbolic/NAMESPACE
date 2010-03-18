@@ -1,4 +1,4 @@
-exportPattern("^[[:alpha:]]+")
+exportPattern("skewhyp")
 S3method(print,skewhypFit)
 S3method(plot,skewhypFit)
 S3method(summary,skewhypFit)
