@@ -1,6 +1,6 @@
 \name{skewhypCalcRange}
 \alias{skewhypCalcRange}
-\alias{stepSize}
+\alias{skewhypStepSize}
 \title{
 Range of a Skew Hyperbolic Student t-Distribuiton
 }
@@ -13,7 +13,7 @@ Range of a Skew Hyperbolic Student t-Distribuiton
 \usage{
 skewhypCalcRange(mu = 0, delta = 1, beta = 1, nu = 1,
                  param = c(mu,delta,beta,nu), tol= 10^(-5), ...)
-stepSize(dist, nu, beta, side = c("right","left"))
+skewhypStepSize(dist, nu, beta, side = c("right","left"))
 }
 \arguments{
   \item{mu}{Location parameter \eqn{\mu}{mu}, default is 0.}
@@ -45,18 +45,22 @@ stepSize(dist, nu, beta, side = c("right","left"))
   points are found by using \code{\link{uniroot}} on the distribution
   function.
 
-  The function \code{stepSize} is used for stepping to the right or the
-  left to obtain an enclosing interval so \code{uniroot} can be used to
-  search. When the tail is declining exponentially the step is just a
-  linear function of the current distance from the mode. If the tail is
-  declining only as a power of \eqn{x}, an exponential step is used.
+  The function \code{skewhypStepSize} is used for stepping to the right
+  or the left to obtain an enclosing interval so \code{uniroot} can be
+  used to search. When the tail is declining exponentially the step is
+  just a linear function of the current distance from the mode. If the
+  tail is declining only as a power of \eqn{x}, an exponential step is
+  used.
+
+  \code{skewhypStepSize} is for internal use and is not expected to be
+  called by users. It is documented here for completeness.
 }
 \value{
   
   The function \code{skewhypCalcRange} returns a two component vector
   giving the lower and upper limits of the range.
 
-  \code{stepSize} returns the size of the step.
+  \code{skewhypStepSize} returns the size of the step.
   
 }
 \references{
