@@ -19,9 +19,9 @@ skewhypCalcRange <- function(mu = 0, delta = 1, beta = 1, nu = 1,
 
     ## find xHigh, xLow and Mode
     modeDist <- skewhypMode(param = param)
-    xHigh <- modeDist + stepSize(delta, nu, beta, "right")
+    xHigh <- modeDist + skewhypStepSize(delta, nu, beta, "right")
     while (upperProb(xHigh) > tol){
-        xHigh <- xHigh + stepSize(xHigh - modeDist, nu, beta, "right")
+        xHigh <- xHigh + skewhypStepSize(xHigh - modeDist, nu, beta, "right")
     }
 
     lowerProb <- function(x){
@@ -29,9 +29,9 @@ skewhypCalcRange <- function(mu = 0, delta = 1, beta = 1, nu = 1,
         return(px)
     }
 
-    xLow <- modeDist  - stepSize(delta, nu, beta, "left")
+    xLow <- modeDist  - skewhypStepSize(delta, nu, beta, "left")
     while (lowerProb(xLow) > tol){
-        xLow <- xLow - stepSize(modeDist - xLow, nu, beta, "left")
+        xLow <- xLow - skewhypStepSize(modeDist - xLow, nu, beta, "left")
     }
 
     ##find xLower and xUpper
@@ -48,7 +48,7 @@ skewhypCalcRange <- function(mu = 0, delta = 1, beta = 1, nu = 1,
 }
 
 
-stepSize <- function(dist, nu, beta, side = c("right","left"))
+skewhypStepSize <- function(dist, nu, beta, side = c("right","left"))
 {
     ## Purpose: determine the step size for a skewhyperbolic
     ## ----------------------------------------------------------------------
