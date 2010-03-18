@@ -1,3 +1,10 @@
+2010-03-18    <d.scott@auckland.ac.nz>
+
+	* skewhypCalcRange changed to refer to probability, not density
+	skewhypStepSize introduced to step out properly in long tail
+
+	* NAMESPACE changed to export all with 'skewhyp'
+
 2010-02-12    <d.scott@auckland.ac.nz>
 
 	* Depends changed to DistributionUtils and
