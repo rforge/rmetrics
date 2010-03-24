@@ -15,8 +15,7 @@
 
 
 \usage{
-read.lynx(url, intern=TRUE, 
-    bin="C:/cygwin/bin/lynx.exe -dump -dont_wrap_pre", \dots)
+read.lynx(url, intern = TRUE, bin = NULL, \dots)
 }
 
 
@@ -30,8 +29,8 @@ read.lynx(url, intern=TRUE,
         of the command an R object. 
     }
     \item{bin}{
-        a string with the path of your lynx binary. The default
-        setting expects a cygwin installation under Windows.
+        a string with the path of your lynx binary or NULL if lynx
+        binary is available in the operating system path.
     }
     \item{\dots}{
         optional arguments passed to the internally called
