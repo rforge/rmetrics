@@ -33,8 +33,8 @@ read.lynx(url, intern = TRUE, bin = NULL, \dots)
         binary is available in the operating system path.
     }
     \item{\dots}{
-        optional arguments passed to the internally called
-        function \code{system}.
+        optional arguments passed to lynx binary. For example
+        \code{accept_all_cookies = TRUE} or \code{cookie_file="~/.lynx_cookies"}.
     }
 }
 

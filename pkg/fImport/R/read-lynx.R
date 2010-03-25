@@ -22,24 +22,31 @@
 
 
 read.lynx <- function(url, intern = TRUE, bin = NULL, ...) {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description
     #   Uses the lynx browser to read from a web page
     #   read.lynx("www.rmetrics.org", bin = "C:/cygwin/bin/lynx.exe")
     # FUNCTION
 
+    ldots <- list(...)
+    args <-
+        if (length(ldots))
+            paste(paste("-", names(ldots) , "=", sep = ""), ldots, sep = "", collapse = " ")
+        else
+            ""
+
     # Compose Command:
     cmd <-
         if (is.null(bin))
-            paste("lynx -dump -dont_wrap_pre", shQuote(url))
+            paste("lynx", args, "-dump -dont_wrap_pre", shQuote(url))
         else
-            paste(bin, "-dump -dont_wrap_pre", shQuote(url))
+            paste(bin, args, "-dump -dont_wrap_pre", shQuote(url))
 
-    # Download URL:
-    ans <- system(cmd, intern = intern, ...)
+    ## # Download URL:
+    ans <- system(cmd, intern = intern)
 
-    # Return Value:
+    ## # Return Value:
     ans
 }
 
