@@ -1,3 +1,4 @@
+useDynLib(ghyp)
 import(graphics, stats, methods)
 export(ghyp, VG, NIG, student.t, hyp, gauss)
 export(ghyp.ad, VG.ad, NIG.ad, student.t.ad, hyp.ad)

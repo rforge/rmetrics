@@ -277,4 +277,7 @@ ghyp V1.5.2
 2010-10-11 David Luethi
 ghyp V1.5.3
 	* Vignette: Typo in eq. (5.8) removed in courtesy of Simon Keel.
+	* rgig: GIG random number generation is now done in C with a
+	significant increase in performance. The code was kindly provided
+	by Ester Pantaleo and Robert B. Gramacy.
 	

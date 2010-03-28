@@ -23,8 +23,8 @@ contains the Generalized Inverse Gaussian distribution.
 \tabular{ll}{
 Package: \tab ghyp\cr
 Type: \tab Package\cr
-Version: \tab 1.5.2\cr
-Date: \tab 2009-10-11\cr
+Version: \tab 1.5.3\cr
+Date: \tab 2010-03-29\cr
 License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 }
 
@@ -168,7 +168,7 @@ acknowledged.
 }
 % <---------------------------------------------------------------------->
 \author{
-Wolfgang Breymann, David Luethi \cr
+David Luethi, Wolfgang Breymann \cr
 
 Institute of Data Analyses and Process Design
 (\url{http://www.idp.zhaw.ch}) \cr

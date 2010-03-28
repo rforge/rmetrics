@@ -74,9 +74,9 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
    parameters \code{rel.tol}, \code{abs.tol}, \code{root.tol} and
    \code{spline.points}. \cr
 
-   \code{rgig} uses the code from the GIG-random number generator from
-   the \R package \emph{fBasics}.\cr
-   
+   \code{rgig} relies on the C function with the same name kindly
+   provided by Ester Pantaleo and Robert B. Gramacy. \cr
+
    \code{Egig} with \code{func = "log x"} uses
    \code{\link[numDeriv]{grad}} from the \R package \emph{numDeriv}. See
    the package vignette for details regarding the expectation of GIG
@@ -96,19 +96,16 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
 % <---------------------------------------------------------------------->
 \references{
 
-  The algorithm for simulating generalized inverse gaussian variates is
-  copied from the \R package \emph{fBasics} from Diethelm Wuertz.
-
   Dagpunar, J.S. (1989). \emph{An easily implemented generalised inverse
   Gaussian generator.} Commun. Statist. -Simula., \bold{18}, 703--710.
 
-  Raible S. (2000).
-  \emph{Levy Processes in Finance: Theory, Numerics and Empirical Facts},
-  PhD Thesis, University of Freiburg, Germany, 161 pages.
+  Michael, J. R, Schucany, W. R, Haas, R, W. (1976).  \emph{Generating
+  random variates using transformations with multiple roots}, The
+  American Statistican, \bold{30}, 88--90.
 
 }
 % <---------------------------------------------------------------------->
-\author{David Luethi}
+\author{Ester Pantaleo, David Luethi}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{fit.ghypuv}}, \code{\link{fit.ghypmv}}, \code{\link{integrate}},
          \code{\link{uniroot}}, \code{\link{spline}}}
