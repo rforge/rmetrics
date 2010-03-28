@@ -105,7 +105,7 @@ Egig(lambda, chi, psi, func = c("x", "logx", "1/x", "var"), check.pars = TRUE)
 
 }
 % <---------------------------------------------------------------------->
-\author{Ester Pantaleo, David Luethi}
+\author{David Luethi and Ester Pantaleo}
 % <---------------------------------------------------------------------->
 \seealso{\code{\link{fit.ghypuv}}, \code{\link{fit.ghypmv}}, \code{\link{integrate}},
          \code{\link{uniroot}}, \code{\link{spline}}}
