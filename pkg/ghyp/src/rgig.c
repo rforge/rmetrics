@@ -3,8 +3,7 @@
  *
  * Ester Pantaleo and Robert B. Gramacy, 2010
  *
- * adapted from the C code in the monomvm package for R, and the
- * R code in the ghyp package
+ * adapted from the C code in the monomvm package for R.
  */
 
 
@@ -202,7 +201,7 @@ double lambda;                          /* specific to gig_y_gfn */
  * rgig:
  *
  * a C implementation of the R code for rgig from
- * the ghyp package on CRAN
+ * the ghyp v_1.5.2 package.
  */
 
 void rgig(const int n, const double lambda, const double chi, const double psi,
@@ -235,7 +234,7 @@ void rgig(const int n, const double lambda, const double chi, const double psi,
 
   /*
    * begin general purpose rgig code, which was basically 
-   * translated from the R function rgig in the ghyp package 
+   * translated from the R function rgig in the ghyp package v_1.5.2
    */
 
   double alpha, beta, beta2, m, m1, lm1, lm12, upper, yM, yP, a, b, c, R1, R2, Y;

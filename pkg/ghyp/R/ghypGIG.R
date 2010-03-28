@@ -359,9 +359,8 @@
         return(1 / rgamma(n, shape = - lambda, rate = chi / 2))
     }
 
-    ## IG distribution: An implementation of the algorithm described
-    ## in Michael et al. (1976) copied from the package fBasics.
-
+    ## C-code for GIG random number generation kindly provided by
+    ## Ester Pantaleo and Robert B. Gramacy, 2010
     rnd.sample <- .C("rgig_R",
                      n = as.integer(n),
                      lambda = as.double(lambda),
