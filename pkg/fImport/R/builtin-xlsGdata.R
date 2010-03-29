@@ -6,12 +6,12 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 
@@ -33,13 +33,13 @@
 # License: GPL-2
 
 
-.dQuote.ascii <- 
-function(x) 
+.dQuote.ascii <-
+function(x)
 {
     # Borrowed from contributed Package 'gdata'
-    
+
     # FUNCTION:
-    
+
     # Creating a temporary function to quote the string
     paste('"', x,'"', sep = '')
 }
@@ -48,15 +48,15 @@ function(x)
 #-------------------------------------------------------------------------------
 
 
-.xls2csv <- 
+.xls2csv <-
 function(xls, sheet = 1, verbose = FALSE, ..., perl = "perl")
 {
     # Borrowed from contributed Package 'gdata'
-    
+
     # FUNCTION:
-    
+
     # Directories:
-    package.dir <- .path.package('fBasics')
+    package.dir <- .path.package('fImport')
     perl.dir <- file.path(package.dir,'perl')
 
     # Files:
@@ -94,8 +94,8 @@ function(xls, sheet = 1, verbose = FALSE, ..., perl = "perl")
         cat("... \n\n")
       }
       else
-        cat("Converting xls file to csv file... ")         
-    
+        cat("Converting xls file to csv file... ")
+
     # Do the translation
     if(verbose)  cat("Executing ", cmd, "... \n\n")
     results <- system(cmd, intern=!verbose)
@@ -106,7 +106,7 @@ function(xls, sheet = 1, verbose = FALSE, ..., perl = "perl")
         stop("Unable to read translated csv file '", csv, "'." )
     cat("Done.\n")
 
-    
+
     # Prepare for cleanup now, in case of error reading file
     file(csv)
 }
@@ -115,16 +115,16 @@ function(xls, sheet = 1, verbose = FALSE, ..., perl = "perl")
 # ------------------------------------------------------------------------------
 
 
-.read.xls <- 
-function(xls, sheet = 1, verbose = FALSE, pattern, ..., perl = "perl") 
+.read.xls <-
+function(xls, sheet = 1, verbose = FALSE, pattern, ..., perl = "perl")
 {
     # Borrowed from contributed Package 'gdata'
-    
+
     # FUNCTION:
-    
+
     # Connection:
     con <- tfn <- NULL
-    on.exit({ 
+    on.exit({
         if (inherits(con, "connection") && isOpen(con)) close(con)
         if (file.exists(tfn)) file.remove(tfn)})
 
@@ -142,7 +142,7 @@ function(xls, sheet = 1, verbose = FALSE, pattern, ..., perl = "perl")
         if(verbose)
             cat("Reading csv file ", .dQuote.ascii(tfn), "...\n")
         else
-            cat("Reading csv file... ")            
+            cat("Reading csv file... ")
         retval <- read.csv(con, ...)
         cat("Done.\n")
     } else {
@@ -153,17 +153,17 @@ function(xls, sheet = 1, verbose = FALSE, pattern, ..., perl = "perl")
             return(NULL)
         }
         cat("Done.\n")
-     
+
         seek(con, 0)
 
         if(verbose)
             cat("Reading csv file ", .dQuote.ascii(tfn), "...\n")
         else
-            cat("Reading csv file... ")       
+            cat("Reading csv file... ")
         retval <- read.csv(con, skip = idx[1]-1, ...)
-        cat("Done.\n")     
+        cat("Done.\n")
     }
-    
+
     # Return Value:
     retval
 }
