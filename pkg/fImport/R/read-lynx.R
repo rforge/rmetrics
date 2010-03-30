@@ -21,7 +21,7 @@
 ################################################################################
 
 
-read.lynx <- function(url, intern = TRUE, bin = NULL, ...) {
+read.lynx <- function(url, intern = TRUE, bin = NULL, pipe = FALSE, ...) {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description
@@ -44,7 +44,11 @@ read.lynx <- function(url, intern = TRUE, bin = NULL, ...) {
             paste(bin, args, "-dump -dont_wrap_pre", shQuote(url))
 
     ## # Download URL:
-    ans <- system(cmd, intern = intern)
+    ans <-
+        if (pipe)
+            pipe(cmd)
+        else
+            system(cmd, intern = intern)
 
     ## # Return Value:
     ans

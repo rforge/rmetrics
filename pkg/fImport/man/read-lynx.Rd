@@ -15,7 +15,7 @@
 
 
 \usage{
-read.lynx(url, intern = TRUE, bin = NULL, \dots)
+read.lynx(url, intern = TRUE, bin = NULL, pipe = FALSE, \dots)
 }
 
 
@@ -31,10 +31,16 @@ read.lynx(url, intern = TRUE, bin = NULL, \dots)
     \item{bin}{
         a string with the path of your lynx binary or NULL if lynx
         binary is available in the operating system path.
-    }
+      }
+      \item{pipe}{
+	a logical which indicates whether the result should be returned
+        as a \code{pipe()} commmand.
+	}
     \item{\dots}{
         optional arguments passed to lynx binary. For example
-        \code{accept_all_cookies = TRUE} or \code{cookie_file="~/.lynx_cookies"}.
+        \code{accept_all_cookies = TRUE} or
+        \code{cookie_file="~/.lynx_cookies"}. For a list of options, see
+        the lynx manual page.
     }
 }
 
