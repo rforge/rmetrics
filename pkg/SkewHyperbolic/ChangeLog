@@ -1,3 +1,17 @@
+2010-03-31    <d.scott@auckland.ac.nz>
+
+	* Version updated to 0.3-0
+
+	* skewhypParam introduced to enable unit testing. Unit tests
+	developed for pskewhyp, qskewhyp and skewhypCalcRange
+
+	* pskewhyp, qskewhyp totally altered to try and improve numeric
+	performance. Extra arguments added to allow specification of
+	tolerances in calls to integrate and uniroot. Integration to be
+	carried out from infinity closer to value than mode and
+	complementation used. lower.tail argument honoured.
+
+
 2010-03-18    <d.scott@auckland.ac.nz>
 
 	* skewhypCalcRange changed to refer to probability, not density

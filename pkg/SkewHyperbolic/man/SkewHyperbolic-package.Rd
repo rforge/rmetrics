@@ -40,9 +40,11 @@ of \code{skwewhypFit}.
   Moments of the Generalized Hyperbolic Distribution. Preprint.
 }
 \keyword{ package }
-\seealso{ \code{\link{dskewhyp}},
-  \code{\link{skewhypMean}},\code{\link{skewhypMom}}, 
+\seealso{
+  \code{\link{dskewhyp}},
+  \code{\link{skewhypMean}},\code{\link{skewhypMom}},
   \code{\link{skewhypFit}}, \code{\link{skewhypFitStart}},
-  \code{\link{skewhypBreaks}}, \code{\link{qqskewhyp}},
-  \code{\link[HyperbolicDist]{HyperbolicDistribution}}.
+  \code{\link{qqskewhyp}},
+  \code{\link[GeneralizedHyperbolic]{GeneralizedHyperbolicDistribution}}.
+
 }

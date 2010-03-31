@@ -4,16 +4,17 @@
 \title{
 Range of a Skew Hyperbolic Student t-Distribuiton
 }
-\description{
+\description{  
   Given the parameter vector \code{param}, or parameter values of a skew
   hyperbolic Student \emph{t}-distribution, this function determines the
-  range outside of which the density function is negligible, to a
-  specified tolerance. 
+  range outside of which the density function or distribution function
+  are negligible, to a specified tolerance.  
 }
 \usage{
 skewhypCalcRange(mu = 0, delta = 1, beta = 1, nu = 1,
-                 param = c(mu,delta,beta,nu), tol= 10^(-5), ...)
-skewhypStepSize(dist, nu, beta, side = c("right","left"))
+                 param = c(mu,delta,beta,nu), density = TRUE,
+                 tol= 10^(-5), ...)
+skewhypStepSize(dist, delta, beta, nu, side = c("right","left"))
 }
 \arguments{
   \item{mu}{Location parameter \eqn{\mu}{mu}, default is 0.}
@@ -22,6 +23,8 @@ skewhypStepSize(dist, nu, beta, side = c("right","left"))
   \item{nu}{Shape parameter \eqn{\nu}{nu}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,delta,beta,nu)}.}
+  \item{density}{Logical. If \code{TRUE} bounds refer to the density
+    function, otherwise bounds refer to the distribution function.} 
   \item{tol}{Density function value at the endpoints of the range
     returned by the function.}
   \item{dist}{Numeric. Current distance value.}
@@ -38,12 +41,9 @@ skewhypStepSize(dist, nu, beta, side = c("right","left"))
   they are valid.
 
   The function \code{skewhypCalcRange} returns the range outside of
-  which the distribution is less than the given tolerance. Useful for
-  plotting, and is called by \code{\link{skewhypBreaks}} when
-  determining suitable breakpoints to be used when integrating the
-  density function numerically to find the distribution function. The
-  points are found by using \code{\link{uniroot}} on the distribution
-  function.
+  which the density function or distribution function are less than the
+  given tolerance.  The points are found by using \code{\link{uniroot}}
+  on the density or distribution function.
 
   The function \code{skewhypStepSize} is used for stepping to the right
   or the left to obtain an enclosing interval so \code{uniroot} can be

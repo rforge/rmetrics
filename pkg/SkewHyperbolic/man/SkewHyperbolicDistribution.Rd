@@ -4,7 +4,6 @@
 \alias{qskewhyp}
 \alias{rskewhyp}
 \alias{ddskewhyp}
-\alias{skewhypBreaks}
 
 \title{
   Skewed Hyperbolic Student t-Distribution
@@ -13,29 +12,28 @@
   Density function, distribution function, quantiles and random number
   generation for the skew hyperbolic Student \emph{t}-distribution, with
   parameters \eqn{\beta}{beta} (skewness), \eqn{\delta}{delta}
-  (scale), \eqn{\mu}{mu} (location) and \eqn{\nu}{nu} (shape). Also
-  functions for the derivative of the distribution, and to calculate
-  suitable break points.
+  (scale), \eqn{\mu}{mu} (location) and \eqn{\nu}{nu} (shape). Also a
+  function for the derivative of the density function.
 }
 \usage{
 dskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1,
          param = c(mu,delta,beta,nu), log = FALSE,
          tolerance = .Machine$double.eps^0.5)
 pskewhyp(q, mu = 0, delta = 1, beta = 1, nu = 1,
-         param = c(mu,delta,beta,nu), log = FALSE, lower.tail = TRUE,
-         small = 10^(-6), tiny = 10^(-10), subdivisions = 100,
-         accuracy = FALSE, ...)
+         param = c(mu, delta, beta, nu), log.p = FALSE,
+         lower.tail = TRUE, subdivisions = 100,
+         intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
 qskewhyp(p, mu = 0, delta = 1, beta = 1, nu = 1,
-         param = c(mu,delta,beta,nu), small = 10^(-6), tiny = 10^(-10),
-         deriv = 0.3, nInterpol = 100, subdivisions = 100, ...)
+         param = c(mu,delta, beta, nu),
+         lower.tail = TRUE, log.p = FALSE,
+         method = c("spline","integrate"),
+         nInterpol = 501, uniTol = .Machine$double.eps^0.25,
+         subdivisions = 100, intTol = uniTol, ...)
 rskewhyp(n, mu = 0, delta = 1, beta = 1, nu = 1,
          param = c(mu,delta,beta,nu), log = FALSE)
 ddskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1,
           param = c(mu,delta,beta,nu),log = FALSE,
-          tolerance = .Machine$double.eps ^ 0.5)
-skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
-              param = c(mu,delta,beta,nu), small = 10^(-6),
-              tiny = 10^(-10), deriv = 0.3, ...)
+          tolerance = .Machine$double.eps^0.5)
 }
 \arguments{
   \item{x,q}{Vector of quantiles.}
@@ -47,30 +45,32 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
   \item{nu}{Shape parameter \eqn{\nu}{nu}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,delta,beta,nu)}.}
-  \item{log}{Logical; if \code{log = TRUE}, probabilities are given as
+  \item{log,log.p}{Logical; if \code{log = TRUE}, probabilities are given as
     log(p).}
-  \item{lower.tail}{Logical; if \code{lower.tail = TRUE}, the cumulative
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+  spline approximation to the distribution function. If
+  \code{"integrate"}, the distribution function used is always obtained
+  by integration.}
+  \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
     density is taken from the lower tail.}
   \item{tolerance}{Specified level of tolerance when checking if
-    parameter beta is equal to 0.}
-  \item{small}{Size of a 'small' difference between the distribution
-    function and 0 or 1.}
-  \item{tiny}{Size of a 'tiny' difference between the distribution
-    function and 0 or 1.}
+    parameter \code{beta} is equal to 0.}
   \item{subdivisions}{The maximum number of subdivisions used to
     integrate the density and determine the accuracy of the distribution
     function calculation.}
-  \item{accuracy}{Logical; if \code{accuracy = TRUE}, uses accuracy
-    calculated by \code{\link{integrate}} to try and determine the
-    accuracy of the distribution function calculation.}
-  \item{deriv}{Value between 0 and 1 which determines the point at which
-    the value of the derivative becomes substantial compared to its
-    maximal value, see \bold{Details}.}
+  \item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in
+    calls to \code{integrate}. See \code{\link{integrate}}.}
+  \item{valueOnly}{Logical. If \code{valueOnly = TRUE} calls to
+    \code{pskewhyp} only return the value obtained for the
+    integral. If \code{valueOnly = FALSE} an estimate of the
+    accuracy of the numerical integration is also returned.}
   \item{nInterpol}{Number of points used in \code{qskewhyp} for cubic
     spline interpolation of the distribution function.}
+  \item{uniTol}{Value of \code{tol} in
+    calls to \code{uniroot}. See \code{\link{uniroot}}.}
   \item{\dots}{Passes additional arguments to \code{\link{integrate}} in
     \code{pskewhyp} and \code{qskewhyp}, and to \code{\link{uniroot}} in
-    \code{skewhypBreaks}.}
+    \code{qskewhyp}.}
 
 }
 \details{
@@ -104,36 +104,50 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
   modified Bessel function of the third kind with order \eqn{\nu}{nu},
   and \eqn{\Gamma(.)}{gamma(.)} is the gamma function.
 
-  \code{pskewhyp} breaks the real line in to 8 regions in order to
-  determine the integral of \code{dhyperb}. The breakpoints determining
-  the regions are calculated by \code{\link{skewhypBreaks}}, based on the
-  values of \code{small}, \code{tiny}, and \code{deriv}.
+  \code{pskewhyp} uses the function \code{\link{integrate}} to
+  numerically integrate the density function. The integration is from
+  \code{-Inf} to \code{x} if \code{x} is to the left of the mode, and
+  from \code{x} to \code{Inf} if \code{x} is to the right of the
+  mode. The probability calculated this way is subtracted from 1 if
+  required. Integration in this manner appears to make calculation of
+  the quantile function more stable in extreme cases.
 
-  The outer breakpoints, \code{xTiny}, \code{xHuge}, \code{xSmall} and
-  \code{xLarge} and are calculated by calls to
-  \code{\link{skewhypCalcRange}}, using the value \code{tiny} for the
-  first two most extreme values, and \code{small} for the next two.
-  The inner area is divided into two regions above and two below the
-  mode. The breakpoint that divides these is calculated to be the point
-  where the derivative of the density function is \code{deriv} times the
-  value of the maximum derivative on that side of the mode. In the
-  extreme tails of the distribution where the density is less than \code{tiny}
-  the density is taken to be zero. In the remaining regions the
-  integral of the density is calculated using the numerical routine
-  \code{\link[DistributionUtils]{safeIntegrate}} (a wrapper for
-  \code{\link{integrate}}).
+  Calculation of quantiles using \code{qhyperb} permits the use of two
+  different methods. Both methods use \code{uniroot} to find the value
+  of \eqn{x} for which a given \eqn{q} is equal \eqn{F(x)} where \eqn{F}
+  denotes the cumulative distribution function. The difference is in how
+  the numerical approximation to \eqn{F} is obtained. The obvious
+  and more accurate method is to calculate the value of \eqn{F(x)}
+  whenever it is required using a call to \code{phyperb}. This is what
+  is done if the method is specified as \code{"integrate"}. It is clear
+  that the time required for this approach is roughly linear in the
+  number of quantiles being calculated. A Q-Q plot of a large data set
+  will clearly take some time. The alternative (and default) method is
+  that for the major part of the distribution a spline approximation to
+  \eqn{F(x)} is calculated and quantiles found using \code{uniroot} with
+  this approximation. For extreme values (for which the tail probability
+  is less than \eqn{10^{-7}}{10^(-7)}), the integration method is still
+  used even when the method specifed is \code{"spline"}.
 
-  \code{qhyperb} uses the same breakup of the real line as
-  \code{pskewhyp}. For quantiles that fall in the two extreme regions
-  the quantile is returned as \code{Inf} or \code{-Inf} as
-  appropriate. In the remaining regions \code{splinefun} is used to fit
-  values of the distribution function calculated by \code{pskewhyp}. The
-  quantiles are then found by the \code{uniroot} function.
+  If accurate probabilities or quantiles are required, tolerances
+  (\code{intTol} and \code{uniTol}) should be set to small values, say
+  \eqn{10^{-10}}{10^(-10)} or \eqn{10^{-12}}{10^(-12)} with \code{method
+  = "integrate"}. Generally then accuracy might be expected to be at
+  least \eqn{10^{-9}}{10^(-9)}. If the default values of the functions
+  are used, accuracy can only be expected to be around
+  \eqn{10^{-4}}{10^(-4)}. Note that on 32-bit systems
+  \code{.Machine$double.eps^0.25 = 0.0001220703} is a typical value.
 
   Note that when small values of \eqn{\nu}{nu} are used, and the density
   is skewed, there are often some extreme values generated by
   \code{rskewhyp}. These look like outliers, but are caused by the
   heaviness of the skewed tail, see \bold{Examples}.
+
+  The extreme skewness of the distribution when \eqn{\beta}{beta} is
+  large in absolute value and \eqn{\nu}{nu} is small make this
+  distribution very challenging numerically.
+
+
 
 }
 \value{
@@ -142,29 +156,11 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
   \code{rskewhyp} generates random variates.
 
   An estimate of the accuracy of the approximation to the distribution
-  function can be found by setting \code{accuracy = TRUE} in the call to
+  function can be found by setting \code{valueOnly = FALSE} in the call to
   \code{pskewyhp} which returns a list with components \code{value} and
   \code{error}.
 
   \code{ddskewhyp} gives the derivative of \code{\link{dskewhyp}}.
-
-  \code{skewhypBreaks} returns a list with components:
-  \item{xTiny}{Value such that the probabilities to the left are less
-    than \code{tiny}.}
-  \item{xSmall}{Value such that probabilities to the left are less
-    than \code{small}.}
-  \item{lowBreak}{Point to the left of the mode such that the
-    derivative of the density at that point is \code{deriv} times its
-    maximum value on that side of the mode.}
-  \item{highBreak}{Point to the right of the mode such that the derivative
-    of the density at that point is \code{deriv} times the value of the
-    maximum value on that side of the mode.}
-  \item{xLarge}{Value such that the probabities to the right are less than
-    \code{xSmall}.}
-  \item{xHuge}{Value such that probability to the right is less than
-    \code{tiny}.}
-  \item{modeDist}{The mode of the given skewed hyperbolic distribution,
-    calculated by \code{\link{skewhypMode}}.}
 }
 \references{
   Aas, K. and Haff, I. H. (2006).
@@ -177,24 +173,24 @@ skewhypBreaks(mu = 0, delta = 1, beta = 1, nu = 1,
 \seealso{ 
   \code{\link[DistributionUtils]{safeIntegrate}},
   \code{\link{integrate}} for its shortfalls,
-  \code{\link{skewhypBreaks}}, \code{\link{skewhypCheckPars}},
+  \code{\link{skewhypCheckPars}},
   \code{\link[DistributionUtils]{logHist}}. Also
   \code{\link{skewhypMean}} for information on moments and mode, and
   \code{\link{skewhypFit}} for fitting to data.
-}
-\examples{
+
+} \examples{
 param <- c(0,1,40,10)
 par(mfrow = c(1,2))
 range <- skewhypCalcRange(param = param, tol = 10^(-2))
 
-##curves of density and distribution
+### curves of density and distribution
 curve(dskewhyp(x, param = param), range[1], range[2], n = 1000)
 title("Density of the \n Skew Hyperbolic Distribution")
-curve(pskewhyp(x, param = param, small = 10^(-2), tiny = 10^(-4)),
+curve(pskewhyp(x, param = param),
       range[1], range[2], n = 500)
 title("Distribution Function of the \n Skew Hyperbolic Distribution")
 
-##curves of density and log density
+### curves of density and log density
 par(mfrow = c(1,2))
 data <- rskewhyp(1000, param = param)
 curve(dskewhyp(x, param = param), range(data)[1], range(data)[2],
@@ -214,15 +210,7 @@ title("Density of the Skew\n Hyperbolic Distribution")
 curve(ddskewhyp(x, param = param), range[1], range[2], n = 1000)
 title("Derivative of the Density\n of the Skew Hyperbolic Distribution")
 
-##plot of the density marking the break points
-par(mfrow = c(1,1))
-range <- skewhypCalcRange(param = param, tol = 10^(-6))
-curve(dskewhyp(x, param = param), range[1], range[2], n = 1000)
-title("Density of the Skew Hyperbolic Distribution\n with Breakpoints")
-breaks <- skewhypBreaks(param = param, small = 10^(-2), tiny = 10^(-4))
-abline(v = breaks, col = 2)
-
-##example of density and random numbers when nu is small
+##example of density and random numbers for beta large and nu small
 par(mfrow = c(1,2))
 param1 <- c(0,1,10,1)
 data1 <- rskewhyp(1000, param = param1)
