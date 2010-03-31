@@ -14,7 +14,7 @@ skewhypTailPlotLine(x, mu = 0, delta = 1, beta = 1, nu = 1,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A vector of values for which the tail plot has been drawn.}  
+  \item{x}{A vector of values for which the tail plot has been drawn.}
   \item{side}{Character. \code{"right"} (the default) if the tail plot
     is of the right-hand tail, \code{"left"} if the tail plot is of the
     left-hand tail.}
@@ -52,13 +52,13 @@ skewhypTailPlotLine(x, mu = 0, delta = 1, beta = 1, nu = 1,
 \author{
   David Scott \email{d.scott@auckland.ac.nz}
 }
-\seealso{  
+\seealso{
   \code{\link[DistributionUtils]{tailPlot}} and
   \code{\link{skewhypFit}}.
 }
 \examples{
 ### Draw tail plot of some data
-param <- c(0,1,2,10)
+param <- c(0,1,1,10)
 x <- rskewhyp(200, param = param)
 tailPlot(x)
 ### Add skew hyperbolic t-distribution line

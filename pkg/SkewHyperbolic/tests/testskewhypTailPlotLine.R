@@ -1,6 +1,5 @@
-require(DistributionUtils)
 require(SkewHyperbolic)
-source("../R/skewhypTailPlotLine.R")
+## source("../R/skewhypTailPlotLine.R")
 ### Draw tail plot of some data
 param <- c(0,1,2,10)
 x <- rskewhyp(200, param = param)
