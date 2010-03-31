@@ -177,8 +177,8 @@ ddskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1,
   \code{\link[DistributionUtils]{logHist}}. Also
   \code{\link{skewhypMean}} for information on moments and mode, and
   \code{\link{skewhypFit}} for fitting to data.
-
-} \examples{
+}
+\examples{
 param <- c(0,1,40,10)
 par(mfrow = c(1,2))
 range <- skewhypCalcRange(param = param, tol = 10^(-2))
