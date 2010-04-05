@@ -48,7 +48,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{fit2factor}},
+  \code{\link{fit.schwartz2f}},
   \code{\link{rfutures}},
   \code{\link{futuresplot}}
 

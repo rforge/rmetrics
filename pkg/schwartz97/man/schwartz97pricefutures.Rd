@@ -3,10 +3,9 @@
 \title{Schwartz two-factor Model: Futures Prices}
 
 \alias{pricefutures}
-\alias{pricefutures,ANY,missing-method}
-\alias{pricefutures,ANY,schwartz2factor-method}
-\alias{pricefutures,ANY,fit.schwartz2factor-method}
-
+\alias{pricefutures,ANY,numeric-method}
+\alias{pricefutures,ANY,schwartz2f-method}
+\alias{pricefutures,ANY,schwartz2f.fit-method}
 
 % <---------------------------------------------------------------------->
 \description{
@@ -17,14 +16,14 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{pricefutures}{ANY,missing}(ttm = 1, s0 = 50, delta0 = 0, sigmaS = 0.3,
+\S4method{pricefutures}{ANY,numeric}(ttm = 1, s0 = 50, delta0 = 0, sigmaS = 0.3,
              kappa = 1, alpha = 0, sigmaE = 0.5, rho = 0.75,
              r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{pricefutures}{ANY,schwartz2factor}(ttm = 1, object, r = 0.05,
+\S4method{pricefutures}{ANY,schwartz2f}(ttm = 1, s0, r = 0.05,
              lambda = 0, alphaT = NULL)
 
-\S4method{pricefutures}{ANY,fit.schwartz2factor}(ttm = 1, object)
+\S4method{pricefutures}{ANY,schwartz2f.fit}(ttm = 1, s0)
 
 }
 
@@ -32,10 +31,9 @@
 \arguments{
 
   \item{ttm}{Time to maturity.}
-  \item{object}{An object inheriting from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
-  \item{s0}{A \code{numeric} representing the initial value of the
-    commodity spot price.}
+  \item{s0}{Either a \code{numeric} representing the initial value of the
+    commodity spot price or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
   \item{alpha}{Mean-level of the convenience-yield process.}
@@ -60,7 +58,7 @@
   explicitly by \code{lambda} or implicitly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
-  \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
+  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
 
 }
 

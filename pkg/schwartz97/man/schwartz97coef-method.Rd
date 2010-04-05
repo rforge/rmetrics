@@ -1,38 +1,38 @@
 \name{coef-method}
-\alias{coef.schwartz2factor}
-\alias{coef.fit.schwartz2factor}
-\alias{coef,schwartz2factor-method}
-\alias{coef,fit.schwartz2factor-method}
-\alias{coefficients,schwartz2factor-method}
-\alias{coefficients,fit.schwartz2factor-method}
-\title{Extract parameters of schwartz2factor objects}
+\alias{coef.schwartz2f}
+\alias{coef.schwartz2f.fit}
+\alias{coef,schwartz2f-method}
+\alias{coef,schwartz2f.fit-method}
+\alias{coefficients,schwartz2f-method}
+\alias{coefficients,schwartz2f.fit-method}
+\title{Extract parameters of schwartz2f objects}
 \description{
 
-  The function \code{coef} returns parameters of \code{schwartz2factor}
-  and a \code{fit.schwartz2factor} objects as a list. The function
+  The function \code{coef} returns parameters of \code{schwartz2f}
+  and a \code{schwartz2f.fit} objects as a list. The function
   \code{coefficients} is a synonym for \code{coef}.
 
 }
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{coef}{schwartz2factor}(object)
-\S4method{coefficients}{schwartz2factor}(object)
+\S4method{coef}{schwartz2f}(object)
+\S4method{coefficients}{schwartz2f}(object)
 
-\S4method{coef}{fit.schwartz2factor}(object)
-\S4method{coefficients}{fit.schwartz2factor}(object)
+\S4method{coef}{schwartz2f.fit}(object)
+\S4method{coefficients}{schwartz2f.fit}(object)
 
 }
 % <---------------------------------------------------------------------->
 \arguments{
 
   \item{object}{An object from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}} or
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}.}
+    \code{\link[=schwartz2f-class]{schwartz2f}} or
+    \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}.}
 
 }
 % <---------------------------------------------------------------------->
 \value{
-  If \code{object} is of class \code{\link[=schwartz2factor-class]{schwartz2factor}}:
+  If \code{object} is of class \code{\link[=schwartz2f-class]{schwartz2f}}:
   \tabular{rl}{
   \code{s0} \tab Commodity spot price.\cr
   \code{delta0} \tab Convenience yield. \cr
@@ -45,7 +45,7 @@
     driving the spot price and the convenience yield process.\cr
   }
 
-  If \code{object} is of class \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}:
+  If \code{object} is of class \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}:
   \tabular{rl}{
   \code{s0} \tab Commodity spot price.\cr
   \code{delta0} \tab Convenience yield. \cr
@@ -70,7 +70,7 @@
   explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
-  \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
+  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
 
 }
 % <---------------------------------------------------------------------->
@@ -78,13 +78,13 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link[=schwartz2factor-class]{schwartz2factor}} classes.
+  \code{\link[=schwartz2f-class]{schwartz2f}} classes.
 
 }
 % <---------------------------------------------------------------------->
 \examples{
 
-  coef(schwartz2factor())
+  coef(schwartz2f())
 
 }
 % <---------------------------------------------------------------------->

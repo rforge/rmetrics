@@ -2,10 +2,10 @@
 \docType{methods}
 \title{Schwartz two-factor Model: Filter futures data}
 
-\alias{filter2factor}
-\alias{filter2factor,ANY,ANY,missing-method}
-\alias{filter2factor,ANY,ANY,schwartz2factor-method}
-\alias{filter2factor,ANY,ANY,fit.schwartz2factor-method}
+\alias{filter.schwartz2f}
+\alias{filter.schwartz2f,ANY,ANY,numeric-method}
+\alias{filter.schwartz2f,ANY,ANY,schwartz2f-method}
+\alias{filter.schwartz2f,ANY,ANY,schwartz2f.fit-method}
 
 % <---------------------------------------------------------------------->
 \description{
@@ -17,18 +17,18 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{filter2factor}{ANY,ANY,missing}(data, ttm, s0 = 50, delta0 = 0,
+\S4method{filter.schwartz2f}{ANY,ANY,numeric}(data, ttm, s0 = 50, delta0 = 0,
               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
               rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL,
               deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
               P0 = 0.5 * diag(c(log(s0), abs(delta0))))
 
-\S4method{filter2factor}{ANY,ANY,schwartz2factor}(data, ttm, object,
+\S4method{filter.schwartz2f}{ANY,ANY,schwartz2f}(data, ttm, s0,
               r = 0.05, lambda = 0, alphaT = NULL, deltat = 1/260,
               meas.sd = rep(1e-3, ncol(data)),
               P0 = 0.1 * diag(2))
 
-\S4method{filter2factor}{ANY,ANY,fit.schwartz2factor}(data, ttm, object)
+\S4method{filter.schwartz2f}{ANY,ANY,schwartz2f.fit}(data, ttm, s0)
 
 }
 
@@ -36,10 +36,9 @@
 \arguments{
   \item{data}{A matrix with futures prices.}
   \item{ttm}{A matrix with the corresponding time to maturity (see \bold{Details}).}
-  \item{object}{An object inheriting from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
-  \item{s0}{A \code{numeric} representing the initial value of the
-    commodity spot price.}
+  \item{s0}{Either a \code{numeric} representing the initial value of the
+    commodity spot price or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{sigmaS}{Diffusion parameter of the spot price process.}
@@ -69,7 +68,7 @@
   explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
-  \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}. \cr
+  \code{\link[=schwartz2f-class]{schwartz2f-classes}}. \cr
 
 
   The time increment observation \code{data[i,j]} and \code{data[i +
@@ -97,7 +96,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{fit2factor}}, \code{\link{pricefutures}}.
+  \code{\link{fit.schwartz2f}}, \code{\link{pricefutures}}.
 
 }
 % <---------------------------------------------------------------------->

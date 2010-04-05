@@ -1,5 +1,5 @@
 ### <======================================================================>
-show.schwartz2factor <- function(object)
+show.schwartz2f <- function(object)
 {
     cat("\n----------------------------------------------------------------\n")
     cat("Schwartz97 two-factor model:\n\n")
@@ -17,12 +17,12 @@ show.schwartz2factor <- function(object)
     cat("----------------------------------------------------------------\n")
 }
 ### <---------------------------------------------------------------------->
-setMethod("show", signature(object = "schwartz2factor"), show.schwartz2factor)
+setMethod("show", signature(object = "schwartz2f"), show.schwartz2f)
 ### <---------------------------------------------------------------------->
 
 
 ### <======================================================================>
-show.fit.schwartz2factor <- function(object)
+show.schwartz2f.fit <- function(object)
 {
     cat("\n----------------------------------------------------------------\n")
     cat("Fitted Schwartz97 two-factor model:\n\n")
@@ -48,13 +48,13 @@ show.fit.schwartz2factor <- function(object)
     cat("\n----------------------------------------------------------------\n")
 }
 ### <---------------------------------------------------------------------->
-setMethod("show", signature(object = "fit.schwartz2factor"),
-          show.fit.schwartz2factor)
+setMethod("show", signature(object = "schwartz2f.fit"),
+          show.schwartz2f.fit)
 ### <---------------------------------------------------------------------->
 
 
 ### <======================================================================>
-coef.schwartz2factor <- function(object)
+coef.schwartz2f <- function(object)
 {
     return(list(s0 = object@s0,
                 delta0 = object@delta0,
@@ -66,15 +66,15 @@ coef.schwartz2factor <- function(object)
                 rho = object@rhoSE))
 }
 ### <---------------------------------------------------------------------->
-setMethod("coef", signature(object = "schwartz2factor"),
-          coef.schwartz2factor)
+setMethod("coef", signature(object = "schwartz2f"),
+          coef.schwartz2f)
 ### <---------------------------------------------------------------------->
-setMethod("coefficients", signature(object = "schwartz2factor"),
-          coef.schwartz2factor)
+setMethod("coefficients", signature(object = "schwartz2f"),
+          coef.schwartz2f)
 ### <---------------------------------------------------------------------->
 
 ### <======================================================================>
-coef.fit.schwartz2factor <- function(object)
+coef.schwartz2f.fit <- function(object)
 {
     return(list(s0 = object@s0,
                 delta0 = object@delta0,
@@ -89,9 +89,9 @@ coef.fit.schwartz2factor <- function(object)
                 alphaT = object@alphaT))
 }
 ### <---------------------------------------------------------------------->
-setMethod("coef", signature(object = "fit.schwartz2factor"),
-          coef.fit.schwartz2factor)
+setMethod("coef", signature(object = "schwartz2f.fit"),
+          coef.schwartz2f.fit)
 ### <---------------------------------------------------------------------->
-setMethod("coefficients", signature(object = "fit.schwartz2factor"),
-          coef.fit.schwartz2factor)
+setMethod("coefficients", signature(object = "schwartz2f.fit"),
+          coef.schwartz2f.fit)
 ### <---------------------------------------------------------------------->

@@ -1,6 +1,6 @@
 ### < ====================================================================== >
 setGeneric("pstate",
-           function(lower, upper, time = 1, object, ...)
+           function(lower, upper, time = 1, s0, ...)
            standardGeneric("pstate"))
 
 
@@ -9,50 +9,50 @@ pstate.default <- function(lower, upper, time = 1, s0 = 50, delta0 = 0,
                            mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
                            sigmaE = 0.5, rho = 0.75, ...)
 {
-    lower[1] <- log(lower[1])
-    upper[1] <- log(upper[1])
+  lower[1] <- log(lower[1])
+  upper[1] <- log(upper[1])
 
-    mean <- .mu.state.schwartz2factor(log(s0), delta0, mu, sigmaS, kappa,
-                                      alpha, sigmaE, rho,
-                                      time)
+  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
+                               alpha, sigmaE, rho,
+                               time)
 
-    sigma <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
 
-    return(pmvnorm(lower = lower, upper = upper, mean = mean,
-                   sigma = sigma, ...))
+  return(pmvnorm(lower = lower, upper = upper, mean = mean,
+                 sigma = sigma, ...))
 }
 
 setMethod("pstate", signature(lower = "ANY", upper = "ANY", time = "ANY",
-                              object = "missing"),
+                              s0 = "numeric"),
           pstate.default)
 
 ### < ---------------------------------------------------------------------- >
-pstate.schwartz2factor <- function(lower, upper, time = 1, object, ...)
+pstate.schwartz2f <- function(lower, upper, time = 1, s0, ...)
 {
-    tmp.coef <- coef(object)
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  tmp.coef <- coef(s0)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(pstate.default(lower, upper, time = time, s0 = tmp.coef$s0,
-                          delta0 = delta0, mu = mu, sigmaS = sigmaS,
-                          kappa = kappa, alpha = alpha, sigmaE = sigmaE,
-                          rho = rho, ...))
+  return(pstate.default(lower, upper, time = time, s0 = tmp.coef$s0,
+                        delta0 = delta0, mu = mu, sigmaS = sigmaS,
+                        kappa = kappa, alpha = alpha, sigmaE = sigmaE,
+                        rho = rho, ...))
 }
 
 setMethod("pstate", signature(lower = "ANY", upper = "ANY", time = "ANY",
-                              object = "schwartz2factor"),
-          pstate.schwartz2factor)
+                              s0 = "schwartz2f"),
+          pstate.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
 
 ### < ====================================================================== >
 setGeneric("dstate",
-           function(x, time = 1, object, ...)
+           function(x, time = 1, s0, ...)
            standardGeneric("dstate"))
 
 dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
@@ -67,18 +67,10 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
   x[,1] <- log(x[,1])
 
-  mean <- .mu.state.schwartz2factor(log(s0), delta0, mu, sigmaS, kappa,
+  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
                                     alpha, sigmaE, rho, time)
 
-  sigma <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE, rho, time)
-
-##   uniform.margins <- cbind(pnorm(x[,1], mean[1], sqrt(sigma[1,1])),
-##                            pnorm(x[,2], mean[2], sqrt(sigma[2,2])))
-
-##   dens <- dmvnorm(qnorm(uniform.margins), sigma = cov2cor(sigma)) *
-##     dnorm(x[,1], mean[1], sqrt(sigma[1,1]))/exp(x[,1]) *
-##       dnorm(x[,2], mean[2], sqrt(sigma[2,2])) /
-##         dnorm(qnorm(uniform.margins[,1]))/ dnorm(qnorm(uniform.margins[,2]))
+  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
 
   dens <- dmvnorm(x, mean = mean, sigma = sigma) / exp(x[,1], ...)
 
@@ -86,34 +78,34 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
 }
 
 
-setMethod("dstate", signature(x = "ANY", time = "ANY", object = "missing"),
+setMethod("dstate", signature(x = "ANY", time = "ANY", s0 = "numeric"),
           dstate.default)
 ### < ---------------------------------------------------------------------- >
 
-dstate.schwartz2factor <- function(x, time = 1, object, ...)
+dstate.schwartz2f <- function(x, time = 1, s0, ...)
 {
-    tmp.coef <- coef(object)
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  tmp.coef <- coef(s0)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(dstate.default(x, time = time, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
-                          alpha = alpha, sigmaE = sigmaE, rho = rho, ...))
+  return(dstate.default(x, time = time, s0 = tmp.coef$s0, delta0 = delta0,
+                        mu = mu, sigmaS = sigmaS, kappa = kappa,
+                        alpha = alpha, sigmaE = sigmaE, rho = rho, ...))
 }
 
 setMethod("dstate", signature(x = "ANY", time = "ANY",
-                              object = "schwartz2factor"),
-          dstate.schwartz2factor)
+                              s0 = "schwartz2f"),
+          dstate.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("qstate",
-           function(p, time = 1, object, ...)
+           function(p, time = 1, s0, ...)
            standardGeneric("qstate"))
 
 
@@ -123,48 +115,46 @@ qstate.default <- function(p, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
                            sigmaE = 0.5, rho = 0.75,
                            tail = "lower.tail", ...)
 {
-    mean <- .mu.state.schwartz2factor(log(s0), delta0, mu, sigmaS, kappa,
-                                      alpha, sigmaE, rho, time)
+  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
+                               alpha, sigmaE, rho, time)
 
-    sigma <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
 
-    quant <- qmvnorm(p = p, tail = tail, mean = mean, sigma = sigma, ...)
-    quant$quantile <- c(exp(quant$quantile), quant$quantile)
+  quant <- qmvnorm(p = p, tail = tail, mean = mean, sigma = sigma, ...)
+  quant$quantile <- c(exp(quant$quantile), quant$quantile)
 
-    return(quant)
+  return(quant)
 }
 
-setMethod("qstate", signature(p = "ANY", time = "ANY", object = "missing"),
+setMethod("qstate", signature(p = "ANY", time = "ANY", s0 = "numeric"),
           qstate.default)
 ### < ---------------------------------------------------------------------- >
 
-qstate.schwartz2factor <- function(p, time = 1, object,
-                                   tail = "lower.tail", ...)
+qstate.schwartz2f <- function(p, time = 1, s0, tail = "lower.tail", ...)
 {
-    tmp.coef <- coef(object)
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  tmp.coef <- coef(s0)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(qstate.default(p, time = time, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS,
-                          kappa = kappa, alpha = alpha,
-                          sigmaE = sigmaE, rho = rho,
-                          tail = tail, ...))
+  return(qstate.default(p, time = time, s0 = tmp.coef$s0, delta0 = delta0,
+                        mu = mu, sigmaS = sigmaS,
+                        kappa = kappa, alpha = alpha,
+                        sigmaE = sigmaE, rho = rho,
+                        tail = tail, ...))
 }
 
-setMethod("qstate", signature(p = "ANY", time = "ANY",
-                              object = "schwartz2factor"),
-          qstate.schwartz2factor)
+setMethod("qstate", signature(p = "ANY", time = "ANY", s0 = "schwartz2f"),
+          qstate.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("rstate",
-           function(n, time = 1, object, ...)
+           function(n, time = 1, s0, ...)
            standardGeneric("rstate"))
 
 ### < ---------------------------------------------------------------------- >
@@ -174,49 +164,47 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
                            sigmaE = 0.5, rho = 0.75,
                            method = "chol")
 {
-    mean <- .mu.state.schwartz2factor(log(s0), delta0, mu, sigmaS, kappa,
-                                      alpha, sigmaE, rho, time)
+  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
+                               alpha, sigmaE, rho, time)
 
-    sigma <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
 
-    rand <- rmvnorm(n = n, mean = mean, sigma = sigma, method = method)
-    rand[,1] <- exp(rand[,1])
-    colnames(rand) <- c("S", "delta")
-    return(rand)
+  rand <- rmvnorm(n = n, mean = mean, sigma = sigma, method = method)
+  rand[,1] <- exp(rand[,1])
+  colnames(rand) <- c("S", "delta")
+  return(rand)
 }
 
-setMethod("rstate", signature(n = "ANY", time = "ANY", object = "missing"),
+setMethod("rstate", signature(n = "ANY", time = "ANY", s0 = "numeric"),
           rstate.default)
 ### < ---------------------------------------------------------------------- >
 
-rstate.schwartz2factor <- function(n, time = 1, object,
-                                   method = "chol")
+rstate.schwartz2f <- function(n, time = 1, s0, method = "chol")
 {
-    tmp.coef <- coef(object)
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  tmp.coef <- coef(s0)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(rstate.default(n, time = time, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS,
-                          kappa = kappa, alpha = alpha,
-                          sigmaE = sigmaE, rho = rho,
-                          method = method))
+  return(rstate.default(n, time = time, s0 = tmp.coef$s0, delta0 = delta0,
+                        mu = mu, sigmaS = sigmaS,
+                        kappa = kappa, alpha = alpha,
+                        sigmaE = sigmaE, rho = rho,
+                        method = method))
 }
 
-setMethod("rstate", signature(n = "ANY", time = "ANY",
-                              object = "schwartz2factor"),
-          rstate.schwartz2factor)
+setMethod("rstate", signature(n = "ANY", time = "ANY", s0 = "schwartz2f"),
+          rstate.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
 
 ### < ====================================================================== >
 setGeneric("simstate",
-           function(n, time = 1, object, ...)
+           function(n, time = 1, s0, ...)
            standardGeneric("simstate"))
 
 ### < ---------------------------------------------------------------------- >
@@ -226,69 +214,66 @@ simstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
                              sigmaE = 0.5, rho = 0.75,
                              method = "chol")
 {
-    if(n <= 1){
-        stop("Use 'rstate' if n <= 1!")
-    }
+  if(n <= 1){
+    stop("Use 'rstate' if n <= 1!")
+  }
 
-    deltat <- time/n
+  deltat <- time/n
 
-    sigma <- .sigma.state.schwartz2factor(sigmaS, kappa, sigmaE, rho,
-                                          time = deltat)
+  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho,
+                                   time = deltat)
 
-    traj <- matrix(NA, ncol = 2, nrow = n,
-                   dimnames = list(1:n, c("S", "delta")))
-    traj[1, ] <- c(log(s0), delta0)
+  traj <- matrix(NA, ncol = 2, nrow = n,
+                 dimnames = list(1:n, c("S", "delta")))
+  traj[1, ] <- c(log(s0), delta0)
 
-    increments <- rmvnorm(n = n - 1, mean = c(0, 0),
-                          sigma = sigma, method = method)
+  increments <- rmvnorm(n = n - 1, mean = c(0, 0),
+                        sigma = sigma, method = method)
 
-    for(i in 2:n){
+  for(i in 2:n){
+    drift <- .mu.state.schwartz2f(x0 = traj[i - 1, 1],
+                                  delta0 = traj[i - 1, 2],
+                                  mu = mu, sigmaS = sigmaS,
+                                  kappa = kappa, alpha = alpha,
+                                  sigmaE  = sigmaE, rho = rho,
+                                  time = deltat, as.mat = FALSE)
+    traj[i, ] <- drift + increments[i - 1, ]
+  }
 
-        drift <- .mu.state.schwartz2factor(x0 = traj[i - 1, 1],
-                                           delta0 = traj[i - 1, 2],
-                                           mu = mu, sigmaS = sigmaS,
-                                           kappa = kappa, alpha = alpha,
-                                           sigmaE  = sigmaE, rho = rho,
-                                           time = deltat, as.mat = FALSE)
-        traj[i, ] <- drift + increments[i - 1, ]
-    }
+  traj[, 1] <- exp(traj[, 1])
 
-    traj[, 1] <- exp(traj[, 1])
-
-    return(traj)
+  return(traj)
 }
 
-setMethod("simstate", signature(n = "ANY", time = "ANY",
-                                object = "missing"),
+setMethod("simstate", signature(n = "ANY", time = "ANY", s0 = "numeric"),
           simstate.default)
 ### < ---------------------------------------------------------------------- >
 
-simstate.schwartz2factor <- function(n, time = 1, object, method = "chol")
+simstate.schwartz2f <- function(n, time = 1, s0, method = "chol")
 {
-    tmp.coef <- coef(object)
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  tmp.coef <- coef(s0)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(simstate.default(n, time = time, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            alpha = alpha, sigmaE = sigmaE, rho = rho,
-                            method = method))
+  return(simstate.default(n, time = time, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          alpha = alpha, sigmaE = sigmaE, rho = rho,
+                          method = method))
 
 }
 
-setMethod("simstate", signature(n = "ANY", time = "ANY",
-                                object = "schwartz2factor"),
-          simstate.schwartz2factor)
+setMethod("simstate", signature(n = "ANY", time = "ANY", s0 = "schwartz2f"),
+          simstate.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("pfutures",
-           function(q, time = 0.1, ttm = 1, object, ...)
+           function(q, time = 0.1, ttm = 1, s0, ...)
            standardGeneric("pfutures"))
 
 ### < ---------------------------------------------------------------------- >
@@ -297,89 +282,89 @@ pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
                              sigmaE = 0.5, rho = 0.75,
                              r = 0.05, lambda = 0, alphaT = NULL, ...)
 {
-    if((missing(lambda) | missing(alpha)) & missing(alphaT)){
-        warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
-                "The mean-level of the convenience yield is set to zero.")
-        alphaT <- 0
-    }else if(missing(alphaT)){
-        alphaT <- alpha - lambda / kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if((missing(lambda) | missing(alpha)) & missing(alphaT)){
+    warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
+            "The mean-level of the convenience yield is set to zero.")
+    alphaT <- 0
+  }else if(missing(alphaT)){
+    alphaT <- alpha - lambda / kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
-                                      kappa, sigmaE, rho, alpha,
-                                      alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
+                               kappa, sigmaE, rho, alpha,
+                               alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 
-    return(pnorm(log(q), mean = mu.fut, sd = sqrt(sigma.fut), ...))
+  return(pnorm(log(q), mean = mu.fut, sd = sqrt(sigma.fut), ...))
 }
 
-setMethod("pfutures", signature(q = "ANY", time ="ANY", ttm = "ANY", object = "missing"),
+setMethod("pfutures", signature(q = "ANY", time ="ANY", ttm = "ANY", s0 = "numeric"),
           pfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-pfutures.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
-                                     alphaT = NULL, ...)
+pfutures.schwartz2f <- function(q, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
+                                alphaT = NULL, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        alphaT <- tmp.coef$alpha
-    }else if(missing(alphaT)){
-        alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    alphaT <- tmp.coef$alpha
+  }else if(missing(alphaT)){
+    alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho, r = r,
-                            alphaT = alphaT, ...))
+  return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho, r = r,
+                          alphaT = alphaT, ...))
 }
 
 setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
-                                object = "schwartz2factor"),
-          pfutures.schwartz2factor)
+                                s0 = "schwartz2f"),
+          pfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-pfutures.fit.schwartz2factor <- function(q, time = 0.1, ttm = 1, object, ...)
+pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
-    r <- tmp.coef$r
-    alphaT <- tmp.coef$alphaT
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
+  r <- tmp.coef$r
+  alphaT <- tmp.coef$alphaT
 
-    return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho,
-                            r = r, alphaT = alphaT, ...))
+  return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho,
+                          r = r, alphaT = alphaT, ...))
 }
 
 setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
-                                object = "fit.schwartz2factor"),
-          pfutures.fit.schwartz2factor)
+                                s0 = "schwartz2f.fit"),
+          pfutures.schwartz2f.fit)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("dfutures",
-           function(x, time = 0.1, ttm = 1, object, ...)
+           function(x, time = 0.1, ttm = 1, s0, ...)
            standardGeneric("dfutures"))
 
 dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
@@ -387,423 +372,419 @@ dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
                              lambda = 0, alphaT = NULL, ...)
 {
-    if((missing(lambda) | missing(alpha)) & missing(alphaT)){
-        warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
-                "The mean-level of the convenience yield is set to zero.")
-        alphaT <- 0
-    }else if(missing(alphaT)){
-        alphaT <- alpha - lambda / kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if((missing(lambda) | missing(alpha)) & missing(alphaT)){
+    warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
+            "The mean-level of the convenience yield is set to zero.")
+    alphaT <- 0
+  }else if(missing(alphaT)){
+    alphaT <- alpha - lambda / kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
-                                      kappa, sigmaE, rho, alpha,
-                                      alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
+                               kappa, sigmaE, rho, alpha,
+                               alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 
-    return(dnorm(log(x), mean = mu.fut, sd = sqrt(sigma.fut), ...) / x)
+  return(dnorm(log(x), mean = mu.fut, sd = sqrt(sigma.fut), ...) / x)
 }
 
-setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
+setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY", s0 = "numeric"),
           dfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-dfutures.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
-                                     alphaT = NULL, ...)
+dfutures.schwartz2f <- function(x, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
+                                alphaT = NULL, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        alphaT <- tmp.coef$alpha
-    }else if(missing(alphaT)){
-        alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    alphaT <- tmp.coef$alpha
+  }else if(missing(alphaT)){
+    alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho, r = r,
-                            alphaT = alphaT, ...))
+  return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho, r = r,
+                          alphaT = alphaT, ...))
 
 }
 
 setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
-                                object = "schwartz2factor"),
-          dfutures.schwartz2factor)
+                                s0 = "schwartz2f"),
+          dfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-dfutures.fit.schwartz2factor <- function(x, time = 0.1, ttm = 1, object, ...)
+dfutures.schwartz2f.fit <- function(x, time = 0.1, ttm = 1, s0, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
-    r <- tmp.coef$r
-    alphaT <- tmp.coef$alphaT
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
+  r <- tmp.coef$r
+  alphaT <- tmp.coef$alphaT
 
-    return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho,
-                            r = r, alphaT = alphaT, ...))
+  return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho,
+                          r = r, alphaT = alphaT, ...))
 }
 
 setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
-                                object = "fit.schwartz2factor"),
-          dfutures.fit.schwartz2factor)
+                                s0 = "schwartz2f.fit"),
+          dfutures.schwartz2f.fit)
 ### < ---------------------------------------------------------------------- >
 
 ### < ====================================================================== >
 setGeneric("qfutures",
-           function(p, time = 0.1, ttm = 1, object, ...)
-           standardGeneric("qfutures"),
-           package = "schwartz97")
+           function(p, time = 0.1, ttm = 1, s0, ...)
+           standardGeneric("qfutures"))
 
 qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75,
                              r = 0.05, lambda = 0, alphaT = NULL, ...)
 {
-    if((missing(lambda) | missing(alpha)) & missing(alphaT)){
-        warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
-                "The mean-level of the convenience yield is set to zero.")
-        alphaT <- 0
-    }else if(missing(alphaT)){
-        alphaT <- alpha - lambda / kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if((missing(lambda) | missing(alpha)) & missing(alphaT)){
+    warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
+            "The mean-level of the convenience yield is set to zero.")
+    alphaT <- 0
+  }else if(missing(alphaT)){
+    alphaT <- alpha - lambda / kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
-                                      kappa, sigmaE, rho, alpha,
-                                      alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
+                               kappa, sigmaE, rho, alpha,
+                               alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 
-    return(exp(qnorm(p = p, mean = mu.fut, sd = sqrt(sigma.fut), ...)))
+  return(exp(qnorm(p = p, mean = mu.fut, sd = sqrt(sigma.fut), ...)))
 }
 
-setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
+setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY", s0 = "numeric"),
           qfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-qfutures.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
-                                     alphaT = NULL, ...)
+qfutures.schwartz2f <- function(p, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
+                                alphaT = NULL, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        alphaT <- tmp.coef$alpha
-    }else if(missing(alphaT)){
-        alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    alphaT <- tmp.coef$alpha
+  }else if(missing(alphaT)){
+    alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho,
-                            r = r, alphaT = alphaT, ...))
+  return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho,
+                          r = r, alphaT = alphaT, ...))
 
 
 }
 setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
-                                object = "schwartz2factor"),
-          qfutures.schwartz2factor)
+                                s0 = "schwartz2f"),
+          qfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-qfutures.fit.schwartz2factor <- function(p, time = 0.1, ttm = 1, object, ...)
+qfutures.schwartz2f.fit <- function(p, time = 0.1, ttm = 1, s0, ...)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
-    r <- tmp.coef$r
-    alphaT <- tmp.coef$alphaT
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
+  r <- tmp.coef$r
+  alphaT <- tmp.coef$alphaT
 
-    return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho,
-                            r = r, alphaT = alphaT, ...))
+  return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho,
+                          r = r, alphaT = alphaT, ...))
 }
 
 setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
-                                object = "fit.schwartz2factor"),
-          qfutures.fit.schwartz2factor)
+                                s0 = "schwartz2f.fit"),
+          qfutures.schwartz2f.fit)
 ### < ---------------------------------------------------------------------- >
 
 
 ### < ====================================================================== >
 setGeneric("rfutures",
-           function(n, time = 0.1, ttm = 1, object, ...)
-           standardGeneric("rfutures"),
-           package = "schwartz97")
+           function(n, time = 0.1, ttm = 1, s0, ...)
+           standardGeneric("rfutures"))
 
 rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
                              lambda = 0, alphaT = NULL)
 {
-    if((missing(lambda) | missing(alpha)) & missing(alphaT)){
-        warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
-                "The mean-level of the convenience yield is set to zero.")
-        alphaT <- 0
-    }else if(missing(alphaT)){
-        alphaT <- alpha - lambda / kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if((missing(lambda) | missing(alpha)) & missing(alphaT)){
+    warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
+            "The mean-level of the convenience yield is set to zero.")
+    alphaT <- 0
+  }else if(missing(alphaT)){
+    alphaT <- alpha - lambda / kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    mu.fut <- .mu.fut.schwartz2factor(log(s0), delta0, mu, sigmaS,
-                                      kappa, sigmaE, rho, alpha,
-                                      alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
+                               kappa, sigmaE, rho, alpha,
+                               alphaT, r, time, ttm)
 
-    sigma.fut <- .sigma.fut.schwartz2factor(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 
-    return(exp(rnorm(n = n, mean = mu.fut, sd = sqrt(sigma.fut))))
+  return(exp(rnorm(n = n, mean = mu.fut, sd = sqrt(sigma.fut))))
 }
 
-setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY", object = "missing"),
+setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY", s0 = "numeric"),
           rfutures.default)
 ### < ---------------------------------------------------------------------- >
 
-rfutures.schwartz2factor <- function(n, time = 0.1, ttm = 1, object, r = 0.05, lambda = 0,
-                                     alphaT = NULL)
+rfutures.schwartz2f <- function(n, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
+                                alphaT = NULL)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        alphaT <- tmp.coef$alpha
-    }else if(missing(alphaT)){
-        alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-    }
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    alphaT <- tmp.coef$alpha
+  }else if(missing(alphaT)){
+    alphaT <- tmp.coef$alpha - lambda / tmp.coef$kappa
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+  }
 
-    s0 <- tmp.coef$s0
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  s0 <- tmp.coef$s0
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho, r = r,
-                            alphaT = alphaT))
+  return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho, r = r,
+                          alphaT = alphaT))
 
 }
 
 setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY",
-                                object = "schwartz2factor"),
-          rfutures.schwartz2factor)
+                                s0 = "schwartz2f"),
+          rfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-rfutures.fit.schwartz2factor <- function(n, time = 0.1, ttm = 1, object)
+rfutures.schwartz2f.fit <- function(n, time = 0.1, ttm = 1, s0)
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    s0 <- tmp.coef$s0
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
-    r <- tmp.coef$r
-    alphaT <- tmp.coef$alphaT
+  s0 <- tmp.coef$s0
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
+  r <- tmp.coef$r
+  alphaT <- tmp.coef$alphaT
 
-    return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
-                            mu = mu, sigmaS = sigmaS, kappa = kappa,
-                            sigmaE = sigmaE, rho = rho,
-                            r = r, alphaT = alphaT))
+  return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          sigmaE = sigmaE, rho = rho,
+                          r = r, alphaT = alphaT))
 
 }
 
 setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY",
-                                object = "fit.schwartz2factor"),
-          rfutures.fit.schwartz2factor)
+                                s0 = "schwartz2f.fit"),
+          rfutures.schwartz2f.fit)
 ### < ---------------------------------------------------------------------- >
 
 
 ### < ====================================================================== >
-setGeneric("filter2factor",
-           function(data, ttm, object, ...)
-           standardGeneric("filter2factor"))
+setGeneric("filter.schwartz2f",
+           function(data, ttm, s0, ...)
+           standardGeneric("filter.schwartz2f"))
 
-filter2factor.default <- function(data, ttm, s0 = 50, delta0 = 0,
-                                  mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
-                                  sigmaE = 0.5, rho = 0.75, r = 0.05,
-                                  lambda = 0, alphaT = NULL, deltat = 1/260,
-                                  meas.sd = rep(1e-3, ncol(data)),
-                                  P0 = 0.5 * diag(c(log(s0), abs(delta0))))
+filter.schwartz2f.default <- function(data, ttm, s0 = 50, delta0 = 0,
+                                      mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
+                                      sigmaE = 0.5, rho = 0.75, r = 0.05,
+                                      lambda = 0, alphaT = NULL, deltat = 1/260,
+                                      meas.sd = rep(1e-3, ncol(data)),
+                                      P0 = 0.5 * diag(c(log(s0), abs(delta0))))
 {
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    lambda <- 0
+  }else if(missing(lambda)){
+    lambda <- kappa * (alpha - alphaT)
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'alphaT' is ignored.")
+  }
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        lambda <- 0
-    }else if(missing(lambda)){
-        lambda <- kappa * (alpha - alphaT)
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'alphaT' is ignored.")
-    }
+  data <- log(as.matrix(data))
 
-    data <- log(as.matrix(data))
+  stateSpace <- .state.space.2f(y = data, ttm = ttm, deltat = deltat,
+                                x0 = log(s0), delta0 = delta0,
+                                kappa = kappa, mu = mu, alpha = alpha, lambda = lambda,
+                                sigmaS = sigmaS, sigmaE = sigmaE, rho = rho,
+                                gg = meas.sd, r = r, d = ncol(data), n = nrow(data))
 
-    stateSpace <- .state.space.2f(y = data, ttm = ttm, deltat = deltat,
-                                  x0 = log(s0), delta0 = delta0,
-                                  kappa = kappa, mu = mu, alpha = alpha, lambda = lambda,
-                                  sigmaS = sigmaS, sigmaE = sigmaE, rho = rho,
-                                  gg = meas.sd, r = r, d = ncol(data), n = nrow(data))
+  filtered.ts <- fkf(a0 = stateSpace$a0,
+                     P0 = stateSpace$P0,
+                     Tt = stateSpace$Tt,
+                     dt = stateSpace$dt,
+                     HHt = stateSpace$HHt,
+                     yt = stateSpace$yt,
+                     Zt = stateSpace$Zt,
+                     ct = stateSpace$ct,
+                     GGt = stateSpace$GGt)
 
-    filtered.ts <- fkf(a0 = stateSpace$a0,
-                       P0 = stateSpace$P0,
-                       Tt = stateSpace$Tt,
-                       dt = stateSpace$dt,
-                       HHt = stateSpace$HHt,
-                       yt = stateSpace$yt,
-                       Zt = stateSpace$Zt,
-                       ct = stateSpace$ct,
-                       GGt = stateSpace$GGt)
+  state <- cbind(S = exp(filtered.ts$att[1,]),
+                 delta = filtered.ts$att[2,])
 
-    state <- cbind(S = exp(filtered.ts$att[1,]),
-                   delta = filtered.ts$att[2,])
-
-    return(list(state = state, fkf.obj = filtered.ts))
+  return(list(state = state, fkf.obj = filtered.ts))
 }
-setMethod("filter2factor", signature(data = "ANY", ttm = "ANY",
-                                     object = "missing"),
-          filter2factor.default)
+setMethod("filter.schwartz2f", signature(data = "ANY", ttm = "ANY",
+                                     s0 = "numeric"),
+          filter.schwartz2f.default)
 ### < ---------------------------------------------------------------------- >
 
-filter2factor.schwartz2factor <- function(data, ttm, object, r = 0.05,
-                                          lambda = 0, alphaT = NULL,
-                                          deltat = 1/260,
-                                          meas.sd = rep(1e-3, ncol(data)),
-                                          P0 = 0.1 * diag(2))
+filter.schwartz2f.schwartz2f <- function(data, ttm, s0, r = 0.05,
+                                         lambda = 0, alphaT = NULL,
+                                         deltat = 1/260,
+                                         meas.sd = rep(1e-3, ncol(data)),
+                                         P0 = 0.1 * diag(2))
 {
-    tmp.coef <- coef(object)
+  tmp.coef <- coef(s0)
 
-    if(missing(lambda) & missing(alphaT)){
-        warning("Both 'lambda' and 'alphaT' are missing!\n",
-                "The market price of risk is set to zero")
-        lambda <- 0
-    }else if(missing(lambda)){
-        lambda <- tmp.coef$kappa * (tmp.coef$alpha - alphaT)
-    }else if(!missing(alphaT) & !missing(lambda)){
-      warning("Both 'alphaT' and 'lambda' were passed: 'alphaT' is ignored.")
-    }
+  if(missing(lambda) & missing(alphaT)){
+    warning("Both 'lambda' and 'alphaT' are missing!\n",
+            "The market price of risk is set to zero")
+    lambda <- 0
+  }else if(missing(lambda)){
+    lambda <- tmp.coef$kappa * (tmp.coef$alpha - alphaT)
+  }else if(!missing(alphaT) & !missing(lambda)){
+    warning("Both 'alphaT' and 'lambda' were passed: 'alphaT' is ignored.")
+  }
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    kappa <- tmp.coef$kappa
-    alpha <- tmp.coef$alpha
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
 
-    return(filter2factor.default(data = data, ttm = ttm,
-                                 s0 = tmp.coef$s0, delta0 = delta0, mu = mu,
-                                 sigmaS = sigmaS, kappa = kappa, alpha = alpha,
-                                 sigmaE = sigmaE, rho = rho, r = r,
-                                 lambda = lambda, deltat = deltat, meas.sd = meas.sd))
+  return(filter.schwartz2f.default(data = data, ttm = ttm,
+                                   s0 = tmp.coef$s0, delta0 = delta0, mu = mu,
+                                   sigmaS = sigmaS, kappa = kappa, alpha = alpha,
+                                   sigmaE = sigmaE, rho = rho, r = r,
+                                   lambda = lambda, deltat = deltat, meas.sd = meas.sd))
 
 }
-setMethod("filter2factor", signature(data = "ANY", ttm = "ANY",
-                                     object = "schwartz2factor"),
-          filter2factor.schwartz2factor)
+setMethod("filter.schwartz2f", signature(data = "ANY", ttm = "ANY",
+                                     s0 = "schwartz2f"),
+          filter.schwartz2f.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-filter2factor.fit.schwartz2factor <- function(data, ttm, object)
+filter.schwartz2f.schwartz2f.fit <- function(data, ttm, s0)
 {
+  tmp.coef <- coef(s0)
 
-    tmp.coef <- coef(object)
+  delta0 <- tmp.coef$delta0
+  mu <- tmp.coef$mu
+  sigmaS <- tmp.coef$sigmaS
+  alpha <- tmp.coef$alpha
+  kappa <- tmp.coef$kappa
+  sigmaE <- tmp.coef$sigmaE
+  rho <- tmp.coef$rho
+  r <- tmp.coef$r
+  lambda <- tmp.coef$lambda
 
-    delta0 <- tmp.coef$delta0
-    mu <- tmp.coef$mu
-    sigmaS <- tmp.coef$sigmaS
-    alpha <- tmp.coef$alpha
-    kappa <- tmp.coef$kappa
-    sigmaE <- tmp.coef$sigmaE
-    rho <- tmp.coef$rho
-    r <- tmp.coef$r
-    lambda <- tmp.coef$lambda
-
-    return(filter2factor.default(data = data, ttm = ttm,
-                                 s0 = tmp.coef$s0, delta0 = delta0, mu = mu,
-                                 sigmaS = sigmaS, kappa = kappa, alpha = alpha,
-                                 sigmaE = sigmaE, rho = rho, r = r,
-                                 lambda = lambda, deltat = object@deltat,
-                                 meas.sd = object@meas.sd))
+  return(filter.schwartz2f.default(data = data, ttm = ttm,
+                                   s0 = tmp.coef$s0, delta0 = delta0, mu = mu,
+                                   sigmaS = sigmaS, kappa = kappa, alpha = alpha,
+                                   sigmaE = sigmaE, rho = rho, r = r,
+                                   lambda = lambda, deltat = s0@deltat,
+                                   meas.sd = s0@meas.sd))
 
 }
 
-setMethod("filter2factor", signature(data = "ANY", ttm = "ANY",
-                                     object = "fit.schwartz2factor"),
-          filter2factor.fit.schwartz2factor)
+setMethod("filter.schwartz2f", signature(data = "ANY", ttm = "ANY",
+                                     s0 = "schwartz2f.fit"),
+          filter.schwartz2f.schwartz2f.fit)
 ### < ---------------------------------------------------------------------- >
 
 futuresplot <- function(x, type = c("futures", "ttm"), ##, "spot"),
-                         contr = 1:8, range = c(x$date[1],
-                                      x$date[length(x$date)]), ...)
+                        contr = 1:8, range = c(x$date[1], x$date[length(x$date)]), ...)
 {
-    range <- c(order(x$date == range[1])[length(x$date)],
-               order(x$date == range[2])[length(x$date)])
+  type <- match.arg(type)
+    
+  range <- c(order(x$date == range[1])[length(x$date)],
+             order(x$date == range[2])[length(x$date)])
 
-    type <- match.arg(type)
-    if(type == "futures")
+  if(type == "futures")
     {
-        plot.ts(x$futures[range[1]:range[2],contr],
-                plot.type = "single",
-                col = contr, xaxt = "n", ...)
-        axis(1, at = 1:length(x$date[range[1]:range[2]]),
-             label = x$date[range[1]:range[2]], ...)
+      plot.ts(x$futures[range[1]:range[2],contr],
+              plot.type = "single",
+              col = contr, xaxt = "n", ...)
+      axis(1, at = 1:length(x$date[range[1]:range[2]]),
+           label = x$date[range[1]:range[2]], ...)
     }else{
-        ## if(type == "ttm")
-        ## {
-        plot.ts(x$ttm[range[1]:range[2],contr],
-                plot.type = "single",
-                col = contr, xaxt = "n", ...)
-        axis(1, at = 1:length(x$date[range[1]:range[2]]),
-             label = x$date[range[1]:range[2]], ...)
-        ## }else{
-        ##     plot.ts(x$spot[range[1]:range[2]],
-        ##             plot.type = "single", xaxt = "n", ...)
-        ##     axis(1, at = 1:length(x$date[range[1]:range[2]]),
-        ##          label = x$date[range[1]:range[2]], ...)
-        ## }
+      ## if(type == "ttm")
+      ## {
+      plot.ts(x$ttm[range[1]:range[2],contr],
+              plot.type = "single",
+              col = contr, xaxt = "n", ...)
+      axis(1, at = 1:length(x$date[range[1]:range[2]]),
+           label = x$date[range[1]:range[2]], ...)
+      ## }else{
+      ##     plot.ts(x$spot[range[1]:range[2]],
+      ##             plot.type = "single", xaxt = "n", ...)
+      ##     axis(1, at = 1:length(x$date[range[1]:range[2]]),
+      ##          label = x$date[range[1]:range[2]], ...)
+      ## }
     }
 }
 

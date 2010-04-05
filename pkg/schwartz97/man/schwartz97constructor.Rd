@@ -1,14 +1,14 @@
-\name{schwartz2factor-constructor}
-\alias{schwartz2factor}
-\title{Create a schwartz2factor object}
+\name{schwartz2f-constructor}
+\alias{schwartz2f}
+\title{Create a schwartz2f object}
 
 \description{
-  Create an object of class \code{schwartz2factor}.
+  Create an object of class \code{schwartz2f}.
 }
 
 % <---------------------------------------------------------------------->
 \usage{
-schwartz2factor(s0 = 100, delta0 = 0,
+schwartz2f(s0 = 100, delta0 = 0,
                 mu = 0.1, sigmaS = 0.3,
                 kappa = 1, alpha = 0, sigmaE = 0.3, rho = 0.5)
 
@@ -31,13 +31,13 @@ schwartz2factor(s0 = 100, delta0 = 0,
 \details{
 
   The dynamics of the Schwartz two-factor model is given in
-  \code{\link[=schwartz2factor-class]{schwartz2factor}} or in the
+  \code{\link[=schwartz2f-class]{schwartz2f}} or in the
   package vignette in the doc-folder.
 
 }
 % <---------------------------------------------------------------------->
 \value{
- An object of class \code{\link[=schwartz2factor-class]{schwartz2factor}}.
+ An object of class \code{\link[=schwartz2f-class]{schwartz2f}}.
 }
 % <---------------------------------------------------------------------->
 \author{Philipp Erb, David Luethi, Juri Hinz}
@@ -51,14 +51,14 @@ schwartz2factor(s0 = 100, delta0 = 0,
 }
 % <---------------------------------------------------------------------->
 \seealso{
-  \code{\link{fit2factor}}.
+  \code{\link{fit.schwartz2f}}.
 }
 % <---------------------------------------------------------------------->
 \examples{
 
-  ## Initialize a 'schwartz2factor' object
+  ## Initialize a 'schwartz2f' object
   ## with little convenience yield volatility:
-  obj <- schwartz2factor(sigmaE = 1e-6)
+  obj <- schwartz2f(sigmaE = 1e-6)
 
   trajectory <- simstate(n = 1000, time = 1, obj)
 

@@ -1,21 +1,21 @@
-\name{schwartz2factor-class-hierarchy}
+\name{schwartz2f-class-hierarchy}
 \docType{class}
-\alias{schwartz2factor-class}
-\alias{fit.schwartz2factor}
-\alias{fit.schwartz2factor-class}
-\alias{show.schwartz2factor}
-\alias{show.fit.schwartz2factor}
-\alias{show,schwartz2factor-method}
-\alias{show,fit.schwartz2factor-method}
+\alias{schwartz2f-class}
+\alias{schwartz2f.fit}
+\alias{schwartz2f.fit-class}
+\alias{show.schwartz2f}
+\alias{show.schwartz2f.fit}
+\alias{show,schwartz2f-method}
+\alias{show,schwartz2f.fit-method}
 % <---------------------------------------------------------------------->
-\title{Classes schwartz2factor and fit.schwartz2factor}
+\title{Classes schwartz2f and schwartz2f.fit}
 % <---------------------------------------------------------------------->
 \description{
 
-  The \code{schwartz2factor} class stores parameters which appear in the
+  The \code{schwartz2f} class stores parameters which appear in the
   dynamics of the state variables (under the objective measure). The
-  class \code{fit.schwartz2factor} inherits from the
-  \code{schwartz2factor} class. The class \code{fit.schwartz2factor}
+  class \code{schwartz2f.fit} inherits from the
+  \code{schwartz2f} class. The class \code{schwartz2f.fit}
   adds slots containing data regarding the fit and parameters of the
   risk-neutral dynamics. In particular, it adds the market-price-of
   convenience-yield risk \code{lambda} and the interest rate.
@@ -25,12 +25,12 @@
 \section{Objects from the Class}{
 
   Objects should only be created by calls to the constructors
-  \code{\link{schwartz2factor}} and \code{\link{fit2factor}}.
+  \code{\link{schwartz2f}} and \code{\link{fit.schwartz2f}}.
 
 }
 % <---------------------------------------------------------------------->
 \section{Slots}{
-  \strong{Slots of class \dQuote{schwartz2factor}:}
+  \strong{Slots of class \dQuote{schwartz2f}:}
     \describe{
     \item{\code{call}:}{The function-call of class \code{call}.}
     \item{\code{s0}:}{Initial commodity spot-price of class \code{numeric}.}
@@ -48,7 +48,7 @@
       class \code{numeric}.}
   }
 
-  \strong{Slots added by class \dQuote{fit.schwartz2factor}:}
+  \strong{Slots added by class \dQuote{schwartz2f.fit}:}
   \describe{
     \item{\code{n.iter}:}{The number of iterations of class
       \code{numeric}.}
@@ -105,7 +105,7 @@
 }
 % <---------------------------------------------------------------------->
 \section{Extends}{
-Class \dQuote{fit.schwartz2factor} extends class \dQuote{schwart2factor}, directly.
+Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
 }
 % <---------------------------------------------------------------------->
 \section{Methods}{
@@ -133,14 +133,14 @@ Class \dQuote{fit.schwartz2factor} extends class \dQuote{schwart2factor}, direct
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{schwartz2factor}} to initialize
-  objects. \code{\link{fit2factor}} to fit the two-factor model to data
-  and get a \code{fit.schwartz2factor} object.
+  \code{\link{schwartz2f}} to initialize
+  objects. \code{\link{fit.schwartz2f}} to fit the two-factor model to data
+  and get a \code{schwartz2f.fit} object.
 
 }
 % <---------------------------------------------------------------------->
 \examples{
-  obj <- schwartz2factor()
+  obj <- schwartz2f()
   coef(obj)
 }
 % <---------------------------------------------------------------------->

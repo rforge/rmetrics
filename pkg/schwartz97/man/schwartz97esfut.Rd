@@ -3,9 +3,9 @@
 \title{Schwartz two-factor Model: Expected Shortfall for Futures Prices}
 
 \alias{ESfutures}
-\alias{ESfutures,ANY,ANY,ANY,missing-method}
-\alias{ESfutures,ANY,ANY,ANY,schwartz2factor-method}
-\alias{ESfutures,ANY,ANY,ANY,fit.schwartz2factor-method}
+\alias{ESfutures,ANY,ANY,ANY,numeric-method}
+\alias{ESfutures,ANY,ANY,ANY,schwartz2f-method}
+\alias{ESfutures,ANY,ANY,ANY,schwartz2f.fit-method}
 
 
 % <---------------------------------------------------------------------->
@@ -19,17 +19,17 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{ESfutures}{ANY,ANY,ANY,missing}(level = 0.95, time = 0.1,
+\S4method{ESfutures}{ANY,ANY,ANY,numeric}(level = 0.95, time = 0.1,
           ttm = 1, g0 = 50, type = c("return", "nominal"),
           delta0 = 0, mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
           sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{ESfutures}{ANY,ANY,ANY,schwartz2factor}(level = 0.95,
-          time = 0.1, ttm = 1, object, type = c("return", "nominal"), r = 0.05,
+\S4method{ESfutures}{ANY,ANY,ANY,schwartz2f}(level = 0.95,
+          time = 0.1, ttm = 1, g0, type = c("return", "nominal"), r = 0.05,
           lambda = 0, alphaT = NULL)
 
-\S4method{ESfutures}{ANY,ANY,ANY,fit.schwartz2factor}(level = 0.95,
-          time = 0.1, ttm = 1, object, type = c("return", "nominal"))
+\S4method{ESfutures}{ANY,ANY,ANY,schwartz2f.fit}(level = 0.95,
+          time = 0.1, ttm = 1, g0, type = c("return", "nominal"))
 
 }
 
@@ -38,12 +38,9 @@
   \item{level}{Vector containing confidence levels.}
   \item{time}{Time horizon for ES-analysis (see package vignette).}
   \item{ttm}{Time to maturity of the futures contract.}
-  \item{object}{An object of class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}} or
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} (see
-    \bold{Details}).}
-  \item{g0}{A \code{numeric} representing the initial value of the
-    \bold{futures price}.}
+  \item{g0}{Either a \code{numeric} representing the initial value of the
+    \emph{futures price} or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{type}{Either \code{"return"} (VaR of negative futures price
     log-return) or \code{"nominal"} (VaR of futures price). For details
     see package vignette.}
@@ -69,14 +66,14 @@
   explicitly by \code{lambda} or implicitly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
-  \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
+  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
 
 }
 % <---------------------------------------------------------------------->
 \note{
 
-  If either a \code{\link[=schwartz2factor-class]{schwartz2factor}},
-  \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} object
+  If either a \code{\link[=schwartz2f-class]{schwartz2f}},
+  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} object
   is submitted the futures price is calculated first and then the
   default function is called with the calculated futures price
   \code{g0}.
@@ -118,10 +115,10 @@
 ESfutures(level = 0.95, time = 0.1, ttm = 0.5, g0 = 45, type = "return",
           alphaT = 0)
 
-## Create a "schwartz2factor"-object
-model <- schwartz2factor()
+## Create a "schwartz2f"-object
+model <- schwartz2f()
 ESfutures(level = c(0.9, 0.95, 0.99), time = 0.1, ttm = 0.5,
-          object = model, type = "nominal", alphaT = 0)
+          g0 = model, type = "nominal", alphaT = 0)
 
 }
 

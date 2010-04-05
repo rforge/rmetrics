@@ -3,9 +3,9 @@
 \title{Schwartz two-factor Model: European Option Prices}
 
 \alias{priceoption}
-\alias{priceoption,ANY,ANY,ANY,ANY,missing-method}
-\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2factor-method}
-\alias{priceoption,ANY,ANY,ANY,ANY,fit.schwartz2factor-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,numeric-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f.fit-method}
 
 
 % <---------------------------------------------------------------------->
@@ -18,14 +18,14 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{priceoption}{ANY,ANY,ANY,ANY,missing}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
+\S4method{priceoption}{ANY,ANY,ANY,ANY,numeric}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
             g0 = 50, sigmaS = 0.3, kappa = 1, sigmaE = 0.5,
             rho = 0.75, r = 0.05)
 
-\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, object,
+\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0,
             r = 0.05, lambda = 0, alphaT = NULL)
 
-\S4method{priceoption}{ANY,ANY,ANY,ANY,fit.schwartz2factor}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, object)
+\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f.fit}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0)
 
 }
 
@@ -37,10 +37,9 @@
   \item{time}{Exercise time of the option.}
   \item{Time}{Maturity date of the underlying instrument (see \bold{Details}).}
   \item{K}{Strike price at exercise time \code{time}.}
-  \item{object}{An object of class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}} or
-    \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}.}
-  \item{g0}{A \code{numeric} representing the current futures price.}
+  \item{g0}{Either a \code{numeric} representing the initial value of the
+    \emph{futures price} or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
   \item{sigmaS}{Diffusion parameter of the spot price-process.}
   \item{sigmaE}{Diffusion parameter of the convenience-yield process.}
@@ -66,14 +65,14 @@
   explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
   relation is \code{alphaT = alpha - lambda / kappa}. See the package
   vignette or
-  \code{\link[=schwartz2factor-class]{schwartz2factor-classes}}.
+  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
 
 }
 % <---------------------------------------------------------------------->
 \note{
 
-  If either a \code{\link[=schwartz2factor-class]{schwartz2factor}},
-  \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} object
+  If either a \code{\link[=schwartz2f-class]{schwartz2f}},
+  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} object
   is submitted the futures price is calculated first and then the
   default function is called with the calculated futures price
   \code{g0}.
@@ -93,7 +92,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{pricefutures}}, \code{\link{fit2factor}}
+  \code{\link{pricefutures}}, \code{\link{fit.schwartz2f}}
   \code{\link{dfutures}}.
 
 }

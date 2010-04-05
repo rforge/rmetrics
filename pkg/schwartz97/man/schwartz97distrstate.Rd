@@ -3,16 +3,16 @@
 \title{Schwartz two-factor Model: Distribution of State Variables}
 
 \alias{pstate}
-\alias{pstate,ANY,ANY,ANY,missing-method}
-\alias{pstate,ANY,ANY,ANY,schwartz2factor-method}
+\alias{pstate,ANY,ANY,ANY,numeric-method}
+\alias{pstate,ANY,ANY,ANY,schwartz2f-method}
 
 \alias{dstate}
-\alias{dstate,ANY,ANY,missing-method}
-\alias{dstate,ANY,ANY,schwartz2factor-method}
+\alias{dstate,ANY,ANY,numeric-method}
+\alias{dstate,ANY,ANY,schwartz2f-method}
 
 \alias{qstate}
-\alias{qstate,ANY,ANY,missing-method}
-\alias{qstate,ANY,ANY,schwartz2factor-method}
+\alias{qstate,ANY,ANY,numeric-method}
+\alias{qstate,ANY,ANY,schwartz2f-method}
 
 % <---------------------------------------------------------------------->
 \description{
@@ -28,47 +28,37 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{dstate}{ANY,ANY,missing}(x, time = 1, s0 = 50, delta0 = 0,
+\S4method{dstate}{ANY,ANY,numeric}(x, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, \dots)
 
-\S4method{dstate}{ANY,ANY,schwartz2factor}(x, time = 1, object, \dots)
+\S4method{dstate}{ANY,ANY,schwartz2f}(x, time = 1, s0, \dots)
 
 
-\S4method{pstate}{ANY,ANY,ANY,missing}(lower, upper, time = 1, s0 = 50, delta0 = 0,
+\S4method{pstate}{ANY,ANY,ANY,numeric}(lower, upper, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, \dots)
 
-\S4method{pstate}{ANY,ANY,ANY,schwartz2factor}(lower, upper, time = 1, object, \dots)
+\S4method{pstate}{ANY,ANY,ANY,schwartz2f}(lower, upper, time = 1, s0, \dots)
 
-\S4method{qstate}{ANY,ANY,missing}(p, time = 1, s0 = 50, delta0 = 0,
+\S4method{qstate}{ANY,ANY,numeric}(p, time = 1, s0 = 50, delta0 = 0,
        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
        sigmaE = 0.5, rho = 0.75, tail = "lower.tail", \dots)
 
-\S4method{qstate}{ANY,ANY,schwartz2factor}(p, time = 1, object, tail = "lower.tail", \dots)
+\S4method{qstate}{ANY,ANY,schwartz2f}(p, time = 1, s0, tail = "lower.tail", \dots)
 
 }
 
 % <---------------------------------------------------------------------->
 \arguments{
 
-  \item{lower}{The vector of lower limits of length 2. Note that first
-    component stands for lower limit of the commodity spot price
-    rather than the log-price.}
-  \item{upper}{The vector of upper limits of length 2. Note that first
-    component stands for the upper limit of the commodity spot price
-    rather than the log-price.}
   \item{x}{Vector or matrix of quantiles. If \code{x} is
     a matrix, each row is taken to be a quantile.}
-  \item{p}{Probability.}
-  \item{tail}{See \code{\link[mvtnorm]{qmvnorm}} of package
-    \code{mvtnorm}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
-  \item{object}{An object inheriting from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
-  \item{s0}{A \code{numeric} representing the initial value of the
-    commodity spot price.}
+  \item{s0}{Either a \code{numeric} representing the initial value of the
+    commodity spot price or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
@@ -77,6 +67,15 @@
   \item{sigmaE}{Diffusion parameter of the convenience yield process.}
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
+  \item{p}{Probability.}
+  \item{lower}{The vector of lower limits of length 2. Note that first
+    component stands for lower limit of the commodity spot price
+    rather than the log-price.}
+  \item{upper}{The vector of upper limits of length 2. Note that first
+    component stands for the upper limit of the commodity spot price
+    rather than the log-price.}
+  \item{tail}{See \code{\link[mvtnorm]{qmvnorm}} of package
+    \code{mvtnorm}.}
   \item{\dots}{Further arguments to be passed to methods of package
     \code{mvtnorm}.}
 }
@@ -107,7 +106,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link[=schwartz2factor-class]{schwartz2factor}}-class
+  \code{\link[=schwartz2f-class]{schwartz2f}}-class
   description, \code{\link{rstate}} and \code{\link{simstate}} for random
   number generation.
 
@@ -115,8 +114,8 @@
 
 % <---------------------------------------------------------------------->
 \examples{
-## Create a "schwartz2factor"-object
-model <- schwartz2factor()
+## Create a "schwartz2f"-object
+model <- schwartz2f()
 
 ## Probability
 pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
@@ -125,7 +124,7 @@ pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
 dstate(x = c(50, 0.03), time = 2, model)
 
 ## Quantile
-qstate(p = 0.5, obj = model)
+qstate(p = 0.5, s0 = model)
 
 }
 

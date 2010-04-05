@@ -1,5 +1,5 @@
 \name{parameter-estimation}
-\alias{fit2factor}
+\alias{fit.schwartz2f}
 \title{Schwartz 1997 commodity model}
 
 % <---------------------------------------------------------------------->
@@ -12,7 +12,7 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-fit2factor(data, ttm, deltat = 1 / 260,
+fit.schwartz2f(data, ttm, deltat = 1 / 260,
            s0 = data[1,1], delta0 = 0,
            mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
            rho = 0.75, lambda = 0,
@@ -81,7 +81,7 @@ fit2factor(data, ttm, deltat = 1 / 260,
 % <---------------------------------------------------------------------->
 \value{
 
-  An object of class \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}}.
+  An object of class \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}.
 
 }
 
@@ -91,7 +91,7 @@ fit2factor(data, ttm, deltat = 1 / 260,
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link[=fit.schwartz2factor-class]{fit.schwartz2factor}} class,
+  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} class,
   \code{\link{pricefutures}}.
 
 }

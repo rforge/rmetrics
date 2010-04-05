@@ -1,5 +1,7 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[authoryear,round]{natbib}
+\usepackage{xr}
+\externaldocument[U-]{UsingSchwartz97}
 \bibliographystyle{plainnat}
 \usepackage{url}
 \usepackage{a4wide}
@@ -43,16 +45,19 @@ pdfstartpage={1}
 % <============================================================>
 \section{Introduction}\label{sec:intro}
 % <============================================================>
-This document will describe the Schwartz two-factor model to the
-extent which is necessary to understand the \RR{} package \Rpackage.  The
-two-factor model describes the spot price of a commodity as well as
-its instantaneous convenience yield. It was introduced in
-\cite{Gibson1990} and extended in \cite{Schwartz1997} for the pricing
-of futures contracts. \cite{Miltersen1998} presented equations for
-arbitrage free prices of European options on commodity futures. In
-particular, they provided a formula for the three-factor model (which
-includes a stochastic interest rate). In what follows we fully rely on
-the above mentioned articles and state the corresponding formulas.
+[See also \ref{U-sec:intro}.]
+
+This document will describe the Schwartz
+two-factor model to the extent which is necessary to understand the
+\RR{} package \Rpackage.  The two-factor model describes the spot
+price of a commodity as well as its instantaneous convenience
+yield. It was introduced in \cite{Gibson1990} and extended in
+\cite{Schwartz1997} for the pricing of futures
+contracts. \cite{Miltersen1998} presented equations for arbitrage free
+prices of European options on commodity futures. In particular, they
+provided a formula for the three-factor model (which includes a
+stochastic interest rate). In what follows we fully rely on the above
+mentioned articles and state the corresponding formulas.
 % <============================================================>
 \section{Model}\label{sec:model}
 % <============================================================>

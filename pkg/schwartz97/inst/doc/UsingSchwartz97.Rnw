@@ -51,7 +51,7 @@ two-factor model describes the joint dynamics of the state variables
 called \emph{convenience yield}).
 
 We believe that the value of this package primarily lies in the
-parameter fitting routine \verb=fit2factor=. Once the parameters of
+parameter fitting routine \verb=fit.schwartz2f=. Once the parameters of
 the two-factor model are known, a number of functions can be used to,
 e.g., draw samples from the model, price derivatives as European
 options, calculate risk-measures, or filter a futures price
@@ -125,21 +125,21 @@ The main-functions of the package~\Rpackage~are the following:\\[1ex]
     \verb=ESfutures= & Expected shortfall of the futures price. \\
     \verb=pricefutures= & Calculate the futures price. \\
     \verb=priceoption= & Calculate the price of a European call or put option. \\
-    \verb=filter2factor= & Filter a futures-price time-series. \\
-    \verb=fit2factor= & Fit the two-factor model to data. \\
+    \verb=filter.schwartz2f= & Filter a futures-price time-series. \\
+    \verb=fit.schwartz2f= & Fit the two-factor model to data. \\
   \end{tabular}
 \end{center}
-\vspace{3mm} Except the function \verb=fit2factor=, all the above
+\vspace{3mm} Except the function \verb=fit.schwartz2f=, all the above
 functions are set to \emph{generic} and accept three different
 signatures (see section \ref{sec:oop}).
 % <------------------------------------------------------------>
 \subsection{Classes}\label{sec:classes}
 % <------------------------------------------------------------>
-The package~\Rpackage~provides the class \verb=schwartz2factor=. This
+The package~\Rpackage~provides the class \verb=schwartz2f=. This
 class contains all parameters which are needed to define the dynamics
 of the state variables \emph{spot price} and \emph{convenience yield}
 under the objective measure $\mathbb{P}$. The class
-\verb=schwartz2factor= has the following slots:\\[1ex]
+\verb=schwartz2f= has the following slots:\\[1ex]
 \begin{center}
   \begin{tabular}{llll}
     Slot name & Class & Symbol & Description\\
@@ -163,20 +163,20 @@ defined\footnote{The suffix ``S'' and ``E'' in the slot names indicate
   uniqueness. Yet in order to allow for a potential extension to the
   three factor model the suffixes are already used.}, together with
 the initial values $s_0$ and $\delta_0$. To create an object of class
-\verb=schwartz2factor= the constructor with the same name can be used
+\verb=schwartz2f= the constructor with the same name can be used
 (see section \ref{sec:init}).
 
-The function \verb=fit2factor=, which fits the two-factor model to
-data, returns an object of class \verb=fit.schwartz2factor=. This
-class inherits from the class \verb=schwartz2factor= and adds around
+The function \verb=fit.schwartz2f=, which fits the two-factor model to
+data, returns an object of class \verb=schwartz2f.fit=. This
+class inherits from the class \verb=schwartz2f= and adds around
 ten slots. Most of them contain information about the fit, as the
 log-likelihood for instance. From a practical point of view, important
-extensions (to class \verb=schwartz2factor=) by the class
-\verb=fit.schwartz2factor= refer to parameters which are needed to
+extensions (to class \verb=schwartz2f=) by the class
+\verb=schwartz2f.fit= refer to parameters which are needed to
 work with derivatives (as the market price of convenience yield risk
 parameter $\lambda$). The following table describes these slots. A
 complete description of the slots can be found in the R-documentation
-(type \verb=?fit.schwartz2factor-class=
+(type \verb=?schwartz2f.fit-class=
 in the R-console).\\[1ex]
 \begin{center}
   \begin{tabular}{llll}
@@ -188,7 +188,7 @@ in the R-console).\\[1ex]
   \end{tabular}
 \end{center}
 \vspace{3mm} These slots together with the ones contained in the class
-\verb=schwartz2factor= fully determine the dynamics of the model under
+\verb=schwartz2f= fully determine the dynamics of the model under
 both, the objective measure $\mathbb{P}$ and the equivalent martingale
 measure $\mathbb{Q}$. Notice that one of the parameters \verb=lambda=
 and \verb=alphaT= is redundant according to equation \ref{eq:Q-drift}.
@@ -196,7 +196,7 @@ and \verb=alphaT= is redundant according to equation \ref{eq:Q-drift}.
 \subsection{Object Orientation}\label{sec:oop}
 % <------------------------------------------------------------>
 As mentioned earlier all functions listed in section
-\ref{sec:functions} (except \verb=fit2factor=) are set to generic.
+\ref{sec:functions} (except \verb=fit.schwartz2f=) are set to generic.
 The idea is to leave some freedom to the user, who can decide
 whether he wants to use an object-oriented approach or provide a
 fairly large set of arguments for each function-call.
@@ -210,10 +210,10 @@ dfutures(x, ttm = 1, s0 = 50, delta0 = 0,
          sigmaE = 0.5, rho = 0.75, r = 0.05, lambda = 0,
          alphaT = NULL, ...)
 
-## S4 method for signature 'ANY, ANY, schwartz2factor':
+## S4 method for signature 'ANY, ANY, schwartz2f':
 dfutures(x, ttm = 1, object, r = 0.05, lambda = 0, alphaT = NULL, ...)
 
-## S4 method for signature 'ANY, ANY, fit.schwartz2factor':
+## S4 method for signature 'ANY, ANY, schwartz2f.fit':
 dfutures(x, ttm = 1, object, ...)
 \end{verbatim}
 Without using objects, the function takes twelve arguments. Ten
@@ -222,7 +222,7 @@ The futures price, yet calculated based on the dynamics under the
 equivalent martingale measure $\mathbb{Q}$, is a function of the state
 variables which evolve under the objective measure $\mathbb{P}$.
 
-If the parameters are estimated by the function \verb=fit2factor=, we
+If the parameters are estimated by the function \verb=fit.schwartz2f=, we
 completely know the transition density. Hence, for a given point in
 time the distribution is defined under both measures. Therefore, the
 only additional arguments are \verb=x= and \verb=ttm= (\emph{time
@@ -232,13 +232,13 @@ On the other hand, if for instance the object of interest is the
 density of the futures price as a function of the state variables, it
 may be handy to use the function which takes all parameters as
 arguments, i.e. no object. Doing so, a repeated initialization of
-\verb=schwartz2factor= objects with different \verb=s0= and
+\verb=schwartz2f= objects with different \verb=s0= and
 \verb=delta0= can be avoided.
 % <============================================================>
 % <============================================================>
 \section{Object Initialization}\label{sec:init}
 % <============================================================>
-A \verb=schwartz2factor= object with reasonable parameters is
+A \verb=schwartz2f= object with reasonable parameters is
 constructed in the following code chunk.
 <<>>=
 library(schwartz97)
@@ -251,7 +251,7 @@ alpha <- 0.05
 sigmaE <- 0.3
 rho <- 0.4
 
-obj <- schwartz2factor(s0 = s0, delta0 = delta0, alpha = alpha,
+obj <- schwartz2f(s0 = s0, delta0 = delta0, alpha = alpha,
                        mu = mu, sigmaS = sigmaS, sigmaE = sigmaE,
                        rho = rho, kappa = kappa)
 obj
@@ -260,7 +260,7 @@ obj
 % <============================================================>
 \section{Working with the state variables}\label{sec:state}
 % <============================================================>
-As soon as a \verb=schwartz2factor= object is constructed it can be
+As soon as a \verb=schwartz2f= object is constructed it can be
 passed to the functions \verb=dstate=, \verb=pstate=, \verb=qstate=,
 \verb=rstate=, and \verb=simstate=. As we know the distribution of the
 state variables for a given point in time in the future, once this
@@ -377,7 +377,7 @@ the market price of convenience yield risk $\lambda$ for instance: At
 first glance, it is difficult to assign a value to a parameter which
 enters a stochastic differential equation of a non-observable process
 (the convenience yield process). However, the parameters can be
-estimated by the function \verb=fit2factor= (see section
+estimated by the function \verb=fit.schwartz2f= (see section
 \ref{sec:parameter-estimation}. For the moment, assume all the
 parameters are known such that the price of a derivative can be
 computed.\\[2ex]
@@ -404,7 +404,7 @@ priceoption("call", time = 1, Time = 2, K = 390, g0 = 370,
 % <============================================================>
 As mentioned in section \ref{sec:intro}, we think that the most
 valuable piece of code of the package~\Rpackage~is in the function
-\verb=fit2factor=. This function can estimate all the nine parameters
+\verb=fit.schwartz2f=. This function can estimate all the nine parameters
 involved in equations (\ref{eq:Pdynamics-S}) -
 (\ref{eq:Qdynamics-delta}) (including the initial values of the state
 variables $s_0$ and $\delta_0$). The estimation procedure is based on
@@ -413,10 +413,10 @@ two Gaussian random variables (the log-spot price and the convenience
 yield), it is the most straightforward way to use a linear state-space
 model.
 
-The header of the function \verb=fit2factor= looks like
+The header of the function \verb=fit.schwartz2f= looks like
 
 <<>>=
-  args(fit2factor)
+  args(fit.schwartz2f)
 @
 
 The only mandatory inputs are \verb=data= and \verb=ttm=. \verb=data=
@@ -442,7 +442,7 @@ We have around 7000 daily observations from Jan. 1989 to Jan. 2009 of
 8 simultaneously listed copper futures prices. Now, we want to
 estimate the parameters. As the data must not have NA's, we first
 compute the indexes of rows containing NA's. Then, we use the default
-arguments of the function \verb=fit2factor= to estimate the
+arguments of the function \verb=fit.schwartz2f= to estimate the
 parameters. That is, all parameters except the initial values
 \verb=s0= and \verb=delta0= are estimated and the standard deviation
 of the measurement equation error is assumed to be equal for all
@@ -455,7 +455,7 @@ data(futures)
 
 na.idx <- apply(is.na(copper$futures), 1, any)
 
-copper.fit <- fit2factor(copper$futures[!na.idx,], copper$ttm[!na.idx,],
+copper.fit <- fit.schwartz2f(copper$futures[!na.idx,], copper$ttm[!na.idx,],
                          control = list(maxit = 100, reltol = 1e-3),
                          silent = TRUE)
 copper.fit
@@ -488,7 +488,7 @@ filtered to estimate the state variables. Figure
 \ref{fig:filtered-state} shows a plot of the estimated spot price and
 convenience yield.
 <<>>=
-filtered <- filter2factor(copper$futures[!na.idx,], copper$ttm[!na.idx,], copper.fit)
+filtered <- filter.schwartz2f(copper$futures[!na.idx,], copper$ttm[!na.idx,], copper.fit)
 @
 \begin{figure}\centering
 <<fig=TRUE,echo=FALSE>>=
@@ -504,8 +504,8 @@ plot(filtered$state[, "delta"], type = "l",
 legend("top", legend = "Convenience yield")
 @
 \caption{Futures prices are filtered based on the parameters estimated
-  by \textsf{fit2factor}. As a result of the function
-  \textsf{filter2factor}, we obtain the spot price and the convenience
+  by \textsf{fit.schwartz2f}. As a result of the function
+  \textsf{filter.schwartz2f}, we obtain the spot price and the convenience
   yield. The top panel shows the estimated spot price together with
   the closest to maturity futures price. The prices can hardly be
   distinguished. The estimated convenience yield is plotted in the
@@ -515,7 +515,7 @@ legend("top", legend = "Convenience yield")
 
 The output of the fitting procedure was stored in the variable
 \verb=copper.fit=. As this object is of class
-\verb=fit.schwartz2factor=, it contains all information needed to
+\verb=schwartz2f.fit=, it contains all information needed to
 price derivatives. To give an example, we calculate the price of a
 European put option written on a copper futures with strike price
 90. The futures expires in 3 years, and the option in 2 years. We also

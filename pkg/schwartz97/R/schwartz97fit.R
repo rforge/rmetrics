@@ -1,17 +1,16 @@
 ## <---------------------------------------------------------------------->
-fit2factor <- function(data, ttm, deltat = 1 / 260,
-                       s0 = data[1,1],
-                       delta0 = 0,
-                       mu = 0.1, sigmaS = 0.3,
-                       kappa = 1, alpha = 0, sigmaE = 0.5,
-                       rho = 0.75, lambda = 0,
-                       meas.sd = rep(0.02, ncol(data)),
-                       opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE,
-                                    sigmaS = TRUE, kappa = TRUE, alpha = TRUE,
-                                    sigmaE = TRUE, rho = TRUE, lambda = TRUE),
-                       opt.meas.sd = c("scalar", "all", "none"),
-                       r = 0.05,
-                       silent = FALSE, ...)
+fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
+                           s0 = data[1,1],
+                           delta0 = 0,
+                           mu = 0.1, sigmaS = 0.3,
+                           kappa = 1, alpha = 0, sigmaE = 0.5,
+                           rho = 0.75, lambda = 0,
+                           meas.sd = rep(0.02, ncol(data)),
+                           opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE,
+                             sigmaS = TRUE, kappa = TRUE, alpha = TRUE,
+                             sigmaE = TRUE, rho = TRUE, lambda = TRUE),
+                           opt.meas.sd = c("scalar", "all", "none"),
+                           r = 0.05, silent = FALSE, ...)
 {
   call <- match.call()
 
@@ -19,10 +18,9 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
 
   time.0 <- proc.time()
 
-  if(!all(opt.pars %in% c(TRUE, FALSE)) || (length(opt.pars) != 9))
+  if(!(is.logical(opt.pars) & (length(opt.pars) == 9)))
     {
-      stop("'opt.pars' is misspecified: Elements must be either",
-           "'TRUE' or 'FALSE' and the length must be 9!\n")
+      stop("'opt.pars' must be of class 'logical' and of length 9!\n")
     }
 
   ## Internal function to compute the log-likelihood
@@ -192,7 +190,7 @@ fit2factor <- function(data, ttm, deltat = 1 / 260,
 
 ##   state <- cbind(S = exp(filtered.ts$att[1,]), delta = filtered.ts$att[2,])
 
-  return(new("fit.schwartz2factor",
+  return(new("schwartz2f.fit",
              call = call,
              s0 = unname(exp(theta["log.s0"])),
              delta0 = unname(theta["delta0"]),

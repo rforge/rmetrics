@@ -3,12 +3,12 @@
 \title{Schwartz two-factor Model: Sampling from the State Variables}
 
 \alias{rstate}
-\alias{rstate,ANY,ANY,missing-method}
-\alias{rstate,ANY,ANY,schwartz2factor-method}
+\alias{rstate,ANY,ANY,numeric-method}
+\alias{rstate,ANY,ANY,schwartz2f-method}
 
 \alias{simstate}
-\alias{simstate,ANY,ANY,missing-method}
-\alias{simstate,ANY,ANY,schwartz2factor-method}
+\alias{simstate,ANY,ANY,numeric-method}
+\alias{simstate,ANY,ANY,schwartz2f-method}
 
 
 % <---------------------------------------------------------------------->
@@ -25,17 +25,17 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-\S4method{rstate}{ANY,ANY,missing}(n, time = 1, s0 = 50, delta0 = 0,
+\S4method{rstate}{ANY,ANY,numeric}(n, time = 1, s0 = 50, delta0 = 0,
         mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
         sigmaE = 0.5, rho = 0.75, method = "chol")
 
-\S4method{rstate}{ANY,ANY,schwartz2factor}(n, time = 1, object, method = "chol")
+\S4method{rstate}{ANY,ANY,schwartz2f}(n, time = 1, s0, method = "chol")
 
-\S4method{simstate}{ANY,ANY,missing}(n, time = 1, s0 = 50, delta0 = 0,
+\S4method{simstate}{ANY,ANY,numeric}(n, time = 1, s0 = 50, delta0 = 0,
           mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
           sigmaE = 0.5, rho = 0.75, method = "chol")
 
-\S4method{simstate}{ANY,ANY,schwartz2factor}(n, time = 1, object, method = "chol")
+\S4method{simstate}{ANY,ANY,schwartz2f}(n, time = 1, s0, method = "chol")
 
 }
 
@@ -47,10 +47,9 @@
     \code{mvtnorm}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
-  \item{object}{An object inheriting from class
-    \code{\link[=schwartz2factor-class]{schwartz2factor}}.}
-  \item{s0}{A \code{numeric} representing the initial value of the
-    commodity spot price.}
+  \item{s0}{Either a \code{numeric} representing the initial value of the
+    commodity spot price or an object inheriting from class
+  \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
@@ -87,7 +86,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link[=schwartz2factor-class]{schwartz2factor}}-class
+  \code{\link[=schwartz2f-class]{schwartz2f}}-class
   description.
   \code{\link[=dstate]{d/p/q/state}} for density, distribution function
   and quantile function of the state variables.
@@ -96,11 +95,11 @@
 }
 % <---------------------------------------------------------------------->
 \examples{
-## Create a "schwartz2factor"-object
-model <- schwartz2factor()
+## Create a "schwartz2f"-object
+model <- schwartz2f()
 
 ## Sample
-sim <- rstate(n = 1000, object = model)
+sim <- rstate(n = 1000, s0 = model)
 par(mfrow = c(1, 2))
 hist(sim[,1], main = "Spot Price")
 hist(sim[,2], main = "Convenience Yield")
