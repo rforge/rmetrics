@@ -26,7 +26,7 @@ pdfstartpage={1}
 \newcommand{\sigmaS}{\sigma_S}
 \newcommand{\sigmaE}{\sigma_\epsilon}
 % <---------------------------------------------------------------------->
-\SweaveOpts{engine=R,eps=FALSE}
+\SweaveOpts{engine=R,eps=TRUE}
 %%\VignetteIndexEntry{User Guide}
 \title{Using the \Rpackage~package}
 \author{Philipp Erb, David L\"{u}thi \& Simon Otziger}%\\\email{otis@zhaw.ch}}
@@ -35,7 +35,7 @@ pdfstartpage={1}
 \maketitle
 \begin{abstract}
   The purpose of this document is to show how the \RR{}
-  package~\Rpackage~can be used. This is done by numerous examples and
+  package \Rpackage can be used. This is done by numerous examples and
   explanations. In addition, this document aims at giving some
   intuition.
 \end{abstract}
@@ -44,7 +44,7 @@ pdfstartpage={1}
 % <============================================================>
 \section{Introduction}\label{sec:intro}
 % <============================================================>
-The package~\Rpackage~provides a set of functions to work with the
+The package \Rpackage~provides a set of functions to work with the
 two-factor model of \cite{Gibson1990} and \cite{Schwartz1997}. The
 two-factor model describes the joint dynamics of the state variables
 \emph{spot price} and \emph{spot convenience yield} (later simply

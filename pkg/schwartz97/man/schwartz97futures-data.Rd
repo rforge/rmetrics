@@ -9,16 +9,20 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  Prices of the eigth closest to maturity futures contracts of different
-  commoditites. The prices are historical prices provided by Bloomberg
-  plus Gaussian white noise with one percent relative standard
-  deviation.
+  Prices of the eigth closest to maturity futures contracts of three
+  different commoditites: copper, crude oil, and soybeans. The prices
+  are historical prices provided by Bloomberg plus Gaussian white noise
+  with one percent relative standard deviation.
 
 }
 % <---------------------------------------------------------------------->
 \usage{data(futures)}
 % <---------------------------------------------------------------------->
 \format{
+ 
+  Three lists with names \dQuote{copper}, \dQuote{crude.oil}, and
+  \dQuote{soybeans} are loaded. Each list has three elements
+
   \describe{
     \item{\code{date}}{The observation date as character.}
     \item{\code{futures}}{Futures prices of eight different futures
@@ -28,15 +32,16 @@
     \item{\code{ttm}}{The time to maturity of the futures contracts
       as a \code{\link{matrix}}. The colnames are
       \dQuote{mat1}, \dots, \dQuote{mat8} (see \bold{Details}.)}
-    % \item{\code{spot}}{A numeric vector containing the spot price.}
+
     }
-  }
+    
+}
 % <---------------------------------------------------------------------->
 \details{
 
   The elements \code{$futures} and \code{$ttm} have the following
   interpretation: \code{$futures[i,j]} denotes the price of the futures
-  contract with time to maturity \code{$ttm[i,j]}.
+  contract with time to maturity \code{$ttm[i,j]} in units of days.\cr
 
   Since the datasets also include holidays and weekends, the element
   \code{$futures} contains \code{NA} values.

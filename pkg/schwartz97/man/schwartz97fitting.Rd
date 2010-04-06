@@ -13,16 +13,16 @@
 \usage{
 
 fit.schwartz2f(data, ttm, deltat = 1 / 260,
-           s0 = data[1,1], delta0 = 0,
-           mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
-           rho = 0.75, lambda = 0,
-           meas.sd = rep(0.02, ncol(data)),
-           opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, sigmaS = TRUE,
-                        kappa = TRUE, alpha = TRUE, sigmaE = TRUE,
-                        rho = TRUE, lambda = TRUE),
-           opt.meas.sd = c("scalar", "all", "none"),
-           % P0 = 2 * diag(c(var(as.vector(data)), 1)),
-           r = 0.05, silent = FALSE, \dots)
+               s0 = data[1,1], delta0 = 0,
+               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
+               rho = 0.75, lambda = 0,
+               meas.sd = rep(0.02, ncol(data)),
+               opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, sigmaS = TRUE,
+                            kappa = TRUE, alpha = TRUE, sigmaE = TRUE,
+                            rho = TRUE, lambda = TRUE),
+               opt.meas.sd = c("scalar", "all", "none"),
+               % P0 = 2 * diag(c(var(as.vector(data)), 1)),
+               r = 0.05, silent = FALSE, \dots)
 
 }
 
