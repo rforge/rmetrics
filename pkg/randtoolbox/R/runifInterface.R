@@ -47,8 +47,8 @@
 ### 
 
 
-set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NULL, seed=NULL, ...,
-		only.dsc=FALSE)
+set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "default"), parameters=NULL, seed=NULL, ...,
+	only.dsc=FALSE)
 {
 	name <- match.arg(name)
 	dots <- list(...)
@@ -105,6 +105,29 @@ set.generator <- function(name=c("congruRand", "WELL", "default"), parameters=NU
 					integer(size),
 					PACKAGE="rngWELL")[[3]]
 		description <- list(name=name, parameters=parameters, state=state)
+	} else if (name == "MersenneTwister")
+	{
+		if (is.null(parameters))
+			parameters <- c(initialization=dots$initialization, resolution=dots$resolution)
+		if (!identical(names(parameters), c("initialization", "resolution")))
+		{
+			param.names <- paste(names(parameters),collapse=" ")
+			stop("parameter list \"", param.names, "\" is not correct for MersenneTwister")
+		}
+		type <- match(parameters["initialization"], c("init2002", "array2002"), nomatch=0)
+		if (type == 0)
+			stop("initialization ", parameters["initialization"], " is not in c(\"init2002\", \"array2002\")")
+		if ( ! parameters["resolution"] %in% c("32", "53"))
+			stop("resolution \"", parameters["resolution"], "\" is not in c(\"32\", \"53\")")
+		if (is.null(seed))
+			seed <- floor(2^31 * runif(1))
+		state <- .C("initMersenneTwister",
+					as.integer(type),
+					length(seed),
+					as.integer(seed),
+					state=integer(625),
+					PACKAGE="randtoolbox")$state
+		description <- list(name=name, parameters=parameters, state=state)
 	} else if (name == "default")
 	{
 		RNGkind("default")
@@ -151,10 +174,20 @@ put.description <- function(description)
 		RNGkind("user-supplied")
 		.C("putRngWELL",
 			as.integer(parameters["order"]),
-			match(parameters["version"], c("a", "b")),
+			match(parameters["version"], c("a", "b"), nomatch=0),
 			as.integer(parameters["temp"] == "Temp"),
 			as.integer(state),
 			PACKAGE="rngWELL")
+	} else if (name == "MersenneTwister")
+	{
+		.C("set_noop", PACKAGE="randtoolbox")
+		RNGkind("user-supplied")
+		.C("putMersenneTwister",
+			match(parameters["initialization"], c("init2002", "array2002"), nomatch=0),
+			as.integer(parameters["resolution"]),
+			as.integer(state),
+			NAOK=TRUE,
+			PACKAGE="randtoolbox")
 	} else 
 		stop("unsupported generator: ", name)
 	invisible(NULL)
@@ -206,8 +239,21 @@ get.description <- function()
 		size <- ceiling(tmp$order/32)
 		state <- tmp$state[1:size]
 		literature <- "Panneton - L'Ecuyer - Matsumoto"
+	} else if (generator == 3)
+	{
+		name <- "MersenneTwister"
+		tmp <- .C("getMersenneTwister",
+			initialization = integer(1),
+			resolution = integer(1),
+			state = integer(625),
+			PACKAGE="randtoolbox")
+		initialization <- c("init2002", "array2002")[tmp$initialization]
+		resolution <- as.character(tmp$resolution)
+		parameters <- c(initialization=initialization, resolution=resolution)
+		state <- tmp$state
+		literature <- "M. Matsumoto, T. Nishimura, 1998"
 	} else
 		stop("internal error of randtoolbox")
-	list(name=name, authors=literature, parameters=parameters, state=state)
+	list(name=name, parameters=parameters, state=state, authors=literature)
 }
 
