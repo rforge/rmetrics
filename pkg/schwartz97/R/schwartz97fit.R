@@ -22,16 +22,22 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
     {
       stop("'opt.pars' must be of class 'logical' and of length 9!\n")
     }
-
+  if(!is.matrix(data)){
+    stop("'data' must be a matrix!")
+  }
+  if(!is.matrix(ttm)){
+    stop("'ttm' must be a matrix!")
+  }
+  ## ---------------------------------------------------------------------------
   ## Internal function to compute the log-likelihood
   log.likelihood.2f <- function(thetaOpt, thetaConst, thetaNames,
                                 data, ttm, deltat, r, d, n,
                                 meas.sd, opt.meas.sd, silent)
     {
       if(!is.na(thetaOpt["rho"]))
-      {
+        {
           thetaOpt["rho"] <- 2 * atan(thetaOpt["rho"]) / pi
-      }
+        }
 
       theta <- c(thetaOpt, thetaConst)
       theta <- theta[thetaNames]
@@ -65,9 +71,9 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
                            GGt = stateSpace$GGt)$logLik
 
       if(!is.na(thetaOpt["rho"]))
-      {
+        {
           thetaOpt["rho"] <- tan(thetaOpt["rho"] * pi / 2)
-      }
+        }
 
 
       theta.backup <<- rbind(theta.backup, c(logLikelihood, theta))
@@ -84,12 +90,9 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
       return(-logLikelihood)
 
     }
+  ## ---------------------------------------------------------------------------
 
-  theta <- c(log(s0), delta0, mu, sigmaS, kappa,
-             alpha, sigmaE, rho, lambda, meas.sd)
-
-  data <- log(as.matrix(data))
-  ttm <- as.matrix(ttm)
+  data <- log(data)
 
   ## Initialization
   d <- ncol(data)                      # Dimension of the observations
@@ -106,6 +109,9 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   thetaNames <- c("log.s0", "delta0", "mu", "sigmaS", "kappa",
                   "alpha", "sigmaE", "rho", "lambda",
                   paste("meas.sd", 1:d, sep = ""))
+
+  theta <- c(log(s0), delta0, mu, sigmaS, kappa,
+             alpha, sigmaE, rho, lambda, meas.sd)
 
   names(theta) <- thetaNames
 
@@ -125,10 +131,10 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   thetaConst <- theta[!opt.pars]
 
   if(!is.na(thetaOpt["rho"]))
-  {
+    {
       thetaOpt["rho"] <- tan(thetaOpt["rho"] * pi / 2)
       theta["rho"] <- tan(theta["rho"] * pi / 2)
-  }
+    }
 
   theta.backup <- rbind(c(NA, unname(theta)))
   colnames(theta.backup) <- c("logLik", thetaNames)
@@ -144,16 +150,16 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
     convergence <- NA
     n.iter <- nrow(theta.backup)
     message <- mle
-    thetaOpt <- theta.backup[nrow(theta.backup), ]
+    thetaOpt <- theta.backup[nrow(theta.backup), -1]
   }else{
     convergence <- mle$convergence
     n.iter <- mle$counts[1]
     message <- NULL
     if(!is.na(thetaOpt["rho"]))
-    {
+      {
         rho.pos <- which(names(thetaOpt) == "rho")
         mle$par[rho.pos] <- 2 * atan(mle$par[rho.pos]) / pi
-    }
+      }
     thetaOpt <- mle$par
   }
 
@@ -188,7 +194,7 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
                      ct = stateSpace$ct,
                      GGt = stateSpace$GGt)
 
-##   state <- cbind(S = exp(filtered.ts$att[1,]), delta = filtered.ts$att[2,])
+  ##   state <- cbind(S = exp(filtered.ts$att[1,]), delta = filtered.ts$att[2,])
 
   return(new("schwartz2f.fit",
              call = call,

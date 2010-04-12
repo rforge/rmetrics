@@ -13,12 +13,12 @@
 \description{
 
   The \code{schwartz2f} class stores parameters which appear in the
-  dynamics of the state variables (under the objective measure). The
-  class \code{schwartz2f.fit} inherits from the
-  \code{schwartz2f} class. The class \code{schwartz2f.fit}
-  adds slots containing data regarding the fit and parameters of the
-  risk-neutral dynamics. In particular, it adds the market-price-of
-  convenience-yield risk \code{lambda} and the interest rate.
+  dynamics of the state variables. The class \code{schwartz2f.fit}
+  inherits from the \code{schwartz2f} class. The class
+  \code{schwartz2f.fit} adds slots containing data regarding the fit and
+  parameters of the risk-neutral dynamics. In particular, it adds the
+  market-price-of convenience-yield risk \code{lambda} and the interest
+  rate.
 
 }
 % <---------------------------------------------------------------------->
@@ -38,11 +38,14 @@
       class \code{numeric}.}
     \item{\code{mu}:}{Enters the drift of the commodity spot-price (in
       the Objective measure, see \bold{Details}) of class \code{numeric}.}
-    \item{\code{sigmaS}:}{Diffusion parameter of the spot-price process of class \code{numeric}.}
+    \item{\code{sigmaS}:}{Diffusion parameter of the spot-price process
+      of class \code{numeric}.} 
     \item{\code{kappaE}:}{Speed of mean-reversion of the
       convenience-yield process of lass \code{numeric}.}
-    \item{\code{alpha}:}{Mean-level of the convenience-yield process of class \code{numeric}.}
-    \item{\code{sigmaE}:}{Diffusion parameter of the convenience-yield process of class \code{numeric}.}
+    \item{\code{alpha}:}{Mean-level of the convenience-yield process of
+      class \code{numeric}.}
+    \item{\code{sigmaE}:}{Diffusion parameter of the convenience-yield
+      process of class \code{numeric}.} 
     \item{\code{rhoSE}:}{Correlation between the two Brownian motions
       which drive the spot-price and convenience-yield processes of
       class \code{numeric}.}
@@ -54,9 +57,10 @@
       \code{numeric}.}
     \item{\code{llh}:}{The log likelihood value of class
       \code{numeric}.}
-    \item{\code{converged}:}{A boolean whether the fit converged or not.
-                             Object of class \code{logical}.}
-    \item{\code{error.code}:}{An error code of class \code{numeric}.}
+    \item{\code{converged}:}{A boolean whether the fit converged or
+      not. Object of class \code{logical}.}
+    \item{\code{error.code}:}{An error code of class \code{numeric}. The
+      value of \code{\link{optim}}'s \dQuote{convergence}.}
     \item{\code{error.message}:}{An error message of class
       \code{character}.}
     \item{\code{fitted.params}:}{A boolean vector stating which
@@ -65,14 +69,12 @@
     during the fitting procedure of class \code{matrix}.}
     \item{\code{r}:}{The risk-free interest rate of class \code{numeric}.}
     \item{\code{alphaT}:}{The mean-value of the convenience-yield
-    process under the equivalent martingale measure of class
+      process under the equivalent martingale measure of class 
     \code{numeric} (see \bold{Details}).}
     \item{\code{lambda}:}{The market price of convenience-yield risk of
       class \code{numeric}.}
-    \item{\code{meas.sd}:}{The standard deviation of the measurement equantion of class
-      \code{numeric}.}
-%     \item{\code{state}:}{The spot-price and the convenience-yield
-%     filtered based on the fitted parameters of class \code{matrix}.}
+    \item{\code{meas.sd}:}{The standard deviation of the measurement
+      equantion of class \code{numeric}.}
   \item{\code{deltat}:}{The time-increment of the transition equation
     of class \code{numeric}.}
 
@@ -82,11 +84,10 @@
 \section{Details}{
 
   The joint dynamics of the spot-price and the convenience yield are
-  given by the stochastic differential equations \deqn{dS_t = (\mu -
-  \delta_t) S_t dt + \sigma_S~S_t~dW_t^1,}{dS = (mu - delta) * S * dt +
-  sigmaS * S * dW1,} \deqn{d \delta_t = \kappa (\alpha - \delta_t) dt +
-  \sigma_E dW_t^2}{d delta = kappa * (alpha - delta) * dt + sigmaE *
-  dW2} \deqn{dW_t^1~dW_t^2 = \rho dt,}{dW1 * dW2 = rho dt,} where
+  given by the stochastic differential equations
+  \deqn{dS_t = (\mu - \delta_t) S_t dt + \sigma_S~S_t~dW_t^1,}{dS = (mu - delta) * S * dt + sigmaS * S * dW1,}
+  \deqn{d \delta_t = \kappa (\alpha - \delta_t) dt +\sigma_E dW_t^2}{d delta = kappa * (alpha - delta) * dt + sigmaE * dW2}
+  \deqn{dW_t^1~dW_t^2 = \rho dt,}{dW1 * dW2 = rho dt,} where
   \eqn{W^1, \, W^2}{W1, W2} are Brownian motions under the objective
   measure.
 

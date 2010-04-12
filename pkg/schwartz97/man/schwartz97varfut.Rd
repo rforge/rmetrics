@@ -20,16 +20,16 @@
 \usage{
 
 \S4method{VaRfutures}{ANY,ANY,ANY,numeric}(level = 0.95, time = 0.1, ttm
-           = 1, g0 = 50, type = c("return", "nominal"), delta0 = 0,
+           = 1, g0 = 50, type = c("loss", "nominal"), delta0 = 0,
            mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
            rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL)
 
 \S4method{VaRfutures}{ANY,ANY,ANY,schwartz2f}(level = 0.95, time =
-           0.1, ttm = 1, g0, type = c("return", "nominal"), r = 0.05,
+           0.1, ttm = 1, g0, type = c("loss", "nominal"), r = 0.05,
            lambda = 0, alphaT = NULL)
 
 \S4method{VaRfutures}{ANY,ANY,ANY,schwartz2f.fit}(level = 0.95,
-          time = 0.1, ttm = 1, g0, type = c("return", "nominal"))
+          time = 0.1, ttm = 1, g0, type = c("loss", "nominal"))
 
 }
 
@@ -41,8 +41,8 @@
   \item{g0}{Either a \code{numeric} representing the initial value of the
     \emph{futures price} or an object inheriting from class
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
-  \item{type}{Either \code{"return"} (VaR of negative futures price
-    log-return) or \code{"nominal"} (VaR of futures price). For details
+  \item{type}{Either \code{"loss"} (VaR of futures price change) or
+    \code{"nominal"} (VaR of futures price). For details 
     see package vignette.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{Drift term of commodity spot price.}
@@ -113,7 +113,7 @@
 % <---------------------------------------------------------------------->
 \examples{
 VaRfutures(level = 0.95, time = 0.1, ttm = 0.5, g0 = 45, type =
-           "return", alphaT = 0)
+           "loss", alphaT = 0)
 
 ## Create a "schwartz2f"-obect
 model <- schwartz2f()

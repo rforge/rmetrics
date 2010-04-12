@@ -29,16 +29,16 @@ pdfstartpage={1}
 \newcommand{\sigmaE}{\sigma_\epsilon}
 %%\VignetteIndexEntry{Technical Document}
 \title{Schwartz 1997 Two-Factor Model\\Technical Document}
-\author{Philipp Erb, David L\"{u}thi \& Simon Otziger}%\\\email{philipp.erb@zhaw.org}}
+\author{Philipp Erb \and David L\"{u}thi \and Simon Otziger}
 \date{\today}
 \begin{document}
 \maketitle
 \begin{abstract}
   The purpose of this document is to give the formulas and relations
-  needed to understand the Schwartz two-factor model
+  needed to understand the Schwartz two-factor commodity model
   \citep{Schwartz1997}. This includes parameter estimation using the
-  Kalman filter as well as pricing of European options according to
-  \cite{Miltersen1998}.
+  Kalman filter, pricing of European options according to
+  \cite{Miltersen1998} as well as computation of risk measures.
 \end{abstract}
 
 %\tableofcontents
@@ -47,17 +47,15 @@ pdfstartpage={1}
 % <============================================================>
 [See also \ref{U-sec:intro}.]
 
-This document will describe the Schwartz
-two-factor model to the extent which is necessary to understand the
-\RR{} package \Rpackage.  The two-factor model describes the spot
-price of a commodity as well as its instantaneous convenience
-yield. It was introduced in \cite{Gibson1990} and extended in
-\cite{Schwartz1997} for the pricing of futures
-contracts. \cite{Miltersen1998} presented equations for arbitrage free
-prices of European options on commodity futures. In particular, they
-provided a formula for the three-factor model (which includes a
-stochastic interest rate). In what follows we fully rely on the above
-mentioned articles and state the corresponding formulas.
+This document will describe the Schwartz two-factor model to the
+extent which is necessary to understand the \RR{} package \Rpackage.
+The two-factor model describes the spot price of a commodity together
+with its instantaneous convenience yield. It was introduced in
+\cite{Gibson1990} and extended in \cite{Schwartz1997} for the pricing
+of futures contracts. \cite{Miltersen1998} presented equations for
+arbitrage free prices of European options on commodity futures. In
+what follows we fully rely on the above mentioned articles and state
+the corresponding formulas. [MENTION CLOSE FORM ETC, dW HAS TO BE IN LINE]
 % <============================================================>
 \section{Model}\label{sec:model}
 % <============================================================>
@@ -73,8 +71,7 @@ yield are assumed to follow the joint stochastic process:
 with Brownian motions $W_S$ and $W_\epsilon$ under the objective
 measure $\mathbb{P}$ and correlation $dW_SdW_\epsilon = \rho dt$.
 
-Under the equivalent martingale measure $\mathbb{Q}$ the dynamics are
-of the form
+Under the pricing measure $\mathbb{Q}$ the dynamics are of the form
 \begin{eqnarray}
   dS_t &=& (r - \delta_t) S_t dt + \sigmaS S_t
   d\widetilde{W}_S   \label{eq:Qdynamics-S} \\
@@ -87,9 +84,9 @@ $\mathbb{Q}$-Brownian motions. It may be handy to introduce a
 new mean-level for the convenience yield process under $\mathbb{Q}$
 \begin{equation}
   \label{eq:Q-drift}
- \tilde{\alpha} = \alpha - \lambda / \kappa.
+ \tilde{\alpha} = \alpha - \lambda / \kappa,
 \end{equation}
-Its dynamics thus becomes
+which leads to the dynamics
 \begin{equation}
 d\delta_t = \kappa (\tilde{\alpha} - \delta_t) dt + \sigmaE
   d\widetilde{W}_\epsilon.
@@ -99,41 +96,41 @@ d\delta_t = \kappa (\tilde{\alpha} - \delta_t) dt + \sigmaE
 % <============================================================>
 \subsection{Joint Distribution of State Variables}
 % <============================================================>
-The log-spot $X_t$ and the convenience yield $\delta_t$ are jointly
-normally distributed (cf. appendix \ref{sec:deriv-joint-distr} for a
+The log-spot $X_t = \log(S_t)$ and the convenience yield $\delta_t$ are jointly
+normally distributed (see appendix \ref{sec:deriv-joint-distr} for a
 derivation):
 \begin{equation}
 \label{jointDist}
 \begin{pmatrix}X_t \\ \delta_t \end{pmatrix} \sim
-\mathcal{N}\left( \boldsymbol{\mu} = \begin{pmatrix}\mu_X \\
-    \mu_\delta \end{pmatrix},
-  \boldsymbol{\Sigma} = \begin{pmatrix}\sigma_X^2 & \sigma_{X\delta}  \\ \sigma_{X\delta} & \sigma_\delta^2  \\
+\mathcal{N}\left( \begin{pmatrix}\mu_X(t) \\
+    \mu_\delta(t) \end{pmatrix},
+  \begin{pmatrix}\sigma_X^2(t) & \sigma_{X\delta}(t)  \\ \sigma_{X\delta}(t) & \sigma_\delta^2(t)  \\
     \end{pmatrix} \right),
 \end{equation}
 with parameters
 \begin{align}
-  \mu_X &= X_0 + \left(\mu - \frac{1}{2}\sigmaS^2 - \alpha\right) t
+  \mu_X(t) &= X_0 + \left(\mu - \frac{1}{2}\sigmaS^2 - \alpha\right) t
   + \left(\alpha  - \delta_0\right) \frac{1 - e^{-\kappa t}}{\kappa}\label{eq:spot-mu}\\
-  \mu_\delta &= e^{-\kappa t}\delta_0 + \alpha \left(1 - e^{-\kappa
+  \mu_\delta(t) &= e^{-\kappa t}\delta_0 + \alpha \left(1 - e^{-\kappa
       t}\right)\label{eq:cy-mu}\\
-  \sigma_X^2 &= \frac{\sigmaE^2}{\kappa^2}
+  \sigma_X^2(t) &= \frac{\sigmaE^2}{\kappa^2}
   \left(\frac{1}{2\kappa}\left(1 - e^{-2\kappa t}\right) -
     \frac{2}{\kappa}\left(1 - e^{-\kappa t}\right) + t\right) +
   2\frac{\sigmaS\sigmaE\rho}{\kappa} \left(\frac{1 - e^{-\kappa
         t}}{\kappa} - t\right) + \sigma^2_St \label{eq:spot-var}\\
-  \sigma_\delta^2 &= \frac{\sigmaE^2}{2\kappa}\left(1 -
+  \sigma_\delta^2(t) &= \frac{\sigmaE^2}{2\kappa}\left(1 -
     e^{-2\kappa t}\right) \label{eq:cy-var}\\
-  \sigma_{X\delta} &= \frac{1}{\kappa}\left\{\left(\sigmaS\sigmaE\rho -
+  \sigma_{X\delta}(t) &= \frac{1}{\kappa}\left\{\left(\sigmaS\sigmaE\rho -
       \frac{\sigmaE^2}{\kappa}\right)\left(1 - e^{-\kappa t}\right) +
     \frac{\sigmaE^2}{2\kappa}\left(1 - e^{-2\kappa
         t}\right)\right\}\label{eq:spot-cov}.
 \end{align}
-The mean-parameters given in equations \ref{eq:spot-mu} and
-\ref{eq:cy-mu} refer to the $\mathbb{P}$-dynamics. To obtain the
+The mean-parameters given in (\ref{eq:spot-mu}) and
+(\ref{eq:cy-mu}) refer to the $\mathbb{P}$-dynamics. To obtain the
 parameters under $\mathbb{Q}$ one can simply replace $\mu$ by $r$ and
 $\alpha$ by $\tilde{\alpha}$ defined in equation \ref{eq:Q-drift}. Let
-the $\mathbb{Q}$-parameters be denoted by $\tilde{\mu}_X$ and
-$\tilde{\mu}_{\delta}$.
+the $\mathbb{Q}$-parameters be denoted by $\tilde{\mu}_X(t)$ and
+$\tilde{\mu}_{\delta}(t)$.
 % <============================================================>
 \section{Futures Price}\label{sec:futures-price}
 % <============================================================> In
@@ -142,22 +139,13 @@ since in our model the interest rate is assumed to be constant. In the
 rest of this document, the statements made about futures contracts
 therefore also hold for forward contracts.
 
-Let the futures price at time $t$ with time to maturity $\tau = (T -
-t)$ be $G(S_t, \delta_t, T - t)$. A futures contract must be priced
-under the spot martingale measure $\mathbb{Q}$. Let's start at time
-zero:
-\begin{equation}
-  \label{futuresPrice}
-  G(S_0, \delta_0, T) = \mathbb{E}^{\mathbb{Q}}(S_T).
-\end{equation}
-From the previous section \ref{sec:distributions} we know that
-$\log(S_T)$ is a Gaussian random variable. Hence we can easily
-calculate the futures price by taking the expectation under the
-measure $\mathbb{Q}$ (i.e. using $\tilde{\mu}_X$ and
-$\tilde{\mu}_{\delta}$).
+Let the futures price at time $t$ with time to maturity $\tau = T - t$
+be $G(S_t, \delta_t, t, T)$. At time zero the futures price is given
+by the $\mathbb{Q}$-expectation of $S_T$.
 \begin{eqnarray}
-  \label{futuresPrice}
-  G(S_0, \delta_0, T) &=& \exp\left\{\tilde{\mu}_X + \frac{1}{2}\sigma_X^2\right\}\\
+  \label{eq:futuresPrice}
+  G(S_0, \delta_0, 0, T) = \mathbb{E}^{\mathbb{Q}}(S_T) &=& \exp\left\{\tilde{\mu}_X(T) +
+    \frac{1}{2}\sigma_X^2(T)\right\}\\
   &=& S_0 e^{A(T) + B(T)\delta_0}
 \end{eqnarray}
 with
@@ -173,55 +161,36 @@ with
 % <============================================================>
 \subsection{Distribution of Futures Prices}
 % <============================================================>
-In the Schwartz model the log-price of a futures contract is a linear
-combination of the models normally distributed state variables and is
-hence also normally distributed, i.e.,
+According to (\ref{eq:futuresPrice}) the futures price follows a
+log-normally law. That is, at time zero the $T$-futures price at time
+$t$ has distribution
 \begin{align}
-\log{G(t,T)} &\sim \mathcal{N}\left(\mu_G, \sigma_G^2\right),\label{distrG}
+  \log{G(S_t, \delta_t, t,T)} &\sim \mathcal{N}\left(\mu_G(t, T),
+    \sigma_G^2(t, T)\right),\label{eq:distrG}
 \end{align}
-where $t$ stands for the time the stochastic processes $\log{G}$ is
-evaluated and $T$ denotes the maturity date.
-
-According to (\ref{jointDist}) and (\ref{futuresPrice}) the parameters
-for the distribution (\ref{distrG}) of the futures price become
+where
 \begin{align}
-  \mu_G &= \mu_X + A(T-t) + B(T-t)\mu_\delta \label{muG} \\
-  \sigma_G^2 &= \sigma_X^2 + 2 B(T-t)\sigma_{X\delta} + +
-  B(T-t)^2 \sigma_\delta. \label{varG}
+  \mu_G(t, T) &= \mu_X(t) + A(T-t) + B(T-t)\mu_\delta(t) \label{eq:muG} \\
+  \sigma_G^2(t, T) &= \sigma_X^2(t) + 2 B(T-t)\sigma_{X\delta}(t) +
+  B(T-t)^2 \sigma_\delta(t). \label{eq:varG}
 \end{align}
-
-
 
 % <============================================================>
 \section{Risk Measures for Futures Contracts}
 \label{sec:Risk}
 % <============================================================>
-The log-returns of futures contracts are normally distributed since in
-our model the futures prices are log-normal. Using this fact,
-closed-form solutions can be obtained for both, value at risk (VaR)
-and expected shortfall (ES).
-
-At time zero and considering a time period $\Delta t$, the
-\textit{negative} log-return or loss $l$ of a futures price with
-maturity $T$ is defined to be
+At time zero the log-loss over a time period $\Delta t$ is defined to
+be
 \begin{equation}
-  l(\Delta t, T) := \log{G(0,T)} - \log{G(\Delta t,T)}
-\end{equation}
-According to (\ref{distrG}) -- (\ref{varG}) the potential loss during
-time period $\Delta t$ is given by
-\begin{equation}
-  \label{distrLoss}
-  l(\Delta t,T) \sim \mathcal{N}\left(\log{G(0,T)}-\mu_G(\Delta
-  t,T),\sigma_G^2(\Delta t,T)\right).
+  l(\Delta t, T) := \log{G(S_0, \delta_0, 0,T)} - \log{G(S_{\Delta t},
+    \delta_{\Delta t}, \Delta t,T)}
 \end{equation}
 
-\subsection{Log-Returns of Futures Price}
-The VaR for the normally distributed negative log-return $l(\Delta
-t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
-  $\alpha = 0.95$.} becomes
+According to (\ref{eq:distrG}) -- (\ref{eq:varG}) the VaR for the is
+therefore
 \begin{equation}
   \label{VaRG}
-  VaR_\alpha^G = \log{G(0,T)} - \mu_G +
+  VaR_\alpha^G = \log{G(S_0, \delta_0, 0,T)} - \mu_G( +
   \sigma_G\Phi^{-1}\left(\alpha\right)
 \end{equation}
 where $\Phi$ denotes the standard normal distribution function and

@@ -7,7 +7,7 @@ setGeneric("VaRfutures",
 
 ### < ---------------------------------------------------------------------- >
 VaRfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50,
-                               type = c("return", "nominal"), delta0 = 0,
+                               type = c("loss", "nominal"), delta0 = 0,
                                mu = 0.1, sigmaS = 0.3, kappa = 1,
                                alpha = 0, sigmaE = 0.5, rho = 0.75,
                                r = 0.05, lambda = 0, alphaT = NULL)
@@ -36,12 +36,11 @@ VaRfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50,
   sigma.fut <- sqrt(.sigma.fut.schwartz2f(sigmaS, kappa, sigmaE,
                                           rho, time, ttm))
 
-  if(type == "return")
-    ans <- log(g0) - mu.fut + sigma.fut * qnorm(level)
-  else{
-    level <- 1 - level
-    ans <- exp(mu.fut + 0.5 * sigma.fut^2) *
-      exp(sigma.fut * (qnorm(level) - 0.5 * sigma.fut))
+  VaR.logret <- mu.fut - sigma.fut * qnorm(level)
+  ans <- 1 - exp(VaR.logret)
+  
+  if(type == "nominal"){
+    ans <- g0 * (1 - ans)
   }
   return(ans)
 }
@@ -52,7 +51,7 @@ setMethod("VaRfutures", signature(level = "ANY", time = "ANY",
 
 ### < ---------------------------------------------------------------------- >
 VaRfutures.schwartz2f <- function(level = 0.95, time = 0.1, ttm = 1,
-                                  g0, type = c("return", "nominal"),
+                                  g0, type = c("loss", "nominal"),
                                   r = 0.05, lambda = 0, alphaT = NULL)
 {
   type <- match.arg(type)
@@ -87,7 +86,7 @@ setMethod("VaRfutures", signature(level = "ANY", time = "ANY",
 
 ### < ---------------------------------------------------------------------- >
 VaRfutures.schwartz2f.fit <- function(level = 0.95, time = 0.1, ttm = 1,
-                                      g0, type = c("return", "nominal"))
+                                      g0, type = c("loss", "nominal"))
 {
   type <- match.arg(type)
   tmp.coef <- coef(g0)
@@ -121,14 +120,12 @@ setGeneric("ESfutures",
            standardGeneric("ESfutures"))
 
 ### < ---------------------------------------------------------------------- >
-ESfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50,
-                              type = c("return", "nominal"), delta0 = 0,
+ESfutures.default <- function(level = 0.95, time = 0.1, ttm = 1,
+                              g0 = 50, delta0 = 0,
                               mu = 0.1, sigmaS = 0.3, kappa = 1,
                               alpha = 0, sigmaE = 0.5, rho = 0.75,
                               r = 0.05, lambda = 0, alphaT = NULL)
 {
-  type <- match.arg(type)
-
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -152,16 +149,9 @@ ESfutures.default <- function(level = 0.95, time = 0.1, ttm = 1, g0 = 50,
   sigma.fut <- sqrt(.sigma.fut.schwartz2f(sigmaS, kappa, sigmaE,
                                           rho, time, ttm))
 
-  if(type == "return")
-    ans <- log(g0) - mu.fut +
-      sigma.fut * dnorm(qnorm(level)) / (1 - level)
-  else{
-    level <- 1 - level
-    ans <- 1 / level * exp(mu.fut + 0.5 * sigma.fut^2) *
-      pnorm(qnorm(level) - sigma.fut)
-  }
 
-  return(ans)
+  ES.logret <- mu.fut - sigma.fut * dnorm(qnorm(level)) / (1 - level)
+  return(-ES.logret)
 }
 
 setMethod("ESfutures", signature(level = "ANY", time = "ANY",
@@ -170,10 +160,8 @@ setMethod("ESfutures", signature(level = "ANY", time = "ANY",
 
 ### < ---------------------------------------------------------------------- >
 ESfutures.schwartz2f <- function(level = 0.95, time = 0.1, ttm = 1, g0,
-                                 type = c("return", "nominal"), r = 0.05,
-                                 lambda = 0, alphaT = NULL)
+                                 r = 0.05, lambda = 0, alphaT = NULL)
 {
-  type <- match.arg(type)
   tmp.coef <- coef(g0)
 
   if(missing(lambda) & missing(alphaT)){
@@ -192,8 +180,8 @@ ESfutures.schwartz2f <- function(level = 0.95, time = 0.1, ttm = 1, g0,
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
 
-  return(ESfutures(level = level, time = time, ttm = ttm, g0 = g0,
-                   type = type, delta0 = delta0,
+  return(ESfutures(level = level, time = time, ttm = ttm,
+                   g0 = g0, delta0 = delta0,
                    mu = mu, sigmaS = sigmaS, kappa = kappa,
                    sigmaE = sigmaE, rho = rho,
                    r = r, alphaT = alphaT))
@@ -204,10 +192,8 @@ setMethod("ESfutures", signature(level = "ANY", time = "ANY",
           ESfutures.schwartz2f)
 
 ### < ---------------------------------------------------------------------- >
-ESfutures.schwartz2f.fit <- function(level = 0.95, time = 0.1, ttm = 1,
-                                     g0, type = c("return", "nominal"))
+ESfutures.schwartz2f.fit <- function(level = 0.95, time = 0.1, ttm = 1, g0)
 {
-  type <- match.arg(type)
   tmp.coef <- coef(g0)
 
   delta0 <- tmp.coef$delta0
@@ -221,8 +207,8 @@ ESfutures.schwartz2f.fit <- function(level = 0.95, time = 0.1, ttm = 1,
 
   g0 <- pricefutures(ttm, g0)
 
-  return(ESfutures(level = level, time = time, ttm = ttm, g0 = g0,
-                   type = type, delta0 = delta0,
+  return(ESfutures(level = level, time = time, ttm = ttm,
+                   g0 = g0, delta0 = delta0,
                    mu = mu, sigmaS = sigmaS, kappa = kappa,
                    sigmaE = sigmaE, rho = rho, r = r,
                    alphaT = alphaT))

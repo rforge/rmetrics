@@ -65,17 +65,18 @@
                                alpha, alphaT, r, time, ttm)
 {
   compA <- .A.schwartz2f(kappa, sigmaS, sigmaE, rho,
-                              alphaT, r, ttm - time)
+                         alphaT, r, ttm - time)
 
   compB <- .B.schwartz2f(kappa, ttm - time)
 
   mu.state <- .mu.state.schwartz2f(x0, delta0, mu, sigmaS, kappa,
-                                        alpha, sigmaE, rho, time)
+                                   alpha, sigmaE, rho, time)
 
-  prod1 <- matrix(c(mu.state, 1), nrow = 1)
-  prod2 <- matrix(c(1, compB, compA), ncol = 1)
+  ##  prod1 <- matrix(, nrow = 1)
+  ##  prod2 <- matrix(c(1, compB, compA), ncol = 1)
 
-  return(as.numeric(prod1 %*% prod2))
+  ##  return(as.numeric(prod1 %*% prod2))
+  return(sum(c(mu.state, 1) * c(1, compB, compA)))
 }
 
 .sigma.fut.schwartz2f <- function(sigmaS, kappa, sigmaE, rho, time, ttm)
@@ -92,12 +93,12 @@
                                   sigmaS = 0.3, sigmaE = 0.5,
                                   rho = 0.75)
 {
-    return(sqrt(sigmaS^2 * time + 2 * sigmaS * sigmaE * rho / kappa *
-                (1 / kappa * exp(-kappa * Time) *
-                 (exp(kappa * time) - 1) - time) + sigmaE^2 / kappa^2 *
-                (time + 1 / (2 * kappa) * exp(-2 * kappa * Time) *
-                 (exp(2 * kappa * time) - 1) - 2 / kappa *
-                 exp(-kappa * Time) * (exp(kappa * time) - 1))))
+  return(sqrt(sigmaS^2 * time + 2 * sigmaS * sigmaE * rho / kappa *
+              (1 / kappa * exp(-kappa * Time) *
+               (exp(kappa * time) - 1) - time) + sigmaE^2 / kappa^2 *
+              (time + 1 / (2 * kappa) * exp(-2 * kappa * Time) *
+               (exp(2 * kappa * time) - 1) - 2 / kappa *
+               exp(-kappa * Time) * (exp(kappa * time) - 1))))
 }
 
 .state.space.2f <- function(y, ttm, deltat, x0, delta0, kappa,
@@ -116,7 +117,7 @@
                  alpha * (1 - exp(- kappa * deltat))), 2, 1)
 
   HHt <- array(.sigma.state.schwartz2f(sigmaS, kappa, sigmaE,
-                                            rho, deltat), c(2, 2, 1))
+                                       rho, deltat), c(2, 2, 1))
 
   ## ------------------------------------------------------------
   ## Density of the linear approx. of the transition equation:
@@ -138,11 +139,11 @@
   yt <- t(y)
 
   ct <- t(.A.schwartz2f(kappa = kappa,
-                             sigmaS = sigmaS, sigmaE = sigmaE, rho = rho,
-                             alphaT = alpha - lambda / kappa,
-                             r = r, ttm = ttm))
+                        sigmaS = sigmaS, sigmaE = sigmaE, rho = rho,
+                        alphaT = alpha - lambda / kappa,
+                        r = r, ttm = ttm))
 
-  Zt <- array(1, c(d,2,n))
+  Zt <- array(1, c(d, 2, n))
   Zt[,2,] <- t(.B.schwartz2f(kappa = kappa, ttm = ttm))
 
   GGt <- array(diag(gg^2, d), c(d, d, 1))
