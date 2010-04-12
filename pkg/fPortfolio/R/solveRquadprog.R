@@ -69,7 +69,7 @@ solveRquadprog <-
 
         # Save Arguments:
         ans$optim$args = args
-        
+
         # class:
         class(ans) = c("solveRfoo", "list")
 
@@ -168,36 +168,12 @@ solveRquadprog <-
     #       becoming active first. vector with the indices of the
     #       active constraints at the solution.
 
-    # FUNCION:
+    # FUNCTION:
 
-    # Settings:
-    n = nrow(Dmat)
-    q = ncol(Amat)
-    r = min(n, q)
-    work = rep(0, 2 * n + r * (r + 5)/2 + 2 * q + 1)
-
-    # Optimize:
-    optim = .Fortran("qpgen2",
-        as.double(Dmat),
-        dvec = as.double(dvec),
-        as.integer(n),
-        as.integer(n),
-        sol = as.double(rep(0, n)),
-        crval = as.double(0),
-        as.double(Amat),
-        as.double(bvec),
-        as.integer(n),
-        as.integer(q),
-        as.integer(meq),
-        iact = as.integer(rep(0, q)),
-        nact = as.integer(0),
-        iter = as.integer(rep(0, 2)),
-        work = as.double(work),
-        ierr = as.integer(0),
-        PACKAGE = "quadprog")
+    optim <- solve.QP(Dmat, dvec, Amat, bvec, meq)
 
     # Set Tiny Weights to Zero:
-    weights = .checkWeights(optim$sol)
+    weights = .checkWeights(optim$solution)
     attr(weights, "invest") = sum(weights)
 
     # Compose Output List:
@@ -207,9 +183,10 @@ solveRquadprog <-
         optim = optim,
         weights = weights,
         targetReturn = bvec[1],
-        targetRisk = sqrt(optim$sol %*% Dmat %*% optim$sol)[[1,1]],
-        objective = sqrt(optim$sol %*% Dmat %*% optim$sol)[[1,1]],
-        status = optim$ierr,
+        targetRisk = sqrt(optim$solution %*% Dmat %*% optim$solution)[[1,1]],
+        objective = sqrt(optim$solution %*% Dmat %*% optim$solution)[[1,1]],
+        status = 0, #-> should be always 0 because solve.QP returns
+                    # error if ierr different than 0
         message = NA)
 
     # Return Value:
