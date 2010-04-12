@@ -1,0 +1,14 @@
+citHeader("To cite fPortfolio in publications use:")
+
+citEntry(entry  = "book",
+         title  = "Portfolio Optimization with R/Rmetrics",
+         author = "Wuertz, Diethelm and Chalabi, Yohan and Chen, William and Ellis, Andrew",	
+	 year   = "2010",	   
+	 month  = "April", 
+	 editor = "Wuertz, Diethelm and Hanf, Martin",
+	 publisher = "Rmetrics Association & Finance Online, www.rmetrics.org",
+         note   = paste("R package version", meta$Version),
+         textVersion = paste("D. Wuertz, Y. Chalabi, W. Chen and A. Ellis",
+                             "(2010),",
+                             "Portfolio Optimization with R/Rmetrics")
+)
