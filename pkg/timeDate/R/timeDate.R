@@ -126,8 +126,11 @@ setMethod("timeDate", "character",
 
     # faster to create manually the POSIXct object
     # num <- structure(num, class = c("POSIXt", "POSIXct"))
-    class(num) <- c("POSIXt", "POSIXct")
-    attr(num, "tzone") <- "GMT"
+    num <-
+        if (getRversion() >= "2.12.0")
+            .POSIXct(num, "GMT")
+        else
+            structure(num, class = c("POSIXt", "POSIXct"), tzone = "GMT")
 
     new("timeDate",
         Data = num,

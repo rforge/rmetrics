@@ -114,7 +114,7 @@ kurtosis.POSIXct <-
     # FUNCTION:
 
     # Return Value:
-    structure(kurtosis(unclass(x), ...), class = c("POSIXt", "POSIXct"))
+    structure(kurtosis(unclass(x), ...), class = oldClass(x))
 }
 
 

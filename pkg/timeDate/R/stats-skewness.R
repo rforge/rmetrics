@@ -115,7 +115,7 @@ skewness.POSIXct <-
     # FUNCTION:
 
     # Return Value:
-    structure(skewness(unclass(x), ...), class = c("POSIXt", "POSIXct"))
+    structure(skewness(unclass(x), ...), oldClass(x))
 }
 
 
