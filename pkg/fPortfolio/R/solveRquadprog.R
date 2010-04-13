@@ -170,24 +170,26 @@ solveRquadprog <-
 
     # FUNCTION:
 
-    optim <- solve.QP(Dmat, dvec, Amat, bvec, meq)
-
-    # Set Tiny Weights to Zero:
-    weights = .checkWeights(optim$solution)
-    attr(weights, "invest") = sum(weights)
+    optim <- try(solve.QP(Dmat, dvec, Amat, bvec, meq))
+    if (inherits(optim, "try-error")) {
+        weights <- bvec
+        status <- 1
+    } else {
+        # Set Tiny Weights to Zero:
+        weights <- .checkWeights(optim$solution)
+        attr(weights, "invest") = sum(weights)
+        status <- 0
+    }
 
     # Compose Output List:
-    ans = list(
-        type = "MV",
-        solver = "solveRquadprog",
-        optim = optim,
-        weights = weights,
-        targetReturn = bvec[1],
-        targetRisk = sqrt(optim$solution %*% Dmat %*% optim$solution)[[1,1]],
-        objective = sqrt(optim$solution %*% Dmat %*% optim$solution)[[1,1]],
-        status = 0, #-> should be always 0 because solve.QP returns
-                    # error if ierr different than 0
-        message = NA)
+    ans <- list(type = "MV",
+                solver = "solveRquadprog",
+                optim = optim,
+                weights = weights,
+                targetReturn = bvec[1],
+                targetRisk = sqrt(weights %*% Dmat %*% weights)[[1,1]],
+                objective = sqrt(weights %*% Dmat %*% weights)[[1,1]],
+                status = status, message = NA)
 
     # Return Value:
     ans
