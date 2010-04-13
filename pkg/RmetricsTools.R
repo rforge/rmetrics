@@ -19,6 +19,35 @@
 ##
 ################################################################################
 
+pkgsRmetrics <- function()
+    c("timeDate",
+      "timeSeries",
+      "fImport",
+      "fBasics",
+      "fArma",
+      "fGarch",
+      "fNonlinear",
+      "fUnitRoots",
+      "fTrading",
+      "fMultivar",
+      "fRegression",
+      "fExtremes",
+      "fCopulae",
+      "fBonds",
+      "fOptions",
+      "fExoticOptions",
+      "fAsianOptions",
+      "fAssets",
+      "fPortfolio",
+      "BLCOP",
+      "FKF",
+      "ghyp",
+      "HyperbolicDist",
+      "randtoolbox",
+      "rngWELL",
+      "SkewHyperbolic",
+      "VarianceGamma")
+
 pkgsRmetricsDev <- function()
     c("BLCOP",
       "fACD",
