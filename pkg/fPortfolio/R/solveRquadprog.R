@@ -170,9 +170,9 @@ solveRquadprog <-
 
     # FUNCTION:
 
-    optim <- try(solve.QP(Dmat, dvec, Amat, bvec, meq))
+    optim <- try(solve.QP(Dmat, dvec, Amat, bvec, meq), silent = TRUE)
     if (inherits(optim, "try-error")) {
-        weights <- bvec
+        weights <- as.numeric(rep(NA, length(dvec)))
         status <- 1
     } else {
         # Set Tiny Weights to Zero:
