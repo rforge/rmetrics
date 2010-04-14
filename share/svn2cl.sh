@@ -3,7 +3,7 @@
 # svn2cl.sh - front end shell script for svn2cl.xsl, calls xsltproc
 #             with the correct parameters
 #
-# Copyright (C) 2005, 2006, 2007, 2008 Arthur de Jong.
+# Copyright (C) 2005, 2006, 2007, 2008, 2009 Arthur de Jong.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -38,7 +38,7 @@ set -e
 set -u
 
 # svn2cl version
-VERSION="0.11"
+VERSION="0.12"
 
 # set default parameters
 PWD=`pwd`
@@ -53,7 +53,7 @@ ACTIONS="no"
 CHANGELOG=""
 OUTSTYLE="cl"
 SVNLOGCMD="svn --verbose --xml log -r BASE:{2009-01-01}" ##
-SVNINFOCMD="svn info"
+SVNINFOCMD="svn --non-interactive info"
 AUTHORSFILE=""
 IGNORE_MESSAGE_STARTING="!" ##
 TITLE="ChangeLog"
@@ -203,7 +203,7 @@ do
       echo "$prog $VERSION";
       echo "Written by Arthur de Jong."
       echo ""
-      echo "Copyright (C) 2005, 2006, 2007 Arthur de Jong."
+      echo "Copyright (C) 2005, 2006, 2007, 2008, 2009 Arthur de Jong."
       echo "This is free software; see the source for copying conditions.  There is NO"
       echo "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
       exit 0
@@ -225,7 +225,7 @@ do
       echo "  --title=NAME         title used in html file"
       echo "  --revision-link=NAME link revision numbers in html output"
       echo "  --ignore-message-starting=STRING"
-      echo "                       ignore messages starting with string"
+      echo "                       ignore messages starting with the string"
       echo "  -o, --output=FILE    output to FILE instead of ChangeLog"
       echo "  -f, --file=FILE      alias for -o, --output"
       echo "  --stdout             output to stdout instead of ChangeLog"
@@ -300,7 +300,7 @@ fi
 # try to determin a prefix to strip from all paths
 if [ "$STRIPPREFIX" = "AUTOMATICALLY-DETERMINED" ]
 then
-  STRIPPREFIX=`LANG=C eval "$SVNINFOCMD" 2> /dev/null | $AWK '/^URL:/{url=$2} /^Repository Root:/{root=$3} END{if(root){print substr(url,length(root)+2)}else{n=split(url,u,"/");print u[n]}}'`
+  STRIPPREFIX=`LANG=C eval "$SVNINFOCMD" | $AWK '/^URL:/{url=$2} /^Repository Root:/{root=$3} END{if(root){print substr(url,length(root)+2)}else{n=split(url,u,"/");print u[n]}}'`
   STRIPPREFIX=`echo "$STRIPPREFIX" | sed 's/%20/ /g'`
 fi
 
