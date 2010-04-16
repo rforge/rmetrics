@@ -847,8 +847,8 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
                       "svn" = paste(vcs, "info", pkg),
                       "git svn" = paste(vcs, "info", file.path("pkg", pkg)),
                       " ")
-        t <- try(svn <- system(cmd, intern = TRUE))
-        if (inherits(t, "try-error"))
+        svn <- try(system(cmd, intern = TRUE))
+        if (inherits(svn, "try-error"))
             warning("Could not update svn revision number in DESC file")
         else {
             rev <- sub("Last Changed Rev: ", "",
@@ -879,8 +879,7 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
             cmd <- paste(svn2cl, pkg,
                          "--ignore-message-starting !",
                          "-o", file.path(pkg, "ChangeLog"))
-            t <- try(system(cmd))
-            if (inherits(t, "try-error"))
+            if (inherits(try(system(cmd)), "try-error"))
                 stop("Could not generate ChageLog file")
             message("OK")
         }
@@ -899,9 +898,10 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
             cl4 <- sub("^:.*\\.\\.\\..*\\.\\.\\.", "   ", cl3)  #-> remove details in before filenames
             cl <- sub("\\t", " ", cl4) #-> replace tab with one space
             # add separator : -------
-        }
+
         cat(cl, file = file.path(pkg, "ChangeLog"), sep = "\n")
         message("OK")
+        }
     }
 
     # build package
