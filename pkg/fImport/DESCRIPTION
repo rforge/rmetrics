@@ -1,7 +1,7 @@
 Package: fImport
 Version: 2110.79
-Revision:
-Date: 2010-01-06
+Revision: 4826
+Date: 2010-04-14
 Title: Rmetrics - Economic and Financial Data Import
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.6.0), methods, timeDate, timeSeries
