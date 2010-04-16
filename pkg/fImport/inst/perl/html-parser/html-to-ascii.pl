@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/bin/env perl
 
 # Program to generate ASCII text for HTML
 # Created by  James R. Davis, July 15 1994

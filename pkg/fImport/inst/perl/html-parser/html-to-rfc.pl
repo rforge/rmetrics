@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/bin/env perl
 
 # Program to generate ASCII text for an Internet Draft
 # according to the standards in
