@@ -30,9 +30,35 @@ Date: \tab 2009-09-03\cr
 License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 }
 % <---------------------------------------------------------------------->
+\strong{Initialization:}
+\tabular{ll}{
+  \code{\link{schwartz2f}} \tab       Initialize a Schwartz 2-factor object.\cr
+}
+
+\strong{Density, distribution function, quantile function,
+  random number generation, and trajectories of the state processes:}
+\tabular{ll}{
+  \code{\link{dstate}} \tab         Density of the spot and the convenience yield.\cr
+  \code{\link{pstate}} \tab         Distribution of the spot and the convenience yield.\cr
+  \code{\link{qstate}} \tab         Quantile of the spot and the convenience yield.\cr
+  \code{\link{rstate}} \tab         Random number generation of the spot and the convenience yield.\cr
+  \code{\link{simstate}} \tab       Trajectory of the spot and the convenience yield.\cr
+}
+
+\strong{Density, distribution function, quantile function, and
+  random number generation of the futures price:}
+\tabular{ll}{
+  \code{\link{dfutures}} \tab         Density of the futures price.\cr
+  \code{\link{pfutures}} \tab         Distribution of the futures price.\cr
+  \code{\link{qfutures}} \tab         Quantile of the futures price.\cr
+  \code{\link{rfutures}} \tab         Random number generation of the futures price.\cr
+}
+
+
+% <---------------------------------------------------------------------->
 \strong{Package vignettes:} \cr
 
-The \R package \code{schwartz97} comes with two vignettes:\cr
+The \R package \code{schwartz97} contains two vignettes:\cr
 
 A \emph{Technical Document} which gives the necessary relations and
 tools to fully understand the internals of the package.

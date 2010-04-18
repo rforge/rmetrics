@@ -1,5 +1,6 @@
 \name{schwartz97-internal}
 \alias{.clean.rda.data}
+\alias{.get.data}
 \alias{.mu.state.schwartz2f}
 \alias{.sigma.state.schwartz2f}
 \alias{.A.schwartz2f}
@@ -17,6 +18,8 @@
 }
 \usage{
 .clean.rda.data(tmp.list, idx = 1:6)
+
+.get.data(data, type = c("uv", "mv"))
 
 .mu.state.schwartz2f(x0, delta0, mu, sigmaS, kappa,
                           alpha, sigmaE, rho, time, as.mat = FALSE)
@@ -41,6 +44,9 @@
 
   \code{.clean.rda.data} \cr Removes NAs from the internal futures data
   sets. This is needed in order to fit parameters to the data.
+
+  \code{.get.data} \cr Check whether \code{data} is of a particular
+  format and return a clean version of \code{data}.
 
   \code{.mu.state.schwartz2f} \cr Computes the mean vector of the
   jointly normally distributed state variables of the Schwartz

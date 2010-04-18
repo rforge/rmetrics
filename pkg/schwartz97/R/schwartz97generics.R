@@ -1,4 +1,94 @@
 ### <======================================================================>
+vcov.schwartz2f <- function(object, time = 1)
+{
+
+  if(length(time) != 1){
+    stop("'time' must be a scalar!")
+  }
+  
+  tmp.coef <- coef(object)
+
+  sigma.log <- .sigma.state.schwartz2f(sigmaS = tmp.coef$sigmaS,
+                                       kappa = tmp.coef$kappa,
+                                       sigmaE = tmp.coef$sigmaE,
+                                       rho = tmp.coef$rho,
+                                       time = time)
+  return(sigma.log)
+}
+### <---------------------------------------------------------------------->
+setMethod("vcov", signature(object = "schwartz2f"), vcov.schwartz2f)
+### <---------------------------------------------------------------------->
+
+
+### <======================================================================>
+mean.schwartz2f <- function(x, time = 1)
+{
+
+  time <- .get.data(time, type = "uv")
+  
+  .mean <- function(time, object){
+    tmp.coef <- coef(object)
+    means.log <- .mu.state.schwartz2f(x0 = log(tmp.coef$s0),
+                                    delta0 = tmp.coef$delta0,
+                                    mu = tmp.coef$mu,
+                                    sigmaS = tmp.coef$sigmaS,
+                                    kappa = tmp.coef$kappa,
+                                    alpha = tmp.coef$alpha,
+                                    sigmaE = tmp.coef$sigmaE,
+                                    rho = tmp.coef$rho,
+                                    time = time)
+
+    sigma.log <- vcov(x, time = time)
+    return(c(s.t = exp(means.log[1] + 1/2 * sigma.log[1,1]),
+             delta.t = means.log[2]))
+
+  }
+  
+  ## Vectorize the mean function
+  means <- t(apply(matrix(time), 1, .mean, object = x))
+
+  if(length(time) == 1){
+    means <- c(s.t = means[1], delta.t = means[2])
+  }
+  
+  return(means)
+
+}
+### <---------------------------------------------------------------------->
+setMethod("mean", signature(x = "schwartz2f"), mean.schwartz2f)
+### <---------------------------------------------------------------------->
+
+
+## ### <======================================================================>
+## mean.schwartz2f.fit <- function(x, time, measure = c("P", "Q"))
+## {
+
+##   measure <- match.arg(measure)
+
+##   tmp.coef <- coef(x)
+
+##   means.log <- .mu.state.schwartz2f(x0 = log(tmp.coef$s0),
+##                                     delta0 = tmp.coef$delta0,
+##                                     mu = tmp.coef$mu,
+##                                     sigmaS = tmp.coef$sigmaS,
+##                                     kappa = tmp.coef$kappa,
+##                                     alpha = tmp.coef$alpha,
+##                                     sigmaE = tmp.coef$sigmaE,
+##                                     rho = tmp.coef$rho,
+##                                     time = time)
+
+##   sigma.log <- vcov(x, time = time)
+
+##   return(c(s.t = exp(means.log[1] + 1/2 * sigma.log[1,1]),
+##            delta.t = means.log[2]))
+
+## }
+## ### <---------------------------------------------------------------------->
+## setMethod("mean", signature(x = "schwartz2f.fit"), mean.schwartz2f.fit)
+## ### <---------------------------------------------------------------------->
+
+
+### <======================================================================>
 show.schwartz2f <- function(object)
 {
     cat("\n----------------------------------------------------------------\n")

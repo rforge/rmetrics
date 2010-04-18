@@ -18,10 +18,10 @@
 \description{
 
   Density, distribution function and quantile function of the state
-  variables with respect to the objective probability measure. The state
-  variables are the commodity spot price \code{s0} and the spot
-  convenience yield \code{delta0}. The commodity log spot price and the
-  convenience yield follow a joint bivariate normal distribution.
+  variables. The state variables are the commodity spot price \code{s}
+  and the spot convenience yield \code{delta}. The commodity log spot
+  price and the convenience yield follow a joint bivariate normal
+  distribution.
 
 }
 
@@ -54,11 +54,11 @@
 
   \item{x}{Vector or matrix of quantiles. If \code{x} is
     a matrix, each row is taken to be a quantile.}
-  \item{time}{Time where the joint stochastic process is evaluated
-    (relative to time zero).}
+  \item{time}{Time at which the quantity is computed (relative to time
+    zero).} 
   \item{s0}{Either a \code{numeric} representing the initial value of the
     commodity spot price or an object inheriting from class
-  \code{\link[=schwartz2f-class]{schwartz2f}}.}
+    \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
@@ -93,6 +93,18 @@
 }
 
 % <---------------------------------------------------------------------->
+% \note{
+
+%   If \code{s0} is of a \code{\link{schwartz2f.fit}}-object these
+%   functions are computed under the objective probability measure. There
+%   may be situations in which the risk-neutral dynamics are of
+%   interest. \code{mu} and \code{alpha} can be modified to get the
+%   risk-neutral dynamics (see package-vignette \emph{Technical
+%   Document}).
+
+% }
+
+% <---------------------------------------------------------------------->
 \value{
 
   Probabilities, densities, or quantiles of the commodity spot price and
@@ -114,17 +126,28 @@
 
 % <---------------------------------------------------------------------->
 \examples{
-## Create a "schwartz2f"-object
+### Create a "schwartz2f"-object
 model <- schwartz2f()
 
-## Probability
+### Probability
 pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
 
-## Density
+### Density
 dstate(x = c(50, 0.03), time = 2, model)
 
-## Quantile
+### Quantile
 qstate(p = 0.5, s0 = model)
+
+### Generate random numbers
+object <- schwartz2f(alpha = 0.05)
+samples <- rstate(1000, time = 2, object)
+### ...and plot histograms
+par(mfrow = c(2, 1))
+hist(samples[,1])
+abline(v = mean(object, time = 2)[1], col = "red")
+hist(samples[,2])
+abline(v = mean(object, time = 2)[2], col = "red")
+
 
 }
 

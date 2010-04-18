@@ -6,6 +6,25 @@
   return(tmp.list)
 }
 
+.get.data <- function(data, type = c("uv", "mv"))
+{
+
+  type <- match.arg(type)
+  if(type == "uv"){
+    if(!is.null(dim(data))){
+      if(min(dim(data)) == 1){
+        data.clean <- as.numeric(data)
+      }else{
+        stop(paste(deparse(substitute(x)), "must be univariate!"))
+      }
+    }else{
+        data.clean <- as.numeric(data)
+    }
+  }
+  return(data.clean)
+  
+}
+
 .mu.state.schwartz2f <- function(x0, delta0, mu, sigmaS, kappa,
                                  alpha, sigmaE, rho,
                                  time, as.mat = FALSE)

@@ -59,7 +59,8 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
                            sigmaS = 0.3, kappa = 1, alpha = 0,
                            sigmaE = 0.5, rho = 0.75, ...)
 {
-  if(is.vector(x)){
+
+ if(is.vector(x)){
     x <- rbind(x)
   }
 
@@ -75,6 +76,7 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
   dens <- dmvnorm(x, mean = mean, sigma = sigma) / exp(x[,1], ...)
 
   return(dens)
+
 }
 
 
@@ -228,7 +230,7 @@ simstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
   traj[1, ] <- c(log(s0), delta0)
 
   increments <- rmvnorm(n = n - 1, mean = c(0, 0),
-                        sigma = sigma * deltat, method = method)
+                        sigma = sigma, method = method)
 
   for(i in 2:n){
     drift <- .mu.state.schwartz2f(x0 = traj[i - 1, 1],
