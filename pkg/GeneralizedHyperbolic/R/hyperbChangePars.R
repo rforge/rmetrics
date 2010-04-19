@@ -10,6 +10,8 @@ hyperbChangePars <- function (from, to, param, noNames = FALSE) {
   if (! to %in% 1:4)
     stop("the argument 'to' must be either 1, 2, 3 or 4")
 
+  param <- as.numeric(param)
+
   delta <- param[2]
 
   if (delta <= 0)

@@ -39,15 +39,17 @@ hyperbBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
 \arguments{
   \item{x,q}{Vector of quantiles.}
   \item{p}{Vector of probabilities.}
-  \item{n}{Number of observations to be generated.}
+  \item{n}{Number of observations to be generated.} 
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
     set to 0.}
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
     A default value of 1 has been set.}
-  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
-  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
+    value of 1.}
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
+    this is 0.}
   \item{param}{Parameter vector taking the form
-               \code{c(mu, delta, alpha, beta)}.}
+    \code{c(mu, delta, alpha, beta)}.}
   \item{small}{Size of a small difference between the distribution
     function and zero or one. See \bold{Details}.}
   \item{tiny}{Size of a tiny difference between the distribution
@@ -109,7 +111,6 @@ hyperbBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   routine \code{\link[DistributionUtils]{safeIntegrate}} (which is a
   wrapper for \code{\link{integrate}}) is used to integrate the density
   \code{dhyperb}.
-
 
   \code{qhyperb} uses the breakup of the real line into the same 8
   regions as \code{phyperb}. For quantiles which fall in the 2 extreme
