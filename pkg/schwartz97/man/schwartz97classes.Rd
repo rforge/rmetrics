@@ -60,7 +60,8 @@
     \item{\code{converged}:}{A boolean whether the fit converged or
       not. Object of class \code{logical}.}
     \item{\code{error.code}:}{An error code of class \code{numeric}. The
-      value of \code{\link{optim}}'s \dQuote{convergence}.}
+      value of \code{\link{optim}}'s \dQuote{convergence}. If an unknown
+      error occurs the value -1 is returned.}
     \item{\code{error.message}:}{An error message of class
       \code{character}.}
     \item{\code{fitted.params}:}{A boolean vector stating which

@@ -28,6 +28,13 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   if(!is.matrix(ttm)){
     stop("'ttm' must be a matrix!")
   }
+  if(any(!is.finite(data))){
+    stop("'data' contains non-finite values!")
+  }
+  if(any(!is.finite(ttm))){
+    stop("'ttm' contains non-finite values!")
+  }
+
   ## ---------------------------------------------------------------------------
   ## Internal function to compute the log-likelihood
   log.likelihood.2f <- function(thetaOpt, thetaConst, thetaNames,
@@ -70,6 +77,16 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
                            ct = stateSpace$ct,
                            GGt = stateSpace$GGt)$logLik
 
+      if(!silent)
+        {
+          print(paste("i: ", nrow(theta.backup) + 1,
+                      "; logL: ",sprintf("%.4E", logLikelihood), "; ",
+                      paste(names(thetaOpt), ": ", sprintf("%.2E", thetaOpt), "; ",
+                            collapse = "", sep = ""),
+                      sep = ""))
+        }
+
+
       if(!is.na(thetaOpt["rho"]))
         {
           thetaOpt["rho"] <- tan(thetaOpt["rho"] * pi / 2)
@@ -78,15 +95,7 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
 
       theta.backup <<- rbind(theta.backup, c(logLikelihood, theta))
 
-      if(!silent)
-        {
-          print(paste("logL: ",sprintf("% .8E", logLikelihood),
-                      "; Theta: ",
-                      paste(sprintf("% .4E", thetaOpt),
-                            collapse = ", "), sep = ""))
-        }
 
-      ## Returning Filter Call
       return(-logLikelihood)
 
     }
@@ -147,14 +156,14 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
                    silent = silent, ...))
 
   if(class(mle) == "try-error"){
-    convergence <- NA
+    convergence <- -1
     n.iter <- nrow(theta.backup)
-    message <- mle
+    message <- as.character(mle)
     thetaOpt <- theta.backup[nrow(theta.backup), -1]
   }else{
     convergence <- mle$convergence
     n.iter <- mle$counts[1]
-    message <- NULL
+    message <- ""
     if(!is.na(thetaOpt["rho"]))
       {
         rho.pos <- which(names(thetaOpt) == "rho")
@@ -210,7 +219,7 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
              llh = unname(filtered.ts$logLik),
              converged = convergence == 0,
              error.code= unname(convergence),
-             error.message = "",
+             error.message = message,
              fitted.params = opt.pars,
              trace.pars = theta.backup,
              r = unname(r),

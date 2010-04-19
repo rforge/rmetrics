@@ -166,6 +166,10 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
                            sigmaE = 0.5, rho = 0.75,
                            method = "chol")
 {
+  if(n != round(n)){
+    stop("'n' must be an integer number!")
+  }
+
   mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
                                alpha, sigmaE, rho, time)
 

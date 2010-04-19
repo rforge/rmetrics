@@ -28,8 +28,11 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
 % <---------------------------------------------------------------------->
 \arguments{
-  \item{data}{A matrix with futures prices.}
-  \item{ttm}{A matrix with the corresponding time to maturity (see \bold{Details}).}
+  \item{data}{A matrix with futures prices. \code{data} must not contain
+    non-finite elements.}
+  \item{ttm}{A matrix with the corresponding time to maturity (see
+    \bold{Details}). \code{ttm} must not contain
+    non-finite elements.}
   \item{deltat}{Time increment (see \bold{Details}).}
   \item{s0}{Initial value of the commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
@@ -75,6 +78,10 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   \dQuote{scalar}. If all of \code{meas.sd} should be fitted choose
   \dQuote{all}. If the measurement uncertainty is known set
   \code{meas.sd} to \dQuote{none}. See also the package vignette.
+
+  Potential error codes are described in the
+  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-class
+  documentation. \cr
 
 }
 
