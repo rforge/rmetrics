@@ -1,52 +1,53 @@
-C PART I:  HALTON SEQUENCE
-C PART II: SOBOL SEQUENCE
+C     PART I:  HALTON SEQUENCE
+C     PART II: SOBOL SEQUENCE
 
 
-C ##############################################################################
-C PART I: HALTON SEQUENCE:
- 
+C###############################################################################
+C     PART I: HALTON SEQUENCE:
 
-C-------------------------------------------------------------------------- 
-C @file  LowDiscrepancy.f
-C @brief Halton sequence
-C
-C @author Diethelm Wuertz 
-C @author Christophe Dutang
-C
-C
-C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
-C slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
-C
-C The new BSD License is applied to this software.
-C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
-C
-C      Redistribution and use in source and binary forms, with or without
-C      modification, are permitted provided that the followingConditions are
-C      met:
-C      
-C          - Redistributions of sourceCode must retain the aboveCopyright
-C          notice, this list ofConditions and the following disclaimer.
-C          - Redistributions in binary form must reproduce the above
-C         Copyright notice, this list ofConditions and the following
-C          disclaimer in the documentation and/or other materials provided
-C          with the distribution.
-C          - Neither the name of the ETH Zurich nor the names of its Contributors 
-C          may be used to endorse or promote products derived from this software 
-C          without specific prior written permission.
+
+C-------------------------------------------------------------------------------
+C     @file  LowDiscrepancy.f
+C     @brief Halton sequence
 C     
-C      THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
-C      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-C      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-C      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
-C      OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-C      SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-C      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-C      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
-C      THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
-C      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-C      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-C  
-C-------------------------------------------------------------------------- 
+C     @author Diethelm Wuertz
+C     @author Christophe Dutang
+C     
+C     
+C     Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights
+C     reserved.  slightly modified (better accuracy and speed) by
+C     Christophe Dutang in October 2009.
+C     
+C     The new BSD License is applied to this software.
+C     Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C     
+C     Redistribution and use in source and binary forms, with or without
+C     modification, are permitted provided that the followingConditions are
+C     met:
+C     
+C     - Redistributions of sourceCode must retain the aboveCopyright
+C     notice, this list ofConditions and the following disclaimer.
+C     - Redistributions in binary form must reproduce the above
+C     Copyright notice, this list ofConditions and the following
+C     disclaimer in the documentation and/or other materials provided
+C     with the distribution.
+C     - Neither the name of the ETH Zurich nor the names of its Contributors
+C     may be used to endorse or promote products derived from this software
+C     without specific prior written permission.
+C     
+C     THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+C     LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
+C     OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C     SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C     LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
+C     THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+C     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+C     
+C-------------------------------------------------------------------------------
 
 
 C-------------------------------------------------------------------------------
@@ -67,52 +68,52 @@ C     THE BASE IS CALCULATED FROM PRIMES
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
- 
+
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       BASE(1) = 2
       BASE(2) = 3
       N = 3
       NC = 2
       DO WHILE(NC.LT.DIMEN)
-      M = N/2
-      K = 0
-      IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
-         DO I = 5, M
+         M = N/2
+         K = 0
+         IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
+            DO I = 5, M
                IF(MOD(N,I).EQ.0) K = K + 1
-         ENDDO
-         IF (K.EQ.0) THEN
-            NC = NC + 1
-            BASE(NC) = N
+            ENDDO
+            IF (K.EQ.0) THEN
+               NC = NC + 1
+               BASE(NC) = N
+            ENDIF
          ENDIF
-      ENDIF
-      N = N + 1
+         N = N + 1
       ENDDO
-      
+
 C     NOW CREATE THE FIRST QUASI RANDOM NUMBER:
       OFFSET = 0
-      DO NB = 1, DIMEN        
-      ITER(NB) = OFFSET
-      QUASI(NB) = 0.0D0
-      HALF = 1.0D0 / BASE(NB)
-      DO WHILE (ITER(NB).NE.0)
-         DIGIT = MOD ( ITER(NB), BASE(NB) )
-         QUASI(NB) = QUASI(NB) + DIGIT * HALF
-         ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
-         HALF = HALF / BASE(NB)
-      ENDDO 
+      DO NB = 1, DIMEN
+         ITER(NB) = OFFSET
+         QUASI(NB) = 0.0D0
+         HALF = 1.0D0 / BASE(NB)
+         DO WHILE (ITER(NB).NE.0)
+            DIGIT = MOD ( ITER(NB), BASE(NB) )
+            QUASI(NB) = QUASI(NB) + DIGIT * HALF
+            ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
+            HALF = HALF / BASE(NB)
+         ENDDO
       ENDDO
 
 C     SET THE COUNTER:
       OFFSET = OFFSET + 1
-      
+
       RETURN
       END
-  
+
 
 C-------------------------------------------------------------------------------
 
-  
-      SUBROUTINE NEXTHALTON(DIMEN, QUASI, BASE, OFFSET) 
+
+      SUBROUTINE NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
 
 C     GENERATE THE NEXT POINT IN HALTON'S LOW DISCREPANCY SEQUENCE
 C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
@@ -120,41 +121,41 @@ C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
-           
-      DO NB = 1, DIMEN      
-      ITER(NB) = OFFSET
-      QUASI(NB) = 0.0D0
-      HALF = 1.0D0 / BASE(NB)
-      DO WHILE (ITER(NB).NE.0)
-         DIGIT = MOD ( ITER(NB), BASE(NB) )
-         QUASI(NB) = QUASI(NB) + DIGIT * HALF
-         ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
-         HALF = HALF / BASE(NB)
-      ENDDO 
-      ENDDO       
+
+      DO NB = 1, DIMEN
+         ITER(NB) = OFFSET
+         QUASI(NB) = 0.0D0
+         HALF = 1.0D0 / BASE(NB)
+         DO WHILE (ITER(NB).NE.0)
+            DIGIT = MOD ( ITER(NB), BASE(NB) )
+            QUASI(NB) = QUASI(NB) + DIGIT * HALF
+            ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
+            HALF = HALF / BASE(NB)
+         ENDDO
+      ENDDO
 
 C     INCREASE THE COUNTER BY ONE:
-      OFFSET = OFFSET + 1    
+      OFFSET = OFFSET + 1
 
       RETURN
       END
 
 
-C-------------------------------------------------------------------------------   
+C-------------------------------------------------------------------------------
 
 
       SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
 
 C     THIS IS AN INTERFACE TO CREATE "N" POINTS IN "DIMEN" DIMENSIONS
 C     ARGUMENTS:
-C       QN        - THE QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
-C       N         - NUMBERS OF POINTS TO GENERATE
-C       DIMEN     - THE DIMENSION
-C       QUASI     - THE LAST POINT IN THE SEQUENDE
-C       BASE      - THE PRIME BASE, A VECTOR OF LENGTH "DIMEN"
-C       OFFSET    - THE OFFSET OF POINTS IN THE NEXT FUNCTION CALL
-C       INIT      - IF ONE, WE INITIALIZE
-C       TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
+C     QN        - THE QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
+C     N         - NUMBERS OF POINTS TO GENERATE
+C     DIMEN     - THE DIMENSION
+C     QUASI     - THE LAST POINT IN THE SEQUENDE
+C     BASE      - THE PRIME BASE, A VECTOR OF LENGTH "DIMEN"
+C     OFFSET    - THE OFFSET OF POINTS IN THE NEXT FUNCTION CALL
+C     INIT      - IF ONE, WE INITIALIZE
+C     TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
@@ -162,31 +163,31 @@ C       TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
-		  CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
+         CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
       IF (TRANSFORM.EQ.0) THEN
-		  DO I=1, N
-			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-			 DO J = 1, DIMEN
-				QN(I, J) = QUASI(J)        
-			 ENDDO
-		  ENDDO
-	  ELSE
-		  DO I=1, N
-			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-			 DO J = 1, DIMEN
-				QN(I, J) = HQNORM(QUASI(J))
-			 ENDDO
-		  ENDDO
-	  ENDIF
-	   
+         DO I=1, N
+            CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+            DO J = 1, DIMEN
+               QN(I, J) = QUASI(J)
+            ENDDO
+         ENDDO
+      ELSE
+         DO I=1, N
+            CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+            DO J = 1, DIMEN
+               QN(I, J) = HQNORM(QUASI(J))
+            ENDDO
+         ENDDO
+      ENDIF
+
       RETURN
       END
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
       DOUBLE PRECISION FUNCTION HQNORM(P)
@@ -194,13 +195,13 @@ C ------------------------------------------------------------------------------
 C     USED TO CALCULATE HALTON NORMAL DEVIATES:
       DOUBLE PRECISION P,R,T,A,B, EPS
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
-     &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
-     &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
-     &    +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,  
-     &    +0.385607006340E-2  /
+     &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
+     &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
+     &     +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,
+     &     +0.385607006340E-2  /
 
 C     NOTE, IF P BECOMES 1, THE PROGRAM FAILS TO CALCULATE THE
-C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY 
+C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY
 C     POINT WITH A POINT FAR IN THE TAILS.
       EPS = 1.0D-6
       IF (P.GE.(1.0D0-EPS)) P = 1.0d0 - EPS
@@ -208,39 +209,39 @@ C     POINT WITH A POINT FAR IN THE TAILS.
       IF (P.NE.0.5D0) GOTO 150
       HQNORM = 0.0D0
       RETURN
-150   R = P 
+ 150  R = P
       IF (P.GT.0.5D0) R = 1.0 - R
       T = DSQRT(-2.0*DLOG(R))
       A = ((((T*P4 + P3)*T+P2)*T + P1)*T + P0)
       B = ((((T*Q4 + Q3)*T+Q2)*T + Q1)*T + Q0)
       HQNORM = T + (A/B)
       IF (P.LT.0.5D0) HQNORM = -HQNORM
-      
+
       RETURN
-      END 
+      END
 
 
-C -----------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
       SUBROUTINE TESTHALTON()
-      
+
       INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
       PARAMETER (N1=20,N2=N1/2,DIMEN=5)
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
 
       TRANSFORM = 0
-      
+
 C     FIRST TEST RUN:
       INIT = 1
       OFFSET = 0
       CALL HALTON(QN1,N1,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
 
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 1-20"  
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,*) "HALTON SEQUENCE: 1-20"
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N1, INT(N1/(2*10))
          WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
@@ -249,135 +250,135 @@ C     SECOND TEST RUN:
       INIT=1
       OFFSET = 0
       CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"  
-      WRITE (*,*)  
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N2, INT(N2/10)
          WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
 
       INIT = 0
       CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"  
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N2, INT(N2/10)
          WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
 
  7    FORMAT(1H ,A8, 10I10)
  8    FORMAT(1H ,I8, 10F10.6)
-      
+
       RETURN
       END
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
-c      program mainhalton
-c      call testhalton
-c      end
-  
-
-C ##############################################################################
-C PART II: SOBOL SEQUENCE:
+c     program mainhalton
+c     call testhalton
+c     end
 
 
-C-------------------------------------------------------------------------- 
-C @file  LowDiscrepancy.f
-C @brief Sobol sequence
-C
-C @author Diethelm Wuertz 
-C
-C     ORIGINAL VERSION:
-C       ALGORITHM 659, COLLECTED ALGORITHMS FROM ACM. PUBLISHED IN
-C       TRANSACTIONS ON MATHEMATICAL SOFTWARE, VOL. 14, NO. 1, P.88.
-C     ADDED SCRAMBLING:
-C       FROM PROGRAM "SSOBOL.F" PUBLISHED ON THE INTERNET SITE
-C       www.mcqmc.org/Software.html
-C     EXTENSION TO MAXD=1111:
-C       BY S. JOE ON 17 MAY 2001, SEE:
-C     MODIFICATIONS FOR R / SPLUS:
-C       BY D. WUERTZ, SEPT. 2002; NOTE THE CHECK OF A VALID DIMENSION
-C       VALUE AND THE MAXIMUM NUMBER OF CALLS (ATMOST) HAS TO BE DONE
-C       R/SPLUS FUNCTION.
-C     SEE:
-C       http://www.acm.org/pubs/copyright_policy/softwareCRnotice.html
-C
-C @author Christophe Dutang
-C
-C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
-C slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
-C
-C The new BSD License is applied to this software.
-C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
-C
-C      Redistribution and use in source and binary forms, with or without
-C      modification, are permitted provided that the followingConditions are
-C      met:
-C      
-C          - Redistributions of sourceCode must retain the aboveCopyright
-C          notice, this list ofConditions and the following disclaimer.
-C          - Redistributions in binary form must reproduce the above
-C         Copyright notice, this list ofConditions and the following
-C          disclaimer in the documentation and/or other materials provided
-C          with the distribution.
-C          - Neither the name of the ETH Zurich nor the names of itsContributors 
-C          may be used to endorse or promote products derived from this software 
-C          without specific prior written permission.
+C###############################################################################
+C     PART II: SOBOL SEQUENCE:
+
+
+C--------------------------------------------------------------------------
+C     @file  LowDiscrepancy.f
+C     @brief Sobol sequence
 C     
-C      THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
-C      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-C      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-C      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
-C      OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-C      SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-C      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-C      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
-C      THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
-C      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-C      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-C  
-C-------------------------------------------------------------------------- 
+C     @author Diethelm Wuertz
+C     
+C     ORIGINAL VERSION:
+C     ALGORITHM 659, COLLECTED ALGORITHMS FROM ACM. PUBLISHED IN
+C     TRANSACTIONS ON MATHEMATICAL SOFTWARE, VOL. 14, NO. 1, P.88.
+C     ADDED SCRAMBLING:
+C     FROM PROGRAM "SSOBOL.F" PUBLISHED ON THE INTERNET SITE
+C     www.mcqmc.org/Software.html
+C     EXTENSION TO MAXD=1111:
+C     BY S. JOE ON 17 MAY 2001, SEE:
+C     MODIFICATIONS FOR R / SPLUS:
+C     BY D. WUERTZ, SEPT. 2002; NOTE THE CHECK OF A VALID DIMENSION
+C     VALUE AND THE MAXIMUM NUMBER OF CALLS (ATMOST) HAS TO BE DONE
+C     R/SPLUS FUNCTION.
+C     SEE:
+C     http://www.acm.org/pubs/copyright_policy/softwareCRnotice.html
+C     
+C     @author Christophe Dutang
+C     
+C     Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C     slightly modified (better accuracy and speed) by Christophe Dutang in October 2009.
+C     
+C     The new BSD License is applied to this software.
+C     Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C     
+C     Redistribution and use in source and binary forms, with or without
+C     modification, are permitted provided that the followingConditions are
+C     met:
+C     
+C     - Redistributions of sourceCode must retain the aboveCopyright
+C     notice, this list ofConditions and the following disclaimer.
+C     - Redistributions in binary form must reproduce the above
+C     Copyright notice, this list ofConditions and the following
+C     disclaimer in the documentation and/or other materials provided
+C     with the distribution.
+C     - Neither the name of the ETH Zurich nor the names of itsContributors
+C     may be used to endorse or promote products derived from this software
+C     without specific prior written permission.
+C     
+C     THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
+C     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+C     LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+C     A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THECOPYRIGHT
+C     OWNER ORCONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+C     SPECIAL, EXEMPLARY, ORCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+C     LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+C     DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVERCAUSED AND ON ANY
+C     THEORY OF LIABILITY, WHETHER INCONTRACT, STRICT LIABILITY, OR TORT
+C     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+C     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+C     
+C--------------------------------------------------------------------------
 
 
 C     FUNCTIONS:
-C       SOBOL (QN, N, DIMEN, QUASI, 
-C           LL, COUNT, SV, 
-C           IFLAG, iSEED, INIT, TRANSFORM)
-C         REAL*8 FUNCTION SQNORM (P)
-C       INITSOBOL (DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)
-C         SGENSCRML (MAX, LSM, SHIFT, S, MAXCOL, iSEED)
-C         SGENSCRMU (USM, USHIFT, S, MAXCOL, iSEED)
-C           REAL*8 FUNCTION UNIS (iSEED)
-C       NEXTSOBOL (DIMEN, QUASI, LL, COUNT, SV)
+C     SOBOL (QN, N, DIMEN, QUASI,
+C     LL, COUNT, SV,
+C     IFLAG, iSEED, INIT, TRANSFORM)
+C     REAL*8 FUNCTION SQNORM (P)
+C     INITSOBOL (DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)
+C     SGENSCRML (MAX, LSM, SHIFT, S, MAXCOL, iSEED)
+C     SGENSCRMU (USM, USHIFT, S, MAXCOL, iSEED)
+C     REAL*8 FUNCTION UNIS (iSEED)
+C     NEXTSOBOL (DIMEN, QUASI, LL, COUNT, SV)
 
 C-------------------------------------------------------------------------------
 
 
       SUBROUTINE SOBOL(QN, N, DIMEN, QUASI, LL, COUNT, SV,
-     &   IFLAG, iSEED, INIT, TRANSFORM)
+     &     IFLAG, iSEED, INIT, TRANSFORM)
 
 C     THIS IS AN INTERFACE TO CREATE "N" POINTS IN "DIMEN" DIMENSIONS
 C     ARGUMENTS:
-C       QN        - QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
-C       N         - NUMBERS OF POINTS TO GENERATE
-C       DIMEN     - DIMENSION OF THE SEQUENCY
-C       QUASI     - LAST POINT IN THE SEQUENDE
-C       LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
-C       COUNT     - SEQUENCE NUMBER OF THE CALL
-C       SV        - TABLE OF DIRECTION NUMBERS
-C       IFLAG     - INITIALIZATION FLAG
-C                   0 - NO SCRAMBLING
-C                   1 - OWEN TYPE SCRAMBLING
-C                   2 - FAURE-TEZUKA TYPE SCRAMBLING
-C                   3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
-C       iSEED     - SCRAMBLING iSEED
-C       INIT      - INITIALIZAYION FLAG, 0 NEXT, 1 RE-INITIALZE
-C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
+C     QN        - QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
+C     N         - NUMBERS OF POINTS TO GENERATE
+C     DIMEN     - DIMENSION OF THE SEQUENCY
+C     QUASI     - LAST POINT IN THE SEQUENDE
+C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
+C     COUNT     - SEQUENCE NUMBER OF THE CALL
+C     SV        - TABLE OF DIRECTION NUMBERS
+C     IFLAG     - INITIALIZATION FLAG
+C     0 - NO SCRAMBLING
+C     1 - OWEN TYPE SCRAMBLING
+C     2 - FAURE-TEZUKA TYPE SCRAMBLING
+C     3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
+C     iSEED     - SCRAMBLING iSEED
+C     INIT      - INITIALIZAYION FLAG, 0 NEXT, 1 RE-INITIALZE
+C     TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
       INTEGER MAXBIT,N,DIMEN,INIT,TRANSFORM
       PARAMETER (MAXBIT=30)
@@ -386,32 +387,32 @@ C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER iSEED
 
       IF (INIT.EQ.1) THEN
-		  CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
+         CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
-      
-	  IF (TRANSFORM.EQ.0) THEN
-		  DO I=1, N
-			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)      
-			 DO J = 1, DIMEN
-				   QN(I, J) = QUASI(J)         
-			 ENDDO
-		  ENDDO
-	  ELSE
-		  DO I=1, N
-			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
-			 DO J = 1, DIMEN
-				   QN(I, J) = SQNORM(QUASI(J))
-			 ENDDO
-		  ENDDO
-	  ENDIF
 
+      IF (TRANSFORM.EQ.0) THEN
+         DO I=1, N
+            CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
+            DO J = 1, DIMEN
+               QN(I, J) = QUASI(J)
+            ENDDO
+         ENDDO
+      ELSE
+         DO I=1, N
+            CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
+            DO J = 1, DIMEN
+               QN(I, J) = SQNORM(QUASI(J))
+            ENDDO
+         ENDDO
+      ENDIF
+      
       RETURN
       END
+      
 
-
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
       DOUBLE PRECISION FUNCTION SQNORM(P)
@@ -419,13 +420,13 @@ C ------------------------------------------------------------------------------
 C     USED TO CALCULATE SOBOL NORMAL DEVIATES
       DOUBLE PRECISION P,R,T,A,B, EPS
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
-     &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
-     &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
-     &    +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,  
-     &    +0.385607006340E-2  /
+     &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
+     &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
+     &     +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,
+     &     +0.385607006340E-2  /
 
 C     NOTE, IF P BECOMES 1, THE PROGRAM FAILS TO CALCULATE THE
-C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY 
+C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY
 C     POINT WITH A POINT FAR IN THE TAILS.
       EPS = 1.0D-6
       IF (P.GE.(1.0D0-EPS)) P=1.0D0-EPS
@@ -433,49 +434,49 @@ C     POINT WITH A POINT FAR IN THE TAILS.
       IF (P.NE.0.5D0) GOTO 150
       SQNORM = 0.0D0
       RETURN
-150   R = P 
+ 150  R = P
       IF (P.GT.0.5D0) R = 1.0D0 - R
       T = DSQRT(-2.0*DLOG(R))
       A = ((((T*P4 + P3)*T+P2)*T + P1)*T + P0)
       B = ((((T*Q4 + Q3)*T+Q2)*T + Q1)*T + Q0)
       SQNORM = T + (A/B)
       IF (P.LT.0.5D0) SQNORM = -SQNORM
-     
+
       RETURN
-      END 
+      END
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
-     
-      SUBROUTINE INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, 
-     &   IFLAG, iSEED)
+
+      SUBROUTINE INITSOBOL(DIMEN, QUASI, LL, COUNT, SV,
+     &     IFLAG, iSEED)
 
 C     INITIALIZATION OF THE SOBOL GENERATOR:
-C       THE LEADING ELEMENTS OF EACH ROW OF SV ARE INITIALIZED USING "VINIT".
-C         EACH ROW CORRESPONDS TO A PRIMITIVE POLYNOMIAL. IF THE POLYNOMIAL 
-C         HAS DEGREE "M", ELEMENTS AFTER THE FIRST "M" ARE CALCULATED.
-C       THE NUMBERS IN "SV" ARE ACTUALLY BINARY FRACTIONS. "RECIPD=1/LL"  
-C         HOLDS 1/(THE COMMON DENOMINATOR OF ALL OF THEM).
-C       INITSOBOL IMPLICITLY COMPUTES THE FIRST ALL-ZERO VECTOR.
-C       THE TAUS" IS FOR DETERMINING "FAVORABLE" VALUES. AS DISCUSSED IN 
-C         BRATLEY/FOX, HESE HAVE THE FORM "N=2**K" WHERE "K.GE.(TAUS+S-1)"
-C         FOR INTEGRATION AND "K.GT.TAUS" FOR GLOBAL OPTIMIZATION.
+C     THE LEADING ELEMENTS OF EACH ROW OF SV ARE INITIALIZED USING "VINIT".
+C     EACH ROW CORRESPONDS TO A PRIMITIVE POLYNOMIAL. IF THE POLYNOMIAL
+C     HAS DEGREE "M", ELEMENTS AFTER THE FIRST "M" ARE CALCULATED.
+C     THE NUMBERS IN "SV" ARE ACTUALLY BINARY FRACTIONS. "RECIPD=1/LL"
+C     HOLDS 1/(THE COMMON DENOMINATOR OF ALL OF THEM).
+C     INITSOBOL IMPLICITLY COMPUTES THE FIRST ALL-ZERO VECTOR.
+C     THE TAUS" IS FOR DETERMINING "FAVORABLE" VALUES. AS DISCUSSED IN
+C     BRATLEY/FOX, HESE HAVE THE FORM "N=2**K" WHERE "K.GE.(TAUS+S-1)"
+C     FOR INTEGRATION AND "K.GT.TAUS" FOR GLOBAL OPTIMIZATION.
 C     ARGUMENTS:
-C       DIMEN     - DIMENSION OF THE SEQUENCY
-C       QUASI     - LAST POINT IN THE SEQUENDE
-C       LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
-C       COUNT     - SEQUENCE NUMBER OF THE CALL
-C       SV        - TABLE OF DIRECTION NUMBERS
-C       IFLAG     - INITIALIZATION FLAG
-C                   0 - NO SCRAMBLING
-C                   1 - OWEN TYPE SCRAMBLING
-C                   2 - FAURE-TEZUKA TYPE SCRAMBLING
-C                   3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
-C       iSEED     - SCRAMBLING iSEED
-      
+C     DIMEN     - DIMENSION OF THE SEQUENCY
+C     QUASI     - LAST POINT IN THE SEQUENDE
+C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
+C     COUNT     - SEQUENCE NUMBER OF THE CALL
+C     SV        - TABLE OF DIRECTION NUMBERS
+C     IFLAG     - INITIALIZATION FLAG
+C     0 - NO SCRAMBLING
+C     1 - OWEN TYPE SCRAMBLING
+C     2 - FAURE-TEZUKA TYPE SCRAMBLING
+C     3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
+C     iSEED     - SCRAMBLING iSEED
+
       INTEGER MAXDIM,MAXDEG,MAXBIT,IFLAG
-CC      DW ADDED FOLLOWING LINE:
+C     C      DW ADDED FOLLOWING LINE:
       INTEGER P,PP
       PARAMETER (MAXDIM=1111,MAXDEG=13,MAXBIT=30)
       INTEGER ATMOST,DIMEN,TAUS,COUNT,MAXCOL,S
@@ -483,14 +484,14 @@ CC      DW ADDED FOLLOWING LINE:
       INTEGER SV(DIMEN,MAXBIT),V(DIMEN,MAXBIT)
       INTEGER I,J,K,L,M,NEWV,TAU(MAXDEG)
       INTEGER USM(31,31),USHIFT(31)
-CC      INTEGER TEMP1,TEMP2,TEMP4
+C     C      INTEGER TEMP1,TEMP2,TEMP4
       INTEGER TEMP1,TEMP2,TEMP3,TEMP4
       INTEGER SHIFT(1111),LSM(1111,31),TV(1111,31,31)
       DOUBLE PRECISION QUASI(DIMEN),RECIPD
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
       INTRINSIC MOD, IEOR
-      
+
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
      +     191,253,203,211,239,247,285,369,299,301,333,351,355,357,361,
@@ -596,7 +597,7 @@ CC      INTEGER TEMP1,TEMP2,TEMP4
      +     16153,16159,16165,16183,16189,16195,16197,16201,16209,16215,
      +     16225,16259,16265,16273,16299/
       DATA (POLY(I),I=1108,1111)/16309,16355,16375,16381/
-      
+
       DATA (VINIT(I,1),I=2,1111)/1110*1/
       DATA (VINIT(I,2),I=3,401)/1,3,1,3,1,3,3,1,3,1,3,1,3,1,1,3,1,3,1,3,
      +     1,3,3,1,1,1,3,1,3,1,3,3,1,3,1,1,1,3,1,3,1,1,1,3,3,1,3,3,1,1,
@@ -1299,7 +1300,7 @@ CC      INTEGER TEMP1,TEMP2,TEMP4
      +     6141,955,3537,2157,841,1999,1465,5171,5651,1535,7235,4349,
      +     1263,1453,1005,6893,2919,1947,1635,3963,397,969,4569,655,
      +     6737,2995,7235,7713,973,4821,2377,1673,1,6541/
-      
+
       DATA TAU/0,0,1,3,5,8,11,15,19,23,27,31,35/
 
 C     CHECK PARAMETERS:
@@ -1309,14 +1310,14 @@ C     CHECK PARAMETERS:
       IF (S.LE.MAXDEG) THEN
          TAUS = TAU(S)
       ELSE
-C        RETURN A DUMMY VALUE TO THE CALLING PROGRAM
+C     RETURN A DUMMY VALUE TO THE CALLING PROGRAM
          TAUS = -1
       END IF
 
 C     FIND NUMBER OF BITS IN ATMOST:
       I = ATMOST
       MAXCOL = 0
-   10 MAXCOL = MAXCOL + 1
+ 10   MAXCOL = MAXCOL + 1
       I = I/2
       IF (I.GT.0) GOTO 10
 C     INITIALIZE ROW 1 OF V
@@ -1326,36 +1327,36 @@ C     INITIALIZE ROW 1 OF V
 
 C     INITIALIZE REMAINING ROWS OF V:
       DO I = 2, S
-C        THE BIT PATTERN OF POLYNOMIAL I GIVES ITS FORM
-C        FIND DEGREE OF POLYNOMIAL I FROM BINARY ENCODING
+C     THE BIT PATTERN OF POLYNOMIAL I GIVES ITS FORM
+C     FIND DEGREE OF POLYNOMIAL I FROM BINARY ENCODING
          J = POLY(I)
          M = 0
-   30    J = J/2
+ 30      J = J/2
          IF (J.GT.0) THEN
             M = M + 1
             GOTO 30
          ENDIF
-C        WE EXPAND THIS BIT PATTERN TO SEPARATE COMPONENTS
-C        OF THE LOGICAL ARRAY INCLUD.
+C     WE EXPAND THIS BIT PATTERN TO SEPARATE COMPONENTS
+C     OF THE LOGICAL ARRAY INCLUD.
          J = POLY(I)
          DO K = M, 1, -1
             INCLUD(K) = (MOD(J, 2).EQ.1)
             J = J/2
          ENDDO
-C        THE LEADING ELEMENTS OF ROW I COME FROM VINIT
+C     THE LEADING ELEMENTS OF ROW I COME FROM VINIT
          DO J = 1, M
             V(I, J) = VINIT(I, J)
          ENDDO
-C        CALCULATE REMAINING ELEMENTS OF ROW I AS EXPLAINED
-C        IN BRATLEY AND FOX, SECTION 2
+C     CALCULATE REMAINING ELEMENTS OF ROW I AS EXPLAINED
+C     IN BRATLEY AND FOX, SECTION 2
          DO J = M + 1,MAXCOL
             NEWV = V(I, J-M)
             L = 1
             DO K = 1, M
                L = 2*L
                IF (INCLUD(K)) NEWV = IEOR(NEWV, L*V(I, J-K))
-C              IF A FULL-WORD EXCLUSIVE-OR, SAY .IEOR., IS AVAILABLE,
-C              THEN REPLACE THE PRECEDING STATEMENT BY
+C     IF A FULL-WORD EXCLUSIVE-OR, SAY .IEOR., IS AVAILABLE,
+C     THEN REPLACE THE PRECEDING STATEMENT BY
             ENDDO
             V(I, J) = NEWV
          ENDDO
@@ -1370,44 +1371,45 @@ C     MULTIPLY COLUMNS OF V BY APPROPRIATE POWER OF 2:
          ENDDO
       ENDDO
 
-C>>> SCRAMBLING START
+C>>>  SCRAMBLING START
       IF (IFLAG .EQ. 0) THEN
          DO I = 1, S
-            DO J = 1,MAXCOL 
+            DO J = 1,MAXCOL
                SV(I, J) = V(I, J)
             ENDDO
             SHIFT(I) = 0
          ENDDO
          LL= 2**MAXCOL
-      ELSE             
+      ELSE
          IF ((IFLAG .EQ. 1) .OR. (IFLAG .EQ. 3)) THEN
-         CALL SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
-         DO I = 1,S
-            DO J = 1,MAXCOL
-               L = 1
-               TEMP2 = 0
-               DO P = MAX,1,-1
-                  TEMP1 = 0
-                  DO K = 1,MAXCOL
-                     TEMP01 = IBITS(LSM(I,P),K-1,1)*IBITS(V(I,J),K-1,1)
-                     TEMP1 = TEMP1 + TEMP01
+            CALL SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
+            DO I = 1,S
+               DO J = 1,MAXCOL
+                  L = 1
+                  TEMP2 = 0
+                  DO P = MAX,1,-1
+                     TEMP1 = 0
+                     DO K = 1,MAXCOL
+                        TEMP01 = IBITS(LSM(I,P),K-1,1) *
+     &                       IBITS(V(I,J),K-1,1)
+                        TEMP1 = TEMP1 + TEMP01
+                     ENDDO
+                     TEMP1 = MOD(TEMP1, 2)
+                     TEMP2 = TEMP2+TEMP1*L
+                     L = 2 * L
                   ENDDO
-                  TEMP1 = MOD(TEMP1, 2)
-                  TEMP2 = TEMP2+TEMP1*L   
-                  L = 2 * L
+                  SV(I, J) = TEMP2
                ENDDO
-               SV(I, J) = TEMP2
             ENDDO
-         ENDDO
-         LL= 2**MAX
-      ENDIF
+            LL= 2**MAX
+         ENDIF
          IF ((IFLAG .EQ. 2) .OR. (IFLAG .EQ. 3)) THEN
-            CALL SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED) 
+            CALL SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
             IF (IFLAG .EQ. 2) THEN
                MAXX = MAXCOL
             ELSE
                MAXX = MAX
-            ENDIF    
+            ENDIF
             DO I = 1, S
                DO J = 1, MAXCOL
                   P = MAXX
@@ -1415,13 +1417,13 @@ C>>> SCRAMBLING START
                      IF (IFLAG .EQ. 2) THEN
                         TV(I,P,J) = IBITS(V(I,J),K-1,1)
                      ELSE
-                        TV(I,P,J) = IBITS(SV(I,J),K-1,1) 
-                     ENDIF 
+                        TV(I,P,J) = IBITS(SV(I,J),K-1,1)
+                     ENDIF
                      P = P-1
                   ENDDO
-               ENDDO     
-               DO PP = 1, MAXCOL 
-                  TEMP2 = 0 
+               ENDDO
+               DO PP = 1, MAXCOL
+                  TEMP2 = 0
                   TEMP4 = 0
                   L = 1
                   DO J = MAXX, 1, -1
@@ -1431,30 +1433,30 @@ C>>> SCRAMBLING START
                         TEMP1 = TEMP1 + TV(I,J,P)*USM(P,PP)
                         IF (PP .EQ. 1) THEN
                            TEMP3 = TEMP3 + TV(I,J,P)*USHIFT(P)
-                        ENDIF 
+                        ENDIF
                      ENDDO
                      TEMP1 = MOD(TEMP1,2)
                      TEMP2 = TEMP2 + TEMP1*L
-                     IF (PP .EQ. 1) THEN 
+                     IF (PP .EQ. 1) THEN
                         TEMP3 = MOD(TEMP3,2)
                         TEMP4 = TEMP4 + TEMP3*L
-                     ENDIF  
+                     ENDIF
                      L = 2*L
                   ENDDO
                   SV(I, PP) = TEMP2
                   IF (PP .EQ. 1) THEN
                      IF (IFLAG .EQ. 3) THEN
-                        SHIFT(I) = IEOR(TEMP4, SHIFT(I))           
+                        SHIFT(I) = IEOR(TEMP4, SHIFT(I))
                      ELSE
                         SHIFT(I) = TEMP4
-                     ENDIF  
+                     ENDIF
                   ENDIF
-               ENDDO 
+               ENDDO
             ENDDO
             LL = 2**MAXX
          ENDIF
-      ENDIF 
-C <<< END OF SCRAMBLING
+      ENDIF
+C     <<< END OF SCRAMBLING
 
 C     RECIPD IS 1/(COMMON DENOMINATOR OF THE ELEMENTS IN SV)
       RECIPD = 1.0D0 / LL
@@ -1468,7 +1470,7 @@ C     SET UP FIRST VECTOR AND VALUES FOR "GOSOBL"
       END
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
       SUBROUTINE SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
@@ -1478,7 +1480,7 @@ C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
       INTEGER S,MAXCOL,P,I,J,MAX,TEMP,STEMP,L,LL
       INTEGER SHIFT(1111),LSM(1111,31)
       INTEGER iSEED
-      
+
       DO P = 1, S
          SHIFT(P) = 0
          L = 1
@@ -1491,21 +1493,21 @@ C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
             DO J = MAXCOL, 1, -1
                IF (J .EQ. I) THEN
                   TEMP = 1
-               ELSEIF (J .LT. I)  THEN 
+               ELSEIF (J .LT. I)  THEN
                   TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
                ELSE
                   TEMP = 0
                ENDIF
                LSM(P ,I) = LSM(P, I) + TEMP*LL
-               LL = 2 * LL            
+               LL = 2 * LL
             ENDDO
-         ENDDO 
+         ENDDO
       ENDDO
       RETURN
-      END   
+      END
 
-     
-C ------------------------------------------------------------------------------
+
+C-------------------------------------------------------------------------------
 
 
       SUBROUTINE SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
@@ -1515,45 +1517,45 @@ C     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND SHIFT VECTORS.
       INTEGER USM(31,31),MAXCOL,I,J
       INTEGER USHIFT(31),S,TEMP,STEMP
       INTEGER iSEED
-      
+
       DO I = 1, MAXCOL
          STEMP =  MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
-         USHIFT(I) = STEMP               
+         USHIFT(I) = STEMP
          DO J = 1, MAXCOL
             IF (J .EQ. I) THEN
                TEMP = 1
-            ELSEIF (J .GT. I)  THEN 
+            ELSEIF (J .GT. I)  THEN
                TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
             ELSE
                TEMP = 0
             ENDIF
-            USM(I, J) = TEMP        
+            USM(I, J) = TEMP
          ENDDO
-      ENDDO 
+      ENDDO
       RETURN
-      END   
+      END
 
 
 C-------------------------------------------------------------------------------
-      
-      
+
+
       DOUBLE PRECISION FUNCTION UNIS(IX)
-C       PORTABLE PSEUDORANDOM NUMBER
-C       GENERATOR IMPLEMENTING THE RECURSION
-C       IX=16807*IX MOD(2**31-1)
-C       UNIF=IX/(2**31-1)
-C       USING ONLY 32 BITS INCLUDING SIGN
-C       INPUT:
-C        IX =INTEGER STRICTLY BETWEEN 0 AND 2** 31 -1
-C       OUTPUTS:
-C        IX=NEW PSEUDORANDOM INTEGER
-C           STRICTLY BETWEEN 0 AND 2**31-1
-C        UNIF=UNIFORM VARIATE (FRACTION)
-C           STRICTLY BETWEEN 0 AND 1
-C      FOR JUSTIFICATION, SEE P. BRATLEY,
-C      B.L. FOX, AND L.E. SCHRAGE (1983)
-C      "A GUIDE TO SIMULATION"
-C      SPRINGER-VERLAG, PAGES 201-202
+C     PORTABLE PSEUDORANDOM NUMBER
+C     GENERATOR IMPLEMENTING THE RECURSION
+C     IX=16807*IX MOD(2**31-1)
+C     UNIF=IX/(2**31-1)
+C     USING ONLY 32 BITS INCLUDING SIGN
+C     INPUT:
+C     IX =INTEGER STRICTLY BETWEEN 0 AND 2** 31 -1
+C     OUTPUTS:
+C     IX=NEW PSEUDORANDOM INTEGER
+C     STRICTLY BETWEEN 0 AND 2**31-1
+C     UNIF=UNIFORM VARIATE (FRACTION)
+C     STRICTLY BETWEEN 0 AND 1
+C     FOR JUSTIFICATION, SEE P. BRATLEY,
+C     B.L. FOX, AND L.E. SCHRAGE (1983)
+C     "A GUIDE TO SIMULATION"
+C     SPRINGER-VERLAG, PAGES 201-202
       INTEGER K1,IX
       K1 = IX/127773
       IX = 16807*(IX-K1*127773)-K1*2836
@@ -1563,29 +1565,29 @@ C      SPRINGER-VERLAG, PAGES 201-202
       END
 
 
-C-------------------------------------------------------------------------------   
+C-------------------------------------------------------------------------------
 
 
       SUBROUTINE NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
 
-C     GENERATES A NEW QUASIRANDOM VECTOR WITH EACH CALL. IT ADAPTS THE 
-C     IDEAS OF ANTONOV AND SALEEV, USSR COMPUT. MATHS. MATH. PHYS. 19, 
-C     (1980), 252-256. "INITSOBOL" MUST BE CALLED BEFORE CALLING "NEXTSOBOL". 
+C     GENERATES A NEW QUASIRANDOM VECTOR WITH EACH CALL. IT ADAPTS THE
+C     IDEAS OF ANTONOV AND SALEEV, USSR COMPUT. MATHS. MATH. PHYS. 19,
+C     (1980), 252-256. "INITSOBOL" MUST BE CALLED BEFORE CALLING "NEXTSOBOL".
 C     ARGUMENTS:
-C       DIMEN     - DIMENSION OF THE SEQUENCY
-C       QUASI     - LAST POINT IN THE SEQUENDE
-C       LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
-C       COUNT     - SEQUENCE NUMBER OF THE CALL
-      
+C     DIMEN     - DIMENSION OF THE SEQUENCY
+C     QUASI     - LAST POINT IN THE SEQUENDE
+C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
+C     COUNT     - SEQUENCE NUMBER OF THE CALL
+
       INTEGER DIMEN,MAXBIT,I,L,COUNT
       PARAMETER (MAXBIT=30)
       INTEGER SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QUASI(DIMEN)
       INTRINSIC MOD, IEOR
-      
+
       L = 0
       I = COUNT
-   10 L = L + 1
+ 10   L = L + 1
       IF (MOD(I, 2).EQ.1) THEN
          I = I/2
          GOTO 10
@@ -1601,9 +1603,9 @@ C     FIRST THE NUMERATORS, THEN NORMALIZED
       RETURN
       END
 
-      
-C ------------------------------------------------------------------------------
-   
+
+C-------------------------------------------------------------------------------
+
 
       SUBROUTINE TESTSOBOL()
 
@@ -1617,14 +1619,14 @@ C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       TRANSFORM = 1
       IFLAG = 3
       iSEED1 = 4711
-           
+
       INIT = 1
       iSEED = iSEED1
       CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
      &     IFLAG, iSEED, INIT, TRANSFORM)
 
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N1, INT(N1/(2*10))
          WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
@@ -1633,8 +1635,8 @@ C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       iSEED = iSEED1
       CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
      &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N2, INT(N2/10)
          WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
@@ -1642,8 +1644,8 @@ C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       INIT = 0
       CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
      &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+      WRITE (*,*)
+      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
       DO I=1, N2, INT(N2/10)
          WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
       ENDDO
@@ -1655,7 +1657,7 @@ C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       END
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
 
 C     program mainsobol
@@ -1663,5 +1665,5 @@ C     call testsobol()
 C     end
 
 
-C ------------------------------------------------------------------------------
+C-------------------------------------------------------------------------------
 
