@@ -2,7 +2,7 @@ citHeader("To cite fPortfolio in publications use:")
 
 citEntry(entry  = "book",
          title  = "Portfolio Optimization with R/Rmetrics",
-         author = "Wuertz, Diethelm and Chalabi, Yohan and Chen, William and Ellis, Andrew",	
+         author = "Diethelm Wuertz, Yohan Chalabi, William Chen and Andrew Ellis",	
 	 year   = "2010",	   
 	 month  = "April", 
 	 editor = "Wuertz, Diethelm and Hanf, Martin",
