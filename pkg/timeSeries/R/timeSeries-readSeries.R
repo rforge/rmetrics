@@ -66,7 +66,7 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "", ...)
 
     # Create Time Series from Data Frame:
     data <- sapply(df[-1], as.numeric)
-    ans <- timeSeries(data = data, charvec = charvec)
+    ans <- timeSeries(data = data, charvec = td)
 
     # Return Value:
     ans
