@@ -5,8 +5,8 @@
 
 import("methods")
 import("MASS")
-import("quadprog")
 import("robustbase")
+import("quadprog")
 import("Rglpk")
 import("timeDate")
 import("timeSeries")
