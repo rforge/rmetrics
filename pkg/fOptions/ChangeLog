@@ -1,3 +1,8 @@
+2010-04-23  chalabi
+
+	* src/085A-LowDiscrepancy.f: fixed sobol RVS on 64 bit platform
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+
 2010-04-22  chalabi
 
 	* src/085A-LowDiscrepancy.f: formating code
