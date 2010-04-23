@@ -5,8 +5,9 @@ Date: 2010-04-14
 Title: Rmetrics - Portfolio Selection and Optimization - ebook
         available at www.rmetrics.org
 Author: Rmetrics Core Team, Diethelm Wuertz
-Depends: R (>= 2.8.0), methods, MASS, quadprog, robustbase, timeDate,
-        timeSeries, fBasics, fAssets (>= 2100.78), Rglpk
+Depends: R (>= 2.8.0), methods, MASS, robustbase, timeDate,
+        timeSeries, fBasics, fAssets (>= 2100.78)
+Imports: quadprog, Rglpk
 Suggests: RUnit, tcltk
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
