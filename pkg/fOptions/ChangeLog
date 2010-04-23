@@ -1,0 +1,28 @@
+2010-04-22  chalabi
+
+	* src/085A-LowDiscrepancy.f: formating code
+	* src/085A-LowDiscrepancy.f: Updated LowDiscrepancy.f with changes
+	  of Christophe Dutang.
+
+2009-09-30  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-09-29  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-01-28  chalabi
+
+	* man/BinomialTreeOptions.Rd, man/MonteCarloOptions.Rd,
+	  man/PlainVanillaOptions.Rd: updated manual pages to new Rd parser
+

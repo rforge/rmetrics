@@ -1,7 +1,7 @@
 Package: fOptions
-Version: 2110.77
-Revision: 4277
-Date: 2009-09-28
+Version: 2101.78
+Revision: 4840
+Date: 2010-04-22
 Title: Basics of Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics
