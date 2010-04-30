@@ -33,7 +33,7 @@ if(require("RUnit", quietly = TRUE))
     } else if(level == 3){
         testSuite <- defineTestSuite(name = paste(pkg, "level 3 testing"),
                                      testFuncRegexp = "^level3test.+",
-                                     dirs = path)    
+                                     dirs = path)
     } else if(level == "graphics"){
         testSuite <- defineTestSuite(name = paste(pkg, "graphics testing"),
                                      testFuncRegexp = "^graphicstest.+",
