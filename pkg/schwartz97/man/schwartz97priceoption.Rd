@@ -1,13 +1,7 @@
 \name{pricing-options}
-\docType{methods}
-\title{Schwartz two-factor Model: European Option Prices}
-
 \alias{priceoption}
-\alias{priceoption,ANY,ANY,ANY,ANY,numeric-method}
-\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f-method}
-\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f.fit-method}
 
-
+\title{Schwartz two-factor Model: European Option Prices}
 % <---------------------------------------------------------------------->
 \description{
 
@@ -18,14 +12,9 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-\S4method{priceoption}{ANY,ANY,ANY,ANY,numeric}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
+priceoption(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
             g0 = 50, sigmaS = 0.3, kappa = 1, sigmaE = 0.5,
             rho = 0.75, r = 0.05)
-
-\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0,
-            r = 0.05, lambda = 0, alphaT = NULL)
-
-\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f.fit}(type = c("call", "put"), time = 0.5, Time = 1, K = 40, g0)
 
 }
 
@@ -33,11 +22,11 @@
 \arguments{
 
   \item{type}{Valuing either a European \code{"call"} or a \code{"put"}
-    option on a futures/ forward.}
+    option on a futures.}
   \item{time}{Exercise time of the option.}
-  \item{Time}{Maturity date of the underlying instrument (see \bold{Details}).}
-  \item{K}{Strike price at exercise time \code{time}.}
-  \item{g0}{Either a \code{numeric} representing the initial value of the
+  \item{Time}{Maturity date of the underlying futures (see \bold{Details}).}
+  \item{K}{Strike price.}
+  \item{g0}{The current value of the futures contractinitial value of the
     \emph{futures price} or an object inheriting from class
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
@@ -71,11 +60,9 @@
 % <---------------------------------------------------------------------->
 \note{
 
-  If either a \code{\link[=schwartz2f-class]{schwartz2f}},
-  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} object
-  is submitted the futures price is calculated first and then the
-  default function is called with the calculated futures price
-  \code{g0}.
+  Since the two-factor model assumes a constant interest rate, futures
+  and forwards always have the same value and therefore also any
+  derivative of futures or forwards.
 
 }
 

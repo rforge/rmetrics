@@ -521,7 +521,7 @@ European put option written on a copper futures with strike price
 90. The futures expires in 3 years, and the option in 2 years. We also
 calculate the 3 years futures price.
 <<>>=
-priceoption("put", time = 2, Time = 3, K = 90, copper.fit)
+##priceoption("put", time = 2, Time = 3, K = 90, copper.fit)
 
 pricefutures(ttm = 3, copper.fit)
 @

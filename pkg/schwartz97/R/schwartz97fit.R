@@ -28,9 +28,9 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   if(!is.matrix(ttm)){
     stop("'ttm' must be a matrix!")
   }
-  if(any(!is.finite(data))){
-    stop("'data' contains non-finite values!")
-  }
+##   if(any(!is.finite(data))){
+##     stop("'data' contains non-finite values!")
+##   }
   if(any(!is.finite(ttm))){
     stop("'ttm' contains non-finite values!")
   }

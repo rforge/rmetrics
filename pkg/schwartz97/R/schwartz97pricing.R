@@ -88,16 +88,16 @@ setMethod("pricefutures", signature(ttm = "ANY",
 
 
 ### < ====================================================================== >
-setGeneric("priceoption",
-           function(type = c("call", "put"), time = 0.5, Time = 1,
-                    K = 40, g0, ...)
-           standardGeneric("priceoption"))
+## setGeneric("priceoption",
+##            function(type = c("call", "put"), time = 0.5, Time = 1,
+##                     K = 40, g0, ...)
+##            standardGeneric("priceoption"))
 
 ### < ---------------------------------------------------------------------- >
-priceoption.default <- function(type = c("call", "put"), time = 0.5,
-                                Time = 1, K = 40, g0 = 50,
-                                sigmaS = 0.3, kappa = 1,
-                                sigmaE = 0.5, rho = 0.75, r = 0.05)
+priceoption <- function(type = c("call", "put"), time = 0.5,
+                        Time = 1, K = 40, g0 = 50,
+                        sigmaS = 0.3, kappa = 1,
+                        sigmaE = 0.5, rho = 0.75, r = 0.05)
 {
   type <- match.arg(type)
   if(Time < time)
@@ -111,7 +111,7 @@ priceoption.default <- function(type = c("call", "put"), time = 0.5,
                                  rho = rho)
   d <- (log(G / K) + c(0.5, -0.5) * sigma^2) / sigma
   P <- exp(-r * time)
-
+  
   if(type == "call")
     {
       call <- P * (G * pnorm(d[1]) - K * pnorm(d[2]))
@@ -122,77 +122,77 @@ priceoption.default <- function(type = c("call", "put"), time = 0.5,
     }
 }
 
-setMethod("priceoption", signature(type = "ANY", time = "ANY",
-                                   Time = "ANY", K = "ANY",
-                                   g0 = "numeric"),
-          priceoption.default)
+## setMethod("priceoption", signature(type = "ANY", time = "ANY",
+##                                    Time = "ANY", K = "ANY",
+##                                    g0 = "numeric"),
+##           priceoption.default)
 
-### < ---------------------------------------------------------------------- >
-priceoption.schwartz2f <- function(type = c("call", "put"),
-                                   time = 0.5, Time = 1, K = 40,
-                                   g0, r = 0.05, lambda = 0, alphaT = NULL)
-{
-  type <- match.arg(type)
-  if(Time < time)
-    stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
+## ### < ---------------------------------------------------------------------- >
+## priceoption.schwartz2f <- function(type = c("call", "put"),
+##                                    time = 0.5, Time = 1, K = 40,
+##                                    g0, r = 0.05, lambda = 0, alphaT = NULL)
+## {
+##   type <- match.arg(type)
+##   if(Time < time)
+##     stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
-  tmp.coef <- coef(g0)
+##   tmp.coef <- coef(g0)
 
-  if(missing(lambda) & missing(alphaT)){
-    warning("Both 'alphaT' and 'lambda' are missing!\n",
-            "The market price of convenience yield risk is set to zero.")
-    alphaT <- tmp.coef$alpha
-  }else if(missing(alphaT)){
-    alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
-  }else if(!missing(alphaT) & !missing(lambda)){
-    warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
-  }
+##   if(missing(lambda) & missing(alphaT)){
+##     warning("Both 'alphaT' and 'lambda' are missing!\n",
+##             "The market price of convenience yield risk is set to zero.")
+##     alphaT <- tmp.coef$alpha
+##   }else if(missing(alphaT)){
+##     alphaT = tmp.coef$alpha - lambda / tmp.coef$kappa
+##   }else if(!missing(alphaT) & !missing(lambda)){
+##     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
+##   }
 
-  G <- pricefutures(ttm = Time - time, s0 = g0, r = r, alphaT = alphaT)
+##   G <- pricefutures(ttm = Time - time, s0 = g0, r = r, alphaT = alphaT)
 
-  sigmaS <- tmp.coef$sigmaS
-  kappa <- tmp.coef$kappa
-  sigmaE <- tmp.coef$sigmaE
-  rho <- tmp.coef$rho
+##   sigmaS <- tmp.coef$sigmaS
+##   kappa <- tmp.coef$kappa
+##   sigmaE <- tmp.coef$sigmaE
+##   rho <- tmp.coef$rho
 
-  type <- match.arg(type)
+##   type <- match.arg(type)
 
-  return(priceoption(type = type, time = time, Time = Time, K = K,
-                     g0 = G, sigmaS = sigmaS, kappa = kappa,
-                     sigmaE = sigmaE, rho = rho, r = r))
-}
+##   return(priceoption(type = type, time = time, Time = Time, K = K,
+##                      g0 = G, sigmaS = sigmaS, kappa = kappa,
+##                      sigmaE = sigmaE, rho = rho, r = r))
+## }
 
-setMethod("priceoption", signature(type = "ANY", time = "ANY",
-                                   Time = "ANY", K = "ANY",
-                                   g0 = "schwartz2f"),
-          priceoption.schwartz2f)
+## setMethod("priceoption", signature(type = "ANY", time = "ANY",
+##                                    Time = "ANY", K = "ANY",
+##                                    g0 = "schwartz2f"),
+##           priceoption.schwartz2f)
 
-### < ---------------------------------------------------------------------- >
-priceoption.schwartz2f.fit <- function(type = c("call", "put"),
-                                       time = 0.5, Time = 1, K = 40, g0)
-{
-  type <- match.arg(type)
-  if(Time < time)
-    stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
+## ### < ---------------------------------------------------------------------- >
+## priceoption.schwartz2f.fit <- function(type = c("call", "put"),
+##                                        time = 0.5, Time = 1, K = 40, g0)
+## {
+##   type <- match.arg(type)
+##   if(Time < time)
+##     stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
 
-  G <- pricefutures(ttm = Time - time, s0 = g0)
+##   G <- pricefutures(ttm = Time - time, s0 = g0)
 
-  tmp.coef <- coef(g0)
-  sigmaS <- tmp.coef$sigmaS
-  kappa <- tmp.coef$kappa
-  sigmaE <- tmp.coef$sigmaE
-  rho <- tmp.coef$rho
+##   tmp.coef <- coef(g0)
+##   sigmaS <- tmp.coef$sigmaS
+##   kappa <- tmp.coef$kappa
+##   sigmaE <- tmp.coef$sigmaE
+##   rho <- tmp.coef$rho
 
-  r <- g0@r
+##   r <- g0@r
 
-  type <- match.arg(type)
+##   type <- match.arg(type)
 
-  return(priceoption(type = type, time = time, Time = Time, K = K,
-                     g0 = G, sigmaS = sigmaS, kappa = kappa,
-                     sigmaE = sigmaE, rho = rho, r = r))
-}
+##   return(priceoption(type = type, time = time, Time = Time, K = K,
+##                      g0 = G, sigmaS = sigmaS, kappa = kappa,
+##                      sigmaE = sigmaE, rho = rho, r = r))
+## }
 
-setMethod("priceoption", signature(type = "ANY", time = "ANY",
-                                   Time = "ANY", K = "ANY",
-                                   g0 = "schwartz2f.fit"),
-          priceoption.schwartz2f.fit)
+## setMethod("priceoption", signature(type = "ANY", time = "ANY",
+##                                    Time = "ANY", K = "ANY",
+##                                    g0 = "schwartz2f.fit"),
+##           priceoption.schwartz2f.fit)
