@@ -12,11 +12,14 @@ pstate.default <- function(lower, upper, time = 1, s0 = 50, delta0 = 0,
   lower[1] <- log(lower[1])
   upper[1] <- log(upper[1])
 
-  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
-                               alpha, sigmaE, rho,
-                               time)
+  mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
+                               mu = mu, sigmaS = sigmaS,
+                               kappa = kappa, alpha = alpha,
+                               sigmaE = sigmaE, rho = rho,
+                               time = time)
 
-  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                   sigmaE = sigmaE, rho = rho, time = time)
 
   return(pmvnorm(lower = lower, upper = upper, mean = mean,
                  sigma = sigma, ...))
@@ -68,10 +71,14 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
 
   x[,1] <- log(x[,1])
 
-  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
-                                    alpha, sigmaE, rho, time)
+  mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
+                               mu = mu, sigmaS = sigmaS,
+                               kappa = kappa, alpha = alpha,
+                               sigmaE = sigmaE, rho = rho,
+                               time = time)
 
-  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                   sigmaE = sigmaE, rho = rho, time = time)
 
   dens <- dmvnorm(x, mean = mean, sigma = sigma) / exp(x[,1], ...)
 
@@ -117,10 +124,14 @@ qstate.default <- function(p, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
                            sigmaE = 0.5, rho = 0.75,
                            tail = "lower.tail", ...)
 {
-  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
-                               alpha, sigmaE, rho, time)
+  mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
+                               mu = mu, sigmaS = sigmaS,
+                               kappa = kappa, alpha = alpha,
+                               sigmaE = sigmaE, rho = rho,
+                               time = time)
 
-  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
+  sigma <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                   sigmaE = sigmaE, rho = rho, time = time)
 
   quant <- qmvnorm(p = p, tail = tail, mean = mean, sigma = sigma, ...)
   quant$quantile <- c(exp(quant$quantile), quant$quantile)
@@ -173,9 +184,17 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
   mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
                                alpha, sigmaE, rho, time)
 
-  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
+  mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
+                               mu = mu, sigmaS = sigmaS,
+                               kappa = kappa, alpha = alpha,
+                               sigmaE = sigmaE, rho = rho,
+                               time = time)
+
+  sigma <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                   sigmaE = sigmaE, rho = rho, time = time)
 
   rand <- rmvnorm(n = n, mean = mean, sigma = sigma, method = method)
+
   rand[,1] <- exp(rand[,1])
   colnames(rand) <- c("S", "delta")
   return(rand)
@@ -226,8 +245,8 @@ simstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
 
   deltat <- time/n
 
-  sigma <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho,
-                                   time = deltat)
+  sigma <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                   sigmaE = sigmaE, rho = rho, time = deltat)
 
   traj <- matrix(NA, ncol = 2, nrow = n,
                  dimnames = list(1:n, c("S", "delta")))
@@ -298,11 +317,13 @@ pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
-  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
-                               kappa, sigmaE, rho, alpha,
-                               alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
+                               sigmaS = sigmaS, kappa = kappa,
+                               sigmaE = sigmaE, rho = rho, alpha = alpha,
+                               alphaT = alphaT, r = r, time = time, ttm = ttm)
 
-  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
+                                     rho = rho, time = time, ttm = ttm)
 
   return(pnorm(log(q), mean = mu.fut, sd = sqrt(sigma.fut), ...))
 }
@@ -330,11 +351,12 @@ pfutures.schwartz2f <- function(q, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
 
   return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
                           alphaT = alphaT, ...))
 }
@@ -351,6 +373,7 @@ pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0, ...)
   delta0 <- tmp.coef$delta0
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
+  alpha <- tmp.coef$alpha
   kappa <- tmp.coef$kappa
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
@@ -358,7 +381,7 @@ pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0, ...)
   alphaT <- tmp.coef$alphaT
 
   return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
                           r = r, alphaT = alphaT, ...))
 }
@@ -388,11 +411,13 @@ dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
-  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
-                               kappa, sigmaE, rho, alpha,
-                               alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
+                               sigmaS = sigmaS, kappa = kappa,
+                               sigmaE = sigmaE, rho = rho, alpha = alpha,
+                               alphaT = alphaT, r = r, time = time, ttm = ttm)
 
-  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
+                                     rho = rho, time = time, ttm = ttm)
 
   return(dnorm(log(x), mean = mu.fut, sd = sqrt(sigma.fut), ...) / x)
 }
@@ -420,11 +445,12 @@ dfutures.schwartz2f <- function(x, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
 
   return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
                           alphaT = alphaT, ...))
 
@@ -443,13 +469,14 @@ dfutures.schwartz2f.fit <- function(x, time = 0.1, ttm = 1, s0, ...)
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
   r <- tmp.coef$r
   alphaT <- tmp.coef$alphaT
 
   return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
                           r = r, alphaT = alphaT, ...))
 }
@@ -479,11 +506,13 @@ qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
-  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
-                               kappa, sigmaE, rho, alpha,
-                               alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
+                               sigmaS = sigmaS, kappa = kappa,
+                               sigmaE = sigmaE, rho = rho, alpha = alpha,
+                               alphaT = alphaT, r = r, time = time, ttm = ttm)
 
-  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
+                                     rho = rho, time = time, ttm = ttm)
 
   return(exp(qnorm(p = p, mean = mu.fut, sd = sqrt(sigma.fut), ...)))
 }
@@ -511,11 +540,12 @@ qfutures.schwartz2f <- function(p, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
 
   return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
                           r = r, alphaT = alphaT, ...))
 
@@ -534,13 +564,14 @@ qfutures.schwartz2f.fit <- function(p, time = 0.1, ttm = 1, s0, ...)
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
   r <- tmp.coef$r
   alphaT <- tmp.coef$alphaT
 
   return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
                           r = r, alphaT = alphaT, ...))
 }
@@ -571,11 +602,12 @@ rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
-  mu.fut <- .mu.fut.schwartz2f(log(s0), delta0, mu, sigmaS,
-                               kappa, sigmaE, rho, alpha,
-                               alphaT, r, time, ttm)
+  mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu, sigmaS = sigmaS,
+                               kappa = kappa, sigmaE = sigmaE, rho = rho, alpha = alpha,
+                               alphaT = alphaT, r = r, time = time, ttm = ttm)
 
-  sigma.fut <- .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
+  sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
+                                     rho = rho, time = time, ttm = ttm)
 
   return(exp(rnorm(n = n, mean = mu.fut, sd = sqrt(sigma.fut))))
 }
@@ -604,11 +636,12 @@ rfutures.schwartz2f <- function(n, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
 
   return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
                           alphaT = alphaT))
 
@@ -628,13 +661,14 @@ rfutures.schwartz2f.fit <- function(n, time = 0.1, ttm = 1, s0)
   mu <- tmp.coef$mu
   sigmaS <- tmp.coef$sigmaS
   kappa <- tmp.coef$kappa
+  alpha <- tmp.coef$alpha
   sigmaE <- tmp.coef$sigmaE
   rho <- tmp.coef$rho
   r <- tmp.coef$r
   alphaT <- tmp.coef$alphaT
 
   return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
-                          mu = mu, sigmaS = sigmaS, kappa = kappa,
+                          mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
                           r = r, alphaT = alphaT))
 

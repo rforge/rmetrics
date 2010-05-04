@@ -83,18 +83,17 @@
                                kappa, sigmaE, rho,
                                alpha, alphaT, r, time, ttm)
 {
-  compA <- .A.schwartz2f(kappa, sigmaS, sigmaE, rho,
-                         alphaT, r, ttm - time)
+  compA <- .A.schwartz2f(kappa = kappa, sigmaS = sigmaS,
+                         sigmaE = sigmaE, rho = rho,
+                         alphaT = alphaT, r = r, ttm = ttm - time)
 
-  compB <- .B.schwartz2f(kappa, ttm - time)
+  compB <- .B.schwartz2f(kappa = kappa, ttm = ttm - time)
 
-  mu.state <- .mu.state.schwartz2f(x0, delta0, mu, sigmaS, kappa,
-                                   alpha, sigmaE, rho, time)
+  mu.state <- .mu.state.schwartz2f(x0 = x0, delta0 = delta0, mu = mu,
+                                   sigmaS = sigmaS, kappa = kappa,
+                                   alpha = alpha, sigmaE = sigmaE,
+                                   rho = rho, time = time)
 
-  ##  prod1 <- matrix(, nrow = 1)
-  ##  prod2 <- matrix(c(1, compB, compA), ncol = 1)
-
-  ##  return(as.numeric(prod1 %*% prod2))
   return(sum(c(mu.state, 1) * c(1, compB, compA)))
 }
 
@@ -105,12 +104,10 @@
                                          rho, time)
 
   prod <- matrix(c(1, compB), ncol = 1)
-  return(as.numeric(t(prod) %*% sigma.state %*% prod))
+  return(as.numeric(t(prod) %*% sigma.state %*% prod))  
 }
 
-.sigma.opt.schwartz2f <- function(time = 0.5, Time = 1, kappa = 1,
-                                  sigmaS = 0.3, sigmaE = 0.5,
-                                  rho = 0.75)
+.sigma.opt.schwartz2f <- function(time, Time, kappa, sigmaS, sigmaE, rho)
 {
   return(sqrt(sigmaS^2 * time + 2 * sigmaS * sigmaE * rho / kappa *
               (1 / kappa * exp(-kappa * Time) *

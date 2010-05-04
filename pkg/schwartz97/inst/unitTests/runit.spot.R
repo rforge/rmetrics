@@ -1,3 +1,15 @@
+check.r.sim <- function(){
+  obj <-  schwartz2f(s0 = 60, delta0 = 0.2, alpha = 0.1)
+
+  traj <- sapply(1:2000, function(dummy, obj)simstate(5, 0.3, obj)[5,],
+                 obj = obj)
+  end.points <- rstate(2000, 0.3, obj)
+
+  abs.diff <- abs(rowMeans(traj) - colMeans(rstate(2000, 0.3, obj)))
+  checkTrue(abs.diff[1] < 1,  "spot: simstate must converge to rstate")
+  checkTrue(abs.diff[2] < .05,  "convenience yield: simstate must converge to rstate")
+}
+
 check.mean <- function(){
 ##  library(schwartz97)
 ##  library(RUnit)

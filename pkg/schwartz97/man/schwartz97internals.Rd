@@ -35,8 +35,7 @@
 
 .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 
-.sigma.opt.schwartz2f(time = 0.5, Time = 1, kappa = 1,
-                           sigmaS = 0.3, sigmaE = 0.5, rho = 0.75)
+.sigma.opt.schwartz2f(time, Time, kappa, sigmaS, sigmaE, rho)
 
 }
 % <---------------------------------------------------------------------->

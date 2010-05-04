@@ -107,8 +107,8 @@ priceoption <- function(type = c("call", "put"), time = 0.5,
 
   type <- match.arg(type)
   sigma <- .sigma.opt.schwartz2f(time = time, Time = Time,
-                                 kappa = kappa, sigmaE = sigmaE,
-                                 rho = rho)
+                                 kappa = kappa, sigmaS = sigmaS,
+                                 sigmaE = sigmaE, rho = rho)
   d <- (log(G / K) + c(0.5, -0.5) * sigma^2) / sigma
   P <- exp(-r * time)
   
