@@ -109,12 +109,19 @@
 
 .sigma.opt.schwartz2f <- function(time, Time, kappa, sigmaS, sigmaE, rho)
 {
-  return(sqrt(sigmaS^2 * time + 2 * sigmaS * sigmaE * rho / kappa *
-              (1 / kappa * exp(-kappa * Time) *
-               (exp(kappa * time) - 1) - time) + sigmaE^2 / kappa^2 *
-              (time + 1 / (2 * kappa) * exp(-2 * kappa * Time) *
-               (exp(2 * kappa * time) - 1) - 2 / kappa *
-               exp(-kappa * Time) * (exp(kappa * time) - 1))))
+  term1 <- sigmaS^2 * time
+
+  term2 <- 2 * sigmaS * sigmaE * rho / kappa *
+    (1 / kappa * exp(-kappa * Time) * (exp(kappa * time) - 1) -
+     time)
+
+  term3 <- sigmaE^2 / kappa^2 *
+    (time +
+     1 / (2 * kappa) * exp(-2 * kappa * Time) *
+     (exp(2 * kappa * time) - 1) -
+     2 / kappa * exp(-kappa * Time) * (exp(kappa * time) - 1))
+
+  return(sqrt(term1 + term2 + term3))
 }
 
 .state.space.2f <- function(y, ttm, deltat, x0, delta0, kappa,
