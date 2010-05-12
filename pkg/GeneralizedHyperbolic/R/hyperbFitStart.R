@@ -1,3 +1,5 @@
+### CYD 01/04/10
+
 hyperbFitStart <- function(x, breaks = NULL,
                            startValues = "BN",
                            paramStart = NULL,
@@ -5,7 +7,7 @@ hyperbFitStart <- function(x, breaks = NULL,
                            startMethodMoM = "Nelder-Mead", ...) {
 
   histData <- hist(x, plot = FALSE, right = FALSE)
-  
+
   if (is.null(breaks))
     breaks <- histData$breaks
 
@@ -15,7 +17,7 @@ hyperbFitStart <- function(x, breaks = NULL,
 
   if (length(na.omit(empDens[1:maxIndex])) > 1) {
     leftAsymptote <- lm(log(empDens)[1:maxIndex] ~ midpoints[1:maxIndex])$coef
-    rightAsymptote <- c(NA, -10 * leftAsymptote[2]) # arbitrary large value
+    rightAsymptote <- c(NA, -10*leftAsymptote[2]) # arbitrary large value
   }
 
   if (length(na.omit(empDens[maxIndex:length(empDens)])) > 1) {
@@ -23,7 +25,7 @@ hyperbFitStart <- function(x, breaks = NULL,
                       midpoints[maxIndex:length(empDens)])$coef
 
     if (length(na.omit(empDens[1:maxIndex])) < 2)
-      leftAsymptote <- c(NA, -10 * rightAsymptote[2]) # arbitrary large value
+      leftAsymptote <- c(NA, -10*rightAsymptote[2]) # arbitrary large value
   }
 
   if ((length(na.omit(empDens[1:maxIndex])) < 2) &
@@ -41,15 +43,13 @@ hyperbFitStart <- function(x, breaks = NULL,
     if (!is.null(paramStart)) {
       if (length(paramStart) != 4)
         stop("paramStart must contain 4 values")
-
-      paramStart <- hyperbChangePars(1, 2, paramStart)
-
-      if (paramStart[4] <= 0)
-        stop("zeta in paramStart must be greater than zero")
-
-      if (paramStart[2] <= 0)
-        stop("delta in paramStart must be greater than zero")
+      if (param[3] <= 0)
+        stop("alpha must be greater than zero")
+      if (abs(param[4]) >= param[3])
+        stop("absolute value of beta must be less than alpha")
     }
+    paramStart <- c(mu = paramStart[1], delta = paramStart[2],
+                      alpha = paramStart[3], beta = paramStart[4])
   }
 
   if (startValues == "FN") {
@@ -57,9 +57,9 @@ hyperbFitStart <- function(x, breaks = NULL,
     nu <- as.numeric(midpoints[maxIndex])
     mu <- mean(x)
     delta <- sd(x)
-    hyperbPi <- (nu - mu) / delta
+    hyperbPi <- (nu - mu)/delta
     zeta <- 1 + hyperbPi^2
-    paramStart <- c(mu, delta, hyperbPi, zeta)
+    paramStart <- hyperbChangePars(1, 2, param = c(mu, delta, hyperbPi, zeta))
   }
 
   if (startValues == "SL") {
@@ -69,25 +69,22 @@ hyperbFitStart <- function(x, breaks = NULL,
       -sum(log(dskewlap(x, param = param)))
     }
 
-    lSkewAlpha <- log(1 / leftAsymptote[2])
-    lSkewBeta <- log(abs(1 / rightAsymptote[2]))
+    lSkewAlpha <- log(1/leftAsymptote[2])
+    lSkewBeta <- log(abs(1/rightAsymptote[2]))
     skewMu <- midpoints[maxIndex]
     paramStart <- c(skewMu, lSkewAlpha, lSkewBeta)
     skewlpOptim <- optim(paramStart, llsklp, NULL,
                          method = startMethodSL, hessian = FALSE, ...)
-    phi <- 1 / exp(skewlpOptim$par[2])
-    hyperbGamma <- 1 / exp(skewlpOptim$par[3])
+    phi <- 1/exp(skewlpOptim$par[2])
+    hyperbGamma <- 1/exp(skewlpOptim$par[3])
     delta <- 0.1 # Take delta to be small
     mu <- skewlpOptim$par[1]
-    hyperbPi <- hyperbChangePars(3, 1, c(mu, delta, phi, hyperbGamma))[3]
-    zeta <- hyperbChangePars(3, 1, c(mu, delta, phi, hyperbGamma))[4]
-    paramStart <- c(mu, delta, hyperbPi, zeta)
+    paramStart <- hyperbChangePars(3, 2, param = c(mu, delta, phi, hyperbGamma))
   }
 
   if (startValues == "MoM") {
     svName <- "Method of Moments"
     paramStart <- hyperbFitStartMoM(x, startMethodMoM = startMethodMoM, ...)
-    paramStart <- hyperbChangePars(2, 1, paramStart)
   }
 
   if (!(startValues %in% c("US", "FN", "SL", "MoM")))
@@ -101,7 +98,7 @@ hyperbFitStart <- function(x, breaks = NULL,
     if (!(is.na(leftAsymptote[1]) | is.na(rightAsymptote[1]))) {
       mu <- -(leftAsymptote[1] - rightAsymptote[1]) /
              (leftAsymptote[2] - rightAsymptote[2])
-      intersectionValue <- leftAsymptote[1] + mu * leftAsymptote[2]
+      intersectionValue <- leftAsymptote[1] + mu*leftAsymptote[2]
       logModalDens <- log(max(empDens, na.rm = TRUE))
       zeta <- intersectionValue - logModalDens
 
@@ -117,49 +114,51 @@ hyperbFitStart <- function(x, breaks = NULL,
         zeta <- 0.1        # This is set arbitrarily
     }
 
-    delta <- zeta / sqrt(phi * hyperbGamma)
-    hyperbPi <- hyperbChangePars(3, 1, c(mu, delta, phi, hyperbGamma))[3]
-    paramStart <- c(mu, delta, hyperbPi, zeta)
+    delta <- zeta/sqrt(phi*hyperbGamma)
+    paramStart <- hyperbChangePars(3, 2, param = c(mu, delta, phi, hyperbGamma))
   }
 
-  paramStart <- hyperbChangePars(1, 2, paramStart)
   names(paramStart) <- c("mu", "delta", "alpha", "beta")
   list(paramStart = paramStart, breaks = breaks, midpoints = midpoints,
        empDens = empDens, svName = svName)
 } ## End of hyperbFitStart()
 
+
+
 hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
 
-  fun1 <- function(param) {
-    diff1 <- hyperbMean(param = param) - mean(x)
+  fun1 <- function(expParam) {
+    diff1 <- hyperbMean(param = expParam) - mean(x)
     diff1
   }
 
-  fun2 <- function(param) {
-    diff2 <- hyperbVar(param = param) - var(x)
+  fun2 <- function(expParam) {
+    diff2 <- hyperbVar(param = expParam) - var(x)
     diff2
   }
 
-  fun3 <- function(param) {
-    diff3 <- hyperbSkew(param = param) - skewness(x)
+  fun3 <- function(expParam) {
+    diff3 <- hyperbSkew(param = expParam) - skewness(x)
     diff3
   }
 
-  fun4 <- function(param) {
-    diff4 <- hyperbKurt(param = param) - kurtosis(x)
+  fun4 <- function(expParam) {
+    diff4 <- hyperbKurt(param = expParam) - kurtosis(x)
     diff4
   }
 
   MoMOptimFun <- function(param) {
-    (fun1(param))^2 + (fun2(param))^2 +
-    (fun3(param))^2 + (fun4(param))^2
+    expParam <- hyperbChangePars(1, 2,
+                  param = c(param[1], exp(param[2]), param[3], exp(param[4])))
+    (fun1(expParam))^2 + (fun2(expParam))^2 +
+    (fun3(expParam))^2 + (fun4(expParam))^2
   }
 
   ## Determine starting values for parameters using
   ## Barndorff-Nielsen et al "The Fascination of Sand" in
   ## A Celebration of Statistics pp.78--79
-  xi <- sqrt(kurtosis(x) / 3)
-  chi <- skewness(x) / 3  # Ensure 0 <= |chi| < xi < 1
+  xi <- sqrt(kurtosis(x)/3)
+  chi <- skewness(x)/3  # Ensure 0 <= |chi| < xi < 1
 
   if (xi >= 1)
     xi <- 0.999
@@ -174,15 +173,15 @@ hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
     }
   }
 
-  hyperbPi <- chi / sqrt(xi^2 - chi^2)
-  zeta <- 3 / xi^2 - 1
-  rho <- chi / xi
-  delta <- (sqrt(1 + zeta) - 1) * sqrt( 1 - rho^2)
-  mu <- mean(x) - delta * hyperbPi * RLambda(zeta, lambda = 1)
-  startValuesMoM <- c(mu, delta, hyperbPi, zeta)
-  startValuesMoM <- hyperbChangePars(1, 2, startValuesMoM, noNames = TRUE)
+  hyperbPi <- chi/sqrt(xi^2 - chi^2)
+  zeta <- 3/xi^2 - 1
+  rho <- chi/xi
+  delta <- (sqrt(1 + zeta) - 1)*sqrt( 1 - rho^2)
+  mu <- mean(x) - delta*hyperbPi*RLambda(zeta, lambda = 1)
+  startValuesMoM <- c(mu, log(delta), hyperbPi, log(zeta))
+
   ## Get Method of Moments estimates
   MoMOptim <- optim(startValuesMoM, MoMOptimFun, method = startMethodMoM, ...)
   paramStart <- MoMOptim$par
-  paramStart
+  paramStart <- hyperbChangePars(1, 2, param = paramStart)
 } ## End of hyperbFitStartMoM

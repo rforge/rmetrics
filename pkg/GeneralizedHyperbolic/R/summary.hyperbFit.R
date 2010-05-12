@@ -2,11 +2,22 @@
 ### Only applies when hessian is asked for
 ###
 ### DJS 11/08/06
-summary.hyperbFit <- function(object, ...) {
+summary.hyperbFit <- function(object, hessian = FALSE, 
+                     hessianMethod= "exact",...) {
 
   if (! "hyperbFit" %in% class(object))
     stop("Object must belong to class hyperbFit")
-
+  obs <- object$obs
+  param <- object$param
+  
+  
+  if(hessian == TRUE) {
+      hessian <- hyperbHessian(obs, param, hessianMethod= hessianMethod, 
+                          whichParam = 2)
+      object$hessian <- hessian
+      object$hessianMethod <- hessianMethod
+  }
+  
   if (!is.null(object$hessian)) {
     varcov <- solve(object$hessian)
     par.ses <- sqrt(diag(varcov)) 
@@ -28,6 +39,10 @@ print.summary.hyperbFit <- function(x,
   cat("\nData:     ", x$obsName, "\n")
   cat("Parameter estimates:\n")
 
+  if (!is.null(x$hessian)) {
+      cat ("Hessian: ", x$hessianMethod, "\n")
+      print.default(x$hessian)
+  }
   if (is.null(x$sds)) {
     print.default(format(x$param, digits = digits),
                   print.gap = 2, quote = FALSE)
