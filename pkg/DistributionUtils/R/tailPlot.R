@@ -60,6 +60,39 @@ tailPlot <- function(x, log = "y", side = c("right", "left"),
 
 #----------------------------------------------------------
 
+tailPlotLine <- function(x, distrFn, param = NULL,
+                         side = c("right", "left"), ...)
+{
+  ## Purpose: Add distribution line to tail plot for distributions
+  ## which use the standardised approach
+  ## ----------------------------------------------------------------------
+  ## Arguments:
+  ## ----------------------------------------------------------------------
+  ## Author: David Scott, Date: 11 Mar 2010, 11:35
+  
+  pfun <- match.fun(paste("p", distrFn, sep = ""))
+  side <- match.arg(side)
+  x <- sort(as.numeric(x))
+  if (side =="left"){
+    if (!is.null(param)){
+      lines(x, pfun(x, param = param), ...)
+    } else {
+      lines(x, pfun(x), ...)
+    }
+  }
+  if (side =="right"){
+    if (!is.null(param)){
+      lines(x, 1 - pfun(x, param = param), ...)
+    } else {
+      lines(x, 1 - pfun(x), ...)
+    }
+  }
+  invisible(NULL)
+}
+
+
+#----------------------------------------------------------
+
 normTailPlotLine <- function(x, mean = 0, sd = 1,
                              side = c("right", "left"), ...)
 {

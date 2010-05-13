@@ -47,6 +47,18 @@ graphicstest.tailPlot <- function(pathReport = pathReport)
     ## Add gamma distribution line
     gammaTailPlotLine(x, shape = 1, scale = 1, side = "l")
 
+
+    ## Add line from a standard distribution with default parameters
+    x <- rlnorm(100)
+    tailPlot(x)
+    tailPlotLine(x, distrFn = "lnorm")
+
+    ## Add line from a distribution with 'param' argument
+    require(VarianceGamma)
+    param <- c(0,0.5,0,0.5)
+    x <- rvg(100, param = param)
+    tailPlot(x)
+    tailPlotLine(x, distrFn = "vg", param = param) 
     dev.off()
 
 

@@ -1,5 +1,6 @@
 \name{tailPlot}
 \alias{tailPlot}
+\alias{tailPlotLine}
 \alias{normTailPlotLine}
 \alias{tTailPlotLine}
 \alias{gammaTailPlotLine}
@@ -9,13 +10,16 @@ Tail Plot Functions
 }
 \description{
 Create a left or right tail plot of a data set using
-\code{tailPlot}. Add normal, \eqn{t}, or gamma distribution lines to
+\code{tailPlot}. Add a line for any distribution with parameters given
+by an argument named \code{param}, using \code{tailPlotLine}.
+Add normal, \eqn{t}, or gamma distribution lines to
 the plot using \code{normTailPlotLine}, \code{tTailPlotLine}, or
 \code{gammaTailPlotLine}
 }
 \usage{
 tailPlot(x, log = "y", side = c("right", "left"), main = NULL,
          xlab = NULL, ylab = NULL, ...)
+tailPlotLine(x, distrFn, param = NULL, side = c("right", "left"), ...)
 normTailPlotLine(x, mean = 0, sd = 1, side = c("right", "left"), ...)
 tTailPlotLine(x, df = Inf, side = c("right", "left"), ...)
 gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
@@ -33,6 +37,10 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
   \item{main}{A main title for the plot.}
   \item{xlab}{A label for the x axis, defaults to \code{NULL}.}
   \item{ylab}{A label for the y axis, defaults to \code{NULL}.}
+  \item{distrFn}{Character. The name of the distribution function to be
+    to be added to the tail plot.}
+  \item{param}{Vector specifying the parameters of the distribution,
+    defaults to \code{NULL}.}
   \item{mean}{The mean of the normal distribution.}
   \item{sd}{The standard deviation of the normal distribution. Must be
     positive.}
@@ -57,6 +65,15 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
   statistic values above the median. The default is for the y-axis to be
   plotted on a log scale.
 
+  \code{tailPlotLine} adds a line for the specified distribution to an
+  already drawn tail plot. The distribution can be any distribution
+  which has default parameters, but if parameters need to be supplied
+  the distribution must have an argument \code{param} which specifies
+  the parameters. This is the case for all distributions in the form
+  recommended in Scott \emph{et al} (2009) and includes distributions
+  from the packages \pkg{GeneralizedHyperbolic}, \pkg{SkewHyperbolic}
+  and \code{VarianceGamma}.
+
   \code{normTailPlotLine},\code{tTailPlotLine} and
   \code{gammaTailPlotLine} add the corresponding line
   derived respectively from the given normal, \eqn{t}, or gamma
@@ -70,6 +87,11 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
   \emph{Journal of Financial Econometrics}, \bold{4}, 275--309.
 
   Resnick, S. (2007) \emph{Heavy-Tail Phenomena}, New York: Springer.
+
+  Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine
+  (2009) Software for Distributions in R. UseR: The R User
+  Conference 2009
+  \url{http://www.agrocampus-ouest.fr/math/useR-2009/slides/Scott+Wuertz+Dong.pdf}
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz}
@@ -98,6 +120,18 @@ gammaTailPlotLine(x, shape = 1, scale = 1, side = "l")
 tailPlot(x, side = "l", log = "xy")
 ### Add gamma distribution line
 gammaTailPlotLine(x, shape = 1, scale = 1, side = "l")
+
+### Add line from a standard distribution with default parameters
+x <- rlnorm(100)
+tailPlot(x)
+tailPlotLine(x, distrFn = "lnorm")
+
+### Add line from a distribution with 'param' argument
+require(VarianceGamma)
+param <- c(0,0.5,0,0.5)
+x <- rvg(100, param = param)
+tailPlot(x)
+tailPlotLine(x, distrFn = "vg", param = param) 
 
 }
 \keyword{distribution}
