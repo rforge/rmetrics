@@ -33,9 +33,9 @@ read.lynx(url, intern = TRUE, bin = NULL, pipe = FALSE, \dots)
         binary is available in the operating system path.
       }
       \item{pipe}{
-	a logical which indicates whether the result should be returned
+    a logical which indicates whether the result should be returned
         as a \code{pipe()} commmand.
-	}
+    }
     \item{\dots}{
         optional arguments passed to lynx binary. For example
         \code{accept_all_cookies = TRUE} or
