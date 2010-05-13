@@ -46,7 +46,7 @@ function(url, intern = TRUE, bin = NULL, pipe = FALSE, ...)
     # Compose Command:
     cmd <-
         if (is.null(bin))
-            paste("w3m", args, "-dump -dont_wrap_pre", shQuote(url))
+            paste("w3m", args, "-dump", shQuote(url))
         else
             paste(bin, args, "-dump", shQuote(url))
 
