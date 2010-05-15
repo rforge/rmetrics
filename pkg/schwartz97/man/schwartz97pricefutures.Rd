@@ -1,12 +1,11 @@
 \name{pricing-futures}
 \docType{methods}
-\title{Schwartz two-factor Model: Futures Prices}
-
 \alias{pricefutures}
 \alias{pricefutures,ANY,numeric-method}
 \alias{pricefutures,ANY,schwartz2f-method}
 \alias{pricefutures,ANY,schwartz2f.fit-method}
 
+\title{Schwartz two-factor Model: Futures Prices}
 % <---------------------------------------------------------------------->
 \description{
 

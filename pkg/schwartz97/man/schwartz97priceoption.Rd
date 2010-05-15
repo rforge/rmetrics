@@ -1,5 +1,9 @@
 \name{pricing-options}
+\docType{methods}
 \alias{priceoption}
+\alias{priceoption,ANY,ANY,ANY,ANY,numeric-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f-method}
+\alias{priceoption,ANY,ANY,ANY,ANY,schwartz2f.fit-method}
 
 \title{Schwartz two-factor Model: European Option Prices}
 % <---------------------------------------------------------------------->
@@ -12,9 +16,17 @@
 
 % <---------------------------------------------------------------------->
 \usage{
-priceoption(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
+\S4method{priceoption}{ANY,ANY,ANY,ANY,numeric}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
             g0 = 50, sigmaS = 0.3, kappa = 1, sigmaE = 0.5,
             rho = 0.75, r = 0.05)
+
+\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f}(type = c("call", "put"),
+                                   time = 0.5, Time = 1, K = 40,
+                                   g0, r = 0.05, lambda = 0, alphaT = NULL)
+
+
+\S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f.fit}(type = c("call", "put"),
+                                       time = 0.5, Time = 1, K = 40, g0)
 
 }
 
@@ -45,10 +57,16 @@ priceoption(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
 % <---------------------------------------------------------------------->
 \details{
 
-  The price of an option on the spot commodity is obtained by simply
-  setting \code{time == Time}. This is because of the convergence of the
-  futures price towards the spot price at maturity.  In general the
-  option expires before the futures contract (\code{time < Time}).\cr
+  The price of an option on the spot commodity is obtained by setting
+  \code{time == Time}. This is because of the convergence of the futures
+  price towards the spot price at maturity.  In general the option
+  expires before the futures contract (\code{time < Time}).\cr
+
+  If \code{g0} is either of class
+  \code{\link[=schwartz2f-class]{schwartz2f}} or class
+  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} the futures price
+  is computed first and then plugged into the pricing formula of the
+  option.\cr
 
   The market price of convenience yield risk can either be specified
   explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
@@ -99,8 +117,13 @@ priceoption(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
 % <---------------------------------------------------------------------->
 \examples{
 
+### The option expires in 0.5 years and the futures contract in 1 year.
 priceoption(type = "call", time = 0.5, Time = 1, K = 40, g0 = 50)
-priceoption(type = "put", time = 1, Time = 1, K = 40, g0 = 50)
+
+### The price of a European put option on the spot which expires in 2.5
+### years.
+priceoption(type = "put", time = 2.5, Time = 2.5, K = 900,
+            g0 = schwartz2f(s0 = 1000))
 
 }
 

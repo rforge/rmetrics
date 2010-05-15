@@ -22,7 +22,7 @@
 .get.data(data, type = c("uv", "mv"))
 
 .mu.state.schwartz2f(x0, delta0, mu, sigmaS, kappa,
-                          alpha, sigmaE, rho, time, as.mat = FALSE)
+                     alpha, sigmaE, rho, time, as.mat = FALSE)
 
 .sigma.state.schwartz2f(sigmaS, kappa, sigmaE, rho, time)
 
@@ -31,7 +31,7 @@
 .B.schwartz2f(kappa, ttm)
 
 .mu.fut.schwartz2f(x0, delta0, mu, sigmaS, kappa, sigmaE, rho,
-                        alpha, alphaT, r, time, ttm)
+                   alpha, alphaT, r, time, ttm, measure = "P")
 
 .sigma.fut.schwartz2f(sigmaS, kappa, sigmaE, rho, time, ttm)
 

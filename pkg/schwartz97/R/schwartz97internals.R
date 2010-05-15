@@ -57,6 +57,7 @@
      (1 - exp(-kappa * time)) + sigmaE^2 / (2 * kappa) *
      (1 - exp(-2 * kappa * time)))
 
+##  browser()
   return(cbind(c(vX, vXD), c(vXD, vD)))
 }
 
@@ -81,7 +82,8 @@
 
 .mu.fut.schwartz2f <- function(x0, delta0, mu, sigmaS,
                                kappa, sigmaE, rho,
-                               alpha, alphaT, r, time, ttm)
+                               alpha, alphaT, r, time, ttm,
+                               measure = "P")
 {
   compA <- .A.schwartz2f(kappa = kappa, sigmaS = sigmaS,
                          sigmaE = sigmaE, rho = rho,
@@ -89,11 +91,17 @@
 
   compB <- .B.schwartz2f(kappa = kappa, ttm = ttm - time)
 
-  mu.state <- .mu.state.schwartz2f(x0 = x0, delta0 = delta0, mu = mu,
-                                   sigmaS = sigmaS, kappa = kappa,
-                                   alpha = alpha, sigmaE = sigmaE,
-                                   rho = rho, time = time)
-
+  if(measure == "P"){
+    mu.state <- .mu.state.schwartz2f(x0 = x0, delta0 = delta0, mu = mu,
+                                     sigmaS = sigmaS, kappa = kappa,
+                                     alpha = alpha, sigmaE = sigmaE,
+                                     rho = rho, time = time)
+  }else{
+    mu.state <- .mu.state.schwartz2f(x0 = x0, delta0 = delta0, mu = r,
+                                     sigmaS = sigmaS, kappa = kappa,
+                                     alpha = alphaT, sigmaE = sigmaE,
+                                     rho = rho, time = time)
+  }
   return(sum(c(mu.state, 1) * c(1, compB, compA)))
 }
 

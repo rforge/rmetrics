@@ -181,9 +181,6 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
     stop("'n' must be an integer number!")
   }
 
-  mean <- .mu.state.schwartz2f(log(s0), delta0, mu, sigmaS, kappa,
-                               alpha, sigmaE, rho, time)
-
   mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
                                mu = mu, sigmaS = sigmaS,
                                kappa = kappa, alpha = alpha,
@@ -195,7 +192,9 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
 
   rand <- rmvnorm(n = n, mean = mean, sigma = sigma, method = method)
 
+##  browser()
   rand[,1] <- exp(rand[,1])
+##  browser()
   colnames(rand) <- c("S", "delta")
   return(rand)
 }
@@ -305,8 +304,11 @@ setGeneric("pfutures",
 pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75,
-                             r = 0.05, lambda = 0, alphaT = NULL, ...)
+                             r = 0.05, lambda = 0, alphaT = NULL,
+                             measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+  
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -320,7 +322,8 @@ pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
                                sigmaE = sigmaE, rho = rho, alpha = alpha,
-                               alphaT = alphaT, r = r, time = time, ttm = ttm)
+                               alphaT = alphaT, r = r, time = time, ttm = ttm,
+                               measure = measure)
 
   sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
                                      rho = rho, time = time, ttm = ttm)
@@ -333,8 +336,11 @@ setMethod("pfutures", signature(q = "ANY", time ="ANY", ttm = "ANY", s0 = "numer
 ### < ---------------------------------------------------------------------- >
 
 pfutures.schwartz2f <- function(q, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
-                                alphaT = NULL, ...)
+                                alphaT = NULL,
+                                measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+
   tmp.coef <- coef(s0)
 
   if(missing(lambda) & missing(alphaT)){
@@ -358,7 +364,7 @@ pfutures.schwartz2f <- function(q, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
-                          alphaT = alphaT, ...))
+                          alphaT = alphaT, measure = measure, ...))
 }
 
 setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
@@ -366,8 +372,11 @@ setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
           pfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0, ...)
+pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0,
+                                    measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+
   tmp.coef <- coef(s0)
 
   delta0 <- tmp.coef$delta0
@@ -383,7 +392,7 @@ pfutures.schwartz2f.fit <- function(q, time = 0.1, ttm = 1, s0, ...)
   return(pfutures.default(q, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
-                          r = r, alphaT = alphaT, ...))
+                          r = r, alphaT = alphaT, measure = measure, ...))
 }
 
 setMethod("pfutures", signature(q = "ANY", time = "ANY", ttm = "ANY",
@@ -399,8 +408,11 @@ setGeneric("dfutures",
 dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
-                             lambda = 0, alphaT = NULL, ...)
+                             lambda = 0, alphaT = NULL,
+                             measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -414,7 +426,8 @@ dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
                                sigmaE = sigmaE, rho = rho, alpha = alpha,
-                               alphaT = alphaT, r = r, time = time, ttm = ttm)
+                               alphaT = alphaT, r = r, time = time, ttm = ttm,
+                               measure = measure)
 
   sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
                                      rho = rho, time = time, ttm = ttm)
@@ -427,8 +440,11 @@ setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY", s0 = "nume
 ### < ---------------------------------------------------------------------- >
 
 dfutures.schwartz2f <- function(x, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
-                                alphaT = NULL, ...)
+                                alphaT = NULL,
+                                measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+  
   tmp.coef <- coef(s0)
 
   if(missing(lambda) & missing(alphaT)){
@@ -452,7 +468,7 @@ dfutures.schwartz2f <- function(x, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
-                          alphaT = alphaT, ...))
+                          alphaT = alphaT, measure = measure, ...))
 
 }
 
@@ -461,8 +477,11 @@ setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
           dfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-dfutures.schwartz2f.fit <- function(x, time = 0.1, ttm = 1, s0, ...)
+dfutures.schwartz2f.fit <- function(x, time = 0.1, ttm = 1, s0,
+                                    measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+
   tmp.coef <- coef(s0)
 
   delta0 <- tmp.coef$delta0
@@ -478,7 +497,7 @@ dfutures.schwartz2f.fit <- function(x, time = 0.1, ttm = 1, s0, ...)
   return(dfutures.default(x, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
-                          r = r, alphaT = alphaT, ...))
+                          r = r, alphaT = alphaT, measure = measure, ...))
 }
 
 setMethod("dfutures", signature(x = "ANY", time = "ANY", ttm = "ANY",
@@ -494,8 +513,11 @@ setGeneric("qfutures",
 qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75,
-                             r = 0.05, lambda = 0, alphaT = NULL, ...)
+                             r = 0.05, lambda = 0, alphaT = NULL,
+                             measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+  
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -509,7 +531,8 @@ qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
                                sigmaE = sigmaE, rho = rho, alpha = alpha,
-                               alphaT = alphaT, r = r, time = time, ttm = ttm)
+                               alphaT = alphaT, r = r, time = time, ttm = ttm,
+                               measure = measure)
 
   sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
                                      rho = rho, time = time, ttm = ttm)
@@ -522,8 +545,11 @@ setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY", s0 = "nume
 ### < ---------------------------------------------------------------------- >
 
 qfutures.schwartz2f <- function(p, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
-                                alphaT = NULL, ...)
+                                alphaT = NULL,
+                                measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+  
   tmp.coef <- coef(s0)
 
   if(missing(lambda) & missing(alphaT)){
@@ -547,7 +573,7 @@ qfutures.schwartz2f <- function(p, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
-                          r = r, alphaT = alphaT, ...))
+                          r = r, alphaT = alphaT, measure = measure, ...))
 
 
 }
@@ -556,8 +582,11 @@ setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
           qfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-qfutures.schwartz2f.fit <- function(p, time = 0.1, ttm = 1, s0, ...)
+qfutures.schwartz2f.fit <- function(p, time = 0.1, ttm = 1, s0,
+                                    measure = c("P", "Q"), ...)
 {
+  measure <- match.arg(measure)
+
   tmp.coef <- coef(s0)
 
   delta0 <- tmp.coef$delta0
@@ -573,7 +602,7 @@ qfutures.schwartz2f.fit <- function(p, time = 0.1, ttm = 1, s0, ...)
   return(qfutures.default(p, time = time, ttm = ttm, s0 = tmp.coef$s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
-                          r = r, alphaT = alphaT, ...))
+                          r = r, alphaT = alphaT, measure = measure, ...))
 }
 
 setMethod("qfutures", signature(p = "ANY", time = "ANY", ttm = "ANY",
@@ -590,8 +619,11 @@ setGeneric("rfutures",
 rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0.1,
                              sigmaS = 0.3, kappa = 1, alpha = 0,
                              sigmaE = 0.5, rho = 0.75, r = 0.05,
-                             lambda = 0, alphaT = NULL)
+                             lambda = 0, alphaT = NULL,
+                             measure = c("P", "Q"))
 {
+  measure <- match.arg(measure)
+  
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -604,7 +636,8 @@ rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
 
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu, sigmaS = sigmaS,
                                kappa = kappa, sigmaE = sigmaE, rho = rho, alpha = alpha,
-                               alphaT = alphaT, r = r, time = time, ttm = ttm)
+                               alphaT = alphaT, r = r, time = time, ttm = ttm,
+                               measure = measure)
 
   sigma.fut <- .sigma.fut.schwartz2f(sigmaS = sigmaS, kappa = kappa, sigmaE = sigmaE,
                                      rho = rho, time = time, ttm = ttm)
@@ -617,8 +650,11 @@ setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY", s0 = "nume
 ### < ---------------------------------------------------------------------- >
 
 rfutures.schwartz2f <- function(n, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0,
-                                alphaT = NULL)
+                                alphaT = NULL,
+                                measure = c("P", "Q"))                                
 {
+  measure <- match.arg(measure)
+  
   tmp.coef <- coef(s0)
 
   if(missing(lambda) & missing(alphaT)){
@@ -643,7 +679,7 @@ rfutures.schwartz2f <- function(n, time = 0.1, ttm = 1, s0, r = 0.05, lambda = 0
   return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho, r = r,
-                          alphaT = alphaT))
+                          alphaT = alphaT, measure = measure))
 
 }
 
@@ -652,8 +688,11 @@ setMethod("rfutures", signature(n = "ANY", time = "ANY", ttm = "ANY",
           rfutures.schwartz2f)
 ### < ---------------------------------------------------------------------- >
 
-rfutures.schwartz2f.fit <- function(n, time = 0.1, ttm = 1, s0)
+rfutures.schwartz2f.fit <- function(n, time = 0.1, ttm = 1, s0,
+                                    measure = c("P", "Q"))
 {
+  measure <- match.arg(measure)
+  
   tmp.coef <- coef(s0)
 
   s0 <- tmp.coef$s0
@@ -670,7 +709,7 @@ rfutures.schwartz2f.fit <- function(n, time = 0.1, ttm = 1, s0)
   return(rfutures.default(n, time = time, ttm = ttm, s0 = s0, delta0 = delta0,
                           mu = mu, sigmaS = sigmaS, kappa = kappa, alpha = alpha,
                           sigmaE = sigmaE, rho = rho,
-                          r = r, alphaT = alphaT))
+                          r = r, alphaT = alphaT, measure = measure))
 
 }
 

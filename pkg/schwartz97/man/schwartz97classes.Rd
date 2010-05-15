@@ -119,17 +119,22 @@ Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
 \references{
 
     \emph{Stochastic Convenience Yield and the Pricing of Oil Contingent
-    Claims} by Rajna Gibson and Eduardo S. Schwartz \cr The Journal of
+      Claims} by Rajna Gibson and Eduardo S. Schwartz \cr The Journal of
     Finance 45, 1990, 959-976 \cr
 
     \emph{The Stochastic Behavior of Commodity Prices: Implications for
-    Valuation and Hedging} by Eduardo S. Schwartz \cr Journal of Finance
+      Valuation and Hedging} by Eduardo S. Schwartz \cr Journal of Finance
     52, 1997, 923-973 \cr
 
     \emph{Pricing of Options on Commodity Futures with Stochastic Term
-    Structures of Convenience Yields and Interest Rates} by Kristian
+      Structures of Convenience Yields and Interest Rates} by Kristian
     R. Miltersen and Eduardo S. Schwartz \cr Journal of Financial and
-    Quantitative Analysis 33, 1998, 33-59
+    Quantitative Analysis 33, 1998, 33-59\cr
+
+    \emph{Valuation of Commodity Futures and Options Under Stochastic
+      Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
+    by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
+    Quantitative Analysis 33, 1998, 61-86
 
 }
 % <---------------------------------------------------------------------->

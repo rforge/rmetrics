@@ -100,7 +100,12 @@ Maintainer: Simon Otziger <otis@zhaw.ch>
     \emph{Pricing of Options on Commodity Futures with Stochastic Term
     Structures of Convenience Yields and Interest Rates} by Kristian
     R. Miltersen and Eduardo S. Schwartz \cr Journal of Financial and
-    Quantitative Analysis 33, 1998, 33-59 
+    Quantitative Analysis 33, 1998, 33-59\cr
+
+    \emph{Valuation of Commodity Futures and Options Under Stochastic
+      Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
+    by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
+    Quantitative Analysis 33, 1998, 61-86
 
 }
 % <---------------------------------------------------------------------->
