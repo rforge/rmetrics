@@ -1,10 +1,14 @@
 ### CYD 01/04/10
 
 hyperbFitStart <- function(x, breaks = NULL,
-                           startValues = "BN",
+                           startValues = c("BN","US","FN","SL","MoM"),
                            paramStart = NULL,
-                           startMethodSL = "Nelder-Mead",
-                           startMethodMoM = "Nelder-Mead", ...) {
+                           startMethodSL = c("Nelder-Mead","BFGS"),
+                           startMethodMoM = c("Nelder-Mead","BFGS"),
+                           ...) {
+  startValues <- match.arg(startValues)
+  startMethodSL <- match.arg(startMethodSL)
+  startMethodMoM <- match.arg(startMethodMoM)
 
   histData <- hist(x, plot = FALSE, right = FALSE)
 

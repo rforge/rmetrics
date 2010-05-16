@@ -2,11 +2,21 @@
 ### CYD 01/04/10
 ### DJS 11/09/06
 hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
-                      startMethod = "Nelder-Mead", startValues = "BN",
-                      criterion = "MLE", method = "Nelder-Mead",
+                      startMethod = c("Nelder-Mead","BFGS"),
+                      startValues = c("BN","US","FN","SL","MoM"),
+                      criterion = "MLE",
+                      method = c("Nelder-Mead","BFGS","nlm",
+                                 "L-BFGS-B","nlminb","bobyqa"),
                       plots = FALSE, printOut = FALSE,
                       controlBFGS = list(maxit = 200),
-                      controlNM = list(maxit = 1000), maxitNLM = 1500, ...) {
+                      controlNM = list(maxit = 1000), maxitNLM = 1500,
+                      controlLBFGSB = list(maxit = 200),
+                      controlNLMINB = list(),
+                      controlBOBYQA = list(), ...) {
+
+  startValues <- match.arg(startValues)
+  startMethod <- match.arg(startMethod)
+  method <- match.arg(method)
 
   xName <- paste(deparse(substitute(x), 500), collapse = "\n")
 
@@ -24,10 +34,12 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                               startMethodSL = startMethod,
                               startMethodMoM = startMethod, ...)
   paramStart <- startInfo$paramStart
-  # change paramStart in the log scale of param set number 1 (mu,delta,pi,zeta)
+  ## change paramStart in the log scale of param set number 1 (mu,delta,pi,zeta)
   paramStart <- hyperbChangePars(2, 1, param = paramStart)
-  paramStart <- c(paramStart[1], log(paramStart[2]),
-                  paramStart[3], log(paramStart[4]))
+  if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
+    paramStart <- c(paramStart[1], log(paramStart[2]),
+                    paramStart[3], log(paramStart[4]))
+  }
   svName <- startInfo$svName
   breaks <- startInfo$breaks
   empDens <- startInfo$empDens
@@ -35,13 +47,24 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
 
   if (criterion == "MLE") {
+    if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
       llfunc <- function(param) {
-      KNu <- besselK(exp(param[4]), nu = 1)
-      hyperbDens <- (2*exp(param[2])* sqrt(1 + param[3]^2)*KNu)^(-1)*
-                    exp(-exp(param[4])* (sqrt(1 + param[3]^2)*
-                        sqrt(1 + ((x - param[1])/exp(param[2]))^2) -
-                        param[3]*(x - param[1])/exp(param[2])))
-      return(-sum(log(hyperbDens)))
+        KNu <- besselK(exp(param[4]), nu = 1)
+        hyperbDens <- (2*exp(param[2])* sqrt(1 + param[3]^2)*KNu)^(-1)*
+                      exp(-exp(param[4])* (sqrt(1 + param[3]^2)*
+                      sqrt(1 + ((x - param[1])/exp(param[2]))^2) -
+                      param[3]*(x - param[1])/exp(param[2])))
+        return(-sum(log(hyperbDens)))
+      }
+    } else {
+      llfunc <- function(param, x) {
+        KNu <- besselK(param[4], nu = 1)
+        hyperbDens <- (2*param[2]* sqrt(1 + param[3]^2)*KNu)^(-1)*
+                      exp(-param[4]* (sqrt(1 + param[3]^2)*
+                      sqrt(1 + ((x - param[1])/param[2])^2) -
+                      param[3]*(x - param[1])/param[2]))
+        return(-sum(log(hyperbDens)))
+      }
     }
 
     output <- numeric(7)
@@ -62,13 +85,53 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
       opOut <- nlm(llfunc, paramStart, iterlim = maxitNLM, ...)
     }
 
+    if (method == "L-BFGS-B") {
+      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
+          paramStart[4],"\n")
+      cat("Starting loglikelihood = ", llfunc(paramStart, x), " \n")
+      opOut <- optim(par = paramStart, llfunc, NULL, x = x,
+                     method = "L-BFGS-B",
+                     lower = c(-Inf,10^(-2),-Inf,10^(-2)),
+                     control = controlLBFGSB, ...)
+    }
+
+    if (method == "nlminb") {
+      ind <- c(1, 2, 3)
+      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
+          paramStart[4],"\n")
+      cat("Starting loglikelihood = ", llfunc(paramStart, x), " \n")
+      opOut <- nlminb(start = paramStart, llfunc, NULL, x = x,
+                     lower = c(-Inf,0,-Inf,0),
+                     control = controlNLMINB, ...)
+    }
+
+    if (method == "bobyqa") {
+      ind <- c(1, 2, 3, 5)
+      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
+          paramStart[4],"\n")
+      cat("Starting loglikelihood = ", llfunc(paramStart, x), " \n")
+      opOut <- bobyqa(par = paramStart, llfunc, x = x,
+                     lower = c(-Inf,0,-Inf,0),
+                     control = controlBOBYQA, ...)
+    }
+
     param <- as.numeric(opOut[[ind[1]]])[1:4]       # parameter values
-    param <- hyperbChangePars(1, 2,
+
+    if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
+      param <- hyperbChangePars(1, 2,
                   param = c(param[1], exp(param[2]), param[3], exp(param[4])))
+    } else {
+      param <- hyperbChangePars(1, 2, param = param)
+    }
+
     names(param) <- c("mu", "delta", "alpha", "beta")
 
     maxLik <- -(as.numeric(opOut[[ind[2]]]))        # maximum likelihood
-    conv <- as.numeric(opOut[[ind[4]]])             # convergence
+    if (method == "bobyqa"){
+      conv <- NA
+    } else {
+      conv <- as.numeric(opOut[[ind[4]]])           # convergence
+    }
     iter <- as.numeric(opOut[[ind[3]]])[1]          # iterations
 
   }
@@ -76,10 +139,14 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
 
 
-  # Change paramStart back to the primary parameter set version normal scale
-  paramStart <- hyperbChangePars(1, 2,
-                param = c(paramStart[1], exp(paramStart[2]),
-                          paramStart[3], exp(paramStart[4])))
+  ## Change paramStart back to the primary parameter set version normal scale
+  if (method != "L-BFGS-B"){
+      paramStart <- hyperbChangePars(1, 2,
+                  param = c(paramStart[1], exp(paramStart[2]),
+                  paramStart[3], exp(paramStart[4])))
+    } else {
+      paramStart <- hyperbChangePars(1, 2, param = paramStart)
+    }
 
   fitResults <- list(param = param, maxLik = maxLik, criterion = criterion,
                      method = method, conv = conv, iter = iter,
@@ -193,7 +260,7 @@ vcov.hyperbFit <- function(object, ...) {
   obs <- object$obs
   param <- object$param
   hessian <- hyperbHessian(obs, param, hessianMethod= "exact",
-                          whichParam = 2)
+                           whichParam = 2)
   varcov <- solve(hessian)
   varcov
 }

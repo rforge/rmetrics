@@ -1,7 +1,8 @@
 library(GeneralizedHyperbolic)
 data(ghypParam)
 
-test.ghypMean <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01) {
+test.ghypMean <- function(testParam = ghypSmallShape, n = 10000,
+                          accuracy = 0.01) {
   for (i in 1:nrow(testParam)) {
     param <- testParam[i, ]
 
@@ -30,7 +31,8 @@ test.ghypMean <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01
 }
 
 
-test.ghypVar <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01) {
+test.ghypVar <- function(testParam = ghypSmallShape, n = 10000,
+                         accuracy = 0.01) {
   for (i in 1:nrow(testParam)) {
     param <- testParam[i, ]
 
@@ -58,7 +60,8 @@ test.ghypVar <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01)
   }
 }
 
-test.ghypSkew <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01) {
+test.ghypSkew <- function(testParam = ghypSmallShape, n = 10000,
+                          accuracy = 0.01) {
   for (i in 1:nrow(testParam)) {
     param <- testParam[i, ]
 
@@ -86,7 +89,8 @@ test.ghypSkew <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01
   }
 }
 
-test.ghypKurt <- function(testParam = ghypSmallShape, n = 10000, accuracy = 0.01) {
+test.ghypKurt <- function(testParam = ghypSmallShape, n = 10000,
+                          accuracy = 0.01) {
   for (i in 1:nrow(testParam)) {
     param <- testParam[i, ]
 

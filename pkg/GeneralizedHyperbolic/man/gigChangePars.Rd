@@ -10,7 +10,7 @@
 
   1. \eqn{(\chi, \psi, \lambda)}{(chi, psi, lambda)}
 
-  2. \eqn{(delta, \gamma, \lambda)}{(delta, gamma, lambda)}
+  2. \eqn{(\delta, \gamma, \lambda)}{(delta, gamma, lambda)}
 
   3. \eqn{(\alpha, \beta, \lambda)}{(alpha, beta, lambda)}
 
@@ -59,7 +59,7 @@ gigChangePars(from, to, param, noNames = FALSE)
 \seealso{\code{\link{dgig}}}
 
 \examples{
-param1 <- c(2.5, 0.5, 5)               # Parameterisation 1
+param1 <- c(2.5, 0.5, 5)                # Parameterisation 1
 param2 <- gigChangePars(1, 2, param1)   # Convert to parameterization 2
 param2                                  # Parameterization 2
 gigChangePars(2, 1, as.numeric(param2)) # Convert back to parameterization 1
