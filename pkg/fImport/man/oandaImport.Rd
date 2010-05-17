@@ -129,12 +129,15 @@ oandaImport(query, file = "tempfile", source = NULL, frequency = "daily",
 }
 
 
-\examples{
-\dontrun{
-## oandaImport -
-   oandaSeries("USD/EUR")      
+\references{
+
+Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+    \emph{Financial Market Data for R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
+    www.rmetrics.org.
+    
 }
-}
+
 
 \keyword{data}
 

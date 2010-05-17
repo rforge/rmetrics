@@ -25,8 +25,7 @@
     \tabular{ll}{
         Package:    \tab fImport\cr
         Type:       \tab Package\cr
-        Version:    \tab 270.73\cr
-        Date:       \tab 2008\cr
+        Date:       \tab 2008, 2009, 2010\cr
         License:    \tab GPL Version 2 or later\cr
         Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
         URL:        \tab \url{http://www.rmetrics.org}
@@ -129,6 +128,16 @@
     This Rmetrics package is written for educational usage teaching
     "Computational Finance and Financial Engineering" and licensed
     under GPL.
+    
+}
+
+
+\references{
+
+Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+    \emph{Financial Market Data for R/Rmetrics}, 
+    Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
+    www.rmetrics.org.
     
 }
 
