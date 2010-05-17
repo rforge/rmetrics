@@ -23,7 +23,7 @@
 .start.timeSeries <- function(x, ...)
 {
     if (length(x@positions)>0)
-        timeDate(min(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
+        timeDate(min(x@positions), zone = "GMT", FinCenter = x@FinCenter)
     else
         NULL
 }
@@ -40,7 +40,7 @@ start.timeSeries <- function(x, ...) .start.timeSeries(x, ...)
 .end.timeSeries <- function(x, ...)
 {
     if (length(x@positions)>0)
-        timeDate(max(x@positions), zone = x@FinCenter, FinCenter = x@FinCenter)
+        timeDate(max(x@positions), zone = "GMT", FinCenter = x@FinCenter)
     else
         NULL
 }
