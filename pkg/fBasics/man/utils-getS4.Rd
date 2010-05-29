@@ -7,6 +7,7 @@
 \alias{getTitle}
 \alias{getDescription}
 \alias{getSlot}
+\alias{getArgs}
 
 
 \title{General S4 Class Extractor Functions}
@@ -25,7 +26,8 @@
     \code{getModel} \tab Extracts the model slot from a S4 object, \cr
     \code{getTitle} \tab Extracts the title slot from a S4 object, \cr
     \code{getDescription} \tab Extracts the description slot from a S4 object, \cr
-    \code{getSlot} \tab Extracts a specified slot from a S4 object. }
+    \code{getSlot} \tab Extracts a specified slot from a S4 object, \cr
+    \code{getArgs} \tab Shows the arguments of a S4 function. }
     
 }
 
@@ -35,15 +37,21 @@ getCall(object)
 getModel(object)
 getTitle(object)
 getDescription(object)
-
 getSlot(object, slotName)
+getSlot(f, signature)
 }
 
 
 \arguments{
 
+    \item{f}{
+        a generic function or the character-string name of one
+        }
     \item{object}{
         an object of class S4.
+        }
+    \item{signature}{
+        the signature of classes to match to the arguments of \code{f}
         }
     \item{slotName}{
         a character string, the name of the slot to be extracted from the 
@@ -60,6 +68,8 @@ getSlot(object, slotName)
     \code{getDescription}\cr
     \code{getSlot}\cr
     return the content of the slot.
+    
+    \code{getCallArgs} returns the names of the arguments.
     
 }
 

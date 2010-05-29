@@ -22,6 +22,7 @@
 #  getTitle                  Extracts the title slot from a S4 object
 #  getDescription            Extracts the description slot from a S4 object
 #  getSlot                   Extracts a specified slot from a S4 object
+#  getArgs                   Shows the arguments of a S4 functiong
 ################################################################################
 
 
@@ -137,5 +138,43 @@ function(object, slotName)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+getArgs <- 
+function(f, signature = character())  
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Shows the arguments of a S4 functiong
+    
+    # Arguments:
+    #   f - a generic function or the character-string name of one
+    #   signature - the signature of classes to match to the arguments 
+    #       of f 
+    
+    # Note:
+    #   such a function is missing in the methods package,
+    #   see, e.g he function getMethod()
+    
+    # FUNCTION:
+    
+    # Get arguments:
+    fun = getMethod(f, signature)@.Data 
+    test = class(try(body(fun)[[2]][[3]], silent = TRUE))
+    if (test == "function") {
+        ans = args(body(fun)[[2]][[3]])
+    } else {
+        ans = args(fun)
+    } 
+    cat(substitute(f), ",", signature, ":\n", sep = "")
+    
+    # Return Value:
+    ans
+} 
+
+
 ################################################################################
+
 

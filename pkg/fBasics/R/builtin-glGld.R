@@ -32,7 +32,6 @@
 ################################################################################
 
 
-
 # Code borrowed from
 #   R's contributed package "gld" written by Robert King
 
