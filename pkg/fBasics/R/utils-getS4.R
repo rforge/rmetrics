@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                 GENERAL EXTRACTORS FOR S4:
+# FUNCTION:                 DESCRIPTION:
 #  getCall                   Extracts the call slot from a S4 object
 #  getModel                  Extracts the model slot from a S4 object
 #  getTitle                  Extracts the title slot from a S4 object

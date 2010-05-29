@@ -37,8 +37,10 @@ getCall(object)
 getModel(object)
 getTitle(object)
 getDescription(object)
+
 getSlot(object, slotName)
-getSlot(f, signature)
+
+getArgs(f, signature)
 }
 
 
@@ -69,7 +71,8 @@ getSlot(f, signature)
     \code{getSlot}\cr
     return the content of the slot.
     
-    \code{getCallArgs} returns the names of the arguments.
+    \code{getArgs} 
+    returns the names of the arguments.
     
 }
 
