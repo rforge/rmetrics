@@ -1,4 +1,3 @@
-# set latexfile to the name of the main file without the .tex
 SHELL = /bin/sh
 techdoc = TechnicalDocument
 userguide = UsingSchwartz97

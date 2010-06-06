@@ -28,14 +28,14 @@ pdfstartpage={1}
 % <---------------------------------------------------------------------->
 \SweaveOpts{engine=R,eps=TRUE}
 %%\VignetteIndexEntry{User Guide}
-\title{Using the \Rpackage package}
+\title{Using the \Rpackage{} package}
 \author{Philipp Erb, David L\"{u}thi \& Simon Otziger}%\\\email{otis@zhaw.ch}}
 \date{\today}
 \begin{document}
 \maketitle
 \begin{abstract}
   The purpose of this document is to show how the \RR{}
-  package \Rpackage can be used. This is done by numerous examples and
+  package \Rpackage{} can be used. This is done by numerous examples and
   explanations. In addition, this document aims at giving some
   intuition.
 \end{abstract}
@@ -44,7 +44,7 @@ pdfstartpage={1}
 % <============================================================>
 \section{Introduction}\label{sec:intro}
 % <============================================================>
-The package \Rpackage provides a set of functions to work with the
+The package \Rpackage{} provides a set of functions to work with the
 two-factor model of \cite{Gibson1990} and \cite{Schwartz1997}. The
 two-factor model describes the joint dynamics of the state variables
 \emph{spot price} and \emph{spot convenience yield} (later simply
@@ -107,7 +107,7 @@ approach followed in this package is explained.
 % <------------------------------------------------------------>
 \subsection{Functions}\label{sec:functions}
 % <------------------------------------------------------------>
-The main-functions of the package \Rpackage are the following:\\[1ex]
+The main-functions of the package \Rpackage{} are the following:\\[1ex]
 \begin{center}
   \begin{tabular}{l|l}
     R-function & Description \\
@@ -135,7 +135,7 @@ signatures (see section \ref{sec:oop}).
 % <------------------------------------------------------------>
 \subsection{Classes}\label{sec:classes}
 % <------------------------------------------------------------>
-The package \Rpackage provides the class \verb=schwartz2f=. This
+The package \Rpackage{} provides the class \verb=schwartz2f=. This
 class contains all parameters which are needed to define the dynamics
 of the state variables \emph{spot price} and \emph{convenience yield}
 under the objective measure $\mathbb{P}$. The class
@@ -403,7 +403,7 @@ priceoption("call", time = 1, Time = 2, K = 390, g0 = 370,
 \section{Parameter Estimation}\label{sec:parameter-estimation}
 % <============================================================>
 As mentioned in section \ref{sec:intro}, we think that the most
-valuable piece of code of the package \Rpackage is in the function
+valuable piece of code of the package \Rpackage{} is in the function
 \verb=fit.schwartz2f=. This function can estimate all the nine parameters
 involved in equations (\ref{eq:Pdynamics-S}) -
 (\ref{eq:Qdynamics-delta}) (including the initial values of the state
@@ -486,14 +486,14 @@ filtered to estimate the state variables. Figure
 \ref{fig:filtered-state} shows a plot of the estimated spot price and
 convenience yield.
 <<>>=
-filtered <- filter.schwartz2f(copper$futures[!na.idx,], copper$ttm[!na.idx,], copper.fit)
+filtered <- filter.schwartz2f(futures$copper$price, futures$copper$ttm / 260, copper.fit)
 @
 \begin{figure}\centering
 <<fig=TRUE,echo=FALSE>>=
 par(mfrow = c(2, 1))
 plot(filtered$state[, "S"], type = "l", ylab = "",
      main = "State variables based on filtered futures prices")
-lines(copper$futures[!na.idx, 1], col = "blue", lty = "dotted")
+lines(futures$copper$price[, 1], col = "blue", lty = "dotted")
 legend("topleft", legend = c("Spot price",
                     "Closest to maturity futures"),
        lty = c("solid", "dotted"), col = c("black", "blue"))

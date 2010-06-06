@@ -174,61 +174,59 @@ where
   B(T-t)^2 \sigma_\delta(t). \label{eq:varG}
 \end{align}
 
-% <============================================================>
-\section{Risk Measures for Futures Contracts}
-\label{sec:Risk}
-% <============================================================>
-At time zero the log-loss over a time period $\Delta t$ is defined to
-be
-\begin{equation}
-  l(\Delta t, T) := \log{G(S_0, \delta_0, 0,T)} - \log{G(S_{\Delta t},
-    \delta_{\Delta t}, \Delta t,T)}
-\end{equation}
+% % <============================================================>
+% \section{Risk Measures for Futures Contracts}
+% \label{sec:Risk}
+% % <============================================================>
+% At time zero the log-loss over a time period $\Delta t$ is defined to
+% be
+% \begin{equation}
+%   l(\Delta t, T) := \log{G(S_0, \delta_0, 0,T)} - \log{G(S_{\Delta t},
+%     \delta_{\Delta t}, \Delta t,T)}
+% \end{equation}
 
-According to (\ref{eq:distrG}) -- (\ref{eq:varG}) the VaR for the is
-therefore
-\begin{equation}
-  \label{VaRG}
-  VaR_\alpha^G = \log{G(S_0, \delta_0, 0,T)} - \mu_G( +
-  \sigma_G\Phi^{-1}\left(\alpha\right)
-\end{equation}
-where $\Phi$ denotes the standard normal distribution function and
-$\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
+% According to (\ref{eq:distrG}) -- (\ref{eq:varG}) the VaR for the is
+% therefore
+% \begin{equation}
+%   \label{VaRG}
+%   VaR_\alpha^G = \log{G(S_0, \delta_0, 0,T)} - \mu_G( +
+%   \sigma_G\Phi^{-1}\left(\alpha\right)
+% \end{equation}
+% where $\Phi$ denotes the standard normal distribution function and
+% $\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
 
-Similarly the ES for the negative log-return at the confidence level
-$\alpha$ is given by
-\begin{equation}
-  \label{ESG}
-  ES_\alpha^G = \log{G(0,T)} - \mu_G +
-    \sigma_G\frac{\phi\left(\Phi^{-1}(\alpha)\right)}{1 -
-      \alpha}
-\end{equation}
-where $\phi$ is the density of the standard normal distribution.
+% Similarly the ES for the negative log-return at the confidence level
+% $\alpha$ is given by
+% \begin{equation}
+%   \label{ESG}
+%   ES_\alpha^G = \log{G(0,T)} - \mu_G +
+%     \sigma_G\frac{\phi\left(\Phi^{-1}(\alpha)\right)}{1 -
+%       \alpha}
+% \end{equation}
+% where $\phi$ is the density of the standard normal distribution.
 
-\subsection{Nominal Futures Price}
-The VaR for the log-normally distributed futures price $G(\Delta
-t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
-  $\alpha = 0.05$.} becomes
-\begin{equation}
-  \label{VaRG}
-  VaR_\alpha^G = e^{\mu_G +
-    \frac{1}{2}\sigma_G^2} e^{\sigma_G\left(\Phi^{-1}(\alpha) -
-      \frac{\sigma_G}{2}\right)}
-\end{equation}
-where $\Phi$ denotes the standard normal distribution function and
-$\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
+% \subsection{Nominal Futures Price}
+% The VaR for the log-normally distributed futures price $G(\Delta
+% t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
+%   $\alpha = 0.05$.} becomes
+% \begin{equation}
+%   \label{VaRG}
+%   VaR_\alpha^G = e^{\mu_G +
+%     \frac{1}{2}\sigma_G^2} e^{\sigma_G\left(\Phi^{-1}(\alpha) -
+%       \frac{\sigma_G}{2}\right)}
+% \end{equation}
+% where $\Phi$ denotes the standard normal distribution function and
+% $\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
 
-Similarly the ES for the futures price at the confidence level
-$\alpha$ is given by
-\begin{equation}
-  \label{ESG}
-  ES_\alpha^G = \frac{1}{\alpha}e^{\mu_G +
-    \frac{1}{2}\sigma_G^2}\Phi\left(\Phi^{-1}(\alpha) -
-      \sigma_G\right)
-\end{equation}
-where $\phi$ is the density of the standard normal distribution.
-
-
+% Similarly the ES for the futures price at the confidence level
+% $\alpha$ is given by
+% \begin{equation}
+%   \label{ESG}
+%   ES_\alpha^G = \frac{1}{\alpha}e^{\mu_G +
+%     \frac{1}{2}\sigma_G^2}\Phi\left(\Phi^{-1}(\alpha) -
+%       \sigma_G\right)
+% \end{equation}
+% where $\phi$ is the density of the standard normal distribution.
 % <============================================================>
 \section{European Commodity Options}
 \label{sec:Options}

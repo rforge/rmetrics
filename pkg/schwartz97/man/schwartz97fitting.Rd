@@ -110,9 +110,22 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
 }
 % <---------------------------------------------------------------------->
-% \examples{
+\examples{
 
-% }
+data(futures)
+
+### Estimate parameters for wheat data.
+### (little precision required with reltol = 1e-2)
+fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                          control = list(maxit = 100, reltol = 1e-2))
+
+### The price of a put option on the wheat futures which matures in 1.1
+### years. The option expires in 1 year. The strike price is the
+### expected futures price in 1.1 years.
+priceoption("put", time = 1, Time = 1.1, K = pricefutures(1.1, fit.obj),
+            fit.obj)
+
+}
 
 % <---------------------------------------------------------------------->
 \keyword{models}
