@@ -45,8 +45,7 @@ pdfstartpage={1}
 % <============================================================>
 \section{Introduction}\label{sec:intro}
 % <============================================================>
-[See also \ref{U-sec:intro}.]
-
+%%[See also \ref{U-sec:intro}.]
 This document will describe the Schwartz two-factor model to the
 extent which is necessary to understand the \RR{} package \Rpackage.
 The two-factor model describes the spot price of a commodity together

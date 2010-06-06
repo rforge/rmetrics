@@ -21,12 +21,12 @@
             rho = 0.75, r = 0.05)
 
 \S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f}(type = c("call", "put"),
-                                   time = 0.5, Time = 1, K = 40,
-                                   g0, r = 0.05, lambda = 0, alphaT = NULL)
+                      time = 0.5, Time = 1, K = 40,
+                       g0, r = 0.05, lambda = 0, alphaT = NULL)
 
 
 \S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f.fit}(type = c("call", "put"),
-                                       time = 0.5, Time = 1, K = 40, g0)
+                      time = 0.5, Time = 1, K = 40, g0)
 
 }
 

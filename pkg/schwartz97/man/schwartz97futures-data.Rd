@@ -1,50 +1,61 @@
 \name{futures-data}
 \alias{futures-data}
-\alias{copper}
-\alias{crude.oil}
-\alias{soybeans}
+\alias{futures}
 \docType{data}
 % <---------------------------------------------------------------------->
 \title{Daily futures prices}
 % <---------------------------------------------------------------------->
 \description{
 
-  Prices of the eigth closest to maturity futures contracts of three
-  different commoditites: copper, crude oil, and soybeans. The prices
-  are historical prices provided by Bloomberg plus Gaussian white noise
-  with one percent relative standard deviation.
+  Futures prices, time to maturity, open interest, and volume of ten
+  different commoditites: corn, wheat, soybean, soybean meal, soybean
+  oil, lumber, live cattle, coffee, heating oil, copper.
+
+  There are, depending on the liquidity of the commodity, between 4 and
+  10 closest to maturity futures.
 
 }
+
 % <---------------------------------------------------------------------->
 \usage{data(futures)}
 % <---------------------------------------------------------------------->
 \format{
  
-  Three lists with names \dQuote{copper}, \dQuote{crude.oil}, and
-  \dQuote{soybeans} are loaded. Each list has three elements
+  A list containing ten commodities as lists:
+  \dQuote{corn}, \dQuote{wheat}, \dQuote{soybean}, \dQuote{soybean.meal},
+  \dQuote{soybean.oil}, \dQuote{lumber}, \dQuote{live.cattle},
+  \dQuote{coffee}, \dQuote{heating.oil}, \dQuote{copper}.\cr
 
+  Each list contains four dimnamed matrices:
   \describe{
-    \item{\code{date}}{The observation date as character.}
-    \item{\code{futures}}{Futures prices of eight different futures
-      contracts as a \code{\link{matrix}}. The colnames are
-      \dQuote{price1}, \dots, \dQuote{price8} where \dQuote{price1}
-      denotes the closest to maturity contract.}
+    \item{\code{price}}{Daily futures prices.}
     \item{\code{ttm}}{The time to maturity of the futures contracts
-      as a \code{\link{matrix}}. The colnames are
-      \dQuote{mat1}, \dots, \dQuote{mat8} (see \bold{Details}.)}
+      in units of days (see \bold{Details}.)}
+    \item{\code{oi}}{Open interest.}
+    \item{\code{vol}}{Volume.}
+  }
 
-    }
-    
+  \tabular{rlll}{
+    \bold{Commodity} \tab \bold{# Contracts} \tab \bold{Start date} \tab \bold{End date}\cr
+    Corn \tab  6 \tab 1997-01-02 \tab 2010-04-07 \cr
+    Wheat \tab 5 \tab 1995-01-03 \tab 2010-04-07 \cr
+    Soybean \tab 7 \tab 1995-01-03 \tab 2010-04-07 \cr
+    Soybean meal \tab 6 \tab 2000-01-03 \tab 2010-04-07 \cr
+    Soybean oil \tab 6 \tab 1995-01-03 \tab 2010-04-07 \cr
+    Lumber \tab 4 \tab 1995-01-03 \tab 2010-04-07 \cr
+    Live cattle \tab 6 \tab 2004-07-01 \tab 2010-04-07 \cr
+    Coffee \tab 5 \tab 1995-01-03 \tab 2010-04-07 \cr
+    Heating oil \tab 10 \tab 1995-01-03 \tab 2010-03-31 \cr
+    Copper \tab 8 \tab 1996-01-02 \tab 2010-02-24 \cr
+  }
+
 }
 % <---------------------------------------------------------------------->
 \details{
 
-  The elements \code{$futures} and \code{$ttm} have the following
-  interpretation: \code{$futures[i,j]} denotes the price of the futures
+  The elements \code{$price} and \code{$ttm} have the following
+  interpretation: \code{$price[i,j]} denotes the price of the futures
   contract with time to maturity \code{$ttm[i,j]} in units of days.\cr
-
-  Since the datasets also include holidays and weekends, the element
-  \code{$futures} contains \code{NA} values.
 
 }
 % <---------------------------------------------------------------------->
@@ -60,15 +71,9 @@
 }
 % <---------------------------------------------------------------------->
 \examples{
+
   data(futures)
 
-  futuresplot(soybeans, type = "fut", contr = c(1, 2, 6),
-               range = c("01.01.1978", "31.12.1982"))
-
-  futuresplot(crude.oil, type = "ttm", contr = c(1, 3),
-               range = c("01.01.2008", "31.12.2008"))
-
-  futuresplot(copper)
 }
 
 % <---------------------------------------------------------------------->

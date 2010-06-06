@@ -1,4 +1,4 @@
-check.initializations <- function()
+test.initializations <- function()
 {
   ##library(schwartz97)
   ##library(RUnit)
@@ -6,13 +6,13 @@ check.initializations <- function()
   opt.meas.sd <- "scalar"
 
   r <- 0.05
-  data <- soybeans
+  data <- futures$soybean
 
-  finite.idx <- apply(data$futures, 1, function(x)all(is.finite(x))) &
+  finite.idx <- apply(data$price, 1, function(x)all(is.finite(x))) &
   apply(data$ttm, 1, function(x)all(is.finite(x)))
 
-  fit <- fit.schwartz2f(data$futures[finite.idx,],
-                        ttm = data$ttm[finite.idx,],
+  fit <- fit.schwartz2f(data$price[finite.idx,],
+                        ttm = data$ttm[finite.idx,] / 260,
                         deltat = 1 / 260,
                         mu = 0.1, sigmaS = 0.3,
                         kappa = 1, alpha = 0, sigmaE = 0.5,
@@ -32,7 +32,7 @@ check.initializations <- function()
                           sigmaE = coefs$sigmaE, rho = coefs$rho)
 
 ### Densities:
-  q <- cbind(runif(10, min(data$futures[finite.idx,]), max(data$futures[finite.idx,])),
+  q <- cbind(runif(10, min(data$price[finite.idx,]), max(data$price[finite.idx,])),
              runif(10, min(data$ttm[finite.idx,]), max(data$ttm[finite.idx,])))
 
   checkEquals(dstate(q, time = 1.65, state.obj), dstate(q, time = 1.65, fit),

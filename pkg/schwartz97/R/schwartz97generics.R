@@ -1,4 +1,30 @@
 ### <======================================================================>
+fitted.schwartz2f.fit <- function(object, data, ttm)
+{
+
+  state <- filter.schwartz2f(data, ttm, object)
+  coefs <- coef(object)
+
+  pricefutures.wrapper <- function(x, mu, sigmaS, kappa, alpha, sigmaE, rho, r, lambda){
+    return(pricefutures(ttm = x[-(1:2)], s0 = x[1], delta0 = x[2],
+                        sigmaS = sigmaS, kappa = kappa, alpha = alpha,
+                        sigmaE = sigmaE, rho = rho, r = r, lambda = lambda))
+  }
+
+  p.futures <- t(apply(cbind(state$state, ttm), 1, pricefutures.wrapper,
+                       sigmaS = coefs$sigmaS, kappa = coefs$kappa,
+                       alpha = coefs$alpha, sigmaE = coefs$sigmaE,
+                       rho = coefs$rho, r = coefs$r, lambda = coefs$lambda))
+
+  dimnames(p.futures) <- dimnames(data)
+  return(p.futures)
+}
+### <---------------------------------------------------------------------->
+setMethod("fitted", signature(object = "schwartz2f.fit"), fitted.schwartz2f.fit)
+### <---------------------------------------------------------------------->
+
+
+### <======================================================================>
 vcov.schwartz2f <- function(object, time = 1)
 {
 
@@ -57,36 +83,6 @@ mean.schwartz2f <- function(x, time = 1)
 ### <---------------------------------------------------------------------->
 setMethod("mean", signature(x = "schwartz2f"), mean.schwartz2f)
 ### <---------------------------------------------------------------------->
-
-
-## ### <======================================================================>
-## mean.schwartz2f.fit <- function(x, time, measure = c("P", "Q"))
-## {
-
-##   measure <- match.arg(measure)
-
-##   tmp.coef <- coef(x)
-
-##   means.log <- .mu.state.schwartz2f(x0 = log(tmp.coef$s0),
-##                                     delta0 = tmp.coef$delta0,
-##                                     mu = tmp.coef$mu,
-##                                     sigmaS = tmp.coef$sigmaS,
-##                                     kappa = tmp.coef$kappa,
-##                                     alpha = tmp.coef$alpha,
-##                                     sigmaE = tmp.coef$sigmaE,
-##                                     rho = tmp.coef$rho,
-##                                     time = time)
-
-##   sigma.log <- vcov(x, time = time)
-
-##   return(c(s.t = exp(means.log[1] + 1/2 * sigma.log[1,1]),
-##            delta.t = means.log[2]))
-
-## }
-## ### <---------------------------------------------------------------------->
-## setMethod("mean", signature(x = "schwartz2f.fit"), mean.schwartz2f.fit)
-## ### <---------------------------------------------------------------------->
-
 
 ### <======================================================================>
 show.schwartz2f <- function(object)

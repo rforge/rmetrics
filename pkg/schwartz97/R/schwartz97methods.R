@@ -833,40 +833,38 @@ filter.schwartz2f.schwartz2f.fit <- function(data, ttm, s0)
 setMethod("filter.schwartz2f", signature(data = "ANY", ttm = "ANY",
                                      s0 = "schwartz2f.fit"),
           filter.schwartz2f.schwartz2f.fit)
-### < ---------------------------------------------------------------------- >
 
-futuresplot <- function(x, type = c("futures", "ttm"), ##, "spot"),
-                        contr = 1:8, range = c(x$date[1], x$date[length(x$date)]), ...)
+
+
+
+### < ---------------------------------------------------------------------- >
+futuresplot <- function(futures, type = c("forward.curve", "ttm"), ...)
 {
   type <- match.arg(type)
-    
-  range <- c(order(x$date == range[1])[length(x$date)],
-             order(x$date == range[2])[length(x$date)])
+  dates <- as.Date(rownames(futures$ttm))
 
-  if(type == "futures")
-    {
-      plot.ts(x$futures[range[1]:range[2],contr],
-              plot.type = "single",
-              col = contr, xaxt = "n", ...)
-      axis(1, at = 1:length(x$date[range[1]:range[2]]),
-           label = x$date[range[1]:range[2]], ...)
-    }else{
-      ## if(type == "ttm")
-      ## {
-      plot.ts(x$ttm[range[1]:range[2],contr],
-              plot.type = "single",
-              col = contr, xaxt = "n", ...)
-      axis(1, at = 1:length(x$date[range[1]:range[2]]),
-           label = x$date[range[1]:range[2]], ...)
-      ## }else{
-      ##     plot.ts(x$spot[range[1]:range[2]],
-      ##             plot.type = "single", xaxt = "n", ...)
-      ##     axis(1, at = 1:length(x$date[range[1]:range[2]]),
-      ##          label = x$date[range[1]:range[2]], ...)
-      ## }
+  if(type == "ttm"){
+    col <- rainbow(ncol(futures$ttm))
+    plot(dates,futures$ttm[,1], ylim = range(futures$ttm, na.rm = TRUE), type = "l", col = col[1],
+         ylab = "Time to maturity [1 day]", ...)
+    for(i in 2:ncol(futures$ttm)){
+      lines(dates, futures$ttm[,i], col = col[i])
     }
-}
+  }else{
+    plot(dates, futures$price[,1],
+         xlim = c(min(dates), max(dates) + max(futures$ttm[nrow(futures$ttm),], na.rm = TRUE)),
+         ylim = range(futures$price, na.rm = TRUE), type = "l", ylab = "", ...)
 
-## <---------------------------------------------------------------------->
-##setMethod("plot", signature(x = "futures",y = "missing"), plot.futures)
-### <---------------------------------------------------------------------->
+    col <- rainbow(10)
+    col.idx <- rep(1:length(col), length = nrow(futures$price))
+    tmp.data <- cbind(futures$price,futures$ttm,data.frame(col.idx), 1:nrow(futures$price))
+    class(tmp.data)
+    plot.forward.curve <- function(x, col, d, dates){
+      lines(dates[x[2 * d + 2]] + x[(d+1):(2*d)], x[1:d], col = col[x[2 * d  + 1]], lty = "dotted")
+    }
+    apply(tmp.data, 1, plot.forward.curve, d = ncol(futures$ttm), col = col, dates = dates)
+    legend("topleft", legend = c("Closest to maturity contract", "Forward Curves"),
+           lty = c("solid", "dotted"), bg = "white")
+
+  }
+}

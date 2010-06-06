@@ -14,15 +14,14 @@
 
 fit.schwartz2f(data, ttm, deltat = 1 / 260,
                s0 = data[1,1], delta0 = 0,
-               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
-               rho = 0.75, lambda = 0,
-               meas.sd = rep(0.02, ncol(data)),
+               mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.3,
+               rho = 0.7, lambda = 0,
+               meas.sd = rep(0.1, ncol(data)),
                opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, sigmaS = TRUE,
                             kappa = TRUE, alpha = TRUE, sigmaE = TRUE,
-                            rho = TRUE, lambda = TRUE),
+                            rho = TRUE, lambda = FALSE),
                opt.meas.sd = c("scalar", "all", "none"),
-               % P0 = 2 * diag(c(var(as.vector(data)), 1)),
-               r = 0.05, silent = FALSE, \dots)
+               r = 0.03, silent = FALSE, \dots)
 
 }
 
@@ -36,15 +35,15 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   \item{deltat}{Time increment (see \bold{Details}).}
   \item{s0}{Initial value of the commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
-  \item{mu}{enters the drift of the commodity spot price.}
-  \item{kappa}{Speed of mean-reversion of the convenience yield process.}
-  \item{alpha}{Mean-level of the convenience yield process.}
-  \item{sigmaS}{Diffusion parameter of the spot price process.}
-  \item{sigmaE}{Diffusion parameter of the convenience yield process.}
-  \item{rho}{Correlation coefficient between the Brownian motion
+  \item{mu}{Initial value of the drift parameter of the commodity spot price.}
+  \item{kappa}{Initial parameter of the speed of mean-reversion of the convenience yield process.}
+  \item{alpha}{Initial parameter of the mean-level of the convenience yield process.}
+  \item{sigmaS}{Initial parameter of the diffusion parameter of the spot price process.}
+  \item{sigmaE}{Initial parameter of the diffusion parameter of the convenience yield process.}
+  \item{rho}{Initial parameter of the correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
-  \item{meas.sd}{The standard deviation of the measurement equation (see \bold{Details}).}
-  \item{lambda}{Market price of convenience yield risk.}
+  \item{meas.sd}{Initial parameter of the standard deviation of the measurement equation (see \bold{Details}).}
+  \item{lambda}{Initial value of the market price of convenience yield risk.}
   \item{opt.pars}{A logical vector which gives the parameters which
     shall be fitted.}
   \item{opt.meas.sd}{States how the standard deviation of the

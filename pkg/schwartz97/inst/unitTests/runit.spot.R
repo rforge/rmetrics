@@ -1,4 +1,4 @@
-check.r.sim <- function(){
+test.r.sim <- function(){
   obj <-  schwartz2f(s0 = 60, delta0 = 0.2, alpha = 0.1)
 
   traj <- sapply(1:2000, function(dummy, obj)simstate(5, 0.3, obj)[5,],
@@ -10,7 +10,7 @@ check.r.sim <- function(){
   checkTrue(abs.diff[2] < .05,  "convenience yield: simstate must converge to rstate")
 }
 
-check.mean <- function(){
+test.mean <- function(){
 ##  library(schwartz97)
 ##  library(RUnit)
 
@@ -36,7 +36,7 @@ check.mean <- function(){
 
 }
 
-check.vcov <- function(){
+test.vcov <- function(){
 
   obj.1 <- schwartz2f(kappa = 1)
   obj.2 <- schwartz2f(kappa = 2)

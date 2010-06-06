@@ -40,7 +40,7 @@
          alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{dfutures}{ANY,ANY,ANY,schwartz2f}(x, time = 0.1, ttm = 1, s0, r = 0.05,
-lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
+         lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{dfutures}{ANY,ANY,ANY,schwartz2f.fit}(x, time = 0.1, ttm = 1, s0, measure = c("P", "Q"), \dots)
 
@@ -183,6 +183,7 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
   \emph{The Stochastic Behavior of Commodity Prices: Implications for
     Valuation and Hedging} by Eduardo S. Schwartz \cr Journal of Finance
   52, 1997, 923-973\cr
+
 
   \emph{Valuation of Commodity Futures and Options Under Stochastic
     Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
