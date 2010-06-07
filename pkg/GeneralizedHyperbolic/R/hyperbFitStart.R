@@ -187,5 +187,7 @@ hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   ## Get Method of Moments estimates
   MoMOptim <- optim(startValuesMoM, MoMOptimFun, method = startMethodMoM, ...)
   paramStart <- MoMOptim$par
-  paramStart <- hyperbChangePars(1, 2, param = paramStart)
+  paramStart <- hyperbChangePars(1, 2, 
+                param = c(paramStart[1], exp(paramStart[2]), paramStart[3], 
+                exp(paramStart[4])))
 } ## End of hyperbFitStartMoM
