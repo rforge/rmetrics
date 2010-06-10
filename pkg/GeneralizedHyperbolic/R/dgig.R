@@ -10,7 +10,7 @@ dgig <- function(x, chi = 1, psi = 1, lambda = 1,
 
   if (case == "error")
     stop(errMessage)
-  
+
   param <- as.numeric(param)
   chi <- param[1]
   psi <- param[2]
@@ -62,7 +62,8 @@ pgig <- function(q, chi = 1, psi = 1, lambda = 1,
   param <- c(chi, psi, lambda)
   KOmega <- besselK(omega, nu = lambda)
 
-  bks <- gigBreaks(param = param, small = small, tiny = tiny, deriv = deriv, ...)
+  bks <- gigBreaks(param = param, small = small, tiny = tiny,
+                   deriv = deriv, ...)
   xTiny <- bks$xTiny
   xSmall <- bks$xSmall
   lowBreak <- bks$lowBreak
@@ -182,7 +183,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (any(p < 0 | p > 1))
     stop("p must lie between 0 and 1")
 
-  bks <- gigBreaks(param = param, small = small, tiny = tiny, deriv = deriv, ...)
+  bks <- gigBreaks(param = param, small = small, tiny = tiny,
+                   deriv = deriv, ...)
   xTiny <- bks$xTiny
   xSmall <- bks$xSmall
   lowBreak <- bks$lowBreak
@@ -223,7 +225,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pSmall) > 0) {
     xValues <- seq(xTiny, xSmall, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pSmall) {
@@ -246,7 +249,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pLow) > 0) {
     xValues <- seq(xSmall, lowBreak, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pLow) {
@@ -269,7 +273,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pLessEqMode) > 0) {
     xValues <- seq(lowBreak, modeDist, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pLessEqMode) {
@@ -283,7 +288,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
         if (zeroFun(modeDist) <= 0) {
           qSort[i] <- modeDist
         } else {
-          qSort[i] <- uniroot(zeroFun, interval = c(lowBreak,modeDist), ...)$root
+          qSort[i] <- uniroot(zeroFun,
+                              interval = c(lowBreak,modeDist), ...)$root
         }
       }
     }
@@ -292,7 +298,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pGreatMode) > 0) {
     xValues <- seq(modeDist, highBreak, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pGreatMode) {
@@ -306,7 +313,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
         if (zeroFun(highBreak) <= 0) {
           qSort[i] <- highBreak
         } else {
-          qSort[i] <- uniroot(zeroFun, interval = c(modeDist,highBreak), ...)$root
+          qSort[i] <- uniroot(zeroFun,
+                              interval = c(modeDist,highBreak), ...)$root
         }
       }
     }
@@ -315,7 +323,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pHigh) > 0) {
     xValues <- seq(highBreak, xLarge, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pHigh) {
@@ -329,7 +338,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
         if (zeroFun(xLarge) <= 0) {
           qSort[i] <- xLarge
         } else {
-          qSort[i] <- uniroot(zeroFun, interval = c(highBreak,xLarge), ...)$root
+          qSort[i] <- uniroot(zeroFun,
+                              interval = c(highBreak,xLarge), ...)$root
         }
       }
     }
@@ -338,7 +348,8 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
   if (length(pLarge) > 0) {
     xValues <- seq(xLarge, xHuge, length = nInterpol)
     pgigValues <- pgig(xValues, param = param, small = small, tiny = tiny,
-                       deriv = deriv, subdivisions = subdivisions, accuracy = FALSE)
+                       deriv = deriv, subdivisions = subdivisions,
+                       accuracy = FALSE)
     pgigSpline <- splinefun(xValues, pgigValues)
 
     for (i in pLarge) {
@@ -504,7 +515,8 @@ rgig <- function(n, chi = 1, psi = 1, lambda = 1,
       R2 <- runif(1)
       Y <- m + a * R2 / R1 + b * (1 - R2) / R1
       if (Y > 0) {
-        if (-log(R1) >= -0.5 * (lambda - 1) * log(Y) + 0.25 * beta * (Y + 1 / Y) + c) {
+        if (-log(R1) >= -0.5 * (lambda - 1) * log(Y) +
+            0.25 * beta * (Y + 1 / Y) + c) {
           needValue <- FALSE
         }
       }
@@ -537,7 +549,8 @@ ddgig <- function(x, chi = 1, psi = 1, lambda = 1,
     KOmega <- besselK(x = omega, nu = lambda)
 
   ddgig <- ifelse(x > 0,
-                  dgig(x, param = param, KOmega) * (chi / x^2 + 2 * (lambda - 1) / x - psi) / 2,
+                  dgig(x, param = param, KOmega)*
+                  (chi/x^2 + 2*(lambda - 1)/x - psi) / 2,
                   0)
   ddgig
 } ## End of ddgig()
@@ -610,7 +623,8 @@ gigBreaks <- function(chi = 1, psi = 1, lambda = 1,
   }
 
   # param[1] is the original value of chi
-  breaks <- param[1] * c(xTiny, xSmall, lowBreak, highBreak, xLarge, xHuge, modeDist)
+  breaks <- param[1] * c(xTiny, xSmall, lowBreak, highBreak,
+                         xLarge, xHuge, modeDist)
   breaks <- list(xTiny = breaks[1], xSmall = breaks[2],
                  lowBreak = breaks[3], highBreak = breaks[4],
                  xLarge = breaks[5], xHuge = breaks[6],
