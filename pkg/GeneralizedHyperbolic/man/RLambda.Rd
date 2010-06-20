@@ -35,12 +35,12 @@ gammaLambda1(hyperbPi, zeta, lambda = 1)
 }
 
 \value{
-  The functions \code{RLambda} and \code{SLambda}
-  are used in the calculation of the mean and variance. They are
-  functions of the Bessel functions of the third kind,
-  implemented in \R as \code{\link{besselK}}. The other functions are
-  used in calculation of higher moments. See Barndorff-Nielsen, O. and
-  Blaesild, P (1981) for details of the calculations.
+  The functions \code{RLambda} and \code{SLambda} are used in the
+  calculation of the mean and variance. They are functions of the Bessel
+  functions of the third kind, implemented in \R as
+  \code{\link{besselK}}. The other functions are used in calculation of
+  higher moments. See Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild},
+  P. (1981) for details of the calculations.
 
   The parameterisation of the hyperbolic distribution used for this
   and other components of the \code{HyperbolicDist} package is the

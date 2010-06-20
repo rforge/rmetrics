@@ -1,7 +1,22 @@
+2010-06-20    <d.scott@auckland.ac.nz>
+
+	* nig functions added by Christine Dong: nigFit, nigFitStart, dqpr
+	functions for nig, nigCalcRange, moments for the nig
+
+	* gigFit and gigFitStart added to allow for fitting of the
+	generalized inverse Gaussian. Plot, print and summary methods are
+	included with the fitting routines.
+
+	* gigParam added to allow testing of the generalized inverse Gaussian
+
+	* ghypParam changed to give spread of values over the shape
+	triangle
+
+
 2010-02-09    <d.scott@auckland.ac.nz>
 
 	* GeneralizedHyperbolic version 0.2-0 created. Eliminated
 	functions already in DistributionUtils and made depend on
 	DistributionUtils
-	
+
 
