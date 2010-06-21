@@ -1,7 +1,7 @@
 ### CYD 30/05/10
 ### DJS 11/09/06
 nigFitStart <- function(x, breaks = NULL,
-                           startValues = c("BN","US","FN","Cauchy","MoM"),
+                           startValues = c("US","FN","Cauchy","MoM"),
                            paramStart = NULL,
                            startMethodSL = c("Nelder-Mead","BFGS"),
                            startMethodMoM = c("Nelder-Mead","BFGS"),
@@ -32,11 +32,7 @@ nigFitStart <- function(x, breaks = NULL,
       leftAsymptote <- c(NA, -10*rightAsymptote[2]) # arbitrary large value
   }
 
-  if ((length(na.omit(empDens[1:maxIndex])) < 2) &
-      (length(na.omit(empDens[maxIndex:length(empDens)])) < 2)) {
-    if (startValues == "BN" )
-      stop("not enough breaks to estimate asymptotes to log-density")
-  }
+
 
   if (startValues == "US") {
     svName <- "User Specified"
@@ -76,41 +72,16 @@ nigFitStart <- function(x, breaks = NULL,
     paramStart <- c(mu, delta, alpha, beta)
   }
 
+
+  if (!(startValues %in% c("US", "FN", "Cauchy")))
+    startValues <- "MoM"
+    
   if (startValues == "MoM") {
     svName <- "Method of Moments"
     paramStart <- nigFitStartMoM(x, startMethodMoM = startMethodMoM, ...)
   }
 
-  if (!(startValues %in% c("US", "FN", "Cauchy", "MoM")))
-    startValues <- "BN"
-
-  if (startValues=="BN") {
-    svName <- "Barndorff-Nielsen 1977"
-    phi <- leftAsymptote[2]
-    hyperbGamma <- -rightAsymptote[2]
-
-    if (!(is.na(leftAsymptote[1]) | is.na(rightAsymptote[1]))) {
-      mu <- -(leftAsymptote[1] - rightAsymptote[1]) /
-             (leftAsymptote[2] - rightAsymptote[2])
-      intersectionValue <- leftAsymptote[1] + mu*leftAsymptote[2]
-      logModalDens <- log(max(empDens, na.rm = TRUE))
-      zeta <- intersectionValue - logModalDens
-
-      if (zeta <= 0)
-        zeta <- 0.1        # This is set arbitrarily
-    } else {
-      mu <- median(x)
-      intersectionValue <- mu
-      logModalDens <- log(max(empDens, na.rm = TRUE))
-      zeta <- intersectionValue - logModalDens
-
-      if (zeta <= 0)
-        zeta <- 0.1        # This is set arbitrarily
-    }
-
-    delta <- zeta/sqrt(phi*hyperbGamma)
-    paramStart <- hyperbChangePars(3, 2, param = c(mu, delta, phi, hyperbGamma))
-  }
+  
 
   names(paramStart) <- c("mu", "delta", "alpha", "beta")
   list(paramStart = paramStart, breaks = breaks, midpoints = midpoints,

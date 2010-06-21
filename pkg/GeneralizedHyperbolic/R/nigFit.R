@@ -1,9 +1,9 @@
-### Function to fit normal inverse distribution to data
+### Function to fit normal inverse Gaussian distribution to data
 ### CYD 07/06/10
 ### DJS 11/09/06
 nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                       startMethod = c("Nelder-Mead","BFGS"),
-                      startValues = c("BN","US","FN","Cauchy","MoM"),
+                      startValues = c("US","FN","Cauchy","MoM"),
                       criterion = "MLE",
                       method = c("Nelder-Mead","BFGS","nlm",
                                  "L-BFGS-B","nlminb","bobyqa"),
