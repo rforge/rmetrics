@@ -37,18 +37,16 @@ gigFit <- function(x, freq = NULL, startValues = c("MoM", "US"),
     paramStart <- gigFitStart(x, startMethodMoM = "Nelder-Mead", ...)
   }
 
+  ## Change paramStart into the log scale
+  paramStart <- c(log(paramStart[1]), log(paramStart[2]), paramStart[3])
 
   ## Creating the Log Likelihood function
 
   llfunc <- function(param) {
-    logchi <- log(param[1])
-    logpsi <-log(param[2])
-    lambda <- param[3]
-    loggigDens <- lambda/2*log(exp(logpsi)/exp(logchi)) -
-                  log(2*besselK(sqrt(exp(logchi)*exp(logpsi)), nu=lambda)) +
-                  (lambda - 1)*log(x) -
-                  1/2*(exp(logchi)*x^-1 + exp(logpsi)*x)
-    loggigDens <- as.numeric(loggigDens)
+    loggigDens <- param[3]/2*log(exp(param[2])/exp(param[1])) -
+      log(2*besselK(sqrt(exp(param[1])*exp(param[2])), nu=param[3])) +
+      (param[3] - 1)*log(x) - 1/2*(exp(param[1])*x^-1 + exp(param[2])*x)
+    as.numeric(loggigDens)
     return(-sum(loggigDens))
   }
 
@@ -65,6 +63,7 @@ gigFit <- function(x, freq = NULL, startValues = c("MoM", "US"),
   }
 
   param <- as.numeric(opOut[[ind[1]]])[1:3]
+  param <- c(exp(param[1]), exp(param[2]), param[3])
   names(param) <- c("chi", "psi", "lambda")
   maxLik <- -(as.numeric(opOut[[ind[2]]]))
 
@@ -100,10 +99,6 @@ print.gigFit <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("Method:            ", x$method, "\n")
   invisible(x)
 }
-
-
-
-
 
 
 ### Function to plot results of fitting a
