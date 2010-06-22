@@ -42,8 +42,8 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   \item{n}{Number of observations to be generated.} 
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
     set to 0.}
-  \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
-    A default value of 1 has been set.}
+  \item{delta}{\eqn{\delta}{delta} is the scale parameter of the
+    distribution. A default value of 1 has been set.}
   \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
     value of 1.}
   \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
@@ -62,8 +62,9 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
     calculation.}
   \item{subdivisions}{The maximum number of subdivisions used to
     integrate the density returning the distribution function.}
-  \item{nInterpol}{The number of points used in \code{qnig} for cubic spline
-    interpolation (see \code{splinefun}) of the distribution function.}
+  \item{nInterpol}{The number of points used in \code{qnig} for cubic
+    spline interpolation (see \code{splinefun}) of the distribution
+    function.}
   \item{\dots}{Passes arguments to \code{uniroot}. See \bold{Details}.}
 }
 
@@ -82,14 +83,14 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   where \eqn{K_1()}{K_1()} is the modified Bessel function of the
   third kind with order 1.
 
-  A succinct description of the normal inverse Gaussian distribution is given in
-  {Paolella} (2007). Because both the normal inverse Gaussian distribution and 
-  the hybperbolic distribution are special cases of the generalized hyperbolic
-  distribution (with different values of \eqn{\lambda}{lambda}, the normal 
-  inverse Gaussian distribution has the same different
-  parameterisations as the hyperbolic distribution and it uses 
-  \code{hyperbChangePars} to interchange between different parameterisations as 
-  well (see \code{hyperbChangePars} for details). 
+  A succinct description of the normal inverse Gaussian distribution is
+  given in {Paolella} (2007). Because both the normal inverse Gaussian
+  distribution and the hybperbolic distribution are special cases of the
+  generalized hyperbolic distribution (with different values of
+  \eqn{\lambda}{lambda}, the normal inverse Gaussian distribution has
+  the same different parameterisations as the hyperbolic distribution
+  and it uses \code{hyperbChangePars} to interchange between different
+  parameterisations as well (see \code{hyperbChangePars} for details).
 
   Each of the functions are wrapper functions for their equivalent
   generalized hyperbolic. For example, \code{dnig} calls \code{dghyp}.
@@ -99,10 +100,10 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   the regions are found by \code{nigBreaks}, based on the values of
   \code{small}, \code{tiny}, and \code{deriv}. In the extreme tails of
   the distribution where the probability is \code{tiny} according to
-  \code{nigCalcRange}, the probability is taken to be zero. In the
-  range between where the probability is \code{tiny} and \code{small}
-  according to \code{nigCalcRange}, an exponential approximation to
-  the hyperbolic distribution is used. In the inner part of the
+  \code{nigCalcRange}, the probability is taken to be zero. In the range
+  between where the probability is \code{tiny} and \code{small}
+  according to \code{nigCalcRange}, an exponential approximation to the
+  hyperbolic distribution is used. In the inner part of the
   distribution, the range is divided in 4 regions, 2 above the mode, and
   2 below. On each side of the mode, the break point which forms the 2
   regions is where the derivative of the density function is
@@ -126,14 +127,14 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   \code{pnig} and \code{qnig} may generally be expected to be
   accurate to 5 decimal places.
 
-  Recall that the normal inverse Gaussian distribution is a special case of the 
-  generalized hyperbolic distribution and the generalized hyperbolic 
-  distribution can be represented as a particular mixture of the normal 
-  distribution where the mixing
-  distribution is the generalized inverse Gaussian.  \code{rnig} uses
-  this representation to generate observations from the hyperbolic
-  distribution. Generalized inverse Gaussian observations are obtained
-  via the algorithm of Dagpunar (1989).}
+  Recall that the normal inverse Gaussian distribution is a special case
+  of the generalized hyperbolic distribution and the generalized
+  hyperbolic distribution can be represented as a particular mixture of
+  the normal distribution where the mixing distribution is the
+  generalized inverse Gaussian.  \code{rnig} uses this representation to
+  generate observations from the hyperbolic distribution. Generalized
+  inverse Gaussian observations are obtained via the algorithm of
+  Dagpunar (1989).}
 
 \value{
   \code{dnig} gives the density, \code{pnig} gives the distribution
@@ -160,7 +161,8 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
      \code{small}.}
    \item{xHuge}{Value such that probability to the right is less than
      \code{tiny}.}
-   \item{modeDist}{The mode of the given normal inverse Gaussian distribution.}
+   \item{modeDist}{The mode of the given normal inverse Gaussian
+     distribution.}
  }
 
 \references{

@@ -2,17 +2,17 @@
 ### CYD 07/06/10
 ### DJS 11/09/06
 nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
-                      startMethod = c("Nelder-Mead","BFGS"),
-                      startValues = c("US","FN","Cauchy","MoM"),
-                      criterion = "MLE",
-                      method = c("Nelder-Mead","BFGS","nlm",
-                                 "L-BFGS-B","nlminb","bobyqa"),
-                      plots = FALSE, printOut = FALSE,
-                      controlBFGS = list(maxit = 200),
-                      controlNM = list(maxit = 1000), maxitNLM = 1500,
-                      controlLBFGSB = list(maxit = 200),
-                      controlNLMINB = list(),
-                      controlBOBYQA = list(), ...) {
+                   startMethod = c("Nelder-Mead","BFGS"),
+                   startValues = c("US","FN","Cauchy","MoM"),
+                   criterion = "MLE",
+                   method = c("Nelder-Mead","BFGS","nlm",
+                   "L-BFGS-B","nlminb","bobyqa"),
+                   plots = FALSE, printOut = FALSE,
+                   controlBFGS = list(maxit = 200),
+                   controlNM = list(maxit = 1000), maxitNLM = 1500,
+                   controlLBFGSB = list(maxit = 200),
+                   controlNLMINB = list(),
+                   controlBOBYQA = list(), ...) {
 
   startValues <- match.arg(startValues)
   startMethod <- match.arg(startMethod)
@@ -29,10 +29,10 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
   x <- as.numeric(na.omit(x))
   startInfo <- nigFitStart(x, breaks = breaks,
-                              startValues = startValues,
-                              paramStart = paramStart,
-                              startMethodSL = startMethod,
-                              startMethodMoM = startMethod, ...)
+                           startValues = startValues,
+                           paramStart = paramStart,
+                           startMethodSL = startMethod,
+                           startMethodMoM = startMethod, ...)
   paramStart <- startInfo$paramStart
   ## change paramStart in the log scale of param set number 1 (mu,delta,pi,zeta)
   paramStart <- hyperbChangePars(2, 1, param = paramStart)
@@ -174,17 +174,17 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
     plot.nigFit(fitResults, ...)
 
   fitResults
-} ## End of hyperbFit()
+} ## End of nigFit()
 
 
 ### Function to print object of class nigFit
 ### CYD 01/04/10
 ### DJS 11/08/06
 print.nigFit <- function(x,
-                            digits = max(3, getOption("digits") - 3), ...) {
+                         digits = max(3, getOption("digits") - 3), ...) {
 
   if (! "nigFit" %in% class(x))
-    stop("Object must belong to class hyperbFit")
+    stop("Object must belong to class nigFit")
 
   cat("\nData:     ", x$obsName, "\n")
   cat("Parameter estimates:\n")
@@ -196,9 +196,9 @@ print.nigFit <- function(x,
   cat("Convergence code:  ", x$conv, "\n")
   cat("Iterations:        ", x$iter, "\n")
   invisible(x)
-} ## End of print.hyperbFit
+} ## End of print.nigFit
 
-### Function to plot results of fitting a hyperbolic distribution
+### Function to plot results of fitting a nig distribution
 plot.nigFit <- function(x, which = 1:4,
                            plotTitles = paste(c("Histogram of ",
                                                 "Log-Histogram of ",
@@ -208,8 +208,8 @@ plot.nigFit <- function(x, which = 1:4,
                            ask = prod(par("mfcol")) < length(which) &
                                  dev.interactive(), ...) {
 
-  if (! "hyperbFit" %in% class(x))
-    stop("Object must belong to class hyperbFit")
+  if (! "nigFit" %in% class(x))
+    stop("Object must belong to class nigFit")
 
   if (ask) {
     op <- par(ask = TRUE)
