@@ -4,7 +4,6 @@
 \alias{qghyp}
 \alias{rghyp}
 \alias{ddghyp}
-\alias{ghypBreaks}
 
 \title{Generalized Hyperbolic Distribution}
 
@@ -31,9 +30,6 @@ rghyp(n, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       param = c(mu, delta, alpha, beta, lambda))
 ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
        param = c(mu, delta, alpha, beta, lambda))
-ghypBreaks(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-           param = c(mu, delta, alpha, beta, lambda),
-           small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
 }
 
 \arguments{
@@ -42,12 +38,15 @@ ghypBreaks(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \item{n}{Number of observations to be generated.}
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
     set to 0.}
-  \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
-    A default value of 1 has been set.}
-  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
-  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
-  \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and dictates the
-    shape that the distribution shall take. Default value is 1.}
+  \item{delta}{\eqn{\delta}{delta} is the scale parameter of the
+    distribution. A default value of 1 has been set.}
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
+    value of 1.}
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
+    this is 0.}
+  \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and
+    dictates the shape that the distribution shall take. Default value
+    is 1.}
   \item{param}{Parameter vector taking the form
     \code{c(mu, delta, alpha, beta, lambda)}.}
   \item{small}{Size of a small difference between the distribution
@@ -158,7 +157,8 @@ ghypBreaks(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
      \code{small}.}
    \item{xHuge}{Value such that probability to the right is less than
      \code{tiny}.}
-   \item{modeDist}{The mode of the given generalized hyperbolic distribution.}
+   \item{modeDist}{The mode of the given generalized hyperbolic
+     distribution.}
  }
 
 \references{
@@ -221,12 +221,6 @@ title("Density of the\n Generalized Hyperbolic Distribution")
 curve(ddghyp(x, param = param), from = ghypRange[1], to = ghypRange[2],
       n = 1000)
 title("Derivative of the Density of the\n Generalized Hyperbolic Distribution")
-par(mfrow = c(1, 1))
-ghypRange <- ghypCalcRange(param = param, tol = 10^(-6))
-curve(dghyp(x, param = param), from = ghypRange[1], to = ghypRange[2],
-      n = 1000)
-bks <- ghypBreaks(param = param)
-abline(v = bks)
 }
 
 \keyword{distribution}

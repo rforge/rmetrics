@@ -67,14 +67,14 @@ ghypChangePars <- function(from, to, param, noNames = FALSE) {
 
   if (from == 1 & to == 2) {
     zeta <- delta * sqrt(alpha^2 - beta^2)
-    rho <- beta / alpha
+    rho <- beta/alpha
     output <- c(mu = mu, delta = delta, zeta = zeta,
                 rho = rho, lambda = lambda)
   }
 
   if (from == 1 & to == 3) {
-    xi <- 1 / sqrt(1 + delta * sqrt(alpha^2 - beta^2))
-    chi <- beta / (alpha * sqrt(1 + delta * sqrt(alpha^2 - beta^2)))
+    xi <- 1/sqrt(1 + delta * sqrt(alpha^2 - beta^2))
+    chi <- beta/(alpha * sqrt(1 + delta * sqrt(alpha^2 - beta^2)))
     output <- c(mu = mu, delta = delta, xi = xi,
                 chi = chi, lambda = lambda)
   }
@@ -87,64 +87,64 @@ ghypChangePars <- function(from, to, param, noNames = FALSE) {
   }
 
   if (from == 2 & to == 1) {
-    alpha <- zeta / (delta * sqrt(1 - rho^2))
+    alpha <- zeta/(delta * sqrt(1 - rho^2))
     beta <- rho * alpha
     output <- c(mu = mu, delta = delta, alpha = alpha,
                 beta = beta, lambda = lambda)
   }
 
   if (from == 2 & to == 3) {
-    xi <- 1 / sqrt(1 + zeta)
+    xi <- 1/sqrt(1 + zeta)
     chi <- xi * rho
     output <- c(mu = mu, delta = delta, xi = xi,
                 chi = chi, lambda = lambda)
   }
 
   if (from == 2 & to == 4) {
-    alphaBar <- zeta / sqrt(1 - rho^2)
+    alphaBar <- zeta/sqrt(1 - rho^2)
     betaBar <- rho * alphaBar
     output <- c(mu = mu, delta = delta, alphaBar = alphaBar,
                 betaBar = betaBar, lambda = lambda)
   }
 
   if (from == 3 & to == 1) {
-    alpha <- (1 - xi^2) / (delta * xi * sqrt(xi^2 - chi^2))
-    beta <- alpha * chi / xi
+    alpha <- (1 - xi^2)/(delta * xi * sqrt(xi^2 - chi^2))
+    beta <- alpha * chi/xi
     output <- c(mu = mu, delta = delta, alpha = alpha,
                 beta = beta, lambda = lambda)
   }
 
   if (from == 3 & to == 2) {
-    zeta <- (1 / xi^2) - 1
-    rho <- chi / xi
+    zeta <- (1/xi^2) - 1
+    rho <- chi/xi
     output <- c(mu = mu, delta = delta, zeta = zeta,
                 rho = rho, lambda = lambda)
   }
 
   if (from == 3 & to == 4) {
-    alphaBar <- (1 - xi^2) / (xi * sqrt(xi^2 - chi^2))
-    betaBar <- alphaBar * chi / xi
+    alphaBar <- (1 - xi^2)/(xi * sqrt(xi^2 - chi^2))
+    betaBar <- alphaBar * chi/xi
     output <- c(mu = mu, delta = delta, alphaBar = alphaBar,
                 betaBar = betaBar, lambda = lambda)
   }
 
   if (from == 4 & to == 1) {
-    alpha <- alphaBar / delta
-    beta <- betaBar / delta
+    alpha <- alphaBar/delta
+    beta <- betaBar/delta
     output <- c(mu = mu, delta = delta, alpha = alpha,
                 beta = beta, lambda = lambda)
   }
 
   if (from == 4 & to == 2) {
     zeta <- sqrt(alphaBar^2 - betaBar^2)
-    rho <- betaBar / alphaBar
+    rho <- betaBar/alphaBar
     output <- c(mu = mu, delta = delta, zeta = zeta,
                 rho = rho, lambda = lambda)
   }
 
   if (from == 4 & to == 3) {
-    xi <- 1 / sqrt(1 + sqrt(alphaBar^2 - betaBar^2))
-    chi <- betaBar / (alphaBar * sqrt(1 + sqrt(alphaBar^2 - betaBar^2)))
+    xi <- 1/sqrt(1 + sqrt(alphaBar^2 - betaBar^2))
+    chi <- betaBar/(alphaBar * sqrt(1 + sqrt(alphaBar^2 - betaBar^2)))
     output <- c(mu = mu, delta = delta, xi = xi,
                 chi = chi, lambda = lambda)
   }
@@ -170,5 +170,6 @@ ghypChangePars <- function(from, to, param, noNames = FALSE) {
   if (noNames)
     names(output) <- NULL
 
-  output
-} ## End of hyperbChangePars()
+  return(output)
+} ## End of ghypChangePars()
+

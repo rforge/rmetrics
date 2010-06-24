@@ -34,10 +34,10 @@ gigFitStart <- function(x, startValues = "MoM",
     startValuesMoM <- c(0, 0, 1)
 
     MoMOptim <- optim(startValuesMoM, MoMOptimFunc,
-                    method = startMethodMoM, ...)
+                      method = startMethodMoM, ...)
 
     paramStartMoM <- c(exp(MoMOptim$par[1]), exp(MoMOptim$par[2]),
-                     MoMOptim$par[3])
+                       MoMOptim$par[3])
     paramStart <- paramStartMoM
   }
   return(paramStart)

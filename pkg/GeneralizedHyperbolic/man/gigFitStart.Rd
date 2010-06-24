@@ -38,8 +38,8 @@
 \value{
   \code{gigFitStart} returns \code{paramStart}, vector with elements
     \code{chi}, \code{psi}, and \code{lambda} giving the starting value
-    of \code{param}.}
-}
+    of \code{param}.
+  }
 
 
 \author{David Scott \email{d.scott@auckland.ac.nz},

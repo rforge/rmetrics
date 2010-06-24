@@ -4,7 +4,6 @@
 \alias{qhyperb}
 \alias{rhyperb}
 \alias{ddhyperb}
-\alias{hyperbBreaks}
 
 \title{Hyperbolic Distribution}
 
@@ -31,9 +30,6 @@ rhyperb(n, mu = 0, delta = 1, alpha = 1, beta = 0,
         param = c(mu, delta, alpha, beta))
 ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
          param = c(mu, delta, alpha, beta))
-hyperbBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
-             param = c(mu, delta, alpha, beta),
-             small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
 }
 
 \arguments{
@@ -218,12 +214,6 @@ title("Density of the\n Hyperbolic Distribution")
 curve(ddhyperb(x, param = param), from = hyperbRange[1], to = hyperbRange[2],
       n = 1000)
 title("Derivative of the Density\n of the Hyperbolic Distribution")
-par(mfrow = c(1, 1))
-hyperbRange <- hyperbCalcRange(param = param, tol = 10^(-6))
-curve(dhyperb(x, param = param), from = hyperbRange[1], to = hyperbRange[2],
-      n = 1000)
-bks <- hyperbBreaks(param = param)
-abline(v = bks)
 }
 
 \keyword{distribution}

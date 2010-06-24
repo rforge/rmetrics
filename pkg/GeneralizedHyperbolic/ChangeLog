@@ -1,4 +1,11 @@
+2010-06-25    <d.scott@auckland.ac.nz>
+
+	* ghypParam recreated to avoid using ghypChangeParam which causes
+	errors when building or checking
+
 2010-06-22    <d.scott@auckland.ac.nz>
+
+	* pghyp, qghyp modified using split at the mode
 
 	* plotShapeTriangle added so parameter values can be plotted on it
 	in examples for ghypParam to give just one use
