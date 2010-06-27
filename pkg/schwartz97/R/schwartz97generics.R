@@ -198,6 +198,11 @@ plot.schwartz2f <- function(x, n = 100, time = 2, dt = 1/52)
   st.sd <- sqrt((exp(log.st.var) - 1)) * means[,1]
   deltat.sd <- sqrt(sapply(time.seq, function(t,obj)vcov(obj, t)[2,2], obj = x))  
 
+  oldpar <- par(no.readonly = TRUE)
+  on.exit({
+    par(oldpar)
+  })
+
   par(mfrow = c(2, 1))
   par(oma = c(5,0,0,0) + 0.1)
   par(mai = c(0,1,0,0))
@@ -221,5 +226,47 @@ plot.schwartz2f <- function(x, n = 100, time = 2, dt = 1/52)
 }
 
 ### <---------------------------------------------------------------------->
-setMethod("plot", signature(x = "schwartz2f",y = "missing"), plot.schwartz2f)
+setMethod("plot", signature(x = "schwartz2f", y = "missing"), plot.schwartz2f)
+### <---------------------------------------------------------------------->
+
+### <======================================================================>
+plot.schwartz2f.fit <- function(x, what = c("trace.pars", "state", "forward.curve", "sim"),
+                                price, ttm)
+{
+  what <- match.arg(what)
+  if(what == "trace.pars"){
+    plot(as.ts(x@trace.pars), xlab = "Iteration", type = "p",
+         main = "Parameter evolution")
+  }else if(what == "state"){
+    if(missing(price) | missing(ttm)){
+      stop("'price' and 'ttm' must be submitted if what == 'state'")
+    }
+    state <- filter.schwartz2f(price, ttm, x)$state
+    col <- colorRampPalette(c("darkblue", "lightblue"))(ncol(price))
+      
+    oldpar <- par(no.readonly = TRUE)
+    on.exit({
+      par(oldpar)
+    })
+
+    par(mfrow = c(2, 1))
+    par(oma = c(5,0,0,0) + 0.1)
+    par(mai = c(0,1,0,0))
+
+    plot(as.Date(rownames(price)), state[,1], type = "l",
+         main = "", xlab = "", ylab = "Spot and futures price", xaxt = "n")
+    for(i in 1:ncol(price))
+      lines(as.Date(rownames(price)), price[,i], type = "l", col = col[i])
+
+    legend("topleft", legend = c("Spot", "1st Futures", "Last futures"),
+           fill = c("black", col[1], rev(col)[1]))
+    plot(as.Date(rownames(price)), state[,2], type = "l", xlab = "", ylab = "Convenience yield")
+    abline(h = coef(fit)$alpha)
+  }else if(what == "sim"){
+    callNextMethod(x)
+  }
+}
+
+### <---------------------------------------------------------------------->
+setMethod("plot", signature(x = "schwartz2f.fit", y = "missing"), plot.schwartz2f.fit)
 ### <---------------------------------------------------------------------->

@@ -857,12 +857,15 @@ futuresplot <- function(futures, type = c("forward.curve", "ttm"), ...)
 
     col <- rainbow(10)
     col.idx <- rep(1:length(col), length = nrow(futures$price))
-    tmp.data <- cbind(futures$price,futures$ttm,data.frame(col.idx), 1:nrow(futures$price))
-    class(tmp.data)
+    tmp.data <- cbind(futures$price, futures$ttm, data.frame(col.idx),
+                      1:nrow(futures$price))
+
     plot.forward.curve <- function(x, col, d, dates){
-      lines(dates[x[2 * d + 2]] + x[(d+1):(2*d)], x[1:d], col = col[x[2 * d  + 1]], lty = "dotted")
+      lines(dates[x[2 * d + 2]] + c(0,x[(d + 1):(2 * d)]), x[c(1,1:d)], 
+            col = col[x[2 * d + 1]], lty = "dotted")
     }
-    apply(tmp.data, 1, plot.forward.curve, d = ncol(futures$ttm), col = col, dates = dates)
+    apply(tmp.data, 1, plot.forward.curve, d = ncol(futures$ttm), col = col,
+          dates = dates)
     legend("topleft", legend = c("Closest to maturity contract", "Forward Curves"),
            lty = c("solid", "dotted"), bg = "white")
 

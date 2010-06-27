@@ -27,11 +27,9 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
 % <---------------------------------------------------------------------->
 \arguments{
-  \item{data}{A matrix with futures prices. \code{data} must not contain
-    non-finite elements.}
+  \item{data}{A matrix with futures prices.}
   \item{ttm}{A matrix with the corresponding time to maturity (see
-    \bold{Details}). \code{ttm} must not contain
-    non-finite elements.}
+    \bold{Details}).}
   \item{deltat}{Time increment (see \bold{Details}).}
   \item{s0}{Initial value of the commodity spot price.}
   \item{delta0}{Initial value of the convenience yield.}
@@ -45,10 +43,10 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   \item{meas.sd}{Initial parameter of the standard deviation of the measurement equation (see \bold{Details}).}
   \item{lambda}{Initial value of the market price of convenience yield risk.}
   \item{opt.pars}{A logical vector which gives the parameters which
-    shall be fitted.}
+    shall be fitted. The order is as in the function header, names are
+    discarded.}
   \item{opt.meas.sd}{States how the standard deviation of the
     measurement equation should be treated (see \bold{Details}).}
-  % \item{P0}{Variance of the state variables \code{s0} and \code{P0}.}
   \item{r}{Instantaneous risk-free interest rate.}
   \item{silent}{If \code{FALSE} the log-likelihood and parameters will
     be printed in each iteration.}
@@ -56,14 +54,20 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 }
 
 % <---------------------------------------------------------------------->
+\note{
+
+  Parameter estimation is statistically computationally demanding...
+
+}
+% <---------------------------------------------------------------------->
 \details{
 
   The elements of \code{data} and \code{ttm} have the following
   interpretation: \code{data[i,j]} denotes the price of the futures
-  contract with time to maturity \code{ttm[i,j]}. \cr
+  contract with time to maturity \code{ttm[i,j]}. 
 
   The time increment observation \code{data[i,j]} and \code{data[i +
-    1,j]} is denoted with \code{deltat}.\cr
+    1,j]} is denoted with \code{deltat}.
 
   \code{opt.meas.sd} is used to determine how measurement uncertainty is
   treated in the fit: According to the model there should be a
@@ -80,7 +84,7 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
   Potential error codes are described in the
   \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-class
-  documentation. \cr
+  documentation. 
 
 }
 
