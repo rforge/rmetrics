@@ -839,6 +839,7 @@ setMethod("filter.schwartz2f", signature(data = "ANY", ttm = "ANY",
 
 ### < ---------------------------------------------------------------------- >
 futuresplot <- function(futures, type = c("forward.curve", "ttm"), ...)
+                        
 {
   type <- match.arg(type)
   dates <- as.Date(rownames(futures$ttm))
