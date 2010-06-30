@@ -190,8 +190,10 @@ setMethod("coefficients", signature(object = "schwartz2f.fit"),
 ### <======================================================================>
 plot.schwartz2f <- function(x, n = 100, time = 2, dt = 1/52)
 {
-  trajectories <- lapply(1:n, function(dummy, obj, n, t)simstate(n, t, obj),
-                         obj = x, n = time/dt, t = time)
+
+  ## trajectories <- lapply(1:n, function(dummy, obj, n, t)simstate(n, t, obj),
+  ##                        obj = x, n = time/dt, t = time)
+  trajectories <- replicate(n, simstate(time/dt, time, x), simplify = FALSE)
   
   st <- sapply(trajectories, function(x)x[,1])
   deltat <- sapply(trajectories, function(x)x[,2])
@@ -235,16 +237,16 @@ setMethod("plot", signature(x = "schwartz2f", y = "missing"), plot.schwartz2f)
 ### <---------------------------------------------------------------------->
 
 ### <======================================================================>
-plot.schwartz2f.fit <- function(x, what = c("trace.pars", "state", "forward.curve", "sim"),
+plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curve", "sim"),
                                 data, ttm, ...)
 {
-  what <- match.arg(what)
-  if(what == "trace.pars"){
+  type <- match.arg(type)
+  if(type == "trace.pars"){
     plot(as.ts(x@trace.pars), xlab = "Iteration", type = "p",
          main = "Parameter evolution", ...)
-  }else if(what == "state"){
+  }else if(type == "state"){
     if(missing(data) | missing(ttm)){
-      stop("'data' and 'ttm' must be submitted if what == 'state'")
+      stop("'data' and 'ttm' must be submitted if type == 'state'")
     }
     state <- filter.schwartz2f(data, ttm, x)$state
     col <- colorRampPalette(c("darkblue", "lightblue"))(ncol(data))
@@ -267,9 +269,9 @@ plot.schwartz2f.fit <- function(x, what = c("trace.pars", "state", "forward.curv
            fill = c("black", col[1], rev(col)[1]))
     plot(as.Date(rownames(data)), state[,2], type = "l", xlab = "", ylab = "Convenience yield", ...)
     abline(h = coef(x)$alpha)
-  }else if(what == "sim"){
+  }else if(type == "sim"){
     callNextMethod(x)
-  }else if(what == "forward.curve"){
+  }else if(type == "forward.curve"){
 
     state <- filter.schwartz2f(data, ttm, x)$state
     fitted.futures <- fitted(x, data, ttm)

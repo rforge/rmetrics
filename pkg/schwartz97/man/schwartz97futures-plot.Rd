@@ -15,7 +15,7 @@
 % <---------------------------------------------------------------------->
 \usage{
 
-futuresplot(futures, type = c("forward.curve", "ttm"), plot.legend = TRUE, ...)
+futuresplot(futures, type = c("forward.curve", "ttm"), ...)
 
 }
 
@@ -26,7 +26,6 @@ futuresplot(futures, type = c("forward.curve", "ttm"), plot.legend = TRUE, ...)
     \code{ttm}. Usually an element of \code{\link{futures}}.}
   \item{type}{Which information shall be plotted. \code{"forward.curve"}
     or \code{"ttm"} (time to maturity).}
-  \item{plot.legend}{Whether a \code{\link{legend}} shall be plotted.}
   \item{\dots}{Optional arguments passed to \code{plot}.}
 
 }

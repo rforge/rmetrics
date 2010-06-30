@@ -1,4 +1,4 @@
-\name{plot-method}
+\name{plot.state-method}
 \alias{plot.schwartz2f}
 \alias{plot,schwartz2f,missing-method}
 \alias{plot-methods}
