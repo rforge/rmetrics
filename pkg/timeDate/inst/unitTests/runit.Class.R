@@ -248,6 +248,7 @@ test.midnightStandard <-
     checkIdentical(MS, "2001-01-01 16:00:00")
     checkIdentical(MS, .midAuto("20010101160000"))
 
+
     ## midnight case :
     MN <- .midAuto("20010131240000")
     checkIdentical(MN, "2001-02-01 00:00:00")
@@ -257,12 +258,20 @@ test.midnightStandard <-
 
     ## NEW: "arbitrary format":
     cv <- c("240000 20010131", "231020 20010131")
-    print(MS <-  midnightStandard(cv, "%H%M%S %Y%m%d"))
+    print(MS <-  midnightStandard(cv, (fcv <- "%H%M%S %Y%m%d")))
     checkIdentical(MS, c("2001-02-01 00:00:00", "2001-01-31 23:10:20"))
+    print(MS2 <-  midnightStandard2(cv, fcv))
+    checkTrue(inherits(MS2, "POSIXct"))
+    checkIdentical(MS, format(MS2))
+
+    cv <- c('1/1/2010', '10/10/2010')
+    print(MS <-  midnightStandard2(cv)) ## only the *2() version works here!
+    checkTrue(inherits(MS, "POSIXct"))
+    checkIdentical(format(MS), c("2010-01-01", "2010-10-10"))
 
     ## even more extreme
     cv <- c("24:00, 31.01.2001", "23:10, 31.01.2001",
-        "24:00, 31.12.2005")
+            "24:00, 31.12.2005")
     print(MS <-  midnightStandard(cv, "%H:%M, %d.%m.%Y"))
     checkIdentical(MS, c("2001-02-01 00:00:00", "2001-01-31 23:10:00",
              "2006-01-01 00:00:00"))

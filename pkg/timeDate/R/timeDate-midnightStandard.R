@@ -35,10 +35,9 @@
 ################################################################################
 
 ## # YC :midnigStandard2 returns object in POSIXct and avoid
-## # waisting time in strptime
+## # wasting time in strptime
 
-midnightStandard2 <-
-    function(charvec, format)
+midnightStandard2 <- function(charvec, format)
 {
     # A function written by Diethelm Wuertz
     # and entirely rewritten by Martin Maechler
@@ -49,29 +48,29 @@ midnightStandard2 <-
 
     # FUNCTION:
 
+    if(all(is.na(charvec)))
+        return(as.POSIXct(charvec))
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
     ##         In that case, subtract 1 seconds convert and re-add it
-    if(all(is.na(charvec))) return(as.numeric(NA))
     paste0 <- function(...) paste(..., sep = '')
 
     # Missing Format:
-    if (missing(format)) format = whichFormat(charvec)
+    if (missing(format)) format <- whichFormat(charvec)
 
-    # convert to strptime and inspect NA's returned by strptime
-    ans <- c(unclass(as.POSIXct(strptime(charvec, format, tz = "GMT"))))
-
+    ## convert to strptime and inspect NA's returned by strptime
+    ans <- as.POSIXct(strptime(charvec, format, tz = "GMT"))
     if (any(idx <- is.na(ans))) {
 
         # inspect problematic dates
         charvec <- charvec[idx]
 
         # Format:
-        rng.nch <- range(nchar(charvec[!is.na(charvec)]))
+        rng.nch <- range(nchar(charvec))
         if(rng.nch[1] != rng.nch[2])
             stop("'charvec' has non-NA entries of different number of characters")
         nch <- rng.nch[1]
         n <- length(charvec)
-        s <- rep(0, n)
+        s <- numeric(n)
 
         ## Do two common formats *fast* (for large n), and then use
         ## flexible approach:
@@ -114,8 +113,10 @@ midnightStandard2 <-
                 if(has.S && !has.M) stop("invalid format: has '%S' but no '%M'")
                 ## 3 remaining cases:  (H,M,S), (H,M), (H)
                 m. <- 1 + has.M + has.S # in {1,2,3}
-                HMStab <- matrix(unlist(lapply(iHMS[1:m.],
-                                               function(ic) substr(charvec, start=ic, stop=ic+1))), n, m.)
+                HMStab <- matrix(unlist(lapply(iHMS[seq_len(m.)],
+					       function(ic)
+					       substr(charvec, start=ic, stop=ic+1L))),
+				 n, m.)
                 twenty4 <- paste0("24", if(has.M)"00", if(has.S)"00")
                 isMidN <- twenty4 == apply(HMStab, 1, paste, collapse='')
                 if(any(isMidN)) {
@@ -142,8 +143,7 @@ midnightStandard2 <-
 
         ## Convert "charvec" to standard ISO format:
         ## YC: added tz = "GMT" to avoid confusion when DST is active
-        ## YC : works now with numeric because faster
-        ans[idx] <- s + c(unclass(as.POSIXct(strptime(charvec, format, tz = "GMT"))))
+        ans[idx] <- s + as.POSIXct(strptime(charvec, format, tz = "GMT"))
     }
 
     # Return Value:
@@ -169,12 +169,12 @@ midnightStandard <-
     paste0 <- function(...) paste(..., sep = '')
 
     # Missing Format:
-    if (missing(format)) format = whichFormat(charvec)
+    if (missing(format)) format <- whichFormat(charvec)
 
     # Format:
     rng.nch <- range(nchar(charvec[!is.na(charvec)]))
     if(rng.nch[1] != rng.nch[2])
-    stop("'charvec' has non-NA entries of different number of characters")
+        stop("'charvec' has non-NA entries of different number of characters")
     nch <- rng.nch[1]
 
     n <- length(charvec)
@@ -249,7 +249,7 @@ midnightStandard <-
 
     ## Convert "charvec" to standard ISO format:
     ## YC: added tz = "GMT" to avoid confusion when DST is active
-    ans = format(s + strptime(charvec, format, tz = "GMT"), "%Y-%m-%d %H:%M:%S")
+    ans  <- format(s + strptime(charvec, format, tz = "GMT"), "%Y-%m-%d %H:%M:%S")
 
     # Return Value:
     ans
