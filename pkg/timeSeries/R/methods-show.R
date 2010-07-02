@@ -53,7 +53,7 @@ setMethod("show", "timeSeries",
 
         # Series:
         cat(FinCenter, "\n", sep = "")
-        if (prod(dim(recordIDs)) & (ncol(data) == NCOL(recordIDs))) {
+        if (prod(dim(recordIDs)) & (nrow(data) == NROW(recordIDs))) {
             dataIDs <- as.matrix(recordIDs)
             colnames(dataIDs) <- paste(colnames(dataIDs), "*", sep = "")
             #-> use format(data) to have same number of digits when timeSeries
