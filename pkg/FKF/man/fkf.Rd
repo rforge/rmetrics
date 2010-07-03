@@ -83,7 +83,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   particular observations \code{yt[,i]} contain NAs, the NA-values are
   removed and the measurement equation is adjusted accordingly.  When
   the full vector \code{yt[,i]} is missing the Kalman filter reduces to
-  a prediction step.  See package vignette for details.
+  a prediction step.
 
 % <------------------------------------->
 \strong{Parameters:}
