@@ -33,16 +33,15 @@
 ################################################################################
 
 
-format.timeDate <-
-    function(x, format = "", tz = "", usetz = FALSE, ...)
+format.timeDate <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     # Description:
-    #   Formats 'timeDate' as ISO conform string   
-    
+    #   Formats 'timeDate' as ISO conform string
+
     # FUNCTION:
-    
+
     if (!inherits(x, "timeDate"))
         stop("wrong class")
 
@@ -51,6 +50,7 @@ format.timeDate <-
     num <- .formatFinCenterNum(as.numeric(x@Data), FinCenter, type = "gmt2any")
     ans <- format(as.POSIXct(num, origin = "1970-01-01", tz = "GMT"),
                   tz = "GMT", format = format)
+    names(ans) <- names(x@Data)
 
     # Should add tz from table in formatFinCenter
     if (usetz)
