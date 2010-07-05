@@ -99,19 +99,6 @@ setMethod("timeDate", "character",
     if (format %in% c("unknown", "counts")) #-> "counts" catch potential problems from timeSeries
         return(timeDate(NA, zone = zone, FinCenter = FinCenter))
 
-    ## # if entries of charvec are not of same length, replace them with NA's
-    ## if (any(nc <- !(nchar(charvec) == nchar(charvec[1])))) {
-    ##     is.na(charvec) <- nc
-    ##     warning("'charvec' entries of different number of characters are replaced by NA's")
-    ## }
-
-    ## # YC :midnigStandard2 returns object in POSIXct which helps
-    ## # wasting time in strptime
-    ## # Midnight Standard & conversion to isoFormat:
-    ## charvec <- midnightStandard(charvec, format)
-    ## # convert to POSIXct as it is
-    ## ct <- as.POSIXct(charvec, format = isoFormat, tz="GMT")
-
     # Midnight Standard & conversion to isoFormat:
     ct <- midnightStandard2(charvec, format)
 
@@ -119,10 +106,8 @@ setMethod("timeDate", "character",
     ## YC: .formatFinCenterNum faster than .formatFinCenter
     num <- .formatFinCenterNum(unclass(ct), zone, type = "any2gmt")
 
-    # it is important to set manually the tzone flag,
-    # num <- as.POSIXct(num, origin = "1970-01-01", tz = "GMT")
-
     ## Manually create the POSIXct object:
+    ## it is important to set manually the tzone flag,
     num <-
         if (getRversion() >= "2.12.0")
             .POSIXct(num, "GMT")
