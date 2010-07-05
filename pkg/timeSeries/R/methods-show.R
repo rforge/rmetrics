@@ -32,17 +32,11 @@ setMethod("show", "timeSeries",
         # FUNCTION:
 
         # Check records to get printed:
-        maxRmetrics <-
-            if (!is.null(max <- getRmetricsOptions("max.print")))
-                max
-            else
-                Inf
-        maxR <-
-            if (!is.null(max <- getOption("max.print") ))
-                floor(max / (NCOL(object) + NCOL(object@recordIDs)))
-            else
-                Inf
-        max <- min(c(maxRmetrics, maxR))
+        maxRmetrics <- as.numeric(getRmetricsOptions("max.print"))
+        maxR <- as.numeric(getOption("max.print"))
+        maxR <- floor(maxR / (NCOL(object) + NCOL(object@recordIDs)))
+        max <- min(na.omit(c(maxRmetrics, maxR, Inf)))
+        #-> Inf to cast case when maxRmetrics and maxR are NULL
 
         if (ptest <- ((omitted <- NROW(object) - max) > 0))
             object <- object[seq.int(max),]
@@ -65,7 +59,7 @@ setMethod("show", "timeSeries",
 
         # print message
         if (ptest)
-            cat(gettextf("...\n [ reached getRmetricsOptions('max.print') | getOption('max.print') -- omitted %i rows ]]\n", omitted))
+            cat(gettextf("...\n [ reached getRmetricsOption('max.print') | getOption('max.print') -- omitted %i rows ]]\n", omitted))
 
         # Return Value:
         invisible(NULL) # as specified in ?show
