@@ -21,21 +21,34 @@
 ################################################################################
 
 
-setMethod("show", "timeDate",
-    function (object)
+setMethod("show", "timeDate", function (object)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
-    
+
     # when creating empty new("timeDate")
     if (!length(slot(object, "Data")))
         return(str(object))
 
+    # Check records to get printed:
+    maxRmetrics <- as.numeric(getRmetricsOptions("max.print"))
+    maxR <- as.numeric(getOption("max.print"))
+    max <- min(na.omit(c(maxRmetrics, maxR, Inf)))
+    #-> Inf to cast case when maxRmetrics and maxR are NULL
+
+    if (ptest <- ((omitted <- length(object) - max) > 0))
+        object <- object[seq.int(max)]
+
     output <- format(object)
     layout <- paste("[", output, "]", sep = "")
+    names(layout) <- names(output)
 
     # Print Results:
     cat(object@FinCenter, "\n", sep = "")
     print(layout, quote = FALSE)
+
+    # print message
+    if (ptest)
+        cat(gettextf("...\n [ reached getRmetricsOption('max.print') | getOption('max.print') -- omitted %i rows ]]\n", omitted))
 
     # Return Value:
     invisible(NULL) # 'show' returns an invisible 'NULL'. (cf. ?show)

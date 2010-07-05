@@ -46,6 +46,10 @@ function(lib, pkg)
     setRmetricsOptions(myFinCenter = "GMT",
                        currentYear = as.POSIXlt(Sys.time())$year + 1900,
                        myUnits = "days")
+
+    if(!is.numeric(getRmetricsOptions("max.print")))
+	setRmetricsOptions(max.print = 100)
+
 }
 
 
@@ -58,11 +62,14 @@ function(lib, pkg)
                        currentYear = as.POSIXlt(Sys.time())$year + 1900,
                        myUnits = "days")
 
+    if(!is.numeric(getRmetricsOptions("max.print")))
+	setRmetricsOptions(max.print = 100)
+
     if (getRversion() < "2.10.0") {
         # Introduction of new patch in 2.10.0 makes it now possible to
         # use import in NAMESAPCE with S4 classes/methods. For
         # backward compatibility, we add here the patch for previous R
-        # verison.
+        # version.
 
         tmp <- function(self, ns, vars, generics, packages) {
             addImports <- function(ns, from, what) {
