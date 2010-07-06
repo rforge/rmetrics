@@ -1,3 +1,31 @@
+2010-07-05  chalabi
+
+	* R/timeDate-DaylightSavingTime.R: updated DST
+	* R/timeDate.R: code cleanup
+	* R/methods-show.R, R/zzz.R: added getRmetricsOption('max.print')
+	  for timeDate objects
+	* R/base-format.R, R/methods-names.R, man/methods-names.Rd: added
+	  names support
+	* R/timeDate-midnightStandard.R: midnightStandard() can also
+	  handling dates without leading zeros
+
+2010-07-02  mmaechler
+
+	* R/timeDate-midnightStandard.R, R/timeDate.R,
+	  inst/unitTests/runit.Class.R, man/timeDate-midnightStandard.Rd:
+	  more midnightStandard()/midnightStandard2(); improve help; add
+	  regression test for last fix
+
+2010-07-02  chalabi
+
+	* R/timeDate-midnightStandard.R: improved handling of dates without
+	  leading zeros and IS0 8601 midnight stantard
+
+2010-04-16  chalabi
+
+	* DESCRIPTION: updated version number
+	* DESCRIPTION: DESC and Changelog
+
 2010-04-13  chalabi
 
 	* R/stats-kurtosis.R, R/stats-skewness.R, R/timeDate.R: Applied

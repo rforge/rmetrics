@@ -1,1709 +1,429 @@
-Author: chalabi
-Date:   2010-01-06
+2010-07-05  chalabi
 
-    fixed unit tests for new years
+	* R/methods-show.R: code cleanup
 
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-    M pkg/timeSeries/inst/unitTests/runit.subset.R
+2010-07-02  chalabi
 
-Author: chalabi
-Date:   2009-12-24
+	* R/methods-show.R: Improved recordIDs handling in show method.
 
-    updated NAMESPACE
-    
-    M pkg/timeSeries/NAMESPACE
+2010-05-17  chalabi
 
-Author: wuertz
-Date:   2009-12-20
+	* R/base-start.R: updated start/end to handle TZ
 
-    .runlengths() function added
-    
-    M pkg/timeSeries/NAMESPACE
-    A pkg/timeSeries/R/fin-runlength.R
+2010-04-22  chalabi
 
-Author: chalabi
-Date:   2009-12-13
+	* R/timeSeries-readSeries.R: improved dates management in
+	  readSeries()
 
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
+2010-04-14  chalabi
 
-Author: chalabi
-Date:   2009-12-13
+	* NAMESPACE: updated NAMESPACE
 
-    updated Changelog and DESC file
-    
-    M pkg/timeSeries/ChangeLog
-    M pkg/timeSeries/DESCRIPTION
+2010-01-23  wuertz
 
-Author: chalabi
-Date:   2009-12-13
+	* NAMESPACE, R/aaa-Deprecated.R, R/fin-align.R,
+	  R/timeSeries-description.R, R/utils-getArgs.R: internal function
+	  .getArgs added
 
-    added aliased in manual pages
-    
-    M pkg/timeSeries/man/base-subset.Rd
+2010-01-22  wuertz
 
-Author: chalabi
-Date:   2009-12-10
+	* R/aaa-Deprecated.R, R/fin-durations.R, R/fin-spreads.R:
+	  deprecated functions moved to aaa-deprecated.R, started to clean
+	  up ....
+	* R/fin-rollmean.R: code cleaned and description added
+	* NAMESPACE, R/fin-runlength.R, R/fin-runlengths.R,
+	  man/fin-runlengths.Rd: .runlengths added
 
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
+2010-01-06  chalabi
 
-Author: chalabi
-Date:   2009-12-10
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated Changelog and DESC file
+	* inst/unitTests/runit.aggregate.R, inst/unitTests/runit.subset.R:
+	  fixed unit tests for new years
 
-    updated Changelog and DESC file
-    
-    M pkg/timeSeries/ChangeLog
-    M pkg/timeSeries/DESCRIPTION
+2009-12-24  chalabi
 
-Author: chalabi
-Date:   2009-12-10
+	* NAMESPACE: updated NAMESPACE
 
-    added completion method after the $ sign.
-    
-    M pkg/timeSeries/R/base-Extract.R
+2009-12-20  wuertz
 
-Author: chalabi
-Date:   2009-12-10
+	* NAMESPACE, R/fin-runlength.R: .runlengths() function added
 
-    updated signature list of timeSeries,$ method according to changes in r50609 in R-devel.
-    
-    M pkg/timeSeries/R/base-Extract.R
-    M pkg/timeSeries/man/base-subset.Rd
+2009-12-13  chalabi
 
-Author: wuertz
-Date:   2009-10-26
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated Changelog and DESC file
+	* man/base-subset.Rd: added aliased in manual pages
 
-    example lin in script corrected
-    
-    M pkg/timeSeries/R/fin-drawdowns.R
+2009-12-10  chalabi
 
-Author: chalabi
-Date:   2009-10-05
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated Changelog and DESC file
+	* R/base-Extract.R: added completion method after the $ sign.
+	* R/base-Extract.R, man/base-subset.Rd: updated signature list of
+	  timeSeries,$ method according to changes in r50609 in R-devel.
 
-    improved handling of NA's in plot,timeSeries-method
-    
-    M pkg/timeSeries/R/graphics-plot.R
+2009-10-26  wuertz
 
-Author: chalabi
-Date:   2009-09-30
+	* R/fin-drawdowns.R: example lin in script corrected
 
-    added pdf files in inst/doc
-    
-    A pkg/timeSeries/inst/doc/TimeSeriesFAQ.pdf
+2009-10-05  chalabi
 
-Author: chalabi
-Date:   2009-09-28
+	* R/graphics-plot.R: improved handling of NA's in
+	  plot,timeSeries-method
+
+2009-09-30  chalabi
+
+	* inst/doc, inst/doc/TimeSeriesFAQ.pdf: added pdf files in inst/doc
+
+2009-09-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated DESCR and ChangeLog
+	* R/AllClass.R: Added prototype in timeSeries class definition.
+
+2009-09-02  chalabi
+
+	* NAMESPACE, R/base-Extract.R, man/base-subset.Rd,
+	  man/timeSeries.Rd: added methods to subset timeSeries object with
+	  POSIXt and Date time stamps
+	* NAMESPACE, R/stats-filter.R, man/stats-filter.Rd: added
+	  filter,timeSeries-method
+	* NAMESPACE, R/base-t.R, man/base-t.Rd: added t,timeSeries-method
+	* R/stats-na.contiguous.R, inst/unitTests/runit.na.contiguous.R,
+	  man/stats-na.contiguous.Rd: added
+	  na.contiguous,timeSeries-method.
+
+2009-08-30  wuertz
+
+	* R/base-apply.R: back to the previous version
+	* R/base-attach.R: description added to attach
+	* R/base-apply.R: apply should work now in all cases
+
+2009-08-30  chalabi
+
+	* NAMESPACE, R/timeSeries-isRegular.R, man/timeSeries-isRegular.Rd:
+	  isRegular methods are now proper S4 methods.
+
+2009-08-30  wuertz
+
+	* man/base-colCumsumsRd: file with missing dot deleted
+	* man/base-colCumsums.Rd: missing dot in file name added
+
+2009-08-28  wuertz
+
+	* R/base-diff.R, R/methods-Ops.R, R/methods-mathOps.R,
+	  man/base-rowCumsums.Rd, man/fin-align.Rd,
+	  man/methods-DataPart.Rd, man/methods-align.Rd,
+	  man/methods-rowCum.Rd, man/time.Rd,
+	  man/timeSeries-getDataPart.Rd, man/timeSeries-time.Rd: renaming
+	  of man files finished
+	* NAMESPACE, R/fin-monthly.R, R/fin-rollmean.R,
+	  R/timeSeries-isRegular.R, man/apply.Rd, man/base-apply.Rd,
+	  man/base-attach.Rd, man/base-cbind.Rd, man/base-colCumsumsRd,
+	  man/base-colSums.Rd, man/base-dim.Rd, man/base-rank.Rd,
+	  man/base-subset.Rd, man/colCum.Rd, man/colStats.Rd,
+	  man/cumulated.Rd, man/daily.Rd, man/description.Rd,
+	  man/drawdowns.Rd, man/durations.Rd, man/fin-cumulated.Rd,
+	  man/fin-daily.Rd, man/fin-drawdowns.Rd, man/fin-durations.Rd,
+	  man/fin-monthly.Rd, man/fin-orderColnames.Rd,
+	  man/fin-orderStatistics.Rd, man/fin-returns.Rd,
+	  man/fin-spreads.Rd, man/finCenter.Rd, man/graphics-plot.Rd,
+	  man/is.Rd, man/isUnivariate.Rd, man/lag.Rd,
+	  man/methods-aggregate.Rd, man/methods-attach.Rd,
+	  man/methods-bind.Rd, man/methods-dim.Rd, man/methods-is.Rd,
+	  man/methods-na.Rd, man/methods-plot.Rd, man/methods-returns.Rd,
+	  man/methods-str.Rd, man/methods-subset.Rd, man/model.frame.Rd,
+	  man/monthly.Rd, man/order.Rd, man/orderStatistics.Rd,
+	  man/rank.Rd, man/series.Rd, man/spreads.Rd,
+	  man/stats-aggregate.Rd, man/stats-lag.Rd,
+	  man/stats-model.frame.Rd, man/stats-na.omit.Rd,
+	  man/timeSeries-description.Rd, man/timeSeries-finCenter.Rd,
+	  man/timeSeries-isRegular.Rd, man/timeSeries-isUnivariate.Rd,
+	  man/timeSeries-series.Rd, man/utils-str.Rd: man script files Rd
+	  renamed to be more compatible with the script R files and the
+	  eBook
+	* man/colCum.Rd: deleted by mistake
+	* man/colCum.Rd:
+	* R/timeSeries-isPeriod.R: isPeriod file no longer needed
+
+2009-08-27  wuertz
+
+	* inst/unitTests/runit.NA.R, inst/unitTests/runit.Omit.R,
+	  inst/unitTests/runit.TimeSeriesClass.R,
+	  inst/unitTests/runit.TimeSeriesCoercion.R,
+	  inst/unitTests/runit.TimeSeriesData.R,
+	  inst/unitTests/runit.TimeSeriesPositions.R,
+	  inst/unitTests/runit.aggregate.R, inst/unitTests/runit.align.R,
+	  inst/unitTests/runit.apply.R, inst/unitTests/runit.as.R,
+	  inst/unitTests/runit.attach.R, inst/unitTests/runit.bind.R,
+	  inst/unitTests/runit.colCum.R, inst/unitTests/runit.colStats.R,
+	  inst/unitTests/runit.cor.R, inst/unitTests/runit.cumulated.R,
+	  inst/unitTests/runit.daily.R, inst/unitTests/runit.dim.R,
+	  inst/unitTests/runit.drawdowns.R,
+	  inst/unitTests/runit.durations.R, inst/unitTests/runit.lag.R,
+	  inst/unitTests/runit.mathOps.R, inst/unitTests/runit.merge.R,
+	  inst/unitTests/runit.methods-plot.R,
+	  inst/unitTests/runit.methods-print.R,
+	  inst/unitTests/runit.methods-summary.R,
+	  inst/unitTests/runit.model.frame.R,
+	  inst/unitTests/runit.monthly.R, inst/unitTests/runit.order.R,
+	  inst/unitTests/runit.periodical.R, inst/unitTests/runit.rank.R,
+	  inst/unitTests/runit.returns.R, inst/unitTests/runit.rowCum.R,
+	  inst/unitTests/runit.signalCounts.R,
+	  inst/unitTests/runit.spreads.R, inst/unitTests/runit.subset.R,
+	  inst/unitTests/runit.time.R, inst/unitTests/runit.timeSeries.R,
+	  man/apply.Rd, man/colCum.Rd, man/colStats.Rd, man/cumulated.Rd,
+	  man/daily.Rd, man/data.Rd, man/description.Rd, man/drawdowns.Rd,
+	  man/durations.Rd, man/finCenter.Rd, man/is.Rd,
+	  man/isUnivariate.Rd, man/lag.Rd, man/methods-DataPart.Rd,
+	  man/methods-aggregate.Rd, man/methods-align.Rd,
+	  man/methods-as.Rd, man/methods-attach.Rd, man/methods-base.Rd,
+	  man/methods-bind.Rd, man/methods-comment.Rd, man/methods-dim.Rd,
+	  man/methods-mathOps.Rd, man/methods-na.Rd, man/methods-plot.Rd,
+	  man/methods-returns.Rd, man/methods-rowCum.Rd,
+	  man/methods-show.Rd, man/methods-stats.Rd, man/methods-str.Rd,
+	  man/methods-subset.Rd, man/model.frame.Rd, man/monthly.Rd,
+	  man/order.Rd, man/orderStatistics.Rd, man/rank.Rd, man/series.Rd,
+	  man/spreads.Rd, man/time.Rd, man/timeSeries.Rd: As a consequnece
+	  of introducing rda data files I have adapted all manual pages and
+	  all unit test files where it was necessary
+	* data/LPP2005REC.rda, data/MSFT.rda, data/USDCHF.rda: now the rda
+	  files are there
+	* data/LPP2005REC.Rda, data/MSFT.Rda, data/USDCHF.Rda: data files
+	  removed
+	* data/LPP2005REC.Rda, data/LPP2005REC.csv, data/MSFT.Rda,
+	  data/USDCHF.Rda: Rda data files added, csv deleted, now all data
+	  files are in the same format makes life easier
+	* data/MSFT.rda, data/msft.dat.csv, data/usdchf.csv: csv and rda
+	  files deleted
+
+2009-08-17  chalabi
+
+	* R/base-colCumsums.R, inst/unitTests/runit.colCum.R: Rewrite all
+	  Colcum methods to take advantages of new
+	  apply,timeSeries-methods.
+	* R/base-apply.R: Improved apply,timeSeries-method to handle
+	  timeSeries with one row.
+	* NAMESPACE: new NAMESPACE structure which should ease maintenance
+	  of packages.
+	* R/methods-show.R: show,timeSeries-method is now more friendly
+	  with default "max.print" R option.
+	* DESCRIPTION, NAMESPACE, R/base-Extract.R, R/base-cbind.R,
+	  R/base-merge.R, R/methods-Ops.R, R/methods-as.R,
+	  R/methods-show.R, R/timeSeries.R, inst/unitTests/runit.bind.R,
+	  man/methods-bind.Rd: Merge branch 'devel-timeSeries'
+	  
+	  Conflicts:
+	  pkg/timeSeries/R/base-Extract.R
+	  pkg/timeSeries/R/timeSeries.R
+	* NAMESPACE, R/AllClass.R, R/base-Extract.R,
+	  R/timeSeries-getDataPart.R, man/methods-subset.Rd: better
+	  handling of @recordIDs with $<-,timeSeries-method.
+	* R/methods-as.R: improved as.ts,timeSeries-method with monthly and
+	  quarterly data.
+
+2009-06-13  chalabi
+
+	* R/base-Extract.R: Improved $,timeSeries-method when matching
+	  names in @recordIDs
+	* R/AllClass.R, R/base-Extract.R, R/base-dim.R:
+	  names,timeSeries-method returns now also the names of data in
+	  @recordIDs. names<-,timeSeries-methods works both for data part
+	  and @recordIDs.
+
+2009-05-17  wuertz
+
+	* inst/unitTests/runit.TimeSeriesCoercion.R: unit tests - still to
+	  be updated as.ts
+	* man/methods-as.Rd, man/methods-bind.Rd, man/timeSeries.Rd: man
+	  pages updated
+	* NAMESPACE: namespace adapted
+	* NAMESPACE:
+	* R/AllClass.R, R/AllGeneric.R, R/base-Extract.R, R/base-apply.R,
+	  R/base-attach.R, R/base-cbind.R, R/base-colCumsums.R,
+	  R/base-colSums.R, R/base-comment.R, R/base-diff.R, R/base-dim.R,
+	  R/base-merge.R, R/base-rank.R, R/base-rev.R, R/base-rowCumsums.R,
+	  R/base-sample.R, R/base-scale.R, R/base-sort.R, R/base-start.R,
+	  R/base-subset.R, R/fin-align.R, R/fin-cumulated.R, R/fin-daily.R,
+	  R/fin-drawdowns.R, R/fin-durations.R, R/fin-monthly.R,
+	  R/fin-orderColnames.R, R/fin-orderStatistics.R,
+	  R/fin-periodical.R, R/fin-returns.R, R/fin-smooth.R,
+	  R/fin-splits.R, R/fin-spreads.R, R/fin-turnpoints.R,
+	  R/graphics-plot.R, R/methods-Ops.R, R/methods-as.R,
+	  R/methods-is.R, R/methods-show.R, R/old2new.R,
+	  R/stats-aggregate.R, R/stats-lag.R, R/stats-model.frame.R,
+	  R/stats-na.omit.R, R/stats-window.R, R/timeSeries-description.R,
+	  R/timeSeries-dummy.R, R/timeSeries-finCenter.R,
+	  R/timeSeries-getDataPart.R, R/timeSeries-isOHLC.R,
+	  R/timeSeries-isPeriod.R, R/timeSeries-isUnivariate.R,
+	  R/timeSeries-readSeries.R, R/timeSeries-series.R,
+	  R/timeSeries-signalCounts.R, R/timeSeries-time.R, R/timeSeries.R,
+	  R/utils-head.R, R/utils-str.R, R/zzz.R: NEW FILE ORDERING CHECKED
+	  IN ...
+	* R/AllClass.R, R/AllGeneric.R, R/colCum.R, R/colStats.R,
+	  R/cumulated.R, R/daily.R, R/description.R, R/drawdowns.R,
+	  R/dummy.R, R/durations.R, R/is.R, R/isUnivariate.R,
+	  R/methods-DataPart.R, R/methods-aggregate.R, R/methods-align.R,
+	  R/methods-apply.R, R/methods-as.R, R/methods-attach.R,
+	  R/methods-bind.R, R/methods-comment.R, R/methods-dim.R,
+	  R/methods-finCenter.R, R/methods-head.R, R/methods-lag.R,
+	  R/methods-mathOps.R, R/methods-merge.R, R/methods-na.R,
+	  R/methods-outlier.R, R/methods-plot.R, R/methods-returns.R,
+	  R/methods-rowCum.R, R/methods-series.R, R/methods-show.R,
+	  R/methods-str.R, R/methods-subset.R, R/methods-tail.R,
+	  R/methods-window.R, R/model.frame.R, R/monthly.R, R/old2new.R,
+	  R/order.R, R/orderStatistics.R, R/periodical.R, R/rank.R,
+	  R/readSeries.R, R/signalCounts.R, R/spreads.R, R/time.R,
+	  R/timeSeries.R, R/turnpoints.R, R/zzz.R:
+
+2009-05-07  wuertz
+
+	* R/methods-show.R: .print.timeSeries missing column names fixed on
+	  "h" style can now also handle "%Q" format for quarterly data
+	* R/methods-plot.R: .plotTimeSeries can now handle different colors
+	  and plot symbols for multivariate series
+
+2009-04-19  chalabi
+
+	* DESCRIPTION: added explicit version number in Depends field for
+	  key packages
+	* R/methods-aggregate.R: fixed colnames in
+	  aggregate,timeSeries-method
+	* R/AllClass.R: initialize,timeSeries-method checks object with
+	  validObject
+	* R/colStats.R: added colMeans and colSums,timeSeries-method
+	  because default function is unefficient with large timeSeries
+	  objects.
+
+2009-04-02  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-03-31  chalabi
+
+	* R/AllClass.R, R/is.R, R/methods-DataPart.R: small changes to make
+	  timeSeries work with R-2.7.0.
+
+2009-03-30  chalabi
+
+	* man/data.Rd: added MSFT (timeSeries version of mstf.dat) in data
+	  folder.
+	* NAMESPACE, R/AllClass.R, R/zzz.R: define S4 class 'difftime' with
+	  'setOldClass()'. We will keep it until
+	  'methods' pkg will define it alongside the other old 'base'
+	  classes.
+	* R/methods-mathOps.R, R/timeSeries.R,
+	  inst/unitTests/runit.mathOps.R,
+	  inst/unitTests/runit.timeSeries.R, man/methods-mathOps.Rd: added
+	  explicit methods for Ops with 'ts' and 'timeSeries' arguments.
+
+2009-03-25  chalabi
+
+	* data/MSFT.rda: added timeSeries version of msft.dat dataset
+
+2009-03-19  chalabi
+
+	* R/is.R, R/methods-aggregate.R, R/methods-as.R, R/methods-bind.R,
+	  R/methods-dim.R, R/methods-head.R, R/methods-lag.R,
+	  R/methods-mathOps.R, R/methods-merge.R, R/methods-na.R,
+	  R/methods-plot.R, R/methods-str.R, R/methods-tail.R,
+	  R/methods-window.R, R/model.frame.R, R/time.R, man/lag.Rd,
+	  man/methods-aggregate.Rd, man/methods-as.Rd, man/methods-bind.Rd,
+	  man/methods-mathOps.Rd, man/methods-na.Rd, man/methods-subset.Rd,
+	  man/time.Rd: 'base' generics have now S3 and S4 methods. S3
+	  methods are used
+	  because 'UseMethod' does not dispatch S4 methods in 'base'
+	  functions. For example 'base' functions starting with something
+	  like
+	  'as.list' would failed without the S3 method.
+	* R/old2new.R: added functions to convert old timeSeries format to
+	  new class 'timeSeries'
+	* R/methods-subset.R, R/time.R, R/timeSeries.R: @positions is
+	  numeric and makes timeSeries object much faster.
+	* R/methods-show.R, R/zzz.R: added getRmetricsOptions("max.print")
+	* R/methods-bind.R, R/methods-merge.R: new implementation of
+	  [cb]bind and merge functions
+	* R/is.R: added function is.signalSeries
+	* R/methods-tail.R: optimized tail for large timeSeries
+	* R/methods-as.R, man/methods-as.Rd: new as.list.timeSeries S3
+	  methods. This means that functions like sapply and lapply can now
+	  work with timeSeries objects.
+	* R/methods-bind.R, man/methods-bind.Rd: new cbind and rbind
+	  implementation in S3 method since methods:::bind_activation might
+	  create problems. Names of arguments are now supported.
+	* R/methods-series.R: series<-,matrix-method uses now the new
+	  timeSeires() methods.
+	* R/methods-as.R: new implementation of as.timeSeries.data.frame.
+	  Should has the same
+	  features as the previous implementation.
+	* R/daily.R, R/methods-dim.R: improved handling of colnames and
+	  unit. functions like var() should
+	  now returns with the appropriate colnames.
+	* R/AllClass.R, R/AllGeneric.R, R/timeSeries.R, man/timeSeries.Rd:
+	  timeSeries() is now a generic function with methods. timeSeries()
+	  should now take advantage of new implementation of timeDate() and
+	  should be faster in creating new timeSeries objects.
+	* R/methods-subset.R: added $,timeSeries method with
+	  auto-completion of column names
+	* NAMESPACE, R/methods-dim.R: added name,timeSeries method which
+	  return the column names
+
+2009-02-04  chalabi
+
+	* ChangeLog:
+	* inst/NEWS:
+	* DESCRIPTION: updated version number
+
+2009-01-29  chalabi
+
+	* R/methods-aggregate.R, man/methods-aggregate.Rd: improved
+	  aggregate,timeSeries-method
+
+2009-01-28  chalabi
+
+	* R/methods-plot.R: small changed in plot,timeSeries to avoid
+	  warning when dealing with signal series
+	* R/methods-subset.R: timeSeries()[''] now returns a nuermic(NA)
+	  instead of logical(NA)
+	* inst/unitTests/runit.subset.R: added RUnit test with subsetting
+
+2009-01-12  chalabi
+
+	* man/apply.Rd: fixed warning with new Rd parser
+	* R/AllClass.R: use getDataPart method
+	* R/is.R: use getDataPart method
+	* R/methods-as.R: change as.matrix to use the getDatPart method
+	* R/methods-subset.R: improved speed of sub-setting and
+	  sub-assignment and fixed problem
+	  when sub-setting with character argument without comma.
+	* R/methods-dim.R, R/methods-head.R, R/methods-show.R,
+	  R/methods-tail.R: faster method
+	* R/methods-bind.R: fixed colnames problem with c,rbind
+	* NAMESPACE, R/methods-DataPart.R: added getDataPart,timeSeries
+	  method
+
+2009-01-11  wuertz
+
+	* R/align.R: old align.R script removed
+	* R/methods-align.R: align established as method filename renamed
+
+2009-01-07  wuertz
+
+	* NAMESPACE, R/align.R, inst/unitTests/runit.aggregate.R,
+	  inst/unitTests/runit.subset.R, man/methods-align.Rd: unit tests
+	  which failed from the change 2008 to 2009 repaired, function
+	  align added the same as .align.timeSeries and documented, added
+	  to namespace
+
+2009-01-06  wuertz
+
+	* R/methods-aggregate.R: example modified was not working for 2009
+	* R/methods-lag.R: example modified
 
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-09-28
-
-    updated DESCR and ChangeLog
-    
-    M pkg/timeSeries/ChangeLog
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-09-22
-
-    Added prototype in timeSeries class definition.
-    
-    M pkg/timeSeries/R/AllClass.R
-
-Author: chalabi
-Date:   2009-09-02
-
-    added methods to subset timeSeries object with POSIXt and Date time stamps
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/base-Extract.R
-    M pkg/timeSeries/man/base-subset.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: chalabi
-Date:   2009-09-02
-
-    added filter,timeSeries-method
-    
-    M pkg/timeSeries/NAMESPACE
-    A pkg/timeSeries/R/stats-filter.R
-    A pkg/timeSeries/man/stats-filter.Rd
-
-Author: chalabi
-Date:   2009-08-31
-
-    added t,timeSeries-method
-    
-    M pkg/timeSeries/NAMESPACE
-    A pkg/timeSeries/R/base-t.R
-    A pkg/timeSeries/man/base-t.Rd
-
-Author: chalabi
-Date:   2009-08-31
-
-    added na.contiguous,timeSeries-method.
-    
-    A pkg/timeSeries/R/stats-na.contiguous.R
-    A pkg/timeSeries/inst/unitTests/runit.na.contiguous.R
-    A pkg/timeSeries/man/stats-na.contiguous.Rd
-
-Author: wuertz
-Date:   2009-08-30
-
-    back to the previous version
-    
-    M pkg/timeSeries/R/base-apply.R
-
-Author: wuertz
-Date:   2009-08-30
-
-    description added to attach
-    
-    M pkg/timeSeries/R/base-attach.R
-
-Author: wuertz
-Date:   2009-08-30
-
-    apply should work now in all cases
-    
-    M pkg/timeSeries/R/base-apply.R
-
-Author: chalabi
-Date:   2009-08-30
-
-    isRegular methods are now proper S4 methods.
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/timeSeries-isRegular.R
-    M pkg/timeSeries/man/timeSeries-isRegular.Rd
-
-Author: wuertz
-Date:   2009-08-30
-
-    file with missing dot deleted
-    
-    D pkg/timeSeries/man/base-colCumsumsRd
-
-Author: wuertz
-Date:   2009-08-30
-
-    missing dot in file name added
-    
-    A pkg/timeSeries/man/base-colCumsums.Rd
-
-Author: wuertz
-Date:   2009-08-28
-
-    renaming of man files finished
-    
-    M pkg/timeSeries/R/base-diff.R
-    D pkg/timeSeries/R/methods-Ops.R
-    A pkg/timeSeries/R/methods-mathOps.R
-    A pkg/timeSeries/man/base-rowCumsums.Rd
-    A pkg/timeSeries/man/fin-align.Rd
-    D pkg/timeSeries/man/methods-DataPart.Rd
-    D pkg/timeSeries/man/methods-align.Rd
-    D pkg/timeSeries/man/methods-rowCum.Rd
-    D pkg/timeSeries/man/time.Rd
-    A pkg/timeSeries/man/timeSeries-getDataPart.Rd
-    A pkg/timeSeries/man/timeSeries-time.Rd
-
-Author: wuertz
-Date:   2009-08-28
-
-    man script files Rd renamed to be more compatible with the script R files and the eBook
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/fin-monthly.R
-    A pkg/timeSeries/R/fin-rollmean.R
-    A pkg/timeSeries/R/timeSeries-isRegular.R
-    D pkg/timeSeries/man/apply.Rd
-    A pkg/timeSeries/man/base-apply.Rd
-    A pkg/timeSeries/man/base-attach.Rd
-    A pkg/timeSeries/man/base-cbind.Rd
-    A pkg/timeSeries/man/base-colCumsumsRd
-    A pkg/timeSeries/man/base-colSums.Rd
-    A pkg/timeSeries/man/base-dim.Rd
-    A pkg/timeSeries/man/base-rank.Rd
-    A pkg/timeSeries/man/base-subset.Rd
-    D pkg/timeSeries/man/colCum.Rd
-    D pkg/timeSeries/man/colStats.Rd
-    D pkg/timeSeries/man/cumulated.Rd
-    D pkg/timeSeries/man/daily.Rd
-    D pkg/timeSeries/man/description.Rd
-    D pkg/timeSeries/man/drawdowns.Rd
-    D pkg/timeSeries/man/durations.Rd
-    A pkg/timeSeries/man/fin-cumulated.Rd
-    A pkg/timeSeries/man/fin-daily.Rd
-    A pkg/timeSeries/man/fin-drawdowns.Rd
-    A pkg/timeSeries/man/fin-durations.Rd
-    A pkg/timeSeries/man/fin-monthly.Rd
-    A pkg/timeSeries/man/fin-orderColnames.Rd
-    A pkg/timeSeries/man/fin-orderStatistics.Rd
-    A pkg/timeSeries/man/fin-returns.Rd
-    A pkg/timeSeries/man/fin-spreads.Rd
-    D pkg/timeSeries/man/finCenter.Rd
-    A pkg/timeSeries/man/graphics-plot.Rd
-    D pkg/timeSeries/man/is.Rd
-    D pkg/timeSeries/man/isUnivariate.Rd
-    D pkg/timeSeries/man/lag.Rd
-    D pkg/timeSeries/man/methods-aggregate.Rd
-    D pkg/timeSeries/man/methods-attach.Rd
-    D pkg/timeSeries/man/methods-bind.Rd
-    D pkg/timeSeries/man/methods-dim.Rd
-    A pkg/timeSeries/man/methods-is.Rd
-    D pkg/timeSeries/man/methods-na.Rd
-    D pkg/timeSeries/man/methods-plot.Rd
-    D pkg/timeSeries/man/methods-returns.Rd
-    D pkg/timeSeries/man/methods-str.Rd
-    D pkg/timeSeries/man/methods-subset.Rd
-    D pkg/timeSeries/man/model.frame.Rd
-    D pkg/timeSeries/man/monthly.Rd
-    D pkg/timeSeries/man/order.Rd
-    D pkg/timeSeries/man/orderStatistics.Rd
-    D pkg/timeSeries/man/rank.Rd
-    D pkg/timeSeries/man/series.Rd
-    D pkg/timeSeries/man/spreads.Rd
-    A pkg/timeSeries/man/stats-aggregate.Rd
-    A pkg/timeSeries/man/stats-lag.Rd
-    A pkg/timeSeries/man/stats-model.frame.Rd
-    A pkg/timeSeries/man/stats-na.omit.Rd
-    A pkg/timeSeries/man/timeSeries-description.Rd
-    A pkg/timeSeries/man/timeSeries-finCenter.Rd
-    A pkg/timeSeries/man/timeSeries-isRegular.Rd
-    A pkg/timeSeries/man/timeSeries-isUnivariate.Rd
-    A pkg/timeSeries/man/timeSeries-series.Rd
-    A pkg/timeSeries/man/utils-str.Rd
-
-Author: wuertz
-Date:   2009-08-28
-
-    deleted by mistake
-    
-    A pkg/timeSeries/man/colCum.Rd
-
-Author: wuertz
-Date:   2009-08-28
-
-    D pkg/timeSeries/man/colCum.Rd
-
-Author: wuertz
-Date:   2009-08-28
-
-    isPeriod file no longer needed
-    
-    D pkg/timeSeries/R/timeSeries-isPeriod.R
-
-Author: wuertz
-Date:   2009-08-27
-
-    As a consequnece of introducing rda data files I have adapted all manual pages and all unit test files where it was necessary
-    
-    M pkg/timeSeries/inst/unitTests/runit.NA.R
-    M pkg/timeSeries/inst/unitTests/runit.Omit.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesClass.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesCoercion.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesData.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesPositions.R
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-    M pkg/timeSeries/inst/unitTests/runit.align.R
-    M pkg/timeSeries/inst/unitTests/runit.apply.R
-    M pkg/timeSeries/inst/unitTests/runit.as.R
-    M pkg/timeSeries/inst/unitTests/runit.attach.R
-    M pkg/timeSeries/inst/unitTests/runit.bind.R
-    M pkg/timeSeries/inst/unitTests/runit.colCum.R
-    M pkg/timeSeries/inst/unitTests/runit.colStats.R
-    M pkg/timeSeries/inst/unitTests/runit.cor.R
-    M pkg/timeSeries/inst/unitTests/runit.cumulated.R
-    M pkg/timeSeries/inst/unitTests/runit.daily.R
-    M pkg/timeSeries/inst/unitTests/runit.dim.R
-    M pkg/timeSeries/inst/unitTests/runit.drawdowns.R
-    M pkg/timeSeries/inst/unitTests/runit.durations.R
-    M pkg/timeSeries/inst/unitTests/runit.lag.R
-    M pkg/timeSeries/inst/unitTests/runit.mathOps.R
-    M pkg/timeSeries/inst/unitTests/runit.merge.R
-    M pkg/timeSeries/inst/unitTests/runit.methods-plot.R
-    M pkg/timeSeries/inst/unitTests/runit.methods-print.R
-    M pkg/timeSeries/inst/unitTests/runit.methods-summary.R
-    M pkg/timeSeries/inst/unitTests/runit.model.frame.R
-    M pkg/timeSeries/inst/unitTests/runit.monthly.R
-    M pkg/timeSeries/inst/unitTests/runit.order.R
-    M pkg/timeSeries/inst/unitTests/runit.periodical.R
-    M pkg/timeSeries/inst/unitTests/runit.rank.R
-    M pkg/timeSeries/inst/unitTests/runit.returns.R
-    M pkg/timeSeries/inst/unitTests/runit.rowCum.R
-    M pkg/timeSeries/inst/unitTests/runit.signalCounts.R
-    M pkg/timeSeries/inst/unitTests/runit.spreads.R
-    M pkg/timeSeries/inst/unitTests/runit.subset.R
-    M pkg/timeSeries/inst/unitTests/runit.time.R
-    M pkg/timeSeries/inst/unitTests/runit.timeSeries.R
-    M pkg/timeSeries/man/apply.Rd
-    M pkg/timeSeries/man/colCum.Rd
-    M pkg/timeSeries/man/colStats.Rd
-    M pkg/timeSeries/man/cumulated.Rd
-    M pkg/timeSeries/man/daily.Rd
-    M pkg/timeSeries/man/data.Rd
-    M pkg/timeSeries/man/description.Rd
-    M pkg/timeSeries/man/drawdowns.Rd
-    M pkg/timeSeries/man/durations.Rd
-    M pkg/timeSeries/man/finCenter.Rd
-    M pkg/timeSeries/man/is.Rd
-    M pkg/timeSeries/man/isUnivariate.Rd
-    M pkg/timeSeries/man/lag.Rd
-    M pkg/timeSeries/man/methods-DataPart.Rd
-    M pkg/timeSeries/man/methods-aggregate.Rd
-    M pkg/timeSeries/man/methods-align.Rd
-    M pkg/timeSeries/man/methods-as.Rd
-    M pkg/timeSeries/man/methods-attach.Rd
-    M pkg/timeSeries/man/methods-base.Rd
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/methods-comment.Rd
-    M pkg/timeSeries/man/methods-dim.Rd
-    M pkg/timeSeries/man/methods-mathOps.Rd
-    M pkg/timeSeries/man/methods-na.Rd
-    M pkg/timeSeries/man/methods-plot.Rd
-    M pkg/timeSeries/man/methods-returns.Rd
-    M pkg/timeSeries/man/methods-rowCum.Rd
-    M pkg/timeSeries/man/methods-show.Rd
-    M pkg/timeSeries/man/methods-stats.Rd
-    M pkg/timeSeries/man/methods-str.Rd
-    M pkg/timeSeries/man/methods-subset.Rd
-    M pkg/timeSeries/man/model.frame.Rd
-    M pkg/timeSeries/man/monthly.Rd
-    M pkg/timeSeries/man/order.Rd
-    M pkg/timeSeries/man/orderStatistics.Rd
-    M pkg/timeSeries/man/rank.Rd
-    M pkg/timeSeries/man/series.Rd
-    M pkg/timeSeries/man/spreads.Rd
-    M pkg/timeSeries/man/time.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: wuertz
-Date:   2009-08-27
-
-    now the rda files are there
-    
-    A pkg/timeSeries/data/LPP2005REC.rda
-    A pkg/timeSeries/data/MSFT.rda
-    A pkg/timeSeries/data/USDCHF.rda
-
-Author: wuertz
-Date:   2009-08-27
-
-    data files removed
-    
-    
-    D pkg/timeSeries/data/LPP2005REC.Rda
-    D pkg/timeSeries/data/MSFT.Rda
-    D pkg/timeSeries/data/USDCHF.Rda
-
-Author: wuertz
-Date:   2009-08-27
-
-    Rda data files added, csv deleted, now all data files are in the same format makes life easier
-    
-    A pkg/timeSeries/data/LPP2005REC.Rda
-    D pkg/timeSeries/data/LPP2005REC.csv
-    A pkg/timeSeries/data/MSFT.Rda
-    A pkg/timeSeries/data/USDCHF.Rda
-
-Author: wuertz
-Date:   2009-08-27
-
-    csv and rda files deleted
-    
-    D pkg/timeSeries/data/MSFT.rda
-    D pkg/timeSeries/data/msft.dat.csv
-    D pkg/timeSeries/data/usdchf.csv
-
-Author: chalabi
-Date:   2009-08-17
-
-    Rewrite all Colcum methods to take advantages of new apply,timeSeries-methods.
-    
-    M pkg/timeSeries/R/base-colCumsums.R
-    M pkg/timeSeries/inst/unitTests/runit.colCum.R
-
-Author: chalabi
-Date:   2009-08-17
-
-    Improved apply,timeSeries-method to handle timeSeries with one row.
-    
-    M pkg/timeSeries/R/base-apply.R
-
-Author: chalabi
-Date:   2009-08-14
-
-    new NAMESPACE structure which should ease maintenance of packages.
-    
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2009-07-14
-
-    show,timeSeries-method is now more friendly with default "max.print" R option.
-    
-    M pkg/timeSeries/R/methods-show.R
-
-Merge: ed38536 c633818
-Author: chalabi
-Date:   2009-06-25
-
-    Merge branch 'devel-timeSeries'
-    
-    Conflicts:
-     pkg/timeSeries/R/base-Extract.R
-     pkg/timeSeries/R/timeSeries.R
-    
-Author: Chalabi
-Date:   2009-06-24
-
-    updated NAMESPACE
-
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/NAMESPACE
-
-Author: Chalabi
-Date:   2009-06-24
-
-    merge,timeSeries,timeSeries-method should now handle merge like a data.frame
-
-    M pkg/timeSeries/R/base-merge.R
-
-Author: Chalabi
-Date:   2009-06-17
-
-    improved support of @recordIDs in [rc]bind,timeSeries-method
-
-    M pkg/timeSeries/R/base-cbind.R
-
-Author: Chalabi
-Date:   2009-06-17
-
-    improved @recordIDs support in merge,timeSeries-method
-
-    M pkg/timeSeries/R/base-merge.R
-
-Author: Chalabi
-Date:   2009-06-17
-
-    as.data.frame,timeSeries-method now also returns @recordIDs
-
-    M pkg/timeSeries/R/methods-as.R
-
-Author: Chalabi
-Date:   2009-06-17
-
-    added quantile,timeSeries-method
-
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/methods-Ops.R
-
-Author: Chalabi
-Date:   2009-06-16
-
-    @recordIDs is now printed with timeSeries as intended. Also adds '*' at the end of colnames for columns coming from @recordIDs.
-
-    M pkg/timeSeries/R/methods-show.R
-
-Author: chalabi
-Date:   2009-06-16
-
-    better handling of @recordIDs with $<-,timeSeries-method.
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/base-Extract.R
-    M pkg/timeSeries/R/timeSeries-getDataPart.R
-    M pkg/timeSeries/man/methods-subset.Rd
-
-Author: Chalabi
-Date:   2009-06-15
-
-    better handling of @recordIDs with $<-,timeSeries-method.
-
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/base-Extract.R
-    M pkg/timeSeries/R/timeSeries-getDataPart.R
-    M pkg/timeSeries/man/methods-subset.Rd
-
-Author: chalabi
-Date:   2009-06-14
-
-    improved as.ts,timeSeries-method with monthly and quarterly data.
-    
-    M pkg/timeSeries/R/methods-as.R
-
-Author: chalabi
-Date:   2009-06-13
-
-    Improved $,timeSeries-method when matching names in @recordIDs
-    
-    M pkg/timeSeries/R/base-Extract.R
-
-Author: chalabi
-Date:   2009-06-13
-
-    names,timeSeries-method returns now also the names of data in @recordIDs. names<-,timeSeries-methods works both for data part and @recordIDs.
-    
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/base-Extract.R
-    M pkg/timeSeries/R/base-dim.R
-
-Author: wuertz
-Date:   2009-05-17
-
-    unit tests - still to be updated as.ts
-    
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesCoercion.R
-
-Author: wuertz
-Date:   2009-05-17
-
-    man pages updated
-    
-    M pkg/timeSeries/man/methods-as.Rd
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: wuertz
-Date:   2009-05-17
-
-    namespace adapted
-    
-    A pkg/timeSeries/NAMESPACE
-
-Author: wuertz
-Date:   2009-05-17
-
-    D pkg/timeSeries/NAMESPACE
-
-Author: wuertz
-Date:   2009-05-17
-
-    NEW FILE ORDERING CHECKED IN ...
-    
-    A pkg/timeSeries/R/AllClass.R
-    A pkg/timeSeries/R/AllGeneric.R
-    A pkg/timeSeries/R/base-Extract.R
-    A pkg/timeSeries/R/base-apply.R
-    A pkg/timeSeries/R/base-attach.R
-    A pkg/timeSeries/R/base-cbind.R
-    A pkg/timeSeries/R/base-colCumsums.R
-    A pkg/timeSeries/R/base-colSums.R
-    A pkg/timeSeries/R/base-comment.R
-    A pkg/timeSeries/R/base-diff.R
-    A pkg/timeSeries/R/base-dim.R
-    A pkg/timeSeries/R/base-merge.R
-    A pkg/timeSeries/R/base-rank.R
-    A pkg/timeSeries/R/base-rev.R
-    A pkg/timeSeries/R/base-rowCumsums.R
-    A pkg/timeSeries/R/base-sample.R
-    A pkg/timeSeries/R/base-scale.R
-    A pkg/timeSeries/R/base-sort.R
-    A pkg/timeSeries/R/base-start.R
-    A pkg/timeSeries/R/base-subset.R
-    A pkg/timeSeries/R/fin-align.R
-    A pkg/timeSeries/R/fin-cumulated.R
-    A pkg/timeSeries/R/fin-daily.R
-    A pkg/timeSeries/R/fin-drawdowns.R
-    A pkg/timeSeries/R/fin-durations.R
-    A pkg/timeSeries/R/fin-monthly.R
-    A pkg/timeSeries/R/fin-orderColnames.R
-    A pkg/timeSeries/R/fin-orderStatistics.R
-    A pkg/timeSeries/R/fin-periodical.R
-    A pkg/timeSeries/R/fin-returns.R
-    A pkg/timeSeries/R/fin-smooth.R
-    A pkg/timeSeries/R/fin-splits.R
-    A pkg/timeSeries/R/fin-spreads.R
-    A pkg/timeSeries/R/fin-turnpoints.R
-    A pkg/timeSeries/R/graphics-plot.R
-    A pkg/timeSeries/R/methods-Ops.R
-    A pkg/timeSeries/R/methods-as.R
-    A pkg/timeSeries/R/methods-is.R
-    A pkg/timeSeries/R/methods-show.R
-    A pkg/timeSeries/R/old2new.R
-    A pkg/timeSeries/R/stats-aggregate.R
-    A pkg/timeSeries/R/stats-lag.R
-    A pkg/timeSeries/R/stats-model.frame.R
-    A pkg/timeSeries/R/stats-na.omit.R
-    A pkg/timeSeries/R/stats-window.R
-    A pkg/timeSeries/R/timeSeries-description.R
-    A pkg/timeSeries/R/timeSeries-dummy.R
-    A pkg/timeSeries/R/timeSeries-finCenter.R
-    A pkg/timeSeries/R/timeSeries-getDataPart.R
-    A pkg/timeSeries/R/timeSeries-isOHLC.R
-    A pkg/timeSeries/R/timeSeries-isPeriod.R
-    A pkg/timeSeries/R/timeSeries-isUnivariate.R
-    A pkg/timeSeries/R/timeSeries-readSeries.R
-    A pkg/timeSeries/R/timeSeries-series.R
-    A pkg/timeSeries/R/timeSeries-signalCounts.R
-    A pkg/timeSeries/R/timeSeries-time.R
-    A pkg/timeSeries/R/timeSeries.R
-    A pkg/timeSeries/R/utils-head.R
-    A pkg/timeSeries/R/utils-str.R
-    A pkg/timeSeries/R/zzz.R
-
-Author: wuertz
-Date:   2009-05-17
-
-    D pkg/timeSeries/R/AllClass.R
-    D pkg/timeSeries/R/AllGeneric.R
-    D pkg/timeSeries/R/colCum.R
-    D pkg/timeSeries/R/colStats.R
-    D pkg/timeSeries/R/cumulated.R
-    D pkg/timeSeries/R/daily.R
-    D pkg/timeSeries/R/description.R
-    D pkg/timeSeries/R/drawdowns.R
-    D pkg/timeSeries/R/dummy.R
-    D pkg/timeSeries/R/durations.R
-    D pkg/timeSeries/R/is.R
-    D pkg/timeSeries/R/isUnivariate.R
-    D pkg/timeSeries/R/methods-DataPart.R
-    D pkg/timeSeries/R/methods-aggregate.R
-    D pkg/timeSeries/R/methods-align.R
-    D pkg/timeSeries/R/methods-apply.R
-    D pkg/timeSeries/R/methods-as.R
-    D pkg/timeSeries/R/methods-attach.R
-    D pkg/timeSeries/R/methods-bind.R
-    D pkg/timeSeries/R/methods-comment.R
-    D pkg/timeSeries/R/methods-dim.R
-    D pkg/timeSeries/R/methods-finCenter.R
-    D pkg/timeSeries/R/methods-head.R
-    D pkg/timeSeries/R/methods-lag.R
-    D pkg/timeSeries/R/methods-mathOps.R
-    D pkg/timeSeries/R/methods-merge.R
-    D pkg/timeSeries/R/methods-na.R
-    D pkg/timeSeries/R/methods-outlier.R
-    D pkg/timeSeries/R/methods-plot.R
-    D pkg/timeSeries/R/methods-returns.R
-    D pkg/timeSeries/R/methods-rowCum.R
-    D pkg/timeSeries/R/methods-series.R
-    D pkg/timeSeries/R/methods-show.R
-    D pkg/timeSeries/R/methods-str.R
-    D pkg/timeSeries/R/methods-subset.R
-    D pkg/timeSeries/R/methods-tail.R
-    D pkg/timeSeries/R/methods-window.R
-    D pkg/timeSeries/R/model.frame.R
-    D pkg/timeSeries/R/monthly.R
-    D pkg/timeSeries/R/old2new.R
-    D pkg/timeSeries/R/order.R
-    D pkg/timeSeries/R/orderStatistics.R
-    D pkg/timeSeries/R/periodical.R
-    D pkg/timeSeries/R/rank.R
-    D pkg/timeSeries/R/readSeries.R
-    D pkg/timeSeries/R/signalCounts.R
-    D pkg/timeSeries/R/spreads.R
-    D pkg/timeSeries/R/time.R
-    D pkg/timeSeries/R/timeSeries.R
-    D pkg/timeSeries/R/turnpoints.R
-    D pkg/timeSeries/R/zzz.R
-
-Author: wuertz
-Date:   2009-05-07
-
-    .print.timeSeries missing column names fixed on "h" style can now also handle "%Q" format for quarterly data
-    
-    M pkg/timeSeries/R/methods-show.R
-
-Author: wuertz
-Date:   2009-05-07
-
-    .plotTimeSeries can now handle different colors and plot symbols for multivariate series
-    
-    M pkg/timeSeries/R/methods-plot.R
-
-Author: chalabi
-Date:   2009-04-19
-
-    added explicit version number in Depends field for key packages
-    
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-04-17
-
-    fixed colnames in aggregate,timeSeries-method
-    
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-
-Author: chalabi
-Date:   2009-04-15
-
-    initialize,timeSeries-method checks object with validObject
-    
-    
-    M pkg/timeSeries/R/AllClass.R
-
-Author: chalabi
-Date:   2009-04-04
-
-    added colMeans and colSums,timeSeries-method because default function is unefficient with large timeSeries objects.
-    
-    
-    M pkg/timeSeries/R/colStats.R
-
-Author: chalabi
-Date:   2009-04-02
-
-    updated NAMESPACE
-    
-    
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2009-04-02
-
-    more explicit depends and suggests field in DESC file.
-    
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-04-01
-
-    updated DESC file
-    
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-03-31
-
-    small changes to make timeSeries work with R-2.7.0.
-    
-    
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/is.R
-    M pkg/timeSeries/R/methods-DataPart.R
-
-Author: chalabi
-Date:   2009-03-30
-
-    added MSFT (timeSeries version of mstf.dat) in data folder.
-    
-    
-    M pkg/timeSeries/man/data.Rd
-
-Author: chalabi
-Date:   2009-03-30
-
-    define S4 class 'difftime' with 'setOldClass()'. We will keep it until
-    'methods' pkg will define it alongside the other old 'base' classes.
-    
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/zzz.R
-
-Author: chalabi
-Date:   2009-03-30
-
-    added explicit methods for Ops with 'ts' and 'timeSeries' arguments.
-    
-    
-    M pkg/timeSeries/R/methods-mathOps.R
-    M pkg/timeSeries/R/timeSeries.R
-    M pkg/timeSeries/inst/unitTests/runit.mathOps.R
-    M pkg/timeSeries/inst/unitTests/runit.timeSeries.R
-    M pkg/timeSeries/man/methods-mathOps.Rd
-
-Author: chalabi
-Date:   2009-03-25
-
-    added timeSeries version of msft.dat dataset
-    
-    
-    A pkg/timeSeries/data/MSFT.rda
-
-Author: chalabi
-Date:   2009-03-19
-
-    'base' generics have now S3 and S4 methods. S3 methods are used
-    because 'UseMethod' does not dispatch S4 methods in 'base'
-    functions. For example 'base' functions starting with something like
-    'as.list' would failed without the S3 method.
-    
-    
-    M pkg/timeSeries/R/is.R
-    M pkg/timeSeries/R/methods-aggregate.R
-    M pkg/timeSeries/R/methods-as.R
-    M pkg/timeSeries/R/methods-bind.R
-    M pkg/timeSeries/R/methods-dim.R
-    M pkg/timeSeries/R/methods-head.R
-    M pkg/timeSeries/R/methods-lag.R
-    M pkg/timeSeries/R/methods-mathOps.R
-    M pkg/timeSeries/R/methods-merge.R
-    M pkg/timeSeries/R/methods-na.R
-    M pkg/timeSeries/R/methods-plot.R
-    M pkg/timeSeries/R/methods-str.R
-    M pkg/timeSeries/R/methods-tail.R
-    M pkg/timeSeries/R/methods-window.R
-    M pkg/timeSeries/R/model.frame.R
-    M pkg/timeSeries/R/time.R
-    M pkg/timeSeries/man/lag.Rd
-    M pkg/timeSeries/man/methods-aggregate.Rd
-    M pkg/timeSeries/man/methods-as.Rd
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/methods-mathOps.Rd
-    M pkg/timeSeries/man/methods-na.Rd
-    M pkg/timeSeries/man/methods-subset.Rd
-    M pkg/timeSeries/man/time.Rd
-
-Author: chalabi
-Date:   2009-02-23
-
-    added functions to convert old timeSeries format to new class 'timeSeries'
-    
-    
-    A pkg/timeSeries/R/old2new.R
-
-Author: chalabi
-Date:   2009-02-23
-
-    @positions is numeric and makes timeSeries object much faster.
-    
-    
-    M pkg/timeSeries/R/methods-subset.R
-    M pkg/timeSeries/R/time.R
-    M pkg/timeSeries/R/timeSeries.R
-
-Author: chalabi
-Date:   2009-02-23
-
-    added getRmetricsOptions("max.print")
-    
-    
-    M pkg/timeSeries/R/methods-show.R
-    M pkg/timeSeries/R/zzz.R
-
-Author: chalabi
-Date:   2009-02-23
-
-    new implementation of [cb]bind and merge functions
-    
-    
-    M pkg/timeSeries/R/methods-bind.R
-    M pkg/timeSeries/R/methods-merge.R
-
-Author: chalabi
-Date:   2009-02-23
-
-    added function is.signalSeries
-    
-    
-    M pkg/timeSeries/R/is.R
-
-Author: chalabi
-Date:   2009-02-23
-
-    optimized tail for large timeSeries
-    
-    
-    M pkg/timeSeries/R/methods-tail.R
-
-Author: chalabi
-Date:   2009-02-11
-
-    new as.list.timeSeries S3 methods. This means that functions like sapply and lapply can now work with timeSeries objects.
-    
-    
-    M pkg/timeSeries/R/methods-as.R
-    M pkg/timeSeries/man/methods-as.Rd
-
-Author: chalabi
-Date:   2009-02-11
-
-    new cbind and rbind implementation in S3 method since methods:::bind_activation might create problems. Names of arguments are now supported.
-    
-    
-    M pkg/timeSeries/R/methods-bind.R
-    M pkg/timeSeries/man/methods-bind.Rd
-
-Author: chalabi
-Date:   2009-02-10
-
-    series<-,matrix-method uses now the new timeSeires() methods.
-    
-    
-    M pkg/timeSeries/R/methods-series.R
-
-Author: chalabi
-Date:   2009-02-10
-
-    new implementation of as.timeSeries.data.frame. Should has the same
-    features as the previous implementation.
-    
-    
-    M pkg/timeSeries/R/methods-as.R
-
-Author: chalabi
-Date:   2009-02-10
-
-    improved handling of colnames and unit. functions like var() should
-    now returns with the appropriate colnames.
-    
-    
-    M pkg/timeSeries/R/daily.R
-    M pkg/timeSeries/R/methods-dim.R
-
-Author: chalabi
-Date:   2009-02-10
-
-    timeSeries() is now a generic function with methods. timeSeries()
-    should now take advantage of new implementation of timeDate() and
-    should be faster in creating new timeSeries objects.
-    
-    
-    M pkg/timeSeries/R/AllClass.R
-    M pkg/timeSeries/R/AllGeneric.R
-    M pkg/timeSeries/R/timeSeries.R
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: chalabi
-Date:   2009-02-05
-
-    added $,timeSeries method with auto-completion of column names
-    
-    
-    M pkg/timeSeries/R/methods-subset.R
-
-Author: chalabi
-Date:   2009-02-05
-
-    added name,timeSeries method which return the column names
-    
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/methods-dim.R
-
-Author: chalabi
-Date:   2009-02-04
-
-    A pkg/timeSeries/ChangeLog
-
-Author: chalabi
-Date:   2009-02-04
-
-    D pkg/timeSeries/inst/NEWS
-
-Author: chalabi
-Date:   2009-02-04
-
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2009-01-29
-
-    improved aggregate,timeSeries-method
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-    M pkg/timeSeries/man/methods-aggregate.Rd
-
-Author: chalabi
-Date:   2009-01-28
-
-    small changed in plot,timeSeries to avoid warning when dealing with signal series
-    
-    M pkg/timeSeries/R/methods-plot.R
-
-Author: chalabi
-Date:   2009-01-28
-
-    timeSeries()[''] now returns a nuermic(NA) instead of logical(NA)
-    
-    M pkg/timeSeries/R/methods-subset.R
-
-Author: chalabi
-Date:   2009-01-28
-
-    added RUnit test with subsetting
-    
-    M pkg/timeSeries/inst/unitTests/runit.subset.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    fixed warning with new Rd parser
-    
-    
-    M pkg/timeSeries/man/apply.Rd
-
-Author: chalabi
-Date:   2009-01-12
-
-    use getDataPart method
-    
-    
-    M pkg/timeSeries/R/AllClass.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    use getDataPart method
-    
-    
-    M pkg/timeSeries/R/is.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    change as.matrix to use the getDatPart method
-    
-    
-    M pkg/timeSeries/R/methods-as.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    improved speed of sub-setting and sub-assignment and fixed problem
-    when sub-setting with character argument without comma.
-    
-    
-    M pkg/timeSeries/R/methods-subset.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    faster method
-    
-    
-    M pkg/timeSeries/R/methods-dim.R
-    M pkg/timeSeries/R/methods-head.R
-    M pkg/timeSeries/R/methods-show.R
-    M pkg/timeSeries/R/methods-tail.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    fixed colnames problem with c,rbind
-    
-    
-    M pkg/timeSeries/R/methods-bind.R
-
-Author: chalabi
-Date:   2009-01-12
-
-    added getDataPart,timeSeries method
-    
-    
-    M pkg/timeSeries/NAMESPACE
-    A pkg/timeSeries/R/methods-DataPart.R
-
-Author: wuertz
-Date:   2009-01-11
-
-    old align.R script removed
-    
-    D pkg/timeSeries/R/align.R
-
-Author: wuertz
-Date:   2009-01-11
-
-    align established as method filename renamed
-    
-    A pkg/timeSeries/R/methods-align.R
-
-Author: wuertz
-Date:   2009-01-07
-
-    unit tests which failed from the change 2008 to 2009 repaired, function align added the same as .align.timeSeries and documented, added to namespace
-    
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/align.R
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-    M pkg/timeSeries/inst/unitTests/runit.subset.R
-    A pkg/timeSeries/man/methods-align.Rd
-
-Author: wuertz
-Date:   2009-01-06
-
-    example modified was not working for 2009
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-
-Author: wuertz
-Date:   2009-01-06
-
-    example modified
-    
-    M pkg/timeSeries/R/methods-lag.R
-
-Author: chalabi
-Date:   2008-12-11
-
-    New version number
-    
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2008-12-04
-
-    made start,timeSeries-method and end,timeSeries-method faster
-    
-    M pkg/timeSeries/R/time.R
-
-Author: chalabi
-Date:   2008-10-27
-
-    updated RUnit test files to make it run on Mac OS X
-    
-    M pkg/timeSeries/R/methods-returns.R
-    M pkg/timeSeries/inst/unitTests/runTests.R
-
-Author: chalabi
-Date:   2008-10-27
-
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2008-10-24
-
-    updated version number
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2008-10-24
-
-    fixed code/documentation mismatches
-    
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/methods-plot.Rd
-    M pkg/timeSeries/man/time.Rd
-
-Author: chalabi
-Date:   2008-10-20
-
-    M pkg/timeSeries/R/methods-dim.R
-
-Author: chalabi
-Date:   2008-10-10
-
-    updated DESC files
-    
-    M pkg/timeSeries/DESCRIPTION
-
-Author: chalabi
-Date:   2008-09-25
-
-    checking all packages before sending to CRAN - fBasics & fPortfolio need further work
-    
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2008-09-24
-
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/R/zzz.R
-
-Author: chalabi
-Date:   2008-08-21
-
-    M pkg/timeSeries/R/methods-outlier.R
-    M pkg/timeSeries/man/methods-subset.Rd
-
-Author: chalabi
-Date:   2008-08-19
-
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2008-08-19
-
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/methods-apply.R
-    M pkg/timeSeries/R/methods-dim.R
-    M pkg/timeSeries/R/methods-returns.R
-    M pkg/timeSeries/R/methods-series.R
-    M pkg/timeSeries/R/methods-window.R
-    M pkg/timeSeries/R/time.R
-    M pkg/timeSeries/man/daily.Rd
-    A pkg/timeSeries/man/data.Rd
-    M pkg/timeSeries/man/finCenter.Rd
-    M pkg/timeSeries/man/lag.Rd
-    M pkg/timeSeries/man/methods-aggregate.Rd
-    M pkg/timeSeries/man/methods-as.Rd
-    A pkg/timeSeries/man/methods-comment.Rd
-    M pkg/timeSeries/man/methods-dim.Rd
-    M pkg/timeSeries/man/methods-mathOps.Rd
-    M pkg/timeSeries/man/methods-subset.Rd
-    M pkg/timeSeries/man/series.Rd
-    M pkg/timeSeries/man/time.Rd
-
-Author: chalabi
-Date:   2008-08-16
-
-    A pkg/timeSeries/R/colStats.R
-    A pkg/timeSeries/R/description.R
-    A pkg/timeSeries/data/LPP2005REC.csv
-    A pkg/timeSeries/data/msft.dat.csv
-    A pkg/timeSeries/data/usdchf.csv
-    A pkg/timeSeries/man/colStats.Rd
-    A pkg/timeSeries/man/description.Rd
-
-Author: chalabi
-Date:   2008-08-16
-
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/NAMESPACE
-    A pkg/timeSeries/R/AllClass.R
-    A pkg/timeSeries/R/AllGeneric.R
-    M pkg/timeSeries/R/align.R
-    D pkg/timeSeries/R/class-timeSeries.R
-    D pkg/timeSeries/R/finCenter.R
-    D pkg/timeSeries/R/generics-timeSeries.R
-    A pkg/timeSeries/R/methods-finCenter.R
-    A pkg/timeSeries/R/methods-outlier.R
-    M pkg/timeSeries/R/methods-subset.R
-    M pkg/timeSeries/R/model.frame.R
-    D pkg/timeSeries/R/outlier.R
-    M pkg/timeSeries/R/timeSeries.R
-    M pkg/timeSeries/R/zzz.R
-    M pkg/timeSeries/inst/unitTests/runit.Omit.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesClass.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesCoercion.R
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-    M pkg/timeSeries/man/apply.Rd
-    M pkg/timeSeries/man/cumulated.Rd
-    M pkg/timeSeries/man/daily.Rd
-    M pkg/timeSeries/man/drawdowns.Rd
-    M pkg/timeSeries/man/durations.Rd
-    M pkg/timeSeries/man/isUnivariate.Rd
-    M pkg/timeSeries/man/lag.Rd
-    M pkg/timeSeries/man/methods-aggregate.Rd
-    M pkg/timeSeries/man/methods-attach.Rd
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/methods-plot.Rd
-    M pkg/timeSeries/man/methods-returns.Rd
-    M pkg/timeSeries/man/methods-show.Rd
-    M pkg/timeSeries/man/methods-stats.Rd
-    M pkg/timeSeries/man/methods-str.Rd
-    M pkg/timeSeries/man/model.frame.Rd
-    M pkg/timeSeries/man/monthly.Rd
-    M pkg/timeSeries/man/order.Rd
-    M pkg/timeSeries/man/orderStatistics.Rd
-    M pkg/timeSeries/man/rank.Rd
-    M pkg/timeSeries/man/spreads.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: chalabi
-Date:   2008-08-04
-
-    M pkg/timeSeries/R/class-timeSeries.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    M pkg/timeSeries/R/daily.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    do not use x@format in time,timeSeries
-    
-    M pkg/timeSeries/R/time.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    M pkg/timeSeries/R/timeSeries.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    new colnames<- rownames<- and dimnames<- methods for timeSeries
-    
-    M pkg/timeSeries/R/methods-dim.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    set max.print options in .onLoad
-    
-    M pkg/timeSeries/R/zzz.R
-
-Author: chalabi
-Date:   2008-08-04
-
-    D pkg/timeSeries/tests/Rplots.pdf
-
-Author: chalabi
-Date:   2008-08-04
-
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2008-07-28
-
-    added validity function check to timeSeries class
-    
-    M pkg/timeSeries/R/class-timeSeries.R
-
-Author: chalabi
-Date:   2008-07-28
-
-    added subset by pyhton and span
-    
-    M pkg/timeSeries/R/methods-subset.R
-
-Author: chalabi
-Date:   2008-07-25
-
-    minor changes in aggregate
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-
-Author: chalabi
-Date:   2008-07-25
-
-    new tests for aggregate
-    
-    M pkg/timeSeries/inst/unitTests/runit.aggregate.R
-
-Author: chalabi
-Date:   2008-07-25
-
-    M pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2008-07-25
-
-    added method for quantile and is.na,timeSeries now returns a timeSeries
-    
-    M pkg/timeSeries/R/is.R
-
-Author: chalabi
-Date:   2008-07-25
-
-    removed sort at the end of function
-    
-    
-    M pkg/timeSeries/R/timeSeries.R
-
-Author: chalabi
-Date:   2008-07-25
-
-    improved indexding with findInterval
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-
-Author: chalabi
-Date:   2008-07-23
-
-    some modification to work with NAMESPACE
-    
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/NAMESPACE
-    M pkg/timeSeries/R/align.R
-    M pkg/timeSeries/R/methods-subset.R
-    M pkg/timeSeries/R/model.frame.R
-    M pkg/timeSeries/R/zzz.R
-    M pkg/timeSeries/inst/unitTests/runit.Omit.R
-    M pkg/timeSeries/inst/unitTests/runit.align.R
-    M pkg/timeSeries/inst/unitTests/runit.as.R
-    M pkg/timeSeries/inst/unitTests/runit.signalCounts.R
-    M pkg/timeSeries/inst/unitTests/runit.timeSeries.R
-    M pkg/timeSeries/tests/Rplots.pdf
-
-Author: chalabi
-Date:   2008-07-18
-
-    first NAMESPACE
-    
-    A pkg/timeSeries/NAMESPACE
-
-Author: chalabi
-Date:   2008-07-18
-
-    D pkg/timeSeries/NAMESPACE.dev
-
-Author: chalabi
-Date:   2008-07-18
-
-    removed colnames in @.Data of signalSeries
-    
-    
-    M pkg/timeSeries/R/timeSeries.R
-
-Author: chalabi
-Date:   2008-07-18
-
-    timeSeries adapted to global envir Rmetrics instead of global variables such as myFinCenter
-    
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesClass.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesData.R
-    M pkg/timeSeries/man/cumulated.Rd
-    M pkg/timeSeries/man/daily.Rd
-    M pkg/timeSeries/man/drawdowns.Rd
-    M pkg/timeSeries/man/durations.Rd
-    M pkg/timeSeries/man/is.Rd
-    M pkg/timeSeries/man/isUnivariate.Rd
-    M pkg/timeSeries/man/methods-as.Rd
-    M pkg/timeSeries/man/methods-mathOps.Rd
-    M pkg/timeSeries/man/methods-returns.Rd
-    M pkg/timeSeries/man/methods-show.Rd
-    M pkg/timeSeries/man/methods-subset.Rd
-    M pkg/timeSeries/man/model.frame.Rd
-    M pkg/timeSeries/man/orderStatistics.Rd
-    M pkg/timeSeries/man/spreads.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-
-Author: chalabi
-Date:   2008-07-18
-
-    timeSeries adapted to global envir Rmetrics instead of global variables such as myFinCenter
-    
-    M pkg/timeSeries/R/daily.R
-    M pkg/timeSeries/R/dummy.R
-    M pkg/timeSeries/R/periodical.R
-    M pkg/timeSeries/R/readSeries.R
-    M pkg/timeSeries/R/timeSeries.R
-
-Author: chalabi
-Date:   2008-07-18
-
-    aggregate now uses findInterval
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-
-Author: chalabi
-Date:   2008-07-17
-
-    M pkg/timeSeries/DESCRIPTION
-    M pkg/timeSeries/R/daily.R
-    A pkg/timeSeries/R/dummy.R
-    M pkg/timeSeries/R/finCenter.R
-    M pkg/timeSeries/R/methods-aggregate.R
-    M pkg/timeSeries/R/methods-attach.R
-    A pkg/timeSeries/R/methods-comment.R
-    M pkg/timeSeries/R/methods-returns.R
-    M pkg/timeSeries/R/methods-subset.R
-    M pkg/timeSeries/R/order.R
-    M pkg/timeSeries/R/timeSeries.R
-    M pkg/timeSeries/R/zzz.R
-    M pkg/timeSeries/inst/unitTests/runit.Omit.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesClass.R
-    M pkg/timeSeries/inst/unitTests/runit.TimeSeriesCoercion.R
-    M pkg/timeSeries/inst/unitTests/runit.attach.R
-    M pkg/timeSeries/inst/unitTests/runit.colCum.R
-    M pkg/timeSeries/inst/unitTests/runit.colStats.R
-    M pkg/timeSeries/inst/unitTests/runit.cor.R
-    M pkg/timeSeries/inst/unitTests/runit.cumulated.R
-    M pkg/timeSeries/inst/unitTests/runit.durations.R
-    M pkg/timeSeries/inst/unitTests/runit.lag.R
-    M pkg/timeSeries/inst/unitTests/runit.mathOps.R
-    M pkg/timeSeries/inst/unitTests/runit.spreads.R
-    M pkg/timeSeries/inst/unitTests/runit.subset.R
-    M pkg/timeSeries/man/apply.Rd
-    M pkg/timeSeries/man/cumulated.Rd
-    M pkg/timeSeries/man/daily.Rd
-    M pkg/timeSeries/man/drawdowns.Rd
-    M pkg/timeSeries/man/durations.Rd
-    M pkg/timeSeries/man/finCenter.Rd
-    M pkg/timeSeries/man/isUnivariate.Rd
-    M pkg/timeSeries/man/lag.Rd
-    M pkg/timeSeries/man/methods-aggregate.Rd
-    M pkg/timeSeries/man/methods-attach.Rd
-    M pkg/timeSeries/man/methods-bind.Rd
-    M pkg/timeSeries/man/methods-plot.Rd
-    M pkg/timeSeries/man/methods-returns.Rd
-    M pkg/timeSeries/man/methods-show.Rd
-    M pkg/timeSeries/man/methods-stats.Rd
-    M pkg/timeSeries/man/methods-str.Rd
-    M pkg/timeSeries/man/model.frame.Rd
-    M pkg/timeSeries/man/monthly.Rd
-    M pkg/timeSeries/man/order.Rd
-    M pkg/timeSeries/man/orderStatistics.Rd
-    M pkg/timeSeries/man/rank.Rd
-    M pkg/timeSeries/man/spreads.Rd
-    M pkg/timeSeries/man/timeSeries.Rd
-    M pkg/timeSeries/tests/Rplots.pdf
-
-Author: wuertz
-Date:   2008-07-02
-
-    Subsetting has an error, we have to check it !!!
-    
-    M pkg/timeSeries/R/methods-subset.R
-
-Author: wuertz
-Date:   2008-07-01
-
-    failed when trying to pass arguments, now fixed,
-    e.g. aggregate( ... FUN = tail, n=1)
-    
-    M pkg/timeSeries/R/methods-aggregate.R
-
-Author: chalabi
-Date:   2008-06-17
-
-    M pkg/timeSeries/R/class-timeSeries.R
-    M pkg/timeSeries/R/methods-aggregate.R
-    M pkg/timeSeries/R/time.R
-
-Author: chalabi
-Date:   2008-06-17
-
-    M pkg/timeSeries/R/time.R
-    M pkg/timeSeries/R/zzz.R
-
-Author: chalabi
-Date:   2008-06-12
-
-    added methods for cummax, ...
-    
-    M pkg/timeSeries/R/methods-mathOps.R
-
-Author: chalabi
-Date:   2008-06-11
-
-    new timeSeries package
-    
-    A pkg/timeSeries/DESCRIPTION
-    A pkg/timeSeries/NAMESPACE.dev
-    A pkg/timeSeries/R/align.R
-    A pkg/timeSeries/R/class-timeSeries.R
-    A pkg/timeSeries/R/colCum.R
-    A pkg/timeSeries/R/cumulated.R
-    A pkg/timeSeries/R/daily.R
-    A pkg/timeSeries/R/drawdowns.R
-    A pkg/timeSeries/R/durations.R
-    A pkg/timeSeries/R/finCenter.R
-    A pkg/timeSeries/R/generics-timeSeries.R
-    A pkg/timeSeries/R/is.R
-    A pkg/timeSeries/R/isUnivariate.R
-    A pkg/timeSeries/R/methods-aggregate.R
-    A pkg/timeSeries/R/methods-apply.R
-    A pkg/timeSeries/R/methods-as.R
-    A pkg/timeSeries/R/methods-attach.R
-    A pkg/timeSeries/R/methods-bind.R
-    A pkg/timeSeries/R/methods-dim.R
-    A pkg/timeSeries/R/methods-head.R
-    A pkg/timeSeries/R/methods-lag.R
-    A pkg/timeSeries/R/methods-mathOps.R
-    A pkg/timeSeries/R/methods-merge.R
-    A pkg/timeSeries/R/methods-na.R
-    A pkg/timeSeries/R/methods-plot.R
-    A pkg/timeSeries/R/methods-returns.R
-    A pkg/timeSeries/R/methods-rowCum.R
-    A pkg/timeSeries/R/methods-series.R
-    A pkg/timeSeries/R/methods-show.R
-    A pkg/timeSeries/R/methods-str.R
-    A pkg/timeSeries/R/methods-subset.R
-    A pkg/timeSeries/R/methods-tail.R
-    A pkg/timeSeries/R/methods-window.R
-    A pkg/timeSeries/R/model.frame.R
-    A pkg/timeSeries/R/monthly.R
-    A pkg/timeSeries/R/order.R
-    A pkg/timeSeries/R/orderStatistics.R
-    A pkg/timeSeries/R/outlier.R
-    A pkg/timeSeries/R/periodical.R
-    A pkg/timeSeries/R/rank.R
-    A pkg/timeSeries/R/readSeries.R
-    A pkg/timeSeries/R/signalCounts.R
-    A pkg/timeSeries/R/spreads.R
-    A pkg/timeSeries/R/time.R
-    A pkg/timeSeries/R/timeSeries.R
-    A pkg/timeSeries/R/turnpoints.R
-    A pkg/timeSeries/R/zzz.R
-    A pkg/timeSeries/inst/COPYING
-    A pkg/timeSeries/inst/COPYRIGHTS
-    A pkg/timeSeries/inst/NEWS
-    A pkg/timeSeries/inst/README
-    A pkg/timeSeries/inst/THANKS
-    A pkg/timeSeries/inst/unitTests/Makefile
-    A pkg/timeSeries/inst/unitTests/runTests.R
-    A pkg/timeSeries/inst/unitTests/runit.NA.R
-    A pkg/timeSeries/inst/unitTests/runit.Omit.R
-    A pkg/timeSeries/inst/unitTests/runit.TimeSeriesClass.R
-    A pkg/timeSeries/inst/unitTests/runit.TimeSeriesCoercion.R
-    A pkg/timeSeries/inst/unitTests/runit.TimeSeriesData.R
-    A pkg/timeSeries/inst/unitTests/runit.TimeSeriesPositions.R
-    A pkg/timeSeries/inst/unitTests/runit.aggregate.R
-    A pkg/timeSeries/inst/unitTests/runit.align.R
-    A pkg/timeSeries/inst/unitTests/runit.apply.R
-    A pkg/timeSeries/inst/unitTests/runit.as.R
-    A pkg/timeSeries/inst/unitTests/runit.attach.R
-    A pkg/timeSeries/inst/unitTests/runit.bind.R
-    A pkg/timeSeries/inst/unitTests/runit.colCum.R
-    A pkg/timeSeries/inst/unitTests/runit.colStats.R
-    A pkg/timeSeries/inst/unitTests/runit.cor.R
-    A pkg/timeSeries/inst/unitTests/runit.cumulated.R
-    A pkg/timeSeries/inst/unitTests/runit.daily.R
-    A pkg/timeSeries/inst/unitTests/runit.dim.R
-    A pkg/timeSeries/inst/unitTests/runit.drawdowns.R
-    A pkg/timeSeries/inst/unitTests/runit.durations.R
-    A pkg/timeSeries/inst/unitTests/runit.lag.R
-    A pkg/timeSeries/inst/unitTests/runit.mathOps.R
-    A pkg/timeSeries/inst/unitTests/runit.merge.R
-    A pkg/timeSeries/inst/unitTests/runit.methods-plot.R
-    A pkg/timeSeries/inst/unitTests/runit.methods-print.R
-    A pkg/timeSeries/inst/unitTests/runit.methods-summary.R
-    A pkg/timeSeries/inst/unitTests/runit.model.frame.R
-    A pkg/timeSeries/inst/unitTests/runit.monthly.R
-    A pkg/timeSeries/inst/unitTests/runit.order.R
-    A pkg/timeSeries/inst/unitTests/runit.periodical.R
-    A pkg/timeSeries/inst/unitTests/runit.rank.R
-    A pkg/timeSeries/inst/unitTests/runit.returns.R
-    A pkg/timeSeries/inst/unitTests/runit.rowCum.R
-    A pkg/timeSeries/inst/unitTests/runit.signalCounts.R
-    A pkg/timeSeries/inst/unitTests/runit.spreads.R
-    A pkg/timeSeries/inst/unitTests/runit.subset.R
-    A pkg/timeSeries/inst/unitTests/runit.time.R
-    A pkg/timeSeries/inst/unitTests/runit.timeSeries.R
-    A pkg/timeSeries/man/00fSeries-package.Rd
-    A pkg/timeSeries/man/apply.Rd
-    A pkg/timeSeries/man/colCum.Rd
-    A pkg/timeSeries/man/cumulated.Rd
-    A pkg/timeSeries/man/daily.Rd
-    A pkg/timeSeries/man/drawdowns.Rd
-    A pkg/timeSeries/man/durations.Rd
-    A pkg/timeSeries/man/fSeries-deprecated.Rd
-    A pkg/timeSeries/man/finCenter.Rd
-    A pkg/timeSeries/man/is.Rd
-    A pkg/timeSeries/man/isUnivariate.Rd
-    A pkg/timeSeries/man/lag.Rd
-    A pkg/timeSeries/man/methods-aggregate.Rd
-    A pkg/timeSeries/man/methods-as.Rd
-    A pkg/timeSeries/man/methods-attach.Rd
-    A pkg/timeSeries/man/methods-base.Rd
-    A pkg/timeSeries/man/methods-bind.Rd
-    A pkg/timeSeries/man/methods-dim.Rd
-    A pkg/timeSeries/man/methods-mathOps.Rd
-    A pkg/timeSeries/man/methods-na.Rd
-    A pkg/timeSeries/man/methods-plot.Rd
-    A pkg/timeSeries/man/methods-returns.Rd
-    A pkg/timeSeries/man/methods-rowCum.Rd
-    A pkg/timeSeries/man/methods-show.Rd
-    A pkg/timeSeries/man/methods-stats.Rd
-    A pkg/timeSeries/man/methods-str.Rd
-    A pkg/timeSeries/man/methods-subset.Rd
-    A pkg/timeSeries/man/model.frame.Rd
-    A pkg/timeSeries/man/monthly.Rd
-    A pkg/timeSeries/man/order.Rd
-    A pkg/timeSeries/man/orderStatistics.Rd
-    A pkg/timeSeries/man/rank.Rd
-    A pkg/timeSeries/man/series.Rd
-    A pkg/timeSeries/man/spreads.Rd
-    A pkg/timeSeries/man/time.Rd
-    A pkg/timeSeries/man/timeSeries.Rd
-    A pkg/timeSeries/tests/Rplots.pdf
-    A pkg/timeSeries/tests/doRUnit.R
-    A pkg/timeSeries/tests/msft.dat.csv
