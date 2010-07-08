@@ -31,14 +31,11 @@ setMethod("finCenter", "timeSeries",
 
     # Arguments:
     #   x - an object of class 'timeSeries'
-    
+
     # Example:
     #
 
     # FUNCTION:
-
-    # Check Arguments:
-    stopifnot(is(x, "timeSeries"))
 
     # Extract financial center:
     ans <- x@FinCenter
@@ -58,19 +55,15 @@ setMethod("finCenter<-", "timeSeries",
 
     # Description:
     #
-    
+
     # Arguments:
     #   x - an object of class 'timeSeries'
-    #   value - 
-    
+    #   value -
+
     # Example:
     #
 
     # FUNCTION:
-    
-    # Check Arguments:
-    stopifnot(is(x, "timeSeries"))
-
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
