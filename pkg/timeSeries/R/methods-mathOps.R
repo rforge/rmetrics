@@ -138,23 +138,22 @@ setMethod("Ops", c("timeSeries", "ts"),
 setMethod("Ops", c("timeSeries", "timeSeries"),
     function(e1, e2)
     {
-          # check if conformable arrays
-          if (!identical(dim(e1), dim(e2)))
-              stop("non-conformable arrays")
-          # check if positions are identical
-          if (!identical(e1@positions, e2@positions))
-              stop("positions slot do not match")
-          # save recordIDs
-          recordIDs <- data.frame(e1@recordIDs, e2@recordIDs)
-          lattrs <- attributes(e1)
-          e1 <- getDataPart(e1)
-          e2 <- getDataPart(e2)
-          value <- callGeneric(e1, e2)
-          if (identical(dim(value), dim(e1))) {
-              attributes(value) <- lattrs
-              value <- asS4(value, TRUE)
-          }
-          value
+        # Note keep recordIDs of e1 only
+        # check if conformable arrays
+        if (!identical(dim(e1), dim(e2)))
+            stop("non-conformable arrays")
+        # check if positions are identical
+        if (!identical(e1@positions, e2@positions))
+            stop("positions slot do not match")
+        lattrs <- attributes(e1)
+        e1 <- getDataPart(e1)
+        e2 <- getDataPart(e2)
+        value <- callGeneric(e1, e2)
+        if (identical(dim(value), dim(e1))) {
+            attributes(value) <- lattrs
+            value <- asS4(value, TRUE)
+        }
+        value
     }
 )
 

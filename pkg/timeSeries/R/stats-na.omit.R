@@ -24,7 +24,7 @@
 ################################################################################
 
 
-.na.omit.timeSeries <-  function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+.na.omit.timeSeries <- function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
                                  interp = c("before", "linear", "after"), ...)
 {
     # Description
@@ -124,9 +124,8 @@ na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.naOmitMatrix <-
-function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-    interp = c("before", "linear", "after"))
+.naOmitMatrix <- function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+                          interp = c("before", "linear", "after"))
 {
     # Description:
     #   Internal Function called from na.omit.timSeries()
@@ -206,8 +205,7 @@ function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
 ################################################################################
 
 
-removeNA =
-function (x, ...)
+removeNA <- function (x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -218,30 +216,14 @@ function (x, ...)
     #   x - an object which can be transformed to a matrix
 
     # FUNCTION:
-
-    # Convert to Matrix:
-    if (class(x) == "timeSeries") {
-        TS = TRUE
-        # positions = time(x)
-        FinCenter = finCenter(x)
-        units = colnames(x)
-        x = series(x)
-    } else {
-        TS = FALSE
-        x = as.matrix(x, ...)
-    }
+    if (!inherits(x, "matrix") && !inherits(x, "timeSeries"))
+        x <- as(x, "matrix")
 
     # Remove:
     nas.row = apply(is.na(x), 1, any)
     x.row = x[!nas.row, , drop = FALSE]
     nas.col = apply(is.na(x.row), 2, any)
     ans = x.row[, !nas.col, drop = FALSE]
-
-    # timeSeries:
-    if (TS) {
-        ans = timeSeries(data = ans, charvec = rownames(ans),
-            units = units, zone = FinCenter, FinCenter = FinCenter)
-    }
 
     # Return Value:
     ans
@@ -251,8 +233,7 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-substituteNA =
-function(x, type = c("zeros", "mean", "median"), ...)
+substituteNA <- function(x, type = c("zeros", "mean", "median"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -266,39 +247,21 @@ function(x, type = c("zeros", "mean", "median"), ...)
     #       used. Choices are "zeros", "mean", or "constant"
 
     # FUNCTION:
-
-    # Convert to Matrix:
-    if (class(x) == "timeSeries") {
-        TS = TRUE
-        positions = time(x)
-        FinCenter = finCenter(x)
-        units = colnames(x)
-        ans = series(x)
-    } else {
-        TS = FALSE
-        ans = as.matrix(x, ...)
-    }
+    if (!inherits(x, "matrix") && !inherits(x, "timeSeries"))
+        x <- as(x, "matrix")
 
     # Type:
-    type = type[1]
-    if (type == "zeros" | type == "z") {
-        ans = apply(ans, 2,
-            function(z) {z[is.na(z)] = 0; z})
-    }
-    if (type == "median") {
-        ans = apply(ans, 2,
-            function(z) {z[is.na(z)] = median(z, na.rm = TRUE); z})
-    }
-    if (type == "mean") {
-        ans = apply(ans, 2,
-            function(z) {z[is.na(z)] = mean(z, na.rm = TRUE); z})
-    }
-
-    # timeSeries:
-    if (TS) {
-        ans = timeSeries(data = ans, charvec = positions, units = units,
-            zone = FinCenter, FinCenter = FinCenter)
-    }
+    type <- match.arg(type)
+    ans <- switch(type,
+                  "zeros" = apply(x, 2, function(z) {
+                      z[is.na(z)] <- 0
+                      z}),
+                  "median" = apply(x, 2, function(z) {
+                      z[is.na(z)] = median(z, na.rm = TRUE)
+                      z}),
+                  "mean" = apply(x, 2, function(z) {
+                      z[is.na(z)] = mean(z, na.rm = TRUE)
+                      z}))
 
     # Return Value:
     ans
@@ -308,8 +271,7 @@ function(x, type = c("zeros", "mean", "median"), ...)
 # ------------------------------------------------------------------------------
 
 
-interpNA =
-function(x, method = c("linear", "before", "after"), ...)
+interpNA <- function(x, method = c("linear", "before", "after"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -330,25 +292,15 @@ function(x, method = c("linear", "before", "after"), ...)
     #   values are interpolated.
 
     # FUNCTION:
-
-    # Convert to Matrix:
-    if (class(x) == "timeSeries") {
-        TS = TRUE
-        positions = time(x)
-        FinCenter = finCenter(x)
-        units = colnames(x)
-        x = series(x)
-    } else {
-        TS = FALSE
-        x = as.matrix(x, ...)
-    }
+    if (!inherits(x, "matrix") && !inherits(x, "timeSeries"))
+        x <- as(x, "matrix")
 
     # Internal Function:
-    interpVectorNA = function(x, method, f) {
-        n = length(x)
-        idx = (1:n)[!is.na(x)]
-        x = approx(idx, x[idx], 1:n, method = method, f = f)$y
-        x  }
+    interpVectorNA <- function(x, method, f) {
+        n <- length(x)
+        idx <- (1:n)[!is.na(x)]
+        x <- approx(idx, x[idx], 1:n, method = method, f = f)$y
+        x}
 
     # Select Method:
     method = method[1];
@@ -365,12 +317,6 @@ function(x, method = c("linear", "before", "after"), ...)
     # For each Column:
     for (i in 1:ncol(x)) {
         x[, i] = interpVectorNA(x[, i], method, f)
-    }
-
-    # timeSeries:
-    if (TS) {
-        x = timeSeries(data = x, charvec = positions, units = units,
-            zone = FinCenter, FinCenter = FinCenter)
     }
 
     # Return Value:

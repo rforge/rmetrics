@@ -75,11 +75,18 @@ setMethod("lag" , "timeSeries",
     # Positions
     pos <- x@positions
 
+    # Record IDs:
+    df <- x@recordIDs
+
     # Trim:
     if (trim){
         idx <- !is.na(apply(z, 1, sum))
         z <- z[idx, , drop = FALSE]
         pos <- pos[idx]
+        if (sum(dim(df)) > 0) {
+            df <- df[idx, , drop = FALSE]
+            rownames(df) <- seq.int(sum(idx))
+        }
     }
 
     # Augment Colnames:
@@ -89,19 +96,10 @@ setMethod("lag" , "timeSeries",
     ab <- paste(a, b, sep = "")
     units <- ab
 
-    # Record IDs:
-    df <- x@recordIDs
-    if (trim) {
-        if (sum(dim(df)) > 0) {
-            TRIM <- dim(df)[1] - dim(ans)[1]
-            df <- df[-(1:TRIM), ]
-        }
-    }
-
     # Return Value:
     timeSeries(data = z, charvec = pos, units = units,
-        format = x@format, FinCenter = x@FinCenter, recordIDs = df,
-        title = x@title, documentation = x@documentation)
+               format = x@format, FinCenter = x@FinCenter, recordIDs = df,
+               title = x@title, documentation = x@documentation)
 
 })
 
