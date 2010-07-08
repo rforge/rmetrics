@@ -19,9 +19,9 @@
 ################################################################################
 
 
-.diff.timeSeries <- 
+.diff.timeSeries <-
 function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
     # Modified by Yohan Chalabi
 
@@ -69,12 +69,11 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
 
     # Record IDs:
     df <- x@recordIDs
-    if (trim) {
-        if (sum(dim(df)) > 0) {
-            TRIM = dim(df)[1] - dim(z)[1]
-            df = df[-(1:TRIM), ]
-        }
+    if (trim && sum(dim(df)) > 0) {
+        df <- df[-seq.int(diffNums), , drop = FALSE]
+        rownames(df) <- seq.int(NROW(df))
     }
+
 
     # Return Value:
     timeSeries(data = z, charvec = pos, units = colnames(z),

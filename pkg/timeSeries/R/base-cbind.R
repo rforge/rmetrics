@@ -202,8 +202,7 @@ function(..., deparse.level = 1)
     }
 
     # recordIDs part
-    # trick because identical(rbind(data.frame()), data.frame()) is FALSE ?!!
-    if (length(dots) > 2)
+    if (length(dots) > 1)
         recordIDs <- tryCatch(do.call(rbind, lapply(dots, slot, "recordIDs")),
                               error = function(e) {
                                   msg <- paste("@recordIDs cannot be binded :",

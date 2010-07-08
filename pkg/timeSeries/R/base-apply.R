@@ -27,13 +27,15 @@ setMethod("apply", "timeSeries",
     function(X, MARGIN, FUN, ...)
     {
         pos <- X@positions
+        rec <- X@recordIDs
         FinCenter <- finCenter(X)
         X <- getDataPart(X)
         ans <- callGeneric()
 
         if (is(ans, "matrix") && identical(NROW(ans), NROW(X)))
             ans <- timeSeries(data = ans, charvec = pos,
-                              zone = FinCenter, FinCenter = FinCenter)
+                              zone = FinCenter, FinCenter = FinCenter,
+                              recordIDs = rec)
         ans
     })
 
@@ -44,16 +46,16 @@ setMethod("apply", "timeSeries",
 ## function(X, MARGIN, FUN, ...)
 ## {
 ##     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-##     
+##
 ##     # Description:
-##     #   Returns a 'timeSeries' of values obtained by applying a function 
-##     #   to the margins of the series. 
-## 
+##     #   Returns a 'timeSeries' of values obtained by applying a function
+##     #   to the margins of the series.
+##
 ##     # FUNCTION:
-##     
+##
 ##     # Call Generic:
 ##     ans <- callGeneric(series(X), MARGIN, FUN)
-##     
+##
 ##     # Return as timeSeries object with proper dimensions:
 ##    if (length(MARGIN) == 1 && MARGIN == 1) {
 ##        # Rowwise:
@@ -74,7 +76,7 @@ setMethod("apply", "timeSeries",
 ##         X = apply(X, MARGIN = 1, FUN)
 ##         colnames(X) = substitute(FUN)
 ##     }
-##     
+##
 ##     # Return Value:
 ##     X
 ## })

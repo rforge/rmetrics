@@ -15,71 +15,32 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  rowCumsums,ANY            Computes cumulated sums by row 
+#  rowCumsums,ANY            Computes cumulated sums by row
 #  rowCumsums,timeSeries     Computes cumulated sums by row for timeSeries
 ################################################################################
 
+setMethod("rowCumsums", "ANY", function(x, na.rm = FALSE, ...)
+      {
+          # Transform:
+          if (!inherits(x, 'matrix'))
+              x <- as(x, "matrix")
 
-setMethod("rowCumsums", "ANY",
-    function(x, na.rm = FALSE, ...)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
-        # Description:
-        #   Computes sample cumulated sums by row 
-    
-        # Arguments:
-        #   x - 
-        #   na.rm - 
-    
-        # FUNCTION:
-    
-        # Transform:
-        X <- as(x, "matrix")
-    
-        # Statistics:
-        if (na.rm) {
-            result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
-        } else {
-            result = apply(X, MARGIN = 2, FUN = cumsum, ...)
-        }
-        colnames(result) <- paste(1:NCOL(x))
-    
-        # Statistics:
-        result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
-    
-        # Return Value:
-        result
-    }
-)
+          if (na.rm)
+              x <- na.omit(x)
 
+          ans <- apply(x, 1, cumsum, ...)
+
+          # special treatment when x has one row because apply returns a vector
+          if (NCOL(x) > 1)
+              t(ans)
+          else
+              matrix(ans, ncol = 1, dimnames = dimnames(x))
+      })
 
 # ------------------------------------------------------------------------------
 
-
-setMethod("rowCumsums", "timeSeries",
-    function(x, na.rm = FALSE, ...)
-    {   
-        # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
-        # Description:
-        #   Computes sample cumulated sums by row for timeSeries objects
-    
-        # Arguments:
-        #   x -
-        #   na.rm
-        
-        # FUNCTION:
-    
-        # Cumulative Sums:
-    
-        series(x) <- callGeneric(as(x, "matrix"), na.rm, ...)
-    
-        # Return Value:
-        x
-    }
-)
-
+setMethod("rowCumsums", "timeSeries", function(x, na.rm = FALSE, ...)
+          setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
 ################################################################################
 

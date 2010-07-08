@@ -56,6 +56,9 @@ function(x, ...)
     X = x[Index, ]
     series(X) <- matrix(diff(c(0L, Index)), ncol = 1)
 
+    # Reset recordIDs
+    X@recordIDs <- data.frame()
+
     # Return Value:
     X
 }
