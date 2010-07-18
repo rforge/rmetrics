@@ -84,16 +84,18 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   third kind with order 1.
 
   A succinct description of the normal inverse Gaussian distribution is
-  given in {Paolella} (2007). Because both the normal inverse Gaussian
-  distribution and the hybperbolic distribution are special cases of the
+  given in {Paolella} (2007). Because both of the normal inverse Gaussian
+  distribution and the hyperbolic distribution are special cases of the
   generalized hyperbolic distribution (with different values of
-  \eqn{\lambda}{lambda}, the normal inverse Gaussian distribution has
-  the same different parameterisations as the hyperbolic distribution
-  and it uses \code{hyperbChangePars} to interchange between different
-  parameterisations as well (see \code{hyperbChangePars} for details).
+  \eqn{\lambda}{lambda}), the normal inverse Gaussian distribution has
+  the same sets of parameterizations as the hyperbolic distribution. 
+  And therefore one can use \code{hyperbChangePars} to interchange between 
+  different parameterizations for the normal inverse Gaussian distribution as 
+  well (see \code{hyperbChangePars} for details).
 
   Each of the functions are wrapper functions for their equivalent
-  generalized hyperbolic. For example, \code{dnig} calls \code{dghyp}.
+  generalized hyperbolic distribution. For example, \code{dnig} calls 
+  \code{dghyp}.
 
   \code{pnig} breaks the real line into eight regions in order to
   determine the integral of \code{dnig}. The break points determining
@@ -132,8 +134,8 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   hyperbolic distribution can be represented as a particular mixture of
   the normal distribution where the mixing distribution is the
   generalized inverse Gaussian.  \code{rnig} uses this representation to
-  generate observations from the hyperbolic distribution. Generalized
-  inverse Gaussian observations are obtained via the algorithm of
+  generate observations from the normal inverse Gaussian distribution. 
+  Generalized inverse Gaussian observations are obtained via the algorithm of
   Dagpunar (1989).}
 
 \value{
