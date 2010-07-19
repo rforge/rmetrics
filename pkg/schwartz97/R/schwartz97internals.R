@@ -185,3 +185,36 @@
   return(list(a0 = a0, P0 = P0, Tt = Tt, dt = dt, HHt = HHt,
               yt = yt, Zt = Zt, ct = ct, GGt = GGt))
 }
+
+
+.sim.futures <- function(time, dt, ttm = NA, obj = schwartz2f(), r = 0.03, lambda = 0, sd = 0.01)
+{
+  n <- time / dt
+
+  traj <- simstate(n, time, obj)
+  
+  if(is.na(ttm)){
+    d <- 6
+    ttm <- seq(0.2, 2, length = d)
+  }else{
+    d <- length(ttm)
+  }
+
+  ttm.mat <- matrix(ttm, byrow = TRUE, ncol = d, nrow = n)
+
+  price.fut <- function(x, sigmaS, alpha, kappa, sigmaE, rho, lambda, r, ttm)
+    {
+      pricefutures(ttm, s0 = as.numeric(x[1]), delta0 = x[2], sigmaS = sigmaS,
+                   alpha = alpha, kappa = kappa, sigmaE = sigmaE, rho = rho,
+                   lambda = lambda, r = r)
+    }
+
+  coefs <- coef(obj)
+  f.curves <- t(apply(traj, 1, price.fut, sigmaS = coefs$sigmaS,
+                      alpha = coefs$alpha, kappa = coefs$kappa, sigmaE = coefs$sigmaE,
+                      rho = coefs$rho,  lambda = lambda, r = r, ttm = ttm))
+
+  f.curves <- f.curves * exp(rnorm(prod(dim(f.curves)), sd = sd))
+  
+  return(list(ttm = ttm.mat, fut = f.curves, traj = traj))
+}

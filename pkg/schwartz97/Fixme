@@ -8,4 +8,4 @@
 
 - Resid what = c("filte", "real", "state")
 
-- doc \alias{plot.schwartz2f.fit}
+- Check resid with simulated fit

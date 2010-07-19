@@ -1,4 +1,27 @@
 ### <======================================================================>
+resid.schwartz2f.fit <- function(object, data, ttm, type = c("filter", "filter.std", "real"))
+{
+  type <- match.arg(type)
+  if(type == "filter"){
+    vt <- t(filter.schwartz2f(data, ttm, object)$fkf.obj$vt)
+    dimnames(vt) <- dimnames(data)
+    return(vt)
+  }else if(type == "filter.std"){
+    filter.obj <- filter.schwartz2f(data, ttm, object)$fkf.obj
+    resid.std <- t(sapply(1:ncol(filter.obj$vt), function(i, Ft, vt)solve(t(chol(Ft[,,i]))) %*% vt[,i],
+                          Ft = filter.obj$Ft, vt = filter.obj$vt))
+    dimnames(resid.std) <- dimnames(data)
+    return(resid.std)
+  }else if(type == "real"){
+    resid.real <- data - fitted(object, data, ttm)
+    return(resid.real)
+  }
+}
+### <---------------------------------------------------------------------->
+setMethod("resid", signature(object = "schwartz2f.fit"), resid.schwartz2f.fit)
+### <---------------------------------------------------------------------->
+
+### <======================================================================>
 fitted.schwartz2f.fit <- function(object, data, ttm)
 {
 
@@ -243,7 +266,8 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
   type <- match.arg(type)
   if(type == "trace.pars"){
     plot(as.ts(x@trace.pars), xlab = "Iteration", type = "p",
-         main = "Parameter evolution", ...)
+         main = "Parameter evolution",
+         panel = function(x,...){points(x,...);abline(h=rev(x)[1])}, ...)
   }else if(type == "state"){
     if(missing(data) | missing(ttm)){
       stop("'data' and 'ttm' must be submitted if type == 'state'")

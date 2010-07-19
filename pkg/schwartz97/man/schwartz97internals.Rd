@@ -7,6 +7,7 @@
 \alias{.B.schwartz2f}
 \alias{.mu.fut.schwartz2f}
 \alias{.sigma.fut.schwartz2f}
+\alias{.sim.futures}
 \title{Internal Schwartz97 Functions}
 
 % <---------------------------------------------------------------------->
@@ -37,6 +38,7 @@
 
 .sigma.opt.schwartz2f(time, Time, kappa, sigmaS, sigmaE, rho)
 
+.sim.futures(time, dt, ttm = NA, obj = schwartz2f(), r = 0.03, lambda = 0, sd = 0.01)
 }
 % <---------------------------------------------------------------------->
 \details{
@@ -71,6 +73,9 @@
 
   \code{.sigma.opt.schwartz2f} \cr Computes the \code{sigma} for
   the options formula.
+
+  \code{.sim.futures} \cr Simulate futures prices and overlay with
+  noise. This function is used to test \code{\link{fit.schwartz2f}}.
 
 }
 % <---------------------------------------------------------------------->
