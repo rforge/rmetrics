@@ -4,7 +4,7 @@ Version: 0.0.1
 Date: 2009-06-29
 Title: A package on the Schwartz two-factor commodity model
 Author: Philipp Erb, Juri Hinz, David Luethi, Simon Otziger
-Maintainer: Simon Otziger <otis@zhaw.ch>
+Maintainer: David Luethi <luethid@gmail.com>
 LazyLoad: yes
 LazyData: no
 Depends:  R(>= 2.8), FKF, mvtnorm, methods
