@@ -1,3 +1,20 @@
+2010-07-26  chalabi
+
+	* DESCRIPTION: updated version number
+
+2010-07-08  chalabi
+
+	* R/methods-mathOps.R, R/stats-lag.R, R/stats-na.omit.R: improved
+	  support recordIDs
+	* R/timeSeries-finCenter.R: cleanup code
+	* R/base-apply.R, R/base-cbind.R, R/base-diff.R,
+	  R/base-rowCumsums.R, R/fin-runlengths.R: improved support of
+	  recordIDs
+
+2010-07-06  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and Changelog
+
 2010-07-05  chalabi
 
 	* R/methods-show.R: code cleanup

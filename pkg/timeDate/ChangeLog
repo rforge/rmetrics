@@ -1,3 +1,16 @@
+2010-07-26  chalabi
+
+	* DESCRIPTION: updated version number
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2010-07-06  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and Changelog
+
 2010-07-05  chalabi
 
 	* R/timeDate-DaylightSavingTime.R: updated DST
