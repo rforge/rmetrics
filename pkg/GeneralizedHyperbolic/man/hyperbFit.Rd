@@ -14,11 +14,17 @@
 
 \usage{
   hyperbFit(x, freq = NULL, breaks = NULL, paramStart = NULL,
-            startMethod = "Nelder-Mead", startValues = "BN",
-            criterion = "MLE", method = "Nelder-Mead", 
+            startMethod = c("Nelder-Mead","BFGS"),
+            startValues = c("BN","US","FN","SL","MoM"),
+            criterion = "MLE",
+            method = c("Nelder-Mead","BFGS","nlm",
+                       "L-BFGS-B","nlminb","constrOptim"),
             plots = FALSE, printOut = FALSE,
             controlBFGS = list(maxit = 200),
-            controlNM = list(maxit = 1000), maxitNLM = 1500, ...)
+            controlNM = list(maxit = 1000), maxitNLM = 1500,
+            controlLBFGSB = list(maxit = 200),
+            controlNLMINB = list(),
+            controlCO = list(), ...)
 
   \method{print}{hyperbFit}(x,
         digits = max(3, getOption("digits") - 3), ...)
@@ -46,8 +52,7 @@
     \code{\link{optim}}.}
   \item{startValues}{Code giving the method of determining starting
     values for finding the maximum likelihood estimate of param.}
-  \item{criterion}{Different criterian method for the fitting, only maximum
-    likelihood estimation for now.}
+  \item{criterion}{Currently only \code{"MLE"} is implemented.}
   \item{method}{Different optimisation methods to consider.
     See \bold{Details}.}
   \item{plots}{Logical. If \code{FALSE} suppresses printing of the
@@ -60,6 +65,12 @@
     when using the \code{"Nelder-Mead"} optimisation.}
   \item{maxitNLM}{A positive integer specifying the maximum number of
     iterations when using the \code{"nlm"} optimisation.}
+  \item{controlLBFGSB}{A list of control parameters for \code{optim} when using
+    the \code{"L-BFGS-B"} optimisation.}
+  \item{controlNLMINB}{A list of control parameters for \code{nlminb}
+    when using the \code{"nlminb"} optimisation.}
+  \item{controlCO}{A list of control parameters for \code{constrOptim}
+    when using the \code{"constrOptim"} optimisation.}
   \item{digits}{Desired number of digits when the object is printed.}
    \item{which}{If a subset of the plots is required, specify a subset of
     the numbers \code{1:4}.}
@@ -87,18 +98,24 @@
   \code{startMethod}, and \code{startValues}, see
   \code{\link{hyperbFitStart}}.
 
-  The three optimisation methods currently available are:
+  The six optimisation methods currently available are:
   \itemize{
   \item{\code{"BFGS"}}{Uses the quasi-Newton method \code{"BFGS"} as
     documented in \code{\link{optim}}.}
   \item{\code{"Nelder-Mead"}}{Uses an implementation of the Nelder and
     Mead method as documented in \code{\link{optim}}.}
   \item{\code{"nlm"}}{Uses the \code{\link{nlm}} function in R.}
+  \item{\code{"L-BFGS-B"}}{Uses the quasi-Newton method with box
+    constraints \code{"L-BFGS-B"} as documented in \code{\link{optim}}.}
+  \item{\code{"nlminb"}}{Uses the \code{\link{nlminb}} function in R.}
+  \item{\code{"constrOptim"}}{Uses the \code{\link{constrOptim}}
+    function in R.}
   }
 
   For details of how to pass control information for optimisation using
-  \code{\link{optim}} and \code{\link{nlm}}, see \code{\link{optim}} and
-  \code{\link{nlm}.}
+  \code{optim}, \code{nlm}, \code{nlminb} and \code{constrOptim}, see
+  \code{\link{optim}}, \code{\link{nlm}}, \code{\link{nlminb}} and
+  \code{\link{constrOptim}}.
 
   When \code{method = "nlm"} is used, warnings may be produced. These do
   not appear to be a problem.
@@ -126,7 +143,6 @@
       \code{\link{hist}}.}
     \item{empDens}{The estimated density found by a call to
       \code{\link{hist}}.}    
-
   }
 
 \references{
@@ -143,11 +159,13 @@
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz},
-  Ai-Wei Lee, Jennifer Tso, Richard Trendall, Thomas Tran}
+  Ai-Wei Lee, Jennifer Tso, Richard Trendall, Thomas Tran,
+  Christine Yang Dong}
 
 
 \seealso{
-  \code{\link{optim}}, \code{\link{nlm}}, \code{\link{par}},
+  \code{\link{optim}}, \code{\link{nlm}}, \code{\link{nlminb}},
+  \code{\link{constrOptim}}, \code{\link{par}},
   \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}},
   \code{\link{qqhyperb}}, \code{\link{pphyperb}}, \code{\link{dskewlap}}
   and \code{\link{hyperbFitStart}}.
