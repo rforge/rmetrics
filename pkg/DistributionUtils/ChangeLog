@@ -1,3 +1,11 @@
+2010-07-28    <d.scott@auckland.ac.nz>
+
+	* specification of files for graphics units tests fixed
+
+	* minor changes to Makefile to get it to clean backups from major
+	directories
+
+
 2010-05-11    <d.scott@auckland.ac.nz>
 
 	* tsHessian added to calculate the approximate Hessian of a function
