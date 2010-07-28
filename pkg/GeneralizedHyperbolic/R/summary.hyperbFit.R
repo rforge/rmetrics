@@ -3,7 +3,7 @@
 ###
 ### DJS 11/08/06
 summary.hyperbFit <- function(object, hessian = FALSE,
-                     hessianMethod= "exact",...) {
+                              hessianMethod= c("exact", "tsHessian"),...) {
 
   if (! "hyperbFit" %in% class(object))
     stop("Object must belong to class hyperbFit")
@@ -12,7 +12,7 @@ summary.hyperbFit <- function(object, hessian = FALSE,
 
 
   if(hessian == TRUE) {
-    hessian <- hyperbHessian(obs, param, hessianMethod= hessianMethod,
+    hessian <- hyperbHessian(obs, param, hessianMethod = hessianMethod,
                              whichParam = 2)
     object$hessian <- hessian
     object$hessianMethod <- hessianMethod

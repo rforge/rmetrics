@@ -43,9 +43,9 @@ nigFitStart <- function(x, breaks = NULL,
     if (!is.null(paramStart)) {
       if (length(paramStart) != 4)
         stop("paramStart must contain 4 values")
-      if (param[3] <= 0)
+      if (paramStart[3] <= 0)
         stop("alpha must be greater than zero")
-      if (abs(param[4]) >= param[3])
+      if (abs(paramStart[4]) >= paramStart[3])
         stop("absolute value of beta must be less than alpha")
     }
     paramStart <- c(mu = paramStart[1], delta = paramStart[2],

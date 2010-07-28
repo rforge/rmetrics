@@ -3,13 +3,18 @@
 \alias{print.summary.hyperbFit}
 \title{Summarizing Hyperbolic Distribution Fit}
 \usage{
-\method{summary}{hyperbFit}(object, ...)
+\method{summary}{hyperbFit}(object, hessian = FALSE,
+        hessianMethod = c("exact", "tsHessian"), ...)
 
 \method{print}{summary.hyperbFit}(x, digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
   \item{object}{An object of class \code{"hyperbFit"}, resulting from a call to
     \code{\link{hyperbFit}}.}
+  \item{hessian}{Logical. If \code{TRUE} the Hessian is printed.}
+  \item{hessianMethod}{Either the exact Hessian is used (the default) or
+    the two-sided Hessian approximation given by \code{tsHessian} from
+    the package \code{DistributionUtils} is used.}
   \item{x}{An object of class \code{"summary.hyperbFit"}, resulting from
     a call to \code{summary.hyperbFit}.}
   \item{digits}{The number of significant digits to use when printing.}
@@ -46,7 +51,8 @@
 
 }
 \seealso{
-  \code{\link{hyperbFit}}, \code{\link{summary}}.
+  \code{\link{hyperbFit}}, \code{\link{summary}},
+  \code{\link{hyperbHessian}}, \code{\link[DistributionUtils]{tsHessian}}.
 }
 \examples{
 ### Continuing the  hyperbFit(.) example:

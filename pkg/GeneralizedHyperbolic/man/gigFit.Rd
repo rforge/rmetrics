@@ -14,6 +14,7 @@
 \usage{
   gigFit(x, freq = NULL, startValues = c("MoM", "US"),
          paramStart = NULL,
+         startMethod = c("Nelder-Mead","BFGS"),
          method = c("Nelder-Mead", "nlm"),
          plots = FALSE, printOut = FALSE,
          controlNM = list(maxit = 1000),

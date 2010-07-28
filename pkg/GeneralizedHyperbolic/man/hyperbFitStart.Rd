@@ -9,9 +9,11 @@
 }
 
 \usage{
-  hyperbFitStart(x, breaks = NULL, startValues = "BN",
-                 paramStart = NULL, startMethodSL = "Nelder-Mead",
-                 startMethodMoM = "Nelder-Mead", ...)
+  hyperbFitStart(x, breaks = NULL,
+                 startValues = c("BN","US","FN","SL","MoM"),
+                 paramStart = NULL,
+                 startMethodSL = c("Nelder-Mead","BFGS"),
+                 startMethodMoM = c("Nelder-Mead","BFGS"), ...)
   hyperbFitStartMoM(x, startMethodMoM = "Nelder-Mead", ...)
 }
 

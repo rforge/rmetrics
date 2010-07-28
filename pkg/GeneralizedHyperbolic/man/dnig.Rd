@@ -4,7 +4,6 @@
 \alias{qnig}
 \alias{rnig}
 \alias{ddnig}
-\alias{nigBreaks}
 
 \title{Normal Inverse Gaussian Distribution}
 
@@ -31,15 +30,12 @@ rnig(n, mu = 0, delta = 1, alpha = 1, beta = 0,
         param = c(mu, delta, alpha, beta))
 ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
          param = c(mu, delta, alpha, beta))
-nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
-             param = c(mu, delta, alpha, beta),
-             small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
 }
 
 \arguments{
   \item{x,q}{Vector of quantiles.}
   \item{p}{Vector of probabilities.}
-  \item{n}{Number of observations to be generated.} 
+  \item{n}{Number of observations to be generated.}
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
     set to 0.}
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the
@@ -77,7 +73,7 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
         f(x) = exp(delta sqrt(alpha^2 - beta^2)%
         alpha delta/pi sqrt(delta^2 + (x - mu)^2)%
         K_1(alpha sqrt(delta^2 + (x - mu)^2))%
-        exp(beta (x - mu))} 
+        exp(beta (x - mu))}
 
 
   where \eqn{K_1()}{K_1()} is the modified Bessel function of the
@@ -147,24 +143,6 @@ nigBreaks(mu = 0, delta = 1, alpha = 1, beta = 0,
   a list with components \code{value} and \code{error}.
 
   \code{ddnig} gives the derivative of \code{dnig}.
-
-  \code{nigBreaks} returns a list with components:
-   \item{xTiny}{Value such that probability to the left is less than
-     \code{tiny}.}
-   \item{xSmall}{Value such that probability to the left is less than
-     \code{small}.}
-   \item{lowBreak}{Point to the left of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode}
-   \item{highBreak}{Point to the right of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode}
-   \item{xLarge}{Value such that probability to the right is less than
-     \code{small}.}
-   \item{xHuge}{Value such that probability to the right is less than
-     \code{tiny}.}
-   \item{modeDist}{The mode of the given normal inverse Gaussian
-     distribution.}
  }
 
 \references{
@@ -220,12 +198,6 @@ title("Density of the\n Normal Inverse Gaussian Distribution")
 curve(ddnig(x, param = param), from = nigRange[1], to = nigRange[2],
       n = 1000)
 title("Derivative of the Density\n of the Normal Inverse Gaussian Distribution")
-par(mfrow = c(1, 1))
-nigRange <- nigCalcRange(param = param, tol = 10^(-6))
-curve(dnig(x, param = param), from = nigRange[1], to = nigRange[2],
-      n = 1000)
-bks <- nigBreaks(param = param)
-abline(v = bks)
 }
 
 \keyword{distribution}

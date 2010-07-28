@@ -6,13 +6,13 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                    startValues = c("US","FN","Cauchy","MoM"),
                    criterion = "MLE",
                    method = c("Nelder-Mead","BFGS","nlm",
-                   "L-BFGS-B","nlminb","bobyqa"),
+                   "L-BFGS-B","nlminb","constrOptim"),
                    plots = FALSE, printOut = FALSE,
                    controlBFGS = list(maxit = 200),
                    controlNM = list(maxit = 1000), maxitNLM = 1500,
                    controlLBFGSB = list(maxit = 200),
                    controlNLMINB = list(),
-                   controlBOBYQA = list(), ...) {
+                   controlCO = list(), ...) {
 
   startValues <- match.arg(startValues)
   startMethod <- match.arg(startMethod)
@@ -36,7 +36,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
   paramStart <- startInfo$paramStart
   ## change paramStart in the log scale of param set number 1 (mu,delta,pi,zeta)
   paramStart <- hyperbChangePars(2, 1, param = paramStart)
-  if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
+  if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
     paramStart <- c(paramStart[1], log(paramStart[2]),
                     paramStart[3], log(paramStart[4]))
   }
@@ -47,7 +47,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
 
   if (criterion == "MLE") {
-    if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
+    if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
       llfunc <- function(param) {
         mu <- param[1]
         delta <- exp(param[2])
@@ -115,19 +115,20 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                      control = controlNLMINB, ...)
     }
 
-    if (method == "bobyqa") {
-      ind <- c(1, 2, 3, 5)
+    if (method == "constrOptim") {
       cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
           paramStart[4],"\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart, x), " \n")
-      opOut <- bobyqa(par = paramStart, llfunc, x = x,
-                     lower = c(-Inf,0,-Inf,0),
-                     control = controlBOBYQA, ...)
+      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+      cat("Feasible?\n")
+      print((paramStart%*%diag(c(0,1,0,1))- c(0,0,0,0)) >= 0)
+      opOut <- constrOptim(theta = paramStart, llfunc, NULL,
+                           ui = diag(c(0,1,0,1)), ci = c(-1e+99,0,-1e+99,0),
+                           control = controlCO, ...)
     }
 
     param <- as.numeric(opOut[[ind[1]]])[1:4]       # parameter values
 
-    if (!(method %in% c("L-BFGS-B","nlminb","bobyqa"))){
+    if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
       param <- hyperbChangePars(1, 2,
                   param = c(param[1], exp(param[2]), param[3], exp(param[4])))
     } else {
@@ -137,12 +138,9 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
     names(param) <- c("mu", "delta", "alpha", "beta")
 
     maxLik <- -(as.numeric(opOut[[ind[2]]]))        # maximum likelihood
-    if (method == "bobyqa"){
-      conv <- NA
-    } else {
-      conv <- as.numeric(opOut[[ind[4]]])           # convergence
-    }
+    conv <- as.numeric(opOut[[ind[4]]])             # convergence
     iter <- as.numeric(opOut[[ind[3]]])[1]          # iterations
+    maxLik <- -(as.numeric(opOut[[ind[2]]]))        # maximum likelihood
 
   }
 
@@ -150,7 +148,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
 
   ## Change paramStart back to the primary parameter set version normal scale
-  if (method != "L-BFGS-B"){
+  if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
       paramStart <- hyperbChangePars(1, 2,
                   param = c(paramStart[1], exp(paramStart[2]),
                   paramStart[3], exp(paramStart[4])))
@@ -180,8 +178,8 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 ### Function to print object of class nigFit
 ### CYD 01/04/10
 ### DJS 11/08/06
-print.nigFit <- function(x,
-                         digits = max(3, getOption("digits") - 3), ...) {
+print.nigFit <-
+  function(x, digits = max(3, getOption("digits") - 3), ...) {
 
   if (! "nigFit" %in% class(x))
     stop("Object must belong to class nigFit")

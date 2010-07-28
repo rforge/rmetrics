@@ -13,42 +13,45 @@ dhyperb <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 
 
 ### Cumulative distribution function of the hyperbolic distribution
-### New version intended to give guaranteed accuracy
-### Uses exponential approximation in tails
-### Integrate() is used over four parts in the middle of the distribution
-### This version calls hyperbBreaks to determine the breaks
-###
+### Now just calls pghyp
+### DJS 28/7/10
 ### DJS 05/09/06
 phyperb <- function(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-                    param = c(mu, delta, alpha, beta),
-                    small = 10^(-6), tiny = 10^(-10),
-                    deriv = 0.3, subdivisions = 100,
-                    accuracy = FALSE, ...) {
+                    param = c(mu, delta, alpha, beta), log.p = FALSE,
+                    lower.tail = TRUE, subdivisions = 100,
+                    intTol = .Machine$double.eps^0.25,
+                    valueOnly = TRUE, ...){
 
   if (length(param) != 4)
     stop("param vector must contain 4 values")
 
   param <- as.numeric(param)
 
-  pghyp(q, param = c(param, 1), small = small, tiny = tiny, deriv = deriv,
-        subdivisions = subdivisions, accuracy = accuracy, ...)
+  pghyp(q, param = c(param, 1), log.p = log.p,
+        lower.tail = lower.tail, subdivisions = subdivisions,
+        intTol = intTol,
+        valueOnly = valueOnly, ...)
 } ## End of phyperb()
 
 ### qhyperb using breaks as for phyperb and splines as in original qhyperb
-###
+### Now just calls qghyp
+### DJS 28/7/10
 ### DJS 06/09/06
 qhyperb <- function(p, mu = 0, delta = 1, alpha = 1, beta = 0,
-                    param = c(mu, delta, alpha, beta),
-                    small = 10^(-6), tiny = 10^(-10),
-                    deriv = 0.3, nInterpol = 100, subdivisions = 100, ...) {
+                    param = c(mu, delta, alpha, beta), log.p = FALSE,
+                    lower.tail = TRUE, method = c("spline", "integrate"),
+                    nInterpol = 501, uniTol = .Machine$double.eps^0.25,
+                    subdivisions = 100, intTol = uniTol, ...) {
 
   if (length(param) != 4)
    stop("param vector must contain 4 values")
 
   param <- as.numeric(param)
 
-  qghyp(p, param = c(param, 1), small = small, tiny = tiny, deriv = deriv,
-        nInterpol = nInterpol, subdivisions = subdivisions, ...)
+  qghyp(p, param = c(param,1), log.p = log.p,
+        lower.tail = lower.tail, method = method,
+        nInterpol = nInterpol, uniTol = uniTol,
+        subdivisions = subdivisions, intTol = intTol, ...)
 } # End of qhyperb()
 
 ### Function to generate random observations from a
@@ -64,7 +67,7 @@ rhyperb <- function(n, mu = 0, delta = 1, alpha = 1, beta = 0,
 
   param <- as.numeric(param)
 
-  rghyp(n, param = param)
+  rghyp(n, param = c(param,1))
 } ## End of rhyperb()
 
 ### Derivative of the density
@@ -79,16 +82,3 @@ ddhyperb <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   ddghyp(x, param = c(param, 1))
 } ## End of ddhyperb()
 
-### Function to set up breaks for phyperb and qhyperb
-hyperbBreaks <- function(mu = 0, delta = 1, alpha = 1, beta = 0,
-                         param = c(mu, delta, alpha, beta),
-                         small = 10^(-6), tiny = 10^(-10),
-                         deriv = 0.3, ...) {
-
-  if (length(param) != 4)
-   stop("param vector must contain 4 values")
-
-  param <- as.numeric(param)
-
-  ghypBreaks(param = c(param, 1), small = small, tiny = tiny, deriv = deriv, ...)
-} ## End of hyperbBreaks()

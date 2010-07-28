@@ -5,6 +5,8 @@
 ### LEVEL=1 in call to make
 ### Functions with name levelntest.* are run by make if
 ### LEVEL=n in call to make
+### Functions with name graphicstest.* are run by make if
+### LEVEL=graphics in call to make
 
 
 ### Graphical Test for Generalized Hyperbolic Distribution
@@ -21,9 +23,9 @@ graphicstest.dhyperb <- function()
   smalllambda <- smallparam[, 5]
   sden <- 0
   ## open file for graphical output
-  ## graphicsOutput <- paste(pathReport, "dhyperb.pdf", sep = "")
-  ## cat("Graphics output in file ", graphicsOutput, "\n")
-  ## pdf(file = graphicsOutput, height = 7,width = 10)
+  graphicsOutput <- paste(pathReport, "dhyperb.pdf", sep = "")
+  cat("Graphics output in file ", graphicsOutput, "\n")
+  pdf(file = graphicsOutput, height = 7,width = 10)
   par(mfrow = c(1, 2), oma = c(5, 5, 5, 5))
   for (i in 1 : nrow(smallparam))
   {
@@ -93,6 +95,8 @@ graphicstest.dhyperb <- function()
        i <- i + 1
   }
 
+  dev.off()
+  
   return()
 }
 

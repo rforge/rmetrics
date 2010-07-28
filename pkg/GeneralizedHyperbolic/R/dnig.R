@@ -16,33 +16,38 @@ dnig <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 ### Cumulative distribution function of the normal inverse Gaussian distribution
 
 pnig <- function(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-                    param = c(mu, delta, alpha, beta),
-                    small = 10^(-6), tiny = 10^(-10),
-                    deriv = 0.3, subdivisions = 100,
-                    accuracy = FALSE, ...) {
+                 param = c(mu, delta, alpha, beta), log.p = FALSE,
+                 lower.tail = TRUE, subdivisions = 100,
+                 intTol = .Machine$double.eps^0.25,
+                 valueOnly = TRUE, ...){
 
   if (length(param) != 4)
     stop("param vector must contain 4 values")
 
   param <- as.numeric(param)
 
-  pghyp(q, param = c(param, -1/2), small = small, tiny = tiny, deriv = deriv,
-        subdivisions = subdivisions, accuracy = accuracy, ...)
+  pghyp(q, param = c(param, -1/2), log.p = log.p,
+        lower.tail = lower.tail, subdivisions = subdivisions,
+        intTol = intTol,
+        valueOnly = valueOnly, ...)
 } ## End of pnig()
 
 ### Quantiles function of the normal inverse Gaussian distribution
 qnig <- function(p, mu = 0, delta = 1, alpha = 1, beta = 0,
-                    param = c(mu, delta, alpha, beta),
-                    small = 10^(-6), tiny = 10^(-10),
-                    deriv = 0.3, nInterpol = 100, subdivisions = 100, ...) {
+                 param = c(mu, delta, alpha, beta), log.p = FALSE,
+                 lower.tail = TRUE, method = c("spline", "integrate"),
+                 nInterpol = 501, uniTol = .Machine$double.eps^0.25,
+                 subdivisions = 100, intTol = uniTol, ...) {
 
   if (length(param) != 4)
    stop("param vector must contain 4 values")
 
   param <- as.numeric(param)
 
-  qghyp(p, param = c(param, -1/2), small = small, tiny = tiny, deriv = deriv,
-        nInterpol = nInterpol, subdivisions = subdivisions, ...)
+  qghyp(p, param = c(param, -1/2), log.p = log.p,
+        lower.tail = lower.tail, method = method,
+        nInterpol = nInterpol, uniTol = uniTol,
+        subdivisions = subdivisions, intTol = intTol, ...)
 } # End of qnig()
 
 ### Function to generate random observations from a
@@ -63,7 +68,7 @@ rnig <- function(n, mu = 0, delta = 1, alpha = 1, beta = 0,
 
 ### Derivative of the density
 ddnig <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
-                     param = c(mu, delta, alpha, beta)) {
+                  param = c(mu, delta, alpha, beta)) {
 
   if (length(param) != 4)
     stop("param vector must contain 4 values")
@@ -73,17 +78,3 @@ ddnig <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   ddghyp(x, param = c(param, -1/2))
 } ## End of ddnig()
 
-### Function to set up breaks for pnig and qnig
-nigBreaks <- function(mu = 0, delta = 1, alpha = 1, beta = 0,
-                         param = c(mu, delta, alpha, beta),
-                         small = 10^(-6), tiny = 10^(-10),
-                         deriv = 0.3, ...) {
-
-  if (length(param) != 4)
-   stop("param vector must contain 4 values")
-
-  param <- as.numeric(param)
-
-  ghypBreaks(param = c(param, -1/2), small = small, tiny = tiny, 
-            deriv = deriv, ...)
-} ## End of nigBreaks()

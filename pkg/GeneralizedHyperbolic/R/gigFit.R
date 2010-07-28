@@ -3,6 +3,7 @@
 
 gigFit <- function(x, freq = NULL, startValues = c("MoM", "US"),
                    paramStart = NULL,
+                   startMethod = c("Nelder-Mead","BFGS"),
                    method = c("Nelder-Mead", "nlm"),
                    plots = FALSE, printOut = FALSE,
                    controlNM = list(maxit = 1000),
@@ -34,7 +35,7 @@ gigFit <- function(x, freq = NULL, startValues = c("MoM", "US"),
 
 
   if (startValues == "MoM") {
-    paramStart <- gigFitStart(x, startMethodMoM = "Nelder-Mead", ...)
+    paramStart <- gigFitStart(x, startMethodMoM = startMethod, ...)
   }
 
   ## Change paramStart into the log scale
