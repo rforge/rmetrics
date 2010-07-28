@@ -8,7 +8,7 @@
 ### LEVEL=graphics in call to make
 
 
-graphicstest.logHist <- function(pathReport = pathReport)
+graphicstest.logHist <- function()
 {
   ## Purpose: Test the log histogram function logHist
   ## ----------------------------------------------------------------------

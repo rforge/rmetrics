@@ -9,7 +9,7 @@
 ### LEVEL=graphics in call to make
 
 
-graphicstest.tailPlot <- function(pathReport = pathReport)
+graphicstest.tailPlot <- function()
 {
     ## Purpose: Test the tail plot functions
     ## ----------------------------------------------------------------------
@@ -58,7 +58,7 @@ graphicstest.tailPlot <- function(pathReport = pathReport)
     param <- c(0,0.5,0,0.5)
     x <- rvg(100, param = param)
     tailPlot(x)
-    tailPlotLine(x, distrFn = "vg", param = param) 
+    tailPlotLine(x, distrFn = "vg", param = param)
     dev.off()
 
 

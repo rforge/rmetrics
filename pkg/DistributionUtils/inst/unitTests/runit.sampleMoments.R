@@ -116,6 +116,10 @@ graphicstest.sampleMoments <- function()
   }
 
   ## plot results
+  graphicsOutput <- paste(pathReport, "sampleMoments.pdf", sep = "")
+  cat("Graphics output in file ", graphicsOutput, "\n")
+  pdf(file = graphicsOutput)
+  print(pathReport)
   with(results, {plot(sampSizes, ssk,
                      xlab = "Sample Size", ylab = "Sample Skewness")
                  lines(sampSizes, tsk)
@@ -126,7 +130,7 @@ graphicstest.sampleMoments <- function()
                  lines(sampSizes, tku)})
   title("Sample and Theoretical Kurtosis: Gamma(1,1)")
 
-
+  dev.off()
 
   return()
 }
