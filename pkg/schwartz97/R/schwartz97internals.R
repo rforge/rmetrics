@@ -108,8 +108,9 @@
 .sigma.fut.schwartz2f <- function(sigmaS, kappa, sigmaE, rho, time, ttm)
 {
   compB <- .B.schwartz2f(kappa, ttm - time)
-  sigma.state <- .sigma.state.schwartz2f(sigmaS, kappa, sigmaE,
-                                         rho, time)
+  sigma.state <- .sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                         sigmaE = sigmaE, rho = rho,
+                                         time = time)
 
   prod <- matrix(c(1, compB), ncol = 1)
   return(as.numeric(t(prod) %*% sigma.state %*% prod))  
@@ -147,8 +148,9 @@
                  alpha / kappa * (1 - exp(-kappa * deltat)),
                  alpha * (1 - exp(- kappa * deltat))), 2, 1)
 
-  HHt <- array(.sigma.state.schwartz2f(sigmaS, kappa, sigmaE,
-                                       rho, deltat), c(2, 2, 1))
+  HHt <- array(.sigma.state.schwartz2f(sigmaS = sigmaS, kappa = kappa,
+                                       sigmaE = sigmaE, rho = rho,
+                                       time = deltat), c(2, 2, 1))
 
   ## ------------------------------------------------------------
   ## Density of the linear approx. of the transition equation:
@@ -193,7 +195,7 @@
 
   traj <- simstate(n, time, obj)
   
-  if(is.na(ttm)){
+  if(any(is.na(ttm))){
     d <- 6
     ttm <- seq(0.2, 2, length = d)
   }else{
