@@ -3,7 +3,7 @@
 ###
 ### DJS 11/08/06
 summary.hyperbFit <- function(object, hessian = FALSE,
-                              hessianMethod= c("exact", "tsHessian"),...) {
+                              hessianMethod = c("exact", "tsHessian"), ...) {
 
   if (! "hyperbFit" %in% class(object))
     stop("Object must belong to class hyperbFit")
@@ -29,9 +29,8 @@ summary.hyperbFit <- function(object, hessian = FALSE,
 } ## End of summary.hyperbFit
 
 ### Print summary
-print.summary.hyperbFit <- function(x,
-                                    digits = max(3, getOption("digits") - 3),
-                                    ...) {
+print.summary.hyperbFit <-
+  function(x, digits = max(3, getOption("digits") - 3), ...) {
 
   if (class(x) != "summary.hyperbFit")
     stop("Object must belong to class summary.hyperbFit")

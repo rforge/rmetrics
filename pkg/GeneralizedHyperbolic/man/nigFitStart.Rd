@@ -9,9 +9,10 @@
 }
 
 \usage{
-  nigFitStart(x, breaks = NULL, startValues = "MoM",
-                 paramStart = NULL, 
-                 startMethodMoM = "Nelder-Mead", ...)
+  nigFitStart(x, breaks = NULL,
+              startValues = c("US","FN","Cauchy","MoM"),
+              paramStart = NULL,
+              startMethodMoM = c("Nelder-Mead","BFGS"), ...)
   nigFitStartMoM(x, startMethodMoM = "Nelder-Mead", ...)
 }
 
@@ -40,10 +41,7 @@
   \code{paramStart}.
 
   If \code{startValues = "MoM"}, \code{nigFitStartMoM} is
-  called. These starting values are based on Barndorff-Nielsen \emph{et
-  al} (1985).
-
-  If \code{startValues = "MoM"} an initial
+  called. If \code{startValues = "MoM"} an initial
   optimisation is needed to find the starting values. These
   optimisations call \code{\link{optim}}.
 }
@@ -92,8 +90,8 @@
 
 \seealso{
   \code{\link{dnig}}, \code{\link{dskewlap}},
-  \code{\link{nigFit}}, \code{\link{hist}}, and
-  \code{\link{optim}}.
+  \code{\link{nigFit}}, \code{\link{hist}}, \code{\link{optim}},
+  \code{\link[MASS]{fitdistr}}.
 }
 
 \examples{

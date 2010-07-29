@@ -3,7 +3,7 @@
 ###
 ### DJS 11/08/06
 summary.nigFit <- function(object, hessian = FALSE,
-                           hessianMethod= "exact",...) {
+                           hessianMethod = c("exact", "tsHessian"), ...) {
 
   if (! "nigFit" %in% class(object))
     stop("Object must belong to class nigFit")
@@ -12,7 +12,7 @@ summary.nigFit <- function(object, hessian = FALSE,
 
 
   if(hessian == TRUE) {
-    hessian <- nigHessian(obs, param, hessianMethod= hessianMethod,
+    hessian <- nigHessian(obs, param, hessianMethod = hessianMethod,
                           whichParam = 2)
     object$hessian <- hessian
     object$hessianMethod <- hessianMethod
@@ -29,9 +29,8 @@ summary.nigFit <- function(object, hessian = FALSE,
 } ## End of summary.nigFit
 
 ### Print summary
-print.summary.nigFit <- function(x,
-                                 digits = max(3, getOption("digits") - 3),
-                                 ...) {
+print.summary.nigFit <-
+  function(x,digits = max(3, getOption("digits") - 3), ...) {
 
   if (class(x) != "summary.nigFit")
     stop("Object must belong to class summary.nigFit")

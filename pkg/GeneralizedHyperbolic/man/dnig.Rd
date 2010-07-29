@@ -17,19 +17,21 @@
 
 \usage{
 dnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta))
+     param = c(mu, delta, alpha, beta))
 pnig(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta),
-        small = 10^(-6), tiny = 10^(-10),
-        deriv = 0.3, subdivisions = 100, accuracy = FALSE, ...)
+     param = c(mu, delta, alpha, beta), log.p = FALSE,
+     lower.tail = TRUE, subdivisions = 100,
+     intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
 qnig(p, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta),
-        small = 10^(-6), tiny = 10^(-10),
-        deriv = 0.3, nInterpol = 100, subdivisions = 100, ...)
+     param = c(mu, delta, alpha, beta),
+     log.p = FALSE, lower.tail = TRUE, 
+     method = c("spline","integrate"),
+     nInterpol = 501, uniTol = .Machine$double.eps^0.25,
+     subdivisions = 100, intTol = uniTol, ...)
 rnig(n, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta))
+     param = c(mu, delta, alpha, beta))
 ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
-         param = c(mu, delta, alpha, beta))
+     param = c(mu, delta, alpha, beta))
 }
 
 \arguments{
@@ -46,21 +48,27 @@ ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
     this is 0.}
   \item{param}{Parameter vector taking the form
     \code{c(mu, delta, alpha, beta)}.}
-  \item{small}{Size of a small difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{tiny}{Size of a tiny difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{deriv}{Value between 0 and 1. Determines the point where the
-    derivative becomes substantial, compared to its maximum value. See
-    \bold{Details}.}
-  \item{accuracy}{Uses accuracy calculated by \code{\link{integrate}}
-    to try and determine the accuracy of the distribution function
-    calculation.}
+  \item{log.p}{Logical; if \code{TRUE}, probabilities are given as
+    log(p).}
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+    spline approximation to the distribution function. If
+    \code{"integrate"}, the distribution function used is always obtained
+    by integration.}
+  \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
+    density is taken from the lower tail.}
   \item{subdivisions}{The maximum number of subdivisions used to
-    integrate the density returning the distribution function.}
-  \item{nInterpol}{The number of points used in \code{qnig} for cubic
-    spline interpolation (see \code{splinefun}) of the distribution
-    function.}
+    integrate the density and determine the accuracy of the distribution
+    function calculation.}
+  \item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in
+    calls to \code{integrate}. See \code{\link{integrate}}.}
+  \item{valueOnly}{Logical. If \code{valueOnly = TRUE} calls to
+    \code{pghyp} only return the value obtained for the integral.
+    If \code{valueOnly = FALSE} an estimate of the
+    accuracy of the numerical integration is also returned.}
+  \item{nInterpol}{Number of points used in \code{qghyp} for cubic
+    spline interpolation of the distribution function.}
+  \item{uniTol}{Value of \code{tol} in
+    calls to \code{uniroot}. See \code{\link{uniroot}}.}
   \item{\dots}{Passes arguments to \code{uniroot}. See \bold{Details}.}
 }
 
@@ -84,13 +92,13 @@ ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   distribution and the hyperbolic distribution are special cases of the
   generalized hyperbolic distribution (with different values of
   \eqn{\lambda}{lambda}), the normal inverse Gaussian distribution has
-  the same sets of parameterizations as the hyperbolic distribution. 
-  And therefore one can use \code{hyperbChangePars} to interchange between 
-  different parameterizations for the normal inverse Gaussian distribution as 
+  the same sets of parameterizations as the hyperbolic distribution.
+  And therefore one can use \code{hyperbChangePars} to interchange between
+  different parameterizations for the normal inverse Gaussian distribution as
   well (see \code{hyperbChangePars} for details).
 
   Each of the functions are wrapper functions for their equivalent
-  generalized hyperbolic distribution. For example, \code{dnig} calls 
+  generalized hyperbolic distribution. For example, \code{dnig} calls
   \code{dghyp}.
 
   \code{pnig} breaks the real line into eight regions in order to
@@ -130,7 +138,7 @@ ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   hyperbolic distribution can be represented as a particular mixture of
   the normal distribution where the mixing distribution is the
   generalized inverse Gaussian.  \code{rnig} uses this representation to
-  generate observations from the normal inverse Gaussian distribution. 
+  generate observations from the normal inverse Gaussian distribution.
   Generalized inverse Gaussian observations are obtained via the algorithm of
   Dagpunar (1989).}
 

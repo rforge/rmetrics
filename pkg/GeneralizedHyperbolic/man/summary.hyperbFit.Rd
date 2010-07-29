@@ -24,29 +24,33 @@
   \code{summary} Method for class \code{"hyperbFit"}.
 }
 \details{
-  \code{summary.hyperbFit} calculates standard errors for the estimates
-  of \eqn{\mu}{mu}, \eqn{\delta}{delta}, \eqn{\alpha}{alpha}, and
-  \eqn{\beta}{beta} of the hyperbolic distribution parameter vector param if
-  the Hessian from the call to \code{\link{hyperbFit}} is available.
+  If \code{hessian = FALSE} no calculations are performed, the class of
+  \code{object} is simply changed from \code{hyperbFit} to
+  \code{summary.hyperbFit} so that it can be passed to
+  \code{print.summary.hyperbFit} for printing in a convenient form.
+
+  If \code{hessian = TRUE} the Hessian is calculated via a call to
+  \code{\link{hyperbHessian}} and the standard errors of the parameter
+  estimates are calculated using the Hessian and these are added to the
+  original list \code{object}. The class of the object
+  returned is again changed to \code{summary.hyperbFit}.
 }
 \value{
-  If the Hessian is available, \code{summary.hyperbFit} computes
-  standard errors for the estimates of \eqn{\mu}{mu}, \eqn{\delta}{delta},
-  \eqn{\alpha}{alpha}, and \eqn{\beta}{beta}, and adds them to \code{object}
-  as \code{object$sds}. Otherwise, no calculations are performed and the
-  composition of \code{object} is unaltered.
-
-  \code{summary.hyperbFit} invisibly returns \code{x}
-  with class changed to \code{summary.hyperbFit}.
+  \code{summary.hyperbFit} returns a list comprised of the original
+  object \code{object} and additional elements \code{hessian} and
+  \code{sds} if \code{hessian = TRUE}, otherwise it returns the original
+  object. The class of the object returned is changed to
+  \code{summary.hyperbFit}.
 
   See \code{\link{hyperbFit}} for the composition of an object of class
   \code{hyperbFit}.
 
-  \code{print.summary.hyperbFit} prints a summary in the same format as
-  \code{\link{print.hyperbFit}} when the Hessian is not available from
-  the fit. When the Hessian is available, the standard errors for the
-  parameter estimates are printed in parentheses beneath the parameter
-  estimates, in the manner of \code{fitdistr} in the package
+  If the Hessian and standard errors have not been added to the object
+  \code{x}, \code{print.summary.hyperbFit} prints a summary in the same
+  format as \code{\link{print.hyperbFit}}. When the Hessian and standard
+  errors are available, the Hessian is printed and the standard errors
+  for the parameter estimates are printed in parentheses beneath the
+  parameter estimates, in the manner of \code{fitdistr} in the package
   \code{MASS}.
 
 }
@@ -58,8 +62,8 @@
 ### Continuing the  hyperbFit(.) example:
 param <- c(2, 2, 2, 1)
 dataVector <- rhyperb(500, param = param)
-fit <- hyperbFit(dataVector, method = "BFGS", hessian = TRUE)
+fit <- hyperbFit(dataVector, method = "BFGS")
 print(fit)
-summary(fit)
+summary(fit, hessian = TRUE)
 }
 \keyword{distribution}

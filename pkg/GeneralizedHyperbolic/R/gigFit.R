@@ -10,6 +10,7 @@ gigFit <- function(x, freq = NULL, startValues = c("MoM", "US"),
                    maxitNLM = 1500, ...) {
 
   startValues <- match.arg(startValues)
+  startMethod <- match.arg(startMethod)
   method <- match.arg(method)
   xName <- paste(deparse(substitute(x), 500), collapse = "\n")
 

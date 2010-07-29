@@ -19,13 +19,15 @@
 dhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
         param = c(mu, delta, alpha, beta))
 phyperb(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta),
-        small = 10^(-6), tiny = 10^(-10),
-        deriv = 0.3, subdivisions = 100, accuracy = FALSE, ...)
+        param = c(mu, delta, alpha, beta), log.p = FALSE,
+        lower.tail = TRUE, subdivisions = 100,
+        intTol = .Machine$double.eps^0.25,
+        valueOnly = TRUE, ...)
 qhyperb(p, mu = 0, delta = 1, alpha = 1, beta = 0,
-        param = c(mu, delta, alpha, beta),
-        small = 10^(-6), tiny = 10^(-10),
-        deriv = 0.3, nInterpol = 100, subdivisions = 100, ...)
+        param = c(mu, delta, alpha, beta), log.p = FALSE,
+        lower.tail = TRUE, method = c("spline", "integrate"),
+        nInterpol = 501, uniTol = .Machine$double.eps^0.25,
+        subdivisions = 100, intTol = uniTol, ...)
 rhyperb(n, mu = 0, delta = 1, alpha = 1, beta = 0,
         param = c(mu, delta, alpha, beta))
 ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
@@ -35,7 +37,7 @@ ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 \arguments{
   \item{x,q}{Vector of quantiles.}
   \item{p}{Vector of probabilities.}
-  \item{n}{Number of observations to be generated.} 
+  \item{n}{Number of observations to be generated.}
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
     set to 0.}
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
@@ -46,20 +48,27 @@ ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
     this is 0.}
   \item{param}{Parameter vector taking the form
     \code{c(mu, delta, alpha, beta)}.}
-  \item{small}{Size of a small difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{tiny}{Size of a tiny difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{deriv}{Value between 0 and 1. Determines the point where the
-    derivative becomes substantial, compared to its maximum value. See
-    \bold{Details}.}
-  \item{accuracy}{Uses accuracy calculated by \code{\link{integrate}}
-    to try and determine the accuracy of the distribution function
-    calculation.}
+  \item{log.p}{Logical; if \code{TRUE}, probabilities are given as
+    log(p).}
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+  spline approximation to the distribution function. If
+  \code{"integrate"}, the distribution function used is always obtained
+  by integration.}
+  \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
+    density is taken from the lower tail.}
   \item{subdivisions}{The maximum number of subdivisions used to
-    integrate the density returning the distribution function.}
-  \item{nInterpol}{The number of points used in qhyperb for cubic spline
-    interpolation (see \code{splinefun}) of the distribution function.}
+    integrate the density and determine the accuracy of the distribution
+    function calculation.}
+  \item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in
+    calls to \code{integrate}. See \code{\link{integrate}}.}
+  \item{valueOnly}{Logical. If \code{valueOnly = TRUE} calls to
+    \code{pghyp} only return the value obtained for the integral.
+    If \code{valueOnly = FALSE} an estimate of the
+    accuracy of the numerical integration is also returned.}
+  \item{nInterpol}{Number of points used in \code{qghyp} for cubic
+    spline interpolation of the distribution function.}
+  \item{uniTol}{Value of \code{tol} in
+    calls to \code{uniroot}. See \code{\link{uniroot}}.}
   \item{\dots}{Passes arguments to \code{uniroot}. See \bold{Details}.}
 }
 
@@ -88,39 +97,8 @@ ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   \eqn{(\alpha, \beta)}{(alpha, beta)} parameterisation used above.
 
   Each of the functions are wrapper functions for their equivalent
-  generalized hyperbolic. For example, \code{dhyperb} calls \code{dghyp}.
-
-  \code{phyperb} breaks the real line into eight regions in order to
-  determine the integral of \code{dhyperb}. The break points determining
-  the regions are found by \code{hyperbBreaks}, based on the values of
-  \code{small}, \code{tiny}, and \code{deriv}. In the extreme tails of
-  the distribution where the probability is \code{tiny} according to
-  \code{hyperbCalcRange}, the probability is taken to be zero. In the
-  range between where the probability is \code{tiny} and \code{small}
-  according to \code{hyperbCalcRange}, an exponential approximation to
-  the hyperbolic distribution is used. In the inner part of the
-  distribution, the range is divided in 4 regions, 2 above the mode, and
-  2 below. On each side of the mode, the break point which forms the 2
-  regions is where the derivative of the density function is
-  \code{deriv} times the maximum value of the derivative on that side of
-  the mode. In each of the 4 inner regions the numerical integration
-  routine \code{\link[DistributionUtils]{safeIntegrate}} (which is a
-  wrapper for \code{\link{integrate}}) is used to integrate the density
-  \code{dhyperb}.
-
-  \code{qhyperb} uses the breakup of the real line into the same 8
-  regions as \code{phyperb}. For quantiles which fall in the 2 extreme
-  regions, the quantile is returned as \code{-Inf} or \code{Inf} as
-  appropriate. In the range between where the probability is \code{tiny}
-  and \code{small} according to \code{hyperbCalcRange}, an exponential
-  approximation to the hyperbolic distribution is used from which the
-  quantile may be found in closed form. In the 4 inner regions
-  \code{splinefun} is used to fit values of the distribution function
-  generated by \code{phyperb}.  The quantiles are then found
-  using the \code{uniroot} function.
-
-  \code{phyperb} and \code{qhyperb} may generally be expected to be
-  accurate to 5 decimal places.
+  generalized hyperbolic counterpart. For example, \code{dhyperb} calls
+  \code{dghyp}. See \code{\link{dghyp}}.
 
   The hyperbolic distribution is a special case of the generalized
   hyperbolic distribution (Barndorff-Nielsen and \enc{Blæsild}{Blaesild}
@@ -140,24 +118,7 @@ ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   a list with components \code{value} and \code{error}.
 
   \code{ddhyperb} gives the derivative of \code{dhyperb}.
-
-  \code{hyperbBreaks} returns a list with components:
-   \item{xTiny}{Value such that probability to the left is less than
-     \code{tiny}.}
-   \item{xSmall}{Value such that probability to the left is less than
-     \code{small}.}
-   \item{lowBreak}{Point to the left of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode}
-   \item{highBreak}{Point to the right of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode}
-   \item{xLarge}{Value such that probability to the right is less than
-     \code{small}.}
-   \item{xHuge}{Value such that probability to the right is less than
-     \code{tiny}.}
-   \item{modeDist}{The mode of the given hyperbolic distribution.}
- }
+}
 
 \references{
   Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).

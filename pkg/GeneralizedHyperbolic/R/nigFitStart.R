@@ -1,11 +1,10 @@
 ### CYD 30/05/10
 ### DJS 11/09/06
 nigFitStart <- function(x, breaks = NULL,
-                           startValues = c("US","FN","Cauchy","MoM"),
-                           paramStart = NULL,
-                           startMethodSL = c("Nelder-Mead","BFGS"),
-                           startMethodMoM = c("Nelder-Mead","BFGS"),
-                           ...) {
+                        startValues = c("US","FN","Cauchy","MoM"),
+                        paramStart = NULL,
+                        startMethodMoM = c("Nelder-Mead","BFGS"),
+                        ...) {
   startValues <- match.arg(startValues)
   startMethodSL <- match.arg(startMethodSL)
   startMethodMoM <- match.arg(startMethodMoM)
@@ -63,11 +62,12 @@ nigFitStart <- function(x, breaks = NULL,
   }
 
   if (startValues == "Cauchy") {
+    require(MASS)
     svName <- "Cauchy"
     cauchyFit <- fitdistr(x, "Cauchy")
     mu <- cauchyFit$estimate[[1]]
     delta <- cauchyFit$estimate[[2]]
-    beta <- 0 
+    beta <- 0
     alpha <- 0.1
     paramStart <- c(mu, delta, alpha, beta)
   }
@@ -75,13 +75,13 @@ nigFitStart <- function(x, breaks = NULL,
 
   if (!(startValues %in% c("US", "FN", "Cauchy")))
     startValues <- "MoM"
-    
+
   if (startValues == "MoM") {
     svName <- "Method of Moments"
     paramStart <- nigFitStartMoM(x, startMethodMoM = startMethodMoM, ...)
   }
 
-  
+
 
   names(paramStart) <- c("mu", "delta", "alpha", "beta")
   list(paramStart = paramStart, breaks = breaks, midpoints = midpoints,
@@ -148,7 +148,7 @@ nigFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   ## Get Method of Moments estimates
   MoMOptim <- optim(startValuesMoM, MoMOptimFun, method = startMethodMoM, ...)
   paramStart <- MoMOptim$par
-  paramStart <- hyperbChangePars(1, 2, 
-                param = c(paramStart[1], exp(paramStart[2]), paramStart[3], 
+  paramStart <- hyperbChangePars(1, 2,
+                param = c(paramStart[1], exp(paramStart[2]), paramStart[3],
                 exp(paramStart[4])))
 } ## End of nigFitStartMoM

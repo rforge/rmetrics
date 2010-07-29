@@ -14,11 +14,17 @@
 
 \usage{
   nigFit(x, freq = NULL, breaks = NULL, paramStart = NULL,
-            startMethod = "Nelder-Mead", startValues = "MoM",
-            criterion = "MLE", method = "Nelder-Mead", 
-            plots = FALSE, printOut = FALSE,
-            controlBFGS = list(maxit = 200),
-            controlNM = list(maxit = 1000), maxitNLM = 1500, ...)
+         startMethod = c("Nelder-Mead","BFGS"),
+         startValues = c("US","FN","Cauchy","MoM"),
+         criterion = "MLE",
+         method = c("Nelder-Mead","BFGS","nlm",
+                   "L-BFGS-B","nlminb","constrOptim"),
+         plots = FALSE, printOut = FALSE,
+         controlBFGS = list(maxit = 200),
+         controlNM = list(maxit = 1000), maxitNLM = 1500,
+         controlLBFGSB = list(maxit = 200),
+         controlNLMINB = list(),
+         controlCO = list(), ...)
 
   \method{print}{nigFit}(x,
         digits = max(3, getOption("digits") - 3), ...)
@@ -45,9 +51,8 @@
   \item{startMethod}{Method used by \code{nigFitStart} in calls to
     \code{\link{optim}}.}
   \item{startValues}{Code giving the method of determining starting
-    values for finding the maximum likelihood estimate of param.}
-  \item{criterion}{Different criterian method for the fitting, only maximum
-    likelihood estimation for now.}  
+    values for finding the maximum likelihood estimate of \code{param}.}
+  \item{criterion}{Currently only \code{"MLE"} is implemented.}
   \item{method}{Different optimisation methods to consider.
     See \bold{Details}.}
   \item{plots}{Logical. If \code{FALSE} suppresses printing of the
@@ -60,6 +65,12 @@
     when using the \code{"Nelder-Mead"} optimisation.}
   \item{maxitNLM}{A positive integer specifying the maximum number of
     iterations when using the \code{"nlm"} optimisation.}
+  \item{controlLBFGSB}{A list of control parameters for \code{optim} when using
+    the \code{"L-BFGS-B"} optimisation.}
+  \item{controlNLMINB}{A list of control parameters for \code{nlminb}
+    when using the \code{"nlminb"} optimisation.}
+  \item{controlCO}{A list of control parameters for \code{constrOptim}
+    when using the \code{"constrOptim"} optimisation.}
   \item{digits}{Desired number of digits when the object is printed.}
    \item{which}{If a subset of the plots is required, specify a subset of
     the numbers \code{1:4}.}
@@ -138,7 +149,7 @@
   Statistics of particle size data.
   \emph{Appl. Statist.},
   \bold{41}, 127--146.
-  
+
   Paolella, Marc S. (2007)
   Intermediate Probability: A Computational Approach,
   Chichester: Wiley

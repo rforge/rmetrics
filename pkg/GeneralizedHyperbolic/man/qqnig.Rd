@@ -2,14 +2,14 @@
 \alias{qqnig}
 \alias{ppnig}
 
-\title{normal inverse Gaussian Quantile-Quantile and Percent-Percent Plots}
+\title{Normal inverse Gaussian Quantile-Quantile and Percent-Percent Plots}
 
 \description{
   \code{qqnig} produces a normal inverse Gaussian Q-Q plot of the values in
 	\code{y}.
 
   \code{ppnig} produces a normal inverse Gaussian P-P (percent-percent) or
-  probability plot of the values in \code{y}.	
+  probability plot of the values in \code{y}.
 
   Graphical parameters may be given as arguments to \code{qqnig},
   and \code{ppnig}.
@@ -17,14 +17,14 @@
 \usage{
 qqnig(y, mu = 0, delta = 1, alpha = 1, beta = 0,
          param = c(mu, delta, alpha, beta),
-         main = "normal inverse Gaussian Q-Q Plot",
+         main = "Normal inverse Gaussian Q-Q Plot",
          xlab = "Theoretical Quantiles",
          ylab = "Sample Quantiles",
          plot.it = TRUE, line = TRUE, \dots)
 
 ppnig(y, mu = 0, delta = 1, alpha = 1, beta = 0,
          param = c(mu, delta, alpha, beta),
-         main = "normal inverse Gaussian P-P Plot",
+         main = "Normal inverse Gaussian P-P Plot",
          xlab = "Uniform Quantiles",
          ylab = "Probability-integral-transformed Data",
          plot.it = TRUE, line = TRUE, \dots)
