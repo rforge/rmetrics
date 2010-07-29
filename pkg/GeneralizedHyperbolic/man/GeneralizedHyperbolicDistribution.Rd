@@ -1,7 +1,6 @@
 \name{GeneralizedHyperbolicDistribution}
 \docType{package}
 \alias{GeneralizedHyperbolic-package}
-\alias{GeneralizedHyperbolicDistribution}
 
 \title{
   The Package `GeneralizedHyperbolic': Summary Information
