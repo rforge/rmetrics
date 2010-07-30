@@ -53,8 +53,13 @@
   parameter estimates, in the manner of \code{fitdistr} in the package
   \code{MASS}.
 }
+\author{
+  David Scott \email{d.scott@auckland.ac.nz},
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}
+}
+
 \seealso{
-  \code{\link{nigFit}}, \code{\link{summary}}.
+  \code{\link{nigFit}}, \code{\link{summary}, \code{nigHessian}}.
 }
 \examples{
 ### Continuing the  nigFit(.) example:
