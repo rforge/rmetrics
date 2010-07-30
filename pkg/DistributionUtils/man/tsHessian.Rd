@@ -42,6 +42,13 @@ Values of other parameters of the function \code{fun} if required.
   David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}
 }
+
+\seealso{
+  \code{hyperbHessian} and \code{summary.hyperbFit.R} in 
+  \code{GeneralizedHyperbolic} package. 
+}
+
+
 \note{
 This code was borrowed from the fBasics package, utils-hessian.R with
 slight modification. This was in turn borrowed from Kevin Sheppard's
