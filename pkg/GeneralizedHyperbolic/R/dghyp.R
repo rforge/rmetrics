@@ -142,8 +142,8 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   if (method == "integrate")
   {
-    less <- which((p <= pModeDist) & (p > .Machine$double.eps^1.5))
-    quant <- ifelse(p <= .Machine$double.eps^1.5, -Inf, quant)
+    less <- which((p <= pModeDist) & (p > .Machine$double.eps^5))
+    quant <- ifelse(p <= .Machine$double.eps^5, -Inf, quant)
     if (length(less) > 0){
       pLow <- min(p[less])
       xLow <- modeDist - sqrt(ghypVar(param = param))
@@ -163,9 +163,9 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       }
     }
 
-    greater <- which ((p > pModeDist) & (p < (1 - .Machine$double.eps^1.5)))
+    greater <- which ((p > pModeDist) & (p < (1 - .Machine$double.eps^5)))
     p[greater] <- 1 - p[greater]
-    quant <- ifelse(p >=(1 - .Machine$double.eps^1.5) ,Inf,quant)
+    quant <- ifelse(p >=(1 - .Machine$double.eps^5) ,Inf,quant)
     if (length(greater) > 0){
       pHigh <- min(p[greater])
       xHigh <- modeDist + sqrt(ghypVar(param = param))
