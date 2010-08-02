@@ -1,4 +1,4 @@
-\name{GeneralizedHyperbolicDistribution}
+\name{GeneralizedHyperbolic}
 \docType{package}
 \alias{GeneralizedHyperbolic-package}
 

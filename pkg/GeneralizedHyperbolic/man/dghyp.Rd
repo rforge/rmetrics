@@ -18,20 +18,19 @@
 }
 \usage{
 dghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-      param = c(mu, delta, alpha, beta, lambda), log = FALSE,
-      tolerance = .Machine$double.eps^0.5)
+      param = c(mu, delta, alpha, beta, lambda))
 pghyp(q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       param = c(mu, delta, alpha, beta, lambda), log.p = FALSE,
       lower.tail = TRUE, subdivisions = 100,
       intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
-qghyp(p, mu = 0, delta = 1, alpha = 1, beta = 1, lambda = 1,
+qghyp(p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       param = c(mu, delta, alpha, beta, lambda),
-      lower.tail = TRUE, log.p = FALSE,
+      log.p = FALSE, lower.tail = TRUE,
       method = c("spline","integrate"),
       nInterpol = 501, uniTol = .Machine$double.eps^0.25,
       subdivisions = 100, intTol = uniTol, ...)
 rghyp(n, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-      param = c(mu, delta, alpha, beta, lambda), log = FALSE)
+      param = c(mu, delta, alpha, beta, lambda))
 ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
        param = c(mu, delta, alpha, beta, lambda))
 }
@@ -43,10 +42,10 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \item{delta}{Peakness parameter \eqn{\delta}{delta}, default is 1.}
   \item{alpha}{Tail parameter \eqn{\alpha}{alpha}, default is 1.}
   \item{beta}{Skewness parameter \eqn{\beta}{beta}, default is 0.}
-  \item{Lambda}{Shape parameter \eqn{\lambda}{lambda}, default is 1.}
+  \item{lambda}{Shape parameter \eqn{\lambda}{lambda}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,delta,alpha,beta,lambda)}.}
-  \item{log,log.p}{Logical; if \code{TRUE}, probabilities are given as
+  \item{log.p}{Logical; if \code{TRUE}, probabilities are given as
     log(p).}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
@@ -54,8 +53,6 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     by integration.}
   \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
     density is taken from the lower tail.}
-  \item{tolerance}{Specified level of tolerance when checking if
-    parameter \code{beta} is equal to 0.}
   \item{subdivisions}{The maximum number of subdivisions used to
     integrate the density and determine the accuracy of the distribution
     function calculation.}
