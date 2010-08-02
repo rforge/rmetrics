@@ -50,10 +50,10 @@
   \item{r}{Instantaneous risk-free interest rate.}
   \item{lambda}{Market price of convenience yield risk.}
   \item{alphaT}{Mean-level of the convenience yield process with
-    respect to the equivalent martingale measure (see \bold{Details}).}
-  \item{deltat}{Time increment (see \bold{Details}).}
+    respect to the equivalent martingale measure.}
+  \item{deltat}{Time increment.}
   \item{meas.sd}{The standard deviation of the measurement equation (see
-    \bold{Details}).}
+    \bold{Details} section of \code{\link{fit.schwartz2f}}).}
   \item{P0}{Variance of the state variables \code{s0} and \code{P0}.}
 }
 
@@ -61,18 +61,12 @@
 \details{
 
   The elements of \code{data} and \code{ttm} have the following
-  interpretation: \code{data[i,j]} denotes the price of the futures
-  contract with time to maturity \code{ttm[i,j]}. \cr
+  interpretation: \code{data[i,j]} denotes the futures price whose time
+  to maturity was \code{ttm[i,j]} when it was observed. \cr
 
-  The market price of convenience yield risk can either be specified
-  explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
-  relation is \code{alphaT = alpha - lambda / kappa}. See the package
-  vignette or
-  \code{\link[=schwartz2f-class]{schwartz2f-classes}}. \cr
-
-
-  The time increment observation \code{data[i,j]} and \code{data[i +
-    1,j]} is denoted with \code{deltat}.
+  \code{deltat} is the time between observation \code{data[i,j]} and
+    \code{data[i + 1,j]}. It is assumed to be constant, i.e., that
+    \code{data} is a regular time-series.
 
 }
 
@@ -82,7 +76,7 @@
   A list with components:
   \tabular{rl}{
   \code{state} \tab A matrix giving the the expected spot price and the
-  convenience yield. The \code{colnames} are \dQuote{S} and \dQuote{delta}\cr
+  convenience yield. The \code{colnames} are \dQuote{S} and \dQuote{delta}.\cr
   \code{fkf.obj} \tab The filter output from the package
   \code{\link[FKF:fkf]{fkf}}. Note that the log of the commodity spot
   price is filtered.\cr
@@ -108,9 +102,26 @@
 
 }
 % <---------------------------------------------------------------------->
-% \examples{
+\examples{
 
-% }
+data(futures)
+
+### Estimate parameters for coffee data (stop after 20 iterations)
+fit.obj <- fit.schwartz2f(futures$coffee$price, futures$coffee$ttm / 260,
+                          control = list(maxit = 20))
+
+### Filter the futures data to get the spot price and the convenience yield.
+filtered <- filter.schwartz2f(futures$coffee$price, futures$coffee$ttm / 260, fit.obj)
+
+
+### ...and plot it.
+par(mfrow = c(2, 1))
+plot(filtered$state[,1], ylab = "Spot price", type = "l")
+lines(futures$coffee$price[,1], col = "red") # Closest to maturity futures
+plot(filtered$state[,2], ylab = "Convenience yield", type = "l")
+abline(h = 0)
+
+}
 
 % <---------------------------------------------------------------------->
 \keyword{iteration}

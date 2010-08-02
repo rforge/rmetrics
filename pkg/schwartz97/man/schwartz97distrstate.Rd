@@ -1,6 +1,6 @@
 \name{distribution-state}
 \docType{methods}
-\title{Schwartz two-factor Model: Distribution of State Variables}
+\title{Schwartz two-factor Model: Distribution of the State Variables}
 
 \alias{pstate}
 \alias{pstate,ANY,ANY,ANY,numeric-method}
@@ -83,6 +83,10 @@
 % <---------------------------------------------------------------------->
 \details{
 
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.\cr
+
   The above methods rely on the functions
   \code{\link[mvtnorm]{pmvnorm}},
   \code{\link[mvtnorm]{dmvnorm}},
@@ -91,18 +95,6 @@
   \code{mvtnorm}.
 
 }
-
-% <---------------------------------------------------------------------->
-% \note{
-
-%   If \code{s0} is of a \code{\link{schwartz2f.fit}}-object these
-%   functions are computed under the objective probability measure. There
-%   may be situations in which the risk-neutral dynamics are of
-%   interest. \code{mu} and \code{alpha} can be modified to get the
-%   risk-neutral dynamics (see package-vignette \emph{Technical
-%   Document}).
-
-% }
 
 % <---------------------------------------------------------------------->
 \value{
@@ -147,7 +139,6 @@ hist(samples[,1])
 abline(v = mean(object, time = 2)[1], col = "red")
 hist(samples[,2])
 abline(v = mean(object, time = 2)[2], col = "red")
-
 
 }
 

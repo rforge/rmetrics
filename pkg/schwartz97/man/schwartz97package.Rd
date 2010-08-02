@@ -58,7 +58,7 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 \tabular{ll}{
   \code{\link{fit.schwartz2f}} \tab         Estimate parameters of the two-factor model.\cr
   \code{\link[=fitted.schwartz2f.fit]{fitted}} \tab Extract the model's fitted values.\cr
-  \code{\link[=resid.schwartz2f.fit]{resid}} Extract model residuals.\tab \cr
+  \code{\link[=resid.schwartz2f.fit]{resid}} \tab Extract model residuals.\cr
 }
 
 \strong{Pricing:}

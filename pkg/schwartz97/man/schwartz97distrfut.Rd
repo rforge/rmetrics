@@ -27,8 +27,7 @@
 \description{
 
   Density, distribution function, quantile function and random number
-  generation of futures prices. Notice that futures prices are
-  log-normally distributed.
+  generation of futures prices.
 
 }
 
@@ -83,8 +82,8 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
   \item{time}{Time where the futures process is evaluated
-    (relative to time zero).}
-  \item{ttm}{Time to maturity.}
+    (relative to now).}
+  \item{ttm}{Time to maturity (relative to now).}
   \item{s0}{Either a \code{numeric} representing the initial value of the
     commodity spot price or an object inheriting from class
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
@@ -145,12 +144,10 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 
   \eqn{\tilde{\alpha} = \alpha - \lambda / \kappa}{alphaT = alpha -
   lambda / kappa} where \eqn{\lambda}{lambda} is the market price of
-  convenience-yield risk.\cr
-
-  The market price of convenience yield risk can either be specified
-  explicitly by \code{lambda} or implicitly by \code{alphaT}. The
-  relation is \code{alphaT = alpha - lambda / kappa}. See the package
-  vignette.
+  convenience-yield risk. The market price of convenience yield risk
+  can either be specified explicitly by \code{lambda} or implicitly by
+  \code{alphaT}. The relation is \code{alphaT = alpha - lambda /
+  kappa}. See the package vignette.
 
 }
 
@@ -193,24 +190,28 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 }
 % <---------------------------------------------------------------------->
 \examples{
-## Create a "schwartz2f"-object
+### Create a "schwartz2f"-object
 model <- schwartz2f()
 
-## Probability
+### Probability
 pfutures(q = 10 * 3:9, time = 0.5, ttm = 2, model, lambda = 0.01)
 
-## Density
+### Density
 dfutures(x = c(20, 40, 100), time = 0.5, ttm = 2, model, lambda = 0.01)
 
-## Quantile
+### Quantile
 qfutures(p = 0.1 * 2:5, time = 0.5, ttm = 10, model, lambda = 0.01)
 
-## Sample
+### Sample
 sim <- rfutures(n = 1000, time = 0.5, ttm = 5, model, lambda = 0.01)
-hist(sim)
 
-## At time 0 the futures price is a deterministic function of s0 and
-## delta0. Therefore 3 times the same value is obtained:
+hist(sim, prob = TRUE)
+lines(seq(30, 300, length = 100),
+      dfutures(seq(30, 300, length = 100),
+               time = 0.5, ttm = 5, model, lambda = 0.01), col = "red")
+
+### At time 0 the futures price is a deterministic function of s0 and
+### delta0. Therefore 3 times the same value is obtained:
 rfutures(3, time = 0, ttm = 1, model, lambda = 0)
 
 }

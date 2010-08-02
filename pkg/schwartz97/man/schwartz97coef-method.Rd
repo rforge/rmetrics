@@ -32,6 +32,7 @@
 }
 % <---------------------------------------------------------------------->
 \value{
+
   If \code{object} is of class \code{\link[=schwartz2f-class]{schwartz2f}}:
   \tabular{rl}{
   \code{s0} \tab Commodity spot price.\cr
@@ -57,10 +58,14 @@
   \code{rho}\tab Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.\cr
   \code{r}\tab Instantaneous risk-free interest rate.\cr
-  \code{lambda}\tab Market price of convenience yield risk (see \bold{Details}).\cr
+  \code{lambda}\tab Market price of convenience yield risk.\cr
   \code{alphaT}\tab Mean-level of the convenience yield process with
-    respect to the equivalent martingale measure (see \bold{Details}).\cr
+    respect to the equivalent martingale measure.\cr
   }
+
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.
 
 }
 % <---------------------------------------------------------------------->
@@ -74,7 +79,15 @@
 % <---------------------------------------------------------------------->
 \examples{
 
-  coef(schwartz2f())
+### coef-method for schwartz2f-objects:
+coef(schwartz2f())
+
+### coef-method for schwartz2f.fit-objects:
+### Estimate parameters for soybean oil (but stop after 3 iterations).
+data(futures)
+fit.obj <- fit.schwartz2f(futures$soybean.oil$price, futures$soybean.oil$ttm / 260,
+                          control = list(maxit = 3))
+coef(fit.obj)
 
 }
 % <---------------------------------------------------------------------->
