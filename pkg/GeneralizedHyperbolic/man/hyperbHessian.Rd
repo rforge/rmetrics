@@ -33,9 +33,9 @@ sumX(x, mu, delta, r, k)
     hyperbolic distribution.}
   \item{delta}{Value of the parameter \eqn{\delta}{delta} of the
     hyperbolic distribution.} 
-  \item{r}{Parameter used in calculating a cumultaive sum of the data
+  \item{r}{Parameter used in calculating a cumulative sum of the data
     vector x.} 
-  \item{k}{Parameter used in calculating a cumultaive sum of the data
+  \item{k}{Parameter used in calculating a cumulative sum of the data
     vector x.}
 }
 \details{

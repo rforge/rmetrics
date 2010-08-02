@@ -1,12 +1,11 @@
 ### CYD 30/05/10
 ### DJS 11/09/06
 nigFitStart <- function(x, breaks = NULL,
-                        startValues = c("US","FN","Cauchy","MoM"),
+                        startValues = c("FN","Cauchy","MoM","US"),
                         paramStart = NULL,
                         startMethodMoM = c("Nelder-Mead","BFGS"),
                         ...) {
   startValues <- match.arg(startValues)
-  startMethodSL <- match.arg(startMethodSL)
   startMethodMoM <- match.arg(startMethodMoM)
 
   histData <- hist(x, plot = FALSE, right = FALSE)
@@ -86,7 +85,7 @@ nigFitStart <- function(x, breaks = NULL,
   names(paramStart) <- c("mu", "delta", "alpha", "beta")
   list(paramStart = paramStart, breaks = breaks, midpoints = midpoints,
        empDens = empDens, svName = svName)
-} ## End of hyperbFitStart()
+} ## End of nigFitStart()
 
 
 

@@ -15,7 +15,7 @@
 \usage{
   nigFit(x, freq = NULL, breaks = NULL, paramStart = NULL,
          startMethod = c("Nelder-Mead","BFGS"),
-         startValues = c("US","FN","Cauchy","MoM"),
+         startValues = c("FN","Cauchy","MoM","US"),
          criterion = "MLE",
          method = c("Nelder-Mead","BFGS","nlm",
                    "L-BFGS-B","nlminb","constrOptim"),

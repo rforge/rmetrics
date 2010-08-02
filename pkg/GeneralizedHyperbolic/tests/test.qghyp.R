@@ -1,3 +1,4 @@
+require(GeneralizedHyperbolic)
 ### Unit tests of function qghyp
 
 ### Functions with name test.* run by R CMD check or by make if

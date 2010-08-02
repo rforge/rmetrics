@@ -3,7 +3,7 @@
 ### DJS 11/09/06
 nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
                    startMethod = c("Nelder-Mead","BFGS"),
-                   startValues = c("US","FN","Cauchy","MoM"),
+                   startValues = c("FN","Cauchy","MoM","US"),
                    criterion = "MLE",
                    method = c("Nelder-Mead","BFGS","nlm",
                               "L-BFGS-B","nlminb","constrOptim"),
@@ -31,7 +31,6 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
   startInfo <- nigFitStart(x, breaks = breaks,
                            startValues = startValues,
                            paramStart = paramStart,
-                           startMethodSL = startMethod,
                            startMethodMoM = startMethod, ...)
   paramStart <- startInfo$paramStart
   ## change paramStart in the log scale of param set number 1 (mu,delta,pi,zeta)
@@ -62,7 +61,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
         return(-sum(log(nigDens)))
       }
     } else {
-      llfunc <- function(param, x) {
+      llfunc <- function(param) {
         mu <- param[1]
         delta <- param[2]
         hyperbPi <- param[3]
@@ -73,7 +72,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
         nigDens <- sqrt(1 + hyperbPi^2)*zeta^(1/2)*
                    (sqrt(2*pi)*KNu)^(-1)*(delta^2 + (x - mu)^2)^(-1/2)*
                    KNu2*exp((zeta*hyperbPi/delta)*(x - mu))
-        return(-sum(log(hyperbDens)))
+        return(-sum(log(nigDens)))
       }
     }
 

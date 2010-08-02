@@ -59,7 +59,7 @@
 }
 
 \seealso{
-  \code{\link{nigFit}}, \code{\link{summary}, \code{nigHessian}}.
+  \code{\link{nigFit}}, \code{\link{summary}}, \code{nigHessian}.
 }
 \examples{
 ### Continuing the  nigFit(.) example:
@@ -67,6 +67,6 @@ param <- c(2, 2, 2, 1)
 dataVector <- rnig(500, param = param)
 fit <- nigFit(dataVector, method = "BFGS")
 print(fit)
-summary(fit, hessian = TRUE)
+summary(fit, hessian = TRUE, hessianMethod = "tsHessian")
 }
 \keyword{distribution}

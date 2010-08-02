@@ -61,7 +61,7 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 {
   parResult <- ghypCheckPars(param)
   case <- parResult$case
-  errorMessage <- parResult$errMessage
+  errMessage <- parResult$errMessage
   if (case == "error")
     stop(errMessage)
   mu <- param[1]

@@ -1,6 +1,5 @@
 \name{nigHessian}
 \alias{nigHessian}
-\alias{sumX}
 
 \title{
 Calculate Two-Sided Hessian for the Normal Inverse Gaussian Distribution
@@ -12,7 +11,6 @@ obtaining the information matrix for maximum likelihood estimation.
 \usage{
 nigHessian(x, param, hessianMethod = c("exact", "tsHessian"),
               whichParam = 1:5, ...)
-sumX(x, mu, delta, r, k)
 }
 \arguments{
   \item{x}{Data vector.}
@@ -31,14 +29,6 @@ sumX(x, mu, delta, r, k)
     \code{param} belong to.} 
   \item{\dots}{Values of other parameters of the function \code{fun} if
     required.} 
-  \item{mu}{Value of the parameter \eqn{\mu}{mu} of the
-    normal inverse Gaussian distribution.}
-  \item{delta}{Value of the parameter \eqn{\delta}{delta} of the
-    normal inverse Gaussian distribution.} 
-  \item{r}{Parameter used in calculating a cumultaive sum of the data
-    vector x.} 
-  \item{k}{Parameter used in calculating a cumultaive sum of the data
-    vector x.}
 }
 \details{
   
@@ -54,10 +44,7 @@ sumX(x, mu, delta, r, k)
 \value{
   \code{nigHessian} gives the approximate or exact Hessian matrix for
   the data vector \code{x} and the estimated parameter vector
-  \code{param}.  \code{sumX} is a sum term used in calculating the exact
-  Hessian. It is called by \code{nigHessian} when the argument
-  \code{hessianMethod = "exact"}.  It is not expected to be called
-  directly by users.
+  \code{param}.
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz},
@@ -76,7 +63,7 @@ fit <- nigFit(dataVector, method = "BFGS")
 ### Or calculate the exact Hessian using summary.nigFit method:
 ### summary(fit, hessian = TRUE)
 
-## Claculate the approximate Hessian:
+## Calculate the approximate Hessian:
 summary(fit, hessian = TRUE, hessianMethod = "tsHessian")
 }
 

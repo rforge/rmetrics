@@ -10,7 +10,7 @@
 
 \usage{
   nigFitStart(x, breaks = NULL,
-              startValues = c("US","FN","Cauchy","MoM"),
+              startValues = c("FN","Cauchy","MoM","US"),
               paramStart = NULL,
               startMethodMoM = c("Nelder-Mead","BFGS"), ...)
   nigFitStartMoM(x, startMethodMoM = "Nelder-Mead", ...)
