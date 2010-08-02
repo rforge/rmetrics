@@ -1,10 +1,7 @@
-\name{fCalendar-package}
+\name{timeDate-package}
 
 
-\alias{fCalendar-package}
-
-
-\alias{fCalendar}
+\alias{timeDate-package}
 
 
 \docType{package}
@@ -21,20 +18,20 @@
 }
 
 
-\details{
+% \details{
 
-  \tabular{ll}{
-    Package:    \tab fCalendar \cr
-    Type:       \tab Package \cr
-    Version:    \tab 270.73 \cr
-    Date:       \tab 2008 \cr
-    License:    \tab GPL (>= 2) \cr
-    Copyright:  \tab (c) 1999-2008 Diethelm Wuertz, Rmetrics Foundation,
-    GPL \cr
-    URL:        \tab \url{http://www.rmetrics.org}
-  }
+%   \tabular{ll}{
+%     Package:    \tab fCalendar \cr
+%     Type:       \tab Package \cr
+%     Version:    \tab 270.73 \cr
+%     Date:       \tab 2008 \cr
+%     License:    \tab GPL (>= 2) \cr
+%     Copyright:  \tab (c) 1999-2008 Diethelm Wuertz, Rmetrics Foundation,
+%     GPL \cr
+%     URL:        \tab \url{http://www.rmetrics.org}
+%   }
 
-}
+% }
 
 
 \section{Overview of Topics}{
