@@ -20,7 +20,7 @@
 }
 % <---------------------------------------------------------------------->
 \arguments{
-  \item{x}{A \code{\link[=schwartz2f-class]{schwartz2f}} object.}
+  \item{x}{A \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} object.}
   \item{type}{Number of trajectories.}
   \item{data}{Time span of the simulation.}
   \item{ttm}{Time steps.}

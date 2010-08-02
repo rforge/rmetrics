@@ -10,7 +10,7 @@
 
   The function \code{coef} returns parameters of \code{schwartz2f}
   and a \code{schwartz2f.fit} objects as a list. The function
-  \code{coefficients} is a synonym for \code{coef}.
+  \code{coefficients} is an alias for \code{coef}.
 
 }
 % <---------------------------------------------------------------------->
