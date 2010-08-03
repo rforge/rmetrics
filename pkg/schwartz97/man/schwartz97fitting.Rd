@@ -1,11 +1,11 @@
 \name{parameter-estimation}
 \alias{fit.schwartz2f}
-\title{Schwartz 1997 commodity model}
+\title{Schwartz 1997 two factor commodity model}
 
 % <---------------------------------------------------------------------->
 \description{
 
-  Fit the Schwartz 1997 commodity model to futures data
+  Fit the Schwartz 1997 two factor commodity model to futures data.
 
 }
 
@@ -56,36 +56,64 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 % <---------------------------------------------------------------------->
 \note{
 
-  Parameter estimation is statistically computationally demanding...
+  Parameter estimation is statistically fragile and computationally
+  demanding. Multiple local maxima of the likelihood may exist which can
+  result in absurd parameter estimates as, e.g., a yearly drift of 3 and
+  or a market price of convenience yield risk of -2. Therefore, a
+  reasonable parameter estimation is most likely an iteration where
+  several initial values are used and different combinations of
+  parameters are hold constant during estimation. Also, simulation
+  studies showed that a fairly large sample is required to get adequate
+  estimates (e.g. 20000 daily observations, depending on the number of
+  parameters which shall be estimated). Several utility functions may
+  help to investigate the fit (see
+  e.g. \code{\link[=fitted.schwartz2f.fit]{fitted}},
+  \code{\link[=resid.schwartz2f.fit]{resid}},
+  \code{\link[=plot.schwartz2f.fit]{plot}},
+  \code{\link[=coef.schwartz2f]{coef}}).
 
+  The fitting procedure generally requires a large number of iterations
+  to achieve a reasonable tolerance level. Each optimization iteration
+  involves the filtering of the data set by the Kalman
+  filter. Therefore, an efficient implementation of the Kalman filter is
+  key. The backbone of the estimation procedure is the
+  \code{\link[FKF:fkf]{fkf}} function of the package \code{\link[FKF:fkf]{FKF}}.
+  
 }
 % <---------------------------------------------------------------------->
 \details{
 
   The elements of \code{data} and \code{ttm} have the following
-  interpretation: \code{data[i,j]} denotes the price of the futures
-  contract with time to maturity \code{ttm[i,j]}. 
+  interpretation: \code{data[i,j]} denotes the futures price whose time
+  to maturity was \code{ttm[i,j]} when it was observed (in units of
+  \code{deltat}).
 
   The time increment observation \code{data[i,j]} and \code{data[i +
-    1,j]} is denoted with \code{deltat}.
+    1,j]} is denoted with \code{deltat}. Note that this specification
+  requires a regularly spaced data series.
 
   \code{opt.meas.sd} is used to determine how measurement uncertainty is
   treated in the fit: According to the model there should be a
   one-to-one correspondance between the spot and the futures price. In
-  reality, futures prices with different maturities but the same
-  observation date lead to different spot prices. This is reflected in
+  reality, futures prices differ from model prices. This is reflected in
   the measurement uncertainty \code{meas.sd}. The parameters
   \code{meas.sd} can be fitted. However, it might be sufficient to fit
   only a scalar where the measurement uncertainty is parametrized by
   \code{scalar * meas.sd}. In this case set \code{opt.meas.sd} to
   \dQuote{scalar}. If all of \code{meas.sd} should be fitted choose
   \dQuote{all}. If the measurement uncertainty is known set
-  \code{meas.sd} to \dQuote{none}. See also the package vignette.
+  \code{meas.sd} to \dQuote{none}. Note that the measurement errors are
+  assumed to be independent in this implementation (even though the
+  model and the filter do not require independence).
 
   Potential error codes are described in the
   \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-class
   documentation. 
 
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.
+  
 }
 
 % <---------------------------------------------------------------------->
@@ -102,6 +130,10 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 \seealso{
 
   \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} class,
+  \code{\link[=fitted.schwartz2f.fit]{fitted}},
+  \code{\link[=resid.schwartz2f.fit]{resid}},
+  \code{\link[=plot.schwartz2f.fit]{plot}},
+  \code{\link[=coef.schwartz2f]{coef}}).
   \code{\link{pricefutures}}.
 
 }
@@ -119,9 +151,45 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 data(futures)
 
 ### Estimate parameters for wheat data.
-### (little precision required with reltol = 1e-2)
+### (little precision required with reltol = 1e-3)
 fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
-                          control = list(maxit = 100, reltol = 1e-2))
+                          control = list(maxit = 300, reltol = 1e-3))
+
+### See how parameter values changed during the fit
+plot(fit.obj, type = "trace.pars")
+
+\dontrun{
+### Do the same but with lower tolerance level:
+high.precision.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                                     control = list(maxit = 3000, reltol = 5e-8))
+
+plot(high.precision.fit, type = "trace.pars")
+### ... alpha becomes nonsensically high, kappa (speed of mean-reversion
+### of the convenience yield) goes to zero. Conclusion: Choose different
+### initial values or hold kappa constant at 1.5.
+}
+
+### These residuals should me iid standard normal
+model.resid <- resid(fit.obj, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
+                     type = "filter.std")
+acf(model.resid)
+par(mfrow = c(3, 2))
+apply(model.resid, 2, function(x)plot(density(x)))
+### ...but are anything but iid standard normal.
+
+### ...though the fitted values look fine:
+fitted.futures <- fitted(fit.obj, futures$wheat$price, futures$wheat$ttm / 260)
+par(mfrow = c(1, 3))
+### Plot futures prices
+plot(as.ts(futures$wheat$price), plot.type = "single", ylab = "Futures prices",
+     col = gray(seq(0.1, 0.9, length = 4)))
+### Plot fitted values
+plot(as.ts(fitted.futures), plot.type = "single", ylab = "Fitted values",
+     col = gray(seq(0.1, 0.9, length = 4)))
+### Plot relative difference
+plot(as.ts((fitted.futures - futures$wheat$price) / fitted.futures), plot.type = "single",
+     ylab = "Relative difference", col = gray(seq(0.1, 0.9, length = 4)))
+
 
 ### The price of a put option on the wheat futures which matures in 1.1
 ### years. The option expires in 1 year. The strike price is the

@@ -12,7 +12,7 @@
   oil, lumber, live cattle, coffee, heating oil, copper.
 
   There are, depending on the liquidity of the commodity, between 4 and
-  10 closest to maturity futures.
+  10 \sQuote{clean} closest to maturity futures price series.
 
 }
 
@@ -24,7 +24,7 @@
   A list containing ten commodities as lists:
   \dQuote{corn}, \dQuote{wheat}, \dQuote{soybean}, \dQuote{soybean.meal},
   \dQuote{soybean.oil}, \dQuote{lumber}, \dQuote{live.cattle},
-  \dQuote{coffee}, \dQuote{heating.oil}, \dQuote{copper}.\cr
+  \dQuote{coffee}, \dQuote{heating.oil}, \dQuote{copper}. \cr
 
   Each list contains four dimnamed matrices:
   \describe{
@@ -34,6 +34,9 @@
     \item{\code{oi}}{Open interest.}
     \item{\code{vol}}{Volume.}
   }
+
+  The i-th column of each matrix contains data for the i-th closest to
+  maturity contract.
 
   \tabular{rlll}{
     \bold{Commodity} \tab \bold{# Contracts} \tab \bold{Start date} \tab \bold{End date}\cr
@@ -53,9 +56,9 @@
 % <---------------------------------------------------------------------->
 \details{
 
-  The elements \code{$price} and \code{$ttm} have the following
-  interpretation: \code{$price[i,j]} denotes the price of the futures
-  contract with time to maturity \code{$ttm[i,j]} in units of days.\cr
+  The elements of \code{price} and \code{ttm} have the following
+  interpretation: \code{price[i,j]} denotes the futures price whose time
+  to maturity was \code{ttm[i,j]} days when it was observed. 
 
 }
 % <---------------------------------------------------------------------->
@@ -72,7 +75,13 @@
 % <---------------------------------------------------------------------->
 \examples{
 
-  data(futures)
+data(futures)
+
+### Plot forward curves of lumber
+futuresplot(futures$lumber, type = "forward.curve")
+
+### Plot time to maturity of heating oil data
+futuresplot(futures$heating.oil, type = "ttm")
 
 }
 

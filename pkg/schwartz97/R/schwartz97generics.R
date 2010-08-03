@@ -265,7 +265,10 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
 {
   type <- match.arg(type)
   if(type == "trace.pars"){
-    plot(as.ts(x@trace.pars), xlab = "Iteration", type = "p",
+    trace.pars <- x@trace.pars
+    trace.pars[,"rel.tol"] <- log(trace.pars[,"rel.tol"], base = 10)
+    colnames(trace.pars)[colnames(trace.pars) == "rel.tol"] <- "log10(rel.tol)"
+    plot(as.ts(trace.pars), xlab = "Iteration", type = "p",
          main = "Parameter evolution",
          panel = function(x,...){points(x,...);abline(h=rev(x)[1])}, ...)
   }else if(type == "state"){

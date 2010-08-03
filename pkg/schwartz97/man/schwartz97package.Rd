@@ -74,7 +74,7 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
   \code{\link[=vcov.schwartz2f]{mean}} \tab Extract the covariance matrix of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
   \code{\link{filter.schwartz2f}} \tab Filter futures prices to get the spot price and convenience yield.\cr
   \code{\link[=plot.schwartz2f.fit]{plot}} \tab Plot \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-objects.\cr
-  \code{\link[=plot.schwartz2f.fit]{plot}} \tab Plot trajectories of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
+  \code{\link[=plot.schwartz2f]{plot}} \tab Plot trajectories of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
   \code{\link{futures}} \tab Use \code{data(futures)} to get data of 10 commodities.\cr
 
 }
