@@ -1,3 +1,11 @@
+2010-08-04    <d.scott@auckland.ac.nz>
+
+	* nig functions added (dnig, pnig, qnig, rnig, nigFit,
+	nigFitStart, etc)
+
+	* incompleteBesselK added for use in pgig
+
+
 2010-06-25    <d.scott@auckland.ac.nz>
 
 	* ghypParam recreated to avoid using ghypChangeParam which causes
