@@ -12,13 +12,13 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  The \code{schwartz2f} class stores parameters which appear in the
-  dynamics of the state variables. The class \code{schwartz2f.fit}
-  inherits from the \code{schwartz2f} class. The class
-  \code{schwartz2f.fit} adds slots containing data regarding the fit and
-  parameters of the risk-neutral dynamics. In particular, it adds the
-  market-price-of convenience-yield risk \code{lambda} and the interest
-  rate.
+  The \code{schwartz2f} class stores parameters which determine initial
+  values and the dynamics of the state variables. The class
+  \code{schwartz2f.fit} inherits from the \code{schwartz2f} class. The
+  class \code{schwartz2f.fit} adds slots which contain data regarding
+  the estimation procedure and parameters of the risk-neutral
+  dynamics. In particular, it adds the market price of convenience yield
+  risk \code{lambda} and the interest rate.
 
 }
 % <---------------------------------------------------------------------->
@@ -34,20 +34,20 @@
     \describe{
     \item{\code{call}:}{The function-call of class \code{call}.}
     \item{\code{s0}:}{Initial commodity spot-price of class \code{numeric}.}
-    \item{\code{delta0}:}{Initial value of the convenience-yield of
+    \item{\code{delta0}:}{Initial value of the convenience yield of
       class \code{numeric}.}
-    \item{\code{mu}:}{Enters the drift of the commodity spot-price (in
+    \item{\code{mu}:}{Enters the drift of the commodity spot price (in
       the Objective measure, see \bold{Details}) of class \code{numeric}.}
-    \item{\code{sigmaS}:}{Diffusion parameter of the spot-price process
+    \item{\code{sigmaS}:}{Diffusion parameter of the spot price process
       of class \code{numeric}.} 
     \item{\code{kappaE}:}{Speed of mean-reversion of the
       convenience-yield process of lass \code{numeric}.}
-    \item{\code{alpha}:}{Mean-level of the convenience-yield process of
+    \item{\code{alpha}:}{Mean level of the convenience-yield process of
       class \code{numeric}.}
     \item{\code{sigmaE}:}{Diffusion parameter of the convenience-yield
       process of class \code{numeric}.} 
     \item{\code{rhoSE}:}{Correlation between the two Brownian motions
-      which drive the spot-price and convenience-yield processes of
+      which drive the spot price and convenience-yield processes of
       class \code{numeric}.}
   }
 
@@ -57,22 +57,22 @@
       \code{numeric}.}
     \item{\code{llh}:}{The log likelihood value of class
       \code{numeric}.}
-    \item{\code{converged}:}{A boolean whether the fit converged or
-      not. Object of class \code{logical}.}
+    \item{\code{converged}:}{A \code{logical} stating whether the fit converged or
+      not.}
     \item{\code{error.code}:}{An error code of class \code{numeric}. The
       value of \code{\link{optim}}'s \dQuote{convergence}. If an unknown
       error occurs the value -1 is returned.}
     \item{\code{error.message}:}{An error message of class
       \code{character}.}
-    \item{\code{fitted.params}:}{A boolean vector stating which
-      parameters were fitted of class \code{logical}.}
+    \item{\code{fitted.params}:}{A \code{logical} vector stating which
+      parameters were fitted.}
     \item{\code{trace.pars}:}{Contains the parameter value evolution
     during the fitting procedure of class \code{matrix}.}
     \item{\code{r}:}{The risk-free interest rate of class \code{numeric}.}
-    \item{\code{alphaT}:}{The mean-value of the convenience-yield
+    \item{\code{alphaT}:}{The mean-value of the convenience yield
       process under the equivalent martingale measure of class 
     \code{numeric} (see \bold{Details}).}
-    \item{\code{lambda}:}{The market price of convenience-yield risk of
+    \item{\code{lambda}:}{The market price of convenience yield risk of
       class \code{numeric}.}
     \item{\code{meas.sd}:}{The standard deviation of the measurement
       equantion of class \code{numeric}.}
@@ -110,9 +110,10 @@
 Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
 }
 % <---------------------------------------------------------------------->
-\section{Methods}{
-   A \dQuote{coef} method.
-}
+% \section{Methods}{
+%   Methods for \dQuote{schwartz2f}-objects:\cr
+%   \code{\link{coef}}, ...
+% }
 % <---------------------------------------------------------------------->
 \author{Philipp Erb, David Luethi, Juri Hinz}
 % <---------------------------------------------------------------------->
@@ -147,9 +148,21 @@ Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
 }
 % <---------------------------------------------------------------------->
 \examples{
-  obj <- schwartz2f()
-  coef(obj)
+
+obj <- schwartz2f() # create an object of class schwartz2f
+obj          # print it
+coef(obj)    # get coefficients 
+unclass(obj) # see the slots 
+
+### create an object of class schwartz2f.fit
+data(futures)
+fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                          control = list(maxit = 3))
+fit.obj          # print it
+coef(fit.obj)    # get coefficients 
+unclass(fit.obj) # see the slots 
+
 }
 % <---------------------------------------------------------------------->
 \keyword{classes}
-
+\keyword{models}

@@ -7,7 +7,7 @@ setGeneric("pricefutures",
 pricefutures.default <- function(ttm = 1, s0 = 50, delta0 = 0,
                                  sigmaS = 0.3, kappa = 1, alpha = 0,
                                  sigmaE = 0.5, rho = 0.75,
-                                 r = 0.05, lambda = 0, alphaT = NULL)
+                                 r = 0.03, lambda = 0, alphaT = NULL)
 {
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
@@ -31,7 +31,7 @@ setMethod("pricefutures", signature(ttm = "ANY", s0 = "numeric"),
           pricefutures.default)
 
 ### < ---------------------------------------------------------------------- >
-pricefutures.schwartz2f <- function(ttm = 1, s0, r = 0.05,
+pricefutures.schwartz2f <- function(ttm = 1, s0, r = 0.03,
                                     lambda = 0, alphaT = NULL)
 {
   tmp.coef <- coef(s0)
@@ -97,7 +97,7 @@ setGeneric("priceoption",
 priceoption.default <- function(type = c("call", "put"), time = 0.5,
                                 Time = 1, K = 40, g0 = 50,
                                 sigmaS = 0.3, kappa = 1,
-                                sigmaE = 0.5, rho = 0.75, r = 0.05)
+                                sigmaE = 0.5, rho = 0.75, r = 0.03)
 {
   type <- match.arg(type)
   if(Time < time)
@@ -131,7 +131,7 @@ setMethod("priceoption", signature(type = "ANY", time = "ANY",
 ### < ---------------------------------------------------------------------- >
 priceoption.schwartz2f <- function(type = c("call", "put"),
                                    time = 0.5, Time = 1, K = 40,
-                                   g0, r = 0.05, lambda = 0, alphaT = NULL)
+                                   g0, r = 0.03, lambda = 0, alphaT = NULL)
 {
   type <- match.arg(type)
   if(Time < time)

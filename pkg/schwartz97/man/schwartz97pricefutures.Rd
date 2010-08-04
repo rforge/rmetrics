@@ -9,7 +9,7 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  A function to compute futures prices.
+  Compute arbitrage-free futures prices.
 
 }
 
@@ -17,9 +17,9 @@
 \usage{
 \S4method{pricefutures}{ANY,numeric}(ttm = 1, s0 = 50, delta0 = 0, sigmaS = 0.3,
              kappa = 1, alpha = 0, sigmaE = 0.5, rho = 0.75,
-             r = 0.05, lambda = 0, alphaT = NULL)
+             r = 0.03, lambda = 0, alphaT = NULL)
 
-\S4method{pricefutures}{ANY,schwartz2f}(ttm = 1, s0, r = 0.05,
+\S4method{pricefutures}{ANY,schwartz2f}(ttm = 1, s0, r = 0.03,
              lambda = 0, alphaT = NULL)
 
 \S4method{pricefutures}{ANY,schwartz2f.fit}(ttm = 1, s0)
@@ -53,11 +53,9 @@
 % <---------------------------------------------------------------------->
 \details{
 
-  The market price of convenience yield risk can either be specified
-  explicitly by \code{lambda} or implicitly by \code{alphaT}. The
-  relation is \code{alphaT = alpha - lambda / kappa}. See the package
-  vignette or
-  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.
 
 }
 
@@ -74,11 +72,10 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{priceoption}},
-  \code{\link{pfutures}},
-  \code{\link{dfutures}},
-  \code{\link{qfutures}},
-  \code{\link{rfutures}}
+  \code{\link{priceoption}} to price futures,
+  \code{\link[=pfutures]{d/p/q/rfutures}} to work with futures,
+  \code{\link[=schwartz2f-class]{schwartz2f}}-constructor,
+  \code{\link{fit.schwartz2f}} for parameter estimation.
 
 }
 
@@ -93,9 +90,19 @@
 % <---------------------------------------------------------------------->
 \examples{
 
-  pricefutures(ttm = 2, s0 = 10, delta0 = 0)
+### function call by atomic arguments
+forward.curve <- pricefutures(ttm = 0.2 * 1:10, s0 = 10, delta0 = 0,
+                              alpha = 0, lambda = 0.02, r = 0)
+plot(forward.curve, type = "b")
+
+### function call via schwartz2f-object. 
+obj <- schwartz2f(delta0 = 0, sigmaE = 1e-5) # Make convenience yield inactive
+forward.curve <- pricefutures(ttm = 0.2 * 1:10, s0=obj, r = 0, alphaT = 0)
+plot(forward.curve, type = "b")
+
 
 }
-
 % <---------------------------------------------------------------------->
 \keyword{models}
+\keyword{derivative}
+

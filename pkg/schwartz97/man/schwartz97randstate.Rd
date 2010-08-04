@@ -14,11 +14,10 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  Random number and trajectory generation of the state variables with
-  respect to the objective probability measure. The state variables are
-  the commodity spot price \code{s0} and the spot convenience yield
-  \code{delta0}. The commodity log spot price and the convenience yield
-  follow a joint bivariate normal distribution.
+  Random number and trajectory generation of the state variables. The
+  state variables are the commodity spot price \code{s0} and the spot
+  convenience yield \code{delta0}. The commodity log spot price and the
+  convenience yield follow a joint bivariate normal distribution.
 
 }
 
@@ -26,14 +25,14 @@
 \usage{
 
 \S4method{rstate}{ANY,ANY,numeric}(n, time = 1, s0 = 50, delta0 = 0,
-        mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
-        sigmaE = 0.5, rho = 0.75, method = "chol")
+       mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
+       sigmaE = 0.5, rho = 0.75, method = "chol")
 
 \S4method{rstate}{ANY,ANY,schwartz2f}(n, time = 1, s0, method = "chol")
 
 \S4method{simstate}{ANY,ANY,numeric}(n, time = 1, s0 = 50, delta0 = 0,
-          mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
-          sigmaE = 0.5, rho = 0.75, method = "chol")
+         mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
+         sigmaE = 0.5, rho = 0.75, method = "chol")
 
 \S4method{simstate}{ANY,ANY,schwartz2f}(n, time = 1, s0, method = "chol")
 
@@ -43,8 +42,6 @@
 \arguments{
 
   \item{n}{Number of observations.}
-  \item{method}{See \code{\link[mvtnorm]{rmvnorm}} of package
-    \code{mvtnorm}.}
   \item{time}{Time where the joint stochastic process is evaluated
     (relative to time zero).}
   \item{s0}{Either a \code{numeric} representing the initial value of the
@@ -58,10 +55,17 @@
   \item{sigmaE}{Diffusion parameter of the convenience yield process.}
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
+  \item{method}{See \code{\link[mvtnorm]{rmvnorm}} of package
+    \code{mvtnorm}.}
+
 }
 
 % <---------------------------------------------------------------------->
 \details{
+
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.
 
   The above methods rely on the functions
   \code{\link[mvtnorm]{pmvnorm}},
@@ -88,7 +92,7 @@
 
   \code{\link[=schwartz2f-class]{schwartz2f}}-class
   description.
-  \code{\link[=dstate]{d/p/q/state}} for density, distribution function
+  \code{\link[=dstate]{d/p/q/state}} for the density, distribution,
   and quantile function of the state variables.
 
 

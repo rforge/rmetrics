@@ -303,12 +303,6 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
     state <- filter.schwartz2f(data, ttm, x)$state
     fitted.futures <- fitted(x, data, ttm)
 
-    col <- rainbow(10)
-    col.idx <- rep(1:length(col), length = nrow(data))
-    tmp.data <- cbind(state[,1], fitted.futures, ttm,
-                      data.frame(col.idx),
-                      1:nrow(data))
-
     x.seq <- seq(0, by = x@deltat, length = nrow(state))
 
     plot(x.seq, state[,1], type = "l",
@@ -316,20 +310,14 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
          ylim = range(cbind(state[,1], fitted.futures), na.rm = TRUE),
          ylab = "", xlab = "Time", ...)
 
-    plot.forward.curve <- function(x, col, d, date.idx){
-      lines(date.idx[x[2 * d + 3]] + c(0,x[d + 1 + (1:d)]),
-            x[1:(d + 1)], 
-            col = col[x[2 * d + 2]], lty = "dotted", ...)
+    plot.forward.curve <- function(i, for.cur, ttm.mat, date.idx, col, ...){
+      lines(date.idx[i] + c(0, ttm.mat[i,]),  for.cur[i,],
+            col = col[i], lty = "dotted", ...)
     }
 
-    apply(tmp.data, 1, plot.forward.curve, d = ncol(ttm), col = col,
-          date.idx = x.seq, ...)
-    ## state <- filter.schwartz2f(data, ttm, x)$state
-    ## col <- colorRampPalette(c("darkblue", "lightblue"))(ncol(data))
-    ## fitted.futures <- fitted(x, data, ttm)
-    ## futures.list <- list(price = cbind(state[,1], data),
-    ##                      ttm = cbind(rep(0, nrow(data)), ttm) / x@deltat)
-    ## futuresplot(futures.list, type = "forward.curve", plot.legend = FALSE)
+    sapply(1:nrow(data), plot.forward.curve, for.cur = cbind(state[,1], fitted.futures),
+           ttm.mat = ttm, col = rep(rainbow(10), length = nrow(data)),
+           date.idx = x.seq, ...)
     legend("topleft", legend = c("Filtered spot price", "Fitted Forward Curves"),
            lty = c("solid", "dotted"), bg = "white")
 

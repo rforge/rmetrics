@@ -8,11 +8,8 @@ test.initializations <- function()
   r <- 0.05
   data <- futures$soybean
 
-  finite.idx <- apply(data$price, 1, function(x)all(is.finite(x))) &
-  apply(data$ttm, 1, function(x)all(is.finite(x)))
-
-  fit <- fit.schwartz2f(data$price[finite.idx,],
-                        ttm = data$ttm[finite.idx,] / 260,
+  fit <- fit.schwartz2f(data$price,
+                        ttm = data$ttm / 260,
                         deltat = 1 / 260,
                         mu = 0.1, sigmaS = 0.3,
                         kappa = 1, alpha = 0, sigmaE = 0.5,
@@ -22,7 +19,7 @@ test.initializations <- function()
                           rho = TRUE, lambda = TRUE),
                         opt.meas.sd = opt.meas.sd,
                         r = r, silent = FALSE,
-                        control = list(maxit = 100, abstol = 1e-4, reltol = 1e-4))
+                        control = list(maxit = 100, reltol = 1e-4))
 
   coefs <- coef(fit)
 
@@ -32,8 +29,8 @@ test.initializations <- function()
                           sigmaE = coefs$sigmaE, rho = coefs$rho)
 
 ### Densities:
-  q <- cbind(runif(10, min(data$price[finite.idx,]), max(data$price[finite.idx,])),
-             runif(10, min(data$ttm[finite.idx,]), max(data$ttm[finite.idx,])))
+  q <- cbind(runif(10, min(data$price), max(data$price)),
+             runif(10, min(data$ttm), max(data$ttm)))
 
   checkEquals(dstate(q, time = 1.65, state.obj), dstate(q, time = 1.65, fit),
               "dstate: Must give same results for schwartz2f and schwartz2f.fit objects!")
@@ -110,7 +107,7 @@ test.initializations <- function()
 
 
 ### Futures (alphaT parametrization of risk neutral measure)
-  fut.state <- pricefutures(ttm = 1.55, state.obj, alphaT = coefs$alphaT)
+  fut.state <- pricefutures(ttm = 1.55, state.obj, alphaT = coefs$alphaT, r = r)
   fut.fit <- pricefutures(ttm = 1.55, fit)
   fut.args <- pricefutures(ttm = 1.55, s0 = coefs$s0, delta0 = coefs$delta0,
                            sigmaS = coefs$sigmaS, kappa = coefs$kappa, alpha = coefs$alpha,
@@ -124,7 +121,7 @@ test.initializations <- function()
               "pricefutures: Must give same results for schwartz2f objects and call by 'atomic' arguments!")
 
 ### Futures (lambda parametrization of risk neutral measure)
-  fut.state <- pricefutures(ttm = 1.55, state.obj, lambda = coefs$lambda)
+  fut.state <- pricefutures(ttm = 1.55, state.obj, lambda = coefs$lambda, r = r)
   fut.fit <- pricefutures(ttm = 1.55, fit)
   fut.args <- pricefutures(ttm = 1.55, s0 = coefs$s0, delta0 = coefs$delta0,
                            sigmaS = coefs$sigmaS, kappa = coefs$kappa, alpha = coefs$alpha,

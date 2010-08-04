@@ -9,7 +9,7 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  Computes arbitrage-free prices of European call and put options on
+  Compute arbitrage-free prices of European call and put options on
   commodity futures contracts.
 
 }
@@ -18,15 +18,14 @@
 \usage{
 \S4method{priceoption}{ANY,ANY,ANY,ANY,numeric}(type = c("call", "put"), time = 0.5, Time = 1, K = 40,
             g0 = 50, sigmaS = 0.3, kappa = 1, sigmaE = 0.5,
-            rho = 0.75, r = 0.05)
+            rho = 0.75, r = 0.03)
 
 \S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f}(type = c("call", "put"),
-                      time = 0.5, Time = 1, K = 40,
-                       g0, r = 0.05, lambda = 0, alphaT = NULL)
-
+            time = 0.5, Time = 1, K = 40,
+            g0, r = 0.03, lambda = 0, alphaT = NULL)
 
 \S4method{priceoption}{ANY,ANY,ANY,ANY,schwartz2f.fit}(type = c("call", "put"),
-                      time = 0.5, Time = 1, K = 40, g0)
+            time = 0.5, Time = 1, K = 40, g0)
 
 }
 
@@ -38,8 +37,7 @@
   \item{time}{Exercise time of the option.}
   \item{Time}{Maturity date of the underlying futures (see \bold{Details}).}
   \item{K}{Strike price.}
-  \item{g0}{The current value of the futures contractinitial value of the
-    \emph{futures price} or an object inheriting from class
+  \item{g0}{The current \emph{futures price} or an object inheriting from class
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
   \item{sigmaS}{Diffusion parameter of the spot price-process.}
@@ -68,11 +66,9 @@
   is computed first and then plugged into the pricing formula of the
   option.\cr
 
-  The market price of convenience yield risk can either be specified
-  explicitly by \code{lambda} or implicigtly by \code{alphaT}. The
-  relation is \code{alphaT = alpha - lambda / kappa}. See the package
-  vignette or
-  \code{\link[=schwartz2f-class]{schwartz2f-classes}}.
+  The model and its parameters are described in the \bold{Details}
+  section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
+  documentation and in the package vignette \emph{Technical Document}.
 
 }
 % <---------------------------------------------------------------------->
@@ -97,8 +93,10 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{pricefutures}}, \code{\link{fit.schwartz2f}}
-  \code{\link{dfutures}}.
+  \code{\link{pricefutures}} to price futures,
+  \code{\link[=pfutures]{d/p/q/rfutures}} to work with futures,
+  \code{\link[=schwartz2f-class]{schwartz2f}}-constructor,
+  \code{\link{fit.schwartz2f}} for parameter estimation.
 
 }
 % <---------------------------------------------------------------------->
@@ -122,10 +120,10 @@ priceoption(type = "call", time = 0.5, Time = 1, K = 40, g0 = 50)
 
 ### The price of a European put option on the spot which expires in 2.5
 ### years.
-priceoption(type = "put", time = 2.5, Time = 2.5, K = 900,
+priceoption(type = "put", time = 2.5, Time = 2.5, K = 900, lambda = 0.02,
             g0 = schwartz2f(s0 = 1000))
 
 }
-
 % <---------------------------------------------------------------------->
 \keyword{models}
+\keyword{derivative}
