@@ -56,12 +56,13 @@ yahooKeystats <-
     if (try) {
         # First try if the Internet can be accessed:
         z <- try(yahooKeystats(query, file, source, save, try = FALSE))
-        if (inherits(z, "try-error") || inherits(z, "Error")) {
-            paste("The query\n  ",query,"\n  gave an error. Maybe no internet access?")
-        }
-        else {
+        if (inherits(z, "try-error") || inherits(z, "Error"))
+            paste("The query", query,
+                  "gave an error. Maybe no internet access?",
+                  sep = "  \n")
+        else
             z
-        }
+
     } else {
         # Download and Scan:
         url = paste(source, query, sep = "")
