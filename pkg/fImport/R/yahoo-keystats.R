@@ -55,12 +55,12 @@ yahooKeystats <-
         source = "http://finance.yahoo.com/q/ks?s="
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooKeystats(query, file, source, save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
-            return("No Internet Access")
+        z <- try(yahooKeystats(query, file, source, save, try = FALSE))
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
+            paste("The query\n  ",query,"\n  gave an error. Maybe no internet access?")
         }
         else {
-            return(z)
+            z
         }
     } else {
         # Download and Scan:
@@ -70,7 +70,7 @@ yahooKeystats <-
 
         # Extract Data Records:
         x = x[grep("datamodoutline1", x)]
- 
+
         # YC: 2009-03-31
         # if keystats are not available, returns NA
         if (!length(x)) return(NA)
@@ -99,8 +99,8 @@ yahooKeystats <-
         x = unlist(strsplit(x, "@" ))
         x = x[ grep(":", x) ]
         x = gsub("^ ", "", x, perl = TRUE)
-        Index = grep("^ ", x)
-        if (length(Index) > 0) x = x[-Index]
+        if (length(Index <- grep("^ ", x)) > 0)
+            x <- x[-Index]
         x = gsub(" $", "", x, perl = TRUE)
         x = gsub(":$", ":NA", x, perl = TRUE)
 
@@ -109,7 +109,7 @@ yahooKeystats <-
         x = sub(":", "/", x)
 
         # Convert to matrix:
-        x = matrix(unlist(strsplit(x, "@" )), byrow = TRUE, ncol = 2)
+        x = matrix(x, byrow = TRUE, ncol = 2)
 
         # Add Current Date:
         stats = as.character(Sys.Date())
@@ -117,10 +117,10 @@ yahooKeystats <-
         X = as.data.frame(x[, 2])
         rownames(X) = x[, 1]
         colnames(X) = "Value"
-    }
 
-    # Return Value:
-    X
+        ## Return Value:
+        X
+    }
 }
 
 
