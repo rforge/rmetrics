@@ -3,8 +3,6 @@
 	* nig functions added (dnig, pnig, qnig, rnig, nigFit,
 	nigFitStart, etc)
 
-	* incompleteBesselK added for use in pgig
-
 
 2010-06-25    <d.scott@auckland.ac.nz>
 

@@ -152,13 +152,13 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \code{ddghyp} gives the derivative of \code{\link{dghyp}}.
 }
 \references{
-  Barndorff-Nielsen, O. and \enc{Blæsild}{Blaesild}, P (1983).
+  Barndorff-Nielsen, O., and \enc{Blæsild}{Blaesild}, P (1983).
   Hyperbolic distributions.
   In \emph{Encyclopedia of Statistical Sciences},
-  eds., Johnson,N. L., Kotz, S. and Read, C. B., Vol. 3,
+  eds., Johnson, N. L., Kotz, S., and Read, C. B., Vol. 3,
   pp. 700--707.-New York: Wiley.
 
-  Bibby, B. M and \enc{Sörenson}{Sorenson},M. (2003).
+  Bibby, B. M., and \enc{Sörenson}{Sorenson},M. (2003).
   Hyperbolic processes in finance.
   In \emph{Handbook of Heavy Tailed Distributions in Finance},ed.,
   Rachev, S. T. pp. 212--248. Elsevier Science B.~V.
