@@ -50,7 +50,7 @@
          alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{pfutures}{ANY,ANY,ANY,schwartz2f}(q, time = 0.1, ttm = 1, s0, r = 0.05,
-lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
+         lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{pfutures}{ANY,ANY,ANY,schwartz2f.fit}(q, time = 0.1, ttm = 1, s0, measure = c("P", "Q"), \dots)
 
@@ -60,7 +60,7 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
          alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{qfutures}{ANY,ANY,ANY,schwartz2f}(p, time = 0.1, ttm = 1, s0, r = 0.05,
-lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
+         lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
 
 \S4method{qfutures}{ANY,ANY,ANY,schwartz2f.fit}(p, time = 0.1, ttm = 1, s0, measure = c("P", "Q"), \dots)
 
@@ -69,7 +69,7 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"), \dots)
          rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 
 \S4method{rfutures}{ANY,ANY,ANY,schwartz2f}(n, time = 0.1, ttm = 1, s0, r = 0.05,
-lambda = 0, alphaT = NULL, measure = c("P", "Q"))
+         lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 
 \S4method{rfutures}{ANY,ANY,ANY,schwartz2f.fit}(n, time = 0.1, ttm = 1, s0, measure = c("P", "Q"))
 
@@ -89,9 +89,9 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{Drift term of commodity spot price.}
+  \item{sigmaS}{Diffusion parameter of the spot price process.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
   \item{alpha}{Mean-level of the convenience yield process.}
-  \item{sigmaS}{Diffusion parameter of the spot price process.}
   \item{sigmaE}{Diffusion parameter of the convenience yield process.}
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
@@ -155,7 +155,7 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 \value{
 
   Probabilities, densities, quantiles or samples of the log-normally
-  distributed futures prices as \code{vector}.
+  distributed futures prices as \code{numeric}.
 
 }
 
@@ -166,11 +166,8 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
 \seealso{
 
   \code{\link{pricefutures}},
-  \code{\link{pstate}},
-  \code{\link{dstate}},
-  \code{\link{qstate}},
-  \code{\link{rstate}},
-  \code{\link{simstate}}  
+  \code{\link[=dstate]{d/p/qstate}}, 
+  \code{\link[=rstate]{r/simstate}}
 
 }
 
@@ -182,7 +179,7 @@ lambda = 0, alphaT = NULL, measure = c("P", "Q"))
   52, 1997, 923-973\cr
 
 
-  \emph{Valuation of Commodity Futures and Options Under Stochastic
+  \emph{Valuation of Commodity Futures and Options under Stochastic
     Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
   by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
   Quantitative Analysis 33, 1998, 61-86

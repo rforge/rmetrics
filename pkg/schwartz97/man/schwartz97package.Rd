@@ -10,14 +10,15 @@
 % <---------------------------------------------------------------------->
 \description{
   
-  This package contains an implementation of the Schwartz' two-factor
-  commodity model, that is, the joint dynamics of the the spot price and
-  the spot convenience according to Schwartz (1997). The parameter
+  This package contains an implementation of the Schwartz two-factor
+  commodity model, that is, the joint dynamics of the spot price and the
+  spot convenience according to Schwartz (1997). The parameter
   estimation function constitutes the core of this package. Once the
-  parameters are known, futures and European call and put options can be
-  priced, risk measures can be calculated and the usual distribution
-  operations d/p/q/r can be carried out on the state varibles as well as
-  on the futures price.
+  parameters are estimated, futures and European call and put options
+  can be priced, risk measures can be calculated and the usual
+  distribution operations d/p/q/r can be carried out on the state
+  variables as well as on the futures price. The package is accompanied
+  by a variety of utility functions.
 
 }
 % <---------------------------------------------------------------------->
@@ -27,16 +28,16 @@ Package: \tab schwartz97\cr
 Type: \tab Package\cr
 Version: \tab 0.0.1\cr
 Date: \tab 2009-09-03\cr
-License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
+License: \tab  GPL (GNU Public License), Version 2 or later \cr
 }
 % <---------------------------------------------------------------------->
 \strong{Initialization:}
 \tabular{ll}{
-  \code{\link{schwartz2f}} \tab       Initialize a Schwartz 2-factor object.\cr
+  \code{\link{schwartz2f}} \tab       Initialize a Schwartz two-factor object.\cr
 }
 
 \strong{Density, distribution function, quantile function,
-  random number generation, and trajectories of the state processes:}
+  random number generation, and trajectories of the state variables:}
 \tabular{ll}{
   \code{\link{dstate}} \tab         Density of the spot and the convenience yield.\cr
   \code{\link{pstate}} \tab         Distribution of the spot and the convenience yield.\cr
@@ -71,7 +72,7 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 \tabular{ll}{
   \code{\link[=coef.schwartz2f]{coef}} \tab Extract model coefficients of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
   \code{\link[=mean.schwartz2f]{mean}} \tab Extract the mean of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
-  \code{\link[=vcov.schwartz2f]{mean}} \tab Extract the covariance matrix of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
+  \code{\link[=vcov.schwartz2f]{vcov}} \tab Extract the covariance matrix of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
   \code{\link{filter.schwartz2f}} \tab Filter futures prices to get the spot price and convenience yield.\cr
   \code{\link[=plot.schwartz2f.fit]{plot}} \tab Plot \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-objects.\cr
   \code{\link[=plot.schwartz2f]{plot}} \tab Plot trajectories of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
@@ -82,20 +83,17 @@ License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 
 
 % <---------------------------------------------------------------------->
-\strong{Package vignettes:} \cr
+\strong{Package vignette:} \cr
 
-The \R package \code{schwartz97} contains two vignettes:\cr
-
-A \emph{Technical Document} which gives the necessary relations and
-tools to fully understand the internals of the package.
-
-A \emph{User Guide} with explanations and some examples.
+The \R package \code{schwartz97} contains the vignette \emph{Technical
+Document} which gives the necessary relations and tools to fully
+understand the internals of the package.
 
 }
 % <---------------------------------------------------------------------->
 \author{
 David Luethi \cr
-Clariden Leu SA
+Clariden Leu Bank
 (\url{http://www.claridenleu.com}) \cr
 
 Juri Hinz \cr
@@ -128,7 +126,7 @@ Maintainer: Simon Otziger <otis@zhaw.ch>
     R. Miltersen and Eduardo S. Schwartz \cr Journal of Financial and
     Quantitative Analysis 33, 1998, 33-59\cr
 
-    \emph{Valuation of Commodity Futures and Options Under Stochastic
+    \emph{Valuation of Commodity Futures and Options under Stochastic
       Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
     by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
     Quantitative Analysis 33, 1998, 61-86

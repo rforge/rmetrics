@@ -20,7 +20,7 @@
   Density, distribution function and quantile function of the state
   variables. The state variables are the commodity spot price \code{s}
   and the spot convenience yield \code{delta}. The commodity log spot
-  price and the convenience yield follow a joint bivariate normal
+  price and the convenience yield follow a bivariate normal
   distribution.
 
 }
@@ -56,24 +56,24 @@
     a matrix, each row is taken to be a quantile.}
   \item{time}{Time at which the quantity is computed (relative to time
     zero).} 
-  \item{s0}{Either a \code{numeric} representing the initial value of the
-    commodity spot price or an object inheriting from class
-    \code{\link[=schwartz2f-class]{schwartz2f}}.}
-  \item{delta0}{Initial value of the convenience yield.}
-  \item{mu}{enters the drift of the commodity spot price.}
-  \item{kappa}{Speed of mean-reversion of the convenience yield process.}
-  \item{alpha}{Mean-level of the convenience yield process.}
-  \item{sigmaS}{Diffusion parameter of the spot price-process.}
-  \item{sigmaE}{Diffusion parameter of the convenience yield process.}
-  \item{rho}{Correlation coefficient between the Brownian motion
-    driving the spot price and the convenience yield process.}
-  \item{p}{Probability.}
+  \item{p}{Probability, a scalar.}
   \item{lower}{The vector of lower limits of length 2. Note that first
     component stands for lower limit of the commodity spot price
     rather than the log-price.}
   \item{upper}{The vector of upper limits of length 2. Note that first
     component stands for the upper limit of the commodity spot price
     rather than the log-price.}
+  \item{s0}{Either a \code{numeric} representing the initial value of the
+    commodity spot price or an object inheriting from class
+    \code{\link[=schwartz2f-class]{schwartz2f}}.}
+  \item{delta0}{Initial value of the convenience yield.}
+  \item{mu}{enters the drift of the commodity spot price.}
+  \item{sigmaS}{Diffusion parameter of the spot price-process.}
+  \item{kappa}{Speed of mean-reversion of the convenience yield process.}
+  \item{alpha}{Mean-level of the convenience yield process.}
+  \item{sigmaE}{Diffusion parameter of the convenience yield process.}
+  \item{rho}{Correlation coefficient between the Brownian motion
+    driving the spot price and the convenience yield process.}
   \item{tail}{See \code{\link[mvtnorm]{qmvnorm}} of package
     \code{mvtnorm}.}
   \item{\dots}{Further arguments to be passed to methods of package
@@ -89,9 +89,9 @@
 
   The above methods rely on the functions
   \code{\link[mvtnorm]{pmvnorm}},
-  \code{\link[mvtnorm]{dmvnorm}},
-  \code{\link[mvtnorm]{qmvnorm}} and
-  \code{\link[mvtnorm]{rmvnorm}} of the package
+  \code{\link[mvtnorm]{dmvnorm}}, and
+  \code{\link[mvtnorm]{qmvnorm}} 
+   of the package
   \code{mvtnorm}.
 
 }
@@ -99,8 +99,8 @@
 % <---------------------------------------------------------------------->
 \value{
 
-  Probabilities, densities, or quantiles of the commodity spot price and
-  instantaneous spot convenience yield.
+  \code{dstate} and \code{pstate} return a \code{numeric}, \code{qstate}
+  returns the output of \code{\link[mvtnorm]{qmvnorm}} as a \code{list}.
 
 }
 
@@ -110,9 +110,10 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link[=schwartz2f-class]{schwartz2f}}-class
-  description, \code{\link{rstate}} and \code{\link{simstate}} for random
-  number generation.
+  \code{\link[=schwartz2f-class]{schwartz2f}}-class description,
+  \code{\link{rstate}} and \code{\link{simstate}} for random number
+  generation, constructors \code{\link{schwartz2f}} and
+  \code{\link{fit.schwartz2f}}.
 
 }
 
@@ -125,7 +126,8 @@ model <- schwartz2f()
 pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
 
 ### Density
-dstate(x = c(50, 0.03), time = 2, model)
+dstate(x = c(50, 0.03), time = 2, model) 
+dstate(x = rbind(c(50, 0.03), c(50, 0.1)), time = 2, model) # x is a matrix 
 
 ### Quantile
 qstate(p = 0.5, s0 = model)

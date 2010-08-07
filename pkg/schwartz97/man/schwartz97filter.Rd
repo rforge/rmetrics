@@ -10,7 +10,7 @@
 % <---------------------------------------------------------------------->
 \description{
 
-  Filter a series of futures prices to obtain expected state variables.
+  Filter a series of futures prices to obtain state variables.
 
 }
 
@@ -18,15 +18,15 @@
 \usage{
 
 \S4method{filter.schwartz2f}{ANY,ANY,numeric}(data, ttm, s0 = 50, delta0 = 0,
-              mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
-              rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL,
-              deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
-              P0 = 0.5 * diag(c(log(s0), abs(delta0))))
+                  mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0, sigmaE = 0.5,
+                  rho = 0.75, r = 0.05, lambda = 0, alphaT = NULL,
+                  deltat = 1/260, meas.sd = rep(1e-3, ncol(data)),
+                  P0 = 0.5 * diag(c(log(s0), abs(delta0))))
 
 \S4method{filter.schwartz2f}{ANY,ANY,schwartz2f}(data, ttm, s0,
-              r = 0.05, lambda = 0, alphaT = NULL, deltat = 1/260,
-              meas.sd = rep(1e-3, ncol(data)),
-              P0 = 0.1 * diag(2))
+                  r = 0.05, lambda = 0, alphaT = NULL, deltat = 1/260,
+                  meas.sd = rep(1e-3, ncol(data)),
+                  P0 = 0.1 * diag(2))
 
 \S4method{filter.schwartz2f}{ANY,ANY,schwartz2f.fit}(data, ttm, s0)
 
@@ -62,7 +62,8 @@
 
   The elements of \code{data} and \code{ttm} have the following
   interpretation: \code{data[i,j]} denotes the futures price whose time
-  to maturity was \code{ttm[i,j]} when it was observed. \cr
+  to maturity was \code{ttm[i,j]} when it was observed. The unit of
+  \code{ttm} is defined by \code{deltat}.
 
   \code{deltat} is the time between observation \code{data[i,j]} and
     \code{data[i + 1,j]}. It is assumed to be constant, i.e., that
@@ -75,8 +76,9 @@
 
   A list with components:
   \tabular{rl}{
-  \code{state} \tab A matrix giving the the expected spot price and the
-  convenience yield. The \code{colnames} are \dQuote{S} and \dQuote{delta}.\cr
+  \code{state} \tab A matrix with \code{colnames} are \dQuote{S} and
+  \dQuote{delta} giving the the expected spot price and the 
+  convenience yield.\cr
   \code{fkf.obj} \tab The filter output from the package
   \code{\link[FKF:fkf]{fkf}}. Note that the log of the commodity spot
   price is filtered.\cr
@@ -108,11 +110,10 @@ data(futures)
 
 ### Estimate parameters for coffee data (stop after 20 iterations)
 fit.obj <- fit.schwartz2f(futures$coffee$price, futures$coffee$ttm / 260,
-                          control = list(maxit = 20))
+                          deltat = 1 / 260, control = list(maxit = 20))
 
 ### Filter the futures data to get the spot price and the convenience yield.
 filtered <- filter.schwartz2f(futures$coffee$price, futures$coffee$ttm / 260, fit.obj)
-
 
 ### ...and plot it.
 par(mfrow = c(2, 1))

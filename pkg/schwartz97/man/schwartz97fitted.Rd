@@ -21,7 +21,7 @@
 \arguments{
   \item{object}{A \code{\link{schwartz2f.fit}}-object returned from \code{\link{schwartz2f.fit}}.}
   \item{data}{A matrix with futures prices.}
-  \item{ttm}{A matrix with the corresponding time to maturity (see \bold{Details}).}
+  \item{ttm}{A matrix with the corresponding times to maturity (see \bold{Details}).}
 }
 
 % <---------------------------------------------------------------------->
@@ -29,8 +29,9 @@
 
   The elements of \code{data} and \code{ttm} have the following
   interpretation: \code{data[i,j]} denotes the futures price whose time
-  to maturity was \code{ttm[i,j]} when it was observed (in units of
-  \code{object@deltat}).
+  to maturity was \code{ttm[i,j]} when it was observed. The unit of
+  \code{ttm} was defined by the argument \code{deltat} of
+  \code{\link{fit.schwartz2f}}.
 
 }
 
@@ -57,9 +58,15 @@
 
 data(futures)
 
-### Estimate parameters for lumber data (stop after 100 iterations)
+### Estimate parameters for lumber data. Fit only 'mu', 'sigmaS',
+### 'sigmaE', and 'rho' (and stop after 100 iterations).
 fit.obj <- fit.schwartz2f(futures$lumber$price, futures$lumber$ttm / 260,
-                          control = list(maxit = 100))
+                          opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                       sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
+                                       sigmaE = TRUE, rho = TRUE, lambda = FALSE),
+                          alpha = 0, kappa = 1.2, lambda = 0,
+                          deltat = 1 / 260, control = list(maxit = 100))
+fit.obj
 
 ### Get the fitted values
 fitted.futures <- fitted(fit.obj, futures$lumber$price, futures$lumber$ttm / 260)

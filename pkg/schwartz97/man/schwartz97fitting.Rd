@@ -42,7 +42,7 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
     driving the spot price and the convenience yield process.}
   \item{meas.sd}{Initial parameter of the standard deviation of the measurement equation (see \bold{Details}).}
   \item{lambda}{Initial value of the market price of convenience yield risk.}
-  \item{opt.pars}{A logical vector which gives the parameters which
+  \item{opt.pars}{A logical vector giving the parameters which
     shall be fitted. The order is as in the function header, names are
     discarded.}
   \item{opt.meas.sd}{States how the standard deviation of the
@@ -76,8 +76,9 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   to achieve a reasonable tolerance level. Each optimization iteration
   involves the filtering of the data set by the Kalman
   filter. Therefore, an efficient implementation of the Kalman filter is
-  key. The backbone of the estimation procedure is the
-  \code{\link[FKF:fkf]{fkf}} function of the package \code{\link[FKF:fkf]{FKF}}.
+  key. Hence, the \code{\link[FKF:fkf]{fkf}} function of the package
+  \code{\link[FKF:fkf]{FKF}} can be considered as the backbone of the
+  estimation procedure.
   
 }
 % <---------------------------------------------------------------------->
@@ -95,20 +96,19 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   \code{opt.meas.sd} is used to determine how measurement uncertainty is
   treated in the fit: According to the model there should be a
   one-to-one correspondance between the spot and the futures price. In
-  reality, futures prices differ from model prices. This is reflected in
-  the measurement uncertainty \code{meas.sd}. The parameters
-  \code{meas.sd} can be fitted. However, it might be sufficient to fit
-  only a scalar where the measurement uncertainty is parametrized by
-  \code{scalar * meas.sd}. In this case set \code{opt.meas.sd} to
-  \dQuote{scalar}. If all of \code{meas.sd} should be fitted choose
-  \dQuote{all}. If the measurement uncertainty is known set
-  \code{meas.sd} to \dQuote{none}. Note that the measurement errors are
-  assumed to be independent in this implementation (even though the
-  model and the filter do not require independence).
+  reality, the term structure does not fully match for any set of
+  parameters. This is reflected in the measurement uncertainty-vector
+  \code{meas.sd}. The parameters \code{meas.sd} can be fitted. However,
+  it might be sufficient to fit only a scalar where the measurement
+  uncertainty is parametrized by \code{scalar * meas.sd}. In this case
+  set \code{opt.meas.sd} to \dQuote{scalar}. If all of \code{meas.sd}
+  should be fitted choose \dQuote{all}. If the measurement uncertainty
+  is known set \code{meas.sd} to \dQuote{none}. Note that the
+  measurement errors are assumed to be independent in this
+  implementation (even though the model and the filter do not require
+  independence).
 
-  Potential error codes are described in the
-  \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-class
-  documentation. 
+  \code{NA}-values are allowed in \code{data}.
 
   The model and its parameters are described in the \bold{Details}
   section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
@@ -153,9 +153,9 @@ data(futures)
 ### Estimate parameters for wheat data.
 ### (little precision required with reltol = 1e-3)
 fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
-                          control = list(maxit = 300, reltol = 1e-3))
+                          deltat = 1 / 260, control = list(reltol = 1e-3))
 
-### See how parameter values changed during the fit
+### See how parameter values evolved during the fit
 plot(fit.obj, type = "trace.pars")
 
 \dontrun{
@@ -166,7 +166,7 @@ high.precision.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 26
 plot(high.precision.fit, type = "trace.pars")
 ### ... alpha becomes nonsensically high, kappa (speed of mean-reversion
 ### of the convenience yield) goes to zero. Conclusion: Choose different
-### initial values or hold kappa constant at 1.5.
+### initial values and/or hold kappa constant at 1.5.
 }
 
 ### These residuals should me iid standard normal
@@ -191,7 +191,17 @@ plot(as.ts((fitted.futures - futures$wheat$price) / fitted.futures), plot.type =
      ylab = "Relative difference", col = gray(seq(0.1, 0.9, length = 4)))
 
 
-### The price of a put option on the wheat futures which matures in 1.1
+### Try with kappa = 1, alpha = 0, and flexible standard deviationss of the measurement errors.
+fit.obj.const <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                                opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                             sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
+                                             sigmaE = TRUE, rho = TRUE, lambda = TRUE),
+                                alpha = 0, kappa = 1, opt.meas.sd = "all",
+                                deltat = 1 / 260, control = list(maxit = 100))
+
+
+### The schwartz2f.fit-object 'fit.obj' can be used to do further calculations as
+### pricing a put option on the wheat futures which matures in 1.1
 ### years. The option expires in 1 year. The strike price is the
 ### expected futures price in 1.1 years.
 priceoption("put", time = 1, Time = 1.1, K = pricefutures(1.1, fit.obj),

@@ -37,8 +37,8 @@
 % <---------------------------------------------------------------------->
 \note{
   
-  \code{vcov} returns the variance-covariance matrix of (\emph{log} spot
-  price, convenience yield).
+  \code{vcov} returns the variance-covariance matrix of [\emph{log} spot
+  price, convenience yield](time).
   
 }
 % <---------------------------------------------------------------------->
@@ -50,7 +50,13 @@
 % <---------------------------------------------------------------------->
 \author{David Luethi}
 % <---------------------------------------------------------------------->
-\seealso{\code{\link{schwartz2f}} to create Schwartz 2 factor objects.}
+\seealso{
+
+  \code{\link{schwartz2f}} to create Schwartz 2 factor objects,
+  \code{\link[=plot.schwartz2f]{plot}} to show trajectories of the state
+  variables including means and standard deviations.
+
+}
 % <---------------------------------------------------------------------->
 \examples{
 
@@ -59,6 +65,9 @@
   mean(schwartz2f(mu = 0.2), time = 0:3)
 
   vcov(schwartz2f(), time = 10)
+
+  ### Plot a schwartz2f-object including means and standard deviations
+  plot(schwartz2f(sigmaE = 0.1), n = 50, time = 5, dt = 1 / 52)
 
 }
 % <---------------------------------------------------------------------->

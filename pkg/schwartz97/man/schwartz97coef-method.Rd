@@ -86,7 +86,7 @@ coef(schwartz2f())
 ### Estimate parameters for soybean oil (but stop after 3 iterations).
 data(futures)
 fit.obj <- fit.schwartz2f(futures$soybean.oil$price, futures$soybean.oil$ttm / 260,
-                          control = list(maxit = 3))
+                          deltat = 1 / 260, control = list(maxit = 3))
 coef(fit.obj)
 
 }
