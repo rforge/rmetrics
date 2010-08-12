@@ -37,24 +37,24 @@ pdfstartpage={1}
   The purpose of this document is to give the formulas and relations
   needed to understand the Schwartz two-factor commodity model
   \citep{Schwartz1997}. This includes parameter estimation using the
-  Kalman filter, pricing of European options according to
-  \cite{Miltersen1998} as well as computation of risk measures.
+  Kalman filter, pricing of European options as well as computation of
+  risk measures.
 \end{abstract}
 
 %\tableofcontents
 % <============================================================>
 \section{Introduction}\label{sec:intro}
 % <============================================================>
-%%[See also \ref{U-sec:intro}.]
-This document will describe the Schwartz two-factor model to the
-extent which is necessary to understand the \RR{} package \Rpackage.
-The two-factor model describes the spot price of a commodity together
-with its instantaneous convenience yield. It was introduced in
+This document describes the Schwartz two-factor model to the extent
+which is necessary to understand the \RR{} package \Rpackage.  The two
+factors are the spot price of a commodity together with its
+instantaneous convenience yield. It was introduced in
 \cite{Gibson1990} and extended in \cite{Schwartz1997} for the pricing
-of futures contracts. \cite{Miltersen1998} presented equations for
-arbitrage free prices of European options on commodity futures. In
-what follows we fully rely on the above mentioned articles and state
-the corresponding formulas. [MENTION CLOSE FORM ETC, dW HAS TO BE IN LINE]
+of futures contracts. \cite{Miltersen1998} and \cite{Hilliard1998}
+presented equations for arbitrage free prices of European options on
+commodity futures. In what follows we fully rely on the above
+mentioned articles and state the corresponding formulas. In addition
+we derive the transition density of the two state variables.
 % <============================================================>
 \section{Model}\label{sec:model}
 % <============================================================>
@@ -95,9 +95,10 @@ d\delta_t = \kappa (\tilde{\alpha} - \delta_t) dt + \sigmaE
 % <============================================================>
 \subsection{Joint Distribution of State Variables}
 % <============================================================>
-The log-spot $X_t = \log(S_t)$ and the convenience yield $\delta_t$ are jointly
-normally distributed (see appendix \ref{sec:deriv-joint-distr} for a
-derivation):
+The log-spot $X_t = \log(S_t)$ and the convenience yield $\delta_t$
+are jointly normally distributed. The transition density is
+\footnote{A derivation can be found in appendix
+  \ref{sec:deriv-joint-distr}.}
 \begin{equation}
 \label{jointDist}
 \begin{pmatrix}X_t \\ \delta_t \end{pmatrix} \sim
@@ -139,8 +140,9 @@ rest of this document, the statements made about futures contracts
 therefore also hold for forward contracts.
 
 Let the futures price at time $t$ with time to maturity $\tau = T - t$
-be $G(S_t, \delta_t, t, T)$. At time zero the futures price is given
-by the $\mathbb{Q}$-expectation of $S_T$.
+be $G(S_t, \delta_t, t, T)$. For notational convenience we assume $t =
+0$ in what follows. At time zero the futures price is given by the
+$\mathbb{Q}$-expectation of $S_T$.
 \begin{eqnarray}
   \label{eq:futuresPrice}
   G(S_0, \delta_0, 0, T) = \mathbb{E}^{\mathbb{Q}}(S_T) &=& \exp\left\{\tilde{\mu}_X(T) +
@@ -161,89 +163,41 @@ with
 \subsection{Distribution of Futures Prices}
 % <============================================================>
 According to (\ref{eq:futuresPrice}) the futures price follows a
-log-normally law. That is, at time zero the $T$-futures price at time
-$t$ has distribution
+log-normal law. That is, at time zero the $T$-futures price at time
+$t$ has the following distribution under $\mathbb{Q}$\footnote{Note
+  that the $\mathbb{Q}$-dynamics is primarily interesting to value
+  derivatives on the futures price. For simulation studies and dynamic
+  financial analysis the real-world ($\mathbb{P}$) dynamics is of
+  relevance. To get the $\mathbb{P}$-dynamics all ``tilde-parameters''
+  have to be replaced by the ones without tilde.}:
 \begin{align}
   \log{G(S_t, \delta_t, t,T)} &\sim \mathcal{N}\left(\mu_G(t, T),
     \sigma_G^2(t, T)\right),\label{eq:distrG}
 \end{align}
 where
 \begin{align}
-  \mu_G(t, T) &= \mu_X(t) + A(T-t) + B(T-t)\mu_\delta(t) \label{eq:muG} \\
+  \mu_G(t, T) &= \tilde{\mu}_X(t) + A(T-t) + B(T-t)\tilde{\mu}_\delta(t) \label{eq:muG} \\
   \sigma_G^2(t, T) &= \sigma_X^2(t) + 2 B(T-t)\sigma_{X\delta}(t) +
   B(T-t)^2 \sigma_\delta(t). \label{eq:varG}
 \end{align}
-
-% % <============================================================>
-% \section{Risk Measures for Futures Contracts}
-% \label{sec:Risk}
-% % <============================================================>
-% At time zero the log-loss over a time period $\Delta t$ is defined to
-% be
-% \begin{equation}
-%   l(\Delta t, T) := \log{G(S_0, \delta_0, 0,T)} - \log{G(S_{\Delta t},
-%     \delta_{\Delta t}, \Delta t,T)}
-% \end{equation}
-
-% According to (\ref{eq:distrG}) -- (\ref{eq:varG}) the VaR for the is
-% therefore
-% \begin{equation}
-%   \label{VaRG}
-%   VaR_\alpha^G = \log{G(S_0, \delta_0, 0,T)} - \mu_G( +
-%   \sigma_G\Phi^{-1}\left(\alpha\right)
-% \end{equation}
-% where $\Phi$ denotes the standard normal distribution function and
-% $\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
-
-% Similarly the ES for the negative log-return at the confidence level
-% $\alpha$ is given by
-% \begin{equation}
-%   \label{ESG}
-%   ES_\alpha^G = \log{G(0,T)} - \mu_G +
-%     \sigma_G\frac{\phi\left(\Phi^{-1}(\alpha)\right)}{1 -
-%       \alpha}
-% \end{equation}
-% where $\phi$ is the density of the standard normal distribution.
-
-% \subsection{Nominal Futures Price}
-% The VaR for the log-normally distributed futures price $G(\Delta
-% t,T)$ at confidence level $\alpha$\footnote{For a 95\%-VaR one sets
-%   $\alpha = 0.05$.} becomes
-% \begin{equation}
-%   \label{VaRG}
-%   VaR_\alpha^G = e^{\mu_G +
-%     \frac{1}{2}\sigma_G^2} e^{\sigma_G\left(\Phi^{-1}(\alpha) -
-%       \frac{\sigma_G}{2}\right)}
-% \end{equation}
-% where $\Phi$ denotes the standard normal distribution function and
-% $\Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $\Phi$.
-
-% Similarly the ES for the futures price at the confidence level
-% $\alpha$ is given by
-% \begin{equation}
-%   \label{ESG}
-%   ES_\alpha^G = \frac{1}{\alpha}e^{\mu_G +
-%     \frac{1}{2}\sigma_G^2}\Phi\left(\Phi^{-1}(\alpha) -
-%       \sigma_G\right)
-% \end{equation}
-% where $\phi$ is the density of the standard normal distribution.
 % <============================================================>
 \section{European Commodity Options}
 \label{sec:Options}
 % <============================================================>
 The fair price of a European call option on a commodity futures
-contract was derived in \cite{Miltersen1998} for a general setting,
-and in particular for the models presented in \cite{Schwartz1997}.
+contract was derived in \cite{Miltersen1998} for a general
+setting, and in particular for the models presented in
+\cite{Schwartz1997}.
 
 Here we give the formula for the two-factor model. In this setting,
 the price of a European call option $C$ at time zero with maturity $t$,
 exercise price $K$ written on a commodity futures contract with
 maturity $T$ is given by
 \begin{align}
-  C^G &= \mathbb{E}^{\mathbb{Q}}\left[e^{-r\,t}(G(S_t, \delta_t, T - t)
+  C^G &= \mathbb{E}^{\mathbb{Q}}\left[e^{-r\,t}(G(S_t, \delta_t, t, T)
     - K)^+\right]
 \end{align}
-Since the futures price $G(S_t, \delta_t, T - t)$ is log-normally
+Since the futures price $G(S_t, \delta_t, t, T)$ is log-normally
 distributed we obtain a Black-Scholes type formula for the call price
 $C^G$.
 \begin{equation}

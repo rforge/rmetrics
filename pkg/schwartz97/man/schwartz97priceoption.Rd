@@ -32,15 +32,15 @@
 % <---------------------------------------------------------------------->
 \arguments{
 
-  \item{type}{Valuing either a European \code{"call"} or a \code{"put"}
-    option on a futures.}
+  \item{type}{Either a European \code{"call"} or a \code{"put"}
+    option on a futures contract.}
   \item{time}{Exercise time of the option.}
   \item{Time}{Maturity date of the underlying futures (see \bold{Details}).}
   \item{K}{Strike price.}
   \item{g0}{The current \emph{futures price} or an object inheriting from class
-  \code{\link[=schwartz2f-class]{schwartz2f}}.}
-  \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
+    \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{sigmaS}{Diffusion parameter of the spot price-process.}
+  \item{kappa}{Speed of mean-reversion of the convenience-yield process.}
   \item{sigmaE}{Diffusion parameter of the convenience-yield process.}
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot-price and the convenience-yield process.}
@@ -63,8 +63,8 @@
   If \code{g0} is either of class
   \code{\link[=schwartz2f-class]{schwartz2f}} or class
   \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} the futures price
-  is computed first and then plugged into the pricing formula of the
-  option.\cr
+  \code{g0} is computed first and then plugged into the pricing function
+  with signature \code{ANY,ANY,ANY,ANY,numeric}.\cr
 
   The model and its parameters are described in the \bold{Details}
   section of the \code{\link[=schwartz2f-class]{schwartz2f}}-class
@@ -83,7 +83,7 @@
 % <---------------------------------------------------------------------->
 \value{
 
-  A \code{numeric} giving the option prices.
+  A \code{numeric} containing the option prices.
 
 }
 
@@ -109,7 +109,12 @@
     \emph{Pricing of Options on Commodity Futures with Stochastic Term
     Structures of Convenience Yields and Interest Rates} by Kristian
     R. Miltersen and Eduardo S. Schwartz \cr Journal of Financial and
-    Quantitative Analysis 33, 1998, 33-59
+    Quantitative Analysis 33, 1998, 33-59 \cr
+
+    \emph{Valuation of Commodity Futures and Options under Stochastic
+      Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
+    by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
+    Quantitative Analysis 33, 1998, 61-86
 
 }
 % <---------------------------------------------------------------------->

@@ -163,13 +163,30 @@ plot(fit.obj, type = "trace.pars")
 high.precision.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                                      control = list(maxit = 3000, reltol = 5e-8))
 
+high.precision.fit
+
 plot(high.precision.fit, type = "trace.pars")
+
 ### ... alpha becomes nonsensically high, kappa (speed of mean-reversion
-### of the convenience yield) goes to zero. Conclusion: Choose different
-### initial values and/or hold kappa constant at 1.5.
+### of the convenience yield) goes to zero. Solution: Choose different
+### initial values and/or hold kappa constant at 1.
+
+constrained.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                                  opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                               sigmaS = TRUE, kappa = FALSE, alpha = TRUE, 
+                                               sigmaE = TRUE, rho = TRUE, lambda = TRUE),
+                                  alpha = 0, kappa = 1, 
+                                  control = list(maxit = 3000, reltol = 5e-8))
+
+constrained.fit
+
+plot(constrained.fit, type = "trace.pars")
+
+### The above parameters based on a fit - where kappa was held constant at 1 -
+### look more reasonable.
 }
 
-### These residuals should me iid standard normal
+### These residuals should be iid standard normal
 model.resid <- resid(fit.obj, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                      type = "filter.std")
 acf(model.resid)
@@ -191,13 +208,22 @@ plot(as.ts((fitted.futures - futures$wheat$price) / fitted.futures), plot.type =
      ylab = "Relative difference", col = gray(seq(0.1, 0.9, length = 4)))
 
 
-### Try with kappa = 1, alpha = 0, and flexible standard deviationss of the measurement errors.
-fit.obj.const <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
-                                opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
-                                             sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
-                                             sigmaE = TRUE, rho = TRUE, lambda = TRUE),
-                                alpha = 0, kappa = 1, opt.meas.sd = "all",
-                                deltat = 1 / 260, control = list(maxit = 100))
+### Try with kappa = 1, alpha = 0, and flexible standard deviationss of
+### the measurement errors. Stop at 200 iterations.
+fit.obj.2 <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
+                            opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                         sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
+                                         sigmaE = TRUE, rho = TRUE, lambda = TRUE),
+                            alpha = 0, kappa = 1, opt.meas.sd = "all",
+                            deltat = 1 / 260, control = list(maxit = 200))
+
+
+model.resid.2 <- resid(fit.obj.2, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
+                       type = "filter.std")
+### Residuals seem to be better:
+acf(model.resid.2)
+par(mfrow = c(3, 2))
+apply(model.resid.2, 2, function(x)plot(density(x)))
 
 
 ### The schwartz2f.fit-object 'fit.obj' can be used to do further calculations as

@@ -36,12 +36,12 @@
     \item{\code{s0}:}{Initial commodity spot-price of class \code{numeric}.}
     \item{\code{delta0}:}{Initial value of the convenience yield of
       class \code{numeric}.}
-    \item{\code{mu}:}{Enters the drift of the commodity spot price (in
-      the Objective measure, see \bold{Details}) of class \code{numeric}.}
+    \item{\code{mu}:}{Enters the drift of the commodity spot price (under
+      the objective measure, see \bold{Details}) of class \code{numeric}.}
     \item{\code{sigmaS}:}{Diffusion parameter of the spot price process
       of class \code{numeric}.} 
     \item{\code{kappaE}:}{Speed of mean-reversion of the
-      convenience-yield process of lass \code{numeric}.}
+      convenience-yield process of class \code{numeric}.}
     \item{\code{alpha}:}{Mean level of the convenience-yield process of
       class \code{numeric}.}
     \item{\code{sigmaE}:}{Diffusion parameter of the convenience-yield
@@ -132,7 +132,7 @@ Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
     R. Miltersen and Eduardo S. Schwartz \cr Journal of Financial and
     Quantitative Analysis 33, 1998, 33-59\cr
 
-    \emph{Valuation of Commodity Futures and Options Under Stochastic
+    \emph{Valuation of Commodity Futures and Options under Stochastic
       Convenience Yields, Interest Rates, and Jump Diffusions in the Spot}
     by Jimmy E. Hilliard and Jorge Reis \cr Journal of Financial and
     Quantitative Analysis 33, 1998, 61-86
@@ -142,8 +142,9 @@ Class \dQuote{schwartz2f.fit} extends class \dQuote{schwart2factor}, directly.
 \seealso{
 
   \code{\link{schwartz2f}} to initialize
-  objects. \code{\link{fit.schwartz2f}} to fit the two-factor model to data
-  and get a \code{schwartz2f.fit} object.
+  \code{schwartz2f}-objects. \code{\link{fit.schwartz2f}} to fit the
+  two-factor model to data and get a \code{schwartz2f.fit} object,
+  \code{\link{schwartz97-package}} for an overview.
 
 }
 % <---------------------------------------------------------------------->
@@ -157,7 +158,7 @@ unclass(obj) # see the slots
 ### create an object of class schwartz2f.fit
 data(futures)
 fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
-                          control = list(maxit = 3))
+                          deltat = 1 / 260, control = list(maxit = 3))
 fit.obj          # print it
 coef(fit.obj)    # get coefficients 
 unclass(fit.obj) # see the slots 

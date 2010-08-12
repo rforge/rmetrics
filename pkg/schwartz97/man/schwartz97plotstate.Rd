@@ -19,16 +19,16 @@
 }
 % <---------------------------------------------------------------------->
 \arguments{
-  \item{x}{A \code{\link[=schwartz2f-class]{schwartz2f}} object.}
+  \item{x}{A \code{\link[=schwartz2f-class]{schwartz2f}}-object.}
   \item{n}{Number of trajectories.}
   \item{time}{Time span of the simulation.}
-  \item{dt}{Time steps.}
+  \item{dt}{Time step.}
 
 }
 % <---------------------------------------------------------------------->
 \details{
 
-  The red solid lines denote the mean and the red dashed lines denote
+  The red solid lines denote the means and the red dashed lines denote
   the mean plus one standard deviation for the spot price and the mean
   plus/minus one standard deviation for the convenience yield.
   
@@ -38,7 +38,7 @@
 % <---------------------------------------------------------------------->
 \seealso{
 
-  \code{\link{schwartz2f}}
+  \code{\link{schwartz2f}} constructor.
   
 }
 % <---------------------------------------------------------------------->

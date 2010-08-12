@@ -23,7 +23,7 @@
 \arguments{
   \item{x}{A \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}} object.}
   \item{type}{What shall be plotted (see \bold{Details}).}
-  \item{data}{A matrix containing futures prices to which were fitted.}
+  \item{data}{A matrix containing futures prices to which parameters were fitted.}
   \item{ttm}{A matrix with the corresponding time to maturity (see \bold{Details}).}
   \item{\dots}{Arguments passed to \code{\link{plot}}.}
 }
@@ -31,17 +31,18 @@
 \details{
 
   If \code{type == "trace.pars"}, the parameter evolution of the
-  estimatio is plotted. The horizontal lines denote the final value.\cr
+  estimation is plotted. The horizontal lines denote the final value.\cr
   If \code{type == "state"}, the filtered state variables are plotted
   and overlaid with the futures prices.\cr
   If \code{type == "forward.curve"}, fitted forward curves are plotted.\cr
   If \code{type == "sim"}, a bunch of simulated trajectories of the
-  state variables are plotted.
+  state variables are plotted. \cr
   
   The elements of \code{data} and \code{ttm} have the following
   interpretation: \code{data[i,j]} denotes the futures price whose time
-  to maturity was \code{ttm[i,j]} when it was observed (in units of
-  \code{object@deltat}).
+  to maturity was \code{ttm[i,j]} when it was observed. The time unit
+  was defined by the argument \code{deltat} of the function
+  \code{\link{fit.schwartz2f}} (stored in \code{x@deltat}).
 
   
 }
@@ -63,6 +64,7 @@ data(futures)
 
 ### Estimate parameters for lumber data (stop after 100 iterations)
 fit.obj <- fit.schwartz2f(futures$lumber$price, futures$lumber$ttm / 260,
+                          deltat = 1 / 260,
                           control = list(maxit = 100))
 
 ### Plot parameter evolution

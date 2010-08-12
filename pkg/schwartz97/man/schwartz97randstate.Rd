@@ -17,7 +17,7 @@
   Random number and trajectory generation of the state variables. The
   state variables are the commodity spot price \code{s0} and the spot
   convenience yield \code{delta0}. The commodity log spot price and the
-  convenience yield follow a joint bivariate normal distribution.
+  convenience yield follow a bivariate normal distribution.
 
 }
 
@@ -42,16 +42,16 @@
 \arguments{
 
   \item{n}{Number of observations.}
-  \item{time}{Time where the joint stochastic process is evaluated
-    (relative to time zero).}
+  \item{time}{at which random numbers of the state variables are drawn (\code{rstate})
+    or horizon of the trajectory (\code{simstate}) relative to now.}
   \item{s0}{Either a \code{numeric} representing the initial value of the
     commodity spot price or an object inheriting from class
   \code{\link[=schwartz2f-class]{schwartz2f}}.}
   \item{delta0}{Initial value of the convenience yield.}
   \item{mu}{enters the drift of the commodity spot price.}
+  \item{sigmaS}{Diffusion parameter of the spot price-process.}
   \item{kappa}{Speed of mean-reversion of the convenience yield process.}
   \item{alpha}{Mean-level of the convenience yield process.}
-  \item{sigmaS}{Diffusion parameter of the spot price-process.}
   \item{sigmaE}{Diffusion parameter of the convenience yield process.}
   \item{rho}{Correlation coefficient between the Brownian motion
     driving the spot price and the convenience yield process.}
@@ -102,11 +102,19 @@
 ## Create a "schwartz2f"-object
 model <- schwartz2f()
 
-## Sample
-sim <- rstate(n = 1000, s0 = model)
+## and sample from its distribution at time = 2.5.
+sim <- rstate(n = 1000, s0 = model, time = 2.5)
 par(mfrow = c(1, 2))
-hist(sim[,1], main = "Spot Price")
-hist(sim[,2], main = "Convenience Yield")
+hist(sim[,1], main = "Distribution of Spot Price")
+hist(sim[,2], main = "Distribution of Convenience Yield")
+
+
+### Create a trajectory over a 6 years horizon sampled on a weekly basis.
+trajectory <- simstate(6 * 52, time = 6, s0 = model)
+par(mfrow = c(1, 2))
+plot(trajectory[,1], main = "Spot Price", type = "l")
+plot(trajectory[,2], main = "Convenience Yield", type = "l")
+
 }
 
 % <---------------------------------------------------------------------->

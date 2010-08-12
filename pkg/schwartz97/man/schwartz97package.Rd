@@ -35,7 +35,6 @@ License: \tab  GPL (GNU Public License), Version 2 or later \cr
 \tabular{ll}{
   \code{\link{schwartz2f}} \tab       Initialize a Schwartz two-factor object.\cr
 }
-
 \strong{Density, distribution function, quantile function,
   random number generation, and trajectories of the state variables:}
 \tabular{ll}{
@@ -45,7 +44,6 @@ License: \tab  GPL (GNU Public License), Version 2 or later \cr
   \code{\link{rstate}} \tab         Random number generation of the spot and the convenience yield.\cr
   \code{\link{simstate}} \tab       Trajectory of the spot and the convenience yield.\cr
 }
-
 \strong{Density, distribution function, quantile function, and
   random number generation of the futures price:}
 \tabular{ll}{
@@ -54,20 +52,17 @@ License: \tab  GPL (GNU Public License), Version 2 or later \cr
   \code{\link{qfutures}} \tab         Quantile of the futures price.\cr
   \code{\link{rfutures}} \tab         Random number generation of the futures price.\cr
 }
-
 \strong{Parameter estimation:}
 \tabular{ll}{
   \code{\link{fit.schwartz2f}} \tab         Estimate parameters of the two-factor model.\cr
   \code{\link[=fitted.schwartz2f.fit]{fitted}} \tab Extract the model's fitted values.\cr
   \code{\link[=resid.schwartz2f.fit]{resid}} \tab Extract model residuals.\cr
 }
-
 \strong{Pricing:}
 \tabular{ll}{
   \code{\link{pricefutures}} \tab  Compute arbitrage-free futures prices.\cr
   \code{\link{priceoption}} \tab  Compute arbitrage-free European option prices.\cr
 }
-
 \strong{Utilities:}
 \tabular{ll}{
   \code{\link[=coef.schwartz2f]{coef}} \tab Extract model coefficients of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
@@ -77,7 +72,6 @@ License: \tab  GPL (GNU Public License), Version 2 or later \cr
   \code{\link[=plot.schwartz2f.fit]{plot}} \tab Plot \code{\link[=schwartz2f.fit-class]{schwartz2f.fit}}-objects.\cr
   \code{\link[=plot.schwartz2f]{plot}} \tab Plot trajectories of \code{\link[=schwartz2f-class]{schwartz2f}}-objects.\cr
   \code{\link{futures}} \tab Use \code{data(futures)} to get data of 10 commodities.\cr
-
 }
 
 
