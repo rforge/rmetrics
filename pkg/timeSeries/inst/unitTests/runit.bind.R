@@ -49,8 +49,22 @@ function()
                    c(rep(c(FALSE, TRUE), 12), rep(c(TRUE, FALSE), 12)))
     checkTrue(all(time(cbind(ts1, ts0)) == time(ts)))
 
-}
+    # --------------------------------------------------------------------------
+    # issues with single number element
+    a <- timeSeries(1, as.Date(0, origin="2010-01-01") )
+    b <- timeSeries( 2:3, as.Date(1:2, origin="2010-01-01")  )
+    d <- timeSeries( 2:10, as.Date(1:9, origin="2010-01-01") )
 
+    cbind(a, b)
+    cbind(b, a)
+    cbind(b, d)
+    cbind(d, b)
+
+    cbind(a, 1)
+    cbind(b, 1)
+    cbind(a, matrix(1))
+    cbind(b, matrix(1))
+}
 
 ################################################################################
 

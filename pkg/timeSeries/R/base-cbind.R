@@ -38,6 +38,13 @@ function(..., deparse.level = 1)
     if (any(t <- unlist(lapply(dots, is.null))))
         dots[t] <- NULL
 
+    # deal with single numeric values
+    vecIdx <- sapply(dots, function(obj)
+                     (!inherits(obj, "timeSeries") && prod(dim(obj)) == 1))
+    if (any(vecIdx))
+        dots[vecIdx] <- lapply(dots[vecIdx], function(vec)
+                               as.timeSeries(rep(as.vector(vec), nrow(dots[[1]]))))
+
     # coerce to timeSeries object if not a timeSeries
     if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
         dots[t] <- lapply(dots[t], as.timeSeries)
@@ -58,12 +65,6 @@ function(..., deparse.level = 1)
 
     # ensure that data is sorted
     dots <- lapply(dots, sort)
-
-    # deal with single numeric values
-    vecIdx <- sapply(dots, function(obj) (prod(dim(obj)) == 1))
-    if (any(vecIdx))
-        dots[vecIdx] <- lapply(dots[vecIdx], function(vec)
-                               as.timeSeries(rep(as.vector(vec), nrow(dots[[1]]))))
 
     # get list of timestamps and recordIDs
     tds <- lapply(dots, slot, "positions")
