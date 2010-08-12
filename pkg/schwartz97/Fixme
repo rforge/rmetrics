@@ -1,11 +1,5 @@
 /* anyone */
 
-- methoden wie z.B: logLik, (step.AIC.schwartz.fit.2.factor)
+- include methods as logLik
 
-- example for fit.schwartz2f
 
-- Note on convergence in 'fit.schwartz2f'
-
-- Resid what = c("filte", "real", "state")
-
-- Check resid with simulated fit
