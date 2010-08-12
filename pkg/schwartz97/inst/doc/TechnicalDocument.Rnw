@@ -185,9 +185,8 @@ where
 \label{sec:Options}
 % <============================================================>
 The fair price of a European call option on a commodity futures
-contract was derived in \cite{Miltersen1998} for a general
-setting, and in particular for the models presented in
-\cite{Schwartz1997}.
+contract was derived as a special case of more general models in
+\cite{Miltersen1998} and \cite{Hilliard1998}.
 
 Here we give the formula for the two-factor model. In this setting,
 the price of a European call option $C$ at time zero with maturity $t$,
@@ -235,29 +234,27 @@ and the maturity $T$ of the futures contract coincide, formulas
 (\ref{callF}) and (\ref{putF}) still hold. However, the options we
 price for $t=T$ are no longer options written on futures contracts
 with maturity $T$ but rather options with exercise time $T$, written on
-a commodity \textit{spot} contract.
+a commodity \emph{spot} contract.
 
 
 % <============================================================>
-\section{Calibration}\label{sec:Calibration}
+\section{Parameter Estimation}\label{sec:Estimation}
 % <============================================================>
-This section demonstrates an elegant way of calibrating the Schwartz
-multi-factor model. That is estimating the model parameters by
-applying the Kalman filter methodology. Subsection
-\ref{sec:stateSpace} contains a documentation of how the Schwartz
-two-factor model can be expressed in state space form. Once the model
-has been cast in this form one can compute maximum likelihood
-estimates of arbitrary model parameters by numerically maximizing the
-Kalman filter likelihood function.
+This section demonstrates an elegant way of estimating the Schwartz
+two-factor model. That is estimating the model parameters using the
+Kalman filter as in \cite{Schwartz1997}. Subsection
+\ref{sec:stateSpace} shows how the Schwartz two-factor model can be
+expressed in state space form. Once the model has been cast in this
+form the likelihood can be computed and numerically maximized.
 % <============================================================>
 \subsection{State Space Representation}
 \label{sec:stateSpace}
 % <============================================================>
-Let $\mathbf{y}_t$ denote a $(n\times{1})$ vector of variables
-observed at date $t$ and $\boldsymbol{\alpha}_t$ denote a
-$(2\times{1})$ vector named \textit{state vector}. The \textit{state
-  space representation} of the dynamics of $\mathbf{y}$ may be
-given by the linear system of equations
+Let $\mathbf{y}_t$ denote a $(n\times{1})$ vector of futures prices
+observed at date $t$ and $\boldsymbol{\alpha}_t$ denote the
+$(2\times{1})$ \emph{state vector} of the spot price and the
+convenience yield. The state space representation of the dynamics of
+$\mathbf{y}$ is given by the linear system of equations
 \begin{eqnarray}
   \mathbf{y}_t &=& \mathbf{c}_t + Z_t \boldsymbol{\alpha}_t + G_t
   \boldsymbol{\eta}_t  \label{eq:measurement}\\
@@ -267,17 +264,18 @@ given by the linear system of equations
 where $\boldsymbol{\epsilon}_t \sim \mathcal{N}(\boldsymbol{0}, I_2)$
 and $\boldsymbol{\eta}_t \sim \mathcal{N}(\boldsymbol{0}, I_n).$ $G_t$
 and $H_t$ are assumed to be time-invariant.  The errors
-(``innovations'') in the measurement equation (\ref{eq:measurement}) are
-further assumed to be independent, i.e.
+(``innovations'') in the measurement equation (\ref{eq:measurement})
+are further assumed to be independent in the implementation of this
+package
 \begin{equation}
   \label{eq:1}
   \mathbf{G}_t\mathbf{G}^{'}_t = \begin{pmatrix}g_{11}^2&&\\
     &\ddots&\\ &&g_{nn}^2\end{pmatrix}.
 \end{equation}
 Using the functions $A(\cdot)$ and $B(\cdot)$ defined in
-eq. (\ref{eq:A-futures}) and (\ref{eq:B-futures}) the components of
-the state space representation (eq. \ref{eq:measurement} and
-eq. \ref{eq:transition}) are
+(\ref{eq:A-futures}) and (\ref{eq:B-futures}) the components of
+the state space representation (\ref{eq:measurement}) and
+(\ref{eq:transition}) are
 \begin{eqnarray}
   \boldsymbol{\alpha}_{t+\Delta t}&=&\begin{pmatrix}X_{t+\Delta t}\\\delta_{t+\Delta t}\end{pmatrix}\\
   \mathbf{T}_t &=&
@@ -326,7 +324,7 @@ eq. \ref{eq:transition}) are
 \end{eqnarray}
 
 where $X_t=\log{S_t}$, $\Delta{t}=t_{k+1}-t_k$ and $m_t(i)$ denotes
-the \textit{remaining time to maturity} of the $i$-th closest to
+the remaining time to maturity of the $i$-th closest to
 maturity futures $G_t(i)$.
 % <============================================================>
 \clearpage
@@ -335,9 +333,9 @@ maturity futures $G_t(i)$.
 % <============================================================>
 \section{Derivation of the joint distribution}\label{sec:deriv-joint-distr}
 % <============================================================>
-The joint dynamics of the commodity log-price $X_t := \log{S_t}$ and
+The joint dynamics of the commodity log-price $X_t = \log{S_t}$ and
 the spot convenience yield $\delta_t$ reads in an orthogonal
-decomposition
+decomposition of (\ref{eq:Pdynamics-S}) and (\ref{eq:Pdynamics-delta})
 
 \begin{eqnarray}
   dX_t &=& \left(\mu - \delta_t - \frac{1}{2}\sigmaS^2\right)dt +
@@ -345,7 +343,7 @@ decomposition
   d\delta_t &=& \kappa (\alpha - \delta_t) dt + \sigmaE dW_t^2, \label{eq:Pdynamics-delta-ortho}
 \end{eqnarray}
 Equation (\ref{eq:Pdynamics-delta-ortho}) can be solved using the
-substitution $\tilde{\delta}_t := e^{\kappa t}\delta_t$ and Ito's lemma.
+substitution $\tilde{\delta}_t = e^{\kappa t}\delta_t$ and Ito's lemma.
 \begin{equation}
 \label{eq:delta-integrated}
 \begin{split}
@@ -360,9 +358,9 @@ gives
   \label{eq:x}
   X_t &=& X_0 + \int_0^t dX_u\\
   &=& X_0 + \left(\mu - \frac{1}{2}\sigmaS^2\right) t -  \int_0^t
-  \delta_u du  + \int_0^t  \sigmaS \sqrt{1 - \rho^2} dW_u^1 + \int_0^t  \sigmaS \rho dW_u^2
+  \delta_u du  + \int_0^t  \sigmaS \sqrt{1 - \rho^2} dW_u^1 + \int_0^t  \sigmaS \rho dW_u^2.
 \end{eqnarray}
-Let's have a look on the integral $\int_0^t \delta_u du$.
+Let's have a look at the integral $\int_0^t \delta_u du$.
 \begin{equation}\label{eq:integra-deltat}
 \begin{split}
   \int_0^t \delta_u du = \int_0^t e^{-\kappa u}\delta_0 du + \int_0^t \alpha \left(1 -
@@ -387,7 +385,7 @@ solving the Riemann integrals yields
   \int_0^t \delta_u du =  \frac{\delta_0}{\kappa} \left(1 -
     e^{-\kappa t}\right) + \alpha t - \frac{\alpha}{\kappa} \left(1 - e^{-\kappa
       t}\right) + \sigmaE \int_0^t \frac{1}{\kappa}\left(1 -
-    e^{-\kappa (t - s)}\right) dW_s^2
+    e^{-\kappa (t - s)}\right) dW_s^2.
 \end{split}
 \end{equation}
 This leaves us with the following expression for $X_t$:
