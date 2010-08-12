@@ -261,6 +261,7 @@ function(x, y = NULL, plot.type = c("multiple",
         axis(2, ...)
     }
     if (frame.plot) box(...)
+    if(grid) abline(v = at, lty = 3, col = "grey")
     return(invisible())
 }
 
