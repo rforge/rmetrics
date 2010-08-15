@@ -1,11 +1,11 @@
 ### Function to calculate the density of the
 ### generalized hyperbolic distribution
 dghyp <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
-                  lambda = 1, param = c(mu, delta, alpha, beta, lambda)) {
+                  lambda = 1, param = c(mu,delta,alpha,beta,lambda)) {
 
   # Lambda defaults to one if omitted from param vector
   if (length(param) == 4)
-    param <- c(param, 1)
+    param <- c(param,1)
 
   ## check parameters
   parResult <- ghypCheckPars(param)
@@ -24,37 +24,37 @@ dghyp <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   gamma <- sqrt(alpha^2 - beta^2)
 
   ## Argument of Bessel K function in numerator
-  y <- alpha * sqrt(delta^2 + (x - mu)^2)
-  bx <- beta * (x - mu)
+  y <- alpha*sqrt(delta^2 + (x - mu)^2)
+  bx <- beta*(x - mu)
 
   ## Deal with underflow in ratio of Bessel K functions
   ## besselK underflows for x > 740
   ## Use exponentially scaled besselK
-  if (delta * gamma > 700) {
+  if (delta*gamma > 700) {
     # underflow in constant part
-    expTerm <- exp(delta * gamma - y + bx)
+    expTerm <- exp(delta*gamma - y + bx)
     besselRatio <- besselK(x = y, nu = lambda - 1/2, expon.scaled = TRUE)/
-                   besselK(x = delta * gamma, nu = lambda, expon.scaled = TRUE)
-    expAndBessel <- expTerm * besselRatio
+                   besselK(x = delta*gamma, nu = lambda, expon.scaled = TRUE)
+    expAndBessel <- expTerm*besselRatio
   } else {
     expAndBessel <- ifelse(y > 700 | bx > 700, # underflow in variable part
-                           exp(delta * gamma - y + bx) *
+                           exp(delta*gamma - y + bx)*
                            besselK(x = y, nu = lambda - 1/2,
                                    expon.scaled = TRUE)/
-                           besselK(x = delta * gamma, nu = lambda,
+                           besselK(x = delta*gamma, nu = lambda,
                                    expon.scaled = TRUE),
-                          exp(bx) * besselK(x = y, nu = lambda - 1/2)/
-                          besselK(x = delta * gamma, nu = lambda))
+                          exp(bx)*besselK(x = y, nu = lambda - 1/2)/
+                          besselK(x = delta*gamma, nu = lambda))
   }
 
-  dens <- (y/alpha)^(lambda - 1/2) * ((gamma/delta)^lambda) *
-          alpha^(1/2 - lambda) * expAndBessel/sqrt(2 * pi)
+  dens <- (y/alpha)^(lambda - 1/2)*((gamma/delta)^lambda) *
+          alpha^(1/2 - lambda)*expAndBessel/sqrt(2*pi)
 
   dens
 } ## End of dghyp()
 
 pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-                   param = c(mu, delta, alpha, beta, lambda), log.p = FALSE,
+                   param = c(mu,delta,alpha,beta,lambda), log.p = FALSE,
                    lower.tail = TRUE, subdivisions = 100,
                    intTol = .Machine$double.eps^0.25,
                    valueOnly = TRUE, ...)
@@ -64,6 +64,10 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   errMessage <- parResult$errMessage
   if (case == "error")
     stop(errMessage)
+
+  if (log.p){
+    stop("log.p  = TRUE option not yet implemented")
+  }
   mu <- param[1]
   delta <- param[2]
   alpha <- param[3]
@@ -106,7 +110,7 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     prob[q <= modeDist] <- 1 - prob[q <= modeDist]
   }
 
-  if (log.p == TRUE){
+  if (log.p){
     prob <- log(prob)
   }
 
@@ -115,7 +119,7 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 }
 
 qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-                   param = c(mu, delta, alpha, beta, lambda), log.p = FALSE,
+                   param = c(mu,delta,alpha,beta,lambda), log.p = FALSE,
                    lower.tail = TRUE, method = c("spline", "integrate"),
                    nInterpol = 501, uniTol = .Machine$double.eps^0.25,
                    subdivisions = 100, intTol = uniTol, ...)
@@ -125,7 +129,12 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   errMessage <- parResult$errMessage
   if (case == "error")
     stop(errMessage)
+  if (log.p){
+    stop("log.p  = TRUE option not yet implemented")
+  }
+
   method <- match.arg(method)
+  param <- as.numeric(param)
   mu <- param[1]
   delta <- param[2]
   alpha <- param[3]
@@ -169,7 +178,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     if (length(greater) > 0){
       pHigh <- min(p[greater])
       xHigh <- modeDist + sqrt(ghypVar(param = param))
-      while (pghyp(xHigh, param = param,lower.tail = FALSE) >= pHigh){
+      while (pghyp(xHigh, param = param, lower.tail = FALSE) >= pHigh){
         xHigh <- xHigh + sqrt(ghypVar(param = param))
       }
       xRange <- c(modeDist, xHigh)
@@ -204,7 +213,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     }
 
     if (length(extreme) > 0){
-      quant[extreme] <- qghyp(p[extreme],param = param,
+      quant[extreme] <- qghyp(p[extreme], param = param,
                               lower.tail = lower.tail, log.p = log.p,
                               method = "integrate",
                               nInterpol = nInterpol, uniTol = uniTol,
@@ -241,14 +250,14 @@ ddghyp <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   ## Terms for simplification of programming
   t1 <- sqrt(delta^2 + (x - mu)^2)
   t2 <- sqrt(alpha^2 - beta^2)
-  t3 <- besselK(x = alpha * t1, nu = lambda - 0.5)
-  t4 <- besselK(x = alpha * t1, nu = lambda + 0.5)
+  t3 <- besselK(x = alpha*t1, nu = lambda - 0.5)
+  t4 <- besselK(x = alpha*t1, nu = lambda + 0.5)
 
-  ddghyp <- (t3 * (beta * delta^2 + (2 * lambda - 1) * (x - mu) + beta * (x - mu)^2) -
-             t4 * alpha * t1 * (x - mu)) *
-             exp(beta * (x - mu)) * t1^(lambda - (5/2)) * t2^lambda/
-             (sqrt(2 * pi) * alpha^(lambda -  1/2) * delta^lambda *
-             besselK(x = delta * t2, nu = lambda))
+  ddghyp <- (t3*(beta*delta^2 + (2*lambda - 1)*(x - mu) + beta*(x - mu)^2) -
+             t4*alpha*t1*(x - mu)) *
+             exp(beta*(x - mu))*t1^(lambda - (5/2))*t2^lambda/
+             (sqrt(2*pi)*alpha^(lambda -  1/2)*delta^lambda *
+             besselK(x = delta*t2, nu = lambda))
 
   ddghyp
 } ## End of ddghyp()
@@ -292,7 +301,7 @@ rghyp <- function(n, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   sigma <- sqrt(X)
   Z <- rnorm(n)
-  Y <- mu + beta * sigma^2 + sigma * Z
+  Y <- mu + beta*sigma^2 + sigma*Z
 
   Y
 } ## End of rghyp()

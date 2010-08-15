@@ -24,7 +24,7 @@ ghypMean <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   gamma <- sqrt(alpha^2 - beta^2)
 
-  mu + delta * beta * besselRatio(delta * gamma, lambda, 1) / gamma
+  mu + delta*beta*besselRatio(delta*gamma, lambda, 1)/gamma
 } ## End of ghypMean()
 
 ### Function to calculate the theoretical variance of a
@@ -67,7 +67,8 @@ ghypSkew <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   if (case == "error")
     stop(errMessage)
 
-  skew <- ghypMom(3, param = param, momType = "central") / (ghypVar(param = param)^(3 / 2))
+  skew <- ghypMom(3, param = param, momType = "central")/
+                 (ghypVar(param = param)^(3/2))
   return(skew)
 } ## End of ghypSkew()
 
@@ -89,7 +90,8 @@ ghypKurt <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   if (case == "error")
     stop(errMessage)
 
-  kurt <- ghypMom(4, param = param, momType = "central") / (ghypVar(param = param)^2) - 3
+  kurt <- ghypMom(4, param = param, momType = "central")/
+                 (ghypVar(param = param)^2) - 3
   return(kurt)
 } ## End of ghypKurt()
 
