@@ -216,17 +216,8 @@ removeNA <- function (x, ...)
     #   x - an object which can be transformed to a matrix
 
     # FUNCTION:
-    if (!inherits(x, "matrix") && !inherits(x, "timeSeries"))
-        x <- as(x, "matrix")
 
-    # Remove:
-    nas.row = apply(is.na(x), 1, any)
-    x.row = x[!nas.row, , drop = FALSE]
-    nas.col = apply(is.na(x.row), 2, any)
-    ans = x.row[, !nas.col, drop = FALSE]
-
-    # Return Value:
-    ans
+    na.omit(x, ...)
 }
 
 
