@@ -155,7 +155,7 @@ obj          # print it
 coef(obj)    # get coefficients 
 unclass(obj) # see the slots 
 
-### create an object of class schwartz2f.fit
+## create an object of class schwartz2f.fit
 data(futures)
 fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                           deltat = 1 / 260, control = list(maxit = 3))

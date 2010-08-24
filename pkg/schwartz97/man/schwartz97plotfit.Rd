@@ -62,26 +62,26 @@
 
 data(futures)
 
-### Estimate parameters for lumber data (stop after 100 iterations)
+## Estimate parameters for lumber data (stop after 100 iterations)
 fit.obj <- fit.schwartz2f(futures$lumber$price, futures$lumber$ttm / 260,
                           deltat = 1 / 260,
                           control = list(maxit = 100))
 
-### Plot parameter evolution
+## Plot parameter evolution
 plot(fit.obj, type = "trace.pars")
 
-### Plot the state variables
+## Plot the state variables
 plot(fit.obj, type = "state", data = futures$lumber$price,
      ttm = futures$lumber$ttm / 260)
 
-### Plot fitted and real forward curves of wheat data since Jan 2010.
+## Plot fitted and real forward curves of wheat data since Jan 2010.
 lumber.1995 <- lapply(futures$lumber, function(x)x[as.Date(rownames(x)) < "2000-01-01",])
 par(mfrow = c(1, 2))
 plot(fit.obj, type = "forward.curve", data = lumber.1995$price,
      ttm = lumber.1995$ttm / 260)
 futuresplot(lumber.1995)
 
-### Plot trajectories from the state variables
+## Plot trajectories from the state variables
 plot(fit.obj, type = "sim")
 
 

@@ -187,19 +187,19 @@
 }
 % <---------------------------------------------------------------------->
 \examples{
-### Create a "schwartz2f"-object
+## Create a "schwartz2f"-object
 model <- schwartz2f()
 
-### Probability
+## Probability
 pfutures(q = 10 * 3:9, time = 0.5, ttm = 2, model, lambda = 0.01)
 
-### Density
+## Density
 dfutures(x = c(20, 40, 100), time = 0.5, ttm = 2, model, lambda = 0.01)
 
-### Quantile
+## Quantile
 qfutures(p = 0.1 * 2:5, time = 0.5, ttm = 10, model, lambda = 0.01)
 
-### Sample
+## Sample
 sim <- rfutures(n = 1000, time = 0.5, ttm = 5, model, lambda = 0.01)
 
 hist(sim, prob = TRUE)
@@ -207,8 +207,8 @@ lines(seq(30, 300, length = 100),
       dfutures(seq(30, 300, length = 100),
                time = 0.5, ttm = 5, model, lambda = 0.01), col = "red")
 
-### At time 0 the futures price is a deterministic function of s0 and
-### delta0. Therefore 3 times the same value is obtained:
+## At time 0 the futures price is a deterministic function of s0 and
+## delta0. Therefore 3 times the same value is obtained:
 rfutures(3, time = 0, ttm = 1, model, lambda = 0)
 
 }

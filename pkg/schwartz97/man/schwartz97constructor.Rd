@@ -63,15 +63,15 @@ schwartz2f(s0 = 100, delta0 = 0, mu = 0.1, sigmaS = 0.3,
 % <---------------------------------------------------------------------->
 \examples{
 
-### Initialize a 'schwartz2f' object with high convenience yield volatility:
+## Initialize a 'schwartz2f' object with high convenience yield volatility:
 obj <- schwartz2f(sigmaE = 0.7)
 
 plot(obj) # plot it
 
 rstate(10, time = 1, s0 = obj) # generate 10 random variates.
 
-### Get the probability of the event 'the spot price is >= 100 and the
-### convenience yield is >= 0':
+## Get the probability of the event 'the spot price is >= 100 and the
+## convenience yield is >= 0':
 pstate(c(0, -Inf), c(100, 0), time = 10, s0 = obj) 
 
 }

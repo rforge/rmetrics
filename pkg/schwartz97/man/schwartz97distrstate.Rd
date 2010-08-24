@@ -119,23 +119,23 @@
 
 % <---------------------------------------------------------------------->
 \examples{
-### Create a "schwartz2f"-object
+## Create a "schwartz2f"-object
 model <- schwartz2f()
 
-### Probability
+## Probability
 pstate(lower = c(0, -Inf), upper = c(45, 0.01), time = 1, model)
 
-### Density
+## Density
 dstate(x = c(50, 0.03), time = 2, model) 
 dstate(x = rbind(c(50, 0.03), c(50, 0.1)), time = 2, model) # x is a matrix 
 
-### Quantile
+## Quantile
 qstate(p = 0.5, s0 = model)
 
-### Generate random numbers
+## Generate random numbers
 object <- schwartz2f(alpha = 0.05)
 samples <- rstate(1000, time = 2, object)
-### ...and plot histograms
+## ...and plot histograms
 par(mfrow = c(2, 1))
 hist(samples[,1])
 abline(v = mean(object, time = 2)[1], col = "red")

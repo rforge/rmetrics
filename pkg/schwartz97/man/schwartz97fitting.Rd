@@ -150,16 +150,16 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
 data(futures)
 
-### Estimate parameters for wheat data.
-### (little precision required with reltol = 1e-3)
+## Estimate parameters for wheat data.
+## (little precision required with reltol = 1e-3)
 fit.obj <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                           deltat = 1 / 260, control = list(reltol = 1e-3))
 
-### See how parameter values evolved during the fit
+## See how parameter values evolved during the fit
 plot(fit.obj, type = "trace.pars")
 
 \dontrun{
-### Do the same but with lower tolerance level:
+## Do the same but with lower tolerance level:
 high.precision.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                                      control = list(maxit = 3000, reltol = 5e-8))
 
@@ -167,9 +167,9 @@ high.precision.fit
 
 plot(high.precision.fit, type = "trace.pars")
 
-### ... alpha becomes nonsensically high, kappa (speed of mean-reversion
-### of the convenience yield) goes to zero. Solution: Choose different
-### initial values and/or hold kappa constant at 1.
+## ... alpha becomes nonsensically high, kappa (speed of mean-reversion
+## of the convenience yield) goes to zero. Solution: Choose different
+## initial values and/or hold kappa constant at 1.
 
 constrained.fit <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                                   opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
@@ -182,34 +182,34 @@ constrained.fit
 
 plot(constrained.fit, type = "trace.pars")
 
-### The above parameters based on a fit - where kappa was held constant at 1 -
-### look more reasonable.
+## The above parameters based on a fit - where kappa was held constant at 1 -
+## look more reasonable.
 }
 
-### These residuals should be iid standard normal
+## These residuals should be iid standard normal
 model.resid <- resid(fit.obj, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                      type = "filter.std")
 acf(model.resid)
 par(mfrow = c(3, 2))
 apply(model.resid, 2, function(x)plot(density(x)))
-### ...but are anything but iid standard normal.
+## ...but are anything but iid standard normal.
 
-### ...though the fitted values look fine:
+## ...though the fitted values look fine:
 fitted.futures <- fitted(fit.obj, futures$wheat$price, futures$wheat$ttm / 260)
 par(mfrow = c(1, 3))
 ### Plot futures prices
 plot(as.ts(futures$wheat$price), plot.type = "single", ylab = "Futures prices",
      col = gray(seq(0.1, 0.9, length = 4)))
-### Plot fitted values
+## Plot fitted values
 plot(as.ts(fitted.futures), plot.type = "single", ylab = "Fitted values",
      col = gray(seq(0.1, 0.9, length = 4)))
-### Plot relative difference
+## Plot relative difference
 plot(as.ts((fitted.futures - futures$wheat$price) / fitted.futures), plot.type = "single",
      ylab = "Relative difference", col = gray(seq(0.1, 0.9, length = 4)))
 
 
-### Try with kappa = 1, alpha = 0, and flexible standard deviationss of
-### the measurement errors. Stop at 200 iterations.
+## Try with kappa = 1, alpha = 0, and flexible standard deviationss of
+## the measurement errors. Stop at 200 iterations.
 fit.obj.2 <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
                             opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
                                          sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
@@ -220,16 +220,16 @@ fit.obj.2 <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
 
 model.resid.2 <- resid(fit.obj.2, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                        type = "filter.std")
-### Residuals seem to be better:
+## Residuals seem to be better:
 acf(model.resid.2)
 par(mfrow = c(3, 2))
 apply(model.resid.2, 2, function(x)plot(density(x)))
 
 
-### The schwartz2f.fit-object 'fit.obj' can be used to do further calculations as
-### pricing a put option on the wheat futures which matures in 1.1
-### years. The option expires in 1 year. The strike price is the
-### expected futures price in 1.1 years.
+## The schwartz2f.fit-object 'fit.obj' can be used to do further calculations as
+## pricing a put option on the wheat futures which matures in 1.1
+## years. The option expires in 1 year. The strike price is the
+## expected futures price in 1.1 years.
 priceoption("put", time = 1, Time = 1.1, K = pricefutures(1.1, fit.obj),
             fit.obj)
 

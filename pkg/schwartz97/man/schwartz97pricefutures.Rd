@@ -93,12 +93,12 @@
 % <---------------------------------------------------------------------->
 \examples{
 
-### function call by atomic arguments
+## function call by atomic arguments
 forward.curve <- pricefutures(ttm = 0.2 * 1:10, s0 = 10, delta0 = 0,
                               alpha = 0, lambda = 0.02, r = 0)
 plot(forward.curve, type = "b")
 
-### function call via schwartz2f-object. 
+## function call via schwartz2f-object. 
 obj <- schwartz2f(delta0 = 0, sigmaE = 1e-5) # Make convenience yield inactive
 forward.curve <- pricefutures(ttm = 0.2 * 1:10, s0 = obj, r = 0, alphaT = 0)
 plot(forward.curve, type = "b")

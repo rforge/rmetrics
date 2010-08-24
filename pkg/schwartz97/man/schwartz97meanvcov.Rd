@@ -66,7 +66,7 @@
 
   vcov(schwartz2f(), time = 10)
 
-  ### Plot a schwartz2f-object including means and standard deviations
+  ## Plot a schwartz2f-object including means and standard deviations
   plot(schwartz2f(sigmaE = 0.1), n = 50, time = 5, dt = 1 / 52)
 
 }

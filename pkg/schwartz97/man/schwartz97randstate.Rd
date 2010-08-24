@@ -109,7 +109,7 @@ hist(sim[,1], main = "Distribution of Spot Price")
 hist(sim[,2], main = "Distribution of Convenience Yield")
 
 
-### Create a trajectory over a 6 years horizon sampled on a weekly basis.
+## Create a trajectory over a 6 years horizon sampled on a weekly basis.
 trajectory <- simstate(6 * 52, time = 6, s0 = model)
 par(mfrow = c(1, 2))
 plot(trajectory[,1], main = "Spot Price", type = "l")

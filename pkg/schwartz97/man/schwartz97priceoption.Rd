@@ -120,11 +120,11 @@
 % <---------------------------------------------------------------------->
 \examples{
 
-### The option expires in 0.5 years and the futures contract in 1 year.
+## The option expires in 0.5 years and the futures contract in 1 year.
 priceoption(type = "call", time = 0.5, Time = 1, K = 40, g0 = 50)
 
-### The price of a European put option on the spot which expires in 2.5
-### years.
+## The price of a European put option on the spot which expires in 2.5
+## years.
 priceoption(type = "put", time = 2.5, Time = 2.5, K = 900, lambda = 0.02,
             g0 = schwartz2f(s0 = 1000))
 

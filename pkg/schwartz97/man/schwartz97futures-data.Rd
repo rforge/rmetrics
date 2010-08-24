@@ -76,10 +76,10 @@
 
 data(futures)
 
-### Plot forward curves of lumber
+## Plot forward curves of lumber
 futuresplot(futures$lumber, type = "forward.curve")
 
-### Plot time to maturity of heating oil data
+## Plot time to maturity of heating oil data
 futuresplot(futures$heating.oil, type = "ttm")
 
 }

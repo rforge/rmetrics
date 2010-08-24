@@ -45,10 +45,10 @@ futuresplot(futures, type = c("forward.curve", "ttm"), ...)
 
 data(futures)
 
-### Plot time to maturity of corn data
+## Plot time to maturity of corn data
 futuresplot(futures$corn, type = "ttm")
 
-### Plot forward curves of wheat data since Jan 2010
+## Plot forward curves of wheat data since Jan 2010
 wheat.2010 <- lapply(futures$wheat,
                      function(x)x[as.Date(rownames(x)) > "2010-01-01",])
 futuresplot(wheat.2010, type = "forward.curve")
