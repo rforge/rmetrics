@@ -75,6 +75,9 @@ function(
         for (name in names(control)) ctrl[name] = control[name]
     control = ctrl
     
+    # Environment Setting:
+    env = .GlobalEnv
+    
     # Box Constraints:
     if (is.null(par.lower)) par.lower = rep(-Inf, length(par))
     if (is.null(par.upper)) par.upper = rep(+Inf, length(par))
