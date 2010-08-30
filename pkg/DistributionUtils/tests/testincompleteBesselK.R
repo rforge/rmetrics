@@ -36,6 +36,7 @@ for (i in 0:9){
 }
 
 numIBF - forIBF
+intIBF - forIBF
 
 system.time({
             numIBF <- numeric(10)

@@ -20,9 +20,9 @@ CCC                                                                  CCC
 CCC   David Scott, 30/08/2010                                        CCC
 CCC                                                                  CCC
 CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-      subroutine incompleteBesselK(x,y,nu,tol,nmax,IBF,result)
-      implicit double precision(a-h,o-z)
-      implicit integer (i-n)
+      subroutine incompleteBesselK(x,y,nu,eps,nmax,IBF,result)
+C     implicit double precision(a-h,o-z)
+C     implicit integer (i-n)
       integer nmax
       integer result
       double precision x,y,nu,eps,IBF
@@ -44,13 +44,13 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       	call GNUM(1,x,y,nu,Am,An,nmax,Cnp,GM,GN)
       	G(1) = x**nu*GM(1)/GN(1)
       	do n=2,nmax
-      		call GDENOM(n,x,y,nu,An,nmax,Cnp,GN)
-      		call GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
-      		G(n) = x**nu*GM(n)/GN(n)
-c     		write(*,*) G(n),n
-      		if(dabs(G(n)-G(n-1)).lt.eps) then
-      			goto 100
-      		end if
+           call GDENOM(n,x,y,nu,An,nmax,Cnp,GN)
+           call GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+           G(n) = x**nu*GM(n)/GN(n)
+c          write(*,*) G(n),n
+           if(dabs(G(n)-G(n-1)).lt.eps) then
+              goto 100
+           end if
       	end do
       else if(y.gt.x) then
       	call IKV(nu,2D0*dsqrt(x*y),pnu,BI,BK)
@@ -61,18 +61,16 @@ c     		write(*,*) G(n),n
       	call GNUM(1,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
       	G(1) = y**(-nu)*GM(1)/GN(1)
       	do n=2,nmax
-      		call GDENOM(n,y,x,-nu,An,nmax,Cnp,GN)
-      		call GNUM(n,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
-      		G(n) = y**(-nu)*GM(n)/GN(n)
-c     		write(*,*) G(n),n
-      		if(dabs(G(n)-G(n-1)).lt.eps) then
-      			G(n-1) = 2D0*(x/y)**(nu/2D0)
-     $			*BK(int(nu))-G(n-1)
-      			G(n) = 2D0*(x/y)**(nu/2D0)
-     $			*BK(int(nu))-G(n)
-c     			write(*,*) 'BK',BK(int(nu))
-      			goto 100
-      		end if
+           call GDENOM(n,y,x,-nu,An,nmax,Cnp,GN)
+           call GNUM(n,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
+           G(n) = y**(-nu)*GM(n)/GN(n)
+c          write(*,*) G(n),n
+           if(dabs(G(n)-G(n-1)).lt.eps) then
+              G(n-1) = 2D0*(x/y)**(nu/2D0)*BK(int(nu))-G(n-1)
+              G(n) = 2D0*(x/y)**(nu/2D0)*BK(int(nu))-G(n)
+c             write(*,*) 'BK',BK(int(nu))
+              goto 100
+           end if
       	end do
       end if
 
@@ -111,7 +109,7 @@ c     			write(*,*) 'BK',BK(int(nu))
          Cnp(n*(n+1)/2 + 0) = 1.0d0
          Cnp(n*(n+1)/2 + n) = 1.0d0
          do np=1, n-1
-            Cnp(n*(n+1)/2+np) = Cnp(n*(n-1)/2+np-1) + Cnp(n*(n-1)/2+np)
+            Cnp(n*(n+1)/2+np) = Cnp(n*(n-1)/2+np-1)+Cnp(n*(n-1)/2+np)
          end do
       end do
       return

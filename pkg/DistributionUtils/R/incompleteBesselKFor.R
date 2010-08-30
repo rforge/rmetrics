@@ -10,7 +10,7 @@ incompleteBesselKFor <- function(x, y, nu, tol = .Machine$double.eps,
                      IBF = double(1),
                      status = integer(1)
                      )
-  str(IBFOut)
+  #str(IBFOut)
   status <- IBFOut$status
   IBF <- IBFOut$IBF
   if(status == 1) warning("Maximum order exceeded\nResult may be unreliable")
