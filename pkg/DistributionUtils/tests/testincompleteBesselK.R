@@ -1,4 +1,4 @@
-require(GeneralizedHyperbolic)
+require(DistributionUtils)
 ##source("../R/incompleteBesselK.R")
 
 options(digits = 15)
@@ -27,6 +27,16 @@ for (i in 0:9){
 }
 
 numIBF - intIBF
+
+forIBF <-  numeric(10)
+for (i in 0:9){
+  ibf <- incompleteBesselKFor(4, 0.01, i, nmax = 100)
+  forIBF[i + 1] <- ibf
+  print(ibf)
+}
+
+numIBF - forIBF
+
 system.time({
             numIBF <- numeric(10)
             for (i in 0:9){
@@ -41,6 +51,15 @@ system.time({
             for (i in 0:9){
               ibf <- incompleteBesselK(4, 0.01, i, nmax = 100)
               numIBF[i + 1] <- ibf
+              print(ibf)
+            }
+})
+
+system.time({
+            forIBF <- numeric(10)
+            for (i in 0:9){
+              ibf <- incompleteBesselKFor(4, 0.01, i, nmax = 100)
+              forIBF[i + 1] <- ibf
               print(ibf)
             }
 })

@@ -1,5 +1,9 @@
+################################################
+## Functions
+################################################
 export(besselRatio)
 export(incompleteBesselK)
+export(incompleteBesselKFor)
 export(distIneqMassart)
 export(integrateDens)
 export(inversionTestpq, inversionTestqp)
@@ -13,3 +17,10 @@ export(skewness, kurtosis)
 export(tailPlot, tailPlotLine)
 export(normTailPlotLine, tTailPlotLine, gammaTailPlotLine)
 export(tsHessian)
+
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("DistributionUtils")

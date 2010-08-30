@@ -121,22 +121,15 @@ incompleteBesselK(10, 2, 6)
 incompleteBesselK(3.1, 2.6, 5) ## 0.00052 85043 25244
 
 ### Check values when x > y using numeric integration
-numIBF <- numeric(10)
-for (i in 0:9){
-  ibf <- incompleteBesselK(4, 0.01, i)
-  numIBF[i + 1] <- ibf
-  print(ibf)
-}
+(numIBF <- sapply(0:9, incompleteBesselK, x = 4, y = 0.01))
+
 besselFn <- function(t, x, y, nu) {
   (t^(-nu - 1))*exp(-x*t - y/t)
 }
-intIBF <- numeric(10)
-for (i in 0:9){
-  ibf <- integrate(besselFn, 1, Inf, x = 4, y = 0.01, nu = i)
-  intIBF[i + 1] <- ibf$value
-  print(ibf)
-}
 
+(intIBF <- sapply(0:9, integrate, f = besselFn, lower = 1, upper = Inf,
+                 x = 4, y = 0.01))
+intIBF <- as.numeric(intIBF[1, ])
 numIBF - intIBF
 max(abs(numIBF - intIBF)) ## 1.256649992398273e-11
 
