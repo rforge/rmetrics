@@ -1,4 +1,5 @@
-### test pgig
+require(GeneralizedHyperbolic)
+### Test pgig
 ### compare with figures supplied by Slevinsky and Safouhi
 
 testData <- matrix(c(0.1, 1, 1, 0,
@@ -50,13 +51,7 @@ for(i in 1:numTests){
 
 intResults - testResults
 max(abs(testResults - intResults))
- 
+
 results - intResults
 max(abs(results - intResults))
 
-for(i in 1:numTests){
-  intResults[i] <- integrate(dgig, lower = testData[i, 1], upper = Inf,
-                       param = testData[i, 2:4])$value
-}
-
-intResults - testResults

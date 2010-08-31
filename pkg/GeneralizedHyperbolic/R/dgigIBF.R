@@ -3,9 +3,10 @@
 ###
 ### DJS 9/8/2010
 pgigIBF <- function(q, chi = 1, psi = 1, lambda = 1,
-                 param = c(chi,psi,lambda), log.p = FALSE,
-                 lower.tail = TRUE,
-                 ibfTol = 10^(-7), nmax = 100, ...) {
+                    param = c(chi,psi,lambda), log.p = FALSE,
+                    lower.tail = TRUE,
+                    ibfTol = .Machine$double.eps^(0.85),
+                    nmax = 100, ...) {
 
   ## check parameters
   parResult <- gigCheckPars(param)

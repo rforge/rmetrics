@@ -1,12 +1,6 @@
-exportPattern("hyperb")
-exportPattern("nig")
-exportPattern("ghyp")
-exportPattern("gig")
-exportPattern("skewlap")
-exportPattern("gamma")
-exportPattern("Lambda")
-exportPattern("mom")
-export(plotShapeTriangle)
+################################################
+## S3 classes
+################################################
 S3method(print,hyperbFit)
 S3method(print,nigFit)
 S3method(plot,hyperbFit)
@@ -20,3 +14,16 @@ S3method(coef,hyperbFit)
 S3method(coef,nigFit)
 S3method(vcov,hyperbFit)
 S3method(vcov,nigFit)
+
+################################################
+## Functions
+################################################
+exportPattern("hyperb")
+exportPattern("nig")
+exportPattern("ghyp")
+exportPattern("gig")
+exportPattern("skewlap")
+exportPattern("gamma")
+exportPattern("Lambda")
+exportPattern("mom")
+export(plotShapeTriangle)
