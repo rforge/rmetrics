@@ -28,15 +28,6 @@ for (i in 0:9){
 
 numIBF - intIBF
 
-forIBF <-  numeric(10)
-for (i in 0:9){
-  ibf <- incompleteBesselKFor(4, 0.01, i, nmax = 100)
-  forIBF[i + 1] <- ibf
-  print(ibf)
-}
-
-numIBF - forIBF
-intIBF - forIBF
 
 system.time({
             numIBF <- numeric(10)
@@ -56,11 +47,3 @@ system.time({
             }
 })
 
-system.time({
-            forIBF <- numeric(10)
-            for (i in 0:9){
-              ibf <- incompleteBesselKFor(4, 0.01, i, nmax = 100)
-              forIBF[i + 1] <- ibf
-              print(ibf)
-            }
-})

@@ -1,6 +1,6 @@
 Package: DistributionUtils
-Version: 0.1-1
-Date: 2010-05-11
+Version: 0.2-0
+Date: 2010-08-31
 Title: Distribution Utilities
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
@@ -17,5 +17,6 @@ Description: This package contains utilities which are of use in the
 	     and kurtosis, log-histogram, tail plots, moments by
 	     integration, changing the point about which a moment is
 	     calculated, functions for testing distributions using
-	     inversion tests and the Massart inequality.
+	     inversion tests and the Massart inequality. Also includes
+	     an implementation of the incomplete Bessel K function.
 License: GPL (>= 2)

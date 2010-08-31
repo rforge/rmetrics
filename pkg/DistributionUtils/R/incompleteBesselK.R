@@ -1,5 +1,37 @@
-incompleteBesselK <- function(x, y, nu, tol = .Machine$double.eps,
+### This file contains two versions of the incomplete Bessel K function
+###
+### incompleteBesselK calls the fortran function incompleteBesselK
+### incompleteBesselKR is a pure R version of the incomplete Bessel K
+### incompleteBesselKR also requires a number of additional R functions:
+###     SSFcoef, combinatorial, GDENOM, and GNUM
+
+incompleteBesselK <- function(x, y, nu, tol = (.Machine$double.eps)^(0.85),
                               nmax = 90) {
+
+  KNu <- besselK(2*sqrt(x*y), nu)
+  IBFOut <- .Fortran("incompleteBesselK",
+                     as.double(x),
+                     as.double(y),
+                     as.double(nu),
+                     as.double(tol),
+                     as.integer(nmax),
+                     as.double(KNu),
+                     IBF = double(1),
+                     status = integer(1)
+                     )
+  ## for debugging
+  ##str(IBFOut)
+  status <- IBFOut$status
+  IBF <- IBFOut$IBF
+  if(status == 1) warning("Maximum order exceeded\nResult may be unreliable")
+  return(IBF)
+}
+
+
+
+incompleteBesselKR <- function(x, y, nu,
+                               tol = (.Machine$double.eps)^(0.85),
+                               nmax = 90) {
   Am <- matrix(rep(0, (nmax + 1)^2), ncol = nmax + 1)
   An <- matrix(rep(0, (nmax + 1)^2), ncol = nmax + 1)
   Cnp <- numeric((nmax + 1)*(nmax + 2)/2)

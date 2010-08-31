@@ -1,5 +1,6 @@
 \name{incompleteBesselK}
 \alias{incompleteBesselK}
+\alias{incompleteBesselKR}
 \alias{SSFcoef}
 \alias{combinatorial}
 \alias{GDENOM}
@@ -13,7 +14,8 @@ Calculates the incomplete Bessel K function using the algorithm and code
 provided by Slavinsky and Safouhi (2009).
 }
 \usage{
-incompleteBesselK(x, y, nu, tol = .Machine$double.eps, nmax = 90)
+incompleteBesselK(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 90)
+incompleteBesselKR(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 90)
 SSFcoef(nmax, nu)
 combinatorial(nu)
 GDENOM(n, x, y, nu, An, nmax, Cnp)
@@ -54,24 +56,32 @@ GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
 
   see Slavinsky and Safouhi (2010), or Harris (2008).
 
+  \code{incompleteBesselK} calls a Fortran routine to carry out the
+  calculations. \code{incompleteBesselKR} is a pure R version of the
+  routine for computing the incomplete Bessel K function.
+
   The functions \code{SSFcoef}, \code{combinatorial}, \code{GDENOM}, and
   \code{GNUM} are subroutines used in the function
-  \code{incompleteBesselK}. They are not expected to be called by the
+  \code{incompleteBesselKR}. They are not expected to be called by the
   user and the user is not required to specify input values for these
   functions.
 
   The approximation to the incomplete Bessel K function returned by
-  \code{incompleteBesselK} is extremely accurate. With the default value
-  of \code{tol} the number of correct figures essentially coincides with
-  the number of figures representable in the machine being used. In many
-  cases such extreme accuracy is not required. In such cases setting the
-  tolerance to a substantially larger value will increase the speed of
-  the calculation. A very basic test showed the time taken was nearly
-  halved when the tolerance was reduced to \eqn{10^{-7}}{10^(-7)}.
+  \code{incompleteBesselK} is highly accurate. The default value of
+  \code{tol} is about 10^(-14) on a 32-bit computer. It appears that
+  even higher accuracy is possible when \code{x > y}. Then the tolerance
+  can be taken as \code{.Machine$double.eps} and the number of correct
+  figures essentially coincides with the number of figures representable
+  in the machine being used.
+
+  \code{incompleteBesselKR} is very slow compared to the Fortran version
+  and is only included for those who wish to see the algorithm in R
+  rather than Fortran.
 }
 
-\value{ \code{incompleteBesselK} returns an approximation to the
-  incomplete Bessel K function as defined above.
+\value{
+  \code{incompleteBesselK} and \code{incompleteBesselKR} both return an
+  approximation to the incomplete Bessel K function as defined above.
 }
 
 \references{

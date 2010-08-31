@@ -1,3 +1,10 @@
+2010-08-31  David Scott  <d.scott@auckland.ac.nz>
+
+	* runit.incompleteBesselK.R written and checked
+
+	* incompleteBesselK using call to fortran routine added. Old R
+	version of IBF changed to incompleteBesselKR
+
 2010-08-06    <d.scott@auckland.ac.nz>
 
 	* incompleteBesselK added
