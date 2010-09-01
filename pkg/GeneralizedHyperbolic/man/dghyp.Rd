@@ -45,14 +45,14 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \item{lambda}{Shape parameter \eqn{\lambda}{lambda}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,delta,alpha,beta,lambda)}.}
-  \item{log.p}{Logical; if \code{TRUE}, probabilities are given as
-    log(p).}
+  \item{log.p}{Logical. If \code{TRUE}, probabilities \eqn{p} are given
+    as \eqn{\log(p)}{log(p)}.}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
     \code{"integrate"}, the distribution function used is always obtained
     by integration.}
-  \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
-    density is taken from the lower tail.}
+  \item{lower.tail}{Logical. If \code{TRUE}, probabilities are
+    \eqn{P(X\leq x)}{P(X<=x)}, otherwise as \eqn{P(X>x)}{P(X>x)}.}
   \item{subdivisions}{The maximum number of subdivisions used to
     integrate the density and determine the accuracy of the distribution
     function calculation.}

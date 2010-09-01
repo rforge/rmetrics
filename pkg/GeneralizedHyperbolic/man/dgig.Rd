@@ -5,7 +5,6 @@
 \alias{rgig}
 \alias{rgig1}
 \alias{ddgig}
-\alias{gigBreaks}
 
 
 \title{Generalized Inverse Gaussian Distribution}
@@ -22,21 +21,18 @@
 dgig(x, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda), KOmega = NULL)
 pgig(q, chi = 1, psi = 1, lambda = 1,
-     param = c(chi, psi, lambda),
-     small = 10^(-6), tiny = 10^(-10), deriv = 0.3,
-     subdivisions = 100, accuracy = FALSE, ...)
+     param = c(chi,psi,lambda), log.p = FALSE, lower.tail = TRUE,
+     ibfTol = .Machine$double.eps^(0.85), nmax = 100)
 qgig(p, chi = 1, psi = 1, lambda = 1,
-     param = c(chi, psi, lambda),
-     small = 10^(-6), tiny = 10^(-10), deriv = 0.3,
-     nInterpol = 100, subdivisions = 100, ...)
+     param = c(chi, psi, lambda),  log.p = FALSE,
+     lower.tail = TRUE, method = c("spline", "integrate"),
+     nInterpol = 501, uniTol = 10^(-7),
+     ibfTol = .Machine$double.eps^(0.85), nmax = 90, ...)
 rgig(n, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda))
 rgig1(n, chi = 1, psi = 1, param = c(chi, psi))
 ddgig(x, chi = 1, psi = 1, lambda = 1,
-      param = c(chi, psi, lambda), KOmega = NULL, ...)
-gigBreaks(chi = 1, psi = 1, lambda = 1,
-          param = c(chi, psi, lambda),
-          small = 10^(-6), tiny = 10^(-10), deriv = 0.3, ...)
+      param = c(chi, psi, lambda), KOmega = NULL)
 }
 
 \arguments{
@@ -45,26 +41,28 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   \item{n}{Number of observations to be generated.}
   \item{chi}{A shape parameter that by default holds a value of 1.}
   \item{psi}{Another shape parameter that is set to 1 by default.}
-  \item{lambda}{Shape parameter of the GIG distribution. Common to all forms of
-    parameterization. By default this is set to 1.}
+  \item{lambda}{Shape parameter of the GIG distribution. Common to all
+    forms of parameterization. By default this is set to 1.}
   \item{param}{Parameter vector taking the form \code{c(chi, psi, lambda)}
     for \code{rgig}, or \code{c(chi, psi)} for \code{rgig1}.}
+  \item{log.p}{Logical. If \code{TRUE}, probabilities \eqn{p} are given
+    as \eqn{\log(p)}{log(p)}.}
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+    spline approximation to the distribution function. If
+    \code{"integrate"}, the distribution function used is always obtained
+    by integration.}
+  \item{lower.tail}{Logical. If \code{TRUE}, probabilities are
+    \eqn{P(X\leq x)}{P(X<=x)}, otherwise as \eqn{P(X>x)}{P(X>x)}.}
   \item{KOmega}{Sets the value of the Bessel function in the density or
     derivative of the density. See \bold{Details}.}
-  \item{small}{Size of a small difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{tiny}{Size of a tiny difference between the distribution
-    function and zero or one. See \bold{Details}.}
-  \item{deriv}{Value between 0 and 1. Determines the point where the
-    derivative becomes substantial, compared to its maximum value. See
-    \bold{Details}.}
-  \item{accuracy}{Uses accuracy calculated by \code{\link{integrate}}
-    to try and determine the accuracy of the distribution function
-    calculation.}
-  \item{subdivisions}{The maximum number of subdivisions used to integrate
-    the density returning the distribution function.}
-  \item{nInterpol}{The number of points used in qhyperb for cubic spline
+  \item{ibfTol}{Value of tolerance to be passed to
+    \code{incompleteBesselK} by \code{pgig}.}
+    \item{nmax}{Value of maximum order of the approximating series to be
+    passed to \code{incompleteBesselK} by \code{pgig}.}
+  \item{nInterpol}{The number of points used in qgig for cubic spline
     interpolation (see \code{splinefun}) of the distribution function.}
+  \item{uniTol}{Value of \code{tol} in
+    calls to \code{uniroot}. See \code{\link{uniroot}}.}
   \item{\dots}{Passes arguments to \code{uniroot}.  See \bold{Details}.}
 }
 
@@ -91,35 +89,38 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   \eqn{(\omega,\eta)}{(omega, eta)} parameterisations to the
   \eqn{(\chi,\psi)}{(chi, psi)}, parameterisation used above.
 
-  \code{pgig} breaks the real line into eight regions in order to
-  determine the integral of \code{dgig}. The break points determining
-  the regions are found by \code{gigBreaks}, based on the values of
-  \code{small}, \code{tiny}, and \code{deriv}. In the extreme tails of
-  the distribution where the probability is \code{tiny} according to
-  \code{gigCalcRange}, the probability is taken to be zero.  For the
-  generalized inverse Gaussian distribution the leftmost breakpoint is
-  not affected by the value of \code{tiny} but is always taken as 0. In
-  the inner part of the distribution, the range is divided in 6 regions,
-  3 above the mode, and 3 below. On each side of the mode, there are two
-  break points giving the required three regions. The outer break point
-  is where the probability in the tail has the value given by the
-  variable \code{small}. The inner break point is where the derivative
-  of the density function is \code{deriv} times the maximum value of the
-  derivative on that side of the mode. In each of the 6 inner regions
-  the numerical integration routine
-  \code{\link[DistributionUtils]{safeIntegrate}} (which is a wrapper for
-  \code{\link{integrate}}) is used to integrate the density \code{dgig}.
+  \code{pgig} calls the function
+  \code{\link[DistributionUtils]{incompleteBesselK}} from the package
+  \pkg{DistributionUtils} to integrate the density function
+  \code{dgig}. This can be expected to be accurate to about 13 decimal
+  places on a 32-bit computer, often more accurate. The algorithm used
+  is due to Slavinsky and Safouhi (2010).
 
-  \code{qgig} use the breakup of the real line into the same 8
-  regions as \code{pgig}. For quantiles which fall in the 2 extreme
-  regions, the quantile is returned as \code{-Inf} or \code{Inf} as
-  appropriate. In the 6 inner regions \code{splinefun} is used to fit
-  values of the distribution function generated by \code{pgig}. The
-  quantiles are then found using the \code{uniroot} function.
+  Calculation of quantiles using \code{qgig} permits the use of two
+  different methods. Both methods use \code{uniroot} to find the value
+  of \eqn{x} for which a given \eqn{q} is equal \eqn{F(x)} where \eqn{F}
+  denotes the cumulative distribution function. The difference is in how
+  the numerical approximation to \eqn{F} is obtained. The obvious
+  and more accurate method is to calculate the value of \eqn{F(x)}
+  whenever it is required using a call to \code{pghyp}. This is what
+  is done if the method is specified as \code{"integrate"}. It is clear
+  that the time required for this approach is roughly linear in the
+  number of quantiles being calculated. A Q-Q plot of a large data set
+  will clearly take some time. The alternative (and default) method is
+  that for the major part of the distribution a spline approximation to
+  \eqn{F(x)} is calculated and quantiles found using \code{uniroot} with
+  this approximation. For extreme values (for which the tail probability
+  is less than \eqn{10^{-7}}{10^(-7)}), the integration method is still
+  used even when the method specifed is \code{"spline"}.
 
-  \code{pgig} and \code{qgig} may generally be expected to be accurate
-  to 5 decimal places. Unfortunately, when \code{lambda} is less than
-  -0.5, the accuracy may be as little as 3 decimal places.
+  If accurate probabilities or quantiles are required, tolerances
+  (\code{intTol} and \code{uniTol}) should be set to small values, say
+  \eqn{10^{-10}}{10^(-10)} or \eqn{10^{-12}}{10^(-12)} with \code{method
+  = "integrate"}. Generally then accuracy might be expected to be at
+  least \eqn{10^{-9}}{10^(-9)}. If the default values of the functions
+  are used, accuracy can only be expected to be around
+  \eqn{10^{-4}}{10^(-4)}. Note that on 32-bit systems
+  \code{.Machine$double.eps^0.25 = 0.0001220703} is a typical value.
 
   Generalized inverse Gaussian observations are obtained via the
   algorithm of Dagpunar (1989).
@@ -129,30 +130,9 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   \code{dgig} gives the density, \code{pgig} gives the distribution
   function, \code{qgig} gives the quantile function, and \code{rgig}
   generates random variates. \code{rgig1} generates random variates in
-  the special case where \eqn{\lambda = 1}{lambda = 1}. An estimate of the
-  accuracy of the approximation to the distribution function may be
-  found by setting \code{accuracy = TRUE} in the call to \code{phyperb}
-  which then returns a list with components \code{value} and
-  \code{error}.
+  the special case where \eqn{\lambda = 1}{lambda = 1}.
 
   \code{ddgig} gives the derivative of \code{dgig}.
-
-  \code{gigBreaks} returns a list with components:
-  \item{xTiny}{Takes value 0 always.}
-  \item{xSmall}{Value such that probability to the left is less than
-    \code{small}.}
-  \item{lowBreak}{Point to the left of the mode such that the
-    derivative of the density is \code{deriv} times its maximum value
-    on that side of the mode}
-  \item{highBreak}{Point to the right of the mode such that the
-    derivative of the density is \code{deriv} times its maximum value
-    on that side of the mode}
-  \item{xLarge}{Value such that probability to the right is less than
-    \code{small}.}
-  \item{xHuge}{Value such that probability to the right is less than
-    \code{tiny}.}
-  \item{modeDist}{The mode of the given generalized inverse Gaussian
-    distribution.}
 }
 
 \references{
@@ -163,6 +143,10 @@ gigBreaks(chi = 1, psi = 1, lambda = 1,
   \enc{Jörgensen}{Jorgensen}, B. (1982). \emph{Statistical Properties of
   the Generalized Inverse Gaussian Distribution}. Lecture Notes in
   Statistics, Vol. 9, Springer-Verlag, New York.
+
+  Slevinsky, Richard M., and Safouhi, Hassan (2010) A recursive
+  algorithm for the G transformation and accurate computation of
+  incomplete Bessel functions. \emph{Appl. Numer. Math.}, In press.
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Richard Trendall,
@@ -202,12 +186,6 @@ title("Density of the\n Generalized Inverse Gaussian")
 curve(ddgig(x, param = param), from = gigRange[1], to = gigRange[2],
       n = 1000)
 title("Derivative of the Density\n of the Generalized Inverse Gaussian")
-par(mfrow = c(1, 1))
-gigRange <- gigCalcRange(param = param, tol = 10^(-6))
-curve(dgig(x, param = param), from = gigRange[1], to = gigRange[2],
-      n = 1000)
-bks <- gigBreaks(param = param)
-abline(v = bks)
 }
 
 \keyword{distribution}

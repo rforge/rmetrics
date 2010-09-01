@@ -14,7 +14,10 @@ qqgig <- function(y, chi = 1, psi = 1, lambda = 1,
   if ((n <- length(y)) == 0)
     stop("y is empty or has only NAs")
 
-  x <- qgig(ppoints(n), param = param)[order(order(y))]
+  ## Tolerances are set very low since it doesn't matter for a plot
+  x <- qgig(ppoints(n), param = param, ibfTol = 10^(-4),
+            nInterpol = 201,
+            uniTol = 10^(-4))[order(order(y))]
 
   if (has.na) {
     y <- x
@@ -52,7 +55,8 @@ ppgig <- function(y, chi = 1, psi = 1, lambda = 1,
   if(0 == (n <- length(y)))
     stop("data is empty")
 
-  yvals <- pgig(y, param = param)
+  ## Tolerances are set very low since it doesn't matter for a plot
+  yvals <- pgig(y, param = param, ibfTol = 10^(-4))
   xvals <- ppoints(n, a = 1 / 2)[order(order(y))]
 
   if (has.na) {

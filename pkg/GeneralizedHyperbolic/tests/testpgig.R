@@ -28,7 +28,7 @@ numTests <- NROW(testData)
 results <- numeric(numTests)
 
 for(i in 1:numTests){
-  results[i] <- pgigIBF(testData[i, 1], param = testData[i, 2:4],
+  results[i] <- pgig(testData[i, 1], param = testData[i, 2:4],
                      lower.tail = FALSE)
 }
 
@@ -36,7 +36,7 @@ results - testResults
 max(abs(results - testResults))
 
 for(i in 1:numTests){
-  results[i] <- pgigIBF(testData[i, 1], param = testData[i, 2:4],
+  results[i] <- pgig(testData[i, 1], param = testData[i, 2:4],
                      lower.tail = FALSE, ibfTol = .Machine$double.eps)
 }
 

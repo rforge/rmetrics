@@ -1,3 +1,13 @@
+2010-09-01    <d.scott@auckland.ac.nz>
+
+	* qqgig, ppgig defaults changed when calculating quantiles and
+	probabilities to make them quicker and more reliable---very large
+	tolerances used since differences won't be obvious in plots
+
+	* pgig, qgig changed so that pgig uses incompleteBesselK from
+	DistributionUtils, and qgig uses the two part split at the mode
+	and then optionally a spline fit or integration
+
 2010-08-04    <d.scott@auckland.ac.nz>
 
 	* nig functions added (dnig, pnig, qnig, rnig, nigFit,

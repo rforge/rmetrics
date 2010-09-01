@@ -1,6 +1,4 @@
 \name{GeneralizedHyperbolic-internal}
-\alias{pgigIBF}
-\alias{qgigIBF}
 
 \title{Internal Generalized Hyperbolic Functions}
 \description{
