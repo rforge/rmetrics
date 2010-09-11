@@ -224,10 +224,17 @@ plot.schwartz2f <- function(x, n = 100, time = 2, dt = 1/52)
   time.seq <- seq(dt, time, by = dt)
   means <- mean(x, time = time.seq)     # Calculate expectations
 
-  log.st.var <- sapply(time.seq, function(t,obj)vcov(obj, t)[1,1], obj = x)
-  st.sd <- sqrt((exp(log.st.var) - 1)) * means[,1]
-  deltat.sd <- sqrt(sapply(time.seq, function(t,obj)vcov(obj, t)[2,2], obj = x))  
+  quantiles <- c(0.01, 0.05, 0.1, 0.9, 0.95, 0.99)
+  names(quantiles) <- paste(quantiles * 100, "%", sep = "")
 
+  log.st.var <- sapply(time.seq, function(t,obj)vcov(obj, t)[1,1], obj = x)
+  st.quantiles <- sapply(quantiles, qlnorm,
+                         meanlog = log(means[,1]) - 1 / 2 * log.st.var,
+                         sdlog = sqrt(log.st.var))
+
+  deltat.sd <- sqrt(sapply(time.seq, function(t,obj)vcov(obj, t)[2,2], obj = x))
+  deltat.quantiles <- sapply(quantiles, qnorm, mean = means[,2], sd = deltat.sd)
+  
   oldpar <- par(no.readonly = TRUE)
   on.exit({
     par(oldpar)
@@ -238,21 +245,25 @@ plot.schwartz2f <- function(x, n = 100, time = 2, dt = 1/52)
   par(mai = c(0,1,0,0))
 
   ## plot spot prices
-  plot(time.seq, time.seq, ylim = range(st), type = "n",
+  plot(time.seq, time.seq, ylim = range(st, st.quantiles), type = "n",
        main = "", xlab = "", ylab = "S(t)", xaxt = "n")
 
   apply(st, 2, function(y, x)lines(x, y, col = "grey"), x = time.seq) 
   lines(time.seq, means[,1], col = "red")
-  lines(time.seq, means[,1] + st.sd, col = "red", lty = "dashed")
-
+  lty <- c("dotted", "dashed", "dotdash")
+  for(i in 1:6)
+    lines(time.seq, st.quantiles[,i], col = "red", lty = c(lty, rev(lty))[i])
+  legend("topleft",
+         c("Trajectories", "Mean", "99% CI", "95% CI", "90% CI"),
+         col = c("grey", rep("red", 4)), lty = c("solid", "solid", lty), bg = "white")
+  
   ## plot convenience yield
-  plot(time.seq, time.seq, ylim = range(deltat), type = "n",
+  plot(time.seq, time.seq, ylim = range(deltat, deltat.quantiles), type = "n",
        main = "", xlab = "time", ylab = "delta(t)")
   apply(deltat, 2, function(y, x)lines(x, y, col = "grey"), x = time.seq) 
   lines(time.seq, means[,2], col = "red")
-  lines(time.seq, means[,2] + deltat.sd, col = "red", lty = "dashed")
-  lines(time.seq, means[,2] - deltat.sd, col = "red", lty = "dashed")
-
+  for(i in 1:6)
+    lines(time.seq, deltat.quantiles[,i], col = "red", lty = c(lty, rev(lty))[i])
 }
 
 ### <---------------------------------------------------------------------->

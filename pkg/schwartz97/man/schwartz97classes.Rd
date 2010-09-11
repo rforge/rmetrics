@@ -63,11 +63,11 @@
       value of \code{\link{optim}}'s \dQuote{convergence}. If an unknown
       error occurs the value -1 is returned.}
     \item{\code{error.message}:}{An error message of class
-      \code{character}.}
+      \code{character}, if any.}
     \item{\code{fitted.params}:}{A \code{logical} vector stating which
       parameters were fitted.}
     \item{\code{trace.pars}:}{Contains the parameter value evolution
-    during the fitting procedure of class \code{matrix}.}
+    during the estimation procedure of class \code{matrix}.}
     \item{\code{r}:}{The risk-free interest rate of class \code{numeric}.}
     \item{\code{alphaT}:}{The mean-value of the convenience yield
       process under the equivalent martingale measure of class 

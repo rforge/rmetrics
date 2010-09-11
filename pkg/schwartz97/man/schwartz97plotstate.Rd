@@ -8,7 +8,8 @@
 \description{
 
   This function plots trajectories of the Schwartz two-factor model
-  including the means and standard deviations.
+  including the means and confidence intervals at 99\%, 95\% and 90\%
+  levels.
 
 }
 % <---------------------------------------------------------------------->
@@ -24,14 +25,6 @@
   \item{time}{Time span of the simulation.}
   \item{dt}{Time step.}
 
-}
-% <---------------------------------------------------------------------->
-\details{
-
-  The red solid lines denote the means and the red dashed lines denote
-  the mean plus one standard deviation for the spot price and the mean
-  plus/minus one standard deviation for the convenience yield.
-  
 }
 % <---------------------------------------------------------------------->
 \author{David Luethi}

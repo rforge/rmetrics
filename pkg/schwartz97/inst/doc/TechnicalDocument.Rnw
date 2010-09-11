@@ -78,9 +78,9 @@ Under the pricing measure $\mathbb{Q}$ the dynamics are of the form
   d\widetilde{W}_\epsilon, \label{eq:Qdynamics-delta}.
 \end{eqnarray}
 where the constant $\lambda$ denotes the market price of convenience
-yield risk and $\widetilde{W}_S$ and $\widetilde{W}_\epsilon$ are now
-$\mathbb{Q}$-Brownian motions. It may be handy to introduce a
-new mean-level for the convenience yield process under $\mathbb{Q}$
+yield risk and $\widetilde{W}_S$ and $\widetilde{W}_\epsilon$ are
+$\mathbb{Q}$-Brownian motions. It may be handy to introduce a new
+mean-level for the convenience yield process under $\mathbb{Q}$
 \begin{equation}
   \label{eq:Q-drift}
  \tilde{\alpha} = \alpha - \lambda / \kappa,
