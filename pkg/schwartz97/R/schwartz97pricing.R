@@ -100,8 +100,15 @@ priceoption.default <- function(type = c("call", "put"), time = 0.5,
                                 sigmaE = 0.5, rho = 0.75, r = 0.03)
 {
   type <- match.arg(type)
-  if(Time < time)
+  if(length(g0) > 1){
+    stop("'g0' must be a scalar!")
+  }
+  if(length(K) > 1){
+    stop("'K' must be a scalar!")
+  }
+  if(Time < time){
     stop("Choose parameters 'time', 'Time' such that 'Time' >= 'time'!")
+  }
 
   G <- g0[1]
 

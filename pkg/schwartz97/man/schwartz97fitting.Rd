@@ -186,6 +186,14 @@ plot(constrained.fit, type = "trace.pars")
 ## look more reasonable.
 }
 
+
+% filter.obj <- filter.schwartz2f(data = futures$wheat$price, ttm = futures$wheat$ttm / 260, fit.obj)$fkf.obj
+%     resid.std <- t(sapply(1:ncol(filter.obj$vt), function(i, Ft, vt){print(i);solve(t(chol(Ft[,,i]))) %*% vt[,i]},
+%                           Ft = filter.obj$Ft, vt = filter.obj$vt))
+
+% filter.obj$Ft[,,90:110]
+% filter.obj$vt[,90:110]
+
 ## These residuals should be iid standard normal
 model.resid <- resid(fit.obj, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                      type = "filter.std")
