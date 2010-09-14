@@ -73,7 +73,7 @@ fit.obj <- fit.schwartz2f(futures$live.cattle$price, futures$live.cattle$ttm / 2
 ## Standardized residuals 
 resid.std <- resid(fit.obj, data = futures$live.cattle$price, ttm =
                    futures$live.cattle$ttm / 260, type = "filter.std")
-acf(resid.std) # ...are not independent
+acf(resid.std, na.action = na.pass) # ...are not independent
 
 ## Real differences
 resid.real <- resid(fit.obj, data = futures$live.cattle$price, ttm =

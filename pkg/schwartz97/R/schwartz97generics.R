@@ -8,7 +8,11 @@ resid.schwartz2f.fit <- function(object, data, ttm, type = c("filter", "filter.s
     return(vt)
   }else if(type == "filter.std"){
     filter.obj <- filter.schwartz2f(data, ttm, object)$fkf.obj
-    resid.std <- t(sapply(1:ncol(filter.obj$vt), function(i, Ft, vt)solve(t(chol(Ft[,,i]))) %*% vt[,i],
+    resid.std <- t(sapply(1:ncol(filter.obj$vt), function(i, Ft, vt){if(any(is.na(vt[,i])))
+                                                                       return(rep(NA, nrow(vt)))
+                                                                     else
+                                                                       return(solve(t(chol(Ft[,,i]))) %*% vt[,i])
+                                                                     },
                           Ft = filter.obj$Ft, vt = filter.obj$vt))
     dimnames(resid.std) <- dimnames(data)
     return(resid.std)

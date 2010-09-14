@@ -353,39 +353,59 @@ abline(h = 0)
 
 @
 \caption{Forward curves with time to maturity up to two years are
-  plotted for the trajectory \emph{state.traj}. The forward curves are
-  steeper (stronger contango) the lower the convenience yield
-  is.}\label{fig:forward-curves}
+  plotted for the trajectory \emph{state.traj}. The ``closest to
+  maturity contract'' is in fact the spot price because the time to
+  maturity is zero. The forward curves are steeper (stronger contango)
+  the lower the convenience yield is.}\label{fig:forward-curves}
 \end{figure}
 % <============================================================>
 \section{Contango and Backwardation}\label{sec:contango}
 % <============================================================>
-<<<>>=
+Fig. \ref{fig:forward-curves} shows the ability of the Schwartz
+two-factor model to generate contango and backwardation
+situations. Mixed shapes are possible too. E.g. an upwards sloping
+forward curve at the short end which points downwards at the long end.
+
+Looking at the $\mathbb{Q}$-dynamics in equations
+(\ref{eq:Qdynamics-S}) and (\ref{eq:Qdynamics-delta}) it is obvious
+that, locally, the drift of the spot price is positive when $\delta_t
+< r$. This corresponds to a (local) contango situation. However, the
+long-term mean of $\delta_t$ is $\tilde{\alpha}$. This means that
+short and long-term futures can point in different directions.
+
+Four different shapes are generated in the following example
+\begin{description}
+\item[Pure contango:]  If $r > \delta_0$ and $r > \tilde{\alpha}$.
+\item[Backwardation first, then contango:] If $r < \delta_0$ and $r >
+  \tilde{\alpha}$.
+\item[Pure backwardation:]  If $r < \delta_0$ and $r < \tilde{\alpha}$.
+\item[Contango first, then backwardation:]  If $r > \delta_0$ and $r < \tilde{\alpha}$.  
+\end{description}
+<<>>=
 s0 <- 1
 delta0 <- 0.0
 sigmaS <- 0.3
 kappa <- 1
-alpha <- 0.1
 sigmaE <- 0.4
-rho <- 0
+rho <- 0.5
 r <- 0.03
-ttm <- seq(0, 2, by = 0.4)
+ttm <- seq(0, 3, by = 0.5)
 ## Pure contango
 pricefutures(ttm, s0 = s0, delta0 = r, sigmaS = sigmaS,
-            kappa = kappa, sigmaE = sigmaE, rho = rho,
-            r = r, alphaT = r - 0.1)
+             kappa = kappa, sigmaE = sigmaE, rho = rho,
+             r = r, alphaT = r - 0.1)
 ## Backwardation and then contango
 pricefutures(ttm, s0 = s0, delta0 = r + 0.1, sigmaS = sigmaS,
-            kappa = kappa, sigmaE = sigmaE, rho = rho,
-            r = r, alphaT = r - 0.1)
+             kappa = kappa, sigmaE = sigmaE, rho = rho,
+             r = r, alphaT = r - 0.1)
 ## Pure backwardation
 pricefutures(ttm, s0 = s0, delta0 = r, sigmaS = sigmaS,
-            kappa = kappa, sigmaE = sigmaE, rho = rho,
-            r = r, alphaT = r + 0.1)
+             kappa = kappa, sigmaE = sigmaE, rho = rho,
+             r = r, alphaT = r + 0.1)
 ## Contango and then backwardation
 pricefutures(ttm, s0 = s0, delta0 = r - 0.1, sigmaS = sigmaS,
-            kappa = kappa, sigmaE = sigmaE, rho = rho,
-            r = r, alphaT = r + 0.1)
+             kappa = kappa, sigmaE = sigmaE, rho = rho,
+             r = r, alphaT = r + 0.1)
 
 @ 
 \clearpage

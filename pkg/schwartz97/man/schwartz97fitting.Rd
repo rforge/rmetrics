@@ -185,21 +185,12 @@ plot(constrained.fit, type = "trace.pars")
 ## The above parameters based on a fit - where kappa was held constant at 1 -
 ## look more reasonable.
 }
-
-
-% filter.obj <- filter.schwartz2f(data = futures$wheat$price, ttm = futures$wheat$ttm / 260, fit.obj)$fkf.obj
-%     resid.std <- t(sapply(1:ncol(filter.obj$vt), function(i, Ft, vt){print(i);solve(t(chol(Ft[,,i]))) %*% vt[,i]},
-%                           Ft = filter.obj$Ft, vt = filter.obj$vt))
-
-% filter.obj$Ft[,,90:110]
-% filter.obj$vt[,90:110]
-
 ## These residuals should be iid standard normal
 model.resid <- resid(fit.obj, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                      type = "filter.std")
-acf(model.resid)
+acf(model.resid, na.action = na.pass)
 par(mfrow = c(3, 2))
-apply(model.resid, 2, function(x)plot(density(x)))
+apply(model.resid, 2, function(x)plot(density(na.omit(x))))
 ## ...but are anything but iid standard normal.
 
 ## ...though the fitted values look fine:
@@ -229,9 +220,9 @@ fit.obj.2 <- fit.schwartz2f(futures$wheat$price, futures$wheat$ttm / 260,
 model.resid.2 <- resid(fit.obj.2, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
                        type = "filter.std")
 ## Residuals seem to be better:
-acf(model.resid.2)
+acf(model.resid.2, na.action = na.pass)
 par(mfrow = c(3, 2))
-apply(model.resid.2, 2, function(x)plot(density(x)))
+apply(model.resid.2, 2, function(x)plot(density(na.omit(x))))
 
 
 ## The schwartz2f.fit-object 'fit.obj' can be used to do further calculations as

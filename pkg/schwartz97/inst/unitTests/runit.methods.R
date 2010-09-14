@@ -29,8 +29,8 @@ test.initializations <- function()
                           sigmaE = coefs$sigmaE, rho = coefs$rho)
 
 ### Densities:
-  q <- cbind(runif(10, min(data$price), max(data$price)),
-             runif(10, min(data$ttm), max(data$ttm)))
+  q <- cbind(runif(10, min(data$price, na.rm = TRUE), max(data$price, na.rm = TRUE)),
+             runif(10, min(data$ttm, na.rm = TRUE), max(data$ttm, na.rm = TRUE)))
 
   checkEquals(dstate(q, time = 1.65, state.obj), dstate(q, time = 1.65, fit),
               "dstate: Must give same results for schwartz2f and schwartz2f.fit objects!")
