@@ -8,7 +8,7 @@
   on a road, measured in seconds.
 }
 \format{
-  The \code{traffic} data frame is a vector of 128 observations.
+  The \code{traffic} data is a vector of 128 observations.
 }
 \source{
   Bartlett, M.S. (1963)
@@ -24,7 +24,6 @@
 \examples{
 data(traffic)
 str(traffic)
-attach(traffic)
 
 ### Fit the generalized inverse Gaussian distribution
 gigFit(traffic)

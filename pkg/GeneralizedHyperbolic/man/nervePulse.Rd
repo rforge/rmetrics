@@ -6,10 +6,9 @@
 \description{
   Times between successive electric pulses on the surface of isolated
   muscle fibres.
-  A vector of data containing 799 observations.
 }
 \format{
-  The \code{nervePulse} data frame is a vector with 799 observations.
+  The \code{nervePulse} data is a vector with 799 observations.
 }
 \details{
   The end-plates of resting muscle fibres are the seat of spontaneous
@@ -36,7 +35,6 @@
 \examples{
 data(nervePulse)
 str(nervePulse)
-attach(nervePulse)
 
 ### Fit the generalized inverse Gaussian distribution
 gigFit(nervePulse)
