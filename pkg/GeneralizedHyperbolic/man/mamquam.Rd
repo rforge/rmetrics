@@ -35,15 +35,14 @@
 \examples{
 data(mamquam)
 str(mamquam)
-attach(mamquam)
 ### Construct data from frequency summary, taking all observations
 ### at midpoints of intervals
-psi <- rep(midpoints, counts)
+psi <- rep(mamquam$midpoints, mamquam$counts)
 barplot(table(psi))
 ### Fit the hyperbolic distribution
 hyperbFit(psi)
 
 ### Actually hyperbFit can deal with frequency data
-hyperbFit(midpoints, freq = counts)
+hyperbFit(mamquam$midpoints, freq = mamquam$counts)
 }
 \keyword{datasets}

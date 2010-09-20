@@ -30,17 +30,16 @@
 \examples{
 data(resistors)
 str(resistors)
-attach(resistors)
 ### Construct data from frequency summary, taking all observations
 ### at midpoints of intervals
-resistances <- rep(midpoints,counts)
+resistances <- rep(resistors$midpoints, resistors$counts)
 hist(resistances)
 logHist(resistances)
 ## Fit the hyperbolic distribution
 hyperbFit(resistances) 
 
 ## Actually fit.hyperb can deal with frequency data
-hyperbFit(midpoints, freq = counts)
+hyperbFit(resistors$midpoints, freq = resistors$counts)
 
 }
 \keyword{datasets}
