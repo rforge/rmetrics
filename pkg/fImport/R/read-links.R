@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  read.lynx               Uses the lynx browser to read from a web page
+#  read.lynx               Uses the links browser to read from a web page
 ################################################################################
 
 

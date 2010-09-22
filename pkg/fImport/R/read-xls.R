@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  read.xls              Downloads an xls fileand converts it in a csv file
+#  read.xls              Downloads an xls file and converts it in a csv file
 ################################################################################
 
 
