@@ -16,10 +16,9 @@
 
 
 \usage{
-timeSequence(from, to = Sys.timeDate(), 
-    by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
-    length.out = NULL, format = NULL,
-    zone = "", FinCenter = "")
+
+timeSequence(from, to = Sys.timeDate(), by, length.out = NULL, format =
+    NULL, zone = "", FinCenter = "")
 
 \method{seq}{timeDate}(from, to, by, length.out = NULL, along.with = NULL, \dots)  
 
@@ -34,10 +33,15 @@ timeSequence(from, to = Sys.timeDate(),
     \code{to} must be after \code{from}.
   }
   \item{by}{
-    a character string, containing one of "sec", "min",
-    "hour", "day", "week", "month" or "year".
-    This can optionally be preceded by an integer and a
-    space, or followed by "s".
+    \itemize{
+      \item a character string, containing one of "sec", "min",
+      "hour", "day", "week", "month" or "year". This can
+      optionally be preceded by an integer and a
+      space, or followed by "s".
+      \item character string "quarter" that is equivalent to "3 months".
+      \item A number, taken to be in seconds.
+      \item A object of class 'difftime'
+    }
   }       
   \item{length.out}{
     length.out integer, optional. Desired length

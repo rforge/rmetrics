@@ -22,9 +22,7 @@
 ################################################################################
 
 timeSequence <-
-    function(from, to = Sys.timeDate(),
-    by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
-    length.out = NULL, format = NULL,
+    function(from, to = Sys.timeDate(), by, length.out = NULL, format = NULL,
     zone = "", FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
@@ -68,20 +66,19 @@ timeSequence <-
         FinCenter <- getRmetricsOptions("myFinCenter")
 
     # Missing from:
-    if (missing(from)) from = timeDate(to, format = format, zone = zone,
-        FinCenter = FinCenter) - 24*29*3600
+    if (missing(from))
+        from <- timeDate(to, format = format, zone = zone,
+                         FinCenter = FinCenter) - 24*29*3600
 
     # Settings and Checks:
-    if (!is.null(length.out)) to = from
-    by = match.arg(by)
-    if (by == "quarter") by = "3 months"
+    if (!is.null(length.out)) to <- from
+    if (missing(by)) by <- "day"
 
     # Auto-detect Input Format:
-    format.from = format.to = format
+    format.from <- format.to <- format
     if (is.null(format)) {
-        format.from = whichFormat(as.character(from))
-        format.to = whichFormat(as.character(to))
-
+        format.from <- whichFormat(as.character(from))
+        format.to <- whichFormat(as.character(to))
         from <- timeDate(from, format = format.from, zone = zone,
                          FinCenter = FinCenter)
         to <- timeDate(to, format = format.to, zone = zone,
@@ -95,23 +92,21 @@ timeSequence <-
 
     tseq <-
         if (length(length.out))
-            seq.timeDate(from = from,  by = by, length.out = length.out)
+            seq(from = from,  by = by, length.out = length.out)
         else
-            seq.timeDate(from = from, to = to, by = by)
+            seq(from = from, to = to, by = by)
     tseq
 }
 
-
 # ------------------------------------------------------------------------------
-
 
 seq.timeDate <-
     function (from, to, by, length.out = NULL, along.with = NULL,  ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
-    
+
     # FUNCTION:
-    
+
     # This function is the same as seq.POSIXt form the base package.
 
     # Modifications by Yohan Chalabi marked with ##
@@ -122,6 +117,7 @@ seq.timeDate <-
         stop("'from' must be a timeDate object") ##
 
     if (!missing(by) && is.character(by)) { ##
+        if (identical("quarter", by)) by <- "3 months"
         by1 <- strsplit(by, " ", fixed = TRUE)[[1]]
         DST <- !is.na(pmatch(by1[length(by1)], c("months", "years", "DSTdays")))
     } else {
