@@ -359,7 +359,8 @@ checkBeforeCommit  <-
 
 genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
                          "fGarch", "fCopulae", "fAssets", "fPortfolio",
-                         "fPortfolioBacktest"), dependsOnPkgsDESC = TRUE, ...)
+                         "fPortfolioBacktest"), dependsOnPkgsDESC = TRUE,
+                         path = ".", ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -368,13 +369,10 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 
     for (pkg in pkgs) {
 
-        user <- Sys.getenv("USER")
 
-        # Change here your personal path to the your local packages
-        pkgPath <-
-            switch(user,
-                   "yankee" = file.path("~/r", pkg),
-                   stop("edit your path in genNAMSPACE"))
+        pkg <- basename(pkg)
+        path <- dirname(path)
+        pkgPath <- file.path(path, pkg)
 
         # test if given directory exists
         if (!file.exists(pkgPath))
