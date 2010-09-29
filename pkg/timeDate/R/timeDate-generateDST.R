@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:                DESCRIPOTION:
+# FUNCTION:                DESCRIPTION:
 #  .genDaylightSavingTime   Create file with Daylight Saving Time Rules for all
 #                           centers in listFinCenter()
 ################################################################################
@@ -177,67 +177,3 @@ Pacific <- LosAngeles
 ",
         file = filename, append = TRUE)
 }
-
-## ### source http://www.stacken.kth.se/~kvickers/timezone.html
-## ###
-## ###   Zone                            Offset   Where
-## ###   ----                            ------   ------
-## ###    EET     Eastern European        +2      Finland, Eastern Europe
-## ###    CET     Central European        +1      Western Europe, Sweden
-## ###    GMT     Greenwich Mean          none    United Kingdom, Portugal
-## ###    AST     Atlantic Standard       -4      Halifax
-## ###    EST     Eastern Standard        -5      NY, DC, Toronto, Montreal
-## ###    CST     Central Standard        -6      Chicago, Houston, Winnipeg
-## ###    MST     Mountain Standard       -7      Denver, Calgary, Edmonton
-## ###    PST     Pacific Standard        -8      LA, San Fransisco, Vancouver
-
-## ## have it automatic
-
-## EET <- function()
-##     data.frame(EET = "1902-01-01 00:00:00",
-##                offSet = 2 * 3600,
-##                isdst = 0,
-##                TimeZone = "EET",
-##                stringsAsFactors = FALSE)
-
-## CET <- function()
-##     data.frame(CET = "1902-01-01 00:00:00",
-##                offSet = 1 * 3600,
-##                isdst = 0,
-##                TimeZone = "CET",
-##                stringsAsFactors = FALSE)
-
-## AST <- function()
-##     data.frame(AST = "1902-01-01 00:00:00",
-##                offSet = -4 * 3600,
-##                isdst = 0,
-##                TimeZone = "AST",
-##                stringsAsFactors = FALSE)
-
-## EST <- function()
-##     data.frame(EST = "1902-01-01 00:00:00",
-##                offSet = -5 * 3600,
-##                isdst = 0,
-##                TimeZone = "EST",
-##                stringsAsFactors = FALSE)
-
-## CST <- function()
-##     data.frame(CST = "1902-01-01 00:00:00",
-##                offSet = -6 * 3600,
-##                isdst = 0,
-##                TimeZone = "CST",
-##                stringsAsFactors = FALSE)
-
-## MST <- function()
-##     data.frame(MST = "1902-01-01 00:00:00",
-##                offSet = -7 * 3600,
-##                isdst = 0,
-##                TimeZone = "MST",
-##                stringsAsFactors = FALSE)
-
-## PST <- function()
-##     data.frame(PST = "1902-01-01 00:00:00",
-##                offSet = -8 * 3600,
-##                isdst = 0,
-##                TimeZone = "PST",
-##                stringsAsFactors = FALSE)
