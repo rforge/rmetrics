@@ -22,9 +22,10 @@
 ################################################################################
 
 
-round.timeDate =
-function(x, digits = c("days", "hours", "mins"))
-{   # A function implemented by Diethelm Wuertz
+round.timeDate <- function(x, digits = c("days", "hours", "mins"))
+{
+    # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
 
     # Note:
     #   round.timeDate(x, units = c("days", "hours", "mins"))    # FAILS !!!
@@ -32,11 +33,12 @@ function(x, digits = c("days", "hours", "mins"))
     # FUNCTION:
 
     # Get Units:
-    units = match.arg(digits)
+    units <- match.arg(digits)
+    FinCenter <- finCenter(x)
 
     # Use:
-    lt <- round.POSIXt(as.POSIXlt(format(x), tz = "GMT"), units = units)
-    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
+    lt <- round.POSIXt(as.POSIXlt(x, tz = "GMT"), units = units)
+    ans <- timeDate(lt, zone = FinCenter, FinCenter = FinCenter)
 
     # Return Value:
     ans
@@ -46,14 +48,16 @@ function(x, digits = c("days", "hours", "mins"))
 # ------------------------------------------------------------------------------
 
 
-trunc.timeDate =
-function(x, units = c("days", "hours", "mins"), ...)
-{   # A function implemented by Diethelm Wuertz
+trunc.timeDate <- function(x, units = c("days", "hours", "mins"), ...)
+{
+    # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
 
     # FUNCTION:
 
     # Get Units:
     units = match.arg(units)
+    FinCenter <- finCenter(x)
 
     # Sorting under GMT is not what we want!
     # GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
@@ -61,8 +65,8 @@ function(x, units = c("days", "hours", "mins"), ...)
     # ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)
 
     # Use:
-    lt <- trunc.POSIXt(as.POSIXlt(format(x), tz = "GMT"), units = units)
-    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
+    lt <- trunc.POSIXt(as.POSIXlt(x, tz = "GMT"), units = units)
+    ans <- timeDate(lt, zone = FinCenter, FinCenter = FinCenter)
 
     # Return Value:
     ans

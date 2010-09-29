@@ -6,16 +6,16 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -33,25 +33,25 @@
 ################################################################################
 
 
-length.timeDate <- 
-    function(x) 
-{   
+length.timeDate <- function(x)
+{
     # A function implemented by Diethelm Wuertz
+    # and improved by Yohan Chalabi
 
     # Description:
     #   Gets the length of a 'timeDate' vector
 
     # Arguments:
     #   x - a 'timeDate' object
-    
+
     # Value:
     #   Returns the lengths of an object of class 'timeDate'.
 
     # FUNCTION:
-    
+
     # Length:
-    ans = length(x@Data)
-    
+    ans <- length(getDataPart(x))
+
     # Return Value:
     ans
 }

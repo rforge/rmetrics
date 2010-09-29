@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - Diethelm Wuertz, GPL
-#   2007 - Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
@@ -45,16 +33,17 @@ format.timeDate <- function(x, format = "", tz = "", usetz = FALSE, ...)
     if (!inherits(x, "timeDate"))
         stop("wrong class")
 
-    FinCenter <- if (tz != "") tz else x@FinCenter
+    FinCenter <- if (tz != "") tz else finCenter(x)
 
-    num <- .formatFinCenterNum(as.numeric(x@Data), FinCenter, type = "gmt2any")
+    num <- .formatFinCenterNum(as.numeric(getDataPart(x)),
+                               FinCenter, type = "gmt2any")
     ans <- format(as.POSIXct(num, origin = "1970-01-01", tz = "GMT"),
                   tz = "GMT", format = format)
-    names(ans) <- names(x@Data)
+    names(ans) <- names(getDataPart(x))
 
     # Should add tz from table in formatFinCenter
     if (usetz)
-        ans <- paste(ans, x@FinCenter)
+        ans <- paste(ans, finCenter(x))
 
     # Return Value:
     ans

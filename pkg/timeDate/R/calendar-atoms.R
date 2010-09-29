@@ -22,10 +22,10 @@
 ################################################################################
 
 
-setMethod("atoms", "timeDate",
-    function(x, ...)
+setMethod("atoms", "timeDate", function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
+    # and improved by Yohan Chalabi
 
     # Description:
     #   Extracts atoms from a 'timeDate' object.
@@ -44,17 +44,17 @@ setMethod("atoms", "timeDate",
     if (!inherits(x, "timeDate")) stop("Wrong class type")
 
     # mdy:
-    X = as.POSIXlt(x@Data)
-    Y = X$year + 1900
-    m = X$mon + 1
-    d = X$mday
-    H = X$hour
-    M = X$min
-    S = X$sec
+    X <- as.POSIXlt(x, tz = "GMT")
+    Y <- X$year + 1900
+    m <- X$mon + 1
+    d <- X$mday
+    H <- X$hour
+    M <- X$min
+    S <- X$sec
 
     # Data Frame:
-    ans = data.frame(Y = Y, m = m, d = d, H = H, M = M, S = S)
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    ans <- data.frame(Y = Y, m = m, d = d, H = H, M = M, S = S)
+    attr(ans, "control") <- c(FinCenter = finCenter(x))
 
     # Return Value:
     ans
@@ -64,8 +64,7 @@ setMethod("atoms", "timeDate",
 # ------------------------------------------------------------------------------
 
 
-setMethod("atoms", "ANY",
-    function(x, ...)
+setMethod("atoms", "ANY", function(x, ...)
 {
     # A function implemented by Diethelm WUertz
 

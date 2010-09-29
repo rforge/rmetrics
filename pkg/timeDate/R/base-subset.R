@@ -37,7 +37,7 @@
 setMethod("[", signature(x="timeDate", i="missing", j="missing", drop="ANY"),
     function(x, i, j, ..., drop = TRUE) x)
 
-    
+
 setMethod("[", signature(x="timeDate", i="numeric", j="missing", drop="ANY"),
     function(x, i, j, ..., drop = TRUE)
     {
@@ -45,7 +45,7 @@ setMethod("[", signature(x="timeDate", i="numeric", j="missing", drop="ANY"),
         x
     })
 
-    
+
 setMethod("[", signature(x="timeDate", i="logical", j="missing", drop="ANY"),
     function(x, i, j, ..., drop = TRUE)
     {
@@ -54,7 +54,7 @@ setMethod("[", signature(x="timeDate", i="logical", j="missing", drop="ANY"),
     }
 )
 
-    
+
 setMethod("[", signature(x="timeDate", i="character", j="missing", drop="ANY"),
     function(x, i, j, ..., drop = TRUE)
     {
@@ -78,7 +78,7 @@ setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
           function(x, i, j, ..., drop = TRUE)
           stop("Not Yet implemented"))
 
-          
+
 #-------------------------------------------------------------------------------
 
 
@@ -98,20 +98,22 @@ setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
 
     # FUNCTION:
 
+    FinCenter <- finCenter(x)
+
     if (!inherits(value, "timeDate"))
-        value <- as.timeDate(value)
+        value <- timeDate(value, zone = FinCenter, FinCenter = FinCenter)
 
     # Subsets:
-    z = as.POSIXlt(x@Data)
-    value <- as.POSIXlt(value@Data)
+    z <- as.POSIXlt(x)
+    value <- as.POSIXlt(value)
     val <- "[<-"(z, ..., value)
-    val = as.POSIXct(val)
+    val <- as.POSIXct(val)
 
     # Return Value:
     new("timeDate",
         Data = val,
         format = x@format,
-        FinCenter = x@FinCenter)
+        FinCenter = FinCenter)
 }
 
 ################################################################################

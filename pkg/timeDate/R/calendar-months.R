@@ -25,6 +25,7 @@ setMethod("months", "timeDate",
     function(x, abbreviate = NULL)
 {
     # A function implemented by Diethelm Wuertz
+    # and improved by Yohan Chalabi
 
     # Description:
     #   Extracts months atom from a timeDate object
@@ -44,8 +45,8 @@ setMethod("months", "timeDate",
     if (!inherits(x, "timeDate")) stop("Wrong class type")
 
     # Month:
-    ans = as.POSIXlt(x@Data)$mon+1
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    ans <- as.POSIXlt(x, tz = "GMT")$mon+1
+    attr(ans, "control") <- c(FinCenter = finCenter(x))
 
     # Return Value:
     ans

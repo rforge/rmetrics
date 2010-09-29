@@ -43,7 +43,7 @@ setMethod("show", "timeDate", function (object)
     names(layout) <- names(output)
 
     # Print Results:
-    cat(object@FinCenter, "\n", sep = "")
+    cat(finCenter(object), "\n", sep = "")
     print(layout, quote = FALSE)
 
     # print message
