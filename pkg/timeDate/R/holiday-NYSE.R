@@ -25,6 +25,7 @@ holidayNYSE <-
     function(year = getRmetricsOptions("currentYear"))
 {
     # A function implemented by Diethelm Wuertz
+    # improved speed and handling of time zone by Yohan Chalabi
 
     # Description:
     #   Returns 'timeDate' object for full-day NYSE holidays
@@ -92,25 +93,30 @@ holidayNYSE <-
     ans <- timeDate(format(holidays), zone = "NewYork", FinCenter = "NewYork")
 
     # Move Sunday Holidays to Monday:
-    ans <- ans + as.integer(as.POSIXlt(ans@Data)$wday==0) * 24 * 3600
+    posix1 <- as.POSIXlt(ans, tz = "GMT")
+    ans <- ans + as.integer(posix1$wday==0) * 24 * 3600
 
     # After July 3, 1959, move Saturday holidays to Friday
     # ... except if at the end of monthly/yearly accounting period
     # this is the last business day of a month.
-    posix <- as.POSIXlt(ans@Data - 24*3600)
-    y <- posix$year + 1900
-    m <- posix$mon + 1
-    lastday <- as.POSIXlt((timeCalendar(y = y+(m+1)%/%13,
-        m = m+1-(m+1)%/%13*12, d = 1) - 24*3600)@Data)$mday
-    ExceptOnLastFriday <- timeDate(as.character(.last.of.nday(year = y,
-        month = m, lastday = lastday, nday = 5)))
-    ans <- ans - as.integer(ans >= timeDate("1959-07-03") &
-        as.POSIXlt(ans@Data)$wday == 6  &
-        (ans - 24*3600) != ExceptOnLastFriday ) * 24 * 3600
+    posix2 <- as.POSIXlt(as.POSIXct(ans, tz = "GMT") - 24 * 3600)
+    y <- posix2$year + 1900
+    m <- posix2$mon + 1
+    calendar <- timeCalendar(y = y+(m+1)%/%13,
+                             m = m+1-(m+1)%/%13*12, d = 1,
+                             zone = "GMT", FinCenter = "GMT")
+    lastday <- as.POSIXlt(calendar - 24*3600, tz = "GMT")$mday
+    lon <- .last.of.nday(year = y, month = m, lastday = lastday, nday = 5)
+    ExceptOnLastFriday <- timeDate(format(lon), zone = "NewYork",
+                                   FinCenter = "NewYork")
+    ans <- ans - as.integer(ans >= timeDate("1959-07-03",
+                            zone ="GMT", FinCenter = "GMT") &
+                            as.POSIXlt(ans, tz = "GMT")$wday == 6  &
+                            (ans - 24*3600) != ExceptOnLastFriday ) * 24 * 3600
 
     # Remove Remaining Weekend Dates:
-    ans <- ans[ !(as.POSIXlt(ans@Data)$wday == 0 |
-        as.POSIXlt(ans@Data)$wday == 6)]
+    posix3 <- as.POSIXlt(ans, tz = "GMT")
+    ans <- ans[ !(posix3$wday == 0 | posix3$wday == 6)]
 
     # Return Value:
     ans

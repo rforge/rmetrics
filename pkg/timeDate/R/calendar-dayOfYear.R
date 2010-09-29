@@ -6,12 +6,12 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 
@@ -21,29 +21,31 @@
 ################################################################################
 
 
-dayOfYear <- 
+dayOfYear <-
     function(x)
-{   
+{
     # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
 
     # Description:
     #   Returns day of week for time date objects
-    
+
     # Arguments:
     #   x - an object of class "timeDate"
-     
+
     # FUNCTION:
-    
+    stopifnot(inherits(x, "timeDate"))
+
     # Assign:
-    yd = 1:366
-    n = as.POSIXlt(x@Data)$yday + 1
-    ydays = yd[n]
-    names(ydays) = as.character(x@Data)
-    
+    x <- as.POSIXlt(x, tz = "GMT")
+    yd <- 1:366
+    n <- x$yday + 1
+    ydays <- yd[n]
+    names(ydays) <- format(x)
+
     # Return Value:
     ydays
-}   
-
+}
 
 ################################################################################
 

@@ -25,6 +25,7 @@ dayOfWeek <-
     function(x)
 {
     # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
 
     # Description:
     #   Returns day of week for time date objects
@@ -37,13 +38,13 @@ dayOfWeek <-
     #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
 
     # FUNCTION:
-    stopifnot(is(x, "timeDate"))
+    stopifnot(inherits(x, "timeDate"))
 
     # Get Day of Week:
-    wd = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    n = as.POSIXlt(x@Data)$wday + 1
-    wdays = wd[n]
-    names(wdays) = as.character(x@Data)
+    wd <- c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    n <- as.POSIXlt(x, tz = "GMT")$wday + 1
+    wdays <- wd[n]
+    names(wdays) <- format(x)
 
     # Return Value:
     wdays

@@ -21,9 +21,10 @@
 ################################################################################
 
 
-holidayZURICH =
-function(year = getRmetricsOptions("currentYear"))
-{   # A function implemented by Diethelm Wuertz
+holidayZURICH <- function(year = getRmetricsOptions("currentYear"))
+{
+    # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
 
     # Description:
     #   Returns a holiday Calendar for Zurich in Switzerland
@@ -46,34 +47,33 @@ function(year = getRmetricsOptions("currentYear"))
     #       CHKnabenschiessen   2nd Saturday to Monday in Sep
 
     # Example:
-    #   holidayTSX(2008)
-    #   holidayTSX(2008)
-    #   holidayTSX(2006:2008)
+    #   holidayZurich(2008)
+    #   holidayZurich(2008)
+    #   holidayZurich(2006:2008)
 
     # FUNCTION:
 
     # Iterate Years:
-    holidays = c(
-        NewYearsDay(year),
-        GoodFriday(year),
-        EasterMonday(year),
-        LaborDay(year),
-        PentecostMonday(year),
-        ChristmasDay(year),
-        BoxingDay(year),
-        CHBerchtoldsDay(year),
-        CHSechselaeuten(year),
-        CHAscension(year),
-        CHConfederationDay(year),
-        CHKnabenschiessen(year) )
+    holidays <- c(NewYearsDay(year),
+                  GoodFriday(year),
+                  EasterMonday(year),
+                  LaborDay(year),
+                  PentecostMonday(year),
+                  ChristmasDay(year),
+                  BoxingDay(year),
+                  CHBerchtoldsDay(year),
+                  CHSechselaeuten(year),
+                  CHAscension(year),
+                  CHConfederationDay(year),
+                  CHKnabenschiessen(year) )
 
     # Sort and Remove Weekends:
-    holidays = sort(holidays)
-    holidays = holidays[isWeekday(holidays)]
+    holidays <- sort(holidays)
+    holidays <- holidays[isWeekday(holidays)]
 
     # Add Financial Center:
-    holidays <- timeDate(format(holidays),
-        zone = "Zurich", FinCenter = "Zurich")
+    holidays <- timeDate(format(holidays), zone = "Zurich",
+                         FinCenter = "Zurich")
 
     # Return Value:
     holidays

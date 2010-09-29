@@ -6,16 +6,16 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - Diethelm Wuertz, GPL
 #   2007 - Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@phys.ethz.ch>
@@ -34,31 +34,31 @@
 ################################################################################
 
 
-isWeekday <- 
-    function(x) 
-{   
+isWeekday <- function(x)
+{
     # A function implemented by Diethelm Wuertz
+    # and improved by Yohan Chalabi
 
     # Description:
     #   Test if a date is a weekday day or not
-    
+
     # Arguments:
     #   x - an object of class "timeDate"
-    
+
     # Value:
     #   returns a logical or a vector of logicals
-    
+
     # Example:
     #   isWeekday(timeDate("2004-07-01"))
     #   isWeekday(Sys.timeDate())
-    
+
     # FUNCTION:
-    
+
     # Test for Weekdays:
-    wday = as.POSIXlt(x@Data)$wday
-    ans = (!(wday == 0 | wday == 6)) 
-    names(ans) = x@Data
-    
+    wday <- as.POSIXlt(x, tz = "GMT")$wday
+    ans <- (!(wday == 0 | wday == 6))
+    names(ans) <- format(x)
+
     # Return Value:
     ans
 }
@@ -66,33 +66,32 @@ isWeekday <-
 
 # ------------------------------------------------------------------------------
 
-    
-isWeekend <- 
-    function(x) 
-{   
+
+isWeekend <- function(x)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests if a date is a weekend day or not
-    
+
     # Arguments:
     #   x - an object of class "timeDate"
-    
+
     # Value:
     #   Returns a logical or a vector of logicals
-    
+
     # Example:
     #   isWeekend(timeDate("2004-07-01"))
     #   isWeekend(Sys.timeDate())
-    
+
     # Changes:
     #
-    
+
     # FUNCTION:
-    
+
     # Return Value:
-    return(!isWeekday(x)) 
-}   
+    return(!isWeekday(x))
+}
 
 
 ################################################################################
