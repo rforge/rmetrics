@@ -27,18 +27,22 @@
 # ------------------------------------------------------------------------------
 
 
-setRmetricsOptions <-
-    function(...)
+setRmetricsOptions <- function(...)
 {
     # A function implemented by Yohan Chalabi
 
     x <- list(...)
+    # check if argument was a single list
+    if (length(x) == 1 && is.list(x[[1]]))
+        x <- x[[1]]
     nm <- names(x)
      if (is.null(nm) || "" %in% nm)
         stop("all arguments must be named")
+    old <- lapply(nm, function(m) unname(getRmetricsOption(m)))
+    names(old) <- nm
     sapply(nm, function(nm) assign(nm, x[[nm]],
         envir = .RmetricsOptions))
-    invisible()
+    invisible(old)
 }
 
 
