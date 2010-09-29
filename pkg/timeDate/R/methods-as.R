@@ -302,7 +302,8 @@ as.POSIXct.timeDate <-
     # Arguments:
     #   x - a 'timeDate' object
     #   tz - a timezone specification to be used for the conversion.
-    #       (Not needed when used for 'timeDate' conversions.)
+    #       (If tz is used, the method does not consider the
+    #        FinCenter of timeDate)
 
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
@@ -313,9 +314,17 @@ as.POSIXct.timeDate <-
     if (!inherits(x, "timeDate"))
         stop("Wrong class type")
 
-    # POSIXlt:
-    ans = x@Data
-    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    # POSIXct:
+    FinCenter <- finCenter(x)
+    if (identical(tz, "")) {
+        ans <- getDataPart(x)
+        attr(ans, "control") <- c(FinCenter = finCenter(x))
+    } else {
+        num <- .formatFinCenterNum(as.numeric(getDataPart(x)),
+                                   FinCenter, type = "gmt2any")
+        ans <- as.POSIXct(num, origin = "1970-01-01", tz = tz)
+        attr(ans, "control") <- c(FinCenter = FinCenter)
+    }
 
     # Return Value:
     ans
@@ -338,7 +347,8 @@ as.POSIXlt.timeDate  <-
     # Arguments:
     #   x - a 'timeDate' object
     #   tz - a timezone specification to be used for the conversion.
-    #       (Not needed when used for 'timeDate' conversions.)
+    #       (If tz is used, the method does not consider the
+    #        FinCenter of timeDate)
 
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
