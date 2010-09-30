@@ -16,6 +16,7 @@
 
 \alias{strptimeDate}
 
+\alias{getDataPart,timeDate-method}
 
 \description{
 

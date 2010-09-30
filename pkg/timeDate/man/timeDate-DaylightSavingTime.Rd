@@ -409,6 +409,14 @@
 \alias{Zaporozhye}
 \alias{Zurich}
 
+\alias{AST}
+\alias{CET}
+\alias{CST}
+\alias{EET}
+\alias{EST}
+\alias{MST}
+\alias{PST}
+
 \title{Daylight Saving Time Rules}
 
 \description{
@@ -443,12 +451,15 @@
 
   There are currently two synonymes available "Pacific" for Los Angeles
   and "Eastern" for New York. 
+
+  specifi time zones (\code{AST}, \code{CET}, \code{CST}, \code{EET},
+  \code{EST}, \code{MST} and \code{PST}) are also available.
   
   Note we leave the space in all double named cities like New York 
   or Hong Kong and use an underscore for it.
   
   All the entries are retrieved from the tzdata library which is 
-  available under GNU's GPL licence. 
+  available under GNU GPL licence. 
 
 }
 
@@ -457,6 +468,9 @@
 ## DST Rules for Zurich:
    head(Zurich())
    tail(Zurich())
+
+## list all available centers
+listFinCenter()
 }
 
 
