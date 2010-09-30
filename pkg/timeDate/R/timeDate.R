@@ -278,8 +278,6 @@ function(num, FinCenter, type = c("gmt2any", "any2gmt"))
     if (FinCenter == "GMT" || FinCenter == "UTC")
         return(num)
 
-    ## else start working:
-
     type <- match.arg(type)
     signum <- switch(type,
                      "gmt2any" = +1,
@@ -292,7 +290,8 @@ function(num, FinCenter, type = c("gmt2any", "any2gmt"))
         stop(gettextf("'%s' is not a valid FinCenter.", FinCenter))
 
     offSetIdx <- findInterval(num, dst.list$numeric)
-    if (any(z <- (offSetIdx == 0))) offSetIdx[z] <- 1
+    # consider first DST rule if event occured before
+    offSetIdx[offSetIdx < 1] <- 1
     num + signum * dst.list$offSet[offSetIdx]
 }
 
