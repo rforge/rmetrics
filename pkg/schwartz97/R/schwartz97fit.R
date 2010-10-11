@@ -122,6 +122,11 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   thetaNames <- c("s0", "delta0", "mu", "sigmaS", "kappa",
                   "alpha", "sigmaE", "rho", "lambda",
                   paste("meas.sd", 1:d, sep = ""))
+
+  ## Initial values must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda, r = r)
+
   theta <- c(s0, delta0, mu, sigmaS, kappa,
              alpha, sigmaE, rho, lambda, meas.sd)
   names(theta) <- thetaNames

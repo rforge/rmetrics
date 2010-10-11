@@ -312,7 +312,7 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
     plot(as.Date(rownames(data)), state[,2], type = "l", xlab = "", ylab = "Convenience yield", ...)
     abline(h = coef(x)$alpha)
   }else if(type == "sim"){
-    callNextMethod(x)
+    callNextMethod(x, ...)
   }else if(type == "forward.curve"){
 
     state <- filter.schwartz2f(data, ttm, x)$state

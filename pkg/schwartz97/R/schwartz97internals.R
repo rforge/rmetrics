@@ -220,3 +220,86 @@
   
   return(list(ttm = ttm.mat, fut = f.curves, traj = traj))
 }
+
+
+.check.lengths <- function(s0, delta0, mu, sigmaS, kappa, alpha,
+                           sigmaE, rho, lambda, alphaT, time, ttm, r)
+{
+  if(!missing(s0)){
+    if(length(s0) > 1){
+      stop("'s0' must be a scalar!")
+    }
+  }
+
+  if(!missing(delta0)){
+    if(length(delta0) > 1){
+      stop("'delta0' must be a scalar!")
+    }
+  }
+
+  if(!missing(mu)){
+    if(length(mu) > 1){
+      stop("'mu' must be a scalar!")
+    }
+  }
+
+  if(!missing(sigmaS)){
+    if(length(sigmaS) > 1){
+      stop("'sigmaS' must be a scalar!")
+    }
+  }
+
+  if(!missing(kappa)){
+    if(length(kappa) > 1){
+      stop("'kappa' must be a scalar!")
+    }
+  }
+
+  if(!missing(alpha)){
+    if(length(alpha) > 1){
+      stop("'alpha' must be a scalar!")
+    }
+  }
+
+  if(!missing(sigmaE)){
+    if(length(sigmaE) > 1){
+      stop("'sigmaE' must be a scalar!")
+    }
+  }
+
+  if(!missing(rho)){
+    if(length(rho) > 1){
+      stop("'rho' must be a scalar!")
+    }
+  }
+
+  if(!missing(lambda)){
+    if(length(lambda) > 1){
+      stop("'lambda' must be a scalar!")
+    }
+  }
+
+  if(!missing(time)){
+    if(length(time) > 1){
+      stop("'time' must be a scalar!")
+    }
+  }
+
+  if(!missing(ttm)){
+    if(length(ttm) > 1){
+      stop("'ttm' must be a scalar!")
+    }
+  }
+
+  if(!missing(r)){
+    if(length(r) > 1){
+      stop("'r' must be a scalar!")
+    }
+  }
+
+  if(!missing(alphaT)){
+    if(length(alphaT) > 1){
+      stop("'alphaT' must be a scalar!")
+    }
+  }
+}

@@ -9,6 +9,10 @@ pstate.default <- function(lower, upper, time = 1, s0 = 50, delta0 = 0,
                            mu = 0.1, sigmaS = 0.3, kappa = 1, alpha = 0,
                            sigmaE = 0.5, rho = 0.75, ...)
 {
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, time = time)
+
   lower[1] <- log(lower[1])
   upper[1] <- log(upper[1])
 
@@ -62,6 +66,10 @@ dstate.default <- function(x, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
                            sigmaS = 0.3, kappa = 1, alpha = 0,
                            sigmaE = 0.5, rho = 0.75, ...)
 {
+
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, time = time)
 
  if(is.vector(x)){
     x <- rbind(x)
@@ -124,6 +132,10 @@ qstate.default <- function(p, time = 1, s0 = 50, delta0 = 0, mu = 0.1,
                            sigmaE = 0.5, rho = 0.75,
                            tail = "lower.tail", ...)
 {
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, time = time)
+
   mean <- .mu.state.schwartz2f(x0 = log(s0), delta0 = delta0,
                                mu = mu, sigmaS = sigmaS,
                                kappa = kappa, alpha = alpha,
@@ -177,6 +189,10 @@ rstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
                            sigmaE = 0.5, rho = 0.75,
                            method = "chol")
 {
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, time = time)
+  
   if(n != round(n)){
     stop("'n' must be an integer number!")
   }
@@ -238,6 +254,10 @@ simstate.default <- function(n, time = 1, s0 = 50, delta0 = 0,
                              sigmaE = 0.5, rho = 0.75,
                              method = "chol")
 {
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, time = time)
+
   if(n <= 1){
     stop("Use 'rstate' if n <= 1!")
   }
@@ -309,6 +329,7 @@ pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
 {
   measure <- match.arg(measure)
   
+  stopifnot(time <= ttm)
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -319,6 +340,11 @@ pfutures.default <- function(q, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda, alphaT = alphaT,
+                 r = r, time = time, ttm = ttm)
+  
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
                                sigmaE = sigmaE, rho = rho, alpha = alpha,
@@ -413,6 +439,7 @@ dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
 {
   measure <- match.arg(measure)
 
+  stopifnot(time <= ttm)
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -422,6 +449,11 @@ dfutures.default <- function(x, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
   }else if(!missing(alphaT) & !missing(lambda)){
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
+
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda, alphaT = alphaT,
+                 r = r, time = time, ttm = ttm)
 
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
@@ -518,6 +550,7 @@ qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
 {
   measure <- match.arg(measure)
   
+  stopifnot(time <= ttm)
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -528,6 +561,12 @@ qfutures.default <- function(p, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
 
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda, alphaT = alphaT,
+                 r = r, time = time, ttm = ttm)
+
+  
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu,
                                sigmaS = sigmaS, kappa = kappa,
                                sigmaE = sigmaE, rho = rho, alpha = alpha,
@@ -623,7 +662,8 @@ rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
                              measure = c("P", "Q"))
 {
   measure <- match.arg(measure)
-  
+
+  stopifnot(time <= ttm)  
   if((missing(lambda) | missing(alpha)) & missing(alphaT)){
     warning("Both 'alphaT' and ('lambda' or 'alpha') are missing!\n",
             "The mean-level of the convenience yield is set to zero.")
@@ -633,6 +673,11 @@ rfutures.default <- function(n, time = 0.1, ttm = 1, s0 = 50, delta0 = 0, mu = 0
   }else if(!missing(alphaT) & !missing(lambda)){
     warning("Both 'alphaT' and 'lambda' were passed: 'lambda' is ignored.")
   }
+
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda, alphaT = alphaT,
+                 r = r, time = time, ttm = ttm)
 
   mu.fut <- .mu.fut.schwartz2f(x0 = log(s0), delta0 = delta0, mu = mu, sigmaS = sigmaS,
                                kappa = kappa, sigmaE = sigmaE, rho = rho, alpha = alpha,
@@ -740,6 +785,11 @@ filter.schwartz2f.default <- function(data, ttm, s0 = 50, delta0 = 0,
   }else if(!missing(alphaT) & !missing(lambda)){
     warning("Both 'alphaT' and 'lambda' were passed: 'alphaT' is ignored.")
   }
+
+  ## Parameters must be scalars. Check it:
+  .check.lengths(s0 = s0, delta0 = delta0, mu = mu, sigmaS = sigmaS, kappa = kappa,
+                 alpha = alpha, sigmaE = sigmaE, rho = rho, lambda = lambda,
+                 r = r)
 
   data <- log(as.matrix(data))
 

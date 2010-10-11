@@ -5,5 +5,8 @@ schwartz97 V0.0.1
 2010-09-11 David Luethi
 schwartz97 V0.0.2
 	* plot-method for schwartz2f-objects modified: Show confidence
-	intervals instead of mean + sd
+	intervals instead of mean + sd.
+	* plot-method for schwartz2f.fit-objects modified: ... -argument
+	added in callNextMethod-call
 	* User guide added as vignette.
+	* Documentation extended.
