@@ -29,7 +29,7 @@ pdfstartpage={1}
 \SweaveOpts{engine=R,eps=TRUE}
 %%\VignetteIndexEntry{User Guide}
 \title{Using the \Rpackage{} package}
-\author{Philipp Erb, David L\"{u}thi \& Simon Otziger}%\\\email{otis@zhaw.ch}}
+\author{David L\"{u}thi, Philipp Erb \& Simon Otziger}%\\\email{otis@zhaw.ch}}
 \date{\today}
 \begin{document}
 \maketitle
@@ -67,9 +67,8 @@ functions. Then, section \ref{sec:init} to
 % <============================================================>
 \section{The Schwartz Two-Factor Model}\label{sec:model}
 % <============================================================>
-This model assumes the spot price of the commodity and the
-instantaneous convenience yield to follow the joint stochastic
-process:
+The spot price of the commodity and the instantaneous convenience
+yield are assumed to follow the joint stochastic process:
 \begin{eqnarray}
   dS_t &=& (\mu - \delta_t) S_t dt + \sigmaS S_t
   dW_S   \label{eq:Pdynamics-S} \\
@@ -78,7 +77,7 @@ process:
 \end{eqnarray}
 with Brownian motions $W_S$ and $W_\epsilon$ under the objective
 measure $\mathbb{P}$ and correlation $dW_SdW_\epsilon = \rho dt$.
-Under the pricing measure $\mathbb{Q}$ the dynamics are of the form
+Under the pricing measure $\mathbb{Q}$ the dynamics are
 \begin{eqnarray}
   dS_t &=& (r - \delta_t) S_t dt + \sigmaS S_t
   d\widetilde{W}_S   \label{eq:Qdynamics-S} \\
@@ -150,11 +149,11 @@ under the objective measure $\mathbb{P}$. The class
     \hline
     s0 & numeric & $s_0$ & Initial spot price.\\
     delta0 & numeric & $\delta_0$ & Initial convenience yield.\\
-    mu & numeric & $\mu$ & Drift parameter of the spot price process.\\
-    sigmaS & numeric & $\sigma_S$ & Diffusion parameter of the spot price process.\\
-    kappaE & numeric & $\kappa$ & Speed of mean-reversion of the convenience yield process.\\
-    alpha & numeric & $\alpha$ & Mean-level of the convenience yield process.\\
-    sigmaE & numeric & $\sigma_\epsilon$ & Diffusion parameter of the convenience yield process.\\
+    mu & numeric & $\mu$ & Drift parameter of the spot price.\\
+    sigmaS & numeric & $\sigma_S$ & Diffusion parameter of the spot price.\\
+    kappaE & numeric & $\kappa$ & Speed of mean-reversion of the convenience yield.\\
+    alpha & numeric & $\alpha$ & Mean-level of the convenience yield.\\
+    sigmaE & numeric & $\sigma_\epsilon$ & Diffusion parameter of the convenience yield.\\
     rhoSE & numeric & $\rho$ & Correlation between the two Brownian motions.\\
     call & call & & The function call.\\
   \end{tabular}
@@ -174,7 +173,7 @@ two-factor model, returns an object of class
     Slot name & Class & Symbol & Description\\
     \hline
     r & numeric & $r$ & Risk-free interest rate.\\
-    alphaT & numeric & $\tilde{\alpha}$ & Mean-value of the convenience yield process under $\mathbb{Q}$.\\
+    alphaT & numeric & $\tilde{\alpha}$ & Mean-value of the convenience yield under $\mathbb{Q}$.\\
     lambda & numeric & $\lambda$ & Market price of convenience yield risk.\\
     deltat & numeric & & Time-increment of the transition equation.\\
     n.iter & numeric & & Number of iterations.\\
@@ -183,7 +182,7 @@ two-factor model, returns an object of class
     error.code & numeric & & An error code or $0$.\\
     error.message & character & & Contains the error message if any.\\
     fitted.params & logical & & States which  parameters were fitted.\\
-    trace.pars & matrix & & Contains the parameter evolution during the estimation.\\
+    trace.pars & matrix & & Parameter evolution during the estimation.\\
     meas.sd & numeric & & Standard deviation of the measurement equation.\\
     % lambda & numeric & $\lambda$ & Market price of convenience yield
     % risk.\\
@@ -302,23 +301,24 @@ plot(obj, n = 50, time = 5, dt = 1 / 52)
 % <============================================================>
 In this example we calculate some futures prices and plot the dynamics
 of the term structure (``forward curve''). In addition prices of
-European options are computed. We work through this section by looking
-at corn and assuming all the parameters are known.
+European options are computed.
 
-The current price ($s_0$) of 1000 bushels of corn is assumed to be 80
-USD. The convenience is yield ($\delta_0$) is zero at the moment but
-it's long-term mean ($\alpha$) is 5\%. The mean return ($\mu$) of corn
-is 10\% and the volatility is 30\%. The speed of mean-reversion of the
-convenience yield ($\kappa$) is 1.5 and its volatility is
-40\%. Correlation is assumed to be 60\%. The risk-free rate is 3\% and
-the market price of convenience yield risk ($\lambda$) is zero.
+We work through this section by looking at corn and assuming all the
+parameters are known. The current price ($s_0$) of 1000 bushels of
+corn is assumed to be 80 USD. The convenience yield ($\delta_0$) is
+zero at the moment but it's long-term mean ($\alpha$) is 5\%. The
+drift ($\mu$) of corn is 10\% and the volatility is 30\%. The speed of
+mean-reversion of the convenience yield ($\kappa$) is 1.5 and its
+volatility is 40\%. Correlation is assumed to be 60\%. The risk-free
+rate is 3\% and the market price of convenience yield risk ($\lambda$)
+is zero.
 
 First the object is initialized. Next a trajectory is generated based
-on a weekly sampling over five years. Then futures prices are
-calculated with time to maturities ranging from zero (which is the
-spot) to two years. Finally, a call option which matures in one year
-written on a futures contract with time to maturity of two years is
-priced. Fig. \ref{fig:forward-curves} plots forward curves.
+on weekly sampling over five years. Then futures prices are calculated
+with time to maturities ranging from zero (which is the spot) to two
+years. Finally, a call option which matures in one year written on a
+futures contract with time to maturity of two years is priced. Forward
+curves are shown in fig. \ref{fig:forward-curves}.
 <<>>=
 s0 <- 80
 delta0 <- 0.05
@@ -356,17 +356,16 @@ abline(h = 0)
 
 @
 \caption{Forward curves with time to maturity up to two years are
-  plotted for the trajectory \emph{state.traj}. The ``closest to
-  maturity contract'' is in fact the spot price because the time to
-  maturity is zero. The forward curves are steeper (stronger contango)
-  the lower the convenience yield is.}\label{fig:forward-curves}
+  plotted for the trajectory \emph{state.traj}. The closest to
+  maturity contract is in fact the spot price because the time to
+  maturity is zero.}\label{fig:forward-curves}
 \end{figure}
 % <============================================================>
 \section{Contango, Backwardation, and Hump Shapes}\label{sec:shape}
 % <============================================================>
 Fig. \ref{fig:forward-curves} shows the ability of the Schwartz
 two-factor model to generate contango and backwardation
-situations. Mixed shapes (humps and ``inverse'' humps) are possible
+situations. Mixed shapes (humps and ``inverse humps'') are possible
 too. E.g. an upwards sloping forward curve at the short end which
 points downwards at the long end.
 
@@ -374,17 +373,16 @@ Looking at the $\mathbb{Q}$-dynamics in equations
 (\ref{eq:Qdynamics-S}) and (\ref{eq:Qdynamics-delta}) it is obvious
 that, locally, the drift of the spot price is positive when $\delta_t
 < r$. This corresponds to a (local) contango situation. However, the
-long-term mean of $\delta_t$ is $\tilde{\alpha}$. This means that
-short and long-term futures can point in different directions.
-
-Four different shapes are generated in the following example and
-plotted in fig. \ref{fig:shape}:
+long-term mean of $\delta_t$, $\tilde{\alpha}$, defines the shape at
+the far end of the term structure. Four different shapes are
+generated in the following example and plotted in
+fig. \ref{fig:shape}:
 \begin{description}
-\item[Pure contango:] If $\delta_0 < r$ and $\tilde{\alpha} < r$.
-\item[Short end backwardation, long end contango:] If $\delta_0 > r$
+\item[Pure contango:] If $\delta_t < r$ and $\tilde{\alpha} < r$.
+\item[Short end backwardation, long end contango:] If $\delta_t > r$
   and $\tilde{\alpha} < r$.
-\item[Pure backwardation:] If $\delta_0 > r$ and $\tilde{\alpha} > r$.
-\item[Short end contango, long end backwardation:] If $\delta_0 < r$
+\item[Pure backwardation:] If $\delta_t > r$ and $\tilde{\alpha} > r$.
+\item[Short end contango, long end backwardation:] If $\delta_t < r$
   and $\tilde{\alpha} > r$.
 \end{description}
 <<>>=
@@ -451,10 +449,11 @@ legend("topleft", c("delta0 = 0%, alpha = 0%",
 @
 \caption{Four term structure shapes which can be generated by the
   Schwartz two-factor model. For a given risk-free interest rate $r$,
-  the shape is determined by the initial value of the convenience yield
+  the shape is determined by th value of the convenience yield
   $\delta_t$ and by the mean level of the convenience yield
-  $\tilde{\alpha}$ under the pricing measure $\mathbb{Q}$
-  (see (\ref{eq:Qdynamics-S}) and (\ref{eq:Qdynamics-delta})).}\label{fig:shape}
+  $\tilde{\alpha}$ under the pricing measure $\mathbb{Q}$ (see
+  (\ref{eq:Qdynamics-S}) and
+  (\ref{eq:Qdynamics-delta})).}\label{fig:shape}
 \end{figure}       
 \clearpage
 % <============================================================>
@@ -491,11 +490,10 @@ The arguments from \verb=s0= to \verb=lambda= are initial values of
 the parameters. 
 
 \verb=meas.sd= gives (initial) values of the measurement error
-standard deviations. Note that the off-diagonals of the measurement
-error covariance matrix are assumed to be zero.
+standard deviations. 
 
-\verb=opt.pars= states which parameters shall be estimated. Note that
-some parameters are held constant by default.
+\verb=opt.pars= states which parameters shall be estimated. Observe
+that some parameters are held constant by default.
 
 \verb=opt.meas.sd= specifies how measurement uncertainty is treated in
 the fit: According to the model there should be a one-to-one
@@ -504,18 +502,19 @@ term structure does not fully match for any set of parameters. This is
 reflected in the measurement uncertainty-vector \verb=meas.sd=. All
 components of \verb=meas.sd= can be fitted. However, it might be
 sufficient to fit only a scalar where the measurement uncertainty is
-parametrized by \verb=scalar * meas.sd=. In this case define the
-vector \verb=meas.sd= and set \verb=opt.meas.sd= to ``scalar''.
-\verb=meas.sd= can be set to a vector with each component set to,
-e.g., 2\%, giving each point in the term structure equal
-weight. Another reasonable specification takes open interest or
+parametrized by \verb=scalar * meas.sd= (this is the default). In this
+case define the vector \verb=meas.sd= and set \verb=opt.meas.sd= to
+``scalar''.  \verb=meas.sd= can be set to a vector with each component
+set to the same value, thereby giving each point on the term structure
+equal weight. Another reasonable specification takes open interest or
 volumes into account: The higher the volume, the higher the weight and
 therefore the lower the corresponding component of \verb=meas.sd=. If
 all components of \verb=meas.sd= shall be fitted choose ``all''. If
 the measurement uncertainty is known set \verb=meas.sd= to
 ``none''. Note that the measurement errors are assumed to be
 independent in this implementation (even though the model and the
-filter do not require independence).
+filter do not require independence). This is reflected in zero
+off-diagonals of the measurement error covariance matrix.
 
 Finally, the risk-free rate \verb=r= must be given.
 
@@ -557,8 +556,8 @@ five closest to maturity wheat futures prices from Jan. 1995 to April
 The default parameters of \verb=fit.schwartz= are used, i.e., all
 parameters except the initial values of the state variables and the
 market price of convenience yield risk \verb=lambda= are estimated.
-The maximum number of iterations is limited to 300 to save (build)
-time. Then the object is printed and the parameter evolution is
+The maximum number of iterations is limited to 300 to save (build and
+check) time. Then the object is printed and the parameter evolution is
 plotted.
 <<<fig=FALSE>>=
 data(futures)
@@ -579,12 +578,14 @@ plot(wheat.fit, type = "trace.pars")
   substantially.}\label{fig:param-evolution-raw}
 \end{figure}
 
-Let's discuss the parameters: A $\mu$ of 25\% is probably not far off
-and the spot price volatility $\sigma_S$ of 37\% seems to be fine
-too. The speed of mean reversion of the convenience yield process
-$\kappa$ is alarmingly close to zero which means that the convenience
-yield can drift far away from it's mean. The mean level of the
-convenience yield $\alpha$ of -12\% is not intuitive to say the
+Observe that the fit did not converge as the maximum of 300 iterations
+is not sufficient to achieve to required tolerance (here optim's
+default). Let's discuss the parameters: A $\mu$ of 25\% is probably
+not far off and the spot price volatility $\sigma_S$ of 37\% seems to
+be fine too. The speed of mean reversion of the convenience yield
+process $\kappa$ is alarmingly close to zero which means that the
+convenience yield can drift far away from it's mean. The mean level of
+the convenience yield $\alpha$ of -12\% is not intuitive to say the
 least. The correlation $\rho$ of 90\% is very high, making the
 parameters even harder to interpret and the process dynamic less
 intuitive. In addition, the parameter evolution shown in
@@ -615,21 +616,26 @@ plot(wheat.fit.constr, type = "trace.pars")
 @ 
 \caption{This figure shows the parameter evolution of the first 300
   iterations of the constrained parameter estimation of wheat. The
-  relative tolerance gets below $10^{-6}$ after 150 iterations the
-  parameter values get more and more
-  stationary.}\label{fig:param-evolution}
+  relative tolerance gets below $10^{-6}$ after 150 iterations and the
+  parameter values get more and more stationary. ``mu'' is an
+  exception: Between iteration number 250 and 300 it goes from
+  negative territory to 20\% and back to
+  10\%.}\label{fig:param-evolution}
 \end{figure}
 Parameters are more reasonable now: $\mu$, $\alpha$, and $\rho$ seem
-to be fine at 10\%, 4.3\%, and 54\%, respectively. Also, as a quick
-check, simulated trajectories in fig. \ref{fig:simulated-trajectories}
-look plausible. Real term structures are compared to model generated
-term structures in fig. \ref{fig:term-structures}.
+to be fine at 10\%, 4.3\%, and 54\%, respectively, as well as the
+parameter evolution presented in fig. \ref{fig:param-evolution}. Also,
+as a quick check, simulated trajectories in
+fig. \ref{fig:simulated-trajectories} look plausible. Real term
+structures are compared to model generated term structures in
+fig. \ref{fig:term-structures}.
 \begin{figure}[h!]\centering
 <<fig=TRUE,width=9,height=7,echo=FALSE>>=
 plot(wheat.fit.constr, type = "sim", time = 5, n = 50)
 @ 
 \caption{Fifty trajectories based on the constrained parameter
-  estimates of wheat.}\label{fig:simulated-trajectories}
+  estimates of wheat on a five years horizon and weekly
+  sampling.}\label{fig:simulated-trajectories}
 \end{figure}
 
 
@@ -664,7 +670,7 @@ plot(wheat.fit.constr, type = "forward.curve", data = wheat.2007$price,
 % <------------------------------------------------------------>
 \subsubsection{Residual Analysis}\label{sec:resid}
 % <------------------------------------------------------------>
-Hands-on model validation is done here via graphical residual
+Model validation is done here via graphical residual
 analysis. ``Residuals'' refer to prediction errors of the Kalman
 filter's measurement equation. According to the model residuals should
 be serially independent Gaussian random variables.
@@ -678,10 +684,12 @@ Standardized residuals are of interest here, hence the argument is
 normality of residuals. Both assumptions are violated as shown in
 fig. \ref{fig:resid-acf} and fig. \ref{fig:resid-normality}.
 
-Before rejecting the two-factor model one could try different settings
-for the measurement error standard deviations (argument
-\verb=meas.sd=), e.g. ``all''. Beside that different parameters could
-be hold constant.
+Before rejecting the two-factor model one should first increase the
+maximum number of iterations from 300 to, e.g., 3000 and investigate
+the parameters estimates again. Then, different settings for the
+measurement error standard deviations (argument \verb=meas.sd=) could
+be tried, e.g. ``all''. Beside that different parameters could be hold
+constant.
 
 <<fig=FALSE>>=
 model.resid <- resid(wheat.fit.constr, data = futures$wheat$price, ttm = futures$wheat$ttm / 260,
@@ -723,13 +731,13 @@ dummy <- apply(model.resid, 2, function(x)plot(density(na.omit(x))))
 % <------------------------------------------------------------>
 \subsubsection{Confidence Intervals and Value-at-Rsik}\label{sec:CI}
 % <------------------------------------------------------------>
-Confidence intervals and the values-at-risk are computed here
-regardless of the misspecification of the model estimated above. In
-order to estimate the most recent values of the spot price and the
-convenience yield the function \verb=filter.schwartz2f= is called
-first. Then, the 5\% and 95\% quantiles are computed and plotted (see
+Confidence intervals and values-at-risk are computed here regardless
+of the misspecification of the model estimated above. In order to
+estimate the most recent values of the spot price and the convenience
+yield the function \verb=filter.schwartz2f= is called first. Then, the
+5\% and 95\% quantiles are computed and plotted (see
 fig. \ref{fig:CI}) for a one week horizon . Note that the 5\% quantile
-is the 95\% value-at-risk. 
+is the 95\% value-at-risk.
 
 <<fig=FALSE>>=
 state <- filter.schwartz2f(data = futures$wheat$price, ttm = futures$wheat$ttm / 260, wheat.fit.constr)$state
@@ -771,7 +779,11 @@ legend("topleft", c("Current observed futures price", "One week ahead 90% confid
 @
 \caption{Current observed futures prices and one week ahead confidence
   intervals for the Sept. 2010, Dec. 2010, Mar. 2011, May 2011, and
-  July 2011 wheat constracts as of Sept. 7, 2010.}\label{fig:CI}
+  July 2011 wheat constracts as of Sept. 7, 2010. The July 2011
+  futures is already at the lower bound of the confidence
+  interval. This is due to the fact that the current shape of the term
+  structure cannot be captured fully by the Schwartz two-factor
+  model}\label{fig:CI}
 \end{figure}
 % <---------------------------------->
 \clearpage
