@@ -29,65 +29,60 @@
 
 ################################################################################
 # FUNCTION:                GENERATION OF TIMEDATE OBJECTS:
-#  setClass                 'timeDate' S4 Class representation  
+#  setClass                 'timeDate' S4 Class representation
 #  setMethod inti           'initialize', 'timeDate
 ################################################################################
 
 
 setClass("timeDate",
-    # A class implemented by Diethelm Wuertz and Yohan Chalabi
-    
-    # Description:
-    #   Class representatation for 'timeDate' Objects.
-    
-    # CLASS:
-    representation(
-        Data = "POSIXct",
-        format = "character",
-        FinCenter = "character"
-        ),
-    validity = function(object) {
-        if(!identical(attr(object@Data, "tzone"), "GMT"))
-        return("@Data must be in \"GMT\" timezone.")
-    if(!is.numeric(unclass(object@Data)))
-        return("unclass(@Data) should be of class \"numeric\".")
-    ## else TRUE
-    TRUE
-    }
-)
+         # A class implemented by Diethelm Wuertz and Yohan Chalabi
 
+         # Description:
+         #   Class representatation for 'timeDate' Objects.
+
+         # CLASS:
+         representation(Data = "POSIXct",
+                        format = "character",
+                        FinCenter = "character"),
+         validity = function(object) {
+             if(!identical(attr(object@Data, "tzone"), "GMT"))
+                 return("@Data must be in \"GMT\" timezone.")
+             if(!is.numeric(unclass(object@Data)))
+                 return("unclass(@Data) should be of class \"numeric\".")
+             ## else TRUE
+             TRUE
+         })
 
 # ------------------------------------------------------------------------------
 
+setMethod("initialize", "timeDate", function(.Object, ...) {
 
-setMethod("initialize", "timeDate", 
-    function(.Object, ...)
-    {
-        .Object <- callNextMethod()
-        
+    .Object <- callNextMethod()
+
+    # if not arguments are passed in ..., do not try to define format
+    # of @Data
+    if (length(list(...))) {
+
         # ISO Date/Time Format:
         isoDate   <- "%Y-%m-%d"
         isoFormat <- "%Y-%m-%d %H:%M:%S"
-        
+
         # extract numerical value
         num <- c(unclass(.Object@Data))
-        
+
         if (all(is.na(num))) {
             # no need to look for a format if @Data has only NA's
             .Object@format <- character(1)
         } else {
             # convert - DST
             num <- .formatFinCenterNum(num, .Object@FinCenter, "gmt2any")
-        
+
             # check if num is a multiple of days
             test <- !(abs(num %% 86400) > 0)
             .Object@format <- ifelse(all(na.omit(test)), isoDate, isoFormat)
         }
-        
-        .Object
     }
-)
-
+    .Object
+})
 
 ################################################################################
-
