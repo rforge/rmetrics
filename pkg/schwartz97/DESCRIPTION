@@ -1,13 +1,13 @@
 Package: schwartz97
 Type: Package
-Version: 0.0.1
-Date: 2009-06-29
+Version: 0.0.2
+Date: 2010-10-16
 Title: A package on the Schwartz two-factor commodity model
 Author: Philipp Erb, David Luethi, Juri Hinz, Simon Otziger
 Maintainer: David Luethi <luethid@gmail.com>
 LazyLoad: yes
 LazyData: no
 Depends:  R(>= 2.8), FKF, mvtnorm, methods
-Description: This package provides detailed functionality for working with the Schwartz 1997 two-factor commodity model. Essentially, it contains pricing formulas for futures and European options and the standard d/p/q/r functions for the distribution of the state variables and futures prices. In addition, the a parameter estimation procedure is contained in the package together with many utilities as filtering and plotting functionality.
+Description: This package provides detailed functionality for working with the Schwartz 1997 two-factor commodity model. Essentially, it contains pricing formulas for futures and European options and the standard d/p/q/r functions for the distribution of the state variables and futures prices. In addition, a parameter estimation procedure is contained in the package together with many utilities as filtering and plotting functionality.
 License: GPL (>= 2)
 Encoding: latin1

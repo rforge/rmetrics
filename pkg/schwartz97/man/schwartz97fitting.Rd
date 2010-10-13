@@ -1,6 +1,6 @@
 \name{parameter-estimation}
 \alias{fit.schwartz2f}
-\title{Schwartz 1997 two factor commodity model}
+\title{Schwartz 1997 two factor parameter estimation}
 
 % <---------------------------------------------------------------------->
 \description{
@@ -140,8 +140,9 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
   \code{\link[=fitted.schwartz2f.fit]{fitted}},
   \code{\link[=resid.schwartz2f.fit]{resid}},
   \code{\link[=plot.schwartz2f.fit]{plot}},
-  \code{\link[=coef.schwartz2f]{coef}}).
-  \code{\link{pricefutures}}.
+  \code{\link[=coef.schwartz2f]{coef}}),
+  \code{\link{pricefutures}},
+  \code{\link{futures-data}}.
 
 }
 % <---------------------------------------------------------------------->
@@ -238,6 +239,38 @@ apply(model.resid.2, 2, function(x)plot(density(na.omit(x))))
 ## expected futures price in 1.1 years.
 priceoption("put", time = 1, Time = 1.1, K = pricefutures(1.1, fit.obj),
             fit.obj)
+
+
+
+## Parameter estimation for weekly soybean meal data:
+## Get Wednesday observations:
+futures.w <- rapply(futures, function(x)x[format(as.Date(rownames(x)), "\%w") == 3,],
+                    classes = "matrix", how = "list")
+
+## Estimate soybean meal parameters (stop after 500 iterations).
+## ttm (time-to-maturity) is divided by 260 as it is in unit of days and
+## deltat = 1/52 because weekly price observations are used.
+## Estimate all measurement error standard deviations (opt.meas.sd == "all"),
+## but hold kappa, alpha, and lambda constant.
+soybean.meal.fit <- fit.schwartz2f(data = futures.w$soybean.meal$price,
+                                   ttm = futures.w$soybean.meal$ttm / 260,
+                                   opt.meas.sd = "all",
+                                   mu = 0, kappa = 1, alpha = 0.03, r = 0.04,
+                                   opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                     sigmaS = TRUE, kappa = FALSE, alpha = FALSE, 
+                                     sigmaE = TRUE, rho = TRUE, lambda = FALSE),
+                                   deltat = 1 / 52, control = list(maxit = 500))
+
+soybean.meal.fit 
+
+plot(soybean.meal.fit, type = "trace.pars") # plot the parameter evolution
+
+## Plot real and predicted forward curves:
+par(mfrow = c(1, 2))
+futuresplot(futures.w$soybean.meal, type = "forward.curve")
+plot(soybean.meal.fit, type = "forward.curve", data = futures.w$soybean.meal$price,
+     ttm = futures.w$soybean.meal$ttm / 260)
+
 
 }
 

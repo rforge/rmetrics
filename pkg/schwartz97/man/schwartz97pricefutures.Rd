@@ -73,8 +73,8 @@
   \code{\link{priceoption}} to price options,
   \code{\link[=pfutures]{d/p/q/rfutures}} to work with futures,
   \code{\link[=schwartz2f-class]{schwartz2f}}-constructor,
-  \code{\link{fit.schwartz2f}} for parameter estimation.
-
+  \code{\link{fit.schwartz2f}} for parameter estimation, 
+  \code{\link{futures-data}}.
 }
 
 % <---------------------------------------------------------------------->

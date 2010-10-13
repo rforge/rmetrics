@@ -281,6 +281,10 @@ plot.schwartz2f.fit <- function(x, type = c("trace.pars", "state", "forward.curv
   type <- match.arg(type)
   if(type == "trace.pars"){
     trace.pars <- x@trace.pars
+    if(ncol(trace.pars) > 10){
+      warning("Only the first 10 columns of 'x@trace.pars' are plotted due to the limitation in plot.ts!")
+      trace.pars <- trace.pars[, 1:10]
+    }
     trace.pars[,"rel.tol"] <- log(trace.pars[,"rel.tol"], base = 10)
     colnames(trace.pars)[colnames(trace.pars) == "rel.tol"] <- "log10(rel.tol)"
     plot(as.ts(trace.pars), xlab = "Iteration", type = "p",

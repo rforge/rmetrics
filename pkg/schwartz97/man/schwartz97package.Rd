@@ -26,8 +26,8 @@
 \tabular{ll}{
 Package: \tab schwartz97\cr
 Type: \tab Package\cr
-Version: \tab 0.0.1\cr
-Date: \tab 2010-08-11\cr
+Version: \tab 0.0.2\cr
+Date: \tab 2010-10-15\cr
 License: \tab  GPL (GNU Public License), Version 2 or later \cr
 }
 % <---------------------------------------------------------------------->
@@ -86,23 +86,11 @@ understand the internals of the package.
 }
 % <---------------------------------------------------------------------->
 \author{
-David Luethi \cr
-Clariden Leu Bank
-(\url{http://www.claridenleu.com}) \cr
 
-Juri Hinz \cr
-National University of Singapore
-(\url{http://www.math.nus.edu.sg}) \cr
+  David Luethi, Philipp Erb, Juri Hinz, Simon Otziger \cr
 
-Philipp Erb \cr
-Zurich Global Corporate Switzerland
-(\url{http://www.zurich.ch}) \cr
+  Maintainer: David Luethi <luethid@gmail.com>
 
-Simon Otziger \cr
-Institute of Data Analysis and Process Design
-(\url{http://www.idp.zhaw.ch}) \cr
-
-Maintainer: Simon Otziger <otis@zhaw.ch>
 }
 % <---------------------------------------------------------------------->
 \references{

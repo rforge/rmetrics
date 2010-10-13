@@ -85,6 +85,18 @@ futuresplot(futures$lumber, type = "forward.curve")
 ## Plot time to maturity of heating oil data
 futuresplot(futures$heating.oil, type = "ttm")
 
+## Make 'futures' weekly, take Wednesday data
+futures.w <- rapply(futures, function(x)x[format(as.Date(rownames(x)), "\%w") == 3,],
+                    classes = "matrix", how = "list")
+
+## Make 'futures' monthly, take the 28th day of the month
+futures.m <- rapply(futures, function(x)x[format(as.Date(rownames(x)), "\%d") == 28,],
+                    classes = "matrix", how = "list") 
+
+## Plot weekly lumber and monthly soybean data
+futuresplot(futures.w$lumber, type = "forward.curve", main = "Lumber") 
+futuresplot(futures.m$soybean, type = "forward.curve", main = "Soybean")
+
 \dontrun{
 ## Convert to zoo-objects:
 require(zoo)
@@ -96,6 +108,15 @@ plot(futures.zoo$heating.oil$ttm)
 plot(futures.zoo$wheat$vol)
 plot(futures.zoo$copper$oi)
 }
+
+## Estimate soybean meal parameters (stop after 100 iterations).
+## ttm (time-to-maturity) is divided by 260 as it is in unit of days and
+## deltat = 1/52 because weekly price observations are used.
+soybean.meal.fit <- fit.schwartz2f(data = futures.w$soybean.meal$price,
+                                   ttm = futures.w$soybean.meal$ttm / 260,
+                                   deltat = 1 / 52, r = 0.04,
+                                   control = list(maxit = 100))
+soybean.meal.fit
 }
 
 % <---------------------------------------------------------------------->

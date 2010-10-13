@@ -278,14 +278,14 @@ time <- 5
 sample.t <- rstate(n = 2000, time, obj)
 pstate(c(0, -Inf), c(150, 0), time, obj)
 mean(obj, time = c(1, 10))
-plot(obj, n = 50, time = 5, dt = 1 / 52)
+plot(obj, n = 30, time = 5, dt = 1 / 52)
 @
 
 \begin{figure}[h!]\centering
 <<fig=TRUE,echo=FALSE,width=9,height=7>>=
 plot(obj, n = 50, time = 5, dt = 1 / 52)
 @
-\caption{Fifty trajectories of the state variables are plotted on a
+\caption{Thirty trajectories of the state variables are plotted on a
   weekly interval and a five years horizon. The initial values of the
   state variables are 100 for the spot price ($s_0$) and 0 for the
   convenience yield ($\delta_0$). The spot price has a drift $\mu$ of
@@ -631,9 +631,9 @@ structures are compared to model generated term structures in
 fig. \ref{fig:term-structures}.
 \begin{figure}[h!]\centering
 <<fig=TRUE,width=9,height=7,echo=FALSE>>=
-plot(wheat.fit.constr, type = "sim", time = 5, n = 50)
+plot(wheat.fit.constr, type = "sim", time = 5, n = 30)
 @ 
-\caption{Fifty trajectories based on the constrained parameter
+\caption{Thirty trajectories based on the constrained parameter
   estimates of wheat on a five years horizon and weekly
   sampling.}\label{fig:simulated-trajectories}
 \end{figure}
@@ -786,6 +786,50 @@ legend("topleft", c("Current observed futures price", "One week ahead 90% confid
   model}\label{fig:CI}
 \end{figure}
 % <---------------------------------->
+\clearpage
+% <------------------------------------------------------------>
+\subsection{Example: Estimating Soybean Meal Parameters}\label{sec:estim-example-soybean}
+% <------------------------------------------------------------>
+Soybean meal parameters are estimated in this example based on weekly
+observations. All measurement error standard deviations are estimated
+(\verb=opt.meas.sd == "all"=), but kappa and lambda are held constant.
+Time-to-maturity (\verb=ttm=) is divided by 260 as it is in unit of
+days and deltat is set to 1/52 because weekly price observations are
+used here.
+
+First, data have to be made weekly. Wednesday observations are
+taken. Second, the estimation is carried out. Finally, real and fitted
+term structures are plotted in fig. \ref{fig:term-structure-soybean}.
+<<fig=FALSE>>=
+futures.w <- rapply(futures, function(x)x[format(as.Date(rownames(x)), "%w") == 3,],
+                    classes = "matrix", how = "list")
+soybean.meal.fit <- fit.schwartz2f(data = futures.w$soybean.meal$price,
+                                   ttm = futures.w$soybean.meal$ttm / 260,
+                                   kappa = 1, mu = 0,
+                                   opt.pars = c(s0 = FALSE, delta0 = FALSE, mu = TRUE, 
+                                     sigmaS = TRUE, kappa = FALSE, alpha = TRUE, 
+                                     sigmaE = TRUE, rho = TRUE, lambda = FALSE),
+                                   opt.meas.sd = "all", deltat = 1 / 52,
+                                   control = list(maxit = 1000), silent = TRUE)
+soybean.meal.fit
+
+par(mfrow = c(1, 2))
+futuresplot(futures.w$soybean.meal, type = "forward.curve")
+plot(soybean.meal.fit, type = "forward.curve", data = futures.w$soybean.meal$price,
+     ttm = futures.w$soybean.meal$ttm / 260)
+@ 
+
+\begin{figure}[t]\centering
+<<fig=TRUE,echo=FALSE,width=9,height=7>>=
+par(mfrow = c(1, 2))
+futuresplot(futures.w$soybean.meal, type = "forward.curve")
+plot(soybean.meal.fit, type = "forward.curve", data = futures.w$soybean.meal$price,
+     ttm = futures.w$soybean.meal$ttm / 260)
+@
+\caption{Real and fitted term structures of soybean meal
+  data.}\label{fig:term-structure-soybean}
+\end{figure}
+
 \clearpage
 % <---------------------------------------------------------------------->
 \bibliography{SpotCommodity}
