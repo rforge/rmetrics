@@ -99,7 +99,7 @@ fit.schwartz2f(data, ttm, deltat = 1 / 260,
 
   \code{opt.meas.sd} specifies how measurement uncertainty is treated in
   the fit: According to the model there should be a one-to-one
-  correspondance between the spot and the futures price. In reality, the
+  correspondence between the spot and the futures price. In reality, the
   term structure does not fully match for any set of parameters. This is
   reflected in the measurement uncertainty-vector \code{meas.sd}. All
   components of \code{meas.sd} can be fitted. However, it might be

@@ -794,12 +794,13 @@ Soybean meal parameters are estimated in this example based on weekly
 observations. All measurement error standard deviations are estimated
 (\verb=opt.meas.sd == "all"=), but kappa and lambda are held constant.
 Time-to-maturity (\verb=ttm=) is divided by 260 as it is in unit of
-days and deltat is set to 1/52 because weekly price observations are
-used here.
+days and \verb=deltat= is set to 1/52 because weekly price
+observations are used here.
 
-First, data have to be made weekly. Wednesday observations are
+First, data has to be made weekly. Wednesday observations are
 taken. Second, the estimation is carried out. Finally, real and fitted
 term structures are plotted in fig. \ref{fig:term-structure-soybean}.
+Residuals could be analysed as outlined in sec. \ref{sec:resid}.
 <<fig=FALSE>>=
 futures.w <- rapply(futures, function(x)x[format(as.Date(rownames(x)), "%w") == 3,],
                     classes = "matrix", how = "list")
@@ -819,7 +820,7 @@ plot(soybean.meal.fit, type = "forward.curve", data = futures.w$soybean.meal$pri
      ttm = futures.w$soybean.meal$ttm / 260)
 @ 
 
-\begin{figure}[t]\centering
+\begin{figure}[h!]\centering
 <<fig=TRUE,echo=FALSE,width=9,height=7>>=
 par(mfrow = c(1, 2))
 futuresplot(futures.w$soybean.meal, type = "forward.curve")
@@ -827,7 +828,8 @@ plot(soybean.meal.fit, type = "forward.curve", data = futures.w$soybean.meal$pri
      ttm = futures.w$soybean.meal$ttm / 260)
 @
 \caption{Real and fitted term structures of soybean meal
-  data.}\label{fig:term-structure-soybean}
+  data. Directionally fitted term structures mostly match observed
+  term structures.}\label{fig:term-structure-soybean}
 \end{figure}
 
 \clearpage

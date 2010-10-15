@@ -12,13 +12,14 @@
   
   This package contains an implementation of the Schwartz two-factor
   commodity model, that is, the joint dynamics of the spot price and the
-  spot convenience according to Schwartz (1997). The parameter
+  spot convenience yield according to Schwartz (1997). The parameter
   estimation function constitutes the core of this package. Once the
   parameters are estimated, futures and European call and put options
-  can be priced, risk measures can be calculated and the usual
+  can be priced, term structures can be calculated and the usual
   distribution operations d/p/q/r can be carried out on the state
-  variables as well as on the futures price. The package is accompanied
-  by a variety of utility functions.
+  variables as well as on futures prices. The package is accompanied by
+  a variety of utility functions, futures data of ten commodities, and
+  two vignettes describing technical details and usage of the package.
 
 }
 % <---------------------------------------------------------------------->
@@ -79,9 +80,13 @@ License: \tab  GPL (GNU Public License), Version 2 or later \cr
 % <---------------------------------------------------------------------->
 \strong{Package vignette:} \cr
 
-The \R package \code{schwartz97} contains the vignette \emph{Technical
-Document} which gives the necessary relations and tools to fully
-understand the internals of the package.
+The \R package \code{schwartz97} contains two vignettes:\cr
+
+The vignette \emph{Technical Document} gives the necessary relations and
+tools to fully understand the internals of the package. \cr
+
+The vignette \emph{User Guide} discusses implementation details and
+gives numerous examples and intuitive explanations. \cr
 
 }
 % <---------------------------------------------------------------------->
