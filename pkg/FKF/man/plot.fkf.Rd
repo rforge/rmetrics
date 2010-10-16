@@ -70,47 +70,43 @@ of observations.
 \seealso{\code{\link{fkf}}}
 % <---------------------------------------------------------------------->
 \examples{
-## This example shows how to filter a series by an AR(2) filter
-
-ar1 <- -0.44
-ar2 <- 0.4
-sigma <- .4
-
-## Sample from an AR(2) process and put it into the Kalman filter
-a <- arima.sim(model = list(ar = c(ar1, ar2)),
-               n = 60, innov = rnorm(60) * sigma)
-
-
-## Set up the state space representation for an AR(2) model:
+## Local level model for the treering width data.
 ## Transition equation:
-## alpha[, t + 1] = matrix(ar1, 1, ar2, 0, ncol = 2) * alpha[,t] + e[t]
+## alpha[t+1] = alpha[t] + eta[t], eta[t] ~ N(0, HHt)          
 ## Measurement equation:
-## y[,t] = c(1, 0) * a[,t] */
-## Initial values:
-## a0 = c(0, 0), P0 = diag(c(10, 10))
+## y[t] = alpha[t] + eps[t], eps[t] ~  N(0, GGt)
 
-ans <- fkf(a0 = c(0, 0), P0 = diag(c(10, 10)),
-           dt = rbind(0, 0), ct = matrix(0),
-           Tt = matrix(c(ar1, 1, ar2, 0), ncol = 2),
-           Zt = cbind(1, 0),
-           HHt = matrix(c(sigma^2, 0, 0, 0), ncol = 2),
-           GGt = matrix(0), yt = rbind(a))
+y <- treering
+y[c(3, 10)] <- NA  # NA values can be handled
 
-## Compared the filtered series with the simulated AR(2) series:
-plot(ans, att.idx = 1, at.idx = NA)
-lines(a, lty = "dotted")
+## Set constant parameters:
+dt <- ct <- matrix(0) 
+Zt <- Tt <- matrix(1)
+a0 <- y[1]            # Estimation of the first width
+P0 <- matrix(100)     # Variance of 'a0'
 
-## Compared the predicted series with the simulated AR(2) series.
-## Additionally, a 99% confidence interval band of at[1,] is drawn.
-plot(ans, att.idx = NA, at.idx = 1, CI = .99)
-lines(a, lty = "dotted")
+## Estimate parameters:
+fit.fkf <- optim(c(HHt = var(y, na.rm = TRUE) * .5,
+                   GGt = var(y, na.rm = TRUE) * .5),
+                 fn = function(par, ...)
+                 -fkf(HHt = matrix(par[1]), GGt = matrix(par[2]), ...)$logLik,
+                 yt = rbind(y), a0 = a0, P0 = P0, dt = dt, ct = ct,
+                 Zt = Zt, Tt = Tt, check.input = FALSE)
 
-## Check the residuals for normality
-plot(ans, type = "resid.qq")
+## Filter Nile data with estimated parameters:
+fkf.obj <- fkf(a0, P0, dt, ct, Tt, Zt, HHt = matrix(fit.fkf$par[1]),
+               GGt = matrix(fit.fkf$par[2]), yt = rbind(y))
 
-## Test for autocorrelation
-plot(ans, type = "acf")
+## Plot the width together with fitted local levels:
+plot(y, main = "Treering data")
+lines(ts(fkf.obj$att[1, ], start = start(y), frequency = frequency(y)), col = "blue")
+legend("top", c("Treering data", "Local level"), col = c("black", "blue"), lty = 1)
 
+## Check the residuals for normality:
+plot(fkf.obj, type = "resid.qq")
+
+## Test for autocorrelation:
+plot(fkf.obj, type = "acf", na.action = na.pass)
 }
 % <---------------------------------------------------------------------->
 \keyword{hplot}

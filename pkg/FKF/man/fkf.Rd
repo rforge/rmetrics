@@ -46,7 +46,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
 % <------------------------------------->
   \strong{State space form:}
 
-  Our notation is closest to the one of Koopman et al.
+  The following notation is closest to the one of Koopman et al.
   The state space model is represented by the transition equation and
   the measurement equation. Let \eqn{m}{m} be the dimension of the state
   variable, \eqn{d}{d} be the dimension of the observations, and \eqn{n}
@@ -135,7 +135,7 @@ fkf(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
   \times d}{d * d}-matrix. But the third dimension
   (i.e. \code{dim(Zt)[3]}) is needed to check for constancy. This
   requires \code{Zt} to be an \eqn{d \times d \times 1}{d * d *
-  1}-array.\cr
+  1}-array.
 
   % <------------------------------------->
   \strong{BLAS and LAPACK routines used:}
@@ -233,9 +233,11 @@ Maintainer: Philipp Erb <erb.philipp@gmail.com>
   \link[sspir]{kfilter} from package \code{sspir}.}
 % <---------------------------------------------------------------------->
 \examples{
+## <--------------------------------------------------------------------------->
+## Example 1: ARMA(2, 1) model estimation.
+## <--------------------------------------------------------------------------->
 ## This example shows how to fit an ARMA(2, 1) model using this Kalman
 ## filter implementation (see also stats' makeARIMA and KalmanRun).
-
 n <- 1000
 
 ## Set the AR parameters
@@ -297,6 +299,50 @@ plot(ans, type = "resid.qq")
 
 ## Check for linear serial dependence through 'acf'
 plot(ans, type = "acf")
+
+
+## <--------------------------------------------------------------------------->
+## Example 2: Local level model for the Nile's annual flow.
+## <--------------------------------------------------------------------------->
+## Transition equation:
+## alpha[t+1] = alpha[t] + eta[t], eta[t] ~ N(0, HHt)          
+## Measurement equation:
+## y[t] = alpha[t] + eps[t], eps[t] ~  N(0, GGt)
+
+y <- Nile
+y[c(3, 10)] <- NA  # NA values can be handled
+
+## Set constant parameters:
+dt <- ct <- matrix(0) 
+Zt <- Tt <- matrix(1)
+a0 <- y[1]            # Estimation of the first year flow 
+P0 <- matrix(100)     # Variance of 'a0'
+
+## Estimate parameters:
+fit.fkf <- optim(c(HHt = var(y, na.rm = TRUE) * .5,
+                   GGt = var(y, na.rm = TRUE) * .5),
+                 fn = function(par, ...)
+                 -fkf(HHt = matrix(par[1]), GGt = matrix(par[2]), ...)$logLik,
+                 yt = rbind(y), a0 = a0, P0 = P0, dt = dt, ct = ct,
+                 Zt = Zt, Tt = Tt, check.input = FALSE)
+
+## Filter Nile data with estimated parameters:
+fkf.obj <- fkf(a0, P0, dt, ct, Tt, Zt, HHt = matrix(fit.fkf$par[1]),
+               GGt = matrix(fit.fkf$par[2]), yt = rbind(y))
+
+## Compare with the stats' structural time series implementation:
+fit.stats <- StructTS(y, type = "level")
+
+fit.fkf$par
+fit.stats$coef
+
+## Plot the flow data together with fitted local levels:
+plot(y, main = "Nile flow")
+lines(fitted(fit.stats), col = "green")
+lines(ts(fkf.obj$att[1, ], start = start(y), frequency = frequency(y)), col = "blue")
+legend("top", c("Nile flow data", "Local level (StructTS)", "Local level (fkf)"),
+       col = c("black", "green", "blue"), lty = 1)
+
 }
 % <---------------------------------------------------------------------->
 \keyword{algebra}
