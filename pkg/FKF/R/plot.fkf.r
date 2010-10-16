@@ -7,10 +7,22 @@ plot.fkf <- function(x, type = c("state", "resid.qq", "qqchisq", "acf"),
   d <- nrow(x$vt)
   n <- ncol(x$att)
 
-  distance <- sapply(1:n, function(i, Ft, vt)t(vt[,i]) %*% solve(Ft[,,i]) %*% vt[,i],
+  distance <- sapply(1:n, function(i, Ft, vt)
+                     {
+                       if(any(is.na(vt[, i])))
+                         return(matrix(NA))
+                       else
+                         return(t(vt[,i]) %*% solve(Ft[,,i]) %*% vt[,i])
+                     },
                      Ft = x$Ft, vt = x$vt)
 
-  std.resid <- sapply(1:n, function(i, Ft, vt)solve(t(chol(Ft[,,i]))) %*% vt[,i],
+  std.resid <- sapply(1:n, function(i, Ft, vt)
+                      {
+                        if(any(is.na(vt[, i])))
+                          return(matrix(NA, ncol = 1, nrow = nrow(vt)))
+                        else
+                          return(solve(t(chol(Ft[,,i]))) %*% vt[,i])
+                      },
                       Ft = x$Ft, vt = x$vt)
 
   dim(std.resid) <- c(d, n) # In case d == 1, make std.resid to be a matrix.

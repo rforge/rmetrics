@@ -15,7 +15,7 @@
 \usage{
 
 \method{plot}{fkf}(x, type = c("state", "resid.qq", "qqchisq", "acf"),
-         CI = 0.95, at.idx = 1:nrow(x$at), att.idx = 1:nrow(x$att), \dots)
+     CI = 0.95, at.idx = 1:nrow(x$at), att.idx = 1:nrow(x$att), \dots)
 
 }
 % <---------------------------------------------------------------------->
@@ -37,11 +37,11 @@
   The argument \code{type} states what shall be plotted. \code{type}
   must partially match one of the following:
   \describe{
-    \item{\code{state}}{The state variables are plotted. Through the
+    \item{\code{state}}{The state variables are plotted. By the
       arguments \code{at.idx} and \code{att.idx}, the user can specify
       which of the predicted (\eqn{a_{t}}{at}) and filtered
       (\eqn{a_{t|t}}{att}) state variables will be drawn.}
-      \item{\code{resid.qq}}{Draws a QQ-plot for each row of the residuals \code{vt}.}
+      \item{\code{resid.qq}}{Draws a QQ-plot for each residual-series in\code{vt}.}
       \item{\code{qqchisq}}{A Chi-Squared QQ-plot will be drawn to graphically
 	test for multivariate normality of the residuals based on the
 	Mahalanobis distance.}
@@ -58,8 +58,8 @@
   \code{distance} \tab The Mahalanobis distance of the residuals as a
   vector of length \eqn{n}. \cr
   \code{std.resid} \tab The standardized residuals as an \eqn{d \times
-    n}{d * n}-matrix. It should hold that \eqn{std.resid_{ij} \; iid \sim N_d(0, 1)}{std.resid[i,j] iid N_d(0,
-      1)},
+    n}{d * n}-matrix. It should hold that \eqn{std.resid_{ij} \; iid \sim N_d(0, I)}{std.resid[i,j] iid N_d(0,
+      I)},
 }
 where \eqn{d} denotes the dimension of the data and \eqn{n} the number
 of observations.

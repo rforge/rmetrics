@@ -233,7 +233,7 @@ void cfkf(/* inputs */
   int potrf_info = 0;
   int det_potrf_info = 0;
 
-  /* integers and reals used in dcopy and dgemm */
+  /* integers and double precisions used in dcopy and dgemm */
   int intone = 1;
   double dblone = 1.0, dblminusone = -1.0, dblzero = 0.0;
 
@@ -527,7 +527,6 @@ void cfkf(/* inputs */
       }
       else
       {
-
 	  /******************************************************/
 	  /* ---------- case 2: d NA's: no filtering ---------- */
 	  /******************************************************/
@@ -792,10 +791,10 @@ void cfkf(/* inputs */
       /**************************************************************************************/
 
       /* ---------------------------------------------------------------------- */
-      /* a[,i] = dt[,i * incdt] + Tt[,,i * incTt] %*% att[,i]                   */
+      /* at[,i + 1] = dt[,i * incdt] + Tt[,,i * incTt] %*% att[,i]                   */
       /* ---------------------------------------------------------------------- */
 
-      /* at[,i] = dt[,i] */
+      /* at[,i + 1] = dt[,i] */
       F77_NAME(dcopy)(&m, &dt[m * i * incdt], &intone, &at[m * (i + 1)], &intone);
 #ifdef DEBUG_PRINT
       print_array(&at[m * (i + 1)], 1, m, "dt:");
@@ -805,7 +804,7 @@ void cfkf(/* inputs */
       print_array(&Tt[m_x_m * i * incTt], m, m, "Tt:");
 #endif
 
-      /* at[,i] = Tt[,,i * incTt] %*% att[,i] + at[,i] */
+      /* at[,i + 1] = Tt[,,i * incTt] %*% att[,i] + at[,i + 1] */
       F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
 		      &intone, &m, &dblone,
 		      &Tt[m_x_m * i * incTt], &m,
@@ -813,7 +812,7 @@ void cfkf(/* inputs */
 		      &dblone, &at[m * (i + 1)], &m);
 
       /* --------------------------------------------------------------------------------- */
-      /* Pt[,,i] = Tt[,,i * incTt] %*% Ptt[,,i] %*% t(Tt[,,i * incTt]) + HHt[,,i * incHHt] */
+      /* Pt[,,i + 1] = Tt[,,i * incTt] %*% Ptt[,,i] %*% t(Tt[,,i * incTt]) + HHt[,,i * incHHt] */
       /* --------------------------------------------------------------------------------- */
 
       /* tmpmxm = Ptt[,,i] %*% t(Tt[,,i * incTt]) */
@@ -823,14 +822,14 @@ void cfkf(/* inputs */
 		      &Tt[m_x_m * i * incTt], &m,
 		      &dblzero, tmpmxm, &m);
 
-      /* Pt[,,i] = HHt[,,i * incHHt] */
+      /* Pt[,,i + 1] = HHt[,,i * incHHt] */
       F77_NAME(dcopy)(&m_x_m, &HHt[m_x_m * i * incHHt], &intone, &Pt[m_x_m * (i + 1)], &intone);
 
 #ifdef DEBUG_PRINT
       print_array(&HHt[m_x_m * i * incHHt], m, m, "HHt:");
 #endif
 
-      /* Pt[,,i] = Tt[,,i * incTt] %*% tmpmxm + Pt[,,i] */
+      /* Pt[,,i + 1] = Tt[,,i * incTt] %*% tmpmxm + Pt[,,i + 1] */
       F77_NAME(dgemm)(dont_transpose, dont_transpose, &m,
 		      &m, &m, &dblone,
 		      &Tt[m_x_m * i * incTt], &m,
