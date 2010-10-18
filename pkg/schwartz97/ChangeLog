@@ -11,3 +11,4 @@ schwartz97 V0.0.2
 	* User guide added as vignette.
 	* Documentation extended.
 	* Check lengths of inputs in functions 'xfutures' and 'xstate'.
+	* data-set 'futures' enhanced by underlying tickers etc.
