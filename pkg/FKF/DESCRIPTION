@@ -1,6 +1,6 @@
 Package: FKF
 Type: Package
-Version: 0.1.2
+Version: 0.1.1
 Date: 2010-10-17
 Title: Fast Kalman Filter
 Author: David Luethi, Philipp Erb, Simon Otziger

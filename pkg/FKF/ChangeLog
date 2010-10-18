@@ -1,11 +1,12 @@
-2010-07-03 David Luethi
+2010-10-17 David Luethi
 
 FKF V0.1.1
-	* Error in plot.fkf: Standardized residuals were wrongly
-	calculated.
+	* Error in plot.fkf: Standardized residuals were calculated
+	wrongly.
 	* plot-method of fkf-objects with type == 'resid.qq' puts the
 	number of the variable in the title (main = ...)
-	* fkf.Rd: Link to (non-existing) vignette removed.
+	* fkf.Rd, plot.fkf.Rd: Documentation extended, examples added.
+	* R unit test added.
 
 
 2009-09-28 Philipp Erb
