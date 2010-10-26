@@ -103,7 +103,7 @@ pkgsRmetricsDev <- function()
 install.RmetricsDev  <-
     function(pkgs = pkgsRmetricsDev(), repos = NULL,
              CRAN = "http://cran.r-project.org",
-             type = "source", suggests = FALSE, ...)
+             type = "source", suggests = TRUE, ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -261,10 +261,10 @@ checkBeforeCommit  <-
     message("will install the packages into ", lib)
 
     ## if outdir does not exist, create it
-    if (!file.exists(outdir)) dir.create(outdir)
+    if (!file.exists(outdir)) dir.create(outdir, recursive = TRUE)
 
     ## extract list of Rmetrics packages
-    pkgsRmetrics <- pkgsRmetricsDev()
+    pkgsRmetrics <- pkgsRmetrics()
     stopifnot(pkgs %in% pkgsRmetrics)
 
     ## search for packages which depends on the package we want to check
@@ -285,8 +285,7 @@ checkBeforeCommit  <-
     ## Run R CMD check ...
     Rbin <- file.path(R.home(), "bin", "R")
     Rcmd <- paste(Rbin, "CMD check")
-    options <- paste("--library=", lib,
-                     " --outdir=", outdir, sep = "")
+    options <- paste("-l", shQuote(lib), "-o", shQuote(outdir))
     cmd <- paste(Rcmd, options, paste(pkgsToCheck, collapse = " "), ...)
     try(system(cmd))
 
