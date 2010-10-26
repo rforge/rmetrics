@@ -4,6 +4,11 @@
 	*	   HyperbolicDist News			 *
 	*						 *
 	**************************************************
+VERSION 0.6-3
+
+  o	Correction to logHist not passing breaks argument to call to 
+  	hist.default reported by adam.zieba@rorotika.com. Notice added
+	to say package is now deprecated.
 
 
 VERSION 0.5-2
