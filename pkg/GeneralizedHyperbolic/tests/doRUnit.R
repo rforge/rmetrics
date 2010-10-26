@@ -13,7 +13,7 @@
 ### environment variable LEVEL set by make
 ### default value of 1 is level used in check and install
 
-if(require("RUnit", quietly=TRUE)) {
+if(require("RUnit", quietly = TRUE)) {
 
   ## --- Setup ---
 
@@ -21,7 +21,7 @@ if(require("RUnit", quietly=TRUE)) {
   pkg <- sub("\\.Rcheck$", '', basename(dirname(wd)))
   level <- Sys.getenv("LEVEL")
 
-  library(package=pkg, character.only=TRUE)
+  library(package = pkg, character.only = TRUE)
 
   path <- system.file("unitTests", package = pkg)
 
