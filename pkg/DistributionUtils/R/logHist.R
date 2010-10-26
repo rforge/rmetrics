@@ -8,7 +8,9 @@ logHist <- function (x, breaks = "Sturges",
                      htype = "b", ...) {
 
   xName <- paste(deparse(substitute(x), 500), collapse = "\n")
-  histInfor <- hist.default(x, plot = FALSE)
+  histInfor <- hist.default(x, plot = FALSE, breaks = breaks,
+                            include.lowest = include.lowest,
+                            right = right)
   logDensity <- log(histInfor$density)
   breaks <- histInfor$breaks
   mids <- histInfor$mids
