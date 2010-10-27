@@ -1,5 +1,59 @@
+2010-10-12  chalabi
+
+	* R/AllClass.R: updated initialize,timeDate-method to remove
+	  superflous warning when no data is included in new timeDate
+	  objects.
+
+2010-09-30  chalabi
+
+	* NAMESPACE, man/timeDate-DaylightSavingTime.Rd, man/timeDate.Rd:
+	  updated NAMESPACE and manual pages with recent changes
+	* R/timeDate.R: improved DST conversion in the presence of NA's
+
+2010-09-29  chalabi
+
+	* R/timeDate-generateDST.R, R/tzone.R: added formal time zones in
+	  addition to the financial centers.
+	* R/calendar-dayOfWeek.R, R/calendar-dayOfYear.R,
+	  R/calendar-isWeekday.R, R/holiday-NERC.R, R/holiday-NYSE.R,
+	  R/holiday-ZURICH.R, inst/unitTests/runit.HolidayCalendars.R,
+	  inst/unitTests/runit.dayOfWeek.R,
+	  inst/unitTests/runit.dayOfYear.R,
+	  inst/unitTests/runit.isWeekday.R,
+	  inst/unitTests/runit.isWeekend.R: Using new argument of method
+	  as.POSIXlt.timeDate for better tzone management in holidays.
+	* R/base-format.R, R/base-length.R, R/base-round.R,
+	  R/base-subset.R, R/calendar-atoms.R, R/calendar-months.R,
+	  R/methods-show.R: cosmetic changes in order to use accessor
+	  functions rather than @
+	* R/methods-as.R: as.POSIXlt.timeDate and as.POSIXct.timeDate now
+	  accepts tz argument.
+	* R/methods-getDataPart.R: added getDataPart,timeDate method.
+	* R/options-RmetricsOptions.R: setRmetricsOption now returns the
+	  old setting as invisible.
+
+2010-09-24  chalabi
+
+	* DESCRIPTION, NAMESPACE: updated NAMESPACE and version number in
+	  DESC file
+	* R/timeDate-Sequence.R, man/timeDate-Sequence.Rd: by argument in
+	  timeSequence() is now the same as argument by in seq.timeDate()
+	  method.
+	* R/timeDate-DaylightSavingTime.R: updated DST rules
+
+2010-09-16  chalabi
+
+	* R/timeDate-midnightStandard.R: midnightStandard is now based on
+	  midnightStandard2
+
+2010-08-02  chalabi
+
+	* man/00fCalendar-package.Rd, man/00timeDate-package.Rd: renmaed
+	  package manual page
+
 2010-07-26  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* DESCRIPTION: updated version number
 
 2010-07-23  chalabi

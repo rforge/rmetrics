@@ -1,5 +1,32 @@
+2010-10-26  chalabi
+
+	* R/base-cbind.R: cbind now extends vectors to match number of rows
+	  of the timeSeries object.
+
+2010-09-30  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+
+2010-09-24  chalabi
+
+	* DESCRIPTION, NAMESPACE: updated NAMESPACE and version number in
+	  DESC file
+
+2010-08-20  chalabi
+
+	* R/stats-na.omit.R: removeNA is now the same as na.omit
+
+2010-08-12  chalabi
+
+	* R/graphics-plot.R: added grid function in .plotTimeSeries when
+	  using single plot type.
+	* R/base-cbind.R, inst/unitTests/runit.bind.R: fixed issued
+	  reported by Thomas Etheber when using cbind method with
+	  timeSeries object with one record.
+
 2010-07-26  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* DESCRIPTION: updated version number
 
 2010-07-08  chalabi
