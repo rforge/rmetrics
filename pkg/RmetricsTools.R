@@ -107,6 +107,7 @@ install.RmetricsDev  <-
 {
 
     stopifnot(is.character(pkgs))
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
 
     # get description of packages
     if (is.null(repos)) {
@@ -228,6 +229,7 @@ dependsRmetrics <-
              contrib =  "http://cran.r-project.org/src/contrib")
 {
     stopifnot(is.character(pkgs))
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
 
     ## extract list of Rmetrics packages
     pkgsRmetrics <- pkgsRmetricsDev()
@@ -251,9 +253,11 @@ dependsRmetrics <-
 # ------------------------------------------------------------------------------
 
 checkBeforeCommit  <-
-    function(pkgs = pkgsRmetricsDev(), lib = NULL, outdir = NULL, ...)
+    function(pkgs = pkgsRmetricsDev(), checkDepends = TRUE,
+             lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(pkgs))
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
 
     ## Set library and outdir paths
     if (is.null(outdir)) outdir <- file.path("../Rcheck", getRversion())
@@ -272,7 +276,8 @@ checkBeforeCommit  <-
     listDepends <- lapply(pkgsRmetrics, getDepends,
                           group = pkgsRmetrics, "Depends")
     names(listDepends) <- pkgsRmetrics
-    tocheck <- sapply(lapply(listDepends, "%in%", pkgs), any)
+    tocheck <- if (checkDepends)
+        sapply(lapply(listDepends, "%in%", pkgs), any) else FALSE
     pkgsToCheck <-
         if ("Rmetrics" %in% pkgs) # Rmetrics virtual package -> check all
             pkgsRmetrics
@@ -363,13 +368,12 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 {
 
     stopifnot(is.character(pkgs))
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
 
     RmetricsPkgs <- pkgsRmetricsDev()
 
     for (pkg in pkgs) {
 
-
-        pkg <- basename(pkg)
         path <- dirname(path)
         pkgPath <- file.path(path, pkg)
 
@@ -763,6 +767,8 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 
 upVersion <- function(pkgs)
 {
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
+
     sapply(pkgs, function(pkg) {
         dcfFile <- file.path(pkg, "DESCRIPTION")
         dcf <- read.dcf(dcfFile)
@@ -789,6 +795,8 @@ upVersion <- function(pkgs)
 
 checkVersion <- function(pkgs = pkgsRmetricsDev())
 {
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
+
     message("Downloading packages info from CRAN ... ", appendLF = FALSE)
     info <- available.packages(contriburl = contrib.url(getOption("repos"),
                                type = "source"))
@@ -815,6 +823,7 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
 
     stopifnot(is.character(pkgs))
     vcs <- match.arg(vcs)
+    pkgs <- basename(pkgs) #-> if pkgs was auto-completed on for Mac OS X
 
     ## extract list of Rmetrics packages
     pkgsRmetrics <- pkgsRmetricsDev()
