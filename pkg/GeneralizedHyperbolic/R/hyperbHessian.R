@@ -6,7 +6,7 @@
 ### 1:4 param = hyperbChangePars 1:4;
 ### 5 = log scale of number 2 and 4 elements of param
 hyperbHessian <- function(x, param, hessianMethod = c("exact", "tsHessian"),
-                          whichParam = 1:5, ...) {
+                          whichParam = 1:5) {
   if (hessianMethod == "exact") {
     hessian <- matrix(nrow = 4, ncol = 4)
     n <- length(x)

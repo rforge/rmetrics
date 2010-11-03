@@ -6,7 +6,8 @@
 \method{summary}{hyperbFit}(object, hessian = FALSE,
         hessianMethod = c("exact", "tsHessian"), ...)
 
-\method{print}{summary.hyperbFit}(x, digits = max(3, getOption("digits") - 3), ...)
+\method{print}{summary.hyperbFit}(x,
+                                  digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
   \item{object}{An object of class \code{"hyperbFit"}, resulting from a call to
@@ -54,6 +55,11 @@
   \code{MASS}.
 
 }
+\author{
+  David Scott \email{d.scott@auckland.ac.nz},
+  Christine Yang Dong \email{c.dong@auckland.ac.nz}
+}
+
 \seealso{
   \code{\link{hyperbFit}}, \code{\link{summary}},
   \code{\link{hyperbHessian}}, \code{\link[DistributionUtils]{tsHessian}}.

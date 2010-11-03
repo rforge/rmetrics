@@ -1,3 +1,14 @@
+2010-11-03    <d.scott@auckland.ac.nz>
+
+	* hyperbHessian, nigHessian, gigHessian all added for calculation
+	of hessians of likelihoods
+
+	* gigParam added for testing gig functions
+
+	* gigFit, gigFitStart, summary.gigFit and gig data fitting
+	examples added, mainly work of David Cusack
+
+
 2010-09-01    <d.scott@auckland.ac.nz>
 
 	* qqgig, ppgig defaults changed when calculating quantiles and

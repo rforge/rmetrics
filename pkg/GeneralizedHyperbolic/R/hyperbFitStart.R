@@ -1,7 +1,6 @@
 ### CYD 01/04/10
 
-hyperbFitStart <- function(x, breaks = NULL,
-                           startValues = c("BN","US","FN","SL","MoM"),
+hyperbFitStart <- function(x, startValues = c("BN","US","FN","SL","MoM"),
                            paramStart = NULL,
                            startMethodSL = c("Nelder-Mead","BFGS"),
                            startMethodMoM = c("Nelder-Mead","BFGS"),
@@ -10,11 +9,9 @@ hyperbFitStart <- function(x, breaks = NULL,
   startMethodSL <- match.arg(startMethodSL)
   startMethodMoM <- match.arg(startMethodMoM)
 
-  histData <- hist(x, plot = FALSE, right = FALSE)
-
-  if (is.null(breaks))
-    breaks <- histData$breaks
-
+  ## right = FALSE deals better with discrete data such as counts
+  histData <- hist(x, plot = FALSE, right = FALSE, ...)
+  breaks <- histData$breaks
   midpoints <- histData$mids
   empDens <- ifelse(!is.finite(log(histData$density)), NA, histData$density)
   maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]

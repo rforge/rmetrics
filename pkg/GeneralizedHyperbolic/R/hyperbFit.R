@@ -2,7 +2,7 @@
 ### DJS 28/7/10
 ### CYD 01/04/10
 ### DJS 11/09/06
-hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
+hyperbFit <- function(x, freq = NULL, paramStart = NULL,
                       startMethod = c("Nelder-Mead","BFGS"),
                       startValues = c("BN","US","FN","SL","MoM"),
                       criterion = "MLE",
@@ -29,8 +29,7 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
   }
 
   x <- as.numeric(na.omit(x))
-  startInfo <- hyperbFitStart(x, breaks = breaks,
-                              startValues = startValues,
+  startInfo <- hyperbFitStart(x, startValues = startValues,
                               paramStart = paramStart,
                               startMethodSL = startMethod,
                               startMethodMoM = startMethod, ...)
@@ -140,17 +139,14 @@ hyperbFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
 
   }
 
-
-
-
   ## Change paramStart back to the primary parameter set version normal scale
   if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
-      paramStart <- hyperbChangePars(1, 2,
-                  param = c(paramStart[1], exp(paramStart[2]),
-                  paramStart[3], exp(paramStart[4])))
-    } else {
-      paramStart <- hyperbChangePars(1, 2, param = paramStart)
-    }
+    paramStart <- hyperbChangePars(1, 2,
+                    param = c(paramStart[1], exp(paramStart[2]),
+                              paramStart[3], exp(paramStart[4])))
+  } else {
+    paramStart <- hyperbChangePars(1, 2, param = paramStart)
+  }
 
   fitResults <- list(param = param, maxLik = maxLik, criterion = criterion,
                      method = method, conv = conv, iter = iter,

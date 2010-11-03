@@ -2,6 +2,8 @@
 \alias{gigFit}
 \alias{print.gigFit}
 \alias{plot.gigFit}
+\alias{coef.gigFit}
+\alias{vcov.gigFit}
 
 
 \title{Fit the Generalized Inverse Gausssian Distribution to Data}
@@ -12,11 +14,12 @@
 }
 
 \usage{
-  gigFit(x, freq = NULL, startValues = c("MoM", "US"),
-         paramStart = NULL,
+  gigFit(x, freq = NULL, paramStart = NULL,
          startMethod = c("Nelder-Mead","BFGS"),
-         method = c("Nelder-Mead", "nlm"),
-         plots = FALSE, printOut = FALSE,
+         startValues = c("LM","GammaIG","MoM","Symb","US"),
+         method = c("Nelder-Mead","BFGS","nlm"),
+         stand = TRUE, plots = FALSE, printOut = FALSE,
+         controlBFGS = list(maxit = 200),
          controlNM = list(maxit = 1000),
          maxitNLM = 1500, ...)
 
@@ -29,24 +32,32 @@
                           "Q-Q Plot of ", "P-P Plot of "),
                           x$obsName, sep = ""),
        ask = prod(par("mfcol")) < length(which) & dev.interactive(), ...)
- }
+
+  \method{coef}{gigFit}(object, ...)
+
+  \method{vcov}{gigFit}(object, ...)
+}
 
 \arguments{
   \item{x}{Data vector for \code{gigFit}. Object of class
     \code{"gigFit"} for \code{print.gigFit} and \code{plot.gigFit}.}
   \item{freq}{A vector of weights with length equal to \code{length(x)}.}
-  \item{paramStart}{A user specified starting parameter vector param taking
-    the form \code{c(chi, psi, lambda)}.}
-  \item{startMethod}{Method used by \code{gigFitStart} in calls to
+  \item{paramStart}{A user specified starting parameter vector
+    \code{param} taking the form \code{c(chi, psi, lambda)}.}
+  \item{startMethod}{Method used by \code{gigFitStartMoM} in calls to
     \code{\link{optim}}.}
   \item{startValues}{Code giving the method of determining starting
-    values for finding the maximum likelihood estimate of param}
+    values for finding the maximum likelihood estimate of \code{param}.}
   \item{method}{Different optimisation methods to consider.
     See \bold{Details}.}
+  \item{stand}{Logical. If \code{TRUE}, the data is first standardized
+    by dividing by the sample standard deviation.}
   \item{plots}{Logical. If \code{FALSE} suppresses printing of the
     histogram, log-histogram, Q-Q plot and P-P plot.}
   \item{printOut}{Logical. If \code{FALSE} suppresses printing of
     results of fitting.}
+  \item{controlBFGS}{A list of control parameters for \code{optim} when using
+    the \code{"BFGS"} optimisation.}
   \item{controlNM}{A list of control parameters for \code{optim}
     when using the \code{"Nelder-Mead"} optimisation.}
   \item{maxitNLM}{A positive integer specifying the maximum number of
@@ -57,26 +68,37 @@
   \item{plotTitles}{Titles to appear above the plots.}
   \item{ask}{Logical. If \code{TRUE}, the user is \emph{ask}ed before
     each plot, see \code{\link{par}(ask = .)}.}
-  \item{\dots}{Passes arguments to \code{par}, \code{hist},
-    \code{logHist}, \code{qqgig} and \code{ppgig}.}
+  \item{\dots}{Passes arguments to \code{optim}, \code{par},
+    \code{hist}, \code{logHist}, \code{qqgig} and \code{ppgig}.}
+  \item{object}{Object of class \code{"gigFit"} for \code{coef.gigFit}
+    and for \code{vcov.gigFit}.}
 }
 \details{
-  \code{startMethod} is	\code{"Nelder-Mead"}.
-
-  \code{startValues} can be either:
+  Possible values of the argument \code{startValues} are the following:
   \itemize{
-    \item{\code{"US"}}{User-supplied.}
+    \item{\code{"LM"}}{Based on fitting linear models to the upper tails
+      of the data \code{x} and the inverse of the data \code{1/x}.}
+    \item{\code{"GammaIG"}}{Based on fitting gamma and inverse gamma
+      distributions.}
     \item{\code{"MoM"}}{Method of moments.}
-    }
+    \item{\code{"Symb"}}{Not yet implemented.}
+    \item{\code{"US"}}{User-supplied.}
+  }
+
+  If \code{startValues = "US"} then a value must be supplied for
+  \code{paramStart}.
+
   For the details concerning the use of \code{paramStart},
   \code{startMethod}, and \code{startValues}, see
   \code{\link{gigFitStart}}.
 
-  The two optimisation method currently available are:
+  The three optimisation methods currently available are:
   \itemize{
-    \item{\code{"Nelder-Mead"}}{Uses an implementation of the Nelder and
-      Mead method as documented in \code{\link{optim}}.}
-    \item{\code{"nlm"}}{Uses the \code{\link{nlm}} function in R.}
+  \item{\code{"BFGS"}}{Uses the quasi-Newton method \code{"BFGS"} as
+    documented in \code{\link{optim}}.}
+  \item{\code{"Nelder-Mead"}}{Uses an implementation of the Nelder and
+    Mead method as documented in \code{\link{optim}}.}
+  \item{\code{"nlm"}}{Uses the \code{\link{nlm}} function in R.}
   }
 
   For details of how to pass control information for optimisation using
@@ -87,18 +109,30 @@
   not appear to be a problem.
 }
 \value{
-  A list with components:
+  \code{gigFit} returns a list with components:
     \item{param}{A vector giving the maximum likelihood estimate of
       param, as \code{c(chi, psi, lambda)}.}
     \item{maxLik}{The value of the maximised log-likelihood.}
     \item{method}{Optimisation method used.}
-    \item{x}{The data used to fit the generalized inverse Gaussian
+    \item{conv}{Convergence code. See the relevant documentation (either
+      \code{\link{optim}} or \code{\link{nlm}}) for details on
+      convergence.}
+    \item{iter}{Number of iterations of optimisation routine.}
+    \item{obs}{The data used to fit the generalized inverse Gaussian
       distribution.}
-    \item{xName}{A character string with the actual \code{x} argument
+    \item{obsName}{A character string with the actual \code{x} argument
       name.}
-    \item{paramStart}{Starting value of param returned by call to
+    \item{paramStart}{Starting value of \code{param} returned by call to
       \code{\link{gigFitStart}}.}
+    \item{svName}{Descriptive name for the method finding start values.}
     \item{startValues}{Acronym for the method of finding start values.}
+    \item{breaks}{The cell boundaries found by a call to
+      \code{\link{hist}}.}
+    \item{midpoints}{The cell midpoints found by a call to
+      \code{\link{hist}}.}
+    \item{empDens}{The estimated density found by a call to
+      \code{\link{hist}}.}
+
   }
 
 \references{

@@ -15,10 +15,11 @@ test.gigFit <- function() {
 
   errorFit <- 5
   nFit <- 10
-  testParam <- gigSmallParam
+  testParam <- matrix(c(1,1,1), nrow = 1)
+  #testParam <- gigSmallParam
   n <- 1000
 
-  for (i in 1:nrow(testParam)) {
+  for (i in 1:NROW(testParam)) {
     param <- testParam[i,]
     chi <- param[1]
     psi <- param[2]
@@ -28,8 +29,8 @@ test.gigFit <- function() {
     lambdaHat <- vector(length = nFit)
 
     for (j in 1:nFit) {
-      gigFitReturn <- gigFit(rgig(n = n, param = param),
-                             startValues = "MoM")$param
+      x <- rgig(n = n, param = param)
+      gigFitReturn <- gigFit(x)$param
       chiHat[j] <- gigFitReturn[1]
       psiHat[j] <- gigFitReturn[2]
       lambdaHat[j] <- gigFitReturn[3]
