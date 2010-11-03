@@ -14,7 +14,7 @@ if(require("RUnit", quietly = TRUE))
         }
     }
 
-    library(package=pkg, character.only = TRUE)
+    library(package = pkg, character.only = TRUE)
     if(!(exists("path") && file.exists(path)))
         path <- system.file("unitTests", package = pkg)
 
@@ -33,7 +33,7 @@ if(require("RUnit", quietly = TRUE))
     } else if(level == 3){
         testSuite <- defineTestSuite(name = paste(pkg, "level 3 testing"),
                                      testFuncRegexp = "^level3test.+",
-                                     dirs = path)    
+                                     dirs = path)
     } else if(level == "graphics"){
         testSuite <- defineTestSuite(name = paste(pkg, "graphics testing"),
                                      testFuncRegexp = "^graphicstest.+",
@@ -41,7 +41,7 @@ if(require("RUnit", quietly = TRUE))
     }
     if(interactive()) {
         cat("Now have RUnit Test Suite 'testSuite' for package '",
-            pkg, "' :\n", sep='')
+            pkg, "' :\n", sep = '')
         str(testSuite)
         cat('', "Consider doing",
             "\t  tests <- runTestSuite(testSuite)", "\nand later",
@@ -51,7 +51,7 @@ if(require("RUnit", quietly = TRUE))
 
         if(file.access(path, 02) != 0) {
             ## cannot write to path -> use writable one
-            tdir <- tempfile(paste(pkg, "unitTests", sep="_"))
+            tdir <- tempfile(paste(pkg, "unitTests", sep = "_"))
             dir.create(tdir)
             pathReport <- file.path(tdir, "report")
             cat("RUnit reports are written into ", tdir, "/report.(txt|html)",
@@ -89,7 +89,7 @@ if(require("RUnit", quietly = TRUE))
         tmp <- getErrors(tests)
         if(tmp$nFail > 0 | tmp$nErr > 0) {
             stop(paste("\n\nunit testing failed (#test failures: ", tmp$nFail,
-                       ", R errors: ",  tmp$nErr, ")\n\n", sep=""))
+                       ", R errors: ",  tmp$nErr, ")\n\n", sep = ""))
         }
     }
 } else {
