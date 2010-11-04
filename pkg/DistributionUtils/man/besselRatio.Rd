@@ -39,7 +39,7 @@ besselRatio(x, nu, orderDiff, useExpScaled = 700)
   scaling since the scaling cancels across numerator and denominator.
 
   The Bessel function ratio is useful in calculating moments of the
-  Generalized Inverse Gaussian distribution, and hence also for the
+  generalized inverse Gaussian distribution, and hence also for the
   moments of the hyperbolic and generalized hyperbolic distributions.
 }
 

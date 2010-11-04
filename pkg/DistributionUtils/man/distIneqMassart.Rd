@@ -23,7 +23,7 @@ distIneqMassart(densFn = "norm", n = 10000, probBound = 0.001, ...)
   Massart (1990) gave a version of the Dvoretsky-Kiefer-Wolfowitz
   inequality with the best possible constant:
 
-  \deqn{P(\left(\sup_{x}|\hat F_n(x)-F(x)|> t\right) \leq%
+  \deqn{P\left(\sup_{x}|\hat F_n(x)-F(x)|> t\right) \leq%
     2\exp(-2nt^2)}{%
     P(sup_x|F_n(x)-F(x)|> t) <= 2exp(-2nt^2)}
 
