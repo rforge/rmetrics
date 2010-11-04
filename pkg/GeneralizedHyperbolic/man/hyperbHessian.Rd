@@ -7,7 +7,7 @@ Calculate Two-Sided Hessian for the Hyperbolic Distribution
 }
 \description{
 Calculates the Hessian of a function, either exactly or approximately. Used to
-obtaining the information matrix for maximum likelihood estimation.
+obtain the information matrix for maximum likelihood estimation.
 }
 \usage{
 hyperbHessian(x, param, hessianMethod = c("exact", "tsHessian"),
@@ -23,19 +23,21 @@ sumX(x, mu, delta, r, k)
     scale of the first set of the parameterization, i.e.,
     \code{mu,log(delta),Pi,log(zeta)}.  }
   \item{hessianMethod}{Two methods are available to calculate the
-      Hessian exactly ("exact") or approximately ("tsHessian").}
+      Hessian exactly ( \code{"exact"}) or approximately
+      (\code{"tsHessian")}.  }   
   \item{whichParam}{Numeric. A number between 1 to 5 indicating which
-    parameterization the argument \code{param} relates to.}
+    set of the parameterization is the specified value in argument
+    \code{param} belong to.} 
   \item{mu}{Value of the parameter \eqn{\mu}{mu} of the
     hyperbolic distribution.}
   \item{delta}{Value of the parameter \eqn{\delta}{delta} of the
-    hyperbolic distribution.}
+    hyperbolic distribution.} 
   \item{r}{Parameter used in calculating a cumulative sum of the data
-    vector x.}
+    vector x.} 
   \item{k}{Parameter used in calculating a cumulative sum of the data
     vector x.}
 }
-\details{
+\details{  
     The formulae for the exact Hessian are derived by \code{Maple}
     software with some simplifications. For now, the exact Hessian can
     only be obtained based on the first, second or the last
@@ -43,7 +45,7 @@ sumX(x, mu, delta, r, k)
     call to \code{tsHessian} from the package \code{DistributionUtils}.
     \code{summary.hyperbFit} calls the function \code{hyperbHessian} to
     calculate the Hessian matrix when the argument \code{hessian =
-    TRUE}.
+    TRUE}.   
 }
 \value{
   \code{hyperbHessian} gives the approximate or exact Hessian matrix for
@@ -66,7 +68,7 @@ fit <- hyperbFit(dataVector, method = "BFGS")
 coef <- coef(fit)
 hyperbHessian(x = dataVector, param = coef, hessianMethod = "exact",
               whichParam = 2)
-
+              
 ### Or calculate the exact Hessian using summary.hyperbFit method:
 summary(fit, hessian = TRUE)
 

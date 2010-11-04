@@ -5,11 +5,11 @@
 ### CYD 01/04/10
 ### 1:4 param = hyperbChangePars 1:4;
 ### 5 = log scale of number 2 and 4 elements of param
-nigHessian <- function(x, param, hessianMethod = c("exact", "tsHessian"),
+nigHessian <- function(x, param, hessianMethod = c("tsHessian", "exact"),
                           whichParam = 1:5, ...) {
   if (hessianMethod == "exact") {
-      stop("The exact hessian is not implemented yet. Please use method tsHessian instead.")
-    }
+    stop("Exact hessian not implemented yet. Use method tsHessian instead.")
+  }
 
   else {
     if (whichParam == 1) {
@@ -33,32 +33,32 @@ nigHessian <- function(x, param, hessianMethod = c("exact", "tsHessian"),
         return(sum(log(dnig(x = x, param = llparam))))
       }
     } else if (whichParam == 4) {
-              llfuncH <- function(param) {
-                llparam <- hyperbChangePars(4, 2, param = param)
-                return(sum(log(dnig(x = x, param = llparam))))
-              }
-            } else if (whichParam == 2) {
-              llfuncH <- function(param) {
-                llparam <- param
-                return(sum(log(dnig(x = x, param = llparam))))
-              }
-
-            } else if (whichParam == 5) {
-              llfuncH <- function(param) {
-                mu <- param[1]
-                delta <- exp(param[2])
-                hyperbPi <- param[3]
-                zeta <- exp(param[4])
-                KNu <- besselK(zeta, nu = -1/2)
-                KNu2 <- besselK((zeta*sqrt(1 + hyperbPi^2)/delta)*
+      llfuncH <- function(param) {
+        llparam <- hyperbChangePars(4, 2, param = param)
+        return(sum(log(dnig(x = x, param = llparam))))
+      }
+    } else if (whichParam == 2) {
+      llfuncH <- function(param) {
+        llparam <- param
+        return(sum(log(dnig(x = x, param = llparam))))
+      }
+      
+    } else if (whichParam == 5) {
+      llfuncH <- function(param) {
+        mu <- param[1]
+        delta <- exp(param[2])
+        hyperbPi <- param[3]
+        zeta <- exp(param[4])
+        KNu <- besselK(zeta, nu = -1/2)
+        KNu2 <- besselK((zeta*sqrt(1 + hyperbPi^2)/delta)*
                         sqrt(delta^2 + (x - mu)^2), nu = -1)
-                nigDens <- sqrt(1 + hyperbPi^2)*zeta^(1/2)*
-                           (sqrt(2*pi)*KNu)^(-1)*(delta^2 + (x - mu)^2)^(-1/2)*
-                           KNu2*exp((zeta*hyperbPi/delta)*(x - mu))
-                return(sum(log(nigDens)))
-              }
-            }
-
+        nigDens <- sqrt(1 + hyperbPi^2)*zeta^(1/2)*
+                   (sqrt(2*pi)*KNu)^(-1)*(delta^2 + (x - mu)^2)^(-1/2)*
+                     KNu2*exp((zeta*hyperbPi/delta)*(x - mu))
+        return(sum(log(nigDens)))
+      }
+    }
+    
     hessian <- tsHessian(param = param, fun = llfuncH)
   }
   if (whichParam == 1) {
@@ -75,13 +75,6 @@ nigHessian <- function(x, param, hessianMethod = c("exact", "tsHessian"),
   }
 
   return(hessian)
-}
-
-
-
-
-sumX <- function(x, mu, delta, r, k) {
-  sum((mu - x)^r / (delta^2 + (x - mu)^2)^(k/2))
 }
 
 

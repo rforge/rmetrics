@@ -9,7 +9,7 @@ Calculates the Hessian of a function, either exactly or approximately. Used to
 obtaining the information matrix for maximum likelihood estimation.
 }
 \usage{
-nigHessian(x, param, hessianMethod = c("exact", "tsHessian"),
+nigHessian(x, param, hessianMethod = c("tsHessian", "exact"),
               whichParam = 1:5, ...)
 }
 \arguments{
@@ -22,24 +22,19 @@ nigHessian(x, param, hessianMethod = c("exact", "tsHessian"),
     are listed in \code{hyperbChangePars} and the last set is the log
     scale of the first set of the parameterization, i.e.,
     \code{mu,log(delta),Pi,log(zeta)}.  }
-  \item{hessianMethod}{Two methods are available to calculate the
-      Hessian exactly ("exact") or approximately ("tsHessian").  }   
+  \item{hessianMethod}{Only the approximate method (\code{"tsHessian"})
+    has actually been implemented so far.}  
   \item{whichParam}{Numeric. A number between 1 to 5 indicating which
     set of the parameterization is the specified value in argument
     \code{param} belong to.} 
   \item{\dots}{Values of other parameters of the function \code{fun} if
     required.} 
 }
-\details{
-  
-    The formulae for the exact Hessian are derived by \code{Maple}
-    software with some simplifications. For now, the exact Hessian can
-    only be obtained based on the first, second or the last
-    parameterization sets.  The approximate Hessian is obtained via a
-    call to \code{tsHessian} from the package \code{DistributionUtils}.
-    \code{summary.nigFit} calls the function \code{nigHessian} to
-    calculate the Hessian matrix when the argument \code{hessian =
-    TRUE}.   
+\details{  
+  The approximate Hessian is obtained via a call to \code{tsHessian}
+  from the package \code{DistributionUtils}.  \code{summary.nigFit}
+  calls the function \code{nigHessian} to calculate the Hessian matrix
+  when the argument \code{hessian = TRUE}.  
 }
 \value{
   \code{nigHessian} gives the approximate or exact Hessian matrix for
@@ -56,9 +51,9 @@ nigHessian(x, param, hessianMethod = c("exact", "tsHessian"),
 param <- c(2, 2, 2, 1)
 dataVector <- rnig(500, param = param)
 fit <- nigFit(dataVector, method = "BFGS")
-### coef=coef(fit)
-### nigHessian(x=dataVector, param=coef, hessianMethod = "exact",
-###            whichParam = 2)
+coef=coef(fit)
+nigHessian(x=dataVector, param=coef, hessianMethod = "tsHessian",
+           whichParam = 2)
               
 ### Or calculate the exact Hessian using summary.nigFit method:
 ### summary(fit, hessian = TRUE)

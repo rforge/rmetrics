@@ -1,18 +1,15 @@
 ### CYD 30/05/10
 ### DJS 11/09/06
-nigFitStart <- function(x, breaks = NULL,
-                        startValues = c("FN","Cauchy","MoM","US"),
+nigFitStart <- function(x, startValues = c("FN","Cauchy","MoM","US"),
                         paramStart = NULL,
                         startMethodMoM = c("Nelder-Mead","BFGS"),
                         ...) {
   startValues <- match.arg(startValues)
   startMethodMoM <- match.arg(startMethodMoM)
 
-  histData <- hist(x, plot = FALSE, right = FALSE)
-
-  if (is.null(breaks))
-    breaks <- histData$breaks
-
+  ## right = FALSE deals better with discrete data such as counts
+  histData <- hist(x, plot = FALSE, right = FALSE, ...)
+  breaks <- histData$breaks
   midpoints <- histData$mids
   empDens <- ifelse(!is.finite(log(histData$density)), NA, histData$density)
   maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]
@@ -150,4 +147,5 @@ nigFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   paramStart <- hyperbChangePars(1, 2,
                 param = c(paramStart[1], exp(paramStart[2]), paramStart[3],
                 exp(paramStart[4])))
+  return(paramStart)
 } ## End of nigFitStartMoM

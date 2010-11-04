@@ -169,5 +169,3 @@ vcov.gigFit <- function(object, ...) {
   varcov
 }
 
-
-

@@ -31,7 +31,7 @@ gigFitStart <- function(x, startValues = c("LM","GammaIG","MoM","Symb","US"),
       if (d == "try-error") {
         stop("GammaIG method does not work for this data set")
       }   else g <- fitdistr(1/x, "gamma")$estimate
-      paramStart <- c(2*g[1], 0.1, -g[2])
+      paramStart <- c(2*g[1], 0.1, -1/g[2])
     } else if (d == "try-error") {
       if (c == "try-error") {
         stop("GammaIG method does not work for this data set")
@@ -42,7 +42,7 @@ gigFitStart <- function(x, startValues = c("LM","GammaIG","MoM","Symb","US"),
       paramStart <- c(0.1, 2*g[1], g[2])
     } else if (lg < lig) {
       g <- fitdistr(1/x, "gamma")$estimate
-      paramStart <- c(2*g[1], 0.1, -g[2])
+      paramStart <- c(2*g[1], 0.1, -1/g[2])
     }
   }
 
@@ -70,7 +70,7 @@ gigFitStart <- function(x, startValues = c("LM","GammaIG","MoM","Symb","US"),
     }
   }
 
-  names(paramStart) <- c("chi","pis","lambda")
+  names(paramStart) <- c("chi","psi","lambda")
   list(paramStart = paramStart, breaks = breaks, midpoints = midpoints,
        empDens = empDens, svName = svName)
 }
@@ -201,7 +201,6 @@ gigFitStartLM <- function(x, ...)
   if (is.na(lambda1)) lambda <- lambda2
   if (is.na(lambda2)) lambda <- lambda1
   if (is.na(lambda1)&is.na(lambda2)) lambda <- 1
-
 
   ## Ensure parameters are not outside range
   if (is.na(chi)) chi <- 1

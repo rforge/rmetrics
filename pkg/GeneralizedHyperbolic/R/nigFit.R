@@ -1,7 +1,7 @@
 ### Function to fit normal inverse Gaussian distribution to data
 ### CYD 07/06/10
 ### DJS 11/09/06
-nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
+nigFit <- function(x, freq = NULL, paramStart = NULL,
                    startMethod = c("Nelder-Mead","BFGS"),
                    startValues = c("FN","Cauchy","MoM","US"),
                    criterion = "MLE",
@@ -28,8 +28,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
   }
 
   x <- as.numeric(na.omit(x))
-  startInfo <- nigFitStart(x, breaks = breaks,
-                           startValues = startValues,
+  startInfo <- nigFitStart(x, startValues = startValues,
                            paramStart = paramStart,
                            startMethodMoM = startMethod, ...)
   paramStart <- startInfo$paramStart
@@ -170,7 +169,7 @@ nigFit <- function(x, freq = NULL, breaks = NULL, paramStart = NULL,
   if (plots)
     plot.nigFit(fitResults, ...)
 
-  fitResults
+  return(fitResults)
 } ## End of nigFit()
 
 

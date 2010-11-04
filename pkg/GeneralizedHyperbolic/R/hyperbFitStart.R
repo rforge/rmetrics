@@ -187,4 +187,5 @@ hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   paramStart <- hyperbChangePars(1, 2,
                 param = c(paramStart[1], exp(paramStart[2]), paramStart[3],
                 exp(paramStart[4])))
+  return(paramStart)
 } ## End of hyperbFitStartMoM

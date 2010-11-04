@@ -13,7 +13,7 @@ test.gigFit <- function() {
   ## Purpose: Level 1 test of gigFit
   data(gigParam)
 
-  errorFit <- 5
+  errorFit <- 10
   nFit <- 10
   testParam <- matrix(c(1,1,1), nrow = 1)
   #testParam <- gigSmallParam
@@ -21,6 +21,7 @@ test.gigFit <- function() {
 
   for (i in 1:NROW(testParam)) {
     param <- testParam[i,]
+    cat(param, "\n", file = "/home/dscott/Packages/GeneralizedHyperbolicDevel/GeneralizedHyperbolic/inst/unitTests/Parameters.txt", append = TRUE)
     chi <- param[1]
     psi <- param[2]
     lambda <- param[3]

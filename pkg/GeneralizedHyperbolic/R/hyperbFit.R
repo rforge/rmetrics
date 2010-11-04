@@ -163,7 +163,7 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
   if (plots)
     plot.hyperbFit(fitResults, ...)
 
-  fitResults
+  return(fitResults)
 } ## End of hyperbFit()
 
 
