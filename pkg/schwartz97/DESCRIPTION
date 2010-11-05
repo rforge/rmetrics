@@ -1,7 +1,7 @@
 Package: schwartz97
 Type: Package
-Version: 0.0.2
-Date: 2010-10-16
+Version: 0.0.3
+Date: 2010-11-11
 Title: A package on the Schwartz two-factor commodity model
 Author: Philipp Erb, David Luethi, Juri Hinz, Simon Otziger
 Maintainer: David Luethi <luethid@gmail.com>

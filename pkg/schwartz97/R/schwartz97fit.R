@@ -89,17 +89,25 @@ fit.schwartz2f <- function(data, ttm, deltat = 1 / 260,
   ## ---------------------------------------------------------------------------
 
   log.data <- log(data)
+
   d <- ncol(data)                      # Dimension of the observations
   n <- nrow(data)                      # Number of observations
 
   ## Check whether arguments are feasible
+  if(any(data < 0, na.rm = TRUE)){
+    stop("All elements of 'data' must be positive!")
+  }
+  if(any(ttm < 0, na.rm = TRUE)){
+    stop("All elements of 'ttm' must be positive!")
+  }
+
   if(!(is.logical(opt.pars) & (length(opt.pars) == 9))){
     stop("'opt.pars' must be of class 'logical' and of length 9!\n")
   }
-  if(!is.matrix(data)){
+  if(!is(data, "matrix")){
     stop("'data' must be a matrix!")
   }
-  if(!is.matrix(ttm)){
+  if(!is(ttm, "matrix")){
     stop("'ttm' must be a matrix!")
   }
   ## if(any(!is.finite(ttm))){

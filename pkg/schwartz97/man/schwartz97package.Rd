@@ -27,8 +27,8 @@
 \tabular{ll}{
 Package: \tab schwartz97\cr
 Type: \tab Package\cr
-Version: \tab 0.0.2\cr
-Date: \tab 2010-10-15\cr
+Version: \tab 0.0.3\cr
+Date: \tab 2010-11-11\cr
 License: \tab  GPL (GNU Public License), Version 2 or later \cr
 }
 % <---------------------------------------------------------------------->
