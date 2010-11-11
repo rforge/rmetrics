@@ -1,4 +1,5 @@
 \name{GeneralizedHyperbolic-internal}
+\alias{ghypMomBNS}
 
 \title{Internal Generalized Hyperbolic Functions}
 \description{

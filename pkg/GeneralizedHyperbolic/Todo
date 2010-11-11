@@ -1,0 +1,9 @@
+Fix arguments in call to hist in hyperbFitStart and .Rd file
+Likewise for other fitting routines (nigFitStart)
+
+Add more unit testing routines
+
+Redo gig parameter creation: use undocumented routine and save data as
+.Rda file. Needs alias for functions in
+GeneralizedHyperbolic-internal.Rd and entry in NAMESPACE file.
+
