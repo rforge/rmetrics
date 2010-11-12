@@ -9,9 +9,7 @@
 \description{
 	General linear congruential generators such as Park Miller sequence,
 	generalized feedback shift register such as SF-Mersenne Twister algorithm
-	and WELL generator; and a quasi random generator 
-	(pseudo random generators) and the Torus algorithm (quasi random
-	generation).
+	and WELL generator.
 }
 \usage{
 congruRand(n, dim = 1, mod = 2^31-1, mult = 16807, incr = 0, echo)
