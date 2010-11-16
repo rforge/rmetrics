@@ -1,5 +1,7 @@
 \name{GeneralizedHyperbolic-internal}
 \alias{ghypMomBNS}
+\alias{ghypCreateParameters.R}
+\alias{gigCreateParameters.R}
 
 \title{Internal Generalized Hyperbolic Functions}
 \description{

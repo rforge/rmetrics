@@ -32,3 +32,4 @@ for (i in 1:length(lambdas)){
   }
 }
 
+save(gigLargeParam, gigSmallParam, file = "gigParam.rda")
