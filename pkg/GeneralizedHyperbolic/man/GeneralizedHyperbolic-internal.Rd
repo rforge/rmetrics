@@ -2,6 +2,8 @@
 \alias{ghypMomBNS}
 \alias{ghypCreateParameters.R}
 \alias{gigCreateParameters.R}
+\alias{nigCreateParameters.R}
+\alias{hyperbCreateParameters.R}
 
 \title{Internal Generalized Hyperbolic Functions}
 \description{
