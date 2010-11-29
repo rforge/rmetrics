@@ -281,3 +281,10 @@ ghyp V1.5.3
 	significant increase in performance. The code was kindly provided
 	by Ester Pantaleo and Robert B. Gramacy.
 	
+
+2010-11-29 David Luethi
+ghyp V1.5.4
+	* In NAMESPACE: S3Method changed to S3method as this will become
+	case-sensitive in R-2.13.0.
+	
+	
