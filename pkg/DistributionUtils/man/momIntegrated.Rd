@@ -18,8 +18,8 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
     calculated.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
-  are specified, then the default parameter values of each distribution
-  are used instead.}
+    are specified, then the default parameter values of each
+    distribution are used instead.}
   \item{about}{Numeric. The point about which the moment is to be calculated.}
   \item{absolute}{Logical. Whether absolute moments or ordinary moments
     are to be calculated. Default is \code{FALSE}.}
@@ -77,7 +77,7 @@ momIntegrated(densFn = c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
 \author{David Scott \email{d.scott@auckland.ac.nz},
         Christine Yang Dong \email{c.dong@auckland.ac.nz}}
 \seealso{
-	
+
   \code{\link[GeneralizedHyperbolic]{dghyp}},
   \code{\link[GeneralizedHyperbolic]{dhyperb}}, \code{\link{dgamma}},
   \code{\link[GeneralizedHyperbolic]{dgig}},

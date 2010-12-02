@@ -1,7 +1,5 @@
-momIntegrated <- function(densFn =
-                          c("ghyp", "hyperb", "gig", "gamma", "invgamma", "vg"),
-                          order, param = NULL, about = 0,
-                          absolute = FALSE) {
+momIntegrated <- function(densFn = "ghyp",
+                          order,  about = 0, absolute = FALSE, ...) {
 
   if (missing(densFn) | !(is.function(densFn) | is.character(densFn)))
     stop("'densFn' must be supplied as a function or name")
@@ -11,132 +9,61 @@ momIntegrated <- function(densFn =
   high <- Inf
 
   if (is.character(densFn)) {
-    distname <- match.arg(densFn)
 
     if (is.null(densFn))
       stop("unsupported distribution")
+    if (densFn == "ghyp" | densFn == "hyperb" |
+        densFn == "gig" | densFn == "vg")
+    {
+        if (!exists(paste("d",densFn,sep = ""), mode = "function"))
+            stop("Relevant package must be loaded")
+    }
 
-    if (distname == "ghyp" | distname == "generalized hyperbolic") {
-      if (!exists("dghyp", mode = "function"))
-        stop("package GeneralizedHyperbolic needs to be loaded")
-      if (is.null(param))
-        param <- c(0, 1, 1, 0, 1)
 
-      if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order * dghyp(x, param = param)
-        }
-      } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order * dghyp(x, param = param)
-        }
-      }
-    } else if (distname == "hyperb" | distname == "hyperbolic") {
-      if (!exists("dhyperb", mode = "function"))
-        stop("package GeneralizedHyperbolic needs to be loaded")
-      if (is.null(param))
-        param <- c(0, 1, 1, 0)
 
-      if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order * dhyperb(x, param = param)
-        }
-      } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order * dhyperb(x, param = param)
-        }
-      }
-    } else  if (distname == "gig" |
-                distname == "generalized inverse gaussian") {
-      if (!exists("dgig", mode = "function"))
-        stop("package GeneralizedHyperbolic needs to be loaded")
-      if (is.null(param))
-        param <- c(1, 1, 1)
-
-      low <- 0
-
-      if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order * dgig(x, param = param)
-        }
-      } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order * dgig(x, param = param)
-        }
-      }
-    } else if (distname == "gamma") {
-      if (order <= -param[1])
-        stop("Order must be greater than shape parameter for gamma")
-
-      if (is.null(param))
-        param <- c(1, 1)
-
-      low <- 0
-
-      if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order *
-          dgamma(x, shape = param[1], rate = param[2])
-        }
-      } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order *
-          dgamma(x, shape = param[1], rate = param[2])
-        }
-      }
-    } else  if (distname == "invgamma" |
-                distname == "inverse gamma") {
-      if (is.null(param))
-        param <- c(-1, 1)
-
-      if (param[1] <= order)
-        stop("Order must be less than shape parameter for inverse gamma")
-
-      low <- 0
-
-      dinvgamma <- function(x, shape, rate = 1, scale = 1/rate) {
+    if (densFn == "invgamma" | densFn == "inverse gamma"){
+        l <- list(...)
+        if(l$shape <= order)
+            stop("Order must be less than shape parameter for inverse gamma")
+        low <- 0
+        dinvgamma <- function(x, shape, rate = 1, scale = 1/rate) {
         dens <- ifelse(x <= 0, 0,
                        (scale / x)^shape * exp(-scale / x) / (x * gamma(shape)))
         return(dens)
       }
 
       if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order *
-          dinvgamma(x, shape = param[1], rate = param[2])
+        ddist <- function(x, order, about, ...) {
+          (x - about)^order * dinvgamma(x, ...)
         }
       } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order *
-          dinvgamma(x, shape = param[1], rate = param[2])
+        ddist <- function(x, order, about, ...) {
+          abs(x - about)^order * dinvgamma(x, ...)
         }
       }
-    } else if (distname == "vg" | distname == "variance gamma") {
-      if (!exists("dvg", mode = "function"))
-        stop("package VarianceGamma needs to be loaded")
-
-      if (is.null(param))
-        param <- c(0, 1, 0, 1)
-
-      if (!absolute) {
-        ddist <- function(x, order, param, about) {
-          (x - about)^order * dvg(x, param = param)
+    } else {
+        dfun <- match.fun(paste("d", densFn, sep = ""))
+        if (densFn == "gamma"){
+            l <- list(...)
+            if(order <= -(l$shape))
+                stop("Order must be greater than shape parameter for gamma")
+            low <- 0
         }
-      } else {
-        ddist <- function(x, order, param, about) {
-          abs(x - about)^order * dvg(x, param = param)
+        if (!absolute) {
+            ddist <- function(x, order, about, ...) {
+                (x - about)^order * dfun(x, ...)
+            }
+        } else {
+            ddist <- function(x, order, about, ...) {
+                abs(x - about)^order * dfun(x, ...)
+            }
         }
-      }
     }
-  } else {
-    if (is.function(densFn))
-      stop("general density functions code not yet implemented")
-  }
-
-  mom <- integrate(ddist, low, high, param = param,
+}
+  mom <- integrate(ddist, low, high,
                    order = order, about = about,
                    subdivisions = 1000,
-                   rel.tol = .Machine$double.eps^0.5)[[1]]
+                   rel.tol = .Machine$double.eps^0.5, ...)[[1]]
 
   ## Return Value:
   return(mom)
