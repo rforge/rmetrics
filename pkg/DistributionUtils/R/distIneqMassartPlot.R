@@ -1,4 +1,4 @@
-ineqMassartplot <- function(densFn = "norm", nboots = 50, n = 100, ...){
+distIneqMassartPlot <- function(densFn = "norm", nboots = 50, n = 100, ...){
     ## Using bootstrap to get the LHS probability
     CALL <- match.call()
     dfun <- match.fun(paste("d", densFn, sep = ""))

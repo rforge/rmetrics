@@ -4,7 +4,7 @@
 export(besselRatio)
 export(incompleteBesselK)
 export(incompleteBesselKR)
-export(distIneqMassart)
+export(distIneqMassart, distIneqMassartPlot)
 export(integrateDens)
 export(inversionTestpq, inversionTestqp)
 export(is.wholenumber)
@@ -17,6 +17,9 @@ export(skewness, kurtosis)
 export(tailPlot, tailPlotLine)
 export(normTailPlotLine, tTailPlotLine, gammaTailPlotLine)
 export(tsHessian)
+export(pDist, qDist)
+export(distCalcRange, distMode, distStepSize)
+export(moranTest)
 
 ################################################
 ### useDynLib
