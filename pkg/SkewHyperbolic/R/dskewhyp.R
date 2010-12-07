@@ -14,14 +14,15 @@ dskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     nu <- param[4]
     if (abs(beta) > tolerance) {
         ldskewhyp <- ((1 - nu)/2) * log(2) + nu * log(delta) +
-            ((nu + 1)/2) * log(abs(beta)) + log(besselK(x = sqrt(beta^2 *
-            (delta^2 + (x - mu)^2)), nu = (nu + 1)/2, expon.scaled = TRUE)) -
-            sqrt(beta^2 * (delta^2 + (x - mu)^2)) + beta * (x -
-            mu) - lgamma(nu/2) - log(sqrt(pi)) - ((nu + 1)/2) *
-            log(sqrt(delta^2 + (x - mu)^2))
+                     ((nu + 1)/2) * log(abs(beta)) +
+                     log(besselK(x = sqrt(beta^2*(delta^2 + (x - mu)^2)),
+                                 nu = (nu + 1)/2, expon.scaled = TRUE)) -
+                     sqrt(beta^2 * (delta^2 + (x - mu)^2)) +
+                     beta * (x - mu) - lgamma(nu/2) - log(pi)/2 -
+                     ((nu + 1)/2) * log(delta^2 + (x - mu)^2)/2
     }
     else {
-        ldskewhyp <- lgamma((nu + 1)/2) - log(sqrt(pi)) - log(delta) -
+        ldskewhyp <- lgamma((nu + 1)/2) - log(pi)/2 - log(delta) -
             lgamma(nu/2) - ((nu + 1)/2) * log(1 + ((x - mu)^2)/delta^2)
     }
     if (log == TRUE) {

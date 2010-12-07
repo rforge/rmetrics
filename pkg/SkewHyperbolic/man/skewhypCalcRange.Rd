@@ -2,7 +2,7 @@
 \alias{skewhypCalcRange}
 \alias{skewhypStepSize}
 \title{
-Range of a Skew Hyperbolic Student t-Distribuiton
+Range of a Skew Hyperbolic Student t-Distribution
 }
 \description{  
   Given the parameter vector \code{param}, or parameter values of a skew

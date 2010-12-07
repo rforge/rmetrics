@@ -34,7 +34,7 @@ skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
     #combination of moments and linear approx to log density
         x <- as.numeric(na.omit(x))
         svName <- "Linear Approximation"
-        start <- skewhypFitStartLA(x, breaks=breaks)
+        start <- skewhypFitStartLA(x, breaks = breaks)
         param <- c(start$param[1], log(start$param[2]), start$param[3],
                    log(start$param[4]))
         names(param) <- c("mu", "log(delta)","beta" , "log(nu)")
@@ -52,17 +52,17 @@ skewhypFitStartLA <- function(x, breaks = NULL){
     #to the log density in the tails
 
     #histogram
-    ifelse(is.null(breaks), breaks <- 30,breaks <- breaks)
-    histInfo <- hist(x,plot=FALSE,breaks=breaks)
+    ifelse(is.null(breaks), breaks <- 30, breaks <- breaks)
+    histInfo <- hist(x, plot = FALSE, breaks = breaks)
     mids <- as.matrix(histInfo$mids)
     #density
     density <- density(x)
     #find the closest density estimate to the midpoint
     func <- function(x) which.min(abs(density$x - x))
-    estx <- apply(mids,1,func)
+    estx <- apply(mids, 1, func)
     esty <- density$y[estx]
     #lower and upper tail
-    quantiles <- quantile(x,probs=c(0.1,0.9))
+    quantiles <- quantile(x, probs = c(0.1,0.9))
     lower <-  which(mids <= quantiles[1])
     upper <-  which(mids >= quantiles[2])
     xLower <- mids[lower]
@@ -138,7 +138,7 @@ skewhypFitStartLA <- function(x, breaks = NULL){
         ifelse(nuLow > 0, nu <- nuLow, nu <- nuUpp)
         beta <- betaUpp
         #nu must be > 4
-        if(nu <=4) nu <- 4.1
+        if(nu <= 4) nu <- 4.1
         #solve for delta
         var <- var(x)
         sol1 <- -1/4*(nu - 4 - (nu^2 - 8*nu + 16 + 8*beta^2*var*nu -
@@ -153,8 +153,8 @@ skewhypFitStartLA <- function(x, breaks = NULL){
     }
 
     #return results
-    param=c(mu,delta,beta,nu)
-    names(param)=c("mu","delta","beta","nu")
+    param <- c(mu,delta,beta,nu)
+    names(param) <- c("mu","delta","beta","nu")
     out <- list(param = param, breaks = histInfo$breaks,
                 mids = as.vector(mids), dens = esty)
     return(out)

@@ -16,8 +16,8 @@ summary.skewhypFit <- function(object,...){
     return(object)
 }
 ### Print Summary #####################################################
-print.summary.skewhypFit <- function(x,
-                          digits = max(3, getOption("digits") - 3), ...)
+print.summary.skewhypFit <-
+  function(x, digits = max(3, getOption("digits") - 3), ...)
 {
     if (!class(x)=="summary.skewhypFit"){
         stop("Object must belong to class summary.skewhypFit")

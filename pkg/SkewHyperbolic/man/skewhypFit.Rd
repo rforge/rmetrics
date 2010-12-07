@@ -13,7 +13,7 @@
 \usage{
 skewhypFit(x, freq = NULL, breaks = NULL, startValues = "LA",
            paramStart = NULL, method = "Nelder-Mead", hessian = TRUE,
-           plots = TRUE, printOut = TRUE, controlBFGS = list(maxit = 200),
+           plots = FALSE, printOut = TRUE, controlBFGS = list(maxit = 200),
            controlNM = list(maxit = 1000), maxitNLM = 1500, ...)
 \method{plot}{skewhypFit}(x, which = 1:4,
      plotTitles = paste(c("Histogram of ", "Log-Histogram of ",
