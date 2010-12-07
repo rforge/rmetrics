@@ -1,4 +1,4 @@
-\name{IntegrationRoutine}
+\name{distStepSize}
 \alias{distStepSize}
 
 \title{

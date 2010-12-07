@@ -1,4 +1,4 @@
-\name{IntegrationRoutine}
+\name{distCalcRange}
 \alias{distCalcRange}
 
 \title{
@@ -32,7 +32,7 @@ distCalcRange(densFn, param = NULL, tol = 10^(-5), ...)
   characters of the root for that density (e.g. \code{norm},
   \code{ghyp}). The particular unimodal distribution being considered is
   specified by the values of the parameters or of the
-  \code{\link{param}} vector.
+  \code{param} vector.
 
   The function gives a range, outside of which
   the density is less than the given tolerance. It is used in

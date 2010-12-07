@@ -5,7 +5,7 @@
 Inversion Tests for Distributions
 }
 \description{
-  
+
 Functions to check performance of distribution and quantile
 functions. Applying the distribution function followed by the quantile
 function to a set of numbers should reproduce the original set of
@@ -14,10 +14,14 @@ distribution function to numbers in the range (0,1) should produce the
 original numbers.
 }
 \usage{
-inversionTestpq(densFn = "norm", n = 10, ...)
+inversionTestpq(densFn = "norm", n = 10,
+                intTol = .Machine$double.eps^0.25,
+                uniTol = intTol, x = NULL, method = "spline", ...)
 inversionTestqp(densFn = "norm",
                 qs = c(0.001, 0.01, 0.025, 0.05, 0.1, 0.2, 0.4, 0.5,
-                0.6, 0.8, 0.9, 0.95, 0.975, 0.99, 0.999), ...)
+                       0.6, 0.8, 0.9, 0.95, 0.975, 0.99, 0.999),
+                uniTol = .Machine$double.eps^0.25,
+                intTol = uniTol, method = "spline", ...)
 }
 
 \arguments{
@@ -26,6 +30,17 @@ inversionTestqp(densFn = "norm",
   distribution function will be applied. See \bold{Details}.}
   \item{n}{Numeric. Number of values to be sampled from the
     distribution. See \bold{Details}.}
+  \item{x}{Numeric. Values at which the distribution function is to be
+    evaluated. If \code{NULL} values are drawn at random from the
+    distribution.}
+  \item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in calls
+    to \code{integrate}. See \code{\link{integrate}}.}
+  \item{uniTol}{Value of \code{tol} in calls to \code{uniroot}. See
+    \code{\link{uniroot}}.}
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+    spline approximation to the distribution function. If
+    \code{"integrate"}, the distribution function used is always obtained
+    by integration.}
   \item{\dots}{Additional arguments to allow specification of the
   parameters of the distribution.}
 }
@@ -45,7 +60,7 @@ inversionTestqp(densFn = "norm",
 }
 \value{
   \code{inversionTestpq} returns a list with components:
-  
+
   \item{qpx}{Numeric. The result of applying the distribution function
     (\eqn{p} function) then the quantile function (\eqn{q} function) to
     the randomly generated set of \eqn{x} values.}
@@ -55,7 +70,7 @@ inversionTestqp(densFn = "norm",
   \item{n}{Numeric. Number of values sampled from the distribution.}
 
   \code{inversionTestqp} returns a list with components:
-  
+
   \item{pqqs}{Numeric. The result of applying the quantile function
     (\eqn{q} function) then the distribution function (\eqn{p} function) to
     the quantiles \code{qs}.}
@@ -64,7 +79,7 @@ inversionTestqp(densFn = "norm",
 }
 
 \author{
-  David Scott \email{d.scott@auckland.ac.nz}, 
+  David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}
 }
 

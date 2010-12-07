@@ -1,6 +1,5 @@
-\name{Specific Unimodel Distribution Mode}
-
-\alias{ghypMode}
+\name{distMode}
+\alias{distMode}
 
 \title{Mode of the Unimodal Distribution}
 \description{
@@ -9,11 +8,15 @@
   corresponding parameters.
 }
 \usage{
-distMode(densFn, ...)
+distMode(densFn, param = NULL, ...)
 }
 \arguments{
   \item{densFn}{Character. The name of the density function required
     calculating the mode.}
+  \item{param}{Numeric. A vector giving the parameter values for the
+    distribution specified by \code{densFn}. If no \code{param} values
+    are specified, then the default parameter values of each
+    distribution are used instead.}
   \item{\dots}{Passes arguments to \code{\link{optimize}}.In
     particular, the parameters of the distribution.}
 }

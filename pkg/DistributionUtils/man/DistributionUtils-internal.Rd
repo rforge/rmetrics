@@ -1,4 +1,6 @@
 \name{DistributionUtils-internal}
+\alias{distIneqMassartPlot}
+\alias{moranTest}
 
 \title{Internal Distribution Utilities Functions}
 \description{

@@ -1,4 +1,4 @@
-\name{DistributionAndQuantileFunctions}
+\name{pDist}
 \alias{pDist}
 \alias{qDist}
 
@@ -13,44 +13,49 @@
 }
 
 \usage{
-pDist(densFn = "norm", q, subdivisions = 100, lower.tail = TRUE,
-      log.p = FALSE, intTol = .Machine$double.eps^0.25,
-      valueOnly = TRUE, ...)
-qDist(densFn = "norm", p, lower.tail = TRUE, log.p = FALSE,
+pDist(densFn = "norm", q, param = NULL, subdivisions = 100,
+      lower.tail = TRUE, log.p = FALSE,
+      intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
+qDist(densFn = "norm", p, param = NULL,
+      lower.tail = TRUE, log.p = FALSE,
       method = "spline", nInterpol = 501,
       uniTol = .Machine$double.eps^0.25,
       subdivisions = 100, intTol = uniTol, ...)
 }
 \arguments{
-\item{densFn}{Character. The name of the density function for which the
-  distribution function or quantile function is required.}
-\item{q}{Vector of quantiles.}
-\item{p}{Vector of probabilities.}
-\item{log.p}{Logical; when the specified distribution belongs Ghyp
-  Distribution Family, probabilities are given as log(p) if \code{log =
-    TRUE} in random number generation for the distribution}
-\item{method}{Character. If \code{"spline"} quantiles are found from a
-  spline approximation to the distribution function. If
-  \code{"integrate"}, the distribution function used is always obtained
-  by integration.}
-\item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
-  density is taken from the lower tail.}
-\item{subdivisions}{The maximum number of subdivisions used to integrate
-  the density and determine the accuracy of the distribution function
-  calculation.}
-\item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in calls
-  to \code{integrate}. See \code{\link{integrate}}.}
-\item{valueOnly}{Logical. If \code{valueOnly = TRUE} calls to
-  \code{pDist} only return the value obtained for the integral. If
-  \code{valueOnly = FALSE} an estimate of the accuracy of the numerical
-  integration is also returned.}
-\item{nInterpol}{Number of points used in \code{qDist} for cubic spline
-  interpolation of the distribution function.}
-\item{uniTol}{Value of \code{tol} in calls to \code{uniroot}. See
-  \code{\link{uniroot}}.}
-\item{\dots}{Passes additional arguments to \code{\link{integrate}},
-  \code{\link{distMode}} or \code{\link{distCalcRange}}. In particular,
-  the parameters of the distribution.}
+  \item{densFn}{Character. The name of the density function for which the
+    distribution function or quantile function is required.}
+  \item{q}{Vector of quantiles.}
+  \item{p}{Vector of probabilities.}
+  \item{param}{Numeric. A vector giving the parameter values for the
+    distribution specified by \code{densFn}. If no \code{param} values
+    are specified, then the default parameter values of each
+    distribution are used instead.}
+  \item{log.p}{Logical; when the specified distribution belongs Ghyp
+    Distribution Family, probabilities are given as log(p) if \code{log =
+      TRUE} in random number generation for the distribution}
+  \item{method}{Character. If \code{"spline"} quantiles are found from a
+    spline approximation to the distribution function. If
+    \code{"integrate"}, the distribution function used is always obtained
+    by integration.}
+  \item{lower.tail}{Logical. If \code{lower.tail = TRUE}, the cumulative
+    density is taken from the lower tail.}
+  \item{subdivisions}{The maximum number of subdivisions used to integrate
+    the density and determine the accuracy of the distribution function
+    calculation.}
+  \item{intTol}{Value of \code{rel.tol} and hence \code{abs.tol} in calls
+    to \code{integrate}. See \code{\link{integrate}}.}
+  \item{valueOnly}{Logical. If \code{valueOnly = TRUE} calls to
+    \code{pDist} only return the value obtained for the integral. If
+    \code{valueOnly = FALSE} an estimate of the accuracy of the numerical
+    integration is also returned.}
+  \item{nInterpol}{Number of points used in \code{qDist} for cubic spline
+    interpolation of the distribution function.}
+  \item{uniTol}{Value of \code{tol} in calls to \code{uniroot}. See
+    \code{\link{uniroot}}.}
+  \item{\dots}{Passes additional arguments to \code{\link{integrate}},
+    \code{\link{distMode}} or \code{\link{distCalcRange}}. In particular,
+    the parameters of the distribution.}
 }
 \details{
 The name of the unimodal density function must be supplied as the
@@ -107,7 +112,9 @@ Joyce Li \email{xli053@aucklanduni.ac.nz}}
 \examples{
 pDist("norm", q = 2, mean = 1, sd = 1)
 pDist("t", q = 0.5, df = 4)
+require(GeneralizedHyperbolic)
 pDist("ghyp", q = 0.1)
+require(SkewHyperbolic)
 qDist("skewhyp", p = 0.4, param = c(0, 1, 0, 10))
 qDist("t", p = 0.2, df = 4)
 }
