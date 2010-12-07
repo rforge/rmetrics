@@ -59,63 +59,66 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
                    intTol = .Machine$double.eps^0.25,
                    valueOnly = TRUE, ...)
 {
-  parResult <- ghypCheckPars(param)
-  case <- parResult$case
-  errMessage <- parResult$errMessage
-  if (case == "error")
-    stop(errMessage)
+   parResult <- ghypCheckPars(param)
+   case <- parResult$case
+   errorMessage <- parResult$errMessage
+   if (case == "error")
+       stop(errMessage)
+   mu <- param[1]
+   delta <- param[2]
+   alpha <- param[3]
+   beta <- param[4]
+   lambda <- param[5]
 
-  if (log.p){
-    stop("log.p  = TRUE option not yet implemented")
-  }
-  mu <- param[1]
-  delta <- param[2]
-  alpha <- param[3]
-  beta <- param[4]
-  lambda <- param[5]
+   modeDist <- ghypMode(param = param)
+   qLess <- which((q <= modeDist)&(is.finite(q)))
+   qGreater <- which((q > modeDist)&(is.finite(q)))
+   prob <- rep(NA, length(q))
+   err <- rep(NA, length(q))
 
-  modeDist <- ghypMode(param = param)
-  qLess <- which((q <= modeDist)&(is.finite(q)))
-  qGreater <- which((q > modeDist)&(is.finite(q)))
-  prob <- rep(NA, length(q))
-  err <- rep(NA, length(q))
+   prob[q == -Inf] <- 0
+   prob[q == Inf] <- 0
+   err[q %in% c(-Inf, Inf)] <- 0
 
-  prob[q == -Inf] <- 0
-  prob[q == Inf] <- 0
-  err[q %in% c(-Inf, Inf)] <- 0
+   dghypInt <- function(q)
+   {
+       dghyp(q, param = param)
+   }
 
-  dghypInt <- function(q){
-    dghyp(q, param = param)
-  }
+   for (i in qLess)
+   {
+       intRes <- integrate(dghypInt, -Inf, q[i],
+                           subdivisions = subdivisions,
+                           rel.tol = intTol, ...)
+       prob[i] <- intRes$value
+       err[i] <- intRes$abs.error
+   }
 
-  for (i in qLess){
-    intRes <- integrate(dghypInt, -Inf, q[i],
-                        subdivisions = subdivisions,
-                        rel.tol = intTol, ...)
-    prob[i] <- intRes$value
-    err[i] <- intRes$abs.error
-  }
+   for (i in qGreater)
+   {
+       intRes <- integrate(dghypInt, q[i], Inf,
+                           subdivisions = subdivisions,
+                           rel.tol = intTol, ...)
+       prob[i] <- intRes$value
+       err[i] <- intRes$abs.error
+   }
 
-  for (i in qGreater){
-    intRes <- integrate(dghypInt, q[i], Inf,
-                        subdivisions = subdivisions,
-                        rel.tol = intTol, ...)
-    prob[i] <- intRes$value
-    err[i] <- intRes$abs.error
-  }
+   if (lower.tail == TRUE)
+   {
+       prob[q > modeDist] <- 1 - prob[q > modeDist]
+   }
+   else
+   {
+       prob[q <= modeDist] <- 1 - prob[q <= modeDist]
+   }
 
-  if (lower.tail == TRUE){
-    prob[q > modeDist] <- 1 - prob[q > modeDist]
-  } else {
-    prob[q <= modeDist] <- 1 - prob[q <= modeDist]
-  }
+   if (log.p == TRUE)
+   {
+       prob <- log(prob)
+   }
 
-  if (log.p){
-    prob <- log(prob)
-  }
-
-  ifelse(valueOnly, return(prob),
-         return(list(value = prob, error = err)))
+   ifelse(valueOnly, return(prob),
+          return(list(value = prob, error = err)))
 }
 
 qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
@@ -124,104 +127,105 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
                    nInterpol = 501, uniTol = .Machine$double.eps^0.25,
                    subdivisions = 100, intTol = uniTol, ...)
 {
-  parResult <- ghypCheckPars(param)
-  case <- parResult$case
-  errMessage <- parResult$errMessage
-  if (case == "error")
-    stop(errMessage)
-  if (log.p){
-    stop("log.p  = TRUE option not yet implemented")
-  }
+    parResult <- ghypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if (case == "error")
+        stop(errMessage)
+    method <- match.arg(method)
+    mu <- param[1]
+    delta <- param[2]
+    alpha <- param[3]
+    beta <- param[4]
+    lambda <- param[5]
+    modeDist <- ghypMode(param = param)
+    pModeDist<- pghyp(modeDist, param = param, intTol = intTol)
+    xRange <- ghypCalcRange(param = param, tol = 10^(-5))
 
-  method <- match.arg(method)
-  param <- as.numeric(param)
-  mu <- param[1]
-  delta <- param[2]
-  alpha <- param[3]
-  beta <- param[4]
-  lambda <- param[5]
-  modeDist <- ghypMode(param = param)
-  pModeDist<- pghyp(modeDist, param = param, intTol = intTol)
-  xRange <- ghypCalcRange(param = param, tol = 10^(-7))
-
-  quant <- rep(NA, length(p))
-  invalid <- which((p < 0) | (p > 1))
-  pFinite <- which((p > 0) & (p < 1))
+    quant <- rep(NA, length(p))
+    invalid <- which((p < 0) | (p > 1))
+    pFinite <- which((p > 0) & (p < 1))
 
 
-  if (method == "integrate")
-  {
-    less <- which((p <= pModeDist) & (p > .Machine$double.eps^5))
-    quant <- ifelse(p <= .Machine$double.eps^5, -Inf, quant)
-    if (length(less) > 0){
-      pLow <- min(p[less])
-      xLow <- modeDist - sqrt(ghypVar(param = param))
-      while (pghyp(xLow, param = param) >= pLow){
-        xLow <- xLow - sqrt(ghypVar(param = param))
-      }
-      xRange <- c(xLow, modeDist)
-      zeroFn <- function(x, param, p)
-      {
-        return(pghyp(x, param = param,
-                     subdivisions = subdivisions,
-                     intTol = intTol) - p)
-      }
-      for (i in less){
-        quant[i] <- uniroot(zeroFn, param = param, p = p[i],
-                            interval = xRange, tol = uniTol)$root
-      }
+    if (method == "integrate"){
+        less <- which((p <= pModeDist) & (p > .Machine$double.eps^8))
+        quant <- ifelse(p <= .Machine$double.eps^8, -Inf, quant)
+        if (length(less) > 0){
+            pLow <- min(p[less])
+            xLow <- modeDist - sqrt(ghypVar(param = param))
+            while (pghyp(xLow, param = param, intTol = intTol) >= pLow)
+            {
+                xLow <- xLow - sqrt(ghypVar(param = param))
+            }
+            xRange <- c(xLow, modeDist)
+            zeroFn <- function(x, param, p)
+            {
+                return(pghyp(x, param = param,
+                             subdivisions = subdivisions,
+                             intTol = intTol) - p)
+            }
+            for (i in less)
+            {
+                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+                                    interval = xRange, tol = uniTol)$root
+            }
+        }
+
+        greater <- which ((p > pModeDist) & (p < (1 - .Machine$double.eps^8)))
+        p[greater] <- 1 - p[greater]
+        quant <- ifelse(p >=(1 - .Machine$double.eps^8), Inf, quant)
+        if (length(greater) > 0){
+            pHigh <- min(p[greater])
+            xHigh <- modeDist + sqrt(ghypVar(param = param))
+            while (pghyp(xHigh, param = param, intTol = intTol,
+                         lower.tail = FALSE) >= pHigh)
+            {
+                xHigh <- xHigh + sqrt(ghypVar(param = param))
+            }
+            xRange <- c(modeDist, xHigh)
+            zeroFn <- function(x, param, p)
+            {
+                return(pghyp(x, param = param, lower.tail = FALSE,
+                             subdivisions = subdivisions,
+                             intTol = intTol) - p)
+            }
+            for (i in greater)
+            {
+                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+                                    interval = xRange, tol = uniTol)$root
+            }
+        }
+    } else if (method == "spline"){
+        inRange <- which((p > pghyp(xRange[1], param = param, intTol = intTol)) &
+                         (p < pghyp(xRange[2], param = param, intTol = intTol)))
+        small <- which((p <= pghyp(xRange[1], param = param, intTol = intTol)) &
+                       (p >= 0))
+        large <- which((p >= pghyp(xRange[2], param = param, intTol = intTol)) &
+                       (p <= 1))
+        extreme <- c(small, large)
+        xVals <- seq(xRange[1], xRange[2], length.out = nInterpol)
+        yVals <- pghyp(xVals, param = param, subdivisions = subdivisions,
+                       intTol = intTol)
+        splineFit <- splinefun(xVals, yVals)
+        zeroFn <- function(x, p){
+            return(splineFit(x) - p)
+        }
+
+        for (i in inRange){
+            quant[i] <- uniroot(zeroFn, p = p[i],
+                                interval = xRange, tol = uniTol)$root
+        }
+
+        if (length(extreme) > 0){
+            quant[extreme] <- qghyp(p[extreme],param = param,
+                                    lower.tail = lower.tail, log.p = log.p,
+                                    method = "integrate",
+                                    nInterpol = nInterpol, uniTol = uniTol,
+                                    subdivisions = subdivisions,
+                                    intTol = intTol, ...)
+        }
     }
-
-    greater <- which ((p > pModeDist) & (p < (1 - .Machine$double.eps^5)))
-    p[greater] <- 1 - p[greater]
-    quant <- ifelse(p >=(1 - .Machine$double.eps^5) ,Inf,quant)
-    if (length(greater) > 0){
-      pHigh <- min(p[greater])
-      xHigh <- modeDist + sqrt(ghypVar(param = param))
-      while (pghyp(xHigh, param = param, lower.tail = FALSE) >= pHigh){
-        xHigh <- xHigh + sqrt(ghypVar(param = param))
-      }
-      xRange <- c(modeDist, xHigh)
-      zeroFn <- function(x, param, p)
-      {
-        return(pghyp(x, param = param, lower.tail = FALSE,
-                     subdivisions = subdivisions,
-                     intTol = intTol) - p)
-      }
-      for (i in greater){
-        quant[i] <- uniroot(zeroFn, param = param, p = p[i],
-                            interval = xRange, tol = uniTol)$root
-      }
-    }
-  } else if (method == "spline") {
-    inRange <- which((p > pghyp(xRange[1], param = param)) &
-                     (p < pghyp(xRange[2], param = param)))
-    small <- which((p <= pghyp(xRange[1], param = param)) & (p >= 0))
-    large <- which((p >= pghyp(xRange[2], param = param)) & (p <= 1))
-    extreme <- c(small, large)
-    xVals <- seq(xRange[1], xRange[2], length.out = nInterpol)
-    yVals <- pghyp(xVals, param = param, subdivisions = subdivisions,
-                   intTol = intTol)
-    splineFit <- splinefun(xVals, yVals)
-    zeroFn <- function(x, p){
-      return(splineFit(x) - p)
-    }
-
-    for (i in inRange){
-      quant[i] <- uniroot(zeroFn, p = p[i],
-                          interval = xRange, tol = uniTol)$root
-    }
-
-    if (length(extreme) > 0){
-      quant[extreme] <- qghyp(p[extreme], param = param,
-                              lower.tail = lower.tail, log.p = log.p,
-                              method = "integrate",
-                              nInterpol = nInterpol, uniTol = uniTol,
-                              subdivisions = subdivisions,
-                              intTol = intTol, ...)
-    }
-  }
-  return(quant)
+    return(quant)
 }
 
 ### Derivative of the density

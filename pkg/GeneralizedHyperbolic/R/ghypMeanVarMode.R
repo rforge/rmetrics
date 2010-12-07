@@ -116,13 +116,19 @@ ghypMode <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   modeFun <- function(x) {
     log(dghyp(x, param = param))
   }
-
-  start <- ghypMean(param = param)
-  optResult <- optim(start, modeFun,
-                     control = list(fnscale = -1, maxit = 1000),
-                     method = "BFGS")
-
-  mode <- ifelse(optResult$convergence == 0, optResult$par, NA)
-  mode
+  mu <- param[1]
+  delta <- param[2]
+  xHigh <- mu + delta
+  while (dghyp(xHigh, param = param) > dghyp(mu, param = param)) {
+      xHigh <- xHigh + delta
+  }
+  xLow <- mu - delta
+  while (dghyp(xLow, param = param) > dghyp(mu, param = param)) {
+      xLow <- xLow - delta
+  }
+  range <- c(xLow, xHigh)
+  optResult <- optimize(f = modeFun, interval = range, maximum = TRUE)
+  mode <- optResult$maximum
+  return(mode)
 } ## End of ghypMode()
 
