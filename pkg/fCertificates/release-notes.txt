@@ -1,0 +1,48 @@
+2010-05-13 (Version 0.5-2)
+--------------------------
+# Payoff-Diagramme als Bilder in die Doku --> Done
+# "NA" an den Nahtstellen in LeveragedBonusCertificate usw. --> Done
+# AirbagPlusCertificate wegen Unstimmigkeiten wieder raus.
+# BonusProCertificate erweitert um TypeFlag
+
+2010-05-09 (Version 0.5-1)
+--------------------------
+# Erweiterung der Dokumentation auf die Swiss Derivative Map 2010
+# Keine Einbindung, nur Verlinkung der Swiss Derivative Map über www.svsp-verband.ch/map
+# Payoff diagramme für
+  * Bonus
+  * CappedBonus
+  * DiscountCall
+  * DiscountCertificate
+  * DiscountPlusCertificate
+  * EasyExpressCertificate
+  * GarantieCertificate
+  * LeveragedBonusCertificate
+  * OutperformanceCertificate
+  * OutperformancePlusCertificate
+  * ReturnCertificate
+  * ReverseConvertible
+  * ReverseConvertiblePlusPro
+  * ReverseDiscountCertificate
+#
+
+
+2009-11-10: (Version 0.4-3)
+---------------------------
+# Überflüssige Methoden/Zertifikate erstmal rausgenommen
+# Methode .RLZ() ins Paket rein.
+# Verlinkung der Swiss Derivative Map in der Hilfe/Vignette
+
+2009-11-04: (Version 0.4-2)
+---------------------------
+# barrierHit für CappedReverseBonusCertificate
+# PartialTimeSingleAssetBarrierOption2() für BonusPro
+# Erweiterung der Dokumentation (insb. Klassifizierung nach der SVSP Swiss Derivative Map 2008) 
+
+2009-05-25: (Version 0.3)
+-------------------------
+# Erweiterung um Strangle()
+
+2009-02-02: (Version 0.2)
+-------------------------
+# Erweiterung des Pakets und insbesondere der Dokumentation auf jetzt 24 Strukturen.
