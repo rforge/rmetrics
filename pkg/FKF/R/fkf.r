@@ -119,7 +119,7 @@ fkf <- function(a0, P0, dt, ct, Tt, Zt, HHt, GGt, yt, check.input = TRUE)
            dim(GGt)[1]!= d  | dim(GGt)[2] != d  | dim(yt)[1] != d)
         {
             stop("Some of dim(ct)[1], dim(Zt)[1], dim(GGt)[1],\n",
-                 "dim(GGt)[2] or dim(yt)[2] is/are not equal to 'd'!\n")
+                 "dim(GGt)[2] or dim(yt)[1] is/are not equal to 'd'!\n")
 
         }
 

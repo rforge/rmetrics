@@ -214,15 +214,15 @@ function arguments \code{a0} and \code{P0}, and the last, i.e. the (n +
 }
 % <---------------------------------------------------------------------->
 \author{
-David Luethi 
+David Luethi
 
 Philipp Erb \cr
-Zurich Global Corporate Switzerland
-(\url{http://www.zurich.com}) 
+Zurich Insurance Company
+(\url{http://www.zurich.com})
 
 Simon Otziger \cr
-Clariden Leu 
-(\url{http://www.claridenleu.com}) 
+Clariden Leu
+(\url{http://www.claridenleu.com})
 
 Maintainer: Philipp Erb <erb.philipp@gmail.com>
 }

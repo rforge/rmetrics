@@ -38,3 +38,9 @@ FKF V0.0.2
 
 FKF V0.0.1
 	* Release of FKF
+
+
+2010-12-19 Philipp Erb
+
+FKF V0.1.1
+	* Fixed minor inconsistency in input check messages of fkf()
