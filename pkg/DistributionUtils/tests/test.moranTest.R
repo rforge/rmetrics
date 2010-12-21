@@ -1,15 +1,4 @@
 require(DistributionUtils)
-require(GeneralizedHyperbolic)
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/pghyp.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/qghyp.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/rghyp.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/ghypCheckPars.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/ghypMeanVarMode.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/dghyp.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/ghypCalcRange.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/ghypMom.R")
-source("C:/Users/xli053/Documents/Hyperbolic/ghypDone/ghypParam.R")
-source("C:/Users/xli053/Documents/Hyperbolic/DUtils/Moran/moranTest.R")
 
 ## Alpha = 0.9
 sampleSize <- c(20, 50, 100, 500)

@@ -17,14 +17,14 @@ test.inversionTestpq <- function()
 
   ## Normal (default)
   diffs <- inversionTestpq()$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
+  checkTrue(max(abs(diffs)) < 10^(-4))
   diffs <- inversionTestpq(mean = 1, sd = 2)$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
+  checkTrue(max(abs(diffs)) < 10^(-4))
 
 
   ## Gamma
   diffs <- inversionTestpq("gamma", shape = 1)$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
+  checkTrue(max(abs(diffs)) < 10^(-4))
 
   return()
 }
@@ -39,14 +39,13 @@ test.inversionTestqp <- function()
 
   ## Normal (default)
   diffs <- inversionTestqp()$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
+  checkTrue(max(abs(diffs)) < 10^(-5))
   diffs <- inversionTestqp(mean = 1, sd = 2)$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
-
+  checkTrue(max(abs(diffs)) < 10^(-5))
 
   ## Gamma
   diffs <- inversionTestqp("gamma", shape = 1)$diffs
-  checkEquals(diffs, rep(0, length(diffs)))
+  checkTrue(max(abs(diffs)) < 10^(-4))
 
   return()
 }

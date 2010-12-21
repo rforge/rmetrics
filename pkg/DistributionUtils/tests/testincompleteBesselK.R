@@ -1,5 +1,4 @@
 require(DistributionUtils)
-##source("../R/incompleteBesselK.R")
 
 options(digits = 15)
 for (i in 0:9){

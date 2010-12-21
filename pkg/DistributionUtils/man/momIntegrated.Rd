@@ -7,12 +7,17 @@
   given distributions.
 }
 \usage{
-momIntegrated(densFn = "ghyp", order, about = 0, absolute = FALSE, ...)
+momIntegrated(densFn = "ghyp", param = NULL, order, about = 0,
+              absolute = FALSE, ...)
 }
 
 \arguments{
   \item{densFn}{Character. The name of the density function whose
     moments are to be calculated. See \bold{Details}.}
+  \item{param}{Numeric. A vector giving the parameter values for the
+    distribution specified by \code{densFn}. If no \code{param} values
+    are specified, then the default parameter values of each
+    distribution are used instead.}  
   \item{order}{Numeric. The order of the moment or absolute moment to be
     calculated.}
   \item{about}{Numeric. The point about which the moment is to be calculated.}
