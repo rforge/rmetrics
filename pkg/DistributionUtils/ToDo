@@ -1,6 +1,1 @@
-Add arguments to inversionTestpq and inversionTestqp to match pDist
-and qDist arguments
-
-Document distIneqMassartPlot and moranTest
-
-Fix failed tests test.momIntegrated and inversion test unit tests
+Add contour plots and 3-D plots for fitted distributions

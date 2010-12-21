@@ -32,11 +32,11 @@ moranTest(x, densFn, alpha, param = NULL, ...)
   unknown parameters.
 
   The test statistic is
-  \deqn{T(\hat \theta)=(M(\hat
-    \theta)+1/2k-C_1)/C_2}{T(thetahat)=(M(thetahat)+1/2k-C1)/C2}
+  \deqn{T(\hat \theta)=(M(\hat\theta)+1/2k-C_1)/C_2}{%
+    T(thetahat)=(M(thetahat)+1/2k-C1)/C2}
   Where \eqn{M(\hat \theta)}, the Moran statistic proposed by Moran, is
-  \deqn{M(\theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_{m-1}))}
-  {M(theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_m-1))}
+  \deqn{M(\theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_{m-1}))}{%
+    M(theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_m-1))}
 
   This test has null hypothesis:
   \eqn{H_0}{H_0} : a random sample of \eqn{n} values of \eqn{x} comes
@@ -55,7 +55,7 @@ moranTest(x, densFn, alpha, param = NULL, ...)
 \references{
 Cheng, R. C. & Stephens, M. A. (1987). A Goodness-of-Fit Test Using
   Moran Statistic with Estimated Parameters. \emph{Biometrika},
-  \bold{76 (2)}, 386–-392.
+  \bold{76 (2)}, 386--392.
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz},

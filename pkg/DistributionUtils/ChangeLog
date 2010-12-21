@@ -1,3 +1,9 @@
+2010-12-22    <d.scott@auckland.ac.nz>
+
+	* distCalcRange, distStepSize, distMode, integrateDens added
+
+	* distIneqMassart, distIneqMassartPlot added
+
 2010-08-31  David Scott  <d.scott@auckland.ac.nz>
 
 	* runit.incompleteBesselK.R written and checked

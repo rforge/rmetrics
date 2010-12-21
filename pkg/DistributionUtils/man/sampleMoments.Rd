@@ -18,13 +18,13 @@ kurtosis(x, na.rm = FALSE)
 \details{
   If \eqn{N = \mathrm{length}(x)}{N = length(x)}, then the skewness of
   \eqn{x} is defined as 
-  \deqn{N^{-1} \mathrm{sd}(x)^{-3} \sum_i (x_i - \mathrm{mean}(x))^3.}{
+  \deqn{N^{-1} \mathrm{sd}(x)^{-3} \sum_i (x_i - \mathrm{mean}(x))^3.}{%
     N^(-1) sd(x)^(-3) sum_i (x_i - mean(x))^3.}
 
   If \eqn{N = \mathrm{length}(x)}{N = length(x)}, then the kurtosis of
   \eqn{x} is defined as
-  \deqn{N^{-1} \mathrm{sd}(x)^{-4}
-    \sum_i(x_i - \mathrm{mean}(x))^4 - 3.}{
+  \deqn{N^{-1} \mathrm{sd}(x)^{-4}%
+    \sum_i(x_i - \mathrm{mean}(x))^4 - 3.}{%
     N^(-1) sd(x)^(-4) sum_i (x_i - mean(x))^4 - 3.}
 }
   
