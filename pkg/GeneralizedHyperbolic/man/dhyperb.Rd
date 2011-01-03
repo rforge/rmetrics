@@ -86,15 +86,15 @@ ddhyperb(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 
   A succinct description of the hyperbolic distribution is given in
   Barndorff-Nielsen and \enc{Blæsild}{Blaesild} (1983). Three different
-  possible parameterisations are described in that paper. A fourth
+  possible parameterizations are described in that paper. A fourth
   parameterization is given in Prause (1999). All use location and scale
   parameters \eqn{\mu}{mu} and \eqn{\delta}{delta}. There are two other
   parameters in each case.
 
   Use \code{hyperbChangePars} to convert from the
   \eqn{(\pi, \zeta)}{(pi, zeta)} \eqn{(\phi, \gamma)}{(phi, gamma)} or
-  \eqn{(\xi, \chi)}{xi, chi)} parameterisations to the
-  \eqn{(\alpha, \beta)}{(alpha, beta)} parameterisation used above.
+  \eqn{(\xi, \chi)}{xi, chi)} parameterizations to the
+  \eqn{(\alpha, \beta)}{(alpha, beta)} parameterization used above.
 
   Each of the functions are wrapper functions for their equivalent
   generalized hyperbolic counterpart. For example, \code{dhyperb} calls
@@ -145,7 +145,7 @@ Ai-Wei Lee, Jennifer Tso, Richard Trendall}
   \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
   \code{\link{uniroot}} and \code{\link{hyperbChangePars}} for changing
   parameters to the \eqn{(\alpha,\beta)}{(alpha, beta)}
-  parameterisation, \code{\link{dghyp}} for the generalized hyperbolic
+  parameterization, \code{\link{dghyp}} for the generalized hyperbolic
   distribution.
 }
 

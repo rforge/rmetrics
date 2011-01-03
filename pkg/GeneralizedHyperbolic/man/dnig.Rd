@@ -176,7 +176,7 @@ ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
   \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
   \code{\link{uniroot}} and \code{\link{hyperbChangePars}} for changing
   parameters to the \eqn{(\alpha,\beta)}{(alpha, beta)}
-  parameterisation, \code{\link{dghyp}} for the generalized hyperbolic
+  parameterization, \code{\link{dghyp}} for the generalized hyperbolic
   distribution.
 }
 

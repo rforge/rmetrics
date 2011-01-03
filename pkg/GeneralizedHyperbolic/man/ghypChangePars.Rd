@@ -4,19 +4,22 @@
 \title{Change Parameterizations of the Generalized Hyperbolic Distribution}
 
 \description{
-  This function interchanges between the following 4 parameterizations
+  This function interchanges between the following 5 parameterizations
   of the generalized hyperbolic distribution:
 
   1. \eqn{\mu, \delta, \alpha, \beta, \lambda}{mu, delta, alpha, beta, lambda}
 
-  2. \eqn{\mu, \delta, \zeta, \rho, \lambda}{mu, delta, zeta, rho, lambda}
+  2. \eqn{\mu, \delta, \rho, \zeta, \lambda}{mu, delta, rho, zeta, lambda}
 
   3. \eqn{\mu, \delta, \xi, \chi, \lambda}{mu, delta, xi, chi, lambda}
 
   4. \eqn{\mu, \delta, \bar\alpha, \bar\beta, \lambda}{%
     mu, delta, alpha bar, beta bar, lambda}
 
-  These are the parameterizations given in Prause (1999)
+  5. \eqn{\mu, \delta, \pi, \zeta, \lambda}{mu, delta, pi, zeta, lambda}
+
+  The first four are the parameterizations given in Prause (1999). The
+  final parameterization has proven useful in fitting.
 }
 
 \usage{
@@ -32,7 +35,7 @@ ghypChangePars(from, to, param, noNames = FALSE)
 }
 
 \details{
-  In the 4 parameterizations, the following must be positive:
+  In the 5 parameterizations, the following must be positive:
 
   1. \eqn{\alpha, \delta}{alpha, delta}
 
@@ -41,6 +44,8 @@ ghypChangePars(from, to, param, noNames = FALSE)
   3. \eqn{\xi, \delta}{xi, delta}
 
   4. \eqn{\bar\alpha, \delta}{alpha bar, delta}
+
+  5. \eqn{\zeta, \delta}{zeta, delta}
 
   Furthermore, note that in the first parameterization
   \eqn{\alpha}{alpha} must be greater than the absolute value of
@@ -77,7 +82,7 @@ Jennifer Tso, Richard Trendall}
 param1 <- c(0, 3, 2, 1, 2)               # Parameterization 1
 param2 <- ghypChangePars(1, 2, param1)   # Convert to parameterization 2
 param2                                   # Parameterization 2
-ghypChangePars(2, 1, as.numeric(param2)) # Convert back to parameterization 1
+ghypChangePars(2, 1, param2)             # Back to parameterization 1
 }
 
 \keyword{distribution}

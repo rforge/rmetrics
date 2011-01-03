@@ -1,3 +1,10 @@
+2011-01-04    <d.scott@auckland.ac.nz>
+
+	* ghypChangePars changed to add fifth parameterization. Also order
+	of parameters changed in second parameterization to make rho the
+	third element of the parameter vector. This to agree with the rule
+	that the third parameter should relate to the skewness
+
 2010-11-03    <d.scott@auckland.ac.nz>
 
 	* hyperbHessian, nigHessian, gigHessian all added for calculation

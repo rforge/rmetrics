@@ -41,10 +41,11 @@ hyperbMode(mu = 0, delta = 1, alpha = 1, beta = 0,
   sometimes called the kurtosis excess. (See
   \url{http://mathworld.wolfram.com/Kurtosis.html} for a discussion.)
 
-  The parameterization of the hyperbolic distribution used for this
-  and other components of the \code{HyperbolicDist} package is the
-  \eqn{(\alpha, \beta)}{(alpha, beta)} one. See \code{\link{hyperbChangePars}}
-  to transfer between parameterizations.
+  The parameterization of the hyperbolic distribution used for this and
+  other components of the \code{GeneralizedHyperbolic} package is the
+  \eqn{(\alpha, \beta)}{(alpha, beta)} one. See
+  \code{\link{hyperbChangePars}} to transfer between parameterizations.
+  
 }
 \details{
   

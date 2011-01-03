@@ -39,7 +39,7 @@ hyperbCvMTestPValue(delta = 1, alpha = 1, beta = 0, Wsq, digits = 3)
   \code{hyperbCvMTest} carries out a \enc{Crämer}{Cramer}-von~Mises
   goodness-of-fit test of the hyperbolic distribution. The parameter
   \code{param} must be given in the \eqn{(\alpha, \beta)}{(alpha, beta)}
-  parameterisation.
+  parameterization.
 
   \code{hyperbCvMTestPValue} calculates the p-value of the test, and is
   not expected to be called by the user. The method used is

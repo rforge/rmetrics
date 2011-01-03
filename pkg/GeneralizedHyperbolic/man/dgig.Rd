@@ -86,8 +86,8 @@ ddgig(x, chi = 1, psi = 1, lambda = 1,
   Use \code{gigChangePars} to convert from the
   \eqn{(\delta,\gamma)}{(delta, gamma)},
   \eqn{(\alpha,\beta)}{(alpha, beta)}, or
-  \eqn{(\omega,\eta)}{(omega, eta)} parameterisations to the
-  \eqn{(\chi,\psi)}{(chi, psi)}, parameterisation used above.
+  \eqn{(\omega,\eta)}{(omega, eta)} parameterizations to the
+  \eqn{(\chi,\psi)}{(chi, psi)}, parameterization used above.
 
   \code{pgig} calls the function
   \code{\link[DistributionUtils]{incompleteBesselK}} from the package
@@ -156,7 +156,7 @@ ddgig(x, chi = 1, psi = 1, lambda = 1,
   \code{\link[DistributionUtils]{safeIntegrate}},
   \code{\link{integrate}} for its shortfalls, \code{\link{splinefun}},
   \code{\link{uniroot}} and \code{\link{gigChangePars}} for changing
-  parameters to the \eqn{(\chi,\psi)}{(chi,psi)} parameterisation,
+  parameters to the \eqn{(\chi,\psi)}{(chi,psi)} parameterization,
   \code{\link{dghyp}} for the generalized hyperbolic distribution.
 }
 

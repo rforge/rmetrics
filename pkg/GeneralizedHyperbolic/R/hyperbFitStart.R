@@ -175,9 +175,9 @@ hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   }
 
   hyperbPi <- chi/sqrt(xi^2 - chi^2)
-  zeta <- 3/xi^2 - 1
+  zeta <- 1/xi^2 - 1
   rho <- chi/xi
-  delta <- (sqrt(1 + zeta) - 1)*sqrt( 1 - rho^2)
+  delta <- (sqrt(1 + zeta) - 1)*sqrt(1 - rho^2)
   mu <- mean(x) - delta*hyperbPi*RLambda(zeta, lambda = 1)
   startValuesMoM <- c(mu, log(delta), hyperbPi, log(zeta))
 

@@ -99,10 +99,11 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     (sqrt(2\pi)K_lambda(delta sqrt(alpha^2-beta^2)))}
 
   Use \code{ghypChangePars} to convert from the
-  \eqn{(\zeta, \rho)}{(zeta, rho)},
-  \eqn{(\xi, \chi)}{(xi, chi)}, or
-  \eqn{(\bar\alpha, \bar\beta)}{(alpha bar, beta bar)} parameterisations
-  to the \eqn{(\alpha, \beta)}{(alpha, beta)} parameterisation used
+  \eqn{(\rho, \zeta)}{(rho, zeta)},
+  \eqn{(\xi, \chi)}{(xi, chi)},
+  \eqn{(\bar\alpha, \bar\beta)}{(alpha bar, beta bar)}, or
+  \eqn{(\pi, \zeta)}{(pi, zeta)} parameterizations
+  to the \eqn{(\alpha, \beta)}{(alpha, beta)} parameterization used
   above.
 
   \code{pghyp} uses the function \code{\link{integrate}} to
@@ -183,7 +184,7 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \code{\link{integrate}} for its shortfalls, also
   \code{\link{splinefun}}, \code{\link{uniroot}} and
   \code{\link{ghypChangePars}} for changing parameters to the
-  \eqn{(\alpha,\beta)}{(alpha,beta)} parameterisation.
+  \eqn{(\alpha,\beta)}{(alpha,beta)} parameterization.
 }
 \examples{
 param <- c(0, 1, 3, 1, 1/2)
