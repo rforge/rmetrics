@@ -112,5 +112,5 @@ for (i in 1:length(mus)){
 }
 
 
-save(ghypLargeParam, ghypSmallParam, ghypLargeShape, ghypSmallShape,
-     file = "ghypParam.rda")
+## save(ghypLargeParam, ghypSmallParam, ghypLargeShape, ghypSmallShape,
+##      file = "ghypParam.rda")

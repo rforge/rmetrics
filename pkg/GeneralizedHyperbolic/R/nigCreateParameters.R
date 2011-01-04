@@ -116,5 +116,5 @@ for (i in 1:length(mus)){
 }
 nigSmallShape <- nigSmallShape[,-5]
 
-save(nigLargeParam, nigSmallParam, nigLargeShape, nigSmallShape,
-     file = "nigParam.rda")
+## save(nigLargeParam, nigSmallParam, nigLargeShape, nigSmallShape,
+##      file = "nigParam.rda")

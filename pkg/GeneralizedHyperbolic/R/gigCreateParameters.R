@@ -1,6 +1,6 @@
 ### Create parameter sets for Generalized Inverse Gaussian
 
-## gigLargeParam
+### gigLargeParam
 chis <- c(0.1,0.2,0.5,1,2,5,10,20,50,100)
 psis <- chis
 lambdas <- c(-2,-1,-0.5,0,0.1,0.2,0.5,1,2,5,10)
@@ -16,7 +16,7 @@ for (i in 1:length(lambdas)){
   }
 }
 
-## gigSmallParam
+### gigSmallParam
 chis <- c(0.1,0.5,2,10,50)
 psis <- chis
 lambdas <- c(-0.5,0,0.5,1,5)
@@ -32,4 +32,4 @@ for (i in 1:length(lambdas)){
   }
 }
 
-save(gigLargeParam, gigSmallParam, file = "gigParam.rda")
+### save(gigLargeParam, gigSmallParam, file = "gigParam.rda")

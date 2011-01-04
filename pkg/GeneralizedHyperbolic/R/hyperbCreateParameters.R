@@ -116,5 +116,5 @@ for (i in 1:length(mus)){
 }
 hyperbSmallShape <- hyperbSmallShape[,-5]
 
-save(hyperbLargeParam, hyperbSmallParam, hyperbLargeShape, hyperbSmallShape,
-     file = "hyperbParam.rda")
+## save(hyperbLargeParam, hyperbSmallParam, hyperbLargeShape, hyperbSmallShape,
+##      file = "hyperbParam.rda")

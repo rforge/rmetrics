@@ -23,7 +23,8 @@
       "US"}.}
   \item{startMethodMoM}{Method used by call to \code{\link{optim}} in
     finding method of moments estimates.}
-  \item{\dots}{Passes arguments to \code{\link{optim}}.}
+  \item{\dots}{Passes arguments to \code{\link{hist}} and
+    \code{\link{optim}}.}
 }
 
 \details{

@@ -21,7 +21,7 @@ test.gigFit <- function() {
 
   for (i in 1:NROW(testParam)) {
     param <- testParam[i,]
-    cat(param, "\n", file = "/home/dscott/Packages/GeneralizedHyperbolicDevel/GeneralizedHyperbolic/inst/unitTests/Parameters.txt", append = TRUE)
+    #cat(param, "\n", file = "/home/dscott/Packages/GeneralizedHyperbolicDevel/GeneralizedHyperbolic/inst/unitTests/Parameters.txt", append = TRUE)
     chi <- param[1]
     psi <- param[2]
     lambda <- param[3]
