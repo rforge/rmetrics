@@ -1,36 +1,24 @@
 \name{timeSequence}
 
-
-\title{Regularly spaced 'timeDate' objects}
-
-
 \alias{timeSequence}
 \alias{seq.timeDate}
 
-
+\title{Regularly spaced 'timeDate' objects}
 \description{
-
-    Create a regularly spaced object of class 'timeDate'. 
-
+    Create a regularly spaced object of class \code{timeDate}.
 }
-
 
 \usage{
+timeSequence(from, to = Sys.timeDate(), by, length.out = NULL,
+            format = NULL, zone = "", FinCenter = "")
 
-timeSequence(from, to = Sys.timeDate(), by, length.out = NULL, format =
-    NULL, zone = "", FinCenter = "")
-
-\method{seq}{timeDate}(from, to, by, length.out = NULL, along.with = NULL, \dots)  
-
+\method{seq}{timeDate}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 
-
-
 \arguments{
-
   \item{from, to}{
-    starting date, required, and end date, optional. If supplied
-    \code{to} must be after \code{from}.
+    starting date, required, and end date, optional.  If supplied,
+    \code{to} must be after (later than) \code{from}.
   }
   \item{by}{
     \itemize{
@@ -42,53 +30,47 @@ timeSequence(from, to = Sys.timeDate(), by, length.out = NULL, format =
       \item A number, taken to be in seconds.
       \item A object of class 'difftime'
     }
-  }       
+  }
   \item{length.out}{
     length.out integer, optional. Desired length
     of the sequence, if specified "to" will be ignored.
-  }    
-  \item{along.with}{Take the length from the length of this argument.
   }
-  \item{format}{
-    the format specification of the input character vector.
-  }
-  \item{zone}{the time zone or financial center where the data were
-    recorded.
-  } 
+  \item{along.with}{Take the length from the length of this argument.}
+  \item{format}{the format specification of the input character vector.}
+  \item{zone}{the time zone or financial center where the data were recorded.}
   \item{FinCenter}{
     a character with the the location of the
     financial center named as "continent/city".
   }
-  \item{\dots}{arguments passed to other methods.
-  }    
-
+  \item{\dots}{arguments passed to other methods.}
 }
-
 
 \note{
-
-     \code{seq} is a synonyme generic function for \code{timeSequence}.
-     
+  \code{timeSequence()} is a wrapper for the \code{"timeDate"} method of
+  \code{\link{seq}()}, and that has been closely modeled after base \R's
+  \code{POSIXt} method, \code{\link{seq.POSIXt}}.
 }
-
 
 \value{
-
-    returns a S4 object of \code{\link{class}} \code{"timeDate"}.
-      
+  an object of \code{\link{class}} \code{"\linkS4class{timeDate}"}.
 }
-
 
 \examples{
 ## timeSequence -
-   
-   timeSequence(from = "2004-03-12", to = "2004-04-11",
-        format = "\%Y-\%m-\%d", FinCenter = "GMT")
-        
-   timeSequence(from = "2004-03-12", to = "2004-04-11",
-        format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich")
-}
 
+## autodetection of format :
+(t1 <- timeSequence(from = "2004-03-12", to = "2004-04-11"))
+
+stopifnot( ## different formats even:
+  identical(t1, timeSequence(from = "2004-03-12", to = "11-Apr-2004")),
+  identical(t1, ## explicit format and FinCenter :
+      timeSequence(from = "2004-03-12", to = "2004-04-11",
+                   format = "\%Y-\%m-\%d", FinCenter = "GMT")))
+
+## observe "switch to summer time":
+timeSequence(from = "2004-03-12", to = "2004-04-11",
+             FinCenter = "Europe/Zurich")
+}
 
 \keyword{chron}
 

@@ -75,27 +75,19 @@ timeSequence <-
     if (missing(by)) by <- "day"
 
     # Auto-detect Input Format:
-    format.from <- format.to <- format
     if (is.null(format)) {
         format.from <- whichFormat(as.character(from))
-        format.to <- whichFormat(as.character(to))
-        from <- timeDate(from, format = format.from, zone = zone,
-                         FinCenter = FinCenter)
-        to <- timeDate(to, format = format.to, zone = zone,
-                       FinCenter = FinCenter)
+        format.to   <- whichFormat(as.character(to))
     } else {
-        from <- timeDate(from, format = format, zone = zone,
-                         FinCenter = FinCenter)
-        to <- timeDate(to, format = format, zone = zone,
-                       FinCenter = FinCenter)
+        format.from <- format.to <- format
     }
+    from <- timeDate(from, format = format.from, zone = zone, FinCenter = FinCenter)
+    to   <- timeDate(to,   format = format.to,   zone = zone, FinCenter = FinCenter)
 
-    tseq <-
-        if (length(length.out))
-            seq(from = from,  by = by, length.out = length.out)
-        else
-            seq(from = from, to = to, by = by)
-    tseq
+    if (length(length.out))
+        seq(from = from,  by = by, length.out = length.out)
+    else
+        seq(from = from, to = to, by = by)
 }
 
 # ------------------------------------------------------------------------------
@@ -107,144 +99,118 @@ seq.timeDate <-
 
     # FUNCTION:
 
-    # This function is the same as seq.POSIXt form the base package.
+    # This function is very similar to seq.POSIXt() from R's base,
+    # --> .../src/library/base/R/datetime.R
+    # Modifications by Yohan Chalabi & Martin Maechler marked with end-of-line ##
 
-    # Modifications by Yohan Chalabi marked with ##
+    if (missing(from)) stop("'from' must be specified")
+    if (!inherits(from, "timeDate")) stop("'from' must be a timeDate object") ##
 
-    if (missing(from))
-        stop("'from' must be specified")
-    if (!inherits(from, "timeDate")) ##
-        stop("'from' must be a timeDate object") ##
-
-    if (!missing(by) && is.character(by)) { ##
-        if (identical("quarter", by)) by <- "3 months"
-        by1 <- strsplit(by, " ", fixed = TRUE)[[1]]
-        DST <- !is.na(pmatch(by1[length(by1)], c("months", "years", "DSTdays")))
-    } else {
-        DST <- FALSE
-    }
-
+    DST <- ##
+        if (!missing(by) && is.character(by)) {
+            if (identical("quarter", by)) by <- "3 months"
+            by1 <- strsplit(by, " ", fixed = TRUE)[[1]]
+            !is.na(pmatch(by1[length(by1)], c("months", "years", "DSTdays")))
+        } else FALSE
     FinCenter <- from@FinCenter ##
     zone <- if (DST) from@FinCenter else "GMT" ##
-
-    from <- ##
-        if (DST)
-            as.POSIXct(format(from), tz = "GMT")
-        else
-            as.POSIXct(from)
+    as.POSIX.. <- function(x)
+        if (DST) as.POSIXct(format(x), tz = "GMT") else as.POSIXct(x)
+    from <- as.POSIX..(from)
 
     cfrom <- as.POSIXct(from)
-    if (length(cfrom) != 1)
-        stop("'from' must be of length 1")
+    if (length(cfrom) != 1) stop("'from' must be of length 1")
     tz <- "GMT" ##
     if (!missing(to)) {
-        if (!inherits(to, "timeDate")) ##
-            stop("'to' must be a timeDate object") ##
-        if (length(to) != 1)
-            stop("'to' must be of length 1")
-        to <- ##
-            if (DST)
-                as.POSIXct(format(to), tz = "GMT")
-            else
-                as.POSIXct(to)
+	if (!inherits(to, "timeDate")) stop("'to' must be a timeDate object") ##
+	to <- as.POSIX..(to)##
+	if (length(to) != 1) stop("'to' must be of length 1")
     }
 
     if (!missing(along.with)) {
         length.out <- length(along.with)
-    }
-    else if (!is.null(length.out)) {
-        if (length(length.out) != 1)
-            stop("'length.out' must be of length 1")
+    }  else if (!is.null(length.out)) {
+        if (length(length.out) != 1L) stop("'length.out' must be of length 1")
         length.out <- ceiling(length.out)
     }
     status <- c(!missing(to), !missing(by), !is.null(length.out))
-    if (sum(status) != 2)
+    if(sum(status) != 2L)
         stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
     if (missing(by)) {
         from <- unclass(cfrom)
         to <- unclass(as.POSIXct(to))
+        ## Till (and incl.) 1.6.0 :
+        ##- incr <- (to - from)/length.out
+        ##- res <- seq.default(from, to, incr)
         res <- seq.int(from, to, length.out = length.out)
         return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
     }
-    if (length(by) != 1)
-        stop("'by' must be of length 1")
-    valid <- 0
+    if (length(by) != 1L) stop("'by' must be of length 1")
+    valid <- 0L
     if (inherits(by, "difftime")) {
-        by <- switch(attr(by, "units"), secs = 1, mins = 60,
-                     hours = 3600, days = 86400, weeks = 7 * 86400) *
-                         unclass(by)
-    }
-    else if (is.character(by)) {
-        by2 <- strsplit(by, " ", fixed = TRUE)[[1]]
-        if (length(by2) > 2 || length(by2) < 1)
+        by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
+                     days = 86400, weeks = 7*86400) * unclass(by)
+    } else if(is.character(by)) {
+        by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
+        if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid 'by' string")
-        valid <- pmatch(by2[length(by2)], c("secs", "mins", "hours",
-            "days", "weeks", "months", "years", "DSTdays"))
-        if (is.na(valid))
-            stop("invalid string for 'by'")
-        if (valid <= 5) {
-            by <- c(1, 60, 3600, 86400, 7 * 86400)[valid]
-            if (length(by2) == 2)
-                by <- by * as.integer(by2[1])
-        }
-        else by <- if (length(by2) == 2)
-            as.integer(by2[1])
-        else 1
-    }
-    else if (!is.numeric(by))
-        stop("invalid mode for 'by'")
-    if (is.na(by))
-        stop("'by' is NA")
-    if (valid <= 5) {
+        valid <- pmatch(by2[length(by2)],
+                        c("secs", "mins", "hours", "days", "weeks",
+                          "months", "years", "DSTdays"))
+        if(is.na(valid)) stop("invalid string for 'by'")
+        if(valid <= 5L) {
+            by <- c(1, 60, 3600, 86400, 7*86400)[valid]
+            if (length(by2) == 2L) by <- by * as.integer(by2[1L])
+        } else
+            by <- if(length(by2) == 2L) as.integer(by2[1L]) else 1
+    } else if(!is.numeric(by)) stop("invalid mode for 'by'")
+    if(is.na(by)) stop("'by' is NA")
+
+    if(valid <= 5L) { # secs, mins, hours, days, weeks
         from <- unclass(as.POSIXct(from))
-        if (!is.null(length.out))
-            res <- seq.int(from, by = by, length.out = length.out)
+        if(!is.null(length.out))
+            res <- seq.int(from, by=by, length.out=length.out)
         else {
-            to <- unclass(as.POSIXct(to))
-            res <- seq.int(0, to - from, by) + from
+            to0 <- unclass(as.POSIXct(to))
+            ## defeat test in seq.default
+            res <- seq.int(0, to0 - from, by) + from
         }
-        return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
-    }
-    else {
+        ## return(.POSIXct(res, tz)) ##
+    } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
-        if (valid == 7) {
-            if (missing(to)) {
+        if(valid == 7L) { # years
+            if(missing(to)) { # years
                 yr <- seq.int(r1$year, by = by, length.out = length.out)
-            }
-            else {
+            } else {
                 to <- as.POSIXlt(to)
                 yr <- seq.int(r1$year, to$year, by)
             }
             r1$year <- yr
-            r1$isdst <- -1
-            res <- as.POSIXct(r1)
-        }
-        else if (valid == 6) {
-            if (missing(to)) {
+        } else if(valid == 6L) { # months
+            if(missing(to)) {
                 mon <- seq.int(r1$mon, by = by, length.out = length.out)
-            }
-            else {
-                to <- as.POSIXlt(to)
-                mon <- seq.int(r1$mon, 12 * (to$year - r1$year) +
-                               to$mon, by)
+            } else {
+                to0 <- as.POSIXlt(to)
+                mon <- seq.int(r1$mon, 12*(to0$year - r1$year) + to0$mon, by)
             }
             r1$mon <- mon
-            r1$isdst <- -1
-            res <- as.POSIXct(r1)
-        }
-        else if (valid == 8) {
-            if (!missing(to)) {
-                length.out <- 2 + floor((unclass(as.POSIXct(to)) -
-                                         unclass(as.POSIXct(from)))/86400)
+        } else if(valid == 8L) { # DSTdays
+            if(!missing(to)) {
+                ## We might have a short day, so need to over-estimate.
+                length.out <- 2L + floor((unclass(as.POSIXct(to)) -
+                                          unclass(as.POSIXct(from)))/86400)
             }
             r1$mday <- seq.int(r1$mday, by = by, length.out = length.out)
-            r1$isdst <- -1
-            res <- as.POSIXct(r1)
-            if (!missing(to))
-                res <- res[res <= as.POSIXct(to)]
         }
-        return(timeDate(res, zone = zone, FinCenter = FinCenter)) ##
+	r1$isdst <- -1L
+	res <- as.POSIXct(r1)
+	## now shorten if necessary.
+	if(!missing(to)) {
+	    to <- as.POSIXct(to)
+	    res <- if(by > 0) res[res <= to] else res[res >= to]
+	}
     }
+    timeDate(res, zone = zone, FinCenter = FinCenter) ##
 }
 
 

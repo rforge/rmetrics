@@ -1,3 +1,8 @@
+2011-01-07  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/timeDate-Sequence.R (seq.timeDate): fix, synchronizing (more)
+	with base::seq.POSIXt.
+
 2010-10-12  chalabi
 
 	* R/AllClass.R: updated initialize,timeDate-method to remove
@@ -289,7 +294,7 @@
 	  maintenance of packages.
 	* NAMESPACE, R/methods-plot.R, man/methods-plot.Rd: Merge branch
 	  'devel-timeSeries'
-	  
+
 	  Conflicts:
 	  pkg/timeSeries/R/base-Extract.R
 	  pkg/timeSeries/R/timeSeries.R
