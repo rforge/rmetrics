@@ -1,9 +1,20 @@
 \name{GeneralizedHyperbolic-internal}
 \alias{ghypMomBNS}
-\alias{ghypCreateParameters.R}
-\alias{gigCreateParameters.R}
-\alias{nigCreateParameters.R}
-\alias{hyperbCreateParameters.R}
+\alias{ghypCreateParameters}
+\alias{gigCreateParameters}
+\alias{nigCreateParameters}
+\alias{hyperbCreateParameters}
+\alias{ghypStandPars}
+\alias{hyperbStandPars}
+\alias{kappaLambda}
+\alias{alphaStand}
+\alias{betaStand}
+\alias{dsghyp}
+\alias{dshyperb}
+\alias{hyperbFitStand}
+\alias{hyperbFitStandStart}
+\alias{ghypScale}
+
 
 \title{Internal Generalized Hyperbolic Functions}
 \description{
