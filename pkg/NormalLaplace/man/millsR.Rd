@@ -28,10 +28,10 @@ millsR(y, log = FALSE)
 
 \details{
   The function calculates the Mills' Ratio.
-  Since the Mill's Ratio is not stable for \eqn{z}{z} greater than about
-  7, we use the log function to get around the instability.
-
-
+  Since the Mill's Ratio converges to zero for large positive \eqn{z}{z}
+  and infinity for large negative \eqn{z}{z}. The range over which the
+  logarithm of the Mill's ratio may be calculated is greater than that
+  for which the Mill's ratio itself may be calculated.
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Jason Shicong Fu}
@@ -42,12 +42,10 @@ millsR(y, log = FALSE)
 
 ## compare millsR calculated directly with the millsR calculated
 ## by transforming to log scale and then back-transformed
-unlist(lapply(1:10, millsR))
-exp(unlist(lapply(1:10, millsR, log = TRUE)))
-exp(unlist(lapply(10*(1:10), millsR)))
-exp(unlist(lapply(10*(1:10), millsR, log = TRUE)))
-
-
+millsR(1:10)
+exp(millsR(1:10, log = TRUE))
+exp(millsR(10*(1:10)))
+exp(millsR(10*(1:10), log = TRUE))
 }
 
 \keyword{math}

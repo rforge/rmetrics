@@ -15,13 +15,13 @@ Mean, Variance, Skewness and Kurtosis of the Normal Laplace Distribution.
 }
 \usage{
 nlMean(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta), log = FALSE)
+         param = c(mu, sigma, alpha, beta))
 nlVar(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta), log = FALSE)
+         param = c(mu, sigma, alpha, beta))
 nlSkew(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta), log = FALSE)
+         param = c(mu, sigma, alpha, beta))
 nlKurt(mu = 0, sigma = 1, alpha = 1, beta = 1,
-         param = c(mu,sigma,alpha,beta), log = FALSE)
+         param = c(mu, sigma, alpha, beta))
 
 }
 \arguments{
@@ -30,9 +30,7 @@ nlKurt(mu = 0, sigma = 1, alpha = 1, beta = 1,
   \item{alpha}{Skewness parameter \eqn{\alpha}{alpha}, default is 1.}
   \item{beta}{Shape parameter \eqn{\beta}{beta}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
-    \code{c(mu,sigma,alpha,beta)}.}
-  \item{log}{Logical. If \code{log = TRUE}, probabilities are given as
-    log(p).}
+    \code{c(mu, sigma, alpha, beta)}.}
 }
 
 \details{
