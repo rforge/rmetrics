@@ -13,13 +13,15 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
                       controlNM = list(maxit = 1000), maxitNLM = 1500,
                       controlLBFGSB = list(maxit = 200),
                       controlNLMINB = list(),
-                      controlCO = list(), ...) {
+                      controlCO = list(), silent = TRUE, ...) {
 
   startValues <- match.arg(startValues)
   startMethod <- match.arg(startMethod)
   method <- match.arg(method)
 
   xName <- paste(deparse(substitute(x), 500), collapse = "\n")
+  ## set default error message
+  errMessage <- ""
 
   if (!is.null(freq)) {
     if (length(freq) != length(x))
@@ -75,27 +77,34 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
     ind <- 1:4
 
     if (method == "BFGS") {
-      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
-          paramStart[4],"\n")
-      opOut <- optim(paramStart, llfunc, NULL, method = "BFGS",
-                     control = controlBFGS, ...)
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+      }
+      tryOpt <- try(optim(paramStart, llfunc, NULL, method = "BFGS",
+                         control = controlBFGS, ...), silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "Nelder-Mead") {
-      opOut <- optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
+      optOut <- optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
                      control = controlNM, ...)
     }
 
     if (method == "nlm") {
       ind <- c(2, 1, 5, 4)
-      opOut <- nlm(llfunc, paramStart, iterlim = maxitNLM, ...)
+      optOut <- nlm(llfunc, paramStart, iterlim = maxitNLM, ...)
     }
 
     if (method == "L-BFGS-B") {
       cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
           paramStart[4],"\n")
       cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      opOut <- optim(par = paramStart, llfunc, NULL,
+      optOut <- optim(par = paramStart, llfunc, NULL,
                      method = "L-BFGS-B",
                      lower = c(-Inf,eps,-Inf,eps),
                      control = controlLBFGSB, ...)
@@ -106,7 +115,7 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
       cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
           paramStart[4],"\n")
       cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      opOut <- nlminb(start = paramStart, llfunc, NULL,
+      optOut <- nlminb(start = paramStart, llfunc, NULL,
                      lower = c(-Inf,eps,-Inf,eps),
                      control = controlNLMINB, ...)
     }
@@ -117,26 +126,35 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
       cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
       cat("Feasible?\n")
       print((paramStart%*%diag(c(0,1,0,1))- c(0,0,0,0)) >= 0)
-      opOut <- constrOptim(theta = paramStart, llfunc, NULL,
+      optOut <- constrOptim(theta = paramStart, llfunc, NULL,
                            ui = diag(c(0,1,0,1)), ci = c(-1e+99,0,-1e+99,0),
                            control = controlCO, ...)
     }
 
-    param <- as.numeric(opOut[[ind[1]]])[1:4]       # parameter values
+
+  } # end criterion == "MLE"
+
+  ## Prepare to return results
+  if (errMessage == ""){
+    param <- as.numeric(optOut[[ind[1]]])[1:4]       # parameter values
 
     if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
       param <- hyperbChangePars(1, 2,
-                  param = c(param[1], exp(param[2]), param[3], exp(param[4])))
+                 param = c(param[1], exp(param[2]), param[3], exp(param[4])))
     } else {
       param <- hyperbChangePars(1, 2, param = param)
     }
-
     names(param) <- c("mu", "delta", "alpha", "beta")
 
-    maxLik <- -(as.numeric(opOut[[ind[2]]]))        # maximum likelihood
-    conv <- as.numeric(opOut[[ind[4]]])             # convergence
-    iter <- as.numeric(opOut[[ind[3]]])[1]          # iterations
-
+    maxLik <- -(as.numeric(optOut[[ind[2]]]))        # maximum likelihood
+    conv <- as.numeric(optOut[[ind[4]]])             # convergence
+    iter <- as.numeric(optOut[[ind[3]]])[1]          # iterations
+  } else {
+    optOut <- NULL
+    param <- NULL
+    maxLik <- NULL
+    conv <- NULL
+    iter <- NULL
   }
 
   ## Change paramStart back to the primary parameter set version normal scale
@@ -153,7 +171,8 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
                      obs = x, obsName = xName, paramStart = paramStart,
                      svName = svName, startValues = startValues,
                      breaks = breaks, midpoints = midpoints,
-                     empDens = empDens)
+                     empDens = empDens, errMessage = errMessage,
+                     optOut = optOut)
 
   class(fitResults) <- c("hyperbFit", "distFit")
 

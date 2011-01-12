@@ -93,8 +93,8 @@ hyperbFitStart <- function(x, startValues = c("BN","US","FN","SL","MoM"),
 
   if (startValues=="BN") {
     svName <- "Barndorff-Nielsen 1977"
-    phi <- leftAsymptote[2]
-    hyperbGamma <- -rightAsymptote[2]
+    phi <- max(0.001, leftAsymptote[2]) # protect against negative
+    hyperbGamma <- max(0.001,-rightAsymptote[2]) # protect against negative
 
     if (!(is.na(leftAsymptote[1]) | is.na(rightAsymptote[1]))) {
       mu <- -(leftAsymptote[1] - rightAsymptote[1]) /

@@ -12,13 +12,15 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
                            controlNM = list(maxit = 1000), maxitNLM = 1500,
                            controlLBFGSB = list(maxit = 200),
                            controlNLMINB = list(),
-                           controlCO = list(), ...) {
+                           controlCO = list(), silent = TRUE, ...) {
 
   startValues <- match.arg(startValues)
   startMethod <- match.arg(startMethod)
   method <- match.arg(method)
 
   xName <- paste(deparse(substitute(x), 500), collapse = "\n")
+  ## set default error message
+  errMessage <- ""
 
   if (!is.null(freq)) {
     if (length(freq) != length(x))
@@ -86,7 +88,7 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
                       exp(-exp(param[2])* (sqrt(1 + param[1]^2)*
                       sqrt(1 + ((x - mu)/delta)^2) -
                       param[1]*(x - mu)/delta))
-        cat("log-likelihood is", -sum(log(hyperbDens)), "\n")
+        ##cat("log-likelihood is", -sum(log(hyperbDens)), "\n")
         return(-sum(log(hyperbDens)))
       }
     } else {
@@ -102,7 +104,7 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
                       exp(-param[2]* (sqrt(1 + param[1]^2)*
                       sqrt(1 + ((x - mu)/delta)^2) -
                       param[1]*(x - mu)/delta))
-        cat("log-likelihood is", -sum(log(hyperbDens)), "\n")
+        ##cat("log-likelihood is", -sum(log(hyperbDens)), "\n")
         return(-sum(log(hyperbDens)))
       }
     }
@@ -111,6 +113,17 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
     ind <- 1:4
 
     if (method == "BFGS") {
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2],"\n")
+      }
+      tryOpt <- try(optim(paramStart, llfunc, NULL, method = "BFGS",
+                     control = controlBFGS, ...), silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
+    }
       cat("paramStart =", paramStart[1], paramStart[2], "\n")
       opOut <- optim(paramStart, llfunc, NULL, method = "BFGS",
                      control = controlBFGS, ...)

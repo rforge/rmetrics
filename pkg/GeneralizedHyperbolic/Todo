@@ -1,3 +1,9 @@
+Protect all calls to optim etc with try and an error message catch
+Add silent argument to fit functions
+Add errMessage to return list for all fit functions to be "" if no error
+Add optOut to return list??
+Fix documentation also: arguments and return list
+
 Add more unit testing routines
 
 
