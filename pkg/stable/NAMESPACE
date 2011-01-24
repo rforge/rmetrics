@@ -1,0 +1,11 @@
+
+export(
+       "dstable",
+       "pstable",
+       "qstable",
+       "rstable",
+
+       "stableMode"
+       )
+
+## and later maybe also the "fitter" functions?

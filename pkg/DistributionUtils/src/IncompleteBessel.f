@@ -89,11 +89,11 @@ c             write(*,*) 'BK',BK(int(nu))
       double precision nu,A(0:nmax,0:nmax)
       A(0,0) = 1D0
       do l=1,nmax
-      	do i=1,l-1
-      		A(l,i) = (-nu+i+l-1D0)*A(l-1,i)+A(l-1,i-1)
-      	end do
-      	A(l,0) = (-nu+l-1D0)*A(l-1,0)
-      	A(l,l) = 1D0
+         do i=1,l-1
+            A(l,i) = (-nu+i+l-1D0)*A(l-1,i)+A(l-1,i-1)
+         end do
+         A(l,0) = (-nu+l-1D0)*A(l-1,0)
+         A(l,l) = 1D0
       end do
       return
       end
@@ -124,15 +124,15 @@ c             write(*,*) 'BK',BK(int(nu))
       double precision Cnp(0:*),GM(1:nmax),GN(0:nmax)
       GM(n) = 0D0
       do ir=1,n
-      	terme=0D0
-      	do is=0,ir-1
-      			termepr = 0D0
-      		do i=0,is
-      	termepr = termepr+Am(is,i)*(-x)**i
-      		end do
-      terme = terme + termepr*Cnp(ir*(ir-1)/2+is)*(1D0/y)**is
-      	end do
-      	GM(n) = GM(n) + Cnp(n*(n+1)/2+ir)*(x*y)**ir
+         terme=0D0
+         do is=0,ir-1
+            termepr = 0D0
+            do i=0,is
+               termepr = termepr+Am(is,i)*(-x)**i
+            end do
+            terme = terme + termepr*Cnp(ir*(ir-1)/2+is)*(1D0/y)**is
+         end do
+         GM(n) = GM(n) + Cnp(n*(n+1)/2+ir)*(x*y)**ir
      $        * GN(n-ir)*terme
       end do
       GM(n) = GM(n)*dexp(-x-y)/x**nu/y
@@ -148,11 +148,11 @@ c             write(*,*) 'BK',BK(int(nu))
       double precision Cnp(0:*),GN(0:nmax)
       GN(n) = 0D0
       do ir=0,n
-      	terme=0D0
-      	do i=0,ir
-      		terme = terme+An(ir,i)*x**i
-      	end do
-      	GN(n) = GN(n) + Cnp(n*(n+1)/2+ir)*(-1D0/y)**ir*terme
+         terme=0D0
+         do i=0,ir
+            terme = terme+An(ir,i)*x**i
+         end do
+         GN(n) = GN(n) + Cnp(n*(n+1)/2+ir)*(-1D0/y)**ir*terme
       end do
       GN(n) = GN(n)*(-x*y)**n*x**(nu+1)*dexp(x+y)
       return

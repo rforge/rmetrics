@@ -31,15 +31,16 @@ function(alpha, beta)
 
     # Notes:
     #   # Test for values close to beta = 1
-    #   alpha = seq(0, 2, by = 0.1)
-    #   ans = NULL
-    #   for ( i in 1:length(alpha) ) {
-    #     ans = rbind(ans, c(alpha[i],
+    #   alpha <- seq(0, 2, by = 0.1)
+    #   ans <- matrix(NA, nrow=length(alpha), ncol = 4)
+    #   for (i in 1:seq_along(alpha)) {
+    #     ans[i,] <- c(
     #       stableMode(alpha = alpha[i], beta = 0.99 ),
     #       stableMode(alpha = alpha[i], beta = 0.99999 ),
     #       stableMode(alpha = alpha[i], beta = 0.99999999 ),
-    #       stableMode(alpha = alpha[i], beta = 0.99999999999 ) ) ) }
-    #   ans
+    #       stableMode(alpha = alpha[i], beta = 0.99999999999))
+    #   }
+    #   cbind(alpha, ans),
     #
     #   alpha          0.99       0.99999    0.99999999 0.99999999999
     #   0.0    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
@@ -57,15 +58,16 @@ function(alpha, beta)
     # FUNCTION:
 
     # Stable Mode:
-    if (beta > 0.99999999999) beta = 0.99999999999
-    if (beta == 0) {
-        ans = 0
+    beta.max <- 0.99999999999
+    if(beta > beta.max) beta <- beta.max
+    else if (beta == 0) {
+        ans <- 0
     } else {
         if (alpha == 0) {
-            ans = 0
+            ans <- 0
         } else {
-            ans = optimize(f = dstable, interval = c(-0.7, 0),
-                maximum = TRUE, alpha = alpha, beta = beta)$maximum
+            ans <- optimize(dstable, interval = c(-0.7, 0),
+                            maximum = TRUE, alpha = alpha, beta = beta)$maximum
         }
     }
 

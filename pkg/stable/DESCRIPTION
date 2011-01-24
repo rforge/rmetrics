@@ -1,0 +1,15 @@
+Package: stable
+Version: 0.5-0
+Date: 2011-01-14
+Title: Stable Distribution Functions
+Author: Martin Maechler, Diethelm Wuertz and Rmetrics core team members.
+Depends: R (>= 2.9.0)
+Suggests: fBasics, RUnit
+Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
+Description: Density, Probability and Quantile functions, and random number
+  generation for (skew) stable distributions, using the parametrizations of
+  Nolan.
+LazyLoad: yes
+LazyData: yes
+License: GPL (>= 2)
+URL: http://www.rmetrics.org

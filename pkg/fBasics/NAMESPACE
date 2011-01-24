@@ -8,6 +8,7 @@ import("methods")
 import("timeDate")
 import("timeSeries")
 
+
 ################################################
 ## useDynLib
 ################################################
@@ -35,10 +36,14 @@ S3method("volatility", "default")
 ################################################
 
 export(
-    ".FCT1",
-    ".FCT2",
-    ".G1",
-    ".G2",
+## For backcompatibility: people expect to find these in fBasics;
+## hence we export wrappers for now:
+       "dstable",
+       "pstable",
+       "qstable",
+       "rstable",
+       "stableMode",
+
     ".HAC",
     ".aRecursionGH",
     ".acfPlot",
@@ -76,12 +81,8 @@ export(
     ".distStandardErrors",
     ".dssden",
     ".emptyPlot",
-    ".fct1",
-    ".fct2",
     ".firePlot",
     ".fligner2Test",
-    ".g1",
-    ".g2",
     ".gauss.quad",
     ".gel",
     ".get_dat",
@@ -108,7 +109,6 @@ export(
     ".hyp3Mode",
     ".hyp4Mode",
     ".hyperb.change.pars",
-    ".integrateStable",
     ".interp.new",
     ".interp.old",
     ".interpp.new",
@@ -275,7 +275,6 @@ export(
     "dsght",
     "dsnig",
     "dssd",
-    "dstable",
     "focusPalette",
     "get.lcgseed",
     "getArgs",
@@ -388,7 +387,6 @@ export(
     "psght",
     "psnig",
     "pssd",
-    "pstable",
     "qgh",
     "qght",
     "qgld",
@@ -402,7 +400,6 @@ export(
     "qsght",
     "qsnig",
     "qssd",
-    "qstable",
     "qualiPalette",
     "rainbowPalette",
     "rampPalette",
@@ -434,7 +431,6 @@ export(
     "rsght",
     "rsnig",
     "rssd",
-    "rstable",
     "rt.lcg",
     "runif.lcg",
     "sampleIQR",
@@ -454,8 +450,6 @@ export(
     "spearmanTest",
     "ssdFit",
     "stableFit",
-    "stableMode",
-    "stableSlider",
     "stdev",
     "symbolTable",
     "tFit",
