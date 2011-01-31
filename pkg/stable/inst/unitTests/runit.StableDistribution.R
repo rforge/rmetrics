@@ -40,8 +40,10 @@
 
 
 if(do.stable.rUnitTest <-
-   Sys.getenv("USER") == "maechler"  &&
-   require("fBasics")) {
+   Sys.getenv("USER") == "maechler" && require("fBasics") &&
+   ## need the newer distCheck():
+   packageDescription("fBasics")$Version > package_version("2110.80"))
+{
     ## fBasics:  for  .distCheck()
     distCheck <- fBasics:::.distCheck
     environment(distCheck) <- asNamespace("stable")
