@@ -5,24 +5,17 @@
 \description{Tests properties of a distribution}
 
 \usage{
-distCheck(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, \dots)
+distCheck(fun = "norm", n = 1000, robust = TRUE, subdivisions = 1000,
+          tol = 1e-4, doMoments = TRUE, \dots)
 }
 \arguments{
-    \item{fun}{
-        a character string denoting the name of the distribution.
-        }
-    \item{n}{
-        an integer specifying the number of random variates to be
-        generated.
-        }
-    \item{robust}{
-        a logical flag, should robust estimates be used? By
-        default \code{TRUE}.
-        }
-    \item{subdivisions}{
-        an integer specifying the numbers of subdivisions
-        in integration.
-        }
+    \item{fun}{a character string denoting the name of the distribution.}
+    \item{n}{an integer specifying the number of random variates to be
+        generated.}
+    \item{robust}{logical flag, should robust estimates be used? By
+        default \code{TRUE}.}
+    \item{subdivisions}{integer specifying the numbers of subdivisions
+      in integration.}
     \item{tol}{relative tolerance (\code{rel.tol}) to be used in
       \code{\link{integrate}()}.}
     \item{doMoments}{logical indicating if checking mean and variance
