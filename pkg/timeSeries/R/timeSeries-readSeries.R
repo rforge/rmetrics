@@ -19,7 +19,8 @@
 
 
 readSeries <-
-function(file, header = TRUE, sep = ";", zone = "", FinCenter = "", ...)
+function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
+         format, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -37,10 +38,8 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "", ...)
     #       financial center named as "continent/city". By default
     #       an empty string which means that internally "GMT" will
     #       be used.
-    #   title - an optional title string, if not specified the inputs
-    #       data name is deparsed.
-    #   documentation - optional documentation string.
-
+    #   format - the format of the timestamps as recoreded in the
+    #       first column of the data in the..
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
 
@@ -52,20 +51,24 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "", ...)
 
     # Read Data:
     df <- read.table(file = file, header = header, sep = sep,
-        check.names = FALSE, colClasses = "character", ...)
-
-    # YC : colClass "character" important otherwise if first column
-    # has %Y%m%d%H%M%S format it would be converted to a numeric in
-    # the form of 1.XXXXXe+13 ... not good
+        check.names = FALSE, colClasses = c("character", "numeric"), ...)
 
     # get timeDate from first column with header specifying the format
-    charvec <- as.character(df[[1]])
-    format <- names(df)[1]
+    charvec <- df[[1]]
+    if (missing(format)) format <- names(df)[1]
     td <- timeDate(charvec = charvec, format = format, zone = zone,
         FinCenter = FinCenter)
 
+    # if format provided in file or with format argument, try to guess it
+    if (all(is.na(td)))
+        warning("Conversion of timestamps to timeDate objects produced only NAs.
+  Are you sure you provided the proper format with argument 'format'
+  or in the header of your file ?")
+
+    # extract data
+    data <- df[-1]
+
     # Create Time Series from Data Frame:
-    data <- sapply(df[-1], as.numeric)
     ans <- timeSeries(data = data, charvec = td)
 
     # Return Value:
@@ -74,4 +77,3 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "", ...)
 
 
 ################################################################################
-

@@ -57,7 +57,7 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = "",
     documentation = NULL, \dots)
        
 readSeries(file, header = TRUE, sep = ";", zone = "", 
-    FinCenter = "",  \dots)
+    FinCenter = "",  format, \dots)
 
 seriesData(object)
 }
