@@ -39,27 +39,30 @@
 ################################################################################
 
 
+if(do.stable.rUnitTest <-
+   Sys.getenv("USER") == "maechler"  &&
+   require("fBasics")) {
+    ## fBasics:  for  .distCheck()
+    distCheck <- fBasics:::.distCheck
+    environment(distCheck) <- asNamespace("stable")
+}
+
 test.stableS0 <- function()
 {
-    if (FALSE) {
+    if (do.stable.rUnitTest) {
         # stable - Parameterization S0:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3)
+        test <- distCheck("stable", alpha = 1.8, beta = 0.3, tol = .005)
+        print(test)
+        ## the 3rd test -- matching (mean, var)  typically fails for stable!
+        checkTrue(mean(test[1:2]) == 1)
+
+        # stable - Parameterization S0:
+        test <- distCheck("stable", alpha = 1.2, beta = -0.3, tol = .005)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S0:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3)
-        print(test)
-        checkTrue(mean(test[1:2]) == 1)
-
-        # stable - Parameterization S0:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 0.6, beta = 0)
+        test <- distCheck("stable", alpha = 0.6, beta = 0, tol = .005)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }
@@ -74,25 +77,19 @@ test.stableS0 <- function()
 
 test.stableS1 <- function()
 {
-    if (FALSE) {
+    if (do.stable.rUnitTest) {
         # stable - Parameterization S1:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
+        test <- distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S1:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
+        test <- distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S1:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
+        test <- distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }
@@ -107,25 +104,19 @@ test.stableS1 <- function()
 
 test.stableS2 <- function()
 {
-    if (FALSE) {
+    if (do.stable.rUnitTest) {
         # stable - Parameterization S2:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
+        test <- distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S2:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
+        test <- distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S2:
-        RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-        set.seed(4711, kind = "Marsaglia-Multicarry")
-        test <- fBasics:::.distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
+        test <- distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }

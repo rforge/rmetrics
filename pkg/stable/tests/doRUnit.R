@@ -22,5 +22,15 @@ if(require("RUnit", quietly=TRUE)) {
 
   stopifnot(file.exists(path), file.info(path.expand(path))$isdir)
 
+  ## MM: Setting RNG states  *outside* testing functions,
+  ##     so we can run them, testing new situations each time
+  oRK <- RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+  set.seed(4711)
+
   source(file.path(path, "runTests.R"), echo = TRUE)
+
+  ## reset RNG:
+  RNGkind(oRK[1])
 }
+
+cat('Time elapsed: ', proc.time(),'\n') # "stats"
