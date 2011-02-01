@@ -128,19 +128,19 @@ maxratioPortfolio <-
     setTargetReturn(spec) <- getTargetReturn(fp)
     portfolio = optimize(f = ratioFun, interval = range(getMu(Data)),
         maximum = TRUE, data = Data, spec = spec, constraints = constraints)
-        
+
     ## 2009-04-19 DW:
     ## It may happen, that the maximum ratio portfolio cannot be computed.
-    ## One reason is that the portfolio does not exist since the constraints 
-    ## are too restrictive. 
+    ## One reason is that the portfolio does not exist since the constraints
+    ## are too restrictive.
     ## Another reason is that the risk free rate is above the highest return
     ## point.
     ## In these cases we stop the computation here, and return an error message.
-    
+
     STATUS = attr(portfolio$objective, "status")
     if (STATUS != 0) {
         # Error Message:
-        cat("\nExecution stopped:")   
+        cat("\nExecution stopped:")
         cat("\n  The maximum ratio portfolio could not be computed.")
         cat("\nPossible Reason:")
         cat("\n  Your portfolio constraints may be too restrictive.")
@@ -149,8 +149,8 @@ maxratioPortfolio <-
         cat("\n")
         stop(call. = FALSE, show.error.messages = "\n  returned from Rmetrics")
     }
-       
-    # Continue: Succesfully computed the minimum risk portfolio ...     
+
+    # Continue: Succesfully computed the minimum risk portfolio ...
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
@@ -171,17 +171,17 @@ tangencyPortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Computes Markowitz tangency portfolio
-    
+
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # FUNCTION:
-    
+
     # Portfolio:
     portfolio = maxratioPortfolio(data, spec, constraints)
     portfolio@title = "Tangency Portfolio"
@@ -225,7 +225,12 @@ minriskPortfolio <-
         setTargetReturn(spec) = x[1]
         Solver = match.fun(getSolver(spec))
         ans = Solver(data, spec, constraints)
-        targetRisk = ans$objective
+        # 2011-02-01 YC:
+        # If solver does not converged to a solution, replace value of
+        # objective function by maximum machine number. It helps in
+        # situation where the worst and best return are not feasible
+        # with the constraints.
+        targetRisk <- if (ans$status) .Machine$double.xmax else ans$objective
         attr(targetRisk, "weights") <- ans$weights
         attr(targetRisk, "status") <- ans$status
         return(targetRisk)
@@ -234,17 +239,17 @@ minriskPortfolio <-
     # Minimal Risk:
     portfolio <- optimize(targetRiskFun, interval = range(getMu(Data)),
         data = Data, spec = spec, constraints = constraints, tol = .Machine$double.eps^0.5)
-        
+
     ## 2009-04-19 DW:
     ## It may happen, that the minimum risk protfolio cannot be computed.
-    ## One reason is that the portfolio does not exist since the constraints 
-    ## are too restrictive. 
+    ## One reason is that the portfolio does not exist since the constraints
+    ## are too restrictive.
     ## In this case we stop the computation here, and return an error message.
-    
+
     STATUS = attr(portfolio$objective, "status")
     if (STATUS != 0) {
         # Error Message:
-        cat("\nExecution stopped:")   
+        cat("\nExecution stopped:")
         cat("\n  The minimum risk portfolio could not be computed.")
         cat("\nPossible Reason:")
         cat("\n  Your portfolio constraints may be too restrictive.")
@@ -253,8 +258,8 @@ minriskPortfolio <-
         cat("\n")
         stop(call.= FALSE, show.error.messages = "\n  returned from Rmetrics")
     }
-       
-    # Continue: Succesfully computed the minimum risk portfolio ...  
+
+    # Continue: Succesfully computed the minimum risk portfolio ...
     setWeights(spec) <- attr(portfolio$objective, "weights")
     setStatus(spec) <- attr(portfolio$objective, "status")
 
@@ -275,17 +280,17 @@ minvariancePortfolio <-
     function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Computes global minimum variance portfolio
-    
+
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
     #   constraints - a character vector or NULL
-    
+
     # FUNCTION:
-    
+
     # Portfolio:
     portfolio = minriskPortfolio(data, spec, constraints)
     portfolio@title = "Minimum Variance Portfolio"
