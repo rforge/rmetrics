@@ -1,4 +1,4 @@
-PKG=stable
+PKG=stabledist
 TOP=../..
 SUITE=doRUnit.R
 R=R

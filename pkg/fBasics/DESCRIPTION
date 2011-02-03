@@ -11,8 +11,8 @@ Author: Diethelm Wuertz and Rmetrics core team members, uses code
         Kersti Aas.
 Depends: R (>= 2.6.0), MASS, methods, timeDate, timeSeries (>= 2100.84)
 Suggests: akima, spatial, RUnit, tcltk
-Imports: stable
-ImportNote: stable only for back compatibility; will suggest only, later
+Imports: stabledist
+ImportNote: stabledist only for back compatibility; will suggest only, later
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance" NOTE: SEVERAL PARTS ARE STILL

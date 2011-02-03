@@ -8,6 +8,9 @@ import("methods")
 import("timeDate")
 import("timeSeries")
 
+## for now
+import("stabledist")
+
 
 ################################################
 ## useDynLib

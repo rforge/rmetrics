@@ -1,0 +1,6 @@
+
+* Compare with Jim Lindsey's "stable" package
+  --> http://www.commanster.eu/rcode.html
+  Maybe even ask him to transfer maintainership and make it CRAN-y ?
+  (at SfS ETH: source in /usr/local/app/R/R_local/JimLindsey/stable/
+   installed in          /usr/local/app/R/R_local/JimLindsey/library )

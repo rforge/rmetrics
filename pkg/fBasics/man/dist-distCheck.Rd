@@ -2,7 +2,10 @@
 \alias{distCheck}
 \title{Distribution Check}
 
-\description{Tests properties of a distribution}
+\description{
+  Tests properties of an \R implementation of a distribution, i.e. of
+  all four of its \dQuote{dpqr} functions.
+}
 
 \usage{
 distCheck(fun = "norm", n = 1000, robust = TRUE, subdivisions = 1000,

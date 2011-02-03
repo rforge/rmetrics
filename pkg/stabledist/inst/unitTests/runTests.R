@@ -1,4 +1,4 @@
-pkg <- "stable"
+pkg <- "stabledist"
 
 if(require("RUnit", quietly = TRUE))
 {

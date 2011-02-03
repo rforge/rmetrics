@@ -46,7 +46,7 @@ if(do.stable.rUnitTest <-
 {
     ## fBasics:  for  .distCheck()
     distCheck <- fBasics:::.distCheck
-    environment(distCheck) <- asNamespace("stable")
+    environment(distCheck) <- asNamespace("stabledist")
 }
 
 test.stableS0 <- function()
