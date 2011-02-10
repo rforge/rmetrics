@@ -60,6 +60,7 @@ pkgsRmetricsDev <- function()
       "schwartz97",
       "SkewHyperbolic",
       "VarianceGamma",
+      "stabledist",
 
       "fUtilities",
       "fEcofin",
