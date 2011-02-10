@@ -25,8 +25,6 @@
 \alias{time_timeSeries-class}
 \alias{initialize,timeSeries-method}
 
-\alias{readSeries}
-
 \alias{seriesData}
 
 
@@ -41,8 +39,7 @@
     Functions to generate and modify 'timeSeries' objects:         
 
     \tabular{ll}{   
-    \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
-    \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file. }
+    \code{timeSeries} \tab Creates a 'timeSeries' object from scratch.}
     
     Data Slot and classification of 'timeSeries' objects: 
     
@@ -55,9 +52,6 @@
 timeSeries(data, charvec, units = NULL, format = NULL, zone = "", 
     FinCenter = "", recordIDs = data.frame(), title = NULL, 
     documentation = NULL, \dots)
-       
-readSeries(file, header = TRUE, sep = ";", zone = "", 
-    FinCenter = "",  format, \dots)
 
 seriesData(object)
 }
@@ -75,20 +69,9 @@ seriesData(object)
     \item{documentation}{
         optional documentation string, or a vector of character strings.
         }
-    \item{file}{
-        the filename of a spreadsheet data set from which
-        to import the data records.
-        }
     \item{FinCenter}{
         a character with the the location of the  financial center named 
         as "continent/city". 
-        }
-    \item{header}{
-        a logical value indicating whether the file contains the
-        names of the variables as its first line.  If missing, the
-        value is determined from the file format: 'header' is set to
-        'TRUE' if and only if the first row contains one fewer field
-        than the number of columns.
         }
     \item{format}{
         the format specification of the input character vector,
@@ -107,11 +90,6 @@ seriesData(object)
         [print] - \cr
         a logical value. Should the \code{recordIDs} printed together
         with the data matrix and time series positions?
-        }
-    \item{sep}{
-        [readSeries] - \cr
-        the field seperator used in the spreadsheet file to separate 
-        columns.
         }
     \item{title}{
         an optional title string, if not specified the inputs data 
@@ -136,7 +114,6 @@ seriesData(object)
 \value{
 
     \code{timeSeries}\cr
-    \code{readSeries}\cr
     \code{returnSeries}\cr
     \cr
     return a S4 object of class \code{timeSeries}.
