@@ -1,3 +1,21 @@
+2011-02-10  chalabi
+
+	* DESCRIPTION: updated DESC file
+	* man/timeSeries-readSeries.Rd, man/timeSeries.Rd: added manual
+	  page for function readSeries()
+	* inst/doc/TimeSeriesFAQ.pdf: removed pdf file because new version
+	  can be found on the website
+
+2011-01-31  chalabi
+
+	* R/timeSeries-readSeries.R, man/timeSeries.Rd: Added the optional
+	  'format' argument and and a warning when the provided format
+	  produces NAs in readSeries function
+
+2010-10-27  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog file
+
 2010-10-26  chalabi
 
 	* R/base-cbind.R: cbind now extends vectors to match number of rows

@@ -1,3 +1,33 @@
+2011-02-10  chalabi
+
+	* DESCRIPTION: updated DESC file
+	* inst/doc/PortfolioOptimizationSample.pdf: removed pdf file
+	  because new version can be found on the website
+
+2011-02-01  chalabi
+
+	* R/efficientPortfolio.R, inst/unitTests/runit.minriskPortfolio.R:
+	  Modified returned value of targetRiskFun when the target return
+	  is not feasible with the given constraints.
+
+2010-10-26  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+	* DESCRIPTION: moved Rglp and quadprog in Imports DESCR file
+
+2010-04-22  chalabi
+
+	* DESCRIPTION: updated DESC file
+	* inst/CITATION: updated CITATION file
+
+2010-04-16  chalabi
+
+	* ChangeLog, DESCRIPTION: DESC and Changelog
 	* R/solveRquadprog.R: set weights to NA when there is no solution
 
 2010-04-13  chalabi
