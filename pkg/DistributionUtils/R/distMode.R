@@ -1,5 +1,4 @@
 distMode <- function(densFn, param = NULL, ...){
-    Call <- match.call()
     dfun <- match.fun(paste("d", densFn, sep = ""))
     if(densFn == "skewhyp"){
         l <- list(...)
@@ -77,10 +76,6 @@ distMode <- function(densFn, param = NULL, ...){
     mode <- optResult$maximum
     mode
 }
-
-## distMode("norm",mean=2,sd=1)
-## distMode("skewhyp",param = c(0,1,1,1))
-## distMode("skewhyp",mu = 0, delta = 1, beta = 1, nu = 1)
 
 
 

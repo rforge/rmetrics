@@ -1,1 +1,10 @@
 Add contour plots and 3-D plots for fitted distributions
+
+Add profile likelihoods for fitted distributions
+
+Add simple wrapper fuctions for optimizers: see fitdistrplus
+
+Sort data before using uniroot to find quantiles. Use algorithm which
+takes this into account---Joyce??
+
+

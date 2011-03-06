@@ -1,6 +1,5 @@
 distStepSize <- function(densFn, dist,
                          param = NULL, side = c("right","left"), ...){
-    CALL <- match.call()
     set.seed(123)
     rfun <- match.fun(paste("r", densFn, sep = ""))
     side <- match.arg(side)
@@ -37,8 +36,3 @@ distStepSize <- function(densFn, dist,
     return(step)
 }
 
-
-
-##distStepSize("skewhyp",mu=2,delta=1,beta=2,nu=1,dist=2,side="right")
-##distStepSize("skewhyp",param=c(1,3,2,1),dist = 2,side="right")
-##distStepSize("norm",mean=2,sd=1,dist=3,side="right")

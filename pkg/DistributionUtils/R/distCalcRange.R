@@ -1,5 +1,4 @@
 distCalcRange <- function(densFn, param = NULL, tol = 10^(-5), ...){
-    CALL <- match.call()
     dfun <- match.fun(paste("d", densFn, sep = ""))
     mode <- distMode(densFn, param = param, ...)
     if (densFn == "skewhyp"){
