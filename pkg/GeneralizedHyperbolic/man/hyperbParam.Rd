@@ -1,5 +1,6 @@
 \name{hyperbParam}
 \docType{data}
+\alias{hyperbParam}
 \alias{hyperbSmallShape}
 \alias{hyperbLargeShape}
 \alias{hyperbSmallParam}

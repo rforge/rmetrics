@@ -74,7 +74,7 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
     }
 
     output <- numeric(7)
-    ind <- 1:4
+    ind <- 1:6
 
     if (method == "BFGS") {
       if (!silent){
@@ -82,7 +82,8 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
             paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
       }
       tryOpt <- try(optim(paramStart, llfunc, NULL, method = "BFGS",
-                         control = controlBFGS, ...), silent = silent)
+                         control = controlBFGS, ...),
+                    silent = silent)
       if (class(tryOpt) == "try-error"){
         errMessage <- unclass(tryOpt)
       } else {
@@ -91,47 +92,89 @@ hyperbFit <- function(x, freq = NULL, paramStart = NULL,
     }
 
     if (method == "Nelder-Mead") {
-      optOut <- optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
-                     control = controlNM, ...)
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+      }
+      tryOpt <- try(optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
+                          control = controlNM, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "nlm") {
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+      }
       ind <- c(2, 1, 5, 4)
-      optOut <- nlm(llfunc, paramStart, iterlim = maxitNLM, ...)
+      tryOpt <- try(nlm(llfunc, paramStart, iterlim = maxitNLM, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "L-BFGS-B") {
-      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
-          paramStart[4],"\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      optOut <- optim(par = paramStart, llfunc, NULL,
-                     method = "L-BFGS-B",
-                     lower = c(-Inf,eps,-Inf,eps),
-                     control = controlLBFGSB, ...)
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+      }
+      tryOpt <- try(optOut <-
+                    optim(par = paramStart, llfunc, NULL,
+                          method = "L-BFGS-B",
+                          lower = c(-Inf,0,-Inf,0),
+                          control = controlLBFGSB, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "nlminb") {
-      ind <- c(1, 2, 3)
-      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
-          paramStart[4],"\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      optOut <- nlminb(start = paramStart, llfunc, NULL,
-                     lower = c(-Inf,eps,-Inf,eps),
-                     control = controlNLMINB, ...)
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+      }
+      ind <- c(1, 2, 5, 3, 4)
+      tryOpt <- try(optOut <-
+                    nlminb(start = paramStart, llfunc, NULL,
+                           lower = c(-Inf,eps,-Inf,eps),
+                           control = controlNLMINB, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "constrOptim") {
-      cat("paramStart =", paramStart[1],paramStart[2],paramStart[3],
-          paramStart[4],"\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      cat("Feasible?\n")
-      print((paramStart%*%diag(c(0,1,0,1))- c(0,0,0,0)) >= 0)
-      optOut <- constrOptim(theta = paramStart, llfunc, NULL,
+      if (!silent){
+        cat("paramStart =",
+            paramStart[1], paramStart[2], paramStart[3], paramStart[4],"\n")
+        cat("Feasible?\n")
+        print((paramStart%*%diag(c(0,1,0,1))- c(0,0,0,0)) >= 0)
+      }
+      tryOpt <- try(optOut <-
+                    constrOptim(theta = paramStart, llfunc, NULL,
                            ui = diag(c(0,1,0,1)), ci = c(-1e+99,0,-1e+99,0),
-                           control = controlCO, ...)
+                           control = controlCO, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
-
-
   } # end criterion == "MLE"
 
   ## Prepare to return results

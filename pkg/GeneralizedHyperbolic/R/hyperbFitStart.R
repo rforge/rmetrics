@@ -116,6 +116,10 @@ hyperbFitStart <- function(x, startValues = c("BN","US","FN","SL","MoM"),
     }
 
     delta <- zeta/sqrt(phi*hyperbGamma)
+    ## Ensure delta is not zero
+    if (delta <= 0) {
+      delta <- 0.001 # This is set arbitrarily
+    }
     paramStart <- hyperbChangePars(3, 2, param = c(mu, delta, phi, hyperbGamma))
   }
 

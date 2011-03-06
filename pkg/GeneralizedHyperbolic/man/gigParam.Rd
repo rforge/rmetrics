@@ -1,5 +1,6 @@
 \name{gigParam}
 \docType{data}
+\alias{gigParam}
 \alias{gigSmallParam}
 \alias{gigLargeParam}
 

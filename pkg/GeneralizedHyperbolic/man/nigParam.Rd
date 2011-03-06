@@ -1,5 +1,6 @@
 \name{nigParam}
 \docType{data}
+\alias{nigParam}
 \alias{nigSmallShape}
 \alias{nigLargeShape}
 \alias{nigSmallParam}

@@ -47,22 +47,23 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
     betaStand <- sdx*paramStart[4]
     paramStand <- c(muStand,deltaStand,alphaStand,betaStand)
   } else {
-    paramStand = NULL
+    paramStand <- NULL
   }
   startInfo <- hyperbFitStandStart(x, startValues = startValues,
                                    paramStart = paramStand,
                                    startMethodSL = startMethod,
                                    startMethodMoM = startMethod, ...)
   ## paramStart is initial (rho, zeta)
-  paramStart <- startInfo$paramStart
-  cat("paramStart after hyperbFitStandStart is", paramStart, "\n")
+  paramStartRhoZeta <- startInfo$paramStart
+  ##cat("paramStart after hyperbFitStandStart is", paramStart, "\n")
   ## get standardized parameters
-  paramStartStand <- ghypStandPars(paramStart[1], paramStart[2])
+  paramStartStandAlphaBeta <-
+    ghypStandPars(paramStartRhoZeta[1], paramStartRhoZeta[2])
   ## get (pi, zeta) version
-  paramStartStand <- ghypChangePars(1, 5, paramStartStand)
-  mu <- paramStartStand[1]
-  delta <- paramStartStand[2]
-  paramStart <- paramStartStand[3:4]
+  paramStartStandPiZeta <- ghypChangePars(1, 5, paramStartStandAlphaBeta)
+  mu <- paramStartStandPiZeta[1]
+  delta <- paramStartStandPiZeta[2]
+  paramStart <- paramStartStandPiZeta[3:4]
 
   if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
     paramStart <- c(paramStart[1], log(paramStart[2]))
@@ -79,10 +80,11 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
   if (criterion == "MLE") {
     if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
       llfunc <- function(param) {
-        muDelta <- ghypStandPars(param[1], exp(param[2]))[1:2]
+        rho <- param[1]/sqrt(1 + param[1]^2)
+        muDelta <- ghypStandPars(rho, exp(param[2]))[1:2]
         mu <- muDelta[1]
         delta <- muDelta[2]
-        print(param)
+        ##print(param)
         KNu <- besselK(exp(param[2]), nu = 1)
         hyperbDens <- (2*delta* sqrt(1 + param[1]^2)*KNu)^(-1)*
                       exp(-exp(param[2])* (sqrt(1 + param[1]^2)*
@@ -95,8 +97,9 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
       llfunc <- function(param) {
         ## Protect against attempts to make parameters < 0
         if (param[2] <= eps) return(1e99)
-        print(param)
-        muDelta <- ghypStandPars(param[1], param[2])[1:2]
+        ##print(param)
+        rho <- param[1]/sqrt(1 + param[1]^2)
+        muDelta <- ghypStandPars(rho, param[2])[1:2]
         mu <- muDelta[1]
         delta <- muDelta[2]
         KNu <- besselK(param[2], nu = 1)
@@ -110,89 +113,134 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
     }
 
     output <- numeric(7)
-    ind <- 1:4
+    ind <- 1:6
 
     if (method == "BFGS") {
       if (!silent){
         cat("paramStart =", paramStart[1], paramStart[2],"\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
       }
       tryOpt <- try(optim(paramStart, llfunc, NULL, method = "BFGS",
-                     control = controlBFGS, ...), silent = silent)
+                          control = controlBFGS, ...), silent = silent)
       if (class(tryOpt) == "try-error"){
         errMessage <- unclass(tryOpt)
       } else {
         optOut <- tryOpt
       }
     }
-      cat("paramStart =", paramStart[1], paramStart[2], "\n")
-      opOut <- optim(paramStart, llfunc, NULL, method = "BFGS",
-                     control = controlBFGS, ...)
-    }
 
     if (method == "Nelder-Mead") {
-      opOut <- optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
-                     control = controlNM, ...)
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2],"\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+      }
+      tryOpt <- try(optim(paramStart, llfunc, NULL, method = "Nelder-Mead",
+                          control = controlNM, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "nlm") {
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2],"\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+      }
       ind <- c(2, 1, 5, 4)
-      opOut <- nlm(llfunc, paramStart, iterlim = maxitNLM, ...)
+      tryOpt <- try(nlm(llfunc, paramStart, iterlim = maxitNLM, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "L-BFGS-B") {
-      cat("paramStart =", paramStart[1], paramStart[2], "\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      opOut <- optim(par = paramStart, llfunc, NULL,
-                     method = "L-BFGS-B",
-                     lower = c(-Inf,eps),
-                     control = controlLBFGSB, ...)
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2],"\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+      }
+      tryOpt <- try(optOut <- optim(par = paramStart, llfunc, NULL,
+                                    method = "L-BFGS-B",
+                                    lower = c(-Inf,0),
+                                    control = controlLBFGSB, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "nlminb") {
-      ind <- c(1, 2, 3)
-      cat("paramStart =", paramStart[1], paramStart[2], "\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      opOut <- nlminb(start = paramStart, llfunc, NULL,
-                     lower = c(-Inf,eps),
-                     control = controlNLMINB, ...)
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2],"\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+      }
+      ind <- c(1, 2, 5, 3, 4)
+      tryOpt <- try(nlminb(start = paramStart, llfunc, NULL,
+                           lower = c(-Inf,eps),
+                           control = controlNLMINB, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
 
     if (method == "constrOptim") {
-      cat("paramStart =", paramStart[1], paramStart[2], "\n")
-      cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
-      cat("Feasible?\n")
-      print((paramStart%*%diag(c(0,1))- c(0,0)) >= 0)
-      opOut <- constrOptim(theta = paramStart, llfunc, NULL,
-                           ui = diag(c(0,1)), ci = c(-1e+99,0),
-                           control = controlCO, ...)
+      if (!silent){
+        cat("paramStart =", paramStart[1], paramStart[2], "\n")
+        cat("Starting loglikelihood = ", llfunc(paramStart), " \n")
+        cat("Feasible?\n")
+        print((paramStart%*%diag(c(0,1))- c(0,0)) >= 0)
+      }
+      tryOpt <- try(optOut <-
+                    constrOptim(theta = paramStart, llfunc, NULL,
+                                ui = diag(c(0,1)), ci = c(-1e+99,0),
+                                control = controlCO, ...),
+                    silent = silent)
+      if (class(tryOpt) == "try-error"){
+        errMessage <- unclass(tryOpt)
+      } else {
+        optOut <- tryOpt
+      }
     }
+  } # end criterion == "MLE"
 
-
-
-    param <- as.numeric(opOut[[ind[1]]])    # parameter values
-    cat("After fitting, param =", param[1], param[2], "\n")
+  ## Prepare to return results
+  if (errMessage == ""){
+    param <- as.numeric(optOut[[ind[1]]])    # parameter values
 
     if (!(method %in% c("L-BFGS-B","nlminb","constrOptim"))){
-      param <- hyperbChangePars(1, 2,
-                                param = c(mu,delta,param[1],exp(param[2])))
+      rho <- param[1]/(1 + param[1]^2)
+      param <- hyperbStandPars(rho, exp(param[2]))
     } else {
-      param <- hyperbChangePars(1, 2,
-                                param = c(mu,delta,param[1],param[2]))
+      rho <- param[1]/(1 + param[1]^2)
+      param <- hyperbStandPars(rho, param[2])
     }
+    ## Change fitted parameter back to unstandardized scale
+    param <- ghypScale(mx, sdx, param = c(param,1))[1:4]
+
     names(param) <- c("mu", "delta", "alpha", "beta")
-    cat("After, log transform, param =",
-        param[1], param[2], param[3], param[4], "\n")
 
     ## FIX ME: maxLik is wrong
-    maxLik <- -(as.numeric(opOut[[ind[2]]]))        # maximum likelihood
-    conv <- as.numeric(opOut[[ind[4]]])             # convergence
-    iter <- as.numeric(opOut[[ind[3]]])[1]          # iterations
+    maxLik <- -(as.numeric(optOut[[ind[2]]]))        # maximum likelihood
+    conv <- as.numeric(optOut[[ind[4]]])             # convergence
+    iter <- as.numeric(optOut[[ind[3]]])[1]          # iterations
 
+  } else {
+    optOut <- NULL
+    param <- NULL
+    maxLik <- NULL
+    conv <- NULL
+    iter <- NULL
   }
-
-
-  ## Change fitted parameter back to unstandardized scale
-  param <- ghypScale(mx, sdx, param = c(param,1))[1:4]
   ## Change data back to original scale
   x <- sdx*x + mx
 
@@ -209,7 +257,8 @@ hyperbFitStand <- function(x, freq = NULL, paramStart = NULL,
                      obs = x, obsName = xName, paramStart = paramStartOrig,
                      svName = svName, startValues = startValues,
                      breaks = breaks, midpoints = midpoints,
-                     empDens = empDens)
+                     empDens = empDens, errMessage = errMessage,
+                     optOut = optOut)
 
   class(fitResults) <- c("hyperbFit", "distFit")
 

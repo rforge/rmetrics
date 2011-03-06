@@ -1,3 +1,11 @@
+Have pdf return NA and warning rather than stop when encountering
+wrong parameter values.
+
+Use Diethelm's skewness and kurtosis from fBasics rather than mine.
+
+For profile likelihood, look at maximum likelihood package which
+creates wrappers to fix parameters.
+
 Protect all calls to optim etc with try and an error message catch
 Add silent argument to fit functions
 Add errMessage to return list for all fit functions to be "" if no error
