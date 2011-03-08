@@ -47,6 +47,12 @@ if(do.stable.rUnitTest <-
     ## fBasics:  for  .distCheck()
     distCheck <- fBasics:::.distCheck
     environment(distCheck) <- asNamespace("stabledist")
+    ## and re-attach "stabledist" as its contents is now masked by fBasics::dstable:
+    if((P <- "package:stabledist") %in% search())
+	detach(P)
+    stopifnot(require("stabledist"),
+	      ## check that indeed we get stabledist's functions, not fBasics:
+	      identical(dstable, stabledist::dstable))
 }
 
 test.stableS0 <- function()

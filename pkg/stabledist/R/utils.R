@@ -23,6 +23,7 @@
     if(is.na(f.lower) || is.na(f.upper) || f.lower * f.upper > 0)
         return(NA)
     ## else there is one :
-    uniroot(f, interval = interval, lower = lower, upper = upper,
-            f.lower = f.lower, f.upper = f.upper, ...)$root
+    uniroot(f, interval = interval, ...,
+            lower=lower, upper=upper, f.lower=f.lower, f.upper=f.upper,
+            tol=tol, maxiter=maxiter)$root
 }

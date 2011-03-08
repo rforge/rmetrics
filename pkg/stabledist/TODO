@@ -4,3 +4,7 @@
   Maybe even ask him to transfer maintainership and make it CRAN-y ?
   (at SfS ETH: source in /usr/local/app/R/R_local/JimLindsey/stable/
    installed in          /usr/local/app/R/R_local/JimLindsey/library )
+
+* stableMode():  [MM] I'm pretty sure that the  'beta.max' argument is
+  		 unneeded and could be eliminated.
+

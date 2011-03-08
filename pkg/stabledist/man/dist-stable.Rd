@@ -24,35 +24,43 @@
 
 \usage{
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
-        log = FALSE, tol = .Machine$double.eps)
-pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0)
-qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0)
+        log = FALSE,
+        tol = 16*.Machine$double.eps, subdivisions = 1000)
+pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
+	tol = 16*.Machine$double.eps, subdivisions = 1000)
+qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
+        tol = .Machine$double.eps^0.25, maxiter = 1000,
+        integ.tol = 1e-7, subdivisions = 200)
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 }
 
 \arguments{
-    \item{alpha, beta, gamma, delta}{
-        value of the index parameter \code{alpha} with \code{alpha = (0,2]};
-        skewness parameter \code{beta}, in the range [-1, 1];
-        scale parameter \code{gamma}; and
-        shift parameter \code{delta}.
-        }
-    \item{n}{sample size (integer).}
-    \item{p}{
-        a numeric vector of probabilities.
-        }
-    \item{pm}{
-        parameterization, an integer in \code{0, 1, 2}; by default \code{pm=0},
-        the \sQuote{S0} parameterization.
-        }
-    \item{x, q}{
-        a numeric vector of quantiles.
+  \item{alpha, beta, gamma, delta}{
+    value of the index parameter \code{alpha} with \code{alpha = (0,2]};
+    skewness parameter \code{beta}, in the range [-1, 1];
+    scale parameter \code{gamma}; and
+    shift parameter \code{delta}.
+  }
+  \item{n}{sample size (integer).}
+  \item{p}{numeric vector of probabilities.}
+  \item{pm}{
+    parameterization, an integer in \code{0, 1, 2}; by default \code{pm=0},
+    the \sQuote{S0} parameterization.}
+  \item{x, q}{numeric vector of quantiles.}
+  \item{log}{logical; if TRUE, the probabilities \code{p} are given as
+    \code{log(p)}.}
+  \item{integ.tol}{positive number, the tolerance used for numerical
+    integration, see \code{\link{integrate}}.}
+  \item{tol}{numerical tolerance,
+    \describe{
+      \item{dstable(), pstable():}{used for numerical integration, see
+	\code{integ.tol} above.}
+      \item{qstable():}{used for rootfinding, see \code{\link{uniroot}}.}
       }
-    \item{log}{
-        a logical, if TRUE, probabilities \code{p} are given as
-        \code{log(p)}.
-      }
-    \item{tol}{positive number used for numerical integration, etc.}
+  }
+  \item{subdivisions}{maximal number of intervals for integration, see
+    \code{\link{integrate}}.}
+  \item{maxiter}{maximal number of iterations in \code{\link{uniroot}}.}
 }
 
 \value{

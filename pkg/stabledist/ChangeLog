@@ -1,0 +1,18 @@
+2011-03-08  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dist-stableMode.R (stableMode): add 'tol' (and 'beta.max')
+	arguments which were implicit before.
+
+	* R/utils.R (.unirootNA): add 'tol' and 'maxiter' arguments.
+
+	* R/dpqr-stable.R (pstable): get rid of "Sversion" and add 'tol,
+	subdivisions' as arguments.
+	Slightly *increase* default tol(erance) - so .integrate2() no
+	longer warns, at least not for the examples.
+
+2011-02-02  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Package): renamed to 'stabledist' as Jim Lindsey has
+	maintained a non-CRAN package 'stable' forever (and it's used).
+	* TODO: added
+

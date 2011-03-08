@@ -22,7 +22,7 @@
 ##  qstable		  Returns quantiles for stable DF
 ##  rstable		  Returns random variates for stable DF
 ## UTILITY FUNCTION	 DESCRIPTION:
-##  .integrate2Stable	   Integrates internal functions for *stable
+##  .integrate2  	  Integrates internal functions for *stable
 ################################################################################
 
 
@@ -36,15 +36,11 @@
 ##  c) subdivisions etc {all but rstable}
 ## ---	to do: "Fix" these in dstable(), then copy/paste to others
 
-## 1) Everywhere : get rid of the 'control' at end
-
-## 2) get rid of S-plus variant -- as I want  'tol' as an optional argument
-
 ##==============================================================================
 
 dstable <- function(x, alpha, beta,
 		    gamma = 1, delta = 0, pm = 0, log = FALSE,
-		    tol = .Machine$double.eps)
+		    tol = 16*.Machine$double.eps, subdivisions = 1000)
 {
     ## Original implemented by Diethelm Wuertz;
     ## Changes for efficiency and accuracy by Martin Maechler
@@ -71,18 +67,11 @@ dstable <- function(x, alpha, beta,
     ##	     integrate()$value and integrate()$integral.
     ##	 optimize() works in both R and SPlus.
 
-    ## Settings:
-    subdivisions <- 1000
-    if (class(version) == "Sversion") {
-	subdivisions <- 100
-	if(missing(tol)) ## default
-	    tol <- sqrt(tol)
-    }
-
     ## Parameter Check:
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2)
+	      length(pm) == 1, pm %in% 0:2,
+              tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -213,26 +202,20 @@ dstable <- function(x, alpha, beta,
 ### ------------------------------------------------------------------------------
 
 
-pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0)
+pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
+		    tol = 16*.Machine$double.eps, subdivisions = 1000)
 {
     ## A function implemented by Diethelm Wuertz
 
     ## Description:
     ##	 Returns probability for stable DF
 
-    ## Settings:
-    subdivisions <- 1000
-    tol	 <- .Machine$double.eps
-    if (class(version) == "Sversion") {
-	subdivisions <- 100
-	tol <- sqrt(tol)
-    }
     x <- q
-
     ## Parameter Check:
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2)
+	      length(pm) == 1, pm %in% 0:2,
+              tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -353,27 +336,20 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0)
 ### ------------------------------------------------------------------------------
 
 
-qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0)
+qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
+                    tol = .Machine$double.eps^0.25, maxiter = 1000,
+                    integ.tol = 1e-7, subdivisions = 200)
 {
     ## A function implemented by Diethelm Wuertz
 
     ## Description:
     ##	 Returns quantiles for stable DF
 
-    ## FUNCTION:
-
-    ## Settings:
-    subdivisions <- 1000
-    tol <- .Machine$double.eps
-    if (class(version) == "Sversion") {
-	subdivisions <- 100
-	tol <- sqrt(tol)
-    }
-
     ## Parameter Check:
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2)
+	      length(pm) == 1, pm %in% 0:2,
+              tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -391,8 +367,9 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0)
         else if (alpha == 1 & beta == 0)
             qcauchy(p)
         else if (abs(alpha-1) < 1) { ## -------------- 0 < alpha < 2 ---------------
-            .froot <- function(x, alpha, beta, subdivisions, p) {
-                pstable(q = x, alpha = alpha, beta = beta, pm = 0) - p
+            .froot <- function(x, p) {
+                pstable(q = x, alpha=alpha, beta=beta, pm = 0,
+                        tol=integ.tol, subdivisions=subdivisions) - p
             }
             ## Calculate:
             unlist(lapply(p, function(pp) {
@@ -431,9 +408,8 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0)
                 root <- NA
                 counter <- 0
                 while (is.na(root)) {
-                    root <- .unirootNA(.froot, interval = c(xmin, xmax),
-                                       alpha = alpha, beta = beta, p = pp,
-                                       subdivisions = subdivisions)
+                    root <- .unirootNA(.froot, interval = c(xmin, xmax), p = pp,
+                                       tol=tol, maxiter=maxiter)
                     counter <- counter + 1
                     xmin <- xmin-2^counter
                     xmax <- xmax+2^counter
@@ -504,12 +480,7 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 ##' --------------------- main difference: no errors, but warnings
 .integrate2 <- function(f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 {
-    ## A function implemented by Diethelm Wuertz
-
-    ## Description:
-    ##	 Internal Function
-
-    ## FUNCTION:
+    ## Originally implemented by Diethelm Wuertz -- without *any* warnings
 
     if (class(version) != "Sversion") {
 	## R:
@@ -523,6 +494,7 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 	iErr <- wk[["ierr"]]
 	if(iErr == 6) stop("the input is invalid")
 	if(iErr > 0)
+            ## NB:  "roundoff error ..." happens many times
 	    warning(switch(iErr + 1, "OK",
 			   "maximum number of subdivisions reached",
 			   "roundoff error was detected",
