@@ -1,5 +1,14 @@
+2011-03-09  chalabi
+
+	* inst/doc: removed empty directory
+	* DESCRIPTION: updated version number
+	* R/timeSeries-readSeries.R: Fixed readSeries when reading tables
+	  with multiple columns. (Reported by Chris Breton).
+
 2011-02-10  chalabi
 
+	* ChangeLog, DESCRIPTION: updated Date and Revision field in DESC
+	  file and updated Changelog file
 	* DESCRIPTION: updated DESC file
 	* man/timeSeries-readSeries.Rd, man/timeSeries.Rd: added manual
 	  page for function readSeries()
