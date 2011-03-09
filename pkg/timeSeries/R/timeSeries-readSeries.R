@@ -51,10 +51,10 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
 
     # Read Data:
     df <- read.table(file = file, header = header, sep = sep,
-        check.names = FALSE, colClasses = c("character", "numeric"), ...)
+        check.names = FALSE, ...)
 
     # get timeDate from first column with header specifying the format
-    charvec <- df[[1]]
+    charvec <- as.character(df[[1]])
     if (missing(format)) format <- names(df)[1]
     td <- timeDate(charvec = charvec, format = format, zone = zone,
         FinCenter = FinCenter)
@@ -66,7 +66,7 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
   or in the header of your file ?")
 
     # extract data
-    data <- df[-1]
+    data <- as.matrix(df[-1])
 
     # Create Time Series from Data Frame:
     ans <- timeSeries(data = data, charvec = td)
