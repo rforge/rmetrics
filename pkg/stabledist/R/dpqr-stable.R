@@ -38,6 +38,13 @@
 
 ##==============================================================================
 
+##' @title omega() according to Lambert & Lindsey (1999), p.412
+##' @param gamma
+##' @param alpha
+##' @return
+.om <- function(gamma,alpha)
+    if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2)
+
 dstable <- function(x, alpha, beta,
 		    gamma = 1, delta = 0, pm = 0, log = FALSE,
 		    tol = 16*.Machine$double.eps, subdivisions = 1000)
@@ -75,8 +82,7 @@ dstable <- function(x, alpha, beta,
 
     ## Parameterizations:
     if (pm == 1) {
-	delta <- delta + beta*gamma*
-	    (if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2))
+	delta <- delta + beta*gamma * .om(gamma,alpha)
     } else if (pm == 2) {
 	delta <- delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
 	gamma <- alpha^(-1/alpha) * gamma
@@ -85,9 +91,9 @@ dstable <- function(x, alpha, beta,
     ans <-
 	## Special Cases:
 	if (alpha == 2) {
-	    dnorm(x, mean = 0, sd = sqrt(2))
+	    dnorm(x, mean = delta, sd = sqrt(2)*gamma)
 	} else if (alpha == 1 && beta == 0) {
-	    dcauchy(x)
+	    dcauchy(x, location = delta, scale = gamma)
 	} else {
 
 	    ## Shift and Scale:
@@ -105,12 +111,10 @@ dstable <- function(x, alpha, beta,
 		    ## Modified D.W. and M.M. {was  if (z == varzeta)}
 		    if (z.m.varz <= 1e-5 * abs(z)) {
 			gamma(1+1/alpha)*cos(theta0) / (pi*(1+varzeta^2)^(1/(2*alpha)))
-		    } else if (z > varzeta) {
-			.fct1(z.m.varz, alpha=alpha, theta0= theta0,
-			      tol = tol, subdivisions = subdivisions)
-		    } else { ## (z < varzeta) <==> (-z > -varzeta) <==> -z-(-varzeta) > 0
-			.fct1(z.m.varz, alpha=alpha, theta0= -theta0,
-			      tol = tol, subdivisions = subdivisions)
+		    } else {
+			## (z < varzeta) <==> (-z > -varzeta) <==> -z-(-varzeta) > 0
+			.fct1(z.m.varz, alpha=alpha, theta0 = sign(z - varzeta)* theta0,
+			      tol=tol, subdivisions=subdivisions)
 		    }
 		}))
 	    }
@@ -134,34 +138,50 @@ dstable <- function(x, alpha, beta,
 
 ## ------------------------------------------------------------------------------
 
-.fct1 <- function(xarg.m.varz, alpha, theta0, tol, subdivisions)
+.fct1 <- function(xarg.m.varz, alpha, theta0, tol, subdivisions,
+                  verbose = getOption("dstable.debug", default=FALSE))
 {
-    ## Integration:
+    ## -- Integrand for dstable() --
 
     ## constants (independent of integrand (x)):
     ## varzeta <- -beta * tan(pi*alpha/2)
     ## theta0 <- (1/alpha) * atan( beta * tan(pi*alpha/2))
     ## xarg.m.varz <- xarg - varzeta
     a_1 <- alpha - 1
-    aa1 <- alpha/a_1
+    ## aa1 <- alpha/a_1
     cat0 <- cos(at0 <- alpha*theta0)
-    g0 <- xarg.m.varz^aa1
+    ## g0 <- xarg.m.varz^aa1
 
     ## Function to Integrate:
     g1 <- function(x) ## and (xarg, alpha, beta) => (varzeta,at0,g0,.....)
     {
-	v <- (cat0 * cos(x))^(1/a_1) * sin(at0+alpha*x)^-aa1 * cos(at0+ a_1*x)
-	g <- g0 * v
-	g * exp(-g)
+	## v <- (cat0 * cos(x))^(1/a_1) * sin(at0+alpha*x)^-aa1 * cos(at0+ a_1*x)
+        ## much better when alpha ~= 1 :
+	v <- (cat0 * cos(x) * (xarg.m.varz/sin(at0+alpha*x))^alpha)^(1/a_1)  * cos(at0+ a_1*x)
+	## v <- g0 * v
+	r <- v * exp(-v)
+	if(any(L <- v > 1000)) ## actually, v > -(.Machine$double.min.exp * log(2)) == 708.396...
+	    r[L] <- 0
+	r
     }
 
-    theta2 <- optimize(g1, lower = -theta0, upper = pi/2,
-		       maximum = TRUE, tol = tol)$maximum
     c2 <- ( alpha / (pi*abs(a_1)*xarg.m.varz) )
+    ## Result = c2 * \int_{-t0}^{pi/2} g1(u) du
+    ## where however, g1(.) may look to be (almost) zero almost everywhere and just have a small peak
+    ## ==> Split the integral into two parts of two intervals  (t0, t_max) + (t_max, pi/2)
+
+    ##  However, this may still be bad, e.g., for dstable(71.61531, alpha=1.001, beta=0.6),
+    ##   the 2nd integral is "completely wrong" (basically zero, instead of ..e-5)
+    ## FIXME --- Lindsey uses "Romberg" integration -- maybe we must split even more
+    theta2 <- optimize(g1, lower = -theta0, upper = pi/2,
+                       maximum = TRUE, tol = tol)$maximum
     r1 <- .integrate2(g1, lower = -theta0, upper = theta2,
-		      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
+                      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
     r2 <- .integrate2(g1, lower = theta2, upper = pi/2,
-		      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
+                      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
+    if(verbose)
+        cat(sprintf(".fct1(%12.9g,..): c2*(r1+r2) = %12g*(%12g + %12g) = %g\n",
+                    xarg.m.varz, c2, r1,r2, c2*(r1+r2)))
     c2*(r1+r2)
 }
 
@@ -219,8 +239,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
     ## Parameterizations:
     if (pm == 1) {
-	delta <- delta + beta*gamma*
-	    (if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2))
+	delta <- delta + beta*gamma * .om(gamma,alpha)
     } else if (pm == 2) {
 	delta <- delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
 	gamma <- alpha^(-1/alpha) * gamma
@@ -229,9 +248,9 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ## Return directly
     ## ------  first, special cases:
     if (alpha == 2) {
-	pnorm(x, mean = 0, sd = sqrt(2))
+	pnorm(x, mean = delta, sd = sqrt(2)*gamma)
     } else if (alpha == 1 && beta == 0) {
-	pcauchy(x)
+	pcauchy(x, location = delta, scale = gamma)
     } else {
 
 	## Shift and Scale:
@@ -353,8 +372,7 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
     ## Parameterizations:
     if (pm == 1) {
-	delta <- delta + beta*gamma*
-	    (if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2))
+	delta <- delta + beta*gamma * .om(gamma,alpha)
     } else if (pm == 2) {
 	delta <- delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
 	gamma <- alpha^(-1/alpha) * gamma
@@ -362,10 +380,11 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
     result <-
         ## Special Cases:
-        if (alpha == 2)
-            qnorm(p, mean = 0, sd = sqrt(2))
-        else if (alpha == 1 & beta == 0)
-            qcauchy(p)
+	if (alpha == 2)
+	    qnorm(p, mean = delta, sd = sqrt(2)*gamma)
+	else if (alpha == 1 && beta == 0)
+	    qcauchy(p, location = delta, scale = gamma)
+
         else if (abs(alpha-1) < 1) { ## -------------- 0 < alpha < 2 ---------------
             .froot <- function(x, p) {
                 pstable(q = x, alpha=alpha, beta=beta, pm = 0,
@@ -439,8 +458,7 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 
     ## Parameterizations:
     if (pm == 1) {
-	delta <- delta + beta*gamma*
-	    (if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2))
+	delta <- delta + beta*gamma * .om(gamma,alpha)
     } else if (pm == 2) {
 	delta <- delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
 	gamma <- alpha^(-1/alpha) * gamma
