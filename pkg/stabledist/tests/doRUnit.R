@@ -33,4 +33,6 @@ if(require("RUnit", quietly=TRUE)) {
   RNGkind(oRK[1])
 }
 
+warnings()## as we see them
+
 cat('Time elapsed: ', proc.time(),'\n') # "stats"

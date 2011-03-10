@@ -88,32 +88,31 @@ dstable <- function(x, alpha, beta,
 	gamma <- alpha^(-1/alpha) * gamma
     } ## else pm == 0
 
+    ## Shift and Scale:
+    x <- (x - delta) / gamma
     ans <-
 	## Special Cases:
 	if (alpha == 2) {
-	    dnorm(x, mean = delta, sd = sqrt(2)*gamma)
+	    dnorm(x, mean = 0, sd = sqrt(2))
 	} else if (alpha == 1 && beta == 0) {
-	    dcauchy(x, location = delta, scale = gamma)
+	    dcauchy(x)
 	} else {
-
-	    ## Shift and Scale:
-	    x <- (x - delta) / gamma
 
 	    ## General Case
 	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 		tanpa2 <- tan(pi*alpha/2)
-		varzeta <- -beta * tanpa2
+		zeta <- -beta * tanpa2
 		theta0 <- atan(beta * tanpa2) / alpha
 
 		## Loop over all x values:
 		unlist(lapply(x, function(z) {
-		    z.m.varz <- abs(z - varzeta)
-		    ## Modified D.W. and M.M. {was  if (z == varzeta)}
+		    z.m.varz <- abs(z - zeta)
+		    ## Modified D.W. and M.M. {was  if (z == zeta)}
 		    if (z.m.varz <= 1e-5 * abs(z)) {
-			gamma(1+1/alpha)*cos(theta0) / (pi*(1+varzeta^2)^(1/(2*alpha)))
+			gamma(1+1/alpha)*cos(theta0) / (pi*(1+zeta^2)^(1/(2*alpha)))
 		    } else {
-			## (z < varzeta) <==> (-z > -varzeta) <==> -z-(-varzeta) > 0
-			.fct1(z.m.varz, alpha=alpha, theta0 = sign(z - varzeta)* theta0,
+			## (z < zeta) <==> (-z > -zeta) <==> -z-(-zeta) > 0
+			.fct1(z.m.varz, alpha=alpha, theta0 = sign(z - zeta)* theta0,
 			      tol=tol, subdivisions=subdivisions)
 		    }
 		}))
@@ -138,51 +137,79 @@ dstable <- function(x, alpha, beta,
 
 ## ------------------------------------------------------------------------------
 
-.fct1 <- function(xarg.m.varz, alpha, theta0, tol, subdivisions,
+.fct1 <- function(x.m.zeta, alpha, theta0, tol, subdivisions,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
     ## -- Integrand for dstable() --
 
-    ## constants (independent of integrand (x)):
-    ## varzeta <- -beta * tan(pi*alpha/2)
+    ## constants (independent of integrand (th)):
+    ## zeta <- -beta * tan(pi*alpha/2)
     ## theta0 <- (1/alpha) * atan( beta * tan(pi*alpha/2))
-    ## xarg.m.varz <- xarg - varzeta
+    ## x.m.zeta <- xarg - zeta
     a_1 <- alpha - 1
     ## aa1 <- alpha/a_1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## g0 <- xarg.m.varz^aa1
+    ## g0 <- x.m.zeta^aa1
+
+    ## g <- (cat0 * cos(th))^(1/a_1) * sin(at0+alpha*th)^-aa1 * cos(at0+ a_1*th)
+    ## much better when alpha ~= 1 :
+    ## g <- g0 * g
+    g <- function(th) (cat0 * cos(th) * (x.m.zeta/sin(at0+alpha*th))^alpha)^(1/a_1)  * cos(at0+ a_1*th)
 
     ## Function to Integrate:
-    g1 <- function(x) ## and (xarg, alpha, beta) => (varzeta,at0,g0,.....)
+    g1 <- function(th) ## and (xarg, alpha, beta) => (zeta,at0,g0,.....)
     {
-	## v <- (cat0 * cos(x))^(1/a_1) * sin(at0+alpha*x)^-aa1 * cos(at0+ a_1*x)
-        ## much better when alpha ~= 1 :
-	v <- (cat0 * cos(x) * (xarg.m.varz/sin(at0+alpha*x))^alpha)^(1/a_1)  * cos(at0+ a_1*x)
-	## v <- g0 * v
+        ## g1 = g(.) exp(-g(.))
+        v <- g(th)
+        ## making sure that we don't get   Inf * 0  =>  NaN
 	r <- v * exp(-v)
 	if(any(L <- v > 1000)) ## actually, v > -(.Machine$double.min.exp * log(2)) == 708.396...
 	    r[L] <- 0
 	r
     }
 
-    c2 <- ( alpha / (pi*abs(a_1)*xarg.m.varz) )
+    c2 <- ( alpha / (pi*abs(a_1)*x.m.zeta) )
     ## Result = c2 * \int_{-t0}^{pi/2} g1(u) du
     ## where however, g1(.) may look to be (almost) zero almost everywhere and just have a small peak
     ## ==> Split the integral into two parts of two intervals  (t0, t_max) + (t_max, pi/2)
 
     ##  However, this may still be bad, e.g., for dstable(71.61531, alpha=1.001, beta=0.6),
+    ##  or  dstable(1.205, 0.75, -0.5)
     ##   the 2nd integral is "completely wrong" (basically zero, instead of ..e-5)
     ## FIXME --- Lindsey uses "Romberg" integration -- maybe we must split even more
-    theta2 <- optimize(g1, lower = -theta0, upper = pi/2,
-                       maximum = TRUE, tol = tol)$maximum
-    r1 <- .integrate2(g1, lower = -theta0, upper = theta2,
-                      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
-    r2 <- .integrate2(g1, lower = theta2, upper = pi/2,
-                      subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
+
+    ## We know that the maximum of g1(.) is = exp(-1) = 0.3679  "at" g(.) == 1
+    ## find that by uniroot :
+    ur <- uniroot(function(th) g(th) - 1, lower = -theta0, upper = pi/2, tol = tol)
+    theta2 <- ur$root
+
+    ## now, because the peak may be extreme, we find two more intermediate values
+    ## NB: Max = 0.3679 ==> 1e-4 is a very small fraction of that
+    ## to the left:
+    th1 <- uniroot(function(th) g1(th) - 1e-4, lower = -theta0, upper = theta2,
+		   tol = tol)$root
+    if((do4 <- g1(pi/2) < 1e-4))
+        ## to the right:
+        th3 <- uniroot(function(th) g1(th) - 1e-4, lower = theta2, upper = pi/2,
+                       tol = tol)$root
+
+    Int <- function(a,b)
+        .integrate2(g1, lower = a, upper = b,
+                    subdivisions=subdivisions, rel.tol= tol, abs.tol= tol)
+
+    r1 <- Int(-theta0, th1)
+    r2 <- Int(         th1, theta2)
+    if(do4) {
+        r3 <- Int(           theta2, th3)
+        r4 <- Int(                   th3, pi/2)
+    } else {
+        r3 <- Int(           theta2, pi/2)
+        r4 <- 0
+    }
     if(verbose)
-        cat(sprintf(".fct1(%12.9g,..): c2*(r1+r2) = %12g*(%12g + %12g) = %g\n",
-                    xarg.m.varz, c2, r1,r2, c2*(r1+r2)))
-    c2*(r1+r2)
+        cat(sprintf(".fct1(%12.9g,..): c2*(r1+r2+r3+r4) = %12g*(%12g + %12g+ %12g + %12g) = %g\n",
+                    x.m.zeta, c2, r1,r2,r3,r4, c2*(r1+r2+r3+r4)))
+    c2*(r1+r2+r3+r4)
 }
 
 
@@ -245,34 +272,34 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	gamma <- alpha^(-1/alpha) * gamma
     } ## else pm == 0
 
+    ## Shift and Scale:
+    x <- (x - delta) / gamma
+
     ## Return directly
     ## ------  first, special cases:
     if (alpha == 2) {
-	pnorm(x, mean = delta, sd = sqrt(2)*gamma)
+	pnorm(x, mean = 0, sd = sqrt(2))
     } else if (alpha == 1 && beta == 0) {
-	pcauchy(x, location = delta, scale = gamma)
+	pcauchy(x)
     } else {
-
-	## Shift and Scale:
-	x <- (x - delta) / gamma
 
 	## General Case
 	if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 	    tanpa2 <- tan(pi*alpha/2)
-	    varzeta <- -beta * tanpa2
+	    zeta <- -beta * tanpa2
 	    theta0 <- atan(beta * tanpa2) / alpha
 
 	    ## Loop over all x values:
 	    unlist(lapply(x, function(z) {
-		z.m.varz <- abs(z - varzeta)
+		z.m.varz <- abs(z - zeta)
 
 		if (z.m.varz < 2 * .Machine$double.eps)
 		    ## FIXME? same problem as dstable
 		    (1/2- theta0/pi)
-		else if (z > varzeta)
+		else if (z > zeta)
 		    .FCT1(z.m.varz, alpha=alpha, theta0= theta0,
 			  tol = tol, subdivisions = subdivisions)
-		else ## (z < varzeta)
+		else ## (z < zeta)
 		    1 - .FCT1(z.m.varz, alpha=alpha, theta0= -theta0,
 			      tol = tol, subdivisions = subdivisions)
 	    }))
@@ -295,12 +322,12 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
 ## ------------------------------------------------------------------------------
 
-.FCT1 <- function(xarg.m.varz, alpha, theta0, tol, subdivisions)
+.FCT1 <- function(x.m.zeta, alpha, theta0, tol, subdivisions)
 {
     a_1 <- alpha - 1
     aa1 <- alpha/a_1
     cat0 <- cos(at0 <- alpha*theta0)
-    g0 <- xarg.m.varz^aa1
+    g0 <- x.m.zeta^aa1
 
     ## Function to integrate:
     G1 <- function(x) { ## (xarg, alpha, beta)
@@ -379,13 +406,12 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
     } ## else pm == 0
 
     result <-
-        ## Special Cases:
+	## Special Cases:
 	if (alpha == 2)
-	    qnorm(p, mean = delta, sd = sqrt(2)*gamma)
+	    qnorm(p, mean = 0, sd = sqrt(2))
 	else if (alpha == 1 && beta == 0)
-	    qcauchy(p, location = delta, scale = gamma)
-
-        else if (abs(alpha-1) < 1) { ## -------------- 0 < alpha < 2 ---------------
+	    qcauchy(p)
+	else if (abs(alpha-1) < 1) { ## -------------- 0 < alpha < 2 ---------------
             .froot <- function(x, p) {
                 pstable(q = x, alpha=alpha, beta=beta, pm = 0,
                         tol=integ.tol, subdivisions=subdivisions) - p

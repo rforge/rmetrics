@@ -1,6 +1,6 @@
 Package: stabledist
-Version: 0.5-1
-Date: 2011-03-08
+Version: 0.6-0
+Date: 2011-03-10
 Title: Stable Distribution Functions
 Author: Martin Maechler, Diethelm Wuertz and Rmetrics core team members.
 Depends: R (>= 2.10.1)

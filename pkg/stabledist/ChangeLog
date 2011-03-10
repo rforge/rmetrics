@@ -1,3 +1,8 @@
+2011-03-10  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (.fct1): use uniroot() to find theta2; then
+	possibly split into four (instead just two) intervals for integration.
+
 2011-03-08  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dist-stableMode.R (stableMode): add 'tol' (and 'beta.max')

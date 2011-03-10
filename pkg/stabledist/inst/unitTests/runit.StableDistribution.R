@@ -38,18 +38,20 @@
 #  rstable               Returns random variates for stable DF
 ################################################################################
 
+## FIXME / TODO:  need unit tests  for   stableMode()  !!
+
 
 if(do.stable.rUnitTest <-
    Sys.getenv("USER") == "maechler" && require("fBasics") &&
    ## need the newer distCheck():
-   packageDescription("fBasics")$Version > package_version("2110.80"))
+   packageDescription("fBasics")$Version >= package_version("2110.79"))
 {
     ## fBasics:  for  .distCheck()
     distCheck <- fBasics:::.distCheck
     environment(distCheck) <- asNamespace("stabledist")
     ## and re-attach "stabledist" as its contents is now masked by fBasics::dstable:
     if((P <- "package:stabledist") %in% search())
-	detach(P)
+	detach(P, character.only=TRUE)
     stopifnot(require("stabledist"),
 	      ## check that indeed we get stabledist's functions, not fBasics:
 	      identical(dstable, stabledist::dstable))
@@ -58,19 +60,21 @@ if(do.stable.rUnitTest <-
 test.stableS0 <- function()
 {
     if (do.stable.rUnitTest) {
+        ## "FIXME" in distCheck() -- would like to use  'tol = .005' for density --
+        ##         but then it would have to work for rstable() too
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 1.8, beta = 0.3, tol = .005)
+        test <- distCheck("stable", alpha = 1.8, beta = 0.3)
         print(test)
-        ## the 3rd test -- matching (mean, var)  typically fails for stable!
+        ## the 3rd test -- matching (mean, var)  typically fails for stable -- as Var(.) == Inf !
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 1.2, beta = -0.3, tol = .005)
+        test <- distCheck("stable", alpha = 1.2, beta = -0.3)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
 
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 0.6, beta = 0, tol = .005)
+        test <- distCheck("stable", alpha = 0.6, beta = 0)
         print(test)
         checkTrue(mean(test[1:2]) == 1)
     }
