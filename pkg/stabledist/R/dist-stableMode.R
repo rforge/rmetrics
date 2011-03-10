@@ -65,7 +65,7 @@ stableMode <- function(alpha, beta, beta.max = 1 - 1e-11,
     ## else
     if(beta > beta.max) beta <- beta.max
 
-    optimize(dstable, interval = c(-0.7, 0),
+    optimize(dstable, interval = c(-0.7, 0)*sign(beta),
 	     alpha = alpha, beta = beta, pm = 0,
 	     maximum = TRUE, tol = tol)$maximum
 }
