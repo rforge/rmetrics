@@ -1,11 +1,11 @@
 Package: stabledist
 Version: 0.6-0
-Date: 2011-03-10
+Date: 2011-03-11
 Title: Stable Distribution Functions
-Author: Martin Maechler, Diethelm Wuertz and Rmetrics core team members.
+Author: Diethelm Wuertz, Martin Maechler and Rmetrics core team members.
+Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
 Depends: R (>= 2.10.1)
 Suggests: fBasics, RUnit
-Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Density, Probability and Quantile functions, and random number
   generation for (skew) stable distributions, using the parametrizations of
   Nolan.

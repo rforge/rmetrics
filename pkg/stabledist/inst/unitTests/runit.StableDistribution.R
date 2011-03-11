@@ -1,4 +1,3 @@
-
 # This R package is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -14,13 +13,13 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
+# Copyrights (C) for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
-#__ and Martin Maechler, ETH Zurich __
+# and
+# Copyright (C) 2010--2011 Martin Maechler, ETH Zurich
 #
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -41,8 +40,7 @@
 ## FIXME / TODO:  need unit tests  for   stableMode()  !!
 
 
-if(do.stable.rUnitTest <-
-   Sys.getenv("USER") == "maechler" && require("fBasics") &&
+if(do.stable.rUnitTest <- require("fBasics") &&
    ## need the newer distCheck():
    packageDescription("fBasics")$Version >= package_version("2110.79"))
 {
@@ -60,8 +58,7 @@ if(do.stable.rUnitTest <-
 test.stableS0 <- function()
 {
     if (do.stable.rUnitTest) {
-        ## "FIXME" in distCheck() -- would like to use  'tol = .005' for density --
-        ##         but then it would have to work for rstable() too
+        ## "TODO" in distCheck() -- use  'tol = .005'  in newer versions
         # stable - Parameterization S0:
         test <- distCheck("stable", alpha = 1.8, beta = 0.3)
         print(test)

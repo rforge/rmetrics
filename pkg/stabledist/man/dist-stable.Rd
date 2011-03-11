@@ -17,10 +17,9 @@
 
     The functions are:
     \tabular{ll}{
-      \code{[dpqr]stable} \tab the skewed stable distribution.
+      \code{[dpqr]stable} \tab the (skewed) stable distribution.
     }
 }
-
 
 \usage{
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
@@ -79,7 +78,8 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     stable distributions. Nolan derived expressions in form of
     integrals based on the characteristic function for standardized
     stable random variables. These integrals are numerically
-    evaluated using \R's \code{\link{integrate}()} function.
+    evaluated using \R's \code{\link{integrate}()} function,
+    following Nolan (1997).
     \cr
     \dQuote{S0} parameterization [pm=0]: based on the (M) representation
     of Zolotarev for an alpha stable distribution with skewness
@@ -113,7 +113,7 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 }
 \author{
   Diethelm Wuertz for the original Rmetrics \R-port.
-  Improvements by Martin Maechler.
+  Numerical improvements by Martin Maechler.
 }
 
 
@@ -126,10 +126,12 @@ Nolan J.P. (1999);
     \emph{Stable Distributions},
     Preprint, University Washington DC, 30 pages.
 
-Nolan J.P. (1999);
-    \emph{Numerical Calculation of Stable Densities and Distribution
-    Functions},
-    Preprint, University Washington DC, 16 pages.
+Nolan J.P. (1997)
+    Numerical calculation of stable densities and distribution
+    functions.
+    \emph{Stochastic Models} \bold{13}(4), 759--774.
+    \cr
+    Also available as \file{density.ps} from Nolan's web page.
 
 Samoridnitsky G., Taqqu M.S. (1994);
     \emph{Stable Non-Gaussian Random Processes, Stochastic Models
