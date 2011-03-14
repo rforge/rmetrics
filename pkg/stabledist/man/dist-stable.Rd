@@ -89,6 +89,12 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     an intuitive meaning to gamma and delta that is lacking in
     other parameterizations.
     \cr
+    Switching the sign of \code{beta} \emph{mirrors} the distribution at
+    the vertical axis \eqn{x = \delta}{x = delta}, i.e.,
+    \deqn{f(x, \alpha, -\beta, \gamma, \delta, 0) =
+      f(2\delta-x, \alpha, +\beta, \gamma, \delta, 0),}
+    see the graphical example below.
+
     \dQuote{S} or \dQuote{S1} parameterization [pm=1]: the parameterization used
     by Samorodnitsky and Taqqu in the book Stable Non-Gaussian
     Random Processes. It is a slight modification of Zolotarev's
@@ -167,6 +173,16 @@ Weron, A., Weron R. (1999);
    rug(r)
    lines(x, pstable(q = x, alpha = 1.9, beta = 0.3),
          col="#0000FF88", lwd= 2.5)
+
+## Switching  sign(beta)  <==> Mirror the distribution around  x == delta:
+curve(dstable(x, alpha=1.2, beta =  .8, gamma = 3, delta = 2), -10, 10)
+curve(dstable(x, alpha=1.2, beta = -.8, gamma = 3, delta = 2),
+      add=TRUE, col=2)
+## or the same
+curve(dstable(2*2-x, alpha=1.2, beta = +.8, gamma = 3, delta = 2),
+      add=TRUE, col=adjustcolor("gray",0.2), lwd=5)
+abline(v = 2, col = "gray", lty=2, lwd=2)
+axis(1, at = 2, label = expression(delta == 2))
 
 ## Compute quantiles:
    x. <- -4:4

@@ -8,3 +8,9 @@
 * stableMode():  [MM] I'm pretty sure that the  'beta.max' argument is
   		 unneeded and could be eliminated.
 
+* parametrizations -- pm=0, 1, 2 ---
+  provide functions for the parameter transformation that go from
+  other to pm=0 -- and back
+  and then show how to, or  use these to to provide thransformations
+  from all pm's to any other.
+

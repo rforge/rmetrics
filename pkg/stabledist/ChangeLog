@@ -1,6 +1,12 @@
+2011-03-12  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable, .fct1): detect when the integration
+	seems completely unreliable and then also use the x=zeta value.
+	This cures all remaining big problems I've found.
+
 2011-03-10  Martin Maechler  <maechler@stat.math.ethz.ch>
 
-	* R/dpqr-stable.R (.fct1): use uniroot() to find theta2; then
+	* R/dpqr-stable.R (dstable, .fct1): use uniroot() to find theta2; then
 	possibly split into four (instead just two) intervals for integration.
 
 2011-03-08  Martin Maechler  <maechler@stat.math.ethz.ch>

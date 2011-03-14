@@ -1,7 +1,8 @@
 require("stabledist")
 
-stopifnot(0 <= dstable(4000., alpha=1.00001, beta=0.6))
+stopifnot(0 <= print(dstable(4000., alpha=1.00001, beta=0.6)))
 ## gave error in fBasics::dstable()
+## currently 3  NA/Inf warnigns
 
 x <- 2^seq(0, 20, length= 200)
 fx <- dstable(x, alpha = 1.0001, beta = 0.6)
@@ -24,8 +25,14 @@ stopifnot(all.equal(m, 0.35810298366))
 ## symmetric (beta = 0)
 (x0 <- (-16:16)/256)
 fx0 <- stabledist::dstable(x0, alpha = 0.1, beta=0, gamma = 1e6)
+fx0 <-             dstable(x0, alpha = 0.1, beta=0, gamma = 1e6)
 plot(x0, fx0, type = "o",
      main = expression(f(x, alpha== 0.1, beta == 0, gamma == 10^6)))
+stopifnot(all.equal(fx0[17],1.15508291498374),
+          all.equal(fx0[ 1],0.02910420736536),
+          all.equal(range(diff(fx0[1:8])),
+                    c(0.0011871409, 0.0025179435), tol=1e-6)
+          )
 
 ## beta > 0
 r3 <- curve(stabledist::dstable(x, alpha = 0.3, beta = 0.5, tol=1e-7),
@@ -39,7 +46,7 @@ r1 <- curve(stabledist::dstable(x, alpha = 0.1, beta = 0.5, tol=1e-7),
 	    -.4, .2, n = 512, ylim = c(0, 10))
 m1 <- stableMode(0.1, 0.5, tol=1e-15)# still with 10 warnings
 abline(v=m1, h=0, col="gray40", lty=2)
-stopifnot(all.equal(m1, -0.079192175764))
+stopifnot(all.equal(m1, -0.0791922, tol=1e-6)) # -0.07919221927, # was -0.07919217576
 title(main = expression(f(x, alpha== 0.1, beta == 0.5)))
 ## check mode *and* unimodality
 i. <- r1$x > m1
@@ -47,6 +54,14 @@ stopifnot(## decreasing to the right:
 	  diff(r1$y[ i.]) < 0,
 	  ## increasing on the left:
 	  diff(r1$y[!i.]) > 0)
+
+## alpha ~= 1  ---- and x ~ zeta(a,b):
+f1 <- dstable(6366.197,  alpha= 1.00001, beta= .1)
+f2 <- dstable(-50929.58, alpha= 1.00001, beta= -.8)
+
+## these all work (luck):
+curve(dstable(-50929+x, alpha= 1.00001, beta= -.8), 0,1, n=200)
+## and now look good
 
 
 cat('Time elapsed: ', proc.time(),'\n') # "stats"

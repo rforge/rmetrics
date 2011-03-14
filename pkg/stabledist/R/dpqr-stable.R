@@ -69,16 +69,14 @@ dstable <- function(x, alpha, beta,
     ##	 delta = location, in the range (-infinity, +infinity)
     ##	 param = type of parmeterization
 
-    ## Notes:
-    ##	 For R and SPlus compatibility use integrate()[[1]] instead of
-    ##	     integrate()$value and integrate()$integral.
-    ##	 optimize() works in both R and SPlus.
+    ## Note: S+ compatibility no longer considered (explicitly)
 
     ## Parameter Check:
+    ## NB: (gamma, delta) can be *vector*s (vectorized along x)
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2,
-              tol > 0, subdivisions > 0)
+	      0 <= gamma, length(pm) == 1, pm %in% 0:2,
+	      tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -103,19 +101,10 @@ dstable <- function(x, alpha, beta,
 		tanpa2 <- tan(pi*alpha/2)
 		zeta <- -beta * tanpa2
 		theta0 <- atan(beta * tanpa2) / alpha
-
 		## Loop over all x values:
-		unlist(lapply(x, function(z) {
-		    z.m.varz <- abs(z - zeta)
-		    ## Modified D.W. and M.M. {was  if (z == zeta)}
-		    if (z.m.varz <= 1e-5 * abs(z)) {
-			gamma(1+1/alpha)*cos(theta0) / (pi*(1+zeta^2)^(1/(2*alpha)))
-		    } else {
-			## (z < zeta) <==> (-z > -zeta) <==> -z-(-zeta) > 0
-			.fct1(z.m.varz, alpha=alpha, theta0 = sign(z - zeta)* theta0,
-			      tol=tol, subdivisions=subdivisions)
-		    }
-		}))
+		unlist(lapply(x, function(z)
+                              .fct1(z, zeta, alpha=alpha, theta0 = theta0,
+                                    tol=tol, subdivisions=subdivisions)))
 	    }
 	    ## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	    else { ## (alpha == 1)  and	 0 < |beta| <= 1  from above
@@ -137,24 +126,32 @@ dstable <- function(x, alpha, beta,
 
 ## ------------------------------------------------------------------------------
 
-.fct1 <- function(x.m.zeta, alpha, theta0, tol, subdivisions,
+.fct1 <- function(x, zeta, alpha, theta0, tol, subdivisions,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
     ## -- Integrand for dstable() --
 
-    ## constants (independent of integrand (th)):
+    x.m.zet <- abs(x - zeta)
+    f.zeta <- function()
+        gamma(1+1/alpha)*cos(theta0) / (pi*(1+zeta^2)^(1/(2*alpha)))
+
+    ## Modified: originally was  if (z == zeta),
+    ## then (D.W.)   if (x.m.zet < 2 * .Machine$double.eps)
+    ## then (M.M.)   if (x.m.zet <= 1e-5 * abs(x))
+    if(x.m.zet < 1e-10)
+        return(f.zeta())
+    ## the real check should be about the feasibility of g() below, or its integration
+
+    if(x < zeta) theta0 <- -theta0
+
+    ## constants ( independent of integrand g1(th) = g*exp(-g) ):
     ## zeta <- -beta * tan(pi*alpha/2)
     ## theta0 <- (1/alpha) * atan( beta * tan(pi*alpha/2))
-    ## x.m.zeta <- xarg - zeta
+    ## x.m.zet <- abs(x - zeta)
     a_1 <- alpha - 1
-    ## aa1 <- alpha/a_1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## g0 <- x.m.zeta^aa1
 
-    ## g <- (cat0 * cos(th))^(1/a_1) * sin(at0+alpha*th)^-aa1 * cos(at0+ a_1*th)
-    ## much better when alpha ~= 1 :
-    ## g <- g0 * g
-    g <- function(th) (cat0 * cos(th) * (x.m.zeta/sin(at0+alpha*th))^alpha)^(1/a_1)  * cos(at0+ a_1*th)
+    g <- function(th) (cat0 * cos(th) * (x.m.zet/sin(at0+alpha*th))^alpha)^(1/a_1)  * cos(at0+ a_1*th)
 
     ## Function to Integrate:
     g1 <- function(th) ## and (xarg, alpha, beta) => (zeta,at0,g0,.....)
@@ -168,7 +165,7 @@ dstable <- function(x, alpha, beta,
 	r
     }
 
-    c2 <- ( alpha / (pi*abs(a_1)*x.m.zeta) )
+    c2 <- ( alpha / (pi*abs(a_1)*x.m.zet) )
     ## Result = c2 * \int_{-t0}^{pi/2} g1(u) du
     ## where however, g1(.) may look to be (almost) zero almost everywhere and just have a small peak
     ## ==> Split the integral into two parts of two intervals  (t0, t_max) + (t_max, pi/2)
@@ -177,6 +174,11 @@ dstable <- function(x, alpha, beta,
     ##  or  dstable(1.205, 0.75, -0.5)
     ##   the 2nd integral is "completely wrong" (basically zero, instead of ..e-5)
     ## FIXME --- Lindsey uses "Romberg" integration -- maybe we must split even more
+
+
+    g. <- if(alpha >= 1) g(-theta0+ 1e-6*abs(theta0)) else g(pi/2 -1e-6*(pi/2))
+    if(is.na(g.) || identical(g., 0))# g() is not usable
+	return(f.zeta())
 
     ## We know that the maximum of g1(.) is = exp(-1) = 0.3679  "at" g(.) == 1
     ## find that by uniroot :
@@ -200,15 +202,15 @@ dstable <- function(x, alpha, beta,
     r1 <- Int(-theta0, th1)
     r2 <- Int(         th1, theta2)
     if(do4) {
-        r3 <- Int(           theta2, th3)
-        r4 <- Int(                   th3, pi/2)
+        r3 <- Int(          theta2, th3)
+        r4 <- Int(                  th3, pi/2)
     } else {
-        r3 <- Int(           theta2, pi/2)
+        r3 <- Int(          theta2,      pi/2)
         r4 <- 0
     }
     if(verbose)
-        cat(sprintf(".fct1(%12.9g,..): c2*(r1+r2+r3+r4) = %12g*(%12g + %12g+ %12g + %12g) = %g\n",
-                    x.m.zeta, c2, r1,r2,r3,r4, c2*(r1+r2+r3+r4)))
+        cat(sprintf(".fct1(%11g,%10g,..): c2*sum(r[1..4])= %11g*(%9.4g + %9.4g + %9.4g + %9.4g)= %g\n",
+                    x,zeta, c2, r1,r2,r3,r4, c2*(r1+r2+r3+r4)))
     c2*(r1+r2+r3+r4)
 }
 
@@ -259,10 +261,11 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
     x <- q
     ## Parameter Check:
+    ## NB: (gamma, delta) can be *vector*s (vectorized along x)
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2,
-              tol > 0, subdivisions > 0)
+	      0 <= gamma, length(pm) == 1, pm %in% 0:2,
+	      tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -291,16 +294,16 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
 	    ## Loop over all x values:
 	    unlist(lapply(x, function(z) {
-		z.m.varz <- abs(z - zeta)
+		z.m.zet <- abs(z - zeta)
 
-		if (z.m.varz < 2 * .Machine$double.eps)
+		if (z.m.zet < 2 * .Machine$double.eps)
 		    ## FIXME? same problem as dstable
 		    (1/2- theta0/pi)
 		else if (z > zeta)
-		    .FCT1(z.m.varz, alpha=alpha, theta0= theta0,
+		    .FCT1(z.m.zet, alpha=alpha, theta0= theta0,
 			  tol = tol, subdivisions = subdivisions)
 		else ## (z < zeta)
-		    1 - .FCT1(z.m.varz, alpha=alpha, theta0= -theta0,
+		    1 - .FCT1(z.m.zet, alpha=alpha, theta0= -theta0,
 			      tol = tol, subdivisions = subdivisions)
 	    }))
 	}
@@ -392,10 +395,11 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ##	 Returns quantiles for stable DF
 
     ## Parameter Check:
+    ## NB: (gamma, delta) can be *vector*s (vectorized along x)
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2,
-              tol > 0, subdivisions > 0)
+	      0 <= gamma, length(pm) == 1, pm %in% 0:2,
+	      tol > 0, subdivisions > 0)
 
     ## Parameterizations:
     if (pm == 1) {
@@ -478,9 +482,10 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     ## slightly amended along  nacopula::rstable1
 
     ## Parameter Check:
+    ## NB: (gamma, delta) can be *vector*s (vectorized along x)
     stopifnot( 0 < alpha, alpha <= 2, length(alpha) == 1,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
-	      length(pm) == 1, pm %in% 0:2)
+	      0 <= gamma, length(pm) == 1, pm %in% 0:2)
 
     ## Parameterizations:
     if (pm == 1) {
