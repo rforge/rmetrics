@@ -1,9 +1,11 @@
 
 * Compare with Jim Lindsey's "stable" package
   --> http://www.commanster.eu/rcode.html
-  Maybe even ask him to transfer maintainership and make it CRAN-y ?
-  (at SfS ETH: source in /usr/local/app/R/R_local/JimLindsey/stable/
-   installed in          /usr/local/app/R/R_local/JimLindsey/library )
+  Maybe even ask him to make it CRANny
+  (maybe after transfering maintainership ?)
+
+  At SfS ETH: source in /usr/local/app/R/R_local/JimLindsey/stable/
+  installed in          /usr/local/app/R/R_local/JimLindsey/library
 
 * stableMode():  [MM] I'm pretty sure that the  'beta.max' argument is
   		 unneeded and could be eliminated.
@@ -14,3 +16,9 @@
   and then show how to, or  use these to to provide thransformations
   from all pm's to any other.
 
+* Nolan (?) and other places mention *asymptotic* formulae
+  --> use these for large |x|, notably for  dstable(*, log = TRUE)
+
+* pstable() should also get   lower.tail = TRUE,  log.p = FALSE
+  ~~~~~~~   arguments
+* qstable() ditto

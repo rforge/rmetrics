@@ -148,7 +148,6 @@ Weron, A., Weron R. (1999);
     \emph{Computer Simulation of Levy alpha-Stable Variables and
     Processes},
     Preprint Technical University of Wroclaw, 13 pages.
-
 }
 
 \examples{

@@ -15,9 +15,9 @@ stopifnot((dlx <- diff(log(fx))) < 0,
 zeta <- function(alpha,beta) if(alpha==1) 0 else -beta*tan(pi/2*alpha)
 
 ## negative beta:
-curve(dstable(x, 0.75, -.5), -.5, 1.5, n=501)# ok, now
+cx <- curve(dstable(x, 0.75, -.5), -.5, 1.5, n=501)# ok, now
 m <- stableMode(0.75, -.5, tol=1e-14)
-stopifnot(all.equal(m, 0.35810298366))
+stopifnot(all.equal(m, 0.35810298366, tol = 1e-7))
 
 ###-------- "small" alpha -----------------
 ## alpha --> 0 --- very heavy tailed -- and numerically challenging.
@@ -63,5 +63,40 @@ f2 <- dstable(-50929.58, alpha= 1.00001, beta= -.8)
 curve(dstable(-50929+x, alpha= 1.00001, beta= -.8), 0,1, n=200)
 ## and now look good
 
+### ---- alpha == 1 ---------
+
+curve(dstable(x, alpha = 1, beta = 0.3), -20, 20,
+      log="y", n= 256)
+## works, but discontinuous --- FIXME
+
+## large x gave problems at times:
+dstable(-1e20, alpha = 0.9,  beta = 0.8)
+
+chkUnimodal <- function(x) {
+    ## x = c(x1, x2)  and  x1 is *increasing*  and x2 is *decreasing*
+    stopifnot((n <- length(x)) %% 2 == 0,
+              (n2 <- n %/% 2) >= 2)
+    if(is.unsorted(x[seq_len(n2)])) stop("first part is *not* increasing")
+    if(is.unsorted(x[n:(n2+1)]))    stop("seconds part is *not* decreasing")
+    invisible(x)
+}
+
+xLrg <- c(10^c(10:100,120, 150, 200, 300), Inf)
+xLrg <- sort(c(-xLrg, xLrg))
+d <- dstable(xLrg, alpha = 1.8,   beta = 0.3 ); chkUnimodal(d)
+d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ); chkUnimodal(d) # >= 50 warnings
+d <- dstable(xLrg, alpha = 1.001, beta = -0.9) # >= 50 warnings
+if(FALSE)# FIXME
+    chkUnimodal(d)
+d <- dstable(xLrg, alpha = 1. ,   beta = 0.3 ); chkUnimodal(d) # "ok" now (all == 0, currently)
+d <- dstable(xLrg, alpha = 0.9,   beta = 0.3 ) # 11 warnings
+if(FALSE)# FIXME
+    chkUnimodal(d)
+d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 22 warnings
+if(FALSE)# FIXME
+    chkUnimodal(d)
+d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings -- *NOT* decreasing
+if(FALSE)# FIXME
+    chkUnimodal(d)
 
 cat('Time elapsed: ', proc.time(),'\n') # "stats"
