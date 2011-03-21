@@ -1,4 +1,5 @@
 require("stabledist")
+dPareto <- stabledist:::dPareto
 
 stopifnot(0 <= print(dstable(4000., alpha=1.00001, beta=0.6)))
 ## gave error in fBasics::dstable()
@@ -84,19 +85,29 @@ chkUnimodal <- function(x) {
 xLrg <- c(10^c(10:100,120, 150, 200, 300), Inf)
 xLrg <- sort(c(-xLrg, xLrg))
 d <- dstable(xLrg, alpha = 1.8,   beta = 0.3 ); chkUnimodal(d)
-d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ); chkUnimodal(d) # >= 50 warnings
+d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ) # >= 50 warnings
+try(chkUnimodal(d))
+## look at the problem:
+curve(dstable(-x, alpha = 1.01, beta = 0.3, log=TRUE), 1e10, 1e20,
+      log="x", n=512)
+curve(dPareto(-x, alpha = 1.01, beta = 0.3, log=TRUE), add=TRUE,
+      col=2, lwd=2, lty=2)
+
+
 d <- dstable(xLrg, alpha = 1.001, beta = -0.9) # >= 50 warnings
-if(FALSE)# FIXME
-    chkUnimodal(d)
-d <- dstable(xLrg, alpha = 1. ,   beta = 0.3 ); chkUnimodal(d) # "ok" now (all == 0, currently)
+try( chkUnimodal(d) ) # FIXME
+## look at the problem:
+curve(dstable(-x, alpha = 1.001, beta = -0.9, log=TRUE), 1e10, 1e20,
+      log="x", n=512)
+curve(dPareto(-x, alpha = 1.001, beta = -0.9, log=TRUE), add=TRUE,
+      col=2, lwd=2, lty=2)
+
+d <- dstable(xLrg, alpha = 1. ,   beta = 0.3 ); chkUnimodal(d) # "ok" now
 d <- dstable(xLrg, alpha = 0.9,   beta = 0.3 ) # 11 warnings
-if(FALSE)# FIXME
-    chkUnimodal(d)
+try( chkUnimodal(d) ) # FIXME
 d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 22 warnings
-if(FALSE)# FIXME
-    chkUnimodal(d)
+try( chkUnimodal(d) ) # FIXME
 d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings -- *NOT* decreasing
-if(FALSE)# FIXME
-    chkUnimodal(d)
+try( chkUnimodal(d) ) # FIXME
 
 cat('Time elapsed: ', proc.time(),'\n') # "stats"

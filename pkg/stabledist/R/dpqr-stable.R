@@ -73,6 +73,11 @@ C.stable.tail <- function(alpha, log = FALSE) {
 ##' @return
 ##' @author Martin Maechler
 dPareto <- function(x, alpha, beta, log = FALSE) {
+    if(any(neg <- x < 0)) { ## left tail
+	x   [neg] <- -x	  [neg]
+        beta <- rep(beta, length.out=length(x))
+	beta[neg] <- -beta[neg]
+    }
     if(log)
 	log(alpha)+ log1p(beta)+ C.stable.tail(alpha, log=TRUE) -(1+alpha)*log(x)
     else
@@ -80,6 +85,10 @@ dPareto <- function(x, alpha, beta, log = FALSE) {
 }
 
 pPareto <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
+    if(any(neg <- x < 0)) { ## left tail
+	x   [neg] <- -x	  [neg]
+	beta[neg] <- -beta[neg]
+    }
     if(log.p) {
 	if(lower.tail) ## log(1 - iF)
 	    log1p(-(1+beta)* C.stable.tail(alpha)* x^(-alpha))
@@ -165,9 +174,21 @@ dstable <- function(x, alpha, beta,
 	    }
 	}
 
-    ans <- ans/gamma
-    ## Return:
-    if (log) log(ans) else ans
+    i0 <- ans == 0 # --> we can do better using asymptotic:
+    if(any(i0)) {
+	d <- dPareto(x[i0], alpha, beta, log=log)
+	## do recycle correctly:
+	gamm <- if(length(gamma) > 1)
+	    rep(gamma, length.out=length(x))[i0] else gamma
+	ans[i0] <- if(log) d - log(gamm) else d/gamm
+    }
+    if(any(io <- !i0)) {
+	d <- ans[io]
+	gamm <- if(length(gamma) > 1)
+	    rep(gamma, length.out=length(x))[io] else gamma
+	ans[io] <- if (log) log(d/gamm) else d/gamm
+    }
+    ans
 }
 
 ## ------------------------------------------------------------------------------
