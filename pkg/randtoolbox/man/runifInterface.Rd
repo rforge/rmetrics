@@ -11,7 +11,7 @@ for example \code{runif()}, \code{rnorm()}, \code{sample()} and
 also \code{set.seed()}.
 }
 \usage{
-set.generator <- function(name=c("congruRand", "WELL", "default"), 
+set.generator(name=c("congruRand", "WELL", "MersenneTwister", "default"), 
 parameters=NULL, seed=NULL, ..., only.dsc=FALSE)
 put.description(description)		
 get.description()

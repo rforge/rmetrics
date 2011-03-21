@@ -1,5 +1,5 @@
-TEXI2DVI = R CMD texi2dvi --pdf
-SWEAVE = R CMD Sweave
+TEXI2DVI = $(R_HOME)/bin/R CMD texi2dvi --pdf
+SWEAVE = $(R_HOME)/bin/R CMD Sweave
 RM = rm -rf
 
 all: randtoolbox.pdf clean

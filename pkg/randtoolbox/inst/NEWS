@@ -1,5 +1,13 @@
 === randtoolbox: an R package for random number generation and tests ===
 
+Version 1.10
+=============
+
+WARNING FIXES
+- fix some warnings following the release of R 2.13.0: 
+the Makefile and the man page of runifInterface.
+
+
 Version 1.09
 =============
 

@@ -186,11 +186,11 @@ learn and to retain, is all these (bitwise) operations can be easily done in man
 languages (e.g in \soft{C}) ensuring a very fast algorithm.
 
 The set of parameters used are 
-\begin{itemize*}
+\begin{itemize}
 \item $(\omega, n, m, r) = (32, 624, 397, 31)$,
 \item $a = 0\times 9908B0DF, b=0\times 9D2C5680, c=0\times EFC60000$,
 \item $u=11$, $l=18$, $s=7$ and $t=15$.
-\end{itemize*}
+\end{itemize}
 These parameters ensure a good equidistribution and a period of $2^{n\omega -r}-1 = 2^{19937}-1$.
 
 The great advantages of the MT algorithm are a far longer period than
