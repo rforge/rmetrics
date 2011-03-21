@@ -26,6 +26,7 @@ dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
         log = FALSE,
         tol = 16*.Machine$double.eps, subdivisions = 1000)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
+        lower.tail = TRUE, log.p = FALSE,
 	tol = 16*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
         tol = .Machine$double.eps^0.25, maxiter = 1000,
@@ -46,8 +47,10 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     parameterization, an integer in \code{0, 1, 2}; by default \code{pm=0},
     the \sQuote{S0} parameterization.}
   \item{x, q}{numeric vector of quantiles.}
-  \item{log}{logical; if TRUE, the probabilities \code{p} are given as
-    \code{log(p)}.}
+  \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
+  \item{lower.tail}{logical; if TRUE (default), probabilities are
+    \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.}
+
   \item{integ.tol}{positive number, the tolerance used for numerical
     integration, see \code{\link{integrate}}.}
   \item{tol}{numerical tolerance,
@@ -110,6 +113,18 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     currently not available for these functions.  The scale is the same
     as the \dQuote{S2} parameterization, the shift is
     \eqn{-beta*g(alpha)}, where \eqn{g(alpha)} is defined in Nolan(1999).
+}
+\section{Tail Behavior}{
+  The asymptotic behavior for large \eqn{x}, aka \dQuote{tail behavior}
+  for the cumulative \eqn{F(x) = P(X \le x)}{F(x) = P(X <= x)}
+  is (for \eqn{x\to\infty}{x -> Inf})
+  \deqn{1 - F(x) \sim (1+\beta) C_\alpha x^{-\alpha},}{1 - F(x) ~ (1+b) C_a x^-a,}
+  where \eqn{C_\alpha = \Gamma(\alpha)/\pi \sin(\alpha\pi/2)
+           }{a=alpha, b=beta, C_a = Gamma(a)/pi * sin(a*pi/2)}; hence also
+  \deqn{F(-x) \sim (1-\beta) C_\alpha x^{-\alpha}.}{F(-x) ~ (1+b) C_a x^-a.}
+
+  Differentiating \eqn{F()} above gives
+  \deqn{f(x) \sim \alpha(1-\beta) C_\alpha x^{-(1+\alpha)}.}{f(x) ~ a(1-b) C_a x^-(1+a).}
 }
 
 \seealso{
@@ -191,4 +206,3 @@ axis(1, at = 2, label = expression(delta == 2))
 }
 
 \keyword{distribution}
-

@@ -1,3 +1,14 @@
+2011-03-21  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (pstable): new arguments (lower.tail=TRUE, log.p=FALSE)
+	not used "properly" yet
+	(dPareto, pPareto): new auxiliary functions for tail behavior; not
+	used yet - apart from tests:
+
+	* tests/tails.R: new: testing tail behavior.
+
+	* R/dpqr-stable.R (qstable): infinite while(.) now caught
+
 2011-03-12  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dpqr-stable.R (dstable, .fct1): detect when the integration

@@ -1,10 +1,25 @@
 require("stabledist")
+pPareto <- stabledist:::pPareto
 
 source(system.file("test-tools.R", package = "Matrix"))
-                                        #-> identical3(), showProct.time(),...
+                                        #-> identical3(), showProc.time(),...
 
 stopifnot(all.equal(pstable(0.3, 0.75, -.5, tol= 1e-14),
 		    0.66887227658457, tol = 1e-10))
+
+## a "outer vectorized" version:
+pstabALL <- function(x, alpha, beta, ...)
+    sapply(alpha, function(alph)
+           sapply(beta, function(bet)
+			pstable(x, alph, bet, ...)))
+
+alph.s <- (1:32)/16   # in (0, 2]
+beta.s <- (-16:16)/16 # in [-1, 1]
+stopifnot(pstabALL( Inf, alph.s, beta.s) == 1,
+	  pstabALL(-Inf, alph.s, beta.s, log.p=TRUE) == -Inf,
+	  pstabALL( 0,   alph.s, beta = 0) == 0.5,
+	  TRUE)
+
 
 ## Check that   pstable() is the integral of dstable() --- using simple Simpson's rule
 
@@ -55,6 +70,7 @@ chk.pd.stable <- function(alpha, beta, xmin=NA, xmax=NA,
     invisible(list(x=x, f=fx, F=Fx, i. = i.ev, F.appr. = Fx.))
 }
 
+pdf("pstab-ex.pdf")
 op <- par(mfrow=2:1, mar = .1+c(3,3,1,1), mgp=c(1.5, 0.6,0))
 
 c1 <- chk.pd.stable(.75, -.5,  -1, 1.5, eq.tol = .006) # (.00413 on 64-Lnx)
@@ -76,7 +92,20 @@ if(dev.interactive()) {
     curve(dstable(x, 1.001, 0.95), -10, 30, log="y")
 }
 c5 <- chk.pd.stable(1.,    0.99,  -6, 50)
-c6 <- chk.pd.stable(1.001, 0.95, -10, 30)
+c6 <- chk.pd.stable(1.001, 0.95, -10, 30)# 2nd plot *clearly* shows problem
+
+## right tail:
+try(## FIXME:
+c1.0 <- chk.pd.stable(1., 0.8,  -6, 500)
+)
+## show it more clearly
+curve(pstable(x, alpha=1, beta=0.5), 20, 800, log="x", ylim=c(.97, 1))
+curve(pPareto(x, alpha=1, beta=0.5), add=TRUE, col=2, lty=2)
+abline(h=1, lty=3,col="gray")
+# and similarly
+curve(pstable(x, alpha=1.001, beta=0.5), 20, 800, log="x", ylim=c(.97, 1))
+curve(pPareto(x, alpha=1.001, beta=0.5), add=TRUE, col=2, lty=2)
+abline(h=1, lty=3,col="gray")
 
 showProc.time() #
 

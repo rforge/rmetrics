@@ -44,6 +44,53 @@
 .om <- function(gamma,alpha)
     if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2)
 
+##' @title C_alpha - the tail constant
+##' @param alpha numeric vector of stable tail parameters, in [0,2]
+##' @return
+##' @author Martin Maechler
+C.stable.tail <- function(alpha, log = FALSE) {
+    stopifnot(0 <= alpha, alpha <= 2)
+    r <- alpha
+    i0 <- alpha == 0
+    r[i0] <- if(log) -log(2) else 0.5
+    al <- alpha[!i0]
+    r[!i0] <-
+        if(log) lgamma(al)-log(pi)+ log(sin(al*pi/2))
+        else gamma(al)/pi * sin(al*pi/2)
+    if(any(a2 <- alpha == 2)) r[a2] <- if(log) -Inf else 0
+    r
+}
+
+##' According to Nolan's  "tail.pdf" paper, where he takes *derivatives*
+##' of the tail approximation 1-F(x) ~ (1+b) C_a x^{-a}  to prove
+##' that    f(x) ~  a(1+b) C_a x^{-(1+a)} ...
+##'
+##' @title tail approximation density for dstable()
+##' @param x
+##' @param alpha
+##' @param beta
+##' @param log if true, return  log(f(.))
+##' @return
+##' @author Martin Maechler
+dPareto <- function(x, alpha, beta, log = FALSE) {
+    if(log)
+	log(alpha)+ log1p(beta)+ C.stable.tail(alpha, log=TRUE) -(1+alpha)*log(x)
+    else
+	alpha*(1+beta)* C.stable.tail(alpha)* x^(-(1+alpha))
+}
+
+pPareto <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
+    if(log.p) {
+	if(lower.tail) ## log(1 - iF)
+	    log1p(-(1+beta)* C.stable.tail(alpha)* x^(-alpha))
+	else ## log(iF)
+	    log1p(beta)+ C.stable.tail(alpha, log=TRUE) - alpha*log(x)
+    } else {
+	iF <- (1+beta)* C.stable.tail(alpha)* x^(-alpha)
+	if(lower.tail) 1-iF else iF
+    }
+}
+
 dstable <- function(x, alpha, beta,
 		    gamma = 1, delta = 0, pm = 0, log = FALSE,
 		    tol = 16*.Machine$double.eps, subdivisions = 1000)
@@ -308,6 +355,7 @@ x.exp.m.x <- function(x) {
 
 
 pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
+                    lower.tail = TRUE, log.p = FALSE,
 		    tol = 16*.Machine$double.eps, subdivisions = 1000)
 {
     ## A function implemented by Diethelm Wuertz
@@ -337,11 +385,18 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ## Return directly
     ## ------  first, special cases:
     if (alpha == 2) {
-	pnorm(x, mean = 0, sd = sqrt(2))
+	pnorm(x, mean = 0, sd = sqrt(2), lower.tail=lower.tail, log.p=log.p)
     } else if (alpha == 1 && beta == 0) {
-	pcauchy(x)
+	pcauchy(x, lower.tail=lower.tail, log.p=log.p)
     } else {
 
+        retValue <- function(F, useLower) {
+            if(useLower) {
+                if(log.p) log(F) else F
+            } else { ## upper: 1 - F
+                if(log.p) log1p(-F) else 1 - F
+            }
+        }
 	## General Case
 	if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 	    tanpa2 <- tan(pi*alpha/2)
@@ -350,17 +405,19 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
 	    ## Loop over all x values:
 	    unlist(lapply(x, function(z) {
-		z.m.zet <- abs(z - zeta)
-
-		if (z.m.zet < 2 * .Machine$double.eps)
+		if (abs(z - zeta) < 2 * .Machine$double.eps) {
 		    ## FIXME? same problem as dstable
-		    (1/2- theta0/pi)
-		else if (z > zeta)
-		    .FCT1(z.m.zet, alpha=alpha, theta0= theta0,
-			  tol = tol, subdivisions = subdivisions)
-		else ## (z < zeta)
-		    1 - .FCT1(z.m.zet, alpha=alpha, theta0= -theta0,
-			      tol = tol, subdivisions = subdivisions)
+		    r <- if(lower.tail) (1/2- theta0/pi) else 1/2+ theta0/pi
+		    if(log.p) log(r) else r
+		} else {
+		    ## FIXME: for alpha > 1 -- the following computes F1 = 1 -c3*r(x)
+		    .F1 <- .FCT1(z, zeta, alpha=alpha,
+				 theta0= sign(z - zeta)* theta0,
+				 tol = tol, subdivisions = subdivisions)
+		    retValue(.F1, useLower =
+			     ((z > zeta && lower.tail) ||
+			      (z < zeta && !lower.tail)))
+		}
 	    }))
 	}
 	## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
@@ -368,11 +425,13 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	    ## Loop over all x values:
 	    unlist(lapply(x, function(z) {
 		if (beta >= 0) {
-		    .FCT2(xarg = z, beta = beta,
-			  tol = tol, subdivisions = subdivisions)
+		    retValue(.FCT2( z, beta = beta,
+				   tol = tol, subdivisions = subdivisions),
+			     lower.tail)
 		} else {
-		    1 - .FCT2(xarg = -z, beta = -beta,
-			      tol = tol, subdivisions = subdivisions)
+		    retValue(.FCT2(-z, beta = -beta,
+				   tol = tol, subdivisions = subdivisions),
+			     ! lower.tail)
 		}
 	    }))
 	}
@@ -382,19 +441,19 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 ## ------------------------------------------------------------------------------
 
 ##' Auxiliary for pstable()  (for alpha != 1)
-.FCT1 <- function(x.m.zet, alpha, theta0, tol, subdivisions)
+.FCT1 <- function(x, zeta, alpha, theta0, tol, subdivisions)
 {
+    if(is.infinite(x))
+	return(1)
     ## identically as in .fct1() for dstable():
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
     ## Nolan(1997) shows that   g() is montone
-    g <- function(th) (cat0 * cos(th) * (x.m.zet/sin(at0+alpha*th))^alpha)^(1/a_1)  * cos(at0+ a_1*th)
+    g <- function(th) (cat0 * cos(th) * (abs(x-zeta)/sin(at0+alpha*th))^alpha)^(1/a_1) *
+        cos(at0+ a_1*th)
 
     ## Function to integrate:
-    G1 <- function(th) { ## (xarg, alpha, beta)
-	v <- g(th)
-	exp(-v)
-    }
+    G1 <- function(th) exp(-g(th))
 
     ## as g() is montone,  G1() is too -- so the maximum is at the boundary
 
@@ -411,28 +470,30 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ## c1 + c3*(r1+r2)
     r <- .integrate2(G1, lower = -theta0, upper = pi/2, subdivisions = subdivisions,
                      rel.tol = tol, abs.tol = tol)
+    ## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
     c1 + c3* r
 }
 
 ## ------------------------------------------------------------------------------
 
 ##' Auxiliary for pstable()  only used when alpha == 1 :
-.FCT2 <- function(xarg, beta, tol, subdivisions)
+.FCT2 <- function(x, beta, tol, subdivisions)
 {
     i2b <- 1/(2*beta)
     p2b <- pi*i2b # = pi/(2 beta)
+    if((ea <- -p2b*x) < -.large.exp.arg) ## ==> g(.) == 0  ==> G2(.) == 1
+	return(1)
+    if(ea > .large.exp.arg) ## ==> g(.) == Inf	==> G2(.) == 0
+	return(0)
     pi2 <- pi/2
-    g. <- exp(-p2b*xarg)
+    g. <- exp(ea)
 
-    ## Function to Integrate; x is a non-sorted vector!
-    G2 <- function(x) { ## and (xarg, beta)
-	g <- p2b+ x # == g'/beta where g' := pi/2 + beta*x
-	v <- g / (p2b*cos(x)) * exp(g*tan(x))
-	g <- g. * v
-	gval <- exp(-g)
-	if(any(ina <- is.na(gval))) gval[ina] <- 0 ## replace NA at pi/2
-	gval
+    g <- function(th) {
+        g <- p2b + th # == g'/beta where g' := pi/2 + beta*th
+	g. * g / (p2b*cos(th)) * exp(g*tan(th))
     }
+    ## Function to Integrate; th is a non-sorted vector!
+    G2 <- function(th) exp(-g(th))
 
     ## Integration:
     theta2 <- optimize(G2, lower = -pi2, upper = pi2,
@@ -479,7 +540,7 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	    qnorm(p, mean = 0, sd = sqrt(2))
 	else if (alpha == 1 && beta == 0)
 	    qcauchy(p)
-	else if (abs(alpha-1) < 1) { ## -------------- 0 < alpha < 2 ---------------
+	else { ## -------------- 0 < alpha < 2 ---------------
             .froot <- function(x, p) {
                 pstable(q = x, alpha=alpha, beta=beta, pm = 0,
                         tol=integ.tol, subdivisions=subdivisions) - p
@@ -514,17 +575,20 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 			else
 			    qcauchy(pp)
 		}
-                root <- NA
-                counter <- 0
-                while (is.na(root)) {
-                    root <- .unirootNA(.froot, interval = c(xmin, xmax), p = pp,
-                                       tol=tol, maxiter=maxiter)
-                    counter <- counter + 1
-                    xmin <- xmin-2^counter
-                    xmax <- xmax+2^counter
-                }
-                root
-            }))
+		dx <- 1
+		repeat {
+		    root <- .unirootNA(.froot, interval = c(xmin, xmax), p = pp,
+				       tol=tol, maxiter=maxiter)
+		    if(!is.na(root))
+			break
+		    xmin <- xmin- dx
+		    xmax <- xmax+ dx
+		    if(xmin == -Inf && xmax == +Inf)
+			stop("could not find an interval for x where pstable(x,*) - p changes sign")
+		    dx <- dx * 2
+		}
+		root
+	    }))
         }
 
     ## Result:
