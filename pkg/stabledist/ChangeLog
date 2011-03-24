@@ -1,3 +1,10 @@
+2011-03-23  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable -> .fct1 -> g): more careful computation
+	of g(), notably at +- pi/2 where it could become NaN instead of 0.
+	Numerically better but considerably (~ 30-40% ?) slower!
+	* tests/dstab-ex.R: testing that
+
 2011-03-21  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dpqr-stable.R (pstable): new arguments (lower.tail=TRUE, log.p=FALSE)

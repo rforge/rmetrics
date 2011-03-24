@@ -1,6 +1,9 @@
 require("stabledist")
 dPareto <- stabledist:::dPareto
 
+source(system.file("test-tools.R", package = "Matrix"))
+                                        #-> identical3(), showProc.time(),...
+
 stopifnot(0 <= print(dstable(4000., alpha=1.00001, beta=0.6)))
 ## gave error in fBasics::dstable()
 ## currently 3  NA/Inf warnigns
@@ -19,6 +22,8 @@ zeta <- function(alpha,beta) if(alpha==1) 0 else -beta*tan(pi/2*alpha)
 cx <- curve(dstable(x, 0.75, -.5), -.5, 1.5, n=501)# ok, now
 m <- stableMode(0.75, -.5, tol=1e-14)
 stopifnot(all.equal(m, 0.35810298366, tol = 1e-7))
+
+showProc.time()
 
 ###-------- "small" alpha -----------------
 ## alpha --> 0 --- very heavy tailed -- and numerically challenging.
@@ -55,6 +60,8 @@ stopifnot(## decreasing to the right:
 	  diff(r1$y[ i.]) < 0,
 	  ## increasing on the left:
 	  diff(r1$y[!i.]) > 0)
+
+showProc.time()
 
 ## alpha ~= 1  ---- and x ~ zeta(a,b):
 f1 <- dstable(6366.197,  alpha= 1.00001, beta= .1)
@@ -109,5 +116,34 @@ d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 22 warnings
 try( chkUnimodal(d) ) # FIXME
 d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings -- *NOT* decreasing
 try( chkUnimodal(d) ) # FIXME
+
+showProc.time()
+
+##-------------  beta = 1  ---------------------
+options(dstable.debug = TRUE)
+dstable(1, alpha=1.2,   beta= 1 - 1e-7)#ok
+dstable(1, alpha=1.2,   beta= 1)# gave error, because   g(pi/2) < 0
+dstable(0, alpha=13/16, beta= 1 -2^-52)# had error as   g(-theta0)  |->  NaN
+dstable(0, alpha=19/16, beta= 1)       # had error as   g(pi/2)     |->  NaN
+
+options(dstable.debug = FALSE)
+
+if(Sys.getenv("USER") == "maechler" &&
+   !nzchar(Sys.getenv("R_quick_check"))) {
+ ## This needs 65 seconds (nb-mm3: 54*32*11 dstable() values)
+
+ ep <- 2^-(1:54)## beta := 1 - ep ---> 1  {NB: 1 - 2^-54 == 1  numerically}
+ alph.s <- (1:32)/16   # in (0, 2]
+ f.b1 <- sapply(alph.s, function(alf)
+                sapply(1 - ep, function(bet)
+                       dstable(0:10, alpha = alf, beta = bet)),
+                simplify = if(getRversion() >= "2.13") "array" else TRUE)
+ print(summary(f.b1))
+ r.b1 <- range(f.b1)
+ stopifnot(0 < r.b1[1], r.b1[2] < 0.35)
+ ## "FIXME" test more: monotonicity in x {mode is < 0 = min{x_i}}, beta, alpha, ...
+ showProc.time()
+
+} else message("expensive dstable() checks  have been skipped")
 
 cat('Time elapsed: ', proc.time(),'\n') # "stats"

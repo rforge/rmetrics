@@ -37,6 +37,9 @@
 
 ##==============================================================================
 
+pi2 <- pi/2 # - we use it so often
+
+
 ##' @title omega() according to Lambert & Lindsey (1999), p.412
 ##' @param gamma
 ##' @param alpha
@@ -55,8 +58,8 @@ C.stable.tail <- function(alpha, log = FALSE) {
     r[i0] <- if(log) -log(2) else 0.5
     al <- alpha[!i0]
     r[!i0] <-
-        if(log) lgamma(al)-log(pi)+ log(sin(al*pi/2))
-        else gamma(al)/pi * sin(al*pi/2)
+        if(log) lgamma(al)-log(pi)+ log(sin(al*pi2))
+        else gamma(al)/pi * sin(al*pi2)
     if(any(a2 <- alpha == 2)) r[a2] <- if(log) -Inf else 0
     r
 }
@@ -155,7 +158,8 @@ dstable <- function(x, alpha, beta,
 	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 		tanpa2 <- tan(pi*alpha/2)
 		zeta <- -beta * tanpa2
-		theta0 <- atan(beta * tanpa2) / alpha
+		theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
+
 		## Loop over all x values:
 		unlist(lapply(x, function(z)
                               .fct1(z, zeta, alpha=alpha, theta0 = theta0,
@@ -231,9 +235,18 @@ x.exp.m.x <- function(x) {
     ## x.m.zet <- abs(x - zeta)
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-
-    g <- function(th) (cat0 * cos(th) * (x.m.zet/sin(at0+alpha*th))^alpha)^(1/a_1)  * cos(at0+ a_1*th)
-    ## Function to Integrate:
+    ## Nolan(1997) shows that   g() is montone, 0 -> Inf or Inf -> 0
+    g <- function(th) {
+	r <- th
+	## g(-pi/2) or g(pi/2) could become  NaN --> work around
+	i.bnd <- abs(pi/2 -sign(a_1)*th) < 64*.Machine$double.eps
+	r[i.bnd] <- 0
+	th <- th[io <- !i.bnd]
+	att <- at0 + alpha*th ## = alpha*(theta0 + theta)
+	r[io] <- (cat0 * cos(th) * (x.m.zet/sin(att))^alpha)^(1/a_1) * cos(att-th)
+	r
+    }
+    ## Function to integrate:
     g1 <- function(th) {
 	## g1 :=  g(.) exp(-g(.))
 	x.exp.m.x( g(th) )
@@ -252,14 +265,14 @@ x.exp.m.x <- function(x) {
     ## NB: g() is monotone, typically from 0 to +Inf
     ##     alpha >= 1  <==>  g() is falling, ie. from Inf --> 0;  otherwise growing from 0 to +Inf
     th0.. <- function(th0, eps) -th0+ eps* abs(th0)
-    pi2.. <- function(eps) pi/2 * (1 - eps)
+    pi2.. <- function(eps) pi2 * (1 - eps)
 
     g. <- if(alpha >= 1) g(th0..(theta0, 1e-6)) else g(pi2..(1e-6))
     if(is.na(g.) || identical(g., 0))# g() is not usable: it's 0 *very close* besides +Inf
 	return(f.zeta())
 
-    if((alpha >= 1 && g( pi/2  ) > .large.exp.arg) ||
-       (alpha  < 1 && g(-theta0) > .large.exp.arg))
+    if((alpha >= 1 && !is.na(g. <- g( pi2   )) && g. > .large.exp.arg) ||
+       (alpha  < 1 && !is.na(g. <- g(-theta0)) && g. > .large.exp.arg))
 	## g() is numerically too large -->  g() * exp(-g()) is 0 everywhere
 	return(0)
 
@@ -277,17 +290,17 @@ x.exp.m.x <- function(x) {
     ## the former is better for  dstable(-122717558, alpha = 1.8, beta = 0.3, pm = 1)
     ## However, it can be that the maximum is at the boundary,  and
     ## g(.) > 1 everywhere or  g(.) < 1  everywhere  {in that case we could revert to optimize..}
-    if((alpha >= 1 && g(pi/2) > 1) ||
-       (alpha <  1 && g(pi/2) < 1))
+    if((alpha >= 1 && !is.na(g. <- g(pi2)) && g. > 1) ||
+       (alpha <	 1 && !is.na(g. <- g(pi2)) && g. < 1))
         g1.th2 <- g1( theta2 <- pi2..(1e-6) )
     else if((alpha <  1 && g(-theta0) > 1) ||
             (alpha >= 1 && g(-theta0) < 1))
         g1.th2 <- g1( theta2 <- th0..(theta0, 1e-6) )
     else {
         ur1 <- uniroot(function(th) g(th) - 1,
-                       lower = -theta0, upper = pi/2, tol = .Machine$double.eps)
+                       lower = -theta0, upper = pi2, tol = .Machine$double.eps)
         ur2 <- uniroot(function(th) log(g(th)),
-                       lower = -theta0, upper = pi/2, tol = .Machine$double.eps)
+                       lower = -theta0, upper = pi2, tol = .Machine$double.eps)
 	g.1 <- x.exp.m.x(ur1$f.root+1)
 	g.2 <- x.exp.m.x(exp(ur2$f.root))
         if(g.1 >= g.2) {
@@ -305,9 +318,9 @@ x.exp.m.x <- function(x) {
     if((do1 <- g1.th2 > eps && g1(-theta0) < eps))
 	th1 <- uniroot(function(th) g1(th) - eps, lower = -theta0, upper = theta2,
 		       tol = tol)$root
-    if((do4 <- g1.th2 > eps && g1(pi/2) < eps))
+    if((do4 <- g1.th2 > eps && g1(pi2) < eps))
 	## to the right:
-	th3 <- uniroot(function(th) g1(th) - eps, lower = theta2, upper = pi/2,
+	th3 <- uniroot(function(th) g1(th) - eps, lower = theta2, upper = pi2,
 		       tol = tol)$root
 
     if(do1) {
@@ -319,9 +332,9 @@ x.exp.m.x <- function(x) {
     }
     if(do4) {
         r3 <- Int(              theta2, th3)
-        r4 <- Int(                      th3, pi/2)
+        r4 <- Int(                      th3, pi2)
     } else {
-        r3 <- Int(              theta2,      pi/2)
+        r3 <- Int(              theta2,      pi2)
         r4 <- 0
     }
     if(verbose)
@@ -353,7 +366,6 @@ x.exp.m.x <- function(x) {
 	x.exp.m.x( g(th) )
     }
 
-    pi2 <- pi/2
     ## p2 <- (1 - 1e-6)*pi2
     ## g. <- if(alpha >= 1) g(-p2) else g(p2)
     ## if(is.na(g.) || identical(g., 0))# g() is not usable
@@ -422,7 +434,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 	    tanpa2 <- tan(pi*alpha/2)
 	    zeta <- -beta * tanpa2
-	    theta0 <- atan(beta * tanpa2) / alpha
+	    theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
 
 	    ## Loop over all x values:
 	    unlist(lapply(x, function(z) {
@@ -466,19 +478,28 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 {
     if(is.infinite(x))
 	return(1)
+    x.m.zet <- abs(x - zeta)
     ## identically as in .fct1() for dstable():
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## Nolan(1997) shows that   g() is montone
-    g <- function(th) (cat0 * cos(th) * (abs(x-zeta)/sin(at0+alpha*th))^alpha)^(1/a_1) *
-        cos(at0+ a_1*th)
+    ## Nolan(1997) shows that   g() is montone, 0 -> Inf or Inf -> 0
+    g <- function(th) {
+	r <- th
+	## g(-pi/2) or g(pi/2) could become  NaN --> work around
+	i.bnd <- abs(pi/2 -sign(a_1)*th) < 64*.Machine$double.eps
+	r[i.bnd] <- 0
+	th <- th[io <- !i.bnd]
+	att <- at0 + alpha*th ## = alpha*(theta0 + theta)
+	r[io] <- (cat0 * cos(th) * (x.m.zet/sin(att))^alpha)^(1/a_1) * cos(att-th)
+	r
+    }
 
     ## Function to integrate:
     G1 <- function(th) exp(-g(th))
 
     ## as g() is montone,  G1() is too -- so the maximum is at the boundary
 
-    ## theta2 <- optimize(G1, lower = -theta0, upper = pi/2,
+    ## theta2 <- optimize(G1, lower = -theta0, upper = pi2,
     ##     	       maximum = TRUE, tol = tol)$maximum
     c1 <- if(alpha < 1) 1/2 - theta0/pi else 1
     c3 <- sign(1-alpha)/pi
@@ -486,10 +507,10 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ##     	      upper = theta2, subdivisions = subdivisions,
     ##     	      rel.tol = tol, abs.tol = tol)
     ## r2 <- .integrate2(G1, lower = theta2,
-    ##     	      upper = pi/2, subdivisions = subdivisions,
+    ##     	      upper = pi2, subdivisions = subdivisions,
     ##     	      rel.tol = tol, abs.tol = tol)
     ## c1 + c3*(r1+r2)
-    r <- .integrate2(G1, lower = -theta0, upper = pi/2, subdivisions = subdivisions,
+    r <- .integrate2(G1, lower = -theta0, upper = pi2, subdivisions = subdivisions,
                      rel.tol = tol, abs.tol = tol)
     ## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
     c1 + c3* r
@@ -506,7 +527,6 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	return(1)
     if(ea > .large.exp.arg) ## ==> g(.) == Inf	==> G2(.) == 0
 	return(0)
-    pi2 <- pi/2
     g. <- exp(ea)
 
     g <- function(th) {
@@ -651,8 +671,8 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
             ## Otherwise, if alpha is different from 1:
         } else {
             ## FIXME: learn from nacopula::rstable1R()
-	    b.tan.pa <- beta*tan(pi*alpha/2)
-	    theta0 <- atan(b.tan.pa) / alpha ## == \theta_0
+	    b.tan.pa <- beta*tan(pi2*alpha)
+	    theta0 <- min(max(-pi2, atan(b.tan.pa) / alpha), pi2)
             c <- (1+b.tan.pa^2)^(1/(2*alpha))
 	    a.tht <- alpha*(theta+theta0)
             r <- ( c*sin(a.tht)/
