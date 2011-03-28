@@ -16,9 +16,5 @@
   and then show how to, or  use these to to provide thransformations
   from all pm's to any other.
 
-* Nolan (?) and other places mention *asymptotic* formulae
-  --> use these for large |x|, notably for  dstable(*, log = TRUE)
-
-* pstable() should also get   lower.tail = TRUE,  log.p = FALSE
-  ~~~~~~~   arguments
-* qstable() ditto
+* [qp] check the  lower.tail & log.p argument settings
+  NB: This check *should* happen in  fBasics  'checkdist' ...

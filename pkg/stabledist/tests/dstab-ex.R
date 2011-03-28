@@ -69,7 +69,8 @@ f2 <- dstable(-50929.58, alpha= 1.00001, beta= -.8)
 
 ## these all work (luck):
 curve(dstable(-50929+x, alpha= 1.00001, beta= -.8), 0,1, n=200)
-## and now look good
+## and now look good -- no longer __ (FIXME)
+showProc.time()
 
 ### ---- alpha == 1 ---------
 
@@ -89,16 +90,19 @@ chkUnimodal <- function(x) {
     invisible(x)
 }
 
+showProc.time()
+
 xLrg <- c(10^c(10:100,120, 150, 200, 300), Inf)
 xLrg <- sort(c(-xLrg, xLrg))
 d <- dstable(xLrg, alpha = 1.8,   beta = 0.3 ); chkUnimodal(d)
-d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ) # >= 50 warnings
-try(chkUnimodal(d))
-## look at the problem:
-curve(dstable(-x, alpha = 1.01, beta = 0.3, log=TRUE), 1e10, 1e20,
-      log="x", n=512)
+d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ); chkUnimodal(d) # (slow!)
+## look at the problem (this is *S.L.O.W.* now [2010-03-28] !)
+r <- curve(dstable(-x, alpha = 1.01, beta = 0.3, log=TRUE), 1e10, 1e20,
+           log="x", n=512)
 curve(dPareto(-x, alpha = 1.01, beta = 0.3, log=TRUE), add=TRUE,
       col=2, lwd=2, lty=2)
+
+showProc.time()
 
 
 d <- dstable(xLrg, alpha = 1.001, beta = -0.9) # >= 50 warnings
@@ -113,9 +117,9 @@ d <- dstable(xLrg, alpha = 1. ,   beta = 0.3 ); chkUnimodal(d) # "ok" now
 d <- dstable(xLrg, alpha = 0.9,   beta = 0.3 ) # 11 warnings
 try( chkUnimodal(d) ) # FIXME
 d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 22 warnings
-try( chkUnimodal(d) ) # FIXME
+chkUnimodal(d)
 d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings -- *NOT* decreasing
-try( chkUnimodal(d) ) # FIXME
+chkUnimodal(d)
 
 showProc.time()
 

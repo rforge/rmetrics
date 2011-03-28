@@ -1,3 +1,7 @@
 * Nolan ("tail.pdf") and other places mention *asymptotic* formulae
   --> use these for large |x|, notably for  dstable(*, log = TRUE)
 
+* pstable() should also get   lower.tail = TRUE,  log.p = FALSE
+  ~~~~~~~   arguments
+* qstable() ditto
+

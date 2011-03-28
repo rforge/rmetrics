@@ -20,6 +20,20 @@ stopifnot(pstabALL( Inf, alph.s, beta.s) == 1,
 	  pstabALL( 0,   alph.s, beta = 0) == 0.5,
 	  TRUE)
 
+##---- log-scale -------------
+r <- curve(pstable(x, alpha=1.8, beta=.9,
+                   lower.tail=FALSE, log.p=TRUE),
+           5, 150, n=500,
+           log="x",type="b", cex=.5)
+curve(stabledist:::pPareto(x, alpha=1.8, beta=.9,
+                           lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
+##--> clearly potential for improvement!
+
+## the less extreme part - of that:
+r <- curve(pstable(x, alpha=1.8, beta=.9,
+                   lower.tail=FALSE, log.p=TRUE),
+           1, 50, n=500, log="x")
+curve(stabledist:::pPareto(x, alpha=1.8, beta=.9, lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
 
 ## Check that   pstable() is the integral of dstable() --- using simple Simpson's rule
 

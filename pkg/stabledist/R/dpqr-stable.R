@@ -235,7 +235,7 @@ x.exp.m.x <- function(x) {
     ## x.m.zet <- abs(x - zeta)
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## Nolan(1997) shows that   g() is montone, 0 -> Inf or Inf -> 0
+
     g <- function(th) {
 	r <- th
 	## g(-pi/2) or g(pi/2) could become  NaN --> work around
@@ -246,7 +246,7 @@ x.exp.m.x <- function(x) {
 	r[io] <- (cat0 * cos(th) * (x.m.zet/sin(att))^alpha)^(1/a_1) * cos(att-th)
 	r
     }
-    ## Function to integrate:
+    ## Function to Integrate:
     g1 <- function(th) {
 	## g1 :=  g(.) exp(-g(.))
 	x.exp.m.x( g(th) )
@@ -259,25 +259,29 @@ x.exp.m.x <- function(x) {
 
     ##  However, this may still be bad, e.g., for dstable(71.61531, alpha=1.001, beta=0.6),
     ##  or  dstable(1.205, 0.75, -0.5)
-    ##   the 2nd integral is "completely wrong" (basically zero, instead of ..e-5)
-    ## FIXME --- Lindsey uses "Romberg" integration -- maybe we must split even more
+    ##   the 2nd integral was "completely wrong" (basically zero, instead of ..e-5)
 
     ## NB: g() is monotone, typically from 0 to +Inf
     ##     alpha >= 1  <==>  g() is falling, ie. from Inf --> 0;  otherwise growing from 0 to +Inf
+    if((alpha >= 1 &&
+	((!is.na(g. <- g( pi2	)) && g. > .large.exp.arg) || identical(g(-theta0), 0))) ||
+       (alpha  < 1 &&
+	((!is.na(g. <- g(-theta0)) && g. > .large.exp.arg) || identical(g(pi2), 0))))
+	## g() is numerically too large *or* 0 even where it should be inf
+	## ===>	 g() * exp(-g()) is 0 everywhere
+	return(0)
+
+
     th0.. <- function(th0, eps) -th0+ eps* abs(th0)
     pi2.. <- function(eps) pi2 * (1 - eps)
 
     g. <- if(alpha >= 1) g(th0..(theta0, 1e-6)) else g(pi2..(1e-6))
-    if(is.na(g.) || identical(g., 0))# g() is not usable: it's 0 *very close* besides +Inf
-	return(f.zeta())
-
-    if((alpha >= 1 && !is.na(g. <- g( pi2   )) && g. > .large.exp.arg) ||
-       (alpha  < 1 && !is.na(g. <- g(-theta0)) && g. > .large.exp.arg))
-	## g() is numerically too large -->  g() * exp(-g()) is 0 everywhere
-	return(0)
+    if(is.na(g.))# g() is not usable --- FIXME rather use *asymptotic dPareto()?
+	if(max(x.m.zet, x.m.zet / abs(x)) < .01)
+	    return(f.zeta())
 
     if(verbose)
-	cat(sprintf(".fct1(%11g,%10g,..): c2*sum(r[1..4])= %11g*", x,zeta, c2))
+	cat(sprintf(".fct1(%.11g, %.10g,..): c2*sum(r[1:4])= %.11g*", x,zeta, c2))
 
     Int <- function(a,b)
 	.integrate2(g1, lower = a, upper = b,
@@ -297,10 +301,17 @@ x.exp.m.x <- function(x) {
             (alpha >= 1 && g(-theta0) < 1))
         g1.th2 <- g1( theta2 <- th0..(theta0, 1e-6) )
     else {
+        ## when alpha ~=< 1 (0.998 e.g.),  g(x) is == 0 (numerically) on a wide range;
+        ## uniroot is not good enough, and we should *increase* -theta0
+        ## or decrease pi2 such that it can find the root:
+        l.th <- -theta0
+        if(alpha < 1) ## g() is *in*creasing from 0 ..
+            while (g(.th <- (l.th + pi2)/2) == 0) l.th <- .th
+
         ur1 <- uniroot(function(th) g(th) - 1,
-                       lower = -theta0, upper = pi2, tol = .Machine$double.eps)
+                       lower = l.th, upper = pi2, tol = .Machine$double.eps)
         ur2 <- uniroot(function(th) log(g(th)),
-                       lower = -theta0, upper = pi2, tol = .Machine$double.eps)
+                       lower = l.th, upper = pi2, tol = .Machine$double.eps)
 	g.1 <- x.exp.m.x(ur1$f.root+1)
 	g.2 <- x.exp.m.x(exp(ur2$f.root))
         if(g.1 >= g.2) {
@@ -338,7 +349,7 @@ x.exp.m.x <- function(x) {
         r4 <- 0
     }
     if(verbose)
-	cat(sprintf("(%9.4g + %9.4g + %9.4g + %9.4g)= %g\n",
+	cat(sprintf("(%6.4g + %6.4g + %6.4g + %6.4g)= %g\n",
 		    r1,r2,r3,r4, c2*(r1+r2+r3+r4)))
     c2*(r1+r2+r3+r4)
 }
@@ -482,7 +493,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     ## identically as in .fct1() for dstable():
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## Nolan(1997) shows that   g() is montone, 0 -> Inf or Inf -> 0
+    ## Nolan(1997) shows that   g() is montone
     g <- function(th) {
 	r <- th
 	## g(-pi/2) or g(pi/2) could become  NaN --> work around
@@ -550,8 +561,25 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
 ### ------------------------------------------------------------------------------
 
+## -- utilities  (==^== Macros in R's  src/nmath/dpq.h ) :
+R.D.Lval <- function(p, lower.tail) if(lower.tail) p else (1 - p) #   p
+R.D.Cval <- function(p, lower.tail) if(lower.tail) (1 - p) else p # 1 - p
+## R.D.qIv <- function(p, log.p)  if(log.p) exp(p) else p       # p  in qF(p,..)
+
+##' == R.D.Lval(R.D.qIv(p))  "==="  p  in qF !
+R.DT.qIv <- function(p, lower.tail, log.p) {
+    if(log.p) if(lower.tail) exp(p) else - expm1(p)
+    else R.D.Lval(p, lower.tail)
+}
+
+##' == R.D.Cval(R.D.qIv(p))  "===" (1 - p) in qF
+R.DT.CIv <- function(p, lower.tail, log.p) {
+    if(log.p) if(lower.tail) -expm1(p) else exp(p)
+    else R.D.Cval(p, lower.tail)
+}
 
 qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
+                    lower.tail = TRUE, log.p = FALSE,
                     tol = .Machine$double.eps^0.25, maxiter = 1000,
                     integ.tol = 1e-7, subdivisions = 200)
 {
@@ -578,44 +606,41 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
     result <-
 	## Special Cases:
 	if (alpha == 2)
-	    qnorm(p, mean = 0, sd = sqrt(2))
+	    qnorm(p, mean = 0, sd = sqrt(2), lower.tail=lower.tail, log.p=log.p)
 	else if (alpha == 1 && beta == 0)
-	    qcauchy(p)
+	    qcauchy(p, lower.tail=lower.tail, log.p=log.p)
 	else { ## -------------- 0 < alpha < 2 ---------------
             .froot <- function(x, p) {
                 pstable(q = x, alpha=alpha, beta=beta, pm = 0,
+                        lower.tail=lower.tail, log.p=log.p,
                         tol=integ.tol, subdivisions=subdivisions) - p
             }
+            ## for approximate interval:
+            .qN <- function(p) qnorm  (p, mean = 0, sd = sqrt(2),
+                                     lower.tail=lower.tail, log.p=log.p)
+            .qC <- function(p) qcauchy(p, lower.tail=lower.tail, log.p=log.p)
+
             ## Calculate:
-            unlist(lapply(p, function(pp) {
+            vapply(p, function(pp) {
+
+		## 1) Find narrow interval  [xmin, xmax]  -----------------------
+		##    NB: will deal with a too narrow interval later
+		p0 <- R.DT.qIv(pp, lower.tail=lower.tail, log.p=log.p)
+		left <- p0 < 0.5
 		if (beta < 0) {
-		    xmin <- -(1-pp)/pp
-		    xmax <-
-			if (pp < 0.5)
-			    qnorm(pp, mean = 0, sd = sqrt(2))
-			else
-			    qcauchy(pp)
+		    xmin <- -R.DT.CIv(pp, lower.tail=lower.tail, log.p=log.p)/p0
+		    xmax <- if (left) .qN(pp) else .qC(pp)
 		}
 		else if (beta > 0 ) {
-		    xmin <-
-			if (pp < 0.5)
-			    qcauchy(pp)
-			else
-			    qnorm(pp, mean = 0, sd = sqrt(2))
-		    xmax <- pp/(1-pp)
+		    xmin <- if (left) .qC(pp) else .qN(pp)
+		    xmax <- p0/R.DT.CIv(pp, lower.tail=lower.tail, log.p=log.p)
 		}
 		else { ## (beta == 0)
-		    xmin <-
-			if (pp < 0.5)
-			    qcauchy(pp)
-			else
-			    qnorm(pp, mean = 0, sd = sqrt(2))
-		    xmax <-
-			if (pp < 0.5)
-			    qnorm(pp, mean = 0, sd = sqrt(2))
-			else
-			    qcauchy(pp)
+		    xmin <- if (left) .qC(pp) else .qN(pp)
+		    xmax <- if (left) .qN(pp) else .qC(pp)
 		}
+
+                ## 2) root-finding  pstable(..) = p  inside the interval: -------
 		dx <- 1
 		repeat {
 		    root <- .unirootNA(.froot, interval = c(xmin, xmax), p = pp,
@@ -629,7 +654,7 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 		    dx <- dx * 2
 		}
 		root
-	    }))
+	    }, 0.)
         }
 
     ## Result:

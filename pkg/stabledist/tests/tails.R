@@ -148,3 +148,25 @@ plot(fr   <- dstab.tailratio(1.7, 0.1))
 plot(fr   <- dstab.tailratio(1.8, 0.2))
 
 showProc.time() #
+
+##------ Some explicit tail problems visualized:
+
+I <- integrate(dstable, 0,Inf, alpha=0.998, beta=0, subdivisions=1000)
+str(I)
+stopifnot(abs(I$value - 0.5) < 1e-4)
+
+curve(dstable(x, alpha=.998, beta=0,    log=TRUE), 10, 1e17, log="x")
+curve(dstable(x, alpha=.999, beta=0.1,  log=TRUE), 10, 1e17, log="x")
+curve(dstable(x, alpha=.999, beta=0.9,  log=TRUE), 10, 1e17, log="x")
+curve(dstable(x, alpha=.999, beta=0.99, log=TRUE), 10, 1e17, log="x")
+curve(dstable(x, alpha=.999, beta=0.99, log=TRUE), 10, 1e170, log="x")
+## less problems here, when alpha > ~= 1 (but it's a bit slow!)
+curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10,  1e7, log="x")
+curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10, 1e17, log="x")
+curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10, 1e40, log="x")
+
+## NB: alpha == 1   also has problems in tail:
+curve(dstable(x, alpha=1.   ,beta=0.99, log=TRUE), 1, 20)
+curve(dstable(x, alpha=1.   ,beta=0.99, log=TRUE), 1,100)# oops!
+
+

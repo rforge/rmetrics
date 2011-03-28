@@ -29,6 +29,7 @@ pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
 	tol = 16*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
+        lower.tail = TRUE, log.p = FALSE,
         tol = .Machine$double.eps^0.25, maxiter = 1000,
         integ.tol = 1e-7, subdivisions = 200)
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
@@ -124,9 +125,19 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \deqn{F(-x) \sim (1-\beta) C_\alpha x^{-\alpha}.}{F(-x) ~ (1+b) C_a x^-a.}
 
   Differentiating \eqn{F()} above gives
-  \deqn{f(x) \sim \alpha(1-\beta) C_\alpha x^{-(1+\alpha)}.}{f(x) ~ a(1-b) C_a x^-(1+a).}
+  \deqn{f(x) \sim \alpha(1+\beta) C_\alpha x^{-(1+\alpha)}.}{f(x) ~ a(1+b) C_a x^-(1+a).}
 }
+\note{
+  When \code{alpha} is close to 1 or close to 0 (\dQuote{close},
+  e.g., meaning distance \eqn{d < 0.01}), the computations typically are
+  numerically considerably more challenging, and the results may not be
+  accurate.
 
+  As I currently (2011-03-28) plan to improve on this, \emph{and}
+  as it is unknown when exactly the numerical difficulties arise, we
+  currently only do warn here (in the documentation), but \emph{not} by
+  giving \code{\link{warning}()}s.
+}
 \seealso{
   the \code{\link[fBasics]{stableSlider}()} function for displaying
   densities and probabilities of these distributions, for educational
@@ -134,7 +145,7 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 }
 \author{
   Diethelm Wuertz for the original Rmetrics \R-port.
-  Numerical improvements by Martin Maechler.
+  Many numerical improvements by Martin Maechler.
 }
 
 

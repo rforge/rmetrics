@@ -1,4 +1,15 @@
+2011-03-28  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable -> .fct1): another round of
+	improvements, thanks to Dieter Schell's bug reports.
+
+2011-03-24  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (qstable): also add arguments lower.tail, log.p
+
 2011-03-23  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-1.1
 
 	* R/dpqr-stable.R (dstable -> .fct1 -> g): more careful computation
 	of g(), notably at +- pi/2 where it could become NaN instead of 0.
