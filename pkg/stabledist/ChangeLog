@@ -1,4 +1,13 @@
+2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-2.1
+
+	* R/dpqr-stable.R (dstable(*, alpha=1) -> .fct2): "robustified" g()
+	* R/dpqr-stable.R (pstable(*, alpha=1) -> .FCT2): ditto + simplified (1 integ.)
+
 2011-03-28  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-2
 
 	* R/dpqr-stable.R (dstable -> .fct1): another round of
 	improvements, thanks to Dieter Schell's bug reports.

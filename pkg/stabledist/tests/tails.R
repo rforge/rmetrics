@@ -1,6 +1,7 @@
 require("stabledist")
 
 ###--- Tail approximations etc  -- both for pstable() and dstable()
+dPareto <- stabledist:::dPareto
 
 source(system.file("test-tools.R", package = "Matrix"))
                                         #-> identical3(), showProc.time(),...
@@ -48,6 +49,7 @@ plot.pstableTailratio <- function(x, type="l", col="blue3",
     plot(eps ~ x, log = "xy", data = dat, col=col,
          ylab = expression(epsilon ~~~ "('eps')"),
          main = tit, type=type, ...)
+    mtext( expression(epsilon(x) == (bar(F)(x,.) - bar(F)[P](x,.)) / bar(F)[P](x,.)) )
     fm <- lm(log(eps) ~ log(x), weights = x^2, data = dat)
     lines(dat[["x"]], exp(predict(fm)), col=lin.col)
     Form <- function(x) formatC(x, digits=4, wid=1)
@@ -63,7 +65,7 @@ plot(tr0  <- pstab.tailratio(1, 0.5))
 plot(tr1  <- pstab.tailratio(1.1, 0.25))
 plot(tr2 <- pstab.tailratio(0.99, +0.992))
 
-showProc.time() #
+showProc.time()
 
 plot(tr   <- pstab.tailratio(1.2, 0.5))
 
@@ -71,7 +73,7 @@ plot(tr3 <- pstab.tailratio(0.7, +0.9))
 
 plot(tr4 <- pstab.tailratio(1.7, +0.6))# not really useful: pstable(.) = 1 too early
 
-showProc.time() #
+showProc.time()
 
 ##---------------- Now the density
 
@@ -116,6 +118,7 @@ plot.dstableTailratio <- function(x, type="l", col="blue3",
     plot(eps ~ x, log = "xy", data = dat, col=col,
          ylab = expression(epsilon ~~~ "('eps')"),
          main = tit, type=type, ...)
+    mtext( expression(epsilon(x) == (f(x,.) - f[P](x,.)) / f[P](x,.)) )
     fm <- lm(log(eps) ~ log(x), weights = x^2, data = dat)
     lines(dat[["x"]], exp(predict(fm)), col=lin.col)
     Form <- function(x) formatC(x, digits=4, wid=1)
@@ -132,7 +135,7 @@ plot(fr   <- dstab.tailratio(1.1,  0.4))
 plot(fr   <- dstab.tailratio(1.2, 0.5))
 plot(fr   <- dstab.tailratio(1.3, 0.6))
 
-showProc.time() #
+showProc.time()
 
 plot(fr   <- dstab.tailratio(1.4, 0.7))
 plot(fr   <- dstab.tailratio(1.5, 0.8))
@@ -141,13 +144,13 @@ plot(fr   <- dstab.tailratio(1.5, 0.8, xmax= 1000))
 plot(fr   <- dstab.tailratio(1.5, 0.8, xmax= 1e4));abline(v=1000, lty=2)
 plot(fr   <- dstab.tailratio(1.5, 0.8, xmax= 1e5));abline(v=1e4, lty=2)
 
-showProc.time() #
+showProc.time()
 
 plot(fr   <- dstab.tailratio(1.6, 0.9))
 plot(fr   <- dstab.tailratio(1.7, 0.1))
 plot(fr   <- dstab.tailratio(1.8, 0.2))
 
-showProc.time() #
+showProc.time()
 
 ##------ Some explicit tail problems visualized:
 
@@ -160,13 +163,21 @@ curve(dstable(x, alpha=.999, beta=0.1,  log=TRUE), 10, 1e17, log="x")
 curve(dstable(x, alpha=.999, beta=0.9,  log=TRUE), 10, 1e17, log="x")
 curve(dstable(x, alpha=.999, beta=0.99, log=TRUE), 10, 1e17, log="x")
 curve(dstable(x, alpha=.999, beta=0.99, log=TRUE), 10, 1e170, log="x")
-## less problems here, when alpha > ~= 1 (but it's a bit slow!)
+showProc.time()
+
+## less problems when alpha > ~= 1 (but it's  __S..L..O..W__ !)
 curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10,  1e7, log="x")
 curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10, 1e17, log="x")
+## -> problem --> zoom in:
+curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 1e12, 160e12)
+curve(dPareto(x, alpha=1.001,beta=0.99, log=TRUE), add=TRUE, lty=3, col=4)
+
 curve(dstable(x, alpha=1.001,beta=0.99, log=TRUE), 10, 1e40, log="x")
+showProc.time()
 
-## NB: alpha == 1   also has problems in tail:
+## NB: alpha == 1   also has problems in tail  --- only as long as "old R"s wrong uniroot is used:
 curve(dstable(x, alpha=1.   ,beta=0.99, log=TRUE), 1, 20)
-curve(dstable(x, alpha=1.   ,beta=0.99, log=TRUE), 1,100)# oops!
+curve(dstable(x, alpha=1.   ,beta=0.99, log=TRUE), 1,100)
 
 
+showProc.time()

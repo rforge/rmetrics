@@ -6,6 +6,7 @@ source(system.file("test-tools.R", package = "Matrix"))
 
 stopifnot(all.equal(pstable(0.3, 0.75, -.5, tol= 1e-14),
 		    0.66887227658457, tol = 1e-10))
+pstable(-4.5, alpha = 1, beta = 0.01)## gave integration error
 
 ## a "outer vectorized" version:
 pstabALL <- function(x, alpha, beta, ...)
@@ -101,6 +102,10 @@ c4 <- chk.pd.stable(.999, -0.9, -20, 5)
 
 showProc.time() #
 
+## alpha == 1 , small beta  ---- now this is really most ugly
+curve(pstable(x, alpha=1, beta= .01), -6, 8)
+abline(h=0:1, v=0, lty=3, col="gray30")
+
 if(dev.interactive()) {
     curve(dstable(x, 1.,    0.99),  -6, 50, log="y")# "uneven" (x < 0)
     curve(dstable(x, 1.001, 0.95), -10, 30, log="y")
@@ -116,7 +121,7 @@ c1.0 <- chk.pd.stable(1., 0.8,  -6, 500)
 curve(pstable(x, alpha=1, beta=0.5), 20, 800, log="x", ylim=c(.97, 1))
 curve(pPareto(x, alpha=1, beta=0.5), add=TRUE, col=2, lty=2)
 abline(h=1, lty=3,col="gray")
-# and similarly
+# and similarly (alpha ~= 1, instead of == 1):
 curve(pstable(x, alpha=1.001, beta=0.5), 20, 800, log="x", ylim=c(.97, 1))
 curve(pPareto(x, alpha=1.001, beta=0.5), add=TRUE, col=2, lty=2)
 abline(h=1, lty=3,col="gray")

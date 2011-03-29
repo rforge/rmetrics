@@ -74,10 +74,17 @@ showProc.time()
 
 ### ---- alpha == 1 ---------
 
-curve(dstable(x, alpha = 1, beta = 0.3), -20, 20,
-      log="y", n= 256)
-## works, but discontinuous --- FIXME
+curve(dstable(x, alpha = 1, beta = 0.3), -20, 20, log="y", n= 256)
+curve(dstable(x, alpha = 1, beta = 0.3, log=TRUE), -200, 160, n=512)
+curve(dPareto(x, alpha = 1, beta = 0.3, log=TRUE), add=TRUE, col=4)
+## "works", but discontinuous --- FIXME
+## ditto:
+curve(dstable(x, alpha=1, beta= 0.1, log=TRUE), -70,80, col=2)
+curve(dPareto(x, alpha=1, beta= 0.1, log=TRUE), add=TRUE)
 
+showProc.time()
+
+dstable(-44, alpha=1, beta= .1)# failed
 ## large x gave problems at times:
 dstable(-1e20, alpha = 0.9,  beta = 0.8)
 

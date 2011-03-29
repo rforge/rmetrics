@@ -90,7 +90,9 @@ dPareto <- function(x, alpha, beta, log = FALSE) {
 pPareto <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
     if(any(neg <- x < 0)) { ## left tail
 	x   [neg] <- -x	  [neg]
+        beta <- rep(beta, length.out=length(x))
 	beta[neg] <- -beta[neg]
+        stop("FIXME --- pPareto() is not correct for negative x")## switch  1-iF / iF
     }
     if(log.p) {
 	if(lower.tail) ## log(1 - iF)
@@ -161,20 +163,20 @@ dstable <- function(x, alpha, beta,
 		theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
 
 		## Loop over all x values:
-		unlist(lapply(x, function(z)
-                              .fct1(z, zeta, alpha=alpha, theta0 = theta0,
-                                    tol=tol, subdivisions=subdivisions)))
+		vapply(x, .fct1, 0.,
+                       zeta=zeta, alpha=alpha, theta0=theta0,
+                       tol=tol, subdivisions=subdivisions)
 	    }
 	    ## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	    else { ## (alpha == 1)  and	 0 < |beta| <= 1  from above
 		## Loop over all x values:
-		unlist(lapply(x, function(z) {
+		vapply(x, function(z) {
 		    if (z >= 0) {
 			.fct2( z , beta, tol=tol, subdivisions=subdivisions)
 		    } else {
 			.fct2(-z, -beta, tol=tol, subdivisions=subdivisions)
 		    }
-		}))
+		}, 0.)
 	    }
 	}
 
@@ -305,8 +307,11 @@ x.exp.m.x <- function(x) {
         ## uniroot is not good enough, and we should *increase* -theta0
         ## or decrease pi2 such that it can find the root:
         l.th <- -theta0
-        if(alpha < 1) ## g() is *in*creasing from 0 ..
-            while (g(.th <- (l.th + pi2)/2) == 0) l.th <- .th
+        if(alpha < 1) { ## g() is *in*creasing from 0 ..
+	    while (g(.th <- (l.th + pi2)/2) == 0) l.th <- .th
+	    if(abs(pi2 - l.th) < 1e-13)# do not trust g()
+		return(0)
+        }
 
         ur1 <- uniroot(function(th) g(th) - 1,
                        lower = l.th, upper = pi2, tol = .Machine$double.eps)
@@ -357,30 +362,46 @@ x.exp.m.x <- function(x) {
 
 ## ------------------------------------------------------------------------------
 
-##' is only used when alpha == 1 (!)
+##' Auxiliary for dstable()  only used when alpha == 1 :
+##' @param x  numeric *scalar*, >= 0
+##' @param beta  0 < |beta| <= 1
+##' @param tol
+##' @param subdivisions
 .fct2 <- function(x, beta, tol, subdivisions)
 {
-    ## Integration:
-
     i2b <- 1/(2*beta)
     p2b <- pi*i2b # = pi/(2 beta)
-    g. <- exp(-p2b*x)
-    if(g. == 0 || g. == Inf) return(0)
-
-    g <- function(th) { ## and (p2b, g.) {from (x, beta)}
-	g <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
-	g. * g / (p2b*cos(th)) * exp(g*tan(th))
+    if(abs(ea <- -p2b*x) > .large.exp.arg) ## ==> g(.) == 0  or  == Inf
+        return(0)
+    g.x <- exp(ea)
+    ##' g() is strictly monotone;
+    ##'  for beta > 0: increasing from g(-pi/2) = 0   to  g(+pi/2) = Inf
+    ##'  for beta < 0: decreasing from g(-pi/2) = Inf to  g(+pi/2) = 0
+    g <- function(th) {
+	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
+	g.x * (h/p2b) * exp(h*tan(th))/cos(th)
     }
+    t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
+    if(is.na(g0 <- g(t0))) { ## numerical problem ==> need more careful version of g()
+	## find a left threshold instead of -pi/2  where g(.) is *not* NA
+	lt <- t0
+	f <- 1 - 1/256
+	while(is.na(g(lt))) lt <- lt*f
+	gg <- g
+	g <- function(th) {
+	    r <- th
+	    r[i <- (beta*(lt - th) > 0)] <- 0
+	    r[!i] <- gg(th[!i])
+	    r
+	}
+    }
+
     ## Function to Integrate; th is a non-sorted vector!
     g2 <- function(th) {
 	## g2 = g(.) exp(-g(.))
 	x.exp.m.x( g(th) )
     }
 
-    ## p2 <- (1 - 1e-6)*pi2
-    ## g. <- if(alpha >= 1) g(-p2) else g(p2)
-    ## if(is.na(g.) || identical(g., 0))# g() is not usable
-    ##     return(f.zeta()) --- but we have no f.zeta() here!
     ## We know that the maximum of g2(.) is = exp(-1) = 0.3679  "at" g(.) == 1
     ## find that by uniroot :
     ur <- uniroot(function(th) g(th) - 1, lower = -pi2, upper = pi2, tol = tol)
@@ -448,7 +469,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	    theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
 
 	    ## Loop over all x values:
-	    unlist(lapply(x, function(z) {
+	    vapply(x, function(z) {
 		if (abs(z - zeta) < 2 * .Machine$double.eps) {
 		    ## FIXME? same problem as dstable
 		    r <- if(lower.tail) (1/2- theta0/pi) else 1/2+ theta0/pi
@@ -462,12 +483,12 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 			     ((z > zeta && lower.tail) ||
 			      (z < zeta && !lower.tail)))
 		}
-	    }))
+	    }, 0.)
 	}
 	## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	else { ## (alpha == 1)	and	 0 < |beta| <= 1  from above
 	    ## Loop over all x values:
-	    unlist(lapply(x, function(z) {
+	    vapply(x, function(z) {
 		if (beta >= 0) {
 		    retValue(.FCT2( z, beta = beta,
 				   tol = tol, subdivisions = subdivisions),
@@ -477,7 +498,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 				   tol = tol, subdivisions = subdivisions),
 			     ! lower.tail)
 		}
-	    }))
+	    }, 0.)
 	}
     }
 }## {pstable}
@@ -530,6 +551,10 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 ## ------------------------------------------------------------------------------
 
 ##' Auxiliary for pstable()  only used when alpha == 1 :
+##' @param x numeric *scalar*
+##' @param beta  >= 0 here
+##' @param tol
+##' @param subdivisions
 .FCT2 <- function(x, beta, tol, subdivisions)
 {
     i2b <- 1/(2*beta)
@@ -538,25 +563,33 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	return(1)
     if(ea > .large.exp.arg) ## ==> g(.) == Inf	==> G2(.) == 0
 	return(0)
-    g. <- exp(ea)
-
+    g.x <- exp(ea)
+    ##' g() is strictly monotone;
+    ##'  for beta > 0: increasing from g(-pi/2) = 0   to  g(+pi/2) = Inf
+    ##'  for beta < 0: decreasing from g(-pi/2) = Inf to  g(+pi/2) = 0
     g <- function(th) {
-        g <- p2b + th # == g'/beta where g' := pi/2 + beta*th
-	g. * g / (p2b*cos(th)) * exp(g*tan(th))
+	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
+	g.x * (h/p2b) * exp(h*tan(th))/cos(th)
     }
-    ## Function to Integrate; th is a non-sorted vector!
-    G2 <- function(th) exp(-g(th))
+    t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
+    ##if(!is.finite(gp <- g(t0))) { ## numerical problem ==> need more careful version of g()
+    if(is.na(g0 <- g(t0))) { ## numerical problem ==> need more careful version of g()
+	## find a left threshold instead of -pi/2  where g(.) is *not* NA
+	lt <- t0
+	f <- 1 - 1/256
+	while(is.na(g(lt))) lt <- lt*f
+	gg <- g
+	g <- function(th) {
+	    r <- th
+	    r[i <- (beta*(lt - th) > 0)] <- 0
+	    r[!i] <- gg(th[!i])
+	    r
+	}
+    }
 
-    ## Integration:
-    theta2 <- optimize(G2, lower = -pi2, upper = pi2,
-		       maximum = TRUE, tol = tol)$maximum
-    r1 <- .integrate2(G2, lower = -pi2,
-		     upper = theta2, subdivisions = subdivisions,
-		     rel.tol = tol, abs.tol = tol)
-    r2 <- .integrate2(G2, lower = theta2,
-		     upper = pi2, subdivisions = subdivisions,
-		     rel.tol = tol, abs.tol = tol)
-    (r1+r2)/pi
+    ##' G2(.) = exp(-g(.)) is strictly monotone .. no need for 'theta2' !
+    .integrate2(function(th) exp(-g(th)), lower = -pi2, upper = pi2,
+                subdivisions = subdivisions, rel.tol = tol, abs.tol = tol) / pi
 }
 
 ### ------------------------------------------------------------------------------
