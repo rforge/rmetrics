@@ -24,10 +24,11 @@
 \usage{
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
         log = FALSE,
-        tol = 16*.Machine$double.eps, subdivisions = 1000)
+        tol = 64*.Machine$double.eps, zeta.tol = 1e-5,
+        subdivisions = 1000)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
-	tol = 16*.Machine$double.eps, subdivisions = 1000)
+	tol = 64*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
         tol = .Machine$double.eps^0.25, maxiter = 1000,
@@ -57,10 +58,17 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \item{tol}{numerical tolerance,
     \describe{
       \item{dstable(), pstable():}{used for numerical integration, see
-	\code{integ.tol} above.}
+	\code{integ.tol} above.  Note that earlier versions had tighter
+	tolerances -- which seem too tight as default values.}
       \item{qstable():}{used for rootfinding, see \code{\link{uniroot}}.}
-      }
+    }
   }
+  \item{zeta.tol}{(\code{dstable}) numerical tolerance for checking if
+    \code{x} is close to \eqn{\zeta(\alpha,\beta)}.
+    \cr
+    As this is \emph{experimental} and may well go away in the future,
+    its use is not recommended in production code.  Rather e-mail the
+    package maintainer about it.}
   \item{subdivisions}{maximal number of intervals for integration, see
     \code{\link{integrate}}.}
   \item{maxiter}{maximal number of iterations in \code{\link{uniroot}}.}

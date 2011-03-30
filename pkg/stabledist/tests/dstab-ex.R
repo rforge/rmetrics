@@ -66,10 +66,16 @@ showProc.time()
 ## alpha ~= 1  ---- and x ~ zeta(a,b):
 f1 <- dstable(6366.197,  alpha= 1.00001, beta= .1)
 f2 <- dstable(-50929.58, alpha= 1.00001, beta= -.8)
+stopifnot(f1 > 0, f2 > 0)
 
 ## these all work (luck):
-curve(dstable(-50929+x, alpha= 1.00001, beta= -.8), 0,1, n=200)
-## and now look good -- no longer __ (FIXME)
+zet <- zeta(alpha= 1.00001, beta= -.8)# -50929.58
+curve(dstable(zet+x, alpha= 1.00001, beta= -.8), -1, 1,
+      n=500, ylim=c(1.8,3)*1e-10)
+abline(v=0, col="pink")
+## no longer much noise (thanks to zeta.tol = 1e-5):
+curve(dPareto(zet+x, alpha= 1.00001, beta= -.8), add=TRUE, col=2)
+
 showProc.time()
 
 ### ---- alpha == 1 ---------
@@ -105,8 +111,14 @@ d <- dstable(xLrg, alpha = 1.8,   beta = 0.3 ); chkUnimodal(d)
 d <- dstable(xLrg, alpha = 1.01,  beta = 0.3 ); chkUnimodal(d) # (slow!)
 ## look at the problem (this is *S.L.O.W.* now [2010-03-28] !)
 r <- curve(dstable(-x, alpha = 1.01, beta = 0.3, log=TRUE), 1e10, 1e20,
-           log="x", n=512)
+           log="x", n=512, ylim = c(-100, -45))
 curve(dPareto(-x, alpha = 1.01, beta = 0.3, log=TRUE), add=TRUE,
+      col=2, lwd=2, lty=2)
+
+## zoom in:
+r <- curve(dstable(x, alpha = 1.01, beta = 0.3, log=TRUE),
+           .1e13, 9e13, ylim = c(-80, -55))
+curve(dPareto(x, alpha = 1.01, beta = 0.3, log=TRUE), add=TRUE,
       col=2, lwd=2, lty=2)
 
 showProc.time()
@@ -119,13 +131,16 @@ curve(dstable(-x, alpha = 1.001, beta = -0.9, log=TRUE), 1e10, 1e20,
       log="x", n=512)
 curve(dPareto(-x, alpha = 1.001, beta = -0.9, log=TRUE), add=TRUE,
       col=2, lwd=2, lty=2)
+## and at the right tail, too:
+curve(dstable(x, alpha = 1.001, beta = -0.9), 1000, 1e17, log="xy", n=400)
+curve(dPareto(x, alpha = 1.001, beta = -0.9), add=TRUE,col=2,lwd=2,lty=2)
 
 d <- dstable(xLrg, alpha = 1. ,   beta = 0.3 ); chkUnimodal(d) # "ok" now
-d <- dstable(xLrg, alpha = 0.9,   beta = 0.3 ) # 11 warnings
+d <- dstable(xLrg, alpha = 0.9,   beta = 0.3 ) # 10 warnings (had 11)
 try( chkUnimodal(d) ) # FIXME
-d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 22 warnings
+d <- dstable(xLrg, alpha = 0.5,   beta = 0.3 ) # 19 warnings (had 22)
 chkUnimodal(d)
-d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings -- *NOT* decreasing
+d <- dstable(xLrg, alpha = 0.1,   beta = 0.3 ) # 26 warnings (had 21)
 chkUnimodal(d)
 
 showProc.time()

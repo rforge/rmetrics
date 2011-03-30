@@ -1,5 +1,12 @@
 2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
 
+	* R/dpqr-stable.R (dstable): new 'zeta.tol' argument; and checking
+	for  "absolut+relative" closeness to 'zeta'.
+	* R/dpqr-stable.R (dstable, pstable): lower the default 'tol' to
+	from  16 * epsC  to  64* epsC.
+
+2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
 	* DESCRIPTION (Version): 0.6-2.1
 
 	* R/dpqr-stable.R (dstable(*, alpha=1) -> .fct2): "robustified" g()

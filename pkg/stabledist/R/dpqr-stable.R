@@ -107,7 +107,7 @@ pPareto <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
 
 dstable <- function(x, alpha, beta,
 		    gamma = 1, delta = 0, pm = 0, log = FALSE,
-		    tol = 16*.Machine$double.eps, subdivisions = 1000)
+		    tol = 64*.Machine$double.eps, zeta.tol= 1e-5, subdivisions = 1000)
 {
     ## Original implemented by Diethelm Wuertz;
     ## Changes for efficiency and accuracy by Martin Maechler
@@ -165,7 +165,7 @@ dstable <- function(x, alpha, beta,
 		## Loop over all x values:
 		vapply(x, .fct1, 0.,
                        zeta=zeta, alpha=alpha, theta0=theta0,
-                       tol=tol, subdivisions=subdivisions)
+                       tol=tol, zeta.tol=zeta.tol, subdivisions=subdivisions)
 	    }
 	    ## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	    else { ## (alpha == 1)  and	 0 < |beta| <= 1  from above
@@ -213,7 +213,7 @@ x.exp.m.x <- function(x) {
     r
 }
 
-.fct1 <- function(x, zeta, alpha, theta0, tol, subdivisions,
+.fct1 <- function(x, zeta, alpha, theta0, tol, subdivisions, zeta.tol,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
     ## -- Integrand for dstable() --
@@ -225,7 +225,7 @@ x.exp.m.x <- function(x) {
     ## Modified: originally was  if (z == zeta),
     ## then (D.W.)   if (x.m.zet < 2 * .Machine$double.eps)
     ## then (M.M.)   if (x.m.zet <= 1e-5 * abs(x))
-    if(x.m.zet < 1e-10)
+    if(x.m.zet < zeta.tol * (zeta.tol+ max(abs(x),abs(zeta))))
         return(f.zeta())
     ## the real check should be about the feasibility of g() below, or its integration
 
@@ -408,11 +408,9 @@ x.exp.m.x <- function(x) {
     theta2 <- ur$root
 
     r1 <- .integrate2(g2, lower = -pi2, upper = theta2,
-		     subdivisions = subdivisions,
-		     rel.tol = tol, abs.tol = tol)
+		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
     r2 <- .integrate2(g2, lower = theta2, upper = pi2,
-		     subdivisions = subdivisions,
-		     rel.tol = tol, abs.tol = tol)
+		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
     abs(i2b)*(r1 + r2)
 }
 
@@ -421,7 +419,7 @@ x.exp.m.x <- function(x) {
 
 pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
                     lower.tail = TRUE, log.p = FALSE,
-		    tol = 16*.Machine$double.eps, subdivisions = 1000)
+		    tol = 64*.Machine$double.eps, subdivisions = 1000)
 {
     ## A function implemented by Diethelm Wuertz
 
@@ -526,24 +524,13 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	r
     }
 
-    ## Function to integrate:
-    G1 <- function(th) exp(-g(th))
+    ## as g() is montone, the integrand  exp(-g(.)) is too -- so the maximum is at the boundary
+    r <- .integrate2(function(th) exp(-g(th)),
+                     lower = -theta0, upper = pi2, subdivisions = subdivisions,
+                     rel.tol = tol, abs.tol = tol)
 
-    ## as g() is montone,  G1() is too -- so the maximum is at the boundary
-
-    ## theta2 <- optimize(G1, lower = -theta0, upper = pi2,
-    ##     	       maximum = TRUE, tol = tol)$maximum
     c1 <- if(alpha < 1) 1/2 - theta0/pi else 1
     c3 <- sign(1-alpha)/pi
-    ## r1 <- .integrate2(G1, lower = -theta0,
-    ##     	      upper = theta2, subdivisions = subdivisions,
-    ##     	      rel.tol = tol, abs.tol = tol)
-    ## r2 <- .integrate2(G1, lower = theta2,
-    ##     	      upper = pi2, subdivisions = subdivisions,
-    ##     	      rel.tol = tol, abs.tol = tol)
-    ## c1 + c3*(r1+r2)
-    r <- .integrate2(G1, lower = -theta0, upper = pi2, subdivisions = subdivisions,
-                     rel.tol = tol, abs.tol = tol)
     ## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
     c1 + c3* r
 }
@@ -572,7 +559,6 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	g.x * (h/p2b) * exp(h*tan(th))/cos(th)
     }
     t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
-    ##if(!is.finite(gp <- g(t0))) { ## numerical problem ==> need more careful version of g()
     if(is.na(g0 <- g(t0))) { ## numerical problem ==> need more careful version of g()
 	## find a left threshold instead of -pi/2  where g(.) is *not* NA
 	lt <- t0
