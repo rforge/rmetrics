@@ -1,7 +1,7 @@
 % <---------------------------------------------------------------------->
 \documentclass[11pt,english]{scrartcl}
 % <---------------------------------------------------------------------->
-\usepackage{lmodern}            %% Optimale Fonts für T1
+\usepackage{lmodern}            %% Optimale Fonts fuer T1
 \usepackage{ghypCommands}
 %\usepackage{inputenc}
 %\usepackage[latin1]{inputenc}

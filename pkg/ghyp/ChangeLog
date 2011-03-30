@@ -288,3 +288,8 @@ ghyp V1.5.4
 	case-sensitive in R-2.13.0.
 	
 	
+2011-03-30 David Luethi
+ghyp V1.5.5
+	* Non-ASCII characters removed from the vignette.
+	
+	
