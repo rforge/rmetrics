@@ -4,12 +4,12 @@
 \alias{description}
 
 
-\title{Date and User Information}
+\title{Creates Date and User Information}
 
 
 \description{
 
-    Returns data and user string.
+    Creates and returns a data and user string.
     
 }
 

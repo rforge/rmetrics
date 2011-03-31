@@ -1,4 +1,5 @@
 \name{series-methods}
+
 \docType{methods}
 
 \alias{series}
