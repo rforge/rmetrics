@@ -14,31 +14,40 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  .turnpoints2              Returns peaks and pits from a timeSeries
-#  .turnpointsStats          Computes turnpoints statistics
-#  .turnpointsSeries         Deprecated, use .turnpoints
-#  .turnpointsPastecs        Builtin from package pastecs
-#  .extract.turnpointsPastecs
-#  .plot.turnpointsPastecs
-#  .summary.turnpointsPastecs
+# FUNCTION:                     DESCRIPTION:
+#  turns                         Returns turnpoints from a 'timeSeries'
+#  turnsStats                    Computes statistics of turn points
+# BUILTIN:                      DESCRIPTION:
+#  .turnpointsPastecs            Builtin function from package pastecs
+#  .extract.turnpointsPastecs    Extractor function from package pastecs
+#  .plot.turnpointsPastecs       Plot function from package pastecs
+#  .summary.turnpointsPastecs    Summary function from package pastecs
+# DEPRECATED:                   DESRIPTION:
+#  .turnpoints2                  Deprecated, use function turns 
+#  .turnpointsSeries             Deprecated, use function turns
+#  .turnpointsStats              Deprecated, use function turnsStats
 ################################################################################
 
 
-.turnpoints2 <-
-function(x, ...)
+# DW:
+# This function is originally borrowed from the contributesd R package pastecs.
+# It is not necessary to load pastecs, the functions required are builtin.
+
+
+# -----------------------------------------------------------------------------
+
+
+turns <-
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns peaks and pits from a timeSeries
+    #   Returns turnpoints from a timeSeries
 
     # Arguments:
-    #   x - an univariate timeSeries object, e.g. a price or index series
+    #   x - an univariate timeSeries object, e.g. a price or index series.
     #   ... - arguments passed to the function na.omit()
-
-    # Example:
-    #   .turnpoints2(as.timeSeries(data(msft.dat))[, 4])
 
     # FUNCTION:
 
@@ -46,32 +55,30 @@ function(x, ...)
     stopifnot(isUnivariate(x))
 
     # Handle Missing Values:
-    x = na.omit(x, ...)
+    x <- na.omit(x, ...)
 
     # Convert to Vector:
-    X = x
-    x = as.vector(x)
+    X <- x
+    x <- as.vector(x)
 
     # Turnpoints:
-    ans = .turnpointsPastecs(x)
-    tp = .extract.turnpointsPastecs(ans)
-    data  = cbind(x, tp)
-    colnames(data) = c(colnames(X), "TP")
-    series(X) = data
+    ans <- .turnpointsPastecs(x)
+    tp <- .extract.turnpointsPastecs(ans)
+    data <- cbind(x, tp)
+    colnames(data) <- c(colnames(X), "TP")
+    series(X) <- data
 
     # Return Value:
     X
 }
 
 
-# ------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
 
-.turnpointsStats <-
+turnsStats <-
     function(x, doplot = TRUE)
 {
-    # A function implemented by Diethelm Wuertz
-
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -81,18 +88,18 @@ function(x, ...)
     #   x - an univariate timeSeries object, e.g. a price or index series
     #   doplot - a logical flag, should an optional plot be displayed?
 
-    # Example:
-    #   .turnpoints2(as.timeSeries(data(msft.dat))[, 4])
+    # Value:
+    #   Returns an object of class turnpoints.
 
     # FUNCTION:
 
     # Settings
     stopifnot(isUnivariate(x))
-    X = x
-    x = as.vector(x)
+    X <- x
+    x <- as.vector(x)
 
     # Turnpoints:
-    ans = .turnpointsPastecs(x)
+    ans <- .turnpointsPastecs(x)
 
     # Summary Statistics:
     .summary.turnpointsPastecs(ans)
@@ -105,19 +112,31 @@ function(x, ...)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-.turnpointsSeries =
+.turnpoints2 <-
 function(...)
 {
-    # FUNCTION:
-    
     # Deprecated:
-    .Deprecated(".turnpointsSeries")
+    .Deprecated(new = "turns", package = "timeSeries")
     
     # Return Value:
-    .turnpoints2(...)
+    turns(...)
+}
+
+
+# -----------------------------------------------------------------------------
+
+
+.turnpointsStats <-
+function(...)
+{
+    # Deprecated:
+    .Deprecated(new = "turnsStats", package = "timeSeries")
+    
+    # Return Value:
+    turnsStats(...)
 }
 
 
@@ -143,7 +162,7 @@ function(...)
 
 
 .turnpointsPastecs <-
-function(x)
+    function(x)
 {
     data <- deparse(substitute(x))
     if (is.null(ncol(x)) == FALSE)
@@ -221,7 +240,7 @@ function(x)
 
 
 .extract.turnpointsPastecs <-
-function(e, n, no.tp = 0, peak = 1, pit = -1, ...)
+    function(e, n, no.tp = 0, peak = 1, pit = -1, ...)
 {
     if (missing(n)) n <- -1
     res <- rep(no.tp, length.out= e$n)
@@ -238,10 +257,10 @@ function(e, n, no.tp = 0, peak = 1, pit = -1, ...)
 
 
 .plot.turnpointsPastecs <-
-function(x, level = 0.05, lhorz = TRUE, lcol = 2, llty = 2, type = "l",
-    xlab = "data number",
-    ylab = paste("I (bits), level = ", level*100, "%", sep = ""),
-    main = paste("Information (turning points) for:",x$data), ...)
+    function(x, level = 0.05, lhorz = TRUE, lcol = 2, llty = 2, type = "l",
+        xlab = "data number",
+        ylab = paste("I (bits), level = ", level*100, "%", sep = ""),
+        main = paste("Information (turning points) for:",x$data), ...)
 {
     # The next function actually draws the graph
     turnpoints.graph <- function(X, Level, Lhorz, Lcol, Llty, Type, Xlab,
@@ -261,7 +280,7 @@ function(x, level = 0.05, lhorz = TRUE, lcol = 2, llty = 2, type = "l",
 
 
 .summary.turnpointsPastecs <-
-function(object, ...)
+    function(object, ...)
 {
     cat("Turning points for:", object$data, "\n\n")
     cat("nbr observations  :", object$n, "\n")
@@ -289,6 +308,20 @@ function(object, ...)
 
     # Return Value:
     invisible(object)
+}
+
+
+################################################################################
+
+
+.turnpointsSeries =
+    function(...)
+{
+    # Deprecated:
+    .Deprecated(new = "turns")
+    
+    # Return Value:
+    turns(...)
 }
 
 

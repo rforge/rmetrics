@@ -15,7 +15,7 @@
 
 ################################################################################
 # S4 METHOD:                DATABASE ATTACHEMENT:
-#  attach,timeSeries         Attaches a 'timeSeries' object
+#  attach,timeSeries         Attaches a 'timeSeries' object to the search path
 ################################################################################
 
 

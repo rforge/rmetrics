@@ -20,7 +20,7 @@
 
    
 .signalCounts <-
-function(int)
+    function(int)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -39,8 +39,8 @@ function(int)
     #   ...
 
     # Format:
-    cint = as.character(int)
-    ans = format(cint, width = max(nchar(cint)), justify = "right")
+    cint <- as.character(int)
+    ans <- format(cint, width = max(nchar(cint)), justify = "right")
 
     # Return Value:
     ans

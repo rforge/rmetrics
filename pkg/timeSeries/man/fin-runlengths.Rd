@@ -9,7 +9,7 @@
 
 \description{
     
-    Compute runlengths of an univariate time series.
+    Computes runlengths of an univariate \code{timeSeries} object.
        
 }
 
@@ -42,11 +42,11 @@ runlengths(x, \dots)
 ## random time series - 
    set.seed(4711)
    x <- rnorm(12)
-   x.tS <- timeSeries(data=x, charvec=timeCalendar(), units="x")
-   x.tS
+   tS <- timeSeries(data=x, charvec=timeCalendar(), units="x")
+   tS
    
 ## return runlengths -
-   runlengths(x.tS)
+   runlengths(tS)
 }
 
 

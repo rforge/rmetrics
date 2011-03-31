@@ -20,6 +20,15 @@
 ################################################################################
 
 
+# DW:
+# We should call this function no loger outlier, much better woud be
+# splits() since thefunction tries to detect splits by large outliers.
+# For outlier detection we should use better methods than just the sd().
+
+
+# ------------------------------------------------------------------------------
+
+
 setMethod("outlier", "ANY",
     function(x, sd = 5, complement = TRUE, ...)
 {

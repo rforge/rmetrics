@@ -15,12 +15,14 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  windows,timeSeries        Windows a piece from a 'timeSeries' object
-#  cut,timeSeries            Cuts a block from a 'timeSeries' object
+#  window,timeSeries         Extracts a piece from a 'timeSeries' object
+# DEPRECATED:               DESCRIPTION:
+#  cut,timeSeries            Extracsts a piece from a 'timeSeries' object
 ################################################################################
 
 
-.window.timeSeries <- function(x, start, end, ...)
+.window.timeSeries <- 
+    function(x, start, end, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -62,17 +64,20 @@
     x[test,]
 }
 
+
 setMethod("window", "timeSeries",
           function(x, start, end, ...) .window.timeSeries(x, start, end, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 window.timeSeries <- function(x, ...) .window.timeSeries(x, ...)
 
 
-# ------------------------------------------------------------------------------
+###############################################################################
 
 
-.cut.timeSeries <- function (x, from, to, ...)
+.cut.timeSeries <- 
+    function (x, from, to, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -107,9 +112,11 @@ window.timeSeries <- function(x, ...) .window.timeSeries(x, ...)
     ans
 }
 
-setMethod("cut", "timeSeries",
-          function (x, from, to, ...) .cut.timeSeries(x, from, to, ...))
 
+setMethod("cut", "timeSeries",
+    function (x, from, to, ...) .cut.timeSeries(x, from, to, ...))
+
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 cut.timeSeries <- function(x, ...) .cut.timeSeries(x, ...)
 

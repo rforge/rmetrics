@@ -18,7 +18,7 @@
 #  alignDailySeries          Aligns a 'timeSeries' object to new positions
 #  rollDailySeries           Rolls daily a 'timeSeries' on a given period
 #  ohlcDailyPlot             Plots open high low close bar chart
-#  .plotOHLC                 Plots open high low close bar chart
+#   .plotOHLC                 Internal called by function ohlcDailyPlot()
 ################################################################################
 
 
@@ -271,6 +271,7 @@ function (x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     # A Copy from Contributed R Package 'tseries'
 
     # Description:
+    #   Internal called by function ohlcDailyPlot()
 
     # FUNCTION:
 

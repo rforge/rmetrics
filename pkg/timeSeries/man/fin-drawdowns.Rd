@@ -11,14 +11,7 @@
 \description{
     
     Compute series of drawdowns from financial returns 
-    and ccalculate drawdown statisitcs.      
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{   
-    \code{drawdowns} \tab Generates 'timeSeries' object of drawdown levels, \cr
-    \code{drawdownsStats} \tab Compute drawdown stats for univariate time series. }
+    and calculate drawdown statisitcs.      
     
 }
     
@@ -33,17 +26,13 @@ drawdownsStats(x, \dots)
 \arguments{
 
     \item{x}{
-        [drawdowns] - \cr
-        an uni- or multivariate 'timeSeries' object of financial returns, \cr
-        [drawdowns] - \cr
-        an univariate 'timeSeries' object of financial returns.
+        a 'timeSeries' object of financial returns.  
+        Note, drawdowns can be calculated from an uni- or multivariate 
+        time deries object, statistics can only be computed from an
+        univariate time series object.
         }
     \item{\dots}{
-        [drawdowns] - \cr
-        optional arguments passed to the function \code{na.omit}, \cr
-        [drawdownsStats] - \cr
-        arguments passed to the function \code{drawdowns}.
-        
+        optional arguments passed to the function \code{na.omit}.
         }
         
 }
@@ -55,7 +44,7 @@ drawdownsStats(x, \dots)
     returns an object of class 'timeSeries'.
     
     \code{drawdownsStats}\cr
-    returns an object of class 'data.frame' wit the following entries:\cr 
+    returns an object of class 'data.frame' with the following entries:\cr 
     \code{"drawdown"} - the depth of the drawdown, \cr 
     \code{"from"} - the start date, \cr  
     \code{"trough"} - the trough period, \cr 
@@ -67,27 +56,44 @@ drawdownsStats(x, \dots)
 }
 
     
+\details{
 
+    The code in the core of the function \code{drawdownsStats} was 
+    was borrowed from the package \code{PerformanceAnalytics} 
+    authored by Peter Carl and Sankalp Upadhyay.
+    
+}
+
+   
 \author{
 
     Peter Carl and Sankalp Upadhyay for code from the contributed 
-    R package PerformanceAnalytics.
+    R package \code{PerformanceAnalytics} used in the function 
+    \code{drawdownsStats}.
     
 }
 
 
 \examples{
-## Load Swiss Pension Fund Data Set -  
-   setRmetricsOptions(myFinCenter = "GMT")
-   data(LPP2005REC)
+## Use Swiss Pension Fund Data Set of Returns - 
    head(LPP2005REC)
-
-## Compute Drawdowns Statistics - 
-   drawdownsStats(LPP2005REC[, "SPI"])
+   SPI <- LPP2005REC[, "SPI"]
+   head(SPI)
    
 ## Plot Drawdowns - 
-   dd = drawdowns(LPP2005REC[, "SPI"])
+   dd = drawdowns(LPP2005REC[, "SPI"], main = "Drawdowns")
    plot(dd)
+   dd = drawdowns(LPP2005REC[, 1:6], main = "Drawdowns")
+   plot(dd)
+
+## Compute Drawdowns Statistics - 
+   ddStats <- drawdownsStats(SPI)
+   class(ddStats)
+   ddStats
+   
+## Note, Only Univariate Series are allowd -
+   ddStats <- try(drawdownsStats(LPP2005REC))
+   class(ddStats)
 }
 
 

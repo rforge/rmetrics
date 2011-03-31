@@ -18,9 +18,18 @@
 ################################################################################
 
 
+# DW:
+# I think we should add a similar function for writeSeries() using 
+# write.table(). Proceed in the same way as in the case of the read
+# function.
+
+
+# ------------------------------------------------------------------------------
+
+
 readSeries <-
-function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
-         format, ...)
+    function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
+    format, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -28,10 +37,22 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
     #   Reads from a spreadsheet and creates a 'timeSeries' object
 
     # Arguments:
-    #   file - the filename of a spreadsheet data set from which
-    #       to import the data records.
-    #   header -
-    #   sep -
+    #   file - the name of the file which the data are to be read 
+    #       from. Each row of the table appears as one line of the 
+    #       file. If it does not contain an absolute path, the file 
+    #       name is relative to the current working directory, 
+    #       getwd(). Tilde-expansion is performed where supported. 
+    #       As from R 2.10.0 this can be a compressed file.
+    #   header - a logical value indicating whether the file contains 
+    #       the names of the variables as its first line. If missing, 
+    #       the value is determined from the file format: header is 
+    #       set to TRUE if and only if the first row contains one fewer 
+    #       field than the number of columns.
+    #   sep - he field separator character. Values on each line of 
+    #       the file are separated by this character. If sep = "" (the 
+    #       default for read.table) the separator is ‘white space’, 
+    #       that is one or more spaces, tabs, newlines or carriage 
+    #       returns.
     #   zone - the time zone or financial center where the data were
     #       recorded.
     #   FinCenter - a character with the the location of the
@@ -40,6 +61,8 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
     #       be used.
     #   format - the format of the timestamps as recoreded in the
     #       first column of the data in the..
+    #   ... - optional arguments passed to the function read.table().
+    
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
 
@@ -77,3 +100,4 @@ function(file, header = TRUE, sep = ";", zone = "", FinCenter = "",
 
 
 ################################################################################
+

@@ -19,7 +19,8 @@
 ################################################################################
 
 
-.aggregate.timeSeries <- function(x, by, FUN, ...)
+.aggregate.timeSeries <- 
+    function(x, by, FUN, ...)
 {
     # A function implemented by Yohan Chalabi and  Diethelm Wuertz
 
@@ -82,11 +83,14 @@
     timeSeries(data, ...)
 }
 
+
 setMethod("aggregate", "timeSeries", function(x, by, FUN, ...)
           .aggregate.timeSeries(x, by, FUN, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 aggregate.timeSeries <- function(x, ...) .aggregate.timeSeries(x, ...)
+
 
 ################################################################################
 

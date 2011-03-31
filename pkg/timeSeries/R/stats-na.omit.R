@@ -16,7 +16,7 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  na.omit,timeSeries        Handles missing values in objects
-#  .naOmitMatrix             Internal function called from na.omit.timeSeries
+#  .naOmitMatrix             Internal function called from na.omit,timeSeries
 # OLD FUNCTIONS:            DESCRIPTION:
 #  removeNA                  Remove NAs from a matrix object
 #  substituteNA              Substitute NAs by zero, the column mean or median
@@ -24,8 +24,23 @@
 ################################################################################
 
 
-.na.omit.timeSeries <- function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-                                 interp = c("before", "linear", "after"), ...)
+# DW:
+# I think we should deprecate the following functions:
+# removeNA, substituteNA, and interpNa since the function 
+# na.omit() can already handle all these cases.
+
+
+# DW:
+# note we do interpolation with approx(), zoo also offers
+# interpolation by splines, we should also add this.
+
+
+################################################################################
+
+
+.na.omit.timeSeries <- 
+    function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+        interp = c("before", "linear", "after"), ...)
 {
     # Description
     #   Handles NAs in timeSeries objects
@@ -38,6 +53,7 @@
     #   object - an object of class timeSeries
     #   method -
     #   interp -
+    #   ... -
 
     # FUNCTION:
 
@@ -112,11 +128,12 @@
 }
 
 
-setMethod("na.omit", "timeSeries",
-          function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-                   interp = c("before", "linear", "after"), ...)
-          .na.omit.timeSeries(object, method, interp, ...))
+setMethod("na.omit", "timeSeries", function(object, 
+    method = c("r", "s", "z", "ir", "iz", "ie"),
+    interp = c("before", "linear", "after"), ...)
+.na.omit.timeSeries(object, method, interp, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
 
@@ -124,8 +141,9 @@ na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.naOmitMatrix <- function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
-                          interp = c("before", "linear", "after"))
+.naOmitMatrix <- 
+    function(object, method = c("r", "s", "z", "ir", "iz", "ie"),
+        interp = c("before", "linear", "after"))
 {
     # Description:
     #   Internal Function called from na.omit.timSeries()
@@ -205,7 +223,8 @@ na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
 ################################################################################
 
 
-removeNA <- function (x, ...)
+removeNA <- 
+    function (x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -224,7 +243,8 @@ removeNA <- function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-substituteNA <- function(x, type = c("zeros", "mean", "median"), ...)
+substituteNA <- 
+    function(x, type = c("zeros", "mean", "median"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -244,15 +264,15 @@ substituteNA <- function(x, type = c("zeros", "mean", "median"), ...)
     # Type:
     type <- match.arg(type)
     ans <- switch(type,
-                  "zeros" = apply(x, 2, function(z) {
-                      z[is.na(z)] <- 0
-                      z}),
-                  "median" = apply(x, 2, function(z) {
-                      z[is.na(z)] = median(z, na.rm = TRUE)
-                      z}),
-                  "mean" = apply(x, 2, function(z) {
-                      z[is.na(z)] = mean(z, na.rm = TRUE)
-                      z}))
+        "zeros" = apply(x, 2, function(z) {
+            z[is.na(z)] <- 0
+            z}),
+        "median" = apply(x, 2, function(z) {
+            z[is.na(z)] = median(z, na.rm = TRUE)
+            z}),
+        "mean" = apply(x, 2, function(z) {
+            z[is.na(z)] = mean(z, na.rm = TRUE)
+            z}))
 
     # Return Value:
     ans
@@ -262,7 +282,8 @@ substituteNA <- function(x, type = c("zeros", "mean", "median"), ...)
 # ------------------------------------------------------------------------------
 
 
-interpNA <- function(x, method = c("linear", "before", "after"), ...)
+interpNA <- 
+    function(x, method = c("linear", "before", "after"), ...)
 {
     # A function implemented by Diethelm Wuertz
 

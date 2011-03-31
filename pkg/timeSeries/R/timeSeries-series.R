@@ -15,8 +15,9 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION:
 #  series,timeSeries            Extracts data slot from 'timeSeries' object
-#  series<-,timeSeries,ANY      Assign new data slot for 'timeSeries' object
-#  series<-,timeSeries,matrix   Assign new data slot for 'timeSeries' object
+#  series<-,timeSeries,ANY      Assigns new data slot for 'timeSeries' object
+#  series<-,timeSeries,matrix   Assigns new data slot for 'timeSeries' object
+# DEPRECATED:                  DESCRIPTION:
 #  seriesData                   Deprecated, use series
 ################################################################################
 
@@ -52,6 +53,8 @@ setMethod("series", "timeSeries",
 setMethod("series<-", signature(x = "timeSeries", value = "ANY"),
     function(x, value)
     {
+        # A function implemented by Yohan Chalabi
+        
         # Return Value:
         callGeneric(x, as(value, "matrix"))
     }
@@ -126,7 +129,7 @@ setMethod("series<-", signature(x = "timeSeries", value = "matrix"),
 )
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 seriesData <-
@@ -150,10 +153,10 @@ function(object)
         stop("Object is not a time Series")
 
     # Deprecated
-    .Deprecated("series", "timeSeries")
+    .Deprecated(new = "series", package = "timeSeries")
 
     # Get Data Slot:
-    ans = as.matrix(object)
+    ans <- as.matrix(object)
 
     # Return Value:
     ans

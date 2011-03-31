@@ -15,8 +15,8 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  isUnivariate              Tests if 'timeSeries' object is univariate
-#  isMultivariate            Tests if 'timeSeries' object is multivariate
+#  isUnivariate              Tests if a 'timeSeries' object is univariate
+#  isMultivariate            Tests if a 'timeSeries' object is multivariate
 ################################################################################
 
 
@@ -31,9 +31,7 @@ function(x)
     # FUNCTION:
 
     # Return Value:
-    ans <- if (NCOL(x) == 1) TRUE else FALSE
-
-    ans
+    if (NCOL(x) == 1) TRUE else FALSE
 }
 
 
@@ -48,15 +46,10 @@ function(x)
     # Description:
     #   Tests if a time series or rectangular object is multivariate
 
-    # Examples:
-    #   isMultivariate(as.timeSeries(data(daxRet)))
-
     # FUNCTION:
 
     # Return Value:
-    ans <- if (NCOL(x) > 1) TRUE else FALSE
-
-    ans
+    if (NCOL(x) > 1) TRUE else FALSE
 }
 
 

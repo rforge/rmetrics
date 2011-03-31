@@ -19,7 +19,7 @@
 function(x)
 {
 
-    # version 1
+    # Version 1:
     if ("Data" %in% slotNames(x)) {
         data <- x@Data
         charvec <- timeDate(x@positions, zone = x@FinCenter,
@@ -36,7 +36,7 @@ function(x)
                         documentation = documentation)
     }
 
-    # version 2
+    # Version 2:
     if ((".Data" %in% slotNames(x)) && is.character(x@positions)) {
         data <- x@.Data
         charvec <- timeDate(x@positions, zone = x@FinCenter,

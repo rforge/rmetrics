@@ -24,15 +24,21 @@
 #  frequency,timeSeries-method    Returns the frequency of a regular time series
 ################################################################################
 
+
 setMethod("isDaily", "timeSeries", function(x) callGeneric(time(x)))
+
 
 setMethod("isQuarterly", "timeSeries", function(x) callGeneric(time(x)))
 
+
 setMethod("isMonthly", "timeSeries", function(x) callGeneric(time(x)))
+
 
 setMethod("isRegular", "timeSeries", function(x) callGeneric(time(x)))
 
+
 setMethod("frequency", "timeSeries", function(x, ...) callGeneric(time(x), ...))
+
 
 ################################################################################
 

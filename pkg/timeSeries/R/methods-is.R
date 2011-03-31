@@ -20,7 +20,7 @@
 
 
 is.timeSeries <-
-function (x)
+    function (x)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -50,7 +50,7 @@ function (x)
 
 
 is.signalSeries <-
-function(x)
+    function(x)
 {
     !as.logical(length(x@positions))
 }
@@ -59,8 +59,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-# YC : Note if is.na returns a timeSeries objects then we have problem
+# YC: 
+# Note if is.na returns a timeSeries objects then we have problem
 # with the function quantile...
+
 
 setMethod("is.na", "timeSeries", function(x)
     setDataPart(x, is.na(getDataPart(x))))
@@ -69,7 +71,8 @@ setMethod("is.na", "timeSeries", function(x)
 # ------------------------------------------------------------------------------
 
 
-if (getRversion() < "2.8.0") {
+if (getRversion() < "2.8.0") 
+{
     setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE)
         callGeneric(x@positions, na.rm = na.rm))
 } else {

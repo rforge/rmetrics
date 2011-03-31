@@ -151,25 +151,24 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
-## Load Microsoft Data - 
-   setRmetricsOptions(myFinCenter = "GMT")
-   data(MSFT)
-   head(MSFT)   
+## Use Microsofts' OHLCV Price Series - 
+   head(MSFT) 
+   end(MSFT)  
    
     
 ## Cut out April Data from 2001 - 
-   Close = MSFT[, "Close"]
-   tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
+   Close <- MSFT[, "Close"]
+   tsApril01 <- window(Close, start="2001-04-01", end="2001-04-30") 
    tsApril01    
    
-## Align with NA - 
-   tsRet = returns(tsApril01, trim = TRUE)
+## Align Daily Series with NA - 
+   tsRet <- returns(tsApril01, trim = TRUE)
    GoodFriday(2001)   
    EasterMonday(2001) 
    alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)
    alignDailySeries(tsRet, method = "fillNA", include.weekends = TRUE)
    
-## Interpolate - 
+## Align Daily Series by Interpolated Values - 
    alignDailySeries(tsRet, method = "interp", include.weekend = FALSE)
    alignDailySeries(tsRet, method = "interp", include.weekend = TRUE)
 }

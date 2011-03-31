@@ -21,8 +21,16 @@
 ################################################################################
 
 
+# DW:
+# I think we should call these functions:
+# countRecordsMonthly, rollWindowsMonthly, rollSeriesMonthly, ...
+
+
+# ------------------------------------------------------------------------------
+
+
 countMonthlyRecords <-
-function(x)
+    function(x)
 {   
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -34,6 +42,7 @@ function(x)
     #   x = as.timeSeries(data(edhec)); countMonthlyRecords(x)
 
     # FUNCTION:
+    
     stopifnot(is(x, "timeSeries"))
 
     if (x@format == "counts")
@@ -53,7 +62,7 @@ function(x)
 
 
 rollMonthlyWindows <-
-function(x, period = "12m", by = "1m")
+    function(x, period = "12m", by = "1m")
 {   
     # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
@@ -68,6 +77,7 @@ function(x, period = "12m", by = "1m")
     #       e.g. "3m" means one quarter
 
     # FUNCTION:
+    
     stopifnot(is(x, "timeSeries"))
 
     if (x@format == "counts")
@@ -110,7 +120,7 @@ function(x, period = "12m", by = "1m")
 
 
 rollMonthlySeries <-
-function(x, period = "12m", by = "1m", FUN, ...)
+    function(x, period = "12m", by = "1m", FUN, ...)
 {   
     # A function implemented by  Diethelm Wuertz and Yohan Chalabi
 
@@ -126,6 +136,7 @@ function(x, period = "12m", by = "1m", FUN, ...)
     #   FUN - function to be applied
 
     # FUNCTION:
+    
     stopifnot(is(x, "timeSeries"))
     if (x@format == "counts")
         stop(as.character(match.call())[1],
@@ -136,7 +147,7 @@ function(x, period = "12m", by = "1m", FUN, ...)
 
     # Apply Function:
     ans <- applySeries(x = x, from = windows$from, to = windows$to,
-                       FUN = FUN, ...)
+        FUN = FUN, ...)
 
     # Return Value:
     ans

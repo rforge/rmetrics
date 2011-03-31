@@ -1,33 +1,34 @@
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  A copy of the GNU General Public License is available at
+#  ../../COPYING
 
-
-# deprecated functions moved to here ...
-
-
-# .description
-# durationSeries
-# midquoteSeries
-# spreadSeries
-
-
+################################################################################
+# DEPRECATED:
+#  .description
+#  durationSeries
+#  midquoteSeries
+#  spreadSeries
 ################################################################################
 
 
 .description <- 
 function()
-{
-    # Note:
-    #   # Keep it for older Rmetrics Versions
-    
-    # FUNCTION:
-    
+{  
     # Deprecated:
-    .Deprecated("description")
-    
-    # Description String:
-    ans = description()
+    .Deprecated(new = "description", package = "timeSeries")
     
     # Return Value:
-    ans
+    description()
 }
     
 
@@ -38,9 +39,9 @@ durationSeries <-
 function(...) 
 {
     # Deprecated:
-    .Deprecated("returns", "timeSeries")
+    .Deprecated(new = "returns", package = "timeSeries")
     
-    # Durations
+    # Return Value:
     durations(...)
 }
 
@@ -51,10 +52,8 @@ function(...)
 midquoteSeries =
 function(...)
 {
-    # FUNCTION:
-    
     # Deprecated:
-    .Deprecated("midquoteSeries")
+    .Deprecated(new = "midquotes", package = "timeSeries")
     
     # Return Value:
     midquotes(...)
@@ -67,10 +66,8 @@ function(...)
 spreadSeries =
 function(...)
 {
-    # FUNCTION:
-    
     # Deprecated:
-    .Deprecated("spreadSeries")
+    .Deprecated(new = "spreads", package = "timeSeries")
     
     # Return Value:
     spreads(...)

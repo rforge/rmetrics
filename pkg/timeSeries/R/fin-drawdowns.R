@@ -17,14 +17,15 @@
 # FUNCTION:                 DESCRIPTION:
 #  drawdowns                 Generate 'timeSeries' object of drawdown levels
 #  drawdownsStats            Compute drawdown stats for univariate time series
+# FUNCTION:                 DESCRIPTION:
 #  .drawdownsHistPlot        Displays a histogram plot
 ################################################################################
 
 
 drawdowns <-
-function(x, ...)
+    function(x, ...)
 {
-    # A function implemetned by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generate 'timeSeries' object of drawdown levels
@@ -43,12 +44,12 @@ function(x, ...)
     x = na.omit(x, ...)
 
     # Preset Drawdowns:
-    drawdowns = x
+    drawdowns <- x
 
     # Compute multivariate 'timeSeries' of Drawdowns:
-    cumprodReturns = colCumprods(1 + x)
-    cummaxReturns = colCummaxs(cumprodReturns)
-    series(drawdowns) = series(cumprodReturns)/series(cummaxReturns) - 1
+    cumprodReturns <- colCumprods(1 + x)
+    cummaxReturns <- colCummaxs(cumprodReturns)
+    series(drawdowns) <- series(cumprodReturns)/series(cummaxReturns) - 1
 
     # Return Value:
     drawdowns
@@ -59,9 +60,9 @@ function(x, ...)
 
 
 drawdownsStats =
-function(x, ...)
+    function(x, ...)
 {
-    # A function implemetned by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Finds the drawdowns in an univariate 'timeSeries' object

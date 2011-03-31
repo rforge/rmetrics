@@ -26,13 +26,13 @@ function()
 {   
     # A function implemented by Diethelm Wuertz
 
-    # Descriptions:
+    # Description:
     #   Sets default description string:
 
     # FUNCTION:
 
-    # Description String:
-    ans = paste(as.character(date()), "by user:", Sys.getenv("USERNAME"))
+    # Get Description String:
+    ans <- paste(as.character(date()), "by user:", Sys.getenv("USERNAME"))
 
     # Return Value:
     ans

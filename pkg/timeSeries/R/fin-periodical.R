@@ -22,7 +22,7 @@
 
 
 .endOfPeriodSeries <- 
-function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
+    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     aggregate = c("monthly", "quarterly"), align = TRUE)
 {   
     # A function implemented by Diethelm Wuertz
@@ -33,7 +33,12 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     # Arguments:
     #   x - a daily 'timeSeries' object of returns
     #   nYearsBack - a period string. How long back should the series
-    #       be extracted?
+    #       be extracted? Options include values from 1 year to 10 years.
+    #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
+    #   aggregate - a character string which defines the aggregation level,
+    #       either "monthly", the default value, or "quarterly".
+    #   align - a logical flag, should the time series be aligned?  
+    #       If TRUE the function alignDailySeries() will be applied. 
 
     # Note:
     #   Add "1m"
@@ -47,11 +52,12 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
             " is for time series and not for signal series.")
 
     # Should the series be aligned:
-    if (align) x = alignDailySeries(x)
+    if (align) x <- alignDailySeries(x)
 
     # Match Arguments:
-    nYearsBack = match.arg(nYearsBack)
-
+    nYearsBack <- match.arg(nYearsBack)
+    aggregate <- match.arg(aggregate)
+    
     # Settings:
     if (nYearsBack == "YTD") yearsBack = 0
     else if (nYearsBack == "1y") yearsBack = 1
@@ -61,12 +67,12 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     else if (nYearsBack == "10y") yearsBack = 10
 
     currentYear <- getRmetricsOptions("currentYear")
-    Year = currentYear - yearsBack
-    fromDate = timeDate(paste(Year, "-01-01", sep = ""))
+    Year <- currentYear - yearsBack
+    fromDate <- timeDate(paste(Year, "-01-01", sep = ""))
     if (yearsBack == 0) {
-        toDate = end(x)
+        toDate <- end(x)
     } else {
-        toDate = timeDate(paste(currentYear-1, "-12-31", sep = ""))
+        toDate <- timeDate(paste(currentYear-1, "-12-31", sep = ""))
     }
 
     # Are there enough Data Points?
@@ -81,7 +87,7 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
 
 
 .endOfPeriodStats <- 
-function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
+    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     aggregate = c("monthly", "quarterly"), align = TRUE)
 {   
     # A function implemented by Diethelm Wuertz
@@ -92,7 +98,13 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     # Arguments:
     #   x - a daily 'timeSeries' object of returns
     #   nYearsBack - a period string. How long back should the series
-    #       be extracted?
+    #       be extracted? Options include values from 1 year to 10 years.
+    #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
+    #   aggregate - a character string which defines the aggregation level,
+    #       either "monthly", the default value, or "quarterly".
+    #   align - a logical flag, should the time series be aligned?  
+    #       If TRUE the function alignDailySeries() will be applied. 
+
 
     # Note:
     #   Add "1m"
@@ -107,7 +119,8 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
 
     # Match Arguments:
     nYearsBack = match.arg(nYearsBack)
-
+    aggregate <- match.arg(aggregate)
+    
     # Should the series be aligned:
     if (align) x = alignDailySeries(x)
 
@@ -170,9 +183,9 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
 
         # Bind:
         if (i > 1) {
-            stats = cbind.data.frame(stats, stats1)
+            stats <- cbind.data.frame(stats, stats1)
         } else {
-            stats = stats1
+            stats <- stats1
         }
     }
 
@@ -186,7 +199,7 @@ function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
 
 
 .endOfPeriodBenchmarks <- 
-function(x, benchmark = ncol(x),
+    function(x, benchmark = ncol(x),
     nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
     aggregate = c("monthly", "quarterly"), align = TRUE)
 {   
@@ -198,45 +211,53 @@ function(x, benchmark = ncol(x),
     # Arguments:
     #   x - a daily 'timeSeries' object of returns
     #   nYearsBack - a period string. How long back should the series
-    #       be extracted?
+    #       be extracted? Options include values from 1 year to 10 years.
+    #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
+    #   aggregate - a character string which defines the aggregation level,
+    #       either "monthly", the default value, or "quarterly".
+    #   align - a logical flag, should the time series be aligned?  
+    #       If TRUE the function alignDailySeries() will be applied. 
+
 
     # Note:
     #   Add "1m"
 
     # FUNCTION:
+    
+    # Checks:
     stopifnot(is.timeSeries(x))
     if (x@format == "counts")
         stop(as.character(match.call())[1], 
             " is for time series and not for signal series.")
 
     # Match Arguments:
-    nYearsBack = match.arg(nYearsBack)
-
+    nYearsBack <- match.arg(nYearsBack)
+    aggregate <- match.arg(aggregate)
+    
     # Should the series be aligned:
-    if (align) x = alignDailySeries(x)
+    if (align) x <- alignDailySeries(x)
 
     # Series:
-    Series = .endOfPeriodSeries(x[, -benchmark], nYearsBack = nYearsBack,
+    Series <- .endOfPeriodSeries(x[, -benchmark], nYearsBack = nYearsBack,
         aggregate = aggregate, align = FALSE)
-    y = Benchmark = .endOfPeriodSeries(x[, benchmark], nYearsBack = nYearsBack,
+    y <- Benchmark <- .endOfPeriodSeries(x[, benchmark], nYearsBack = nYearsBack,
         aggregate = aggregate, align = FALSE)
 
-    stats = NULL
+    stats <- NULL
     for (i in 1:ncol(Series))
     {
         # Gdet Series:
-        x = Series[, i]
+        x <- Series[, i]
 
         # Compute Statistics:
-        stats1 = c(
+        stats1 <- c(
             TrackingError = NA,
             Alpha = NA,
             Beta = NA,
-            CorrelationToBenchmark = NA
-        )
+            CorrelationToBenchmark = NA)
 
         # Bind Results:
-        stats = rbind(stats, stats1)
+        stats <- rbind(stats, stats1)
     }
 
     # Return Value:

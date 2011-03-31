@@ -17,10 +17,10 @@
 # METHOD:                   SUBSETTING METHODS ON DATA:
 #  .subset_timeSeries
 #  .findIndex
-#  $,timeSeries              Subset by column names
-#  $<-,timeSeries            Replace subset by column names
-#  [,timeSeries              Subsets of a 'timeSeries' object
-#  [<-,timeSeries            Assign value to subsets of a 'timeSeries' object
+#  $,timeSeries              Subsets a time series by column names
+#  $<-,timeSeries            Replaces subset by column names
+#  [,timeSeries              Subsets a time series object
+#  [<-,timeSeries            Assigns value to subsets of a time series
 ################################################################################
 
 
@@ -32,9 +32,6 @@
 setClassUnion("index_timeSeries", members =  c("numeric", "logical"))
 
 setClassUnion("time_timeSeries", members =  c("POSIXt", "Date"))
-
-
-
 
 # ------------------------------------------------------------------------------
 

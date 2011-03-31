@@ -10,6 +10,7 @@
     Print or assign new comment to a \code{timeSeries} object.
 }
 
+
 \usage{
 \S4method{comment}{timeSeries}(x)
 \S4method{comment}{timeSeries}(x) <- value

@@ -20,9 +20,23 @@
 ################################################################################
 
 
+# DW:
+# Setting bid and ask for column names is maybe ot the best coice. Examples
+# are the TED spread or the Libo OIS spread. The spread between High and Low
+# is the range.
+
+
+# ------------------------------------------------------------------------------
+
+
 spreads =
 function(x, which = c("Bid", "Ask"), tickSize = NULL)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes spreads from a 'timeSeries' object
+     
     # FUNCTION:
     
     # Compute Spread:
@@ -40,6 +54,11 @@ function(x, which = c("Bid", "Ask"), tickSize = NULL)
 midquotes =
 function(x, which = c("Bid", "Ask"))
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes mid quotes from a 'timeSeries' object
+     
     # FUNCTION:
     
     # Compute Mid Quotes:

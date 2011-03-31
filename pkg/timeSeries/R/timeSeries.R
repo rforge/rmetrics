@@ -16,6 +16,7 @@
 # FUNCTION:                 DESCRIPTION:
 #  .signalSeries             Creates a signal series from scratch
 #  .timeSeries               Creates a time series from scratch
+# METHODS:
 #  timeSeries,ANY,ANY
 #  timeSeries,matrix,missing
 #  timeSeries,matrix,timeDate

@@ -40,7 +40,7 @@
 
 
 as.timeSeries <-
-function(x, ...)
+    function(x, ...)
 {
     UseMethod("as.timeSeries")
 }
@@ -50,7 +50,7 @@ function(x, ...)
 
 
 as.timeSeries.default <-
- function(x, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -70,7 +70,7 @@ setAs("ANY", "timeSeries", function(from) as.timeSeries(from))
 
 
 as.timeSeries.ts <-
-function(x, ...)
+    function(x, ...)
 {
     asTime <- unclass(time(x))
     yearPart <- trunc(asTime)
@@ -115,7 +115,7 @@ setAs("ts", "timeSeries", function(from) as.timeSeries(from))
 
 
 as.timeSeries.data.frame <-
-function(x, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -164,9 +164,9 @@ setAs("data.frame", "timeSeries", function(from) as.timeSeries(from))
 # ------------------------------------------------------------------------------
 
 
-as.timeSeries.character <- function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    # Extended by Yohan Chalabi
+as.timeSeries.character <- 
+    function(x, ...)
+{   # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Example:
     #   as.timeSeries(data(nyse))
@@ -191,7 +191,7 @@ setAs("character", "timeSeries", function(from) as.timeSeries(from))
 
 
 as.timeSeries.zoo <-
-function(x, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -211,41 +211,43 @@ function(x, ...)
 ################################################################################
 
 
-# YC : since 2.9.0 must define proper S4 methods
+# YC:
+# Since 2.9.0 must define proper S4 methods
 
 
-.as.matrix.timeSeries <- function(x, ...)
-    {
-        # A function implemented by Diethelm Wuertz
+.as.matrix.timeSeries <- 
+    function(x, ...)
+{
+    # A function implemented by Diethelm Wuertz
 
-        # Description:
-        #   Converts a multivariate "timeSeries" to a matrix
+    # Description:
+    #   Converts a multivariate "timeSeries" to a matrix
 
-        # Arguments:
-        #   x - a 'timeSeries' object
+    # Arguments:
+    #   x - a 'timeSeries' object
 
-        # Value:
-        #   Returns the data slot of a 'timesSeries' object as a vector.
+    # Value:
+    #   Returns the data slot of a 'timesSeries' object as a vector.
 
-        # FUNCTION:
+    # FUNCTION:
 
-        # Check:
-        if (!inherits(x, "timeSeries"))
-            stop("x is not a timeSeries object!")
+    # Check:
+    if (!inherits(x, "timeSeries"))
+        stop("x is not a timeSeries object!")
 
-        # Convert:
-        ans <- getDataPart(x) # is matrix
-        dimnames(ans) <- dimnames(x)
+    # Convert:
+    ans <- getDataPart(x) # is matrix
+    dimnames(ans) <- dimnames(x)
 
-        # Results
-        ans
-    }
-
+    # Results
+    ans
+}
 
 
 setMethod("as.matrix", "timeSeries",
           function(x, ...) .as.matrix.timeSeries(x, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 as.matrix.timeSeries <- function(x, ...) .as.matrix.timeSeries(x, ...)
 
@@ -256,7 +258,8 @@ setAs("timeSeries", "matrix", function(from) as.matrix(from))
 # ------------------------------------------------------------------------------
 
 
-.as.data.frame.timeSeries <- function(x, row.names = NULL, optional = FALSE, ...)
+.as.data.frame.timeSeries <- 
+    function(x, row.names = NULL, optional = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -289,12 +292,15 @@ setAs("timeSeries", "matrix", function(from) as.matrix(from))
     ans
 }
 
+
 setMethod("as.data.frame", "timeSeries",
     function(x, row.names = NULL, optional = FALSE, ...)
           .as.data.frame.timeSeries(x, row.names = row.names, optional = optional, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 as.data.frame.timeSeries <- function(x, ...) .as.data.frame.timeSeries(x, ...)
+
 
 setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 
@@ -302,7 +308,8 @@ setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
 # ------------------------------------------------------------------------------
 
 
-.as.ts.timeSeries <- function(x, ...)
+.as.ts.timeSeries <- 
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -358,25 +365,36 @@ setAs("timeSeries", "data.frame", function(from) as.data.frame(from))
     ans
 }
 
+
 setMethod("as.ts", "timeSeries", function(x, ...) .as.ts.timeSeries(x, ...))
+
 
 # until UseMethod dispatches S4 methods in 'base' functions
 as.ts.timeSeries <- function(x, ...) .as.ts.timeSeries(x, ...)
 
+
 setAs("timeSeries", "ts", function(from) as.ts(from))
 
-# ------------------------------------------------------------------------------
-
-## YC : unneeded since timeSeries inherits from the structure class
-## as.logical.timeSeries <- function(x, ...) as.logical(series(x), ...)
-
 
 # ------------------------------------------------------------------------------
 
 
-# YC : important for functions like lapply and sapply to work properly
+# YC: 
+# Unneeded since timeSeries inherits from the structure class
 
-.as.list.timeSeries <- function(x, ...)
+
+# as.logical.timeSeries <- function(x, ...) as.logical(series(x), ...)
+
+
+# ------------------------------------------------------------------------------
+
+
+# YC: 
+# Important for functions like lapply and sapply to work properly
+
+
+.as.list.timeSeries <- 
+    function(x, ...)
 {
     data <- getDataPart(x)
     ncols <- NCOL(data)
@@ -386,13 +404,17 @@ setAs("timeSeries", "ts", function(from) as.ts(from))
     value
 }
 
+
 setMethod("as.list", "timeSeries",
           function(x, ...) .as.list.timeSeries(x, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 as.list.timeSeries <- function(x, ...) .as.list.timeSeries(x, ...)
 
+
 setAs("timeSeries", "list", function(from) as.list(from))
+
 
 ################################################################################
 

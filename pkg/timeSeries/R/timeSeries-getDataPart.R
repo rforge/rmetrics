@@ -20,7 +20,8 @@
 ################################################################################
 
 
-# this makes getDataPart a bit faster than default function
+# YC:
+# This makes getDataPart a bit faster than default function
 
 
 setMethod("getDataPart", "timeSeries", #"signalSeries",
@@ -38,7 +39,8 @@ setMethod("getDataPart", "timeSeries", #"signalSeries",
 # ------------------------------------------------------------------------------
 
 
-# this makes setDataPart a bit faster than default function
+# YC:
+# This makes setDataPart a bit faster than default function
 
 
 if (getRversion() < "2.8.0") {

@@ -22,6 +22,12 @@
 
 .start.timeSeries <- function(x, ...)
 {
+    # Description:
+    #   Extracts start date of a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Extract Date:
     if (length(x@positions)>0)
         timeDate(min(x@positions), zone = "GMT", FinCenter = x@FinCenter)
     else
@@ -39,6 +45,12 @@ start.timeSeries <- function(x, ...) .start.timeSeries(x, ...)
 
 .end.timeSeries <- function(x, ...)
 {
+    # Description:
+    #   Extracts start date of a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Extract Date:
     if (length(x@positions)>0)
         timeDate(max(x@positions), zone = "GMT", FinCenter = x@FinCenter)
     else

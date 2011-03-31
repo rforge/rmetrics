@@ -20,7 +20,8 @@
 ################################################################################
 
 
-.head.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
+.head.timeSeries <- 
+    function(x, n = 6, recordIDs = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -29,10 +30,16 @@
 
     # Arguments:
     #   x - a 'timeSeries' object.
+    #   n - a single integer. If positive, number of the first n records (rows)
+    #        to  be returned. If negative, all but the n first number of 
+    #        elements of x are returned.
+    #   recordIDs - a logical flag, should the record identification
+    #       be shown? By default FALSE.
+    #   ... - 
 
     # Value:
-    #   Returns the head of an object of class 'timeSeries'.
-
+    #   Returns the tail of an object of class 'timeSeries'.
+    
     # FUNCTION:
 
     # Head:
@@ -42,9 +49,11 @@
         head.matrix(x, n = n, ...)
 }
 
+
 setMethod("head", "timeSeries", function(x, n = 6, recordIDs = FALSE, ...)
           .head.timeSeries(x, n, recordIDs, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
 
@@ -52,7 +61,8 @@ head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.tail.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
+.tail.timeSeries <- 
+    function(x, n = 6, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -60,6 +70,12 @@ head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
 
     # Arguments:
     #   x - a 'timeSeries' object.
+    #   n - a single integer. If positive, number of the last n records (rows)
+    #       to be returned. If negative, all but the n last number of 
+    #       elements of x are returned.    
+    #   recordIDs - a logical flag, should the record identification
+    #       be shown? By default FALSE.
+    #   ... - 
 
     # Value:
     #   Returns the tail of an object of class 'timeSeries'.
@@ -74,9 +90,11 @@ head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
         tail.matrix(x, n = n, addrownums = FALSE, ...)
 }
 
+
 setMethod("tail", "timeSeries", function(x, n = 6, recordIDs = FALSE, ...)
           .tail.timeSeries(x, n, recordIDs, ...))
 
+          
 # until UseMethod dispatches S4 methods in 'base' functions
 tail.timeSeries <- function(x, ...) .tail.timeSeries(x, ...)
 

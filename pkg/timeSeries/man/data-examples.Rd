@@ -1,6 +1,8 @@
 \name{TimeSeriesData}
 
+
 \alias{TimeSeriesData}
+
 
 \alias{LPP2005REC}
 \alias{MSFT}

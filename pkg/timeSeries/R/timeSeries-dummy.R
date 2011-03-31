@@ -20,9 +20,25 @@
 ################################################################################
 
 
+# DW:
+# A more natural name for the function dummySeries() would be 
+# dummyMonthlySeries() to have the same naming conventions like in the
+# case of the dummy daily series.
+
+
 dummySeries <- 
 function(...)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Creates a monthly dummy 'time Series' object
+    
+    # Arguments:
+    #   ... - optional arguments passed to the function timeSeries().
+    
+    # FUnction:
+    
     # Return Value:
     timeSeries(matrix(runif(24), ncol = 2), as.character(timeCalendar()), ...)
 }
@@ -52,14 +68,14 @@ dummyDailySeries <-
     # Check:
     stopifnot(is.numeric(x))
     if (is.null(units)) units <- paste("X", 1:NCOL(x), sep = "")
-    stopifnot(length(units)==NCOL(x))
+    stopifnot(length(units) == NCOL(x))
 
     # Time Series:
     if (is.vector(x)) data = matrix(x, ncol = 1)
     if (is.matrix(x)) data = x
-    positions = timeSequence(from = "1970-01-01", length.out =
+    positions <- timeSequence(from = "1970-01-01", length.out =
         NROW(data), zone = zone, FinCenter = FinCenter)
-    ans = timeSeries(data = data, charvec = positions, units = units,
+    ans <- timeSeries(data = data, charvec = positions, units = units,
         zone = zone, FinCenter = FinCenter)
 
     # Return Value:

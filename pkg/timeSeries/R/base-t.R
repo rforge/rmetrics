@@ -16,9 +16,12 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  t,timeSeries              transpose of timeSeries object
+#  t,timeSeries              Returns the transpose of timeSeries object
 ################################################################################
 
-setMethod("t", "timeSeries", function(x) callGeneric(getDataPart(x)))
+
+setMethod("t", "timeSeries", 
+    function(x) callGeneric(getDataPart(x)))
+
 
 ################################################################################

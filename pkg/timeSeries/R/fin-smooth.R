@@ -15,23 +15,27 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  .supsmuSmoother       Smoothes a time series with the supsmu function
-#  .lowessSmoother       Smoothes a time series with the lowess function
-#  .splineSmoother       Smoothes a time series with the smooth.spline function
+#  smoothSupsmu          Smoothes a timeSeries with the supsmu function
+#  smoothLowess          Smoothes a timeSeries with the lowess function
+#  smoothSpline          Smoothes a timeSeries with the smooth.spline function
+# DEPRECATED:           DESCRIPTION:
+#  .supsmuSmoother       Smoothes a timeSeries with the supsmu function
+#  .lowessSmoother       Smoothes a timeSeries with the lowess function
+#  .splineSmoother       Smoothes a timeSeries with the smooth.spline function
 ################################################################################
 
 
-# IMPORTANT:
-#   DW: These are older functions which have to be rewritten ...
-#   The functions are thought to be used to smooth financial 
-#   price or index series.
+# DW: 
+# These are older functions which have to be rewritten ...
+# The functions are thought to be used to smooth financial 
+# price or index series.
 
 
 # ------------------------------------------------------------------------------
 
 
-.supsmuSmoother <- 
-function(x, bass = 5, ...)
+smoothSupsmu <- 
+    function(x, bass = 5, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -42,10 +46,10 @@ function(x, bass = 5, ...)
     #   x - an univariate timeSeries object, e.g. a price or index series
     #   bass - controls the smoothness of the fitted curve. Values of up 
     #       to 10 indicate increasing smoothness.
-    #   ... - further arguments passed to the function smooth()
+    #   ... - further arguments passed to the function supsmu()
     
     # Example:
-    #   x = .supsmuSmoother(MSFT[, 4], bass = 0.1); x; plot(x)
+    #   x = smoothSupsmu(MSFT[, 4], bass = 0.1); x; plot(x)
     
     # FUNCTION:
     
@@ -53,18 +57,18 @@ function(x, bass = 5, ...)
     stopifnot(isUnivariate(x))
     
     # Handle Missing Values:
-    x = na.omit(x, ...)
+    x <- na.omit(x)
     
     # Convert to Vector:
-    X = x
-    x = as.vector(x)
+    X <- x
+    x <- as.vector(x)
     
     # Smooth:
-    ans = stats::supsmu(x = 1:length(x), y = x, bass = bass, ... )
-    data  = cbind(x, ans$y) 
-    colnames(data) = c(colnames(X), "supsmu")
-    rownames(data) = as.character(time(X))
-    series(X) = data
+    ans <- stats::supsmu(x = 1:length(x), y = x, bass = bass, ... )
+    data <- cbind(x, ans$y) 
+    colnames(data) <- c(colnames(X), "supsmu")
+    rownames(data) <- as.character(time(X))
+    series(X) <- data
     
     # Return Value:
     X
@@ -74,8 +78,8 @@ function(x, bass = 5, ...)
 # ------------------------------------------------------------------------------
 
 
-.lowessSmoother <- 
-function(x, f = 0.5, ...)
+smoothLowess <- 
+    function(x, f = 0.5, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -87,10 +91,10 @@ function(x, f = 0.5, ...)
     #   f - the smoother span. This gives the proportion of points in the 
     #       plot which influence the smooth at each value. Larger values 
     #       give more smoothness.
-    #   ... - further arguments passed to the function smooth()
+    #   ... - further arguments passed to the function lowess()
     
     # Example:
-    #   x = .lowessSmoother(MSFT[, 4], f = 0.05); x; plot(x)
+    #   x = smoothLowess(MSFT[, 4], f = 0.05); x; plot(x)
     
     # FUNCTION:
     
@@ -98,17 +102,17 @@ function(x, f = 0.5, ...)
     stopifnot(isUnivariate(x))
     
     # Handle Missing Values:
-    x = na.omit(x, ...)
+    x <- na.omit(x)
     
     # Convert to Vector:
-    X = x
-    x = as.vector(x)
+    X <- x
+    x <- as.vector(x)
     
     # Smooth:
-    ans = stats::lowess(x, f = f, ...)$y
-    data  = cbind(x, ans) 
-    colnames(data) = c(colnames(X), "lowess")
-    rownames(data) = as.character(time(X))
+    ans <- stats::lowess(x, f = f, ...)$y
+    data <- cbind(x, ans) 
+    colnames(data) <- c(colnames(X), "lowess")
+    rownames(data) <- as.character(time(X))
     series(X) <- data
     
     # Return Value:
@@ -116,11 +120,11 @@ function(x, f = 0.5, ...)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
-.splineSmoother <- 
-function(x, ...)
+smoothSpline <- 
+    function(x, spar = NULL, ...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -134,12 +138,14 @@ function(x, ...)
     #       give more smoothness.
     #   ... - further arguments passed to the function smooth.spline()
     
-    # smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE, 
-    #   all.knots = FALSE, nknots = NULL, keep.data = TRUE, df.offset = 0, 
-    #   penalty = 1, control.spar = list()) 
+    # Details:
+    #   smooth.spline(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE, 
+    #     all.knots = FALSE, nknots = NULL, keep.data = TRUE, df.offset = 0, 
+    #     penalty = 1, control.spar = list()) 
    
     # Example:
-    #   x = .splineSmoother(MSFT[, 4], spar = 0.4); x; plot(x)
+    #   x = smoothSpline(MSFT[, 4], spar = NULL); x; plot(x)
+    #   x = smoothSpline(MSFT[, 4], spar = 0.4); x; plot(x)
     
     # FUNCTION:
     
@@ -147,21 +153,69 @@ function(x, ...)
     stopifnot(isUnivariate(x))
     
     # Handle Missing Values:
-    x = na.omit(x, ...)
+    x <- na.omit(x)
     
     # Convert to Vector:
-    X = x
-    x = as.vector(x)
+    X <- x
+    x <- as.vector(x)
     
     # Smooth:
-    ans = stats::smooth.spline(x, ...)$y
-    data = cbind(x, ans) 
-    colnames(data) = c(colnames(X), "spline")
-    rownames(data) = as.character(time(X))
+    ans <- stats::smooth.spline(x, spar = spar, ...)$y
+    data <- cbind(x, ans) 
+    colnames(data) <- c(colnames(X), "spline")
+    rownames(data) <- as.character(time(X))
     series(X) <- data
     
     # Return Value:
     X
+}
+
+
+################################################################################
+
+
+.supsmuSmoother <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated(".supsmuSmoother")
+    
+    # Return Value:
+    smoothSupsmu(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.lowessSmoother <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated(".lowessSmoother")
+    
+    # Return Value:
+    smoothLowess(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.splineSmoother <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated(".splineSmoother")
+    
+    # Return Value:
+    smoothSpline(...)
 }
 
 

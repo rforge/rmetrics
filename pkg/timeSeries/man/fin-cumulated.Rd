@@ -44,28 +44,37 @@ cumulated(x, \dots)
 }
 
 
+\details{
+
+    Note, the function \code{cumulated} assumes as input discrete 
+    returns from a price or index series. Only then the cumulatrd 
+    series agrees with the original price or index series. The 
+    first values of the cumulated series cannot be computed, it
+    is assumed that the series is indexed to 1.
+        
+}
+
+
 \value{
 
-    all functions return a time series object of the same class as
+    returns a time series object of the same class as
     the input argument \code{x}.
         
 }
     
 
 \examples{
-## Load Microsoft Data - 
-   data(MSFT)
-   setRmetricsOptions(myFinCenter = "GMT")
-   MSFT <- MSFT[1:10, "Close"]
-   MSFT
+## Use the Microsofts' Close Prices Indexed to 1 - 
+   MSFT.CL <- MSFT[, "Close"]
+   MSFT.CL <- MSFT.CL/MSFT[[1, "Close"]]
+   head(MSFT.CL)
 
-## Discrete Return Series  - 
-   MSFT = 100 * MSFT/as.numeric(MSFT[1, 1])
-   MSFT.RET = returns(MSFT, method = "discrete")
-   MSFT.RET
+## Compute Discrete Return -    
+   MSFT.RET <- returns(MSFT.CL, method = "discrete")
    
-## Cumulative Series, Indexed to 100 - 
-   cumulated(MSFT.RET, method = "discrete") 
+## Cumulative Series and Compare - 
+   MSFT.CUM <- cumulated(MSFT.RET, method = "discrete") 
+   head(cbind(MSFT.CL, MSFT.CUM))
 }
 
 

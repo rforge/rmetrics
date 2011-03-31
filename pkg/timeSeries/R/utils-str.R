@@ -19,22 +19,26 @@
 ################################################################################
 
 
-.str.timeSeries <- function(object, ...)
+.str.timeSeries <- 
+    function(object, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
-    #   Displays the structure of a 'timeSeries' object
+    #   Displays the structure of a 'timeSeries' object.
 
-    # Arguments
-    #   object - an object of class "timeSeries"
+    # Arguments:
+    #   object - an object of class 'timeSeries'.
+    #   ... - 
 
     # FUNCTION:
 
     # Series Name:
     cat("Time Series:          ")
     cat("\n Name:              ", as.character(c(substitute(object))))
+    
     # YC : as.character(c( important to handle str(timeSeries())
+    
     # Data Matrix:
     Dim = dim(object)
     cat("\nData Matrix:        ")
@@ -43,10 +47,12 @@
     firstName = rownames(object)[1]
     lastName = rownames(object)[Dim[1]]
     cat("\n Row Names:         ", firstName, " ... ", lastName)
+    
     # Date/Time Positions:
     cat("\nPositions:          ")
     cat("\n Start:             ", as.character(start(object)))
     cat("\n End:               ", as.character(end(object)))
+    
     # Other Attributes:
     cat("\nWith:               ")
     cat("\n Format:            ", object@format)
@@ -60,9 +66,11 @@
     invisible()
 }
 
-setMethod("str", "timeSeries",
-          function(object, ...) .str.timeSeries(object, ...))
 
+setMethod("str", "timeSeries",
+    function(object, ...) .str.timeSeries(object, ...))
+
+    
 # until UseMethod dispatches S4 methods in 'base' functions
 str.timeSeries <- function (object, ...) .str.timeSeries(object, ...)
 

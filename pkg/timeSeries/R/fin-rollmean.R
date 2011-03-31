@@ -14,19 +14,24 @@
 
 
 ################################################################################
-# FUNCTION:            DESCRIPTION:
-#  rollmean             Returns rolling mean
-#  rollmin              Returns rolling minimum
-#  rollmax              Returns rolling maximum
-#  rolmedian            Returns rolling median
+# FUNCTION:                DESCRIPTION:
+#  rollMean                 Returns rolling mean of a 'timeSeries' object
+#  rollMin                  Returns rolling minimum of a 'timeSeries' object
+#  rollMax                  Returns rolling maximum of a 'timeSeries' object
+#  rolMedian                Returns rolling median of a 'timeSeries' object
+# DEPRECATED:              DESCRIPTION:
+#  .rollmean.timeSeries     Returns rolling mean of a 'timeSeries' object
+#  .rollmin.timeSeries      Returns rolling minimum of a 'timeSeries' object
+#  .rollmax.timeSeries      Returns rolling maximum of a 'timeSeries' object
+#  .rolmedian.timeSeries    Returns rolling median of a 'timeSeries' object
 ################################################################################
 
 
-.rollmean.timeSeries <-
+rollMean <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
-    #   Returns rolling mean
+    #   Returns rolling mean of a 'timeSeries' object
     
     # Arguments:
     #   x - an object of class timeSeries 
@@ -41,7 +46,7 @@
 
     # Example:
     #   X = timeSeries(matrix(rnorm(24), ncol = 2), timeCalendar())
-    #   R = .rollmean.timeSeries(x = X, k = 3); R; plot(R)
+    #   R = rollMean(x = X, k = 3); R; plot(R)
 
     # FUNCTION:
 
@@ -79,11 +84,11 @@
 # ------------------------------------------------------------------------------
 
 
-.rollmax.timeSeries <-
+rollMin <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
-    #   Returns rolling maximum
+    #   Returns rolling maximum of a 'timeSeries' object
     
     # Arguments:
     #   x - an object of class timeSeries 
@@ -98,7 +103,7 @@
     
     # Example:
     #   X = timeSeries(matrix(rnorm(24), ncol = 2), timeCalendar())
-    #   R = .rollmax.timeSeries(x = X, k = 3); plot(R)
+    #   R = rollMax(x = X, k = 3); plot(R)
 
     # FUNCTION:
 
@@ -145,11 +150,11 @@
 # ------------------------------------------------------------------------------
 
 
-.rollmin.timeSeries <-
+rollMax <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
-    #   Returns rolling minimum
+    #   Returns rolling minimum of a 'timeSeries' object
     
     # Arguments:
     #   x - an object of class timeSeries 
@@ -164,7 +169,7 @@
     
     # Example:
     #   X = timeSeries(matrix(rnorm(24), ncol = 2), timeCalendar())
-    #   R = .rollmin.timeSeries(x = X, k = 3); R; plot(R)
+    #   R = rollMin(x = X, k = 3); R; plot(R)
 
     # FUNCTION:
 
@@ -218,11 +223,11 @@
 # ------------------------------------------------------------------------------
 
 
-.rollmedian.timeSeries <-
+rollMedian <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
-    #   Returns rolling median
+    #   Returns rolling median of a 'timeSeries' object
     
     # Arguments:
     #   x - an object of class timeSeries 
@@ -237,7 +242,7 @@
     
     # Example:
     #   X = timeSeries(matrix(rnorm(24), ncol=2), timeCalendar())
-    #   R = .rollmedian.timeSeries(x = X, k = 3); R; plot(R)
+    #   R = rollMedian(x = X, k = 3); R; plot(R)
 
     # FUNCTION:
 
@@ -276,3 +281,68 @@
 
 
 ################################################################################
+
+
+.rollmean.timeSeries <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated("rollMean")
+    
+    # Return Value:
+    rollMean(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rollmin.timeSeries <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated("rollMin")
+    
+    # Return Value:
+    rollMin(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rollmax.timeSeries <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated("rollMax")
+    
+    # Return Value:
+    rollMax(...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rollmedian.timeSeries <-
+    function(...)
+{
+    # FUNCTION:
+    
+    # Deprecated:
+    .Deprecated("rollMedian")
+    
+    # Return Value:
+    rollMedian(...)
+}
+
+
+################################################################################
+

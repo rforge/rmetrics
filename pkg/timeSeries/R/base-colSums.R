@@ -65,8 +65,8 @@ colStats <-
     # Statistics:
     if (inherits(x, "timeSeries"))
         apply(na.omit(getDataPart(x), ...), 2, FUN, ...) #<< YC : as.matrix is slow !
-       else
-           apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
+    else
+        apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
 }
 
 
@@ -169,5 +169,4 @@ colStdevs <- colSds
 
 
 ################################################################################
-
 

@@ -189,8 +189,9 @@ setMethod("cumsum", "timeSeries",
 # ------------------------------------------------------------------------------
 
 
-setMethod("quantile", "timeSeries", function(x, ...)
-          callGeneric(as.vector(x), ...))
+setMethod("quantile", "timeSeries", 
+    function(x, ...) callGeneric(as.vector(x), ...))
+    
 
 ################################################################################
 

@@ -15,9 +15,9 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  finCenter,timeSeries      Get financial center slot from a 'timeSeries' object
-#  finCenter<-,timeSeries    Set financial center slot from a 'timeSeries' object
+# FUNCTION:                DESCRIPTION:
+#  finCenter,timeSeries     Get financial center slot from a 'timeSeries' object
+#  finCenter<-,timeSeries   Set financial center slot from a 'timeSeries' object
 ################################################################################
 
 
@@ -27,7 +27,7 @@ setMethod("finCenter", "timeSeries",
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
-    #
+    #   Get financial center slot from a 'timeSeries' object
 
     # Arguments:
     #   x - an object of class 'timeSeries'
@@ -54,14 +54,12 @@ setMethod("finCenter<-", "timeSeries",
     # A function implemented by  Yohan Chalabi and Diethelm Wuertz
 
     # Description:
-    #
+    #   Set financial center slot from a 'timeSeries' object
 
     # Arguments:
     #   x - an object of class 'timeSeries'
-    #   value -
-
-    # Example:
-    #
+    #   value - a character string, setting the name of the financial
+    #       center.
 
     # FUNCTION:
     if (x@format == "counts")
@@ -72,6 +70,7 @@ setMethod("finCenter<-", "timeSeries",
     positions <- timeDate(charvec = time(x), zone = finCenter(x),
         FinCenter = value)
 
+    # Assign Positions to Time Stamps:
     time(x) <- positions
 
     # Return Value:

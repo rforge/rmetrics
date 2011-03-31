@@ -20,7 +20,7 @@
 
 
 durations <-
-function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+    function(x, trim = FALSE, units = c("secs", "mins", "hours", "days"))
 {   
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -39,13 +39,19 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
+    
+    # Check for 'timeSeries' Object:
     stopifnot(is(x, "timeSeries"))
-
+    
+    # Check for Signal Series:
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
 
-    # Positions and Durations:
+    # Match Arguments:
+    units <- match.arg(units)
+
+    # Get Positions and Durations:
     pos <- time(x)
     dur <- c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
 

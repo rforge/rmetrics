@@ -20,8 +20,20 @@
 ################################################################################
 
 
+# DW:
+# I think we need a better method to detect if a series is a OHLC(V) series
+# or not. A possible approach would be:
+# any High >= Open, Close, Low
+# any Low  <= Open, Close, High
+# Volume >= 0
+# number of columns 4(5)
+
+
+# -----------------------------------------------------------------------------
+
+
 .isOHLC <-
-function(object) 
+    function(object) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -29,11 +41,11 @@ function(object)
     #   Is the series an Open-High-Low-Close series?
     
     # Arguments:
-    #   object - an object of class timeSeries
+    #   object - an object of class 'timeSeries'
     
     # FUNCTION:
     
-    colNames = c("Open", "High", "Low", "Close")
+    colNames <- c("Open", "High", "Low", "Close")
     if (colnames(object)[1:4] == colNames) {
         return(TRUE)
     } else {
@@ -46,7 +58,7 @@ function(object)
 
 
 .isOHLCV <-
-function(object) 
+    function(object) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -54,11 +66,11 @@ function(object)
     #   Is the series an Open-High-Low-Close-Volume series?
     
     # Arguments:
-    #   object - an object of class timeSeries
+    #   object - an object of class 'timeSeries'
     
     # FUNCTION:
     
-    colNames = c("Open", "High", "Low", "Close", "Volume")
+    colNames <- c("Open", "High", "Low", "Close", "Volume")
     if (colnames(object) == colNames) {
         return(TRUE)
     } else {

@@ -15,7 +15,7 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  sort,timeSeries           Sorts reverts a 'timeSeries' object in time
+#  sort,timeSeries           Sorts a 'timeSeries' object in time
 ################################################################################
 
 

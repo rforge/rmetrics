@@ -50,15 +50,12 @@
 }
 
 
-\examples{
-## Load Microsoft Dataset - 
-   data(MSFT)
-   
-## Compute Sample Size - 
+\examples{   
+## Use MSFT and Compute Sample Size - 
    dim(MSFT)
    
 ## Align the Series - 
-   MSFT.AL = align(MSFT) 
+   MSFT.AL <- align(MSFT) 
    
 ## Show the Size of the Aligned Series - 
    dim(MSFT.AL)

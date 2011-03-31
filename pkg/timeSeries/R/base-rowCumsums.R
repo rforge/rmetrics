@@ -19,6 +19,7 @@
 #  rowCumsums,timeSeries     Computes cumulated sums by row for timeSeries
 ################################################################################
 
+
 setMethod("rowCumsums", "ANY", function(x, na.rm = FALSE, ...)
       {
           # Transform:
@@ -37,10 +38,13 @@ setMethod("rowCumsums", "ANY", function(x, na.rm = FALSE, ...)
               matrix(ans, ncol = 1, dimnames = dimnames(x))
       })
 
+      
 # ------------------------------------------------------------------------------
+
 
 setMethod("rowCumsums", "timeSeries", function(x, na.rm = FALSE, ...)
           setDataPart(x, callGeneric(getDataPart(x), na.rm = na.rm, ...)))
 
+          
 ################################################################################
 
