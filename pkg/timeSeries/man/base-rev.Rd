@@ -1,13 +1,50 @@
-\name{rev}                     
+\name{rev}     
+
+
+\alias{rev,timeSeries-method}
+\alias{rev.timeSeries}
+                                                 
                                     
-                                    
-\title{rev}
+\title{Reversion of a 'timeSeries'}
 
 
 \description{
 
-    Description ...
+    Reverses an uni- or multivariate 'timeSeries' object by 
+    reversing the order of the time stamps.
     
 }
 
- 
+
+\usage{
+\S4method{rev}{timeSeries}(x)
+}
+
+
+\arguments{
+
+    \item{x}{
+        an uni- or multivariate \code{timeSeries} object.
+        } 
+        
+}
+
+
+\value{
+
+    returns a \code{timeSeries} object.
+    
+}
+
+
+\examples{   
+## Create Dummy timeSeries -    
+   tS <- dummySeries()
+   
+## Reverse Series -
+   rev(tS)
+}
+
+
+\keyword{chron}
+

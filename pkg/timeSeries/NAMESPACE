@@ -27,7 +27,7 @@ export("colCummaxs",
         "rowCumsums",
         "series",
         "series<-",
-        "timeSeries" )
+        "timeSeries")
 exportMethods("$",
               "$<-",
               "Ops",
@@ -61,7 +61,7 @@ exportMethods("$",
               "dimnames<-",
               "end",
               "filter",
-              "finCenter",
+              "finCenter",   
               "finCenter<-",
               "frequency",
               "getDataPart",
@@ -143,6 +143,14 @@ S3method("window", "timeSeries")
 ################################################
 
 export(
+    "getSeries",
+    "setSeries<-",
+    "getUnits",
+    "setUnits<-",
+    "getTime",
+    "setTime<-",
+    "getFinCenter",
+    "setFinCenter<-",                   
     ".DollarNames.timeSeries",
     ".aggregate.timeSeries",
     ".align.timeSeries",

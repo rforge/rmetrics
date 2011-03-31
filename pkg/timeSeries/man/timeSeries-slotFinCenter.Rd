@@ -1,11 +1,14 @@
 \name{finCenter}
 
 
-\title{Financial Center of to a timeSeries}
+\title{Get and Set Financial Center of a 'timeSeries'}
 
 
 \alias{finCenter,timeSeries-method}
 \alias{finCenter<-,timeSeries-method}
+
+\alias{getFinCenter}  
+\alias{setFinCenter<-}
 
 
 \description{
@@ -19,6 +22,8 @@
 \S4method{finCenter}{timeSeries}(x)
 \S4method{finCenter}{timeSeries}(x) <- value
 
+getFinCenter(x)         
+setFinCenter(x) <- value
 }
 
 
@@ -34,24 +39,25 @@
 }
 
 
-%\seealso{listFinCenter}
+\seealso{listFinCenter}
 
 
 \examples{
-## A timeSeries Object - 
-   data <- matrix(rnorm(24), ncol = 2)
-   charvec <- as.character(timeCalendar())
-   ts <- timeSeries(data, charvec, FinCenter = "NewYork")
-   ts
+## An artificial timeSeries Object - 
+   tS <- dummySeries()
+   tS
 
 ## Print Financial Center -
-   finCenter(ts)
+   finCenter(tS)
+   getFinCenter(tS)
 
 ## Assign New Financial Center - 
-   finCenter(ts) <- "Zurich"
-   ts
+   finCenter(tS) <- "Zurich"
+   tS
+   setFinCenter(tS) <- "New_York"
+   tS
 }
 
 
-\keyword{chron}
+\keyword{programming}
 
