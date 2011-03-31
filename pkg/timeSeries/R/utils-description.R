@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  description               Sets default description string
+#  description               Creates default description string
 ################################################################################
 
 

@@ -16,8 +16,11 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-#  finCenter,timeSeries     Get financial center slot from a 'timeSeries' object
-#  finCenter<-,timeSeries   Set financial center slot from a 'timeSeries' object
+#  finCenter,timeSeries     Get financial center slot from a 'timeSeries'  
+#  finCenter<-,timeSeries   Set financial center slot from a 'timeSeries'  
+# FUNCTION:                DESCRIPTION:
+#  getFinCenter             Get financial center slot from a 'timeSeries'  
+#  setFinCenter<-           Set new financial center slot from a 'timeSeries'  
 ################################################################################
 
 
@@ -31,9 +34,6 @@ setMethod("finCenter", "timeSeries",
 
     # Arguments:
     #   x - an object of class 'timeSeries'
-
-    # Example:
-    #
 
     # FUNCTION:
 
@@ -51,7 +51,7 @@ setMethod("finCenter", "timeSeries",
 setMethod("finCenter<-", "timeSeries",
     function(x, value)
 {
-    # A function implemented by  Yohan Chalabi and Diethelm Wuertz
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
     #   Set financial center slot from a 'timeSeries' object
@@ -62,6 +62,8 @@ setMethod("finCenter<-", "timeSeries",
     #       center.
 
     # FUNCTION:
+    
+    # Check:
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
@@ -76,6 +78,47 @@ setMethod("finCenter<-", "timeSeries",
     # Return Value:
     x
 })
+
+
+################################################################################
+
+
+getFinCenter <- 
+function(x)
+{
+    # Description:
+    #    Get financial center slot from a 'timeSeries' object 
+ 
+    # Arguments:
+    #   x - a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Return Value:
+    finCenter(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setFinCenter<-" <- 
+function(x, value)
+{
+    # Description:
+    #    Set new financial center slot from a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    
+    # Assign Financial Center Slot:
+    finCenter(x) <- value
+    
+    # Return Value:
+    x
+}
 
 
 ################################################################################
