@@ -10,6 +10,15 @@
 	General linear congruential generators such as Park Miller sequence,
 	generalized feedback shift register such as SF-Mersenne Twister algorithm
 	and WELL generator.
+
+  The list of supported generators consists of generators available via
+  direct functions and generators available via \code{set.generator()} and
+  \code{runif()} interface. Most of the generators belong to both these groups,
+  but some generators are only available directly (SFMT) and some only via
+  \code{runif()} interface (Mersenne Twister 2002). This help page describes
+  the list of all the supported generators and the functions for the direct
+  access to those, which are available in this way. See \code{set.generator()}
+  for the generators available via \code{runif()} interface.
 }
 \usage{
 congruRand(n, dim = 1, mod = 2^31-1, mult = 16807, incr = 0, echo)
@@ -115,7 +124,20 @@ The currently available generator are given below.
 	In R, there is the integer version of this generator.	
 
 	All the C code for this generator called RAN\_ARRAY by Knuth is the code of 
-	D. Knuth (cf.  \url{http://www-cs-faculty.stanford.edu/\~knuth/news02.html\#rng}) except some C code, we add, to \emph{interface} with R.}
+	D. Knuth (cf.  \url{http://www-cs-faculty.stanford.edu/\~knuth/news02.html\#rng})
+    except some C code, we add, to \emph{interface} with R.}
+
+    \item{\bold{Mersenne Twister 2002 generator:}}{
+    The generator suggested by Makoto Matsumoto and Takuji Nishimura with
+    the improved initialization from 2002. See
+    \url{http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html}
+    for more information on the generator itself. This generator is available
+    only via \code{set.generator()} and \code{runif()} interface. Mersenne Twister
+    generator used in base R is the same generator (the recurrence), but with
+    a different initialization and the output transformation. The implementation
+    included in randtoolbox allows to generate the same random numbers as
+    in Matlab, see examples in \code{set.generator()}.
+    }
 
    \item{\bold{Set the seed:}}{
 	The function \code{setSeed} is similar to the function \code{set.seed} in R. It sets
