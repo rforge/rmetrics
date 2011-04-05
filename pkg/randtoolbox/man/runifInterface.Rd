@@ -135,9 +135,10 @@ get.description()
 
 # generate the same random numbers as in Matlab
 set.generator("MersenneTwister", initialization="init2002", resolution=53, seed=12345)
+runif(5)
 # [1] 0.9296161 0.3163756 0.1839188 0.2045603 0.5677250
 # Matlab commands rand('twister', 12345); rand(1, 5) generate the same numbers,
-# which are in short format   0.9296    0.3164    0.1839    0.2046    0.5677
+# which in short format are   0.9296    0.3164    0.1839    0.2046    0.5677
 
 #get back to the original R setting
 set.generator("default")
