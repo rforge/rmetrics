@@ -1,10 +1,11 @@
-\name{quasi.randtoolbox}
-\alias{quasi.randtoolbox}
+\name{quasiRNG}
+\alias{quasiRNG}
 \alias{torus}
 \alias{sobol}
 \alias{runif.sobol}
 \alias{halton}
 \alias{runif.halton}
+\alias{quasi.randtoolbox}
 \title{Toolbox for quasi random number generation}
 \description{
 	the Torus algorithm, the Sobol and Halton sequences.
@@ -102,7 +103,7 @@ simulation en assurance}. Bulletin Francais d'Actuariat, vol. 6, 11, 3-69. (avai
 
 }
 \seealso{
-    \code{\link{pseudo.randtoolbox}} for pseudo random number generation, \code{\link{.Random.seed}} for what is done in R about random number generation. 
+    \code{\link{pseudoRNG}} for pseudo random number generation, \code{\link{.Random.seed}} for what is done in R about random number generation. 
 }
 \author{
  Christophe Dutang and Diethelm Wuertz

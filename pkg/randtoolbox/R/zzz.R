@@ -46,7 +46,8 @@
 ### 
 ### ideas taken from rgenoud, ash, tree packages
 
-.onUnload <- function(lib) library.dynam.unload(c("randtoolbox"), lib)
+.onUnload <- function(lib) 
+	library.dynam.unload(c("randtoolbox"), lib)
 
 .onLoad <- function(lib, pkg)
 {
@@ -65,6 +66,11 @@
 		OStype <- version$platform
 		
 		cat(paste("<<-- randtoolbox - version ", PkgVersion, " - building date ", BuildDate, "\n", sep=""))
-		cat(paste("-->> with ",Rversion, " on the platform ", OStype, "\n", sep="")) 
-	}
+		cat(paste("with ",Rversion, " on the platform ", OStype, "\n", sep="")) 
+		cat("-->> For overview, type 'help(\"randtoolbox\")'.\n")
+	}else
+		cat(paste("This is randtoolbox. For overview, type 'help(\"randtoolbox\")'.\n", sep=""))
+	
 }
+
+
