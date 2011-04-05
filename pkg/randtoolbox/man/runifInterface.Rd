@@ -68,9 +68,9 @@ Parameters for the WELL generators is a character vector with components
   \item{order}{The number of bits in the internal state.
    Possible values are 512, 521, 607, 800, 1024, 19937, 21701, 23209, 44497.}
   \item{version}{The version letter "a" or "b" to be appended to the order.}
-  \item{temp}{Indication, whether tempering is used. Either "" or "Temp".}
+  \item{temper}{Indication, whether tempering is used. Either "" or "Temp".}
 }
-Concatenation of \code{order}, \code{version} and \code{temp} should belong
+Concatenation of \code{order}, \code{version} and \code{temper} should belong
 to \code{"512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
 "19937a", "19937aTemp", "19937b", "21701a", "23209a", "23209b", "44497a", "44497aTemp"}.
 }

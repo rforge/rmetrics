@@ -77,19 +77,19 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		{
 			order <- as.character(dots$order)
 			version <- as.character(dots$version)
-			if (is.null(dots$temp))
-				dots$temp <- ""
-			temp <- as.character(dots$temp)
-			if (temp == "temp")
-				temp <- "Temp"
-			parameters <- c(order=order, version=version, temp=temp)
+			if (is.null(dots$temper))
+				dots$temper <- ""
+			temper <- as.character(dots$temper)
+			if (temper == "temper")
+				temper <- "Temp"
+			parameters <- c(order=order, version=version, temper=temper)
 		}
 		if (identical(names(parameters), c("order", "version")))
-			parameters <- c(parameters, temp="")
-		if (!identical(names(parameters), c("order", "version", "temp")))
+			parameters <- c(parameters, temper="")
+		if (!identical(names(parameters), c("order", "version", "temper")))
 		{
 			param.names <- paste(names(parameters),collapse=" ")
-			cat("parameters required for WELL: order, version, temp\n")
+			cat("parameters required for WELL: order, version, temper\n")
 			cat("parameters provided: ", param.names, "\n")
 			stop("parameter list is not correct for WELL")
 		}
@@ -175,7 +175,7 @@ put.description <- function(description)
 		.C("putRngWELL",
 			as.integer(parameters["order"]),
 			match(parameters["version"], c("a", "b"), nomatch=0),
-			as.integer(parameters["temp"] == "Temp"),
+			as.integer(parameters["temper"] == "Temp"),
 			as.integer(state),
 			PACKAGE="rngWELL")
 	} else if (name == "MersenneTwister")
@@ -229,13 +229,13 @@ get.description <- function()
 		tmp <- .C("getRngWELL",
 			order = integer(1),
 			version = integer(1),
-			temp = integer(1),
+			temper = integer(1),
 			state = integer(2000),
 			PACKAGE="rngWELL")
 		order <- as.character(tmp$order)
 		version <- letters[tmp$version]
-		temp <- if (tmp$temp == 1) "Temp" else ""
-		parameters <- c(order=order, version=version, temp=temp)
+		temper <- if (tmp$temper == 1) "Temp" else ""
+		parameters <- c(order=order, version=version, temper=temper)
 		size <- ceiling(tmp$order/32)
 		state <- tmp$state[1:size]
 		literature <- "Panneton - L'Ecuyer - Matsumoto"
