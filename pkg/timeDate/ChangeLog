@@ -1,5 +1,6 @@
 2011-04-06  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* inst/doc: removed empty directory
 	* DESCRIPTION: updated version number
 	* R/calendar-isBizday.R, R/calendar-isWeekday.R,
