@@ -183,7 +183,7 @@ double MT2002_genrand_res53(void)
 #include "runifInterface.h"
 int initialization, resolution;
 
-void initMersenneTwister(int *type, int *nseed, unsigned int *iseed, unsigned int *state)
+void initMersenneTwister(int *type, int *nseed, unsigned long *iseed, unsigned int *state)
 {
 	int i;
 	if (*type == 1)
