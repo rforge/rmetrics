@@ -1,5 +1,17 @@
+2011-04-06  chalabi
+
+	* inst/doc: removed empty directory
+	* DESCRIPTION: updated version number
+	* R/calendar-isBizday.R, R/calendar-isWeekday.R,
+	  man/calendar-isBizday.Rd, man/calendar-isWeekday.Rd: added
+	  argument to isWeekend(), isWeekday(), isBizday() and isHoliday to
+	  specify days that should be considered as weekdays. By defaults
+	  it is from Mondays to Fridays
+
 2011-02-10  chalabi
 
+	* ChangeLog, DESCRIPTION: updated Date and Revision field in DESC
+	  file and updated Changelog file
 	* DESCRIPTION: updated DESC file
 
 2011-01-07  mmaechler
