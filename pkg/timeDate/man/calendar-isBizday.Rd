@@ -10,8 +10,8 @@
 }
 
 \usage{
-isBizday(x, holidays = holidayNYSE())
-isHoliday(x, holidays = holidayNYSE())
+isBizday(x, holidays = holidayNYSE(), wday = 1:5)
+isHoliday(x, holidays = holidayNYSE(), wday = 1:5)
 }
 
 \arguments{
@@ -19,6 +19,10 @@ isHoliday(x, holidays = holidayNYSE())
   \item{holidays}{
     holiday dates from a holiday calendar.  An object of class
     \code{timeDate}.}
+  \item{wday}{
+    Specify which days should be considered as weekdays. By default
+    from Mondays to Fridays.
+  }
 }
 
 \value{

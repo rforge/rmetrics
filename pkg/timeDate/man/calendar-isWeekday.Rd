@@ -9,43 +9,46 @@
 
 
 \description{
-    
+
     Tests if a date is a weekday or not.
 
 }
 
 
 \usage{
-isWeekday(x)
-isWeekend(x)
+isWeekday(x, wday = 1:5)
+isWeekend(x, wday = 1:5)
 }
 
 
 \arguments{
-  
-    \item{x}{
-        an object of class \code{timeDate}.
-        }  
-       
+
+  \item{x}{
+    an object of class \code{timeDate}.
+  }
+  \item{wday}{
+    Specify which days should be considered as weekdays. By default
+    from Mondays to Fridays.
+  }
 }
 
 
 \value{
 
-    the functions return logical vectors indicating if a date is a 
-    weekday, or a weekend day. 
+    the functions return logical vectors indicating if a date is a
+    weekday, or a weekend day.
 
 }
 
 
-\examples{  
+\examples{
 ## Dates in April, currentYear:
-   currentYear = getRmetricsOptions("currentYear") 
+   currentYear = getRmetricsOptions("currentYear")
    tS = timeSequence(
       from = paste(currentYear, "-03-01", sep = ""),
       to = paste(currentYear, "-04-30", sep = ""))
    tS
-    
+
 ## Subset of Weekends:
    isWeekend(tS)
    tS[isWeekend(tS)]

@@ -6,12 +6,12 @@
 #
 # This R package is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this R package; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this R package; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 
@@ -22,66 +22,66 @@
 ################################################################################
 
 
-isBizday <-  
-    function(x, holidays = holidayNYSE()) 
-{   
+isBizday <-
+    function(x, holidays = holidayNYSE(), wday = 1:5)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Test if a date is a business day or not
-    
+
     # Arguments:
     #   x - an object of class "timeDate"
     #   holidays - a holiday calendar
-    
+
     # Value:
     #   Returns a logical or a vector of logicals
-    
+
     # Example:
     #   x = timeSequence(from = "2005-05-15", to = "2005-07-15")
     #   h = holiday.NYSE(2005)
     #   cbind(as.character(x), is.bizday(x, h))
-    
+
     # FUNCTION:
-    
+
     # Test:
     char.x = substr(as.character(x), 1, 10)
     char.h = substr(as.character(holidays), 1, 10)
-    Weekday = as.integer(isWeekday(x))
+    Weekday = as.integer(isWeekday(x, wday = wday))
     nonHoliday = as.integer(!(char.x %in% char.h))
-    
+
     # Business Days:
     bizdays = as.logical(Weekday*nonHoliday)
     names(bizdays) = x@Data
-    
+
     # Return Value:
     bizdays
-} 
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-isHoliday <-  
-    function(x, holidays = holidayNYSE()) 
-{   
+isHoliday <-
+    function(x, holidays = holidayNYSE(), wday = 1:5)
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Test if a date is a holiday or not
-    
+
     # Arguments:
     #   x - an object of class "timeDate"
     #   holidays - a holiday calendar
-    
+
     # Value:
     #   Returns a logical or a vector of logicals
-    
+
     # FUNCTION:
-    
+
     # Return Value:
-    return(!isBizday(x, holidays)) 
-}   
+    !isBizday(x, holidays, wday = wday)
+}
 
 
 ################################################################################

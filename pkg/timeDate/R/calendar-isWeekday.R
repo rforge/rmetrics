@@ -34,7 +34,7 @@
 ################################################################################
 
 
-isWeekday <- function(x)
+isWeekday <- function(x, wday = 1:5)
 {
     # A function implemented by Diethelm Wuertz
     # and improved by Yohan Chalabi
@@ -55,8 +55,8 @@ isWeekday <- function(x)
     # FUNCTION:
 
     # Test for Weekdays:
-    wday <- as.POSIXlt(x, tz = "GMT")$wday
-    ans <- (!(wday == 0 | wday == 6))
+    days <- as.POSIXlt(x, tz = "GMT")$wday
+    ans <- days %in% wday
     names(ans) <- format(x)
 
     # Return Value:
@@ -67,7 +67,7 @@ isWeekday <- function(x)
 # ------------------------------------------------------------------------------
 
 
-isWeekend <- function(x)
+isWeekend <- function(x, wday = 1:5)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -90,7 +90,7 @@ isWeekend <- function(x)
     # FUNCTION:
 
     # Return Value:
-    return(!isWeekday(x))
+    !isWeekday(x, wday = wday)
 }
 
 
