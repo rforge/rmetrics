@@ -144,6 +144,8 @@ SFMT <- function(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, us
  
 WELL <- function(n, dim = 1, order = 512, temper = FALSE, version = "a")
 {
+	require(rngWELL)
+	
     if(n <0 || is.array(n))
         stop("invalid argument 'n'")
     if(dim < 0 || length(dim) >1)

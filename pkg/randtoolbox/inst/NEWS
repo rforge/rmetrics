@@ -1,11 +1,21 @@
-=== randtoolbox: an R package for random number generation and tests ===
+=== randtoolbox: an R package for random number generation and testing ===
 
 Version 1.10
 =============
 
+NEW FEATURES
+- update the man page pseudoRNG.Rd and quasiRNG.Rd with MT19937
+and other minor improvements.
+- on loading, the package print the overview man page.
+
+STRUCTURAL CHANGE
+- the package does not depend on the rngWELL package, but 
+only suggests it.
+
 WARNING FIXES
 - fix some warnings following the release of R 2.13.0: 
 the Makefile and the man page of runifInterface.
+- fix a warning in the MT19937 file.
 
 
 Version 1.09
