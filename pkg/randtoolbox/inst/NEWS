@@ -8,9 +8,6 @@ NEW FEATURES
 and other minor improvements.
 - on loading, the package print the overview man page.
 
-STRUCTURAL CHANGE
-- the package does not depend on the rngWELL package, but 
-only suggests it.
 
 WARNING FIXES
 - fix some warnings following the release of R 2.13.0: 
