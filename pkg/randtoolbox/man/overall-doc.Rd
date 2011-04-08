@@ -3,7 +3,7 @@
 \alias{randtoolbox}
 \docType{package}
 \title{
-  Toolbox for pseudo and quasi random number generation
+  General remarks on toolbox for pseudo and quasi random number generation
 }
 \description{The randtoolbox-package started in 2007 
   during an ISFA (France) working group. From then, it
