@@ -71,8 +71,10 @@ stopifnot(f1 > 0, f2 > 0)
 ## these all work (luck):
 zet <- zeta(alpha= 1.00001, beta= -.8)# -50929.58
 curve(dstable(zet+x, alpha= 1.00001, beta= -.8), -1, 1,
+      xlab = expression(zeta(alpha,beta) - x),
       n=500, ylim=c(1.8,3)*1e-10)
-abline(v=0, col="pink")
+cc <- "pink3"
+abline(v=0, col=cc); mtext(at=0, line = -1, adj = -.1, col=cc, expression(x==zeta(.)))
 ## no longer much noise (thanks to zeta.tol = 1e-5):
 curve(dPareto(zet+x, alpha= 1.00001, beta= -.8), add=TRUE, col=2)
 

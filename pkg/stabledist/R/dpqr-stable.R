@@ -45,7 +45,7 @@ pi2 <- pi/2 # - we use it so often
 ##' @param alpha
 ##' @return
 .om <- function(gamma,alpha)
-    if(alpha == 1) (2/pi)*log(gamma) else tan(pi*alpha/2)
+    if(alpha == 1) (2/pi)*log(gamma) else tan(pi2*alpha)
 
 ##' @title C_alpha - the tail constant
 ##' @param alpha numeric vector of stable tail parameters, in [0,2]
@@ -61,6 +61,34 @@ C.stable.tail <- function(alpha, log = FALSE) {
         if(log) lgamma(al)-log(pi)+ log(sin(al*pi2))
         else gamma(al)/pi * sin(al*pi2)
     if(any(a2 <- alpha == 2)) r[a2] <- if(log) -Inf else 0
+    r
+}
+
+##' @title tan(pi/2*x), for x in [-1,1] with correct limits
+##'   i.e. tanpi2(-/+ 1) == -/+ Inf
+##' @param x numeric vector
+##' @return numeric vector of values tan(pi/2*x)
+##' @author Martin Maechler
+tanpi2 <- function(x) {
+    r <- x
+    if(any(i <- x & x == round(x)))# excluding 0
+	r[i] <- (2 - (x[i] %% 4))*Inf
+    io <- which(!i)
+    r[io] <- tan(pi2* x[io])
+    r
+}
+
+##' @title cos(pi/2*x), for x in [-1,1] with correct limits
+##'   i.e. cospi2(+- 1) == 0
+##' @param x numeric vector
+##' @return numeric vector of values cos(pi/2*x)
+##' @author Martin Maechler
+cospi2 <- function(x) {
+    r <- x
+    if(any(i <- x == round(x)))
+	r[i] <- as.numeric(x[i] == 0)# 1 or 0 - iff x \in [-1,1] !
+    io <- which(!i)
+    r[io] <- cos(pi2* x[io])
     r
 }
 
@@ -158,7 +186,7 @@ dstable <- function(x, alpha, beta,
 
 	    ## General Case
 	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
-		tanpa2 <- tan(pi*alpha/2)
+		tanpa2 <- tan(pi2*alpha)
 		zeta <- -beta * tanpa2
 		theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
 
@@ -213,6 +241,11 @@ x.exp.m.x <- function(x) {
     r
 }
 
+.e.plus <- function(x, eps) x + eps* abs(x)
+.e.minus<- function(x, eps) x - eps* abs(x)
+pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more efficiently
+
+
 .fct1 <- function(x, zeta, alpha, theta0, tol, subdivisions, zeta.tol,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
@@ -235,13 +268,15 @@ x.exp.m.x <- function(x) {
     ## zeta <- -beta * tan(pi*alpha/2)
     ## theta0 <- (1/alpha) * atan( beta * tan(pi*alpha/2))
     ## x.m.zet <- abs(x - zeta)
+    ##-------->>>  identically as in .FCT1() for pstable() below: <<<-----------
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-
+    ##' g() is strictly monotone -- Nolan(1997) ["3. Numerical Considerations"]
+    ##'     alpha >= 1  <==>  g() is falling, ie. from Inf --> 0;  otherwise growing from 0 to +Inf
     g <- function(th) {
 	r <- th
 	## g(-pi/2) or g(pi/2) could become  NaN --> work around
-	i.bnd <- abs(pi/2 -sign(a_1)*th) < 64*.Machine$double.eps
+	i.bnd <- abs(pi2 -sign(a_1)*th) < 64*.Machine$double.eps
 	r[i.bnd] <- 0
 	th <- th[io <- !i.bnd]
 	att <- at0 + alpha*th ## = alpha*(theta0 + theta)
@@ -263,8 +298,7 @@ x.exp.m.x <- function(x) {
     ##  or  dstable(1.205, 0.75, -0.5)
     ##   the 2nd integral was "completely wrong" (basically zero, instead of ..e-5)
 
-    ## NB: g() is monotone, typically from 0 to +Inf
-    ##     alpha >= 1  <==>  g() is falling, ie. from Inf --> 0;  otherwise growing from 0 to +Inf
+    ## NB: g() is monotone, see above
     if((alpha >= 1 &&
 	((!is.na(g. <- g( pi2	)) && g. > .large.exp.arg) || identical(g(-theta0), 0))) ||
        (alpha  < 1 &&
@@ -273,11 +307,7 @@ x.exp.m.x <- function(x) {
 	## ===>	 g() * exp(-g()) is 0 everywhere
 	return(0)
 
-
-    th0.. <- function(th0, eps) -th0+ eps* abs(th0)
-    pi2.. <- function(eps) pi2 * (1 - eps)
-
-    g. <- if(alpha >= 1) g(th0..(theta0, 1e-6)) else g(pi2..(1e-6))
+    g. <- if(alpha >= 1) g(.e.plus(-theta0, 1e-6)) else g(pi2..(1e-6))
     if(is.na(g.))# g() is not usable --- FIXME rather use *asymptotic dPareto()?
 	if(max(x.m.zet, x.m.zet / abs(x)) < .01)
 	    return(f.zeta())
@@ -301,7 +331,7 @@ x.exp.m.x <- function(x) {
         g1.th2 <- g1( theta2 <- pi2..(1e-6) )
     else if((alpha <  1 && g(-theta0) > 1) ||
             (alpha >= 1 && g(-theta0) < 1))
-        g1.th2 <- g1( theta2 <- th0..(theta0, 1e-6) )
+        g1.th2 <- g1( theta2 <- .e.plus(-theta0, 1e-6) )
     else {
         ## when alpha ~=< 1 (0.998 e.g.),  g(x) is == 0 (numerically) on a wide range;
         ## uniroot is not good enough, and we should *increase* -theta0
@@ -367,52 +397,53 @@ x.exp.m.x <- function(x) {
 ##' @param beta  0 < |beta| <= 1
 ##' @param tol
 ##' @param subdivisions
-.fct2 <- function(x, beta, tol, subdivisions)
+.fct2 <- function(x, beta, tol, subdivisions,
+                  verbose = getOption("dstable.debug", default=FALSE))
 {
     i2b <- 1/(2*beta)
     p2b <- pi*i2b # = pi/(2 beta)
-    if(abs(ea <- -p2b*x) > .large.exp.arg) ## ==> g(.) == 0  or  == Inf
-        return(0)
-    g.x <- exp(ea)
+    ea <- -p2b*x
+    if(is.infinite(ea)) return(0)
+
     ##' g() is strictly monotone;
-    ##'  for beta > 0: increasing from g(-pi/2) = 0   to  g(+pi/2) = Inf
-    ##'  for beta < 0: decreasing from g(-pi/2) = Inf to  g(+pi/2) = 0
-    g <- function(th) {
-	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
-	g.x * (h/p2b) * exp(h*tan(th))/cos(th)
-    }
-    t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
-    if(is.na(g0 <- g(t0))) { ## numerical problem ==> need more careful version of g()
-	## find a left threshold instead of -pi/2  where g(.) is *not* NA
-	lt <- t0
-	f <- 1 - 1/256
-	while(is.na(g(lt))) lt <- lt*f
-	gg <- g
-	g <- function(th) {
-	    r <- th
-	    r[i <- (beta*(lt - th) > 0)] <- 0
-	    r[!i] <- gg(th[!i])
-	    r
-	}
+    ##' g(u) := original_g(u*pi/2)
+    ##'  for beta > 0: increasing from g(-1) = 0   to  g(+1) = Inf
+    ##'  for beta < 0: decreasing from g(-1) = Inf to  g(+1) = 0
+    ##t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
+    u0 <- -sign(beta)# g(u0) == 0  mathematically, but not always numerically
+    g <- function(u) {
+        r <- u
+        r[i <- abs(u-u0) < 1e-10] <- 0
+        u <- u[!i]
+        th <- u*pi2
+	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th = pi/2* (1 + beta*u)
+	r[!i] <- (h/p2b) * exp(ea + h*tanpi2(u)) / cospi2(u)
+        r
     }
 
-    ## Function to Integrate; th is a non-sorted vector!
-    g2 <- function(th) {
+    ## Function to Integrate; u is a non-sorted vector!
+    g2 <- function(u) {
 	## g2 = g(.) exp(-g(.))
-	x.exp.m.x( g(th) )
+	x.exp.m.x( g(u) )
     }
 
     ## We know that the maximum of g2(.) is = exp(-1) = 0.3679  "at" g(.) == 1
     ## find that by uniroot :
-    ur <- uniroot(function(th) g(th) - 1, lower = -pi2, upper = pi2, tol = tol)
-    theta2 <- ur$root
+    ur <- uniroot(function(u) g(u) - 1, lower = -1, upper = 1, tol = tol)
+    u2 <- ur$root
 
-    r1 <- .integrate2(g2, lower = -pi2, upper = theta2,
+    r1 <- .integrate2(g2, lower = -1, upper = u2,
 		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
-    r2 <- .integrate2(g2, lower = theta2, upper = pi2,
+    r2 <- .integrate2(g2, lower = u2, upper = 1,
 		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
-    abs(i2b)*(r1 + r2)
-}
+
+    cc <- pi2*abs(i2b)
+    if(verbose)
+	cat(sprintf(".fct2(%.11g, %.6g,..): c*sum(r1+r2)= %.11g*(%6.4g + %6.4g)= %g\n",
+		    x,beta, cc, r1, r2, cc*(r1+r2)))
+
+    cc*(r1 + r2)
+}## {.fct2}
 
 ### ------------------------------------------------------------------------------
 
@@ -453,7 +484,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	pcauchy(x, lower.tail=lower.tail, log.p=log.p)
     } else {
 
-        retValue <- function(F, useLower) {
+        retValue <- function(F, useLower) { ## (vectorized in F)
             if(useLower) {
                 if(log.p) log(F) else F
             } else { ## upper: 1 - F
@@ -462,7 +493,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
         }
 	## General Case
 	if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
-	    tanpa2 <- tan(pi*alpha/2)
+	    tanpa2 <- tan(pi2*alpha)
 	    zeta <- -beta * tanpa2
 	    theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
 
@@ -473,30 +504,39 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 		    r <- if(lower.tail) (1/2- theta0/pi) else 1/2+ theta0/pi
 		    if(log.p) log(r) else r
 		} else {
+		    useLower <-
+			((z > zeta && lower.tail) ||
+			 (z < zeta && !lower.tail))
 		    ## FIXME: for alpha > 1 -- the following computes F1 = 1 -c3*r(x)
-		    .F1 <- .FCT1(z, zeta, alpha=alpha,
-				 theta0= sign(z - zeta)* theta0,
+		    ## and suffers from cancellation when 1-F1 is used below:
+		    giveI <- !useLower && alpha > 1 # if TRUE, .FCT1() return 1-F
+		    .F1 <- .FCT1(z, zeta, alpha=alpha, theta0=theta0,
+				 giveI = giveI,
 				 tol = tol, subdivisions = subdivisions)
-		    retValue(.F1, useLower =
-			     ((z > zeta && lower.tail) ||
-			      (z < zeta && !lower.tail)))
+		    if(giveI)
+			if(log.p) log(.F1) else .F1
+		    else retValue(.F1, useLower=useLower)
 		}
 	    }, 0.)
 	}
 	## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	else { ## (alpha == 1)	and	 0 < |beta| <= 1  from above
-	    ## Loop over all x values:
-	    vapply(x, function(z) {
-		if (beta >= 0) {
-		    retValue(.FCT2( z, beta = beta,
-				   tol = tol, subdivisions = subdivisions),
-			     lower.tail)
-		} else {
-		    retValue(.FCT2(-z, beta = -beta,
-				   tol = tol, subdivisions = subdivisions),
-			     ! lower.tail)
+	    useL <-
+		if(beta >= 0)
+		    lower.tail
+		else {
+		    beta <- -beta
+		    x <- -x
+		    !lower.tail
 		}
-	    }, 0.)
+	    if(giveI <- !useL && !log.p)
+		useL <- TRUE
+	    ## Loop over all x values:
+	    retValue(vapply(x, function(z)
+			    .FCT2(z, beta = beta, tol=tol, subdivisions=subdivisions,
+				  giveI = giveI),
+			    0.),
+		     useLower = useL)
 	}
     }
 }## {pstable}
@@ -504,19 +544,22 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 ## ------------------------------------------------------------------------------
 
 ##' Auxiliary for pstable()  (for alpha != 1)
-.FCT1 <- function(x, zeta, alpha, theta0, tol, subdivisions)
+.FCT1 <- function(x, zeta, alpha, theta0, giveI, tol, subdivisions,
+                  verbose = getOption("pstable.debug", default=FALSE))
 {
     if(is.infinite(x))
-	return(1)
+	return(if(giveI) 0 else 1)
     x.m.zet <- abs(x - zeta)
-    ## identically as in .fct1() for dstable():
+    ##-------->>>  identically as in .fct1() for dstable() above: <<<-----------
+    if(x < zeta) theta0 <- -theta0
+
     a_1 <- alpha - 1
     cat0 <- cos(at0 <- alpha*theta0)
-    ## Nolan(1997) shows that   g() is montone
+
     g <- function(th) {
 	r <- th
 	## g(-pi/2) or g(pi/2) could become  NaN --> work around
-	i.bnd <- abs(pi/2 -sign(a_1)*th) < 64*.Machine$double.eps
+	i.bnd <- abs(pi2 -sign(a_1)*th) < 64*.Machine$double.eps
 	r[i.bnd] <- 0
 	th <- th[io <- !i.bnd]
 	att <- at0 + alpha*th ## = alpha*(theta0 + theta)
@@ -524,16 +567,43 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	r
     }
 
-    ## as g() is montone, the integrand  exp(-g(.)) is too -- so the maximum is at the boundary
+    if(verbose) cat(sprintf(".FCT1(%9g, %10g, th0=%.10g, %s..): ",
+			    x,zeta, theta0, if(giveI)"giveI=TRUE," else ""))
+
+    ## as g() is montone, the integrand  exp(-g(.)) is too ==> maximum is at the boundary
+    ## however, integration can be inaccuracte when g(.) quickly jumps from Inf to 0
+    ## _BUT_  empirically I find that good values l.th / u.th below are *INDEPENDENT* of x,
+    l.th <- .e.plus(-theta0, 1e-6)
+    if(alpha > 1 && g(l.th) == Inf) {
+        ur <- uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=pi2,
+                      f.lower= -1, f.upper= 1, tol = 1e-8)
+        l.th <- ur$root
+        if(verbose) cat(sprintf(" g(-th0 +1e-6)=Inf: unirt(%d it) -> l.th=%.10g ",
+                                ur$iter, l.th))
+    }
+    u.th <- .e.minus(pi2, 1e-6)
+    if(alpha < 1 && g(u.th) == Inf) {
+        ur <- uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=u.th,
+                      f.upper= -1, tol = 1e-8)
+        u.th <- ur$root
+        if(verbose) cat(sprintf(" g(pi/2 -1e-6)=Inf: unirt(%d it) -> u.th=%.10g ",
+                                ur$iter, u.th))
+    }
     r <- .integrate2(function(th) exp(-g(th)),
-                     lower = -theta0, upper = pi2, subdivisions = subdivisions,
+                     lower = l.th, upper = u.th, subdivisions = subdivisions,
                      rel.tol = tol, abs.tol = tol)
 
-    c1 <- if(alpha < 1) 1/2 - theta0/pi else 1
-    c3 <- sign(1-alpha)/pi
-    ## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
-    c1 + c3* r
-}
+    if(verbose) cat(sprintf("--> Int r= %.11g\n", r))
+    if(giveI) { ## { ==> alpha > 1 ==> c1 = 1; c3 = -1/pi}
+	## return (1 - F) = 1 - (1 -1/pi * r) = r/pi :
+	r/pi
+    } else {
+	c1 <- if(alpha < 1) 1/2 - theta0/pi else 1
+	c3 <- sign(1-alpha)/pi
+	## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
+	c1 + c3* r
+    }
+} ## {.FCT1}
 
 ## ------------------------------------------------------------------------------
 
@@ -542,41 +612,63 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 ##' @param beta  >= 0 here
 ##' @param tol
 ##' @param subdivisions
-.FCT2 <- function(x, beta, tol, subdivisions)
+.FCT2 <- function(x, beta, tol, subdivisions, giveI = FALSE,
+                  verbose = getOption("pstable.debug", default=FALSE))
 {
     i2b <- 1/(2*beta)
     p2b <- pi*i2b # = pi/(2 beta)
-    if((ea <- -p2b*x) < -.large.exp.arg) ## ==> g(.) == 0  ==> G2(.) == 1
-	return(1)
-    if(ea > .large.exp.arg) ## ==> g(.) == Inf	==> G2(.) == 0
-	return(0)
-    g.x <- exp(ea)
+    ea <- -p2b*x
+    if(is.infinite(ea))
+	return(R.D.Lval(if(ea < 0) ## == -Inf  ==> g(.) == 0	==> G2(.) == 1
+			1 else 0,  ## == +Inf  ==> g(.) == Inf	==> G2(.) == 0
+			lower.tail= !giveI))
+
     ##' g() is strictly monotone;
-    ##'  for beta > 0: increasing from g(-pi/2) = 0   to  g(+pi/2) = Inf
-    ##'  for beta < 0: decreasing from g(-pi/2) = Inf to  g(+pi/2) = 0
-    g <- function(th) {
-	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
-	g.x * (h/p2b) * exp(h*tan(th))/cos(th)
+    ##' g(u) := original_g(u*pi/2)
+    ##'	 for beta > 0: increasing from g(-1) = 0   to  g(+1) = Inf
+    ##'	 for beta < 0: decreasing from g(-1) = Inf to  g(+1) = 0
+    ## original_g :
+    ## g <- function(th) {
+    ##     h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th
+    ##     (h/p2b) * exp(ea + h*tan(th)) / cos(th)
+    ## }
+    ##t0 <- -pi2# g(t0) == 0  mathematically, but not always numerically
+    u0 <- -1 # g(u0) == 0  mathematically, but not always numerically
+    g <- function(u) {
+        r <- u
+        r[i <- abs(u-u0) < 1e-10] <- 0
+        u <- u[!i]
+        th <- u*pi2
+	h <- p2b+ th # == g'/beta where g' := pi/2 + beta*th = pi/2* (1 + beta*u)
+	r[!i] <- (h/p2b) * exp(ea + h*tanpi2(u)) / cospi2(u)
+        r
     }
-    t0 <- -sign(beta)*pi2# g(t0) == 0  mathematically, but not always numerically
-    if(is.na(g0 <- g(t0))) { ## numerical problem ==> need more careful version of g()
-	## find a left threshold instead of -pi/2  where g(.) is *not* NA
-	lt <- t0
-	f <- 1 - 1/256
-	while(is.na(g(lt))) lt <- lt*f
-	gg <- g
-	g <- function(th) {
-	    r <- th
-	    r[i <- (beta*(lt - th) > 0)] <- 0
-	    r[!i] <- gg(th[!i])
-	    r
-	}
+
+    if(verbose)
+	cat(sprintf(".FCT2(%.11g, %.6g, %s..): ",
+		    x,beta, if(giveI) "giveI=TRUE," else ""))
+
+    ## g(-u0) == +Inf {at other end}, mathematically ==> exp(-g(.)) == 0
+    ## in the outer tails, the numerical integration can be inaccurate,
+    ## because g(.) jumps from 0 to Inf,  but is 0 almost always
+    ##   <==> g1(.) = exp(-g(.)) jumps from 1 to 0 and is 1 almost everywhere
+    ##  ---> the integration "does not see the 0" and returns too large..
+    u. <- 1
+    if(g(uu <- .e.minus(u., 1e-6)) == Inf) {
+        ur <- uniroot(function(t) 1-2*(g(t)==Inf), lower=-1, upper= uu,
+                      f.lower= +1, f.upper= -1, tol = 1e-8)
+        u. <- ur$root
+        if(verbose) cat(sprintf(" g(%g)=Inf: unirt(%d it) -> u.=%.10g",
+                                uu, ur$iter, u.))
     }
 
     ##' G2(.) = exp(-g(.)) is strictly monotone .. no need for 'theta2' !
-    .integrate2(function(th) exp(-g(th)), lower = -pi2, upper = pi2,
-                subdivisions = subdivisions, rel.tol = tol, abs.tol = tol) / pi
-}
+    G2 <- if(giveI) function(u) expm1(-g(u)) else function(u) exp(-g(u))
+    r <- .integrate2(G2, lower = -1, upper = u.,
+                     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol) / 2
+    if(verbose) cat(sprintf("--> Int r= %.11g\n", r))
+    if(giveI) -r else r
+}## {.FCT2}
 
 ### ------------------------------------------------------------------------------
 
