@@ -390,7 +390,7 @@ Thus Monte Carlo methods have a wide range of applications.
 The main difference between (pseudo) Monte-Carlo methods 
 and quasi Monte-Carlo methods is that we no longer
 use random points $(x_i)_{1\leq i\leq n}$ but deterministic points. Unlike statistical tests,
-numerical integration does not rely on true randomness. Let us note that quasi Monte-Carlo methods dates
+numerical integration does not rely on true randomness. Let us note that quasi Monte-Carlo methods date
 from the fifties, and have also been used for interpolation problems and integral equations solving.
 
 
