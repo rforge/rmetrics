@@ -4,6 +4,7 @@
 \title{Rolling Statistics}
 
 
+\alias{rollStats}
 \alias{rollMean}
 \alias{rollMin}
 \alias{rollMax}
@@ -18,6 +19,9 @@
     
     
 \usage{
+rollStats(x, k, FUN=mean, na.pad=FALSE, 
+    align=c("center", "left", "right"), \dots)
+    
 rollMean(x, k, na.pad = FALSE, 
     align = c("center", "left", "right"), \dots)
 rollMin(x, k, na.pad = FALSE, 
@@ -37,6 +41,9 @@ rollMedian(x, k, na.pad = FALSE,
     \item{k}{
         an integer width of the rolling window. Must be odd for 
         \code{rollMedian}.
+        }
+    \item{FUN}{
+        the function to be rolled.
         }
     \item{na.pad}{
         a logical flag. Should NA padding be added at beginning?

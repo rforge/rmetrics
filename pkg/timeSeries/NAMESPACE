@@ -197,6 +197,7 @@ export(
     "rollMedian",
     ".rollmin.timeSeries",
     "rollMin",
+    "rollStats",
     ".scale.timeSeries",
     ".signalCounts",
     ".signalSeries",
