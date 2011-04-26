@@ -319,9 +319,12 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
     //init the seed of SFMT
     SFMT_init_gen_rand(seed);
     
+#if defined(HAVE_SSE2)	
     //size of internal array
     int blocksize = get_min_array_size32();
-    //number of blocks to generate
+#endif
+    
+	//number of blocks to generate
     //int nbblock = nb / blocksize; 
     //last variates to generate
     //int rest = nb % blocksize;
