@@ -17,10 +17,10 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  holidayGB               Returns holidays for British Bank Holidays
+#  holidayLONDON             Returns holidays for British Bank Holidays
 ################################################################################
 
-holidayGB <- function (year = getRmetricsOptions("currentYear")) {
+holidayLONDON <- function (year = getRmetricsOptions("currentYear")) {
 
     # function implemented by Menon Murali
 

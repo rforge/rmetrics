@@ -1,21 +1,21 @@
-\name{holidayGB}
+\name{holidayLONDON}
 
 
-\title{GB Bank Holidays}
+\title{London Bank Holidays}
 
 
-\alias{holidayGB}
+\alias{holidayLONDON}
 
 
 \description{
 
-    Returns bank holidays in Britain.
+    Returns bank holidays in London.
 
 }
 
 
 \usage{
-holidayGB(year = getRmetricsOptions("currentYear"))
+holidayLONDON(year = getRmetricsOptions("currentYear"))
 }
 
 
@@ -41,10 +41,9 @@ holidayGB(year = getRmetricsOptions("currentYear"))
 \author{Function contributed by Menon Murali}
 
 \examples{
-## holidayGB -
-   holidayGB()
-   holidayGB(2008:2010)
+## holidayLONDON -
+   holidayLONDON()
+   holidayLONDON(2008:2010)
 }
-
 
 \keyword{chron}
