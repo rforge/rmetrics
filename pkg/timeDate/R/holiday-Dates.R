@@ -242,12 +242,12 @@ function(year = getRmetricsOptions("currentYear")) {
 
 # ------------------------------------------------------------------------------
 
-
 GBMayDay =
 function(year = getRmetricsOptions("currentYear")) {
     ans = .nth.of.nday(year, 5, 1, 1)
     timeDate(as.character(ans)) }
 
+# YC: Note GBBankHoliday returns Spring Bank Holiday
 GBBankHoliday =
 function(year = getRmetricsOptions("currentYear")) {
     ans = .last.of.nday(year, 5, 31, 1)

@@ -125,12 +125,12 @@
 
 
 \description{
-    
-    A collection and description of functions and methods 
+
+    A collection and description of functions and methods
     dealing with holiday dates in the G7 countries and
-    Switzerland. 
+    Switzerland.
     \cr
-   
+
 }
 
 
@@ -175,7 +175,7 @@ CHAscension(year = getRmetricsOptions("currentYear"))
 CHConfederationDay(year = getRmetricsOptions("currentYear"))
 CHKnabenschiessen(year = getRmetricsOptions("currentYear"))
 GBMayDay(year = getRmetricsOptions("currentYear"))
-GBBankHoliday(year = getRmetricsOptions("currentYear"))
+GBBankHoliday(year = getRmetricsOptions("currentYear")) # see note in details section
 GBSummerBankHoliday(year = getRmetricsOptions("currentYear"))
 GBMilleniumDay(year = getRmetricsOptions("currentYear"))
 DEAscension(year = getRmetricsOptions("currentYear"))
@@ -255,12 +255,12 @@ JPBankHolidayDec31(year = getRmetricsOptions("currentYear"))
 
 \arguments{
 
-    \item{year}{ 
+    \item{year}{
         an integer value or vector of year numbers including the
-        century. These are integers of the form \code{CCYY}, e.g. 
+        century. These are integers of the form \code{CCYY}, e.g.
         \code{2000}.
         }
-  
+
 }
 
 
@@ -268,22 +268,26 @@ JPBankHolidayDec31(year = getRmetricsOptions("currentYear"))
 
     The function \code{listHolidays} returns a character vector
     with the names of the supported holidays.
-    
+
     The holiday functions return an ISO-8601 formatted 'timeDate'
     of the requested holiday.
-   
+
 }
 
+\details{
+  Note that \code{GBBankHoliday()} returns GB Spring bank holiday. For GB holiday
+  calender see \code{holidayGB()}.
+}
 
 \examples{
 ## listHolidays -
    listHolidays()
-   
+
 ## CHSechselaeuten -
    # Sechselaeuten a half Day Bank Holiday in Switzerland
    CHSechselaeuten(2000:2010)
    CHSechselaeuten(getRmetricsOptions("currentYear"))
-   
+
 ## German Unification Day:
    DEGermanUnity(getRmetricsOptions("currentYear"))
 }
