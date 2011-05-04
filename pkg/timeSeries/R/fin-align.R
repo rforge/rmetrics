@@ -81,9 +81,11 @@ setMethod("align", "timeSeries",
 
     # Compute Julian counts (x) and series values (y)
     Origin = as.POSIXct("1970-01-01", tz = "GMT")
-    u <- as.integer(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
+    # YC: use as as.vector rather as.integer to avoid integer overflow
+    # YC: when dealing with long historical time series
+    u <- as.vector(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
     xout <- seq(u[1] + offset, u[length(u)], by = by)
-    posixGMT <- Origin + as.integer(xout)
+    posixGMT <- Origin + xout
 
     N = NCOL(x)
     for (i in 1:N) {
