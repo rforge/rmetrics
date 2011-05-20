@@ -4,6 +4,7 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{fancyvrb}
 \usepackage{color}
+\usepackage[utf8]{inputenc}
 \advance \topmargin by -\headheight
 \advance \topmargin by -\headsep
 \textheight 8.9in
@@ -17,7 +18,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 % Command for R functions
 \newcommand{\rfun}[1]{\texttt{#1}}
-\newcommand{\packversion}{0.2.4}
+\newcommand{\packversion}{0.2.6}
 \DefineVerbatimEnvironment{Code}{Verbatim}{commandchars=¬\{\}, frame = single, samepage = TRUE}
 \begin{document}
 \title{Notes on the BLCOP Package}

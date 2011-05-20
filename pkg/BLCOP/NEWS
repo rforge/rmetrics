@@ -1,3 +1,6 @@
+New in version 0.2.6:
+- No new functionality was added.  The package has simply been updated to build correctly under R 2.13.0.
+
 New in version 0.2.4:
 - Made corrections to the vignette, added examples using the new optimalPortfolios.fPort functionality
 - Added several extractor functions, including posteriorMeanCov, posteriorSimulations, numSimulations, 
