@@ -2,9 +2,8 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage[pdftex]{graphicx}
-\usepackage{fancyvrb}
 \usepackage{color}
-\usepackage[utf8]{inputenc}
+% \usepackage[utf8]{inputenc}
 \advance \topmargin by -\headheight
 \advance \topmargin by -\headsep
 \textheight 8.9in
@@ -19,7 +18,6 @@
 % Command for R functions
 \newcommand{\rfun}[1]{\texttt{#1}}
 \newcommand{\packversion}{0.2.6}
-\DefineVerbatimEnvironment{Code}{Verbatim}{commandchars=¬\{\}, frame = single, samepage = TRUE}
 \begin{document}
 \title{Notes on the BLCOP Package}
 \author{Francisco Gochez, Mango Solutions}
