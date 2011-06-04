@@ -15,16 +15,19 @@
 # MA  02111-1307  USA
 
 ################################################################################
-# FUNCTION:
-#  ipopControl
+# FUNCTION:					DESCRIPTION:
+#  ipopControl				 Returns list of control parameters
 ################################################################################
 
-# Note: not yet implemented in solver ipop
         
-.ipopControl <- 
+ipopControl <- 
     function()
 {
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #	Returns list of control parameters
+    
     
     # FUNCTION:
     
