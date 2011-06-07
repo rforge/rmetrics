@@ -1,5 +1,20 @@
+2011-06-07  chalabi
+
+	* src/085A-LowDiscrepancy.f: Delcared all variables and functions
+	  to avoid troubles with picky compilers
+
+2011-06-07  mmaechler
+
+	* src/085A-LowDiscrepancy.f: fix obvious typos after spell-checking
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
 2010-04-23  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESCR and ChangeLog
 	* src/085A-LowDiscrepancy.f: fixed sobol RVS on 64 bit platform
 	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 
