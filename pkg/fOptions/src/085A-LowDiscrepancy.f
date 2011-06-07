@@ -12,11 +12,13 @@ C     @brief Halton sequence
 C
 C     @author Diethelm Wuertz
 C     @author Christophe Dutang
-C
+C     @author Yohan Chalabi
 C
 C     Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights
 C     reserved.  slightly modified (better accuracy and speed) by
-C     Christophe Dutang in October 2009.
+C     Christophe Dutang in October 2009. Delcared all variables and
+C     functions to avoid troubles with new version of gfortran by Yohan
+C     Chalabi in June 2011.
 C
 C     The new BSD License is applied to this software.
 C     Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
@@ -65,9 +67,12 @@ C-------------------------------------------------------------------------------
 C     INITIALIZE THE HALTON LOW DISCREPANCY SEQUENCE.
 C     THE BASE IS CALCULATED FROM PRIMES
 
+      IMPLICIT NONE
+
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
+      INTEGER NC, I, K, M, N, NB
 
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMPLE SIEVE:
       BASE(1) = 2
@@ -118,9 +123,12 @@ C-------------------------------------------------------------------------------
 C     GENERATE THE NEXT POINT IN HALTON'S LOW DISCREPANCY SEQUENCE
 C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
 
+      IMPLICIT NONE
+
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
+      INTEGER NB
 
       DO NB = 1, DIMEN
          ITER(NB) = OFFSET
@@ -157,9 +165,13 @@ C     OFFSET    - THE OFFSET OF POINTS IN THE NEXT FUNCTION CALL
 C     INIT      - IF ONE, WE INITIALIZE
 C     TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
+      IMPLICIT NONE
+
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
+      DOUBLE PRECISION HQNORM
+      INTEGER I, J
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
@@ -192,8 +204,11 @@ C-------------------------------------------------------------------------------
 
       DOUBLE PRECISION FUNCTION HQNORM(P)
 
+      IMPLICIT NONE
+
 C     USED TO CALCULATE HALTON NORMAL DEVIATES:
       DOUBLE PRECISION P,R,T,A,B, EPS
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
      &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -226,10 +241,13 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE TESTHALTON()
 
+      IMPLICIT NONE
+
       INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
       PARAMETER (N1=20,N2=N1/2,DIMEN=5)
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
+      INTEGER J, I, INIT
 
       TRANSFORM = 0
 
@@ -421,8 +439,11 @@ C-------------------------------------------------------------------------------
 
       DOUBLE PRECISION FUNCTION SQNORM(P)
 
+      IMPLICIT NONE
+
 C     USED TO CALCULATE SOBOL NORMAL DEVIATES
       DOUBLE PRECISION P,R,T,A,B, EPS
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
       DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
      &     /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0,
      &     -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
@@ -479,6 +500,8 @@ C     2 - FAURE-TEZUKA TYPE SCRAMBLING
 C     3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
 C     iSEED     - SCRAMBLING iSEED
 
+      IMPLICIT NONE
+
       INTEGER MAXDIM,MAXDEG,MAXBIT,IFLAG
 C     C      DW ADDED FOLLOWING LINE:
       INTEGER P,PP
@@ -495,6 +518,8 @@ C     C      INTEGER TEMP1,TEMP2,TEMP4
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
       INTRINSIC MOD, IEOR
+      INTEGER LL, MAXX, MAX, TEMP01
+
 
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
@@ -1479,6 +1504,8 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
 
+      IMPLICIT NONE
+
 C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
       DOUBLE PRECISION UNIS
       INTEGER S,MAXCOL,P,I,J,MAX,TEMP,STEMP,L,LL
@@ -1516,7 +1543,10 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
 
+      IMPLICIT NONE
+
 C     GENERATING UPPER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
+
       DOUBLE PRECISION UNIS
       INTEGER USM(31,31),MAXCOL,I,J
       INTEGER USHIFT(31),S,TEMP,STEMP
@@ -1560,6 +1590,9 @@ C     FOR JUSTIFICATION, SEE P. BRATLEY,
 C     B.L. FOX, AND L.E. SCHRAGE (1983)
 C     "A GUIDE TO SIMULATION"
 C     SPRINGER-VERLAG, PAGES 201-202
+
+      IMPLICIT NONE
+
       INTEGER K1,IX
       K1 = IX/127773
       IX = 16807*(IX-K1*127773)-K1*2836
@@ -1583,11 +1616,14 @@ C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
 
+      IMPLICIT NONE
+
       INTEGER DIMEN,MAXBIT,I,L,COUNT
       PARAMETER (MAXBIT=30)
       INTEGER SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QUASI(DIMEN)
       INTRINSIC MOD, IEOR
+      INTEGER LL
 
       L = 0
       I = COUNT
@@ -1613,12 +1649,16 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE TESTSOBOL()
 
+      IMPLICIT NONE
+
 C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
       INTEGER MAXBIT,DIMEN,TRANSFORM
+      INTEGER N1, N2
       PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
       INTEGER iSEED, iSEED1
+      INTEGER I, INIT, IFLAG, J
 
       TRANSFORM = 1
       IFLAG = 3
