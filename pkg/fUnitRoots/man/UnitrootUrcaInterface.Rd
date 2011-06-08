@@ -1,7 +1,7 @@
 \name{UnitrootUrcaInterface}
+\title{Unit Root Time Series Tests}
 
 \alias{UnitrootUrcaInterface}
-
 
 \alias{urdfTest}
 \alias{urersTest}
@@ -10,45 +10,33 @@
 \alias{urspTest}
 \alias{urzaTest}
 
-
-\title{Unit Root Time Series Tests}
-
-
 \description{
+  A collection and description of functions
+  for unit root testing.  This is a Rmetrics
+  conform interface to the unitroot tests implemented by B. Pfaff
+  available through the \R package "\pkg{urca}" which is required here.
 
-    A collection and description of functions 
-    for unit root testing. This is a Rmetrics
-    conform interface to the unitroot tests 
-    implemented by B. Pfaff available through
-    the contributed package "urca".
-    \cr
-    
-    Added functions based on the 'urca' package include:
-    
-    \tabular{ll}{
+  Added functions based on the \pkg{urca} package include:
+
+  \tabular{ll}{
     \code{urdfTest} \tab Augmented Dickey--Fuller test for unit roots, \cr
     \code{urersTest} \tab Elliott--Rothenberg--Stock test for unit roots, \cr
     \code{urkpssTest} \tab KPSS unit root test for stationarity, \cr
-    \code{urppTest} \tab Phillips--Perron test for unit roots, \cr  
-    \code{urspTest} \tab Schmidt--Phillips test for unit roots, \cr 
-    \code{urzaTest} \tab Zivot--Andrews test for unit roots. }
-    
-    Note, that the contributed R package \code{urca} is required!
-    
+    \code{urppTest} \tab Phillips--Perron test for unit roots, \cr
+    \code{urspTest} \tab Schmidt--Phillips test for unit roots, \cr
+    \code{urzaTest} \tab Zivot--Andrews test for unit roots.
+  }
 }
 
-
 \note{
+  The functions \code{ur*Test()} fullfill the naming conventions
+  of Rmetrics, return an S4 object named \code{fHTEST} as any other
+  hypothesis test from Rmetrics, and allow for \code{timeSeries} objects
+  as input.  These are the only differences to the original implementation
+  of the functions.
 
-    The functions \code{ur*Test()} fullfill the naming conventions 
-    of Rmetrics, return an S4 object named \code{fHTEST} as any other 
-    hypothesis test from Rmetrics, and allow for \code{timeSeries} objects 
-    as input. These are the only differences to the original implementation
-    of the functions. 
-    
-    Fur further details we refer to the manual pages of the 
-    \code{"urca"} package.
-    
+  Fur further details we refer to the manual pages of the
+  \pkg{urca} package which is required for all these.
 }
 
 
@@ -65,9 +53,7 @@ urspTest(x, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
 urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
 }
 
-
 \arguments{
-  
     %\item{description}{
     %    a character string which allows for a brief description.
     %    }
@@ -78,14 +64,14 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         }
     \item{lag.max}{
         [urersTest] - \cr
-        the maximum numbers of lags used for testing of a decent lag 
-        truncation for the \code{"P-test"}, BIC used, or the maximum 
-        number of lagged differences to be included in the test 
+        the maximum numbers of lags used for testing of a decent lag
+        truncation for the \code{"P-test"}, BIC used, or the maximum
+        number of lagged differences to be included in the test
         regression for \code{"DF-GLS"}.
         }
     \item{lag}{
         [urzaTest] - \cr
-        the highest number of lagged endogenous differenced variables 
+        the highest number of lagged endogenous differenced variables
         to be included in the test regression.
         }
     \item{lags}{
@@ -94,16 +80,16 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         }
     \item{model}{
         [urersTest] - \cr
-        a character string dennoting the deterministic model used for 
-        detrending, either \code{"constant"}, the default, or 
+        a character string dennoting the deterministic model used for
+        detrending, either \code{"constant"}, the default, or
         \code{"trend"}. \cr
         [urppTest] - \cr
-        a character string which determines the deterministic part in 
-        the test regression, either \code{"constant"}, the default, or 
+        a character string which determines the deterministic part in
+        the test regression, either \code{"constant"}, the default, or
         \code{"trend"}. \cr
         [urzaTest] - \cr
-        a character string specifying if the potential break occured 
-        in either the \code{"intercept"}, the linear \code{"trend"} or 
+        a character string specifying if the potential break occured
+        in either the \code{"intercept"}, the linear \code{"trend"} or
         in \code{"both"}.
         }
     \item{pol.deg}{
@@ -112,96 +98,95 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         }
     \item{signif}{
         [urspTest] - \cr
-        the significance level for the critical value of the test 
+        the significance level for the critical value of the test
         statistic.
         }
     %\item{title}{
     %    a character string which allows for a project title.
     %    }
-    \item{type}{    
+    \item{type}{
         [urkpssTest] - \cr
         a character string which denotes the type of deterministic part,
         either \code{"mu"}, the default, or \code{"tau"}.
         \cr
         [urppTest] - \cr
-        a character string which specifies the test type, either 
+        a character string which specifies the test type, either
         \code{"Z-alpha"}, the default, or \code{"Z-tau"}.
         \cr
         [urspTest] - \cr
-        a character string which specifies the test type, either 
+        a character string which specifies the test type, either
         \code{"tau"}, the default, or \code{"rho"}.
-        } 
+        }
     \item{use.lag}{
         [urkpssTest] - \cr
         a character string specifying the number of lags. Allowed
-        arguments are \code{lags=c("short", "long", "nil")}, for more 
+        arguments are \code{lags=c("short", "long", "nil")}, for more
         information see the details section.\cr
-        [urppTest] - \cr      
+        [urppTest] - \cr
         Use of a different lag number, specified by the user.
         }
     \item{x}{
         a numeric vector or time series object.
-        }  
+        }
 }
 
 
 \details{
-
-    \bold{Unit Root Tests from Berhard Pfaff's "urca" Package:}
+    \bold{Unit Root Tests from Berhard Pfaff's "\pkg{urca}" Package:}
     \cr
 
-    \emph{Elliott--Rothenberg--Stock Test for Unit Roots:} 
+    \emph{Elliott--Rothenberg--Stock Test for Unit Roots:}
     \cr
-    To improve the power of the unit root test, Elliot, Rothenberg and 
-    Stock proposed a local to unity detrending of the time series. ERS 
-    developed a feasible point optimal test, \code{"P-test"}, which 
-    takes serial correlation of the error term into account. The second 
-    test type is the \code{"DF-GLS"} test, which is an ADF-type test 
-    applied to the detrended data without intercept. Critical values 
+    To improve the power of the unit root test, Elliot, Rothenberg and
+    Stock proposed a local to unity detrending of the time series. ERS
+    developed a feasible point optimal test, \code{"P-test"}, which
+    takes serial correlation of the error term into account. The second
+    test type is the \code{"DF-GLS"} test, which is an ADF-type test
+    applied to the detrended data without intercept. Critical values
     for this test are taken from MacKinnon in case of \code{model="constant"}
     and else from Table 1 of Elliot, Rothenberg and Stock. \cr
     \code{[urca:ur.ers]} \cr
-        
-    \emph{KPSS Test for Unit Roots:} 
+
+    \emph{KPSS Test for Unit Roots:}
     \cr
-    Performs the KPSS unit root test, where the Null hypothesis is 
-    stationarity. The test types specify as deterministic component 
-    either a constant \code{"mu"} or a constant with linear trend 
-    \code{"tau"}. \code{lags="short"} sets the number of lags to 
-    \emph{root 4 of [4 times (n/100)}, whereas \code{lags="long"} 
-    sets the number of lags to \emph{root 4 of [12 times (n/100)]}. 
-    If \code{lags="nil"} is choosen, then no error correction is made. 
-    Furthermore, one can specify a different number of maximum lags 
+    Performs the KPSS unit root test, where the Null hypothesis is
+    stationarity. The test types specify as deterministic component
+    either a constant \code{"mu"} or a constant with linear trend
+    \code{"tau"}. \code{lags="short"} sets the number of lags to
+    \emph{root 4 of [4 times (n/100)}, whereas \code{lags="long"}
+    sets the number of lags to \emph{root 4 of [12 times (n/100)]}.
+    If \code{lags="nil"} is choosen, then no error correction is made.
+    Furthermore, one can specify a different number of maximum lags
     by setting use.lag accordingly. \cr
     \code{[urca:ur.kpss]} \cr
-    
-    \emph{Phillips--Perron Test for Unit Roots:} 
+
+    \emph{Phillips--Perron Test for Unit Roots:}
     \cr
-    Performs the Phillips and Perron unit root test. Beside the 
-    Z statistics Z-alpha and Z-tau, the Z statistics for the 
-    deterministic part of the test regression are computed, too. 
+    Performs the Phillips and Perron unit root test. Beside the
+    Z statistics Z-alpha and Z-tau, the Z statistics for the
+    deterministic part of the test regression are computed, too.
     For correction of the error term a Bartlett window is used. \cr
     \code{[urca:ur.pp]} \cr
-        
-    \emph{Schmidt--Phillips Test for Unit Roots:} 
+
+    \emph{Schmidt--Phillips Test for Unit Roots:}
     \cr
-    Performs the Schmidt and Phillips unit root test, where under 
-    the Null and Alternative Hypothesis the coefficients of the 
-    deterministic variables are included. Two test types are available: 
-    the \code{"rho-test"} and the \code{"tau-test"}. Both tests are 
+    Performs the Schmidt and Phillips unit root test, where under
+    the Null and Alternative Hypothesis the coefficients of the
+    deterministic variables are included. Two test types are available:
+    the \code{"rho-test"} and the \code{"tau-test"}. Both tests are
     extracted from the LM principle. \cr
     \code{[urca:ur.sp]} \cr
-        
-    \emph{Zivot--Andrews Test for Unit Roots:} 
+
+    \emph{Zivot--Andrews Test for Unit Roots:}
     \cr
-    Performs the Zivot and Andrews unit root test, which allows a 
-    break at an unknown point in either the intercept, the linear 
-    trend or in both. This test is based upon the recursive estimation 
-    of a test regression. The test statistic is defined as the 
-    minimum t-statistic of the coeffcient of the lagged endogenous 
+    Performs the Zivot and Andrews unit root test, which allows a
+    break at an unknown point in either the intercept, the linear
+    trend or in both. This test is based upon the recursive estimation
+    of a test regression. The test statistic is defined as the
+    minimum t-statistic of the coeffcient of the lagged endogenous
     variable. \cr
-    \code{[urca:ur.za]} 
- 
+    \code{[urca:ur.za]}
+
 }
 
 
@@ -212,7 +197,7 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
 
 
     \item{@call}{
-        the function call.      
+        the function call.
         }
     \item{@data}{
         a data frame with the input data.
@@ -231,7 +216,7 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         a character string with a brief description of the
         test.
         }
-        
+
     The entries of the \code{@test} slot include the following components:
 
     \item{$statistic}{
@@ -246,7 +231,7 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
     \item{$method}{
         a character string indicating what type of test was
         performed.
-        } 
+        }
     \item{$data.name}{
         a character string giving the name of the data.
         }
@@ -260,68 +245,66 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
     \item{$output}{
         additional test results to be printed.
         }
-        
+
 }
 
 
 \references{
 
 Banerjee A., Dolado J.J., Galbraith J.W., Hendry D.F. (1993);
-    \emph{Cointegration, Error Correction, and the Econometric 
+    \emph{Cointegration, Error Correction, and the Econometric
         Analysis of Non-Stationary Data},
-    Oxford University Press, Oxford. 
-    
+    Oxford University Press, Oxford.
+
 Dickey, D.A., Fuller, W.A. (1979);
-    \emph{Distribution of the estimators for autoregressive time 
-        series with a unit root}, 
-    Journal of the American Statistical Association 74, 427--431. 
-    
+    \emph{Distribution of the estimators for autoregressive time
+        series with a unit root},
+    Journal of the American Statistical Association 74, 427--431.
+
 Kwiatkowski D., Phillips P.C.B, Schmidt P., Shin Y. (1992);
-    \emph{Testing the Null Hypothesis of Stationarity against 
+    \emph{Testing the Null Hypothesis of Stationarity against
     the Alternative of a Unit Root},
     Journal of Econometrics 54, 159--178.
-    
+
 Perron P. (1988);
     \emph{Trends and Random Walks in Macroeconomic Time Series},
     Journal of Economic Dynamics and Control 12, 297--332.
-    
+
 Phillips P.C.B., Perron P. (1988);
-    \emph{Testing for a unit root in time series regression}, 
+    \emph{Testing for a unit root in time series regression},
     Biometrika 75, 335--346.
-    
+
 Said S.E., Dickey D.A. (1984);
-    \emph{Testing for Unit Roots in Autoregressive-Moving Average 
+    \emph{Testing for Unit Roots in Autoregressive-Moving Average
         Models of Unknown Order},
     Biometrika 71, 599--607.
-    
+
 Schwert G.W. (1989);
     \emph{Tests for Unit Roots: A Monte Carlo Investigation},
     Journal of Business and Economic Statistics 2, 147--159.
- 
+
 }
 
 
 \author{
-
-    Bernhard Pfaff for the tests implemented in R's "urca" package,\cr
+    Bernhard Pfaff for the tests implemented in R's "\pkg{urca}" package,\cr
     Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 
 \examples{
-## Time Series 
+## Time Series
    # A time series which contains no unit-root:
-   x = rnorm(1000)  
+   x <- rnorm(1000)
    # A time series which contains a unit-root:
-   y = cumsum(c(0, x))
-   
+   y <- cumsum(c(0, x))
+
 ## ERS Test:
-   if (require(urca)) {
+ if(require("urca")) {
    urersTest(x)
    urersTest(y)
-   }
+  }
 }
-
 
 \keyword{htest}
 

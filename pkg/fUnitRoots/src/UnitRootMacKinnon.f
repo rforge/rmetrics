@@ -31,10 +31,10 @@ c
 
 C ******************************************************************************
 
-     
-      subroutine fcrit(probs, cnorm, beta, wght, cval, size, 
+
+      subroutine fcrit(probs, cnorm, beta, wght, cval, size,
      &  precrt, nobs, model, nreg, np, nx)
-      
+
       implicit real*8 (a-h,o-z)
 c
 c Copyright (c) James G. MacKinnon, 1995
@@ -186,12 +186,12 @@ c
 c
       end if
       end
-     
-       
+
+
 C ******************************************************************************
 
 
-      subroutine fpval(beta, cnorm, wght, probs, pval, stat, 
+      subroutine fpval(beta, cnorm, wght, probs, pval, stat,
      &  precrt, nobs, model, nreg, np, nx)
       implicit real*8 (a-h,o-z)
 c
@@ -350,8 +350,8 @@ c
         return
       end if
       end
-      
- 
+
+
 C ******************************************************************************
 
 
@@ -391,8 +391,8 @@ c
       write(6,*) '*** Warning! Error in input file. ***'
       return
       end
-      
-      
+
+
 C ******************************************************************************
 
 
@@ -473,66 +473,66 @@ c
 c
       return
       end
-      
-      
+
+
 C ******************************************************************************
 
 
       subroutine cholx(amat,m,n,kxx)
       implicit real*8 (a-h,o-z)
 c
-c Copyright (c) James G. MacKinnon, 1993
-c This routine uses the cholesky decomposition to invert a real
-c symmetric matrix.
+c     Copyright (c) James G. MacKinnon, 1993
+c     This routine uses the cholesky decomposition to invert a real
+c     symmetric matrix.
 c
       real*8 amat(m,m)
+      ooa = 1.d0 ! Wall
       kxx = 0
       do 8 i=1,n
-      kl = i - 1
-      do 7 j=i,n
-      if (i.gt.1) then
-        do 3 k=1,kl
-    3   amat(i,j) = amat(i,j) - amat(k,i)*amat(k,j)
-      else
-        if (amat(i,i).le.0.d0) then
-        kxx = i
-        go to 20
-      end if
-      end if
-      if (i.eq.j) then
-        amat(i,i) = dsqrt(amat(i,i))
-      else
-        if (j.eq.i+1) ooa = 1.d0/amat(i,i)
-        amat(i,j) = amat(i,j)*ooa
-      end if
-    7 continue
+         kl = i - 1
+         do 7 j=i,n
+            if (i .gt. 1) then
+               do 3 k=1,kl
+ 3                amat(i,j) = amat(i,j) - amat(k,i)*amat(k,j)
+            else if (amat(i,i) .le. 0.d0) then
+               kxx = i
+               return
+            end if
+            if (i.eq.j) then
+               amat(i,i) = dsqrt(amat(i,i))
+            else
+               if (j.eq.i+1) ooa = 1.d0/amat(i,i)
+               amat(i,j) = amat(i,j)*ooa
+            end if
+ 7       continue
     8 continue
-      do 13 i=1,n
-      do 12 j=i,n
-      ooa = 1.d0/amat(j,j)
-      if (i.ge.j) then
-        t = 1.d0
-        go to 12
-      end if
-      kl = j - 1
-      t = 0.d0
-      do 11 k=i,kl
-   11 t = t - amat(i,k)*amat(k,j)
-   12 amat(i,j) = t*ooa
-   13 continue
-      do 16 i=1,n
-      do 15 j=i,n
-      t = 0.d0
-      do 14 k=j,n
-   14 t = t + amat(i,k)*amat(j,k)
-      amat(i,j) = t
-   19 amat(j,i) = t
-   15 continue
-   16 continue
-   20 return
+      do i=1,n
+         do 12 j=i,n
+            ooa = 1.d0/amat(j,j)
+            if (i.ge.j) then
+               t = 1.d0
+            else
+               kl = j - 1
+               t = 0.d0
+               do 11 k=i,kl
+ 11               t = t - amat(i,k)*amat(k,j)
+            end if
+ 12         amat(i,j) = t*ooa
+      enddo
+      do i=1,n
+         do j=i,n
+            t = 0.d0
+            do k=j,n
+               t = t + amat(i,k)*amat(j,k)
+            enddo
+            amat(i,j) = t
+            amat(j,i) = t
+         enddo
+      enddo
+      return
       end
-      
-    
+
+
 C ******************************************************************************
 
 
@@ -659,8 +659,8 @@ c
       gauss = erfc*.5d0
       return
       end
-      
-      
+
+
 C ******************************************************************************
 
 
