@@ -25,7 +25,7 @@ stableMode(alpha, beta)
 \arguments{
   \item{x,q,p,n, alpha, beta, gamma, delta, pm}{%
     see the arguments in \code{\link[stable]{dstable}} etc,
-    in package \pkg{stable}.}
+    in package \pkg{stabledist}.}
 }
 \seealso{
   \code{\link{Deprecated}}, \code{\link{Defunct}}

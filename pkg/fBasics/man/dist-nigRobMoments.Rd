@@ -8,14 +8,14 @@
 \alias{nigKURT}
 
 
-\title{Robust Moments for the GLD}
+\title{Robust Moments for the NIG}
 
 
 \description{
-    
+
     Computes the first four robust moments for the
-    Normal Inverse Gaussian Distribution. 
-    
+    Normal Inverse Gaussian Distribution.
+
 }
 
 
@@ -36,21 +36,21 @@ nigKURT(alpha = 1, beta = 0, delta = 1, mu = 0)
         \code{delta} is the first shape parameter, and
         \code{mu} is the second shape parameter.
         }
-    
+
 }
 
 
 \value{
 
-    All values for the \code{*nig} functions are numeric vectors: 
+    All values for the \code{*nig} functions are numeric vectors:
     \code{d*} returns the density,
     \code{p*} returns the distribution function,
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates.
-    
+
     All values have attributes named \code{"param"} listing
     the values of the distributional parameters.
-    
+
 }
 
 
@@ -62,23 +62,23 @@ nigKURT(alpha = 1, beta = 0, delta = 1, mu = 0)
 \author{
 
     Diethelm Wuertz.
-    
+
 }
 
 
-\examples{   
+\examples{
 ## nigMED -
    # Median:
    nigMED(alpha = 1, beta = 0, delta = 1, mu = 0)
- 
-## nigIQR - 
+
+## nigIQR -
    # Inter-quartile Range:
    nigIQR(alpha = 1, beta = 0, delta = 1, mu = 0)
- 
-## nigSKEW -  
+
+## nigSKEW -
    # Robust Skewness:
    nigSKEW(alpha = 1, beta = 0, delta = 1, mu = 0)
-   
+
 ## nigKURT -
    # Robust Kurtosis:
    nigKURT(alpha = 1, beta = 0, delta = 1, mu = 0)
