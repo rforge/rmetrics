@@ -9,6 +9,11 @@ import("stabledist")
 import("timeDate")
 import("timeSeries")
 
+if(getRversion() >= "2.14.0") {
+    importFrom(stats, "getCall")
+    exportMethods("getCall" )
+}
+
 ################################################
 ## useDynLib
 ################################################

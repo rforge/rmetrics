@@ -18,9 +18,9 @@
     A collection and description of functions to extract
     slots from S4 class objects.
     \cr
-      
+
     The extractor functions are:
-    
+
     \tabular{ll}{
     \code{getCall} \tab Extracts the call slot from a S4 object, \cr
     \code{getModel} \tab Extracts the model slot from a S4 object, \cr
@@ -28,12 +28,12 @@
     \code{getDescription} \tab Extracts the description slot from a S4 object, \cr
     \code{getSlot} \tab Extracts a specified slot from a S4 object, \cr
     \code{getArgs} \tab Shows the arguments of a S4 function. }
-    
+
 }
 
 
 \usage{
-getCall(object)
+getCall(x, \dots)
 getModel(object)
 getTitle(object)
 getDescription(object)
@@ -45,61 +45,59 @@ getArgs(f, signature)
 
 
 \arguments{
-
-    \item{f}{
-        a generic function or the character-string name of one
-        }
-    \item{object}{
-        an object of class S4.
-        }
+  \item{f}{a generic function or the character-string name of one.}
+  \item{object, x}{
+    an object of class S4.
+    (For \code{getCall()} and \R 2.14.0 and newer: \dQuote{any} object.)
+  }
     \item{signature}{
         the signature of classes to match to the arguments of \code{f}
         }
     \item{slotName}{
-        a character string, the name of the slot to be extracted from the 
+        a character string, the name of the slot to be extracted from the
         S4 object.
-        } 
+        }
 }
 
 
 \value{
-    
+
     \code{getCall}\cr
     \code{getModel}\cr
     \code{getTitle}\cr
     \code{getDescription}\cr
     \code{getSlot}\cr
     return the content of the slot.
-    
-    \code{getArgs} 
+
+    \code{getArgs}
     returns the names of the arguments.
-    
+
 }
 
 
 \examples{
 ## Example S4 Representation:
-   # Hyothesis Testing with Control Settings 
-   setClass("hypTest", 
+   # Hyothesis Testing with Control Settings
+   setClass("hypTest",
      representation(
        call = "call",
        data = "numeric",
        test = "list",
-       description = "character")  
+       description = "character")
    )
-   
+
 ## Shapiro Wilk Normaility Test
    swTest = function(x, description = "") {
      ans = shapiro.test(x)
      class(ans) = "list"
-     new("hypTest", 
-       call = match.call(), 
-       data = x, 
+     new("hypTest",
+       call = match.call(),
+       data = x,
        test = ans,
        description = description)
    }
    test = swTest(x = rnorm(500), description = "500 RVs")
-   
+
 ## Extractor Functions:
    isS4(test)
    getCall(test)
