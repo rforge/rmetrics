@@ -24,11 +24,11 @@
 ################################################################################
 
 
-.asRGB <- 
+.asRGB <-
 function(col = rainbowPalette(64), alpha = FALSE)
-{   
-    # A function implemented by Diethelm Wuertz  
-     
+{
+    # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Converts any R color to RGB (red/green/blue)
 
@@ -40,10 +40,9 @@ function(col = rainbowPalette(64), alpha = FALSE)
     #       should be returned.
 
     # FUNCTION:
-    
+
     # Color Conversion:
-    result = .Internal(col2rgb(col))
-    if (!alpha) result = result[1:3, , drop = FALSE]
+    result <- col2rgb(col = col, alpha = alpha)
 
     # Return Value:
     t(result)
@@ -53,9 +52,9 @@ function(col = rainbowPalette(64), alpha = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.chcode <- 
+.chcode <-
 function(b, base.in = 2, base.out = 10, digits = "0123456789ABCDEF")
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -109,9 +108,9 @@ function(b, base.in = 2, base.out = 10, digits = "0123456789ABCDEF")
 # ------------------------------------------------------------------------------
 
 
-.hex.to.dec <- 
+.hex.to.dec <-
 function(b)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -136,9 +135,9 @@ function(b)
 # ------------------------------------------------------------------------------
 
 
-.dec.to.hex <- 
+.dec.to.hex <-
 function(b)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -162,4 +161,4 @@ function(b)
 
 ################################################################################
 
-    
+
