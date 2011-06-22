@@ -5,12 +5,9 @@
 
 import("MASS")
 import("methods")
+import("stabledist")
 import("timeDate")
 import("timeSeries")
-
-## for now
-import("stabledist")
-
 
 ################################################
 ## useDynLib
@@ -323,6 +320,7 @@ export(
     "histPlot",
     "hypFit",
     "hypIQR",
+    "hypKURT",
     "hypKurt",
     "hypMED",
     "hypMean",
@@ -453,6 +451,7 @@ export(
     "spearmanTest",
     "ssdFit",
     "stableFit",
+    "stableSlider",
     "stdev",
     "symbolTable",
     "tFit",
