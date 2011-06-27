@@ -71,8 +71,12 @@ oandaImport <-
         }
     } else {
         # Download File:
+	to <- as.timeDate(to)
         to = trunc(to, "days")
-        from = to - nDaysBack*24*3600
+	if (is.null(from))
+	        from = to - nDaysBack * 24 * 3600
+	else
+		from <- as.timeDate(from)
         from.date <- format(timeDate(from),
             "date1=%m%%2F%d%%2F%y&")
         to.date <- format(timeDate(to),
@@ -84,6 +88,8 @@ oandaImport <-
                 "&expr2=", ccy.pair[2], "&margin_fixed=0&SUBMIT=Get+Table&",
                 "format=CSV&redirected=1", sep = ""),
             destfile = tmp)
+	# add an EOL to the file to avoid the warning message
+	cat("\n",file=tmp,append=TRUE)
 
         # Compose Time Series:
         fx <- readLines(tmp)
@@ -145,18 +151,68 @@ oandaSeries <-
     # FUNCTION:
 
     # Download:
-    X = oandaImport(query = symbols[1], ...)@data
+    if (is.null(from)) 
+        from <- to - nDaysBack * 24 * 3600
+    else
+	from <- as.timeDate(from) 
+    to <- as.timeDate(to)
+    to <- trunc(to,"days")	
+    # The maximum number of observations allowed by Oanda is 500
+    # We need a loop to dowload the series sequencially 
+    if ( (to-from) > 400)
+	{
+	getMore <- TRUE
+	to2 <- from+399*24*3600
+	X = oandaImport(query = symbols[1], from = from, to = to2, ...)@data
+	while (getMore)
+		{
+		from2 <- to2+24*3600
+		if ( (to-from2) < 400)
+		    {
+		    X <- rbind(X, oandaImport(query = symbols[1], from = from2, to = to, ...)@data)
+		    getMore <- FALSE
+		    }
+		else
+		    {
+		    to2 <- from2+399*24*3600
+		    X <- rbind(X, oandaImport(query = symbols[1], from = from2, to = to2, ...)@data)
+		    }	
+		}
+	}
+    else
+	    X = oandaImport(query = symbols[1], from = from, to = to, ...)@data
+    names(X) <- symbols[1]	
+
     N = length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            X = merge(X, oandaImport(query = symbols[i], ...)@data)
+	   if ( (to-from) > 400)
+		{
+		getMore <- TRUE
+		to2 <- from+399*24*3600
+		X2 = oandaImport(query = symbols[i], from = from, to = to2, ...)@data
+		while (getMore)
+			{
+			print(from2)
+			from2 <- to2+24*3600
+			if ( (to-from2) < 400)
+			    {
+			    X2 <- rbind(X2, oandaImport(query = symbols[i], from = from2, to = to, ...)@data)
+			    getMore <- FALSE
+			    }
+			else
+			    {
+			    to2 <- from2+399*24*3600
+			    X2 <- rbind(X2, oandaImport(query = symbols[i], from = from2, to = to2, ...)@data)
+			    }	
+			}
+		}
+	    else
+		    X2 = oandaImport(query = symbols[i], from = from, to = to, ...)@data
+	    names(X2) <- symbols[i]
+            X = cbind(X, X2)
         }
     }
-
-    # Time Window:
-    if (is.null(from)) from = to - nDaysBack*24*3600
-    X = window(X, from, to)
-
     # Return Value:
     X
 }
