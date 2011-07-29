@@ -246,9 +246,10 @@ dependsRmetrics <-
     idx <- unique(idx)
 
     pkgsDepends <- rownames(info)[idx]
-    pkgsDepends <- pkgsDepends[!(pkgsDepends %in% pkgsRmetrics)]
+    ans <- list(Rmetrics = pkgsDepends[pkgsDepends %in% pkgsRmetrics],
+                other = pkgsDepends[!(pkgsDepends %in% pkgsRmetrics)])
 
-    pkgsDepends
+    ans
 }
 
 # ------------------------------------------------------------------------------
