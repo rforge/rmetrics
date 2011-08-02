@@ -1,5 +1,82 @@
+2011-05-04  chalabi
+
+	* R/fin-align.R: Fixed integer overflow when dealing with very long
+	  historical data (1800 - today) in align method.
+
+2011-04-21  wuertz
+
+	* NAMESPACE, R/statistics-rollMean.R, man/statistics-rollMean.Rd:
+	  function rollStats added
+
+2011-03-31  wuertz
+
+	* NAMESPACE, R/fin-smooth.R, R/statistics-smoothLowess.R,
+	  man/base-rev.Rd, man/base-sort.Rd, man/base-start.Rd,
+	  man/fin-smooth.Rd, man/statistics-smoothLowess.Rd,
+	  man/timeSeries-readSeries.Rd, man/timeSeries-slotFinCenter.Rd,
+	  man/timeSeries-slotSeries.Rd, man/timeSeries-slotTime.Rd,
+	  man/timeSeries-slotUnits.Rd: help pages added and script files
+	  renamed
+	* man/timeSeries-finCenter.Rd, man/timeSeries-slotFinCenter.Rd,
+	  man/timeSeries-slotUnits.Rd, man/utils-str.Rd,
+	  man/utils-structure.Rd: function renames
+	* R/timeSeries-description.R, R/timeSeries-finCenter.R,
+	  R/timeSeries-series.R, R/timeSeries-slotFinCenter.R,
+	  R/timeSeries-slotSeries.R, R/timeSeries-slotTime.R,
+	  R/timeSeries-slotUnits.R, R/timeSeries-time.R,
+	  R/utils-description.R, R/utils-str.R, R/utils-structure.R: files
+	  renamed
+	* man/timeSeries-description.Rd, man/timeSeries-series.Rd,
+	  man/timeSeries-slotSeries.Rd, man/timeSeries-slotTime.Rd,
+	  man/timeSeries-time.Rd, man/utils-description.Rd: files renamed
+	* R/base-colCumsums.R, R/base-colSums.R, R/base-rowCumsums.R,
+	  R/fin-orderColnames.R, R/fin-orderStatistics.R, R/fin-rollmean.R,
+	  R/statistics-colCumsums.R, R/statistics-colSums.R,
+	  R/statistics-orderColnames.R, R/statistics-orderStatistics.R,
+	  R/statistics-rollMean.R, R/statistics-rowCumsums.R,
+	  man/base-colCumsums.Rd, man/base-colSums.Rd,
+	  man/base-rowCumsums.Rd, man/fin-orderColnames.Rd,
+	  man/fin-orderStatistics.Rd, man/fin-rollMean.Rd,
+	  man/statistics-colCumsums.Rd, man/statistics-colSums.Rd,
+	  man/statistics-orderColnames.Rd,
+	  man/statistics-orderStatistics.Rd, man/statistics-rollMean.Rd,
+	  man/statistics-rowCumsums.Rd: new file group for statistics and
+	  inference introduced.
+	* NAMESPACE, R/aaa-Deprecated.R, R/base-Extract.R, R/base-attach.R,
+	  R/base-colSums.R, R/base-comment.R, R/base-rowCumsums.R,
+	  R/base-sort.R, R/base-start.R, R/base-subsetting.R, R/base-t.R,
+	  R/data-examples.R, R/fin-align.R, R/fin-daily.R,
+	  R/fin-drawdowns.R, R/fin-durations.R, R/fin-monthly.R,
+	  R/fin-periodical.R, R/fin-rollmean.R, R/fin-runlengths.R,
+	  R/fin-smooth.R, R/fin-splits.R, R/fin-spreads.R,
+	  R/fin-turnpoints.R, R/graphics-plot.R, R/methods-as.R,
+	  R/methods-comment.R, R/methods-is.R, R/methods-mathOps.R,
+	  R/methods-plot.R, R/old2new.R, R/stats-aggregate.R,
+	  R/stats-filter.R, R/stats-lag.R, R/stats-model.frame.R,
+	  R/stats-na.contiguous.R, R/stats-na.omit.R, R/stats-window.R,
+	  R/timeSeries-description.R, R/timeSeries-dummy.R,
+	  R/timeSeries-finCenter.R, R/timeSeries-getDataPart.R,
+	  R/timeSeries-isOHLC.R, R/timeSeries-isRegular.R,
+	  R/timeSeries-isUnivariate.R, R/timeSeries-readSeries.R,
+	  R/timeSeries-series.R, R/timeSeries-signalCounts.R,
+	  R/timeSeries-time.R, R/timeSeries.R, R/utils-getArgs.R,
+	  R/utils-head.R, R/utils-old2new.R, R/utils-str.R,
+	  man/00timeSeries-package.Rd, man/base-diff.Rd, man/base-merge.Rd,
+	  man/base-rev.Rd, man/base-sample.Rd, man/base-scale.Rd,
+	  man/base-sort.Rd, man/base-start.Rd, man/base-subsetting.Rd,
+	  man/data-examples.Rd, man/data.Rd, man/fin-align.Rd,
+	  man/fin-cumulated.Rd, man/fin-daily.Rd, man/fin-drawdowns.Rd,
+	  man/fin-durations.Rd, man/fin-periodical.Rd, man/fin-rollMean.Rd,
+	  man/fin-runlengths.Rd, man/fin-smooth.Rd, man/fin-splits.Rd,
+	  man/fin-turnpoints.Rd, man/graphics-plot.Rd,
+	  man/methods-comment.Rd, man/methods-plot.Rd, man/stats-window.Rd:
+	  several smaller updates: man pages improved, rolling statistics
+	  and smoother function added, some obsolete functions declared as
+	  deprecated.
+
 2011-03-09  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* inst/doc: removed empty directory
 	* DESCRIPTION: updated version number
 	* R/timeSeries-readSeries.R: Fixed readSeries when reading tables
