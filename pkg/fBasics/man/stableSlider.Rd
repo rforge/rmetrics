@@ -22,7 +22,7 @@ stableSlider(col= "steelblue", col.med = "gray30")
 }
 
 \references{
-  see those in \code{\link[stable]{dstable}}, in package \pkg{stabledist}.
+  see those in \code{\link[stabledist]{dstable}}, in package \pkg{stabledist}.
 }
 
 \examples{

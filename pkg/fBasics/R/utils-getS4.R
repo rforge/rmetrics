@@ -34,12 +34,12 @@
     #   Extracts the "call" slot from an object of class 4
 
     # Arguments:
-    #   x, ... - an object of class S4
+    #   x - an object of class S4
 
     # FUNCTION:
 
     # Return Value:
-    slot(x, ..., "call")
+    slot(x, "call")
 }
 if(getRversion() < "2.14") {
     getCall <- .getCall

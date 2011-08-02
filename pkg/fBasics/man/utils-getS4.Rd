@@ -7,6 +7,7 @@
 \alias{getTitle}
 \alias{getDescription}
 \alias{getSlot}
+\alias{getCall,ANY-method}
 \alias{getArgs}
 
 
@@ -56,7 +57,8 @@ getArgs(f, signature)
     \item{slotName}{
         a character string, the name of the slot to be extracted from the
         S4 object.
-        }
+      }
+      \item{\dots}{Further arguments to be passed to function.}
 }
 
 
