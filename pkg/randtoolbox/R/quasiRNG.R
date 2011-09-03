@@ -56,7 +56,7 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
 ## Check arguments
         if(n <0 || is.array(n) || !is.numeric(n))
                 stop("invalid argument 'n'")
-        if(dim < 0 || length(dim) >1)
+        if(dim < 1 || length(dim) >1)
                 stop("invalid argument 'dim'")
         if(!is.logical(usetime))
                 stop("invalid argument 'mixed'")
@@ -107,9 +107,9 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 {   
 # A function implemented by Diethelm Wuertz
     
-    if(n <0 || is.array(n) || !is.numeric(n))
+    if(n < 0 || is.array(n) || !is.numeric(n))
         stop("invalid argument 'n'")
-    if(dim < 0 || dim > 200 || length(dim) >1)
+    if(dim < 1 || dim > 200 || length(dim) >1)
         stop("invalid argument 'dim'")    
     
     
@@ -172,7 +172,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
 # A function implemented by Diethelm Wuertz
     if(n <0 || is.array(n) || !is.numeric(n))
         stop("invalid argument 'n'")
-    if(dim < 0 || dim > 1111 || length(dim) >1)
+    if(dim < 1 || dim > 1111 || length(dim) >1)
         stop("invalid argument 'dim'")    
     if( !any(scrambling == 0:3) )
         stop("invalid argument 'scrambling'")    

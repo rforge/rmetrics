@@ -87,7 +87,7 @@ SFMT <- function(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, us
 {    
         if(n <0 || is.array(n))
                 stop("invalid argument 'n'")
-        if(dim < 0 || length(dim) >1)
+        if(dim < 1 || length(dim) >1)
                 stop("invalid argument 'dim'")
         if(!is.logical(withtorus) && !is.numeric(withtorus))
                 stop("invalid argument 'withtorus'")
@@ -146,7 +146,7 @@ WELL <- function(n, dim = 1, order = 512, temper = FALSE, version = "a")
 {	
     if(n <0 || is.array(n))
         stop("invalid argument 'n'")
-    if(dim < 0 || length(dim) >1)
+    if(dim < 1 || length(dim) >1)
             stop("invalid argument 'dim'")
     if(!is.numeric(order))
             stop("invalid argument 'order'")
@@ -187,7 +187,7 @@ knuthTAOCP <- function(n, dim = 1)
 {
     if(n <0 || is.array(n))
         stop("invalid argument 'n'")
-    if(dim < 0 || length(dim) >1)
+    if(dim < 1 || length(dim) >1)
         stop("invalid argument 'dim'")
     
     if(length(n) > 1)

@@ -395,11 +395,7 @@ from the fifties, and have also been used for interpolation problems and integra
 
 
 In the following, we consider a sequence
-$(u_i)_{1\leq i\leq n}$ of points in $I^d$, that are \textbf{not} random. As $n$ increases, we want
-$$
-\frac{1}{n} \sum_{i=1}^n f(u_i) \underset{n\rightarrow +\infty}{ \longrightarrow} \int_{I^d} f(x)dx.
-$$
-Furthermore the convergence condition on the sequence $(u_i)_i$ 
+'''Furthermore the convergence condition on the sequence $(u_i)_i$ 
 is to be uniformly distributed in the unit cube $I^d$
 with the following sense:
 $$

@@ -1,5 +1,13 @@
 === randtoolbox: an R package for random number generation and testing ===
 
+Version 1.11
+=============
+
+BUG FIXES
+- the package crashes when the dimension was 0 in RNG functions, 
+reported by David LeBauer.
+
+
 Version 1.10
 =============
 
