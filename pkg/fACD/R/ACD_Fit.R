@@ -57,8 +57,14 @@ if (distrib=='weibull')
 }
 
 param0[1]<-.1
-param0[2:(1+qLag)]<-.05/qLag
-param0[(2+qLag):(1+qLag+pLag)]<-.95/pLag
+param0[2:(1+qLag)]<-.1/qLag
+param0[(2+qLag):(1+qLag+pLag)]<-.9/pLag
+
+param0[1]<-mean(x)
+param0[2:(1+qLag)]<-0
+param0[(2+qLag):(1+qLag+pLag)]<-0
+
+#browser()
 
 options(warn=-1)
 fittedParam<-optim(param0,
