@@ -7,5 +7,4 @@ Author: Marcelo Perlin / ICMA - Reading/Uk
 Maintainer: Marcelo Perlin <marceloperlin@gmail.com>
 Description: This package provides functions for estimation, simulation and forecasting of a general markov switching regression. The code is flexible enought to handle any number of independents variables, any number of states and any setup for the model iself (see example files)
 License: GPL (>=2)
-LazyLoad: yes
 Depends: methods,Rdonlp2

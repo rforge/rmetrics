@@ -17,4 +17,3 @@ Description: Functions are provided for the density function,
 	     any centre. To assess goodness of fit, there are
 	     functions to generate a Q-Q plot and a P-P plot.
 License: GPL (>= 2)
-LazyLoad: yes

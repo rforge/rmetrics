@@ -1,6 +1,5 @@
 Package: fCalendar
-Version: 270.78.5
-Revision: 4193
+Version: 270.78.5-1
 Date: 2009-09-28
 Title: Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi
@@ -9,10 +8,9 @@ Suggests: RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
-LazyLoad: yes
+NOTE: Package 'fCalendar' has been replaced by package 'timeDate'.
+      DO USE PACKAGE 'timeDate' INSTEAD OF 'fCalendar', WHEREVER POSSIBLE!
+      --------------------------------------------------------------------
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

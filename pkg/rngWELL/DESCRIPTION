@@ -9,4 +9,3 @@ Description: It is a dedicated package to WELL pseudo random generators. But it 
 Depends: R (>= 2.6.0)
 License: file LICENSE
 Encoding: latin1
-LazyLoad: yes

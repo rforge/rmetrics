@@ -5,7 +5,6 @@ Date: 2011-03-30
 Title: A package on the generalized hyperbolic distribution and its special cases
 Author: David Luethi, Wolfgang Breymann
 Maintainer: David Luethi <luethid@gmail.com>
-LazyLoad: yes
 LazyData: no
 Depends:  R(>= 2.7), methods, numDeriv, graphics, stats, gplots
 Description: This package provides detailed functionality for working

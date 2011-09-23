@@ -11,5 +11,4 @@ Description: Non-linear Optimization Using Augmented Lagrange Multiplier
     Method Version for Rmetrics Portfolio Optimization. This package will 
     become obsolete when the original package Rsolnp will be released to 
     CRAN
-LazyLoad: yes
 License: GPL

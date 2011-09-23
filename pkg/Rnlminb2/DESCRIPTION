@@ -9,7 +9,6 @@ Description: Environment for teaching "Financial Engineering and
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
         FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
         WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
-LazyLoad: yes
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

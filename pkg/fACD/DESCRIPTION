@@ -6,6 +6,5 @@ Date: 2009-05-05
 Author: Marcelo Perlin 
 Maintainer: Marcelo Perlin <marceloperlin@gmail.com>
 Description: Package for estimation and simulation of ACD models
-License: GPL version 2 or newer  
+License: GPL (>= 2)
 Depends: methods
-LazyLoad: yes        

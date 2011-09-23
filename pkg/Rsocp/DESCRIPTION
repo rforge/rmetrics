@@ -10,5 +10,4 @@ Description: Second-order cone programming solver written by M. Lobo, L.
     THIS PACKAGE IS USED FOR PORTFOLIO OPTIMIZATION WITH RMETRICS.
     NOTE, FOR OTHER PURPOSES YOU HAVE TO EXTEND THIS R PORT.
 License: Rsocp - GPL | SOCP - (C) see file License
-LazyLoad: yes
 LazyData: yes

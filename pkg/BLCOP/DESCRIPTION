@@ -11,5 +11,4 @@ Depends: methods, MASS, quadprog
 Suggests: RUnit (>= 0.4.22), fPortfolio (>= 2100.78), sn, corpcor
 License: GPL-3
 LazyData: yes
-LazyLoad: yes
 Packaged: Wed Aug 20 14:00:52 2008; fgochez
