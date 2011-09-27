@@ -77,24 +77,17 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		{
 			order <- as.character(dots$order)
 			version <- as.character(dots$version)
-			if (is.null(dots$temper))
-				dots$temper <- ""
-			temper <- as.character(dots$temper)
-			if (temper == "temper")
-				temper <- "Temp"
-			parameters <- c(order=order, version=version, temper=temper)
+			parameters <- c(order=order, version=version)
 		}
-		if (identical(names(parameters), c("order", "version")))
-			parameters <- c(parameters, temper="")
-		if (!identical(names(parameters), c("order", "version", "temper")))
+		if (!identical(names(parameters), c("order", "version")))
 		{
 			param.names <- paste(names(parameters),collapse=" ")
-			cat("parameters required for WELL: order, version, temper\n")
+			cat("parameters required for WELL: order, version\n")
 			cat("parameters provided: ", param.names, "\n")
 			stop("parameter list is not correct for WELL")
 		}
 		if (! paste(parameters, collapse="") %in% c("512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
-			"19937a", "19937aTemp", "19937b", "21701a", "23209a", "23209b", "44497a", "44497aTemp"))
+			"19937a", "19937b", "19937c", "21701a", "23209a", "23209b", "44497a", "44497b"))
 			stop("unsupported parameters for WELL")
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
@@ -174,8 +167,7 @@ put.description <- function(description)
 		RNGkind("user-supplied")
 		.C("putRngWELL",
 			as.integer(parameters["order"]),
-			match(parameters["version"], c("a", "b"), nomatch=0),
-			as.integer(parameters["temper"] == "Temp"),
+			match(parameters["version"], c("a", "b", "c"), nomatch=0),
 			as.integer(state),
 			PACKAGE="rngWELL")
 	} else if (name == "MersenneTwister")
@@ -229,13 +221,11 @@ get.description <- function()
 		tmp <- .C("getRngWELL",
 			order = integer(1),
 			version = integer(1),
-			temper = integer(1),
 			state = integer(2000),
 			PACKAGE="rngWELL")
 		order <- as.character(tmp$order)
 		version <- letters[tmp$version]
-		temper <- if (tmp$temper == 1) "Temp" else ""
-		parameters <- c(order=order, version=version, temper=temper)
+		parameters <- c(order=order, version=version)
 		size <- ceiling(tmp$order/32)
 		state <- tmp$state[1:size]
 		literature <- "Panneton - L'Ecuyer - Matsumoto"
