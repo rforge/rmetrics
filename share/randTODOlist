@@ -64,3 +64,5 @@ implementation may be found on the web.
 8. implement Latin Hypercube Sampling (use in some way the lhs pkg)
 
 9. support SSE2 processor operation for SFMT RNG.
+
+10. add the Faure sequence.
