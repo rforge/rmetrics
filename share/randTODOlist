@@ -29,9 +29,12 @@
 # 9. rewrite the vignette with two chapter, the first one will be a short
 #   introduction while the second one will a deep and exhaustive presentation
 #   of all the tools in randtoolbox.
+#
+# 10. Include Matlab's default generator (MT with 53 bit resolution).
+#
 
 Add runif() interface for SFMT.
-Include Matlab's default generator (MT with 53 bit resolution).
+
 
 === long term ===
 
