@@ -69,3 +69,19 @@ implementation may be found on the web.
 9. support SSE2 processor operation for SFMT RNG.
 
 10. add the Faure sequence.
+
+11. Move some parts of randtoolbox to dedicated packages.
+
+A possible structure:
+
+randtoolbox: gap.test, freq.test, serial.test, poker.test, order.test, coll.test,
+  stirling, permut,
+  setSeed, congruRand, SFMT, WELL, knuthTAOCP.
+
+quasiRNG: torus, runif.halton, halton, runif.sobol, sobol, get.primes.
+
+pseudoRNG: congruRand, SFMT, knuthTAOCP, set.generator, put.description, get.description.
+
+rngWELL (new one): the C code for WELL and runif interface, rngWELLDemo,
+  setGenerator.WELL, putDescription.WELL, getDescription.WELL.
+
