@@ -26,4 +26,16 @@
   A numeric vector of length \code{n}.
 }
 
+\seealso{
+  \code{\link{getWELLState}}
+}
+
+\examples{
+  set.generator("WELL", order=512, version="a", seed=123456)
+  s <- getWELLState()
+  x <- runif(500)
+  y <- rngWELLDemo(500, s, "512a")
+  all(x == y)
+  # [1] TRUE
+}
 

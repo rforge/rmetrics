@@ -25,9 +25,13 @@ bits.to.real <- function(x)
 
 getWELLState <- function()
 {
-	out <- get.description()
-	stopifnot(out$name == "WELL")
-	int.to.bits(out$state)
+	if (RNGkind()[1] == "user-supplied") {
+		out <- get.description()
+		if (out$name == "WELL") {
+			return(int.to.bits(out$state))
+		}
+	}
+	stop("None of the WELL generators is set")
 }
 
 rngWELLDemo <- function(n, s, generator)
