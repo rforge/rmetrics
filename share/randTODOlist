@@ -75,13 +75,29 @@ implementation may be found on the web.
 A possible structure:
 
 randtoolbox: gap.test, freq.test, serial.test, poker.test, order.test, coll.test,
-  stirling, permut,
-  setSeed, congruRand, SFMT, WELL, knuthTAOCP.
+  stirling, permut.
 
 quasiRNG: torus, runif.halton, halton, runif.sobol, sobol, get.primes.
 
-pseudoRNG: congruRand, SFMT, knuthTAOCP, set.generator, put.description, get.description.
+pseudoRNG:
+  runif interface: setGenerator, putDescription, getDescription, and aliases
+                   set.generator, put.description, get.description.
+                   generators: congruRand, WELL, MersenneTwister.
+  direct interface: setSeed, congruRand, SFMT, WELL, knuthTAOCP.
 
-rngWELL (new one): the C code for WELL and runif interface, rngWELLDemo,
-  setGenerator.WELL, putDescription.WELL, getDescription.WELL.
+rngWELL (new one): setGenerator.WELL, putDescription.WELL, getDescription.WELL.
+                   rngWELLDemo, getWELLState,
+                   the C code for WELL and runif interface.
+
+rngWELLOriginal: setGenerator.WELL, putDescription.WELL, getDescription.WELL,
+                 the C code (U Montreal) for 
+                    WELL512a
+                    WELL1024a
+                    WELL19937a
+                    WELL19937c
+                    WELL44497a
+                    WELL44497b
+                 and runif interface.
+
+12. Extend the direct call interface with multiple streams.
 
