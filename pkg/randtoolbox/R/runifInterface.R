@@ -75,6 +75,11 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 	{
 		if (is.null(parameters))
 		{
+			if (is.null(dots$order)) dots$order <- ""
+			if (is.null(dots$version)) dots$version <- ""
+			if (dots$order != "" & nchar(dots$version) != 1) {
+				stop("unsupported parameters order=", dots$order, ", version=", dots$version," for WELL")
+			}
 			version.name <- paste(dots$order, dots$version, sep="")
 			order <- substr(version.name, 1, nchar(version.name) - 1)
 			version <- substr(version.name, nchar(version.name), nchar(version.name))
