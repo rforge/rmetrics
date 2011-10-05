@@ -9,7 +9,7 @@
 }
   
 \usage{ 
-  rngWELLScriptR(n, s, generator)
+  rngWELLScriptR(n, s, generator, includeState=FALSE)
 } 
 
 \arguments{
@@ -20,10 +20,15 @@
   \code{"512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b", "19937a",
   "19937c", "19937b", "21701a", "23209a", "23209b", "44497a", "44497b"}.
   }
+  \item{includeState}{ Logical. Controls, whether the output should contain
+            the final internal state additionally to the numerical output or not.}
 }
 
 \value{
-  A numeric vector of length \code{n}.
+  If \code{includeState=FALSE}, a numeric vector of length \code{n} containing
+  the numerical output of the generator.
+  If \code{includeState=TRUE}, a list with components \code{x} (the numerical
+  output) and \code{state} (the final internal state of the generator).
 }
 
 \seealso{

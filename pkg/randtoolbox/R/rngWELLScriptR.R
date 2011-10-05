@@ -34,7 +34,7 @@ getWELLState <- function()
 	stop("None of the WELL generators is set")
 }
 
-rngWELLScriptR <- function(n, s, generator)
+rngWELLScriptR <- function(n, s, generator, includeState=FALSE)
 {
 	params <- getParameters(generator)
 	k <- params$k
@@ -69,7 +69,11 @@ rngWELLScriptR <- function(n, s, generator)
 			x[i] <- bits.to.real((Temper %*% s[, 1]) %% 2)
 		}
 	}
-	x
+	if (includeState) {
+		list(x=x, state=s)
+	} else {
+		x
+	}
 }
 
 getParameters <- function(generator)
