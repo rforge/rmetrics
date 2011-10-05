@@ -34,7 +34,7 @@ getWELLState <- function()
 	stop("None of the WELL generators is set")
 }
 
-rngWELLDemo <- function(n, s, generator)
+rngWELLScriptR <- function(n, s, generator)
 {
 	params <- getParameters(generator)
 	k <- params$k

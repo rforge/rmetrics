@@ -7,7 +7,7 @@ export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
 
 export(set.generator, put.description, get.description)
 
-export(rngWELLDemo, getWELLState)
+export(rngWELLScriptR, getWELLState)
 
 export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
 

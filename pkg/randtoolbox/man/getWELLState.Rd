@@ -4,7 +4,7 @@
 
 \description{
   Get the state of a WELL generator implemented in randtoolbox package
-  to be used in function \code{rngWELLDemo()}.
+  to be used in function \code{rngWELLScriptR()}.
 }
   
 \usage{ 
@@ -16,6 +16,6 @@
 }
 
 \seealso{
-  \code{\link{rngWELLDemo}}
+  \code{\link{rngWELLScriptR}}
 }
 

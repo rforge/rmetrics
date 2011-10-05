@@ -38,7 +38,7 @@ for (i in 1:nrow(param))
 	set.generator("WELL", order=order, version=version, seed=seed)
 	s <- getWELLState()
 	y1 <- runif(m)
-	y2 <- rngWELLDemo(m, s, generator)
+	y2 <- rngWELLScriptR(m, s, generator)
 	out[i] <- if (all(y1 == y2)) "OK" else "FAIL"
 }
 

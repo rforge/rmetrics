@@ -1,5 +1,5 @@
-\name{rngWELLDemo}
-\alias{rngWELLDemo}
+\name{rngWELLScriptR}
+\alias{rngWELLScriptR}
 \title{An implementation of the recurrence of WELL generators in R language}
 
 \description{
@@ -9,7 +9,7 @@
 }
   
 \usage{ 
-  rngWELLDemo(n, s, generator)
+  rngWELLScriptR(n, s, generator)
 } 
 
 \arguments{
@@ -34,7 +34,7 @@
   set.generator("WELL", order=512, version="a", seed=123456)
   s <- getWELLState()
   x <- runif(500)
-  y <- rngWELLDemo(500, s, "512a")
+  y <- rngWELLScriptR(500, s, "512a")
   all(x == y)
   # [1] TRUE
 }
