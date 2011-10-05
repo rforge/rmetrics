@@ -75,8 +75,9 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 	{
 		if (is.null(parameters))
 		{
-			order <- as.character(dots$order)
-			version <- as.character(dots$version)
+			version.name <- paste(dots$order, dots$version, sep="")
+			order <- substr(version.name, 1, nchar(version.name) - 1)
+			version <- substr(version.name, nchar(version.name), nchar(version.name))
 			parameters <- c(order=order, version=version)
 		}
 		if (!identical(names(parameters), c("order", "version")))
@@ -88,7 +89,7 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		}
 		if (! paste(parameters, collapse="") %in% c("512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
 			"19937a", "19937b", "19937c", "21701a", "23209a", "23209b", "44497a", "44497b"))
-			stop("unsupported parameters for WELL")
+			stop("unsupported parameters order=", parameters["order"], ", version=", parameters["version"]," for WELL")
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
 		size <- ceiling(as.numeric(parameters["order"])/32)
