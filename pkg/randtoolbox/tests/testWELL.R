@@ -21,7 +21,8 @@ param <- rbind(
 
 dimnames(param) <- list(NULL, c("order", "version"))
 
-result <- rep(NA, times=nrow(param))
+result1 <- rep(NA, times=nrow(param))
+result2 <- rep(NA, times=nrow(param))
 
 seed <- floor(2^31*runif(1))
 cat("using seed", seed, "for test of the output of WELL RNG\n")
@@ -40,11 +41,12 @@ for (i in 1:nrow(param))
 	x <- runif(m)
 	out <- rngWELLScriptR(m, s0, generator, includeState=TRUE)
 	s1 <- getWELLState()
-	result[i] <- if (all(x == out$x) & all(s1 == out$state)) "OK" else "FAIL"
+	result1[i] <- all(x == out$x)
+	result2[i] <- all(s1 == out$state)
 }
 
 cat("\n\n")
-print(cbind(data.frame(param), result=result))
+print(cbind(data.frame(param), result1=result1, result2=result2))
 
-stopifnot(all(result == "OK"))
+stopifnot(all(result1, result2))
 
