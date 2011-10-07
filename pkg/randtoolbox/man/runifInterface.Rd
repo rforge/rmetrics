@@ -69,9 +69,13 @@ Parameters for the WELL generators is a character vector with components
    Possible values are 512, 521, 607, 800, 1024, 19937, 21701, 23209, 44497.}
   \item{version}{The version letter "a", "b", or "c" to be appended to the order.}
 }
-Concatenation of \code{order}, \code{version} and \code{temper} should belong
-to \code{"512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
+The concatenation of \code{order} and \code{version} should belong to
+\code{"512a", "521a", "521b", "607a", "607b", "800a", "800b", "1024a", "1024b",
 "19937a", "19937b", "19937c", "21701a", "23209a", "23209b", "44497a", "44497b"}.
+When order and version are specified in \code{set.generator()} separately,
+then the parameter \code{order} is optional and it is assumed that the
+parameter \code{version} contains also the number of bits in the internal state
+and belongs to the list above.
 }
 
 \subsection{Mersenne Twister 2002 generator}{
