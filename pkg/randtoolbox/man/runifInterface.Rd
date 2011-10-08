@@ -53,6 +53,8 @@ is different for different types of the generators. This vector may be passed
 to \code{set.generator()}, if it is prepared before its call, however, it is
 also possible to pass its named components via the \code{...} parametr of
 \code{set.generator()} and the vector \code{parameters} is created internally.
+If the vector \code{parameters} is not supplied and the arguments in \code{...}
+are not sufficient to create it, an error message is produced.
 
 \subsection{Linear congruential generators}{
 Parameters for the linear congruential generators (\code{name="congruRand"})
