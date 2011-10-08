@@ -26,7 +26,7 @@ get.description()
            to be used as a seed.}
 	\item{...}{Arguments describing named components of the vector of parameters,
            if argument \code{parameters} is missing or \code{NULL}.}	
-	\item{only.dsc}{Logical. If \code{TRUE}, the description of a RNG is returned
+	\item{only.dsc}{Logical. If \code{TRUE}, a description of the specified RNG is returned
            and the generator is not initialized.}
 	\item{description}{A list describing a specific RNG as created by
            \code{set.generator(,only.dsc=TRUE)} or \code{get.description()}.}
@@ -34,7 +34,7 @@ get.description()
 \details{
 Random number generators provided by R extension packages are set using
 \code{RNGkind("user-supplied")}. The package \pkg{randtoolbox} assumes that
-this function is not called by the user directly and it is called from
+this function is not called by the user directly and is called from
 the functions \code{set.generator()} and \code{put.description()}.
 
 Random number generators in \pkg{randtoolbox} are represented at the R level by a list
