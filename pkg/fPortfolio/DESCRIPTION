@@ -1,5 +1,5 @@
 Package: fPortfolio
-Version: 2130.80
+Version: 2140.81
 Revision: 5047
 Date: 2011-02-10
 Title: Rmetrics - Portfolio Selection and Optimization - ebook
@@ -17,4 +17,5 @@ NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
         WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
+Repository: R-FORGE
 URL: http://www.rmetrics.org
