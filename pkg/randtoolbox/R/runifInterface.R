@@ -207,6 +207,7 @@ get.description <- function()
 			seed=outspace,
 			PACKAGE="randtoolbox")
 		parameters <- aux$parameters
+		names(parameters) <- c("mod", "mult", "incr")
 		seed <- aux$seed
 		state <- c(seed=aux$seed)
 		if(parameters[1] == "4294967296" && parameters[2] == "1664525" && parameters[3] == "1013904223")
