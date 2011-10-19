@@ -698,6 +698,18 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 \n", file = out)
         cat("useDynLib(", "\"", pkg, "\"", ")\n", sep = "", file = out)
     }
+
+    if (pkg == "timeDate") {
+        cat("
+################################################
+## Special: To avoid that zoo package masks
+##          as.Date.timeDate
+################################################
+
+export(as.Date.timeDate)
+\n", file = out)
+    }
+
     cat("
 ################################################
 ## S4 classes
@@ -759,6 +771,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     }
 
     ################################################
+
     close(out)
     options(op)
 
