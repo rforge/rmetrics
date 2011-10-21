@@ -706,8 +706,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
 ##          as.Date.timeDate
 ################################################
 
-export(as.Date.timeDate)
-\n", file = out)
+export(as.Date.timeDate)\n", file = out)
     }
 
     cat("
