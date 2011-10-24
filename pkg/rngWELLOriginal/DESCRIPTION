@@ -1,0 +1,18 @@
+Package: rngWELLOriginal
+Type: Package
+Title: Well Equidistributed Long-period Linear modulo 2 random number generators
+  by F. Panneton, P. L'Ecuyer, and M. Matsumoto.
+Version: 0.0-2
+Date: 2011-10-23
+Author: The main part of code is by F. Panneton, P. L'Ecuyer and M. Matsumoto,
+  the R interface is by Petr Savicky and Christophe Dutang.
+Maintainer: Petr Savicky <savicky@cs.cas.cz>
+Description: This package provides an R interface to the WELL generators 
+  implemented at http://www.iro.umontreal.ca/~panneton/WELLRNG.html
+  and described in the paper
+  F. Panneton, P. L'Ecuyer, and M. Matsumoto, Improved Long-Period Generators
+  Based on Linear Recurrences Modulo 2. The package belongs to a collection
+  of packages related to randtoolbox.
+Depends: R (>= 2.6.0)
+License: file LICENSE
+Packaged: 2011-10-23 21:04:13 UTC; savicky
