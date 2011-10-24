@@ -44,6 +44,19 @@ function()
     y
     merge(x, y)
 
+
+    # check that merge method can deal with timeSeries that have
+    # colnames that are invalid data.frame colnames. For example
+    # "S[-1]".
+
+    data <- matrix(runif(18), ncol = 3)
+    charvec <- rev(paste("2009-0", 1:6, "-01", sep = ""))
+    S <- timeSeries(data, charvec)
+    colnames(S) <- paste("S", 1:3, sep = ".")
+    ts <- merge(S[,2], lag(S[,1], -1:1))
+
+    checkIdentical(dim(ts), c(6L,4L))
+
 }
 
 
