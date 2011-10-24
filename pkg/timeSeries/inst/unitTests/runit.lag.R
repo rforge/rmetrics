@@ -34,6 +34,17 @@ function()
     lag(tS)
     lag(tS, k = -2:2)
     lag(tS, k = -2:2, trim = TRUE)
+
+
+    # check colnames when using multiple lag indexes.
+    data <- matrix(runif(12), ncol = 2)
+    charvec <- rev(paste("2009-0", 1:6, "-01", sep = ""))
+    S <- timeSeries(data, charvec)
+    colnames(S) <- paste("S", 1:2, sep = ".")
+    ts <- lag(S, -1:1)
+    checkIdentical(colnames(ts), c("S.1[-1]", "S.1[0]", "S.1[1]", "S.2[-1]",
+                                   "S.2[0]", "S.2[1]"))
+
 }
 
 

@@ -29,13 +29,13 @@ setMethod("lag" , "timeSeries",
 
     # Arguments:
     #   x - a 'timeSeries' object.
-    #   k - an integer indicating which lag to use. By default 1. 
+    #   k - an integer indicating which lag to use. By default 1.
     #       Note, negative lags are to data in the future.
     #   trim - a logical. Should NAs at the beginning of the
     #       series be removed? By default FALSE.
-    #   units - 
-    #   ... - 
-    
+    #   units -
+    #   ... -
+
     # Details:
     #   The arguments differ in the following way from the function
     #   stats::lag - lag(x, k = 1, ...)
@@ -97,6 +97,10 @@ setMethod("lag" , "timeSeries",
 
     # Augment Colnames:
     a <- if (is.null(units)) colnames(x) else units
+    if (length(k) > 1)
+        # ensure that colnames is replicated according to the length
+        # of lag indexes.
+        a <- as.vector(matrix(a, nrow = length(k), ncol = length(a), byrow = TRUE))
     kcols <- rep(k, times = ncol(y))
     b <- paste("[", kcols, "]", sep="")
     ab <- paste(a, b, sep = "")
