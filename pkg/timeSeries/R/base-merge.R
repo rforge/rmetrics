@@ -122,9 +122,10 @@ setMethod("merge", c("timeSeries", "matrix"),
 
     # Merge as Data Frame:
     df <- merge(df.x, df.y, all = TRUE)
-    nx <- colnames(x)
+    #-> To avoid problems when using invalid data.frame colnames
+    nx <- make.names(colnames(x))
     nxrec <- colnames(rec.x)
-    ny <- colnames(y)
+    ny <- make.names(colnames(y))
     nyrec <- colnames(rec.y)
 
     dataIdx <- colnames(df) %in% c(nx, ny)
