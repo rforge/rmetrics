@@ -1,5 +1,25 @@
+2011-10-20  chalabi
+
+	* NAMESPACE: Updated NAMESPACE such that zoo package is no longer
+	  masking as.Date.timeDate method.
+
+2011-09-26  mmaechler
+
+	* DESCRIPTION, R/calendar-nDay.R, R/zzz.R,
+	  inst/unitTests/runit.SpecialDates.R, man/calendar-nDay.Rd:
+	  timeNthNdayInMonth() {bug fix, thanks to Dave Winsenius}; do
+	  sensible unit tests; require reasonably recent R
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+	* NAMESPACE, R/holiday-Dates.R, R/holiday-GB.R,
+	  man/holiday-Dates.Rd, man/holiday-GB.Rd: added GB Bank holiday
+	  calendar contributed by Murali Menon
+
 2011-04-06  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* inst/doc: removed empty directory
 	* DESCRIPTION: updated version number

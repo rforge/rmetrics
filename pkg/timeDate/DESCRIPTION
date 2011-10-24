@@ -1,9 +1,10 @@
 Package: timeDate
 Version: 2131.00
-Date: 2011-09-26
+Revision: 5145
+Date: 2011-10-24
 Title: Rmetrics - Chronological and Calendarical Objects
-Author: Diethelm Wuertz, Yohan Chalabi and Martin Maechler
-	with contributions from Joe W. Byers, and others
+Author: Diethelm Wuertz, Yohan Chalabi and Martin Maechler with
+        contributions from Joe W. Byers, and others
 Depends: R (>= 2.10.0), graphics, utils, stats, methods
 Suggests: RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
