@@ -1,26 +1,19 @@
 #include "R.h"
 #include <R_ext/Random.h>
 
+#include "WELL512a.h"
+#include "WELL1024a.h"
+#include "WELL19937a.h"
+#include "WELL19937c.h"
+#include "WELL44497a.h"
+#include "WELL44497b.h"
+
 #define m1   4294949027.0
 #define m2   4294934327.0
 extern double  s10, s11, s12, s13, s14, s20, s21, s22, s23, s24;
 unsigned int MRG32k5a();
 
-void InitWELLRNG512a(unsigned int *);
-void InitWELLRNG1024a(unsigned int *);
-void InitWELLRNG19937a(unsigned int *);
-void InitWELLRNG19937c(unsigned int *);
-void InitWELLRNG44497a(unsigned int *);
-void InitWELLRNG44497b(unsigned int *);
-
 static void (*CallInitWELL)();
-
-extern double WELLRNG512a(void);
-extern double WELLRNG1024a(void);
-extern double (*WELLRNG19937a)(void);
-extern double (*WELLRNG19937c)(void);
-extern double (*WELLRNG44497a)(void);
-extern double (*WELLRNG44497b)(void);
 
 #define SizeOfState 1391
 
