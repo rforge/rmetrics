@@ -13,14 +13,9 @@
 extern double  s10, s11, s12, s13, s14, s20, s21, s22, s23, s24;
 unsigned int MRG32k5a();
 
-static void (*CallInitWELL)();
+static void (*InitWELLSelected)();
 
 #define SizeOfState 1391
-
-#define bin32m 2.3283064365386962891e-10 // 2^(-32)
-#define bin33m 1.1641532182693481445e-10 // 2^(-33)
-#define bin53m 1.1102230246251565404e-16 // 2^(-53)
-#define bin54m 5.5511151231257827021e-17 // 2^(-54)
 
 unsigned int prepare[SizeOfState];
 
@@ -58,6 +53,7 @@ double getWELLRNG44497b()
 
 static double (*user_unif_rand_selected)();
 
+// R_ext/Random.h entry point
 double *user_unif_rand(void)
 {
 	user_unif_rand_selected();
@@ -113,7 +109,7 @@ void init_mrg32k5a(int n, unsigned int *seed)
 void user_unif_init_mrg32k5a(unsigned int seed)
 {
 	init_mrg32k5a(1, &seed);
-	CallInitWELL(prepare);
+	InitWELLSelected(prepare);
 }
 
 void user_unif_init_sfmt(unsigned int seed)
@@ -122,7 +118,7 @@ void user_unif_init_sfmt(unsigned int seed)
 	prepare[0] = seed;
 	for (i = 1; i < SizeOfState; i++) 
 		prepare[i] = 1812433253UL * ( prepare[i - 1] ^ ( prepare[i - 1] >> 30 ) ) + i;
-	CallInitWELL(prepare);
+	InitWELLSelected(prepare);
 }
 
 // this is called by RNGkind("user-supplied")
@@ -139,38 +135,40 @@ void set_noop(void)
     user_unif_init_selected = no_operation;
 }
 
+// R_ext/Random.h entry point
 void user_unif_init(unsigned int seed)
 {
 	seed = 3602842457U * seed + 105890386U; // undo initial scrambling
 	user_unif_init_selected(seed);
 }
 
+// .C entry point
 void set_generator(int *order, int *version, int *initialization)
 {
 	switch (100*(*order) + (*version)) {
 	case 51201: 
 		user_unif_rand_selected = getWELLRNG512a;
-		CallInitWELL = InitWELLRNG512a;
+		InitWELLSelected = InitWELLRNG512a;
 		break;
 	case 102401: 
 		user_unif_rand_selected = getWELLRNG1024a;
-		CallInitWELL = InitWELLRNG1024a;
+		InitWELLSelected = InitWELLRNG1024a;
 		break;
 	case 1993701: 
 		user_unif_rand_selected = getWELLRNG19937a;
-		CallInitWELL = InitWELLRNG19937a;
+		InitWELLSelected = InitWELLRNG19937a;
 		break;
 	case 1993703: 
 		user_unif_rand_selected = getWELLRNG19937c;
-		CallInitWELL = InitWELLRNG19937c;
+		InitWELLSelected = InitWELLRNG19937c;
 		break;
 	case 4449701: 
 		user_unif_rand_selected = getWELLRNG44497a;
-		CallInitWELL = InitWELLRNG44497a;
+		InitWELLSelected = InitWELLRNG44497a;
 		break;
 	case 4449702: 
 		user_unif_rand_selected = getWELLRNG44497b;
-		CallInitWELL = InitWELLRNG44497b;
+		InitWELLSelected = InitWELLRNG44497b;
 		break;
 	default:
 		printf("order %d, version %d unsupported\n", *order, *version);
