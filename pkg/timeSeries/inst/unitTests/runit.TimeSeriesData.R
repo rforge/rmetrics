@@ -103,9 +103,9 @@ function()
     X = lag(x = uTS, k = c(2,4), trim = FALSE, units = NULL)
     X
     X@recordIDs
-    # X = lag(x = uTS, k = c(2,4), trim = TRUE, units = NULL)   # ERROR
-    # X
-    # X@recordIDs
+    X = lag(x = uTS, k = c(2,4), trim = TRUE, units = NULL)
+    X
+    X@recordIDs
     X = lag(x = uTS, k = -1:1, trim = FALSE, units = LETTERS[1:3])
     X
     X@recordIDs
