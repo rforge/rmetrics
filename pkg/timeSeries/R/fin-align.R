@@ -29,22 +29,37 @@
 # ------------------------------------------------------------------------------
 
 
-setMethod("align", "timeSeries",
-    function(x, by = "1d", offset = "0s",
-        method = c("before", "after", "interp", "fillNA"),
-        include.weekends = FALSE)
+.align.timeSeries <- function(x, by = "1d", offset = "0s",
+                              method = c("before", "after", "interp", "fillNA",
+                              "fmm", "periodic", "natural", "monoH.FC"),
+                              include.weekends = FALSE, ...)
 {
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+
     # Description:
     #   Aligns a 'timeSeries' object to equidistant time stamps
 
+    # Arguments:
+    #   x - an object of class "timeSeries".
+    #   method -
+    #       "before" - use the data from the row whose position is
+    #           just before the unmatched position;
+    #       "after" - use the data from the row whose position is
+    #           just after the unmatched position;
+    #       "linear" - interpolate linearly between "before" and
+    #           "after".
+    #       "fillNA" - fill missing days with NA values
+    #   include.weekends - a logical value. Should weekend dates be
+    #       included or removed?
+
     # Example:
-    #   data(usdthb)
-    #   data = matrix(usdthb[, "BID"])
-    #   charvec = as.character(usdthb[, "XDATE"])
-    #   USDTHB = timeSeries(data, charvec, format = "%Y%M%d%H%M")
-    #   align(USDTHB, by = "3h", offset = "92m")
-    #   MSFT = as.timeSeries(data(msft.dat))
-    #   align(MSFT)
+    #      data(usdthb)
+    #      data = matrix(usdthb[, "BID"])
+    #      charvec = as.character(usdthb[, "XDATE"])
+    #      USDTHB = timeSeries(data, charvec, format = "%Y%M%d%H%M")
+    #      align(USDTHB, by = "3h", offset = "92m")
+    #      MSFT = as.timeSeries(data(msft.dat))
+    #      align(MSFT)
 
     # See also:
     #   in package timeDate
@@ -53,141 +68,70 @@ setMethod("align", "timeSeries",
 
     # FUNCTION:
 
-    # Settings:
-    periods = c(7*24*3600, 24*3600, 3600, 60, 1)
-    names(periods) = c("w", "d", "h", "m", "s")
-    offset = as.integer(gsub("[a-z]", "", offset, perl = TRUE)) *
-        periods[gsub("[ 0-9]", "", offset, perl = TRUE)]
-    by = as.integer(gsub("[a-z]", "", by, perl = TRUE)) *
-        periods[gsub("[ 0-9]", "", by, perl = TRUE)]
+    if (x@format == "counts")
+        stop(as.character(match.call())[1],
+             " is for time series and not for signal series.")
 
-    # left-right adjustment:
-    Method = match.arg(method)
-    method = "linear"
-    f = 0.5
-    if (Method == "interp") {
-        method = "linear"
-        f = 0.5 }
-    if (Method == "before") {
-        method = "constant"
-        f = 0 }
-    if (Method == "after") {
-        method = "constant"
-        f = 1 }
+    # check if series sorted
+    if (is.unsorted(x))
+        x <- sort(x)
 
-    # Convert timeDate to GMT-POSIX
-    posixGMT = as.POSIXct(
-        timeDate(time(x), zone = x@FinCenter, FinCenter = "GMT"), tz = "GMT")
+    # adjustment:
+    Method <- match.arg(method)
+    fun <- switch(Method,
 
-    # Compute Julian counts (x) and series values (y)
-    Origin = as.POSIXct("1970-01-01", tz = "GMT")
-    # YC: use as as.vector rather as.integer to avoid integer overflow
-    # YC: when dealing with long historical time series
-    u <- as.vector(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
-    xout <- seq(u[1] + offset, u[length(u)], by = by)
-    posixGMT <- Origin + xout
+                  before = function(x, u, v)
+                  approxfun(x = u, y = v, method = "constant", f = 0, ...)(x),
+
+                  after = function(x, u, v)
+                  approxfun(x = u, y = v, method = "constant", f = 1, ...)(x),
+
+                  interp = ,
+                  fillNA = function(x, u, v)
+                  approxfun(x = u, y = v, method = "linear", f = 0.5, ...)(x),
+
+                  fmm = ,
+                  periodic = ,
+                  natural = ,
+                  monoH.FC = function(x, u, v)
+                  splinefun(x = u, y = v, method = Method, ...)(x))
+
+    # Align timeDate stamps
+    td1 <- time(x)
+    td2 <- align(td1, by = by, offset = offset)
+
+    # extract numerical values
+    u <- as.numeric(td1, units = "secs")
+    xout <- as.numeric(td2, units = "secs")
 
     N = NCOL(x)
+    data <- matrix(ncol = N, nrow = length(td2))
+    xx <- getDataPart(x)
     for (i in 1:N) {
-        v <- as.vector(series(x[, i]))
+
+        v <- as.vector(xx[, i])
 
         # New Positions and approximated values:
-        yout <- approx(u, v, xout, method = method, f = f)$y
-        if (Method == "fillNA") yout[!(x %in% u)] = NA
+        yout <- fun(xout, u, v)
+        if (Method == "fillNA") yout[!(xout %in% u)] = NA
 
-        # Compose Time Series:
-        tS <- timeSeries(yout, posixGMT, zone = "GMT", FinCenter = x@FinCenter)
-        if (i == 1) ans = tS else ans = cbind(ans, tS)
+        # Compose data:
+        data[, i] = yout
     }
 
-    # Remove Weekends:
-    if(!include.weekends) ans <- ans[isWeekday(time(ans)), ]
-    colnames(ans) <- colnames(x)
-
-    # Return Value:
-    ans
-}
-)
-
-
-################################################################################
-
-
-.align.timeSeries <-
-    function(x, by = "1d", offset = "0s",
-        method = c("before", "after", "interp", "fillNA"),
-        include.weekends = FALSE)
-{
-    # Description:
-    #   Aligns a 'timeSeries' object to equidistant time stamps
-
-    # Example:
-    #   data(usdthb)
-    #   data = matrix(usdthb[, "BID"])
-    #   charvec = as.character(usdthb[, "XDATE"])
-    #   USDTHB = timeSeries(data, charvec, format = "%Y%M%d%H%M")
-    #   align(USDTHB, by = "3h", offset = "92m")
-    #   MSFT = as.timeSeries(data(msft.dat))
-    #   align(MSFT)
-
-    # FUNCTION:
-
-    # Not for signal Series:
-    stopifnot(!(x@format == "counts"))
-
-    # Settings:
-    periods = c(7*24*3600, 24*3600, 3600, 60, 1)
-    names(periods) = c("w", "d", "h", "m", "s")
-    offset = as.integer(gsub("[a-z]", "", offset, perl = TRUE)) *
-        periods[gsub("[ 0-9]", "", offset, perl = TRUE)]
-    by = as.integer(gsub("[a-z]", "", by, perl = TRUE)) *
-        periods[gsub("[ 0-9]", "", by, perl = TRUE)]
-
-    # left-right adjustment:
-    Method <- match.arg(method)
-    method <- "linear"
-    f <- 0.5
-    if (Method == "interp") {
-        method = "linear"
-        f = 0.5 }
-    if (Method == "before") {
-        method = "constant"
-        f = 0 }
-    if (Method == "after") {
-        method = "constant"
-        f = 1 }
-
-    # Convert timeDate to GMT-POSIX
-    posixGMT = as.POSIXct(
-        timeDate(time(x), zone = x@FinCenter, FinCenter = "GMT"), tz = "GMT")
-
-    # Compute Julian counts (x) and series values (y)
-    Origin = as.POSIXct("1970-01-01", tz = "GMT")
-    u <- as.integer(difftime(posixGMT, Origin, tz = "GMT", units = "secs"))
-    xout = seq(u[1] + offset, u[length(u)], by = by)
-    posixGMT = Origin + as.integer(xout)
-
-    N = NCOL(x)
-    for (i in 1:N) {
-        v <- as.vector(series(x[, i]))
-
-        # New Positions and Approximated Values:
-        yout = approx(u, v, xout, method = method, f = f)$y
-        if (Method == "fillNA") yout[!(x %in% u)] = NA
-
-        # Compose Time Series:
-        tS = timeSeries(yout, posixGMT, zone = "GMT", FinCenter = x@FinCenter)
-        if (i == 1) ans = tS else ans = cbind(ans, tS)
-    }
+    # build time series
+    ans <- timeSeries(data, td2, units = colnames(x))
 
     # Remove Weekends:
-    if(!include.weekends) ans = ans[isWeekday(time(ans)), ]
-    colnames(ans) <- colnames(x)
+    if(!include.weekends) ans <- ans[isWeekday(td2), ]
 
     # Return Value:
     ans
 }
 
+# ------------------------------------------------------------------------------
+
+setMethod("align", "timeSeries", .align.timeSeries)
 
 ################################################################################
 

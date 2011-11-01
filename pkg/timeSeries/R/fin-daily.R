@@ -23,13 +23,14 @@
 
 
 alignDailySeries <-
-function (x, method = c("before", "after", "interp", "fillNA"),
-    include.weekends = FALSE, units = NULL, zone = "", FinCenter = "")
+function (x, method = c("before", "after", "interp", "fillNA",
+             "fmm", "periodic", "natural", "monoH.FC"),
+    include.weekends = FALSE, units = NULL, zone = "", FinCenter = "", ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # Description:
-    #   Aligns an univariate 'timeSeries' object to new positions
+    #   Aligns a 'timeSeries' object to new positions
 
     # Arguments:
     #   x - an object of class "timeSeries".
@@ -44,111 +45,20 @@ function (x, method = c("before", "after", "interp", "fillNA"),
     #   include.weekends - a logical value. Should weekend dates be
     #       included or removed?
 
+    # Note: alignDailySeries is now based on align timeSeries method.
+
+    # adjust zone and FinCenter if provided
+    if (zone != "" || FinCenter != "") {
+        if (zone == "")
+            zone <- getRmetricsOptions("myFinCenter")
+        if (FinCenter == "")
+            FinCenter <- getRmetricsOptions("myFinCenter")
+        x <- timeSeries(x, zone = zone, FinCenter = FinCenter)
+    }
+
     # FUNCTION:
-
-    # Settings:
-    stopifnot(is.timeSeries(x))
-    if (zone == "")
-        zone <- getRmetricsOptions("myFinCenter")
-    if (FinCenter == "")
-        FinCenter <- getRmetricsOptions("myFinCenter")
-
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
-
-    method = match.arg(method)
-
-    # check if series sorted
-    if (is.unsorted(x))
-        x <- sort(x)
-
-    # Internal Function
-    # Univariate Time Series Alignment:
-    alignDailySeries.OneColumn =
-    function (x, method, include.weekends, zone, FinCenter) {
-        # Settings:
-        units = x@units
-        # Units:
-        # myUnits <<- "days"
-        myUnits <- "days"
-        # Fill with NAs:
-        if (method == "fillNA") {
-            positions = time(x)
-            u = as.integer(julian(positions))
-            v = as.vector(series(x)[, 1])
-            x = u[1]:u[length(u)]
-            y = approx(u, v, xout = x, method = "linear", f = 0.5)$y
-            y[!(x %in% u)] = NA
-            poschar = as.character(positions)
-            td = timeSeries(y, timeSequence(from = poschar[1],
-                to = poschar[length(poschar)], FinCenter = FinCenter,
-                format = "%Y-%m-%d"), FinCenter = FinCenter)
-            td@format = "%Y-%m-%d"
-        } else {
-            # Interpolate with real Values:
-            # Wich method ?
-            if (method == "interp") {
-                method = "linear"
-                f = 0.5 }
-            if (method == "before") {
-                method = "constant"
-                f = 0 }
-            if (method == "after") {
-                method = "constant"
-                f = 1 }
-            # Get Positions and Data:
-            positions = time(x)
-            u = as.integer(julian(positions))
-            v = as.vector(series(x)[, 1])
-            # Approximate:
-            #   method - specifies the interpolation method to be used.
-            #       Choices are "linear" or "constant".
-            #   f - For method="constant" a number between 0 and 1 inclusive,
-            #       indicating a compromise between left- and right-continuous
-            #       step functions. If 'y0' and 'y1' are the values to the left
-            #       and right of the point then the value is 'y0*(1-f)+y1*f' so
-            #       that 'f=0' is right-continuous and 'f=1' is left-continuous.
-            x = u[1]:u[length(u)]
-            y = approx(u, v, xout = x, method = method, f = f)$y
-            # Create timeSeries:
-            poschar = as.character(positions)
-            td = timeSeries(y, timeSequence(from = poschar[1],
-                to = poschar[length(poschar)], FinCenter = FinCenter,
-                format = "%Y-%m-%d"), FinCenter = FinCenter)
-            td@format = "%Y-%m-%d" }
-        # Handle Weekends:
-        if (!include.weekends) {
-            # Internal Functions:
-            is.weekday = function(x) {
-                # x - a 'timeDate' object
-                wday = as.POSIXlt(as.POSIXct(x))$wday
-                return(!(wday == 0 | wday == 6)) }
-            # Test:
-            test = is.weekday(time(td))
-            td <- td[test, 1]
-        }
-        # Units:
-        # td@units = units # unneeded because have colnames after
-        colnames(td) = units
-        ans = td
-        # Return Value:
-        ans
-    }
-
-    # First Column:
-    ans = alignDailySeries.OneColumn(x = x[, 1], method = method,
-        include.weekends = include.weekends, zone = zone,
-        FinCenter = FinCenter)
-
-    # Next Columns:
-    DimX = dim(x)[2]
-    if ( DimX > 1 ) {
-        for ( i in 2:DimX ) {
-            ans.add = alignDailySeries.OneColumn(x = x[, i],
-                method = method, include.weekends = include.weekends,
-                zone = zone, FinCenter = FinCenter)
-            ans = merge(ans, ans.add) }
-    }
+    ans <- .align.timeSeries(x = x, by = "1d", offset = "0s", method = method,
+                             include.weekends = include.weekends, ...)
 
     # Add New Units:
     if (!is.null(units)){
