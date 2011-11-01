@@ -49,6 +49,10 @@ function(..., deparse.level = 1)
     if (any(t <- !unlist(lapply(dots, inherits, "timeSeries"))))
         dots[t] <- lapply(dots[t], as.timeSeries)
 
+
+    # note that new timeSeries get FinCenter of first entry of args
+    FinCenter = finCenter(dots[[1]])
+
     # get names of arguments if any
     units <- unlist(lapply(dots, colnames))
     if (length(t <- as.logical((nchar(nm <- names(units))))))
@@ -88,7 +92,7 @@ function(..., deparse.level = 1)
             else
                 data.frame()
         timeSeries(data = data, charvec = td, units = units, zone = "GMT",
-                   FinCenter = finCenter(dots[[1]]),
+                   FinCenter = FinCenter,
                    recordIDs = recordIDs)
     } else {
         # aligned timestamps
@@ -110,8 +114,8 @@ function(..., deparse.level = 1)
         }
 
         # note that new timeSeries get FinCenter of first entry of args
-        timeSeries(data = data, charvec = td, units = units, zone = "GMT",
-                   FinCenter = finCenter(dots[[1]]))
+        timeSeries(data = data, charvec = td, units = units,
+                   zone = FinCenter, FinCenter = FinCenter)
     }
 }
 
