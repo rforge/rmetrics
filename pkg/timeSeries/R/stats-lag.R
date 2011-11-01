@@ -96,11 +96,15 @@ setMethod("lag" , "timeSeries",
     }
 
     # Augment Colnames:
-    a <- if (is.null(units)) colnames(x) else units
-    if (length(k) > 1)
-        # ensure that colnames is replicated according to the length
-        # of lag indexes.
-        a <- as.vector(matrix(a, nrow = length(k), ncol = length(a), byrow = TRUE))
+    cn <- colnames(x)
+    a <-
+        if (is.null(units))
+            # ensure that colnames is replicated according to the length
+            # of lag indexes.
+            as.vector(matrix(cn, nrow = length(k), ncol = length(cn), byrow = TRUE))
+        else
+            units
+
     kcols <- rep(k, times = ncol(y))
     b <- paste("[", kcols, "]", sep="")
     ab <- paste(a, b, sep = "")
