@@ -103,17 +103,23 @@ seq.timeDate <-
     # --> .../src/library/base/R/datetime.R
     # Modifications by Yohan Chalabi & Martin Maechler marked with end-of-line ##
 
+    # YC: Note the only difference with seq.POSIXt apart that it works
+    # with timeDate objects is that argument 'by' accepts the syantax
+    # without whitespace, e.g. 1week, and accept 'by = quarter'. This
+    # is important for compatibilty purpose for the align timeDate
+    # method that is based on seq.timeDate.
+
     if (missing(from)) stop("'from' must be specified")
     if (!inherits(from, "timeDate")) stop("'from' must be a timeDate object") ##
 
     DST <- ##
         if (!missing(by) && is.character(by)) {
             if (identical("quarter", by)) by <- "3 months"
-            by1 <- strsplit(by, " ", fixed = TRUE)[[1]]
-            !is.na(pmatch(by1[length(by1)], c("months", "years", "DSTdays")))
+            by1 <- gsub("[ 0-9]", "", by, perl = TRUE) ##
+            !is.na(pmatch(by1, c("months", "years", "DSTdays"))) ##
         } else FALSE
-    FinCenter <- from@FinCenter ##
-    zone <- if (DST) from@FinCenter else "GMT" ##
+    FinCenter <- finCenter(from) ##
+    zone <- if (DST) FinCenter else "GMT" ##
     as.POSIX.. <- function(x)
         if (DST) as.POSIXct(format(x), tz = "GMT") else as.POSIXct(x)
     from <- as.POSIX..(from)
@@ -123,6 +129,8 @@ seq.timeDate <-
     tz <- "GMT" ##
     if (!missing(to)) {
 	if (!inherits(to, "timeDate")) stop("'to' must be a timeDate object") ##
+        # FinCenter of 'from' argument is used as reference ##
+        finCenter(to) <- FinCenter ##
 	to <- as.POSIX..(to)##
 	if (length(to) != 1) stop("'to' must be of length 1")
     }
@@ -151,7 +159,9 @@ seq.timeDate <-
         by <- switch(attr(by,"units"), secs = 1, mins = 60, hours = 3600,
                      days = 86400, weeks = 7*86400) * unclass(by)
     } else if(is.character(by)) {
-        by2 <- strsplit(by, " ", fixed=TRUE)[[1L]]
+        by2 <- c(if (length(grep("[0-9]", by, perl = TRUE))) ##
+                 gsub("[ A-Za-z]", "", by, perl = TRUE),
+                 gsub("[ 0-9]", "", by, perl = TRUE)) ##
         if(length(by2) > 2L || length(by2) < 1L)
             stop("invalid 'by' string")
         valid <- pmatch(by2[length(by2)],
