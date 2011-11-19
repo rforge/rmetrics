@@ -589,8 +589,7 @@ coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
 # observed numbers of collisions for 'nbSample' random samples 
 # (of length 'lenSample') in 'nbCell' urns 
     obsNumColl <- replicate( nbSample, routine())
-    theoLambda <- lenSample^2 / ( 2 * nbCell ) 
-    collMax <- max(obsNumColl, ceiling(10*theoLambda))
+    collMax <- max(obsNumColl)
     
 # theoretical counts of collision numbers
     if(lenSample / nbCell > 1/32 && lenSample <= 2^8) #exact distribution
@@ -630,9 +629,11 @@ coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
     else 
     {   #Poisson approximation
         method <- "Poisson approximation"
+        theoLambda <- lenSample^2 / ( 2 * nbCell ) 
         probNumColl <- dpois(0:collMax, lambda = theoLambda )
     }
 
+    probNumColl <- c(probNumColl, 1 - sum(probNumColl))
     pValLeft <- cumsum(probNumColl)
     pValRight <- rev(cumsum(rev(probNumColl)))
     invLeft <- ifelse(pValLeft < 0.5, 1 - pValLeft, 0.5)
