@@ -65,11 +65,11 @@
 		Rversion <- version$version.string
 		OStype <- version$platform
 		
-		cat(paste("<<-- randtoolbox - version ", PkgVersion, " - building date ", BuildDate, "\n", sep=""))
-		cat(paste("with ",Rversion, " on the platform ", OStype, "\n", sep="")) 
-		cat("-->> For overview, type 'help(\"randtoolbox\")'.\n")
+		packageStartupMessage("<<-- randtoolbox - version ", PkgVersion, " - building date ", BuildDate)
+		packageStartupMessage("with ",Rversion, " on the platform ", OStype) 
+		packageStartupMessage("-->> For overview, type 'help(\"randtoolbox\")'.")
 	}else
-		cat(paste("This is randtoolbox. For overview, type 'help(\"randtoolbox\")'.\n", sep=""))
+		packageStartupMessage("This is randtoolbox. For overview, type 'help(\"randtoolbox\")'.")
 	
 }
 
