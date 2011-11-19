@@ -1,11 +1,11 @@
-\name{coll.test}
-\alias{coll.test}
+\name{coll.test.sparse}
+\alias{coll.test.sparse}
 \title{the Collision test}
 \description{
   The Collision test for testing random number generators.
 }
 \usage{
-coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, echo = TRUE, ...)
+coll.test.sparse(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 10, ...)
 }
 \arguments{
   \item{rand}{a function generating random numbers. its first argument must be
@@ -13,8 +13,7 @@ coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, ec
   \item{lenSample}{numeric for the length of generated samples.}
   \item{segments}{numeric for the number of segments to which the interval \code{[0, 1]} is split.}
   \item{tdim}{numeric for the length of the disjoint t-tuples.}
-  \item{nbSample}{numeric for the overall sample number.}
-  \item{echo}{logical to plot detailed results, default \code{TRUE}}
+  \item{nbSample}{numeric for the number of repetitions of the test.}
   \item{...}{further arguments to pass to function rand}
   
 }
@@ -40,28 +39,16 @@ coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, ec
 
         But we cannot use this formula for large \eqn{n} since the Stirling number
         need \eqn{O(n\log(n))}{O(n log(n))} time to be computed. We use
-        a Gaussian approximation if 
-        \eqn{\frac{n}{k}>\frac{1}{32}}{ n/k>\frac{1}{32} } and \eqn{n\geq 2^8}{n >= 2^8},
         a Poisson approximation if \eqn{\frac{n}{k} < \frac{1}{32}}{n/k < 1/32} and the exact formula
         otherwise.
         
-        Finally we compute \eqn{m} samples of random numbers, on which we calculate
-        the number of collisions. Then we are able to compute a chi-squared statistic.
-        
-	
 }
 \value{
-  a list with the following components :
-
-\code{statistic}	 the value of the chi-squared statistic.
-
-\code{p.value}	 	 the p-value of the test.
+A data frame with the following columns.
 
 \code{observed}	 the observed counts.
 
-\code{expected}	 the expected counts under the null hypothesis.
-
-\code{residuals}	 the Pearson residuals, (observed - expected) / sqrt(expected).
+\code{p.value}   the p-value of the test.
 
 }
 \references{
@@ -91,11 +78,11 @@ Software 33(4), 22.
 \examples{
 # (1) poisson approximation
 #
-coll.test(runif)
+coll.test.sparse(runif)
 
 # (2) exact distribution
 #
-coll.test(SFMT, 2^7, 2^10, 1, 10000)
+coll.test.sparse(SFMT, lenSample=2^7, segments=2^5, tdim=2, nbSample=10)
 
 }
 \keyword{htest}

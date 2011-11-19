@@ -469,15 +469,17 @@ order.test <- function(u, d = 3, echo = TRUE)
 }
 
 #collision test
-coll.test <- function(rand, lenSample = 2^14, nbCell = 2^20, nbSample = 1000, echo = TRUE, ...)
+coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, echo = TRUE, ...)
 {
+    nbCell <- segments^tdim
     
     routine <- function()
     {
 # compute random sample
-        u <- rand( lenSample, ... )
+        u <- rand( tdim * lenSample, ... )
+        uint <- matrix(floor( u * segments ), nrow=tdim, ncol=lenSample)
 # compute urn numbers i.e. integers in {0, ..., nbCell-1}
-        num <- floor( u * nbCell )
+        num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
 # compute the number of collisions
         NumColl <- .Call("doCollisionTest", as.integer(num), lenSample, nbCell)
     }
@@ -567,6 +569,76 @@ coll.test <- function(rand, lenSample = 2^14, nbCell = 2^20, nbSample = 1000, ec
                 p.value = pvalue, observed = empNumColl, 
                 expected = expNumColl, residuals = residu) 
     return( invisible( res ) )
+}
+
+coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 10, ...)
+{
+    nbCell <- segments^tdim
+
+    routine <- function()
+    {
+# compute random sample
+        u <- rand( tdim * lenSample, ... )
+        uint <- matrix(floor( u * segments ), nrow=tdim, ncol=lenSample)
+# compute urn numbers i.e. integers in {0, ..., nbCell-1}
+        num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
+# compute the number of collisions
+        NumColl <- .Call("doCollisionTest", as.integer(num), lenSample, nbCell)
+    }
+    
+# observed numbers of collisions for 'nbSample' random samples 
+# (of length 'lenSample') in 'nbCell' urns 
+    obsNumColl <- replicate( nbSample, routine())
+    theoLambda <- lenSample^2 / ( 2 * nbCell ) 
+    collMax <- max(obsNumColl, ceiling(10*theoLambda))
+    
+# theoretical counts of collision numbers
+    if(lenSample / nbCell > 1/32 && lenSample <= 2^8) #exact distribution
+    { 
+        method <- "exact distribution"
+# compute stirling number S_n^k for k = 0 : n and n = lenSample
+        stirling0toN <- stirling(lenSample)
+#      print(stirling0toN)
+#        stirlingDivided <- stirlingDividedByK(lenSample, floor(collMax/2), nbCell)
+#        print(stirlingDivided)
+# collision c = 0 : (n-1)
+        collRange <- 0:collMax
+# compute P(Collision = c) = \prod_{i=0}^{n-c-1}\frac{k-i}{k}  *  \frac{1}{k^c} *  S_n^{n-c} in two steps
+        f <- function(x) 
+        {   
+#res <- prod( 1 - 0:(lenSample-x-1) / rep( c(nbCell, 1), (lenSample-x) /2) )
+#cat("1- ", x," x ",res, " ")
+#          res <- res /nbCell^x
+#          cat("2- ",res, " ")
+#          res <- res * stirling0toN[lenSample-x+1]
+#          cat("3- ",res," S ",stirling0toN[lenSample-x+1] , "\n")
+            res <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirling0toN[lenSample-x+1]
+#cat("1- ", x," x ",res, " ")            
+#            res2 <- 4^lenSample * prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirlingDivided[lenSample-x+1] 
+#            res2 <-  prod( x+1 - 0:(lenSample-x-1) / nbCell * (x+1) ) * prod( (lenSample-x+1):lenSample / nbCell)  * stirlingDivided[lenSample-x+1] 
+#            res2 <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / nbCell^(x-floor(collMax/2))  * stirlingDivided[lenSample-x+1]
+#          cat("2- ", x," x ",res2, "\n")            
+            res
+        }
+#        expNumColl <- stirling0toN[ lenSample:(lenSample-collMax)+1 ] * cumprod0toN
+        probNumColl <- sapply(collRange, f)
+    }
+    else if(lenSample / nbCell > 1/32 && lenSample > 2^8)
+    {
+        stop("unsupported parameters for the collision test")
+    }
+    else 
+    {   #Poisson approximation
+        method <- "Poisson approximation"
+        probNumColl <- dpois(0:collMax, lambda = theoLambda )
+    }
+
+    pValLeft <- cumsum(probNumColl)
+    pValRight <- rev(cumsum(rev(probNumColl)))
+    invLeft <- ifelse(pValLeft < 0.5, 1 - pValLeft, 0.5)
+    pVal <- ifelse(pValRight < pValLeft, pValRight, invLeft)
+
+    data.frame(observed=obsNumColl, p.value = pVal[obsNumColl])
 }
 
 #compute stirling numbers of second kind i.e.

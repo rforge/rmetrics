@@ -1771,11 +1771,11 @@ and parameters implying the use of the exact distribution (i.e. $n<2^8$ and
 $\lambda>1/32$).
 %%% R code
 <<coll1, fig=FALSE, echo=TRUE, eval=FALSE>>=
-coll.test(runif, 2^7, 2^10)
+coll.test(runif, 2^7, 2^10, 1)
 @
 <<coll2, fig=FALSE, echo=FALSE>>=
 options( width =40)
-res <- coll.test(runif, 2^7, 2^10, echo=FALSE)
+res <- coll.test(runif, 2^7, 2^10, 1, echo=FALSE)
 	stat <- res$statistic
 	pvalue <- res$p.value
 	df <- res$parameter
@@ -1796,11 +1796,11 @@ the Poisson approximation (i.e. $\lambda<1/32$). For example with \code{congruRa
 generator we have
 %%% R code
 <<coll3, fig=FALSE, echo=TRUE, eval=FALSE>>=
-coll.test(congruRand, 2^8, 2^14)
+coll.test(congruRand, 2^8, 2^14, 1)
 @
 <<coll4, fig=FALSE, echo=FALSE>>=
 options( width =40)
-res <- coll.test(congruRand, 2^8, 2^14, echo=FALSE)
+res <- coll.test(congruRand, 2^8, 2^14, 1, echo=FALSE)
 	stat <- res$statistic
 	pvalue <- res$p.value
 	df <- res$parameter

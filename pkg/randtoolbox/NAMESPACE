@@ -9,7 +9,7 @@ export(set.generator, put.description, get.description)
 
 export(rngWELLScriptR, getWELLState)
 
-export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test)
+export(gap.test, freq.test, serial.test, poker.test, order.test, coll.test, coll.test.sparse)
 
 export(stirling, permut, get.primes)
 
