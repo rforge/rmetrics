@@ -60,8 +60,8 @@
 	if(verbose <- getOption("verbose")) 
 	{	
 		randtoolboxLib <- dirname(system.file(package = "randtoolbox"))
-		PkgVersion <- packageDescription("randtoolbox", lib = randtoolboxLib)$Version
-		BuildDate <- packageDescription("randtoolbox", lib = randtoolboxLib)$Date
+		PkgVersion <- packageDescription("randtoolbox", lib.loc = randtoolboxLib)$Version
+		BuildDate <- packageDescription("randtoolbox", lib.loc = randtoolboxLib)$Date
 		Rversion <- version$version.string
 		OStype <- version$platform
 		
