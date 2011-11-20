@@ -583,7 +583,7 @@ coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
 # compute urn numbers i.e. integers in {0, ..., nbCell-1}
         num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
 # compute the number of collisions
-        NumColl <- .Call("doCollisionTest", as.integer(num), lenSample, nbCell)
+        length(num) - length(unique(num))
     }
     
 # observed numbers of collisions for 'nbSample' random samples 
@@ -638,8 +638,7 @@ coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
     pValRight <- rev(cumsum(rev(probNumColl)))
     invLeft <- ifelse(pValLeft < 0.5, 1 - pValLeft, 0.5)
     pVal <- ifelse(pValRight < pValLeft, pValRight, invLeft)
-
-    data.frame(observed=obsNumColl, p.value = pVal[obsNumColl])
+    data.frame(observed=obsNumColl, p.value = pVal[obsNumColl + 1])
 }
 
 #compute stirling numbers of second kind i.e.
