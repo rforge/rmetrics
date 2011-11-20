@@ -157,13 +157,13 @@ void get_seed_congruRand(unsigned long long *out_seed)
 void get_state_congru(char **params, char **seed)
 {
 	if (mod != 0LL) {
-		sprintf(params[0], "%llu", mod);
+		Rprintf(params[0], "%llu", mod);
 	} else {
 		strcpy(params[0], two_64_s);
 	}
-	sprintf(params[1], "%llu", mult);
-	sprintf(params[2], "%llu", incr);
-	sprintf(seed[0], "%llu", congru_seed);
+	Rprintf(params[1], "%llu", mult);
+	Rprintf(params[2], "%llu", incr);
+	Rprintf(seed[0], "%llu", congru_seed);
 }
 
 // .C entry point used by put.description

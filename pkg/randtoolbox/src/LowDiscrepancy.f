@@ -248,62 +248,62 @@ C     POINT WITH A POINT FAR IN THE TAILS.
 
 
 C -----------------------------------------------------------------------------
-
-
-      SUBROUTINE TESTHALTON()
-      
-      INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
-      PARAMETER (N1=20,N2=N1/2,DIMEN=5)
-      INTEGER BASE(DIMEN)
-      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
-	  
+C
+C
+C      SUBROUTINE TESTHALTON()
+C      
+C      INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
+C      PARAMETER (N1=20,N2=N1/2,DIMEN=5)
+C      INTEGER BASE(DIMEN)
+C      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
+C	  
 C	  >>> remove implicit type declaration <<<
-	  INTEGER INIT, I, J	
-
-      TRANSFORM = 0
-      
+C	  INTEGER INIT, I, J	
+C
+C      TRANSFORM = 0
+C      
 C     FIRST TEST RUN:
-      INIT = 1
-      OFFSET = 0
-      CALL HALTON(QN1,N1,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 1-20"  
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N1, INT(N1/(2*10))
-         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
+C      INIT = 1
+C      OFFSET = 0
+C      CALL HALTON(QN1,N1,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+C
+C      WRITE (*,*) 
+C      WRITE (*,*) "HALTON SEQUENCE: 1-20"  
+C      WRITE (*,*) 
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N1, INT(N1/(2*10))
+C         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
 C     SECOND TEST RUN:
-      INIT=1
-      OFFSET = 0
-      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"  
-      WRITE (*,*)  
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT = 0
-      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"  
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
- 7    FORMAT(1H ,A8, 10I10)
- 8    FORMAT(1H ,I8, 10F10.6)
-      
-      RETURN
-      END
-
-
+C      INIT=1
+C      OFFSET = 0
+C      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+C      WRITE (*,*) 
+C      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"  
+C      WRITE (*,*)  
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N2, INT(N2/10)
+C         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
+C      INIT = 0
+C      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+C      WRITE (*,*) 
+C      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"  
+C      WRITE (*,*) 
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N2, INT(N2/10)
+C         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
+C 7    FORMAT(1H ,A8, 10I10)
+C 8    FORMAT(1H ,I8, 10F10.6)
+C      
+C      RETURN
+C      END
+C
+C
 C ------------------------------------------------------------------------------
 
 
@@ -1666,64 +1666,64 @@ C     FIRST THE NUMERATORS, THEN NORMALIZED
 
       
 C ------------------------------------------------------------------------------
-   
-
-      SUBROUTINE TESTSOBOL()
-
+C   
+C
+C      SUBROUTINE TESTSOBOL()
+C
 C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
-      INTEGER MAXBIT,DIMEN,TRANSFORM
+C      INTEGER MAXBIT,DIMEN,TRANSFORM
 C	  >>> remove implicit type declaration <<<
-	  INTEGER N1, N2
-      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
-      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
-      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
-      INTEGER iSEED, iSEED1
-	  
+C	  INTEGER N1, N2
+C      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
+C      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
+C      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
+C      INTEGER iSEED, iSEED1
+C	  
 C	  >>> remove implicit type declaration <<<
-	  INTEGER IFLAG, I, J, INIT
-	  
-
-      TRANSFORM = 1
-      IFLAG = 3
-      iSEED1 = 4711
-           
-      INIT = 1
-      iSEED = iSEED1
-      CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N1, INT(N1/(2*10))
-         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT=1
-      iSEED = iSEED1
-      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT = 0
-      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*) 
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
- 7    FORMAT(1H ,A8, 10I10)
- 8    FORMAT(1H ,I8, 10F10.6)
-
-      RETURN
-      END
-
-
+C	  INTEGER IFLAG, I, J, INIT
+C	  
+C
+C      TRANSFORM = 1
+C      IFLAG = 3
+C      iSEED1 = 4711
+C           
+C      INIT = 1
+C      iSEED = iSEED1
+C      CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
+C     &     IFLAG, iSEED, INIT, TRANSFORM)
+C
+C      WRITE (*,*) 
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N1, INT(N1/(2*10))
+C         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
+C      INIT=1
+C      iSEED = iSEED1
+C      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
+C     &     IFLAG, iSEED, INIT, TRANSFORM)
+C      WRITE (*,*) 
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N2, INT(N2/10)
+C         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
+C      INIT = 0
+C      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
+C     &     IFLAG, iSEED, INIT, TRANSFORM)
+C      WRITE (*,*) 
+C      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))   
+C      DO I=1, N2, INT(N2/10)
+C         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+C      ENDDO
+C
+C 7    FORMAT(1H ,A8, 10I10)
+C 8    FORMAT(1H ,I8, 10F10.6)
+C
+C      RETURN
+C      END
+C
+C
 C ------------------------------------------------------------------------------
 
 
