@@ -4,7 +4,7 @@
 Moran's Log Spacings Test
 }
 \description{
-The function implements a goodness fit test using Moran's log spacings
+The function implements a goodness of fit test using Moran's log spacings
 statistic.
 }
 \usage{

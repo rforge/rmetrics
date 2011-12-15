@@ -16,7 +16,6 @@ distIneqMassart <- function(densFn = "norm", n = 10000,
   ## large-sample approximation to the Kolmogorov-Smirnov statistic.
   ##
 
-  CALL <- match.call()
   dfun <- match.fun(paste("d", densFn, sep = ""))
   pfun <- match.fun(paste("p", densFn, sep = ""))
   rfun <- match.fun(paste("r", densFn, sep = ""))

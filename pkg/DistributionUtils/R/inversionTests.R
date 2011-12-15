@@ -2,7 +2,6 @@ inversionTestpq <- function(densFn = "norm", n = 10,
                             intTol = .Machine$double.eps^0.25,
                             uniTol = intTol, x = NULL, method = "spline", ...)
 {
-    CALL <- match.call()
     if (is.null(x)){
         rfun <- match.fun(paste("r", densFn, sep = ""))
         x <- rfun(n, ...)
@@ -22,7 +21,6 @@ inversionTestqp <- function(densFn = "norm",
                             uniTol = .Machine$double.eps^0.25,
                             intTol = uniTol, method = "spline", ...)
 {
-    CALL <- match.call()
     q <- qDist(densFn, p = qs, uniTol = uniTol, ...)
     pqqs <- pDist(densFn, q = q, intTol = intTol, ...)
     diffs <- pqqs - qs

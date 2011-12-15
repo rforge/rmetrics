@@ -1,7 +1,7 @@
 \name{distMode}
 \alias{distMode}
 
-\title{Mode of the Unimodal Distribution}
+\title{Mode of a Unimodal Distribution}
 \description{
   Function to calculate mode of a unimodal distribution which is
   specified by the root of the density function name and the

@@ -15,7 +15,7 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
     if (densFn == "ghyp" | densFn == "hyperb" |
         densFn == "gig" | densFn == "vg")
     {
-      if (!exists(paste("d",densFn,sep = ""), mode = "function"))
+      if (!exists(paste("d", densFn, sep = ""), mode = "function"))
         stop("Relevant package must be loaded")
     }
 

@@ -1,3 +1,5 @@
+Fix Moran test---return object of class htest. Also needs unit test
+
 Add contour plots and 3-D plots for fitted distributions
 
 Add profile likelihoods for fitted distributions

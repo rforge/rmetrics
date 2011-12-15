@@ -40,6 +40,7 @@ test.sampleMoments <- function()
   sampSize <- 10000
   shape <- 8
   scale <- 2
+  set.seed(123)
   x <- rgamma(sampSize, shape = shape, scale = scale)
   sampM3 <- skewness(x)*sd(x)^3
   sampM4 <- (kurtosis(x) + 3)*sd(x)^4

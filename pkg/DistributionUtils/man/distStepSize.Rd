@@ -9,8 +9,8 @@
   Given the parameter of a unimodal distribution and specify the root of
   the density function name, this function determines the step size when
   calculatinging the range of a specific unimodal distribution. The
-  parameterization used is the one as for corresponding density function
-  calculation.
+  parameterization used is the one for the corresponding density
+  function calculation.
 }
 
 \usage{
@@ -25,7 +25,7 @@ distStepSize(densFn, dist,
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
     are specified, then the default parameter values of each
-    distribution are used instead.}  
+    distribution are used instead.}
   \item{side}{Character. \code{"right"} for a step to the right,
     \code{"left"} for a step to the right.}
   \item{\dots}{Passes arguments in particular the parameters of the
