@@ -1,3 +1,11 @@
+2011-12-15    <d.scott@auckland.ac.nz>
+
+	* runit.sampleMoments.R changed to use a fixed seed to avoid
+	occasional errors in skewness and kurtosis tests
+
+	* moranTest added, but needs a change to produce object of class
+	htest
+
 2010-12-22    <d.scott@auckland.ac.nz>
 
 	* distCalcRange, distStepSize, distMode, integrateDens added
