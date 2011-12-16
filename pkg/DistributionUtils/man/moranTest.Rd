@@ -4,17 +4,16 @@
 Moran's Log Spacings Test
 }
 \description{
-The function implements a goodness of fit test using Moran's log spacings
+The function implements a goodness fit test using Moran's log spacings
 statistic.
 }
 \usage{
-moranTest(x, densFn, alpha, param = NULL, ...)
+moranTest(x, densFn, param = NULL, ...)
 }
 
 \arguments{
   \item{densFn}{Character. The root name of the distribution to be tested.}
   \item{x}{Vector of random generated numbers under tested distribution.}
-  \item{alpha}{Numeric. The significant level.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
     are specified, then the default parameter values of each
@@ -32,11 +31,11 @@ moranTest(x, densFn, alpha, param = NULL, ...)
   unknown parameters.
 
   The test statistic is
-  \deqn{T(\hat \theta)=(M(\hat\theta)+1/2k-C_1)/C_2}{%
-    T(thetahat)=(M(thetahat)+1/2k-C1)/C2}
+  \deqn{T(\hat \theta)=(M(\hat
+    \theta)+1/2k-C_1)/C_2}{T(thetahat)=(M(thetahat)+1/2k-C1)/C2}
   Where \eqn{M(\hat \theta)}, the Moran statistic proposed by Moran, is
-  \deqn{M(\theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_{m-1}))}{%
-    M(theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_m-1))}
+  \deqn{M(\theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_{m-1}))}
+  {M(theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_m-1))}
 
   This test has null hypothesis:
   \eqn{H_0}{H_0} : a random sample of \eqn{n} values of \eqn{x} comes
@@ -50,12 +49,19 @@ moranTest(x, densFn, alpha, param = NULL, ...)
 
 }
 \value{
-  \item{test}{Numeric. The Moran test statistics.}
+  \item{statistic}{Numeric. The value of Moran test statistics.}
+  \item{estimate}{Numeric. A vector of parameter estimate of the tested 
+                  distribution.}
+  \item{parameter}{Numeric. the degrees of freedom for the moran statistic.}
+  \item{p.value}{Numeric. The p-value for the test}
+  \item{data.name}{Charactor. A charactor string gives the name(s) of the 
+                   data}
+  \item{method}{Charactor. Type of test performed}
 }
 \references{
 Cheng, R. C. & Stephens, M. A. (1987). A Goodness-of-Fit Test Using
   Moran Statistic with Estimated Parameters. \emph{Biometrika},
-  \bold{76 (2)}, 386--392.
+  \bold{76 (2)}, 386–-392.
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz},
@@ -63,31 +69,20 @@ Cheng, R. C. & Stephens, M. A. (1987). A Goodness-of-Fit Test Using
 }
 
 \examples{
-### Alpha = 0.9
-sampleSize <- c(20, 50, 100)
-prob <- rep(0, length(sampleSize))
-result = 0
-### Bootstrap numbers
-n <- 10
 
 ### Normal Distribution
+x <- rnorm(100, mean = 0, sd = 1)
+muhat <- mean(x)
+sigmahat <- sqrt(var(x)*(100 - 1)/100)
+result <- moranTest(x, "norm", mean = muhat, sd = sigmahat)
+result
 
-for (j in 1:length(sampleSize))
-{
-    for(i in 1:n)
-    {
-        data = rnorm(sampleSize[j], mean = 0, sd = 1)
-        muhat = mean(data)
-        sigmahat = sqrt(var(data) *
-                        (sampleSize[j] - 1) / sampleSize[j])
-        result = result + moranTest(data, "norm",
-        alpha = 0.9, mean = muhat, sd = sigmahat)
-    }
-    prob[j] = 1 - result / n
-    result = 0
-}
-prob
-}
+### Exponential Distribution
+y <- rexp(200, rate = 3)
+lambdahat <- 1/mean(y)
+result <- moranTest(y, "exp", rate = lambdahat)
+result
+
 \keyword{distribution}
 \keyword{univariate}
 

@@ -1,4 +1,4 @@
-moranTest <- function(x, densFn, alpha, param = NULL, ...)
+moranTest <- function(x, densFn, param = NULL, ...)
 {
     if (missing(densFn) | !(is.function(densFn) | is.character(densFn)))
     stop("'densFn' must be supplied as a function or name")
@@ -6,14 +6,19 @@ moranTest <- function(x, densFn, alpha, param = NULL, ...)
     CALL <- match.call()
     pfun <- match.fun(paste("p", densFn, sep = ""))
 
+    METHOD <- "Moran Goodness-of-Fit Test"
+    DNAME <- deparse(substitute(x))
+
     if(is.null(param)){
         y <- sort(pfun(x, ...))
         l <- list(...)
         k <- length(l)
+        ESTIMATE <- as.numeric(l)
     }
     else{
         y <- sort(pfun(x, param = param, ...))
         k <- length(param)
+        ESTIMATE <- param
     }
 
 
@@ -48,11 +53,19 @@ moranTest <- function(x, densFn, alpha, param = NULL, ...)
         T <- (M + k/2 - C1)/C2
     }
 
+    STATISTIC <- T
+
+
     ## Goodness-of-fit Test
-    test <- T > qchisq(alpha, df=length(x))
-    return(test)
+    PARAMETER <- length(x)
+    PV <- pchisq(T, df=length(x), lower.tail = FALSE)
 
+    names(STATISTIC) <- "Moran Statistic"
+    names(PARAMETER) <- "df"
+
+    result <- list(statistic = STATISTIC, parameter = PARAMETER,
+                   method = METHOD, data.name = DNAME,
+                   estimate = ESTIMATE, p.value = PV)
+    class(result) <- "htest"
+    return(result)
 }
-
-
-
