@@ -19,3 +19,10 @@ schwartz97 V0.0.3
 	former did pass 'zoo' objects e.g.
 	* fit.schwartz2f: 'data' and 'ttm' are now tested for negative values.
 	
+2010-12-18 David Luethi
+schwartz97 V0.0.4
+	* Resaved Rda to xy
+	* Compressed vignettes
+	* Require R >= 2.10 instead of 2.8
+
+
