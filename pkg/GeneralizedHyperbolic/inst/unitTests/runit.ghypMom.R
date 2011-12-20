@@ -14,27 +14,27 @@ test.ghypMom <- function()
   ## Arguments:
   ## ----------------------------------------------------------------------
   ## Author: David Scott, Date: 11 Nov 2010, 13:02
-  
+
   ## select a random parameter value for testing
   ## eliminate problem values first
   data(ghypParam)
   testParam <- ghypSmallParam
-  paramSampleSize <- 1    
-  
+  paramSampleSize <- 1
+
   ## sample parameter values
   np <- NROW(testParam)
   paramNum <- sample(1:np, paramSampleSize, replace = FALSE)
   paramVals <- matrix(testParam[paramNum,], ncol = 5)
   nv <- NROW(paramVals)
-  
+
   ## specify orders of moments
-  orders <- c(1,2,3,10,50,51)
+  orders <- c(1,2,3,10)
 
   ## mu moments first
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -53,7 +53,7 @@ test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -67,7 +67,7 @@ test.ghypMom <- function()
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -86,7 +86,7 @@ test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -100,7 +100,7 @@ test.ghypMom <- function()
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -120,7 +120,7 @@ test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -129,7 +129,7 @@ test.ghypMom <- function()
                         param[1], param[2], param[3], param[4], param[5],
                         "order", orders[jMax]))
   }
-  
+
   return()
 }
 
@@ -140,15 +140,15 @@ level2test.ghypMom <- function()
   ## Arguments:
   ## ----------------------------------------------------------------------
   ## Author: David Scott, Date: 11 Nov 2010, 13:02
-  
+
   ## select a random parameter value for testing
   ## eliminate problem values first
   data(ghypParam)
   paramVals <- ghypLargeParam
-  
+
   ## test all parameter values
   nv <- NROW(paramVals)
-  
+
   ## specify orders of moments
   orders <- c(1,2,3,10,50,51)
 
@@ -156,7 +156,7 @@ level2test.ghypMom <- function()
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -181,7 +181,7 @@ level2test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -195,7 +195,7 @@ level2test.ghypMom <- function()
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -220,7 +220,7 @@ level2test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -234,7 +234,7 @@ level2test.ghypMom <- function()
   ## initialize result matrix
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
-  
+
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])
@@ -260,7 +260,7 @@ level2test.ghypMom <- function()
         differences[i, 5 + j] <-
           (results[i, 5 + 2*j - 1] - results[i, 5 + 2*j])/
           results[i, 5 + 2*j]
-      }            
+      }
     }
     maxDiff <- max(abs(differences[i, 5 + 1:length(orders)]))
     jMax <- which.max(abs(differences[i, 5 + 1:length(orders)]))
@@ -269,6 +269,6 @@ level2test.ghypMom <- function()
                         param[1], param[2], param[3], param[4], param[5],
                         "order", orders[jMax]))
   }
-  
+
   return()
 }

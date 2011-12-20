@@ -29,6 +29,12 @@ test.ghypStandPars <- function()
 
   ## convert to standardized parameters
   paramStar <- ghypStandPars(param[3], param[4], param[5])
-  checkTrue(abs(ghypMean(param = paramStar) - 0) < 10^(-15))
-  checkTrue(abs(ghypVar(param = paramStar) - 1) < 10^(-15))
+  checkTrue(abs(ghypMean(param = paramStar) - 0) < 10^(-13),
+            msg = paste("paramStar = ", paramStar,
+                        "ghypMean(param = paramStar) = ",
+                        ghypMean(param = paramStar)))
+  checkTrue(abs(ghypVar(param = paramStar) - 1) < 10^(-13),
+            msg = paste("paramStar = ", paramStar,
+                        "ghypVar(param = paramStar) = ",
+                        ghypVar(param = paramStar)))
 }

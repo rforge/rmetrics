@@ -10,7 +10,7 @@ hyperbFitStart <- function(x, startValues = c("BN","US","FN","SL","MoM"),
   startMethodMoM <- match.arg(startMethodMoM)
 
   ## right = FALSE deals better with discrete data such as counts
-  histData <- hist(x, plot = FALSE, right = FALSE, ...)
+  histData <- hist(x, breaks = "Sturges", plot = FALSE, right = FALSE, ...)
   breaks <- histData$breaks
   midpoints <- histData$mids
   empDens <- ifelse(!is.finite(log(histData$density)), NA, histData$density)

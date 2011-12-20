@@ -15,22 +15,24 @@ ghypCheckPars(param)
     hyperblic distribution.}
 }
 \details{
-  The vector \code{param} takes the form \code{c(mu, delta, alpha, beta, lambda)}.
+  
+  The vector \code{param} takes the form \code{c(mu, delta, alpha, beta,
+  lambda)}.
 
   If \code{alpha} is negative, an error is returned.
 
-  If lambda is 0 then the absolute value of \code{beta} must be
-  less than \code{alpha} and delta must be greater than zero. If
-  either of these conditions are false, than a error is returned.
+  If lambda is 0 then the absolute value of \code{beta} must be less
+  than \code{alpha} and delta must be greater than zero. If either of
+  these conditions are false, than a error is returned.
 
-  If \code{lambda} is greater than 0 the absolute value of \code{beta} must
-  be less than \code{alpha}. \code{delta} must also be non-negative. When
-  either one of these is not true, an error is returned.
+  If \code{lambda} is greater than 0 the absolute value of \code{beta}
+  must be less than \code{alpha}. \code{delta} must also be
+  non-negative. When either one of these is not true, an error is
+  returned.
 
-  If \code{lambda} is less than 0 then the absolute value of \code{beta} must
-  be equal to \code{alpha}. \code{delta} must be greater than 0, if
-  both conditions are not true, an error is returned.
-}
+  If \code{lambda} is less than 0 then the absolute value of \code{beta}
+  must be equal to \code{alpha}. \code{delta} must be greater than 0, if
+  both conditions are not true, an error is returned.  }
 
 \value{
   A list with components:

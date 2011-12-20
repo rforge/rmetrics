@@ -35,6 +35,6 @@ test.ghypStandPars <- function()
   ## obtain new mean and sd
   newMeanTest <- ghypMean(param = newParam)
   newSDTest <- sqrt(ghypVar(param = newParam))
-  checkTrue(abs(newMean - newMeanTest) < 10^(-14))
-  checkTrue(abs(newSD - newSDTest) < 10^(-14))
+  checkTrue(abs(newMean - newMeanTest) < 10^(-13))
+  checkTrue(abs(newSD - newSDTest) < 10^(-13))
 }

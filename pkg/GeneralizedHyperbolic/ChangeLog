@@ -1,3 +1,10 @@
+2011-12-21    <d.scott@auckland.ac.nz>
+
+	* hyperbFitStand, hyperbFitStandStart, dsghyp, ghypStandPars added
+	to provide facility for standardized generalized hyperbolic
+	distribution which has mean zero and variance one. Functions still
+	need to be documented however.
+
 2011-01-04    <d.scott@auckland.ac.nz>
 
 	* ghypChangePars changed to add fifth parameterization. Also order
