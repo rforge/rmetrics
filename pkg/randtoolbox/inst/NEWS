@@ -3,6 +3,16 @@
 Version 1.11
 =============
 
+WARNING FIXES in C files
+- remove warnings with Wall and pedantic gcc options, e.g. for myfile.c
+
+gcc-4.2 -arch x86_64 -std=gnu99 -I/Library/Frameworks/R.framework/Resources/include 
+-I/Library/Frameworks/R.framework/Resources/include/x86_64  -I/usr/local/include    
+-fPIC  -g -O2 -Wall -pedantic -c myfile.c -o myfile.o
+
+(change x86_64 to i386 for 32bit build)
+
+
 BUG FIXES
 - the package crashes when the dimension was 0 in RNG functions, 
 reported by David LeBauer.
