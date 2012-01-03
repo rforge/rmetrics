@@ -65,7 +65,11 @@ gigFit <- function(x, freq = NULL, paramStart = NULL,
   }
 
   param <- as.numeric(opOut[[ind[1]]])[1:3]
-  param <- c(exp(param[1]), exp(param[2]), param[3])
+  if (stand) {
+      param <- c(sx*exp(param[1]), exp(param[2])/sx, param[3])
+  } else {
+      param <- c(exp(param[1]), exp(param[2]), param[3])
+  }
 
   names(param) <- c("chi", "psi", "lambda")
   maxLik <- -(as.numeric(opOut[[ind[2]]]))
