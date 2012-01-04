@@ -1,6 +1,6 @@
 distIneqMassartPlot <- function(densFn = "norm", param = NULL,
-                                nboots = 50, n = 100, ...){
-  ## Using bootstrap to get the LHS probability
+                                nSamp = 50, n = 100, ...){
+  ## Using repeated sampling to get the LHS probability
   CALL <- match.call()
   dfun <- match.fun(paste("d", densFn, sep = ""))
   pfun <- match.fun(paste("p", densFn, sep = ""))
@@ -16,7 +16,7 @@ distIneqMassartPlot <- function(densFn = "norm", param = NULL,
   pm <- 0
 
   for (j in 1:200){
-    for (i in 1:nboots){
+    for (i in 1:nSamp){
       if(is.null(param))
         x <- rfun(n = n, ...)
       else x <- rfun(n = n, param = param)
@@ -33,9 +33,9 @@ distIneqMassartPlot <- function(densFn = "norm", param = NULL,
     m[j] = pm
     pm = 0
   }
-  prob = m / nboots
+  prob = m/nSamp
 
-  ##Smooth the curve
+  ## Smooth the curve
   smooth <- 0
   probs <- 0
 
@@ -49,10 +49,10 @@ distIneqMassartPlot <- function(densFn = "norm", param = NULL,
 
   smooth = c(probs,smooth)
 
-  ## Plot the probability and it's bound
+  ## Plot the probability and its bound
   plot(tVal, RHS, type = "l",
-       main = paste("The Massart Inequality for p",densFn, sep = ""),
-       xlab = "Lambda")
+       main = paste("The Massart Inequality for p", densFn, sep = ""),
+       xlab = "t", ylab = "Probability and bound")
   lines(tVal, smooth, col = "red")
   invisible(NULL)
 }

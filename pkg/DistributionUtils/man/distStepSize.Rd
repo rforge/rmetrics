@@ -6,9 +6,9 @@
 }
 
 \description{
-  Given the parameter of a unimodal distribution and specify the root of
+  Given the parameters of a unimodal distribution and the root of
   the density function name, this function determines the step size when
-  calculatinging the range of a specific unimodal distribution. The
+  calculating the range of the specified unimodal distribution. The
   parameterization used is the one for the corresponding density
   function calculation.
 }
@@ -20,7 +20,7 @@ distStepSize(densFn, dist,
 \arguments{
   \item{densFn}{Character. The name of the density function for which
     the step size needs to be calculated.}
-  \item{dist}{Numeric. Current distance value, for Skew Hyperbolic
+  \item{dist}{Numeric. Current distance value, for skew hyperbolic
     distribution only}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
@@ -33,15 +33,15 @@ distStepSize(densFn, dist,
 }
 
 \details{
-  The function is used for stepping to the right or the left to obtain
+  This function is used for stepping to the right or the left to obtain
   an enclosing interval so \code{uniroot} can be used to search. The
-  step size for right tail is the absolute difference between median and
-  upper quantile and for left tail is the absolute difference between
-  median and lower quantile. The skew hyperbolic distribution however
-  needs special step size. When the tail is declining exponentially the
-  step is just a linear function of the current distance from the
-  mode. If the tail is declining only as a power of \eqn{x}, an
-  exponential step is used.
+  step size for the right tail is the absolute difference between the
+  median and upper quantile and for the left tail is the absolute
+  difference between the median and lower quantile. The skew hyperbolic
+  distribution however needs a special step size. When the tail is
+  declining exponentially the step is just a linear function of the
+  current distance from the mode. If the tail is declining only as a
+  power of \eqn{x}, an exponential step is used.
 
   \code{distStepSize} is for internal use and is not expected to be
   called by users. It is documented here for completeness.

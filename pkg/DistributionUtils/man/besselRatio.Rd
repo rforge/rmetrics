@@ -4,7 +4,8 @@
 
 \title{Ratio of Bessel K Functions}
 \description{
-  Calculates the ratio of Bessel K functions of different orders
+  Calculates the ratio of Bessel K functions of different orders, but
+  the same value of the argument.
 }
 \usage{
 besselRatio(x, nu, orderDiff, useExpScaled = 700)

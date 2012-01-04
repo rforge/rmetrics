@@ -28,11 +28,11 @@ distIneqMassart <- function(densFn = "norm", n = 10000,
   xi <- as.numeric(names(tx))
   f <- pfun(xi, ...)
   fhat <- cumsum(tx)/n
-  sup <- max(abs(fhat-f))
-  superror <- signif(sup,2)
+  sup <- max(abs(fhat - f))
+  supError <- signif(sup, 2)
 
   ## probability of that sup value
-  pVal <- min(1,round(2*exp(-2*n*sup*sup),4))
+  pVal <- min(1, round(2*exp(-2*n*sup*sup), 4))
 
   ## value of t for that probability bound
   tVal <- sqrt(log(probBound/2)/(-2*n))
@@ -44,7 +44,7 @@ distIneqMassart <- function(densFn = "norm", n = 10000,
     check <- FALSE
   }
 
-  results <- list(sup = superror, probBound = probBound, t = tVal,
+  results <- list(sup = supError, probBound = probBound, t = tVal,
                   pVal = pVal, check = check)
 
   return(results)

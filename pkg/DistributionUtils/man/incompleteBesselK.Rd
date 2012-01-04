@@ -22,11 +22,11 @@ GDENOM(n, x, y, nu, An, nmax, Cnp)
 GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
 }
 \arguments{
-  \item{x}{Numeric. Value of first argument of the incomplete Bessel K
+  \item{x}{Numeric. Value of the first argument of the incomplete Bessel K
     function.}
-  \item{y}{Numeric. Value of second argument of the incomplete Bessel K
+  \item{y}{Numeric. Value of the  second argument of the incomplete Bessel K
     function.}
-  \item{nu}{Numeric. The index of the incomplete Bessel K function.}
+  \item{nu}{Numeric. The order of the incomplete Bessel K function.}
   \item{tol}{Numeric. The tolerance for the difference between
     successive approximations of the incomplete Bessel K function.}
   \item{nmax}{Integer. The maximum order allowed for the approximation
@@ -106,7 +106,7 @@ GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
   equivalent to the problem of calculation of the cumulative
   distribution function of the generalized inverse Gaussian
   distribution. See \code{\link[GeneralizedHyperbolic:dgig]{Generalized
-  Inverse Gaussian}}
+  Inverse Gaussian}.}
 }
 \seealso{
 \code{\link{besselK}}

@@ -5,26 +5,26 @@
 Massart Inequality Plot Function
 }
 \description{
-Create a Massart inequality plot implements a test of the empirical
+Creates a Massart inequality plot for testing the empirical
 distribution and distribution function based on an inequality due to
 Massart (1990).
 }
 \usage{
 distIneqMassartPlot(densFn = "norm", param = NULL,
-                    nboots = 50, n = 100, ...)
+                    nSamp = 50, n = 100, ...)
 }
 
 \arguments{
   \item{densFn}{Character. The root name of the distribution to be tested.}
   \item{n}{Numeric. The size of the sample to be used.}
-  \item{nboots}{Numeric. The number of bootstrap to approximate the LHS
-    probability of the inequality.}
+  \item{nSamp}{Numeric. The number of samples used to approximate the
+    LHS probability of the inequality.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
     are specified, then the default parameter values of each
     distribution are used instead.}
   \item{\dots}{Passes the parameters of the distribution other than
-    specified by param.}
+    specified by \code{param}.}
 }
 \details{
   Massart (1990) gave a version of the Dvoretsky-Kiefer-Wolfowitz
@@ -39,8 +39,10 @@ distIneqMassartPlot(densFn = "norm", param = NULL,
   variables with distribution function \eqn{F}. This inequality is true
   for all distribution functions, for all \eqn{n} and \eqn{t}.
 
-  This red curve in the plot is the LHS probabilities and the black
-  curve is the RHS bound.
+  The red curve in the plot shows the LHS probabilities and the black
+  curve gives the RHS bound. The red curve should lie below the black
+  curve in order that the empirical distribution represents a sample
+  from the theoretical distribution.
 }
 \value{Returns \code{NULL} invisibly.
 }
@@ -49,7 +51,7 @@ distIneqMassartPlot(densFn = "norm", param = NULL,
   inequality. \emph{Ann. Probab.}, \bold{18}, 1269--1283.
 }
 \author{
-  David Scott \email{d.scott@auckland.ac.nz}
+  David Scott \email{d.scott@auckland.ac.nz},
   Xinxing Li \email{xli053@aucklanduni.ac.nz}
 }
 \examples{

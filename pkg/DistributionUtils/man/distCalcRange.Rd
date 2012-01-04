@@ -6,7 +6,7 @@
 }
 
 \description{
-  Given the parameter of a unimodal distribution and the root of
+  Given the parameters of a unimodal distribution and the root of
   the density function name, this function determines the range outside
   of which the density function is negligible, to a specified
   tolerance.
