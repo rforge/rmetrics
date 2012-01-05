@@ -1,10 +1,13 @@
-Fix Moran test---return object of class htest. Also needs unit test
+Moran test needs unit test
+
+Unit tests also needed for pDist and qDist, distMode,
+distIneqMassartPlot (all to be done by Joyce)
 
 Add contour plots and 3-D plots for fitted distributions
 
 Add profile likelihoods for fitted distributions
 
-Add simple wrapper fuctions for optimizers: see fitdistrplus
+Add simple wrapper functions for optimizers: see fitdistrplus
 
 Sort data before using uniroot to find quantiles. Use algorithm which
 takes this into account---Joyce??
