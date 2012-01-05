@@ -1,12 +1,12 @@
 pDist <- function(densFn = "norm", q, param = NULL,
-                  subdivisions = 100, lower.tail = TRUE, log.p = FALSE,
+                  subdivisions = 100, lower.tail = TRUE,
                   intTol = .Machine$double.eps^0.25,
                   valueOnly = TRUE, ...)
 {
     CALL <- match.call()
     dfun <- match.fun(paste("d", densFn, sep = ""))
     mode <- distMode(densFn, param = param, ...)
-    ## match the density function for different distribution
+    ## match the density function for different distributions
     qLess <- which((q <= mode)&(is.finite(q)))
     ## when q is less than mode
     qGreater <- which((q > mode)&(is.finite(q)))
@@ -63,12 +63,12 @@ pDist <- function(densFn = "norm", q, param = NULL,
 
 
 qDist <- function(densFn = "norm", p, param = NULL,
-                  lower.tail = TRUE, log.p = FALSE,
-                  method = "spline",  nInterpol = 501,
+                  lower.tail = TRUE, method = "spline",  nInterpol = 501,
                   uniTol = .Machine$double.eps^0.25, subdivisions = 100,
                   intTol = uniTol, ...)
 {
     CALL <- match.call()
+    if (!lower.tail) p <- 1 - p
     mode <- distMode(densFn, param = param, ...)
     pMode <- pDist(densFn, q = mode, param = param, intTol = intTol, ...)
     quant <- rep(NA, length(p))
@@ -175,7 +175,6 @@ qDist <- function(densFn = "norm", p, param = NULL,
 
         if (length(extreme) > 0){
             quant[extreme] <- qDist(densFn, p[extreme], param = param,
-                                    log.p = log.p,
                                     lower.tail = lower.tail,
                                     method = "integrate",
                                     nInterpol = nInterpol, uniTol = uniTol,

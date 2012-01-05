@@ -44,15 +44,18 @@ Values of other parameters of the function \code{fun} if required.
 }
 
 \seealso{
-  \code{hyperbHessian} and \code{summary.hyperbFit.R} in 
-  \code{GeneralizedHyperbolic} package. 
+  \code{hyperbHessian} and \code{summary.hyperbFit} in
+  \pkg{GeneralizedHyperbolic}.
 }
 
 
 \note{
-This code was borrowed from the fBasics package, utils-hessian.R with
-slight modification. This was in turn borrowed from Kevin Sheppard's
-Matlab garch toolbox as implemented by Alexios Ghalanos in his rgarch package
+
+This code was borrowed from the \pkg{fBasics} function, in the file
+\file{utils-hessian.R} with slight modification. This was in turn
+borrowed from Kevin Sheppard's Matlab garch toolbox as implemented by
+Alexios Ghalanos in his \pkg{rgarch} package.
+
 }
 
 \examples{
@@ -78,5 +81,5 @@ maxDiff
 
 }
 
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{math}
+

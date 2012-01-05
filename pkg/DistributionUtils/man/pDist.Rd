@@ -14,11 +14,10 @@
 
 \usage{
 pDist(densFn = "norm", q, param = NULL, subdivisions = 100,
-      lower.tail = TRUE, log.p = FALSE,
-      intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
+      lower.tail = TRUE, intTol = .Machine$double.eps^0.25,
+      valueOnly = TRUE, ...)
 qDist(densFn = "norm", p, param = NULL,
-      lower.tail = TRUE, log.p = FALSE,
-      method = "spline", nInterpol = 501,
+      lower.tail = TRUE, method = "spline", nInterpol = 501,
       uniTol = .Machine$double.eps^0.25,
       subdivisions = 100, intTol = uniTol, ...)
 }
@@ -31,9 +30,6 @@ qDist(densFn = "norm", p, param = NULL,
     distribution specified by \code{densFn}. If no \code{param} values
     are specified, then the default parameter values of each
     distribution are used instead.}
-  \item{log.p}{Logical; when the specified distribution belongs Ghyp
-    Distribution Family, probabilities are given as log(p) if \code{log =
-      TRUE} in random number generation for the distribution}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
     \code{"integrate"}, the distribution function used is always obtained

@@ -4,7 +4,7 @@
 \title{Moments Using Integration}
 \description{
   Calculates moments and absolute moments about a given location for any
-  given distributions.
+  given distribution.
 }
 \usage{
 momIntegrated(densFn = "ghyp", param = NULL, order, about = 0,
@@ -16,7 +16,7 @@ momIntegrated(densFn = "ghyp", param = NULL, order, about = 0,
     moments are to be calculated. See \bold{Details}.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
-    are specified, then the default parameter values of each
+    are specified, then the default parameter values of the
     distribution are used instead.}  
   \item{order}{Numeric. The order of the moment or absolute moment to be
     calculated.}

@@ -8,22 +8,24 @@
   the standard approach developed in Scott, Wuertz and Dong.
 }
 \description{
-  The main functions calculate skewness and kurtosis, change the
-  centering of moments and calculate moments by integration. There are a
-  number of functions for checking code for distributions.
+  Functionality includes sample skewness and kurtosis, log-histogram,
+  tail plots, moments by integration, changing the point about which a
+  moment is calculated, functions for testing distributions using
+  inversion tests and the Massart inequality. Also includes an
+  implementation of the incomplete Bessel K function.  
 }
 \details{
 \tabular{ll}{
 Package: \tab DistributionUtils\cr
 Type: \tab Package\cr
-Version: \tab 0.5-0\cr
-Date: \tab 2011-12-15\cr
+Version: \tab 0.5-1\cr
+Date: \tab 2012-01-05\cr
 License: \tab GPL (>=2)\cr
 LazyLoad: \tab yes\cr
 }
 Contains functions which are useful for packages implementing
-distributions. Designed to work with my packages GeneralizedHyperbolic,
-VarianceGamma and SkewHyperbolic.
+distributions. Designed to work with my packages \pkg{GeneralizedHyperbolic},
+\pkg{VarianceGamma}, \pkg{SkewHyperbolic} and \pkg{NormalLaplace}.
 }
 \author{
 David Scott <d.scott@auckland.ac.nz>
@@ -31,14 +33,14 @@ David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
 
 }
-\references{ 
+\references{
   Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine
   (2009) Software for Distributions in R. UseR: The R User
   Conference 2009
-  \url{http://www.agrocampus-ouest.fr/math/useR-2009/slides/Scott+Wuertz+Dong.pdf}		  
+  \url{http://www.agrocampus-ouest.fr/math/useR-2009/slides/Scott+Wuertz+Dong.pdf}
 }
 
 \keyword{ package }
 \seealso{
-\code{\link[GeneralizedHyperbolic]{GeneralizedHyperbolicDistribution}} 
+\code{\link[GeneralizedHyperbolic]{GeneralizedHyperbolicDistribution}}
 }

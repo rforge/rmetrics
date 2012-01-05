@@ -71,8 +71,8 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
   the distribution must have an argument \code{param} which specifies
   the parameters. This is the case for all distributions in the form
   recommended in Scott \emph{et al} (2009) and includes distributions
-  from the packages \pkg{GeneralizedHyperbolic}, \pkg{SkewHyperbolic}
-  and \code{VarianceGamma}.
+  from the packages \pkg{GeneralizedHyperbolic}, \pkg{SkewHyperbolic},
+  \pkg{VarianceGamma} and \pkg{NormalLaplace} (which is on R-Forge).
 
   \code{normTailPlotLine},\code{tTailPlotLine} and
   \code{gammaTailPlotLine} add the corresponding line
@@ -131,7 +131,7 @@ require(VarianceGamma)
 param <- c(0,0.5,0,0.5)
 x <- rvg(100, param = param)
 tailPlot(x)
-tailPlotLine(x, distrFn = "vg", param = param) 
+tailPlotLine(x, distrFn = "vg", param = param)
 
 }
 \keyword{distribution}

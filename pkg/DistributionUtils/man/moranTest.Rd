@@ -16,7 +16,7 @@ moranTest(x, densFn, param = NULL, ...)
   \item{x}{Numeric. Vector of data to be tested.}
   \item{param}{Numeric. A vector giving the parameter values for the
     distribution specified by \code{densFn}. If no \code{param} values
-    are specified, then the default parameter values of each
+    are specified, then the default parameter values of the
     distribution are used instead.}
   \item{\dots}{Additional arguments to allow specification of the
   parameters of the distribution other than specified by \code{param}.}
@@ -32,7 +32,7 @@ moranTest(x, densFn, param = NULL, ...)
   The test statistic is
   \deqn{T(\hat \theta)=(M(\hat
     \theta)+1/2k-C_1)/C_2}{T(thetahat)=(M(thetahat)+1/2k-C1)/C2}
-  Where \eqn{M(\hat \theta)}, the Moran statistic proposed by Moran, is
+  Where \eqn{M(\hat \theta)}, the Moran statistic, is
   \deqn{M(\theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_{m-1}))}
   {M(theta)=-(log(y_1-y_0)+log(y_2-y_1)+...+log(y_m-y_m-1))}
 
