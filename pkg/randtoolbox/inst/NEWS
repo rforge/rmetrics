@@ -3,6 +3,13 @@
 Version 1.11
 =============
 
+- this version will be the last version depending rng-WELL.
+
+NOTE FIXES
+- this version use packageStartupMessage function for the .onAttach
+rather than the cat function. 
+- it removes a printf in KnuthTAOCP2002.c
+
 WARNING FIXES in C files
 - remove warnings with Wall and pedantic gcc options, e.g. for myfile.c
 

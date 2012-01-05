@@ -57,7 +57,7 @@
 /*              constants               */
 //the seed
 static unsigned long seed; 
-static unsigned long torusoffset;
+//static unsigned long torusoffset;
 //a pseudo boolean to initiate the seed
 static int isInit=0;
 //the length (maximal) of the internal seed array for WELL44497
