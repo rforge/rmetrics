@@ -56,10 +56,14 @@ fit of a skew-Laplace distribution.
 
 \section{Acknowledgements}{
   A number of students have worked on the package: Ai-Wei Lee, Jennifer Tso,
-  Richard Trendall, and Thomas Tran.
+  Richard Trendall, Thomas Tran, Simon Potter and David Cusack.
 
   Thanks to Ross Ihaka and Paul Murrell for their willingness to answer
   my questions, and to all the core group for the development of R.
+
+  Special thanks also to Diethelm \enc{Würtz}{Wuertz} without whose
+  advice, this package would be far inferior.
+
 }
 \references{
   Barndorff-Nielsen, O. (1977)

@@ -46,7 +46,6 @@ ghypVar <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     stop(errMessage)
 
   var <- ghypMom(2, param = param, momType = "central")
-  return(var)
 } ## End of ghypVar()
 
 ### Function to calculate the theoretical skewness of a
@@ -69,7 +68,6 @@ ghypSkew <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   skew <- ghypMom(3, param = param, momType = "central")/
                  (ghypVar(param = param)^(3/2))
-  return(skew)
 } ## End of ghypSkew()
 
 ### Function to calculate the theoretical kurtosis of a
@@ -92,7 +90,6 @@ ghypKurt <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   kurt <- ghypMom(4, param = param, momType = "central")/
                  (ghypVar(param = param)^2) - 3
-  return(kurt)
 } ## End of ghypKurt()
 
 ### Function to calculate the theoretical mode point of a
@@ -129,6 +126,5 @@ ghypMode <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   range <- c(xLow, xHigh)
   optResult <- optimize(f = modeFun, interval = range, maximum = TRUE)
   mode <- optResult$maximum
-  return(mode)
 } ## End of ghypMode()
 
