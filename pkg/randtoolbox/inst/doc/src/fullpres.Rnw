@@ -1,3 +1,4 @@
+
 {\raggedright  
 \vspace{-1cm}
 	\textit{ 
@@ -1815,6 +1816,7 @@ res <- coll.test(congruRand, 2^8, 2^14, 1, echo=FALSE)
               cat(" ", i-1,"    ", obsnum[i],"    ", expnum[i],"\n")
 @
 %%%
+Note that the Normal approximation is not yet implemented and those two approximations are not valid when some expected collision numbers are below 1. 
 
 \subsubsection{The poker test}
 Finally the function \code{poker.test} implements
@@ -2011,3 +2013,4 @@ with the WELL RNG functions.
 The definitive reference for these matters remains the \emph{Writing R
 Extensions} manual, page 20 in sub-section ``specifying imports
 exports'' and page 64 in sub-section ``registering native routines''.
+

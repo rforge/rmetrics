@@ -1,4 +1,5 @@
 
+
 Random simulation or Monte-Carlo methods rely on the fact we have access to random
 numbers. Even if nowadays having random sequence is no longer a problem, for many
 years producing random numbers was a big challenge. According to \cite{ripleybook},

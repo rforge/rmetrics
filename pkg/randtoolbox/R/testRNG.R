@@ -469,66 +469,54 @@ order.test <- function(u, d = 3, echo = TRUE)
 }
 
 #collision test
-coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, echo = TRUE, ...)
+coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, 
+	echo = TRUE, ...)
 {
     nbCell <- segments^tdim
     
     routine <- function()
     {
-# compute random sample
+		# compute random sample
         u <- rand( tdim * lenSample, ... )
         uint <- matrix(floor( u * segments ), nrow=tdim, ncol=lenSample)
-# compute urn numbers i.e. integers in {0, ..., nbCell-1}
+		# compute urn numbers i.e. integers in {0, ..., nbCell-1}
         num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
-# compute the number of collisions
+		# compute the number of collisions
         NumColl <- .Call("doCollisionTest", as.integer(num), lenSample, nbCell)
     }
     
-# observed numbers of collisions for 'nbSample' random samples 
-# (of length 'lenSample') in 'nbCell' urns 
+	# observed numbers of collisions for 'nbSample' random samples 
+	# (of length 'lenSample') in 'nbCell' urns 
     obsNumColl <- replicate( nbSample, routine())
     
-# empirical counts of collision numbers with 'hist'
-# maybe we should use table(obsNumColl)
+	# empirical counts of collision numbers with 'hist'
+	# maybe we should use table(obsNumColl)
     collMax <- max(obsNumColl)
     collMin <- min(obsNumColl)
     empNumColl <- hist(obsNumColl, (collMin-1) : collMax, plot=FALSE)$counts
     
-# theoretical counts of collision numbers
+	# theoretical counts of collision numbers
     if(lenSample / nbCell > 1/32 && lenSample <= 2^8) #exact distribution
     { 
         method <- "exact distribution"
-# compute stirling number S_n^k for k = 0 : n and n = lenSample
+		# compute stirling number S_n^k for k = 0 : n and n = lenSample
         stirling0toN <- stirling(lenSample)
-#      print(stirling0toN)
-#        stirlingDivided <- stirlingDividedByK(lenSample, floor(collMax/2), nbCell)
-#        print(stirlingDivided)
-# collision c = 0 : (n-1)
+
+		# collision c = 0 : (n-1)
         collRange <- 0:collMax
-# compute P(Collision = c) = \prod_{i=0}^{n-c-1}\frac{k-i}{k}  *  \frac{1}{k^c} *  S_n^{n-c} in two steps
+		# compute P(Collision = c) = \prod_{i=0}^{n-c-1}\frac{k-i}{k}  *  \frac{1}{k^c} *  S_n^{n-c} in two steps
         f <- function(x) 
         {   
-#res <- prod( 1 - 0:(lenSample-x-1) / rep( c(nbCell, 1), (lenSample-x) /2) )
-#cat("1- ", x," x ",res, " ")
-#          res <- res /nbCell^x
-#          cat("2- ",res, " ")
-#          res <- res * stirling0toN[lenSample-x+1]
-#          cat("3- ",res," S ",stirling0toN[lenSample-x+1] , "\n")
             res <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirling0toN[lenSample-x+1]
-#cat("1- ", x," x ",res, " ")            
-#            res2 <- 4^lenSample * prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirlingDivided[lenSample-x+1] 
-#            res2 <-  prod( x+1 - 0:(lenSample-x-1) / nbCell * (x+1) ) * prod( (lenSample-x+1):lenSample / nbCell)  * stirlingDivided[lenSample-x+1] 
-#            res2 <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / nbCell^(x-floor(collMax/2))  * stirlingDivided[lenSample-x+1]
-#          cat("2- ", x," x ",res2, "\n")            
             res
         }
         expNumColl <- sapply(collRange, f)
-#        expNumColl <- stirling0toN[ lenSample:(lenSample-collMax)+1 ] * cumprod0toN
+
         expNumColl <- expNumColl * nbSample
         
-#        print(expNumColl)
+		
         
-# just prob of observable collisions i.e. c=collMin ... collMax         
+		# just prob of observable collisions i.e. c=collMin ... collMax         
         expNumColl <- expNumColl[ collMin : collMax+1 ]
     }
     else if(lenSample / nbCell > 1/32 && lenSample > 2^8) #normal approximation
@@ -543,10 +531,8 @@ coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSampl
         expNumColl <- dpois(collMin:collMax, lambda = theoLambda ) * nbSample
     }
     
-#        print(length(empNumColl))
-#        print(length(expNumColl))
     
-#compute chisquare statistic
+	#compute chisquare statistic
     residu <-  (empNumColl - expNumColl) / sqrt(expNumColl) 
     stat <- sum( residu^2 )
     dfree <- collMax - collMin + 1 - 1
@@ -564,63 +550,54 @@ coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSampl
         for(i in 1:(collMax - collMin + 1) )
         cat("\t\t", collMin+i-1,"\t\t\t", empNumColl[i],"\t\t\t", expNumColl[i],"\n")
     } 
-    
+	
+    if(any(expNumColl < 1))
+		warning("p-values will be approximate in the presence of low expected collision number.")
+	
     res <- list( statistic = stat, parameter = dfree, 
                 p.value = pvalue, observed = empNumColl, 
                 expected = expNumColl, residuals = residu) 
     return( invisible( res ) )
 }
 
-coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 10, ...)
+coll.test.sparse <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
+	nbSample = 10, ...)
 {
     nbCell <- segments^tdim
 
     routine <- function()
     {
-# compute random sample
+		# compute random sample
         u <- rand( tdim * lenSample, ... )
         uint <- matrix(floor( u * segments ), nrow=tdim, ncol=lenSample)
-# compute urn numbers i.e. integers in {0, ..., nbCell-1}
+		# compute urn numbers i.e. integers in {0, ..., nbCell-1}
         num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
-# compute the number of collisions
+		# compute the number of collisions
         length(num) - length(unique(num))
     }
     
-# observed numbers of collisions for 'nbSample' random samples 
-# (of length 'lenSample') in 'nbCell' urns 
+	# observed numbers of collisions for 'nbSample' random samples 
+	# (of length 'lenSample') in 'nbCell' urns 
     obsNumColl <- replicate( nbSample, routine())
     collMax <- max(obsNumColl)
     
-# theoretical counts of collision numbers
+	# theoretical counts of collision numbers
     if(lenSample / nbCell > 1/32 && lenSample <= 2^8) #exact distribution
     { 
         method <- "exact distribution"
-# compute stirling number S_n^k for k = 0 : n and n = lenSample
+		# compute stirling number S_n^k for k = 0 : n and n = lenSample
         stirling0toN <- stirling(lenSample)
-#      print(stirling0toN)
-#        stirlingDivided <- stirlingDividedByK(lenSample, floor(collMax/2), nbCell)
-#        print(stirlingDivided)
-# collision c = 0 : (n-1)
+
+		# collision c = 0 : (n-1)
         collRange <- 0:collMax
-# compute P(Collision = c) = \prod_{i=0}^{n-c-1}\frac{k-i}{k}  *  \frac{1}{k^c} *  S_n^{n-c} in two steps
+		# compute P(Collision = c) = \prod_{i=0}^{n-c-1}\frac{k-i}{k}  *  \frac{1}{k^c} *  S_n^{n-c} in two steps
         f <- function(x) 
         {   
-#res <- prod( 1 - 0:(lenSample-x-1) / rep( c(nbCell, 1), (lenSample-x) /2) )
-#cat("1- ", x," x ",res, " ")
-#          res <- res /nbCell^x
-#          cat("2- ",res, " ")
-#          res <- res * stirling0toN[lenSample-x+1]
-#          cat("3- ",res," S ",stirling0toN[lenSample-x+1] , "\n")
-            res <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirling0toN[lenSample-x+1]
-#cat("1- ", x," x ",res, " ")            
-#            res2 <- 4^lenSample * prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirlingDivided[lenSample-x+1] 
-#            res2 <-  prod( x+1 - 0:(lenSample-x-1) / nbCell * (x+1) ) * prod( (lenSample-x+1):lenSample / nbCell)  * stirlingDivided[lenSample-x+1] 
-#            res2 <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / nbCell^(x-floor(collMax/2))  * stirlingDivided[lenSample-x+1]
-#          cat("2- ", x," x ",res2, "\n")            
-            res
+			res <- prod( 1 - 0:(lenSample-x-1) / nbCell ) / (nbCell^x)  * stirling0toN[lenSample-x+1]
+			res
         }
-#        expNumColl <- stirling0toN[ lenSample:(lenSample-collMax)+1 ] * cumprod0toN
-        probNumColl <- sapply(collRange, f)
+
+		probNumColl <- sapply(collRange, f)
     }
     else if(lenSample / nbCell > 1/32 && lenSample > 2^8)
     {
@@ -679,7 +656,7 @@ stirlingDividedByK <- function(n, cmax, cste)
     if(n > 1)
     {
         if(cmax >= n) 
-        stop("wrong cmax argument")
+			stop("wrong cmax argument")
         for(i in 1:cmax)
         {
             k <- 1:length(res) -1
@@ -734,18 +711,18 @@ permut <- function(n)
         for(i in 3:n)
         {
             tempagg <- NULL
-#add i on first column
+			#add i on first column
             temp <- cbind(i, result)
             tempagg <- rbind(tempagg, temp)
             
-#add i on the jth column
+			#add i on the jth column
             for( j in 1:(NCOL(result)-1) )
             {   
                 temp <- cbind(result[, 1:j], i, result[, (j+1):NCOL(result)] )
                 tempagg <- rbind(tempagg, temp)
             }
             
-#add i on the last column
+			#add i on the last column
             temp <- cbind(result, i)
             tempagg <- rbind(tempagg, temp)
             

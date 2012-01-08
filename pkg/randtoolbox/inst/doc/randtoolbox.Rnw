@@ -69,7 +69,7 @@
 
 % 8 bit accents 
 %\usepackage[applemac]{inputenc} %MAC encoding
-\usepackage[latin1]{inputenc} %UNIX encoding
+\usepackage[utf8]{inputenc} %UNIX encoding
 %\usepackage[ansinew]{inputenc} %WINDOWS encoding
 
 %graph

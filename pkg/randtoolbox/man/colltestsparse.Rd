@@ -61,7 +61,7 @@ random number generators. ACM Trans. on Mathematical
 Software 33(4), 22.
 }
 \seealso{
-    other tests of this package \code{\link{freq.test}}, \code{\link{serial.test}}, \code{\link{poker.test}},
+    other tests of this package \code{\link{coll.test}}, \code{\link{freq.test}}, \code{\link{serial.test}}, \code{\link{poker.test}},
     \code{\link{order.test}} and \code{\link{gap.test}}
 
     \code{\link{ks.test}} for the Kolmogorov Smirnov test and \code{\link{acf}} for

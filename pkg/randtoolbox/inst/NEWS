@@ -3,7 +3,8 @@
 Version 1.11
 =============
 
-- this version will be the last version depending rng-WELL.
+- this version will be the last version working with
+package rng-WELL <= 0.91.
 
 NOTE FIXES
 - this version use packageStartupMessage function for the .onAttach
