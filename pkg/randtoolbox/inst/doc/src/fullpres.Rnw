@@ -1816,7 +1816,7 @@ res <- coll.test(congruRand, 2^8, 2^14, 1, echo=FALSE)
               cat(" ", i-1,"    ", obsnum[i],"    ", expnum[i],"\n")
 @
 %%%
-Note that the Normal approximation is not yet implemented and those two approximations are not valid when some expected collision numbers are below 1. 
+Note that the Normal approximation is not yet implemented and those two approximations are not valid when some expected collision numbers are below 5. 
 
 \subsubsection{The poker test}
 Finally the function \code{poker.test} implements

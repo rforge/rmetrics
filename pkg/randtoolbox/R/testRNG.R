@@ -551,7 +551,7 @@ coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSampl
         cat("\t\t", collMin+i-1,"\t\t\t", empNumColl[i],"\t\t\t", expNumColl[i],"\n")
     } 
 	
-    if(any(expNumColl < 1))
+    if(any(expNumColl < 5))
 		warning("p-values will be approximate in the presence of low expected collision number.")
 	
     res <- list( statistic = stat, parameter = dfree, 
