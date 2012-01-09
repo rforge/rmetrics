@@ -18,3 +18,10 @@ Add data sets from Eric Morway as examples.
 
 Add data set from Kevin Lin as an example.
 
+Not really important, but for completeness, add lower.tail, log and
+log.p arguments to dpqr functions for skewlap. This area is a bit of a
+mess with the different packages having different arguments allowed of
+this type.
+
+
+

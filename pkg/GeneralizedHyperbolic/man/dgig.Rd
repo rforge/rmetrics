@@ -21,11 +21,11 @@
 dgig(x, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda), KOmega = NULL)
 pgig(q, chi = 1, psi = 1, lambda = 1,
-     param = c(chi,psi,lambda), log.p = FALSE, lower.tail = TRUE,
+     param = c(chi,psi,lambda), lower.tail = TRUE,
      ibfTol = .Machine$double.eps^(0.85), nmax = 100)
 qgig(p, chi = 1, psi = 1, lambda = 1,
-     param = c(chi, psi, lambda),  log.p = FALSE,
-     lower.tail = TRUE, method = c("spline", "integrate"),
+     param = c(chi, psi, lambda), lower.tail = TRUE,
+     method = c("spline", "integrate"),
      nInterpol = 501, uniTol = 10^(-7),
      ibfTol = .Machine$double.eps^(0.85), nmax = 90, ...)
 rgig(n, chi = 1, psi = 1, lambda = 1,
@@ -45,8 +45,6 @@ ddgig(x, chi = 1, psi = 1, lambda = 1,
     forms of parameterization. By default this is set to 1.}
   \item{param}{Parameter vector taking the form \code{c(chi, psi, lambda)}
     for \code{rgig}, or \code{c(chi, psi)} for \code{rgig1}.}
-  \item{log.p}{Logical. If \code{TRUE}, probabilities \eqn{p} are given
-    as \eqn{\log(p)}{log(p)}.}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
     \code{"integrate"}, the distribution function used is always obtained

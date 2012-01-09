@@ -19,13 +19,12 @@
 dnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
      param = c(mu, delta, alpha, beta))
 pnig(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-     param = c(mu, delta, alpha, beta), log.p = FALSE,
+     param = c(mu, delta, alpha, beta),
      lower.tail = TRUE, subdivisions = 100,
      intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
 qnig(p, mu = 0, delta = 1, alpha = 1, beta = 0,
      param = c(mu, delta, alpha, beta),
-     log.p = FALSE, lower.tail = TRUE, 
-     method = c("spline","integrate"),
+     lower.tail = TRUE, method = c("spline","integrate"),
      nInterpol = 501, uniTol = .Machine$double.eps^0.25,
      subdivisions = 100, intTol = uniTol, ...)
 rnig(n, mu = 0, delta = 1, alpha = 1, beta = 0,
@@ -48,8 +47,6 @@ ddnig(x, mu = 0, delta = 1, alpha = 1, beta = 0,
     this is 0.}
   \item{param}{Parameter vector taking the form
     \code{c(mu, delta, alpha, beta)}.}
-  \item{log.p}{Logical; if \code{TRUE}, probabilities are given as
-    log(p).}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
     \code{"integrate"}, the distribution function used is always obtained

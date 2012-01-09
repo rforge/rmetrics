@@ -43,8 +43,8 @@ dghyp <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
                                    expon.scaled = TRUE)/
                            besselK(x = delta*gamma, nu = lambda,
                                    expon.scaled = TRUE),
-                          exp(bx)*besselK(x = y, nu = lambda - 1/2)/
-                          besselK(x = delta*gamma, nu = lambda))
+                           exp(bx)*besselK(x = y, nu = lambda - 1/2)/
+                           besselK(x = delta*gamma, nu = lambda))
   }
 
   dens <- (y/alpha)^(lambda - 1/2)*((gamma/delta)^lambda) *
@@ -54,7 +54,7 @@ dghyp <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 } ## End of dghyp()
 
 pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-                   param = c(mu,delta,alpha,beta,lambda), log.p = FALSE,
+                   param = c(mu,delta,alpha,beta,lambda),
                    lower.tail = TRUE, subdivisions = 100,
                    intTol = .Machine$double.eps^0.25,
                    valueOnly = TRUE, ...)
@@ -112,17 +112,12 @@ pghyp <- function (q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
        prob[q <= modeDist] <- 1 - prob[q <= modeDist]
    }
 
-   if (log.p == TRUE)
-   {
-       prob <- log(prob)
-   }
-
    ifelse(valueOnly, return(prob),
           return(list(value = prob, error = err)))
 }
 
 qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-                   param = c(mu,delta,alpha,beta,lambda), log.p = FALSE,
+                   param = c(mu,delta,alpha,beta,lambda),
                    lower.tail = TRUE, method = c("spline", "integrate"),
                    nInterpol = 501, uniTol = .Machine$double.eps^0.25,
                    subdivisions = 100, intTol = uniTol, ...)
@@ -132,6 +127,10 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
     errMessage <- parResult$errMessage
     if (case == "error")
         stop(errMessage)
+    if(!lower.tail){
+      p <- 1 - p
+      lower.tail == TRUE
+    }
     method <- match.arg(method)
     mu <- param[1]
     delta <- param[2]
@@ -196,12 +195,13 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
             }
         }
     } else if (method == "spline"){
-        inRange <- which((p > pghyp(xRange[1], param = param, intTol = intTol)) &
+        inRange <- which((p > pghyp(xRange[1],
+                                    param = param, intTol = intTol)) &
                          (p < pghyp(xRange[2], param = param, intTol = intTol)))
-        small <- which((p <= pghyp(xRange[1], param = param, intTol = intTol)) &
-                       (p >= 0))
-        large <- which((p >= pghyp(xRange[2], param = param, intTol = intTol)) &
-                       (p <= 1))
+        small <- which((p <= pghyp(xRange[1],
+                        param = param, intTol = intTol)) & (p >= 0))
+        large <- which((p >= pghyp(xRange[2],
+                        param = param, intTol = intTol)) & (p <= 1))
         extreme <- c(small, large)
         xVals <- seq(xRange[1], xRange[2], length.out = nInterpol)
         yVals <- pghyp(xVals, param = param, subdivisions = subdivisions,
@@ -217,8 +217,8 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
         }
 
         if (length(extreme) > 0){
-            quant[extreme] <- qghyp(p[extreme],param = param,
-                                    lower.tail = lower.tail, log.p = log.p,
+            quant[extreme] <- qghyp(p[extreme], param = param,
+                                    lower.tail = lower.tail,
                                     method = "integrate",
                                     nInterpol = nInterpol, uniTol = uniTol,
                                     subdivisions = subdivisions,

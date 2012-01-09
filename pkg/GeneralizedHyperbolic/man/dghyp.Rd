@@ -20,13 +20,12 @@
 dghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       param = c(mu, delta, alpha, beta, lambda))
 pghyp(q, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
-      param = c(mu, delta, alpha, beta, lambda), log.p = FALSE,
+      param = c(mu, delta, alpha, beta, lambda),
       lower.tail = TRUE, subdivisions = 100,
       intTol = .Machine$double.eps^0.25, valueOnly = TRUE, ...)
 qghyp(p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
       param = c(mu, delta, alpha, beta, lambda),
-      log.p = FALSE, lower.tail = TRUE,
-      method = c("spline","integrate"),
+      lower.tail = TRUE, method = c("spline","integrate"),
       nInterpol = 501, uniTol = .Machine$double.eps^0.25,
       subdivisions = 100, intTol = uniTol, ...)
 rghyp(n, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
@@ -45,14 +44,12 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \item{lambda}{Shape parameter \eqn{\lambda}{lambda}, default is 1.}
   \item{param}{Specifying the parameters as a vector of the form\cr
     \code{c(mu,delta,alpha,beta,lambda)}.}
-  \item{log.p}{Logical. If \code{TRUE}, probabilities \eqn{p} are given
-    as \eqn{\log(p)}{log(p)}.}
   \item{method}{Character. If \code{"spline"} quantiles are found from a
     spline approximation to the distribution function. If
     \code{"integrate"}, the distribution function used is always obtained
     by integration.}
   \item{lower.tail}{Logical. If \code{TRUE}, probabilities are
-    \eqn{P(X\leq x)}{P(X<=x)}, otherwise as \eqn{P(X>x)}{P(X>x)}.}
+    \eqn{P(X\leq x)}{P(X<=x)}, otherwise they are \eqn{P(X>x)}{P(X>x)}.}
   \item{subdivisions}{The maximum number of subdivisions used to
     integrate the density and determine the accuracy of the distribution
     function calculation.}

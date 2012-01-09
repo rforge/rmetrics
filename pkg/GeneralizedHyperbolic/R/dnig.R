@@ -13,10 +13,11 @@ dnig <- function(x, mu = 0, delta = 1, alpha = 1, beta = 0,
 } ## End of dnig()
 
 
-### Cumulative distribution function of the normal inverse Gaussian distribution
+### Cumulative distribution function of the
+### normal inverse Gaussian distribution
 
 pnig <- function(q, mu = 0, delta = 1, alpha = 1, beta = 0,
-                 param = c(mu, delta, alpha, beta), log.p = FALSE,
+                 param = c(mu, delta, alpha, beta),
                  lower.tail = TRUE, subdivisions = 100,
                  intTol = .Machine$double.eps^0.25,
                  valueOnly = TRUE, ...){
@@ -26,15 +27,14 @@ pnig <- function(q, mu = 0, delta = 1, alpha = 1, beta = 0,
 
   param <- as.numeric(param)
 
-  pghyp(q, param = c(param, -1/2), log.p = log.p,
-        lower.tail = lower.tail, subdivisions = subdivisions,
-        intTol = intTol,
+  pghyp(q, param = c(param, -1/2), lower.tail = lower.tail,
+        subdivisions = subdivisions, intTol = intTol,
         valueOnly = valueOnly, ...)
 } ## End of pnig()
 
 ### Quantiles function of the normal inverse Gaussian distribution
 qnig <- function(p, mu = 0, delta = 1, alpha = 1, beta = 0,
-                 param = c(mu, delta, alpha, beta), log.p = FALSE,
+                 param = c(mu, delta, alpha, beta),
                  lower.tail = TRUE, method = c("spline", "integrate"),
                  nInterpol = 501, uniTol = .Machine$double.eps^0.25,
                  subdivisions = 100, intTol = uniTol, ...) {
@@ -44,8 +44,7 @@ qnig <- function(p, mu = 0, delta = 1, alpha = 1, beta = 0,
 
   param <- as.numeric(param)
 
-  qghyp(p, param = c(param, -1/2), log.p = log.p,
-        lower.tail = lower.tail, method = method,
+  qghyp(p, param = c(param, -1/2), lower.tail = lower.tail, method = method,
         nInterpol = nInterpol, uniTol = uniTol,
         subdivisions = subdivisions, intTol = intTol, ...)
 } # End of qnig()

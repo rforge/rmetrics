@@ -1,4 +1,4 @@
-### Unit tests of function ghypScale
+### Unit tests of function ghypStandPars
 
 ### Functions with name test.* are run by R CMD check or by make if
 ### LEVEL=1 in call to make
