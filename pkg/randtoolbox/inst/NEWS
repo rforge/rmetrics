@@ -20,6 +20,8 @@ gcc-4.2 -arch x86_64 -std=gnu99 -I/Library/Frameworks/R.framework/Resources/incl
 
 (change x86_64 to i386 for 32bit build)
 
+See https://stat.ethz.ch/pipermail/r-sig-mac/2008-August/005251.html
+
 
 BUG FIXES
 - the package crashes when the dimension was 0 in RNG functions, 
