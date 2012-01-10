@@ -58,7 +58,7 @@ static unsigned long mt[N]; /* the array for the state vector  */
 static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
 /* initializes mt[N] with a seed */
-void MT2002_init_genrand(unsigned long s)
+void MT2002_init_genrand(unsigned int s)
 {
     mt[0]= s & 0xffffffffUL;
     for (mti=1; mti<N; mti++) {
@@ -77,7 +77,7 @@ void MT2002_init_genrand(unsigned long s)
 /* init_key is the array for initializing keys */
 /* key_length is its length */
 /* slight change for C++, 2004/2/26 */
-void MT2002_init_by_array(unsigned long init_key[], int key_length)
+void MT2002_init_by_array(unsigned int init_key[], int key_length)
 {
     int i, j, k;
     MT2002_init_genrand(19650218UL);
@@ -102,7 +102,7 @@ void MT2002_init_by_array(unsigned long init_key[], int key_length)
     mt[0] = 0x80000000UL; /* MSB is 1; assuring non-zero initial array */ 
 }
 
-void MT2002_init_by_array_1(unsigned long seed)
+void MT2002_init_by_array_1(unsigned int seed)
 {
 	MT2002_init_by_array(&seed, 1);
 }
@@ -183,7 +183,7 @@ double MT2002_genrand_res53(void)
 #include "runifInterface.h"
 int initialization, resolution;
 
-void initMersenneTwister(int *type, int *nseed, unsigned long *iseed, unsigned int *state)
+void initMersenneTwister(int *type, int *nseed, unsigned int *iseed, unsigned int *state)
 {
 	int i;
 	if (*type == 1)
