@@ -89,6 +89,6 @@ void R_init_randtoolbox(DllInfo *info)
 		 
 		//retrieve WELL rng entry point in the rngWELL pkg
 		WELLrng = (void (*) (double *, int, int, int, int, int)) R_GetCCallable("rngWELL", "WELLrng");
-		WELL_get_set_entry_point =(void (*) (void *)) R_GetCCallable("rngWELL", "WELL_get_set_entry_point");
+		WELL_get_set_entry_point =(void (*) (void (*)())) R_GetCCallable("rngWELL", "WELL_get_set_entry_point");
 }
 
