@@ -49,7 +49,7 @@
 
 //array with the last R v_i,j's
 static unsigned int STATE[R];
-static unsigned int z0,z1,z2,y;
+static unsigned int z0,z1,z2;
 static int state_i=0;
 
 static double case_1(void);

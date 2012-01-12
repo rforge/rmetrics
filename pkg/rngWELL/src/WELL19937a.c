@@ -56,8 +56,6 @@ static double case_5 (void);
 static double case_6 (void);
        double (*WELLRNG19937a) (void);
 
-static unsigned int y;
-
 void InitWELLRNG19937a (unsigned int *init){
   int j;
   state_i = 0;

@@ -46,7 +46,7 @@
 #define FACT 2.32830643653869628906e-10
 
 static unsigned int STATE[R];
-static unsigned int z0,z1,z2,y;
+static unsigned int z0,z1,z2;
 static int state_i=0;
 
 static double case_1(void);
