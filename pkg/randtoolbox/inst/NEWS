@@ -3,7 +3,7 @@
 Version 1.11
 =============
 
-- this version will be the last version working with
+- this version is one of the last versions working with
 package rng-WELL <= 0.91.
 
 NOTE FIXES
@@ -12,13 +12,9 @@ rather than the cat function.
 - it removes a printf in KnuthTAOCP2002.c
 
 WARNING FIXES in C files
-- remove warnings with Wall and pedantic gcc options, e.g. for myfile.c
-
-gcc-4.2 -arch x86_64 -std=gnu99 -I/Library/Frameworks/R.framework/Resources/include 
--I/Library/Frameworks/R.framework/Resources/include/x86_64  -I/usr/local/include    
--fPIC  -g -O2 -Wall -pedantic -c myfile.c -o myfile.o
-
-(change x86_64 to i386 for 32bit build)
+- remove warnings with Wall and pedantic gcc options. For this
+purpose, files randtoolbox/src/Makevars and rngWELL/src/Makevars
+now contain a line, uncommenting which includes Wall and pedantic.
 
 See https://stat.ethz.ch/pipermail/r-sig-mac/2008-August/005251.html
 
