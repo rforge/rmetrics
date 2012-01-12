@@ -2,7 +2,7 @@ Package: rngWELL
 Type: Package
 Title: toolbox for WELL random number generators.
 Version: 0.91
-Date: 2009-12-10
+Date: 2012-01-11
 Author: C code by F. Panneton, P. L'Ecuyer and M. Matsumoto and R port by Christophe Dutang and Petr Savicky <savicky@cs.cas.cz>.
 Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
 Description: It is a dedicated package to WELL pseudo random generators. But it is not intended to use it directly, you are strongly __encouraged__ to directly use the 'randtoolbox' package, which depends on this package.
