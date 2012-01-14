@@ -16,6 +16,6 @@
 
 void version_rngWELL(char **s)
 {
-	s[0] = "1.00";
+	s[0] = "0.10-0";
 }
 

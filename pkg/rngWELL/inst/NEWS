@@ -1,6 +1,10 @@
 === rngWELL: WELL random number generators ===
 
 
+Version 0.10-0
+=============
+- change the runifInterface to WELL rngs.
+
 Version 0.9
 =============
 
