@@ -1,14 +1,11 @@
 === randtoolbox: an R package for random number generation and testing ===
 
-Version 1.12
-=============
-
 
 Version 1.11
 =============
 
 - this version is one of the last versions working with
-package rngWELL <= 0.91.
+package rngWELL == 0.10-x.
 
 NOTE FIXES
 - this version use packageStartupMessage function for the .onAttach
