@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -35,31 +35,31 @@
 ################################################################################
 
 
-pcauchy2d = 
-function(x, y = x, rho = 0) 
+pcauchy2d =
+function(x, y = x, rho = 0)
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Computes bivariate Cauchy probability function
-    
+
     # Arguments:
     #   x, y - two numeric values or vectors of the same length at
-    #       which the probability will be computed. 
-    
+    #       which the probability will be computed.
+
     # Example:
     #   pt2d(rnorm(5), rnorm(5), 0.5, 5)
-    
+
     # Value:
     #   returns a numeric vector of probabilities of the same length
     #   as the input vectors
-   
+
     # FUNCTION:
-    
+
     # Settings:
     # Probaility:
-    ans  = pt2d(x = x, y = y, rho = rho, nu = 1) 
+    ans  = pt2d(x = x, y = y, rho = rho, nu = 1)
     attr(ans, "control") = c(rho = rho)
-    
+
     # Return Value:
     ans
 }
@@ -68,27 +68,27 @@ function(x, y = x, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-dcauchy2d = 
+dcauchy2d =
 function(x, y = x, rho = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n - number of random deviates to be generated
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # Description:
     #   Computes bivariate Cauchy density function
-    
+
     # Note:
     #   Partly copied from contributed R package 'sn'
-    
+
     # FUNCTION:
-    
+
     # Density:
     density = dt2d(x = x, y = y, rho = rho, nu = 1)
     attr(density, "control") = c(rho = rho)
-    
+
     # Return value:
     density
 }
@@ -98,27 +98,27 @@ function(x, y = x, rho = 0)
 
 
 rcauchy2d =
-function(n, rho = 0) 
+function(n, rho = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates bivariate Cauchy random deviates
-    
+
     # Arguments:
     #   n - number of random deviates to be generated
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # Note:
     #   Partly copied from contributed R package 'mvtnorm'
     #   Author Friedrich Leisch
-    
+
     # FUNCTION:
-    
+
     # Random Deviates:
-    ans = rt2d(n = n, rho = rho)
+    ans = rt2d(n = n, rho = rho, nu = 1)
     attr(ans, "control") = c(rho = rho)
-    
+
     # Return Value:
     ans
 }
