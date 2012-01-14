@@ -12,14 +12,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 // #include <time.h>
 #include <math.h>
 // #include <setjmp.h>
 // #include <R.h>
-// #include <Rdefines.h> 
+// #include <Rdefines.h>
 // #include <Rinternals.h>
 // #include <Rmatch.h>
 // #include <R_ext/Constants.h>
@@ -33,7 +32,7 @@
 #define  EPS       1e-12
 #define  XLEAST    2.23e-308
 #define  XSMALL    1.11e-16
-#define  XINF      1.79e308 
+#define  XINF      1.79e308
 #define  XMAX      704.78 // log(XINF) - 5
 #define  MAX_ITER  5000
 #define  ITMAX     100
@@ -48,10 +47,7 @@
 
 void printError(char *text, char filename[200])
 {
-  Rprintf(text);
-  Rprintf(": %s ", filename);
-  Rprintf(" !!!\n");
-  exit(0);
+  error("%s: %s !!!\n", text, filename);
 }
 
 
@@ -81,12 +77,12 @@ void heapSort(int n, double *x, int *order)
   {
     if(l > 1)
     {
-      /* Decrement l before evaluating the expression */      
+      /* Decrement l before evaluating the expression */
       q = x[(ordert = order[--l-1])];
-    } 
+    }
     else
     {
-      q = x[(ordert = order[ir-1])]; 
+      q = x[(ordert = order[ir-1])];
       order[ir-1] = order[0];
       /* Decrement ir before its value is used */
       if(--ir == 1)
@@ -124,29 +120,29 @@ double bessk1(double x)
   int i;
   double y, k1;
   double sump, sumq, sumf, sumg;
-  static double p[5] = 
+  static double p[5] =
   {
     4.8127070456878442310e-1, 9.9991373567429309922e+1,
     7.1885382604084798576e+3, 1.7733324035147015630e+5,
     7.1938920065420586101e+5
   };
-  static double q[3] = 
+  static double q[3] =
   {
     -2.8143915754538725829e+2, 3.7264298672067697862e+4,
     -2.2149374878243304548e+6
   };
-  static double f[5] = 
+  static double f[5] =
   {
     -2.2795590826955002390e-1,-5.3103913335180275253e+1,
     -4.5051623763436087023e+3,-1.4758069205414222471e+5,
     -1.3531161492785421328e+6
   };
-  static double g[3] = 
+  static double g[3] =
   {
     -3.0507151578787595807e+2, 4.3117653211351080007e+4,
     -2.7062322985570842656e+6
   };
-  static double pp[11] = 
+  static double pp[11] =
   {
     6.4257745859173138767e-2, 7.5584584631176030810e+0,
     1.3182609918569941308e+2, 8.1094256146537402173e+2,
@@ -156,7 +152,7 @@ double bessk1(double x)
     2.2196792496874548962e+0
   };
   static double qq[9] =
-  { 
+  {
     3.6001069306861518855e+1, 3.3031020088765390854e+2,
     1.2082692316002348638e+3, 2.1181000487171943810e+3,
     1.9448440788918006154e+3, 9.6929165726802648634e+2,
@@ -213,7 +209,7 @@ double bessk1(double x)
 ////////////////////////////////////////////////////////////////////////////////
 
 
-void dNIG(double* x, double* mu, double* delta, double* alpha, 
+void dNIG(double* x, double* mu, double* delta, double* alpha,
     double* beta, int* n, double* d)
 {
   int i;
@@ -260,7 +256,7 @@ double fdNIG(double x, double mu, double delta, double alpha, double beta)
 ///////////////////////////////////////////////////////////////////////////
 
 
-void intdei(double a, double mu, double delta, double alpha, double beta, 
+void intdei(double a, double mu, double delta, double alpha, double beta,
     double *i, double *err)
 {
   /* ---- adjustable parameters ---- */
@@ -270,7 +266,7 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
   int m;
   double pi4, epsln, epsh, h0, ehp, ehm, epst, ir, h;
   double iback, irback, t, ep, em, xp, xm, fp, fm, errt, errh, errd;
-  
+
   pi4 = atan(1.0);
   epsln = 1 - log(efs * EPS);
   epsh = sqrt(efs * EPS);
@@ -284,17 +280,17 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
   h = 2 * h0;
   m = 1;
   errh = 0;
-  do 
+  do
   {
     iback = *i;
     irback = ir;
     t = h * 0.5;
-    do 
+    do
     {
       em = exp(t);
       ep = pi4 * em;
       em = pi4 / em;
-      do 
+      do
       {
         xp = exp(ep - em);
         xm = 1 / xp;
@@ -309,12 +305,12 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
       } while (errt > *err || xm > epsh);
       t += h;
     } while (t < h0);
-    if (m == 1) 
+    if (m == 1)
     {
       errh = (*err / epst) * epsh * h0;
       errd = 1 + 2 * errh;
-    } 
-    else 
+    }
+    else
     {
       errd = h * (fabs(*i - 2 * iback) + 4 * fabs(ir - 2 * irback));
     }
@@ -322,11 +318,11 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
     m *= 2;
   } while (errd > errh && m < mmax);
   *i *= h;
-  if (errd > errh) 
+  if (errd > errh)
   {
     *err = -errd * m;
-  } 
-  else 
+  }
+  else
   {
     *err = errh * epsh * m / (2 * efs);
   }
@@ -340,7 +336,7 @@ void intdei(double a, double mu, double delta, double alpha, double beta,
 ////////////////////////////////////////////////////////////////////////////////
 
 
-void pNIG(double *x, double *mu, double *delta, double *alpha, double *beta, 
+void pNIG(double *x, double *mu, double *delta, double *alpha, double *beta,
     int *n, double *p)
 {
   int i;
@@ -373,13 +369,13 @@ void pNIG(double *x, double *mu, double *delta, double *alpha, double *beta,
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Return cdf of NIG distribution evaluated at a given point, with the 
-// probability p substracted (made for root finding) 
+// Return cdf of NIG distribution evaluated at a given point, with the
+// probability p substracted (made for root finding)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 
-double fpNIG(double x, double mu, double delta, double alpha, double beta, 
+double fpNIG(double x, double mu, double delta, double alpha, double beta,
     double sp)
 {
   double f;
@@ -397,35 +393,35 @@ double fpNIG(double x, double mu, double delta, double alpha, double beta,
 ////////////////////////////////////////////////////////////////////////////////
 
 
-double zbrent(double x1, double x2, double mu, double delta, double alpha, 
+double zbrent(double x1, double x2, double mu, double delta, double alpha,
     double beta, double sp)
 {
   int iter;
   double a, b, c, d, e, min1, min2;
   double fa, fb, fc, p, q, r, s, tol1, xm;
-  
+
   d = 0;
   e = 0;
-  
+
   a = x1;
   b = x2;
   c = x2;
   fa = fpNIG(a,mu,delta,alpha,beta,sp);
   fb = fpNIG(b,mu,delta,alpha,beta,sp);
-  
-  // if((fa > 0.0 && fb > 0.0)||(fa < 0.0 && fb < 0.0)) 
+
+  // if((fa > 0.0 && fb > 0.0)||(fa < 0.0 && fb < 0.0))
   // printError("Root must be bracketed in zbrent", "");
-  
+
   fc = fb;
-  for(iter = 1; iter <= ITMAX; iter++) 
+  for(iter = 1; iter <= ITMAX; iter++)
   {
-    if((fb > 0.0 && fc > 0.0)||(fb < 0.0 && fc < 0.0)) 
+    if((fb > 0.0 && fc > 0.0)||(fb < 0.0 && fc < 0.0))
     {
       c = a;
       fc = fa;
       e = d = b-a;
     }
-    if(fabs(fc) < fabs(fb)) 
+    if(fabs(fc) < fabs(fb))
     {
       a = b;
       b = c;
@@ -437,15 +433,15 @@ double zbrent(double x1, double x2, double mu, double delta, double alpha,
     tol1 = 2.0*EPS*fabs(b)+0.5*EPS;
     xm = 0.5*(c-b);
     if(fabs(xm) <= tol1 || fb == 0.0) return b;
-    if(fabs(e) >= tol1 && fabs(fa) > fabs(fb)) 
+    if(fabs(e) >= tol1 && fabs(fa) > fabs(fb))
     {
       s = fb/fa;
-      if(a == c) 
+      if(a == c)
       {
         p = 2.0*xm*s;
         q = 1.0-s;
-      } 
-      else 
+      }
+      else
       {
         q = fa/fc;
         r = fb/fc;
@@ -456,18 +452,18 @@ double zbrent(double x1, double x2, double mu, double delta, double alpha,
       p = fabs(p);
       min1 = 3.0*xm*q-fabs(tol1*q);
       min2 = fabs(e*q);
-      if(2.0*p < (min1 < min2 ? min1 : min2)) 
+      if(2.0*p < (min1 < min2 ? min1 : min2))
       {
         e = d;
         d = p/q;
-      } 
-      else 
+      }
+      else
       {
         d = xm;
         e = d;
       }
-    } 
-    else 
+    }
+    else
     {
       d = xm;
       e = d;
@@ -485,7 +481,7 @@ double zbrent(double x1, double x2, double mu, double delta, double alpha,
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Function that computes inverse cumulative NIG distribution function, 
+// Function that computes inverse cumulative NIG distribution function,
 // evaluated at given points.
 // INPUT:
 //   p          Probabilities at which to evaluate cdf^-1 (nx1)
@@ -499,22 +495,22 @@ double zbrent(double x1, double x2, double mu, double delta, double alpha,
 ////////////////////////////////////////////////////////////////////////////////
 
 
-void qNIG(double* p, double* i_mu, double* i_delta, double* i_alpha, 
+void qNIG(double* p, double* i_mu, double* i_delta, double* i_alpha,
     double* i_beta, int* i_n, double* q)
 {
   int i, n, counter, *pOrder;
-  double mu, delta, alpha, beta, qTmp, sp, lpiv, rpiv, mpiv, div, lpivVal, 
+  double mu, delta, alpha, beta, qTmp, sp, lpiv, rpiv, mpiv, div, lpivVal,
     rpivVal;
   n=*i_n; mu=*i_mu; delta=*i_delta; alpha=*i_alpha; beta=*i_beta;
-  
-  // Expectation and standard deviation of NIG distribution, 
-  // used for setting lpiv and rpiv 
+
+  // Expectation and standard deviation of NIG distribution,
+  // used for setting lpiv and rpiv
   mpiv = mu+delta*beta/sqrt(alpha*alpha-beta*beta);
   div = sqrt(delta*alpha*alpha/pow(alpha*alpha-beta*beta,1.5));
-  
+
   //Allocagte space:
   pOrder = malloc(n*sizeof(int));
-  //Find descending order of probabilities:0.5, 
+  //Find descending order of probabilities:0.5,
   heapSort(n, p, pOrder);
   for(i=0;i<n;i++)
   {
@@ -526,11 +522,11 @@ void qNIG(double* p, double* i_mu, double* i_delta, double* i_alpha,
     else if(p[pOrder[n-i-1]] == 1.0)
     {
       q[pOrder[n-i-1]] = XINF;
-    }       
+    }
     else
     {
       lpiv = mpiv-div;
-      rpiv = mpiv+div;      
+      rpiv = mpiv+div;
       counter = 0;
       // Use the previous quantile for the new lower boundary
       if(i > 0)
@@ -547,7 +543,7 @@ void qNIG(double* p, double* i_mu, double* i_delta, double* i_alpha,
       }
       lpivVal = fpNIG(lpiv,mu,delta,alpha,beta,sp);
       rpivVal = fpNIG(rpiv,mu,delta,alpha,beta,sp);
-      
+
       // Search for a quantile q that fulfills |fpNIG(q)-p| < eps
       if(lpivVal*rpivVal >= 0.0)
       {
