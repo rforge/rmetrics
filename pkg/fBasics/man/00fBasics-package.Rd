@@ -772,7 +772,7 @@
         \tab \cr
         \emph{Function ________________}
         \tab Description _________________________________________\cr
-            \code{getCall} \tab Extracts the call slot from a S4 object \cr
+% in R           % \code{getCall} \tab Extracts the call slot from a S4 object \cr
             \code{getModel} \tab extracts the model slot from a S4 object \cr
             \code{getTitle} \tab extracts the title slot from a S4 object \cr
             \code{getDescription} \tab extracts the description slot \cr

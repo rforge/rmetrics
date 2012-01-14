@@ -1,7 +1,7 @@
 Package: fBasics
-Version: 2140.80
+Version: 2140.81
 Revision: 5116
-Date: 2011-08-02
+Date: 2012-01-14
 Title: Rmetrics - Markets and Basic Statistics
 Author: Diethelm Wuertz and Rmetrics core team members, uses code
         builtin from the following R contributed packages: gmm from

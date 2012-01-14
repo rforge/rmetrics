@@ -26,29 +26,10 @@
 ################################################################################
 
 
-.getCall <- function(x)
-{
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the "call" slot from an object of class 4
-
-    # Arguments:
-    #   x - an object of class S4
-
-    # FUNCTION:
-
-    # Return Value:
-    slot(x, "call")
-}
 if(getRversion() < "2.14") {
-    getCall <- .getCall
-} else { ## since 2.14.0, getCall() is an S3 generic in 'stats'
-    ## this also makes  getCall() into an S4 generic :
-    setMethod("getCall", "ANY", ## <-- "S4" would be nice .. but fails: is(*. "S4") fails
-	      function(x, ...)
-	      if(isS4(x)) slot(x, "call") else stats:::getCall.default(x))
-}
+    getCall <- function(x) slot(x, "call")
+} ## since 2.14.0, getCall() is an S3 generic in 'stats'
+## *AND* its default method also works for S4 and a "call" slot
 
 # ------------------------------------------------------------------------------
 
