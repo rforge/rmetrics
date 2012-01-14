@@ -124,7 +124,7 @@ stopifnot(f2[x[-c(1,n)] < 0] > 0,
 fx. <- dstable(x., alpha=1, beta=.01)
 lines(x., fx., col = 2, lwd=3, lty="5111")
 
-if(dev.interactive()) {
+if(dev.interactive(orNone=TRUE)) {
     curve(dstable(x, 1.,    0.99),  -6, 50, log="y")# "uneven" (x < 0); 50 warnings
     curve(dstable(x, 1.001, 0.95), -10, 30, log="y")# much better
 }
