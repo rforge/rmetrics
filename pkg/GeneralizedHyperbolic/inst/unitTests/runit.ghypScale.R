@@ -1,4 +1,4 @@
-### Unit tests of function ghypStandPars
+### Unit tests of function ghypScale
 
 ### Functions with name test.* are run by R CMD check or by make if
 ### LEVEL=1 in call to make
@@ -7,7 +7,7 @@
 ### Functions with name graphicstest.* are run by make if
 ### LEVEL=graphics in call to make
 
-test.ghypStandPars <- function()
+test.ghypScale <- function()
 {
   ## Purpose: Level 1 test of hypStandPars
   ## ----------------------------------------------------------------------

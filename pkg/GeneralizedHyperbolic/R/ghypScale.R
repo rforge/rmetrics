@@ -9,8 +9,9 @@ ghypScale <- function(newMean, newSD,
   ## Author: David Scott, Date:  7 Jan 2011, 22:49
 
   ## Lambda defaults to one if omitted from param vector
-  if (length(param) == 4)
+  if (length(param) == 4){
     param <- c(param,1)
+  }
 
   ## check parameters
   parResult <- ghypCheckPars(param)

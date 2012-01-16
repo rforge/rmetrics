@@ -14,8 +14,9 @@ plot.hyperblm <- function(x, breaks = "FD",
 
   par(mar = c(6, 4, 4, 2) + 0.1)
 
-  x <- x$xMatrix
-  y <- as.numeric(x$yVec)
+  ## Caused problems when first argument changed to x, not needed
+  ##x <- x$xMatrix
+  ##y <- as.numeric(x$yVec)
   fitted.values <- x$fitted.values
   residuals <- x$residuals
   xName <- x$xName

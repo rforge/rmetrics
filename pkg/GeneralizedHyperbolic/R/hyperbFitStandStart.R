@@ -61,7 +61,7 @@ hyperbFitStandStart <- function(x, startValues = c("BN","US","MoM"),
   if (startValues=="BN") {
     svName <- "Barndorff-Nielsen 1977"
     phi <- max(0.001, leftAsymptote[2]) # protect against negative
-    hyperbGamma <- max(0.001,-rightAsymptote[2]) # protect against negative
+    gamma <- max(0.001,-rightAsymptote[2]) # protect against negative
     alpha <- (phi + gamma)/2
     beta <- (phi - gamma)/2
     rho <- beta/alpha

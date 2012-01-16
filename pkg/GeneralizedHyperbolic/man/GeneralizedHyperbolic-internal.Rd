@@ -13,7 +13,6 @@
 \alias{dshyperb}
 \alias{hyperbFitStand}
 \alias{hyperbFitStandStart}
-\alias{ghypScale}
 \alias{hyperblmFit}
 
 

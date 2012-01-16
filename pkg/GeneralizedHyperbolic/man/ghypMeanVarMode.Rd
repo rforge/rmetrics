@@ -23,14 +23,23 @@ ghypMode(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 }
 \arguments{
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
-    set to 0.}
+    set to 0.
+  }
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
-    A default value of 1 has been set.}
-  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
-  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
+    A default value of 1 has been set.
+  }
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
+    value of 1.
+  }
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
+    this is 0.
+  }
   \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and dictates the
-    shape that the distribution shall take. Default value is 1.}
-  \item{param}{Parameter vector of the generalized hyperbolic distribution.}
+    shape that the distribution shall take. Default value is 1.
+  }
+  \item{param}{Parameter vector of the generalized hyperbolic
+    distribution.
+  }
 }
 
 \value{
@@ -41,12 +50,12 @@ ghypMode(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   skewness and kurtosis are obtained using the recursive formula
   implemented in \code{\link{ghypMom}} which can calculate moments of
   all orders about any point.
-  
+
   The mode is found by a numerical optimisation using
   \code{\link{optim}}. For the special case of the hyperbolic
   distribution a formula for the mode is available, see
   \code{\link{hyperbMode}}.
-   
+
   The parameterization of the generalized hyperbolic distribution used
   for these functions is the \eqn{(\alpha, \beta)}{(alpha, beta)} one. See
   \code{\link{ghypChangePars}} to transfer between parameterizations.
@@ -54,13 +63,13 @@ ghypMode(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 \references{
   Prause, K. (1999) \emph{The generalized hyperbolic models: Estimation,
   financial derivatives and risk measurement.} PhD Thesis, Mathematics
-  Faculty, University of Freiburg. 
+  Faculty, University of Freiburg.
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Thomas Tran}
 
 \seealso{
-  \code{\link{dghyp}}, \code{\link{ghypChangePars}}, 
+  \code{\link{dghyp}}, \code{\link{ghypChangePars}},
   \code{\link{besselK}}, \code{\link{RLambda}}.
 }
 

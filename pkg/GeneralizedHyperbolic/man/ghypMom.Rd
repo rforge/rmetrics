@@ -18,24 +18,34 @@ ghypMom(order, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 \arguments{
   \item{order}{Numeric. The order of the moment to be calculated. Not
     permitted to be a vector. Must be a positive whole number except for
-    moments about zero.}
+    moments about zero.
+  }
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
-    set to 0.}
+    set to 0.
+  }
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
-    A default value of 1 has been set.}
+    A default value of 1 has been set.
+  }
   \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
-    value of 1.}
+    value of 1.
+  }
   \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
-    this is 0.}
+    this is 0.
+  }
   \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and dictates the
-    shape that the distribution shall take. Default value is 1.}
-  \item{param}{Numeric. The parameter vector specifying the GHyp
-    distribution. Of the form \code{c(mu, delta, alpha, beta, lambda)}
+    shape that the distribution shall take. Default value is 1.
+  }
+  \item{param}{Numeric. The parameter vector specifying the generalized
+    hyperbolic  distribution. Of the form \cr
+    \code{c(mu, delta, alpha, beta, lambda)}
     (see \code{\link{dghyp}}).}
   \item{momType}{Common types of moments to be calculated, default is "raw".
-    See \bold{Details}.}
+    See \bold{Details}.
+  }
   \item{about}{Numeric. The point around which the moment is to be
-    calculated.}}
+    calculated.
+  }
+}
 \details{
   Checking whether \code{order} is a whole number is carried out using
   the function \code{\link[DistributionUtils]{is.wholenumber}}.

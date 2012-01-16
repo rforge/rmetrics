@@ -12,10 +12,11 @@ ghypCheckPars(param)
 }
 \arguments{
   \item{param}{Numeric. Putative parameter values for a generalized
-    hyperblic distribution.}
+    hyperblic distribution.
+  }
 }
 \details{
-  
+
   The vector \code{param} takes the form \code{c(mu, delta, alpha, beta,
   lambda)}.
 

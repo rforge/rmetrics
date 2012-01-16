@@ -17,21 +17,31 @@ ghypCalcRange(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 }
 \arguments{
   \item{mu}{\eqn{\mu}{mu} is the location parameter. By default this is
-    set to 0.}
+    set to 0.
+  }
   \item{delta}{\eqn{\delta}{delta} is the scale parameter of the distribution.
-    A default value of 1 has been set.}
-  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default value of 1.}
-  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default this is 0.}
+    A default value of 1 has been set.
+  }
+  \item{alpha}{\eqn{\alpha}{alpha} is the tail parameter, with a default
+    value of 1.
+  }
+  \item{beta}{\eqn{\beta}{beta} is the skewness parameter, by default
+    this is 0.
+  }
   \item{lambda}{\eqn{\lambda}{lambda} is the shape parameter and dictates the
-    shape that the distribution shall take. Default value is 1.}
+    shape that the distribution shall take. Default value is 1.
+  }
   \item{param}{Value of parameter vector specifying the generalized
-    hyperbolic distribution. This takes the form \code{c(mu, delta,
-    alpha, beta, lambda)}.}
+    hyperbolic distribution. This takes the form \cr
+    \code{c(mu, delta,alpha, beta, lambda)}.
+  }
   \item{tol}{Tolerance.}
   \item{density}{Logical. If \code{TRUE}, the bounds are for the density
     function. If \code{FALSE}, they should be for the probability
-    distribution, but this has not yet been implemented.}
-  \item{\dots}{Extra arguments for calls to \code{\link{uniroot}}.}
+    distribution, but this has not yet been implemented.
+  }
+  \item{\dots}{Extra arguments for calls to \code{\link{uniroot}}.
+  }
 }
 
 \details{

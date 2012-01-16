@@ -38,7 +38,7 @@ ddghyp(x, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
   \item{p}{Vector of probabilities.}
   \item{n}{Number of random variates to be generated.}
   \item{mu}{Location parameter \eqn{\mu}{mu}, default is 0.}
-  \item{delta}{Peakness parameter \eqn{\delta}{delta}, default is 1.}
+  \item{delta}{Scale parameter \eqn{\delta}{delta}, default is 1.}
   \item{alpha}{Tail parameter \eqn{\alpha}{alpha}, default is 1.}
   \item{beta}{Skewness parameter \eqn{\beta}{beta}, default is 0.}
   \item{lambda}{Shape parameter \eqn{\lambda}{lambda}, default is 1.}

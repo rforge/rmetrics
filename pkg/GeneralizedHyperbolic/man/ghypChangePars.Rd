@@ -27,11 +27,16 @@ ghypChangePars(from, to, param, noNames = FALSE)
 }
 
 \arguments{
-  \item{from}{The set of parameters to change from.}
-  \item{to}{The set of parameters to change to.}
-  \item{param}{"from" parameter vector consisting of 5 numerical elements.}
+  \item{from}{The set of parameters to change from.
+  }
+  \item{to}{The set of parameters to change to.
+  }
+  \item{param}{"from" parameter vector consisting of 5 numerical
+    elements.
+  }
   \item{noNames}{Logical. When \code{TRUE}, suppresses the parameter
-    \code{names} in the output.}
+    \code{names} in the output.
+  }
 }
 
 \details{
