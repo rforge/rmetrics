@@ -58,7 +58,7 @@ ghypScale(newMean, newSD,
 }
 
 \seealso{
-\link{\code{ghypStand}} for standardizing the generalized hyperbolic
+\link{\code{ghypStandPars}} for standardizing the generalized hyperbolic
   distribution.
 }
 \examples{

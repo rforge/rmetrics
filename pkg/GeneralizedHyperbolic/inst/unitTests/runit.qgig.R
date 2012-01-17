@@ -7,7 +7,7 @@
 ### Functions with name graphicstest.* are run by make if
 ### LEVEL = graphics in call to make
 
-test.qgigIBF <- function()
+level2test.qgigIBF <- function()
 {
     ## Purpose: test qgig
     ## ----------------------------------------------------------------------
@@ -19,7 +19,7 @@ test.qgigIBF <- function()
 
     paramSampleSize <- 1
     sampleSize <- 1
-    ps <- c(-Inf, -1, 0, 1, Inf, NA, NA)
+    ps <- c(0, 1, Inf, NA, NA)
     qs <- c(0, 0.001, 0.025, 0.3, 0.5, 0.7, 0.975, 0.999, 1)
     nps <- length(ps)
     nqs <- length(qs)
@@ -56,6 +56,7 @@ test.qgigIBF <- function()
         ## add some extreme values
         extreme <- qgig(c(10^(-5), 1 - 10^(-5)), param = param)
         extreme <- extreme + abs(x) * c(-1, 1)
+        extreme <- pmax(extreme, c(0,0))
         ps[c(nps - 1, nps)] <- extreme
         result <- qgig(pgig(ps, param = param), param = param)
 
@@ -68,13 +69,13 @@ test.qgigIBF <- function()
     if (nv == 1){
         pqMaxInd <- 1
     } else {
-        pqMaxInd <- which.max(pmax(abs(pgResult[, 3 + (1:nqs)])))
+        pqMaxInd <- which.max(pmax(abs(pqResult[, 3 + (1:nqs)])))
     }
     checkTrue(pqMaxDiff < 10^(-2), msg =
               paste("pqMaxDiff = ", pqMaxDiff, "for param = ",
-                    pqResult[pgMaxInd, 1], pqResult[pgMaxInd, 2],
-                    pqResult[pgMaxInd, 3], pqResult[pgMaxInd, 4],
-                    pqResult[pgMaxInd, 5]))
+                    pqResult[pqMaxInd, 1], pqResult[pqMaxInd, 2],
+                    pqResult[pqMaxInd, 3], pqResult[pqMaxInd, 4],
+                    pqResult[pqMaxInd, 5]))
 
     ## second test: 1 then p
     qpMaxDiff <- max(abs(qpResult[, 3 + (1:nps)]))
@@ -127,7 +128,7 @@ test.qgigIBF <- function()
         pqMaxInd <- which.max(pmax(abs(pqResult[, 3 + (1:nqs)])))
     }
     checkTrue(pqMaxDiff < 10^(-6), msg =
-              paste("pgMaxDiff = ", pgMaxDiff, "for param = ",
+              paste("pqMaxDiff = ", pqMaxDiff, "for param = ",
                     pqResult[pqMaxInd, 1], pqResult[pqMaxInd, 2],
                     pqResult[pqMaxInd, 3], pqResult[pqMaxInd, 4],
                     pqResult[pqMaxInd, 5]))

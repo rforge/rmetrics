@@ -22,12 +22,12 @@ dgig(x, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda), KOmega = NULL)
 pgig(q, chi = 1, psi = 1, lambda = 1,
      param = c(chi,psi,lambda), lower.tail = TRUE,
-     ibfTol = .Machine$double.eps^(0.85), nmax = 100)
+     ibfTol = .Machine$double.eps^(0.85), nmax = 200)
 qgig(p, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda), lower.tail = TRUE,
      method = c("spline", "integrate"),
      nInterpol = 501, uniTol = 10^(-7),
-     ibfTol = .Machine$double.eps^(0.85), nmax = 90, ...)
+     ibfTol = .Machine$double.eps^(0.85), nmax =200, ...)
 rgig(n, chi = 1, psi = 1, lambda = 1,
      param = c(chi, psi, lambda))
 rgig1(n, chi = 1, psi = 1, param = c(chi, psi))

@@ -24,8 +24,8 @@ ghypMean <- function(mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 
   gamma <- sqrt(alpha^2 - beta^2)
 
-  mu + delta*beta*besselRatio(delta*gamma, lambda, 1)/gamma
-  mu
+  mn <- mu + delta*beta*besselRatio(delta*gamma, lambda, 1)/gamma
+  mn
 } ## End of ghypMean()
 
 ### Function to calculate the theoretical variance of a

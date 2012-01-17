@@ -28,7 +28,7 @@ test.ghypMom <- function()
   nv <- NROW(paramVals)
 
   ## specify orders of moments
-  orders <- c(1,2,3,10)
+  orders <- c(1,2,3,4,5)
 
   ## mu moments first
   ## initialize result matrix

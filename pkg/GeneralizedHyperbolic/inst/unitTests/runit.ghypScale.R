@@ -29,12 +29,18 @@ test.ghypScale <- function()
   newMean <- rnorm(1, 0, 5)
   newSD <- rgamma(1, 1, scale = 5)
 
-  ## convert to standardized parameters
+  ## rescale
   newParam <- ghypScale(newMean, newSD, param = param)
 
   ## obtain new mean and sd
   newMeanTest <- ghypMean(param = newParam)
   newSDTest <- sqrt(ghypVar(param = newParam))
-  checkTrue(abs(newMean - newMeanTest) < 10^(-13))
-  checkTrue(abs(newSD - newSDTest) < 10^(-13))
+  checkTrue(abs(newMean - newMeanTest) < 10^(-13),
+            msg = paste("newMean = ", newMean, "newMeanTest = ", newMeanTest,
+                        "diff = ", abs(newMean - newMeanTest), "for param",
+                        param[1], param[2], param[3], param[4], param[5]))
+  checkTrue(abs(newSD - newSDTest) < 10^(-13),
+            msg = paste("newSD = ", newSD, "newSDTest = ", newSDTest,
+                        "diff = ", abs(newSD - newSDTest), "for param",
+                        param[1], param[2], param[3], param[4], param[5]))
 }

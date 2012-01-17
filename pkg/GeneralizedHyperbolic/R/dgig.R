@@ -34,7 +34,7 @@ dgig <- function(x, chi = 1, psi = 1, lambda = 1,
 pgig <- function(q, chi = 1, psi = 1, lambda = 1,
                     param = c(chi,psi,lambda), lower.tail = TRUE,
                     ibfTol = .Machine$double.eps^(0.85),
-                    nmax = 100) {
+                    nmax = 200) {
 
   ## check parameters
   parResult <- gigCheckPars(param)
@@ -76,7 +76,7 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
                  param = c(chi, psi, lambda),
                  lower.tail = TRUE, method = c("spline", "integrate"),
                  nInterpol = 501, uniTol = 10^(-7),
-                 ibfTol = .Machine$double.eps^(0.85), nmax = 90, ...){
+                 ibfTol = .Machine$double.eps^(0.85), nmax =200, ...){
 
   ## check parameters
   parResult <- gigCheckPars(param)
