@@ -45,8 +45,10 @@ pkgsRmetrics <- function()
       "HyperbolicDist",
       "randtoolbox",
       "rngWELL",
+      "schwartz97",
       "SkewHyperbolic",
-      "VarianceGamma")
+      "VarianceGamma",
+      "stabledist")
 
 pkgsRmetricsDev <- function()
     c("BLCOP",
