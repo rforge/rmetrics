@@ -1,0 +1,25 @@
+----------------------------------------------------------------------
+-- LICENCE
+----------------------------------------------------------------------
+
+-- Before version 1.09, there was a lot of different (and incompatible) 
+licences in this package, namely, GPL, BSD, public domain, etc... 
+(cf. 1.08-version DESCRIPTION file of this package). 
+
+-- From 1.09, all this code of this package (and only this package, i.e.
+not imported packages such as rngWELL pkg) is under the new BSD licence. 
+A copy of the BSD licence is available at 
+http://www.opensource.org/licenses/bsd-license.php
+
+----------------------------------------------------------------------
+-- AUTHORS
+----------------------------------------------------------------------
+
+-- all the code except the ones listed below was written by Yohan Chalabi,
+Christophe Dutang, Petr Savicky and Diethelm Wuertz.
+
+-- the code for SF-Mersenne Twister belongs to M. Matsumoto and M. Saito, 
+which is under the new BSD licence. 
+
+-- the code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth. 
+This code is in the public domain and freely copyable.

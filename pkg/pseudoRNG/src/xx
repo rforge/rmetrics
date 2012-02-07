@@ -1,0 +1,20 @@
+config.h:#define PACKAGE_NAME "randtoolbox"
+config.h:#define PACKAGE_STRING "randtoolbox 1.09"
+config.h:#define PACKAGE_TARNAME "randtoolbox"
+congruRand.c:// called from randtoolbox.c from congruRand function
+init.c: *  randtoolbox to generate pseudo and quasi random sequences
+init.c:#include "randtoolbox.h"
+init.c:        //make randtoolbox C functions available from other packages
+init.c://        R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
+init.c:        R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
+init.c:        R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
+init.c:        R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);
+init.c://        R_RegisterCCallable("randtoolbox", "pokerTest", (DL_FUNC) pokerTest);
+init.c://		R_RegisterCCallable("randtoolbox", "collisionTest", (DL_FUNC) collisionTest);
+init.c:        R_RegisterCCallable("randtoolbox", "knuthTAOCP", (DL_FUNC) knuthTAOCP); 
+locale.h: *  randtoolbox to generate pseudo and quasi random sequences
+pseudoRNG.c: * @file  randtoolbox.c
+pseudoRNG.c:#include "randtoolbox.h"
+pseudoRNG.h: * @file  randtoolbox.h
+runifInterface.c:// .C entry point called from randtoolbox initialization (.onLoad)
+wellrng.h: * @file  randtoolbox.h
