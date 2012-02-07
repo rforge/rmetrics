@@ -1,0 +1,182 @@
+=== randtoolbox: an R package for random number generation and testing ===
+
+Version 1.12
+=============
+
+
+Version 1.11
+=============
+
+- this version is one of the last versions working with
+package rngWELL == 0.10-x.
+
+NOTE FIXES
+- this version use packageStartupMessage function for the .onAttach
+rather than the cat function. 
+- it removes a printf in KnuthTAOCP2002.c
+
+WARNING FIXES in C files
+- remove warnings with Wall and pedantic gcc options. For this
+purpose, files randtoolbox/src/Makevars and rngWELL/src/Makevars
+now contain a line, uncommenting which includes Wall and pedantic.
+
+See https://stat.ethz.ch/pipermail/r-sig-mac/2008-August/005251.html
+
+
+BUG FIXES
+- the package crashes when the dimension was 0 in RNG functions, 
+reported by David LeBauer.
+
+
+Version 1.10
+=============
+
+NEW FEATURES
+- update the man page pseudoRNG.Rd and quasiRNG.Rd with MT19937
+and other minor improvements.
+- on loading, the package print the overview man page.
+
+WARNING FIXES
+- fix some warnings following the release of R 2.13.0: 
+the Makefile and the man page of runifInterface.
+- fix a warning in the MT19937 file.
+
+BUG FIXES
+- remove implicit type declaration in the LowDiscrepancy fortran file,
+which causes errors with GCC 4.6 compilers.
+
+
+Version 1.09
+=============
+
+NEW FEATURES
+
+- start runif interface for congruential generator and WELL RNG,
+- vignette contains two chapters,
+- start to test true randomness (not included in this version),
+- increase the speed and accuracy of Halton and Sobol sequences.
+
+STRUCTURAL CHANGE
+
+- extract Pierre L'Ecuyer's code from randtoolbox and 
+put it in a dedicated package rngWELL,
+- change the licence of randtoolbox from GPL to BSD licence,
+- depends now on rngWELL.
+
+BUG FIXES
+- normal transformation of Halton and Sobol sequences is correct.
+
+BUG REPORT
+
+- Halton and Sobol sequences did not work on 64bit architecture when
+using normal transformation reported by Anirban Mukherjee,
+- Sobol sequences for dimension > 2 need to be tested.
+
+Version 1.08 (never released on CRAN)
+=============
+
+NEW FEATURES
+
+- add function get.primes,
+- table of primes moved from randtoolbox.c to primes.h and compressed
+  by storing half difference from the previous prime instead of each
+  prime (except for 2 and 3),
+- start runifinterface.
+
+Version 1.07
+=============
+
+NEW FEATURES
+
+- integrate code for Halton, Sobol sequence from fBasics (Rmetrics),
+- randoolbox is now part of Rmetrics project (available on R-forge),
+- increase the speed of congruRand.
+
+BUG FIXES
+
+- fix setSeed function,
+- a warning shows up on 64 bit architecture.
+
+BUG REPORT
+
+- setting the seed with WELL's RNGs was not correct, 
+reported by Petr Savicky.
+
+Version 1.06
+=============
+
+BUG FIXES
+
+- the degree of freedom is now correct for the order test.
+
+BUG REPORT
+
+- Astley Lin reports that the degree-of-freedom(df) of 
+chi-square test is wrong for the order test.
+
+Version 1.05
+=============
+
+NEW FEATURES
+
+- add new WELL generators based on L'Ecuyer's code,
+- add the Sobol and Halton sequences from fOptions package.
+
+BUG FIXES
+
+- Yes, it compiles on 64bit linux both on CRAN and R-forge.
+
+Version 1.04
+=============
+
+BUG REPORT
+
+- the package does not compil on Fedora 8 x86_64 boxes,
+reported by Brian Ripley.
+
+
+Version 1.03
+=============
+
+NEW FEATURES
+
+- add the WELL generator thanks to the code of P. L'Ecuyer,
+- SFMT now allows for different mersenne exponents as well as parameter sets,
+- increase the possible dimension for Torus algorithm from 1000 to 100 000,
+- add the RAN_ARRAY generator of Knuth TAOCP (2002),
+- the function setRandSeed has be renamed by setSeed,
+- update the vignette.
+
+
+Version 1.02
+=============
+
+NEW FEATURES
+
+- more random generation tests such as collision test and order test,
+- poker test is generalized to any dimension,
+- some auxiliary functions,
+- a detailed vignette on generating and testing random generation.
+
+BUG FIXES
+
+- on windows, when the seed was not fixed by the user, we use the machine
+time. But we use only seconds of machine time not micro second like on 
+unix-like system. Hence a call like this
+> for(i in 1:10) print(congruRand(1))
+produces the same output. Now it is fixed.
+
+Version 1.01 (never released on CRAN)
+=============
+
+NEW FEATURES
+
+- add withtorus option for SFMT function,
+- improve output of tests.
+
+
+Version 1.00
+=============
+
+- Initial release based on the torus package (which is no longer available).
+
