@@ -8,4 +8,3 @@ Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
 Description: The package provides quasi random generators - the Torus algorithm, the Sobol sequence, the Halton sequence (thus include Van der Corput sequence).
   For true random number generation, use the 'random' package, for Latin Hypercube Sampling (a hybrid QMC method), use the 'lhs' package.
 License: BSD
-Packaged: 2012-02-04 18:42:48 UTC; savicky
