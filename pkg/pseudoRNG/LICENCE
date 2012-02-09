@@ -2,12 +2,7 @@
 -- LICENCE
 ----------------------------------------------------------------------
 
--- Before version 1.09, there was a lot of different (and incompatible) 
-licences in this package, namely, GPL, BSD, public domain, etc... 
-(cf. 1.08-version DESCRIPTION file of this package). 
-
--- From 1.09, all this code of this package (and only this package, i.e.
-not imported packages such as rngWELL pkg) is under the new BSD licence. 
+-- This package is under the new BSD licence. 
 A copy of the BSD licence is available at 
 http://www.opensource.org/licenses/bsd-license.php
 
