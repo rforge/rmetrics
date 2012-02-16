@@ -47,21 +47,17 @@
 # Packaged: Wed Jun 27 20:27:33 2007; Tomas
 
 
-colorLocator <-
-function(locator = FALSE)
+colorLocator <- function(locator = FALSE, cex.axis = 0.7)
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Plots R's 657 named colors for selection
-    
+
     # Source:
     #   Code borrowed from contributed R-package epitools
 
     # FUNCTION:
-
-    # Settings:
-    cex.axis = 0.7
 
     # Plot:
     xx <- rep(1:30, 22)
@@ -71,45 +67,41 @@ function(locator = FALSE)
     matplot(xx[1:30], yyy, pch = 15, type = "n", axes = FALSE,
         xlab = "colorMatrix[row, ]", ylab = "colorMatrix[ , col]",
         main = "Identify Color Names.")
-    # title(sub = "Source: www.epitools.net", cex.sub = 0.7)
-    points(xx, yy, type = "p", pch = 15, cex = 2, col = c(colors(),
-        NA, NA, NA))
+    ## title(sub = "Source: www.epitools.net", cex.sub = 0.7)
+    points(xx, yy, type = "p", pch = 15, cex = 2,
+           col = c(colors(), NA, NA, NA))
     axis(1, at = c(0:30 + 0.5), labels = FALSE, tick = TRUE)
-    axis(1, at = 1:30, label = 1:30, cex.axis = cex.axis, tick = FALSE)
+    axis(1, at = 1:30, labels = 1:30, cex.axis = cex.axis, tick = FALSE)
     axis(2, at = c(0:22 + 0.5), labels = FALSE, tick = TRUE)
-    axis(2, at = 1:22, label = 1:22, cex.axis = cex.axis, tick = FALSE,
-        las = 1)
+    axis(2, at = 1:22, labels = 1:22, cex.axis = cex.axis, tick = FALSE,
+         las = 1)
 
     # Locator:
-    if (locator == TRUE) {
+    if (locator) {
         lxy <- locator()
         xy <- round(data.frame(lxy))
         xym <- as.matrix(xy)
-        located <- data.frame(xy, color.names = cm[xym])
-        return(located)
+        ## return located :=
+        data.frame(xy, color.names = cm[xym])
     } else {
-        return(invisible(cm))
+        invisible(cm)
     }
-    
-    # Return Value:
-    invisible()
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-colorMatrix <-
-function()
+colorMatrix <- function()
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Returns matrix of R's color names
 
     # Source:
     #   Code borrowed from contributed R-package epitools
-    
+
     # FUNCTION:
 
     # Color Names:

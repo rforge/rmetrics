@@ -39,9 +39,9 @@
 # ------------------------------------------------------------------------------
 
 
-.sliderMenu <-
-function(refresh.code, names, minima, maxima, resolutions, starts,
-    title = "Slider", no = 0, set.no.value = 0)
+.sliderMenu <- function(refresh.code, names, minima, maxima,
+                        resolutions, starts,
+                        title = "Slider", no = 0, set.no.value = 0)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -63,14 +63,16 @@ function(refresh.code, names, minima, maxima, resolutions, starts,
     }
     if (no != 0) {
         options(show.error.messages = FALSE)
-        ans = as.numeric(tclvalue(get(paste("slider", no, sep = ""),
-            env = .slider.env)))
+        ans <- as.numeric(tclvalue(get(paste("slider", no, sep = ""),
+                                       envir = .slider.env)))
         options(show.error.messages = TRUE)
         return(ans)
     }
     if (set.no.value[1] != 0) {
-        try(eval(parse(text = paste("tclvalue(slider", set.no.value[1],
-            ")<-", set.no.value[2], sep = "")), env = .slider.env),
+        try(eval(parse(text =
+                       paste("tclvalue(slider", set.no.value[1],
+                             ")<-", set.no.value[2], sep = "")),
+                 envir = .slider.env),
             silent = TRUE)
         return(set.no.value[2])
     }
@@ -83,16 +85,16 @@ function(refresh.code, names, minima, maxima, resolutions, starts,
     # Slider:
     for (i in seq(names)) {
         eval(parse(text = paste("assign(\"slider", i, "\",
-            tclVar(starts[i]), env = .slider.env)", sep = "")))
+            tclVar(starts[i]), envir = .slider.env)", sep = "")))
         tkpack(fr<-tkframe(nt), anchor = "sw")
         lab = tklabel(fr, text = names[i], anchor = "sw")
         sc = tkscale(fr, command = refresh.code, from = minima[i],
             to = maxima[i], showvalue = TRUE, resolution =
             resolutions[i], orient = "horiz")
-        assign("sc", sc, env = .slider.env)
+        assign("sc", sc, envir = .slider.env)
         tkgrid(sc, lab)
         eval(parse(text = paste("tkconfigure(sc, variable = slider", i, ")",
-            sep = "")), env = .slider.env)
+            sep = "")), envir = .slider.env)
     }
     tkpack(fr<-tkframe(nt), anchor = "sw")
 
@@ -105,9 +107,10 @@ function(refresh.code, names, minima, maxima, resolutions, starts,
     # Reset:
     resetButton = tkbutton(fr, text = "   Start | Reset   ",
         command = function() {
-            for (i in seq(starts)) eval(parse(text =
-                paste("tclvalue(slider", i, ")<-", starts[i], sep = "")),
-                env = .slider.env)
+            for (i in seq(starts))
+                eval(parse(text =
+                           paste("tclvalue(slider", i, ")<-", starts[i], sep="")),
+                     envir = .slider.env)
             refresh.code()
         }  )
 

@@ -5,18 +5,18 @@
 # version 2 of the License, or (at your option) any later version.
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 
 ################################################################################
-# FUNCTION:            
-#  .ssden      
+# FUNCTION:
+#  .ssden
 #  .dssden
 #  .pssden
 #  .qssden
@@ -42,13 +42,13 @@
 ################################################################################
 
 
-# Code borrowed from 
+# Code borrowed from
 #   R's contributed package "gss" written by Chong Gu.
 
 
 # Rmetrics:
-#   Note that gmm is not available on Debian as of 2009-04-28. 
-#   To run these functions under Debian/Rmetrics we have them    
+#   Note that gmm is not available on Debian as of 2009-04-28.
+#   To run these functions under Debian/Rmetrics we have them
 #   implemented here as a builtin.
 
 
@@ -583,7 +583,7 @@ function(d, k) {
     repeat {
         zz <- nlm(cv.wk,theta,stepmax=1,ndigit=7)
         if (zz$code<=3)  break
-        theta <- zz$est        
+        theta <- zz$est
         counter <- counter + 1
         if (counter>=5) {
             warning("gss warning in .ssden: CV iteration fails to converge")
@@ -706,16 +706,15 @@ function(d, k) {
     if (!((2*order>dm)&(dm>=1))) {
         stop("gss error: thin-plate spline undefined for the parameters")
     }
-    if (xor(is.vector(mesh),dm==1)
-        |xor(is.matrix(mesh),dm>=2)) {
+    if (xor(is.vector(mesh), dm==1) ||
+        xor(is.matrix(mesh), dm>=2)) {
         stop("gss error in mkrk.tp: mismatched inputs")
     }
     if ((min(weight)<0)|(max(weight)<=0)) {
         stop("gss error in mkrk.tp: negative weights")
     }
     ## Set weights
-    if (is.vector(mesh)) N <- length(mesh)
-    else N <- dim(mesh)[1]
+    N <- if(is.vector(mesh)) length(mesh) else dim(mesh)[1]
     weight <- rep(weight,len=N)
     weight <- sqrt(weight/sum(weight))
     ## Obtain orthonormal basis
@@ -766,8 +765,8 @@ function(d, k) {
                 phix <- rbind(phix,env$phi.p$fun(x,nu,env$phi.p$env))
                 phiy <- rbind(phiy,env$phi.p$fun(y,nu,env$phi.p$env))
             }
-            phix <- backsolve(env$r,phix,tr=TRUE)
-            phiy <- backsolve(env$r,phiy,tr=TRUE)
+            phix <- backsolve(env$r,phix,transpose=TRUE)
+            phiy <- backsolve(env$r,phiy,transpose=TRUE)
             ex <- env$rk.p$fun(env$mesh,x,env$rk.p$env,out=TRUE)
             ex <- env$weight*ex
             ex <- t(env$q)%*%ex
@@ -784,9 +783,9 @@ function(d, k) {
                 phix <- rbind(phix,env$phi.p$fun(x,nu,env$phi.p$env))
                 phiy <- rbind(phiy,env$phi.p$fun(y,nu,env$phi.p$env))
             }
-            phix <- backsolve(env$r,phix,tr=TRUE)
+            phix <- backsolve(env$r,phix,transpose=TRUE)
             phix <- matrix(phix,nnull,N)
-            phiy <- backsolve(env$r,phiy,tr=TRUE)
+            phiy <- backsolve(env$r,phiy,transpose=TRUE)
             phiy <- matrix(phiy,nnull,N)
             ex <- env$rk.p$fun(env$mesh,x,env$rk.p$env,out=TRUE)
             ex <- env$weight*ex
@@ -841,9 +840,9 @@ function(d, k) {
     fun <- function(x,nu,env) {
         nnull <- choose(env$dim+env$order-1,env$dim)
         phix <- NULL
-        for(i in 1:nnull)
+        for(i in seq_len(nnull))
             phix <- rbind(phix,env$phi.p$fun(x,i,env$phi.p$env))
-        t(backsolve(env$r,phix,tr=TRUE))[,nu+1]
+        t(backsolve(env$r,phix,transpose=TRUE))[,nu+1]
     }
     ## Return the function and the environment
     list(fun=fun,env=env)
@@ -857,7 +856,7 @@ function(d, k) {
         stop("gss error: thin-plate spline undefined for the parameters")
     }
     ## Create the environment
-    if (dm%%2) {                    
+    if (dm%%2) {
         theta <- gamma(dm/2-order)/2^(2*order)/pi^(dm/2)/gamma(order)
     }
     else {
@@ -884,7 +883,7 @@ function(d, k) {
             }
         }
         ## Return the results
-        if (outer.prod) {               
+        if (outer.prod) {
             if (env$dim==1) {
                 fn1 <- function(x,y) abs(x-y)
                 d <- outer(x,y,fn1)
@@ -932,7 +931,7 @@ function(d, k) {
         if (sum(code)<order) pol.code <- cbind(pol.code,code)
     }
     env <- list(dim=dm,pol.code=pol.code)
-    ## Create the phi function  
+    ## Create the phi function
     fun <- function(x,nu,env) {
         if (env$dim==1) x <- as.matrix(x)
         if (env$dim!=dim(x)[2]) {
@@ -1012,7 +1011,7 @@ function(d, k) {
         type <- NULL
         for (xlab in vlist) type[[xlab]] <- type.wk
     }
-    ## Set types for marginals    
+    ## Set types for marginals
     var.type <- NULL
     for (xlab in vlist) {
         x <- mf[,xlab]
