@@ -20,9 +20,9 @@
 // #include <R.h>
 // #include <Rdefines.h>
 // #include <Rinternals.h>
-// #include <Rmatch.h>
 // #include <R_ext/Constants.h>
 #include <R_ext/PrtUtil.h>
+#include <R_ext/Error.h>
 
 #define  SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 #define  MIN(a, b) ((a) < (b) ? (a) : (b))
@@ -208,20 +208,18 @@ double bessk1(double x)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-
+// "FIXME": is only used from fdNIG() below ... could simplify
+//          *or* call from R's  dnig
 void dNIG(double* x, double* mu, double* delta, double* alpha,
-    double* beta, int* n, double* d)
+	  double* beta, int* n, double* d)
 {
-  int i;
-  double xarg, exparg;
-  for(i = 0; i < *n; i++)
-  {
-    xarg = *alpha*sqrt(pow(*delta,2.0)+pow((x[i]-*mu),2.0));
-    exparg = *delta*sqrt(pow(*alpha,2.0)-pow(*beta,2.0))+*beta*(x[i]-*mu);
-    if(exparg < -XMAX) exparg = -XMAX;
-    if(exparg > XMAX) exparg = XMAX;
-    d[i] = (*alpha*(*delta)/pi)*exp(exparg)*bessk1(xarg)/sqrt(pow(*delta,2.0) +
-      pow((x[i]-*mu),2.0));
+  for(int i = 0; i < *n; i++) {
+      double sdx = sqrt(pow(*delta,2.0)+pow((x[i]-*mu),2.0)),
+	  xarg = *alpha * sdx,
+	  exparg = *delta*sqrt(pow(*alpha,2.0)-pow(*beta,2.0))+*beta*(x[i]-*mu);
+      if(exparg < -XMAX) exparg = -XMAX;
+      if(exparg > XMAX) exparg = XMAX;
+      d[i] = (*alpha*(*delta)/pi)*exp(exparg)*bessk1(xarg)/ sdx;
   }
 }
 
