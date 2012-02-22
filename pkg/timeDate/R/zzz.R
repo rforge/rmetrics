@@ -30,31 +30,7 @@
 
 ################################################################################
 
-
-.First.lib <- function(lib, pkg)
-{
-
-###     # Startup Mesage and Desription:
-###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-###     dsc <- packageDescription(pkg)
-###     if(interactive() || getOption("verbose")) {
-###         # not in test scripts
-###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-###     }
-
-    # setting Rmetrics global variables
-    setRmetricsOptions(myFinCenter = "GMT",
-                       currentYear = as.POSIXlt(Sys.time())$year + 1900,
-                       myUnits = "days")
-
-    if(!is.numeric(getRmetricsOptions("max.print")))
-	setRmetricsOptions(max.print = 100)
-
-}
-
-
-.onLoad <-
-    function(libname, pkgname)
+.onLoad <- function(libname, pkgname)
 {
 
     # setting Rmetrics global variables
