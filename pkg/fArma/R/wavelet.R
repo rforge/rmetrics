@@ -675,7 +675,7 @@ function(x, q)
 # Slider:
 
 
-.xHurst = NA
+## .xHurst = NA
 
 
 hurstSlider =
@@ -692,7 +692,7 @@ function(x = fgnSim())
     # FUNCTION:
 
     # Transform and Save Series:
-    .xHurst <<- as.vector(x)
+    .xHurst <- as.vector(x)
 
     # Internal Function:
     refresh.code = function(...)
