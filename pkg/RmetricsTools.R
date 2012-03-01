@@ -366,9 +366,9 @@ checkBeforeCommit  <-
 ## ## before starting install packages without namespace
 
 genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
-                         "fGarch", "fCopulae", "fAssets", "fPortfolio",
-                         "fPortfolioBacktest"), dependsOnPkgsDESC = TRUE,
-                         path = ".", ...)
+                         "fArma", "fGarch", "fCopulae", "fAssets",
+                         "fPortfolio", "fPortfolioBacktest"),
+                         dependsOnPkgsDESC = TRUE, path = ".", ...)
 {
 
     stopifnot(is.character(pkgs))
