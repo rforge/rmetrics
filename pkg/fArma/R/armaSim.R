@@ -110,7 +110,10 @@ armaSim <-
     # ARMA:
     if (TSMODEL == "ARIMA") {
         x = ts(c(start.innov, innov), start = 1 - n.start)
-        if (length(model$ma)) x = filter(x, c(1, model$ma), sides = 1)
+        if (length(model$ma)) {
+            x <- filter(x, c(1, model$ma), sides = 1)
+            x[seq_along(model$ma)] <- 0
+        }
         if (length(model$ar)) x = filter(x, model$ar, method = "recursive")
         x = x[-(1:n.start)]
         if (d > 0) x = diffinv(x, differences = d)
