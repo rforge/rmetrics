@@ -283,15 +283,15 @@ void wavedecomp(
 
     if (verbose)    {
     if (*bc == PERIODIC)
-        printf("Periodic boundary method\n");
+        Rprintf("Periodic boundary method\n");
     else if (*bc == SYMMETRIC)
-        printf("Symmetric boundary method\n");
+        Rprintf("Symmetric boundary method\n");
     else    {
-        printf("Unknown boundary correction method\n");
+        Rprintf("Unknown boundary correction method\n");
         *ierr = 1;
         return;
     }
-    printf("Decomposing into level: ");
+    Rprintf("Decomposing into level: ");
     }
 
     *ierr = 0;
@@ -299,7 +299,7 @@ void wavedecomp(
     for(next_level = *levels - 1; next_level >= 0; --next_level)    {
 
     if (verbose)
-        printf("%d ", next_level);
+        Rprintf("%d ", next_level);
 
     at_level = next_level + 1;
 
@@ -324,7 +324,7 @@ void wavedecomp(
            (int)(*(lastD+next_level)), (int)*bc );
     }
     if (verbose)
-    printf("\n");
+    Rprintf("\n");
     return;
 }
 
