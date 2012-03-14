@@ -1,6 +1,8 @@
-\name{YahooKeystats}
+\name{utils-yahooKeystats}
+
 
 \alias{yahooKeystats}
+
 
 \title{Import Key Statistics Data from Yahoo}
 

@@ -15,8 +15,7 @@
 
 
 \usage{ 
-yahooBriefing(query, file = "tempfile", source = NULL, save = FALSE, 
-    try = TRUE) 
+yahooBriefing(query, file = "tempfile", source = NULL, save = FALSE, try = TRUE) 
 }
 
 
@@ -56,13 +55,11 @@ yahooBriefing(query, file = "tempfile", source = NULL, save = FALSE,
 
 
 \author{
-
     Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 
 \references{
-
 Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,

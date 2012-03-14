@@ -1,4 +1,4 @@
-\name{fWEBDATA-class}
+\name{class-fWEBDATA}
 
 
 \docType{class}

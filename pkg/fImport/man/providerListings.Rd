@@ -1,4 +1,4 @@
-\name{providerListings}
+\name{provider-Listings}
 
 
 \alias{providerListings}
