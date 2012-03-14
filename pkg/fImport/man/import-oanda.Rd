@@ -1,6 +1,6 @@
-\name{Oanda}
+\name{import-oanda}
 
-\alias{Oanda}
+\alias{import-oanda}
 
 
 \alias{oandaImport}

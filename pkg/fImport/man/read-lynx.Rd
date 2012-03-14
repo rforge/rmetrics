@@ -1,4 +1,4 @@
-\name{read.lynx}
+\name{read-lynx}
 
 
 \alias{read.lynx}

@@ -1,6 +1,6 @@
-\name{Yahoo}
+\name{import-yahoo}
 
-\alias{Yahoo}
+\alias{import-yahoo}
 
 \alias{yahooImport}
 \alias{yahooSeries}

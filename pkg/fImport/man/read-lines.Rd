@@ -1,9 +1,9 @@
-\name{read.lines}
+\name{read-lines}
 
 
 \alias{read.lines}
-
-
+ 
+ 
 \title{Read from a text file line by line}
 
 

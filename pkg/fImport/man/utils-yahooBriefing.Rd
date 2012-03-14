@@ -1,4 +1,4 @@
-\name{YahooBriefing}
+\name{utils-yahooBriefing}
 
 
 \alias{yahooBriefing}

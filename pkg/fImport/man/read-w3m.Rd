@@ -1,4 +1,4 @@
-\name{read.w3m}
+\name{read-w3m}
 
 
 \alias{read.w3m}

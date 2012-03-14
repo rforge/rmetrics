@@ -1,4 +1,4 @@
-\name{readSplit}
+\name{read-split}
 
 
 \alias{charvecSplit}
@@ -10,14 +10,14 @@
 
 \description{
 
-    Some helpful data set splitting utilities. 
+    Two helpful data set and charvec splitting utilities. 
     
 }
 
 
 \usage{
-charvecSplit(x, split=" ", col=1, format="\%F")
 dataSplit(x, split=" ", col=-1)
+charvecSplit(x, split=" ", col=1, format="\%F")
 }
 
 

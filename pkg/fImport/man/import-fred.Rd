@@ -1,6 +1,6 @@
-\name{Fred}
+\name{import-fred}
 
-\alias{Fred}
+\alias{import-fred}
 
 
 \alias{fredImport}

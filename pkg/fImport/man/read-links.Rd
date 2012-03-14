@@ -1,4 +1,4 @@
-\name{read.links}
+\name{read-links}
 
 
 \alias{read.links}

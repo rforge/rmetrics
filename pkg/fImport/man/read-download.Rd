@@ -1,4 +1,4 @@
-\name{readDownload}
+\name{read-download}
 
 
 \alias{composeURL}
@@ -10,7 +10,7 @@
 
 \description{
 
-    Some helpful download utilities. 
+    Twp helpful utilities to read downloads.\ 
     
 }
 

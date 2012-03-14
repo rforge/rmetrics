@@ -1,4 +1,4 @@
-\name{read.xls}
+\name{read-xls}
 
 
 \alias{read.xls}
