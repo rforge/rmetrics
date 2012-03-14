@@ -14,6 +14,9 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C) for this R-port:
+#   1999 - 2012, Diethelm Wuertz, Zurich, <wuertz@itp.phys.ethz.ch>
+#   2009 - 2012 Rmetrics Association, Zurich, www.rmetrics.org
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:

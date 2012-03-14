@@ -15,10 +15,16 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C) for this R-port:
+#   1999 - 2012, Diethelm Wuertz, Zurich, <wuertz@itp.phys.ethz.ch>
+#   2009 - 2012 Rmetrics Association, Zurich, www.rmetrics.org
+
 
 ################################################################################
-# INTERNAL:                     DESCRIPTION:
-#  .getYahooData                 Downloads time series data from yahoo finance
+# INTERNAL:                 DESCRIPTION:
+#  .getYahooData             Downloads time series data from yahoo finance
+#  yahooBriefing             Downloads briefings from Yahoo's Internet site
+#  yahooKeystats             Downloads key statistics from Yahoo's web site
 ################################################################################
 
 
@@ -279,6 +285,212 @@ function(
 
     # Return Value:
     return(ohlc)
+}
+
+
+###############################################################################
+
+
+yahooBriefing <-
+    function (query, file = "tempfile", source = NULL,
+    save = FALSE, try = TRUE)
+{
+    # A function implemented by Diethelm Wuertz and Matthew C.Keller
+
+    # Description:
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+
+    # Imortant Note:
+    #   This function is no longer supported. The reason for this
+    #   are the too many changes on the Yhaoo web site which made 
+    #   the download very prone to many failures. Feel free to use
+    #   the code here to adapt the function to your own needs.
+    #   DW: Match 14, 2012
+       
+    # Example:
+    #   yahooBriefing("YHOO")
+    #   yahooBriefing("IBM")
+
+    # FUNCTION:
+
+    # Important Note:
+    cat("\n")
+    cat("This function is no longer supported. The reason for this\n")
+    cat("are the too many changes on the Yhaoo web site which made\n")
+    cat("the download very prone to many failures. Feel free to use\n")
+    cat("the code here to adapt the function to your own needs.\n")
+    cat("\n")
+    return()
+    
+    # Download:
+    if (is.null(source))
+        source = "http://finance.yahoo.com/q/ud?s="
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(yahooBriefing(query, file, source, save, try = FALSE))
+        if (class(z) == "try-error" || class(z) == "Error") {
+            return("No Internet Access")
+        }
+        else {
+            return(z)
+        }
+    } else {
+        # Download:
+        url = paste(source, query, sep = "")
+        download.file(url = url, destfile = file)
+        x = scan(file, what = "", sep = "\n")
+
+        # Extract Data Records:
+        x = x[grep("Briefing.com", x)]
+
+        x = gsub("</", "<", x, perl = TRUE)
+        x = gsub("/", " / ", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x = gsub(" align=.center.", "", x, perl = TRUE)
+        x = gsub(" cell.......=...", "", x, perl = TRUE)
+        x = gsub(" border=...", "", x, perl = TRUE)
+        x = gsub(" color=.red.", "", x, perl = TRUE)
+        x = gsub(" color=.green.", "", x, perl = TRUE)
+        x = gsub("<.>", "", x, perl = TRUE)
+        x = gsub("<td>", "@", x, perl = TRUE)
+        x = gsub("<..>", "", x, perl = TRUE)
+        x = gsub("<...>", "", x, perl = TRUE)
+        x = gsub("<....>", "", x, perl = TRUE)
+        x = gsub("<table>", "", x, perl = TRUE)
+        x = gsub("<td nowrap", "", x, perl = TRUE)
+        x = gsub("<td height=....", "", x, perl = TRUE)
+        x = gsub("&amp;", "&", x, perl = TRUE)
+
+        x = unlist(strsplit(x, ">"))
+
+        x = x[ grep("-...-[90]", x, perl = TRUE) ]
+        nX = length(x)
+        # The last record has an additional @, remove it ...
+        x[nX] = gsub("@$", "", x[nX], perl = TRUE)
+        x = unlist(strsplit(x, "@"))
+        x[x == ""] = "NA"
+        x = matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
+        x[, 1] = as.character(strptime(x[, 1], format = "%d-%b-%y"))
+        colnames(x) = c("Date", "ResearchFirm", "Action", "From", "To")
+        x = x[nrow(x):1, ]
+        X = as.data.frame(x)
+    }
+
+    # Return Value:
+    X
+}
+
+
+###############################################################################
+
+
+
+yahooKeystats <-
+    function (query, file = "tempfile", source = NULL,
+    save = FALSE, try = TRUE)
+{
+    # A function implemented by Diethelm Wuertz and Matthew C.Keller
+
+    # Description:
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+
+    # Imortant Note:
+    #   This function is no longer supported. The reason for this
+    #   are the too many changes on the Yhaoo web site which made 
+    #   the download very prone to many failures. Feel free to use
+    #   the code here to adapt the function to your own needs.
+    #   DW: Match 14, 2012
+       
+    # Example:
+    #   yahooKeystats("YHOO")
+    #   yahooKeystats("IBM")
+
+    # Changes:
+    #   2006-08-26 update by MCK
+
+    # FUNCTION:
+    
+    # Important Note:
+    cat("\n")
+    cat("This function is no longer supported. The reason for this\n")
+    cat("are the too many changes on the Yhaoo web site which made\n")
+    cat("the download very prone to many failures. Feel free to use\n")
+    cat("the code here to adapt the function to your own needs.\n")
+    cat("\n")
+    return()
+    
+    # Download:
+    if (is.null(source))
+        source = "http://finance.yahoo.com/q/ks?s="
+    if (try) {
+        # First try if the Internet can be accessed:
+        z <- try(yahooKeystats(query, file, source, save, try = FALSE))
+        if (inherits(z, "try-error") || inherits(z, "Error"))
+            paste("The query", query,
+                  "gave an error. Maybe no internet access?",
+                  sep = "  \n")
+        else
+            z
+
+    } else {
+        # Download and Scan:
+        url = paste(source, query, sep = "")
+        download.file(url = url, destfile = file)
+        x = scan(file, what = "", sep = "\n")
+
+        # Extract Data Records:
+        x = x[grep("datamodoutline1", x)]
+
+        # YC: 2009-03-31
+        # if keystats are not available, returns NA
+        if (!length(x)) return(NA)
+
+        # Clean up HTML:
+        x = gsub("/", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_datamodoutline1.", "", x, perl = TRUE)
+        x = gsub(" colspan=.2.", "", x, perl = TRUE)
+        x = gsub(" cell.......=...", "", x, perl = TRUE)
+        x = gsub(" border=...", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tablehead1.", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x = gsub(" width=.75%.>", "", x, perl = TRUE)
+        x = gsub(" width=.100%.", "", x, perl = TRUE)
+        x = gsub(" size=.-1.", "", x, perl = TRUE)
+        x = gsub("<.>", "", x, perl = TRUE)
+        x = gsub("<..>", "", x, perl = TRUE)
+        x = gsub("<....>", "", x, perl = TRUE)
+        x = gsub("<table>", "", x, perl = TRUE)
+        x = gsub("<sup>.<sup>", "", x, perl = TRUE)
+        x = gsub("&amp;", "&", x, perl = TRUE)
+        x = gsub("<td", " @ ", x, perl = TRUE)
+        x = gsub(",", "", x, perl = TRUE)
+
+        # Create Matrix:
+        x = unlist(strsplit(x, "@" ))
+        x = x[ grep(":", x) ]
+        x = gsub("^ ", "", x, perl = TRUE)
+        if (length(Index <- grep("^ ", x)) > 0)
+            x <- x[-Index]
+        x = gsub(" $", "", x, perl = TRUE)
+        x = gsub(":$", ":NA", x, perl = TRUE)
+
+        # If there are two ":" in a line ...
+        x = sub(":", "@", x)
+        x = sub(":", "/", x)
+
+        # Convert to matrix:
+        x = matrix(x, byrow = TRUE, ncol = 2)
+
+        # Add Current Date:
+        stats = as.character(Sys.Date())
+        x = rbind(c("Symbol", query), c("Date", stats), x)
+        X = as.data.frame(x[, 2])
+        rownames(X) = x[, 1]
+        colnames(X) = "Value"
+
+        ## Return Value:
+        X
+    }
 }
 
 
