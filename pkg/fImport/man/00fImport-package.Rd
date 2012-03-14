@@ -15,8 +15,8 @@
 
 \description{
 
-    Package of functions to download data from
-    the internet or from other sources.
+    Package of utility functions to download and manage data sets
+    from the Internet or from other sources.
 }
 
 
@@ -31,13 +31,23 @@
         URL:        \tab \url{http://www.rmetrics.org}
     }
     
+    The package contains:
+    
+    1) Three example import funcions for Yahoo, Oanda, and the Federal Reserve.
+    
+    2) Several utility functions to read and write data, including functions
+    which allow system calls to the \code{Links}, \code{Lynx}, and \code{W3M} 
+    text browser, and a function to read \code{xls} Excel files.
+    
+    3) Several csv files with provider listings.
+      
 }
     
   
-\section{Overview:}{
+\section{Overview on Time Series Data:}{
 
     The package makes functions available to download financial market
-    data from the internet. Functions are availalbe for the 
+    data from the internet. Functions are available for the 
     follwing web sites:
     
     1. Data from research.stlouisfed.org\cr
@@ -65,7 +75,7 @@
 }
 
 
-\section{Downloading a 'timeSeries' Object:}{
+\section{Downloading 'timeSeries' Objects:}{
 
     The following functions 
 
@@ -81,11 +91,6 @@
     by these changes. The reason was that now all functions have the same
     arguments which makes their usage much easier. For details we refer to 
     the help pages of the functions mentioned above.
-    
-}    
-
-
-\section{Importing a 'fWEBDATA' Object:}{
 
     If you like to keep additional download information, use the functions
     
@@ -98,29 +103,18 @@
 }    
 
 
-\section{Key Statistics:}{
+\section{Fomer Yahoo Utilities:}{
 
-    The function \code{yahooKeystats} allows to download kyy statistics
+    The function \code{yahooKeystats} allows to download key statistics
     from Yahoo's web site.
-    
-}  
-
-
-\section{Briefing:}{
 
     The function \code{yahooBriefings} allows to download a briefing
     from Yahoo's web site.
+        
+    Note: The Yahoo utilities \code{yahooKeystats} and \code{yahooBriefings}
+    are (as of March 2012) no longer supported.
     
 }   
-
-
-\section{Examples:}{
-
-    Simple examples for downloading time series objects are given in the
-    help pages, more elaborated examples can be found in the unit testing
-    directory.
-    
-}
 
 
 \section{License:}{
@@ -133,12 +127,10 @@
 
 
 \references{
-
 Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
-    www.rmetrics.org.
-    
+    www.rmetrics.org.   
 }
 
    
