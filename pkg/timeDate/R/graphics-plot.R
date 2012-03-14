@@ -91,7 +91,7 @@ axis.timeDate <-
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Adds an axis to a 'timeDate' lot
+    #   Adds an axis to a 'timeDate' plot
     
     # Arguments:
     #   side - an integer specifying which side of the plot the axis
@@ -118,7 +118,7 @@ axis.timeDate <-
 
     # Add Axis:
     axis.POSIXct(side = side, x = as.POSIXct(x), at = as.POSIXct(at),
-        format = format, labels = TRUE, ...)
+        format = format, labels = labels, ...)
 
     # Return Value:
     invisible()
