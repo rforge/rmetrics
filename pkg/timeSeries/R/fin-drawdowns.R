@@ -57,9 +57,10 @@ drawdowns <-
     cumprodReturns <- colCumprods(1 + r)
     cummaxReturns <- colCummaxs(cumprodReturns)
     series(drawdowns) <- series(cumprodReturns)/series(cummaxReturns) - 1
-
-    # Return Value:
     drawdowns <- drawdowns[-1, ]
+    
+    # Return Value:
+    drawdowns
 }
 
 
