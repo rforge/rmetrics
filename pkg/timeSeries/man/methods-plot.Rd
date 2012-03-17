@@ -8,6 +8,7 @@
 \alias{plot,timeSeries-method}
 \alias{lines,timeSeries-method}
 \alias{points,timeSeries-method}
+\alias{pretty.timeSeries}
 
 
 \description{
@@ -19,40 +20,46 @@
 
 
 \usage{
-\S4method{plot}{timeSeries}(x, y, FinCenter = NULL, plot.type =
-    c("multiple", "single"), format = "auto", at = "auto", widths = 1,
-    heights = 1, xy.labels, xy.lines, panel = lines, nc, yax.flip =
-    FALSE, mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
+\S4method{plot}{timeSeries}(x, y, FinCenter = NULL, 
+    plot.type = c("multiple", "single"), format = "auto", 
+    at = pretty(x), widths = 1, heights = 1, xy.labels, 
+    xy.lines, panel = lines, nc, yax.flip = FALSE, 
+    mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
     oma.multi = c(6, 0, 5, 0), axes = TRUE, \ldots)
     
 \S4method{lines}{timeSeries}(x, FinCenter = NULL, \dots)
 \S4method{points}{timeSeries}(x, FinCenter = NULL, \dots)
+
+pretty.timeSeries(x, n=5, min.n=n\%/\%3, shrink.sml=0.75, 
+    high.u.bias=1.5, u5.bias=0.5+1.5*high.u.bias, 
+    eps.correct=0, \dots) 
 }
 
 
 \arguments{
 
-    \item{x}{
-        an object of class \code{timeSeries}.
-        }
-    \item{y}{
-        an object of class \code{timeSeries}.
+    \item{x,y }{
+        objects of class \code{timeSeries}.
         }
     \item{FinCenter}{
-        a character with the the location of the  financial center named 
-        as \code{"continent/city"}.
+        a character with the the location of the  financial center 
+        named as \code{"continent/city"}.
         }
     \item{plot.type}{
         for multivariate time series, should the series by plotted
         separately (with a common time axis) or on a single plot?
         }
-    \item{format}{...
+    \item{format}{POSIX label format, e.g. "\%Y-\%m-\%d" or "\%F" for 
+        ISO-8601 standard date format.
         }
-    \item{at}{...
+    \item{at}{
+        a \code{timeDate} object setting the plot label positions. 
+        If \code{at=pretty(x)}, the postitions are generated automatized 
+        calling the function \code{pretty}. Former default option
+        \code{at="auto"} selects 6 equal spaced time label positions.
         }
-    \item{widths}{...
-        }
-    \item{heights}{...
+    \item{widths, heights}{ 
+        widths and heights for individual graphs, see \code{layout}.
         }
     \item{xy.labels}{
         logical, indicating if \code{text()} labels should be used for an
@@ -68,7 +75,7 @@
     \item{panel}{
         a \code{function(x, col, bg, pch, type, ...)} which gives the
         action to be carried out in each panel of the display for
-        \code{plot.type="multiple"}.  The default is \code{lines}
+        \code{plot.type="multiple"}.  The default is \code{lines}.
         }
     \item{nc}{
         the number of columns to use when \code{type="multiple"}. Defaults
@@ -85,17 +92,39 @@
     \item{axes}{
         logical indicating if x- and y- axes should be drawn.
         }
+    \item{n}{
+        an integer giving the desired number of intervals. 
+    } 
+    \item{min.n}{
+        a nonnegative integer giving the minimal 
+        number of intervals. 
+    }
+    \item{shrink.sml}{
+        a positive numeric by a which a default 
+        scale is shrunk in the case when range(x) is 
+        very small.
+    }
+    \item{high.u.bias}{
+        a non-negative numeric, typically > 1. 
+        Larger high.u.bias values favor larger units.
+    }
+    \item{u5.bias}{
+        a non-negative numeric multiplier favoring 
+        factor 5 over 2.
+    }
+    \item{eps.correct}{
+       an integer code, one of {0,1,2}. If 
+       non-0, a correction is made at the boundaries.
+    }          
     \item{\dots}{
        additional graphical arguments, see \code{plot}, \code{plot.default}
-       and \code{par}
-       }
+       and \code{par}.
+    }
 }
 
 
 \value{
-
-    a plot or plot elements of an object of class \code{timeSeries}.
-        
+    a plot or plot elements of an object of class \code{timeSeries}.      
 }
 
 

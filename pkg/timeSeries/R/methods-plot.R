@@ -19,16 +19,19 @@
 #  .plot.timeSeries          Internal function called by plot.timeSeries
 #  lines,timeSeries          Adds lines to a 'timeSeries' plot
 #  points,timeSeries         Adds points to a 'timeSeries' plot
+# FUNCTION:                 DESCRIPTION:
+#  pretty.timeSeries         Returns a sequence of equally spaced round values 
 ################################################################################
 
 
-.plot.timeSeries <- function(x, y, FinCenter = NULL,
-                             plot.type = c("multiple", "single"),
-                             format = "auto", at = "auto",
-                             widths = 1, heights = 1,
-                             xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
-                             mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
-                             oma.multi = c(6, 0, 5, 0), axes = TRUE, ...)
+.plot.timeSeries <- 
+    function(x, y, FinCenter = NULL,
+    plot.type = c("multiple", "single"),
+    format = "auto", at = pretty(x),
+    widths = 1, heights = 1,
+    xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
+    mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
+    oma.multi = c(6, 0, 5, 0), axes = TRUE, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -54,7 +57,7 @@
 
     # FUNCTION:
 
-    #
+    # Check Missing
     if (missing(y)) y <- NULL
 
     # Labels:
@@ -76,10 +79,11 @@
                     format = format, at = at, widths = widths, heights = heights, ...)
 }
 
+
 setMethod("plot", "timeSeries",
           function(x, y, FinCenter = NULL,
                    plot.type = c("multiple", "single"),
-                   format = "auto", at = "auto",
+                   format = "auto", at = pretty(x),
                    widths = 1, heights = 1,
                    xy.labels, xy.lines, panel = lines, nc, yax.flip = FALSE,
                    mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1),
@@ -101,11 +105,10 @@ plot.timeSeries <- function(x, y, ...) .plot.timeSeries(x, y, ...)
 
 
 .plotTimeSeries <-
-function(x, y = NULL, plot.type = c("multiple",
-    "single"), xy.labels, xy.lines, panel = lines, nc, xlabel, ylabel,
+function(x, y = NULL, plot.type = c("multiple", "single"), 
+    xy.labels, xy.lines, panel = lines, nc, xlabel, ylabel,
     type = "l", xlim = NULL, ylim = NULL, xlab = "Time", ylab, log = "",
-    col = 1:ncol(x), bg = NA,
-    pch = 1:ncol(x), cex = par("cex"),
+    col = 1:ncol(x), bg = NA, pch = 1:ncol(x), cex = par("cex"),
     lty = par("lty"), lwd = par("lwd"), axes = TRUE, frame.plot =
     axes, ann = par("ann"), main = NULL, mar.multi, oma.multi, yax.flip,
     format, at, widths, heights, grid = FALSE, ...)
@@ -120,7 +123,7 @@ function(x, y = NULL, plot.type = c("multiple",
     #   see 'plot.ts()'.
 
     # FUNCTION:
-
+    
     # Utility Function:
     plot.type <- match.arg(plot.type)
     nser <- NCOL(x)
@@ -352,4 +355,54 @@ setMethod("points", "timeSeries",
 points.timeSeries <- function(x, FinCenter = NULL, ...)
     .points.timeSeries(x, FinCenter = FinCenter, ...)
 
+    
 ################################################################################
+
+
+pretty.timeSeries <- 
+    function(x, n = 5, min.n = n%/%3, shrink.sml = 0.75, 
+        high.u.bias = 1.5, u5.bias = 0.5 + 1.5 * high.u.bias, 
+        eps.correct = 0, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #    Returns a sequence of equally spaced round values.
+    
+    # Details:
+    #    Computes a sequence of about n+1 equally spaced ‘round’ 
+    #    values which cover the range of the values in x. 
+    #    The values are chosen so that they are 1, 2 or 5 times 
+    #    a power of 10.
+    
+    # Arguments:
+    #    x - a timeSeries object from which the time is
+    #        extracted
+    #    n - integer giving the desired number of intervals.  
+    #    min.n  - nonnegative integer giving the minimal 
+    #        number of intervals. 
+    #    shrink.sml - positive numeric by a which a default 
+    #        scale is shrunk in the case when range(x) is 
+    #        very small.
+    #    high.u.bias - non-negative numeric, typically > 1. 
+    #        Larger high.u.bias values favor larger units.
+    #    u5.bias - non-negative numeric multiplier favoring 
+    #        factor 5 over 2.
+    #    eps.correct - integer code, one of {0,1,2}. If 
+    #       non-0, a correction is made at the boundaries.
+    #    ... - further arguments for methods.
+    
+    # FUNCTION:
+    
+    x <- as.POSIXct(time(x))
+    ans <- pretty(x, n=n, min.n=min.n, shrink.sml=shrink.sml,
+        high.u.bias=high.u.bias, u5.bias=u5.bias, 
+        eps.correct=eps.correct, ...)
+        
+    # Return Value:
+    as.timeDate(ans)
+}   
+ 
+
+###############################################################################
+
