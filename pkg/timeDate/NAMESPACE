@@ -20,7 +20,10 @@ export(as.Date.timeDate)
 ################################################
 
 exportClasses("timeDate" )
-export("align",
+export( "align",
+        "alignDaily",
+        "alignMonthly",
+        "alignQuarterly",
         "atoms",
         "finCenter",
         "finCenter<-",
