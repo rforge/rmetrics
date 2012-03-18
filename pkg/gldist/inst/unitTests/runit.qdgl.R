@@ -147,19 +147,6 @@ test.qdgl <- function() {
     }
 
     ###################################
-    # take care of remove any previous warnings to avoid that they
-    # alter the following tests
-    ops <- options(warn = -1)
-    olast.warning <- get("last.warning", envir = baseenv())
-    on.exit({
-        options(ops)
-        assign("last.warning", olast.warning, envir = baseenv())
-    })
-    assign("last.warning", NULL, envir = baseenv())
-
-
-
-    ###################################
     # test with values larger than one or smaller than 0
 
     oo <- options(warn = -1)
