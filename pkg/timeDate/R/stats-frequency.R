@@ -17,34 +17,36 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  frequency.timeDate      Returns the frequency of a timeDate vector
+#  frequency,timeDate      Returns the frequency of a timeDate vector
 ################################################################################
 
 
 setMethod("frequency", "timeDate", function(x, ...)
-      {
-          # A function implemented by Diethelm Wuertz
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns the frequency of a timeDate vector
+    
+    # Arguments:
+    #   x - an object of class timeDate
+    
+    # Example:
+    #   frequency(timeCalendar())
+    #   frequency(timeCalendar()[(1:3)*4])
+    #   frequency(timeLastDayInQuarter(timeCalendar())[(1:3)*4])
+    
+    # FUNCTION:
+    
+    # Frequency:
+    frequency <- 1
+    if(isMonthly(x)) frequency <- 12
+    if(isQuarterly(x)) frequency <- 4
+    
+    # Return Value:
+    frequency
+})
 
-          # Description:
-          #   Returns the frequency of a timeDate vector
-
-          # Arguments:
-          #   x - an object of class timeDate
-
-          # Example:
-          #   frequency(timeCalendar())
-          #   frequency(timeCalendar()[(1:3)*4])
-
-          # FUNCTION:
-
-          # Frequency:
-          frequency <- 1
-          if(isMonthly(x)) frequency <- 12
-          if(isQuarterly(x)) frequency <- 4
-
-          # Return Value:
-          frequency
-      })
 
 ################################################################################
 
