@@ -15,42 +15,43 @@
 
 
 ################################################################################
-## FUNCTION:		     DESCRIPTION:
-##  timeNthNdayInMonth	      Computes n-th ocurrance of a n-day in year/month
-##  timeLastNdayInMonth	      Computes the last n-day in year/month
+## FUNCTION:             DESCRIPTION:
+##  timeNthNdayInMonth        Computes n-th ocurrance of a n-day in year/month
+##  timeLastNdayInMonth       Computes the last n-day in year/month
 ################################################################################
 
 
-timeNthNdayInMonth <- function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
-			       zone = "", FinCenter = "")
+timeNthNdayInMonth <- 
+function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
+    zone = "", FinCenter = "")
 {
     ## A function implemented by Diethelm Wuertz
 
     ## Description:
-    ##	 Computes "nth" ocurrance of a "nday" (nth = 1,...,5)
-    ##	 in "year,month"
+    ##   Computes "nth" ocurrance of a "nday" (nth = 1,...,5)
+    ##   in "year,month"
 
     ## Arguments:
-    ##	 charvec - a character vector of dates and times.
-    ##	 nday - an integer vector with entries ranging from
-    ##	     0 (Sunday) to 6 (Saturday).
-    ##	 nth - an integer vector numbering the n-th occurence.
-    ##	 format - the format specification of the input character vector.
-    ##	 FinCenter - a character string with the the location of the
-    ##	     financial center named as "continent/city".
+    ##   charvec - a character vector of dates and times.
+    ##   nday - an integer vector with entries ranging from
+    ##       0 (Sunday) to 6 (Saturday).
+    ##   nth - an integer vector numbering the n-th occurence.
+    ##   format - the format specification of the input character vector.
+    ##   FinCenter - a character string with the the location of the
+    ##       financial center named as "continent/city".
 
     ## Value:
-    ##	 Returns the "nth" ocurrance of a "nday" (nth = 1,...,5)
-    ##	 in "year,month" as a 'timeDate' object.
+    ##   Returns the "nth" ocurrance of a "nday" (nth = 1,...,5)
+    ##   in "year,month" as a 'timeDate' object.
 
     ## Example:
-    ##	 What date is the second Monday in April 2004?
-    ##	 timeNthNdayInMonth("2004-04-01", 1, 2)
+    ##   What date is the second Monday in April 2004?
+    ##   timeNthNdayInMonth("2004-04-01", 1, 2)
 
     if (zone == "")
-	zone <- getRmetricsOptions("myFinCenter")
+    zone <- getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
-	FinCenter <- getRmetricsOptions("myFinCenter")
+    FinCenter <- getRmetricsOptions("myFinCenter")
 
     ## timeDate:
     lt <- strptime(charvec, format, tz = "GMT")
@@ -60,41 +61,42 @@ timeNthNdayInMonth <- function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
     lt1$mday <- 1
     ct <- 24*3600*(as.integer(julian.POSIXt(lt)) + (nth-1)*7 + (nday-lt1$wday)%%7)
     timeDate(format(as.POSIXct(ct, origin="1970-01-01")),
-	     format = format, zone = zone, FinCenter = FinCenter)
+         format = format, zone = zone, FinCenter = FinCenter)
 }
 
 
 ## ------------------------------------------------------------------------------
 
 
-timeLastNdayInMonth <- function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
-				FinCenter = "")
+timeLastNdayInMonth <- 
+function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
+    FinCenter = "")
 {
     ## A function implemented by Diethelm Wuertz
 
     ## Description:
-    ##	 Computes the last "nday" in "year/month"
+    ##   Computes the last "nday" in "year/month"
 
     ## Arguments:
-    ##	 charvec - a character vector of dates and times.
-    ##	 nday - an integer vector with entries ranging from
-    ##	     0 (Sunday) to 6 (Saturday).
-    ##	 format - the format specification of the input character vector.
-    ##	 FinCenter - a character string with the the location of the
-    ##	     financial center named as "continent/city".
+    ##   charvec - a character vector of dates and times.
+    ##   nday - an integer vector with entries ranging from
+    ##       0 (Sunday) to 6 (Saturday).
+    ##   format - the format specification of the input character vector.
+    ##   FinCenter - a character string with the the location of the
+    ##       financial center named as "continent/city".
 
     ## Value:
-    ##	 Returns the last "nday" in "year/month" as a 'timeDate'
-    ##	 object.
+    ##   Returns the last "nday" in "year/month" as a 'timeDate'
+    ##   object.
 
     ## Example:
-    ##	 What date has the last Tuesday in May, 1996?
-    ##	 timeLastNdayInMonth("1996-05-01", 2)
+    ##   What date has the last Tuesday in May, 1996?
+    ##   timeLastNdayInMonth("1996-05-01", 2)
 
     if (zone == "")
-	zone <- getRmetricsOptions("myFinCenter")
+    zone <- getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
-	FinCenter <- getRmetricsOptions("myFinCenter")
+    FinCenter <- getRmetricsOptions("myFinCenter")
 
     ## Last Day:
     last.day <- c(31,28,31, 30,31,30, 31,31,30, 31,30,31)
@@ -104,12 +106,12 @@ timeLastNdayInMonth <- function(charvec, nday = 1, format = "%Y-%m-%d", zone = "
     leap.day <- leap.year & (lt$mon == 1) # leap year *and* february -> 28 + 1 days
     lt$mday <- last.day[1 + lt$mon] + leap.day
     lt <- strptime(lt, format, tz = "GMT")
-				## to make sure that lt$wday
-				## represents the wday of the
-				## last day of the month
+                ## to make sure that lt$wday
+                ## represents the wday of the
+                ## last day of the month
     ct <- 24*3600*(as.integer(julian.POSIXt(lt)) + (nday - lt$wday)%%7)
     timeDate(format(as.POSIXct(ct, origin="1970-01-01")),
-	     format = format, zone = zone, FinCenter = FinCenter)
+         format = format, zone = zone, FinCenter = FinCenter)
 }
 
 
