@@ -18,11 +18,12 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  dayOfWeek                 Returns the day of the week to a 'timeDate' object
+#  dayOfYear                 Returns the day of the year to a 'timeDate' object
 ################################################################################
 
 
 dayOfWeek <-
-    function(x)
+function(x)
 {
     # A function implemented by Diethelm Wuertz
     # and modified by Yohan Chalabi
@@ -48,6 +49,36 @@ dayOfWeek <-
 
     # Return Value:
     wdays
+}
+
+
+################################################################################
+
+
+dayOfYear <-
+function(x)
+{
+    # A function implemented by Diethelm Wuertz
+    # and modified by Yohan Chalabi
+
+    # Description:
+    #   Returns day of week for time date objects
+
+    # Arguments:
+    #   x - an object of class "timeDate"
+
+    # FUNCTION:
+    stopifnot(inherits(x, "timeDate"))
+
+    # Assign:
+    x <- as.POSIXlt(x, tz = "GMT")
+    yd <- 1:366
+    n <- x$yday + 1
+    ydays <- yd[n]
+    names(ydays) <- format(x)
+
+    # Return Value:
+    ydays
 }
 
 
