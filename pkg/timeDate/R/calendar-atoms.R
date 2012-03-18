@@ -18,7 +18,7 @@
 ################################################################################
 # METHOD:                   DESCRIPTION:
 #  atoms,timeDate            Returns date/time atoms from a 'timeDate' object
-#  atoms,timeDate
+#  months,timeDate           Extracts months atom from a 'timeDate' object
 ################################################################################
 
 
@@ -72,6 +72,41 @@ setMethod("atoms", "ANY", function(x, ...)
 
     # Return Value:
     invisible(x)
+})
+
+
+################################################################################
+
+
+setMethod("months", "timeDate",
+    function(x, abbreviate=NULL)
+{
+    # A function implemented by Diethelm Wuertz
+    # and improved by Yohan Chalabi
+
+    # Description:
+    #   Extracts months atom from a timeDate object
+
+    # Arguments:
+    #   x - a 'timeDate' object from which to extract the
+    #       month "atom".
+
+    # Value:
+    #   Returns the month from a 'timeDate' object as an integer
+    #   value or vector with elements ranging between 1 and 12,
+    #   numbering the months from January to December.
+
+    # FUNCTION:
+
+    # Check Class Type:
+    if (!inherits(x, "timeDate")) stop("Wrong class type")
+
+    # Month:
+    ans <- as.POSIXlt(x, tz = "GMT")$mon+1
+    attr(ans, "control") <- c(FinCenter = finCenter(x))
+
+    # Return Value:
+    ans
 })
 
 
