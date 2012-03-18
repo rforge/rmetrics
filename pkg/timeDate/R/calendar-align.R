@@ -25,6 +25,8 @@
 setMethod("align", "timeDate",
     function(x, by = "1d", offset = "0s")
 {
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
+    
     # Description:
     #   Aligns a 'timeDate' object to regular time stamps
 
@@ -54,7 +56,7 @@ setMethod("align", "ANY",
     function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
     ties = mean, ...)
 {
-    # A function implemented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
     # FUNCTION:
 
@@ -69,4 +71,93 @@ setMethod("align", "ANY",
 
 ################################################################################
 
+
+alignDaily <-
+function(x, include.weekends=FALSE)
+{
+     # A function implemented by Diethelm Wuertz
+     
+     # Description:
+     #    Aligns a 'timeDate' object to end-of-day dates
+     
+     # Arguments:
+     #    x - a 'timeDate' object
+     #    include.weekends - a logical, should weekends be included?
+     
+     # FUNCTION:
+     
+     # Align:
+     if (include.weekends) {
+         tD <- align(x)
+     } else {
+         tD <- align(x)
+         tD <- tD[isWeekday(tD)]
+     }
+     
+     # Return Value:
+     tD
+}
+
+
+# ----------------------------------------------------------------------------
+
+
+alignMonthly <- 
+function(x, include.weekends=FALSE)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #    Aligns a 'timeDate' object to end of month dates
+     
+    # Arguments:
+    #    x - a 'timeDate' object
+    #    include.weekends - a logical, should weekends be included?
+     
+    # FUNCTION:
+    
+    # Align:
+    if (include.weekends) {
+        tD <- timeLastDayInMonth(x)
+    } else {
+        tD <- timeLastDayInMonth(x)
+        tD[isWeekend(tD)] <- tD[isWeekend(tD)] - 24*3600
+    }
+    
+    # Return Value:
+    tD
+}
+
+
+# ----------------------------------------------------------------------------
+
+
+alignQuarterly <- 
+function(x, include.weekends=FALSE)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #    Aligns a 'timeDate' object to end-of-quarter dates
+    
+    # Arguments:
+    #    x - a 'timeDate' object
+    #    include.weekends - a logical, should weekends be included?
+     
+    # FUNCTION:
+    
+    # Align:
+    if (include.weekends) {
+        tD <- timeLastDayInQuarter(x)
+    } else {
+        tD <- timeLastDayInQuarter(x)
+        tD[isWeekend(tD)] <- tD[isWeekend(tD)] - 24*3600
+    }
+    
+    # Return Value:
+    tD
+}
+
+
+###############################################################################
 
