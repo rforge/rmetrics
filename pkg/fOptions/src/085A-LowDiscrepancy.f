@@ -238,59 +238,59 @@ C     POINT WITH A POINT FAR IN THE TAILS.
 
 C-------------------------------------------------------------------------------
 
-
-      SUBROUTINE TESTHALTON()
-
-      IMPLICIT NONE
-
-      INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
-      PARAMETER (N1=20,N2=N1/2,DIMEN=5)
-      INTEGER BASE(DIMEN)
-      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
-      INTEGER J, I, INIT
-
-      TRANSFORM = 0
-
-C     FIRST TEST RUN:
-      INIT = 1
-      OFFSET = 0
-      CALL HALTON(QN1,N1,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-
-      WRITE (*,*)
-      WRITE (*,*) "HALTON SEQUENCE: 1-20"
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N1, INT(N1/(2*10))
-         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-C     SECOND TEST RUN:
-      INIT=1
-      OFFSET = 0
-      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*)
-      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT = 0
-      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
-      WRITE (*,*)
-      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
- 7    FORMAT(1H ,A8, 10I10)
- 8    FORMAT(1H ,I8, 10F10.6)
-
-      RETURN
-      END
+c$$$
+c$$$      SUBROUTINE TESTHALTON()
+c$$$
+c$$$      IMPLICIT NONE
+c$$$
+c$$$      INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
+c$$$      PARAMETER (N1=20,N2=N1/2,DIMEN=5)
+c$$$      INTEGER BASE(DIMEN)
+c$$$      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
+c$$$      INTEGER J, I, INIT
+c$$$
+c$$$      TRANSFORM = 0
+c$$$
+c$$$C     FIRST TEST RUN:
+c$$$      INIT = 1
+c$$$      OFFSET = 0
+c$$$      CALL HALTON(QN1,N1,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+c$$$
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,*) "HALTON SEQUENCE: 1-20"
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N1, INT(N1/(2*10))
+c$$$         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$C     SECOND TEST RUN:
+c$$$      INIT=1
+c$$$      OFFSET = 0
+c$$$      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,*) "HALTON SEQUENCE: 1-10 RE-INITIALIZED"
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N2, INT(N2/10)
+c$$$         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$      INIT = 0
+c$$$      CALL HALTON(QN2,N2,DIMEN,BASE,OFFSET,INIT,TRANSFORM)
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,*) "HALTON SEQUENCE: 11-20 CONTINUED"
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N2, INT(N2/10)
+c$$$         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$ 7    FORMAT(1H ,A8, 10I10)
+c$$$ 8    FORMAT(1H ,I8, 10F10.6)
+c$$$
+c$$$      RETURN
+c$$$      END
 
 
 C-------------------------------------------------------------------------------
@@ -1646,59 +1646,59 @@ C     FIRST THE NUMERATORS, THEN NORMALIZED
 
 C-------------------------------------------------------------------------------
 
-
-      SUBROUTINE TESTSOBOL()
-
-      IMPLICIT NONE
-
-C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
-      INTEGER MAXBIT,DIMEN,TRANSFORM
-      INTEGER N1, N2
-      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
-      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
-      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
-      INTEGER iSEED, iSEED1
-      INTEGER I, INIT, IFLAG, J
-
-      TRANSFORM = 1
-      IFLAG = 3
-      iSEED1 = 4711
-
-      INIT = 1
-      iSEED = iSEED1
-      CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N1, INT(N1/(2*10))
-         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT=1
-      iSEED = iSEED1
-      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
-      INIT = 0
-      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
-      WRITE (*,*)
-      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
-      DO I=1, N2, INT(N2/10)
-         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
-      ENDDO
-
- 7    FORMAT(1H ,A8, 10I10)
- 8    FORMAT(1H ,I8, 10F10.6)
-
-      RETURN
-      END
+c$$$
+c$$$      SUBROUTINE TESTSOBOL()
+c$$$
+c$$$      IMPLICIT NONE
+c$$$
+c$$$C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
+c$$$      INTEGER MAXBIT,DIMEN,TRANSFORM
+c$$$      INTEGER N1, N2
+c$$$      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
+c$$$      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
+c$$$      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
+c$$$      INTEGER iSEED, iSEED1
+c$$$      INTEGER I, INIT, IFLAG, J
+c$$$
+c$$$      TRANSFORM = 1
+c$$$      IFLAG = 3
+c$$$      iSEED1 = 4711
+c$$$
+c$$$      INIT = 1
+c$$$      iSEED = iSEED1
+c$$$      CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
+c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N1, INT(N1/(2*10))
+c$$$         WRITE (*,8) I, (QN1(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$      INIT=1
+c$$$      iSEED = iSEED1
+c$$$      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
+c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N2, INT(N2/10)
+c$$$         WRITE (*,8) I, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$      INIT = 0
+c$$$      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
+c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$      WRITE (*,*)
+c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
+c$$$      DO I=1, N2, INT(N2/10)
+c$$$         WRITE (*,8) I+N2, (QN2(I,J), J=1, DIMEN, INT(DIMEN/5))
+c$$$      ENDDO
+c$$$
+c$$$ 7    FORMAT(1H ,A8, 10I10)
+c$$$ 8    FORMAT(1H ,I8, 10F10.6)
+c$$$
+c$$$      RETURN
+c$$$      END
 
 
 C-------------------------------------------------------------------------------
