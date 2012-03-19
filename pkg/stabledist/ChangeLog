@@ -1,3 +1,7 @@
+2012-03-19  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-3,  released to CRAN on 2012-03-19
+
 2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dpqr-stable.R (dstable): new 'zeta.tol' argument; and checking
@@ -7,7 +11,7 @@
 
 2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
 
-	* DESCRIPTION (Version): 0.6-2.1
+	* DESCRIPTION (Version): 0.6-2.1, released to CRAN on 2011-03-30
 
 	* R/dpqr-stable.R (dstable(*, alpha=1) -> .fct2): "robustified" g()
 	* R/dpqr-stable.R (pstable(*, alpha=1) -> .FCT2): ditto + simplified (1 integ.)
@@ -44,6 +48,8 @@
 	* R/dpqr-stable.R (qstable): infinite while(.) now caught
 
 2011-03-12  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-0, released to CRAN, 2011-03-14
 
 	* R/dpqr-stable.R (dstable, .fct1): detect when the integration
 	seems completely unreliable and then also use the x=zeta value.
