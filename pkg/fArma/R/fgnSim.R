@@ -201,7 +201,7 @@ function(n, H, mean, std)
     zprime = c(0, z, Conj(rev(z)[-1]))
 
     # Inverse FFT gives sample path:
-    z = Re(fft(zprime, inv = TRUE))
+    z = Re(fft(zprime, inverse = TRUE))
 
     # Standardize:
     z = (z-mean(z))/sqrt(var(z))

@@ -117,7 +117,7 @@ doplot = TRUE, ...)
         ylim = range(ylim, lower, upper, na.rm = TRUE)
         ylab = paste("Series: ", fit$series)
         vTS = ts(c(data[(n-n.back+1):n], pred$pred[1], rep(NA, npred-1)),
-            end = tsp(data)[2] + npred/freq, f = freq)
+            end = tsp(data)[2] + npred/freq, frequency = freq)
         plot(vTS, type = "o", pch = 19, ylim = ylim, ylab = ylab)
         title(main = paste(fit$tstitle))
 
@@ -130,7 +130,7 @@ doplot = TRUE, ...)
         palette("default")
 
         # Mean:
-        vTS = ts(pred$pred, start = tsp(data)[2]+1/freq, f = freq)
+        vTS = ts(pred$pred, start = tsp(data)[2]+1/freq, frequency = freq)
         lines(vTS, lty = 1, col = 4)
         points(vTS, pch = 19)
 
