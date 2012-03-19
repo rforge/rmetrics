@@ -5,134 +5,134 @@ C      VOL. 18, NO. 3, SEPTEMBER, 1992, PP. 343-344.
 C
 C     USED FOR:
 C      PROGRAM RUNPDE
-C      FOR TESTING AND DEBUGGING UNDER FORTRAN    
-C      CALL PDETEST()     
+C      FOR TESTING AND DEBUGGING UNDER FORTRAN
+C      CALL PDETEST()
 C      END
 
 C     MODEL 1: VECER's PDE
 C     MODEL 2: ZHANG's PDE
 
 C ------------------------------------------------------------------------------
+c$$$
+c$$$      SUBROUTINE PDETEST()
+c$$$CC     NOT USED BY R
+c$$$CC     FOR TESTING AND DEBUGGING UNDER FORTRAN
+c$$$      IMPLICIT REAL*8 (A-H, O-Z)
+c$$$      PARAMETER(MNP=10)
+c$$$      DIMENSION PRICE(MNP+1), XBYS(MNP+1)
+c$$$C
+c$$$      PARAMETER (MMF=12, MMX=1000)
+c$$$      PARAMETER (MNPDE=1, MKORD=4, MNINT=MMX, MNCC=2, MMAXDER=5)
+c$$$
+c$$$C     WORKING ARRAYS:
+c$$$      DIMENSION WORK
+c$$$     *   (MKORD+MNPDE*(4+9*MNPDE)+(MKORD+(MNINT-1)*(MKORD-MNCC))*
+c$$$     *   (3*MKORD+2+MNPDE*(3*(MKORD-1)*MNPDE+MMAXDER+4)))
+c$$$      DIMENSION IWORK((MNPDE+1)*(MKORD+(MNINT-1)*(MKORD-MNCC)))
+c$$$      DIMENSION XBKPT(MNINT+1)
+c$$$
+c$$$C PDE PARAMETERS:
+c$$$      NP = MNP
+c$$$      MF = MMF
+c$$$      MX = MMX
+c$$$      NPDE = MNPDE
+c$$$      KORD = MKORD
+c$$$      NINT = MNINT
+c$$$      NCC = MNCC
+c$$$      MAXDER = MMAXDER
+c$$$
+c$$$C OPTION SETTINGS:
+c$$$      SIGMA   =    0.30D0
+c$$$      TIME    =    1.00D0
+c$$$      RR      =    0.09D0
+c$$$      XS      =  100.00D0
+c$$$       XSMIN  =   90.00D0
+c$$$       XSMAX  =  110.00D0
+c$$$      SS      =  100.00D0
+c$$$      DELTA = (XSMAX-XSMIN)/NP
+c$$$      DO I = 1, NP+1
+c$$$         XBYS(I) = (XSMIN +(I-1)*DELTA)/XS
+c$$$      ENDDO
+c$$$
+c$$$C SET TIME POINTS:
+c$$$C   T0    =  INITIAL VALUE OF T, THE INDEPENDENT VARIABLE
+c$$$C   TOUT  =  VALUE OF T AT WHICH OUTPUT IS DESIRED NEXT
+c$$$C   DT    =  INITIAL STEP SIZE IN T
+c$$$C   EPS   =  RELATIVE TIME ERROR BOUND
+c$$$      T0   = 0.0D0
+c$$$      TOUT = 1.0D0
+c$$$      EPS  = 1.0D-08
+c$$$      DT   = 1.0D-10
+c$$$
+c$$$C FURTHER PARAMETERS:
+c$$$C   NINT=1000 - NUMBER OF SUBINTERVALS (XLEFT,XRIGHT) IS TO BE DIVIDED
+c$$$C   KORD=4    - ORDER OF THE PIECEWISE POLYNOMIAL SPACE TO BE USED
+c$$$C   NCC=2     - NUMBER OF CONTINUITY CONDITIONS TO BE IMPOSED
+c$$$C   MF=12     - METHOD FLAG
+c$$$C               ADAMS METHODS - GENERALIZATIONS OF CRANK-NICOLSON AND
+c$$$C               CHORD METHOD WITH FINITE DIFFERENCES JACOBIAN
+c$$$C   INDEX     - INTEGER USED ON INPUT TO INDICATE TYPE OF CALL
+c$$$C   WORK      - WORKING ARRAY
+c$$$C   IWORK     - SIZE OF WORKING ARRAY
+c$$$
+c$$$C ASIAN CALL (1) AND PUT(2) VALUE:
+c$$$      Z = -1
+c$$$      DO IP = 1, 2
+c$$$         Z = -Z
+c$$$C        PDE PARAMETERS:
+c$$$         MODSEL = 1
+c$$$         SIGMAT = SIGMA * DSQRT(TIME)
+c$$$         RRT    = RR*TIME
+c$$$         XM     = 5.0D0 * SIGMAT
+c$$$         WRITE (*,*)
+c$$$         WRITE (*,*) " PDE - ASIAN OPTION SETTINGS"
+c$$$         WRITE (*,*) " MF  KORD  NCC : ", MF, KORD, NCC
+c$$$         WRITE (*,*) " SIGMA*TIME    : ", SIGMAT
+c$$$         WRITE (*,*) " R*TIME        : ", RRT
+c$$$         WRITE (*,*) " XM            : ", XM
+c$$$         WRITE (*,*) " (XMIN,XMAX)/S : ", XSMIN/SS, XSMAX/SS
+c$$$         CALL ASIANVAL(
+c$$$     &        Z, SS, XS, XSMIN, XSMAX, TIME, RR, SIGMA,
+c$$$     &        T0, TOUT, EPS, DT, PRICE, NP, MODSEL,
+c$$$     &        MF, NPDE, KORD, MX, NCC, MAXDER,
+c$$$     &        XBYS, XBKPT, WORK, IWORK)
+c$$$C        OUTPUT U - NUMERICAL SOLUTION:
+c$$$         WRITE (*,*) " XLEFT  XRIGHT : ", XBKPT(1), XBKPT(NINT+1)
+c$$$         WRITE (*,*) " EPS DT MX     : ", EPS, DT, MX
+c$$$         WRITE (*,*) " ERROR CODE:   : ", INDEX
+c$$$         WRITE(*,*)
+c$$$         WRITE(*,*) " U - NUMERICAL SOLUTION FOR DIFF STRIKES:"
+c$$$         WRITE(*,*) "      X          XI           PRICE     "
+c$$$         DO I = 1, NP+1
+c$$$            XI = XBYS(I)*EXP(-RRT) - (1.0-EXP(-RRT))/RRT
+c$$$            WRITE(*,9) XS*XBYS(I), SS*XI, SS*PRICE(I), SS*(PRICE(I)-XI)
+c$$$         ENDDO
+c$$$      ENDDO
+c$$$    9 FORMAT(F10.3, 4F15.7)
+c$$$
+c$$$      RETURN
+c$$$      END
 
-      SUBROUTINE PDETEST()
-CC     NOT USED BY R
-CC     FOR TESTING AND DEBUGGING UNDER FORTRAN         
-      IMPLICIT REAL*8 (A-H, O-Z)
-      PARAMETER(MNP=10)
-      DIMENSION PRICE(MNP+1), XBYS(MNP+1)
-C      
-      PARAMETER (MMF=12, MMX=1000)
-      PARAMETER (MNPDE=1, MKORD=4, MNINT=MMX, MNCC=2, MMAXDER=5)
 
-C     WORKING ARRAYS: 
-      DIMENSION WORK
-     *   (MKORD+MNPDE*(4+9*MNPDE)+(MKORD+(MNINT-1)*(MKORD-MNCC))*
-     *   (3*MKORD+2+MNPDE*(3*(MKORD-1)*MNPDE+MMAXDER+4)))
-      DIMENSION IWORK((MNPDE+1)*(MKORD+(MNINT-1)*(MKORD-MNCC)))
-      DIMENSION XBKPT(MNINT+1)    
-   
-C PDE PARAMETERS:   
-      NP = MNP
-      MF = MMF
-      MX = MMX
-      NPDE = MNPDE
-      KORD = MKORD
-      NINT = MNINT
-      NCC = MNCC
-      MAXDER = MMAXDER
-      
-C OPTION SETTINGS:     
-      SIGMA   =    0.30D0
-      TIME    =    1.00D0
-      RR      =    0.09D0
-      XS      =  100.00D0
-       XSMIN  =   90.00D0
-       XSMAX  =  110.00D0
-      SS      =  100.00D0    
-      DELTA = (XSMAX-XSMIN)/NP
-      DO I = 1, NP+1
-         XBYS(I) = (XSMIN +(I-1)*DELTA)/XS
-      ENDDO
-      
-C SET TIME POINTS:
-C   T0    =  INITIAL VALUE OF T, THE INDEPENDENT VARIABLE
-C   TOUT  =  VALUE OF T AT WHICH OUTPUT IS DESIRED NEXT
-C   DT    =  INITIAL STEP SIZE IN T
-C   EPS   =  RELATIVE TIME ERROR BOUND 
-      T0   = 0.0D0
-      TOUT = 1.0D0
-      EPS  = 1.0D-08
-      DT   = 1.0D-10
-
-C FURTHER PARAMETERS:
-C   NINT=1000 - NUMBER OF SUBINTERVALS (XLEFT,XRIGHT) IS TO BE DIVIDED 
-C   KORD=4    - ORDER OF THE PIECEWISE POLYNOMIAL SPACE TO BE USED
-C   NCC=2     - NUMBER OF CONTINUITY CONDITIONS TO BE IMPOSED 
-C   MF=12     - METHOD FLAG
-C               ADAMS METHODS - GENERALIZATIONS OF CRANK-NICOLSON AND
-C               CHORD METHOD WITH FINITE DIFFERENCES JACOBIAN
-C   INDEX     - INTEGER USED ON INPUT TO INDICATE TYPE OF CALL
-C   WORK      - WORKING ARRAY
-C   IWORK     - SIZE OF WORKING ARRAY
-    
-C ASIAN CALL (1) AND PUT(2) VALUE:
-      Z = -1
-      DO IP = 1, 2
-         Z = -Z   
-C        PDE PARAMETERS:
-         MODSEL = 1
-         SIGMAT = SIGMA * DSQRT(TIME)
-         RRT    = RR*TIME   
-         XM     = 5.0D0 * SIGMAT 
-         WRITE (*,*)
-         WRITE (*,*) " PDE - ASIAN OPTION SETTINGS"     
-         WRITE (*,*) " MF  KORD  NCC : ", MF, KORD, NCC         
-         WRITE (*,*) " SIGMA*TIME    : ", SIGMAT
-         WRITE (*,*) " R*TIME        : ", RRT
-         WRITE (*,*) " XM            : ", XM
-         WRITE (*,*) " (XMIN,XMAX)/S : ", XSMIN/SS, XSMAX/SS 
-         CALL ASIANVAL(
-     &        Z, SS, XS, XSMIN, XSMAX, TIME, RR, SIGMA, 
-     &        T0, TOUT, EPS, DT, PRICE, NP, MODSEL, 
-     &        MF, NPDE, KORD, MX, NCC, MAXDER, 
-     &        XBYS, XBKPT, WORK, IWORK)
-C        OUTPUT U - NUMERICAL SOLUTION:   
-         WRITE (*,*) " XLEFT  XRIGHT : ", XBKPT(1), XBKPT(NINT+1)
-         WRITE (*,*) " EPS DT MX     : ", EPS, DT, MX
-         WRITE (*,*) " ERROR CODE:   : ", INDEX
-         WRITE(*,*)
-         WRITE(*,*) " U - NUMERICAL SOLUTION FOR DIFF STRIKES:"
-         WRITE(*,*) "      X          XI           PRICE     "
-         DO I = 1, NP+1 
-            XI = XBYS(I)*EXP(-RRT) - (1.0-EXP(-RRT))/RRT   
-            WRITE(*,9) XS*XBYS(I), SS*XI, SS*PRICE(I), SS*(PRICE(I)-XI)
-         ENDDO 
-      ENDDO        
-    9 FORMAT(F10.3, 4F15.7) 
-      
-      RETURN
-      END
-      
-      
 C ------------------------------------------------------------------------------
 
-    
+
       SUBROUTINE ASIANVAL(
-     &  ZZ, SS1, XS1, XSMIN, XSMAX, TIME1, RR1, SIGMA1, 
+     &  ZZ, SS1, XS1, XSMIN, XSMAX, TIME1, RR1, SIGMA1,
      &  T0, TOUT, EPS, DT, PRICEBYS, NP, MODSEL,
-     &  MF1, NPDE1, KORD1, MX1, NCC1, MAXDER1, 
+     &  MF1, NPDE1, KORD1, MX1, NCC1, MAXDER1,
      &  XBYS, XBKPT, WORK, IWORK)
-      
+
       IMPLICIT REAL*8 (A-H, O-Z)
-      PARAMETER(MKORD=4, MDERV=0)   
+      PARAMETER(MKORD=4, MDERV=0)
       DIMENSION WORK
      *   (KORD1+NPDE1*(4+9*NPDE1)+(KORD1+(MX1-1)*(KORD1-NCC1))*
      *   (3*KORD1+2+NPDE1*(3*(KORD1-1)*NPDE1+MAXDER1+4)))
       DIMENSION IWORK((NPDE1+1)*(KORD1+(MX1-1)*(KORD1-NCC1)))
-      DIMENSION XBKPT(MX1+1)      
+      DIMENSION XBKPT(MX1+1)
       DIMENSION USOL(1,1,MDERV+1), SCRTCH(MKORD*(MDERV+1))
       DIMENSION XBYS(NP), PRICEBYS(NP)
-        
+
       COMMON /SIZES/  NINT,KORD,NCC,NPDE,NCPTS,NEQN,IQUAD
       COMMON /GEAR0/  HUSED, NQUSED, NS, NF, NJ
       COMMON /GEAR1/  T,DTC,DTMN,DTMX,EPSC,UROUND,N,MFC,KFLAG,JSTART
@@ -150,7 +150,7 @@ C FOR COMMON BLOCKS:
       XS = XS1
       SS = SS1
 
-C FOR COMMON BLOCKS:    
+C FOR COMMON BLOCKS:
       MF = MF1
       NPDE = NPDE1
       KORD = KORD1
@@ -159,78 +159,78 @@ C FOR COMMON BLOCKS:
       MAXDER = MAXDER1
       NINT = MX1
       MODEL = MODSEL
-      PI   = 4.0D0 * DATAN(1.0D0)  
+      PI   = 4.0D0 * DATAN(1.0D0)
 
-C CALCULATE FOR BOTH, FOR A CALL Z=+1 OR FOR A PUT Z=-1:       
+C CALCULATE FOR BOTH, FOR A CALL Z=+1 OR FOR A PUT Z=-1:
       Z = ZZ
-         
-C WORKSPACE SETTINGS:          
+
+C WORKSPACE SETTINGS:
       IWORK(1) = KORD+NPDE*(4+9*NPDE)+(KORD+(MX-1)*
      *   (KORD-NCC))*(3*KORD+2+NPDE*(3*(KORD-1)*NPDE+MAXDER+4))
-      IWORK(2) = (NPDE+1)*(KORD+(NINT-1)*(KORD-NCC)) 
+      IWORK(2) = (NPDE+1)*(KORD+(NINT-1)*(KORD-NCC))
       DO I = 1, IWORK(1)
          WORK(I)=0.0
       ENDDO
-                        
-C OPTION SETTINGS:          
+
+C OPTION SETTINGS:
       SIGMAT = SIGMA * DSQRT(TIME)
-      RRT    = RR*TIME   
-      XM     = 5.0D0 * SIGMAT 
+      RRT    = RR*TIME
+      XM     = 5.0D0 * SIGMAT
       XL     = -XM
       XR     = +XM
       ETA    = (SIGMA**2)*(TIME**3)/6.0D0
-             
-C SET SPACE POINTS:  
+
+C SET SPACE POINTS:
       NX = MX
       DX = 2.0D0 * XM / NX
       DO I = 1, NX + 1
          XBKPT(I) = -XM + (I-1)*DX
       ENDDO
-         
+
 C SOLVE PDE:
       INDEX = 1
-      CALL PDECOL(T0, TOUT, DT, XBKPT, EPS,  
+      CALL PDECOL(T0, TOUT, DT, XBKPT, EPS,
      &     NX, KORD, NCC, NPDE, MF, INDEX, WORK, IWORK)
 
-C OUTPUT U - NUMERICAL SOLUTION:     
+C OUTPUT U - NUMERICAL SOLUTION:
       DO I = 1, NP+1
-         XI = XBYS(I)*DEXP(-RRT) - (1.0D0-DEXP(-RRT))/RRT         
+         XI = XBYS(I)*DEXP(-RRT) - (1.0D0-DEXP(-RRT))/RRT
          CALL VALUES(XI, USOL, SCRTCH, 1, 1, 1, 0, WORK)
          PRICEBYS(I) = USOL(1,1,1)
-      ENDDO 
-         
+      ENDDO
+
       RETURN
       END
-     
+
 C ------------------------------------------------------------------------------
 
       SUBROUTINE F(T, X, U, UX, UXX, FVAL, NPDE)
-      
+
       IMPLICIT REAL*8 (A-H, O-Z)
       DIMENSION U(NPDE), UX(NPDE), UXX(NPDE), FVAL(NPDE)
       COMMON /GEAR0/ HUSED, NQUSED, NS, NF, NJ
       COMMON /PARAMS/ PI
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
-      
+
       IF (MODEL.EQ.1) THEN
-         FR = (1.0D0-DEXP(-RR*T))/RRT     
+         FR = (1.0D0-DEXP(-RR*T))/RRT
          FVAL(1) = (0.5D0*SIGMAT*SIGMAT) * ((X+FR)**2) * UXX(1)
       ENDIF
-      
+
       IF (MODEL.EQ.2) THEN
          RT = (1.0D0-DEXP(-RR*T))/RR
-         PF = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA)) 
+         PF = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA))
          FVAL(1) = (0.5D0*SIGMA*SIGMA) * ((X+RT)**2) * UXX(1)
          FVAL(1) = FVAL(1) + PF*DEXP(-0.25D0*X*X/ETA)*(X+2.0D0*RT)
       ENDIF
-      
+
       RETURN
-      
+
       END
-      
+
 C ------------------------------------------------------------------------------
-      
+
       SUBROUTINE BNDRY(T, X, U, UX, DBDU, DBDUX, DZDT, NPDE)
 
       IMPLICIT REAL*8 (A-H, O-Z)
@@ -239,7 +239,7 @@ C ------------------------------------------------------------------------------
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
 
-C LEFT/RIGHT BOUNDARY MODEL 1:     
+C LEFT/RIGHT BOUNDARY MODEL 1:
       IF (MODEL.EQ.1) THEN
          IF (X.LE.-XM) THEN
             DBDU (1,1) = (-Z*X + DABS(X) ) / 2.0D0
@@ -252,10 +252,10 @@ C LEFT/RIGHT BOUNDARY MODEL 1:
            DBDUX(1,1) = 0.0D0
            DZDT (1)   = 0.0D0
            RETURN
-         ENDIF   
+         ENDIF
       ENDIF
- 
-C LEFT/RIGHT BOUNDARY MODEL 2:      
+
+C LEFT/RIGHT BOUNDARY MODEL 2:
       IF (MODEL.EQ.2) THEN
          EPS = 1.0D-20
          IF (X.LE.XL ) THEN
@@ -263,7 +263,7 @@ C LEFT/RIGHT BOUNDARY MODEL 2:
             DBDUX(1,1) = 0.0D0
             DZDT (1)   = 0.0D0
             RETURN
-         ENDIF   
+         ENDIF
          IF (X.GE.XR ) THEN
             DBDU (1,1) = EPS
             DBDUX(1,1) = 0.0D0
@@ -271,37 +271,37 @@ C LEFT/RIGHT BOUNDARY MODEL 2:
             RETURN
          ENDIF
       ENDIF
-   
+
       RETURN
-      
+
       END
-      
+
 C ------------------------------------------------------------------------------
-       
+
       SUBROUTINE UINIT(X, U, NPDE)
-      
+
       IMPLICIT REAL*8 (A-H, O-Z)
-      DIMENSION U(NPDE) 
+      DIMENSION U(NPDE)
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
-      
-C NOTE : Z=+1 FOR A CALL AND Z-1 FOR A PUT  
-    
+
+C NOTE : Z=+1 FOR A CALL AND Z-1 FOR A PUT
+
       IF (MODEL.EQ.1) THEN
         U(1) = ( (-Z*X) + DABS(-X) ) / 2.0D0
       ENDIF
-      
+
       IF (MODEL.EQ.2) THEN
         U(1) = 0.0D0
       ENDIF
-    
+
       RETURN
       END
-      
+
 C ------------------------------------------------------------------------------
-       
+
       SUBROUTINE DERIVF(T, X, U, UX, UXX, DFDU, DFDUX, DFDUXX, NPDE)
-      
+
       IMPLICIT REAL*8 (A-H, O-Z)
       DIMENSION U(NPDE), UX(NPDE), UXX(NPDE)
       DIMENSION DFDU(NPDE,NPDE), DFDUX(NPDE,NPDE), DFDUXX(NPDE,NPDE)
@@ -332,22 +332,22 @@ C         DFDUXX(K,J) = PARTIAL DERIVATIVE OF THE K-TH COMPONENT OF THE
 C                       PDE DEFINING FUNCTION  F  WITH RESPECT TO THE
 C                       VARIABLE UXX(J).
 C        NOTE... THE INCOMING VALUE OF  X  WILL BE A COLLOCATION POINT
-C        VALUE.  
+C        VALUE.
 
       PI = 4.0 * DATAN(1.0D0)
-      
+
       IF (MODEL.EQ.1) THEN
         RT = (1.0D0-EXP(-RRT*T))/RRT
         DFDU(1,1)   = 0.0D0
         DFDUX(1,1)  = 0.0D0
         DFDUXX(1,1) = (SIGMAT**2) * ( X + RT )
       ENDIF
-      
+
       IF (MODEL.EQ.1) THEN
-         RT = (1.0D0-DEXP(-RR*T))/RR 
-         F1 = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA))    
+         RT = (1.0D0-DEXP(-RR*T))/RR
+         F1 = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA))
          F2 = DEXP(-0.25D0*X*X/ETA)
-         F3 = (X+2.0D0*RT)    
+         F3 = (X+2.0D0*RT)
          DF1 = F1 / X
          DF2 = -2.0D0 * X * F2 / (4.0D0*ETA)
          DF3 = 1.0D0
@@ -355,22 +355,22 @@ C        VALUE.
          DFDUX(1,1)  = 0.0D0
          DFDU(1,1)   = DF1*F2*F3 + F1*DF2*F3 + F1*F2*DF3
       ENDIF
-      
+
       RETURN
       END
 
-      
-C ##############################################################################      
- 
-     
+
+C ##############################################################################
+
+
 C      ALGORITHM 540R (REMARK ON ALG.540), COLLECTED ALGORITHMS FROM ACM.
 C      THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
 C      VOL. 18, NO. 3, SEPTEMBER, 1992, PP. 343-344.
 C
 C
-      SUBROUTINE PDECOL(T0, TOUT, DT, XBKPT, EPS, NINT, KORD, 
+      SUBROUTINE PDECOL(T0, TOUT, DT, XBKPT, EPS, NINT, KORD,
      *   NCC, NPDE, MF, INDEX, WORK, IWORK)
-     
+
       IMPLICIT REAL*8 (A-H, O-Z)
 C
 C
@@ -1407,7 +1407,7 @@ C*** UROUND SET TO SINGLE PRECISION FOR A SUN SPARC2
 C***
 C***     DATA LOUT,NOGAUS,MAXDER,UROUND/6, 0, 5, 5.960464D-08/
 C
-      DATA LOUT,NOGAUS,MAXDER,UROUND/66, 0, 5, 2.22D-16/     
+      DATA LOUT,NOGAUS,MAXDER,UROUND/66, 0, 5, 2.22D-16/
       END
 C
 C
@@ -2507,7 +2507,7 @@ C
 C
 C ##############################################################################
 C
-C     
+C
       SUBROUTINE DIFFUN( N, T, Y, YDOT, IER, PW, IPIV, WORK, IWORK )
       IMPLICIT REAL*8 (A-H, O-Z)
 C-------------------------------------------------------------------------------
@@ -2545,7 +2545,7 @@ C
 C
 C ##############################################################################
 C
-C      
+C
       SUBROUTINE ADDA( PW,N0,A,ILEFT,BC,NPDE )
       IMPLICIT REAL*8 (A-H, O-Z)
 C-------------------------------------------------------------------------------
@@ -2598,7 +2598,7 @@ C
 C
 C ##############################################################################
 C
-C      
+C
       SUBROUTINE RES( T,H,C,V,R,NPDE,NCPTS,A,ILEFT,BC,DBDU,DBDUX,DZDT,
      *               XC,UVAL )
       IMPLICIT REAL*8 (A-H, O-Z)
@@ -2848,7 +2848,7 @@ C-----------------------------------------------------------------------
       COMMON /OPTION/ NOGAUS,MAXDER
       COMMON /GEAR1/ T,H,DUMMY(4),N,IDUMMY(2),JSTART
       DIMENSION Y0(NEQN),Y(NEQN,MAXDER+1)
-      
+
       DO 10 I = 1,N
    10   Y0(I) = Y(I,1)
       L = JSTART + 1
@@ -3193,6 +3193,6 @@ C-----------------------------------------------------------------------
       RETURN
       END
 
-      
+
 C ------------------------------------------------------------------------------
 
