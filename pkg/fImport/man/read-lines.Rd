@@ -2,36 +2,37 @@
 
 
 \alias{read.lines}
- 
- 
+
+
 \title{Read from a text file line by line}
 
 
 \description{
 
-    Reads from a text file line by line. 
-    
+    Reads from a text file line by line. Wrapper to readLines()
+    function.
+
 }
 
 
 \usage{
-read.lines(con=stdin(), n=-1, ok=TRUE, warn=FALSE, encoding="unknown") 
+read.lines(con=stdin(), n=-1, ok=TRUE, warn=FALSE, encoding="unknown")
 }
-    
-    
+
+
 \arguments{
 
     \item{con}{
         a connection object or a character string.
     }
     \item{n}{
-        an integer, the (maximal) number of lines to read. 
-        Negative values indicate that one should read up 
+        an integer, the (maximal) number of lines to read.
+        Negative values indicate that one should read up
         to the end of input on the connection.
     }
     \item{ok}{
-        a logical, is it OK to reach the end of the connection 
-        before n > 0 lines are read? If not, an error will be 
+        a logical, is it OK to reach the end of the connection
+        before n > 0 lines are read? If not, an error will be
         generated.
     }
     \item{warn}{
@@ -40,15 +41,15 @@ read.lines(con=stdin(), n=-1, ok=TRUE, warn=FALSE, encoding="unknown")
         \code{readLines}.
     }
     \item{encoding}{
-        a character string, the encoding to be assumed for input 
-        strings. 
+        a character string, the encoding to be assumed for input
+        strings.
     }
 }
 
 
 \value{
 
-    the downloaded text.
+    the downloaded text. Same output as readLines() function.
 
 }
 
@@ -56,10 +57,10 @@ read.lines(con=stdin(), n=-1, ok=TRUE, warn=FALSE, encoding="unknown")
 \references{
 
 Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
-    \emph{Financial Market Data for R/Rmetrics}, 
+    \emph{Financial Market Data for R/Rmetrics},
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
     www.rmetrics.org.
-    
+
 }
 
 
