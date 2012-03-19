@@ -1,0 +1,110 @@
+
+################################################
+## import name space
+################################################
+
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+import("fOptions")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fAsianOptions")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    ".AbrahamsonAsianOptionMoments",
+    ".Bessel.ENVJ",
+    ".Bessel.MSTA1",
+    ".Bessel.MSTA2",
+    ".Bessel01",
+    ".BesselN",
+    ".DufresneAsianOptionMoments",
+    ".DufresneMoments",
+    ".GramCharlierAsianDensity",
+    ".LevyTurnbullWakemanAsianDensity",
+    ".LevyTurnbullWakemanAsianOption",
+    ".MilevskyPosnerAsianDensity",
+    ".MilevskyPosnerAsianOption",
+    ".PosnerMilevskyAsianDensity",
+    ".PosnerMilevskyAsianOption",
+    ".TolmatzAsianOptionMoments",
+    ".TurnbullWakemanAsianOptionMoments",
+    ".gxtEBM",
+    ".gxtuEBM",
+    ".gxuEBM",
+    ".psiEBM",
+    ".thetaEBM",
+    "AsianOptionMoments",
+    "BesselDI",
+    "BesselDK",
+    "BesselI",
+    "BesselK",
+    "BoundsOnAsianOption",
+    "CallPutParityAsianOption",
+    "CurranThompsonAsianOption",
+    "FuMadanWangTable",
+    "FusaiTaglianiTable",
+    "GemanTable",
+    "GemanYorAsianOption",
+    "GramCharlierAsianOption",
+    "LinetzkyAsianOption",
+    "LinetzkyTable",
+    "MomentMatchedAsianDensity",
+    "MomentMatchedAsianOption",
+    "Pochhammer",
+    "Psi",
+    "RogerShiThompsonAsianOption",
+    "ThompsonAsianOption",
+    "TolmatzAsianOption",
+    "VecerAsianOption",
+    "WithDividendsAsianOption",
+    "ZhangApproximateAsianOption",
+    "ZhangAsianOption",
+    "ZhangLongTable",
+    "ZhangShortTable",
+    "ZhangTable",
+    "cgamma",
+    "d2EBM",
+    "dEBM",
+    "dasymEBM",
+    "derivative",
+    "dgam",
+    "djohnson",
+    "dlognorm",
+    "drgam",
+    "erf",
+    "gGemanYor",
+    "gLinetzky",
+    "hermiteH",
+    "igamma",
+    "kummerM",
+    "kummerU",
+    "masian",
+    "mjohnson",
+    "mlognorm",
+    "mnorm",
+    "mrgam",
+    "pEBM",
+    "pgam",
+    "pjohnson",
+    "plognorm",
+    "prgam",
+    "whittakerM",
+    "whittakerW" )
