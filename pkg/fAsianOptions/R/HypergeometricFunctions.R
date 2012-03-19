@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2004, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:       KUMMER DESCRIPTION:               
+# FUNCTION:       KUMMER DESCRIPTION:
 #  kummerM         Computes Confluent Hypergeometric Function of the 1st Kind
 #  kummerU         Computes Confluent Hypergeometric Function of the 2nd Kind
 # FUNCTION:       WHITTAKER DESCRIPTION:
@@ -43,29 +43,29 @@
 # KUMMER:
 
 
-kummerM =  
-function(x, a, b, lnchf = 0, ip = 0) 
+kummerM =
+function(x, a, b, lnchf = 0, ip = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Calculate the Confluent Hypergeometric Function of the First  
+    #   Calculate the Confluent Hypergeometric Function of the First
     #   Kind for complex argument "x" and complex indexes "a" and "b"
-    
+
     # Arguments:
     #   x - complex function argument
-    #   a, b - complex indexes 
-    #   lnchf - 
-    #   ip - 
-    
+    #   a, b - complex indexes
+    #   lnchf -
+    #   ip -
+
     # FUNCTION:
-    
+
     # You can also input real arguments:
-    if (!is.complex(x)) x = complex(real = x, imag = 0*x)
-    if (!is.complex(a)) a = complex(real = a, imag = 0)
-    if (!is.complex(b)) b = complex(real = b, imag = 0)    
-    
+    if (!is.complex(x)) x = complex(real = x, imaginary = 0*x)
+    if (!is.complex(a)) a = complex(real = a, imaginary = 0)
+    if (!is.complex(b)) b = complex(real = b, imaginary = 0)
+
     # Calculate KummerM:
-    chm = rep(complex(real = 0, imag = 0), length = length(x))
+    chm = rep(complex(real = 0, imaginary = 0), length = length(x))
     value = .Fortran("chfm",
         as.double(Re(x)),
         as.double(Im(x)),
@@ -79,8 +79,8 @@ function(x, a, b, lnchf = 0, ip = 0)
         as.integer(lnchf),
         as.integer(ip),
         PACKAGE = "fAsianOptions")
-    result = complex(real = value[[7]], imag = value[[8]]) 
-    
+    result = complex(real = value[[7]], imaginary = value[[8]])
+
     # Return Value:
     result
 }
@@ -89,38 +89,38 @@ function(x, a, b, lnchf = 0, ip = 0)
 # ------------------------------------------------------------------------------
 
 
-kummerU =  
-function(x, a, b, ip = 0) 
+kummerU =
+function(x, a, b, ip = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Calculate the Confluent Hypergeometric Function of the Second 
+    #   Calculate the Confluent Hypergeometric Function of the Second
     #   Kind for complex argument "x" and complex indexes "a" and "b"
-  
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Todo ...
     lnchf = 0
-    
+
     # Test for complex arguments:
-    if (!is.complex(x)) x = complex(real = x, imag = 0*x)
-    if (!is.complex(a)) a = complex(real = a, imag = 0)
-    if (!is.complex(b)) b = complex(real = b, imag = 0)
-    
+    if (!is.complex(x)) x = complex(real = x, imaginary = 0*x)
+    if (!is.complex(a)) a = complex(real = a, imaginary = 0)
+    if (!is.complex(b)) b = complex(real = b, imaginary = 0)
+
     # Calculate KummerU:
     # From KummerM:
     # Uses the formula ...
-    #   pi/sin(pi*b) [ M(a,b,z) / (Gamma(1+a-b)*Gamma(b)) - 
+    #   pi/sin(pi*b) [ M(a,b,z) / (Gamma(1+a-b)*Gamma(b)) -
     #        x^(1-b) * M(1+a-b,2-b,z) / (Gamma(a)*Gamma(2-b)) ]
     ans = ( pi/sin(pi*b) ) * (
         kummerM(x, a = a, b = b, lnchf = lnchf, ip=ip) /
-            ( cgamma(1+a-b)*cgamma(b) ) - (x^(1-b)) * 
-        kummerM(x, a = (1+a-b), b=2-b, lnchf = lnchf, ip = ip) / 
+            ( cgamma(1+a-b)*cgamma(b) ) - (x^(1-b)) *
+        kummerM(x, a = (1+a-b), b=2-b, lnchf = lnchf, ip = ip) /
             ( cgamma(a)*cgamma(2-b) ) )
 
-    # Return Value: 
+    # Return Value:
     ans
 }
 
@@ -129,25 +129,25 @@ function(x, a, b, ip = 0)
 # WHITTAKER:
 
 
-whittakerM = 
-function(x, kappa, mu, ip = 0) 
+whittakerM =
+function(x, kappa, mu, ip = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Whittaker's M Function
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Test for complex arguments:
-    if (!is.complex(x)) x = complex(real = x, imag = 0*x)
-    if (!is.complex(kappa)) kappa = complex(real = kappa, imag = 0)
-    if (!is.complex(mu)) mu = complex(real = mu, imag = 0)
-    
+    if (!is.complex(x)) x = complex(real = x, imaginary = 0*x)
+    if (!is.complex(kappa)) kappa = complex(real = kappa, imaginary = 0)
+    if (!is.complex(mu)) mu = complex(real = mu, imaginary = 0)
+
     # Calculate:
     ans = exp(-x/2) * x^(1/2+mu) * kummerM(x, 1/2+mu-kappa, 1+2*mu, ip = ip)
-        
+
     # Return Value:
     ans
 }
@@ -156,25 +156,25 @@ function(x, kappa, mu, ip = 0)
 # ------------------------------------------------------------------------------
 
 
-whittakerW = 
-function(x, kappa, mu, ip = 0) 
+whittakerW =
+function(x, kappa, mu, ip = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Whittaker's M Function
-    
+
     # Arguments:
-    
+
     # FUNCTION:
-    
+
     # Test for complex arguments:
-    if (!is.complex(x)) x = complex(real = x, imag = 0*x)
-    if (!is.complex(kappa)) kappa = complex(real = kappa, imag = 0)
-    if (!is.complex(mu)) mu = complex(real = mu, imag = 0)
-    
+    if (!is.complex(x)) x = complex(real = x, imaginary = 0*x)
+    if (!is.complex(kappa)) kappa = complex(real = kappa, imaginary = 0)
+    if (!is.complex(mu)) mu = complex(real = mu, imaginary = 0)
+
     # Calculate:
     ans = exp(-x/2) * x^(1/2+mu) * kummerU(x, 1/2+mu-kappa, 1+2*mu, ip = ip)
-        
+
     # Return Value:
     ans
 }
@@ -184,27 +184,27 @@ function(x, kappa, mu, ip = 0)
 # HERMITE POLYNOMIAL:
 
 
-hermiteH = 
+hermiteH =
 function(x, n, ip = 0)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Description:
-    #   Computes the Hermite Polynomial 
-    
+    #   Computes the Hermite Polynomial
+
     # Arguments:
     #   n - the index of the Hermite polynomial.
-    
+
     # FUNCTION:
-    
+
     # Check
     stopifnot(n - round(n, 0) == 0)
-    
+
     # Result:
     S = sign(x) + (1-sign(abs(x)))
     ans = (S*2)^n * Re ( kummerU(x^2, -n/2, 1/2, ip = ip) )
-    
+
     # Return Value:
-    ans   
+    ans
 }
 
 
