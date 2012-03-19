@@ -23,9 +23,9 @@
 
 axis.timeDate(side, x, at, format = NULL, labels = TRUE, \dots)
 
-pretty.timeDate(x, n=5, min.n=n\%/\%3, shrink.sml=0.75, 
-        high.u.bias=1.5, u5.bias=0.5+1.5*high.u.bias, 
-        eps.correct=0, \dots) 
+\method{pretty}{timeDate}(x, n=5, min.n=n\%/\%3, shrink.sml=0.75,
+        high.u.bias=1.5, u5.bias=0.5+1.5*high.u.bias,
+        eps.correct=0, \dots)
 }
 
 
@@ -47,27 +47,27 @@ pretty.timeDate(x, n=5, min.n=n\%/\%3, shrink.sml=0.75,
         strings to be placed at the tickpoints.
     }
     \item{n}{
-        an integer giving the desired number of intervals. 
-    } 
+        an integer giving the desired number of intervals.
+    }
     \item{min.n}{
-        a nonnegative integer giving the minimal 
-        number of intervals. 
+        a nonnegative integer giving the minimal
+        number of intervals.
     }
     \item{shrink.sml}{
-        a positive numeric by a which a default 
-        scale is shrunk in the case when range(x) is 
+        a positive numeric by a which a default
+        scale is shrunk in the case when range(x) is
         very small.
     }
     \item{high.u.bias}{
-        a non-negative numeric, typically > 1. 
+        a non-negative numeric, typically > 1.
         Larger high.u.bias values favor larger units.
     }
     \item{u5.bias}{
-        a non-negative numeric multiplier favoring 
+        a non-negative numeric multiplier favoring
         factor 5 over 2.
     }
     \item{eps.correct}{
-       an integer code, one of {0,1,2}. If 
+       an integer code, one of {0,1,2}. If
        non-0, a correction is made at the boundaries.
     }
     \item{\dots}{
@@ -93,7 +93,7 @@ pretty.timeDate(x, n=5, min.n=n\%/\%3, shrink.sml=0.75,
    x <- timeCalendar()
    y <- rnorm(12)
 
-   
+
 ## Plotting :
 
    plot(x, y, type = "l")

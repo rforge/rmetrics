@@ -13,17 +13,17 @@
 \description{
 
     Returns start and end dates for a rolling periods
-    
+
 }
 
-  
+
 \usage{
 periods(x, period = "12m", by = "1m", offset = "0d")
 periodicallyRolling(x, period = "52w", by = "4w", offset = "0d")
 monthlyRolling(x, period = "12m", by = "1m")
 }
 
-  
+
 \arguments{
 
     \item{x}{
@@ -45,28 +45,27 @@ monthlyRolling(x, period = "12m", by = "1m")
 
 \details{
 
-    Periodically Rolling - Allowed unit values are "m" for 4 weeks, "w"
-    for weeks, "d" for days, "H" for hours, "M" for minutes, and "S" for
-    seconds.
+ Periodically Rolling - Allowed unit values are "m" for 4 weeks, "w" for
+ weeks, "d" for days, "H" for hours, "M" for minutes, and "S" for
+ seconds.
 
-
-    Monthly Calendar Rolling - The only allowed allowed unit value is "m"
-    for monthly periods. Express a quarterly period by "3m", a semester by
-    "6m", a year by "12m" etc.
+ Monthly Calendar Rolling - The only allowed allowed unit value is "m"
+ for monthly periods. Express a quarterly period by "3m", a semester by
+ "6m", a year by "12m" etc.
 
 }
 
 \examples{
-## Create Time Sequence - 
-   x <- timeSequence(from = "2001-01-01", to = "2009-01-01", by = "day") 
+## Create Time Sequence -
+   x <- timeSequence(from = "2001-01-01", to = "2009-01-01", by = "day")
 
-## Generate Periods - 
+## Generate Periods -
    periods(x, "12m", "1m")
    periods(x, "52w", "4w")
 
-## Roll Periodically -  
+## Roll Periodically -
    periodicallyRolling(x)
-   
-## Roll Monthly -  
+
+## Roll Monthly -
    monthlyRolling(x)
 }
