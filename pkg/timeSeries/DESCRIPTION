@@ -4,7 +4,7 @@ Revision: 5098
 Date: 2011-08-02
 Title: Rmetrics - Financial Time Series Objects
 Author: Diethelm Wuertz and Yohan Chalabi
-Depends: R (>= 2.6.0), graphics, grDevices, methods, stats, utils,
+Depends: R (>= 2.10), graphics, grDevices, methods, stats, utils,
         timeDate (>= 2150.95)
 Suggests: robustbase, RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
@@ -16,3 +16,4 @@ NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
+Packaged: 2012-03-19 08:58:44 UTC; yankee
