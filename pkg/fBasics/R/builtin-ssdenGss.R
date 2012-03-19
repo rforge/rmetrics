@@ -462,8 +462,8 @@ function(d, k) {
                         info=integer(1),PACKAGE="fBasics")
         if (fit$info==1) stop("gss error in .ssden: Newton iteration diverges")
         if (fit$info==2) warning("gss warning in .ssden: Newton iteration fails to converge")
-        assign("cd",fit$cd,inherit=TRUE)
-        assign("int",fit$wk[3],inherit=TRUE)
+        assign("cd",fit$cd,inherits=TRUE)
+        assign("int",fit$wk[3],inherits=TRUE)
         cv <- alpha*fit$wk[2]-fit$wk[1]
         alpha.wk <- max(0,log.la0-lambda-5)*(3-alpha) + alpha
         alpha.wk <- min(alpha.wk,3)
@@ -529,8 +529,8 @@ function(d, k) {
                         info=integer(1),PACKAGE="fBasics")
         if (fit$info==1) stop("gss error in .ssden: Newton iteration diverges")
         if (fit$info==2) warning("gss warning in .ssden: Newton iteration fails to converge")
-        assign("cd",fit$cd,inherit=TRUE)
-        assign("int",fit$wk[3],inherit=TRUE)
+        assign("cd",fit$cd,inherits=TRUE)
+        assign("int",fit$wk[3],inherits=TRUE)
         cv <- alpha*fit$wk[2]-fit$wk[1]
         alpha.wk <- max(0,theta-log.th0-5)*(3-alpha) + alpha
         alpha.wk <- min(alpha.wk,3)

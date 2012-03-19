@@ -154,11 +154,11 @@ function(sl.functions, names, minima, maxima, resolutions, starts,
     # Setup:
     if(!missing(no)) {
         return(as.numeric(tclvalue(get(paste(".tdSlider", no, sep=""),
-            env = .slider.env))))
+            envir = .slider.env))))
     }
     if(!missing(set.no.value)){
         try(eval(parse(text=paste("tclvalue(.tdSlider", set.no.value[1],")<-",
-            set.no.value[2], sep = "")), env = .slider.env))
+            set.no.value[2], sep = "")), envir = .slider.env))
         return(set.no.value[2])
     }
     if(!exists(".slider.env")) {
@@ -166,9 +166,9 @@ function(sl.functions, names, minima, maxima, resolutions, starts,
     }
     if(!missing(obj.name)){
         if(!missing(obj.value)) {
-            assign(obj.name, obj.value, env = .slider.env)
+            assign(obj.name, obj.value, envir = .slider.env)
         } else {
-            obj.value <- get(obj.name, env = .slider.env)
+            obj.value <- get(obj.name, envir = .slider.env)
         }
         return(obj.value)
     }
@@ -207,7 +207,7 @@ function(sl.functions, names, minima, maxima, resolutions, starts,
         for(i in seq(names))
             eval(parse(text = paste("tclvalue(.tdSlider",i,")<-",
                 starts[i], sep = "")),
-            env = .slider.env)
+            envir = .slider.env)
         reset.function()
     }
     tkpack(
@@ -260,10 +260,10 @@ function(sl.functions, names, minima, maxima, resolutions, starts,
             sc,
             anchor = "sw",
             side = "right");
-        assign("sc", sc, env = .slider.env)
+        assign("sc", sc, envir = .slider.env)
 
         eval(parse(text=paste("tkconfigure(sc,variable=.tdSlider",i,")",
-            sep="")), env = .slider.env)
+            sep="")), envir = .slider.env)
         sl.fun <-
             if(length(sl.functions)>1)
                 sl.functions[[i]]
@@ -274,7 +274,7 @@ function(sl.functions, names, minima, maxima, resolutions, starts,
 
         tkconfigure(sc, command = sl.fun)
     }
-    assign("slider.values.old", starts, env = .slider.env)
+    assign("slider.values.old", starts, envir = .slider.env)
 
     # Return Value:
     invisible(nt)

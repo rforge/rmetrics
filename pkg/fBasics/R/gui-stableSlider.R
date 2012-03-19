@@ -84,7 +84,7 @@ stableSlider <- function(col= "steelblue", col.med = "gray30")
         lines(c(par("usr")[1],med,med),
               c(0.5 ,0.5,  0), lty = 2, col=col.med)
         text(med, 0.1, "median", adj=0, col=col.med)
-        axis(1, label=expression(delta), at = delta,
+        axis(1, labels=expression(delta), at = delta,
              col = "red", col.axis="red", lwd=1.5,
              line = .5, tck = 1/8, hadj = -1, padj = -4)
     }

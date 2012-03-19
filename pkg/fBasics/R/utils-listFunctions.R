@@ -43,7 +43,7 @@ function(package, character.only = FALSE)
         package <- as.character(substitute(package))
     if(require(package, character.only = TRUE, quietly = TRUE)) {
         env <- paste("package", package, sep = ":")
-        nm <- ls(env, all = TRUE)
+        nm <- ls(env, all.names = TRUE)
         ans = nm[unlist(lapply(nm, function(n) exists(n, where = env,
             mode = "function", inherits = FALSE)))]
     } else {
