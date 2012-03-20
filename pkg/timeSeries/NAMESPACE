@@ -143,8 +143,8 @@ S3method("window", "timeSeries")
 ################################################
 
 export(
-    "getSeries",
-    "setSeries<-",
+    #"getSeries",
+    #"setSeries<-",
     "getUnits",
     "setUnits<-",
     "getTime",
