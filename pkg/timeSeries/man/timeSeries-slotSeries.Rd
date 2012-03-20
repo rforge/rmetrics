@@ -13,25 +13,27 @@
 \alias{series<-,timeSeries,data.frame-method}
 \alias{series<-,timeSeries,vector-method}
 
-\alias{getSeries}
-\alias{setSeries<-}
+%\alias{getSeries}
+%\alias{getSeries.timeSeries}
+%\alias{setSeries<-}
 
 
 \title{Get and Set Data of a 'timeSeries'}
 
 
 \description{
-\code{series} returns \code{Data} slot a \code{timeSeries} object in a
-\code{matrix} form. New series can also be assign to the \code{timeSeries}.
+    \code{series} returns \code{Data} slot a \code{timeSeries} object in a
+    \code{matrix} form. New series can also be assign to the \code{timeSeries}.
 }
+
 
 \usage{
 %\S4method{series}{timeSeries}(x)
 series(x)
 series(x) <- value
-
-getSeries(x)
-setSeries(x) <- value
+%
+%getSeries(x)
+%setSeries(x) <- value
 }
 
 
