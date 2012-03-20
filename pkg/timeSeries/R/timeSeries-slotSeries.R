@@ -19,7 +19,9 @@
 #  series<-,timeSeries,ANY          Set new data slot to a 'timeSeries'  
 #  series<-,timeSeries,matrix       Set new data slot to a 'timeSeries'  
 # FUNCTION:                        DESCRIPTION:
-#  getSeries                        Get data slot from a 'timeSeries'  
+#  getSeries
+#  getSeries.default
+#  getSeries.timeSeries             Get data slot from a 'timeSeries'  
 #  setSeries<-                      Set new data slot to a 'timeSeries' 
 # DEPRECATED:                      DESCRIPTION:
 #  seriesData                       Deprecated, use series
@@ -136,42 +138,79 @@ setMethod("series<-", signature(x = "timeSeries", value = "matrix"),
 ################################################################################
 
 
-getSeries <- 
-    function(x)
-{
-    # Description:
-    #   Get data slot from a 'timeSeries' object
-    
-    # Arguments:
-    #   x - a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Return Value:
-    series(x)
-}
+## getSeries <-
+##     function(x)
+## {
+##     # A function implemented by Diethelm Wuertz
+##     
+##     # Note:
+##     #   Used for getSeries methods in fPortfolio package.
+## 
+##     # FUNCTION: 
+##     
+##     # Return Value:
+##     UseMethod("getSeries")
+## }
 
 
 # ------------------------------------------------------------------------------
 
 
-"setSeries<-" <-
-    function(x, value)
-{
-    # Description:
-    #   Set data slot to a 'timeSeries' object
+## getSeries.default <- 
+##     function(x)
+## {
+##     # Description:
+##     #   Get data slot from a 'timeSeries' object
+##     
+##     # Arguments:
+##     #   x - a 'timeSeries' object
+##     
+##     # FUNCTION:
+##     
+##     # Return Value:
+##     series(x)
+## }
 
-    # Arguments:
-    #   x - a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Assign Series Slot:
-    series(x) <- value
-    
-    # Return Value:
-    x
-}
+
+# ------------------------------------------------------------------------------
+
+
+## getSeries.timeSeries <- 
+##     function(x)
+## {
+##     # Description:
+##     #   Get data slot from a 'timeSeries' object
+##     
+##     # Arguments:
+##     #   x - a 'timeSeries' object
+##     
+##     # FUNCTION:
+##     
+##     # Return Value:
+##     series(x)
+## }
+
+
+# ------------------------------------------------------------------------------
+
+
+## "setSeries<-" <-
+##     function(x, value)
+## {
+##     # Description:
+##     #   Set data slot to a 'timeSeries' object
+## 
+##     # Arguments:
+##     #   x - a 'timeSeries' object
+##     
+##     # FUNCTION:
+##     
+##     # Assign Series Slot:
+##     series(x) <- value
+##     
+##     # Return Value:
+##     x
+## }
 
 
 ################################################################################
