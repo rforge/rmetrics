@@ -106,7 +106,7 @@ export(
     ".day.of.week",
     ".easter",
     ".easterSunday",
-    ".endpoints",
+    "endpoints",
     ".fjulian",
     ".formatFinCenter",
     ".formatFinCenterNum",
