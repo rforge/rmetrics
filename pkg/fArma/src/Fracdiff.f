@@ -561,8 +561,13 @@ c     These are passed to LMDER1() to be optimized:
 
       data              modelm/1/, factlm /100.d0/
 
+      integer vipvt(1)
+
 c copyright 1991 Department of Statistics, University of Washington
 c written by Chris Fraley
+
+c Added integer array vipvt to avoid warnings created by gfortran 4.6 by
+c Yohan Chalabi in March 2012
 
 c----------------------------------------------------------------------------
 
@@ -594,21 +599,23 @@ c
            if (np .ne. 0) then
              call LMDER1( ajp, n-np, np, w(lqp+nq),w(la),w(lajac), n-np,
      *                    ftol, xtol, gtol, maxfun, w(ldiag), modelm,
-     *                    factlm, info, ifun, igrd, w(ipvt), w(lqtf),
+     *                    factlm, info, ifun, igrd, vipvt, w(lqtf),
      *                    w(lwa1), w(lwa2), w(lwa3), w(lwa4), w(ly))
            end if
            if (nq .ne. 0) then
              call LMDER1( ajq, n-nq, nq, w(lqp),w(la),w(lajac), n-nq,
      *                    ftol, xtol, gtol, maxfun, w(ldiag), modelm,
-     *                    factlm, info, ifun, igrd, w(ipvt), w(lqtf),
+     *                    factlm, info, ifun, igrd, vipvt, w(lqtf),
      *                    w(lwa1), w(lwa2), w(lwa3), w(lwa4), w(ly))
            end if
          end if
 
          call LMDER1( ajqp, nm, npq, w(lqp), w(la), w(lajac), nm,
      *                ftol, xtol, gtol, maxfun, w(ldiag), modelm,
-     *                factlm, info, ifun, igrd, w(ipvt), w(lqtf),
+     *                factlm, info, ifun, igrd, vipvt, w(lqtf),
      *                w(lwa1), w(lwa2), w(lwa3), w(lwa4), w(ly))
+
+         w(ipvt) = DBLE(vipvt(1))
 
         if (info .eq. 0) then
 c         write( 6, *) 'MINPACK : improper input parameters
@@ -1783,7 +1790,7 @@ C     2integer, 68, 1, 1)
 c
       end
 
- 
+
 C ##############################################################################
 C FRACDIFF-fdhess
 
@@ -2485,7 +2492,7 @@ c------------------------------------------------------------------------------
       return
       end
 
-      
+
 C ##############################################################################
 C FRACDIFF-fdmin
 
@@ -3879,4 +3886,4 @@ c
        return
        end
 
-        
+

@@ -12,6 +12,10 @@ C      END
 C     MODEL 1: VECER's PDE
 C     MODEL 2: ZHANG's PDE
 
+C     Small modification to avoid gfortran warning: 'Rank mismatch in
+C      argument 'x' at (1) (rank-1 and scalar)' by Yohan Chalabi on
+C      March 2012
+
 C ------------------------------------------------------------------------------
 c$$$
 c$$$      SUBROUTINE PDETEST()
@@ -143,6 +147,8 @@ C ------------------------------------------------------------------------------
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
 
+      DIMENSION XI(1)
+
 C FOR COMMON BLOCKS:
       SIGMA = SIGMA1
       TIME = TIME1
@@ -194,7 +200,7 @@ C SOLVE PDE:
 
 C OUTPUT U - NUMERICAL SOLUTION:
       DO I = 1, NP+1
-         XI = XBYS(I)*DEXP(-RRT) - (1.0D0-DEXP(-RRT))/RRT
+         XI(1) = XBYS(I)*DEXP(-RRT) - (1.0D0-DEXP(-RRT))/RRT
          CALL VALUES(XI, USOL, SCRTCH, 1, 1, 1, 0, WORK)
          PRICEBYS(I) = USOL(1,1,1)
       ENDDO
