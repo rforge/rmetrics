@@ -217,7 +217,6 @@ export(
     ".skewness.test",
     ".sliderMenu",
     ".smolyak.quad",
-    ".smolyak.size",
     ".smooth_g",
     ".ssden",
     ".sspdsty",
