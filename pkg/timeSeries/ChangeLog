@@ -1,3 +1,14 @@
+2012-03-21  chalabi
+
+	* man/utils-getArgs.Rd: added manual page for getArgs
+	* R/utils-getArgs.R: getArgs() can now handle signature of length >
+	  1
+	* NAMESPACE: added getArgs to NAMESPACE
+	* R/methods-plot.R: pretty.timeSeries can not handle signal series
+	* NAMESPACE: updated NAMESPACE
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog
+	* DESCRIPTION: updated version number
+
 2012-03-20  chalabi
 
 	* DESCRIPTION: updated DESC file
