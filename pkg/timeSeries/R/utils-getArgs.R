@@ -12,7 +12,6 @@
 #  A copy of the GNU General Public License is available at
 #  ../../COPYING
 
-
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  getArgs                   Gets arguments from a S4 function and signature
@@ -22,52 +21,45 @@
 #  methods::getMethod        Gets or Tests for the Definition of a Method
 ################################################################################
 
-
-getArgs <- 
-    function(f, signature = character())  
+getArgs <- function(f, signature = character())
 {
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   Gets arguments from a S4 function and signature
-    
+
     # Examples:
     #   args(returns)
     #   getArgs(returns)
     #   getArgs("returns")
-    #   getArgs(returns, "timeSeries") 
+    #   getArgs(returns, "timeSeries")
     #   getArgs("returns", "timeSeries")
-    
+
     # FUNCTION:
-    
+
     # Get Arguments:
-    fun <- getMethod(f, signature)@.Data 
+    fun <- getMethod(f, signature)@.Data
     test <- class(try(body(fun)[[2]][[3]], silent = TRUE))
     if (test == "function") {
         ans <- args(body(fun)[[2]][[3]])
     } else {
         ans <- args(fun)
-    } 
-    cat(substitute(f), ",", signature, ":\n", sep = "")
-    
+    }
+    cat(substitute(f), ",", paste(signature, collapse = ","),
+        ":\n", sep = "")
+
     # Return Value:
     ans
 }
 
-
 ################################################################################
-
 
 .getArgs =
 function(...)
 {
     # Deprecated:
     .Deprecated(new = "getArgs", package = "timeSeries")
-    
-    # Return Value:
-    getArgs(...)
+
 }
 
-
 ################################################################################
-
