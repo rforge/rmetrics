@@ -1,3 +1,63 @@
+2012-03-20  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2012-03-20  wuertz
+
+	* man/calendar-endpoints.Rd: non-ASCII characters removed
+	* man/calendar-endpoints.Rd: man page for endpoints added
+	* NAMESPACE: .endpoints renamed to endpoints
+	* R/calendar-endpoints.R: .endpoints renamed yo endpoints and man
+	  page added
+
+2012-03-19  chalabi
+
+	* man/calendar-align.Rd, man/calendar-periods.Rd,
+	  man/graphics-plot.Rd: fixed manual pages
+
+2012-03-18  wuertz
+
+	* R/graphics-plot.R, R/methods-plot.R: graphics-plot.R renamed to
+	  methods-plot.R
+	* R/stats-frequency.R: description modified
+	* R/calendar-nDay.R: tabs removed
+	* R/calendar-isBizday.R, R/calendar-isWeekday.R: is Bizday and
+	  isWeekday scripts merged
+	* R/calendar-isDaily.R, R/calendar-isMonthly.R,
+	  R/calendar-isQuarterly.R, R/calendar-isRegular.R: isDaily,
+	  isMonthly, isQuarterly, isRegular merged to one script file
+	* NAMESPACE: align* functions added
+	* man/calendar-align.Rd: align help page updated
+	* R/calendar-dayOfWeek.R, R/calendar-dayOfYear.R: dayOfWeek and
+	  dayOfYear scripts merged
+	* R/calendar-months.R: obsolete calendar-months.R removed
+	* R/calendar-atoms.R: months, timeDate moved to calendar.atoms.R
+	* R/calendar-align.R: simple to use alignDaily, alignMonthly, and
+	  alignQuarterly functions added
+
+2012-03-17  wuertz
+
+	* NAMESPACE, R/graphics-plot.R, man/graphics-plot.Rd: pretty added
+
+2012-03-14  wuertz
+
+	* R/graphics-plot.R: bug in passing argument "labels" removed
+
+2012-02-22  mmaechler
+
+	* R/zzz.R: .First.lib is deprecated now (one should use .onLoad
+	  only)
+	* DESCRIPTION: updated version number
+	* R/calendar-align.R: align,timeDate-method is now based on
+	  seq.timeDate.
+	* R/timeDate-Sequence.R: seq.timeDate method now works with 'by =
+	  quarter' and accepts syntax without whitesapce, e.g. 'by =
+	  1week'.
+
+2011-10-24  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog file
+
 2011-10-20  chalabi
 
 	* NAMESPACE: Updated NAMESPACE such that zoo package is no longer
