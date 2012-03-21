@@ -14,8 +14,7 @@ import("timeDate")
 ## S4 classes
 ################################################
 
-exportClasses("difftime",
-              "index_timeSeries",
+exportClasses("index_timeSeries",
               "timeSeries",
               "time_timeSeries" )
 export("colCummaxs",
