@@ -20,10 +20,7 @@ export(as.Date.timeDate)
 ################################################
 
 exportClasses("timeDate" )
-export( "align",
-        "alignDaily",
-        "alignMonthly",
-        "alignQuarterly",
+export("align",
         "atoms",
         "finCenter",
         "finCenter<-",
@@ -32,7 +29,9 @@ export( "align",
         "isQuarterly",
         "isRegular",
         "timeDate" )
-exportMethods("+",
+exportMethods("$",
+              "$<-",
+              "+",
               "-",
               "Ops",
               "[",
@@ -80,6 +79,7 @@ S3method("kurtosis", "default")
 S3method("length", "timeDate")
 S3method("max", "timeDate")
 S3method("min", "timeDate")
+S3method("pretty", "timeDate")
 S3method("range", "timeDate")
 S3method("rep", "timeDate")
 S3method("rev", "timeDate")
@@ -106,7 +106,6 @@ export(
     ".day.of.week",
     ".easter",
     ".easterSunday",
-    "endpoints",
     ".fjulian",
     ".formatFinCenter",
     ".formatFinCenterNum",
@@ -658,14 +657,17 @@ export(
     "Zagreb",
     "Zaporozhye",
     "Zurich",
+    "alignDaily",
+    "alignMonthly",
+    "alignQuarterly",
     "as.timeDate",
     "axis.timeDate",
-    "pretty.timeDate",
     "blockEnd",
     "blockStart",
     "dayOfWeek",
     "dayOfYear",
     "difftimeDate",
+    "endpoints",
     "getRmetricsOption",
     "getRmetricsOptions",
     "holiday",
