@@ -1,5 +1,8 @@
 2012-03-21  chalabi
 
+	* NAMESPACE, R/utils-getArgs.R, man/utils-getArgs.Rd: moved getArgs
+	  to fBasics where it was already defined
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* man/utils-getArgs.Rd: added manual page for getArgs
 	* R/utils-getArgs.R: getArgs() can now handle signature of length >
 	  1
