@@ -101,6 +101,14 @@ getArgs(f, signature)
    isS4(test)
    getCall(test)
    getDescription(test)
+
+## get arguments
+args(returns)
+getArgs(returns)
+getArgs("returns")
+getArgs(returns, "timeSeries")
+getArgs("returns", "timeSeries")
+
 }
 
 

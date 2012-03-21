@@ -133,14 +133,17 @@ function(f, signature = character())
     # FUNCTION:
 
     # Get arguments:
-    fun = getMethod(f, signature)@.Data
-    test = class(try(body(fun)[[2]][[3]], silent = TRUE))
+    fun <- getMethod(f, signature)@.Data
+    test <- class(try(body(fun)[[2]][[3]], silent = TRUE))
+
     if (test == "function") {
-        ans = args(body(fun)[[2]][[3]])
+        ans <- args(body(fun)[[2]][[3]])
     } else {
-        ans = args(fun)
+        ans <- args(fun)
     }
-    cat(substitute(f), ",", signature, ":\n", sep = "")
+
+    cat(substitute(f), ",", paste(signature, collapse = ","), ":\n",
+        sep = "")
 
     # Return Value:
     ans
