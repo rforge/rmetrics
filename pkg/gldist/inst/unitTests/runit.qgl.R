@@ -91,7 +91,7 @@ test.qgl <- function () {
     p <- seq(0, 1, len = 1e3)
     for (i in seq.int(nrow(params))) {
         pars <- as.numeric(params[i, ])
-        lambdas <- CSW2FMKL(pars[1], pars[2], pars[3], pars[4])
+        lambdas <- CSW2FKML(pars[1], pars[2], pars[3], pars[4])
         checkEquals(Rqgl(p, lambdas), qgl(p, pars), tol)
     }
 

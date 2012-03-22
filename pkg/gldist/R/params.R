@@ -15,7 +15,7 @@
 
 # convert the paramters from the different parametrization
 
-.S_FMKL <- function(p, lambda3, lambda4) {
+.S_FKML <- function(p, lambda3, lambda4) {
 
     S <- numeric(length(p))
 
@@ -61,7 +61,7 @@
     S
 }
 
-FMKL2CSW <- function(lambda1, lambda2, lambda3, lambda4) {
+FKML2CSW <- function(lambda1, lambda2, lambda3, lambda4) {
 
     if (length(lambda1) == 4L) {
         par <- lambda1
@@ -71,8 +71,8 @@ FMKL2CSW <- function(lambda1, lambda2, lambda3, lambda4) {
         lambda4 <- par[4]
     }
 
-    med <- lambda1 + .S_FMKL(1/2, lambda3, lambda4) / lambda2
-    iqr <- (.S_FMKL(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / lambda2
+    med <- lambda1 + .S_FKML(1/2, lambda3, lambda4) / lambda2
+    iqr <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / lambda2
 
     chi <- (lambda3 - lambda4) / sqrt(1 + (lambda3 - lambda4)^2)
     xi <- .5 - (lambda3 + lambda4) / (2 * sqrt(1 + (lambda3 + lambda4)^2))
@@ -80,7 +80,7 @@ FMKL2CSW <- function(lambda1, lambda2, lambda3, lambda4) {
     c(med = med, iqr = iqr, chi = chi, xi = xi)
 }
 
-CSW2FMKL <- function(med, iqr, chi, xi) {
+CSW2FKML <- function(med, iqr, chi, xi) {
 
     if (length(med) == 4L) {
         par <- med
@@ -98,16 +98,16 @@ CSW2FMKL <- function(med, iqr, chi, xi) {
 
         lambda3 <- Inf
         lambda4 <- 0
-        lambda2 <- (.S_FMKL(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
-        lambda1 <- med - .S_FMKL(1/2, lambda3, lambda4) / lambda2
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
     } else if (chi == -1 && xi == 0) {
 
         lambda3 <- 0
         lambda4 <- Inf
-        lambda2 <- (.S_FMKL(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
-        lambda1 <- med - .S_FMKL(1/2, lambda3, lambda4) / lambda2
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
     } else if (chi <= -1 || chi >= 1 || xi <= 0 || xi >= 1) {
@@ -120,8 +120,8 @@ CSW2FMKL <- function(med, iqr, chi, xi) {
         beta <- .5 * chi / sqrt(1 - chi^2)
         lambda3 <- alpha + beta
         lambda4 <- alpha - beta
-        lambda2 <- (.S_FMKL(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
-        lambda1 <- med - .S_FMKL(1/2, lambda3, lambda4) / lambda2
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
     }

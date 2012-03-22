@@ -5,8 +5,8 @@ export("dgl",
        "qdgl",
        "qgl",
        "rgl",
-       "CSW2FMKL",
-       "FMKL2CSW",
+       "CSW2FKML",
+       "FKML2CSW",
        "fitgl",
        "glshapeplot")
 

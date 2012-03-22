@@ -1,5 +1,6 @@
 \name{gldist}
 
+\alias{gldist}
 \alias{dgl}
 \alias{pgl}
 \alias{qgl}
