@@ -47,7 +47,7 @@ fitgl <- function(x, start, inc = FALSE, na.rm = FALSE,
                    function(par) {
                        if (any(is.na(par))) return(Inf)
                        if (!inc) par <- c(0, 1, par)
-                       ans <-  -sum(log(dgl(x, par)))
+                       ans <-  -sum(log(dgl(x, par, maxit=1e4L)))
                        if (is.na(ans)) Inf else ans
                    }
                },
@@ -58,7 +58,7 @@ fitgl <- function(x, start, inc = FALSE, na.rm = FALSE,
                    function(par) {
                        if (any(is.na(par))) return(Inf)
                        if (!inc) par <- c(0, 1, par)
-                       den <-  dgl(hh$mids, par)
+                       den <-  dgl(hh$mids, par, maxit=1e4L)
                        if (any(is.na(den))) Inf else mean((hh$density - den)^2)
                    }
                },
@@ -121,7 +121,7 @@ fitgl <- function(x, start, inc = FALSE, na.rm = FALSE,
                    }
                })
 
-    small <- 1e-6
+    small <- 1e-4
     if (missing(start))
         start <- c(med, iqr , 0, .6)
     lower <- c(-Inf, small, -1 + small, small)
