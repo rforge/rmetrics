@@ -39,12 +39,6 @@ glshapeplot(x, method, moments = 1:4, \dots)
   }
 }
 
-\details{
-
-  FIXME
-
-}
-
 \value{
 
   A list with the output of \code{fitgl} for each column of \code{x}. Is
@@ -54,17 +48,22 @@ glshapeplot(x, method, moments = 1:4, \dots)
 
 \references{
 
-  An Asymmetry-Steepness Parameterization of the Generalized Lambda
-  Distribution. Y. Chalabi, D. J. Scott, D. W\"urtz.
+  Y. Chalabi, D. J. Scott and D. Wuertz, \emph{An Asymmetry-Steepness
+  Parameterization of the Generalized Lambda Distribution}. Working
+  paper, 2012.
 
 }
 
 \author{
-  Yohan Chalabi and Diethelm W\"urtz
+
+  Yohan Chalabi and Diethelm Wuertz
+
 }
 
 \seealso{
+
   fitgl, gldist, gldist-package
+
 }
 
 \examples{

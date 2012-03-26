@@ -1,11 +1,11 @@
-\name{Parammetrization conversion}
+\name{Parametrization conversion}
 
 \alias{CSW2FKML}
 \alias{FKML2CSW}
 
 \title{
 
-  Parameter conversion for the FKML and CSW parametrization.
+  Parameter conversion for the FKML and CSW parameterization.
 
 }
 
@@ -48,19 +48,24 @@ FKML2CSW(lambda1, lambda2, lambda3, lambda4)
 
 \references{
 
-  An Asymmetry-Steepness Parameterization of the Generalized Lambda
-  Distribution. Y. Chalabi, D. J. Scott, D. W\"urtz, Working paper.
+  Y. Chalabi, D. J. Scott and D. Wuertz, \emph{An Asymmetry-Steepness
+  Parameterization of the Generalized Lambda Distribution}. Working
+  paper, 2012.
 
-  M. Freimer, G. Kollia, G. Mudholkar, and C. Lin. A study of the
-  generalized Tukey lambda family. Communications in Statistics-Theory
-  and Methods, 17(10):3547–3567, 1988.
+  M. Freimer, G. Kollia, G. Mudholkar, and C. Lin. \emph{A study of the
+  generalized Tukey lambda family}. Communications in Statistics-Theory
+  and Methods, 17(10):3547--3567, 1988.
 
 }
 
 \author{
-  Yohan Chalabi and Diethelm W\"urtz
+
+  Yohan Chalabi and Diethelm Wuertz
+
 }
 
 \seealso{
+
   gldist, gldist-package
+
 }

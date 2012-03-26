@@ -75,13 +75,16 @@ fitgl(x, start, inc = FALSE, na.rm = FALSE, method = c("mle", "hist",
 
 \references{
 
-  An Asymmetry-Steepness Parameterization of the Generalized Lambda
-  Distribution. Y. Chalabi, D. J. Scott, D. W\"urtz.
+  Y. Chalabi, D. J. Scott and D. Wuertz, \emph{An Asymmetry-Steepness
+  Parameterization of the Generalized Lambda Distribution}. Working
+  paper, 2012.
 
 }
 
 \author{
-  Yohan Chalabi and Diethelm W\"urtz
+
+  Yohan Chalabi and Diethelm Wuertz
+
 }
 
 \seealso{

@@ -64,12 +64,6 @@ rgl(n, med = 0, iqr = 1, chi = 0, xi = 0.6)
   }
 }
 
-\details{
-
-  FIXME
-
-}
-
 \value{
 
   'dgl' gives the density, 'pgl' gives the distribution function, 'qgl'
@@ -80,22 +74,21 @@ rgl(n, med = 0, iqr = 1, chi = 0, xi = 0.6)
 
 \source{
 
-  An Asymmetry-Steepness Parameterization of the Generalized Lambda
-  Distribution. Y. Chalabi, D. J. Scott, D. W\"urtz.
+  Y. Chalabi, D. J. Scott and D. Wuertz, \emph{An Asymmetry-Steepness
+  Parameterization of the Generalized Lambda Distribution}. Working
+  paper, 2012.
 
 }
 
 \author{
-  Yohan Chalabi and Diethelm W\"urtz
+
+  Yohan Chalabi and Diethelm Wuertz
+
 }
 
 \seealso{
+
   fitgl, gldist-package
-}
-
-\examples{
-
-## ...
 
 }
 
