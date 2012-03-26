@@ -72,7 +72,7 @@ FKML2CSW <- function(lambda1, lambda2, lambda3, lambda4) {
     }
 
     med <- lambda1 + .S_FKML(1/2, lambda3, lambda4) / lambda2
-    iqr <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / lambda2
+    iqr <- (.S_FKML(3/4, lambda3, lambda4) - .S_FKML(1/4, lambda3, lambda4)) / lambda2
 
     chi <- (lambda3 - lambda4) / sqrt(1 + (lambda3 - lambda4)^2)
     xi <- .5 - (lambda3 + lambda4) / (2 * sqrt(1 + (lambda3 + lambda4)^2))
@@ -98,7 +98,7 @@ CSW2FKML <- function(med, iqr, chi, xi) {
 
         lambda3 <- Inf
         lambda4 <- 0
-        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FKML(1/4, lambda3, lambda4)) / iqr
         lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
@@ -106,7 +106,7 @@ CSW2FKML <- function(med, iqr, chi, xi) {
 
         lambda3 <- 0
         lambda4 <- Inf
-        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FKML(1/4, lambda3, lambda4)) / iqr
         lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
@@ -120,7 +120,7 @@ CSW2FKML <- function(med, iqr, chi, xi) {
         beta <- .5 * chi / sqrt(1 - chi^2)
         lambda3 <- alpha + beta
         lambda4 <- alpha - beta
-        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FMKL(1/4, lambda3, lambda4)) / iqr
+        lambda2 <- (.S_FKML(3/4, lambda3, lambda4) - .S_FKML(1/4, lambda3, lambda4)) / iqr
         lambda1 <- med - .S_FKML(1/2, lambda3, lambda4) / lambda2
         c(lambda1 = lambda1, lambda2 = lambda2, lambda3 = lambda3, lambda4 = lambda4)
 
