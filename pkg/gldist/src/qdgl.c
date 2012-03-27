@@ -101,17 +101,17 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
     case 3:
 	/* (chi == -1. && xi == 0.) */
 	a = iqr / log(3.);
-#define DSFUN (1. / px);
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN (1. / px)
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     case 4:
 	/* (chi == 1. && xi == 0.) */
 	a = iqr / log(3.);
-#define DSFUN (1. / (1. - px));
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN (1. / (1. - px))
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     case 5:
@@ -126,9 +126,9 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
 	for (i = 0; i < 2; i++)
 	    Sqv[i] = gldist_do_S1(qv[i], (void *) NULL);
 	a = iqr / (Sqv[1] - Sqv[0]);
-#define DSFUN gldist_do_dS1(px, (void *) NULL);
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN gldist_do_dS1(px, (void *) NULL)
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     case 7:
@@ -137,9 +137,9 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
 	for (i = 0; i < 2; i++)
 	    Sqv[i] = gldist_do_S2(qv[i], &alpha);
 	a = iqr / (Sqv[1] - Sqv[0]);
-#define DSFUN gldist_do_dS2(px, &alpha);
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN gldist_do_dS2(px, &alpha)
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     case 8:
@@ -148,9 +148,9 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
 	for (i = 0; i < 2; i++)
 	    Sqv[i] = gldist_do_S3(qv[i], &beta);
 	a = iqr / (Sqv[1] - Sqv[0]);
-#define DSFUN gldist_do_dS3(px, &beta);
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN gldist_do_dS3(px, &beta)
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     case 9:
@@ -181,9 +181,9 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
 	for (i = 0; i < 2; i++)
 	    Sqv[i] = gldist_do_S4(qv[i], ev);
 	a = iqr / (Sqv[1] - Sqv[0]);
-#define DSFUN gldist_do_dS4(px, ev);
-	DO_LOOP;
-#undef  DSFUN;
+#define DSFUN gldist_do_dS4(px, ev)
+	DO_LOOP
+#undef  DSFUN
 	break;
 
     }

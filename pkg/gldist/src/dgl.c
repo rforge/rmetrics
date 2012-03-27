@@ -163,7 +163,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 #define SFUN &gldist_do_S1
 #define DSFUN &gldist_do_dS1
 #define INFO ((void *) NULL)
-#define QDSFUN gldist_do_dS1(px, (void *) NULL);
+#define QDSFUN gldist_do_dS1(px, (void *) NULL)
 	DO_LOOP
 #undef  SFUN
 #undef  DSFUN
@@ -189,7 +189,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 #define SFUN &gldist_do_S2
 #define DSFUN &gldist_do_dS2
 #define INFO &alpha
-#define QDSFUN gldist_do_dS2(px, &alpha);
+#define QDSFUN gldist_do_dS2(px, &alpha)
 	DO_LOOP
 #undef  SFUN
 #undef  DSFUN
@@ -215,7 +215,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 #define SFUN &gldist_do_S3
 #define DSFUN &gldist_do_dS3
 #define INFO &beta
-#define QDSFUN gldist_do_dS3(px, &beta);
+#define QDSFUN gldist_do_dS3(px, &beta)
 	DO_LOOP
 #undef  SFUN
 #undef  DSFUN
@@ -263,7 +263,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 #define SFUN &gldist_do_S4
 #define DSFUN &gldist_do_dS4
 #define INFO ev
-#define QDSFUN gldist_do_dS4(px, ev);
+#define QDSFUN gldist_do_dS4(px, ev)
 	DO_LOOP
 #undef  SFUN
 #undef  DSFUN
@@ -274,7 +274,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
     }
 }
 
-#undef DO_LOOP;
+#undef DO_LOOP
 
 SEXP
 gldist_dgl(SEXP x, SEXP med, SEXP iqr, SEXP chi, SEXP xi, SEXP maxit) {

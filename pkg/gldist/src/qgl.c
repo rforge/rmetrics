@@ -107,9 +107,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = log(3.);
 	a = med + iqr * log(2.) / c;
 	b = iqr / c;
-#define SFUN log(px);
-	DO_LOOP;
-#undef	SFUN;
+#define SFUN log(px)
+	DO_LOOP
+#undef	SFUN
 	break;
 
     case 4:
@@ -117,9 +117,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = log(3.);
 	a = med - iqr * log(2.) / c;
 	b = - iqr / c;
-#define	SFUN log(1. - px);
-	DO_LOOP;
-#undef  SFUN;
+#define	SFUN log(1. - px)
+	DO_LOOP
+#undef  SFUN
 	break;
 
     case 5:
@@ -136,9 +136,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = Sqv[2] - Sqv[0];
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
-#define SFUN gldist_do_S1(px, (void *) NULL);
-	DO_LOOP;
-#undef  SFUN;
+#define SFUN gldist_do_S1(px, (void *) NULL)
+	DO_LOOP
+#undef  SFUN
 	break;
 
     case 7:
@@ -149,9 +149,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = Sqv[2] - Sqv[0];
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
-#define	SFUN gldist_do_S2(px, &alpha);
-	DO_LOOP;
-#undef	SFUN;
+#define	SFUN gldist_do_S2(px, &alpha)
+	DO_LOOP
+#undef	SFUN
 	break;
 
     case 8:
@@ -162,9 +162,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = Sqv[2] - Sqv[0];
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
-#define	SFUN gldist_do_S3(px, &beta);
-	DO_LOOP;
-#undef  SFUN;
+#define	SFUN gldist_do_S3(px, &beta)
+	DO_LOOP
+#undef  SFUN
 	break;
 
     case 9:
@@ -196,9 +196,9 @@ gldist_do_qgl(double *q, double * const p, double med,
 	c = Sqv[2] - Sqv[0];
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
-#define SFUN gldist_do_S4(px, ev);
-	DO_LOOP;
-#undef  SFUN;
+#define SFUN gldist_do_S4(px, ev)
+	DO_LOOP
+#undef  SFUN
 	break;
 
     }

@@ -352,7 +352,7 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
     }
 }
 
-#undef DO_LOOP;
+#undef DO_LOOP
 
 SEXP
 gldist_pgl(SEXP q, SEXP med, SEXP iqr, SEXP chi, SEXP xi, SEXP maxit) {
