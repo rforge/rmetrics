@@ -48,7 +48,8 @@ pkgsRmetrics <- function()
       "schwartz97",
       "SkewHyperbolic",
       "VarianceGamma",
-      "stabledist")
+      "stabledist",
+      "gldist")
 
 pkgsRmetricsDev <- function()
     c("BLCOP",
@@ -63,6 +64,8 @@ pkgsRmetricsDev <- function()
       "SkewHyperbolic",
       "VarianceGamma",
       "stabledist",
+
+      "gldist",
 
       "fUtilities",
       "fEcofin",
