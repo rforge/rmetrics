@@ -1,33 +1,29 @@
 Package: gldist
-Version: 0.1
+Version: 2160.1
+Revision: 5289
 Title: An Asymmetry-Steepness Parameterization of the Generalized
-       Lambda Distribution.
+        Lambda Distribution.
+Date: 2012-03-27
 Author: Yohan Chalabi and Diethelm Wuertz
 Depends: R (>= 2.14.0)
 Suggests: RUnit
 Maintainer: Yohan Chalabi <chalabi@phys.ethz.ch>
 License: GPL-2 | GPL-3
 Description: The generalized lambda distribution (GLD) is a versatile
-	     distribution that can accommodate a wide range of shapes,
-	     including fat-tailed and asymmetric distributions. This
-	     package implements a more intuitive parameterization of
-	     the GLD that expresses the location and scale parameters
-	     directly as the median and inter-quartile range of the
-	     distribution. The remaining two shape parameters
-	     characterize the asymmetry and steepness of the
-	     distribution respectively. The fitting of the GLD to
-	     empirical data can be reduced to a two-parameter
-	     estimation problem where the location and scale
-	     parameters are estimated by their robust sample
-	     estimators. Moreover, the parameterization can be used to
-	     compare data sets in a convenient asymmetry and steepness
-	     shape plot. The underline C routines are written such
-	     that compilers that support vectorized mathematical
-	     operations can automatically vectorize the most time
-	     consuming loops (tested with icc 12.1.0). The package
-	     includes the usual distribution functions, fitting
-	     routines and a shape plot function.
-
-
-
-
+        distribution that can accommodate a wide range of shapes,
+        including fat-tailed and asymmetric distributions. This package
+        implements a more intuitive parameterization of the GLD that
+        expresses the location and scale parameters directly as the
+        median and inter-quartile range of the distribution. The
+        remaining two shape parameters characterize the asymmetry and
+        steepness of the distribution respectively. The fitting of the
+        GLD to empirical data can be reduced to a two-parameter
+        estimation problem where the location and scale parameters are
+        estimated by their robust sample estimators. Moreover, the
+        parameterization can be used to compare data sets in a
+        convenient asymmetry and steepness shape plot. The underline C
+        routines are written such that compilers that support
+        vectorized mathematical operations can automatically vectorize
+        the most time consuming loops (tested with icc 12.1.0). The
+        package includes the usual distribution functions, fitting
+        routines and a shape plot function.
