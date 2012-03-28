@@ -14,8 +14,8 @@ Calculates the incomplete Bessel K function using the algorithm and code
 provided by Slavinsky and Safouhi (2009).
 }
 \usage{
-incompleteBesselK(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 90)
-incompleteBesselKR(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 90)
+incompleteBesselK(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 120)
+incompleteBesselKR(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 120)
 SSFcoef(nmax, nu)
 combinatorial(nu)
 GDENOM(n, x, y, nu, An, nmax, Cnp)

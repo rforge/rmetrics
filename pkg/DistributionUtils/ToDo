@@ -12,4 +12,8 @@ Add simple wrapper functions for optimizers: see fitdistrplus
 Sort data before using uniroot to find quantiles. Use algorithm which
 takes this into account---Joyce??
 
+Inversion tests need to be checked to make sure that they deal with
+distributions which are not on the whole real line, eg gig, but also
+gamma, uniform etc
+
 

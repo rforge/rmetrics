@@ -1,4 +1,5 @@
 \name{DistributionUtils-internal}
+\alias{newIBFR}
 
 \title{Internal Distribution Utilities Functions}
 \description{

@@ -6,7 +6,7 @@
 ###     SSFcoef, combinatorial, GDENOM, and GNUM
 
 incompleteBesselK <- function(x, y, nu, tol = (.Machine$double.eps)^(0.85),
-                              nmax = 90) {
+                              nmax = 120) {
 
   KNu <- besselK(2*sqrt(x*y), nu)
   IBFOut <- .Fortran("incompleteBesselK",
@@ -31,7 +31,7 @@ incompleteBesselK <- function(x, y, nu, tol = (.Machine$double.eps)^(0.85),
 
 incompleteBesselKR <- function(x, y, nu,
                                tol = (.Machine$double.eps)^(0.85),
-                               nmax = 90) {
+                               nmax = 120) {
   Am <- matrix(rep(0, (nmax + 1)^2), ncol = nmax + 1)
   An <- matrix(rep(0, (nmax + 1)^2), ncol = nmax + 1)
   Cnp <- numeric((nmax + 1)*(nmax + 2)/2)

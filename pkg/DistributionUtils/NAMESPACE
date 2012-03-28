@@ -1,6 +1,7 @@
 ################################################
 ### Functions
 ################################################
+export(newIBFR)
 export(besselRatio)
 export(incompleteBesselK)
 export(incompleteBesselKR)

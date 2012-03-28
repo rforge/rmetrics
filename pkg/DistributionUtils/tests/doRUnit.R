@@ -22,6 +22,7 @@ if(require("RUnit", quietly=TRUE)) {
   level <- Sys.getenv("LEVEL")
 
   library(package=pkg, character.only=TRUE)
+  cat("value of pkg is ",pkg,"\n\n")
 
   path <- system.file("unitTests", package = pkg)
 

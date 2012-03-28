@@ -68,7 +68,10 @@ qDist <- function(densFn = "norm", p, param = NULL,
                   intTol = uniTol, ...)
 {
     CALL <- match.call()
-    if (!lower.tail) p <- 1 - p
+    if (!lower.tail) {
+        p <- 1 - p
+        lower.tail <- TRUE
+    }
     mode <- distMode(densFn, param = param, ...)
     pMode <- pDist(densFn, q = mode, param = param, intTol = intTol, ...)
     quant <- rep(NA, length(p))
