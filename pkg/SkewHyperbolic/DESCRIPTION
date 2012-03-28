@@ -5,7 +5,7 @@ Date: 2010-03-31
 Title: The Skew Hyperbolic Student t-Distribution
 Author: David Scott <d.scott@auckland.ac.nz>, Fiona Grimson
 Maintainer: David Scott <d.scott@auckland.ac.nz>
-Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic
+Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic, RUnit
 Encoding: latin1
 Description: Functions are provided for the density function,
 	     distribution function, quantiles and random number

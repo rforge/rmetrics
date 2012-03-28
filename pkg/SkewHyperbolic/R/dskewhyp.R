@@ -112,6 +112,10 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
     errMessage <- parResult$errMessage
     if (case == "error")
         stop(errMessage)
+    if(!lower.tail){
+      p <- 1 - p
+      lower.tail == TRUE
+    }
     method <- match.arg(method)
     param <- as.numeric(param)
     mu <- param[1]

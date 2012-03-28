@@ -118,7 +118,7 @@ test.qskewhyp <- function()
     } else {
         qpMaxInd <- which.max(pmax(abs(qpResult[,4 + (1:nqs)])))
     }
-    checkTrue(qpMaxDiff < 10^(-4), msg =
+    checkTrue(qpMaxDiff < 10^(-3), msg =
               paste("qpMaxDiff = ", qpMaxDiff,
                     "for param = ",
                     qpResult[qpMaxInd, 1], qpResult[qpMaxInd, 2],
@@ -175,7 +175,7 @@ test.qskewhyp <- function()
     } else {
         qpMaxInd <- which.max(pmax(abs(qpResult[,4 + (1:nqs)])))
     }
-    checkTrue(qpMaxDiff < 10^(-4), msg =
+    checkTrue(qpMaxDiff < 10^(-3), msg =
               paste("qpMaxDiff = ", qpMaxDiff,
                     "for param = ",
                     qpResult[qpMaxInd, 1], qpResult[qpMaxInd, 2],
@@ -277,7 +277,7 @@ test.qskewhyp <- function()
     } else {
         qpMaxInd <- which.max(pmax(abs(qpResult[,4 + (1:nqs)])))
     }
-    checkTrue(qpMaxDiff < 10^(-4), msg =
+    checkTrue(qpMaxDiff < 10^(-3), msg =
               paste("qpMaxDiff = ", qpMaxDiff,
                     "for param = ",
                     qpResult[qpMaxInd, 1], qpResult[qpMaxInd, 2],
@@ -336,7 +336,7 @@ test.qskewhyp <- function()
     } else {
         qpMaxInd <- which.max(pmax(abs(qpResult[,4 + (1:nqs)])))
     }
-    checkTrue(qpMaxDiff < 10^(-4), msg =
+    checkTrue(qpMaxDiff < 10^(-3), msg =
               paste("qpMaxDiff = ", qpMaxDiff,
                     "for param = ",
                     qpResult[qpMaxInd, 1], qpResult[qpMaxInd, 2],
