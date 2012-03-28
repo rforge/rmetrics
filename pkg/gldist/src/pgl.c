@@ -37,11 +37,11 @@ gldist_zeroin_Newton(double y, double a, double b, double (*f)(double x, void *i
     fb = (*f)(b, info) - y;
 
     /* test if we have found a root at an endpoint */
-    if(fa == 0.) {
+    if(fabs(fa) < 2 * EPS) {
         *Maxit = 0;
         return a;
     }
-    if(fb == 0.) {
+    if(fabs(fb) < 2 * EPS) {
         *Maxit = 0;
         return b;
     }
@@ -153,16 +153,12 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
        auto-vectorize the calls to mathematical functions. */
 
     double px, qx;
-    double *qrange = (double*) R_alloc(2, sizeof(double));
     double qmin, qmax;
-    double prange[2] = {0., 1.};
     double alpha, beta;
-    double Sv[2], pv[2], ev[2];
+    double ev[2];
     double Sqv[3], qv[3] = {.25, .5, .75};
     double a, b, c;
-    double S;
-    double x, y;
-    double * pars = (double*) R_alloc(3, sizeof(double));
+    double y;
     int flag = 0;
     int i, maxiter;
     double **ptr;
