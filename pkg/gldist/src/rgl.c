@@ -35,12 +35,12 @@ gldist_do_rgl(double *x, double med, double iqr, double chi, double xi, int n) {
 
     double px;
     double alpha, beta;
-    double Sv[2], pv[2], ev[2];
+    double ev[2];
     double Sqv[3], qv[3] = {.25, .5, .75};
     double a, b, c;
     double S;
     int flag = 0;
-    int i, j;
+    int i;
 
     /* First check the special cases when chi in {-1, 1} and xi in {0, 1} */
     WHICH_CASE(flag, med, iqr, chi, xi);

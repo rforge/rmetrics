@@ -79,7 +79,7 @@ gldist_do_qgl(double *q, double * const p, double med,
 
     double qx, px;
     double alpha, beta;
-    double Sv[2], pv[2], ev[2];
+    double ev[2];
     double Sqv[3], qv[3] = {.25, .5, .75};
     double a, b, c;
     double S;
@@ -109,7 +109,7 @@ gldist_do_qgl(double *q, double * const p, double med,
 	b = iqr / c;
 #define SFUN log(px)
 	DO_LOOP
-#undef	SFUN
+#undef	SFUN;
 	break;
 
     case 4:

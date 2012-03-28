@@ -57,18 +57,14 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
     /* more over we use seperate variables to help compilers to
        auto-vectorize the calls to mathematical functions. */
 
-    double * p;
     double px, xx, dx;
-    double *qrange = (double*) R_alloc(2, sizeof(double));
     double qmin, qmax;
-    double prange[2] = {0., 1.};
     double alpha, beta;
-    double Sv[2], pv[2], ev[2];
+    double ev[2];
     double Sqv[3], qv[3] = {.25, .5, .75};
     double a, b, c, e;
-    double S, dS;
+    double dS;
     double y;
-    double * pars = (double*) R_alloc(3, sizeof(double));
     int flag = 0;
     int i, maxiter;
     double **ptr;

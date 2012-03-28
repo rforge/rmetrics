@@ -75,7 +75,7 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
 
     double qx, px;
     double alpha, beta;
-    double dSv[2], pv[2], ev[2];
+    double ev[2];
     double Sqv[2], qv[2] = {.25, .75};
     double a, b, c;
     double dS;
