@@ -1,9 +1,9 @@
 Package: gldist
 Version: 2160.2
-Revision: 5298
+Revision: 5308
 Title: An Asymmetry-Steepness Parameterization of the Generalized
         Lambda Distribution.
-Date: 2012-03-28
+Date: 2012-04-02
 Author: Yohan Chalabi and Diethelm Wuertz
 Depends: R (>= 2.14.0)
 Suggests: RUnit
