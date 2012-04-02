@@ -109,7 +109,7 @@ gldist_do_qgl(double *q, double * const p, double med,
 	b = iqr / c;
 #define SFUN log(px)
 	DO_LOOP
-#undef	SFUN;
+#undef	SFUN
 	break;
 
     case 4:
