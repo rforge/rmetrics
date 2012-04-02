@@ -30,27 +30,34 @@ test.qdgl <- function() {
 
             u <- p[i]
 
+            ## x <-
+            ##     if (u > 1 || u < 0) {
+            ##         NaN
+            ##     } else if (u == 0) {
+            ##         if (lambda3 < 1)
+            ##             Inf
+            ##         else
+            ##             1 / lambda2
+            ##     } else if (u == 1) {
+            ##         if (lambda4 < 1)
+            ##             Inf
+            ##         else
+            ##             1 / lambda2
+            ##     } else if (lambda3 == 0 && lambda4 == 0) {
+            ##         1 / (u - u^2) / lambda2
+            ##     } else if (u == 0 && lambda3 > 0) {
+            ##         0
+            ##     } else if (lambda4 == 0 && lambda3 != 0) {
+            ##         (1 / (1 - u) + u^(lambda3 - 1)) / lambda2
+            ##     } else if (lambda3 == 0 && lambda4 != 0) {
+            ##         (u - 1 - (1 - u)^lambda4 * u) / ((u - 1) * u * lambda2)
+            ##     } else {
+            ##         (u^(lambda3 - 1) + (1 - u)^(lambda4 - 1)) / lambda2
+            ##     }
+
             x <-
                 if (u > 1 || u < 0) {
                     NaN
-                } else if (u == 0) {
-                    if (lambda3 < 1)
-                        Inf
-                    else
-                        1 / lambda2
-                } else if (u == 1) {
-                    if (lambda4 < 1)
-                        Inf
-                    else
-                        1 / lambda2
-                } else if (lambda3 == 0 && lambda4 == 0) {
-                    1 / (u - u^2) / lambda2
-                } else if (u == 0 && lambda3 > 0) {
-                    0
-                } else if (lambda4 == 0 && lambda3 != 0) {
-                    (1 / (1 - u) + u^(lambda3 - 1)) / lambda2
-                } else if (lambda3 == 0 && lambda4 != 0) {
-                    (u - 1 - (1 - u)^lambda4 * u) / ((u - 1) * u * lambda2)
                 } else {
                     (u^(lambda3 - 1) + (1 - u)^(lambda4 - 1)) / lambda2
                 }
@@ -78,21 +85,39 @@ test.qdgl <- function() {
                     c(0, 1,  1, 0),
                     c(0, 1, -1, 0))
 
+    # special case with different location and scale
+    params <- rbind(params,
+                    c(-1, 2, 0, .5 - 1/sqrt(5)),
+                    c(-1, 2, 0, .5 - 2/sqrt(17)),
+                    c(-1, 2, 0, .5),
+                    c(-1, 2,  1, 0),
+                    c(-1, 2, -1, 0))
+    params <- rbind(params,
+                    c(1, 2, 0, .5 - 1/sqrt(5)),
+                    c(1, 2, 0, .5 - 2/sqrt(17)),
+                    c(1, 2, 0, .5),
+                    c(1, 2,  1, 0),
+                    c(1, 2, -1, 0))
+
     ###################################
     # compare both implementation
     p <- seq(0, 1, len = 1e3)
     for (i in seq.int(nrow(params))) {
         pars <- as.numeric(params[i, ])
         lambdas <- CSW2FKML(pars[1], pars[2], pars[3], pars[4])
-        if (i != 295)
-            checkEquals(Rqdgl(p, lambdas), qdgl(p, pars), tol)
+        if (!(i %in% c(295, 300, 305)))
+        checkEquals(Rqdgl(p, lambdas), qdgl(p, pars), tol)
     }
-    # deal with special case of i == 295 which correspond to the
-    # included uniform distribuion. Rqdgl fails at p = 0,1 because of
-    # numerical errors. We have to deal with it specially in the C
-    # code.
+
+    # deal with special case which correspond to the included uniform
+    # distribuion. Rqdgl fails at p = 0,1 because of numerical errors
+    # in the transformed lambdas.
     pars <- as.numeric(params[295, ])
-    checkEquals(qdgl(p, pars), rep(2, length(p)), tol)
+    checkEquals(Rqdgl(p, c(0, 1, 1, 1)), qdgl(p, pars))
+    pars <- as.numeric(params[300, ])
+    checkEquals(Rqdgl(p, c(-1, .5, 1, 1)), qdgl(p, pars))
+    pars <- as.numeric(params[305, ])
+    checkEquals(Rqdgl(p, c(1, .5, 1, 1)), qdgl(p, pars))
 
     ###################################
     # test included distribution

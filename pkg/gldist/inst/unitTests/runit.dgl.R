@@ -40,6 +40,20 @@ test.dgl <- function() {
                     c(0, 1,  1, 0),
                     c(0, 1, -1, 0))
 
+    # special case with different location and scale
+    params <- rbind(params,
+                    c(-1, 2, 0, .5 - 1/sqrt(5)),
+                    c(-1, 2, 0, .5 - 2/sqrt(17)),
+                    c(-1, 2, 0, .5),
+                    c(-1, 2,  1, 0),
+                    c(-1, 2, -1, 0))
+    params <- rbind(params,
+                    c(1, 2, 0, .5 - 1/sqrt(5)),
+                    c(1, 2, 0, .5 - 2/sqrt(17)),
+                    c(1, 2, 0, .5),
+                    c(1, 2,  1, 0),
+                    c(1, 2, -1, 0))
+
     ###################################
     # check if density integrates to one
     for (i in seq.int(nrow(params))) {
@@ -132,13 +146,13 @@ test.dgl <- function() {
         if (is.finite(xmin)) {
             x <- c(if (xmin < 0) xmin * 1.2 else xmin * .8, xmin)
             d <- dgl(x, pars)
-            checkIdentical(d, c(0, 1/qdgl(0, pars)))
+            checkEquals(d, c(0, 1/qdgl(0, pars)), tol)
         }
 
         if (is.finite(xmax)) {
             x <- c(xmax, if (xmax < 0) xmax * .8 else xmax * 1.2)
             d <- dgl(x, pars)
-            checkIdentical(d, c(1/qdgl(1, pars), 0))
+            checkEquals(d, c(1/qdgl(1, pars), 0), tol)
         }
     }
 

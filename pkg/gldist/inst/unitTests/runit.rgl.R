@@ -30,6 +30,20 @@ test.rgl <- function () {
                     c(0, 1,  1, 0),
                     c(0, 1, -1, 0))
 
+    # special case with different location and scale
+    params <- rbind(params,
+                    c(-1, 2, 0, .5 - 1/sqrt(5)),
+                    c(-1, 2, 0, .5 - 2/sqrt(17)),
+                    c(-1, 2, 0, .5),
+                    c(-1, 2,  1, 0),
+                    c(-1, 2, -1, 0))
+    params <- rbind(params,
+                    c(1, 2, 0, .5 - 1/sqrt(5)),
+                    c(1, 2, 0, .5 - 2/sqrt(17)),
+                    c(1, 2, 0, .5),
+                    c(1, 2,  1, 0),
+                    c(1, 2, -1, 0))
+
     tol <- 5 * .Machine$double.eps
 
     ###################################
