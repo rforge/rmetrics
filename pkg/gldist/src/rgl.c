@@ -181,7 +181,7 @@ gldist_rgl(SEXP n, SEXP med, SEXP iqr, SEXP chi, SEXP xi) {
     PROTECT(x = allocVector(REALSXP, len));
     if (len == 0) {
 	UNPROTECT(1);
-	return(x);
+	return x;
     }
 
     /* Compute quantiles */
