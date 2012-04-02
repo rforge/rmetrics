@@ -104,22 +104,38 @@ gldist_do_qgl(double *q, double * const p, double med,
 
     case 3:
 	/* (chi == -1. && xi == 0.) */
-	c = log(3.);
-	a = med + iqr * log(2.) / c;
-	b = iqr / c;
-#define SFUN log(px)
-	DO_LOOP
-#undef	SFUN
+	a = iqr / log(3.);
+	for (i = 0; i < n; ++i) {
+	    px = p[i];
+	    if (ISNAN(px)) {
+		qx = px;
+	    } else if (px < 0. || px > 1.) {
+		qx = R_NaN;
+		warn = 1;
+	    } else {
+		qx = med + a * log(2. * px);
+	    }
+	    q[i] = qx;
+	}
+	if (warn) Rf_warning("NaNs produced");
 	break;
 
     case 4:
 	/* (chi == 1. && xi == 0.) */
-	c = log(3.);
-	a = med - iqr * log(2.) / c;
-	b = - iqr / c;
-#define	SFUN log(1. - px)
-	DO_LOOP
-#undef  SFUN
+	a = -iqr / log(3.);
+	for (i = 0; i < n; ++i) {
+	    px = p[i];
+	    if (ISNAN(px)) {
+		qx = px;
+	    } else if (px < 0. || px > 1.) {
+		qx = R_NaN;
+		warn = 1;
+	    } else {
+		qx = med + a * log(2. - 2. * px);
+	    }
+	    q[i] = qx;
+	}
+	if (warn) Rf_warning("NaNs produced");
 	break;
 
     case 5:

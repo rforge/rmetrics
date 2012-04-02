@@ -101,17 +101,37 @@ gldist_do_qdgl(double *qd, double * const p, double med, double iqr, double chi,
     case 3:
 	/* (chi == -1. && xi == 0.) */
 	a = iqr / log(3.);
-#define DSFUN (1. / px)
-	DO_LOOP
-#undef  DSFUN
+	for (i = 0; i < n; ++i) {
+	    px = p[i];
+	    if (ISNAN(px)) {
+		qx = px;
+	    } else if (px < 0. || px > 1.) {
+		qx = R_NaN;
+		warn = 1;
+	    } else {
+		qx = a / px;
+	    }
+	    qd[i] = qx;
+	}
+	if (warn) Rf_warning("NaNs produced");
 	break;
 
     case 4:
 	/* (chi == 1. && xi == 0.) */
 	a = iqr / log(3.);
-#define DSFUN (1. / (1. - px))
-	DO_LOOP
-#undef  DSFUN
+	for (i = 0; i < n; ++i) {
+	    px = p[i];
+	    if (ISNAN(px)) {
+		qx = px;
+	    } else if (px < 0. || px > 1.) {
+		qx = R_NaN;
+		warn = 1;
+	    } else {
+		qx = a / (1. - px);
+	    }
+	    qd[i] = qx;
+	}
+	if (warn) Rf_warning("NaNs produced");
 	break;
 
     case 5:
