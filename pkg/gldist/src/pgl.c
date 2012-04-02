@@ -181,11 +181,8 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
 
     case 3:
 	/* (chi == -1. && xi == 0.) */
-	c = log(3.);
-	a = med + iqr * log(2.) / c;
-	b = iqr / c;
-        qmin = -INFINITY;
-        qmax = a;
+	qmin = -INFINITY;
+	qmax = med + iqr * log(2.)/log(3.);
 	for (i = 0; i < n; ++i) {
 	    qx = q[i];
 	    if (ISNAN(qx)) {
@@ -195,8 +192,7 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
 	    } else if (qx >= qmax) {
 		px = 1.;
 	    } else {
-		y = (qx - a) / b;
-		px = exp(y);
+		px = .5 * pow(3., (qx - med)/iqr);
 	    }
 	    p[i] = px;
 	}
@@ -204,11 +200,8 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
 
     case 4:
 	/* (chi == 1. && xi == 0.) */
-	c = log(3.);
-	a = med - iqr * log(2.) / c;
-	b = - iqr / c;
-        qmin = a;
-        qmax = INFINITY;
+	qmin = med - iqr * log(2.)/log(3.);
+	qmax = INFINITY;
 	for (i = 0; i < n; ++i) {
 	    qx = q[i];
 	    if (ISNAN(qx)) {
@@ -218,8 +211,7 @@ gldist_do_pgl(double *p, double * const q, double med, double iqr,
 	    } else if (qx >= qmax) {
 		px = 1.;
 	    } else {
-		y = (qx - a) / b;
-		px = 1. - exp(y);
+		px = 1. - .5 * pow(3., (med - qx)/iqr);
 	    }
 	    p[i] = px;
 	}

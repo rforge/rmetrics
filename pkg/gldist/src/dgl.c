@@ -87,24 +87,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 
     case 3:
 	/* (chi == -1. && xi == 0.) */
-	c = log(3.);
-	a = med + iqr * log(2.) / c;
-	b = iqr / c;
-	e = log(3.) / iqr;
+	a = .5 * log(3.)/iqr;
         qmin = -INFINITY;
-        qmax = a;
+	qmax = med + iqr * log(2.)/log(3.);
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
 	    if (ISNAN(xx)) {
 		dx = xx;
-	    } else if (xx == qmax) {
-		dx = e;
-	    } else if (xx <= qmin || xx > qmax) {
+	    } else if (xx < qmin || xx > qmax) {
 		dx = 0.;
 	    } else {
-		y = (xx - a) / b;
-		px = exp(y);
-		dx = e * px;
+		dx = a * pow(3., (xx - med)/iqr);
 	    }
 	    d[i] = dx;
 	}
@@ -112,24 +105,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 
     case 4:
 	/* (chi == 1. && xi == 0.) */
-	c = log(3.);
-	a = med - iqr * log(2.) / c;
-	b = - iqr / c;
-	e = log(3.) / iqr;
-        qmin = a;
+	a = .5 * log(3.)/iqr;
+	qmin = med - iqr * log(2.)/log(3.);
         qmax = INFINITY;
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
 	    if (ISNAN(xx)) {
 		dx = xx;
-	    } else if (xx == qmin) {
-		dx = e;
-	    } else if (xx < qmin || xx >= qmax) {
+	    } else if (xx < qmin || xx > qmax) {
 		dx = 0.;
 	    } else {
-		y = (xx - a) / b;
-		px = 1. - exp(y);
-		dx = e * (1. - px);
+		dx = a * pow(3., (med - xx)/iqr);
 	    }
 	    d[i] = dx;
 	}
@@ -228,9 +214,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	    xx = x[i];
 	    if (ISNAN(xx)) {
 		dx = xx;
-	    } else if (xx < a) {
-		dx = 0.;
-	    } else if (xx > b) {
+	    } else if (xx < a || xx > b) {
 		dx = 0.;
 	    } else {
 		dx = c;
@@ -298,4 +282,3 @@ gldist_dgl(SEXP x, SEXP med, SEXP iqr, SEXP chi, SEXP xi, SEXP maxit) {
     return d;
 
 }
-
