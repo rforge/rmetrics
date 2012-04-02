@@ -26,7 +26,7 @@ gldist_zeroin_Newton(double y, double a, double b, double (*f)(double x, void *i
     double fa, fb;
     double c, fc;
     double p, q;
-    double prev_step, new_step;
+    double new_step;
     double tol_act;
     int maxit = *Maxit + 1;
 
