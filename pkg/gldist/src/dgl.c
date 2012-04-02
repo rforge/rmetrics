@@ -88,7 +88,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
     case 3:
 	/* (chi == -1. && xi == 0.) */
 	a = .5 * log(3.)/iqr;
-        qmin = -INFINITY;
+	qmin = -INFINITY;
 	qmax = med + iqr * log(2.)/log(3.);
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
@@ -107,7 +107,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	/* (chi == 1. && xi == 0.) */
 	a = .5 * log(3.)/iqr;
 	qmin = med - iqr * log(2.)/log(3.);
-        qmax = INFINITY;
+	qmax = INFINITY;
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
 	    if (ISNAN(xx)) {
