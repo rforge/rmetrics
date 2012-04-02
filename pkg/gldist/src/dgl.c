@@ -19,19 +19,20 @@
 #include "gldist.h"
 
 #define DO_LOOP								\
+    px = 0.;								\
+    qmin = a + b * SFUN;						\
     px = 1.;								\
+    qmax = a + b * SFUN;						\
     for (i = 0; i < n; ++i) {						\
 	xx = *ptr[i];							\
 	if (ISNAN(xx)) {						\
 	    dx = xx;							\
 	} else if (xx == qmin) {					\
 	    px = 0.;							\
-	    dS = QDSFUN;						\
-	    dx = 1. / (e * dS);						\
+	    dx = 1. / (e * DSFUN);					\
 	} else if (xx == qmax) {					\
 	    px = 1.;							\
-	    dS = QDSFUN;						\
-	    dx = 1. / (e * dS);						\
+	    dx = 1. / (e * DSFUN);					\
 	} else if (xx < qmin || xx > qmax) {				\
 	    dx = 0.;							\
 	} else {							\
@@ -40,11 +41,10 @@
 		px = 1.;						\
 	    maxiter = maxit;						\
 	    y = (xx - a) / b;						\
-	    px = gldist_zeroin_Newton(y, 0., px, SFUN, DSFUN,		\
+	    px = gldist_zeroin_Newton(y, 0., px, SFUNX, DSFUNX,		\
 				      INFO, 0., &maxiter);		\
 	    if (maxiter < 0) Rf_warning("Reached maxit for x=%f", xx);	\
-	dS = QDSFUN;							\
-	dx = 1 / (e * dS);						\
+	    dx = 1 / (e * DSFUN);					\
 	}								\
 	d[ptr[i] - x] = dx;						\
     }
@@ -63,7 +63,6 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
     double ev[2];
     double Sqv[3], qv[3] = {.25, .5, .75};
     double a, b, c, e;
-    double dS;
     double y;
     int flag = 0;
     int i, maxiter;
@@ -88,7 +87,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
     case 3:
 	/* (chi == -1. && xi == 0.) */
 	a = .5 * log(3.)/iqr;
-	qmin = -INFINITY;
+	qmin = -INFINITY; // not required but help to understand code
 	qmax = med + iqr * log(2.)/log(3.);
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
@@ -107,7 +106,7 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	/* (chi == 1. && xi == 0.) */
 	a = .5 * log(3.)/iqr;
 	qmin = med - iqr * log(2.)/log(3.);
-	qmax = INFINITY;
+	qmax = INFINITY; // not required but help to understand code
 	for (i = 0; i < n; ++i) {
 	    xx = x[i];
 	    if (ISNAN(xx)) {
@@ -140,17 +139,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
 	e = iqr / (Sqv[2] - Sqv[0]);
-        qmin = -INFINITY;
-        qmax = INFINITY;
-#define SFUN &gldist_do_S1
-#define DSFUN &gldist_do_dS1
+#define SFUNX &gldist_do_S1
+#define DSFUNX &gldist_do_dS1
 #define INFO ((void *) NULL)
-#define QDSFUN gldist_do_dS1(px, (void *) NULL)
+#define SFUN gldist_do_S1(px, (void *) NULL)
+#define DSFUN gldist_do_dS1(px, (void *) NULL)
 	DO_LOOP
+#undef  SFUNX
+#undef  DSFUNX
+#undef  INFO
 #undef  SFUN
 #undef  DSFUN
-#undef  INFO
-#undef  QDSFUN
 	break;
 
     case 7:
@@ -166,17 +165,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
 	e = iqr / (Sqv[2] - Sqv[0]);
-        qmin = -INFINITY;
-        qmax = (alpha > 0) ? a + b / alpha : INFINITY;
-#define SFUN &gldist_do_S2
-#define DSFUN &gldist_do_dS2
+#define SFUNX &gldist_do_S2
+#define DSFUNX &gldist_do_dS2
 #define INFO &alpha
-#define QDSFUN gldist_do_dS2(px, &alpha)
+#define SFUN gldist_do_S2(px, &alpha)
+#define DSFUN gldist_do_dS2(px, &alpha)
 	DO_LOOP
+#undef  SFUNX
+#undef  DSFUNX
+#undef  INFO
 #undef  SFUN
 #undef  DSFUN
-#undef  INFO
-#undef  QDSFUN
 	break;
 
     case 8:
@@ -192,17 +191,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
 	a = med - iqr * Sqv[1] / c;
 	b = iqr / c;
 	e = iqr / (Sqv[2] - Sqv[0]);
-        qmin = (beta > 0) ? a - b / beta : -INFINITY;
-        qmax = INFINITY;
-#define SFUN &gldist_do_S3
-#define DSFUN &gldist_do_dS3
+#define SFUNX &gldist_do_S3
+#define DSFUNX &gldist_do_dS3
 #define INFO &beta
-#define QDSFUN gldist_do_dS3(px, &beta)
+#define SFUN gldist_do_S3(px, &beta)
+#define DSFUN gldist_do_dS3(px, &beta)
 	DO_LOOP
+#undef  SFUNX
+#undef  DSFUNX
+#undef  INFO
 #undef  SFUN
 #undef  DSFUN
-#undef  INFO
-#undef  QDSFUN
 	break;
 
     case 9:
@@ -238,17 +237,17 @@ gldist_do_dgl(double *d, double * const x, double med, double iqr,
         a = med - iqr * Sqv[1] / c;
         b = iqr / c;
 	e = iqr / (Sqv[2] - Sqv[0]);
-        qmin = (ev[0] > 0) ? a - b / ev[0] : -INFINITY;
-        qmax = (ev[1] > 0) ? a + b / ev[1] : INFINITY;
-#define SFUN &gldist_do_S4
-#define DSFUN &gldist_do_dS4
+#define SFUNX &gldist_do_S4
+#define DSFUNX &gldist_do_dS4
 #define INFO ev
-#define QDSFUN gldist_do_dS4(px, ev)
+#define SFUN gldist_do_S4(px, ev)
+#define DSFUN gldist_do_dS4(px, ev)
 	DO_LOOP
+#undef  SFUNX
+#undef  DSFUNX
+#undef  INFO
 #undef  SFUN
 #undef  DSFUN
-#undef  INFO
-#undef  QDSFUN
 	break;
 
     }
