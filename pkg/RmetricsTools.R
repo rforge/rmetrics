@@ -933,8 +933,9 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
 
     # build package
     message("\nBuilding packages ... ")
+    Rbin <- file.path(R.home(), "bin", "R")
     build <-
-        sapply(pkgs, function(pkg, ...) system(paste("R CMD build", pkg, ...)))
+        sapply(pkgs, function(pkg, ...) system(paste(Rbin, "CMD build", pkg, ...)))
     if (any(build))
         stop("\nProblem in building the packages\n", build)
 
