@@ -53,7 +53,7 @@ gldist_zeroin_Newton(double y, double a, double b, double (*f)(double x, void *i
 	b = 1.;
 	fa = (*f)(a, info) - y;
 	fb = (*f)(b, info) - y;
-	if (fa * fb > 0) return(R_NaN);
+	if (fa * fb > 0) return R_NaN;
     }
 
     while (maxit--) {
@@ -115,9 +115,9 @@ cmp(const void *a, const void *b)
     const double *bb = *(double**)b;
     int naa = ISNAN(*aa);
     int nab = ISNAN(*bb);
-    if (naa && nab) return(0);
-    if (naa) return(1);
-    if (nab) return(-1);
+    if (naa && nab) return 0;
+    if (naa) return 1;
+    if (nab) return -1;
     return (*aa < *bb) - (*aa > *bb);
 }
 
