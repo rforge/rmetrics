@@ -68,15 +68,19 @@ C     INITIALIZE THE HALTON LOW DISCREPANCY SEQUENCE.
 C     THE BASE IS CALCULATED FROM PRIMES
 
       IMPLICIT NONE
-
-      INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
-      DOUBLE PRECISION QUASI(DIMEN), HALF
-      INTRINSIC MOD
+c Args
+      INTEGER DIMEN, BASE(DIMEN), OFFSET
+      DOUBLE PRECISION QUASI(DIMEN)
+c Vars
+      INTEGER ITER(DIMEN), DIGIT
+      DOUBLE PRECISION HALF
       INTEGER NC, I, K, M, N, NB
+
+      INTRINSIC MOD
 
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMPLE SIEVE:
       BASE(1) = 2
-      BASE(2) = 3
+      IF(DIMEN .ge. 2) BASE(2) = 3
       N = 3
       NC = 2
       DO WHILE(NC.LT.DIMEN)
@@ -159,18 +163,19 @@ C     ARGUMENTS:
 C     QN        - THE QUASI NUMBERS, A "N" BY "DIMEN" ARRAY
 C     N         - NUMBERS OF POINTS TO GENERATE
 C     DIMEN     - THE DIMENSION
-C     QUASI     - THE LAST POINT IN THE SEQUENCE
 C     BASE      - THE PRIME BASE, A VECTOR OF LENGTH "DIMEN"
 C     OFFSET    - THE OFFSET OF POINTS IN THE NEXT FUNCTION CALL
 C     INIT      - IF ONE, WE INITIALIZE
 C     TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
       IMPLICIT NONE
-
+c Args
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
-      DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
-      DOUBLE PRECISION HQNORM
+      DOUBLE PRECISION QN(N,DIMEN)
+c Vars
+C     QUASI     - THE LAST POINT IN THE SEQUENCE
+      DOUBLE PRECISION QUASI(DIMEN), HQNORM
       INTEGER I, J
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
@@ -366,9 +371,9 @@ C--------------------------------------------------------------------------
 C     FUNCTIONS:
 C     SOBOL (QN, N, DIMEN, QUASI,
 C     LL, COUNT, SV,
-C     IFLAG, iSEED, INIT, TRANSFORM)
+C     scrambling, iSEED, INIT, TRANSFORM)
 C     REAL*8 FUNCTION SQNORM (P)
-C     INITSOBOL (DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)
+C     INITSOBOL (DIMEN, QUASI, LL, COUNT, SV, scrambling, iSEED)
 C     SGENSCRML (MAX, LSM, SHIFT, S, MAXCOL, iSEED)
 C     SGENSCRMU (USM, USHIFT, S, MAXCOL, iSEED)
 C     REAL*8 FUNCTION UNIS (iSEED)
@@ -378,7 +383,7 @@ C-------------------------------------------------------------------------------
 
 
       SUBROUTINE SOBOL(QN, N, DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED, INIT, TRANSFORM)
+     &     scrambling, iSEED, INIT, TRANSFORM)
 
 C     THIS IS AN INTERFACE TO CREATE "N" POINTS IN "DIMEN" DIMENSIONS
 C     ARGUMENTS:
@@ -389,7 +394,7 @@ C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
 C     SV        - TABLE OF DIRECTION NUMBERS
-C     IFLAG     - INITIALIZATION FLAG
+C     scrambling     - INITIALIZATION FLAG
 C     0 - NO SCRAMBLING
 C     1 - OWEN TYPE SCRAMBLING
 C     2 - FAURE-TEZUKA TYPE SCRAMBLING
@@ -403,13 +408,13 @@ C     TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER MAXBIT,N,DIMEN,INIT,TRANSFORM
       PARAMETER (MAXBIT=30)
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
-      INTEGER iSEED, IFLAG, I, J
+      INTEGER iSEED, scrambling, I, J
       DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
       DOUBLE PRECISION SQNORM
       EXTERNAL SQNORM
 
       IF (INIT.EQ.1) THEN
-         CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)
+         CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, scrambling, iSEED)
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
@@ -475,7 +480,7 @@ C-------------------------------------------------------------------------------
 
 
       SUBROUTINE INITSOBOL(DIMEN, QUASI, LL, COUNT, SV,
-     &     IFLAG, iSEED)
+     &     scrambling, iSEED)
 
 C     INITIALIZATION OF THE SOBOL GENERATOR:
 C     THE LEADING ELEMENTS OF EACH ROW OF SV ARE INITIALIZED USING "VINIT".
@@ -493,7 +498,7 @@ C     QUASI     - LAST POINT IN THE SEQUENCE
 C     LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
 C     COUNT     - SEQUENCE NUMBER OF THE CALL
 C     SV        - TABLE OF DIRECTION NUMBERS
-C     IFLAG     - INITIALIZATION FLAG
+C     scrambling     - INITIALIZATION FLAG
 C     0 - NO SCRAMBLING
 C     1 - OWEN TYPE SCRAMBLING
 C     2 - FAURE-TEZUKA TYPE SCRAMBLING
@@ -502,7 +507,7 @@ C     iSEED     - SCRAMBLING iSEED
 
       IMPLICIT NONE
 
-      INTEGER MAXDIM,MAXDEG,MAXBIT,IFLAG
+      INTEGER MAXDIM,MAXDEG,MAXBIT,scrambling
 C     C      DW ADDED FOLLOWING LINE:
       INTEGER P,PP
       PARAMETER (MAXDIM=1111,MAXDEG=13,MAXBIT=30)
@@ -1401,7 +1406,7 @@ C     MULTIPLY COLUMNS OF V BY APPROPRIATE POWER OF 2:
       ENDDO
 
 C>>>  SCRAMBLING START
-      IF (IFLAG .EQ. 0) THEN
+      IF (scrambling .EQ. 0) THEN
          DO I = 1, S
             DO J = 1,MAXCOL
                SV(I, J) = V(I, J)
@@ -1410,7 +1415,7 @@ C>>>  SCRAMBLING START
          ENDDO
          LL= 2**MAXCOL
       ELSE
-         IF ((IFLAG .EQ. 1) .OR. (IFLAG .EQ. 3)) THEN
+         IF ((scrambling .EQ. 1) .OR. (scrambling .EQ. 3)) THEN
             CALL SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
             DO I = 1,S
                DO J = 1,MAXCOL
@@ -1432,9 +1437,9 @@ C>>>  SCRAMBLING START
             ENDDO
             LL= 2**MAX
          ENDIF
-         IF ((IFLAG .EQ. 2) .OR. (IFLAG .EQ. 3)) THEN
+         IF ((scrambling .EQ. 2) .OR. (scrambling .EQ. 3)) THEN
             CALL SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
-            IF (IFLAG .EQ. 2) THEN
+            IF (scrambling .EQ. 2) THEN
                MAXX = MAXCOL
             ELSE
                MAXX = MAX
@@ -1443,7 +1448,7 @@ C>>>  SCRAMBLING START
                DO J = 1, MAXCOL
                   P = MAXX
                   DO K = 1, MAXX
-                     IF (IFLAG .EQ. 2) THEN
+                     IF (scrambling .EQ. 2) THEN
                         TV(I,P,J) = IBITS(V(I,J),K-1,1)
                      ELSE
                         TV(I,P,J) = IBITS(SV(I,J),K-1,1)
@@ -1474,7 +1479,7 @@ C>>>  SCRAMBLING START
                   ENDDO
                   SV(I, PP) = TEMP2
                   IF (PP .EQ. 1) THEN
-                     IF (IFLAG .EQ. 3) THEN
+                     IF (scrambling .EQ. 3) THEN
                         SHIFT(I) = IEOR(TEMP4, SHIFT(I))
                      ELSE
                         SHIFT(I) = TEMP4
@@ -1658,16 +1663,16 @@ c$$$      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
 c$$$      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
 c$$$      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
 c$$$      INTEGER iSEED, iSEED1
-c$$$      INTEGER I, INIT, IFLAG, J
+c$$$      INTEGER I, INIT, scrambling, J
 c$$$
 c$$$      TRANSFORM = 1
-c$$$      IFLAG = 3
+c$$$      scrambling = 3
 c$$$      iSEED1 = 4711
 c$$$
 c$$$      INIT = 1
 c$$$      iSEED = iSEED1
 c$$$      CALL SOBOL(QN1, N1, DIMEN, QUASI ,LL, COUNT, SV,
-c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$     &     scrambling, iSEED, INIT, TRANSFORM)
 c$$$
 c$$$      WRITE (*,*)
 c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
@@ -1678,7 +1683,7 @@ c$$$
 c$$$      INIT=1
 c$$$      iSEED = iSEED1
 c$$$      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$     &     scrambling, iSEED, INIT, TRANSFORM)
 c$$$      WRITE (*,*)
 c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
 c$$$      DO I=1, N2, INT(N2/10)
@@ -1687,7 +1692,7 @@ c$$$      ENDDO
 c$$$
 c$$$      INIT = 0
 c$$$      CALL SOBOL(QN2, N2, DIMEN, QUASI, LL, COUNT, SV,
-c$$$     &     IFLAG, iSEED, INIT, TRANSFORM)
+c$$$     &     scrambling, iSEED, INIT, TRANSFORM)
 c$$$      WRITE (*,*)
 c$$$      WRITE (*,7) "N/DIMEN:", (J, J=1,DIMEN,INT(DIMEN/5))
 c$$$      DO I=1, N2, INT(N2/10)

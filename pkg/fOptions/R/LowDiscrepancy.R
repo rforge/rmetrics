@@ -37,48 +37,30 @@
 #  rnorm.sobol            Normal Sobol low discrepancy sequence
 ################################################################################
 
-runif.pseudo =
-function(n, dimension, init = NULL)
-{   # A function implemented by Diethelm Wuertz
-
+runif.pseudo <- function(n, dimension, init = NULL) {
     # Description:
     #   Uniform Pseudo Random number sequence
 
-    # FUNCTION:
-
-    # Deviates:
-    result = matrix(runif(n*dimension), ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(runif(n*dimension), ncol = dimension)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rnorm.pseudo =
-function(n, dimension, init = TRUE)
-{   # A function implemented by Diethelm Wuertz
+rnorm.pseudo <- function(n, dimension, init = TRUE) {
 
     # Description:
     #   Normal Pseudo Random number sequence
 
-    # FUNCTION:
-
-    # Deviates:
-    result = matrix(rnorm(n*dimension), ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(rnorm(n*dimension), ncol = dimension)
 }
 
 
 # -----------------------------------------------------------------------------
 
 
-runif.halton =
-function (n, dimension, init = TRUE)
+runif.halton <- function (n, dimension, init = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -99,41 +81,30 @@ function (n, dimension, init = TRUE)
         # options(warn = .warn)
         .setfOptionsEnv(.runif.halton.seed = list(base = rep(0, dimension), offset = 0))
     }
-
-    # Generate:
-    qn = rep(0, n*dimension)
+    optEnv <- .getfOptionsEnv(".runif.halton.seed")
 
     # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
-    result = .Fortran("halton",
-        as.double(qn),
-        as.integer(n),
-        as.integer(dimension),
-        as.integer(.getfOptionsEnv(".runif.halton.seed")$base),
-        as.integer(.getfOptionsEnv(".runif.halton.seed")$offset),
-        as.integer(init),
-        as.integer(0),
-        PACKAGE = "fOptions")
+    result <- .Fortran("halton",
+                       qn = numeric(n*dimension),
+                       as.integer(n),
+                       as.integer(dimension),
+                       base = as.integer(optEnv$base),
+                       offset=as.integer(optEnv$offset),
+                       as.integer(init),
+                       0L,
+                       PACKAGE = "fOptions")
 
     # For the next numbers save:
-###     .warn = options()$warn
-###     options(warn = -1)
-###     rm(".runif.halton.seed")
-###     options(warn = .warn)
-    .setfOptionsEnv(.runif.halton.seed = list(base = result[[4]], offset = result[[5]]))
+    .setfOptionsEnv(.runif.halton.seed = result[c("base", "offset")])
 
-    # Deviates:
-    result = matrix(result[[1]], ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(result[["qn"]], ncol = dimension)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rnorm.halton =
-function (n, dimension, init = TRUE)
+rnorm.halton <- function (n, dimension, init = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -153,41 +124,30 @@ function (n, dimension, init = TRUE)
 ###         options(warn = .warn)
         .setfOptionsEnv(.rnorm.halton.seed = list(base = rep(0, dimension), offset = 0))
     }
-
-    # Generate:
-    qn = rep(0, n*dimension)
+    optEnv <- .getfOptionsEnv(".rnorm.halton.seed")
 
     # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
-    result = .Fortran("halton",
-        as.double(qn),
-        as.integer(n),
-        as.integer(dimension),
-        as.integer(.getfOptionsEnv(".rnorm.halton.seed")$base),
-        as.integer(.getfOptionsEnv(".rnorm.halton.seed")$offset),
-        as.integer(init),
-        as.integer(1),
-        PACKAGE = "fOptions")
+    result <- .Fortran("halton",
+                       qn = numeric(n * dimension),
+                       as.integer(n),
+                       as.integer(dimension),
+                       base = as.integer(optEnv$base),
+                       offset=as.integer(optEnv$offset),
+                       as.integer(init),
+                       1L,
+                       PACKAGE = "fOptions")
 
     # For the next numbers save:
-###     .warn = options()$warn
-###     options(warn = -1)
-###     rm(".rnorm.halton.seed")
-###     options(warn = .warn)
-    .setfOptionsEnv(.rnorm.halton.seed = list(base = result[[4]], offset = result[[5]]))
+    .setfOptionsEnv(.rnorm.halton.seed = result[c("base", "offset")])
 
-    # Deviates:
-    result = matrix(result[[1]], ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(result[["qn"]], ncol = dimension)
 }
 
 
 # -----------------------------------------------------------------------------
 
 
-runif.sobol =
-function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
+runif.sobol <- function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -200,56 +160,41 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     #
 
     # FUNCTION:
+    stopifnot(0 <= (scrambling <- as.integer(scrambling)), scrambling <= 3)
 
     # Restart Settings:
     if (init) {
-###         .warn = options()$warn
-###         options(warn = -1)
-###         rm(".runif.sobol.seed")
-###         options(warn = .warn)
         .setfOptionsEnv(.runif.sobol.seed = list(quasi = rep(0, dimension), ll = 0,
-            count = 0, sv = rep(0, dimension*30), seed = seed))
+                        count = 0, sv = rep(0, dimension*30), seed = seed))
     }
+    optEnv <- .getfOptionsEnv(".runif.sobol.seed")
 
-    # Generate:
-    qn = rep(0.0, n*dimension)
-
-    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-    result = .Fortran("sobol",
-        as.double(qn),
-        as.integer(n),
-        as.integer(dimension),
-        as.double (.getfOptionsEnv(".runif.sobol.seed")$quasi),
-        as.integer(.getfOptionsEnv(".runif.sobol.seed")$ll),
-        as.integer(.getfOptionsEnv(".runif.sobol.seed")$count),
-        as.integer(.getfOptionsEnv(".runif.sobol.seed")$sv),
-        as.integer(scrambling),
-        as.integer(.getfOptionsEnv(".runif.sobol.seed")$seed),
-        as.integer(init),
-        as.integer(0),
-        PACKAGE = "fOptions")
+    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,scrambling,SEED,INIT,TRANSFORM)
+    result <- .Fortran("sobol",
+                       qn = numeric(n * dimension),
+                       as.integer(n),
+                       as.integer(dimension),
+                       quasi = as.double (optEnv$quasi),
+                       ll    = as.integer(optEnv$ll),
+                       count = as.integer(optEnv$count),
+                       sv    = as.integer(optEnv$sv),
+                       scrambling,
+                       seed  = as.integer(optEnv$seed),
+                       as.integer(init),
+                       0L,
+                       PACKAGE = "fOptions")
 
     # For the next numbers save:
-###     .warn = options()$warn
-###     options(warn = -1)
-###     rm(".runif.sobol.seed")
-###     options(warn = .warn)
-    .setfOptionsEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
-        count = result[[6]], sv = result[[7]], seed = result[[9]]))
+    .setfOptionsEnv(.runif.sobol.seed = result[c("quasi","ll","count","sv","seed")])
 
-    # Deviates:
-    result = matrix(result[[1]], ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(result[["qn"]], ncol = dimension)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-rnorm.sobol =
-function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
+rnorm.sobol <- function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -262,47 +207,33 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
 
     # FUNCTION:
 
+    stopifnot(0 <= (scrambling <- as.integer(scrambling)), scrambling <= 3)
     # Restart Settings:
     if (init) {
-###         .warn = options()$warn
-###         options(warn = -1)
-###         rm(".rnorm.sobol.seed")
-###         options(warn = .warn)
         .setfOptionsEnv(.rnorm.sobol.seed = list( quasi = rep(0, dimension), ll = 0,
-            count = 0, sv = rep(0, dimension*30), seed = seed))
+                        count = 0, sv = rep(0, dimension*30), seed = seed))
     }
+    optEnv <- .getfOptionsEnv(".rnorm.sobol.seed")
 
-    # Generate:
-    qn = rep(0.0, n*dimension)
-
-    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-    result = .Fortran("sobol",
-        as.double(qn),
-        as.integer(n),
-        as.integer(dimension),
-        as.double (.getfOptionsEnv(".rnorm.sobol.seed")$quasi),
-        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$ll),
-        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$count),
-        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$sv),
-        as.integer(scrambling),
-        as.integer(.getfOptionsEnv(".rnorm.sobol.seed")$seed),
-        as.integer(init),
-        as.integer(1),
-        PACKAGE = "fOptions")
+    # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,scrambling,SEED,INIT,TRANSFORM)
+    result <- .Fortran("sobol",
+                       qn = numeric(n * dimension),
+                       as.integer(n),
+                       as.integer(dimension),
+                       quasi = as.double (optEnv$quasi),
+                       ll    = as.integer(optEnv$ll),
+                       count = as.integer(optEnv$count),
+                       sv    = as.integer(optEnv$sv),
+                       scrambling,
+                       seed  = as.integer(optEnv$seed),
+                       as.integer(init),
+                       1L,
+                       PACKAGE = "fOptions")
 
     # For the next numbers save:
-###     .warn = options()$warn
-###     options(warn = -1)
-###     rm(".rnorm.sobol.seed")
-###     options(warn = .warn)
-    .setfOptionsEnv(.rnorm.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
-        count = result[[6]], sv = result[[7]], seed = result[[9]]))
+    .setfOptionsEnv(.rnorm.sobol.seed = result[c("quasi","ll","count","sv","seed")])
 
-    # Deviates:
-    result = matrix(result[[1]], ncol = dimension)
-
-    # Return Value:
-    result
+    matrix(result[["qn"]], ncol = dimension)
 }
 
 
