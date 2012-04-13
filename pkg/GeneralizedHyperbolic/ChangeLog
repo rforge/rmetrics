@@ -1,3 +1,12 @@
+2012-04-13    <d.scott@auckland.ac.nz>
+
+	* ArkansasRiver added as a data set giving data provided by Eric
+	Morway from the US Geological Survey 
+
+	* hyperblmFit, hyperblm added to allow fitting of linear models
+	with hyperbolic errors
+
+
 2011-12-21    <d.scott@auckland.ac.nz>
 
 	* hyperbFitStand, hyperbFitStandStart, dsghyp, ghypStandPars added

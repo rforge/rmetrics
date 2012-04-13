@@ -12,8 +12,8 @@
 }
 
 \usage{
-summary.hyperblm(object, hessian = FALSE,
-                 nboots = 1000, ...)
+\method{summary}{hyperblm}(object, hessian = FALSE,
+                           nboots = 1000, ...)
 
 \method{print}{summary.hyperblm}(x,
                                  digits = max(3, getOption("digits") - 3), ...)

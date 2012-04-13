@@ -58,8 +58,8 @@ ghypScale(newMean, newSD,
 }
 
 \seealso{
-\link{\code{ghypStandPars}} for standardizing the generalized hyperbolic
-  distribution.
+%\link{\code{ghypStandPars}} for standardizing the generalized hyperbolic
+%  distribution.
 }
 \examples{
 param <- c(2,10,0.1,0.07,-0.5) # a normal inverse Gaussian

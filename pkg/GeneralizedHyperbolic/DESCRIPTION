@@ -1,6 +1,6 @@
 Package: GeneralizedHyperbolic
-Version: 0.7-0
-Date: 2011-12-21
+Version: 0.8-0
+Date: 2012-04-13
 Title: The Generalized Hyperbolic Distribution
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
@@ -15,7 +15,8 @@ Description: This package provides functions for the hyperbolic and
         the skew-Laplace distribution. Additional functionality is
         provided for the hyperbolic distribution, normal inverse
 	Gaussian distribution and generalized inverse Gaussian distribution,
-	including fitting of these distributions to data.
+	including fitting of these distributions to data. Linear models with 
+        hyperbolic errors may be fitted using hyperblmFit.
 License: GPL (>= 2)
 URL: http://www.r-project.org
 Repository: CRAN

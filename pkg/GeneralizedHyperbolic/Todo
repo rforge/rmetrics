@@ -1,3 +1,5 @@
+Round the parameter values in the test parameter sets rather than using values with many digits. Also include reference values for cdf obtained from Maple.
+
 Have pdf return NA and warning rather than stop when encountering
 wrong parameter values.
 
