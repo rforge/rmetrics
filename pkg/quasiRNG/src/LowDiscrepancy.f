@@ -77,6 +77,7 @@ C	  >>> remove implicit type declaration <<<
 	   	  
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       BASE(1) = 2
+	  IF (DIMEN.GE.2) THEN
       BASE(2) = 3
       N = 3
       NC = 2
@@ -94,6 +95,7 @@ C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       ENDIF
       N = N + 1
       ENDDO
+	  ENDIF
       
 C     NOW CREATE THE FIRST QUASI RANDOM NUMBER:
       OFFSET = 0
