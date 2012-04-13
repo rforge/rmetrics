@@ -187,7 +187,7 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
                        (p < 1))
         extreme <- c(small,large)
         xVals <- seq(xRange[1], xRange[2], length.out = nInterpol)
-        yVals <- pskewhyp(xVals, param = param, subdivision = subdivisions,
+        yVals <- pskewhyp(xVals, param = param, subdivisions = subdivisions,
                           intTol = intTol)
         splineFit <- splinefun(xVals, yVals)
         zeroFn <- function(x, p) {

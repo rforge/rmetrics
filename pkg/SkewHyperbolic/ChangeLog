@@ -1,3 +1,10 @@
+2012-04-13    <d.scott@auckland.ac.nz>
+
+	* version changed to 0.3-1
+
+	* test.qskewhyp changed to level2test.qskewhyp in unitTests
+	because of intermittent failures
+
 2010-03-31    <d.scott@auckland.ac.nz>
 
 	* Version updated to 0.3-0

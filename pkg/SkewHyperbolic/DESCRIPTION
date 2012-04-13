@@ -1,7 +1,7 @@
 Package: SkewHyperbolic
 Type: Package
-Version: 0.3-0
-Date: 2010-03-31
+Version: 0.3-1
+Date: 2012-04-13
 Title: The Skew Hyperbolic Student t-Distribution
 Author: David Scott <d.scott@auckland.ac.nz>, Fiona Grimson
 Maintainer: David Scott <d.scott@auckland.ac.nz>

@@ -7,9 +7,9 @@
 ### Functions with name graphicstest.* are run by make if
 ### LEVEL=graphics in call to make
 
-test.qskewhyp <- function()
+level2test.qskewhyp <- function()
 {
-    ## Purpose: Level 1 test of qskewhyp and pskewhyp
+    ## Purpose: Level 2 test of qskewhyp and pskewhyp
     ## ----------------------------------------------------------------------
     ## Arguments:
     ## ----------------------------------------------------------------------
