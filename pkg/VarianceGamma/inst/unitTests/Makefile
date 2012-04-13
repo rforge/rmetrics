@@ -18,5 +18,5 @@ test: # Run unit tests
 	${R} --vanilla --slave < ${SUITE}
 
 clean:
-	rm *~ *.Rout .RData .Rhistory
+	rm *~ *.Rout .RData .Rhistory ../*~ ../../*~ ../../R/*~ ../../man/*~ ../../data/*~
 
