@@ -8,7 +8,7 @@
 ### LEVEL = graphics in call to make
 
 
-test.qghyp <- function()
+level2test.qghyp <- function()
 {
     ## select a random parameter value for testing
 
