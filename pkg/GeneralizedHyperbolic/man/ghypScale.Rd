@@ -50,17 +50,17 @@ ghypScale(newMean, newSD,
     the rescaled generalized hyperbolic distribution in the usual
     (\eqn{\alpha, \beta}{alpha, beta}) parameterization.
 }
-\references{
-%% Add reference to paper with Diethelm Wuertz when completed
-}
+% \references{
+%   Add reference to paper with Diethelm Wuertz when completed
+% }
 \author{
   David Scott \email{d.scott@auckland.ac.nz}
 }
 
-\seealso{
-%\link{\code{ghypStandPars}} for standardizing the generalized hyperbolic
-%  distribution.
-}
+% \seealso{
+%   \link{\code{ghypStandPars}} for standardizing the generalized hyperbolic
+%   distribution.
+% }
 \examples{
 param <- c(2,10,0.1,0.07,-0.5) # a normal inverse Gaussian
 ghypMean(param = param)
