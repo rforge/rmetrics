@@ -71,13 +71,13 @@ C     THE BASE IS CALCULATED FROM PRIMES
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
-	  
-C	  >>> remove implicit type declaration <<<	  
+      
+C     >>> remove implicit type declaration <<<	  
       INTEGER N, NC, NB, M, K, I
-	   	  
+      
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       BASE(1) = 2
-	  IF (DIMEN.GE.2) THEN
+      IF (DIMEN.GE.2) THEN
       BASE(2) = 3
       N = 3
       NC = 2
@@ -95,7 +95,7 @@ C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       ENDIF
       N = N + 1
       ENDDO
-	  ENDIF
+      ENDIF
       
 C     NOW CREATE THE FIRST QUASI RANDOM NUMBER:
       OFFSET = 0
@@ -129,9 +129,9 @@ C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       DOUBLE PRECISION QUASI(DIMEN), HALF
       INTRINSIC MOD
-	  
-C	  >>> remove implicit type declaration <<<	  
-	  INTEGER NB                                                        
+      
+C     >>> remove implicit type declaration <<<	  
+      INTEGER NB                                                        
            
       DO NB = 1, DIMEN      
       ITER(NB) = OFFSET
@@ -171,33 +171,33 @@ C       TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER N, DIMEN, OFFSET, INIT, TRANSFORM
       INTEGER BASE(DIMEN)
       DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
-	  
-C	  >>> remove implicit type declaration <<<	  
-	  INTEGER I, J
-	  DOUBLE PRECISION HQNORM
+
+C     >>> remove implicit type declaration <<<	  
+      INTEGER I, J
+      DOUBLE PRECISION HQNORM
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
-		  CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
+         CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
       IF (TRANSFORM.EQ.0) THEN
-		  DO I=1, N
-			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-			 DO J = 1, DIMEN
-				QN(I, J) = QUASI(J)        
-			 ENDDO
-		  ENDDO
-	  ELSE
-		  DO I=1, N
-			 CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-			 DO J = 1, DIMEN
-				QN(I, J) = HQNORM(QUASI(J))
-			 ENDDO
-		  ENDDO
-	  ENDIF
-	   
+         DO I=1, N
+            CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+            DO J = 1, DIMEN
+               QN(I, J) = QUASI(J)        
+            ENDDO
+         ENDDO
+      ELSE
+         DO I=1, N
+            CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
+            DO J = 1, DIMEN
+               QN(I, J) = HQNORM(QUASI(J))
+            ENDDO
+         ENDDO
+      ENDIF
+          
       RETURN
       END
 
@@ -209,24 +209,24 @@ C ------------------------------------------------------------------------------
 
 C     USED TO CALCULATE HALTON NORMAL DEVIATES:
       DOUBLE PRECISION P,R,T,A,B, EPS
-	  
+
 C      DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
 C     &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
 C     &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
 C     &    +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,  
 C     &    +0.385607006340E-2  /
-C	  >>> remove implicit type declaration <<<
-	  DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
-	  P0 = -0.322232431088E+0 
-	  P1 = -1.000000000000E+0 
-	  P2 = -0.342242088547E+0 
-	  P3 = -0.204231210245E-1 
-	  P4 = -0.453642210148E-4 
-	  Q0 = +0.993484626060E-1
-	  Q1 = +0.588581570495E+0 
-	  Q2 = +0.531103462366E+0 
-	  Q3 = +0.103537752850E+0  
-	  Q4 = +0.385607006340E-2
+C     >>> remove implicit type declaration <<<
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
+      P0 = -0.322232431088E+0 
+      P1 = -1.000000000000E+0 
+      P2 = -0.342242088547E+0 
+      P3 = -0.204231210245E-1 
+      P4 = -0.453642210148E-4 
+      Q0 = +0.993484626060E-1
+      Q1 = +0.588581570495E+0 
+      Q2 = +0.531103462366E+0 
+      Q3 = +0.103537752850E+0  
+      Q4 = +0.385607006340E-2
 
 C     NOTE, IF P BECOMES 1, THE PROGRAM FAILS TO CALCULATE THE
 C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY 
@@ -258,9 +258,9 @@ C      INTEGER N1,N2,DIMEN,OFFSET,TRANSFORM
 C      PARAMETER (N1=20,N2=N1/2,DIMEN=5)
 C      INTEGER BASE(DIMEN)
 C      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN)
-C	  
-C	  >>> remove implicit type declaration <<<
-C	  INTEGER INIT, I, J	
+C   
+C     >>> remove implicit type declaration <<<
+C     INTEGER INIT, I, J	
 C
 C      TRANSFORM = 0
 C      
@@ -422,32 +422,32 @@ C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QN(N,DIMEN), QUASI(DIMEN)
       INTEGER iSEED
-	  
-C	  >>> remove implicit type declaration <<<
-	  INTEGER I, J, IFLAG
-	  DOUBLE PRECISION SQNORM
+
+C     >>> remove implicit type declaration <<<
+      INTEGER I, J, IFLAG
+      DOUBLE PRECISION SQNORM
 
       IF (INIT.EQ.1) THEN
-		  CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
+         CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
       
-	  IF (TRANSFORM.EQ.0) THEN
-		  DO I=1, N
-			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)      
-			 DO J = 1, DIMEN
-				   QN(I, J) = QUASI(J)         
-			 ENDDO
-		  ENDDO
-	  ELSE
-		  DO I=1, N
-			 CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
-			 DO J = 1, DIMEN
-				   QN(I, J) = SQNORM(QUASI(J))
-			 ENDDO
-		  ENDDO
-	  ENDIF
+      IF (TRANSFORM.EQ.0) THEN
+         DO I=1, N
+            CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)      
+            DO J = 1, DIMEN
+               QN(I, J) = QUASI(J)         
+            ENDDO
+         ENDDO
+      ELSE
+         DO I=1, N
+            CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
+            DO J = 1, DIMEN
+               QN(I, J) = SQNORM(QUASI(J))
+            ENDDO
+         ENDDO
+      ENDIF
 
       RETURN
       END
@@ -460,25 +460,25 @@ C ------------------------------------------------------------------------------
 
 C     USED TO CALCULATE SOBOL NORMAL DEVIATES
       DOUBLE PRECISION P,R,T,A,B, EPS
-	  
+
 C      DATA P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
 C     &   /-0.322232431088E+0, -1.000000000000E+0, -0.342242088547E+0, 
 C     &    -0.204231210245E-1, -0.453642210148E-4, +0.993484626060E-1,
 C     &    +0.588581570495E+0, +0.531103462366E+0, +0.103537752850E+0,  
 C     &    +0.385607006340E-2  /
-C	  >>> remove implicit type declaration <<<
-	  DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
-	  P0 = -0.322232431088E+0 
-	  P1 = -1.000000000000E+0 
-	  P2 = -0.342242088547E+0
-	  P3 = -0.204231210245E-1 
-	  P4 = -0.453642210148E-4 
-	  Q0 = +0.993484626060E-1
-	  Q1 = +0.588581570495E+0 
-	  Q2 = +0.531103462366E+0 
-	  Q3 = +0.103537752850E+0  
-	  Q4 = +0.385607006340E-2
-	 
+C     >>> remove implicit type declaration <<<
+      DOUBLE PRECISION P0,P1,P2,P3,P4, Q0,Q1,Q2,Q3,Q4
+      P0 = -0.322232431088E+0 
+      P1 = -1.000000000000E+0 
+      P2 = -0.342242088547E+0
+      P3 = -0.204231210245E-1 
+      P4 = -0.453642210148E-4 
+      Q0 = +0.993484626060E-1
+      Q1 = +0.588581570495E+0 
+      Q2 = +0.531103462366E+0 
+      Q3 = +0.103537752850E+0  
+      Q4 = +0.385607006340E-2
+
 
 C     NOTE, IF P BECOMES 1, THE PROGRAM FAILS TO CALCULATE THE
 C     NORMAL RDV. IN THIS CASE WE REPLACE THE LOW DISCREPANCY 
@@ -546,8 +546,8 @@ CC      INTEGER TEMP1,TEMP2,TEMP4
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
       INTRINSIC MOD, IEOR
-	  
-	  
+
+
       
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
@@ -1359,10 +1359,10 @@ CC      INTEGER TEMP1,TEMP2,TEMP4
      +     6737,2995,7235,7713,973,4821,2377,1673,1,6541/
       
       DATA TAU/0,0,1,3,5,8,11,15,19,23,27,31,35/
-	  
-C	  >>> remove implicit type declaration <<<
-	  INTEGER MAXX, MAX, LL, TEMP01
-	  
+
+C     >>> remove implicit type declaration <<<
+      INTEGER MAXX, MAX, LL, TEMP01
+
 
 C     CHECK PARAMETERS:
       MAX = 30
@@ -1644,9 +1644,9 @@ C       COUNT     - SEQUENCE NUMBER OF THE CALL
       INTEGER SV(DIMEN,MAXBIT)
       DOUBLE PRECISION QUASI(DIMEN)
       INTRINSIC MOD, IEOR
-	  
-C	  >>> remove implicit type declaration <<<
-	  INTEGER LL
+
+C     >>> remove implicit type declaration <<<
+      INTEGER LL
       
       L = 0
       I = COUNT
@@ -1674,16 +1674,16 @@ C      SUBROUTINE TESTSOBOL()
 C
 C     TESTROUTINE, CALLED FROM THE FORTRAN MAIN PROGRAM
 C      INTEGER MAXBIT,DIMEN,TRANSFORM
-C	  >>> remove implicit type declaration <<<
-C	  INTEGER N1, N2
+C     >>> remove implicit type declaration <<<
+C     INTEGER N1, N2
 C      PARAMETER (N1=20,N2=N1/2,DIMEN=5,MAXBIT=30)
 C      INTEGER LL,COUNT,SV(DIMEN,MAXBIT)
 C      DOUBLE PRECISION QN1(N1,DIMEN),QN2(N2,DIMEN),QUASI(DIMEN)
 C      INTEGER iSEED, iSEED1
-C	  
-C	  >>> remove implicit type declaration <<<
-C	  INTEGER IFLAG, I, J, INIT
-C	  
+C  
+C     >>> remove implicit type declaration <<<
+C     INTEGER IFLAG, I, J, INIT
+C     
 C
 C      TRANSFORM = 1
 C      IFLAG = 3
