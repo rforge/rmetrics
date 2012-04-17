@@ -1,5 +1,27 @@
+2012-04-11  mmaechler
+
+	* DESCRIPTION, NAMESPACE, R/LowDiscrepancy.R,
+	  src/085A-LowDiscrepancy.f: fix array overrun for dimension=1;
+	  other cosmetic halton/sobl
+
+2012-03-20  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2012-03-19  chalabi
+
+	* R/HestonNandiOptions.R: fixed partial argument names
+	* src/085A-LowDiscrepancy.f: removed calls to WRITE() in
+	  fortranFortran routines
+	* NAMESPACE: added NAMESPACE
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
 2011-06-07  chalabi
 
+	* ChangeLog, DESCRIPTION: updated ChangeLog and DESC file
 	* src/085A-LowDiscrepancy.f: Delcared all variables and functions
 	  to avoid troubles with picky compilers
 
