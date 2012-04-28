@@ -101,3 +101,5 @@ rngWELLOriginal: setGenerator.WELL, putDescription.WELL, getDescription.WELL,
 
 12. Extend the direct call interface with multiple streams.
 
+13. change the behavior of quasi RNG sequences when the sequence is not initialized.
+
