@@ -56,7 +56,7 @@ rngWELLScriptR <- function(n, s, generator, includeState=FALSE)
 	T7 <- params$T7
 	Temper  <- params$Temper
 	x <- double(n)
-	for (i in seq.int(length=n)) {
+	for (i in seq.int(length.out=n)) {
 		z0 <- (mask1 * s[, r] + mask0 * s[, r-1]) %% 2
 		z1 <- (T0 %*% s[, 1] + T1 %*% s[, m1+1]) %% 2
 		z2 <- (T2 %*% s[, m2+1] + T3 %*% s[, m3+1]) %% 2

@@ -77,19 +77,22 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
 ## Restart Settings:
     if(init) 
         .setrandtoolboxEnv(.torus.seed = list(offset = 1))
+	if(!exists(".torus.seed", envir=.randtoolboxEnv, mode="list"))
+		stop("Torus algorithm not initialized.")
     
 ## Compute        
     nb <- ifelse(length(n)>1, length(n), n)
     startpt <- .getrandtoolboxEnv(".torus.seed")$offset
     
     res <- .Call("doTorus", nb, dim, prime, startpt, mixed, usetime)
+	
 ## Normal transformation
     if(normal)
         res <- qnorm(res)
-    
-## For the next numbers save:
-    .setrandtoolboxEnv(.torus.seed = list(offset = startpt+nb))
-    
+	
+## For the next numbers save (if init=FALSE)
+    .setrandtoolboxEnv(.torus.seed = list(offset = startpt+nb))	
+        
 ## Result	
         if(dim == 1)
                 as.vector(res)
@@ -109,7 +112,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
     
     if(n < 0 || is.array(n) || !is.numeric(n))
         stop("invalid argument 'n'")
-    if(dim < 1 || dim > 200 || length(dim) >1)
+    if(dim < 1 || length(dim) >1)
         stop("invalid argument 'dim'")    
     
     
@@ -117,7 +120,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 #   Uniform Halton Low Discrepancy Sequence
     
 # Details:
-#   DIMENSION : dimension <= 200
+#   DIMENSION : dimension unlimited?
 #       N : LD numbers to create
     
 # FUNCTION:
@@ -125,32 +128,41 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
         start <- as.numeric(Sys.time())
     else
         start <- 0
-    
+		
 # Restart Settings:
-## YC : previous code should not needed since we have now global Env
     if (init) 
-        .setrandtoolboxEnv(.runif.halton.seed = list(base = rep(0, dim), offset = start))
-    
+        .setrandtoolboxEnv(.halton.seed = list(base = rep(0, dim), offset = start))
+	if(!exists(".halton.seed", envir=.randtoolboxEnv, mode="list"))
+		stop("Halton algorithm not initialized.")
+	
+#print(.randtoolboxEnv)
+#print(ls(envir=.randtoolboxEnv))
+	
+	rngEnv <- .getrandtoolboxEnv(".halton.seed")
     
 # Generate:
-    qn = rep(0, ifelse(length(n)>1, length(n), n) * dim)
+    qn <- numeric(ifelse(length(n)>1, length(n), n) * dim)
     
 # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
     result <- .Fortran("halton",
-                          as.double( qn ),
-                          as.integer( ifelse(length(n)>1, length(n), n) ),
-                          as.integer( dim ),
-                          as.integer( .getrandtoolboxEnv(".runif.halton.seed")$base ),
-                          as.integer( .getrandtoolboxEnv(".runif.halton.seed")$offset ),
-                          as.integer( init ),
-                          as.integer( 0 ),
+                          qn= as.double( qn ),
+                          n= as.integer( ifelse(length(n)>1, length(n), n) ),
+                          dim= as.integer( dim ),
+                          base= as.integer( rngEnv$base ),
+                          offset= as.integer( rngEnv$offset ),
+                          init= as.integer( init ),
+                          trans= as.integer( 0 ),
                           PACKAGE = "randtoolbox")    
         
-# For the next numbers save:
-    .setrandtoolboxEnv(.runif.halton.seed = list(base = result[[4]], offset = result[[5]]))
+#	print(result<-list(qn=1, base=1, offset=1))
+#	print(result)
+#	cat("--\n")
+	
+# For the next numbers save (if init=FALSE)
+    .setrandtoolboxEnv(.halton.seed = result[c("base", "offset")])
     
 # Deviates:
-    result = matrix(result[[1]], ncol = dim)
+    result <- matrix(result[["qn"]], ncol = dim)
 
 ## Normal transformation
     if(normal)
@@ -192,14 +204,16 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     
 # Restart Settings:
     if (init) 
-        .setrandtoolboxEnv(.runif.sobol.seed = list(quasi = rep(0, dim), ll = 0,
-                                                 count = 0, sv = rep(0, dim*30), seed = seed))
-    
+        .setrandtoolboxEnv(.runif.sobol.seed = 
+			list(quasi = rep(0, dim), ll = 0, count = 0, sv = rep(0, dim*30), seed = seed))
+	if(!exists(".runif.sobol.seed", envir=.randtoolboxEnv, mode="list"))
+		stop("Sobol algorithm not initialized.")
+	
 # Generate:
-    qn = rep(0.0, ifelse(length(n)>1, length(n), n) * dim)
+    qn = numeric(ifelse(length(n)>1, length(n), n) * dim)
     
 # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-	result = .Fortran("sobol",
+	result <- .Fortran("sobol",
 					  as.double( qn ),
 					  as.integer( ifelse(length(n)>1, length(n), n) ),
 					  as.integer( dim ),
@@ -213,9 +227,10 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
 					  as.integer( 0 ),
 					  PACKAGE = "randtoolbox")
     
-# For the next numbers save:
+# For the next numbers save (if init=FALSE)
     .setrandtoolboxEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
-                                             count = result[[6]], sv = result[[7]], seed = result[[9]]))
+                                             count = result[[6]], sv = result[[7]], 
+                                             seed = result[[9]]))
     
 # Deviates:
     result = matrix(result[[1]], ncol = dim)

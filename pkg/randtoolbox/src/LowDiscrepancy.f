@@ -77,38 +77,36 @@ C     >>> remove implicit type declaration <<<
       
 C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       BASE(1) = 2
-      IF (DIMEN.GE.2) THEN
-      BASE(2) = 3
+      IF (DIMEN.GE.2) BASE(2) = 3
       N = 3
       NC = 2
       DO WHILE(NC.LT.DIMEN)
-      M = N/2
-      K = 0
-      IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
-         DO I = 5, M
+         M = N/2
+         K = 0
+         IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
+            DO I = 5, M
                IF(MOD(N,I).EQ.0) K = K + 1
-         ENDDO
-         IF (K.EQ.0) THEN
-            NC = NC + 1
-            BASE(NC) = N
+            ENDDO
+            IF (K.EQ.0) THEN
+               NC = NC + 1
+               BASE(NC) = N
+            ENDIF
          ENDIF
-      ENDIF
-      N = N + 1
+         N = N + 1
       ENDDO
-      ENDIF
       
 C     NOW CREATE THE FIRST QUASI RANDOM NUMBER:
       OFFSET = 0
       DO NB = 1, DIMEN        
-      ITER(NB) = OFFSET
-      QUASI(NB) = 0.0D0
-      HALF = 1.0D0 / BASE(NB)
-      DO WHILE (ITER(NB).NE.0)
-         DIGIT = MOD ( ITER(NB), BASE(NB) )
-         QUASI(NB) = QUASI(NB) + DIGIT * HALF
-         ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
-         HALF = HALF / BASE(NB)
-      ENDDO 
+         ITER(NB) = OFFSET
+         QUASI(NB) = 0.0D0
+         HALF = 1.0D0 / BASE(NB)
+         DO WHILE (ITER(NB).NE.0)
+            DIGIT = MOD ( ITER(NB), BASE(NB) )
+            QUASI(NB) = QUASI(NB) + DIGIT * HALF
+            ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
+            HALF = HALF / BASE(NB)
+         ENDDO 
       ENDDO
 
 C     SET THE COUNTER:

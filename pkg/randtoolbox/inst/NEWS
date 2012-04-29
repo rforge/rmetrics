@@ -1,7 +1,17 @@
 === randtoolbox: an R package for random number generation and testing ===
 
+Version 1.13
+=============
+
 Version 1.12
 =============
+NEW FEATURES
+- add new test files.
+- increase the possible dimension of Halton sequences.
+
+WARNING FIXES in Fortran files
+- remove an array over-run (reported by Brian Ripley) and tab 
+characters in LowDiscrepancy.f.
 
 
 Version 1.11
@@ -13,7 +23,7 @@ package rngWELL == 0.10-x.
 NOTE FIXES
 - this version use packageStartupMessage function for the .onAttach
 rather than the cat function. 
-- it removes a printf in KnuthTAOCP2002.c
+- remove a printf in KnuthTAOCP2002.c
 
 WARNING FIXES in C files
 - remove warnings with Wall and pedantic gcc options. For this
