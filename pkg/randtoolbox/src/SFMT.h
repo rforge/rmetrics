@@ -157,7 +157,7 @@ void init_SFMT(int mersennexponent, int useparamset);
 
 /* =================== end of my code =============== */
 
-uint32_t gen_rand32(void);
+uint32_t SFMT_gen_rand32(void);
 uint64_t gen_rand64(void);
 void fill_array32(uint32_t *array, int size);
 void fill_array64(uint64_t *array, int size);
@@ -178,7 +178,7 @@ inline static double to_real1(uint32_t v)
 /** generates a random number on [0,1]-real-interval */
 inline static double SFMT_genrand_real1(void)
 {
-    return to_real1(gen_rand32());
+    return to_real1(SFMT_gen_rand32());
 }
 
 /** generates a random number on [0,1)-real-interval */
@@ -191,7 +191,7 @@ inline static double to_real2(uint32_t v)
 /** generates a random number on [0,1)-real-interval */
 inline static double SFMT_genrand_real2(void)
 {
-    return to_real2(gen_rand32());
+    return to_real2(SFMT_gen_rand32());
 }
 
 /** generates a random number on (0,1)-real-interval */
@@ -204,7 +204,7 @@ inline static double to_real3(uint32_t v)
 /** generates a random number on (0,1)-real-interval */
 inline static double SFMT_genrand_real3(void)
 {
-    return to_real3(gen_rand32());
+    return to_real3(SFMT_gen_rand32());
 }
 /** These real versions are due to Isaku Wada */
 
@@ -235,8 +235,8 @@ inline static double genrand_res53_mix(void)
 { 
     uint32_t x, y;
 
-    x = gen_rand32();
-    y = gen_rand32();
+    x = SFMT_gen_rand32();
+    y = SFMT_gen_rand32();
     return to_res53_mix(x, y);
 } 
 #endif

@@ -1538,7 +1538,7 @@ int get_min_array_size64(void) {
  * init_gen_rand or init_by_array must be called before this function.
  * @return 32-bit pseudorandom number
  */
-uint32_t gen_rand32(void) {
+uint32_t SFMT_gen_rand32(void) {
     uint32_t r;
 
     assert(initialized);
@@ -1670,7 +1670,7 @@ uint32_t gen_rand32(void) {
 /**
  * This function generates and returns 64-bit pseudorandom number.
  * init_gen_rand or init_by_array must be called before this function.
- * The function gen_rand64 should not be called after gen_rand32,
+ * The function gen_rand64 should not be called after SFMT_gen_rand32,
  * unless an initialization is again executed. 
  * @return 64-bit pseudorandom number
  */

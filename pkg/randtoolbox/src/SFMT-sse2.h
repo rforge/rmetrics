@@ -45,7 +45,7 @@
  *		header
  *
  */
-
+/*
 #ifndef SFMT_SSE2_H
 #define SFMT_SSE2_H
 
@@ -93,5 +93,5 @@
 #include "SFMT-sse2-132049-1.h"
 #include "SFMT-sse2-216091-1.h"
 
-#endif 
+#endif */
 

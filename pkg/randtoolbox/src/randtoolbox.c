@@ -167,7 +167,9 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
         {    
             for(i = 0; i < nb; i++) 
             {
-                state = gen_rand32();
+                state = SFMT_gen_rand32();
+//				Rprintf("state %lu\n", state);
+				
                 u[i + j * nb] = fracPart( state * sqrt( prime[j] ) ) ;
             }
         }
@@ -175,12 +177,15 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
     else //classic Torus algo
     {
         if(usetime) //use the machine time
-            state = seed;
+            state = ((unsigned int) seed >> 16);
         else 
             state  = offset;
+		
+		
+//Rprintf("state %u %lu\n", state, state);
         
         for(j = 0; j < dim; j++)
-            for(i = 0; i < nb; i++) 
+            for(i = 0; i < nb; i++) 					
                 u[i + j * nb] = fracPart( ( state + i ) * sqrt( prime[j] ) ) ;                
     }
     
