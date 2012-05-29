@@ -828,37 +828,12 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 
 ##' Numerically Integrate -- basically the same as R's	integrate()
 ##' --------------------- main difference: no errors, but warnings
-.integrate2 <- function(f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
+.integrate2 <- function(f, lower, upper, ..., subdivisions, rel.tol, abs.tol,
+			stop.on.error = FALSE)
 {
-    ## Originally implemented by Diethelm Wuertz -- without *any* warnings
-
-    if (class(version) != "Sversion") {
-	## R:
-	f <- match.fun(f)
-	ff <- function(x) f(x, ...)
-	wk <- .External("call_dqags", ff,
-			rho = environment(), as.double(lower),
-			as.double(upper), as.double(abs.tol),
-			as.double(rel.tol), limit = as.integer(subdivisions),
-			PACKAGE = "base")[c("value","ierr")]
-	iErr <- wk[["ierr"]]
-	if(iErr == 6) stop("the input is invalid")
-	if(iErr > 0)
-            ## NB:  "roundoff error ..." happens many times
-	    warning(switch(iErr + 1, "OK",
-			   "maximum number of subdivisions reached",
-			   "roundoff error was detected",
-			   "extremely bad integrand behaviour",
-			   "roundoff error is detected in the extrapolation table",
-			   "the integral is probably divergent"))
-	wk[[1]]
-
-    } else {
-	## SPlus:
-	integrate(f, lower, upper, subdivisions, rel.tol, abs.tol, ...)[[1]]
-    }
+    ri <- integrate(f, lower, upper, ..., subdivisions=subdivisions,
+		    rel.tol=rel.tol, abs.tol=abs.tol, stop.on.error=stop.on.error)
+    if((msg <- ri[["message"]]) != "OK")
+	warning(msg) ## NB: "roundoff error ..." happens many times
+    ri[["value"]]
 }
-
-
-################################################################################
-

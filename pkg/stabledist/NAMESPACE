@@ -1,3 +1,8 @@
+importFrom(stats,
+	   dnorm, pnorm, qnorm, rnorm,
+	   dcauchy, pcauchy, qcauchy, rcauchy,
+	   runif,
+	   integrate, uniroot, optimize)
 
 export(
        "dstable",
