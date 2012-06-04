@@ -25,33 +25,26 @@
 
 
 .garchRoptimhess <-
-function(par, .params, .series, eps = 1.0e-4)
+    function(par, .params, .series, eps = 1.0e-4)
 {
     # A function implemeted by Diethelm Wuertz
-    
+
     # Description:
     #   Compute Hessian via R's Internal function optimhess()
-    
+
     # Arguments:
     #   par -
     #   .params -
     #   .series -
     #   eps -
-    
+
     # FUNCTION:
-    
+
     # Take Time:
     .StartHessian <- Sys.time()
 
-    # Control Parameters:
-    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1,
-        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100L,
-        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1,
-        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5,
-        factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
-
     # Compute Hessian:
-    H <- .Internal(optimhess(par, .garchLLH, NULL, con))
+    H <- optimHess(par, .garchLLH)
     H <- 0.5 * (H + t(H))
     nm <- names(par)
     dimnames(H) <- list(nm, nm)
@@ -69,7 +62,7 @@ function(par, .params, .series, eps = 1.0e-4)
 
 
 .garchRCDAHessian <-
-function(par, .params, .series, eps = 1.0e-4)
+    function(par, .params, .series, eps = 1.0e-4)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -81,7 +74,7 @@ function(par, .params, .series, eps = 1.0e-4)
     #   .params -
     #   .series -
     #   eps -
-    
+
     # Reference:
     #   http://status.sph.umich.edu/computing/manuals/sas8/stat/chap46/sect26.htm
 
@@ -110,10 +103,10 @@ function(par, .params, .series, eps = 1.0e-4)
             x4[i] = x4[i] - eps[i]
             x4[j] = x4[j] - eps[j]
             H[i, j] = (
-                .garchLLH(x1, .trace) -
-                .garchLLH(x2, .trace) -
-                .garchLLH(x3, .trace) +
-                .garchLLH(x4, .trace) ) / (4*eps[i]*eps[j])
+             .garchLLH(x1, .trace) -
+             .garchLLH(x2, .trace) -
+             .garchLLH(x3, .trace) +
+             .garchLLH(x4, .trace) ) / (4*eps[i]*eps[j])
         }
     }
     colnames(H) = rownames(H) = names(par)
@@ -131,7 +124,7 @@ function(par, .params, .series, eps = 1.0e-4)
 
 
 .garchTSHessian <-
-function(par, .params, .series, eps = NA)
+    function(par, .params, .series, eps = NA)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -153,9 +146,9 @@ function(par, .params, .series, eps = NA)
     algorithm = .params$control$algorithm[1]
 
     # Compute Hessian:
-    H <- .hessian2sided(f = .garchLLH, x = par, trace = FALSE, fGarchEnv = FALSE)  
+    H <- .hessian2sided(f = .garchLLH, x = par, trace = FALSE, fGarchEnv = FALSE)
     colnames(H) = rownames(H) = names(par)
-    
+
     # Attribute execution time:
     time = Sys.time() - .StartHessian
     attr(H, "time") = time
@@ -169,66 +162,66 @@ function(par, .params, .series, eps = NA)
 
 
 .hessian2sided <-
-function(f, x, ...)
+    function(f, x, ...)
 {
-	# A function adapted from Kevin Sheppard's Matlab garch toolbox
-	# ... implemented by Alexios Ghalanos in his rgarch package
-	# ... R port for Rmetrics' fGarch by Diethelm Wuertz
-	
-	# Description:
+    # A function adapted from Kevin Sheppard's Matlab garch toolbox
+    # ... implemented by Alexios Ghalanos in his rgarch package
+    # ... R port for Rmetrics' fGarch by Diethelm Wuertz
+
+    # Description:
     #   Computes two sided (TS) approximated Hessian
-	
-	# Arguments:
-	#   f -
-	#   x -
-	
-	# Notes:
-	#   requires package Matrix (added as suggestion)
-	
-	# FUNCTION:
-	
-	# Settings:
-	n = length(x)
-	fx <- f(x, ...)
-	eps = .Machine$double.eps
-	
-	# Compute the stepsize (h)
-	h = eps^(1/3) * 
-	    apply( as.data.frame(x), 1, FUN = function(z) max(abs(z), 1.0e-2))
-	xh = x + h
-	h = xh - x
-	ee = Matrix(diag(h), sparse = TRUE)
-	
-	# Compute forward and backward steps:
-	gp = vector(mode = "numeric", length = n)
-	for(i in 1:n) gp[i] <- f(x + ee[, i], ...)
-	gm = vector(mode = "numeric", length = n)
-	for(i in 1:n) gm[i] <- f(x - ee[, i], ...)
-	H = h %*% t(h)
-	Hm = H
-	Hp = H
 
-	# Compute "double" forward and backward steps:
-	for(i in 1:n){
-		for(j in  i:n){
-			Hp[i, j] <- f(x + ee[, i] + ee[, j], ...)
-			Hp[j, i] <- Hp[i, j]                
-			Hm[i, j] <- f(x - ee[, i] - ee[, j], ...)
-			Hm[j, i] <- Hm[i, j]
-		}
-	}
+    # Arguments:
+    #   f -
+    #   x -
 
-	# Compute the hessian:
-	for(i in 1:n){
-		for(j in  i:n){
-			H[i, j] = ((Hp[i, j] - gp[i] - gp[j] + fx + fx - gm[i] - gm[j] +
-			    Hm[i, j]) / H[i, j]) / 2
-			H[j, i] = H[i, j]
-		}
-	}
-	
-	# Return Value:
-	return(H)
+    # Notes:
+    #   requires package Matrix (added as suggestion)
+
+    # FUNCTION:
+
+    # Settings:
+    n = length(x)
+    fx <- f(x, ...)
+    eps = .Machine$double.eps
+
+    # Compute the stepsize (h)
+    h = eps^(1/3) *
+        apply( as.data.frame(x), 1, FUN = function(z) max(abs(z), 1.0e-2))
+    xh = x + h
+    h = xh - x
+    ee = Matrix(diag(h), sparse = TRUE)
+
+    # Compute forward and backward steps:
+    gp = vector(mode = "numeric", length = n)
+    for(i in 1:n) gp[i] <- f(x + ee[, i], ...)
+    gm = vector(mode = "numeric", length = n)
+    for(i in 1:n) gm[i] <- f(x - ee[, i], ...)
+    H = h %*% t(h)
+    Hm = H
+    Hp = H
+
+    # Compute "double" forward and backward steps:
+    for(i in 1:n){
+        for(j in  i:n){
+            Hp[i, j] <- f(x + ee[, i] + ee[, j], ...)
+            Hp[j, i] <- Hp[i, j]
+            Hm[i, j] <- f(x - ee[, i] - ee[, j], ...)
+            Hm[j, i] <- Hm[i, j]
+        }
+    }
+
+    # Compute the hessian:
+    for(i in 1:n){
+        for(j in  i:n){
+            H[i, j] = ((Hp[i, j] - gp[i] - gp[j] + fx + fx - gm[i] - gm[j] +
+                        Hm[i, j]) / H[i, j]) / 2
+            H[j, i] = H[i, j]
+        }
+    }
+
+    # Return Value:
+    return(H)
 }
 
 
