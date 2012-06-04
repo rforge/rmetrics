@@ -30,7 +30,7 @@
     # A function implemeted by Diethelm Wuertz
 
     # Description:
-    #   Compute Hessian via R's Internal function optimhess()
+    #   Compute Hessian via R's function optimHess()
 
     # Arguments:
     #   par -

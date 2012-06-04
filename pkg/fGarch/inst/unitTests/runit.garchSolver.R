@@ -300,7 +300,7 @@ function()
 test.hessian.rosenbrock <-
 function()
 {
-    # Example for Internal R code optimhess:
+    # Example for Internal R code optimHess:
 
     # Objective:
     fn <- function(x) {
@@ -313,14 +313,8 @@ function()
     # Optimum:
     par = c(1, 1)
 
-    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1,
-        length(par)), ndeps = rep.int(0.001, length(par)), maxit = 100,
-        abstol = -Inf, reltol = sqrt(.Machine$double.eps), alpha = 1,
-        beta = 0.5, gamma = 2, REPORT = 10, type = 1, lmm = 5,
-        factr = 1e+07, pgtol = 0, tmax = 10, temp = 10)
-
     # Hessian:
-    hess <- .Internal(optimhess(par, fn, gr = NULL, con))
+    hess <- optimHess(par, fn)
     hess <- 0.5 * (hess + t(hess))
     hess
 }
