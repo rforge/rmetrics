@@ -1,12 +1,12 @@
 Package: timeDate
-Version: 2160.96
-Revision: 5268
-Date: 2012-03-21
+Version: 2160.97
+Revision: 5276
+Date: 2012-08-04
 Title: Rmetrics - Chronological and Calendarical Objects
 Author: Diethelm Wuertz, Yohan Chalabi and Martin Maechler with
         contributions from Joe W. Byers, and others
 Depends: R (>= 2.10.0), graphics, utils, stats, methods
-Suggests: RUnit
+Suggests: date, RUnit
 Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
