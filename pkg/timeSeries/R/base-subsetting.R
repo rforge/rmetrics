@@ -90,15 +90,7 @@ function(x, i, j)
         pos <- pos[or]
     }
 
-    # call directly .C("findInteval") because faster than
-    # i <- findInterval(ipos, pos)
-    if (!is.double(ipos)) ipos <- as.double(ipos)
-    if (!is.double(pos)) pos <- as.double(pos)
-    nx <- length(ipos)
-    i <- integer(nx)
-    .C("find_interv_vec", xt = pos, n = length(pos), x = ipos,
-       nx = nx, FALSE, FALSE, i, DUP = FALSE, NAOK = TRUE,
-       PACKAGE = "base")
+    i <- findInterval(ipos, pos)
 
     if (!identical(ipos, pos[i]))
         stop("subscript out of bounds", call. = FALSE)
@@ -700,4 +692,3 @@ setReplaceMethod("[",
 
 
 ################################################################################
-
