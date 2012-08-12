@@ -1,5 +1,5 @@
 Package: fBasics
-Version: 2160.81
+Version: 2160.82
 Revision: 5116
 Date: 2012-01-14
 Title: Rmetrics - Markets and Basic Statistics
@@ -9,7 +9,8 @@ Author: Diethelm Wuertz and Rmetrics core team members, uses code
         from Juergen Gross, HyperbolicDist from David Scott, sandwich
         from Thomas Lumley and Achim Zeileis, and fortran/C code from
         Kersti Aas.
-Depends: R (>= 2.6.0), stats, MASS, methods, timeDate, timeSeries (>= 2100.84)
+Depends: R (>= 2.6.0), stats, MASS, methods, timeDate, timeSeries (>=
+        2100.84)
 Suggests: akima, spatial, RUnit, tcltk
 Imports: stabledist
 ImportNote: stabledist only for back compatibility; will suggest only,
