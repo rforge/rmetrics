@@ -1,5 +1,12 @@
+2012-08-07  chalabi
+
+	* DESCRIPTION: updated version number
+	* R/base-subsetting.R: Removed C level call to 'find_interv_vec'
+	  due to changes in R-devel
+
 2012-03-21  chalabi
 
+	* ChangeLog, DESCRIPTION: updated ChangeLog and DESC
 	* NAMESPACE, R/utils-getArgs.R, man/utils-getArgs.Rd: moved getArgs
 	  to fBasics where it was already defined
 	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
