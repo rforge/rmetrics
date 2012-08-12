@@ -389,6 +389,9 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
         if (!file.exists(pkgPath))
             stop(gettextf("package in %s does not exist", pkgPath))
 
+        if (pkg == "fBasics")
+            stop("You must edit fBasics manually")
+
         # first remove current NAMEPSACE
         nmSpace <- file.path(pkgPath , "NAMESPACE")
         suppressWarnings(file.remove(nmSpace))
