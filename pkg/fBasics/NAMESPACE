@@ -213,7 +213,6 @@ export(
     ".rmetricsPackages",
     ".rmetricsUnitTest",
     ".runitTest",
-    ".shapiro.test",
     ".skewness.test",
     ".sliderMenu",
     ".smolyak.quad",
