@@ -1,15 +1,15 @@
 Package: fBasics
-Version: 2160.82
+Version: 2160.83
 Revision: 5341
 Date: 2012-08-12
 Title: Rmetrics - Markets and Basic Statistics
 Author: Diethelm Wuertz and Rmetrics core team members, uses code
         builtin from the following R contributed packages: gmm from
-        Pierre Chauss, gld from Robert King, gss from Chong Gu,
-        nortest from Juergen Gross, HyperbolicDist from David Scott,
-        sandwich from Thomas Lumley and Achim Zeileis, fortran/C code
-        from Kersti Aas and akima (0.5-1: R code under GPL) from
-        Albrecht Gebhardt
+        Pierre Chauss, gld from Robert King, gss from Chong Gu, nortest
+        from Juergen Gross, HyperbolicDist from David Scott, sandwich
+        from Thomas Lumley and Achim Zeileis, fortran/C code from
+        Kersti Aas and akima (0.5-1: R code under GPL) from Albrecht
+        Gebhardt
 Depends: R (>= 2.6.0), stats, MASS, methods, timeDate, timeSeries (>=
         2100.84)
 Suggests: akima, spatial, RUnit, tcltk
