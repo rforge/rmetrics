@@ -1,3 +1,12 @@
+2012-08-22  chalabi
+
+	* DESCRIPTION, NAMESPACE, R/stats-interpAkima.R,
+	  R/stats-interpLinear.R: Removed code that was copied from akiam
+	  (0.5-1) to avoid external .Fortran calls to akima package.
+	* DESCRIPTION: updated version number
+	* ChangeLog: updated Changelog
+	* DESCRIPTION: added reference to code from akima (0.5-1) package
+
 2012-08-12  chalabi
 
 	* DESCRIPTION: updated version number
