@@ -74,7 +74,7 @@ function(x, y = NULL, z = NULL, gridPoints = 21,
     }
 
     # Interpolation:
-    ans = .interp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
+    ans = interp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
         duplicate = "median", dupfun = NULL)
     colnames(ans$z) = as.character(signif(ans$x, round(log(gridPoints), 0)))
     rownames(ans$z) = as.character(signif(ans$y, round(log(gridPoints), 0)))
@@ -138,7 +138,7 @@ function(x, y = NULL, z = NULL, xo, yo)
     }
 
     # Interpolation:
-    ans = .interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
+    ans = akima:::interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
         duplicate = "median", dupfun = NULL)
     ans = data.frame(x = ans$x, y = ans$y, z = ans$z)
 
@@ -148,4 +148,3 @@ function(x, y = NULL, z = NULL, xo, yo)
 
 
 ################################################################################
-

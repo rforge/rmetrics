@@ -16,7 +16,7 @@ Suggests: akima, spatial, RUnit, tcltk
 Imports: stabledist
 ImportNote: stabledist only for back compatibility; will suggest only,
         later
-Maintainer: yohan.chalabi@rmetrics.org
+Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance" NOTE: SEVERAL PARTS ARE STILL
         PRELIMINARY AND MAY BE CHANGED IN THE FUTURE. THIS TYPICALLY
