@@ -35,6 +35,13 @@
 
 Add runif() interface for SFMT.
 
+Bug/problem list to look at
+- object '.runif.sobol.seed' not found by Mun Cheok Hong <munc@student.ethz.ch>
+- torus mixed=TRUE
+- large dimensional halton sequences by Garbett, Shawn P <shawn.garbett@Vanderbilt.Edu>
+- large computation time by Paulo Barata <pbarata@infolink.com.br>
+
+
 
 === long term ===
 
