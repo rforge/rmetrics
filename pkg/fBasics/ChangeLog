@@ -1,5 +1,11 @@
+2012-09-14  chalabi
+
+	* DESCRIPTION: updated version number
+	* R/utils-Sys.putenv.R: Removed deprecated putenv patch
+
 2012-08-22  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* DESCRIPTION, NAMESPACE, R/stats-interpAkima.R,
 	  R/stats-interpLinear.R: Removed code that was copied from akiam
 	  (0.5-1) to avoid external .Fortran calls to akima package.
