@@ -566,17 +566,9 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
             nrx = nry = NROW(t)
             ncx = NCOL(t)
             ncy = NCOL(y)
-            # Fast lsfit - Have a look on function 'lsfit'
-            # This is the essential line from function 'lsfit'
-            res = .Fortran("dqrls",
-                qr = t, n = nrx, p = ncx,
-                y = as.matrix(y), ny = ncy, tol = 1e-7,
-                coefficients = mat.or.vec(ncx, ncy),
-                residuals = mat.or.vec(nrx, ncy),
-                effects = mat.or.vec(nrx, ncy), rank = integer(1),
-                pivot = as.integer(1:ncx), qraux = double(ncx),
-                work = double(2 * ncx),
-                PACKAGE = "base")$residuals
+            # 17-09-2012 (YC): reverted external .Fortran call to R
+            # function lm.fit to comply with new CRAN policy
+            res <- lm.fit(t, y)$residuals
             V = c(V, var(res))
         }
         STATS = stats(V)
@@ -889,4 +881,3 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 
 
 ################################################################################
-
