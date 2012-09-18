@@ -20,7 +20,6 @@
 #  .aparchLLH.internal     Internal ARMA-APARCH recursion done by Fortran Code
 #  .aparchLLH.filter       Fast approach using the filter function in R
 #  .aparchLLH.testing      Simple double loops over time and order in R
-#  .filter2                Fast filter function based on top of stats::filter()
 ################################################################################
 
 
@@ -263,12 +262,14 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
             Filter = rep(0, length = p+1)
             Filter[j+1] = alpha[j]
             edelta = (abs(z) - gamma[j]*z)^delta
-            edelta = .filter2(edelta, filter = Filter, sides = 1)
+            edelta = as.vector(filter(edelta, filter = Filter, sides = 1))
             edeltat = edeltat + edelta
         }
         c.init = omega/(1-sum(beta))
-        h = c( h[1:pq], c.init + .filter2(edeltat[-(1:pq)], filter = beta,
-             method = "recursive", init = h[q:1]-c.init))
+        h <- c(h[1:pq], c.init +
+               as.vector(filter(edeltat[-(1:pq)],
+                                filter = beta, method = "recursive",
+                                init = h[q:1]-c.init)))
 
         ### ? remove ? ### DW: May be not .
         if( sum(is.na(h)) > 0 ) {
@@ -512,85 +513,4 @@ function(params, trace = TRUE, fGarchEnv = FALSE)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.filter2 <-
-function (x, filter, method = c("convolution", "recursive"),
-    sides = 2, circular = FALSE, init = NULL)
-{
-    # Description:
-    #   Fast filter function based on top of stats::filter()
-
-    # Arguments:
-
-    # Note:
-    #   This function is called from .garchLLH.filter
-
-    # FUNCTION:
-
-    # DEBUG:
-    DEBUG = FALSE
-    if (DEBUG) print("Entering Function .filter2")
-
-    # Settings:
-    method <- match.arg(method)
-    x <- as.matrix(x)
-    n <- nrow(x)
-    nser <- ncol(x)
-    nfilt <- length(filter)
-    if (any(is.na(filter))) stop("missing values in 'filter'")
-    y <- matrix(NA, n, nser)
-
-    # Convolution Filter:
-    if (method == "convolution") {
-        if (nfilt > n)
-            stop("'filter' is longer than time series")
-        if (sides != 1 && sides != 2)
-            stop("argument 'sides' must be 1 or 2")
-        for (i in 1:nser) y[, i] <-
-            .C("filter1",
-            as.double(x[, i]),
-               as.integer(n),
-               as.double(filter),
-               as.integer(nfilt),
-               as.integer(sides),
-               as.integer(circular),
-               out = double(n),
-               NAOK = TRUE,
-               PACKAGE = "stats")$out
-
-    # Recursive Filter:
-    } else {
-        if (missing(init)) {
-            init <- matrix(0, nfilt, nser)
-        } else {
-            ni <- NROW(init)
-            if (ni != nfilt)
-                stop("length of 'init' must equal length of 'filter'")
-            if (NCOL(init) != 1 && NCOL(init) != nser)
-                stop(gettextf("'init'; must have 1 or %d cols",
-                    nser), domain = NA)
-            if (!is.matrix(init))
-                init <- matrix(init, nfilt, nser)
-        }
-        for (i in 1:nser) y[, i] <-
-            .C("filter2",
-                as.double(x[, i]),
-                as.integer(n),
-                as.double(filter),
-                as.integer(nfilt),
-                out = as.double(c(rev(init[, i]),
-                double(n))),
-                NAOK = TRUE,
-                PACKAGE = "stats")$out[-(1:nfilt)]
-    }
-
-    # Return Value:
-    if (DEBUG) print("Entering Function .filter2")
-    y
-}
-
-
 ################################################################################
-

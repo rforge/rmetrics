@@ -51,7 +51,6 @@ export(
     ".dsged",
     ".dsnorm",
     ".dsstd",
-    ".filter2",
     ".garchArgsParser",
     ".garchFit",
     ".garchInitParameters",
