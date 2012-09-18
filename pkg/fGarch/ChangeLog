@@ -1,5 +1,16 @@
+2012-09-18  chalabi
+
+	* DESCRIPTION: Changed maintainer field to comply with the new CRAN
+	  policy.
+	* inst/unitTests/runit.garchSolver.R: Removed superfluous unitTest.
+	* NAMESPACE, R/loglik-aparch.R: Removed .filter2() to avoid
+	  external .Call calls.
+
 2012-06-04  chalabi
 
+	* R/garch-Hessian.R, inst/unitTests/runit.garchSolver.R: using now
+	  optimHess to calculate the Hessian
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog files
 	* DESCRIPTION, R/garch-Hessian.R: using now optimHess to calculate
 	  the Hessian
 
