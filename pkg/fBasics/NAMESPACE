@@ -8,10 +8,10 @@ useDynLib("fBasics")
 ## import name space
 ################################################
 
+import("stabledist")
 ## FIXME: use importFrom() for the larger packages!
 import("MASS")
 import("methods")
-import("stabledist")
 import("timeDate")
 import("timeSeries")
 
@@ -43,14 +43,6 @@ S3method("volatility", "default")
 ################################################
 
 export(
-## For backcompatibility: people expect to find these in fBasics;
-## hence we export wrappers for now:
-       "dstable",
-       "pstable",
-       "qstable",
-       "rstable",
-       "stableMode",
-
     ".HAC",
     ".aRecursionGH",
     ".acfPlot",

@@ -43,9 +43,8 @@
 ################################################################################
 
 
-test.nFit = 
-function()
-{ 
+test.nFit <- function()
+{
     # Graph Frame:
     par(mfrow = c(1, 1))
      
@@ -55,13 +54,13 @@ function()
     s = rnorm(n = 2000, mean = 1, sd = 0.5) 
     
     # Fit:
-    ans = nFit(x = s)
-    
+    cat("nFit():\n")
+    print(ans <- nFit(x = s))
+
     # Precision within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 1.0)/1.0 < 0.10 ), 
         ( (ans@fit$estimate[2] - 0.5)/0.5 < 0.10 ))
-    print(ans)
     print(relErrorTest)
     checkTrue(as.logical(mean(relErrorTest)))
 
@@ -170,31 +169,31 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.nigFit = 
-function()
-{ 
+test.nigFit <- function()
+{
     # Graph Frame:
     par(mfrow = c(1, 1))
     
     # Simulate normal random variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    s = rnig(n = 2000, alpha = 1.5, beta = -0.7, delta = 0.5, mu = -1.0) 
-    
-    # Fit:
-    ans = nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
-        trace = FALSE)
-    
-    # Precision of parameters within 10% ?
-    relErrorTest =  c(
-        ( (ans@fit$estimate[1] - 1.5)/( 1.5) < 0.10 ), 
-        ( (ans@fit$estimate[2] + 0.7)/(-0.7) < 0.10 ),
-        ( (ans@fit$estimate[3] - 0.5)/( 0.5) < 0.10 ),
-        ( (ans@fit$estimate[4] + 1.0)/(-1.0) < 0.10 ))
-    print(ans)
-    print(relErrorTest)
-    checkTrue(as.logical(mean(relErrorTest)))
-    
+    th.0 <- c(alpha = 1.5, beta = -0.7, delta = 0.5, mu = -1.0)
+    s <- do.call(rnig, c(list(n = 2000), th.0))
+
+    # Fit {includes plot !}
+    print(ans <- nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s),
+                        trace = FALSE))
+    # Precision of parameters within 10% / 35% ?
+    est <- ans@fit$estimate
+    relErr <- (est - th.0) / th.0
+    checkTrue(all(abs(relErr) < 0.35))# 35%
+    ## 10% / 35$ is silly, rather use  SE scale:
+    print(SE <- ans@fit$se.coef)
+    print(cbind(th.0, est, SE))# NaN
+    SE[is.na(SE)] <- .1 # arbitrary
+    cat("t-ratios:\n"); print(t. <- (est - th.0)/ SE)
+    checkTrue(all(abs(t.) < 6))## 6 is too large, but have -5.476 for beta
+
     # Return Value:
     return()
 }
@@ -203,47 +202,43 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.stableFit = 
-function()
-{   
+test.stableFit <- function()
+{
     # Graph Frame:
     par(mfrow = c(1, 1))
     
     # Simulate stable random variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    s = rstable(500, alpha=1.8, beta=0.3, gamma = 1, delta = 0.1, pm = 0) 
-    
-    # Fit:
-    ans = stableFit(x = s, alpha = 1.5) 
-    print(ans)  # CHECK: call
-    
-    # Precision of parameters within 10% ?
-    relErrorTest =  c(
-        ( (ans@fit$estimate[1] - 1.8)/( 1.8) < 0.10 ), 
-        ( (ans@fit$estimate[2] - 0.3)/( 0.3) < 0.10 ),
-        ( (ans@fit$estimate[3] - 1.0)/( 1.0) < 0.10 ),
-        ( (ans@fit$estimate[4] - 0.1)/( 0.1) < 0.10 ))
-    print(ans)
-    print(relErrorTest)
-    checkTrue(as.logical(mean(relErrorTest)))
-    
+
+    th.0 <- c(alpha=1.8, beta=0.3, gamma = 1, delta = 0.1)
+    s <- do.call(stabledist::rstable, c(list(n = 500), th.0))
+
+    # Fit {includes plot !}
+    cat("stableFit():\n")
+    print(ans <- stableFit(x = s, alpha = 1.5))
+    # Precision of parameters within 5% / 10% / ...?
+    est <- ans@fit$estimate
+    arelErr <- abs(relErr <- (est - th.0) / th.0)
+    print(cbind(th.0, est, relErr))
+    checkTrue(all(arelErr[c("alpha","gamma")] < 0.05) &&
+              arelErr[["beta"]] < 0.15 && arelErr[["delta"]] < 1.50) # 150% !
+
     # MLE Fit:
-    if (FALSE) {
-        # Note, this takes rather long time ...
-        ans = stableFit(x = s, alpha = 1.5, type = "mle", trace = TRUE) 
-        # .mleStableFit(s, 1.75, 0, 1, 0)
+    if (FALSE) { # as this takes rather too long time ...
+        print(system.time(
+            ans <- stableFit(x = s, alpha = 1.5, type = "mle", trace = TRUE)
+            ## .mleStableFit(s, 1.75, 0, 1, 0)
+            ))
+        ##  user  {lynne, 2012-09}
+        ## 159.7
         # The result would be:
-        #
-        # Precision of parameters within 10% ?
-        relErrorTest =  c(
-            ( (ans@fit$estimate[1] - 1.8)/( 1.8) < 0.10 ), 
-            ( (ans@fit$estimate[2] - 0.3)/( 0.3) < 0.10 ),
-            ( (ans@fit$estimate[3] - 1.0)/( 1.0) < 0.10 ),
-            ( (ans@fit$estimate[4] - 0.1)/( 0.1) < 0.10 ))      
         print(ans)
-        print(relErrorTest)
-        checkTrue(as.logical(mean(relErrorTest)))
+        ## Precision of parameters within 5% / 10% / ...?
+        est <- ans@fit$estimate
+        arelErr <- abs(relErr <- (est - th.0) / th.0)
+        print(cbind(th.0, est, relErr))
+        checkTrue(all(arelErr[1:3] < 0.02) && arelErr[["delta"]] < 0.42)
     }
     
     # Return Value:
