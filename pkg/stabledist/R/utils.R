@@ -27,3 +27,9 @@
             lower=lower, upper=upper, f.lower=f.lower, f.upper=f.upper,
             tol=tol, maxiter=maxiter)$root
 }
+
+## Not exported, and only used because CRAN checks must be faster
+doExtras <- function() {
+    interactive() || nzchar(Sys.getenv("R_STABLEDIST_CHECK_EXTRA")) ||
+        identical("true", unname(Sys.getenv("R_PKG_CHECKING_doExtras")))
+}

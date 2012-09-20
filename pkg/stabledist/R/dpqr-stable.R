@@ -495,11 +495,21 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
 	    tanpa2 <- tan(pi2*alpha)
 	    zeta <- -beta * tanpa2
-	    theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
-
+	    theta0 <- min(max(-pi2, atan(-zeta) / alpha), pi2)
+            if(finSupp <- (abs(beta) == 1 && alpha < 1)) {
+                ## has *finite* support    [zeta, Inf)  if beta ==  1
+                ##                         (-Inf, zeta] if beta == -1
+            }
 	    ## Loop over all x values:
 	    vapply(x, function(z) {
-		if (abs(z - zeta) < 2 * .Machine$double.eps) {
+		if(finSupp) {
+                    if(beta == 1 && z <= zeta)
+                        return(retValue(0., useLower=lower.tail))
+                    else if(beta == -1 && z >= zeta)
+                        return(retValue(1., useLower=lower.tail))
+                    ## else .. one of the cases below
+                }
+		if(abs(z - zeta) < 2 * .Machine$double.eps) {
 		    ## FIXME? same problem as dstable
 		    r <- if(lower.tail) (1/2- theta0/pi) else 1/2+ theta0/pi
 		    if(log.p) log(r) else r

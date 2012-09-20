@@ -136,49 +136,58 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \deqn{f(x) \sim \alpha(1+\beta) C_\alpha x^{-(1+\alpha)}.}{f(x) ~ a(1+b) C_a x^-(1+a).}
 }
 \note{
+  In the case \eqn{\beta = 1}, the distributions are \dQuote{maximally
+    skewed to the right} or simply \dQuote{\emph{extremal} stable}
+  (Zolotarev).  In that case, the package \pkg{FMStable} provides
+  \code{dpq*} functions which are faster and more accurate than ours (if
+  accuracy higher than about 6 digits is needed), see,
+  \code{\link[FMStable]{pEstable}}.
+
+
   When \code{alpha} is close to 1 or close to 0 (\dQuote{close},
   e.g., meaning distance \eqn{d < 0.01}), the computations typically are
   numerically considerably more challenging, and the results may not be
   accurate.
-
-  As I currently (2011-03-28) plan to improve on this, \emph{and}
+  \cr
+  As we % currently (2011-03-28)
+  plan to improve on this, \emph{and}
   as it is unknown when exactly the numerical difficulties arise, we
   currently only do warn here (in the documentation), but \emph{not} by
   giving \code{\link{warning}()}s.
 }
 \seealso{
-  the \code{\link[fBasics]{stableSlider}()} function for displaying
-  densities and probabilities of these distributions, for educational
-  purposes.
+  the \code{\link[fBasics]{stableSlider}()} function from package
+  \pkg{fBasics} for displaying densities and probabilities of these
+  distributions, for educational purposes.
 }
 \author{
   Diethelm Wuertz for the original Rmetrics \R-port.
   Many numerical improvements by Martin Maechler.
 }
 
-
 \references{
-Chambers J.M., Mallows, C.L. and Stuck, B.W. (1976);
-    \emph{A Method for Simulating Stable Random Variables},
-    J. Amer. Statist. Assoc. 71, 340--344.
+  Chambers J.M., Mallows, C.L. and Stuck, B.W. (1976)
+  \emph{A Method for Simulating Stable Random Variables},
+  J. Amer. Statist. Assoc. \bold{71}, 340--344.
 
-Nolan J.P. (1999);
-    \emph{Stable Distributions},
-    Preprint, University Washington DC, 30 pages.
+  John P. Nolan (2012)
+  \emph{Stable Distributions - Models for Heavy Tailed Data}
+  Birkhauser, Boston; in progress, chapter 1 online at
+  \url{http://academic2.american.edu/~jpnolan/stable/chap1.pdf}
 
-Nolan J.P. (1997)
+  Nolan J.P. (1997)
     Numerical calculation of stable densities and distribution
     functions.
     \emph{Stochastic Models} \bold{13}(4), 759--774.
     \cr
     Also available as \file{density.ps} from Nolan's web page.
 
-Samoridnitsky G., Taqqu M.S. (1994);
+  Samoridnitsky G., Taqqu M.S. (1994);
     \emph{Stable Non-Gaussian Random Processes, Stochastic Models
     with Infinite Variance},
     Chapman and Hall, New York, 632 pages.
 
-Weron, A., Weron R. (1999);
+  Weron, A., Weron R. (1999);
     \emph{Computer Simulation of Levy alpha-Stable Variables and
     Processes},
     Preprint Technical University of Wroclaw, 13 pages.

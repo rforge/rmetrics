@@ -3,12 +3,14 @@ require("stabledist")
 ###--- Tail approximations etc  -- both for pstable() and dstable()
 dPareto <- stabledist:::dPareto
 
-source(system.file("test-tools.R", package = "Matrix"))
-                                        #-> identical3(), showProc.time(),...
+source(system.file("test-tools-1.R", package = "Matrix"), keep.source=interactive())
+					#-> identical3(), showProc.time(),...
+(doExtras <- stabledist:::doExtras())
+nc <- if(doExtras) 512 else 64 # number of points for curve()
 
 pdf("stable-tails.pdf")
 
-pstab.tailratio <- function(alpha, beta, n = 512, prob = 1/4096,
+pstab.tailratio <- function(alpha, beta, n = nc, prob = 1/4096,
                             xmin = qstable(0.95, alpha,beta, tol = 0.01),
                             xmax = qstable(1 - prob, alpha,beta))
 {
@@ -77,16 +79,19 @@ showProc.time()
 
 ##---------------- Now the density
 
-dstab.tailratio <- function(alpha, beta, n = 512, prob = 1/4096,
+##' @title Explore eps(x) where   dstable(x)/dPareto(x) = 1 + eps(x)
+##' @param alpha
+##' @param beta
+##' @param n
+##' @param prob
+##' @param xmin
+##' @param xmax
+##' @return an object of \code{\link{class} "dstableTailratio"}, ...
+##' @author Martin Maechler, 21 Mar 2011
+dstab.tailratio <- function(alpha, beta, n = nc, prob = 1/4096,
                             xmin = qstable(0.95, alpha,beta, tol = 0.01),
                             xmax = qstable(1 - prob, alpha,beta))
 {
-  ## Purpose: Explore eps(x) where   dstable(x)/dPareto(x) = 1 + eps(x)
-  ##  <==>
-  ## ----------------------------------------------------------------------
-  ## Arguments:
-  ## ----------------------------------------------------------------------
-  ## Author: Martin Maechler, Date: 21 Mar 2011, 10:09
     cl <- match.call()
     stopifnot(0 < prob, prob < .5,
               0 < xmin, xmin < xmax)
@@ -101,6 +106,14 @@ dstab.tailratio <- function(alpha, beta, n = 512, prob = 1/4096,
               class = "dstableTailratio")
 }
 
+##' @title plot() method for  dstableTailratio() results
+##' @param x object of \code{\link{class} "dstableTailratio"}.
+##' @param type plot type; default simple lines
+##' @param col
+##' @param lin.col
+##' @param ... optional further arguments passed to \code{\link{plot.formula}()}.
+##' @return
+##' @author Martin Maechler
 plot.dstableTailratio <- function(x, type="l", col="blue3",
                                   lin.col = adjustcolor("red2",.6), ...)
 {
@@ -132,8 +145,8 @@ plot.dstableTailratio <- function(x, type="l", col="blue3",
 plot(fr   <- dstab.tailratio(1.01, 0.8))
 plot(fr   <- dstab.tailratio(1.05, 0.4))
 plot(fr   <- dstab.tailratio(1.1,  0.4))
-plot(fr   <- dstab.tailratio(1.2, 0.5))
-plot(fr   <- dstab.tailratio(1.3, 0.6))
+plot(fr   <- dstab.tailratio(1.2,  0.5))
+plot(fr   <- dstab.tailratio(1.3,  0.6))
 
 showProc.time()
 

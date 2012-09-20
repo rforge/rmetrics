@@ -1,3 +1,23 @@
+* Disable some of the tests/  for non-maechler !!
+
+     From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+     Subject: Re: New version of copula uploaded 0.99-2
+     Date: Tue, 29 May 2012 17:17:05 +0100
+
+     ..  but the test times
+
+     * checking tests ...  [173s/174s] OK
+	Running doRUnit.R  [82s/83s]
+	Running dstab-ex.R [34s/34s]
+	Running pstab-ex.R [19s/19s]
+	Running tails.R    [39s/39s]
+
+     are more than we would like, so please consider reducing substantially
+     next time around (but we can at least put on --no-tests where necessary).
+
+     CRAN keeps on growing (more packages, many getting bigger) and our check
+     farm does not (and nor do servers in general, although we can get more cores).
+
 
 * Compare with Jim Lindsey's "stable" package
   --> http://www.commanster.eu/rcode.html

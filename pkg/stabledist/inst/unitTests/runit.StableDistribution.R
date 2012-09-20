@@ -19,7 +19,7 @@
 #   info@rmetrics.org
 #   www.rmetrics.org
 # and
-# Copyright (C) 2010--2011 Martin Maechler, ETH Zurich
+# Copyright (C) 2010--2012 Martin Maechler, ETH Zurich
 #
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -54,26 +54,32 @@ if(do.stable.rUnitTest <- require("fBasics") &&
 	      ## check that indeed we get stabledist's functions, not fBasics:
 	      identical(dstable, stabledist::dstable))
 }
+source(system.file("test-tools-1.R", package = "Matrix"))
+					#-> identical3(), showProc.time(),...
+(doExtras <- stabledist:::doExtras())
+n.check <- if(doExtras) 1000 else 64
 
-test.stableS0 <- function()
+test.stableS0 <- function(n = n.check)
 {
     if (do.stable.rUnitTest) {
         ## "TODO" in distCheck() -- use  'tol = .005'  in newer versions
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 1.8, beta = 0.3)
+        test <- distCheck("stable", n=n, alpha = 1.8, beta = 0.3)
         print(test)
         ## the 3rd test -- matching (mean, var)  typically fails for stable -- as Var(.) == Inf !
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
 
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 1.2, beta = -0.3)
+        test <- distCheck("stable", n=n, alpha = 1.2, beta = -0.3)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
 
+      if(doExtras) {
         # stable - Parameterization S0:
-        test <- distCheck("stable", alpha = 0.6, beta = 0)
+        test <- distCheck("stable", n=n, alpha = 0.6, beta = 0)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
+      }
     }
 
     # Return Value:
@@ -84,55 +90,60 @@ test.stableS0 <- function()
 # ------------------------------------------------------------------------------
 
 
-test.stableS1 <- function()
+test.stableS1 <- function(n = n.check)
 {
     if (do.stable.rUnitTest) {
+      if(doExtras) {
         # stable - Parameterization S1:
-        test <- distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
+        test <- distCheck("stable", n=n, alpha = 1.8, beta = 0.3, pm = 1)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
+      }
+        # stable - Parameterization S1:
+        test <- distCheck("stable", n=n, alpha = 1.2, beta = -0.3, pm = 1)
+        print(test)
+        checkTrue(all(test[1:2]))
 
+      if(doExtras) {
         # stable - Parameterization S1:
-        test <- distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
+        test <- distCheck("stable", n=n, alpha = 0.6, beta = 0, pm = 1)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
-
-        # stable - Parameterization S1:
-        test <- distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
-        print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
+      }
     }
 
     # Return Value:
     return()
 }
-
+##if(doExtras) test.stableS1 <- Tst.stableS1
 
 # ------------------------------------------------------------------------------
 
 
-test.stableS2 <- function()
+Tst.stableS2 <- function(n = n.check)
 {
     if (do.stable.rUnitTest) {
+      if(doExtras) {
         # stable - Parameterization S2:
-        test <- distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
+        test <- distCheck("stable", n=n, alpha = 1.8, beta = 0.3, pm = 2)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
 
         # stable - Parameterization S2:
-        test <- distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
+        test <- distCheck("stable", n=n, alpha = 1.2, beta = -0.3, pm = 2)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
-
+        checkTrue(all(test[1:2]))
+      }
         # stable - Parameterization S2:
-        test <- distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
+        test <- distCheck("stable", n=n, alpha = 0.6, beta = 0, pm = 2)
         print(test)
-        checkTrue(mean(test[1:2]) == 1)
+        checkTrue(all(test[1:2]))
     }
 
     # Return Value:
     return()
 }
+##if(doExtras) test.stableS2 <- Tst.stableS2
 
 ################################################################################
 

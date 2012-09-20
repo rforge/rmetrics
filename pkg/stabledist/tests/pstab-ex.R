@@ -1,8 +1,9 @@
 require("stabledist")
 pPareto <- stabledist:::pPareto
 
-source(system.file("test-tools.R", package = "Matrix"))
-                                        #-> identical3(), showProc.time(),...
+source(system.file("test-tools-1.R", package = "Matrix"), keep.source=interactive())
+					#-> identical3(), showProc.time(),...
+(doExtras <- stabledist:::doExtras())
 
 options(pstable.debug = FALSE)
 options(pstable.debug = TRUE)# want to see when uniroot() is called
@@ -15,38 +16,38 @@ pstable(-4.5, alpha = 1, beta = 0.01)## gave integration error (now uniroot..)
 ## a "outer vectorized" version:
 pstabALL <- function(x, alpha, beta, ...)
     sapply(alpha, function(alph)
-           sapply(beta, function(bet)
+	   sapply(beta, function(bet)
 			pstable(x, alph, bet, ...)))
 
 alph.s <- (1:32)/16   # in (0, 2]
 beta.s <- (-16:16)/16 # in [-1, 1]
 stopifnot(pstabALL( Inf, alph.s, beta.s) == 1,
 	  pstabALL(-Inf, alph.s, beta.s, log.p=TRUE) == -Inf,
-	  pstabALL( 0,   alph.s, beta = 0) == 0.5,
+	  pstabALL( 0,	 alph.s, beta = 0) == 0.5,
 	  TRUE)
 
 ##---- log-scale -------------
 r <- curve(pstable(x, alpha=1.8, beta=.9,
-                   lower.tail=FALSE, log.p=TRUE),
-           5, 150, n=500,
-           log="x",type="b", cex=.5)
-curve(stabledist:::pPareto(x, alpha=1.8, beta=.9,
-                           lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
+		   lower.tail=FALSE, log.p=TRUE),
+	   5, 150, n=500,
+	   log="x",type="b", cex=.5)
+curve(pPareto(x, alpha=1.8, beta=.9,
+			   lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
 ##--> clearly potential for improvement!
 
 ## the less extreme part - of that:
 r <- curve(pstable(x, alpha=1.8, beta=.9,
-                   lower.tail=FALSE, log.p=TRUE),
-           1, 50, n=500, log="x")
-curve(stabledist:::pPareto(x, alpha=1.8, beta=.9, lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
+		   lower.tail=FALSE, log.p=TRUE),
+	   1, 50, n=500, log="x")
+curve(pPareto(x, alpha=1.8, beta=.9, lower.tail=FALSE, log.p=TRUE), add=TRUE, col=2)
 
-## Check that   pstable() is the integral of dstable() --- using simple Simpson's rule
+## Check that	pstable() is the integral of dstable() --- using simple Simpson's rule
 
 ## in it's composite form:
-## \int_a^b f(x) \, dx\approx \frac{h}{3}
+## \int_a^b f(x)   dx\approx \frac{h}{3}
 ##  \bigg[ f(x_0) + 2 \sum_{j=1}^{n/2-1}f(x_{2j}) +
-##               + 4 \sum_{j=1}^{n/2}  f(x_{2j-1}) +
-##        + f(x_n) \bigg],
+##		 + 4 \sum_{j=1}^{n/2}  f(x_{2j-1}) +
+##	  + f(x_n) \bigg],
 intSimps <- function(fx, h) {
     stopifnot((n <- length(fx)) %% 2 == 0,
 	      n >= 4, length(h) == 1, h > 0)
@@ -57,8 +58,8 @@ intSimps <- function(fx, h) {
 }
 
 chk.pd.stable <- function(alpha, beta, xmin=NA, xmax=NA,
-                          n = 256, do.plot=TRUE,
-                          comp.tol = 1e-13, eq.tol = 1e-3)
+			  n = 256, do.plot=TRUE,
+			  comp.tol = 1e-13, eq.tol = 1e-3)
 {
     stopifnot(n >= 20)
     if(is.na(xmin)) xmin <- qstable(0.01, alpha, beta)
@@ -69,20 +70,20 @@ chk.pd.stable <- function(alpha, beta, xmin=NA, xmax=NA,
     fx <- dstable(x, alpha=alpha, beta=beta, tol=  comp.tol)
     Fx <- pstable(x, alpha=alpha, beta=beta, tol=2*comp.tol)
     i.ev <- (i <- seq_along(x))[i %% 2 == 0 & i >= max(n/10, 16)]
-    ## integrate from x[1] up to x[i]   (where i is even);
+    ## integrate from x[1] up to x[i]	(where i is even);
     ## the exact value will be F(x[i]) - F(x[1]) == Fx[i] - Fx[1]
     Fx. <- vapply(lapply(i.ev, seq_len),
-                  function(ii) intSimps(fx[ii], h), 0)
+		  function(ii) intSimps(fx[ii], h), 0)
     a.eq <- all.equal(Fx., Fx[i.ev] - Fx[1], tol = eq.tol)
     if(do.plot) {
-        ## Show the fit
-        plot(x, Fx - Fx[1], type = "l")
-        lines(x[i.ev], Fx., col=adjustcolor("red", 0.5), lwd=3)
-        op <- par(ask=TRUE) ; on.exit(par(op))
-        ## show the "residual", i.e., the relative error
-        plot(x[i.ev], 1- Fx./(Fx[i.ev] - Fx[1]),
-             type = "l", xlim = range(x))
-        abline(h=0, lty=3, lwd = .6)
+	## Show the fit
+	plot(x, Fx - Fx[1], type = "l")
+	lines(x[i.ev], Fx., col=adjustcolor("red", 0.5), lwd=3)
+	op <- par(ask=TRUE) ; on.exit(par(op))
+	## show the "residual", i.e., the relative error
+	plot(x[i.ev], 1- Fx./(Fx[i.ev] - Fx[1]),
+	     type = "l", xlim = range(x))
+	abline(h=0, lty=3, lwd = .6)
     }
 
     if(!isTRUE(a.eq)) stop(a.eq)
@@ -119,7 +120,7 @@ plot (x., diff(px)*16, type="l")
 ## now check convexity/concavity :
 f2 <- diff(diff(px))
 stopifnot(f2[x[-c(1,n)] < 0] > 0,
-          f2[x[-c(1,n)] > 0] < 0)
+	  f2[x[-c(1,n)] > 0] < 0)
 ## and compare with dstable() ... which actually shows dstable() problem:
 fx. <- dstable(x., alpha=1, beta=.01)
 lines(x., fx., col = 2, lwd=3, lty="5111")
@@ -128,14 +129,14 @@ if(dev.interactive(orNone=TRUE)) {
     curve(dstable(x, 1.,    0.99),  -6, 50, log="y")# "uneven" (x < 0); 50 warnings
     curve(dstable(x, 1.001, 0.95), -10, 30, log="y")# much better
 }
-c5 <- chk.pd.stable(1.,    0.99,  -6, 50)# -> uniroot
+c5 <- chk.pd.stable(1.,	   0.99,  -6, 50)# -> uniroot
 c6 <- chk.pd.stable(1.001, 0.95, -10, 30)# -> uniroot; 2nd plot *clearly* shows problem
 with(c5, all.equal(F.appr., F[i.] - F[1], tol = 0)) # .00058 on 64-Lnx
 with(c6, all.equal(F.appr., F[i.] - F[1], tol = 0)) # 2.611e-5 on 64-Lnx
 
 ## right tail:
 try(## FIXME:
-c1.0 <- chk.pd.stable(1., 0.8,  -6, 500)# uniroot; rel.difference = .030
+c1.0 <- chk.pd.stable(1., 0.8,	-6, 500)# uniroot; rel.difference = .030
 )
 ## show it more clearly
 curve(pstable(x, alpha=1, beta=0.5), 20, 800, log="x", ylim=c(.97, 1))
@@ -148,13 +149,113 @@ abline(h=1, lty=3,col="gray")
 ## zoom
 curve(pstable(x, alpha=1.001, beta=0.5), 100, 200, log="x")
 curve(pPareto(x, alpha=1.001, beta=0.5), add=TRUE, col=2, lty=2)
-## but  alpha = 1   is only somewhat better as approximation:
+## but	alpha = 1   is only somewhat better as approximation:
 curve(pstable(x, alpha=1    , beta=0.5), add=TRUE, col=3,
       lwd=3, lty="5131")
 
 showProc.time() #
 
-c7 <- chk.pd.stable(1.2, -0.2,   -40, 30)
+c7 <- chk.pd.stable(1.2, -0.2,	 -40, 30)
 c8 <- chk.pd.stable(1.5, -0.999, -40, 30)# two warnings
 
 showProc.time() #
+
+### Newly found -- Marius Hofert, 18.Sept. (via qstable):
+stopifnot(all.equal(qstable(0.6, alpha = 0.5, beta = 1,
+			    tol=1e-15, integ.tol=1e-15),
+		    2.636426573120147))
+##--> which can be traced to the first of
+stopifnot(pstable(q= -1.1, alpha=0.5, beta=1) == 0,
+	  pstable(q= -2.1, alpha=0.6, beta=1) == 0)
+
+### Lévy :
+### ====
+## Stable(alpha = 1/2, beta = 1, gamma, delta, pm = 1)	<===>  Levy(delta, gamma)
+##	  ~~~~~~~~~~~  ~~~~~~~~
+## http://en.wikipedia.org/wiki/L%C3%A9vy_distribution
+## The probability density function of the Lévy distribution over the domain x >= \mu is
+##
+##     f(x;\mu,c)=\sqrt{\frac{c}{2\pi}}~~\frac{e^{ -\frac{c}{2(x-\mu)}}} {(x-\mu)^{3/2}}
+dLevy <- function(x, mu=0, c=1, log=FALSE) {
+    r <- x <- x-mu
+    ## ensure f(0) = 0 {not NaN}:
+    pos <- x > 0 ; x <- x[pos]; if(log) r[!pos] <- -Inf
+    r[pos] <- if(log)
+	(log(c/(2*pi)) + -c/x - 3*log(x))/2
+    else
+	sqrt(c/(2*pi)) * exp(-c/(2*x)) / (x^(3/2))
+    r
+}
+## where \mu is the location parameter and c is the scale parameter.
+
+## The cumulative distribution function is
+##
+##     F(x;\mu,c)=\textrm{erfc}\left(\sqrt{c/(2(x-\mu))}\right)
+##
+##     {MM:  fixed Wikipedia entry: (x-mu) is in the denominator!}
+pLevy <- function(x, mu=0, c=1, log.p=FALSE, lower.tail=TRUE) {
+    ## erfc <- function(x) 2 * pnorm(x * sqrt(2), lower = FALSE)
+    ## erfc(sqrt(c/(2*(x-mu))))
+    x <- (x-mu)/c # re-scale to (0,1)
+    u <- 1/sqrt(x)
+    if(log.p) {
+	if(lower.tail)
+	    log(2) + pnorm(u, lower.tail = FALSE, log.p=TRUE)
+	else log(2 * pnorm(u) - 1)
+    } else {
+	if(lower.tail)
+	    2* pnorm(u, lower.tail = FALSE)
+	else 2*pnorm(u) - 1
+    }
+}
+
+## where \textrm{erfc}(z) is the complementary error function. The shift
+## parameter \mu has the effect of shifting the curve to the right by an
+## amount \mu, and changing the support to the interval [\mu, \infty). Like
+## all stable distributions, the Levy distribution has a standard form
+## f(x;0,1) which has the following property:
+##
+##     f(x;\mu,c) dx  =	 f(y;0,1) dy
+##
+## where y is defined as
+##
+##     y = \frac{x-\mu}{c}
+
+set.seed(101)
+show.Acc <- (interactive() && require("Rmpfr"))
+showProc.time()
+
+if(show.Acc) { ## want to see accuracies, do not stop "quickly"
+    pTOL <- dTOL <- 0.1
+    format.relErr <- function(tt, cc)
+        format(as.numeric(relErr(tt, cc)), digits = 4, width = 8)
+} else {
+    pTOL <- 1e-6  # typically see relErr of  5e-7
+    dTOL <- 1e-14 # typically see relErr of  1.3...3.9 e-15
+}
+## Note that dstable() is more costly than pstable()
+##  20 should depend on "check level"
+for(ii in 1:(if(doExtras) 32 else 8)) {
+    Z <- rnorm(2)
+    mu	<- sign(Z[1])*exp(Z[1])
+    sc <- exp(Z[2])
+    x <- seq(mu, mu+ sc* 100*rchisq(1, df=3),
+	     length.out= if(doExtras) 512 else 32)
+    ## pLevy() using only pnorm() is hence "mpfr-aware":
+    x. <- if(show.Acc) mpfr(x, 256) else x
+    pL <- pLevy(x., mu, sc)
+    pS <- pstable(x, alpha=1/2, beta=1, gamma=sc, delta=mu,
+		  pm = 1)
+    dL <- dLevy(x., mu, sc)
+    dS <- dstable(x, alpha=1/2, beta=1, gamma=sc, delta=mu,
+		  pm = 1)
+    if(show.Acc) {
+	cat("p: ", format.relErr(pL, pS), "\t")
+	cat("d: ", format.relErr(dL, dS), "\n")
+    } else {
+	cat(ii %% 10)
+    }
+    stopifnot(all.equal(pL, pS, tol = pTOL),
+	      all.equal(dL, dS, tol = dTOL))
+}; cat("\n")
+showProc.time()## ~ 75 sec  (doExtras=TRUE) on lynne (2012-09)
