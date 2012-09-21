@@ -5,3 +5,20 @@
   ~~~~~~~   arguments
 * qstable() ditto
 
+* using  doExtras to *not* run some tests when  --as-cran ,  as
+
+     From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+     Subject: Re: New version of copula uploaded 0.99-2
+     Date: Tue, 29 May 2012 17:17:05 +0100
+
+     ..  but the test times
+
+     * checking tests ...  [173s/174s] OK
+	Running doRUnit.R  [82s/83s]
+	Running dstab-ex.R [34s/34s]
+	Running pstab-ex.R [19s/19s]
+	Running tails.R    [39s/39s]
+
+     are more than we would like, so please consider reducing substantially
+     next time around
+     ...

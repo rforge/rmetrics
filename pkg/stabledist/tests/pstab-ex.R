@@ -129,6 +129,9 @@ if(dev.interactive(orNone=TRUE)) {
     curve(dstable(x, 1.,    0.99),  -6, 50, log="y")# "uneven" (x < 0); 50 warnings
     curve(dstable(x, 1.001, 0.95), -10, 30, log="y")# much better
 }
+showProc.time() #
+
+if(doExtras) {
 c5 <- chk.pd.stable(1.,	   0.99,  -6, 50)# -> uniroot
 c6 <- chk.pd.stable(1.001, 0.95, -10, 30)# -> uniroot; 2nd plot *clearly* shows problem
 with(c5, all.equal(F.appr., F[i.] - F[1], tol = 0)) # .00058 on 64-Lnx
@@ -152,8 +155,9 @@ curve(pPareto(x, alpha=1.001, beta=0.5), add=TRUE, col=2, lty=2)
 ## but	alpha = 1   is only somewhat better as approximation:
 curve(pstable(x, alpha=1    , beta=0.5), add=TRUE, col=3,
       lwd=3, lty="5131")
-
 showProc.time() #
+}
+
 
 c7 <- chk.pd.stable(1.2, -0.2,	 -40, 30)
 c8 <- chk.pd.stable(1.5, -0.999, -40, 30)# two warnings
