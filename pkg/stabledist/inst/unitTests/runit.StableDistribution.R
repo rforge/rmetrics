@@ -143,7 +143,7 @@ Tst.stableS2 <- function(n = n.check)
     # Return Value:
     return()
 }
-##if(doExtras) test.stableS2 <- Tst.stableS2
+if(doExtras) test.stableS2 <- Tst.stableS2
 
 ################################################################################
 
