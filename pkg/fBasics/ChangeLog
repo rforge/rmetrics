@@ -1,5 +1,14 @@
+2012-09-20  mmaechler
+
+	* DESCRIPTION, NAMESPACE, R/dist-stable-deprecated.R,
+	  inst/unitTests/runit.DistributionFits.R,
+	  man/fBasics-deprecated.Rd: no longer re-export the [dpqr]stable()
+	  functions from "stabledist"; and more reasonable unitTests for
+	  those
+
 2012-09-14  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
 	* DESCRIPTION: updated version number
 	* R/utils-Sys.putenv.R: Removed deprecated putenv patch
 
