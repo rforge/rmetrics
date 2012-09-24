@@ -86,7 +86,6 @@ export(
     ".getCorFilter.Shrinkage",
     ".hclustArrange",
     ".hclustSelect",
-    ".hist",
     ".histPanel",
     ".jaccardDist",
     ".kendallDist",
