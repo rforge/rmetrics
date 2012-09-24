@@ -1,3 +1,20 @@
+2012-09-24  chalabi
+
+	* DESCRIPTION: Adapted version number.
+	* DESCRIPTION: Updated maintainer field.
+	* NAMESPACE, R/base-weekdays.R: Removed external C call.
+
+2012-08-04  mmaechler
+
+	* DESCRIPTION, R/base-weekdays.R: we "semi-depend" on package
+	  "date"
+
+2012-03-21  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog
+	* DESCRIPTION: updated version number
+
 2012-03-20  chalabi
 
 	* DESCRIPTION: updated DESC file
