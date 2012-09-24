@@ -24,70 +24,70 @@
 ################################################################################
 
 
-.fjulian <-
-    function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
-{
-    # A function implemented by Diethelm Wuertz
+## .fjulian <-
+##     function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
+## {
+##     # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Transforms formatted dates (fdates) from several formats
-    #   as 8/11/73 11Aug1973, ... into ISO-8601 Gregorian dates
-    #   ... makes use of C-Program char_date.c implemented by
-    #   Terry Therneau
+##     # Description:
+##     #   Transforms formatted dates (fdates) from several formats
+##     #   as 8/11/73 11Aug1973, ... into ISO-8601 Gregorian dates
+##     #   ... makes use of C-Program char_date.c implemented by
+##     #   Terry Therneau
 
-    # Notes:
-    #   cc - Century, becoming obsolete with the introduction of swap.
+##     # Notes:
+##     #   cc - Century, becoming obsolete with the introduction of swap.
 
-    # Example:
-    #   require(date)
-    #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
-    #   .fjulian(fdates)
-    #   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
-    #   .fjulian(fdates, order = 'dmy')
+##     # Example:
+##     #   require(date)
+##     #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
+##     #   .fjulian(fdates)
+##     #   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
+##     #   .fjulian(fdates, order = 'dmy')
 
-    # Note:
-    #   Requires R-package "date"
+##     # Note:
+##     #   Requires R-package "date"
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    stopifnot(require("date"))
+##     stopifnot(require("date"))
 
 
-    # Formats:
-    order.vec <-
-        switch(order,
-               'ymd'= c(1,2,3),
-               'ydm'= c(1,3,2),
-               'mdy'= c(2,3,1),
-               'myd'= c(2,1,3),
-               'dym'= c(3,1,2),
-               'dmy'= c(3,2,1),
-               stop("Invalid value for 'order' option"))
-    nn = length(fdates)
-    cd <- .C("char_date",
-             as.integer(nn),
-             as.integer(order.vec),
-             as.character(fdates),
-             month = integer(nn),
-             day = integer(nn),
-             year = integer(nn), PACKAGE = "date")[c("month", "day", "year")]
+##     # Formats:
+##     order.vec <-
+##         switch(order,
+##                'ymd'= c(1,2,3),
+##                'ydm'= c(1,3,2),
+##                'mdy'= c(2,3,1),
+##                'myd'= c(2,1,3),
+##                'dym'= c(3,1,2),
+##                'dmy'= c(3,2,1),
+##                stop("Invalid value for 'order' option"))
+##     nn = length(fdates)
+##     cd <- .C("char_date",
+##              as.integer(nn),
+##              as.integer(order.vec),
+##              as.character(fdates),
+##              month = integer(nn),
+##              day = integer(nn),
+##              year = integer(nn), PACKAGE = "date")[c("month", "day", "year")]
 
-    yy <- cd$year %% 100
+##     yy <- cd$year %% 100
 
-    # Swap:
-    cc = 19 + trunc(sign(swap-yy)+1)/2
-    year = cc*100 + yy
+##     # Swap:
+##     cc = 19 + trunc(sign(swap-yy)+1)/2
+##     year = cc*100 + yy
 
-    # Origin:
-    cc0 = origin %/% 1000000
-    yymmdd0 = origin - cc0*1000000
-    yy0 = yymmdd0 %/% 10000
-    mm0 = yymmdd0 %/% 100 - yy0*100
-    dd0 = yymmdd0 - yy0*10000 - mm0*100
+##     # Origin:
+##     cc0 = origin %/% 1000000
+##     yymmdd0 = origin - cc0*1000000
+##     yy0 = yymmdd0 %/% 10000
+##     mm0 = yymmdd0 %/% 100 - yy0*100
+##     dd0 = yymmdd0 - yy0*10000 - mm0*100
 
-    # Result:
-    .julian(cd$month, cd$day, year, origin = c(mm0, dd0, cc0*100+yy0))
-}
+##     # Result:
+##     .julian(cd$month, cd$day, year, origin = c(mm0, dd0, cc0*100+yy0))
+## }
 
 
 # ------------------------------------------------------------------------------
@@ -182,4 +182,3 @@
 
 
 ################################################################################
-

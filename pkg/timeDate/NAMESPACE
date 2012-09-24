@@ -106,7 +106,6 @@ export(
     ".day.of.week",
     ".easter",
     ".easterSunday",
-    ".fjulian",
     ".formatFinCenter",
     ".formatFinCenterNum",
     ".genDaylightSavingTime",
