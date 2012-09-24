@@ -7,7 +7,7 @@ Author: Diethelm Wuertz, Yohan Chalabi and Martin Maechler with
         contributions from Joe W. Byers, and others
 Depends: R (>= 2.10.0), graphics, utils, stats, methods
 Suggests: date, RUnit
-Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
+Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
