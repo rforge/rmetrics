@@ -814,6 +814,21 @@ upVersion <- function(pkgs)
     invisible(TRUE)
 }
 
+checkStatus <- function(pkgs = pkgsRmetrics())
+{
+
+    # open web pages directly
+
+    pkgs <- basename(pkgs)
+
+    for (pkg in pkgs) {
+
+        url <- paste("http://cran.r-project.org/web/checks/check_results_",
+                     pkg, ".html", sep = "")
+        browseURL(url)
+    }
+}
+
 # ------------------------------------------------------------------------------
 
 checkVersion <- function(pkgs = pkgsRmetricsDev())
