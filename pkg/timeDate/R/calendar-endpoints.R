@@ -20,35 +20,36 @@
 #  endpoints              Returns endpoint indexes from a timeDate object
 ################################################################################
 
-
-endpoints <- 
-function (x, on = c("months", "years", "quarters", "weeks", "days", 
-    "hours", "minutes", "seconds"), k = 1) 
+## YC: do not make this function visible unless one rename it to avoid
+## conflicts with xts endpoints() function.
+.endpoints <-
+function (x, on = c("months", "years", "quarters", "weeks", "days",
+    "hours", "minutes", "seconds"), k = 1)
 {
     # Description:
     #   Returns endpoint indexes from a 'timeDate' object.
-    
+
     # Arguments:
-    #   x - a 'timeDate' object  
+    #   x - a 'timeDate' object
     #   on - the periods endpoints to find as a character string
     #   k - along every k-th element
-    
+
     # Note:
     #   Behaves like function entpoints() from R package xts, which
-    #     extracts index values of a given "xts" object corresponding 
+    #     extracts index values of a given "xts" object corresponding
     #     to the last observations given a period specified by "on",
-    #   with a zero added to the beginning of the vector, and the 
+    #   with a zero added to the beginning of the vector, and the
     #     index of the last observation in x at the end.
-    #   The Index rules are borrowed from Jeff Ryans endpoints() 
+    #   The Index rules are borrowed from Jeff Ryans endpoints()
     #     function.
-       
+
     # FUNCTION:
-    
+
     # Convert to POSIX:
     on <- match.arg(on)
     posix <- as.POSIXct(x)
     .posix <- unclass(posix)
-    
+
     # Apply index extraction rules:
     if (on == "years") {
         ans <- as.integer(which(diff(as.POSIXlt(posix)$year %/% k + 1) != 0))
@@ -66,13 +67,12 @@ function (x, on = c("months", "years", "quarters", "weeks", "days",
         ans <- as.integer(which(diff(.posix %/% 60L %/% k + 1) != 0))
     } else if (on == "seconds" || on == "secs") {
         ans <- as.integer(which(diff(.posix %/% k + 1) != 0))
-    } 
+    }
     ans <- c(0, ans, NROW(x))
-    
+
     # Return Value:
     ans
 }
 
 
 ################################################################################
-

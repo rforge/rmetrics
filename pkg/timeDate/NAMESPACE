@@ -666,7 +666,7 @@ export(
     "dayOfWeek",
     "dayOfYear",
     "difftimeDate",
-    "endpoints",
+    ".endpoints",
     "getRmetricsOption",
     "getRmetricsOptions",
     "holiday",
