@@ -4,6 +4,7 @@ dPareto <- stabledist:::dPareto
 source(system.file("test-tools-1.R", package = "Matrix"), keep.source=interactive())
 					#-> identical3(), showProc.time(),...
 (doExtras <- stabledist:::doExtras())
+if(!require("sfsmisc")) eaxis <- axis # use sfsmisc::eaxis if available
 
 stopifnot(0 <= print(dstable(4000., alpha=1.00001, beta=0.6)))
 ## gave error in fBasics::dstable()
@@ -62,6 +63,25 @@ stopifnot(## decreasing to the right:
 	  diff(r1$y[ i.]) < 0,
 	  ## increasing on the left:
 	  diff(r1$y[!i.]) > 0)
+
+### beta = 1 (extremely skewed)  and small alpha: ---------
+##  --------
+## Problem at *left* ("less problematic") tail, namely very close to where the
+## support of the density becomes mathematically exactly zero :
+##
+## clear inaccuracy / bug --- maybe *seems* curable
+##
+curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE), -15, 10)
+##            ------
+## --> warnings both from uniroot ("-Inf") and .integrate2()
+## about equivalent to
+curve(dstable(x, alpha= 0.1, beta=1, pm=1, log=TRUE), 1e-7, 4e4,
+      log="x", xaxt="n"); eaxis(1)
+## If we decrease  zeta.tol "to 0", we get better here:
+curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE, zeta.tol=1e-100), -40, 20)
+## or here, ... but still not good enough
+curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE, zeta.tol=1e-200), -45, 30)
+
 
 showProc.time()
 

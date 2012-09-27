@@ -17,3 +17,9 @@
 
 * [qp] check the  lower.tail & log.p argument settings
   NB: This check *should* happen in  fBasics  'checkdist' ...
+
+* curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE), -15, 0)
+  --> tests/dstab-ex.R ("beta = 1")
+
+* As easy alternative to  fBasics::stableFit() define one  based
+  on stats4::mle (and possibly also a  quantile-matching alternative).

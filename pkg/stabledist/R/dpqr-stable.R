@@ -41,11 +41,16 @@ pi2 <- pi/2 # - we use it so often
 
 
 ##' @title omega() according to Lambert & Lindsey (1999), p.412
-##' @param gamma
-##' @param alpha
-##' @return
-.om <- function(gamma,alpha)
-    if(alpha == 1) (2/pi)*log(gamma) else tan(pi2*alpha)
+##' @param gamma [dpqr]stable()'s scale parameter, > 0         -- of length 1
+##' @param alpha [dpqr]stable()'s "main" parameter, in [0, 2]  -- of length 1
+##' @return omega(.) = tan(pi/2 alpha) if alpha != 1 ...
+.om <- function(gamma,alpha) {
+    if(alpha != round(alpha)) # non-integer usual case
+	tan(pi2*alpha)# not tanpi2() !
+    else if(alpha == 1)
+	(2/pi)*log(gamma)
+    else 0 # for alpha = 0 or = 2
+}
 
 ##' @title C_alpha - the tail constant
 ##' @param alpha numeric vector of stable tail parameters, in [0,2]
