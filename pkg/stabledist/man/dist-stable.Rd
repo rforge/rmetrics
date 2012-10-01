@@ -15,7 +15,7 @@
     density, distribution and quantile function and
     to generate random variates of the stable distribution.
 
-    The functions are:
+    The four functions are:
     \tabular{ll}{
       \code{[dpqr]stable} \tab the (skewed) stable distribution.
     }
@@ -24,11 +24,11 @@
 \usage{
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
         log = FALSE,
-        tol = 64*.Machine$double.eps, zeta.tol = 1e-5,
+        tol = 64*.Machine$double.eps, zeta.tol = NULL,
         subdivisions = 1000)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
-	tol = 64*.Machine$double.eps, subdivisions = 1000)
+        tol = 64*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
         tol = .Machine$double.eps^0.25, maxiter = 1000,
@@ -40,8 +40,8 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \item{alpha, beta, gamma, delta}{
     value of the index parameter \code{alpha} with \code{alpha = (0,2]};
     skewness parameter \code{beta}, in the range [-1, 1];
-    scale parameter \code{gamma}; and
-    shift parameter \code{delta}.
+    scale parameter \code{gamma}; and location (or \sQuote{shift})
+    parameter \code{delta}.
   }
   \item{n}{sample size (integer).}
   \item{p}{numeric vector of probabilities.}
@@ -64,10 +64,11 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     }
   }
   \item{zeta.tol}{(\code{dstable}) numerical tolerance for checking if
-    \code{x} is close to \eqn{\zeta(\alpha,\beta)}.
+    \code{x} is close to \eqn{\zeta(\alpha,\beta)}.  The default,
+    \code{NULL} depends itself on \eqn{(\alpha,\beta)}.
     \cr
-    As this is \emph{experimental} and may well go away in the future,
-    its use is not recommended in production code.  Rather e-mail the
+    As it is \emph{experimental} and not guaranteed to remain in the
+    future, its use is not recommended in production code.  Rather e-mail the
     package maintainer about it.}
   \item{subdivisions}{maximal number of intervals for integration, see
     \code{\link{integrate}}.}
@@ -86,12 +87,12 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 \details{
     \bold{Skew Stable Distribution:}
     \cr\cr
-    The function uses the approach of J.P. Nolan for general
-    stable distributions. Nolan derived expressions in form of
-    integrals based on the characteristic function for standardized
-    stable random variables. These integrals are numerically
-    evaluated using \R's \code{\link{integrate}()} function,
-    following Nolan (1997).
+    The function uses the approach of J.P. Nolan for general stable
+    distributions. Nolan (1997) derived expressions in form of integrals
+    based on the characteristic function for standardized stable random
+    variables. For \code{dstable} and \code{pstable}, these integrals
+    are numerically evaluated using \R's \code{\link{integrate}()}
+    function.
     \cr
     \dQuote{S0} parameterization [pm=0]: based on the (M) representation
     of Zolotarev for an alpha stable distribution with skewness
@@ -116,12 +117,13 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     parameterization which is defined so that (i) the scale gamma
     agrees with the Gaussian scale (standard dev.) when alpha=2
     and the Cauchy scale when alpha=1, (ii) the mode is exactly at
-    delta.
+    delta.  For this parametrization,
+    \code{\link{stableMode}(alpha,beta)} is needed.
     \cr
     \dQuote{S3} parameterization [pm=3]: an internal parameterization,
     currently not available for these functions.  The scale is the same
     as the \dQuote{S2} parameterization, the shift is
-    \eqn{-beta*g(alpha)}, where \eqn{g(alpha)} is defined in Nolan(1999).
+    \eqn{-\beta*g(\alpha)}, where \eqn{g(\alpha)} is defined in Nolan(1999).
 }
 \section{Tail Behavior}{
   The asymptotic behavior for large \eqn{x}, aka \dQuote{tail behavior}
@@ -143,7 +145,6 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   accuracy higher than about 6 digits is needed), see,
   \code{\link[FMStable]{pEstable}}.
 
-
   When \code{alpha} is close to 1 or close to 0 (\dQuote{close},
   e.g., meaning distance \eqn{d < 0.01}), the computations typically are
   numerically considerably more challenging, and the results may not be
@@ -153,7 +154,7 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   plan to improve on this, \emph{and}
   as it is unknown when exactly the numerical difficulties arise, we
   currently only do warn here (in the documentation), but \emph{not} by
-  giving \code{\link{warning}()}s.
+  giving explicit \code{\link{warning}()}s.
 }
 \seealso{
   the \code{\link[fBasics]{stableSlider}()} function from package
@@ -176,11 +177,10 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \url{http://academic2.american.edu/~jpnolan/stable/chap1.pdf}
 
   Nolan J.P. (1997)
-    Numerical calculation of stable densities and distribution
-    functions.
-    \emph{Stochastic Models} \bold{13}(4), 759--774.
-    \cr
-    Also available as \file{density.ps} from Nolan's web page.
+  Numerical calculation of stable densities and distribution functions.
+  \emph{Stochastic Models} \bold{13}(4), 759--774.
+  \cr
+  Also available as \file{density.ps} from Nolan's web page.
 
   Samoridnitsky G., Taqqu M.S. (1994);
     \emph{Stable Non-Gaussian Random Processes, Stochastic Models

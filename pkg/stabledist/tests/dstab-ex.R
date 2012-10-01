@@ -6,17 +6,21 @@ source(system.file("test-tools-1.R", package = "Matrix"), keep.source=interactiv
 (doExtras <- stabledist:::doExtras())
 if(!require("sfsmisc")) eaxis <- axis # use sfsmisc::eaxis if available
 
-stopifnot(0 <= print(dstable(4000., alpha=1.00001, beta=0.6)))
+stopifnot(0 < print(dstable(4000., alpha=1.00001, beta=0.6)))
 ## gave error in fBasics::dstable()
 ## now 18 warnings from uniroot()
+
+pdf("dstab-ex.pdf")
 
 x <- 2^seq(0, 20, length= if(doExtras) 200 else 64)
 fx <- dstable(x, alpha = 1.0001, beta = 0.6)
 
 plot(x,fx, log="x", type="l")# looks good
 plot(x,fx, log="xy", type="l")# --- perfect now
-stopifnot((dlx <- diff(log(fx))) < 0,
-	  abs(dlx[-(1:99)] - -0.13938) < 4e-4)
+stopifnot((dlx <- diff(log(fx))) < 0, # decreasing
+      { dl <- dlx[x[-1] > 1000] # the negative slope:
+	relErr(if(doExtras) -0.13934 else -0.44016, dl) < 4e-4},
+	  diff(dl) > -1e-6)#  > 0 "in theory"; > -6e-7, ok on 64-bit Linux
 
 nc <- if(doExtras) 512 else 101 # number of points for curve()
 
@@ -25,7 +29,8 @@ zeta <- function(alpha,beta) if(alpha==1) 0 else -beta*tan(pi/2*alpha)
 ## negative beta:
 cx <- curve(dstable(x, 0.75, -.5), -.5, 1.5, n=nc)# ok, now
 m <- stableMode(0.75, -.5, tol=1e-14)
-stopifnot(all.equal(m, 0.35810298366, tol = 1e-7))
+stopifnot(all.equal(m, 0.35810298366, tol = 1e-7),
+	  all.equal(dstable(m, 0.75, -.5), 0.3554664043, tol=1e-6))
 
 showProc.time()
 
@@ -48,14 +53,16 @@ r3 <- curve(dstable(x, alpha = 0.3, beta = 0.5, tol=1e-7),
 	    -1, 1)
 m3 <- stableMode(0.3, 0.5, tol=1e-14)# still with 3 warnings
 stopifnot(all.equal(m3, -0.2505743952946, tol = 1e-10))
+## zoom into the above
 r3. <- curve(dstable(x, alpha = 0.3, beta = 0.5, tol=1e-7),
 	    -.27, -.22)
+abline(v = m3, col="gray40", lty=2)
 
 r1 <- curve(dstable(x, alpha = 0.1, beta = 0.5, tol=1e-7),
-	    -.4, .2, ylim = c(0, 10), n = nc)
-m1 <- stableMode(0.1, 0.5, tol=1e-15)# still with 10 warnings
+	    -.4, .2, ylim = c(0, 20), n = nc)
+m1 <- stableMode(0.1, 0.5, tol=1e-15)
 abline(v=m1, h=0, col="gray40", lty=2)
-stopifnot(all.equal(m1, -0.0791922, tol=1e-6)) # -0.07919221927, # was -0.07919217576
+stopifnot(all.equal(m1, -0.079193, tol=1e-5)) # -0.079193188, was -0.079192219, and -0.0791921758
 title(main = expression(f(x, alpha== 0.1, beta == 0.5)))
 ## check mode *and* unimodality
 i. <- r1$x > m1
@@ -64,6 +71,110 @@ stopifnot(## decreasing to the right:
 	  ## increasing on the left:
 	  diff(r1$y[!i.]) > 0)
 
+## Now *really* small alpha --> 0:
+##     --------------------------
+## Note that
+if(require("FMStable")) {
+    try( FMStable::setParam(alpha = 1e-18, location=0, logscale=0, pm = 0) )
+## gives
+## Error in .... setParam: S0=M parametrization not suitable for small alpha
+}
+## now if this is true (and I think we can trust Geoff Robinson on this),
+## we currently have a  "design bug - problem":
+## as internally, we always translate to  'pm=0' parametrization __FIXME_(how ??)__
+## --> solution: see below:  there's a simple  (alpha -> 0) asymptotic
+
+## These now "work": .... well with integration warnings !!
+
+pdstab.alpha <- function(x, beta, alphas = 2^-(40:2),
+                         type = "o", add=FALSE, log = "xy", ...)
+{
+    stopifnot(is.numeric(x), length(x) == 1, length(beta) == 1,
+              is.numeric(beta), -1 <= beta, beta <= 1,
+              is.numeric(alphas), 0 <= alphas, alphas <= 2,
+              is.logical(add))
+    if(is.unsorted(alphas)) alphas <- sort(alphas)
+    dst.alp <- vapply(alphas, function(aaa)
+                    dstable(x, aaa, beta = beta, pm = 0), 1.) ## with warnings
+    if(add)
+        lines(alphas, dst.alp, type=type, ...)
+    else {
+        plot(alphas, dst.alp, type=type, log=log, axes=FALSE,
+             xlab = quote(alpha),
+             ylab = bquote(f(x == .(x), alpha)),
+             main = bquote(dstable(x == .(x), alpha, beta == .(beta), pm == 0)
+             ~~~"for (very) small" ~ alpha))
+        if(!require("sfsmisc")) eaxis <- axis # use sfsmisc::eaxis if available
+        eaxis(1); eaxis(2)
+    }
+    invisible(cbind(alphas, dstable = dst.alp))
+}
+
+## vary beta,  keep x :
+pdstab.alpha(x = -1, beta = 0.1)
+if(doExtras) {
+pdstab.alpha(x = -1, beta = 0.3, add=TRUE, col=2, type="l")
+pdstab.alpha(x = -1, beta = 0.5, add=TRUE, col=3, type="l")
+pdstab.alpha(x = -1, beta = 0.7, add=TRUE, col=4, type="l")
+pdstab.alpha(x = -1, beta = 0.9, add=TRUE, col=5, type="l")
+
+## vary x,  keep beta
+pdstab.alpha(x =  -1, beta = 0.3)
+pdstab.alpha(x =  +1, beta = 0.3, add=TRUE, col=2, type="l")
+pdstab.alpha(x =  +5, beta = 0.3, add=TRUE, col=3, type="l")
+pdstab.alpha(x = +50, beta = 0.3, add=TRUE, col=4, type="l")
+pdstab.alpha(x = -10, beta = 0.3, add=TRUE, col=5, type="l")
+}
+## Plots suggest a simple formula
+##  log(f(x, alpha, beta))=  c(x,beta) + log(alpha)
+##      f(x, alpha, beta) =  C(x,beta) * (alpha)   -- ???
+
+## for normal alpha, it looks different {which is reassuring!}
+pdstab.alpha(x = -1, beta = 0.3, alphas = seq(1/128, 2, length=100))
+
+## Show the formula, we derived:
+## f(x, \alpha, \beta) ~  \alpha * \frac{1 + \beta}{2e \abs{x + \pi/2 \alpha\beta}}
+## ONLY ok, when  x > zeta := - beta * tan(pi/2 *alpha)
+## otherwise, "swap sign" of (x, beta)
+dst.smlA <- function(x, alpha, beta, log = FALSE) {
+    pa <- pi/2*alpha
+    i. <- x < -pa*beta
+    if(any(i.)) {
+        beta <- rep(beta, length.out=length(x))
+        beta[i.] <- -beta[i.]
+        x   [i.] <- -x   [i.]
+    }
+    ## alpha*(1+beta) / (2*exp(1)*(x+ pa*beta))
+    r <- log(alpha) + log1p(beta) - (1 + log(2*(x+ pa*beta)))
+    if(log) r else exp(r)
+}
+
+set.seed(17)
+
+alpha <- 1e-15 ## must be larger than cutoff in .fct1() in ../R/dpqr-stable.R :
+stopifnot(alpha > stabledist:::.alpha.small.dstable)
+for(beta in runif(if(doExtras) 20 else 2, -1, 1)) {
+ cat(sprintf("beta =%10g: ", beta))
+ for(N in 1:(if(doExtras) 10 else 1)) {
+     x <- 10*rnorm(100); cat(".")
+     stopifnot(all.equal(dstable (x, alpha, beta),
+                         dst.smlA(x, alpha, beta), tol = 1e-13))
+ }; cat("\n")
+}
+
+
+curve( dstable (x, alpha=1e-10, beta=.8, log=TRUE) , -10, 10)
+curve( dst.smlA(x, alpha=1e-10, beta=.8, log=TRUE), add=TRUE, col=2)
+
+## "same" picture (self-similar !)
+curve( dstable (x, alpha=1e-10, beta=.8, log=TRUE), -1, 1)
+curve( dst.smlA(x, alpha=1e-10, beta=.8, log=TRUE), add=TRUE, col=2)
+
+
+
+## Testing stableMode here:
+
+
 ### beta = 1 (extremely skewed)  and small alpha: ---------
 ##  --------
 ## Problem at *left* ("less problematic") tail, namely very close to where the
@@ -71,16 +182,17 @@ stopifnot(## decreasing to the right:
 ##
 ## clear inaccuracy / bug --- maybe *seems* curable
 ##
-curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE), -15, 10)
+curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE), -40, 10)
 ##            ------
 ## --> warnings both from uniroot ("-Inf") and .integrate2()
 ## about equivalent to
-curve(dstable(x, alpha= 0.1, beta=1, pm=1, log=TRUE), 1e-7, 4e4,
+curve(dstable(x, alpha= 0.1, beta=1, pm=1, log=TRUE), 1e-15, 4e4,
       log="x", xaxt="n"); eaxis(1)
 ## If we decrease  zeta.tol "to 0", we get better here:
 curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE, zeta.tol=1e-100), -40, 20)
 ## or here, ... but still not good enough
 curve(dstable(exp(x), alpha= 0.1, beta=1, pm=1, log=TRUE, zeta.tol=1e-200), -45, 30)
+
 
 
 showProc.time()
@@ -96,21 +208,25 @@ stopifnot(f1 > 0, f2 > 0)
 
 ## these all work (luck):
 zet <- zeta(alpha= 1.00001, beta= -.8)# -50929.58
-r4 <- curve(dstable(zet+x, alpha= 1.00001, beta= -.8), -1, 1,
+## here, we must have larger zeta.tol: = 5e-5 is fine; now using "automatic" default
+r4 <- curve(dstable(zet+x, alpha= 1.00001, beta= -.8), -3, 7,
 	    xlab = expression(zeta(alpha,beta) - x),
-	    ylim=c(2, 2.4)*1e-10, n = nc)
+	    ylim=c(2.1, 2.3)*1e-10, n = nc)
 cc <- "pink3"
-abline(v=0, col=cc); mtext(at=0, line = -1, adj = -.1, col=cc, expression(x==zeta(.)))
+abline(v=0, col=cc)
+z.txt <- bquote(paste(x == zeta(.), phantom() == .(signif(zet,6))))
+mtext(z.txt, at=0, line = -1, adj = -.1, padj=.2, col=cc)
 ## no longer much noise (thanks to zeta.tol = 1e-5):
 curve(dPareto(zet+x, alpha= 1.00001, beta= -.8), add=TRUE, col=2)
 stopifnot({ rr <- range(r4$y)
-	    2.15e-10 < rr & rr < 2.25e-10 })
+	    2.1e-10 < rr & rr < 2.3e-10 })
 
 showProc.time()
 
 ### ---- alpha == 1 ---------
 curve(dstable(x, alpha = 1, beta = 0.3), -20, 20, log="y", n=nc)
 curve(dstable(x, alpha = 1, beta = 0.3, log=TRUE), -200, 160, n=nc)
+
 curve(dPareto(x, alpha = 1, beta = 0.3, log=TRUE), add=TRUE, col=4)
 ## "works", but discontinuous --- FIXME
 ## ditto:

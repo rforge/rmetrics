@@ -1,3 +1,16 @@
+2012-09-30  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable, .fct1): direct 'log' argument;
+	advantageous in few (only) cases.  New default 'zeta.tol=NULL' now
+	determines zeta.tol depending on parameters.
+
+2012-09-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable.smallA): new asymptotic (alpha -> 0)
+	formula for small alpha.
+
+	* DESCRIPTION (Version): 0.6-5,  released to CRAN on 2012-...
+
 2012-05-29  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* DESCRIPTION (Version): 0.6-4,  released to CRAN on 2012-05-29

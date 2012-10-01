@@ -140,7 +140,8 @@ pPareto <- function(x, alpha, beta, lower.tail = TRUE, log.p = FALSE) {
 
 dstable <- function(x, alpha, beta,
 		    gamma = 1, delta = 0, pm = 0, log = FALSE,
-		    tol = 64*.Machine$double.eps, zeta.tol= 1e-5, subdivisions = 1000)
+		    tol = 64*.Machine$double.eps, zeta.tol= NULL,
+                    subdivisions = 1000)
 {
     ## Original implemented by Diethelm Wuertz;
     ## Changes for efficiency and accuracy by Martin Maechler
@@ -170,7 +171,8 @@ dstable <- function(x, alpha, beta,
 	      -1 <= beta, beta	<= 1, length(beta) == 1,
 	      0 <= gamma, length(pm) == 1, pm %in% 0:2,
 	      tol > 0, subdivisions > 0)
-
+    ## not an official argument {no doc!}:
+    verbose <- getOption("dstable.debug", default=FALSE)
     ## Parameterizations:
     if (pm == 1) {
 	delta <- delta + beta*gamma * .om(gamma,alpha)
@@ -188,47 +190,59 @@ dstable <- function(x, alpha, beta,
 	} else if (alpha == 1 && beta == 0) {
 	    dcauchy(x)
 	} else {
-
 	    ## General Case
-	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1	from above
+	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1 from above
 		tanpa2 <- tan(pi2*alpha)
-		zeta <- -beta * tanpa2
-		theta0 <- min(max(-pi2, atan(beta * tanpa2) / alpha), pi2)
+                betan <- beta * tanpa2
+		zeta <- -betan
+		theta0 <- min(max(-pi2, atan(betan) / alpha), pi2)
+		if(verbose) cat(sprintf(
+		    "dstable(., alpha=%g, beta=%g,..): --> theta0=%g, zeta=%g,",
+		    alpha, beta, theta0, zeta))
+		if(is.null(zeta.tol)) {
+		    zeta.tol <-
+			if(betan == 0) .4e-15
+			else if(1-abs(beta) < .01 || alpha < .01) 2e-15 else 5e-5
+		    if(verbose) cat(sprintf(" --> zeta.tol= %g", zeta.tol))
+		}
+		else stopifnot(is.numeric(zeta.tol), zeta.tol >= 0)
+		if(verbose) cat("\n")
 
-		## Loop over all x values:
+		## Loop over all x values ( < , = , or >  zeta):
 		vapply(x, .fct1, 0.,
-                       zeta=zeta, alpha=alpha, theta0=theta0,
-                       tol=tol, zeta.tol=zeta.tol, subdivisions=subdivisions)
+		       zeta=zeta, alpha=alpha, beta=beta, theta0=theta0, log=log,
+		       verbose=verbose,
+		       tol=tol, zeta.tol=zeta.tol, subdivisions=subdivisions)
 	    }
 	    ## Special Case alpha == 1	and  -1 <= beta <= 1 (but not = 0) :
 	    else { ## (alpha == 1)  and	 0 < |beta| <= 1  from above
 		## Loop over all x values:
 		vapply(x, function(z) {
 		    if (z >= 0) {
-			.fct2( z , beta, tol=tol, subdivisions=subdivisions)
+			.fct2( z , beta, log=log, tol=tol, subdivisions=subdivisions)
 		    } else {
-			.fct2(-z, -beta, tol=tol, subdivisions=subdivisions)
+			.fct2(-z, -beta, log=log, tol=tol, subdivisions=subdivisions)
 		    }
 		}, 0.)
 	    }
 	}
 
-    i0 <- ans == 0 # --> we can do better using asymptotic:
+    i0 <- ans == (if(log)-Inf else 0) # --> we can do better using asymptotic:
     if(any(i0)) {
 	d <- dPareto(x[i0], alpha, beta, log=log)
 	## do recycle correctly:
-	gamm <- if(length(gamma) > 1)
-	    rep(gamma, length.out=length(x))[i0] else gamma
-	ans[i0] <- if(log) d - log(gamm) else d/gamm
+	if(length(gamma) > 1)
+	    gamma <- rep(gamma, length.out=length(x))[i0]
+	ans[i0] <- if(log) d - log(gamma) else d/gamma
     }
     if(any(io <- !i0)) {
 	d <- ans[io]
-	gamm <- if(length(gamma) > 1)
-	    rep(gamma, length.out=length(x))[io] else gamma
-	ans[io] <- if (log) log(d/gamm) else d/gamm
+	if(length(gamma) > 1)
+	    gamma <- rep(gamma, length.out=length(x))[io]
+	ans[io] <- if (log) d - log(gamma) else d/gamma
     }
     ans
-}
+}## {dstable}
 
 ## ------------------------------------------------------------------------------
 
@@ -239,10 +253,10 @@ dstable <- function(x, alpha, beta,
 ##' @author Martin Maechler
 x.exp.m.x <- function(x) {
     r <- x*exp(-x)
-    if(any(lrg <- x > .large.exp.arg))
-	r[lrg] <- 0
     if(any(nax <- is.na(x)))
 	r[nax] <- NA_real_
+    if(any(lrg <- !nax & x > .large.exp.arg))# e.g. x == Inf
+	r[lrg] <- 0
     r
 }
 
@@ -250,24 +264,58 @@ x.exp.m.x <- function(x) {
 .e.minus<- function(x, eps) x - eps* abs(x)
 pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more efficiently
 
+##' dstable() for very small alpha > 0
+##' ok only for  x > zeta := - beta * tan(pi/2 *alpha)
+dstable.smallA <- function(x, alpha, beta, log=FALSE) {
+    r <- log(alpha) + log1p(beta) - (1 + log(2*x + pi*alpha*beta))
+    if(log) r else exp(r)
+}
 
-.fct1 <- function(x, zeta, alpha, theta0, tol, subdivisions, zeta.tol,
+## 1e-17: seems "good", but not "optimized" at all -- hidden for now
+.alpha.small.dstable <- 1e-17
+
+.fct1 <- function(x, zeta, alpha, beta, theta0, log,
+                  tol, subdivisions, zeta.tol,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
-    ## -- Integrand for dstable() --
+    ## --- dstable(x, alpha, beta, ..)  for alpha < 2 ---
 
+    ## For  x = zeta, have special case formula [Nolan(1997)];
+    ## need to use it also for x ~= zeta, i.e., x.m.zet := |x - zeta| < delta :
+    stopifnot(is.finite(zeta))
     x.m.zet <- abs(x - zeta)
-    f.zeta <- function()
-        gamma(1+1/alpha)*cos(theta0) / (pi*(1+zeta^2)^(1/(2*alpha)))
-
-    ## Modified: originally was  if (z == zeta),
+    f.zeta <- function(log)
+        if(log)
+            lgamma(1+1/alpha)+ log(cos(theta0)) - (log(pi)+ log1p(zeta^2)/(2*alpha))
+        else
+            gamma(1+1/alpha)*cos(theta0) / (pi*(1+zeta^2)^(1/(2*alpha)))
+    ## Modified: originally was	 if (z == zeta),
     ## then (D.W.)   if (x.m.zet < 2 * .Machine$double.eps)
     ## then (M.M.)   if (x.m.zet <= 1e-5 * abs(x))
-    if(x.m.zet < zeta.tol * (zeta.tol+ max(abs(x),abs(zeta))))
-        return(f.zeta())
+    if(is.finite(x) && x.m.zet <= zeta.tol * (zeta.tol+ max(abs(x),abs(zeta)))) {
+        if(verbose)
+	    cat(sprintf(".fct1(%.11g, %.10g,..): x ~= zeta => using f.zeta()\n",
+                        x, zeta))
+	return(f.zeta(log))
+    }
     ## the real check should be about the feasibility of g() below, or its integration
 
-    if(x < zeta) theta0 <- -theta0
+    smallAlpha <- (alpha < .alpha.small.dstable)
+    if(x < zeta) {
+	theta0 <- -theta0 # see Nolan(1997), Thm.1 (c)
+	if(smallAlpha) {
+	    beta <- -beta
+	    x <- -x
+	}
+    }
+
+    if(smallAlpha) {
+        ## here, *MUST* have  __ x > zeta __
+	if(verbose)
+	    cat(sprintf(".fct1(%.11g, %.10g,..): small alpha=%g\n",
+			x, zeta, alpha))
+	return(dstable.smallA(x, alpha, beta, log=log))
+    }
 
     ## constants ( independent of integrand g1(th) = g*exp(-g) ):
     ## zeta <- -beta * tan(pi*alpha/2)
@@ -288,34 +336,37 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
 	r[io] <- (cat0 * cos(th) * (x.m.zet/sin(att))^alpha)^(1/a_1) * cos(att-th)
 	r
     }
-    ## Function to Integrate:
+    ## Function to integrate: dstable(..)= f(..) = c2 * \int_{-\theta_0}^{\pi/2} g1(u) du
     g1 <- function(th) {
 	## g1 :=  g(.) exp(-g(.))
 	x.exp.m.x( g(th) )
     }
-
     c2 <- ( alpha / (pi*abs(a_1)*x.m.zet) )
-    ## Result = c2 * \int_{-t0}^{pi/2} g1(u) du
-    ## where however, g1(.) may look to be (almost) zero almost everywhere and just have a small peak
-    ## ==> Split the integral into two parts of two intervals  (t0, t_max) + (t_max, pi/2)
 
-    ##  However, this may still be bad, e.g., for dstable(71.61531, alpha=1.001, beta=0.6),
-    ##  or  dstable(1.205, 0.75, -0.5)
+    ## Now, result = c2 * \int_{-t0}^{pi/2}  g1(u) du  ,  we "only" need the integral
+    ## where however, g1(.) may look to be (almost) zero almost everywhere and just have a small peak
+    ## ==> Find the peak, split the integral into two parts of for intervals  (t0, t_max) + (t_max, pi/2)
+
+    ## However, this may still be bad, e.g., for dstable(71.61531, alpha=1.001, beta=0.6),
+    ## or  dstable(1.205, 0.75, -0.5)
     ##   the 2nd integral was "completely wrong" (basically zero, instead of ..e-5)
 
     ## NB: g() is monotone, see above
     if((alpha >= 1 &&
 	((!is.na(g. <- g( pi2	)) && g. > .large.exp.arg) || identical(g(-theta0), 0))) ||
        (alpha  < 1 &&
-	((!is.na(g. <- g(-theta0)) && g. > .large.exp.arg) || identical(g(pi2), 0))))
+	((!is.na(g. <- g(-theta0)) && g. > .large.exp.arg) || identical(g(pi2), 0)))) {
 	## g() is numerically too large *or* 0 even where it should be inf
 	## ===>	 g() * exp(-g()) is 0 everywhere
-	return(0)
+	if(verbose)
+	    cat(sprintf(".fct1(%.11g, %.10g,..): g() is 'Inf' (or 0) ==> result 0", x,zeta))
+	return(if(log)-Inf else 0)
+    }
 
     g. <- if(alpha >= 1) g(.e.plus(-theta0, 1e-6)) else g(pi2..(1e-6))
     if(is.na(g.))# g() is not usable --- FIXME rather use *asymptotic dPareto()?
 	if(max(x.m.zet, x.m.zet / abs(x)) < .01)
-	    return(f.zeta())
+	    return(f.zeta(log))
 
     if(verbose)
 	cat(sprintf(".fct1(%.11g, %.10g,..): c2*sum(r[1:4])= %.11g*", x,zeta, c2))
@@ -331,6 +382,7 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
     ## the former is better for  dstable(-122717558, alpha = 1.8, beta = 0.3, pm = 1)
     ## However, it can be that the maximum is at the boundary,  and
     ## g(.) > 1 everywhere or  g(.) < 1  everywhere  {in that case we could revert to optimize..}
+
     if((alpha >= 1 && !is.na(g. <- g(pi2)) && g. > 1) ||
        (alpha <	 1 && !is.na(g. <- g(pi2)) && g. < 1))
         g1.th2 <- g1( theta2 <- pi2..(1e-6) )
@@ -342,18 +394,27 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
         ## uniroot is not good enough, and we should *increase* -theta0
         ## or decrease pi2 such that it can find the root:
         l.th <- -theta0
+        u.th <- pi2
         if(alpha < 1) { ## g() is *in*creasing from 0 ..
-	    while (g(.th <- (l.th + pi2)/2) == 0) l.th <- .th
-	    if(abs(pi2 - l.th) < 1e-13)# do not trust g()
-		return(0)
+	    while ((g.t <- g(.th <- (l.th + pi2)/2)) == 0) l.th <- .th
+	    if(g.t == 1)# decrease upper limit {needed, e.g. for alpha = 1e-20}
+                while ((g.t <- g(.th <- (l.th + u.th)/2)) == 1) u.th <- .th
+	    if(abs(u.th - l.th) < 1e-13)# do not trust g()
+                return(if(log)-Inf else 0)
+	    if(verbose >= 2)
+		cat(sprintf("\n -theta0=%g %s l.th=%g .. u.th=%g <= pi/2\n",
+			    -theta0, if(-theta0 == l.th) "=" else "<",
+			    l.th, u.th))
         }
 
         ur1 <- uniroot(function(th) g(th) - 1,
-                       lower = l.th, upper = pi2, tol = .Machine$double.eps)
-        ur2 <- uniroot(function(th) log(g(th)),
-                       lower = l.th, upper = pi2, tol = .Machine$double.eps)
+                       lower = l.th, upper = u.th, tol = .Machine$double.eps)
+        ## consider using safeUroot() [ ~/R/Pkgs/copula/R/safeUroot.R ] !!
+        ur2 <- tryCatch(uniroot(function(th) log(g(th)),
+                                lower = l.th, upper = u.th, tol = .Machine$double.eps),
+                        error=function(e)e)
 	g.1 <- x.exp.m.x(ur1$f.root+1)
-	g.2 <- x.exp.m.x(exp(ur2$f.root))
+	g.2 <- if(inherits(ur2, "error")) -Inf else x.exp.m.x(exp(ur2$f.root))
         if(g.1 >= g.2) {
             theta2 <- ur1$root
             g1.th2 <- g.1 ## == g1(theta2)
@@ -391,8 +452,11 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
     if(verbose)
 	cat(sprintf("(%6.4g + %6.4g + %6.4g + %6.4g)= %g\n",
 		    r1,r2,r3,r4, c2*(r1+r2+r3+r4)))
-    c2*(r1+r2+r3+r4)
-}
+    if(log)
+	log(c2)+ log(r1+r2+r3+r4)
+    else
+	c2*(r1+r2+r3+r4)
+} ## {.fct1}
 
 
 ## ------------------------------------------------------------------------------
@@ -402,13 +466,13 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
 ##' @param beta  0 < |beta| <= 1
 ##' @param tol
 ##' @param subdivisions
-.fct2 <- function(x, beta, tol, subdivisions,
+.fct2 <- function(x, beta, log, tol, subdivisions,
                   verbose = getOption("dstable.debug", default=FALSE))
 {
     i2b <- 1/(2*beta)
     p2b <- pi*i2b # = pi/(2 beta)
     ea <- -p2b*x
-    if(is.infinite(ea)) return(0)
+    if(is.infinite(ea)) return(if(log)-Inf else 0)
 
     ##' g() is strictly monotone;
     ##' g(u) := original_g(u*pi/2)
@@ -441,13 +505,15 @@ pi2.. <- function(eps) pi2 * (1 - eps) ## == .e.minus(pi/2, eps), slight more ef
 		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
     r2 <- .integrate2(g2, lower = u2, upper = 1,
 		     subdivisions = subdivisions, rel.tol = tol, abs.tol = tol)
-
-    cc <- pi2*abs(i2b)
-    if(verbose)
+    if(verbose) {
+        cc <- pi2*abs(i2b)
 	cat(sprintf(".fct2(%.11g, %.6g,..): c*sum(r1+r2)= %.11g*(%6.4g + %6.4g)= %g\n",
 		    x,beta, cc, r1, r2, cc*(r1+r2)))
-
-    cc*(r1 + r2)
+    }
+    if(log)
+	log(pi2) + log(abs(i2b)) + log(r1 + r2)
+    else
+	pi2*abs(i2b)*(r1 + r2)
 }## {.fct2}
 
 ### ------------------------------------------------------------------------------
@@ -564,8 +630,10 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 {
     if(is.infinite(x))
 	return(if(giveI) 0 else 1)
+    stopifnot(is.finite(zeta))
     x.m.zet <- abs(x - zeta)
     ##-------->>>  identically as in .fct1() for dstable() above: <<<-----------
+    ## FIXME: also provide "very small alpha" case, as in .fct1()
     if(x < zeta) theta0 <- -theta0
 
     a_1 <- alpha - 1
@@ -615,7 +683,8 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
     } else {
 	c1 <- if(alpha < 1) 1/2 - theta0/pi else 1
 	c3 <- sign(1-alpha)/pi
-	## = 1 - |.|*r(x)  <==> cancellation iff we eventually want 1 - F() -- FIXME
+	## FIXME: for alpha > 1, F = 1 - |.|*r(x)
+        ##    <==> cancellation iff we eventually want 1 - F() [-> 'lower.tail']
 	c1 + c3* r
     }
 } ## {.FCT1}
@@ -795,7 +864,7 @@ rstable <- function(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     ## Description:
     ##	 Returns random variates for stable DF
 
-    ## slightly amended along  nacopula::rstable1
+    ## slightly amended along  copula::rstable1
 
     ## Parameter Check:
     ## NB: (gamma, delta) can be *vector*s (vectorized along x)

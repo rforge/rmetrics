@@ -190,6 +190,9 @@ if(show.Acc) { ## want to see accuracies, do not stop "quickly"
     pTOL <- 1e-6  # typically see relErr of  5e-7
     dTOL <- 1e-14 # typically see relErr of  1.3...3.9 e-15
 }
+## FIXME: Look why pstable() is so much less accurate than dstable()
+##        even though the integration in dstable() is more delicate in general
+
 ## Note that dstable() is more costly than pstable()
 for(ii in 1:(if(doExtras) 32 else 8)) {
     Z <- rnorm(2)
