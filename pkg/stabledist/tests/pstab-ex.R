@@ -180,18 +180,16 @@ source(system.file("xtraR", "Levy.R", package = "stabledist"), keep.source=inter
 
 set.seed(101)
 show.Acc <- (interactive() && require("Rmpfr"))
-showProc.time()
-
 if(show.Acc) { ## want to see accuracies, do not stop "quickly"
-    pTOL <- dTOL <- 0.1
     format.relErr <- function(tt, cc)
         format(as.numeric(relErr(tt, cc)), digits = 4, width = 8)
-} else {
-    pTOL <- 1e-6  # typically see relErr of  5e-7
-    dTOL <- 1e-14 # typically see relErr of  1.3...3.9 e-15
 }
 ## FIXME: Look why pstable() is so much less accurate than dstable()
 ##        even though the integration in dstable() is more delicate in general
+
+pTOL <- 1e-6  # typically see relErr of  5e-7
+dTOL <- 1e-14 # typically see relErr of  1.3...3.9 e-15
+showProc.time()
 
 ## Note that dstable() is more costly than pstable()
 for(ii in 1:(if(doExtras) 32 else 8)) {
