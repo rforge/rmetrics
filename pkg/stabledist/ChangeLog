@@ -9,7 +9,7 @@
 	* R/dpqr-stable.R (dstable.smallA): new asymptotic (alpha -> 0)
 	formula for small alpha.
 
-	* DESCRIPTION (Version): 0.6-5,  released to CRAN on 2012-...
+	* DESCRIPTION (Version): 0.6-5,  released to CRAN on 2012-10-01
 
 2012-05-29  Martin Maechler  <maechler@stat.math.ethz.ch>
 
