@@ -26,6 +26,8 @@ stopifnot(pstabALL( Inf, alph.s, beta.s) == 1,
 	  pstabALL( 0,	 alph.s, beta = 0) == 0.5,
 	  TRUE)
 
+pdf("pstab-ex.pdf")
+
 ##---- log-scale -------------
 r <- curve(pstable(x, alpha=1.8, beta=.9,
 		   lower.tail=FALSE, log.p=TRUE),
@@ -90,7 +92,6 @@ chk.pd.stable <- function(alpha, beta, xmin=NA, xmax=NA,
     invisible(list(x=x, f=fx, F=Fx, i. = i.ev, F.appr. = Fx.))
 }
 
-pdf("pstab-ex.pdf")
 op <- par(mfrow=2:1, mar = .1+c(3,3,1,1), mgp=c(1.5, 0.6,0))
 
 c1 <- chk.pd.stable(.75, -.5,  -1, 1.5, eq.tol = .006)
@@ -172,58 +173,10 @@ stopifnot(all.equal(qstable(0.6, alpha = 0.5, beta = 1,
 stopifnot(pstable(q= -1.1, alpha=0.5, beta=1) == 0,
 	  pstable(q= -2.1, alpha=0.6, beta=1) == 0)
 
-### Lévy :
-### ====
 ## Stable(alpha = 1/2, beta = 1, gamma, delta, pm = 1)	<===>  Levy(delta, gamma)
-##	  ~~~~~~~~~~~  ~~~~~~~~
-## http://en.wikipedia.org/wiki/L%C3%A9vy_distribution
-## The probability density function of the Lévy distribution over the domain x >= \mu is
-##
-##     f(x;\mu,c)=\sqrt{\frac{c}{2\pi}}~~\frac{e^{ -\frac{c}{2(x-\mu)}}} {(x-\mu)^{3/2}}
-dLevy <- function(x, mu=0, c=1, log=FALSE) {
-    r <- x <- x-mu
-    ## ensure f(0) = 0 {not NaN}:
-    pos <- x > 0 ; x <- x[pos]; if(log) r[!pos] <- -Inf
-    r[pos] <- if(log)
-	(log(c/(2*pi)) + -c/x - 3*log(x))/2
-    else
-	sqrt(c/(2*pi)) * exp(-c/(2*x)) / (x^(3/2))
-    r
-}
-## where \mu is the location parameter and c is the scale parameter.
-
-## The cumulative distribution function is
-##
-##     F(x;\mu,c)=\textrm{erfc}\left(\sqrt{c/(2(x-\mu))}\right)
-##
-##     {MM:  fixed Wikipedia entry: (x-mu) is in the denominator!}
-pLevy <- function(x, mu=0, c=1, log.p=FALSE, lower.tail=TRUE) {
-    ## erfc <- function(x) 2 * pnorm(x * sqrt(2), lower = FALSE)
-    ## erfc(sqrt(c/(2*(x-mu))))
-    x <- (x-mu)/c # re-scale to (0,1)
-    u <- 1/sqrt(x)
-    if(log.p) {
-	if(lower.tail)
-	    log(2) + pnorm(u, lower.tail = FALSE, log.p=TRUE)
-	else log(2 * pnorm(u) - 1)
-    } else {
-	if(lower.tail)
-	    2* pnorm(u, lower.tail = FALSE)
-	else 2*pnorm(u) - 1
-    }
-}
-
-## where \textrm{erfc}(z) is the complementary error function. The shift
-## parameter \mu has the effect of shifting the curve to the right by an
-## amount \mu, and changing the support to the interval [\mu, \infty). Like
-## all stable distributions, the Levy distribution has a standard form
-## f(x;0,1) which has the following property:
-##
-##     f(x;\mu,c) dx  =	 f(y;0,1) dy
-##
-## where y is defined as
-##
-##     y = \frac{x-\mu}{c}
+source(system.file("xtraR", "Levy.R", package = "stabledist"), keep.source=interactive())
+##-> dLevy(x, mu, c, log)                and
+##-> pLevy(x, mu, c, log.p, lower.tail)
 
 set.seed(101)
 show.Acc <- (interactive() && require("Rmpfr"))
@@ -238,14 +191,13 @@ if(show.Acc) { ## want to see accuracies, do not stop "quickly"
     dTOL <- 1e-14 # typically see relErr of  1.3...3.9 e-15
 }
 ## Note that dstable() is more costly than pstable()
-##  20 should depend on "check level"
 for(ii in 1:(if(doExtras) 32 else 8)) {
     Z <- rnorm(2)
     mu	<- sign(Z[1])*exp(Z[1])
     sc <- exp(Z[2])
     x <- seq(mu, mu+ sc* 100*rchisq(1, df=3),
 	     length.out= if(doExtras) 512 else 32)
-    ## pLevy() using only pnorm() is hence "mpfr-aware":
+    ## dLevy() and pLevy() using only pnorm() are "mpfr-aware":
     x. <- if(show.Acc) mpfr(x, 256) else x
     pL <- pLevy(x., mu, sc)
     pS <- pstable(x, alpha=1/2, beta=1, gamma=sc, delta=mu,
