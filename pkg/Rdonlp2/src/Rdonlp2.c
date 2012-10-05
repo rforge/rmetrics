@@ -156,9 +156,9 @@ call_donlp2(SEXP par,            /* initial parameter vector        */
   info->intakt = asLogical(getListElement(control, "intakt"));
 
   /*  evaluation function and env */
-  if (!isFunction(confun))error("confun must be a function");
+  //if (!isFunction(confun))error("confun must be a function");
   if (!isEnvironment(Renv))error("Renv must be an environment");
-  if (!isFunction(accfun))error("confun must be a function");
+  if (!isFunction(accfun))error("accfun must be a function");
 
   info->fn = confun;
   info->env = Renv;
@@ -273,6 +273,30 @@ setup()
     error("fnscale must not be zero.");
   return;
 }
+
+SEXP myeval(SEXP fcall, SEXP var, SEXP env) {
+	
+	SEXP sexp_fvec;
+
+  	PROTECT(sexp_fvec);
+
+	if (TYPEOF(fcall) == EXTPTRSXP) {
+		
+                typedef SEXP (*funcPtr)(SEXP);
+		funcPtr* funptr = (funcPtr*) R_ExternalPtrAddr(fcall);
+
+		sexp_fvec = (*funptr)(var);
+                
+	} else {
+		sexp_fvec = eval(lang2(fcall, var), env);
+	}
+
+	UNPROTECT(1);
+
+        return sexp_fvec;
+
+};
+
  
 void
 ef(double x[], double *fx)
@@ -287,7 +311,7 @@ ef(double x[], double *fx)
   for (i=2; i<n+2; i++){
     REAL(tmp_x)[i] = x[i-1];
   }
-  PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
+  PROTECT(ans = myeval(info->fn, tmp_x, info->env));
   if (length(ans)>1){
     ffuerr = REAL(ans)[1]>0 ? TRUE : FALSE;
   }
@@ -310,7 +334,7 @@ egradf(double x[], double gradf[])
   for (i=2; i<n+2; i++){
     REAL(tmp_x)[i] = x[i-1];
   }
-  PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
+  PROTECT(ans = myeval(info->fn, tmp_x, info->env));
   PROTECT(ans = coerceVector(ans, REALSXP));
   if (length(ans)!=n){
     error("fn: # of elements of gradient must equal to %d",n);
@@ -341,7 +365,7 @@ econ(int type, int liste[], double x[], double con[], int err[])
   case 1: /* all constraints are evaluated */
     for (i=1; i<=info->nonlin; i++){
       REAL(tmp_x)[1] = i;
-      PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
+      PROTECT(ans = myeval(info->fn, tmp_x, info->env));
       if (length(ans)>1){
     confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
       }
@@ -352,7 +376,7 @@ econ(int type, int liste[], double x[], double con[], int err[])
   case 2: /* subset of constraints are evaluated */
     for (i=1; i<=liste[0]; i++){
       REAL(tmp_x)[1] = liste[i];
-      PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
+      PROTECT(ans = myeval(info->fn, tmp_x, info->env));
       if (length(ans)>1){
     confuerr[i] = REAL(ans)[1]>0 ? TRUE : FALSE;
       }
@@ -382,7 +406,7 @@ econgrad(int liste[], int shift, double x[], double **grad)
   }
   for (i=1; i<=liste[0]; i++){
     REAL(tmp_x)[1] = liste[i];
-    PROTECT(ans = eval(lang2(info->fn, tmp_x), info->env));
+    PROTECT(ans = myeval(info->fn, tmp_x, info->env));
     PROTECT(ans = coerceVector(ans, REALSXP));
     if (length(ans)!=n){
       error("constraint #%d: length of gradient vector must equal to %d",
@@ -522,7 +546,7 @@ newx(double x[], double u[], int itstep, double **accinf, int *cont)
       PROTECT(Raccinf = init_Raccinf(itstep, accinf, x, gradf, u, w,
                      (double **)NULL, (double **)NULL,
                      (char *)NULL, 0.0));
-      PROTECT(ans = eval(lang2(info->accfn, Raccinf), info->env));
+      PROTECT(ans = myeval(info->accfn, Raccinf, info->env));
       *cont = INTEGER(ans)[0];
       UNPROTECT(2);
       return;

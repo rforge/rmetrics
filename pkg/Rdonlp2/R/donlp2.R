@@ -89,11 +89,17 @@ function(
         conmat <- t(A)
     }
   
-    # Nonlinear constraints:
-    num.nlin <- length(nlin)
-    if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
-        stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
-    
+    if(is.function(fn)) {
+      # Nonlinear constraints:
+      num.nlin <- length(nlin)
+      if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
+          stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
+    } else {
+      num.nlin <- length(nlin.upper)
+      if (length(nlin.lower)!=num.nlin)
+          stop("# of bounds for nonlinear constraints should be equal (lower and upper)")
+    }
+
     # Concatenate bounds for internal use:
     lbd <- c(par.lower, lin.lower, nlin.lower)
     ubd <- c(par.upper, lin.upper, nlin.upper)
@@ -106,21 +112,26 @@ function(
     # fun.id == 0: evaluate objective function 'fn'
     # fun.id >= 1: evaluate constraint function 'nlin[[fun.id]]'
     #
-    confun <- function(arg){
-        mode = arg[1]; fun.id = arg[2]; p = arg[c(-1,-2)]
-        if (mode == 0){      # evaluate function values
-            if (fun.id == 0){
-                return(as.double(eval(fn(p), env)))
+
+    if(is.function(fn)) {
+        confun <- function(arg){
+            mode = arg[1]; fun.id = arg[2]; p = arg[c(-1,-2)]
+            if (mode == 0){      # evaluate function values
+                if (fun.id == 0){
+                    return(as.double(eval(fn(p), env)))
+                }
+                return(as.double(eval(nlin[[fun.id]](p), env)))
+            } else if (mode == 1){ # evaluate gradient values
+                if (fun.id == 0){
+                    return(as.double(eval(fn@gr(p), env)))
+                }
+                return(as.double(eval((nlin[[fun.id]]@gr)(p), env)))
+            } else {
+                stop("unknown evaluation mode: %d", mode)
             }
-            return(as.double(eval(nlin[[fun.id]](p), env)))
-        } else if (mode == 1){ # evaluate gradient values
-            if (fun.id == 0){
-                return(as.double(eval(fn@gr(p), env)))
-            }
-            return(as.double(eval((nlin[[fun.id]]@gr)(p), env)))
-        } else {
-            stop("unknown evaluation mode: %d", mode)
         }
+    } else {
+      confun <- fn
     }
 
     # accfun
@@ -148,7 +159,7 @@ function(
             control,
             accfun,
             confun, 
-            environment(confun), 
+            if(is.function(confun)) environment(confun) else env,
             PACKAGE = "Rdonlp2"),
         # ensure to free memory and close .mes .pro files if opened
         finally=.Call("teardown", 0, PACKAGE = "Rdonlp2"))

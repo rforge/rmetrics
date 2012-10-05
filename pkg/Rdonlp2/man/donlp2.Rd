@@ -35,7 +35,13 @@ donlp2(
         the objective function to be minimized. Currently, \code{fn}
         must take only one argument, and the parameter vector(\code{par})
         will be passed to \code{fn} during the optimization. The first
-        element of return value must be the evaluated value.}
+        element of return value must be the evaluated value.
+        Newly (as of 05/10/2012), \code{fn} can be either an R function or an external 
+        pointer to a function implemented in, e.g., C (this can speed 
+        up the computation considerably). The external pointer mechanism is
+        illustrated by an example in the file wright4ExampleCompiledEval.R,
+        which is in the inst/doc folder of the package.
+}
   
     \item{par}{
         parameter vector(vector object).}
