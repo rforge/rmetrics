@@ -50,7 +50,7 @@
 %%% 
 
 
-\documentclass[11pt, twocolumn, a4paper]{report}
+\documentclass[11pt, twocolumn, a4paper]{article}
 
 %\VignetteIndexEntry{Quick introduction of randtoolbox}
 %\VignettePackage{randtoolbox}
@@ -178,6 +178,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \maketitle
 

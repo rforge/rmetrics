@@ -45,7 +45,7 @@
 %%% 
 
 
-\documentclass[11pt, twocolumn, a4paper]{report}
+\documentclass[11pt, twocolumn, a4paper]{article}
 
 %\VignetteIndexEntry{A note on random number generation}
 %\VignettePackage{randtoolbox}
@@ -173,6 +173,7 @@
 
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \maketitle
 
