@@ -1,0 +1,100 @@
+
+################################################
+## import name space
+################################################
+
+import("methods")
+import("sn")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fMV" )
+exportMethods("$",
+              "$<-",
+              "+",
+              "-",
+              "[",
+              "[<-",
+              "cummax",
+              "cummin",
+              "cumprod",
+              "cumsum",
+              "dim",
+              "dim<-",
+              "dimnames",
+              "dimnames<-",
+              "is.na",
+              "names",
+              "names<-",
+              "show" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("plot", "fMV")
+S3method("plot", "hexBinning")
+S3method("plot", "squareBinning")
+S3method("summary", "fMV")
+
+################################################
+## functions
+################################################
+
+export(
+    ".TInt",
+    ".TOwen",
+    ".delliptical2dSlider",
+    ".dnorm2d",
+    ".gfunc2d",
+    ".mvsnorm.plot.1",
+    ".mvsnorm.plot.1A",
+    ".mvsnorm.plot.1B",
+    ".mvsnorm.plot.2",
+    ".mvsnorm.plot.3",
+    ".mvsnorm.plot.4",
+    ".mvsnorm.plot.5",
+    ".mvsnormFit",
+    ".mvsnormPlot",
+    ".mvst.plot.1",
+    ".mvst.plot.1A",
+    ".mvst.plot.1B",
+    ".mvst.plot.2",
+    ".mvst.plot.3",
+    ".mvst.plot.4",
+    ".mvst.plot.5",
+    ".mvstFit",
+    ".mvstPlot",
+    ".pnorm2d",
+    ".rnorm2d",
+    "contour.gridData",
+    "dcauchy2d",
+    "delliptical2d",
+    "density2d",
+    "dmvsnorm",
+    "dmvst",
+    "dnorm2d",
+    "dt2d",
+    "grid2d",
+    "gridData",
+    "hexBinning",
+    "hist2d",
+    "integrate2d",
+    "mvFit",
+    "pcauchy2d",
+    "persp.gridData",
+    "pmvsnorm",
+    "pmvst",
+    "pnorm2d",
+    "pt2d",
+    "rcauchy2d",
+    "rmvsnorm",
+    "rmvst",
+    "rnorm2d",
+    "rt2d",
+    "squareBinning" )
