@@ -1,3 +1,9 @@
+2012-11-07  chalabi
+
+	* DESCRIPTION: Updated version number
+	* DESCRIPTION: Updated maintainer field
+	* man/PlainVanillaOptions.Rd: Fixed typo
+
 2012-04-17  chalabi
 
 	* ChangeLog, DESCRIPTION: update version number and ChangeLog file
