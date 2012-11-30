@@ -303,7 +303,7 @@ function()
     class(x.ts)
     x.vec = as.vector(x.ts)
     class(x.vec)
-    x.tS = timeSeries(x.vec, timeSequence(length.out = NROW(x.vec)))
+    x.tS = timeSeries(x.vec, timeSequence(Sys.Date(), length.out = NROW(x.vec)))
 
     # ts as input & 20 Days Blocks:
     fit = gevFit(x.ts, block = 20, type = "pwm")
@@ -320,7 +320,7 @@ function()
     # timeSeries o bject as input & Monthly Blocks:
     fit = gevFit(x.tS, block = "monthly", type = "pwm")
     fit
-    fit = gevFit(x.tS, block = "monthly", type = "mle")
+    fit = gevFit(x.tS, block = "quarterly", type = "mle")
     fit
 
     # timeSeries object as input & 20 Days Blocks:
@@ -387,4 +387,3 @@ function()
 
 
 ################################################################################
-
