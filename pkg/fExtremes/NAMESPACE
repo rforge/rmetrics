@@ -1,0 +1,152 @@
+
+################################################
+## Note this file has been automatically
+## generated --- Do not edit it.
+################################################
+
+
+################################################
+## import name space
+################################################
+
+import("methods")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+import("fGarch")
+import("fTrading")
+
+################################################
+## S4 classes
+################################################
+
+exportClasses("fGEVFIT",
+              "fGPDFIT",
+              "fTHETA" )
+exportMethods("$",
+              "$<-",
+              "+",
+              "-",
+              "[",
+              "[<-",
+              "cummax",
+              "cummin",
+              "cumprod",
+              "cumsum",
+              "dim",
+              "dim<-",
+              "dimnames",
+              "dimnames<-",
+              "is.na",
+              "names",
+              "names<-",
+              "show" )
+
+################################################
+## S3 classes
+################################################
+
+S3method("plot", "fGEVFIT")
+S3method("plot", "fGPDFIT")
+S3method("summary", "fGEVFIT")
+S3method("summary", "fGPDFIT")
+
+################################################
+## functions
+################################################
+
+export(
+    ".depd",
+    ".devd",
+    ".garch11MetricsPlot",
+    ".gev1Plot",
+    ".gev2Plot",
+    ".gev3Plot",
+    ".gev4Plot",
+    ".gevFit",
+    ".gevLLH",
+    ".gevmleFit",
+    ".gevpwmFit",
+    ".gevrlevelLLH",
+    ".gpd1Plot",
+    ".gpd2Plot",
+    ".gpd3Plot",
+    ".gpd4Plot",
+    ".gpdLLH",
+    ".gpdmleFit",
+    ".gpdmleFitCheck",
+    ".gpdpwmFit",
+    ".gpdpwmFitCheck",
+    ".gumLLH",
+    ".gummleFit",
+    ".gumpwmFit",
+    ".meanExcessPlot",
+    ".pepd",
+    ".pevd",
+    ".qepd",
+    ".qevd",
+    ".repd",
+    ".revd",
+    ".riskMetricsPlot",
+    "CVaR",
+    "VaR",
+    "blockMaxima",
+    "blockTheta",
+    "clusterTheta",
+    "deCluster",
+    "dgev",
+    "dgpd",
+    "emdPlot",
+    "exindexPlot",
+    "exindexesPlot",
+    "ferrosegersTheta",
+    "findThreshold",
+    "gevFit",
+    "gevMoments",
+    "gevSim",
+    "gevSlider",
+    "gevrlevelPlot",
+    "ghMeanExcessFit",
+    "ghtMeanExcessFit",
+    "gpdFit",
+    "gpdMoments",
+    "gpdQPlot",
+    "gpdQuantPlot",
+    "gpdRiskMeasures",
+    "gpdSfallPlot",
+    "gpdShapePlot",
+    "gpdSim",
+    "gpdSlider",
+    "gpdTailPlot",
+    "gumbelFit",
+    "gumbelSim",
+    "hillPlot",
+    "hypMeanExcessFit",
+    "lilPlot",
+    "mePlot",
+    "mrlPlot",
+    "msratioPlot",
+    "mxfPlot",
+    "nigMeanExcessFit",
+    "normMeanExcessFit",
+    "pgev",
+    "pgpd",
+    "pointProcess",
+    "qgev",
+    "qgpd",
+    "qqparetoPlot",
+    "recordsPlot",
+    "rgev",
+    "rgpd",
+    "runTheta",
+    "shaparmDEHaan",
+    "shaparmHill",
+    "shaparmPickands",
+    "shaparmPlot",
+    "sllnPlot",
+    "ssrecordsPlot",
+    "tailPlot",
+    "tailRisk",
+    "tailSlider",
+    "thetaSim",
+    "xacfPlot" )
