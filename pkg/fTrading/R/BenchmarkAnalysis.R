@@ -217,7 +217,7 @@ origin = "1899-12-30", ...)
             D = as.vector(time.x[lab.ind]*86400) +
                 as.POSIXct(origin, tz = "GMT")
             DD = format.POSIXct(D, format = format, tz ="GMT")
-            axis(1, at=time.x[lab.ind], lab=DD, ...)
+            axis(1, at=time.x[lab.ind], labels = DD, ...)
             axis(2, ...)
         }
     }
@@ -226,4 +226,3 @@ origin = "1899-12-30", ...)
 
 
 ################################################################################
-
