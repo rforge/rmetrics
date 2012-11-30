@@ -577,9 +577,9 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
         plot(index, theta, ylim = yrange, type = "b", xlab = "", ylab = "",
             axes = FALSE, ...)
         IDX = round(seq(1, length(index), length = 10))
-        axis(1, at = index[IDX], lab = paste(K)[IDX])
+        axis(1, at = index[IDX], labels = paste(K)[IDX])
         axis(2)
-        axis(3, at = index[IDX], lab = paste(format(signif(un, 3)))[IDX])
+        axis(3, at = index[IDX], labels = paste(format(signif(un, 3)))[IDX])
         box()
         if (labels) {
             ylabel =
@@ -599,4 +599,3 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
 
 
 ################################################################################
-

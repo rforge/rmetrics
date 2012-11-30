@@ -454,9 +454,9 @@ doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, ...)
         }
         plot(index, qest, ylim = yrange, type = "l", xlab = "", ylab = "",
             axes = FALSE)
-        axis(1, at = index, lab = paste(exceed))
+        axis(1, at = index, labels = paste(exceed))
         axis(2)
-        axis(3, at = index, lab = paste(format(signif (thresh, 3))))
+        axis(3, at = index, labels = paste(format(signif (thresh, 3))))
         box()
         if (ci) {
             lines(index, l, lty = 2, col = "steelblue")
@@ -533,9 +533,9 @@ doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, ...)
         }
         plot(index, y, ylim = yrange, type = "l", xlab = "", ylab = "",
             axes = FALSE)
-        axis(1, at = index, lab = paste(X))
+        axis(1, at = index, labels = paste(X))
         axis(2)
-        axis(3, at = index, lab = paste(format(signif(thresh, 3))))
+        axis(3, at = index, labels = paste(format(signif(thresh, 3))))
         box()
         grid()
         if (ci) {
@@ -1022,5 +1022,3 @@ function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
 
 
 ################################################################################
-
-

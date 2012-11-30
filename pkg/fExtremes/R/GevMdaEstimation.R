@@ -91,10 +91,10 @@ doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, ...)
         plot(index, y, ylim = yrange, type = "l", xlab = "", ylab = "",
             axes = FALSE, ...)
         pos = floor(seq(1, length(index), length = 10))
-        axis(1, at = index[pos], lab = paste(x[pos]), tick = TRUE)
+        axis(1, at = index[pos], labels = paste(x[pos]), tick = TRUE)
         axis(2)
         threshold = signif(findThreshold(data, x), 3)
-        axis(3, at = index[pos], lab = paste(format(threshold[pos])),
+        axis(3, at = index[pos], labels = paste(format(threshold[pos])),
             tick = TRUE)
         box()
         lines(index, u, lty = 2, col = "steelblue")
@@ -548,4 +548,3 @@ doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, ...)
 
 
 ################################################################################
-
