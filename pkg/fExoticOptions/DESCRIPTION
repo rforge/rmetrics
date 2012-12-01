@@ -1,7 +1,7 @@
 Package: fExoticOptions
 Version: 2152.78
-Revision:
-Date: 2009-11-03
+Revision: 5392
+Date: 2012-11-07
 Title: Exotic Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics, fOptions

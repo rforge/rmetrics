@@ -1,5 +1,56 @@
-2009-05-21 chalabi
+2012-11-30  chalabi
 
-        * assignment beta = fit$par.ests["xi"] should read : beta =
+	* DESCRIPTION: Updated version number.
+	* NAMESPACE: Added NAMESPACE
+	* DESCRIPTION: Updated maintainer field.
+	* R/ExtremeIndex.R, R/GevMdaEstimation.R, R/GpdRisk.R: Fixed
+	  partial argument match.
+	* inst/unitTests/runit.GevModelling.R: Updated unit test to avoid
+	  troubles when running in the last two days of the month as
+	  reported by Brian Ripley.
 
-pkg/fExtremes/R/GevFit.R
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2009-10-01  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-09-29  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+
+2009-05-21  chalabi
+
+	* R/GevFit.R: assignment beta = fit$par.ests["xi"] should read :
+	  beta =
+	  fit$par.ests["beta"]. (Dodzi Attimu)
+
+2009-04-09  wuertz
+
+	* R/DataPreprocessing.R, R/GevDistribution.R, R/GevFit.R,
+	  R/GevPrintPlotSummary.R, R/GevSim.R, R/GpdDistribution.R,
+	  R/GpdSim.R, R/GpdSow.R, R/MeanExcessFit.R, R/ValueAtRisk.R,
+	  man/DataPreprocessing.Rd, man/GevDistribution.Rd,
+	  man/GevModelling.Rd: The *Sim functions now return signal
+	  timeSeries, and some smaller beautifies
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-01-28  chalabi
+
+	* man/ExtremeIndex.Rd: updated manual pages to new Rd parser
+

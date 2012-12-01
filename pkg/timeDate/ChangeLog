@@ -1,5 +1,13 @@
+2012-09-26  chalabi
+
+	* NAMESPACE, R/calendar-endpoints.R, man/calendar-endpoints.Rd:
+	  Hidden back .endpoints() to avoid conflicts with
+	  xts:::endpoints()
+	* DESCRIPTION: Updated version number and package title.
+
 2012-09-24  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files
 	* DESCRIPTION: Adapted version number.
 	* DESCRIPTION: Updated maintainer field.
 	* NAMESPACE, R/base-weekdays.R: Removed external C call.
