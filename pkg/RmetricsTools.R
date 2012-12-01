@@ -368,9 +368,11 @@ checkBeforeCommit  <-
 
 ## ## before starting install packages without namespace
 
-genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
+genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries",
                          "fImport",  "fArma", "fGarch", "fCopulae",
+                         "fMultivar", "fOptions", "fExoticOptions",
                          "fOptions", "fAsianOptions",
+                         "fTrading", "fExtremes",
                          "fAssets", "fPortfolio", "fPortfolioBacktest"),
                          dependsOnPkgsDESC = TRUE, path = ".", ...)
 {
@@ -677,7 +679,17 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries", "fBasics",
     # write NAMESPACE file
     op <- options("useFancyQuotes")
     options(useFancyQuotes = FALSE)
+
+    # header file
     out <- file(file, "wt")
+    cat("
+################################################
+## Note this file has been automatically
+## generated --- Do not edit it.
+################################################
+\n", file = out)
+
+    # import name space
     cat("
 ################################################
 ## import name space
