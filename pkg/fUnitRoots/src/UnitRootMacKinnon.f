@@ -1,4 +1,4 @@
-
+c 2012-12-10 YC: added R print and exit functions
 
 c Copyright (c) James G. MacKinnon, 1996 (corrected 2001-1-8)
 c
@@ -357,6 +357,7 @@ C ******************************************************************************
 
       subroutine eval(beta,cval,model,nreg,nobs)
       implicit real*8 (a-h,o-z)
+
 c
 c Copyright (c) James G. MacKinnon, 1995
 c Routine to evaluate response surface for specified betas and sample size.
@@ -388,7 +389,8 @@ c
      &     + beta(4)*onobs**3
          return
       end if
-      write(6,*) '*** Warning! Error in input file. ***'
+      ier = 1
+      call intpr('*** Warning! Error in input file. ***', -1, ier, 0)
       return
       end
 
@@ -677,8 +679,8 @@ c
       data c2/0.010328d0/, d3/0.001308d0/, d2/0.189269d0/
       data const/.398942280401432678d0/
       if (prob.lt.0.d0.or.prob.gt.1.d0) then
-         write(6,*) 'Attempt to find inverse normal of ', prob
-         stop
+         call realpr('Attempt to find inverse normal of ', -1, prob, 1)
+         call rexit('')
       end if
       pr = prob
       if (prob.gt.0.5d0) pr = 1.d0 - prob
@@ -706,4 +708,3 @@ c
       anorm = anorm - error/dens
       return
       end
-
