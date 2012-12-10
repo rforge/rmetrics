@@ -313,8 +313,8 @@ checkBeforeCommit  <-
         # Note R CMD check does not check by default S4 method mismatches.
         # We do it if variable _R_CHECK_CODOC_S4_METHODS_ is TRUE
         check_S4_methods <-
-              isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
-	if (check_S4_methods) tools::codoc(pkg, lib.loc = lib)
+            isTRUE(as.logical(Sys.getenv("_R_CHECK_CODOC_S4_METHODS_")))
+        if (check_S4_methods) tools::codoc(pkg, lib.loc = lib)
 
         ERROR <- grep("ERROR", log)
         # Note do not check for object files in pkgs
@@ -328,21 +328,21 @@ checkBeforeCommit  <-
         if (length(WARNING)) {
             for (line in WARNING) {
                 logWarning <- c(logWarning,
-                 "\n ####################### WARNING #######################\n",
-                 paste(" In package", pkg, "\n"),
-                 paste(paste(log[seq(line, line+5)], collapse = "\n "), "\n"),
-                 paste("\n More details in", logFile, "\n"),
-                 paste(" ####################### WARNING #######################\n"))
+                                "\n ####################### WARNING #######################\n",
+                                paste(" In package", pkg, "\n"),
+                                paste(paste(log[seq(line, line+5)], collapse = "\n "), "\n"),
+                                paste("\n More details in", logFile, "\n"),
+                                paste(" ####################### WARNING #######################\n"))
             }
         }
         if (length(NOTE)) {
             for (line in NOTE) {
                 logNOTE <- c(logNOTE,
-                 "\n #######################  NOTE  #######################\n",
-                 paste(" In package", pkg, "\n"),
-                 paste(paste(log[seq(line, line+8)], collapse = "\n "), "\n"),
-                 paste("\n More details in", logFile, "\n"),
-                 paste(" #######################  NOTE  #######################\n"))
+                             "\n #######################  NOTE  #######################\n",
+                             paste(" In package", pkg, "\n"),
+                             paste(paste(log[seq(line, line+8)], collapse = "\n "), "\n"),
+                             paste("\n More details in", logFile, "\n"),
+                             paste(" #######################  NOTE  #######################\n"))
             }
         }
     }
@@ -372,6 +372,8 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries",
                          "fImport",  "fArma", "fGarch", "fCopulae",
                          "fMultivar", "fOptions", "fExoticOptions",
                          "fOptions", "fAsianOptions",
+                         "fNonlinear", "fUnitRoots",
+                         "fBonds", "fRegression",
                          "fTrading", "fExtremes",
                          "fAssets", "fPortfolio", "fPortfolioBacktest"),
                          dependsOnPkgsDESC = TRUE, path = ".", ...)
@@ -408,33 +410,33 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries",
         if (inherits(t, "try-error"))
             stop("could not generate NAMESPACE")
 
-### if (dependsOnPkgsDESC) {
-###             message("\n")
-###             message("update DESC of pkgs which depend on : ", pkg)
-###             # check if all Rmetrics are installed in lib
-###             if (!all(RmetricsPkgs %in% installed.packages(...)))
-###                 stop("All Rmetrics Dev packages should be installed")
-###             dpkgs <- tools::dependsOnPkgs(pkg, ...)
-###             dpkgs <- RmetricsPkgs[RmetricsPkgs %in% dpkgs] #<- in right order
-###             # only packages with NAMESPACE is critical
-###             dpkgs <- dpkgs[file.exists(file.path(dpkgs, "NAMESPACE"))]
-###             pkgVersion <- read.dcf(file.path(pkg, "DESCRIPTION"))[,"Version"]
-###             for (dpkg  in dpkgs) {
-###                 message("Update DESC of ", dpkg)
-###                 dcfFile <- file.path(dpkg, "DESCRIPTION")
-###                 dcf <- read.dcf(dcfFile)
-###                 pattern <- paste(pkg, ".*", sep = "")
-###                 replacement <- paste(pkg, " (>= ", pkgVersion, ")", sep = "")
-###                 dcfDepends <- dcf[,"Depends"]
-###                 # check if depend pkgs is at the end of line otherwise add comma
-###                 if (length(grep(paste(pattern, ",", sep = ""), dcfDepends))) {
-###                     pattern <- paste(pattern, ",", sep = "")
-###                     replacement <- paste(replacement, ",", sep = "")
-###                 }
-###                 dcf[,"Depends"] <- sub(pattern, replacement, dcfDepends)
-###                 write.dcf(dcf, file = dcfFile)
-###             }
-###         }
+        ### if (dependsOnPkgsDESC) {
+        ###             message("\n")
+        ###             message("update DESC of pkgs which depend on : ", pkg)
+        ###             # check if all Rmetrics are installed in lib
+        ###             if (!all(RmetricsPkgs %in% installed.packages(...)))
+        ###                 stop("All Rmetrics Dev packages should be installed")
+        ###             dpkgs <- tools::dependsOnPkgs(pkg, ...)
+        ###             dpkgs <- RmetricsPkgs[RmetricsPkgs %in% dpkgs] #<- in right order
+        ###             # only packages with NAMESPACE is critical
+        ###             dpkgs <- dpkgs[file.exists(file.path(dpkgs, "NAMESPACE"))]
+        ###             pkgVersion <- read.dcf(file.path(pkg, "DESCRIPTION"))[,"Version"]
+        ###             for (dpkg  in dpkgs) {
+        ###                 message("Update DESC of ", dpkg)
+        ###                 dcfFile <- file.path(dpkg, "DESCRIPTION")
+        ###                 dcf <- read.dcf(dcfFile)
+        ###                 pattern <- paste(pkg, ".*", sep = "")
+        ###                 replacement <- paste(pkg, " (>= ", pkgVersion, ")", sep = "")
+        ###                 dcfDepends <- dcf[,"Depends"]
+        ###                 # check if depend pkgs is at the end of line otherwise add comma
+        ###                 if (length(grep(paste(pattern, ",", sep = ""), dcfDepends))) {
+        ###                     pattern <- paste(pattern, ",", sep = "")
+        ###                     replacement <- paste(replacement, ",", sep = "")
+        ###                 }
+        ###                 dcf[,"Depends"] <- sub(pattern, replacement, dcfDepends)
+        ###                 write.dcf(dcf, file = dcfFile)
+        ###             }
+        ###         }
 
         message("\n")
         message("install.packages()ing with NAMESPACE : ", pkgPath)
@@ -555,15 +557,22 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries",
 
     ##
     S4class <- getClasses(where = paste("package:", pkg, sep = ""))
-    genericsList <- getGenerics(where = paste("package:", pkg, sep = ""))
-    S4methods <- genericsList[!(genericsList@package %in% pkg)]
-    S4generics <- genericsList[(genericsList@package %in% pkg)]
-    S4names <- unique(genericsList)
-    # take care of function defined in .GlobalEnv
-    S4pkg <- data.frame(pkg = genericsList@package, func = genericsList@.Data)
-    if (any(test <- (S4pkg[,1] %in% ".GlobalEnv"))){
-        print(S4pkg)
-        stop("S4pkg")
+    if (length(S4class)) {
+        genericsList <- getGenerics(where = paste("package:", pkg, sep = ""))
+        S4methods <- genericsList[!(genericsList@package %in% pkg)]
+        S4generics <- genericsList[(genericsList@package %in% pkg)]
+        S4names <- unique(genericsList)
+        # take care of function defined in .GlobalEnv
+        S4pkg <- data.frame(pkg = genericsList@package, func = genericsList@.Data)
+        if (any(test <- (S4pkg[,1] %in% ".GlobalEnv"))){
+            print(S4pkg)
+            stop("S4pkg")
+        }
+    } else {
+        S4class <- NULL
+        S4methods <- NULL
+        S4generics <- NULL
+        S4names <- NULL
     }
 
     ##
@@ -583,7 +592,7 @@ genNAMESPACE <- function(pkgs = c("timeDate", "timeSeries",
     ##     globals <- NULL
     ##     for (g in methods::getGenerics(where = env))
     ##         for (m in methods::findMethods(g, where = env)) {
-    ##     	fun <- methods::getDataPart(m)
+    ##          fun <- methods::getDataPart(m)
     ##             globals <- c(globals, findGlobals(fun))
     ##         }
     ##     unique(globals)
@@ -765,19 +774,19 @@ export(as.Date.timeDate)\n", file = out)
         }
     }
 
-## YC : Not needed since we are still using S3 methods of cbind and
-## rbind but will need this code eventually
-###     if (pkg == "timeSeries") {
-###         cat("
-### ################################################
-### ## Special Case
-### ################################################
+    ## YC : Not needed since we are still using S3 methods of cbind and
+    ## rbind but will need this code eventually
+    ###     if (pkg == "timeSeries") {
+    ###         cat("
+    ### ################################################
+    ### ## Special Case
+    ### ################################################
 
-### if (getRversion() < \"2.9.0\") {
-###     S3method(\"cbind\", \"timeSeries\")
-###     S3method(\"rbind\", \"timeSeries\")
-### }\n", file = out)
-###     }
+    ### if (getRversion() < \"2.9.0\") {
+    ###     S3method(\"cbind\", \"timeSeries\")
+    ###     S3method(\"rbind\", \"timeSeries\")
+    ### }\n", file = out)
+    ###     }
 
     cat("
 ################################################
@@ -956,8 +965,8 @@ buildRmetrics <- function(pkgs = pkgsRmetricsDev(), outdir = NULL,
             cl <- sub("\\t", " ", cl4) #-> replace tab with one space
             # add separator : -------
 
-        cat(cl, file = file.path(pkg, "ChangeLog"), sep = "\n")
-        message("OK")
+            cat(cl, file = file.path(pkg, "ChangeLog"), sep = "\n")
+            message("OK")
         }
     }
 
