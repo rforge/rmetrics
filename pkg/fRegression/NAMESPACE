@@ -13,6 +13,7 @@ import("methods")
 import("mgcv")
 import("nnet")
 import("polspline")
+import("lmtest")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
@@ -69,17 +70,11 @@ S3method("termPlot", "fREG")
 ################################################
 
 export(
-    ".bgtest",
-    ".bptest",
-    ".dwtest",
     ".fittedContour",
     ".fittedPersp",
     ".fittedPlot",
     ".gam",
     ".glm",
-    ".gqtest",
-    ".harvtest",
-    ".hmctest",
     ".interactiveRegPlot",
     ".lm",
     ".multRegPlot",
@@ -111,8 +106,6 @@ export(
     ".predict.polymars",
     ".predict.ppr",
     ".predict.rlm",
-    ".raintest",
-    ".reset",
     ".rlm",
     "GAM3",
     "LM3",
