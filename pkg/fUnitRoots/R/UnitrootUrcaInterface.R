@@ -203,7 +203,7 @@ lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
 
     # Compute:
     x = as.vector(x)
-    urca = ur.pp(x, type = type[1], mode = model[1], lags = lags[1],
+    urca = ur.pp(x, type = type[1], model = model[1], lags = lags[1],
         use.lag = use.lag)
     output = capture.output(summary(urca))[-c(1:4, 7:10)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
@@ -323,4 +323,3 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
 
 
 ################################################################################
-
