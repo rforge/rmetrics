@@ -1,0 +1,62 @@
+
+################################################
+## Note this file has been automatically
+## generated --- Do not edit it.
+################################################
+
+
+################################################
+## import name space
+################################################
+
+import("methods")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+import("fGarch")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fNonlinear")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    ".C2",
+    ".checkEmbParms",
+    ".d2",
+    ".embeddPSR",
+    ".find.nearest",
+    ".follow.points",
+    ".lyapunovFit",
+    ".rk4",
+    "bdsTest",
+    "falsennPlot",
+    "henonSim",
+    "ikedaSim",
+    "logisticSim",
+    "lorentzSim",
+    "lyapunovPlot",
+    "mutualPlot",
+    "recurrencePlot",
+    "roesslerSim",
+    "runsTest",
+    "separationPlot",
+    "tentSim",
+    "tnnTest",
+    "tsTest",
+    "wnnTest" )
