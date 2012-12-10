@@ -1,11 +1,19 @@
 Package: fRegression
 Version: 2160.77
-Revision: 4277
-Date: 2009-09-28
+Revision: 5422
+Date: 2012-12-10
 Title: Regression Based Decision and Prediction
-Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, mgcv, nnet, polspline, timeDate,
-        timeSeries, fBasics, fTrading, fMultivar
+Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
+        from R's base and nnet() from nnet package); B.R. Ripley (for
+        glm() from R's base); S.N. Wood (for gam() from mgcv package);
+        N.N. (for ppr() from modreg package); M. O' Connors (for
+        functions from polspline package); and T. Hothorn, A. Zeileis
+        G. Millo and D. Mitchell (for bgtest(), bptest(), dwtest(),
+        gqtest(), harvtest(), hmctest(), raintest(), reset() and
+        resettest() from lmtest package)
+Depends: R (>= 2.4.0), methods, mgcv, nnet, timeDate, timeSeries, fBasics,
+         fTrading, fMultivar
+Imports: polspline, lmtest
 Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
