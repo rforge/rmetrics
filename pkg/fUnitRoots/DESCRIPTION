@@ -1,17 +1,17 @@
 Package: fUnitRoots
 Version: 2160.77
-Revision: 4277
-Date: 2009-09-28
+Revision: 5414
+Date: 2012-12-10
 Title: Trends and Unit Roots
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), urca, methods, timeDate, timeSeries, fBasics
 Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
-             Computational Finance"
+        Computational Finance"
 Note: Several parts are still preliminary and may be changed in the
-      future. this typically includes function and argument names, as
-      well as defaults for arguments and return values.
+        future. this typically includes function and argument names, as
+        well as defaults for arguments and return values.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
