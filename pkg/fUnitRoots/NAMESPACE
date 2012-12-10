@@ -1,0 +1,56 @@
+
+################################################
+## Note this file has been automatically
+## generated --- Do not edit it.
+################################################
+
+
+################################################
+## import name space
+################################################
+
+import("urca")
+import("methods")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+
+################################################
+## useDynLib
+################################################
+
+useDynLib("fUnitRoots")
+
+################################################
+## S4 classes
+################################################
+
+
+################################################
+## S3 classes
+################################################
+
+
+################################################
+## functions
+################################################
+
+export(
+    ".adfPlot",
+    ".strsplitUrcval",
+    ".urTest",
+    ".urcval",
+    "adfTable",
+    "adfTest",
+    "padf",
+    "punitroot",
+    "qadf",
+    "qunitroot",
+    "unitrootTable",
+    "unitrootTest",
+    "urdfTest",
+    "urersTest",
+    "urkpssTest",
+    "urppTest",
+    "urspTest",
+    "urzaTest" )
