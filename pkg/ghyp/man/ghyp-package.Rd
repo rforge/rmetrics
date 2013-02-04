@@ -116,8 +116,9 @@ A document about generalized hyperbolic distributions can be found in the
 }
 % <---------------------------------------------------------------------->
 \section{Existing solutions}{
-  There are already two packages \code{HyperbolicDist} and \code{fBasics} which cover the
-  univariate generalized hyperbolic distribution and some of its special cases. However, the univariate case is contained
+  There are packages like \code{GeneralizedHyperbolic},
+  \code{HyperbolicDist}, \code{SkewHyperbolic}, \code{VarianceGamma} and \code{fBasics} which cover the
+  univariate generalized hyperbolic distribution and/or some of its special cases. However, the univariate case is contained
   in this package as well because we aim to provide a uniform interface to deal with
   generalized hyperbolic distribution. Recently an \R port of the S-Plus library \code{QRMlib}
   was released. The package \code{QRMlib} contains fitting procedures for the multivariate NIG, hyp and
