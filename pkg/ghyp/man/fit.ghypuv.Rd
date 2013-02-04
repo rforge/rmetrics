@@ -107,7 +107,7 @@ fit.gaussuv(data, na.rm = T, save.data = T)
   data(smi.stocks)
 
   nig.fit <- fit.NIGuv(smi.stocks[,"SMI"], opt.pars = c(alpha.bar = FALSE),
-                       alpha.bar = 1, control = list(abs.tol = 1e-8))
+                       alpha.bar = 1, control = list(abstol = 1e-8))
   nig.fit
 
   summary(nig.fit)
