@@ -455,7 +455,7 @@ $$(\LambdaAbar) \quad \leftrightarrows \quad (\LambdaChiPsi)
 \subsection{Location and scale invariant parametrizations}
 % <---------------------------------------------------------------------->
 All parametrizations mentioned above can be modified to location and
-scale invariant parametrizations. For a $d$-varite GH random variable
+scale invariant parametrizations. For a $d$-variate GH random variable
 $\X$ there may occur problems if it is linearly transformed ($\Y = B
 \X + \mathbf{b}$) while $B$ affects the dimensionality (i.e.  $B
 \notin \Real^{d \times d}$).  Thus, let's consider the univariate case

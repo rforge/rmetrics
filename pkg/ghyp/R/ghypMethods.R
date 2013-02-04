@@ -432,7 +432,7 @@
 
     chisq.quantile <- qchisq(conf.level, df = df)
 
-    p.value <- 1 - pchisq(L.stat.chisq, df = df) # P(X > L.stat.chisq)
+    p.value <- pchisq(L.stat.chisq, df = df, lower.tail = FALSE) # P(X > L.stat.chisq)
 
     L.stat <- exp(logLik(x.subclass)-logLik(x))
 
