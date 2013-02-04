@@ -23,8 +23,8 @@ contains the Generalized Inverse Gaussian distribution.
 \tabular{ll}{
 Package: \tab ghyp\cr
 Type: \tab Package\cr
-Version: \tab 1.5.5\cr
-Date: \tab 2011-03-30\cr
+Version: \tab 1.5.6\cr
+Date: \tab 2013-02-04\cr
 License: \tab  GPL (GNU Public Licence), Version 2 or later \cr
 }
 
