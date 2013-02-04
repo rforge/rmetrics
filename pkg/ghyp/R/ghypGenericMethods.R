@@ -347,7 +347,7 @@ setMethod("mean", signature(x = "ghyp"), mean.ghyp)
             par(mfg=c(i,j))
             if(i==j){
                 if(qq){
-                    qqghyp(x[i], data[,i], main = "", legend = gaussian,
+                    qqghyp(x[i], data[,i], main = "", plot.legend = gaussian,
                            gaussian = gaussian, xaxt = "n", yaxt = "n",
                            spline.points = spline.points, root.tol = root.tol,
                            rel.tol = rel.tol, abs.tol = abs.tol, ...)
