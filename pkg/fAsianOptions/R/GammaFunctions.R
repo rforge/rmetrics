@@ -243,7 +243,8 @@ function(x, n)
 
     # For Real Arguments:
     # DW: 2006-05-10 is.real(z) replaced by is.real(x)
-    if (is.real(x)) {
+    # YC: is.real is deprecated -> replaced by is.double
+    if (is.double(x)) {
         Pochhammer = gamma(x + n)/gamma(x)
     }
 
@@ -296,4 +297,3 @@ if (.S) {
 
 
 ################################################################################
-
