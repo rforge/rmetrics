@@ -818,7 +818,9 @@ upVersion <- function(pkgs)
         dcf <- read.dcf(dcfFile)
         ## in Rmetrics first number correspond to R version and
         ## second is the number of time the package was uploaded to CRAN
-        Rver <- paste(R.version[c("major", "minor")], collapse = "")
+        major <- R.version$major
+        minor <- sprintf("%04.1f", as.numeric(R.version$minor)) # take care of leading zero for new version of R
+        Rver <- paste(major, minor, collapse = "")
         Rver <- sub("\\.","", Rver)
 
         pkgVersion <- dcf[,"Version"]
