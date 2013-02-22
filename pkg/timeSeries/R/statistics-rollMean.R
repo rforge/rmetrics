@@ -78,7 +78,7 @@ rollStats <-
 
     x <- setDataPart(x[seq.int(1,NROW(ans)),], ans)
 
-    colnames(x) <- paste(colnames(x), "RMEAN", sep = "_")
+    colnames(x) <- paste(colnames(x), "RSTATS", sep = "_")
     if(!na.pad) x = na.omit(x)
 
     # Return Value
@@ -146,7 +146,7 @@ rollMean <-
 # ------------------------------------------------------------------------------
 
 
-rollMin <-
+rollMax <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
@@ -212,7 +212,7 @@ rollMin <-
 # ------------------------------------------------------------------------------
 
 
-rollMax <-
+rollMin <-
     function(x, k, na.pad=FALSE, align=c("center", "left", "right"), ...)
 {
     # Description:
@@ -263,14 +263,13 @@ rollMax <-
     .rollmin.default <- function(x, k, na.pad = FALSE,
         align = c("center", "left", "right"), ...) 
     {
-        ans = - .rollmax.default(x, k, na.pad = FALSE,
-            align = c("center", "left", "right"), ...)
+        ans = -.rollmax.default(-x, k, na.pad = na.pad, align = align, ...)
         ans
     }
 
 
     # Roll:
-    ans <- apply(x, 2, .rollmin.default, k=k, na.pad=na.pad, align=align)
+    ans <- apply(getDataPart(x), 2, .rollmin.default, k=k, na.pad=na.pad, align=align)
 
     x <- setDataPart(x[seq.int(1,NROW(ans)),], ans)
 
