@@ -1,3 +1,10 @@
+2013-02-26    <d.scott@auckland.ac.nz>
+
+	* version changed to 0.3-2
+
+	* testskewhypTailPlotLine.R changed to have a fixed seed when
+	simulating data, at request of CRAN maintainers
+
 2012-04-13    <d.scott@auckland.ac.nz>
 
 	* version changed to 0.3-1
