@@ -16,14 +16,14 @@ dgig <- function(x, chi = 1, psi = 1, lambda = 1,
   psi <- param[2]
   lambda <- param[3]
 
-  omega <- sqrt(chi * psi)
+  omega <- sqrt(chi*psi)
 
   if (is.null(KOmega))
     KOmega <- besselK(omega, nu = lambda)
 
-  gigDensity <- ifelse(x > 0, (psi / chi)^(lambda / 2) /
-                       (2 * KOmega) * x^(lambda - 1) *
-                       exp(-(1/2) * (chi * x^(-1) + psi * x)), 0)
+  gigDensity <- ifelse(x > 0, (psi/chi)^(lambda/2) /
+                       (2*KOmega)*x^(lambda - 1) *
+                       exp(-(1/2)*(chi*x^(-1) + psi*x)), 0)
   gigDensity
 } ## end of dgig()
 
@@ -53,7 +53,7 @@ pgig <- function(q, chi = 1, psi = 1, lambda = 1,
   ## probabilities are of upper tail: change later if needs be
   prob[q <= 0] <- 1
   prob[q == Inf] <- 0
-  omega <- sqrt(chi * psi)
+  omega <- sqrt(chi*psi)
   KOmega <- besselK(omega, nu = lambda)
   x <- psi*q/2
   y <- chi/(2*q)
@@ -197,28 +197,28 @@ rgig1 <- function(n, chi = 1, psi = 1, param = c(chi, psi)) {
   psi <- param[2]
   lambda <- 1
 
-  alpha <- sqrt(psi / chi)
-  beta <- sqrt(psi * chi)
+  alpha <- sqrt(psi/chi)
+  beta <- sqrt(psi*chi)
 
-  m <- abs(beta) / beta
+  m <- abs(beta)/beta
 
   g <- function(y) {
-    0.5 * beta * y^3 - y^2 * (0.5 * beta * m + lambda + 1) +
-      y * (-0.5 * beta) + 0.5 * beta * m
+    0.5*beta*y^3 - y^2*(0.5*beta*m + lambda + 1) +
+      y*(-0.5*beta) + 0.5*beta*m
   }
 
   upper <- m
 
   while (g(upper) <= 0)
-    upper <- 2 * upper
+    upper <- 2*upper
 
   yM <- uniroot(g, interval = c(0, m))$root
 
   yP <- uniroot(g, interval = c(m, upper))$root
 
-  a <- (yP - m) * exp(-0.25 * beta * (yP + 1 / yP - m - 1 / m))
-  b <- (yM - m) * exp(-0.25 * beta * (yM + 1 / yM - m - 1 / m))
-  c <- -0.25 * beta * (m + 1 / m)
+  a <- (yP - m)*exp(-0.25*beta*(yP + 1/yP - m - 1/m))
+  b <- (yM - m)*exp(-0.25*beta*(yM + 1/yM - m - 1/m))
+  c <- -0.25*beta*(m + 1/m)
 
   output <- numeric(n)
 
@@ -228,9 +228,9 @@ rgig1 <- function(n, chi = 1, psi = 1, param = c(chi, psi)) {
     while (needValue) {
       R1 <- runif(1)
       R2 <- runif(1)
-      Y <- m + a * R2 / R1 + b * (1 - R2) / R1
+      Y <- m + a*R2/R1 + b*(1 - R2)/R1
       if (Y > 0) {
-        if (-log(R1) >= 0.25 * beta * (Y + 1 / Y) + c) {
+        if (-log(R1) >= 0.25*beta*(Y + 1/Y) + c) {
           needValue <- FALSE
         }
       }
@@ -239,7 +239,7 @@ rgig1 <- function(n, chi = 1, psi = 1, param = c(chi, psi)) {
     output[i] <- Y
   }
 
-  output / alpha
+  output/alpha
 } ## End of rgig1
 
 # Function to generate random observations from a
@@ -263,20 +263,20 @@ rgig <- function(n, chi = 1, psi = 1, lambda = 1,
   if (lambda == 1)
     stop(return(rgig1(n, param = c(chi, psi))))
 
-  alpha <- sqrt(psi / chi)
-  beta <- sqrt(psi * chi)
+  alpha <- sqrt(psi/chi)
+  beta <- sqrt(psi*chi)
 
-  m <- (lambda - 1 + sqrt((lambda - 1)^2 + beta^2)) / beta
+  m <- (lambda - 1 + sqrt((lambda - 1)^2 + beta^2))/beta
 
   g <- function(y) {
-    0.5 * beta * y^3 - y^2 * (0.5 * beta * m + lambda + 1) +
-      y * ((lambda - 1) * m - 0.5 * beta) + 0.5 * beta * m
+    0.5*beta*y^3 - y^2*(0.5*beta*m + lambda + 1) +
+      y*((lambda - 1)*m - 0.5*beta) + 0.5*beta*m
   }
 
   upper <- m
 
   while (g(upper) <= 0)
-    upper <- 2 * upper
+    upper <- 2*upper
 
   ## yM <- uniroot(g, interval = c(0, m))$root
   ## Correct problem when psi and chi are very small
@@ -284,15 +284,15 @@ rgig <- function(n, chi = 1, psi = 1, lambda = 1,
   ## Fabian.Scheipl@stat.uni-muenchen.de
   yM <- uniroot(g, interval = c(0, m),
                 tol = min(.Machine$double.eps^0.25,
-                          (.Machine$double.eps + g(0) / 10)))$root
+                          (.Machine$double.eps + g(0)/10)))$root
 
   yP <- uniroot(g, interval = c(m, upper))$root
 
-  a <- (yP - m) * (yP / m)^(0.5 * (lambda - 1)) *
-         exp(-0.25 * beta * (yP + 1 / yP - m - 1 / m))
-  b <- (yM - m) * (yM / m)^(0.5 * (lambda - 1)) *
-         exp(-0.25 * beta * (yM + 1 / yM - m - 1 / m))
-  c <- -0.25 * beta * (m + 1 / m) + 0.5 * (lambda - 1) * log(m)
+  a <- (yP - m)*(yP/m)^(0.5*(lambda - 1)) *
+         exp(-0.25*beta*(yP + 1/yP - m - 1/m))
+  b <- (yM - m)*(yM/m)^(0.5*(lambda - 1)) *
+         exp(-0.25*beta*(yM + 1/yM - m - 1/m))
+  c <- -0.25*beta*(m + 1/m) + 0.5*(lambda - 1)*log(m)
 
   output <- numeric(n)
 
@@ -302,17 +302,17 @@ rgig <- function(n, chi = 1, psi = 1, lambda = 1,
     while (needValue) {
       R1 <- runif(1)
       R2 <- runif(1)
-      Y <- m + a * R2 / R1 + b * (1 - R2) / R1
+      Y <- m + a*R2/R1 + b*(1 - R2)/R1
       if (Y > 0) {
-        if (-log(R1) >= -0.5 * (lambda - 1) * log(Y) +
-            0.25 * beta * (Y + 1 / Y) + c) {
+        if (-log(R1) >= -0.5*(lambda - 1)*log(Y) +
+            0.25*beta*(Y + 1/Y) + c) {
           needValue <- FALSE
         }
       }
     }
     output[i] <- Y
   }
-  output / alpha
+  output/alpha
 } ## End of rgig()
 
 ### Derivative of dgig
@@ -332,14 +332,14 @@ ddgig <- function(x, chi = 1, psi = 1, lambda = 1,
   psi <- param[2]
   lambda <- param[3]
 
-  omega <- sqrt(chi * psi)
+  omega <- sqrt(chi*psi)
 
   if (is.null(KOmega))
     KOmega <- besselK(x = omega, nu = lambda)
 
   ddgig <- ifelse(x > 0,
                   dgig(x, param = param, KOmega)*
-                  (chi/x^2 + 2*(lambda - 1)/x - psi) / 2,
+                  (chi/x^2 + 2*(lambda - 1)/x - psi)/2,
                   0)
   ddgig
 } ## End of ddgig()
