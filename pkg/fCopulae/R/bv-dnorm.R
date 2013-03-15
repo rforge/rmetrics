@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -35,29 +35,29 @@
 ################################################################################
 
 
-pnorm2d = 
-function(x, y = x, rho = 0) 
+pnorm2d =
+function(x, y = x, rho = 0)
 {   # pnorm2d: A copy from R package "sn"
 
     # Description:
     #   Computes bivariate Normal probability function
-    
+
     # Arguments:
     #   x, y - two numeric values or vectors of the same length at
-    #       which the probability will be computed. 
-    
+    #       which the probability will be computed.
+
     # Value:
     #   returns a numeric vector of probabilities of the same length
     #   as the input vectors
-   
+
     # FUNCTION:
-    
+
     # Probaility:
     X = cbind(x, y)
     ans = apply(X, 1, .pnorm2d, rho = rho)
     attr(ans, "control") = c(rho = rho)
-    
-    
+
+
     # Return Value:
     ans
 }
@@ -66,23 +66,23 @@ function(x, y = x, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-.pnorm2d = 
-function(X, rho = 0) 
+.pnorm2d =
+function(X, rho = 0)
 {   # pnorm2d: A copy from R package "sn"
 
     # Description:
     #   Bivariate Normal probability function
-    
+
     # Arguments:
-    #   x, y - two numeric values at which the probability will 
-    #   be computed. 
-    
+    #   x, y - two numeric values at which the probability will
+    #   be computed.
+
     # Value:
     #   returns a numeric vector of probabilities of the same length
     #   as the input vectors
-   
+
     # FUNCTION:
-    
+
     # Probability:
     x = X[1]
     y = X[2]
@@ -115,7 +115,7 @@ function(X, rho = 0)
             p = p - 0.5
         }
     }
-    
+
     # Return Value:
     return(p)
 }
@@ -124,15 +124,15 @@ function(X, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-.TInt = 
-function(h, a, jmax, cut.point) 
+.TInt =
+function(h, a, jmax, cut.point)
 {   # T.int: A copy from R package "sn"
 
     # Note:
     #   Required by .pnorm2d and .TOwen
-    
+
     # FUNCTION:
-    
+
     .fui = function(h, i) (h^(2 * i))/((2^i) * gamma(i + 1))
     seriesL = seriesH = NULL
     i = 0:jmax
@@ -150,13 +150,13 @@ function(h, a, jmax, cut.point)
         seriesL = (atan(a) - as.vector(matr))/(2 * pi)
     }
     if (length(hH) > 0) {
-        seriesH = atan(a) * exp(-0.5 * (hH^2) * a/atan(a)) * 
+        seriesH = atan(a) * exp(-0.5 * (hH^2) * a/atan(a)) *
             (1 + 0.00868 * (hH^4) * a^4)/(2 * pi)
     }
     series = c(seriesL, seriesH)
     id = c((1:length(h))[low], (1:length(h))[!low])
     series[id] = series
-    
+
     # Return Value:
     series
 }
@@ -165,38 +165,38 @@ function(h, a, jmax, cut.point)
 # ------------------------------------------------------------------------------
 
 
-.TOwen = 
-function (h, a, jmax = 50, cut.point = 6) 
+.TOwen =
+function (h, a, jmax = 50, cut.point = 6)
 {   # T.Owen: A copy from R package "sn"
 
     # Note:
     #   Required by .pnorm2d
-    
+
     # FUNCTION:
-    
-    if (!is.vector(a) | length(a) > 1) 
+
+    if (!is.vector(a) | length(a) > 1)
         stop("a must be a vector of length 1")
-    if (!is.vector(h)) 
+    if (!is.vector(h))
         stop("h must be a vector")
     aa = abs(a)
     ah = abs(h)
-    if (aa == Inf) 
+    if (aa == Inf)
         return(0.5 * pnorm(-ah))
-    if (aa == 0) 
+    if (aa == 0)
         return(rep(0, length(h)))
     na = is.na(h)
     inf = (ah == Inf)
     ah = replace(ah, (na | inf), 0)
-    if (aa <= 1) { 
+    if (aa <= 1) {
         owen = .TInt(ah, aa, jmax, cut.point)
     } else {
-        owen = 0.5 * pnorm(ah) + pnorm(aa * ah) * (0.5 - pnorm(ah)) - 
+        owen = 0.5 * pnorm(ah) + pnorm(aa * ah) * (0.5 - pnorm(ah)) -
             .TInt(aa * ah, (1/aa), jmax, cut.point)
     }
     owen = replace(owen, na, NA)
     owen = replace(owen, inf, 0)
     ans = return(owen * sign(a))
-    
+
     # Return Value:
     ans
 }
@@ -211,18 +211,18 @@ function(x, y = x, rho = 0)
 
     # Arguments:
     #   x,y - two numeric vectors
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # FUNCTION:
-    
+
     # Argument:
     xoy = (x^2 - 2*rho*x*y + y^2)/ (2*(1 - rho^2))
-    
+
     # Density:
     density = exp(-xoy) / ( 2*pi*sqrt(1-rho^2))
     attr(density, "control") = c(rho = rho)
-    
+
     # Return Value:
     density
 }
@@ -231,28 +231,28 @@ function(x, y = x, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-.dnorm2d = 
+.dnorm2d =
 function(x, y = x, rho = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   x,y - two numeric vectors
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # Note:
     #   Partly copied from contributed R package 'mvtnorm'
     #   Author Friedrich Leisch
-    
+
     # FUNCTION
-    
+
     # Settings:
     mean = c(0,0)
-    sigma = diag(2) 
-    sigma[1,2] = sigma[2,1] = rho 
+    sigma = diag(2)
+    sigma[1,2] = sigma[2,1] = rho
     log = FALSE
     x = cbind(x, y)
-    
+
     # From mvtnorm - Check:
     if (is.vector(x)) {
         x = matrix(x, ncol = length(x))
@@ -272,7 +272,7 @@ function(x, y = x, rho = 0)
     if (length(mean) != nrow(sigma)) {
         stop("mean and sigma have non-conforming size")
     }
-    
+
     # From mvtnorm - Density:
     distval = mahalanobis(x, center = mean, cov = sigma)
     logdet = sum(log(eigen(sigma, symmetric = TRUE, only.values = TRUE)$values))
@@ -280,7 +280,7 @@ function(x, y = x, rho = 0)
     if(log) return(logretval)
     ans = exp(logretval)
     attr(ans, "control") = c(rho = rho)
-    
+
     # Return value:
     ans
 }
@@ -290,38 +290,38 @@ function(x, y = x, rho = 0)
 
 
 rnorm2d =
-function(n, rho = 0) 
+function(n, rho = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates bivariate normal random deviates
-    
+
     # Arguments:
     #   n - number of random deviates to be generated
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # Note:
     #   Partly copied from contributed R package 'mvtnorm'
     #   Author Friedrich Leisch
-    
+
     # FUNCTION
-    
+
     # Settings:
     mean = c(0,0)
-    sigma = diag(2) 
-    sigma[1,2] = sigma[2,1] = rho 
-    
+    sigma = diag(2)
+    sigma[1,2] = sigma[2,1] = rho
+
     # From mvtnorm - Random Numbers:
-    ev = eigen(sigma, sym = TRUE)$values
-    if (!all(ev >= -sqrt(.Machine$double.eps) * abs(ev[1]))) 
+    ev = eigen(sigma, symmetric = TRUE)$values
+    if (!all(ev >= -sqrt(.Machine$double.eps) * abs(ev[1])))
         warning("sigma is numerically not positive definite")
     sigsvd = svd(sigma)
     ans = t(sigsvd$v %*% (t(sigsvd$u) * sqrt(sigsvd$d)))
     ans = matrix(rnorm(n * ncol(sigma)), nrow = n) %*% ans
     ans = sweep(ans, 2, mean, "+")
     attr(ans, "control") = c(rho = rho)
-    
+
     # Return Value:
     ans
 }
@@ -330,20 +330,20 @@ function(n, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-.rnorm2d = 
+.rnorm2d =
 function(n, rho = 0)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Alternative direct algorithm from Lindskog Master Thesis
-    
+
     # Arguments:
     #   n - number of random deviates to be generated
-    #   rho - the linear correlation, a numeric value between 
+    #   rho - the linear correlation, a numeric value between
     #       minus one and one.
-    
+
     # FUNCTION:
-    
+
     # Random Deviates
     x = matrix(c(1, rho, rho,1), 2)
     V = NULL
@@ -355,11 +355,10 @@ function(n, rho = 0)
         V = cbind(V,res)
     }
     rmn = t(V)
-    
+
     # Return Value:
     rmn
 }
 
 
 ################################################################################
-
