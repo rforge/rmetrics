@@ -1,3 +1,106 @@
+2013-03-15  chalabi
+
+	* DESCRIPTION: Updated maintainer field, R version and version
+	  number.
+	* R/builtin-xlsGdata.R: Removed depcreated .path.package()
+	* R/zzz.R: Removed deprecated .First.lib()
+
+2012-03-20  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2012-03-19  chalabi
+
+	* NAMESPACE: added NAMESPACE
+	* R/read-lines.R, man/read-lines.Rd: read.lines() is now a wrapper
+	  for readLines().
+
+2012-03-14  wuertz
+
+	* man/00fImport-package.Rd, man/provider-listings.Rd,
+	  man/providerListings.Rd: minor updates in man pages
+	* R/builtin-xlsGdata.R, R/class-fWEBDATA.R, R/import-fred.R,
+	  R/import-oanda.R, R/import-yahoo.R, R/methods-show.R,
+	  R/read-download.R, R/read-lines.R, R/read-links.R, R/read-lynx.R,
+	  R/read-split.R, R/read-w3m.R, R/read-xls.R, R/utils-yahoo.R,
+	  R/zzz.R, man/class-fWEBDATA.Rd, man/providerListings.Rd,
+	  man/read-links.Rd, man/utils-yahooBriefing.Rd,
+	  man/utils-yahooKeystats.Rd: minor man pages updates
+	* man/import-fred.Rd, man/import-oanda.Rd, man/import-yahoo.Rd,
+	  man/read-download.Rd, man/read-lines.Rd, man/read-links.Rd,
+	  man/read-lynx.Rd, man/read-split.Rd, man/read-w3m.Rd,
+	  man/read-xls.Rd, man/utils-yahoo.Rd, man/utils-yahooBriefing.Rd,
+	  man/utils-yahooKeystats.Rd: minor updates in man pages
+	* DESCRIPTION: description updated
+	* R/utils-yahoo.R, R/yahoo-utils.R, man/fredImport.Rd,
+	  man/import-fred.Rd, man/import-oanda.Rd, man/import-yahoo.Rd,
+	  man/oandaImport.Rd, man/utils-yahoo.Rd,
+	  man/utils-yahooKeystats.Rd, man/yahooBriefing.Rd,
+	  man/yahooImport.Rd, man/yahooKeystats.Rd: smaller updates
+	* R/builtin-xlsGdata.R, R/class-fWEBDATA.R, R/import-fred.R,
+	  R/import-oanda.R, R/import-yahoo.R, R/methods-show.R,
+	  R/read-download.R, R/read-lines.R, R/read-links.R, R/read-lynx.R,
+	  R/read-split.R, R/read-w3m.R, R/read-xls.R, R/yahoo-briefing.R,
+	  R/yahoo-keystats.R, R/yahoo-utils.R, R/zzz.R: minor updates
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
+2011-06-27  chaussep
+
+	* R/import-oanda.R: Modified oandaSeries to allow downloads of
+	  series of any length
+
+2010-09-22  wuertz
+
+	* R/read-links.R, R/read-xls.R: readers updated
+
+2010-08-04  mmaechler
+
+	* R/yahoo-keystats.R: (uncommitted accidentally)
+	* R/yahoo-keystats.R, man/yahooKeystats.Rd: fix bug; add example (+
+	  cosmetic changes)
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2010-05-28  wuertz
+
+	* R/fredImport.R, R/import-fred.R, R/import-oanda.R,
+	  R/import-yahoo.R, R/oandaImport.R, R/utils-yahoo.R,
+	  R/yahoo-briefing.R, R/yahoo-keystats.R, R/yahoo-utils.R,
+	  R/yahooBriefing.R, R/yahooImport.R, R/yahooKeystats.R: files
+	  renamed for better search of functions
+
+2010-05-17  wuertz
+
+	* man/00fImport-package.Rd, man/class-fWEBDATA.Rd,
+	  man/fredImport.Rd, man/methods-show.Rd, man/oandaImport.Rd,
+	  man/providerListings.Rd, man/read-download.Rd, man/read-lines.Rd,
+	  man/read-links.Rd, man/read-lynx.Rd, man/read-split.Rd,
+	  man/read-w3m.Rd, man/read-xls.Rd, man/yahooBriefing.Rd,
+	  man/yahooImport.Rd, man/yahooKeystats.Rd: ebook reference added
+	* tests: unnecessary tests directory removed
+	* R/read-links.R, inst/unitTests, man/read-links.Rd: old unit tests
+	  removed, links reader added
+	* R/utils-yahoo.R: function from datafeed moved here
+
+2010-05-13  wuertz
+
+	* R/read-w3m.R: options adapted
+	* R/read-lynx.R, R/read-w3m.R, man/providerListings.Rd,
+	  man/read-lynx.Rd, man/read-w3m.Rd: w3m added
+
+2010-04-16  chalabi
+
+	* inst/perl/html-parser/html-to-ascii.pl,
+	  inst/perl/html-parser/html-to-rfc.pl: updated perl path
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: DESC and Changelog
+
 2010-04-14  chalabi
 
 	* data/amexListing.csv, data/h15Listing.csv,
