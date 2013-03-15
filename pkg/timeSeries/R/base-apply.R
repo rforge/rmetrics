@@ -173,7 +173,8 @@ applySeries <-
     rowNames = rownames(x)
     rowBind = NULL
     for (i in seq_len(length(from))) {
-        test = (j.pos >= j.from[i] & j.pos <= j.to[i])
+        test <- (j.pos >= j.from[i] & j.pos <= j.to[i])
+        if (!sum(test)) stop("outsite of range")
         # make sure that cutted is a matrix ...
         cutted = as.matrix(x[test, ])
         # YC : *AND* make sure the matrix is not subbsetted to a vector!!!
@@ -409,4 +410,3 @@ function(x, from, to, FUN, ...)
 
 
 ################################################################################
-
