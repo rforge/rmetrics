@@ -15,16 +15,6 @@
 # MA  02111-1307  USA
 ################################################################################
 
-
-.First.lib <-
-function(libname, pkgname)
-{
-    if(!is.numeric(getRmetricsOptions("length.print")))
-	setRmetricsOptions(length.print = 5)
-}
-
-# ------------------------------------------------------------------------------
-
 .onLoad <-
 function(libname, pkgname)
 {
@@ -34,4 +24,3 @@ function(libname, pkgname)
 
 
 ################################################################################
-
