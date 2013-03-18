@@ -1,5 +1,5 @@
 Package: fPortfolio
-Version: 2140.81
+Version: 3000.81
 Revision: 5047
 Date: 2011-02-10
 Title: Rmetrics - Portfolio Selection and Optimization - ebook
@@ -9,12 +9,12 @@ Depends: R (>= 2.8.0), methods, MASS, robustbase, timeDate, timeSeries,
         fBasics, fAssets (>= 2100.78)
 Imports: quadprog, Rglpk
 Suggests: RUnit, tcltk
-Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
+Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Note: Several parts are still preliminary and may be changed in the
+      future. this typically includes function and argument names, as
+      well as defaults for arguments and return values.
 LazyData: yes
 License: GPL (>= 2)
 Repository: R-FORGE
