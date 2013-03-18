@@ -1,7 +1,7 @@
 Package: fAsianOptions
-Version: 2160.77
-Revision: 5272
-Date: 2012-03-21
+Version: 3000.78
+Revision: 5443
+Date: 2013-02-07
 Title: EBM and Asian Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.4.0), timeDate, timeSeries, fBasics, fOptions
@@ -9,9 +9,9 @@ Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Note: Several parts are still preliminary and may be changed in the
+      future. this typically includes function and argument names, as
+      well as defaults for arguments and return values.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

@@ -1,5 +1,12 @@
+2013-02-07  chalabi
+
+	* R/zzz.R: Removed deprecated .First.lib()
+	* R/GammaFunctions.R: Changed deprecated is.real() by is.double()
+	* DESCRIPTION: Updated maintainer field
+
 2012-03-21  chalabi
 
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog
 	* src/EBMAsianOptions.f: replaced 'write' calls by R Fortran print
 	  API
 
