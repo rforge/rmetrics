@@ -2,9 +2,9 @@ Package: randtoolbox
 Type: Package
 Title: toolbox for pseudo and quasi random number generation and RNG tests.
 Version: 1.13
-Date: 2012-05-01
-Author: Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wuertz (except underlying C codes of (i) the SFMT algorithm from M. Matsumoto and M. Saito, (ii) the Knuth-TAOCP RNG from D. Knuth). See LICENCE file for details.
+Date: 2013-03-19
+Author: Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wuertz (except underlying C codes of (i) the SFMT algorithm from M. Matsumoto and M. Saito, (ii) the Knuth-TAOCP RNG from D. Knuth). See NEWS-Version 1.09 file for details.
 Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
 Description: The package provides (1) pseudo random generators - general linear congruential generators (Park Miller) and multiple recursive generators (Knuth TAOCP), generalized feedback shift register (SF-Mersenne Twister algorithm and WELL generators); (2) quasi random generators - the Torus algorithm, the Sobol sequence, the Halton sequence (thus include Van der Corput sequence) and (3) some additional tests such as the gap test, the serial test, the poker test... The package depends on rngWELL package but it can be provided without this dependency on demand to the maintainer. For true random number generation, use the 'random' package, for Latin Hypercube Sampling (a hybrid QMC method), use the 'lhs' package, a number of RNGs and tests for RNGs are provided by 'RDieHarder', all available on CRAN. There is also a small stand-alone package 'rngwell19937' for the WELL19937a RNG. 
-Depends: rngWELL (>= 0.10-0), rngWELL (<= 0.10-99)
+Depends: rngWELL (>= 0.11-0)
 License: BSD
