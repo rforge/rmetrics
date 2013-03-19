@@ -6,12 +6,12 @@
  * @author Petr Savicky 
  *
  *
- * Copyright (C) 2009, Christophe Dutang, 
+ * Copyright (C) 2013, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
- * Copyright (c) 2009 Christophe Dutang, Petr Savicky. 
+ * Copyright (c) 2013 Christophe Dutang, Petr Savicky. 
  * All rights reserved.
  *
  *      Redistribution and use in source and binary forms, with or without
@@ -58,10 +58,12 @@
 
 
 
-//well RNG function coming from rngWELL package
+//well RNG function coming from rngWELL package, see files rngWELL.c(h) in that pkg
 void (*WELLrng)(double *u, int nb, int dim, int order, int temper, int version);
-
-//well RNG function coming from rngWELL package
 void (*setSeed4WELL)(double *u, int nb, int dim, int order, int temper, int version);
 
+//well RNG function coming from rngWELL package, see files runifInterface.c(h) in that pkg
+void (*getRngWELL)(int *porder, int *pversion, unsigned int *state);
+void (*putRngWELL)(int *porder, int *pversion, unsigned int *state);
+void (*initMT2002)(unsigned int *seed, int *n, unsigned int *state);
 

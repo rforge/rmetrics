@@ -7,6 +7,10 @@ Version 1.13
 - this version is one of the last versions working with
 package rngWELL >= 0.11-0.
 
+NOTES FIXES
+
+- remove NOTES appearing in R CMD check
+
 Version 1.12
 =============
 
