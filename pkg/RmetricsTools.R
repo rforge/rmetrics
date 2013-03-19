@@ -109,7 +109,8 @@ pkgsRmetricsDev <- function()
 install.RmetricsDev  <-
     function(pkgs = pkgsRmetricsDev(), repos = NULL,
              CRAN = "http://cran.r-project.org",
-             type = "source", suggests = TRUE, ...)
+             type = "source", suggests = TRUE,
+             INSTALL_opts = "--preclean", ...)
 {
 
     stopifnot(is.character(pkgs))
@@ -159,7 +160,7 @@ install.RmetricsDev  <-
         if (!require(depends[i], character.only = TRUE, quietly = TRUE)) {
             message("\ninstalling package ", depends[i],
                     " from CRAN ", CRAN, " ...")
-            install.packages(depends[i], repos = CRAN, type = type, ...)
+            install.packages(depends[i], repos = CRAN, type = type, INSTALL_opts = INSTALL_opts, ...)
         }
     }
 
@@ -260,7 +261,7 @@ dependsRmetrics <-
 # ------------------------------------------------------------------------------
 
 checkBeforeCommit  <-
-    function(pkgs = pkgsRmetricsDev(), checkDepends = TRUE,
+    function(pkgs = pkgsRmetricsDev(), checkDepends = FALSE,
              lib = NULL, outdir = NULL, ...)
 {
     stopifnot(is.character(pkgs))
@@ -296,10 +297,14 @@ checkBeforeCommit  <-
 
     ## Run R CMD check ...
     Rbin <- file.path(R.home(), "bin", "R")
-    Rcmd <- paste(Rbin, "CMD check")
+    Rcmd <- paste(Rbin, "CMD check --as-cran")
     options <- paste("-l", shQuote(lib), "-o", shQuote(outdir))
-    cmd <- paste(Rcmd, options, paste(pkgsToCheck, collapse = " "), ...)
-    try(system(cmd))
+
+    for (pkg in pkgsToCheck) {
+        cmd <- paste(Rcmd, options, paste(pkg, collapse = " "), ...)
+        message("Checking ", pkg)
+        try(system(cmd, intern = TRUE, ignore.stdout = TRUE))
+    }
 
     logWarning <- NULL
     logNOTE <- NULL
@@ -318,8 +323,8 @@ checkBeforeCommit  <-
 
         ERROR <- grep("ERROR", log)
         # Note do not check for object files in pkgs
-        WARNING <- grep("WARNING", log[-grep("source package", log)])
-        NOTE <- grep("NOTE", log)
+        WARNING <- grep("WARNING$", log[-grep("source package", log)])
+        NOTE <- grep("NOTE$", log)
 
         if (length(ERROR)) {
             msg <- paste("More details in", logFile)
@@ -330,7 +335,7 @@ checkBeforeCommit  <-
                 logWarning <- c(logWarning,
                                 "\n ####################### WARNING #######################\n",
                                 paste(" In package", pkg, "\n"),
-                                paste(paste(log[seq(line, line+5)], collapse = "\n "), "\n"),
+                                paste(paste(na.omit(log[seq(line, line+5)]), collapse = "\n "), "\n"),
                                 paste("\n More details in", logFile, "\n"),
                                 paste(" ####################### WARNING #######################\n"))
             }
@@ -340,7 +345,7 @@ checkBeforeCommit  <-
                 logNOTE <- c(logNOTE,
                              "\n #######################  NOTE  #######################\n",
                              paste(" In package", pkg, "\n"),
-                             paste(paste(log[seq(line, line+8)], collapse = "\n "), "\n"),
+                             paste(paste(na.omit(log[seq(line, line+8)]), collapse = "\n "), "\n"),
                              paste("\n More details in", logFile, "\n"),
                              paste(" #######################  NOTE  #######################\n"))
             }
@@ -820,7 +825,7 @@ upVersion <- function(pkgs)
         ## second is the number of time the package was uploaded to CRAN
         major <- R.version$major
         minor <- sprintf("%04.1f", as.numeric(R.version$minor)) # take care of leading zero for new version of R
-        Rver <- paste(major, minor, collapse = "")
+        Rver <- paste(major, minor, sep = "")
         Rver <- sub("\\.","", Rver)
 
         pkgVersion <- dcf[,"Version"]
