@@ -2,19 +2,22 @@
 -- LICENCE
 ----------------------------------------------------------------------
 
--- free for personal, academic, or non-commercial purposes. BUT for any
-commercial purposes (direct or indirect), the code is under the licence 
-of Université of Montreal. In this latter case, you MUST contact Pierre
-L'Ecuyer at: lecuyer@iro.UMontreal.ca  
+-- Before version 0.11-0, the package was under the licence 
+of Université of Montreal, which allow free use for personal, academic, 
+or non-commercial purposes.
+
+-- From 0.11-0, all this code of this package is under the new BSD licence. 
+A copy of the BSD licence is available at http://www.opensource.org/licenses/bsd-license.php.
+For any commercial purposes (direct or indirect), you MUST contact Pierre L'Ecuyer 
+from Université of Montreal at lecuyer@iro.UMontreal.ca.  
+
 
 ----------------------------------------------------------------------
 -- AUTHORS
 ----------------------------------------------------------------------
 
--- all the R code was written by Christophe Dutang and Petr Savicky, but
-the C code was written by Francois Panneton and Pierre L'Ecuyer. All the
-code of this package can be used freely for personal, academic, or 
-non-commercial purposes. BUT for any commercial purposes (direct or
-indirect), the code is under the licence of Université of Montreal. In 
-this latter case, you MUST contact Pierre L'Ecuyer at: 
-lecuyer@iro.UMontreal.ca  
+-- WELL pseudo random generators were introduced in F. Panneton, P. L'Ecuyer, and M. Matsumoto, ``Improved Long-Period Generators Based on Linear Recurrences Modulo 2'', ACM Transactions on Mathematical Software, 32, 1 (2006), 1-16.
+
+-- all the C code was written by Francois Panneton and Pierre L'Ecuyer. 
+
+-- all the R code was written by Christophe Dutang and Petr Savicky.
