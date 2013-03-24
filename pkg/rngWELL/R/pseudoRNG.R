@@ -3,7 +3,7 @@
  #                                                                           #
  #   This code can be used freely for personal, academic, or                 #
  #   non-commercial purposes. For commercial purposes, please contact        #
- #   P. L'Ecuyer at: lecuyer@iro.UMontreal.ca                                #
+ #   P. L Ecuyer at: lecuyer@iro.UMontreal.ca                                #
  #   (at your option) any later version.                                     #
  #                                                                           #
  #                                                                           #
@@ -62,4 +62,20 @@ WELL2test <- function(n, dim = 1, order = 512, temper = FALSE, version = "a")
     else
         as.matrix(res)
 }
+
+doinitMT2002 <- function(seed, n, state)
+{
+	if(n <= state)
+		.C("initMT2002", as.integer(seed), as.integer(n), integer(state))
+	else
+		NA
+}
+
+doputRngWELL <- function(order, version, state)
+	.C("putRngWELL", as.integer(order), match(version, c("a", "b", "c"), nomatch=0), state)
+
+dogetRngWELL <- function(order, version, state)
+	.C("getRngWELL", as.integer(order), match(version, c("a", "b", "c"), nomatch=0), state)
+
+
 

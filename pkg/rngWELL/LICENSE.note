@@ -1,19 +1,27 @@
 ----------------------------------------------------------------------
--- LICENCE
+-- LICENSE
 ----------------------------------------------------------------------
 
--- Before version 0.11-0, the package was under the licence 
+YEAR: 2013
+COPYRIGHT HOLDER: Pierre L'Ecuyer
+
+
+----------------------------------------------------------------------
+-- COMMENTS
+----------------------------------------------------------------------
+
+-- Before version 0.10-1 (exclusively), the package was under the licence 
 of Université of Montreal, which allow free use for personal, academic, 
 or non-commercial purposes.
 
--- From 0.11-0, all this code of this package is under the new BSD licence. 
-A copy of the BSD licence is available at http://www.opensource.org/licenses/bsd-license.php.
+-- From 0.10-1, all this code of this package is under the above BSD 2-clause 
+licence, available at http://opensource.org/licenses/BSD-2-Clause. 
 For any commercial purposes (direct or indirect), you MUST contact Pierre L'Ecuyer 
 from Université of Montreal at lecuyer@iro.UMontreal.ca.  
 
 
 ----------------------------------------------------------------------
--- AUTHORS
+-- DETAILED AUTHORSHIP
 ----------------------------------------------------------------------
 
 -- WELL pseudo random generators were introduced in F. Panneton, P. L'Ecuyer, and M. Matsumoto, ``Improved Long-Period Generators Based on Linear Recurrences Modulo 2'', ACM Transactions on Mathematical Software, 32, 1 (2006), 1-16.

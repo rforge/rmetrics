@@ -4,12 +4,12 @@ citHeader("To cite rngWELL in publications use:")
 citEntry(entry="Manual",
          title = "rngWELL: WELL generators.",
          author = "Christophe Dutang, Petr Savicky and Diethelm Wuertz",
-	 year = 2012,
-         note = "R package version 0.10-0",
+	 year = 2013,
+         note = "R package version 0.10-1",
 
          textVersion =
 	 paste(	"C. Dutang & Petr Savicky",
-		"(2012),",
+		"(2013),",
 	       	"rngWELL: WELL generators.")
 )
 

@@ -1,3 +1,4 @@
+
 /**********************************************************************************************
  *   Copyright (c) 2009 Christophe Dutang and Petr Savicky                                    *
  *                                                                                            *
@@ -23,6 +24,9 @@ static const R_CallMethodDef callMethods[] =
 {
         {"doSetSeed4WELL", (DL_FUNC) &doSetSeed4WELL, 1},
         {"doWELL", (DL_FUNC) &doWELL, 5},
+		{"initMT2002", (DL_FUNC) &initMT2002, 3},
+		{"putRngWELL", (DL_FUNC) &putRngWELL, 3},
+		{"getRngWELL", (DL_FUNC) &getRngWELL, 3},
         {NULL, NULL, 0}
 };
 
@@ -30,12 +34,12 @@ void R_init_rngWELL(DllInfo *info)
 {
         //register method accessed with .Call
         R_registerRoutines(info, NULL, callMethods, NULL, NULL); 
-        //make rngWELL C functions available from other packages
+        //make rngWELL C functions available for other packages
         R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
         R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
         R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
-        R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
+        /*R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
         R_RegisterCCallable("rngWELL", "putRngWELL", (DL_FUNC) putRngWELL);
-        R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);
+        R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);*/
 }
 
