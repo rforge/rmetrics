@@ -4,11 +4,11 @@ citHeader("To cite randtoolbox in publications use:")
 citEntry(entry="Manual",
          title = "randtoolbox: Generating and Testing Random Numbers",
          author = "Christophe Dutang and Petr Savicky",
-	 year = 2012,
+	 year = 2013,
          note = "R package version 1.13",
          textVersion =
 	 paste(	"C. Dutang and P. Savicky",
-		"(2012),",
+		"(2013),",
 	       	"randtoolbox: Generating and Testing Random Numbers.")
 )
 

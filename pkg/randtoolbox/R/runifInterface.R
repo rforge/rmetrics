@@ -98,11 +98,12 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
 		size <- ceiling(as.numeric(parameters["order"])/32)
-		state <- .C("initMT2002",
-					as.integer(seed),
-					as.integer(size),
-					integer(size),
-					PACKAGE="rngWELL")[[3]]
+		state <- doinitMT2002(seed, size, size)[[3]]
+#		state <- .C("initMT2002",
+#					as.integer(seed),
+#					as.integer(size),
+#					integer(size),
+#					PACKAGE="rngWELL")[[3]]
 		description <- list(name=name, parameters=parameters, state=state)
 	} else if (name == "MersenneTwister")
 	{
@@ -171,11 +172,12 @@ put.description <- function(description)
 	{
 		.C("set_noop", PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
-		.C("putRngWELL",
-			as.integer(parameters["order"]),
-			match(parameters["version"], c("a", "b", "c"), nomatch=0),
-			as.integer(state),
-			PACKAGE="rngWELL")
+		doputRngWELL(parameters["order"], parameters["version"], state)
+#		.C("putRngWELL",
+#			as.integer(parameters["order"]),
+#			match(parameters["version"], c("a", "b", "c"), nomatch=0),
+#			as.integer(state),
+#			PACKAGE="rngWELL")
 	} else if (name == "MersenneTwister")
 	{
 		.C("set_noop", PACKAGE="randtoolbox")
@@ -225,11 +227,12 @@ get.description <- function()
 	} else if (generator == 2)
 	{
 		name <- "WELL"
-		tmp <- .C("getRngWELL",
-			order = integer(1),
-			version = integer(1),
-			state = integer(2000),
-			PACKAGE="rngWELL")
+		tmp <- dogetRngWELL(1, 1, 2000)
+#		tmp <- .C("getRngWELL",
+#			order = integer(1),
+#			version = integer(1),
+#			state = integer(2000),
+#			PACKAGE="rngWELL")
 		order <- as.character(tmp$order)
 		version <- letters[tmp$version]
 		parameters <- c(order=order, version=version)

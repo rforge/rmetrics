@@ -23,3 +23,6 @@ useDynLib(randtoolbox, .registration = TRUE)
 
 ### Import of rngWELL package for C code
 import(rngWELL)
+
+### Import of rngWELL package for R code
+importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL)

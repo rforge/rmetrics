@@ -6,6 +6,7 @@ Version 1.13
 - remove obsolete LICENCE file and put its content in this file.
 - this version is one of the last versions working with
 package rngWELL >= 0.11-0.
+- change licence from BSD to BSD_2_clause
 
 NOTES FIXES
 
