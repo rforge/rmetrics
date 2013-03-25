@@ -1,5 +1,13 @@
+2013-03-25  chalabi
+
+	* DESCRIPTION: Updated version number
+	* R/methods-mathOps.R: callGeneric() seems to have troubles in
+	  finding variables defined in the function frame and passed to the
+	  generic with the dots arguments.
+
 2013-03-15  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DSC files
 	* DESCRIPTION: Updated maintainer field and version number
 	* R/zzz.R: Removed deprecated .First.lib()
 	* R/base-apply.R: Added out of range test in
