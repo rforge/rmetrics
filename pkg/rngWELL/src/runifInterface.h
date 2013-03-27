@@ -42,74 +42,30 @@
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *  
  */
-/*
- *  WELL generators
- *  
- *			header file
+/*****************************************************************************
+ *  runif interface
+ *    
+ *      header file
  *
  */
 
-//R header files
 #include <R.h>
-#include <Rinternals.h>
-#include <Rdefines.h>
-#include <Rmath.h>
-#include <R_ext/Error.h>
-
-#include "config.h"
-#include "locale.h"
-
-//WELL
 #include "WELL512a.h"
 #include "WELL521a.h"
 #include "WELL521b.h"
 #include "WELL607a.h"
 #include "WELL607b.h"
-#include "WELL1024a.h"
-#include "WELL1024b.h"
-
 #include "WELL800a.h"
 #include "WELL800b.h"
+#include "WELL1024a.h"
+#include "WELL1024b.h"
 #include "WELL19937a.h"
-#include "WELL19937b.h"
 #include "WELL19937c.h"
+#include "WELL19937b.h"
 #include "WELL21701a.h"
 #include "WELL23209a.h"
 #include "WELL23209b.h"
 #include "WELL44497a.h"
 #include "WELL44497b.h"
 
-//time header files
-#if HAVE_TIME_H
-# include <time.h>
-#endif
-
-#if HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-
-#if HAVE_WINDOWS_H
-# include <windows.h>
-#endif
-
-#if defined(HAVE_SSE2)
-# include <emmintrin.h>
-#endif
-
-
-/* Functions accessed from .Call() */
-SEXP doSetSeed4WELL(SEXP s);
-SEXP doWELL(SEXP n, SEXP d, SEXP order, SEXP tempering, SEXP version);
-
-/* utility functions */
-void WELLrng(double *u, int nb, int dim, int order, int temper, int version);
-
-void setSeed4WELL(long s);
-void randSeedByArray(int length);
-void randSeed();
-
-void WELL_get_set_entry_point(void * p_user_unif_set_generator);
-void initMT2002(unsigned int *seed, int *n, unsigned int *state);
-void putRngWELL(int *order, unsigned int *state);
-void getRngWELL(int *order, unsigned int *state);
-
+#include "locale.h"

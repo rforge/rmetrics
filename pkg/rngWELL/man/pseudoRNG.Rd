@@ -2,9 +2,9 @@
 \alias{pseudo.rngWELL}
 \alias{WELL2test}
 \alias{setSeed4WELL}
-\alias{initMT2002}
-\alias{putRngWELL}
-\alias{getRngWELL}
+\alias{doinitMT2002}
+\alias{doputRngWELL}
+\alias{dogetRngWELL}
 \title{Toolbox for pseudo and quasi random number generation}
 \description{
 	General linear congruential generators such as Park Miller sequence,
@@ -17,9 +17,9 @@
 WELL2test(n, dim = 1, order = 512, temper = FALSE, version = "a")
 setSeed4WELL(seed)
 
-initMT2002(seed, n, state)
-putRngWELL(order, version, state)
-getRngWELL(order, version, state)
+doinitMT2002(seed, n, state)
+doputRngWELL(order, version, state)
+dogetRngWELL(order, version, state)
 
 }
 \arguments{
