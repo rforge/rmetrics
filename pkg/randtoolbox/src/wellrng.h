@@ -63,7 +63,7 @@ void (*WELLrng)(double *u, int nb, int dim, int order, int temper, int version);
 void (*setSeed4WELL)(double *u, int nb, int dim, int order, int temper, int version);
 
 //well RNG function coming from rngWELL package, see files runifInterface.c(h) in that pkg
-void (*getRngWELL)(int *porder, int *pversion, unsigned int *state);
+/*void (*getRngWELL)(int *porder, int *pversion, unsigned int *state);
 void (*putRngWELL)(int *porder, int *pversion, unsigned int *state);
-void (*initMT2002)(unsigned int *seed, int *n, unsigned int *state);
+void (*initMT2002)(unsigned int *seed, int *n, unsigned int *state);*/
 

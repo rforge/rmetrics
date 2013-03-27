@@ -234,6 +234,7 @@ get.description <- function()
 #			state = integer(2000),
 #			PACKAGE="rngWELL")
 		order <- as.character(tmp$order)
+		print(tmp)
 		version <- letters[tmp$version]
 		parameters <- c(order=order, version=version)
 		size <- ceiling(tmp$order/32)

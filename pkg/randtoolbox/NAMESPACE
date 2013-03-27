@@ -20,9 +20,7 @@ export(stirling, permut, get.primes)
 ### use dynamic library for C code
 useDynLib(randtoolbox, .registration = TRUE)
 
-
-### Import of rngWELL package for C code
-import(rngWELL)
-
 ### Import of rngWELL package for R code
-importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL)
+importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL, setSeed4WELL, WELL2test)
+
+
