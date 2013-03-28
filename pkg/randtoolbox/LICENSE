@@ -1,0 +1,37 @@
+----------------------------------------------------------------------
+-- LICENSE
+----------------------------------------------------------------------
+
+YEAR: 2013
+COPYRIGHT HOLDER: Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wuertz 
+
+
+----------------------------------------------------------------------
+-- COMMENTS
+----------------------------------------------------------------------
+
+- Before version 1.13 (exclusively), there was a lot of different (and incompatible) 
+licenses in this package, namely, GPL, BSD, public domain, etc... 
+(cf. 1.08-version DESCRIPTION file of this package). 
+
+- From 1.13, all this code of this package is under the above BSD 2-clause 
+license, available at http://opensource.org/licenses/BSD-2-Clause. 
+
+- The package depends on the rngWELL package which is also under the
+BSD 2-clause but has its own LICENSE file. The randtoolbox package 
+can be provided without this dependency on demand to the maintainer. 
+
+----------------------------------------------------------------------
+-- DETAILED AUTHORSHIP
+----------------------------------------------------------------------
+
+- all the code of this package except the two codes listed below was written by Yohan Chalabi,
+Christophe Dutang, Petr Savicky and Diethelm Wuertz.
+
+- the C code for SF-Mersenne Twister belongs to M. Matsumoto and M. Saito, 
+which is under the BSD license. Please refer to 
+http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/LICENSE.txt 
+
+- the C code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth. 
+This code is in the public domain and freely copyable. Please refer to
+http://www-cs-faculty.stanford.edu/~uno/programs/rng-double.c.
