@@ -118,7 +118,19 @@ fredImport(query, file = "tempfile", source = NULL, frequency = "daily",
     
     IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
+    
+    Feel free to inspect the code of the functions and to create your
+    own download function from other Internet web sites and Portals.
   
+}
+
+
+\seealso{
+       
+    Two further download functions \code{\link{oandaImport}} and 
+    \code{\link{yahooImport}} allow to import data from Oanda and 
+    from Yahoo Finance.
+     
 }
 
 

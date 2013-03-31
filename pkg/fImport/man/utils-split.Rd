@@ -1,4 +1,4 @@
-\name{read-split}
+\name{utils-split}
 
 
 \alias{charvecSplit}
@@ -6,7 +6,7 @@
 \alias{stringSplit}
 
 
-\title{Splitting downloaded data sets}
+\title{Splitting Downloaded Data Sets}
 
 
 \description{

@@ -62,9 +62,22 @@
 }
 
 
+\note{
+
+
+    The import and series functions like \code{\link{fredImport}} and
+    \code{\link{fredSeries}} are typical examples which show how to
+    implement download functions as simple \code{timeSeries} objectx
+    or as more complicate \code{fWEBDATA} S4 objects. Inspect the 
+    R code and feel free to create your own download functions and
+    objects.
+
+}
+
+
 \references{
 
-Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+    Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
     www.rmetrics.org.

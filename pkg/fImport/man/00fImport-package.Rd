@@ -31,25 +31,35 @@
         URL:        \tab \url{http://www.rmetrics.org}
     }
     
-    The package contains:
+    Major package content:
     
-    1) Three example import funcions for downloading data from Yahoo, Oanda, 
-    and the Federal Reserve.
+    1) Download functions implementing the web text browsers Lynx, Links, and 
+    W3M for an easy and straightforward download of data from the Internet.   
     
-    2) Several utility functions to read and write data, including functions
-    which allow system calls to the \code{Links}, \code{Lynx}, and \code{W3M} 
-    text browser, and a function to read \code{xls} Excel files.
+    2) Helpful utility functions to split numerical matrices, date character
+    vectors, and strings from downloads to create in a very easy way timeSeries 
+    objects.
     
-    3) Several csv files with provider listings.
+    3) Examples of import and series funcions for downloading data from the 
+    Federal Reserve, from Oanda, and from Yahoo Finance.
+    
+    4) Instruments listings from the American Stock Exchange,
+    from the FED H15 Report, from the NASDAQ Stock Market,
+    from the New York Stock Exchange, of OANDAs Foreign Exchange Rates,
+    of STOXX Indices, and from the Swiss Stock Exchange,
+       
+    For the download of spread sheets from the Internet we refer to the functions
+    \code{gdata::read.xls} and \code{xlsx::read.xlsx} for the R packages 
+    \code{gdata} and \code{xlsx} respectively.
       
 }
     
   
-\section{Overview on Time Series Data:}{
+\section{Examples - Time Series Data:}{
 
     The package makes functions available to download financial market
-    data from the internet. Functions are available for the 
-    follwing web sites:
+    data from the internet. Functions are available for the follwing 
+    web sites:
     
     1. Data from research.stlouisfed.org\cr
     2. Data from www.oanda.com\cr
@@ -63,27 +73,18 @@
     wit a \code{@Data} slot which keeps the \code{"timeSeries"} object
     and further slots which keep additional download information.
     
-    We recommend the first kind of functions for easy download of economic
-    and financial time series, whereas we recommend to use the second kind
-    of functions when additional information is required for example for
-    the storage of the data in a data base management system.
-    
     IMPORTANT NOTE: The download from the web site www.forecasts.org has
     been withdrawn since the time series are no longer updated. Note, all 
     the series offered by the "forecasts.org" web site are also available
     from the FRED St. Louis database.
+
+
+    The functions    
     
-}
+    1. \code{fredSeries}\cr
+    2. \code{oandaSeries}\cr
+    3. \code{yahooSeries}
 
-
-\section{Downloading 'timeSeries' Objects:}{
-
-    The following functions 
-
-    1. fredSeries\cr
-    2. oandaSeries\cr
-    3. yahooSeries
-    
     allow for an easy download of economic and financial time series data 
     as objects of class \code{"timeSeries"}.   
     
@@ -95,43 +96,47 @@
 
     If you like to keep additional download information, use the functions
     
-    1. fredImport\cr
-    2. oandaImport\cr
-    3. yahooImport
-    
-    which return objects of class \code{"fWEBDATA"}.
+    1. \code{fredImport}\cr
+    2. \code{oandaImport}\cr
+    3. \code{yahooImport}   
+
+    which return objects of class \code{"fWEBDATA"}. Feel free to extend
+    and modify these functions to your personal needs.
     
 }    
 
 
-\section{Fomer Yahoo Utilities:}{
+\section{Examples - Further Yahoo Utilities:}{
 
-    The function \code{yahooKeystats} allows to download key statistics
-    from Yahoo's web site.
-
-    The function \code{yahooBriefings} allows to download a briefing
-    from Yahoo's web site.
+    The function \code{yahooKeystats} allows to download key statistics from 
+    Yahoo's web site, and the function \code{yahooBriefings} allows to 
+    download a briefing from Yahoo's web site.
         
-    Note: The Yahoo utilities \code{yahooKeystats} and \code{yahooBriefings}
-    are (as of March 2012) no longer supported.
+    Note: These two function are no longer supported (since March 2012). The 
+    reason for this are the too many changes on the Yhaoo web site which made
+    the download very prone to many failures. Feel free to use the original 
+    code (which is still available) to update and adapt the function to your 
+    specific needs.
     
 }   
 
 
-\section{License:}{
+\section{About Rmetrics:}{
 
-    This Rmetrics package is written for educational usage teaching
+    This Rmetrics package is written for educational support in teaching 
     "Computational Finance and Financial Engineering" and licensed
-    under GPL.
+    under the GPL.
     
 }
 
 
 \references{
-Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+
+    Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
-    www.rmetrics.org.   
+    www.rmetrics.org.
+       
 }
 
    

@@ -1,4 +1,4 @@
-\name{read-download}
+\name{utils-download}
 
 
 \alias{composeURL}

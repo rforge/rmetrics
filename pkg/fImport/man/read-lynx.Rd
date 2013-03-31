@@ -54,11 +54,32 @@ read.lynx(url, intern = TRUE, bin = NULL, pipe = FALSE, \dots)
 
 \references{
 
-Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+    Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
     www.rmetrics.org.
     
+}
+
+
+\seealso{
+       
+    Alternative text browser functions are the Rmetrics functions
+    \code{\link{read.links}} and \code{\link{read.w3m}}.
+    
+    To download \code{xls} and \code{xlsx} spread sheets use the
+    functions \code{gdata::read.xls} and \code{xlsx::read.xlsx} 
+    from the contributed packages \code{gdata} and \code{xlsx}, 
+    respectively.
+    
+    To download text files line by line use the Rmetrics function
+    \code{\link{read.lines}} which wraps the function {readLines}
+    from R's base evironment.
+    
+    To postprocess downloaded files use the Rmetrics functions
+    \code{\link{indexGrep}}, \code{\link{dataSplit}}, 
+    \code{\link{charvecSplit}}, and \code{\link{stringSplit}}.
+     
 }
 
 
