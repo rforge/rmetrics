@@ -41,10 +41,7 @@ exportMethods("$",
 ################################################
 
 export(
-    ".dQuote.ascii",
     ".getYahooData",
-    ".read.xls",
-    ".xls2csv",
     "charvecSplit",
     "composeURL",
     "dataSplit",
@@ -57,7 +54,6 @@ export(
     "read.links",
     "read.lynx",
     "read.w3m",
-    "read.xls",
     "stringSplit",
     "yahooBriefing",
     "yahooImport",

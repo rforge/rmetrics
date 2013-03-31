@@ -5,7 +5,7 @@ Date: 2013-03-15
 Title: Rmetrics - Economic and Financial Data Import
 Author: Diethelm Wuertz and many others
 Depends: R (>= 2.13.0), methods, timeDate, timeSeries
-Suggests: RUnit
+Suggests: RUnit, xlsx, gdata
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
