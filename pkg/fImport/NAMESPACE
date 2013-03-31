@@ -58,6 +58,7 @@ export(
     "read.lynx",
     "read.w3m",
     "read.xls",
+    "stringSplit",
     "yahooBriefing",
     "yahooImport",
     "yahooKeystats",

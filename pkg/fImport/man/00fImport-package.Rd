@@ -15,7 +15,7 @@
 
 \description{
 
-    Package of utility functions to download and manage data sets
+    Package of some utility functions to download and manage data sets
     from the Internet or from other sources.
 }
 
@@ -33,7 +33,8 @@
     
     The package contains:
     
-    1) Three example import funcions for Yahoo, Oanda, and the Federal Reserve.
+    1) Three example import funcions for downloading data from Yahoo, Oanda, 
+    and the Federal Reserve.
     
     2) Several utility functions to read and write data, including functions
     which allow system calls to the \code{Links}, \code{Lynx}, and \code{W3M} 

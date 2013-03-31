@@ -23,6 +23,7 @@
 # FUNCTION:               DESCRIPTION:
 #  dataSplit               Splits data matrix from a downloaded file
 #  charvecSplit            Splits charvec vector from a downloaded file
+#  sringSplit              Splits a string vector from a downloaded file
 ################################################################################
 
 
@@ -31,7 +32,7 @@ function (x, split=" ", col=-1)
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
     #   Splits data matrix from a downloaded file
     
     # FUNCTION
@@ -58,7 +59,7 @@ function (x, split=" ", col=1, format="%F")
 {
     # A function implemented by Diethelm Wuertz
     
-    # Description
+    # Description:
     #   Splits charvec vector from a downloaded file
     
     # FUNCTION
@@ -74,6 +75,28 @@ function (x, split=" ", col=1, format="%F")
     
     # Return Value:
     charvec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+stringSplit <-
+function (x, split = " ", col = NULL) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Splits charvec vector from a downloaded file
+    
+    # FUNCTION:
+    
+    FUN <- function(x, split, col) {
+        unlist(strsplit(x, split))[col] }
+        
+    data <- unlist(lapply(x, FUN, split = split, col = col))
+    data <- matrix(data, byrow = TRUE, nrow = length(x))
+    data
 }
 
 

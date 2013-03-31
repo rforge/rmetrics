@@ -10,7 +10,7 @@
 
 \description{
 
-    Two helpful data set and charvec splitting utilities. 
+    Helpful data set and charvec splitting utilities. 
     
 }
 
@@ -18,6 +18,7 @@
 \usage{
 dataSplit(x, split=" ", col=-1)
 charvecSplit(x, split=" ", col=1, format="\%F")
+stringSplit(x, split=" ", col=NULL) 
 }
 
 
