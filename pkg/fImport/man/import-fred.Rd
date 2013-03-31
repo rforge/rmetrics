@@ -105,7 +105,7 @@ fredImport(query, file = "tempfile", source = NULL, frequency = "daily",
         be returned.}
         
     The function \code{fredSeries} returns an S4 object of 
-    class  \code{timeSeries} or alternatively an object specified by
+    class \code{timeSeries} or alternatively an object specified by
     the function argument \code{returnClass}.
     \cr
     
@@ -136,6 +136,13 @@ Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     www.rmetrics.org.
     
 }
+
+
+%\examples{
+%## Check temporarily if functions work ...
+%   fredImport("DEXSZUS")
+%   fredSeries("DEXSZUS")
+%}
 
 
 \keyword{data}

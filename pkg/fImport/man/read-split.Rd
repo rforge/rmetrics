@@ -3,6 +3,7 @@
 
 \alias{charvecSplit}
 \alias{dataSplit}
+\alias{stringSplit}
 
 
 \title{Splitting downloaded data sets}

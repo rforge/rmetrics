@@ -48,19 +48,31 @@ yahooBriefing(query, file = "tempfile", source = NULL, save = FALSE, try = TRUE)
   
 \value{
 
-    returns a data frame with 
-    briefings downloaded from yahoo's web site.
+    returns a data frame with briefings downloaded from yahoo's web site.
     
 }
 
 
+\note{
+
+    This function is no longer supported. The reason for this
+    are the too many changes on the Yhaoo web site which made
+    the download very prone to many failures. Feel free to use
+    the code here to adapt the function to your own needs.
+
+}
+
+
 \author{
+
     Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
 \references{
-Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
+
+    Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
     \emph{Financial Market Data for R/Rmetrics}, 
     Rmetrics eBook, Rmetrics Association and Finance Online, Zurich,
     www.rmetrics.org.
