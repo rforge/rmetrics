@@ -5,7 +5,7 @@ citEntry(entry="Manual",
          title = "rngWELL: WELL generators.",
          author = "Christophe Dutang, Petr Savicky and Diethelm Wuertz",
 	 year = 2013,
-         note = "R package version 0.10-1",
+         note = "R package version 0.10-2",
 
          textVersion =
 	 paste(	"C. Dutang & Petr Savicky",
