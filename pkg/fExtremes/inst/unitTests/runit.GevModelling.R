@@ -155,7 +155,7 @@ function()
 
     # Create an artificial timeSeries with dummy positions:
     xx <- rt(5000, df = 4)
-    X = timeSeries(xx, charvec = timeSequence(length.out = NROW(xx)))
+    X = timeSeries(xx, charvec = timeSequence(Sys.Date(), length.out = NROW(xx)))
 
     # Compute Block Maxima:
     x.tS = blockMaxima(X, "monthly")
