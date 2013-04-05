@@ -100,8 +100,8 @@ function(
     # FUNCTION:
 
     # Match Arguments:
-    freq = match.arg(freq)
-    type = match.arg(type)
+    freq <- match.arg(freq)
+    type <- match.arg(type)
     
     # Check Dates:
     if (missing(start)) {
@@ -324,10 +324,10 @@ yahooBriefing <-
     
     # Download:
     if (is.null(source))
-        source = "http://finance.yahoo.com/q/ud?s="
+        source <- "http://finance.yahoo.com/q/ud?s="
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(yahooBriefing(query, file, source, save, try = FALSE))
+        z <- try(yahooBriefing(query, file, source, save, try = FALSE))
         if (class(z) == "try-error" || class(z) == "Error") {
             return("No Internet Access")
         }
@@ -336,44 +336,44 @@ yahooBriefing <-
         }
     } else {
         # Download:
-        url = paste(source, query, sep = "")
+        url <- paste(source, query, sep = "")
         download.file(url = url, destfile = file)
-        x = scan(file, what = "", sep = "\n")
+        x <- scan(file, what = "", sep = "\n")
 
         # Extract Data Records:
-        x = x[grep("Briefing.com", x)]
+        x <- x[grep("Briefing.com", x)]
 
-        x = gsub("</", "<", x, perl = TRUE)
-        x = gsub("/", " / ", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
-        x = gsub(" align=.center.", "", x, perl = TRUE)
-        x = gsub(" cell.......=...", "", x, perl = TRUE)
-        x = gsub(" border=...", "", x, perl = TRUE)
-        x = gsub(" color=.red.", "", x, perl = TRUE)
-        x = gsub(" color=.green.", "", x, perl = TRUE)
-        x = gsub("<.>", "", x, perl = TRUE)
-        x = gsub("<td>", "@", x, perl = TRUE)
-        x = gsub("<..>", "", x, perl = TRUE)
-        x = gsub("<...>", "", x, perl = TRUE)
-        x = gsub("<....>", "", x, perl = TRUE)
-        x = gsub("<table>", "", x, perl = TRUE)
-        x = gsub("<td nowrap", "", x, perl = TRUE)
-        x = gsub("<td height=....", "", x, perl = TRUE)
-        x = gsub("&amp;", "&", x, perl = TRUE)
+        x <- gsub("</", "<", x, perl = TRUE)
+        x <- gsub("/", " / ", x, perl = TRUE)
+        x <- gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x <- gsub(" align=.center.", "", x, perl = TRUE)
+        x <- gsub(" cell.......=...", "", x, perl = TRUE)
+        x <- gsub(" border=...", "", x, perl = TRUE)
+        x <- gsub(" color=.red.", "", x, perl = TRUE)
+        x <- gsub(" color=.green.", "", x, perl = TRUE)
+        x <- gsub("<.>", "", x, perl = TRUE)
+        x <- gsub("<td>", "@", x, perl = TRUE)
+        x <- gsub("<..>", "", x, perl = TRUE)
+        x <- gsub("<...>", "", x, perl = TRUE)
+        x <- gsub("<....>", "", x, perl = TRUE)
+        x <- gsub("<table>", "", x, perl = TRUE)
+        x <- gsub("<td nowrap", "", x, perl = TRUE)
+        x <- gsub("<td height=....", "", x, perl = TRUE)
+        x <- gsub("&amp;", "&", x, perl = TRUE)
 
-        x = unlist(strsplit(x, ">"))
+        x <- unlist(strsplit(x, ">"))
 
-        x = x[ grep("-...-[90]", x, perl = TRUE) ]
-        nX = length(x)
+        x <- x[ grep("-...-[90]", x, perl = TRUE) ]
+        nX <- length(x)
         # The last record has an additional @, remove it ...
-        x[nX] = gsub("@$", "", x[nX], perl = TRUE)
-        x = unlist(strsplit(x, "@"))
+        x[nX] <- gsub("@$", "", x[nX], perl = TRUE)
+        x <- unlist(strsplit(x, "@"))
         x[x == ""] = "NA"
-        x = matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
-        x[, 1] = as.character(strptime(x[, 1], format = "%d-%b-%y"))
+        x <- matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
+        x[, 1] <- as.character(strptime(x[, 1], format = "%d-%b-%y"))
         colnames(x) = c("Date", "ResearchFirm", "Action", "From", "To")
-        x = x[nrow(x):1, ]
-        X = as.data.frame(x)
+        x <- x[nrow(x):1, ]
+        X <- as.data.frame(x)
     }
 
     # Return Value:
@@ -421,7 +421,7 @@ yahooKeystats <-
     
     # Download:
     if (is.null(source))
-        source = "http://finance.yahoo.com/q/ks?s="
+        source <- "http://finance.yahoo.com/q/ks?s="
     if (try) {
         # First try if the Internet can be accessed:
         z <- try(yahooKeystats(query, file, source, save, try = FALSE))
@@ -446,49 +446,49 @@ yahooKeystats <-
         if (!length(x)) return(NA)
 
         # Clean up HTML:
-        x = gsub("/", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_datamodoutline1.", "", x, perl = TRUE)
-        x = gsub(" colspan=.2.", "", x, perl = TRUE)
-        x = gsub(" cell.......=...", "", x, perl = TRUE)
-        x = gsub(" border=...", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tablehead1.", "", x, perl = TRUE)
-        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
-        x = gsub(" width=.75%.>", "", x, perl = TRUE)
-        x = gsub(" width=.100%.", "", x, perl = TRUE)
-        x = gsub(" size=.-1.", "", x, perl = TRUE)
-        x = gsub("<.>", "", x, perl = TRUE)
-        x = gsub("<..>", "", x, perl = TRUE)
-        x = gsub("<....>", "", x, perl = TRUE)
-        x = gsub("<table>", "", x, perl = TRUE)
-        x = gsub("<sup>.<sup>", "", x, perl = TRUE)
-        x = gsub("&amp;", "&", x, perl = TRUE)
-        x = gsub("<td", " @ ", x, perl = TRUE)
-        x = gsub(",", "", x, perl = TRUE)
+        x <- gsub("/", "", x, perl = TRUE)
+        x <- gsub(" class=.yfnc_datamodoutline1.", "", x, perl = TRUE)
+        x <- gsub(" colspan=.2.", "", x, perl = TRUE)
+        x <- gsub(" cell.......=...", "", x, perl = TRUE)
+        x <- gsub(" border=...", "", x, perl = TRUE)
+        x <- gsub(" class=.yfnc_tablehead1.", "", x, perl = TRUE)
+        x <- gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x <- gsub(" width=.75%.>", "", x, perl = TRUE)
+        x <- gsub(" width=.100%.", "", x, perl = TRUE)
+        x <- gsub(" size=.-1.", "", x, perl = TRUE)
+        x <- gsub("<.>", "", x, perl = TRUE)
+        x <- gsub("<..>", "", x, perl = TRUE)
+        x <- gsub("<....>", "", x, perl = TRUE)
+        x <- gsub("<table>", "", x, perl = TRUE)
+        x <- gsub("<sup>.<sup>", "", x, perl = TRUE)
+        x <- gsub("&amp;", "&", x, perl = TRUE)
+        x <- gsub("<td", " @ ", x, perl = TRUE)
+        x <- gsub(",", "", x, perl = TRUE)
 
         # Create Matrix:
-        x = unlist(strsplit(x, "@" ))
-        x = x[ grep(":", x) ]
-        x = gsub("^ ", "", x, perl = TRUE)
+        x <- unlist(strsplit(x, "@" ))
+        x <- x[ grep(":", x) ]
+        x <- gsub("^ ", "", x, perl = TRUE)
         if (length(Index <- grep("^ ", x)) > 0)
             x <- x[-Index]
-        x = gsub(" $", "", x, perl = TRUE)
-        x = gsub(":$", ":NA", x, perl = TRUE)
+        x <- gsub(" $", "", x, perl = TRUE)
+        x <- gsub(":$", ":NA", x, perl = TRUE)
 
         # If there are two ":" in a line ...
-        x = sub(":", "@", x)
-        x = sub(":", "/", x)
+        x <- sub(":", "@", x)
+        x <- sub(":", "/", x)
 
         # Convert to matrix:
-        x = matrix(x, byrow = TRUE, ncol = 2)
+        x <- matrix(x, byrow = TRUE, ncol = 2)
 
         # Add Current Date:
-        stats = as.character(Sys.Date())
-        x = rbind(c("Symbol", query), c("Date", stats), x)
-        X = as.data.frame(x[, 2])
-        rownames(X) = x[, 1]
-        colnames(X) = "Value"
+        stats <- as.character(Sys.Date())
+        x <- rbind(c("Symbol", query), c("Date", stats), x)
+        X <- as.data.frame(x[, 2])
+        rownames(X) <- x[, 1]
+        colnames(X) <- "Value"
 
-        ## Return Value:
+        # Return Value:
         X
     }
 }

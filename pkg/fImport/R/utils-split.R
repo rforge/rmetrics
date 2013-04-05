@@ -21,9 +21,9 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  dataSplit               Splits data matrix from a downloaded file
-#  charvecSplit            Splits charvec vector from a downloaded file
-#  sringSplit              Splits a string vector from a downloaded file
+#  dataSplit               Splits a data matrix from a downloaded file
+#  charvecSplit            Splits a charvec vector from a downloaded file
+#  stringSplit             Splits a string vector from a downloaded file
 ################################################################################
 
 
@@ -33,18 +33,18 @@ function (x, split=" ", col=-1)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Splits data matrix from a downloaded file
+    #   Splits a data matrix from a downloaded file
     
     # FUNCTION
     
     # Split Function:
-    FUN = function(x, split, col) {
+    FUN <- function(x, split, col) {
         unlist(strsplit(x, split))[col]
     }
     
     # Split Data:
-    data = unlist(lapply(x, FUN, split = split, col = col))
-    data = matrix(as.numeric(data), byrow = TRUE, nrow = length(x))
+    data <- unlist(lapply(x, FUN, split = split, col = col))
+    data <- matrix(as.numeric(data), byrow = TRUE, nrow = length(x))
     
     # Return Value:
     data
@@ -60,18 +60,18 @@ function (x, split=" ", col=1, format="%F")
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Splits charvec vector from a downloaded file
+    #   Splits a charvec vector from a downloaded file
     
     # FUNCTION
     
     # Split Function:
-    FUN = function(x, split, col) {
+    FUN <- function(x, split, col) {
         unlist(strsplit(x, split))[col]
     }
     
     # Split Date Character Vector:
-    charvec = unlist(lapply(x, FUN, split = split, col = col))
-    charvec = format(strptime(charvec, format = format))
+    charvec <- unlist(lapply(x, FUN, split = split, col = col))
+    charvec <- format(strptime(charvec, format = format))
     
     # Return Value:
     charvec
@@ -87,7 +87,7 @@ function (x, split = " ", col = NULL)
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Splits charvec vector from a downloaded file
+    #   Splits a string vector from a downloaded file
     
     # FUNCTION:
     
