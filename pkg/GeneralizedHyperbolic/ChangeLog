@@ -1,3 +1,15 @@
+2013-04-19    <d.scott@auckland.ac.nz>
+
+	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding
+	the alpha and beta values to one decimal place
+
+	* runit.dgig.R added to graphically test both standard and extreme
+	cases (being ones where omega > 700)
+
+	* dgig changed to avoid underflow. Log evaluated and
+	exponentially-scaled Bessel function used when omega > 700
+
+
 2012-04-13    <d.scott@auckland.ac.nz>
 
 	* ArkansasRiver added as a data set giving data provided by Eric

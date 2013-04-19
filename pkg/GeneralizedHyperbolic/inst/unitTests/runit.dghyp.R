@@ -10,7 +10,7 @@
 
 
 ### Graphical Test for Generalized Hyperbolic Distribution
-graphicstest.dhyperb <- function()
+graphicstest.dghyp <- function()
 {
   ##Purpose: Test the dghyp function with small range parameters
   n <- 1000
@@ -23,7 +23,7 @@ graphicstest.dhyperb <- function()
   smalllambda <- smallparam[, 5]
   sden <- 0
   ## open file for graphical output
-  graphicsOutput <- paste(pathReport, "dhyperb.pdf", sep = "")
+  graphicsOutput <- paste(pathReport, "dghyp.pdf", sep = "")
   cat("Graphics output in file ", graphicsOutput, "\n")
   pdf(file = graphicsOutput, height = 7,width = 10)
   par(mfrow = c(1, 2), oma = c(5, 5, 5, 5))
@@ -96,7 +96,7 @@ graphicstest.dhyperb <- function()
   }
 
   dev.off()
-  
+
   return()
 }
 

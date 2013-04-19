@@ -22,7 +22,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         hyperbLargeParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -50,7 +50,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         hyperbSmallParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -79,7 +79,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         hyperbLargeShape[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -107,7 +107,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         hyperbSmallShape[rownum,] <- param
         rownum <- rownum + 1
       }

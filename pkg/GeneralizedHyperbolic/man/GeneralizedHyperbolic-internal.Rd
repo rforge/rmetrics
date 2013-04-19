@@ -9,6 +9,7 @@
 \alias{kappaLambda}
 \alias{alphaStand}
 \alias{betaStand}
+\alias{dgigScaled}
 \alias{dsghyp}
 \alias{dshyperb}
 \alias{hyperbFitStand}

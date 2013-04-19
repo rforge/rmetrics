@@ -25,11 +25,12 @@
   For the shape parameters \eqn{\alpha}{alpha} and \eqn{\beta}{beta} the
   approach is more complex. The values for these shape parameters were
   chosen by choosing values of \eqn{\xi}{xi} and \eqn{\chi}{chi} which
-  range over the shape triangle, then the function \code{hyperbChangePars}
-  was applied to convert them to the \eqn{\alpha, \beta}{alpha, beta}
-  parameterization. See the examples for the values of \eqn{\xi}{xi} and
-  \eqn{\chi}{chi} for the large parameter sets.
-}
+  range over the shape triangle, then the function
+  \code{hyperbChangePars} was applied to convert them to the
+  \eqn{\alpha, \beta}{alpha, beta} parameterization. The resulting
+  \eqn{\alpha, \beta}{alpha, beta} values were then rounded to one
+  decimal place. See the examples for the values of \eqn{\xi}{xi} and
+  \eqn{\chi}{chi} for the large parameter sets.  }
 
 \usage{
   hyperbSmallShape

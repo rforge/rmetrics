@@ -18,12 +18,25 @@ dgig <- function(x, chi = 1, psi = 1, lambda = 1,
 
   omega <- sqrt(chi*psi)
 
-  if (is.null(KOmega))
-    KOmega <- besselK(omega, nu = lambda)
+  if (omega > 700){
+      KOmega <- besselK(omega, nu = lambda, expon.scaled = TRUE)
+      logDensity <- ifelse(x > 0,
+                           (lambda/2)*log(psi/chi) -
+                           log(2) - log(KOmega) + omega +
+                           (lambda - 1)*log(x) -
+                           (1/2)*(chi*x^(-1) + psi*x),
+                           -Inf)
+      gigDensity <- exp(logDensity)
+  } else {
+      if (is.null(KOmega)){
+          KOmega <- besselK(omega, nu = lambda)
+      }
 
-  gigDensity <- ifelse(x > 0, (psi/chi)^(lambda/2) /
-                       (2*KOmega)*x^(lambda - 1) *
-                       exp(-(1/2)*(chi*x^(-1) + psi*x)), 0)
+      gigDensity <- ifelse(x > 0, (psi/chi)^(lambda/2) /
+                           (2*KOmega)*x^(lambda - 1) *
+                           exp(-(1/2)*(chi*x^(-1) + psi*x)), 0)
+  }
+
   gigDensity
 } ## end of dgig()
 

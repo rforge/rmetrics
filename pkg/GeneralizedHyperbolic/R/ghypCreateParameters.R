@@ -21,7 +21,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         ghypLargeParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -48,7 +48,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         ghypSmallParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -76,7 +76,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         ghypLargeShape[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -103,7 +103,7 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],alpha,beta,lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
         ghypSmallShape[rownum,] <- param
         rownum <- rownum + 1
       }
