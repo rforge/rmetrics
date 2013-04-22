@@ -22,7 +22,8 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,3),round(beta,3),lambdas[l])
+        if (param[3] <= abs(param[4])) print("Error")
         nigLargeParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -50,7 +51,8 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,3),round(beta,3),lambdas[l])
+        if (param[3] <= abs(param[4])) print("Error")
         nigSmallParam[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -79,7 +81,8 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,3),round(beta,3),lambdas[l])
+        if (param[3] <= abs(param[4])) print("Error")
         nigLargeShape[rownum,] <- param
         rownum <- rownum + 1
       }
@@ -107,7 +110,8 @@ for (i in 1:length(mus)){
         chi <- xiChis[k,2]
         alpha <- (1 - xi^2)/(deltas[j]*xi*sqrt(xi^2 - chi^2))
         beta <- alpha*chi/xi
-        param <- c(mus[i],deltas[j],round(alpha,1),round(beta,1),lambdas[l])
+        param <- c(mus[i],deltas[j],round(alpha,3),round(beta,3),lambdas[l])
+        if (param[3] <= abs(param[4])) print("Error")
         nigSmallShape[rownum,] <- param
         rownum <- rownum + 1
       }

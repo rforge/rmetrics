@@ -1,3 +1,9 @@
+2013-04-22    <d.scott@auckland.ac.nz>
+
+	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding
+	the alpha and beta values to three decimal places. One decimal
+	place resulted in some alpha = abs(beta) cases.
+
 2013-04-19    <d.scott@auckland.ac.nz>
 
 	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding

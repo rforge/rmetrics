@@ -29,15 +29,13 @@
   range over the shape triangle, then the function \code{ghypChangePars}
   was applied to convert them to the \eqn{\alpha, \beta}{alpha, beta}
   parameterization. The resulting \eqn{\alpha, \beta}{alpha, beta}
-  values were then rounded to one decimal place. See the examples for
+  values were then rounded to three decimal places. See the examples for
   the values of \eqn{\xi}{xi} and \eqn{\chi}{chi} for the large
   parameter sets.
 
   The values of \eqn{\lambda}{lambda} are drawn from \{-0.5, 0, 1\} in
   \code{ghypSmallShape} and \{-1, -0.5, 0, 0.5, 1, 2\} in
   \code{ghypLargeShape}.
-
-
 }
 
 \usage{

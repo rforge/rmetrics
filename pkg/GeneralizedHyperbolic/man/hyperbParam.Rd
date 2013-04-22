@@ -28,9 +28,10 @@
   range over the shape triangle, then the function
   \code{hyperbChangePars} was applied to convert them to the
   \eqn{\alpha, \beta}{alpha, beta} parameterization. The resulting
-  \eqn{\alpha, \beta}{alpha, beta} values were then rounded to one
-  decimal place. See the examples for the values of \eqn{\xi}{xi} and
-  \eqn{\chi}{chi} for the large parameter sets.  }
+  \eqn{\alpha, \beta}{alpha, beta} values were then rounded to three
+  decimal places. See the examples for the values of \eqn{\xi}{xi} and
+  \eqn{\chi}{chi} for the large parameter sets.
+}
 
 \usage{
   hyperbSmallShape
