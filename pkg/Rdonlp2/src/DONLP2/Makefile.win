@@ -1,0 +1,14 @@
+#-*- Makefile -*-
+#
+include $(R_HOME)/etc$(R_ARCH)/Makeconf
+
+SOURCES= ./donlp2.c 
+
+OBJS = $(SOURCES:.c=.o)
+
+PKG_CPPFLAGS = -D__WOE__ -D__MINGW32__ -I.
+
+all: libdonlp2.a
+
+libdonlp2.a: $(OBJS)
+	$(AR) crs $@ $(OBJS)

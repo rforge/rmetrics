@@ -2,11 +2,18 @@
 
     Rdonlp2.c - R extension library for DONLP2
 
+    Original Version:
     Copyright (C) 2007 Ryuichi Tamura (ry.tamura @ gmail.com)
+    
+    Extensions, Modifications and Bug Fixing
+    Diethelm Wuertz
+    Christoph Bergmeir
 
  ***********************************************************************/
-#include "Rdonlp2.h"
 
+ #include "Rdonlp2.h"
+
+ 
 /*** list reader function ***/
 static SEXP
 getListElement(SEXP list, char *str)
@@ -21,6 +28,7 @@ getListElement(SEXP list, char *str)
   }
   return elmt;
 }
+
 
 /*** initializer for Rdonlp2Info ***/
 static Rdonlp2Info*
@@ -45,6 +53,7 @@ init_Rdonlp2Info(int npar, int nlin, int nonlin)
   memset(ret->name, '\0', 41);
   return ret;
 }
+
 
 /*** copy bounds parameters (par, lin, nlin)             ***/
 /*** 'big' must be the same value as defined in donlp2() ***/
@@ -77,9 +86,11 @@ copy_bounds(Rdonlp2Info *info, SEXP lbd, SEXP ubd)
   return;
 }
 
+
 /*** 'main' function ***/
 SEXP
-call_donlp2(SEXP par,            /* initial parameter vector        */
+call_donlp2(
+        SEXP par,            /* initial parameter vector        */
         SEXP num_lin,        /* number of linear constraints    */
         SEXP num_nonlin,     /* number of nonlinear constraints */
         SEXP fsilent,        /* output to .[mes|pro] file ?     */
@@ -171,6 +182,7 @@ call_donlp2(SEXP par,            /* initial parameter vector        */
   return(duplicate(info->ret));
 }
 
+
 SEXP
 teardown(SEXP dummy)
 {
@@ -180,6 +192,7 @@ teardown(SEXP dummy)
   global_mem_free();
   return R_NilValue;
 }
+
 
 void
 user_init_size()
@@ -195,6 +208,7 @@ user_init_size()
 
   return;
 }
+
 
 void
 user_init()
@@ -249,6 +263,7 @@ user_init()
   return;
 }
 
+
 void
 setup()
 {
@@ -274,7 +289,11 @@ setup()
   return;
 }
 
-SEXP myeval(SEXP fcall, SEXP var, SEXP env) {
+
+SEXP 
+myeval(SEXP fcall, SEXP var, SEXP env) {
+	
+	/* added by Christoph Bermeier */
 	
 	SEXP sexp_fvec;
 
@@ -282,7 +301,7 @@ SEXP myeval(SEXP fcall, SEXP var, SEXP env) {
 
 	if (TYPEOF(fcall) == EXTPTRSXP) {
 		
-                typedef SEXP (*funcPtr)(SEXP);
+        typedef SEXP (*funcPtr)(SEXP);
 		funcPtr* funptr = (funcPtr*) R_ExternalPtrAddr(fcall);
 
 		sexp_fvec = (*funptr)(var);
@@ -293,9 +312,9 @@ SEXP myeval(SEXP fcall, SEXP var, SEXP env) {
 
 	UNPROTECT(1);
 
-        return sexp_fvec;
+   return sexp_fvec;
 
-};
+}
 
  
 void
@@ -320,6 +339,7 @@ ef(double x[], double *fx)
   
   return;
 }
+
 
 void
 egradf(double x[], double gradf[])
@@ -346,6 +366,7 @@ egradf(double x[], double gradf[])
   UNPROTECT(3);
   return;
 }
+
 
 void
 econ(int type, int liste[], double x[], double con[], int err[])
@@ -392,6 +413,7 @@ econ(int type, int liste[], double x[], double con[], int err[])
   return;
 }
 
+
 void
 econgrad(int liste[], int shift, double x[], double **grad)
 {
@@ -426,6 +448,7 @@ econgrad(int liste[], int shift, double x[], double **grad)
 /*** we do not use eval_extern() ***/
 void user_eval(double xvar[],int mode) {return;}
 void eval_extern(int mode){return;}
+
 
 static char *tagname[] = {
   /* 0-3 */
@@ -536,6 +559,7 @@ init_Raccinf(int it, double **accinf,
   return(Raccinf);
 }
 
+
 /*** donlp() calls newx() on every end of iteration ***/
 void 
 newx(double x[], double u[], int itstep, double **accinf, int *cont)
@@ -579,6 +603,7 @@ static char *messag[] = {
   "max(n,10) small differences in penalty function,terminate",
   "user required termination                                "
 };
+
 
 /*** donlp() calls solchk() on termination ***/
 void

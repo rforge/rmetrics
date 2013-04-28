@@ -13,17 +13,17 @@ Collection of Control Variables}
 donlp2Control( 
     iterma = 4000, nstep = 20,fnscale = 1, report = FALSE, 
     rep.freq = 1, tau0 = 1.0, tau = 0.1, del0 = 1.0, epsx = 1e-5, 
-    delmin = 0.1*del0, epsdif=1e-8, nreset.multiplier = 1,
+    delmin = 0.1, epsdif=1e-8, nreset.multiplier = 1,
     difftype=3, epsfcn = 1e-16,taubnd = 1.0, hessian = FALSE,
     te0 = TRUE, te1 = FALSE, te2 = FALSE, te3 = FALSE,
-    silent = FALSE, intakt = TRUE)
+    silent = TRUE, intakt = TRUE)
 }
 
 
 \arguments{
 
     \item{iterma}{
-        maximum number of iterations}
+        maximum number of iterations.}
   
     \item{nstep}{
         maximum number of tries in the backtracking.}
@@ -61,7 +61,7 @@ donlp2Control(
         binding. If too small, the indentification of correct sets of
         binding constraints may be delayed. If too large, DONLP2 will escape
         to the full regularlized SQP method(quite costly).  Good values are
-        in [0.01, 1.0]}
+        in [0.01, 1.0].}
 
     \item{epsx}{
         successful temination is indicated if the Kuhn-Tucker
@@ -108,7 +108,7 @@ donlp2Control(
         if TRUE post-mortem-dump of accumlated information is printed.}
 
     \item{te2}{
-        if TRUE, more detailed information is ``pretty-printed''.}
+        if TRUE, more detailed information is 'pretty-printed'.}
 
     \item{te3}{
         if TRUE, the gradients and approximated Newton-Raphson
@@ -118,14 +118,6 @@ donlp2Control(
         If \code{TRUE}, \code{donlp2()} runs quietly, i.e.,
         \code{intakt=FALSE}, .pro/.mes files are not created, and
         \code{te0,te1,te2,te3} are omitted.}
-}
-
-
-\seealso{
-
-  \code{donlp2}, \code{donlp2NLP},
-  and packages \code{Rnlminb2} and \code{Rsolnp2}.
-  
 }
 
 

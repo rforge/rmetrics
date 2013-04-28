@@ -40,8 +40,7 @@ donlp2(
         pointer to a function implemented in, e.g., C (this can speed 
         up the computation considerably). The external pointer mechanism is
         illustrated by an example in the file wright4ExampleCompiledEval.R,
-        which is in the inst/doc folder of the package.
-}
+        which is in the inst/doc folder of the package.}
   
     \item{par}{
         parameter vector(vector object).}
@@ -70,9 +69,9 @@ donlp2(
  
     \item{nlin.lower, nlin.upper}{
         upper and lower bounds for nonlinear constraints,
-        respectively. Their length must equal to \code{length(nlin)}. If some
-        elements are unbounded, specify \code{+Inf} or \code{-Inf}
-        explicitly.  }
+        respectively. Their length must equal to \code{length(nlin)}. If 
+        some elements are unbounded, specify \code{+Inf} or \code{-Inf}
+        explicitly.}
 
     \item{control}{
         "control parameters" that defines the behavior of
@@ -222,10 +221,11 @@ donlp2(
         in BFGS.}
 
     \item{qpterm}{
-        \code{0}:if \code{sing==-1}, termination indicator of
-        the QP solver, \code{1}:successful, \code{-1}:\code{\tau} becomes
-        larger than \code{tauqp} without slack variables becoming sufficiently
-        small.}
+        \code{0}:if 
+        \code{sing==-1}, termination indicator of the QP solver, 
+        \code{1}:successful, 
+        \code{-1}:\code{tau} becomes larger than \code{tauqp} without 
+        slack variables becoming sufficiently small.}
 
     \item{tauqp}{
         weight of slack variables in QP solver.}

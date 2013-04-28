@@ -70,41 +70,41 @@ function(
     # FUNCTION:
     
     # Control List:
-    ctrl = donlp2Control()
+    ctrl <- donlp2Control()
     if (length(control) > 0)
         for (name in names(control)) ctrl[name] = control[name]
-    control = ctrl
+    control <- ctrl
     
     # Environment Setting:
-    env = .GlobalEnv
+    env <- .GlobalEnv
     
     # Box Constraints:
     if (is.null(par.lower)) par.lower = rep(-Inf, length(par))
     if (is.null(par.upper)) par.upper = rep(+Inf, length(par))
     
     # Linear Constraints:
-    A = rbind(eqA, ineqA)
-    lin.lower = c(eqA.bound, ineqA.lower)
-    lin.upper = c(eqA.bound, ineqA.upper)
+    A <- rbind(eqA, ineqA)
+    lin.lower <- c(eqA.bound, ineqA.lower)
+    lin.upper <- c(eqA.bound, ineqA.upper)
     
     # Nonlinear Constraints:
     if ((length(eqFun) + length(ineqFun)) == 0) {
-        nlin = list()
-        nlin.lower = rep(-Inf, length(nlin))
-        nlin.upper = rep(+Inf, length(nlin))
+        nlin <- list()
+        nlin.lower <- rep(-Inf, length(nlin))
+        nlin.upper <- rep(+Inf, length(nlin))
     } else {
-        nlin = list()
-        if (length(eqFun) > 0) nlin = c(nlin, eqFun)
-        if (length(ineqFun) > 0) nlin = c(nlin, ineqFun)
-        nlin.lower = c(eqFun.bound, ineqFun.lower)
-        nlin.upper = c(eqFun.bound, ineqFun.upper)
+        nlin <- list()
+        if (length(eqFun) > 0) nlin <- c(nlin, eqFun)
+        if (length(ineqFun) > 0) nlin <- c(nlin, ineqFun)
+        nlin.lower <- c(eqFun.bound, ineqFun.lower)
+        nlin.upper <- c(eqFun.bound, ineqFun.upper)
     }
     
     # Control List:
-    if(length(control) == 0) control = donlp2Control()
+    if(length(control) == 0) control <- donlp2Control()
     
     # Solve:
-    ans = donlp2(
+    ans <- donlp2(
         par = par, 
         fn = fun, 
         par.upper = par.upper, 

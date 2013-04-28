@@ -43,7 +43,6 @@
 /*    new version of BFGS: if nr  =  0 take Powell's update                  */
 /*    no suppression of update beforehand (with exception dg = 0)            */
 /*    plus some minor corrections                                            */
-
 /*    for consistency reasons variable names cf and cgf changed into         */
 /*    icf and icgf                                                           */
 /*    added feature numerical differentiation of order 1,2,6                 */
@@ -56,9 +55,9 @@
 /* ************************************************************************* */
 /* (*) using a c-version of donlp2 as of 1998 made by                        */
 /*     by S. Schoeffert, ASB, Bourges, France                                */
-/*     dynamic memory allocation added by k.s. Cover                         */
-/*     copyrights and right of commercial exploitation remaining by contract */
-/*     with P. Spellucci                                                     */
+/*     dynamic memory allocation added by K.S. Cover                         */
+/*     copyrights and right of commercial exploitation                       */
+/*     remaining by contract  with P. Spellucci                                                     */
 /* ************************************************************************  */
 /*  new function format                                                      */
 /*  developed in 2002/2003 by P. Spellucci copyrigth P. Spellucci            */
@@ -102,9 +101,6 @@
 /*   bug fix in user_eval.c: nres replaced by nonlin                         */
 /*  fix of a problem with glibc : bind and bind0 renamed to o8bind and o8bind0*/
 /*****************************************************************************/
-
-
-
 
 
 /* ARRAY_BORDER_CHECK: Check array borders for indices writing off
@@ -579,8 +575,7 @@ void o8st(void) {
     void user_eval(double xvar[],int mode);
 
     static int  i,j/*,k*/;
-    /* static double   tol1 ,bd0,infiny,gxi,hxi,term; */
-    static double infiny;
+    static double   tol1,bd0,infiny,gxi,hxi,term;
     static time_t   tim;
 
 #if 0    

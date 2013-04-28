@@ -2,6 +2,8 @@
 
 # ------------------------------------------------------------------------------
 http://www.koders.com/cpp/fid233BFDABFB59589A07781C932CE33A5D528ACE32.aspx
+see also: http://code.ohloh.net
+
 
 Source Code
 
@@ -36,17 +38,13 @@ d o n l p  2
    new version of BFGS: if nr  =  0 take Powell's update                     
    no suppression of update beforehand (with exception dg = 0)               
    plus some minor corrections                                               
-
    for consistency reasons variable names cf and cgf changed into            
    icf and icgf                                                              
-
    added feature numerical differentiation of order 1,2,6                    
    requires new parameters epsfcn, taubnd, difftype                          
-
    added feature of external blockwise evaluation of functions               
    rather than individual evaluation                                         
    requires new parameter bloc                                               
-
    new feature of user-supplied scaling of x                                 
 
    (*) direct translation of -, from f77 to ANSI C language                  

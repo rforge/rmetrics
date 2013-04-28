@@ -90,14 +90,14 @@ function(
     }
   
     if(is.function(fn)) {
-      # Nonlinear constraints:
-      num.nlin <- length(nlin)
-      if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
-          stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
+        # Nonlinear constraints:
+        num.nlin <- length(nlin)
+        if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
+           stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
     } else {
-      num.nlin <- length(nlin.upper)
-      if (length(nlin.lower)!=num.nlin)
-          stop("# of bounds for nonlinear constraints should be equal (lower and upper)")
+        num.nlin <- length(nlin.upper)
+        if (length(nlin.lower)!=num.nlin)
+           stop("# of bounds for nonlinear constraints should be equal (lower and upper)")
     }
 
     # Concatenate bounds for internal use:
@@ -111,7 +111,6 @@ function(
 
     # fun.id == 0: evaluate objective function 'fn'
     # fun.id >= 1: evaluate constraint function 'nlin[[fun.id]]'
-    #
 
     if(is.function(fn)) {
         confun <- function(arg){
@@ -131,7 +130,7 @@ function(
             }
         }
     } else {
-      confun <- fn
+        confun <- fn
     }
 
     # accfun
@@ -164,11 +163,11 @@ function(
         # ensure to free memory and close .mes .pro files if opened
         finally=.Call("teardown", 0, PACKAGE = "Rdonlp2"))
             
-    ans$nr.update <- matrix(ans$nr.update, nr = length(par))
+    ans$nr.update <- matrix(ans$nr.update, nrow = length(par))
     if (control$hessian)
-        ans$hessian = matrix(ans$hessian, nr = length(par))
+        ans$hessian <- matrix(ans$hessian, nrow = length(par))
     else
-        ans$hessian = NULL
+        ans$hessian <- NULL
         
     # Return Value:
     ans

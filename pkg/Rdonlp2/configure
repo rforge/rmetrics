@@ -1,0 +1,50 @@
+#! /bin/sh
+## For the time being, this is a simple shell script ...
+
+## Test whether a complete DONLP2 library environment is available,
+## e.g. ftp://ftp.gnu.org/gnu/donlp2/
+
+## Find the R home directory.
+: ${R_HOME=`R RHOME`}
+if test -z "${R_HOME}"; then
+  echo "Could not determine R_HOME."
+  exit 1
+fi
+
+R="${R_HOME}/bin/R"
+
+DONLP2_LIBS="-ldonlp2"
+
+## Test whether we can compile and link a minimal program.
+rm -f conftest.*
+
+cat > conftest.cc <<EOF
+#include <donlp2.h>
+int main ()
+{
+   glp_prob *lp;
+   lp = glp_create_prob();
+   glp_delete_prob(lp);
+   return 0;
+}
+EOF
+
+${R} CMD SHLIB conftest.cc ${DONLP2_LIBS} >/dev/null 2>&1
+status=${?}
+
+rm -f conftest.*
+
+if test ${status} -eq 0; then
+    DONLP2_INCLUDE_PATH=
+    DONLP2_LIB_PATH=
+    DONLP2_TS=
+else    
+    DONLP2_INCLUDE_PATH="-IDONLP2"
+    DONLP2_LIB_PATH="-LDONLP2"
+    DONLP2_TS="DONLP2.ts"
+fi
+
+sed -e "s|@DONLP2_INCLUDE_PATH@|${DONLP2_INCLUDE_PATH}|" \
+    -e "s|@DONLP2_LIB_PATH@|${DONLP2_LIB_PATH}|" \
+    -e "s|@DONLP2_TS@|${DONLP2_TS}|" \
+    src/Makevars.in > src/Makevars
