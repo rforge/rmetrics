@@ -119,13 +119,5 @@ PORT Library,
 }
 
 
-\seealso{
-
-    \code{nlminb2Control}, \code{nlminb2NLP},
-    and packages \code{Rdonlp2} and \code{Rsolnp2}. 
-    
-}
-
-
 \keyword{optimize}
 

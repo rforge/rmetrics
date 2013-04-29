@@ -87,7 +87,7 @@ function(
     }
     
     # Solve:
-    ans <- nlminb2(
+    optim <- nlminb2(
         start = par, 
         objective = fun, 
         eqFun = eqfun, 
@@ -104,12 +104,16 @@ function(
     version <- paste(package$Package, package$Version, package$Date)
     
     # Return Value:
-    list(
-        opt = ans,
-        par = ans$par, 
-        objective = fun(ans$par), 
-        convergence = ans$convergence,
-        message = ans$message)
+    value <- list(
+        opt = optim,
+        solution = optim$par, 
+        objective = fun(optim$par), 
+        status = optim$convergence,
+        message = optim$message,
+        solver = "nlminb2NLP",
+        version = version)
+    class(value) <- c("solver", "list")
+    value
 }        
    
 
