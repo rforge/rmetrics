@@ -1,14 +1,17 @@
 Package: Rnlminb2
-Version: 2110.79
-Date: 2009 
-Title: Rmetrics - Nonlinear programming with nonlinear constraints
-Author: Yohan Chalabi, Stefan Theussl, Diethelm Wuertz
-Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
-LazyData: yes
-License: GPL (>= 2)
-URL: http://www.rmetrics.org
+Version: 3.0.0
+Date: 2009-04-12
+Title: An R extension library for constrained optimization with nlminb.
+Description: 
+    NLMINB2 is an interior point nonlinear constrained programming 
+    problem interface written by Dietgelm Wuertz. The version here 
+    calls the R function nlminb from R's base environment. 
+Author: 
+    Douglas Bates and Deepayan Sarkar have written the nlminb R Port.
+    David M. Gay has written the underlying Fortran code.
+    Diethelm Wuertz has added nonlinear constraints functionality nlminb2.
+Maintainer: 
+    Diethelm Wuertz <wuertz@phys.ethz.ch>
+Depends: R (>= 2.12.0)
+License: GPL-2
+URL: https://r-forge.r-project.org/projects/rmetrics/

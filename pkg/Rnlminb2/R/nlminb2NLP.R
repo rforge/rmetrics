@@ -17,7 +17,7 @@
 
 ################################################################################
 # FUNCTION:                DESCRIPTION:
-#  nlminb2 NLP              Function wrapper for solver nlminb2()
+#  nlminb2NLP               Function wrapper for solver nlminb2()
 ################################################################################
 
 
@@ -48,13 +48,13 @@ function(
     # FUNCTION:
     
     # Environment Setting:
-    env = .GlobalEnv
+    env <- .GlobalEnv
     
     # Control List:
-    ctrl = nlminb2Control()
+    ctrl <- nlminb2Control()
     if (length(control) > 0)
         for (name in names(control)) ctrl[name] = control[name]
-    control = ctrl
+    control <- ctrl
 
     # Box Constraints:
     if (is.null(par.lower)) par.lower = -Inf
@@ -87,7 +87,7 @@ function(
     }
     
     # Solve:
-    ans = nlminb2(
+    ans <- nlminb2(
         start = par, 
         objective = fun, 
         eqFun = eqfun, 
@@ -98,6 +98,10 @@ function(
         hessian = NULL,  
         control = control,
         env = env)
+    
+    # Version:
+    package <- packageDescription(pkg="Rnlminb2")
+    version <- paste(package$Package, package$Version, package$Date)
     
     # Return Value:
     list(
