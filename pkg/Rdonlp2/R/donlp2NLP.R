@@ -23,7 +23,7 @@
 
 donlp2NLP <- 
 function(
-    par, fun, 
+    start, fun, 
     
     par.lower = NULL, 
     par.upper = NULL,
@@ -67,6 +67,14 @@ function(
     #       env = .GlobalEnv, 
     #       name = NULL)
     
+    # Authors:
+    #    Peter Spelucci has has written the original solver code,
+    #    S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
+    #    K. S. Cove has added dynamic memory allocation,
+    #    Christoph Bergmeier has added passing objecive and constraints as external pointer,
+    #    Ryuichi Tamura has written the original Rdonlp2 interface,
+    #    Diethelm Wuertz has written the current Rdonlp2 interface.
+    
     # FUNCTION:
     
     # Control List:
@@ -79,8 +87,8 @@ function(
     env <- .GlobalEnv
     
     # Box Constraints:
-    if (is.null(par.lower)) par.lower = rep(-Inf, length(par))
-    if (is.null(par.upper)) par.upper = rep(+Inf, length(par))
+    if (is.null(par.lower)) par.lower <- rep(-Inf, length(start))
+    if (is.null(par.upper)) par.upper <- rep(+Inf, length(start))
     
     # Linear Constraints:
     A <- rbind(eqA, ineqA)
@@ -102,10 +110,11 @@ function(
     
     # Control List:
     if(length(control) == 0) control <- donlp2Control()
-    
+
     # Solve:
-    ans <- donlp2(
-        par = par, 
+    elapsed <- Sys.time()
+    optim <- donlp2(
+        par = start, 
         fn = fun, 
         par.upper = par.upper, 
         par.lower = par.lower, 
@@ -119,14 +128,24 @@ function(
         control.fun = function(lst) {return(TRUE)}, 
         env = .GlobalEnv, 
         name = NULL)
-        
+    elapsed <- Sys.time() - elapsed
+       
+    # Version:
+    package <- packageDescription(pkg="Rdonlp2")
+    version <- paste(package$Package, package$Version, package$Date)
+    
     # Return Value:
-    list(
-        opt = ans,
-        par = ans$par, 
-        objective = fun(ans$par), 
-        convergence = NA,
-        message = ans$message)
+    value <- list(
+        opt = optim,
+        solution = optim$par, 
+        objective = fun(optim$par), 
+        status = NA,
+        message = optim$message,
+        solver = "donlp2NLP",
+        elapsed = elapsed,
+        version = version)
+    class(value) <- c("solver", "list")
+    value
 }
 
 

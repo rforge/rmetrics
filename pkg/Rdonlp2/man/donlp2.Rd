@@ -86,7 +86,7 @@ donlp2(
 
     \item{env}{
         the environment in which objective, constraint, control
-        functions are evaluated. }
+        functions are evaluated.}
 
     \item{name}{
         an character object that specify file name(without
@@ -251,24 +251,13 @@ donlp2(
 
 \author{ 
 
-    Rdonlp2(R port) is copyrighted by Ryuichi Tamura. Original
+    Peter Speluccihas has written the original solver code,
+    S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
+    K. S. Cove has added dynamic memory allocation,
+    Christoph Bergmeier has added passing objecive and constraints as external pointer,
+    Ryuichi Tamura has written the original Rdonlp2 interface,
+    Diethelm Wuertz has written the current Rdonlp2 interface.
     DONLP2 is copyrighted software written by Peter Sperucci.
-    
-}
-
-
-\references{
-
-    \url{http://plato.la.asu.edu/donlp2.html}(original DONLP2),
-    \url{http://arumat.net/Rdonlp2/}(Rdonlp2)
-    
-}
-
-
-\seealso{
-
-    \code{donlp2Control}, \code{donlp2NLP},
-    and packages \code{Rnlminb2} and \code{Rsolnp2}.
     
 }
 

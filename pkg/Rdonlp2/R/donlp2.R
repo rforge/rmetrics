@@ -58,6 +58,14 @@ function(
     #   let lower and upper bounds for constraint be equal. 
     #   http://arumat.net/Rdonlp2/tutorial.html
     
+    # Authors:
+    #    Peter Speluccihas has written the original solver code,
+    #    S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
+    #    K. S. Cove has added dynamic memory allocation,
+    #    Christoph Bergmeier has added passing objecive and constraints as external pointer,
+    #    Ryuichi Tamura has written the original Rdonlp2 interface,
+    #    Diethelm Wuertz has written the current Rdonlp2 interface.
+    
     # FUNCTION:
     
     # Use analytical gradients?

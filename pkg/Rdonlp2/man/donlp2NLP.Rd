@@ -26,7 +26,7 @@
 
 \usage{
 donlp2NLP( 
-    par, fun,
+    start, fun,
     par.lower = NULL, par.upper = NULL,   
     eqA = NULL, eqA.bound = NULL,
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,  
@@ -38,7 +38,7 @@ donlp2NLP(
 
 \arguments{
 
-    \item{par}{
+    \item{start}{
         parameter vector(vector object).}
         
     \item{fun}{
@@ -94,16 +94,22 @@ donlp2NLP(
         a list of information on the optimal solution as returned by
         the function \code{donlp2}.}
     
-    \item{par}{
+    \item{solution}{
         a numeric vector, the optimal solution.}
   
     \item{objective}{
         a numeric value, the value at the optimal solution}
   
-    \item{convergence}{
+    \item{status}{
         not used, returns NA.}
         
     \item{message}{
+        a character string, the convergence message.}
+        
+    \item{solver}{
+        a character string, the name of the solver.}
+        
+    \item{version}{
         a character string, the convergence message.}
 
 }
@@ -111,49 +117,36 @@ donlp2NLP(
 
 \author{ 
 
-    The R port of \code{dnonlp2} was written by Ryuichi Tamura,
-    the R/Rmetrics interface \code{donlp2NLP} was written by Diethem Wuertz,  
-    the underlying C code called by the R function \code{donlp2} was 
-    written by Peter Sperucci.
+    Peter Speluccihas has written the original solver code,
+    S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
+    K. S. Cove has added dynamic memory allocation,
+    Christoph Bergmeier has added passing objecive and constraints as external pointer,
+    Ryuichi Tamura has written the original Rdonlp2 interface,
+    Diethelm Wuertz has written the current Rdonlp2 interface.
     
 }
 
-\references{
-
-    \url{http://plato.la.asu.edu/donlp2NLP.html}(original donlp2NLP),
-    \url{http://arumat.net/Rdonlp2NLP/}(Rdonlp2NLP)
-    
-}
-
-
-\seealso{
-
-    \code{\link{donlp2Control}},
-    and packages \code{Rnlminb2} and \code{Rsolnp2}.
-    
-}
 
 
 \examples{
 ## Example:
 
    # Feasible Start Solution:
-   start = c(10, 10)
+   start <- c(10, 10)
    
    # Objective Function: x^2 + y^2 
    fun <- function(x) sum(x^2)
    
    # Bounds: -100 <= x,y <= 100
-   par.lower = c(-100, -100)
-   par.upper = c(100, 100)
+   par.lower <- c(-100, -100)
+   par.upper <- c(100, 100)
     
    # Equality Constraints: x*y = 2
-   eqFun <- list(
-     function(x) x[1]*x[2])
-   eqFun.bound = 2
+   eqFun <- list(function(x) x[1]*x[2])
+   eqFun.bound <- 2
   
    # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
-   donlp2NLP(par = start, fun = fun, 
+   donlp2NLP(start = start, fun = fun, 
      par.lower = par.lower, par.upper = par.upper,
      eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
 }
