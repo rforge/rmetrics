@@ -18,7 +18,7 @@
 
 \usage{
 nlminb2NLP( 
-    par, fun,
+    start, fun,
     par.lower = NULL, par.upper = NULL,   
     eqA = NULL, eqA.bound = NULL,
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,   
@@ -30,7 +30,7 @@ nlminb2NLP(
 
 \arguments{
 
-    \item{par}{
+    \item{start}{
         parameter vector(vector object).}
         
     \item{fun}{
@@ -82,26 +82,27 @@ nlminb2NLP(
 
     A list with following elements:
   
-    \item{par}{
-        a numeric vector, the best set of parameters found.}
+    \item{opt}{
+        a list of information on the optimal solution as returned by
+        the function \code{donlp2}.}
     
+    \item{solution}{
+        a numeric vector, the optimal solution.}
+  
     \item{objective}{
-        a numeric value, the value of \code{objective} corresponding 
-        to \code{par}.}
+        a numeric value, the value at the optimal solution}
   
-    \item{convergence}{
-        an integer code, 0 indicates successful convergence.}
-  
+    \item{status}{
+        not used, returns NA.}
+        
     \item{message}{
-        a character string giving any additional information returned 
-        by the optimizer, or NULL. For details, see PORT documentation.}
-
-    \item{iterations}{
-        am integer value, the number of iterations performed.}
-
-    \item{evaluations}{
-        an integer value, the number of objective function and gradient 
-        function evaluations.}
+        a character string, the convergence message.}
+        
+    \item{solver}{
+        a character string, the name of the solver.}
+        
+    \item{version}{
+        a character string, the convergence message.}
         
 }
 
@@ -132,7 +133,7 @@ PORT Library,
 ## Example:
 
    # Feasible Start Solution:
-   start = c(10, 10)
+   start <- c(10, 10)
    
    # Objective Function: x^2 + y^2 
    fun <- function(x) sum(x^2)
@@ -142,12 +143,11 @@ PORT Library,
    par.upper <- c(100, 100)
     
    # Equality Constraints: x*y = 2
-   eqFun <- list(
-     function(x) x[1]*x[2])
+   eqFun <- list(function(x) x[1]*x[2])
    eqFun.bound <- 2
   
    # Solution: x = c(sqrt(2), sqrt(2)), f(x) = 4   
-   nlminb2NLP(par = start, fun = fun, 
+   nlminb2NLP(start = start, fun = fun, 
      par.lower = par.lower, par.upper = par.upper,
      eqFun = eqFun, eqFun.bound = eqFun.bound)[-1]
 }

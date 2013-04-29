@@ -23,7 +23,7 @@
 
 nlminb2NLP <- 
 function(
-    par, fun, 
+    start, fun, 
     par.lower = NULL, par.upper = NULL,
     eqA = NULL, eqA.bound = NULL,
     ineqA = NULL, ineqA.lower = NULL, ineqA.upper = NULL,
@@ -57,8 +57,8 @@ function(
     control <- ctrl
 
     # Box Constraints:
-    if (is.null(par.lower)) par.lower = -Inf
-    if (is.null(par.upper)) par.upper = Inf
+    if (is.null(par.lower)) par.lower <- rep(-Inf, length(start))
+    if (is.null(par.upper)) par.upper <- rep(+Inf, length(start))
     
     # Equality Constraints:
     eqfun <- function(x) {
@@ -87,8 +87,9 @@ function(
     }
     
     # Solve:
+    elapsed <- Sys.time()
     optim <- nlminb2(
-        start = par, 
+        start = start, 
         objective = fun, 
         eqFun = eqfun, 
         leqFun = leqfun, 
@@ -98,6 +99,7 @@ function(
         hessian = NULL,  
         control = control,
         env = env)
+    elapsed <- Sys.time() - elapsed
     
     # Version:
     package <- packageDescription(pkg="Rnlminb2")
@@ -111,6 +113,7 @@ function(
         status = optim$convergence,
         message = optim$message,
         solver = "nlminb2NLP",
+        elapsed = elapsed,
         version = version)
     class(value) <- c("solver", "list")
     value

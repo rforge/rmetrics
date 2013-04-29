@@ -47,7 +47,7 @@ function(
     # FUNCTION:
     
     # Control list:
-    ans = list(
+    optim <- list(
         eval.max = eval.max, 
         iter.max = iter.max,
         trace = trace,
@@ -62,7 +62,7 @@ function(
         steps.tol = steps.tol)
         
    # Return Value:
-   ans
+   optim
 }
 
 

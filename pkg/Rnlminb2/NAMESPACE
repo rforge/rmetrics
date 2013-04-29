@@ -1,5 +1,4 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
+# Default NAMESPACE
 
 # Export all names
 exportPattern(".")
