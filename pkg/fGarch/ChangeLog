@@ -1,5 +1,11 @@
+2013-04-30  chalabi
+
+	* DESCRIPTION, R/zzz.R, src/llhGarch.f: fix array bound warning in
+	  Fortran code
+
 2012-09-18  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files.
 	* DESCRIPTION: Changed maintainer field to comply with the new CRAN
 	  policy.
 	* inst/unitTests/runit.garchSolver.R: Removed superfluous unitTest.
