@@ -1,3 +1,12 @@
+2013-04-30  chalabi
+
+	* DESCRIPTION, NAMESPACE, R/builtin-ssdenGss.R, R/zzz.R,
+	  src/gss_a.f, src/gss_b.c: gss is now an import package
+
+2012-09-21  chalabi
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files
+
 2012-09-20  mmaechler
 
 	* DESCRIPTION, NAMESPACE, R/dist-stable-deprecated.R,
