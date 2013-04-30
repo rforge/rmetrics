@@ -1,5 +1,5 @@
 Package: fBasics
-Version: 2160.85
+Version: 3010.86
 Revision: 5359
 Date: 2012-09-21
 Title: Rmetrics - Markets and Basic Statistics
@@ -12,7 +12,7 @@ Author: Diethelm Wuertz and Rmetrics core team members, uses code
         Gebhardt
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Depends: stats, MASS, methods, timeDate, timeSeries (>= 2100.84)
-Imports: stabledist
+Imports: stabledist, gss
 Suggests: akima, spatial, RUnit, tcltk
 Description: Environment for teaching "Financial Engineering and
         Computational Finance" NOTE: SEVERAL PARTS ARE STILL

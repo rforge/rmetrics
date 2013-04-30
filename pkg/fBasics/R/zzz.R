@@ -30,21 +30,21 @@
 ################################################################################
 
 
-.First.lib =
-function(lib, pkg)
-{
+## .First.lib =
+## function(lib, pkg)
+## {
 
-###     # Startup Mesage and Desription:
-###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-###     dsc <- packageDescription(pkg)
-###     if(interactive() || getOption("verbose")) {
-###         # not in test scripts
-###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-###     }
+## ###     # Startup Mesage and Desription:
+## ###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+## ###     dsc <- packageDescription(pkg)
+## ###     if(interactive() || getOption("verbose")) {
+## ###         # not in test scripts
+## ###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+## ###     }
 
-    setRmetricsOptions(.x.save = NA)
+##     setRmetricsOptions(.x.save = NA)
 
-}
+## }
 
 
 .onLoad <- function(libname, pkgname) setRmetricsOptions(.x.save = NA)
@@ -55,4 +55,3 @@ if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
 
 
 ################################################################################
-
