@@ -1,5 +1,12 @@
+2013-04-30  chalabi
+
+	* DESCRIPTION, inst/unitTests/runit.GevModelling.R: Updating unit
+	  tests
+
 2013-04-02  chalabi
 
+	* R/zzz.R: removed .First.lib()
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files
 	* DESCRIPTION: Updated version number.
 	* inst/unitTests/runit.GevModelling.R: Updated unit test to avoid
 	  troubles when running in the last two days of the month as
