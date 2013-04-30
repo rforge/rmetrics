@@ -155,7 +155,8 @@ function()
 
     # Create an artificial timeSeries with dummy positions:
     xx <- rt(5000, df = 4)
-    X = timeSeries(xx, charvec = timeSequence(Sys.Date(), length.out = NROW(xx)))
+    charvec <- timeSequence("2013-01-01", length.out = NROW(xx))
+    X = timeSeries(xx, charvec = charvec)
 
     # Compute Block Maxima:
     x.tS = blockMaxima(X, "monthly")
@@ -303,7 +304,8 @@ function()
     class(x.ts)
     x.vec = as.vector(x.ts)
     class(x.vec)
-    x.tS = timeSeries(x.vec, timeSequence(Sys.Date(), length.out = NROW(x.vec)))
+    charvec <- timeSequence("2013-01-01", length.out = NROW(x.vec))
+    x.tS = timeSeries(x.vec, charvec)
 
     # ts as input & 20 Days Blocks:
     fit = gevFit(x.ts, block = 20, type = "pwm")
