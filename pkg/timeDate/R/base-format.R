@@ -32,8 +32,10 @@ format.timeDate <- function(x, format = "", tz = "", usetz = FALSE, ...)
 
     if (!inherits(x, "timeDate"))
         stop("wrong class")
+    if (tz != "")
+        finCenter(x) <- tz
 
-    FinCenter <- if (tz != "") tz else finCenter(x)
+    FinCenter <- finCenter(x)
 
     num <- .formatFinCenterNum(as.numeric(getDataPart(x)),
                                FinCenter, type = "gmt2any")

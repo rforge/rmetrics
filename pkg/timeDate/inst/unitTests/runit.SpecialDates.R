@@ -41,7 +41,7 @@ test.timeLastDayInMonth <- function()
     myFinCenter <- getRmetricsOptions("myFinCenter")
 
     timeLastDayInMonth(charvec, format = "%Y-%m-%d",
-		       zone = myFinCenter, FinCenter = myFinCenter)
+                       zone = myFinCenter, FinCenter = myFinCenter)
 
     timeLastDayInMonth(charvec, FinCenter = "Zurich")
 
@@ -56,7 +56,7 @@ test.timeFirstDayInMonth <- function()
 {
     ## What date has the first day in a month for a given date ?
     checkEQ(timeFirstDayInMonth(c("2006-04-16","2000-02-29")),
-	    as(c("2006-04-01", "2000-02-01"), "timeDate"))
+            as(c("2006-04-01", "2000-02-01"), "timeDate"))
 }
 
 
@@ -67,7 +67,7 @@ test.timeLastDayInQuarter <- function()
 {
     ## What date has the last day in a quarter for a given date ?
     checkEQ(timeLastDayInQuarter("2006-04-16"),
-	    as("2006-06-30", "timeDate"))
+            as("2006-06-30", "timeDate"))
 }
 
 
@@ -78,7 +78,7 @@ test.timeFirstDayInQuarter <- function()
 {
     ## What date has the first day in a quarter for a given date ?
     checkEQ(timeFirstDayInQuarter("2006-04-16"),
-	    as("2006-04-01", "timeDate"))
+            as("2006-04-01", "timeDate"))
 }
 
 
@@ -89,7 +89,7 @@ test.timeNdayOnOrAfter <- function()
 {
     ## What date has the first Monday on or after March 15, 1986 ?
     checkEQ(timeNdayOnOrAfter("1986-03-15", 1),
-	    as("1986-03-17", "timeDate"))
+            as("1986-03-17", "timeDate"))
 }
 
 
@@ -100,7 +100,7 @@ test.timeNdayOnOrBefore <- function()
 {
     ## What date has Friday on or before March 15, 1986?
     checkEQ(timeNdayOnOrBefore("1986-03-15", 5),
-		as("1986-03-14", "timeDate"))
+            as("1986-03-14", "timeDate"))
 }
 
 
@@ -109,7 +109,7 @@ test.timeNdayOnOrBefore <- function()
 isOpExFriday <- function(ch.dts) {
     dts <- as.Date(ch.dts)
     from <- as.numeric(format(min(dts), "%Y"))
-    to	 <- as.numeric(format(max(dts), "%Y"))
+    to   <- as.numeric(format(max(dts), "%Y"))
 
     OEFri <- timeNthNdayInMonth(timeFirstDayInMonth(ch.dts), nday=5, nth=3)
     isBizday(timeDate(dts), holidayNYSE(from:to)) & dts == as(OEFri, "Date")
@@ -120,7 +120,7 @@ test.timeNthNdayInMonth <- function()
 {
     ## What date is the second Monday in April 2004 ?
     checkEQ(timeNthNdayInMonth("2004-04-01", 1, 2),
-	    as("2004-04-12", "timeDate"))
+            as("2004-04-12", "timeDate"))
 
     ## From the (timezone dependent) bug, reported by David Winsemius, Sep.23, 2011:
     dates <- structure(c(15228:15233, 15236:15240), class="Date")
@@ -144,11 +144,12 @@ test.timeNthNdayInMonth <- function()
 
 test.timeLastNdayInMonth <- function()
 {
+
     ## What date has the last Tuesday in May, 1996 ?
     checkEQ(timeLastNdayInMonth("1996-05-01", 2),
-	    as("1996-06-04", "timeDate"))
+            as("1996-06-04", "timeDate"))
+
 }
 
 
 ################################################################################
-

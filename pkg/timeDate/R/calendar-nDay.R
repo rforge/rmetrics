@@ -21,7 +21,7 @@
 ################################################################################
 
 
-timeNthNdayInMonth <- 
+timeNthNdayInMonth <-
 function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
     zone = "", FinCenter = "")
 {
@@ -60,7 +60,7 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
     lt1 <- lt
     lt1$mday <- 1
     ct <- 24*3600*(as.integer(julian.POSIXt(lt)) + (nth-1)*7 + (nday-lt1$wday)%%7)
-    timeDate(format(as.POSIXct(ct, origin="1970-01-01")),
+    timeDate(format(.POSIXct(ct), tz = "GMT"),
          format = format, zone = zone, FinCenter = FinCenter)
 }
 
@@ -68,7 +68,7 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d",
 ## ------------------------------------------------------------------------------
 
 
-timeLastNdayInMonth <- 
+timeLastNdayInMonth <-
 function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
     FinCenter = "")
 {
@@ -110,10 +110,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", zone = "",
                 ## represents the wday of the
                 ## last day of the month
     ct <- 24*3600*(as.integer(julian.POSIXt(lt)) + (nday - lt$wday)%%7)
-    timeDate(format(as.POSIXct(ct, origin="1970-01-01")),
+    timeDate(format(.POSIXct(ct), tz = "GMT"),
          format = format, zone = zone, FinCenter = FinCenter)
 }
 
 
 ################################################################################
-
