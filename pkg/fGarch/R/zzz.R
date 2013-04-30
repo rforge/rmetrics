@@ -29,7 +29,6 @@
 
 ################################################################################
 
-.First.lib <- function(lib, pkg) library.dynam("fGarch", pkg, lib)
+## .First.lib <- function(lib, pkg) library.dynam("fGarch", pkg, lib)
 
 ################################################################################
-

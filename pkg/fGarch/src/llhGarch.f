@@ -9,18 +9,18 @@ C     DECLARATION OF ARGUMENTS
       DOUBLE PRECISION X(NF)
       DOUBLE PRECISION DPARM(3)
       INTEGER MDIST
-      INTEGER MYPAR(8)
+      INTEGER MYPAR(11)
       DOUBLE PRECISION F
 
 C     LOCAL VARIABLE
       INTEGER INITREC, LEVERAGE, INCMEAN, INCDELTA ,INCSKEW, INCSHAPE
       INTEGER NR, NS, NP, NQ, NORM
       DOUBLE PRECISION XMEAN, XOMEGA, XDELTA, XSKEW, XSHAPE
-      INTEGER IAR, IMA, IOMEGA, IALPHA, IBETA, IDELTA, ISKEW, ISHAPE 
-      
+      INTEGER IAR, IMA, IOMEGA, IALPHA, IBETA, IDELTA, ISKEW, ISHAPE
+
       INTEGER I, NEXT, IP, IQ, IR
       DOUBLE PRECISION SUMALPHA, SUMBETA, PERSISTENCE
-      DOUBLE PRECISION VAR, ZI, ZZ, HH, LLH, DD 
+      DOUBLE PRECISION VAR, ZI, ZZ, HH, LLH, DD
       DOUBLE PRECISION XINVD
 
 C     EXTRENAL FUNC
@@ -43,8 +43,8 @@ C     DPARM
       XDELTA = DPARM(1)
       XSKEW  = DPARM(2)
       XSHAPE = DPARM(3)
-      
-C     VECTOR START POSITIONS: 
+
+C     VECTOR START POSITIONS:
       IAR    = INCMEAN + 1
       IMA    = INCMEAN+NR + 1
       IOMEGA = INCMEAN+NR+NS + 1
@@ -54,37 +54,37 @@ C     VECTOR START POSITIONS:
       ISKEW  = INCMEAN+NR+NS+1+NP*(1+LEVERAGE)+NQ+INCDELTA + 1
       ISHAPE = INCMEAN+NR+NS+1+NP*(1+LEVERAGE)+NQ+INCDELTA+INCSKEW+1
 
-C     TODO 
+C     TODO
 C     INCLUDE MEAN?
-      IF (INCMEAN.EQ.1) THEN     
+      IF (INCMEAN.EQ.1) THEN
           XMEAN = X(1)
-      ELSE 
+      ELSE
           XMEAN = 0.0D0
       END IF
-      
-C     INCLUDE DELTA ?    
-      IF (INCDELTA.EQ.1) THEN     
+
+C     INCLUDE DELTA ?
+      IF (INCDELTA.EQ.1) THEN
           XDELTA = X(IDELTA)
       END IF
       XINVD = 1.0D0/XDELTA
-      
-C     INCLUDE SKEW ?    
-      IF (INCSKEW.EQ.1) THEN     
+
+C     INCLUDE SKEW ?
+      IF (INCSKEW.EQ.1) THEN
           XSKEW = X(ISKEW)
       END IF
-      
-C     INCLUDE SHAPE ?    
-      IF (INCSHAPE.EQ.1) THEN     
+
+C     INCLUDE SHAPE ?
+      IF (INCSHAPE.EQ.1) THEN
           XSHAPE = X(ISHAPE)
       END IF
-      
+
 C     POSTION OMEGA:
       XOMEGA = X(IOMEGA)
-    
+
 C     ARMA RECURSION:
       DO I = 1, MAX(NR,NS)
          Z(I) = 0.0D0
-      END DO      
+      END DO
       DO I = MAX(NR,NS)+1, N
          Z(I) = Y(I) - XMEAN
          NEXT = IAR
@@ -98,7 +98,7 @@ C     ARMA RECURSION:
             NEXT = NEXT + 1
          END DO
       END DO
-      
+
 C     COMPUTE (UNLEVERAGED) PERSISTENCE:
       SUMALPHA = 0.0D0
       NEXT = IALPHA
@@ -113,7 +113,7 @@ C     COMPUTE (UNLEVERAGED) PERSISTENCE:
          NEXT = NEXT + 1
       END DO
       PERSISTENCE = SUMALPHA + SUMBETA
- 
+
 C     INITIALZE RECURSION - 1 (FCP) | 2 (TSP) LIKE:
       IF (INITREC.EQ.1) THEN
          VAR = 0.0D0
@@ -126,13 +126,13 @@ C     INITIALZE RECURSION - 1 (FCP) | 2 (TSP) LIKE:
          VAR = XOMEGA/(1.0D0-PERSISTENCE)
       END IF
 
-C     ITERATE H:      
+C     ITERATE H:
       DO I = 1, MAX(NP,NQ)
-         H(I) = XOMEGA + PERSISTENCE*VAR  
-      END DO  
+         H(I) = XOMEGA + PERSISTENCE*VAR
+      END DO
       IF (LEVERAGE.EQ.1) THEN
           DO I = MAX(NP,NQ)+1, N
-             H(I) = XOMEGA 
+             H(I) = XOMEGA
              NEXT = IALPHA
              DO IP = 1, NP, 1
                 ZI = DABS(Z(I-IP))-X(NEXT+NP)*Z(I-IP)
@@ -144,10 +144,10 @@ C     ITERATE H:
                 H(I) = H(I) + X(NEXT)*H(I-IQ)
                 NEXT = NEXT + 1
              END DO
-          END DO          
+          END DO
       ELSE
           DO I = MAX(NP,NQ)+1, N
-             H(I) = XOMEGA 
+             H(I) = XOMEGA
              NEXT = IALPHA
              DO IP = 1, NP, 1
                 H(I) = H(I) + X(NEXT)*DABS(Z(I-IP))**XDELTA
@@ -158,10 +158,10 @@ C     ITERATE H:
                 H(I) = H(I) + X(NEXT)*H(I-IQ)
                 NEXT = NEXT + 1
              END DO
-          END DO    
+          END DO
       END IF
-           
-C     COMPUTE LIKELIHOOD:    
+
+C     COMPUTE LIKELIHOOD:
       LLH = 0.0D0
       DO I = 1, N
          ZZ = Z(I)
@@ -172,4 +172,4 @@ C     COMPUTE LIKELIHOOD:
       F = LLH
 
       RETURN
-      END  
+      END
