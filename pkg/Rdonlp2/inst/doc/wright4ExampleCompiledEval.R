@@ -9,6 +9,7 @@ require(Rdonlp2)
 start = c(1, 1, 1, 1, 1)
 eqFun.bound = c(2+3*sqrt(2), -2+2*sqrt(2), 2)
 
+
 #------------------------------
 # Normal package usage
 #------------------------------
