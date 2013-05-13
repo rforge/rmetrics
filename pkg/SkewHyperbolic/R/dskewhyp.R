@@ -12,25 +12,82 @@ dskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
+
     if (abs(beta) > tolerance) {
-        ldskewhyp <- ((1 - nu)/2) * log(2) + nu * log(delta) +
-                     ((nu + 1)/2) * log(abs(beta)) +
-                     log(besselK(x = sqrt(beta^2*(delta^2 + (x - mu)^2)),
-                                 nu = (nu + 1)/2, expon.scaled = TRUE)) -
-                     sqrt(beta^2 * (delta^2 + (x - mu)^2)) +
-                     beta * (x - mu) - lgamma(nu/2) - log(pi)/2 -
-                     ((nu + 1)/2) * log(delta^2 + (x - mu)^2)/2
+        if (beta < tolerance){
+            m <- besselK(x = -beta*sqrt(delta^2 + (x - mu)^2),
+                         nu = (nu + 1)/2, expon.scaled = T)
+            dskewhyp <- 2^((1 - nu)/2)*delta^nu*abs(beta)^((nu + 1)/2)*m*
+                          exp(beta*((x - mu) + sqrt(delta^2 + (x - mu)^2)))/
+                          (gamma(nu/2)*sqrt(pi) *
+                          sqrt(delta^2 + (x - mu)^2)^((nu + 1)/2))
+        } else {
+            m <- besselK(x = beta*sqrt(delta^2 + (x - mu)^2),
+                         nu = (nu + 1)/2, expon.scaled = T)
+            dskewhyp <- 2^((1 - nu)/2)*delta^nu*abs(beta)^((nu + 1)/2)*m*
+                          exp(beta*((x - mu) - sqrt(delta^2 + (x - mu)^2)))/
+                          (gamma(nu/2)*sqrt(pi) *
+                          sqrt(delta^2 + (x - mu)^2)^((nu + 1)/2))
+        }
+    } else {
+        dskewhyp <- gamma((nu + 1)/2) / (sqrt(pi)*delta*gamma(nu/2)) *
+                      (1 + ((x - mu)^2)/delta^2)^(-(nu + 1)/2)
     }
-    else {
-        ldskewhyp <- lgamma((nu + 1)/2) - log(pi)/2 - log(delta) -
-            lgamma(nu/2) - ((nu + 1)/2) * log(1 + ((x - mu)^2)/delta^2)
+    if (log == TRUE) dskewhyp <- log(dskewhyp)
+    return(dskewhyp)
+}
+
+ddskewhypScale <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
+                            param = c(mu,delta,beta,nu), log = FALSE,
+                            tolerance = .Machine$double.eps^0.5)
+{
+    parResult <- skewhypCheckPars(param)
+    case <- parResult$case
+    errMessage <- parResult$errMessage
+    if (case == "error")
+        stop(errMessage)
+    param <- as.numeric(param)
+    mu <- param[1]
+    delta <- param[2]
+    beta <- param[3]
+    nu <- param[4]
+    if (log == TRUE)
+        stop("This function is not yet implemented")
+
+    if(abs(beta) >  tolerance){
+        if (beta < tolerance){
+            m <- besselK(nu = 1/2*nu + 1/2,
+                         x = -beta*sqrt(delta^2 + (x - mu)^2),
+                         expon.scaled = T)
+            n <- besselK(nu = 1/2*nu - 1/2,
+                         x = -beta*sqrt(delta^2 + (x - mu)^2),
+                         expon.scaled = T)
+            dd <- exp(beta*(x - mu + sqrt(delta^2 + (x - mu)^2)))*delta^nu*
+                    abs(beta)^(1/2*nu + 1/2) *
+                    2^(1/2 - 1/2*nu)*(beta*m + beta*m*x^2 - x*nu*m -
+                    x*m - x*n*sqrt(beta^2*(delta^2 + (x - mu)^2)))*
+                    (delta^2 + (x - mu)^2)^(-5/4 - 1/4*nu)/
+                    gamma(nu/2)/sqrt(pi)
+        } else {
+            m <- besselK(nu = 1/2*nu + 1/2,
+                         x = beta*sqrt(delta^2 + (x - mu)^2),
+                         expon.scaled = T)
+            n <- besselK(nu = 1/2*nu - 1/2,
+                         x = beta*sqrt(delta^2 + (x - mu)^2),
+                         expon.scaled = T)
+            dd <- exp(beta*(x - mu - sqrt(delta^2 + (x - mu)^2)))*delta^nu*
+                    abs(beta)^(1/2*nu + 1/2)*
+                    2^(1/2 - 1/2*nu)*(beta*m + beta*m*x^2 - x*nu*m -
+                    x*m - x*n*sqrt(beta^2*(delta^2 + (x - mu)^2)))*
+                    (delta^2 + (x - mu)^2)^(-5/4 - 1/4*nu)/
+                    gamma(nu/2)/sqrt(pi)
+        }
+    } else {
+        dd <- 2*gamma(1/2*nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2*nu)*
+                (1 + (x - mu)^2/delta^2)^(-1/2*nu - 1/2)*
+                (-1/2*nu - 1/2)*(x - mu)/(1 + (x - mu)^2/delta^2)
     }
-    if (log == TRUE) {
-        return(ldskewhyp)
-    }
-    else {
-        return(exp(ldskewhyp))
-    }
+  return(dd)
 }
 
 
@@ -49,7 +106,8 @@ pskewhyp <- function (q, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-
+    if (log.p == TRUE)
+        stop("This function is not yet implemented")
 
     distMode <- skewhypMode(param = param)
     qLess <- which((q <= distMode)&(is.finite(q)))
@@ -112,6 +170,8 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
     errMessage <- parResult$errMessage
     if (case == "error")
         stop(errMessage)
+    if (log.p == TRUE)
+        stop("This function is not yet implemented")
     if(!lower.tail){
       p <- 1 - p
       lower.tail == TRUE
@@ -230,7 +290,7 @@ rskewhyp <- function (n, mu = 0, delta = 1, beta = 1, nu = 1,
     y <- 1/rgamma(n, shape = nu/2, scale = 2/delta^2)
     sigma <- sqrt(y)
     z <- rnorm(n)
-    rskewhyp <- mu + beta * sigma^2 + sigma * z
+    rskewhyp <- mu + beta*sigma^2 + sigma*z
     return(rskewhyp)
 }
 
@@ -251,31 +311,31 @@ ddskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     if (log == TRUE)
         stop("This function is not yet implemented")
     if (abs(beta) > tolerance) {
-        ddskewhyp <- 1/2 * 2^(1/2 - 1/2 * nu) * delta^nu * abs(beta)^(1/2 *
-            nu + 1/2) * (-besselK(nu = 1/2 * nu + 3/2, x = (beta^2 *
-            (delta^2 + (x - mu)^2))^(1/2)) + (1/2 * nu + 1/2)/(beta^2 *
-            (delta^2 + (x - mu)^2))^(1/2) * besselK(nu = 1/2 *
-            nu + 1/2, x = (beta^2 * (delta^2 + (x - mu)^2))^(1/2)))/(beta^2 *
-            (delta^2 + (x - mu)^2))^(1/2) * beta^2 * (2 * x -
-            2 * mu) * exp(beta * (x - mu))/gamma(1/2 * nu)/pi^(1/2)/(((delta^2 +
-            x^2 - 2 * x * mu + mu^2)^(1/2))^(1/2 * nu + 1/2)) +
-            2^(1/2 - 1/2 * nu) * delta^nu * abs(beta)^(1/2 *
-                nu + 1/2) * besselK(nu = 1/2 * nu + 1/2, x = (beta^2 *
-                (delta^2 + (x - mu)^2))^(1/2)) * beta * exp(beta *
-                (x - mu))/gamma(1/2 * nu)/pi^(1/2)/(((delta^2 +
-                x^2 - 2 * x * mu + mu^2)^(1/2))^(1/2 * nu + 1/2)) -
-            1/2 * 2^(1/2 - 1/2 * nu) * delta^nu * abs(beta)^(1/2 *
-                nu + 1/2) * besselK(nu = 1/2 * nu + 1/2, x = (beta^2 *
-                (delta^2 + (x - mu)^2))^(1/2)) * exp(beta * (x -
-                mu))/gamma(1/2 * nu)/pi^(1/2)/(((delta^2 + x^2 -
-                2 * x * mu + mu^2)^(1/2))^(1/2 * nu + 1/2)) *
-                (1/2 * nu + 1/2)/(delta^2 + x^2 - 2 * x * mu +
-                mu^2) * (2 * x - 2 * mu)
+        ddskewhyp <- 1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2 *
+            nu + 1/2)*(-besselK(nu = 1/2*nu + 3/2, x = (beta^2 *
+            (delta^2 + (x - mu)^2))^(1/2)) + (1/2*nu + 1/2)/(beta^2 *
+            (delta^2 + (x - mu)^2))^(1/2)*besselK(nu = 1/2 *
+            nu + 1/2, x = (beta^2*(delta^2 + (x - mu)^2))^(1/2)))/(beta^2 *
+            (delta^2 + (x - mu)^2))^(1/2)*beta^2*(2*x -
+            2*mu)*exp(beta*(x - mu))/gamma(1/2*nu)/pi^(1/2)/(((delta^2 +
+            x^2 - 2*x*mu + mu^2)^(1/2))^(1/2*nu + 1/2)) +
+            2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2 *
+                nu + 1/2)*besselK(nu = 1/2*nu + 1/2, x = (beta^2 *
+                (delta^2 + (x - mu)^2))^(1/2))*beta*exp(beta *
+                (x - mu))/gamma(1/2*nu)/pi^(1/2)/(((delta^2 +
+                x^2 - 2*x*mu + mu^2)^(1/2))^(1/2*nu + 1/2)) -
+            1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2 *
+                nu + 1/2)*besselK(nu = 1/2*nu + 1/2, x = (beta^2 *
+                (delta^2 + (x - mu)^2))^(1/2))*exp(beta*(x -
+                mu))/gamma(1/2*nu)/pi^(1/2)/(((delta^2 + x^2 -
+                2*x*mu + mu^2)^(1/2))^(1/2*nu + 1/2)) *
+                (1/2*nu + 1/2)/(delta^2 + x^2 - 2*x*mu +
+                mu^2)*(2*x - 2*mu)
     }
     else {
-        ddskewhyp <- 2 * gamma(1/2 * nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2 *
-            nu) * (1 + (x - mu)^2/delta^2)^(-1/2 * nu - 1/2) *
-            (-1/2 * nu - 1/2) * (x - mu)/(1 + (x - mu)^2/delta^2)
+        ddskewhyp <- 2*gamma(1/2*nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2 *
+            nu)*(1 + (x - mu)^2/delta^2)^(-1/2*nu - 1/2) *
+            (-1/2*nu - 1/2)*(x - mu)/(1 + (x - mu)^2/delta^2)
     }
     return(ddskewhyp)
 }

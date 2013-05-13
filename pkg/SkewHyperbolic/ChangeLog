@@ -1,3 +1,10 @@
+2013-05-13    <d.scott@auckland.ac.nz>
+
+	* skewhypParam updated to avoid creating mu, delta, beta, and nu
+	which might overwrite existing values
+
+	* dskewhyp updated to deal with underflow of Bessel function
+
 2013-02-26    <d.scott@auckland.ac.nz>
 
 	* version changed to 0.3-2
@@ -50,7 +57,7 @@
 
 	* ppskewhyp and qqskewhyp subtitle default changed to match those
 	for hist and logHist (param = (parameter values vector))
-	
+
 
 2009-10-10    <d.scott@auckland.ac.nz>
 

@@ -1,8 +1,5 @@
 \name{SkewHyperbolic-internal}
-\alias{beta}
-\alias{delta}
-\alias{mu}
-\alias{nu}
+\alias{ddskewhypScale}
 
 
 \title{Internal Skew Hyperbolic Functions}
