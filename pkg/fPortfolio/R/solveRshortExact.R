@@ -28,7 +28,7 @@ solveRshortExact <-
     function(data, spec, constraints)
 {
     # Description:
-    #   SPortfolio interface to solver RshortExact
+    #   Portfolio interface to solver RshortExact
 
     # Details:
     #   If getTargetReturn() is specified we minimze the risk,
@@ -41,27 +41,27 @@ solveRshortExact <-
     # FUNCTION:
 
     # Convert Data and Constraints to S4 Objects:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
-    Constraints = portfolioConstraints(Data, spec, constraints)
+    Constraints <- portfolioConstraints(Data, spec, constraints)
 
     # Stop if the Target Return is not Defined!
-    optimize = getOptimize(spec)
-    targetReturn = getTargetReturn(spec)
-    targetRisk = getTargetRisk(spec)
+    optimize <- getOptimize(spec)
+    targetReturn <- getTargetReturn(spec)
+    targetRisk <- getTargetRisk(spec)
     stopifnot(is.numeric(targetReturn))
 
     # Get '.rshortexact' conform arguments:
-    args = .rshortExactArguments(Data, spec, Constraints)
+    args <- .rshortExactArguments(Data, spec, Constraints)
 
     # Solve Portfolio:
-    ans = .rshortExact(optimize = optimize,
+    ans <- .rshortExact(optimize = optimize,
         C0 = args$C0, a = args$a, b = args$b, c = args$c, d = args$d,
         invSigma = args$invSigma, mu = args$mu,
         targetReturn, targetRisk)
 
     # Return Value:
-    class(ans) = c("solveRfoo", "list")
+    class(ans) <- c("solveRfoo", "list")
     ans
 }
 
@@ -78,27 +78,34 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Data as S4 Objects:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
 
     # Get Specifications:
-    mu = getMu(Data)
-    Sigma = getSigma(Data)
-    weights = getWeights(spec)
-    targetReturn = getTargetReturn(spec)
-    targetRisk = getTargetRisk(spec)
+    mu <- getMu(Data)
+    Sigma <- getSigma(Data)
+    weights <- getWeights(spec)
+    targetReturn <- getTargetReturn(spec)
+    targetRisk <- getTargetRisk(spec)
 
     # Parameter Settings:
-    C0 = 1
-    one = rep(1, times = length(mu))
-    invSigma = solve(Sigma)
-    a = as.numeric(mu %*% invSigma %*% mu)
-    b = as.numeric(mu %*% invSigma %*% one)
-    c = as.numeric(one %*% invSigma %*% one)
-    d = as.numeric(a*c - b^2)
+    C0 <- 1
+    one <- rep(1, times = length(mu))
+    invSigma <- solve(Sigma)
+    a <- as.numeric(mu %*% invSigma %*% mu)
+    b <- as.numeric(mu %*% invSigma %*% one)
+    c <- as.numeric(one %*% invSigma %*% one)
+    d <- as.numeric(a*c - b^2)
 
     # Return Value:
-    list(C0 = C0, a = a, b = b, c = c, d = d, mu = mu, invSigma = invSigma)
+    list(
+        C0 = C0, 
+        a = a, 
+        b = b, 
+        c = c, 
+        d = d, 
+        mu = mu, 
+        invSigma = invSigma)
 }
 
 
@@ -117,20 +124,20 @@ function(data, spec, constraints)
     # Optimize:
     if (optimize == "minRisk") {
         # Compute Target Risk:
-        objective = targetRisk =
+        objective <- targetRisk <-
             sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
     } else if (optimize == "maxReturn")  {
         # Compute Target Return:
-        aq = c
-        bq = -2*b*C0
-        cq = a*C0^2 - d*targetRisk^2
-        objective = targetReturn =
+        aq <- c
+        bq <- -2*b*C0
+        cq <- a*C0^2 - d*targetRisk^2
+        objective <- targetReturn <-
             (-bq + sqrt(bq^2 - 4*aq*cq)) / (2*aq)
     }
 
     # Compute Weights:
-    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
-    weights = .checkWeights(weights)
+    weights <- as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    weights <- .checkWeights(weights)
 
     # Return Value:
     list(

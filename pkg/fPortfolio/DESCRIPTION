@@ -1,14 +1,15 @@
 Package: fPortfolio
-Version: 3000.81
+Version: 3001.82
 Revision: 5047
-Date: 2011-02-10
+Date: 2013-06-02
 Title: Rmetrics - Portfolio Selection and Optimization - ebook
         available at www.rmetrics.org
-Author: Rmetrics Core Team, Diethelm Wuertz
+Author: Diethelm Wuertz, Rmetrics Core Team
 Depends: R (>= 2.8.0), methods, MASS, robustbase, timeDate, timeSeries,
-        fBasics, fAssets (>= 2100.78)
-Imports: quadprog, Rglpk
-Suggests: RUnit, tcltk
+        fBasics, fAssets (>= 2100.78), 
+        Rglpk, spam, Rsymphony, quadprog, kernlab, Rsolnp
+Suggests: RUnit, tcltk, 
+Imports: Rdonlp2, Rnlminb2
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"

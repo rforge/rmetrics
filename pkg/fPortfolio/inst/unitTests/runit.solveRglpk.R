@@ -33,24 +33,24 @@ test.solveRglpk.CVaR.LongOnly <-
     function()
 {
     # Load Data:
-    data = SMALLCAP.RET
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    data <- SMALLCAP.RET
+    data <- data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
     # Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
-    setTargetReturn(spec) = mean(colMeans(data))
-    setAlpha(spec) = 0.10
+    spec <- portfolioSpec()
+    setType(spec) <- "CVaR"
+    setTargetReturn(spec) <- mean(colMeans(data))
+    setAlpha(spec) <- 0.10
     setSolver(spec) <- "solveRglpk"
     print(spec)
 
     # Constraints:
-    constraints = "LongOnly"
+    constraints <- "LongOnly"
     print(constraints)
 
     # Portfolio:
-    ans = solveRglpk(data, spec, constraints)
+    ans <- solveRglpk(data, spec, constraints)
     print(ans)
     print(ans$weights)
 

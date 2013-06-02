@@ -1,22 +1,22 @@
-\name{solveRglpk}
+\name{solveRsolnp}
 
 
-\alias{solveRglpk}
+\alias{solveRsolnp}
 
 
-\title{Linear Programming Solver}
+\title{Non-Linear Programming Solver}
 
 
 \description{
 
-    Optimizes a portfolio using the linear
-    programming solver Rglpk.
+    Optimizes a portfolio using the non-linear
+    programming solver Rsolnp.
 
 }
 
 
 \usage{
-solveRglpk(data, spec, constraints)
+solveRsolnp(data, spec, constraints)
 }
 
 

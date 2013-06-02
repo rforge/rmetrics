@@ -52,10 +52,10 @@ solveRglpk <-
     # FUNCTION:
 
     # Settings:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
-    nAssets = getNAssets(Data)
-    type = getType(spec)
+    nAssets <- getNAssets(Data)
+    type <- getType(spec)
 
     # Solve:
     if(nAssets == 2) {
@@ -64,16 +64,16 @@ solveRglpk <-
         # ... this is only thhought for 'unlimited' LongOnly Constraints
         # box and group constraints are discarded here.
 
-        fun = match.fun(paste(".", tolower(type), "SolveTwoAssets", sep = ""))
-        ans = fun(Data, spec, constraints)
+        fun <- match.fun(paste(".", tolower(type), "SolveTwoAssets", sep = ""))
+        ans <- fun(Data, spec, constraints)
 
     } else {
 
         # Compile Arguments for Solver:
-        args = .rglpkArguments(Data, spec, constraints)
+        args <- .rglpkArguments(Data, spec, constraints)
 
         # Solve Multiassets Portfolio:
-        ans = .rglpk(
+        ans <- .rglpk(
             obj = args$obj,
             mat = args$mat,
             dir = args$dir,
@@ -107,10 +107,10 @@ solveRglpk <-
     #   .rglpkArguments(.lppData[1:8,1:3], .madSpec, "LongOnly")
 
     # Settings:
-    type = getType(spec)
+    type <- getType(spec)
 
     # Execute appropriate .rfooArguments function:
-    fun = match.fun(paste(".", tolower(type), "RglpkArguments", sep = ""))
+    fun <- match.fun(paste(".", tolower(type), "RglpkArguments", sep = ""))
 
     # Return Value:
     fun(data, spec, constraints)
@@ -143,84 +143,84 @@ solveRglpk <-
     # FUNCTION:
 
     # Settings:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
-    nAssets = getNAssets(Data)
-    nScenarios = nrow(getSeries(Data))
-    targetReturn = getTargetReturn(spec)
-    Alpha = getAlpha(spec)
-    Type = getType(spec)
+    nAssets <- getNAssets(Data)
+    nScenarios <- nrow(getSeries(Data))
+    targetReturn <- getTargetReturn(spec)
+    Alpha <- getAlpha(spec)
+    Type <- getType(spec)
 
     # Objective Function:
-    objNames = c("VaR", paste("e", 1:nScenarios, sep = ""), colnames(data))
-    obj = c(1, -rep(1/(Alpha*nScenarios), nScenarios), rep(0, nAssets))
-    names(obj) = objNames
+    objNames <- c("VaR", paste("e", 1:nScenarios, sep = ""), colnames(data))
+    obj <- c(1, -rep(1/(Alpha*nScenarios), nScenarios), rep(0, nAssets))
+    names(obj) <- objNames
 
     # The A_equal Equation Constraints: A_eq %*% x == a_eq
-    eqsumW = eqsumWConstraints(Data, spec, constraints)
-    Aeq = cbind(matrix(0, ncol = 1+nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
-    aeq = eqsumW[, 1]
-    deq = rep("==", nrow(eqsumW))
+    eqsumW <- eqsumWConstraints(Data, spec, constraints)
+    Aeq <- cbind(matrix(0, ncol = 1+nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+    aeq <- eqsumW[, 1]
+    deq <- rep("==", nrow(eqsumW))
 
     # The VaR Equation Constraints:
     #   (1 + diag + Returns) %*% (VaR,es,W)  >= 0
-    Avar = cbind(
+    Avar <- cbind(
         matrix(rep(-1, nScenarios), ncol = 1),
         diag(nScenarios),
         getDataPart(getSeries(Data)) )
-    avar = rep(0, nrow(Avar))
-    dvar = rep(">=", nrow(Avar))
+    avar <- rep(0, nrow(Avar))
+    dvar <- rep(">=", nrow(Avar))
 
     # The e_s > = 0 Equation Constraints:
-    Aes = cbind(
+    Aes <- cbind(
         matrix(rep(0, nScenarios), ncol = 1),
         diag(nScenarios),
         matrix(0, nrow = nScenarios, ncol = nAssets) )
-    aes = rep(0, nrow(Aes))
-    des = rep(">=", nrow(Aes))
+    aes <- rep(0, nrow(Aes))
+    des <- rep(">=", nrow(Aes))
 
     # Group Constraints: A W >= a
-    minsumW = minsumWConstraints(Data, spec, constraints)
+    minsumW <- minsumWConstraints(Data, spec, constraints)
     if (is.null(minsumW)){
-        Aminsum = aminsum = dminsum = NULL
+        Aminsum <- aminsum <- dminsum <- NULL
     } else {
-        Aminsum = cbind(
+        Aminsum <- cbind(
             matrix(0, nrow = nrow(minsumW), ncol = 1+nScenarios),
             minsumW[, -1, drop = FALSE] )
-        aminsum = minsumW[, 1]
-        dminsum  = rep(">=", nrow(minsumW))
+        aminsum <- minsumW[, 1]
+        dminsum <- rep(">=", nrow(minsumW))
     }
 
     # Group Constraints: A W <= b
-    maxsumW = maxsumWConstraints(Data, spec, constraints)
+    maxsumW <- maxsumWConstraints(Data, spec, constraints)
     if (is.null(maxsumW)){
-        Amaxsum = amaxsum = dmaxsum = NULL
+        Amaxsum <- amaxsum <- dmaxsum <- NULL
     } else {
-        Amaxsum = cbind(
+        Amaxsum <- cbind(
             matrix(0, nrow = nrow(maxsumW), ncol = 1+nScenarios),
             maxsumW[, -1, drop = FALSE] )
-        amaxsum = maxsumW[, 1]
-        dmaxsum  = rep("<=", nrow(maxsumW))
+        amaxsum <- maxsumW[, 1]
+        dmaxsum <- rep("<=", nrow(maxsumW))
     }
 
     # Putting all together:
-    mat = rbind(Aeq, Avar, Aes, Aminsum, Amaxsum)
-    rhs = c(aeq, avar, aes, aminsum, amaxsum)
-    dir = c(deq, dvar, des, dminsum, dmaxsum)
+    mat <- rbind(Aeq, Avar, Aes, Aminsum, Amaxsum)
+    rhs <- c(aeq, avar, aes, aminsum, amaxsum)
+    dir <- c(deq, dvar, des, dminsum, dmaxsum)
 
     # Box Constraints: Upper and Lower Bounds as listn required ...
-    minW = minWConstraints(Data, spec, constraints)
-    maxW = maxWConstraints(Data, spec, constraints)
-    nInd = 1:(1+nScenarios+nAssets)
-    bounds = list(
+    minW <- minWConstraints(Data, spec, constraints)
+    maxW <- maxWConstraints(Data, spec, constraints)
+    nInd <- 1:(1+nScenarios+nAssets)
+    bounds <- list(
         lower = list(ind = nInd, val = c(rep(-Inf, 1+nScenarios), minW)),
         upper = list(ind = nInd, val = c(rep( Inf, 1+nScenarios), maxW)) )
 
     # What variable Types, All Continuous:
-    types = NULL
+    types <- NULL
 
     # Should I minimize or maximize ?
-    max = TRUE
+    max <- TRUE
 
     # Return Value:
     list(
@@ -257,93 +257,89 @@ solveRglpk <-
     # FUNCTION:
 
     # Settings:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
-    nAssets = getNAssets(Data)
-    Series = getSeries(Data)
-    Series = Series - colMeans(Series)
-    nScenarios = nrow(Series)
-    targetReturn = getTargetReturn(spec)
-    Type = getType(spec)
+    nAssets <- getNAssets(Data)
+    Series <- getSeries(Data)
+    Series <- Series - colMeans(Series)
+    nScenarios <- nrow(Series)
+    targetReturn <- getTargetReturn(spec)
+    Type <- getType(spec)
 
     # Objective Function to be Maximized:
-    objNames = c(paste("e", 1:nScenarios, sep = ""), colnames(data))
-    obj = c(rep(1/nScenarios, nScenarios), rep(0, nAssets))
-    names(obj) = objNames
+    objNames <- c(paste("e", 1:nScenarios, sep = ""), colnames(data))
+    obj <- c(rep(1/nScenarios, nScenarios), rep(0, nAssets))
+    names(obj) <- objNames
 
     # 1
     # The negative MAD Equation Constraints:
     #   (-diag + [Returns-mu]) %*% (es,W) <= 0
-    Aneg = cbind(-diag(nScenarios), getDataPart(Series) )
-    aneg = rep(0, nrow(Aneg))
-    dneg = rep("<=", nrow(Aneg))
+    Aneg <- cbind(-diag(nScenarios), getDataPart(Series) )
+    aneg <- rep(0, nrow(Aneg))
+    dneg <- rep("<=", nrow(Aneg))
 
     # 2
     # The positive MAD Equation Constraints:
     #   (+diag + [Returns-mu]) %*% (es,W) >= 0
-    Apos = cbind( diag(nScenarios), getDataPart(Series) )
-    apos = rep(0, nrow(Apos))
-    dpos = rep(">=", nrow(Apos))
+    Apos <- cbind( diag(nScenarios), getDataPart(Series) )
+    apos <- rep(0, nrow(Apos))
+    dpos <- rep(">=", nrow(Apos))
 
     # 3 and 4
     # The A_equal Equation Constraints: A_eq %*% x == a_eq
-    eqsumW = eqsumWConstraints(Data, spec, constraints)
-    Aeq = cbind(matrix(0, ncol = nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
-    aeq = eqsumW[, 1]
-    deq = rep("==", nrow(eqsumW))
+    eqsumW <- eqsumWConstraints(Data, spec, constraints)
+    Aeq <- cbind(matrix(0, ncol = nScenarios, nrow = nrow(eqsumW)), eqsumW[, -1])
+    aeq <- eqsumW[, 1]
+    deq <- rep("==", nrow(eqsumW))
 
     # 5
     # The e_s > = 0 Equation Constraints:
-    Aes = cbind(diag(nScenarios), matrix(0, nrow = nScenarios, ncol = nAssets))
-    aes = rep(0, nrow(Aes))
-    des = rep(">=", nrow(Aes))
-
+    Aes <- cbind(diag(nScenarios), matrix(0, nrow = nScenarios, ncol = nAssets))
+    aes <- rep(0, nrow(Aes))
+    des <- rep(">=", nrow(Aes))
 
     # Group Constraints: A W >= a
-    minsumW = minsumWConstraints(Data, spec, constraints)
+    minsumW <- minsumWConstraints(Data, spec, constraints)
     if (is.null(minsumW)){
-        Aminsum = aminsum = dminsum = NULL
+        Aminsum <- aminsum <- dminsum <- NULL
     } else {
-        Aminsum = cbind(
+        Aminsum <- cbind(
             matrix(0, nrow = nrow(minsumW), ncol = nScenarios),
             minsumW[, -1, drop = FALSE] )
-        aminsum = minsumW[, 1]
-        dminsum  = rep(">=", nrow(minsumW))
+        aminsum <- minsumW[, 1]
+        dminsum <- rep(">=", nrow(minsumW))
     }
 
     # Group Constraints: A W <= b
-    maxsumW = maxsumWConstraints(Data, spec, constraints)
-    if (is.null(maxsumW)){
-        Amaxsum = amaxsum = dmaxsum = NULL
+    maxsumW <- maxsumWConstraints(Data, spec, constraints)
+    if (is.null(maxsumW)) {
+        Amaxsum <- amaxsum <- dmaxsum <- NULL
     } else {
-        Amaxsum = cbind(
+        Amaxsum <- cbind(
             matrix(0, nrow = nrow(maxsumW), ncol = nScenarios),
             maxsumW[, -1, drop = FALSE] )
-        amaxsum = maxsumW[, 1]
-        dmaxsum  = rep("<=", nrow(maxsumW))
+        amaxsum <- maxsumW[, 1]
+        dmaxsum <- rep("<=", nrow(maxsumW))
     }
 
     # Putting together
-    mat = rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
-    rhs =     c(aeq, apos, aneg, aes, aminsum, amaxsum)
-    dir =     c(deq, dpos, dneg, des, dminsum, dmaxsum)
-
-
-
+    mat <- rbind(Aeq, Apos, Aneg, Aes, Aminsum, Amaxsum)
+    rhs <-     c(aeq, apos, aneg, aes, aminsum, amaxsum)
+    dir <-     c(deq, dpos, dneg, des, dminsum, dmaxsum)
 
     # Box Constraints: Upper and Lower Bounds as listn required ...
-    minW = minWConstraints(Data, spec, constraints)
-    maxW = maxWConstraints(Data, spec, constraints)
-    nInd = 1:(nScenarios+nAssets)
-    bounds = list(
+    minW <- minWConstraints(Data, spec, constraints)
+    maxW <- maxWConstraints(Data, spec, constraints)
+    nInd <- 1:(nScenarios+nAssets)
+    bounds <- list(
         lower = list(ind = nInd, val = c(rep(  0, nScenarios), minW)),
         upper = list(ind = nInd, val = c(rep(Inf, nScenarios), maxW)) )
 
     # What variable Types, All Continuous:
-    types = NULL
+    types <- NULL
 
     # Should I minimize or maximize ?
-    max = FALSE
+    max <- FALSE
 
     # Return Value:
     list(
@@ -364,21 +360,23 @@ solveRglpk <-
     # Description:
     #   Rglpk Solver
 
-	# FUNCTION:
+    # FUNCTION:
 
-	# Solve - use Rglpk_solve_LP:
-    optim <- Rglpk::Rglpk_solve_LP(obj = obj,
-                                   mat = mat,
-                                   dir = dir,
-                                   rhs = rhs,
-                                   types = types,
-                                   max = max,
-                                   bounds = bounds,
-                                   verbose = verbose)
+    # Solve - use Rglpk_solve_LP:
+    require(Rglpk)
+    optim <- Rglpk::Rglpk_solve_LP(
+        obj = obj,
+        mat = mat,
+        dir = dir,
+        rhs = rhs,
+        types = types,
+        max = max,
+        bounds = bounds,
+        verbose = verbose)
 
     # Extract Weights:
-    weights = .checkWeights(rev(rev(optim$solution)[1:nAssets]))
-    attr(weights, "invest") = sum(weights)
+    weights <- .checkWeights(rev(rev(optim$solution)[1:nAssets]))
+    attr(weights, "invest") <- sum(weights)
 
     # Result:
     ans <- list(

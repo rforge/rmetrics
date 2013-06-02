@@ -42,7 +42,7 @@ solveRquadprog <-
     # FUNCTION:
 
     # Transform Data:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
     nAssets = getNAssets(Data)
 
@@ -50,17 +50,17 @@ solveRquadprog <-
     if(nAssets == 2) {
 
         # Solve two Assets Portfolio Analytically:
-        ans = .mvSolveTwoAssets(Data, spec, constraints)
+        ans <- .mvSolveTwoAssets(Data, spec, constraints)
         # ... this is only  for 'unlimited' LongOnly constraints,
         # box and group constraints are discarded here.
 
     } else {
 
         # Compile Arguments for Solver:
-        args = .rquadprogArguments(Data, spec, constraints)
+        args <- .rquadprogArguments(Data, spec, constraints)
 
         # Solve Multiassets Portfolio:
-        ans = .rquadprog(
+        ans <- .rquadprog(
             Dmat = args$Dmat,
             dvec = args$dvec,
             Amat = args$Amat,
@@ -98,31 +98,31 @@ solveRquadprog <-
     # FUNCTION:
 
     # Data and Constraints as S4 Objects:
-    Data = portfolioData(data, spec)
+    Data <- portfolioData(data, spec)
     data <- getSeries(Data)
-    Sigma = getSigma(Data)
-    nAssets = getNAssets(Data)
+    Sigma <- getSigma(Data)
+    nAssets <- getNAssets(Data)
 
     # Set up A_mat of Constraints:
-    eqsumW = eqsumWConstraints(Data, spec, constraints)
-    minsumW = minsumWConstraints(Data, spec, constraints)
-    maxsumW = maxsumWConstraints(Data, spec, constraints)
-    Amat = rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
-    if(!is.null(minsumW)) Amat = rbind(Amat, minsumW[, -1])
-    if(!is.null(maxsumW)) Amat = rbind(Amat, -maxsumW[, -1])
+    eqsumW <- eqsumWConstraints(Data, spec, constraints)
+    minsumW <- minsumWConstraints(Data, spec, constraints)
+    maxsumW <- maxsumWConstraints(Data, spec, constraints)
+    Amat <- rbind(eqsumW[, -1], diag(nAssets), -diag(nAssets))
+    if(!is.null(minsumW)) Amat <- rbind(Amat, minsumW[, -1])
+    if(!is.null(maxsumW)) Amat <- rbind(Amat, -maxsumW[, -1])
 
     # Set up Vector A_mat >= bvec of Constraints:
-    minW = minWConstraints(Data, spec, constraints)
-    maxW = maxWConstraints(Data, spec, constraints)
-    bvec = c(eqsumW[, 1], minW, -maxW)
-    if(!is.null(minsumW)) bvec = c(bvec, minsumW[, 1])
-    if(!is.null(maxsumW)) bvec = c(bvec, -maxsumW[, 1])
+    minW <- minWConstraints(Data, spec, constraints)
+    maxW <- maxWConstraints(Data, spec, constraints)
+    bvec <- c(eqsumW[, 1], minW, -maxW)
+    if(!is.null(minsumW)) bvec <- c(bvec, minsumW[, 1])
+    if(!is.null(maxsumW)) bvec <- c(bvec, -maxsumW[, 1])
 
     # Part (meq=1) or Full (meq=2) Investment, the Default ?
-    meq = nrow(eqsumW)
+    meq <- nrow(eqsumW)
 
     # Directions:
-    dir = c(
+    dir <- c(
         rep("==", times = meq),
         rep(">=", times = length(bvec) - meq))
 
@@ -170,7 +170,10 @@ solveRquadprog <-
 
     # FUNCTION:
 
-    optim <- try(solve.QP(Dmat, dvec, Amat, bvec, meq), silent = TRUE)
+    # Solve:
+    require(quadprog)
+    optim <- try(quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq), 
+        silent = TRUE)
     if (inherits(optim, "try-error")) {
         weights <- rep(0, length(dvec))
         optim <- list()
@@ -184,13 +187,13 @@ solveRquadprog <-
 
     # Compose Output List:
     ans <- list(type = "MV",
-                solver = "solveRquadprog",
-                optim = optim,
-                weights = weights,
-                targetReturn = bvec[1],
-                targetRisk = sqrt(weights %*% Dmat %*% weights)[[1,1]],
-                objective = sqrt(weights %*% Dmat %*% weights)[[1,1]],
-                status = status, message = NA)
+        solver = "solveRquadprog",
+        optim = optim,
+        weights = weights,
+        targetReturn = bvec[1],
+        targetRisk = sqrt(weights %*% Dmat %*% weights)[[1,1]],
+        objective = sqrt(weights %*% Dmat %*% weights)[[1,1]],
+        status = status, message = NA)
 
     # Return Value:
     ans

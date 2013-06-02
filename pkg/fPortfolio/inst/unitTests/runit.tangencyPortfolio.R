@@ -30,25 +30,24 @@
 ################################################################################
 
 
-
 test.tangencyPortfolio.MV.LongOnly <-
     function()
 {
     # Data:
-    data = SMALLCAP.RET
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    data <- SMALLCAP.RET
+    data <- data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
     # Specification:
-    spec = portfolioSpec()
+    spec <- portfolioSpec()
     print(spec)
 
     # Constraints:
-    constraints = "LongOnly"
+    constraints <- "LongOnly"
     print(constraints)
 
     # Optimization:
-    portfolio = tangencyPortfolio(data, spec, constraints)
+    portfolio <- tangencyPortfolio(data, spec, constraints)
     print(portfolio)
 
     # Return Value:
@@ -66,19 +65,19 @@ test.tangencyPortfolio.CVaR.LongOnly <-
     #   the return is fixed, we minimie the CVaR
 
     # Data:
-    data = SMALLCAP.RET
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    data <- SMALLCAP.RET
+    data <- data[, c("BKE", "GG", "GYMB", "KRON")]
     head(data)
 
     # CVaR Specification:
-    spec = portfolioSpec()
-    setType(spec) = "CVaR"
+    spec <- portfolioSpec()
+    setType(spec) <- "CVaR"
     setTargetReturn(spec) = mean(colMeans(data))
-    setAlpha(spec) = 0.05
+    setAlpha(spec) <- 0.05
     print(spec)
 
     # Constraints:
-    constraints = "LongOnly"
+    constraints <- "LongOnly"
     print(constraints)
 
     # CVaR Portfolio:

@@ -6,8 +6,14 @@
 import("methods")
 import("MASS")
 import("robustbase")
-import("quadprog")
 import("Rglpk")
+import("spam")
+import("Rsymphony")
+import("quadprog")
+import("kernlab")
+import("Rdonlp2")
+import("Rsolnp")
+import("Rnlminb2")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
@@ -140,6 +146,7 @@ export(
     ".mvSolveTwoAssets",
     ".notStackedWeightsPlot",
     ".portfolioFrontier",
+    ".rdonlp2Arguments",
     ".rglpk",
     ".rglpkArguments",
     ".rglpkControl",
@@ -150,6 +157,7 @@ export(
     ".rshortExact",
     ".rshortExactArguments",
     ".rshortExactControl",
+    ".rsolnpArguments",
     ".studentEstimator",
     ".tailRiskBudgetsLinePlot",
     ".varRisk",
@@ -255,9 +263,11 @@ export(
     "sharpeRatioLines",
     "shrinkEstimator",
     "singleAssetPoints",
+    "solveRdonlp2",
     "solveRglpk",
     "solveRquadprog",
     "solveRshortExact",
+    "solveRsolnp",
     "spearmanEstimator",
     "tailRiskBudgetsPie",
     "tailRiskBudgetsPlot",

@@ -40,18 +40,18 @@ test.solveRquadprog.LongOnly <-
     print(head(data))
 
     # Specification:
-    spec = portfolioSpec()
-    setType(spec) = "MV"
-    setOptimize(spec) = "minRisk"
-    setTargetReturn(spec) = mean(colMeans(data))
+    spec <- portfolioSpec()
+    setType(spec) <- "MV"
+    setOptimize(spec) <- "minRisk"
+    setTargetReturn(spec) <- mean(colMeans(data))
     print(spec)
 
     # Default Constraints:
-    constraints = "LongOnly"
+    constraints <- "LongOnly"
     constraints
 
     # Quadprog:
-    ans = solveRquadprog(data, spec, constraints)
+    ans <- solveRquadprog(data, spec, constraints)
     print(ans)
 
     # Return Value:
@@ -69,23 +69,23 @@ test.solveRquadprog.twoAssets <-
     #   Speeds up the two-assets forntier significantly!
 
     # Data:
-    data = SMALLCAP.RET
-    data = data[, c("BKE", "GG")]
+    data <- SMALLCAP.RET
+    data <- data[, c("BKE", "GG")]
     print(head(data))
 
     # Specification:
-    spec = portfolioSpec()
-    setType(spec) = "MV"
-    setOptimize(spec) = "minRisk"
-    setTargetReturn(spec) = mean(colMeans(data))
+    spec <- portfolioSpec()
+    setType(spec) <- "MV"
+    setOptimize(spec) <- "minRisk"
+    setTargetReturn(spec) <- mean(colMeans(data))
     print(spec)
 
     # Default Constraints:
-    constraints = "LongOnly"
+    constraints <- "LongOnly"
     print(constraints)
 
     # Quadprog:
-    ans = solveRquadprog(data, spec, constraints)
+    ans <- solveRquadprog(data, spec, constraints)
     print(ans)
 
     # Return Value:
