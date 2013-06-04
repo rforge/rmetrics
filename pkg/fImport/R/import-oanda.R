@@ -70,7 +70,7 @@ oandaImport <-
     } else {
         # Download File:
     to <- as.timeDate(to)
-        to = trunc(to, "days")
+    to <- trunc(to, "days")
     if (is.null(from))
             from = to - nDaysBack * 24 * 3600
     else
@@ -97,7 +97,7 @@ oandaImport <-
         fx = matrix(fx, byrow = TRUE, ncol = 2)
         data = as.numeric(fx[, 2])
         time = fx[, 1]
-        charvec = paste(substr(time, 7, 10), substr(time, 1, 2),
+        charvec <- paste(substr(time, 7, 10), substr(time, 1, 2),
             substr(time, 4, 5), sep = "-")
         X = timeSeries(data, charvec, units = query)
     }

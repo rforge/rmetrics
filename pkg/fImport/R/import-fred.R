@@ -88,14 +88,14 @@ fredImport <-
         x1 = scan(tmp, what = "", sep = "\n")
 
         # Extract dates ^19XX and ^20XX:
-        x2 = x1[regexpr("^[12][90]", x1) > 0]
-        x1 = x2[regexpr(" .$", x2) < 0]
+        x2 = x1[regexpr(pattern="^[12][90]", x1, perl=TRUE) > 0]
+        x1 = x2[regexpr(pattern=" .$", x2, perl=TRUE) < 0]
 
         # Compose Time Series:
-        data = matrix(
+        data <- matrix(
             as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
-        charvec = substring(x1, 1, 10)
-        X = timeSeries(data, charvec, units = query)
+        charvec <- substring(x1, 1, 10)
+        X <- timeSeries(data, charvec, units = query)
     }
 
     # Save to file:
@@ -106,7 +106,7 @@ fredImport <-
     }
 
     # Result:
-    ans = new("fWEBDATA",
+    ans <- new("fWEBDATA",
         call = match.call(),
         param = c(
             "Instrument" = query,
@@ -144,17 +144,17 @@ fredSeries <-
     # FUNCTION:
 
     # Download:
-    X = fredImport(query = symbols[1], ...)@data
-    N = length(symbols)
+    X <- fredImport(query = symbols[1], ...)@data
+    N <- length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            X = merge(X, fredImport(query = symbols[i], ...)@data)
+            X <- merge(X, fredImport(query = symbols[i], ...)@data)
         }
     }
 
     # Time Window:
-    if (is.null(from)) from = to - nDaysBack*24*3600
-    X = window(X, from, to)
+    if (is.null(from)) from <- to - nDaysBack*24*3600
+    X <- window(X, from, to)
 
     # Return Value:
     X

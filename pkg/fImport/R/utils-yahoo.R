@@ -363,10 +363,10 @@ yahooBriefing <-
 
         x <- unlist(strsplit(x, ">"))
 
-        x <- x[ grep("-...-[90]", x, perl = TRUE) ]
+        x <- x[ grep(pattern="-...-[90]", x, perl = TRUE) ]
         nX <- length(x)
         # The last record has an additional @, remove it ...
-        x[nX] <- gsub("@$", "", x[nX], perl = TRUE)
+        x[nX] <- gsub(pattern="@$", "", x[nX], perl = TRUE)
         x <- unlist(strsplit(x, "@"))
         x[x == ""] = "NA"
         x <- matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
@@ -469,7 +469,7 @@ yahooKeystats <-
         x <- unlist(strsplit(x, "@" ))
         x <- x[ grep(":", x) ]
         x <- gsub("^ ", "", x, perl = TRUE)
-        if (length(Index <- grep("^ ", x)) > 0)
+        if (length(Index <- grep(pattern="^ ", x, perl=TRUE)) > 0)
             x <- x[-Index]
         x <- gsub(" $", "", x, perl = TRUE)
         x <- gsub(":$", ":NA", x, perl = TRUE)
