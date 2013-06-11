@@ -5,7 +5,8 @@
   The Collision test for testing random number generators.
 }
 \usage{
-coll.test.sparse(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 10, ...)
+coll.test.sparse(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
+nbSample = 10, \dots)
 }
 \arguments{
   \item{rand}{a function generating random numbers. its first argument must be
@@ -14,7 +15,7 @@ coll.test.sparse(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1
   \item{segments}{numeric for the number of segments to which the interval \code{[0, 1]} is split.}
   \item{tdim}{numeric for the length of the disjoint t-tuples.}
   \item{nbSample}{numeric for the number of repetitions of the test.}
-  \item{...}{further arguments to pass to function rand}
+  \item{\dots}{further arguments to pass to function rand}
   
 }
 \details{

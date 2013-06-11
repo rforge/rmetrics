@@ -13,7 +13,8 @@
 \usage{
 halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE)
-torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, normal=FALSE)
+torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
+normal=FALSE)
 }
 \arguments{
   \item{n}{number of observations. If length(n) > 1, 

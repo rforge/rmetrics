@@ -23,7 +23,8 @@
 }
 \usage{
 congruRand(n, dim = 1, mod = 2^31-1, mult = 16807, incr = 0, echo)
-SFMT(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, usetime = FALSE)
+SFMT(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, 
+usetime = FALSE)
 WELL(n, dim = 1, order = 512, temper = FALSE, version = "a")
 knuthTAOCP(n, dim = 1)
 setSeed(seed)

@@ -5,7 +5,8 @@
   The Collision test for testing random number generators.
 }
 \usage{
-coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, echo = TRUE, ...)
+coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, 
+nbSample = 1000, echo = TRUE, \dots)
 }
 \arguments{
   \item{rand}{a function generating random numbers. its first argument must be
@@ -15,7 +16,7 @@ coll.test(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSample = 1000, ec
   \item{tdim}{numeric for the length of the disjoint t-tuples.}
   \item{nbSample}{numeric for the overall sample number.}
   \item{echo}{logical to plot detailed results, default \code{TRUE}}
-  \item{...}{further arguments to pass to function rand}
+  \item{\dots}{further arguments to pass to function rand}
   
 }
 \details{

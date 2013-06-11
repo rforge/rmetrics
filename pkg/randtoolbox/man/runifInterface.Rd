@@ -12,7 +12,7 @@ and \code{set.seed()}.
 }
 \usage{
 set.generator(name=c("congruRand", "WELL", "MersenneTwister", "default"),
-              parameters=NULL, seed=NULL, ..., only.dsc=FALSE)
+              parameters=NULL, seed=NULL, \dots, only.dsc=FALSE)
 
 put.description(description)		
 
@@ -24,7 +24,7 @@ get.description()
            family specified by the \code{name}.}
 	\item{seed}{A number, whose value is an integer between \code{0} and \code{2^32 - 1},
            to be used as a seed.}
-	\item{...}{Arguments describing named components of the vector of parameters,
+	\item{\dots}{Arguments describing named components of the vector of parameters,
            if argument \code{parameters} is missing or \code{NULL}.}	
 	\item{only.dsc}{Logical. If \code{TRUE}, a description of the specified RNG is returned
            and the generator is not initialized.}

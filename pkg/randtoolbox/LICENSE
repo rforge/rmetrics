@@ -3,7 +3,8 @@
 ----------------------------------------------------------------------
 
 YEAR: 2013
-COPYRIGHT HOLDER: Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wuertz 
+COPYRIGHT HOLDER: Yohan Chalabi, Christophe Dutang, Petr Savicky, Diethelm Wuertz, Makoto Matsumoto, Mutsuo Saito and Donald Knuth 
+ORGANIZATION: ETH Zurich, Academy of Sciences of the Czech Republic, Hiroshima University and The University of Tokyo
 
 
 ----------------------------------------------------------------------
@@ -14,10 +15,10 @@ COPYRIGHT HOLDER: Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wu
 licenses in this package, namely, GPL, BSD, public domain, etc... 
 (cf. 1.08-version DESCRIPTION file of this package). 
 
-- From 1.13, all this code of this package is under the above BSD 2-clause 
-license, available at http://opensource.org/licenses/BSD-2-Clause. 
+- From 1.13, all this code of this package is under the above BSD 3-clause 
+license, available at http://opensource.org/licenses/BSD-3-Clause. 
 
-- The package depends on the rngWELL package which is also under the
+- The package depends on the rngWELL package which is under the
 BSD 2-clause but has its own LICENSE file. The randtoolbox package 
 can be provided without this dependency on demand to the maintainer. 
 
@@ -29,9 +30,8 @@ can be provided without this dependency on demand to the maintainer.
 Christophe Dutang, Petr Savicky and Diethelm Wuertz.
 
 - the C code for SF-Mersenne Twister belongs to M. Matsumoto and M. Saito, 
-which is under the BSD license. Please refer to 
-http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/LICENSE.txt 
+see http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/LICENSE.txt 
 
-- the C code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth. 
-This code is in the public domain and freely copyable. Please refer to
-http://www-cs-faculty.stanford.edu/~uno/programs/rng-double.c.
+- the C code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth, 
+see http://www-cs-faculty.stanford.edu/~uno/programs/rng-double.c.
+
