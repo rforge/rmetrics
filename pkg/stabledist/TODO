@@ -12,7 +12,7 @@
 * parametrizations -- pm=0, 1, 2 ---
   provide functions for the parameter transformation that go from
   other to pm=0 -- and back
-  and then show how to, or  use these to to provide thransformations
+  and then show how to, or  use these to to provide transformations
   from all pm's to any other.
 
 * [qp] check the  lower.tail & log.p argument settings

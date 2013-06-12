@@ -13,6 +13,15 @@ stopifnot(0 < print(dstable(4000., alpha=1.00001, beta=0.6)))
 pdf("dstab-ex.pdf")
 
 x <- 2^seq(0, 20, length= if(doExtras) 200 else 64)
+## Regression check for alpha=2: <==> *norm() :
+x. <- x/1024
+fx <- dstable(x., alpha = 2, beta = 0, gamma = 1.1, delta=2, pm=2)
+lf <- dstable(x., alpha = 2, beta = 0, gamma = 1.1, delta=2, pm=2, log=TRUE)
+stopifnot(
+    local({i <- is.finite(log(fx)); all.equal(log(fx[i]), lf[i])}),
+    all.equal(fx, dnorm(x., m=2, s=1.1)),
+    all.equal(lf, dnorm(x., m=2, s=1.1, log=TRUE)))
+
 fx <- dstable(x, alpha = 1.0001, beta = 0.6)
 
 plot(x,fx, log="x", type="l")# looks good

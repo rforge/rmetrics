@@ -1,4 +1,4 @@
-## Part of R package 'stabledist' (part of the Rmetrics project).
+# Part of R package 'stabledist' (part of the Rmetrics project).
 
 ## The stabledist R package is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU Library General Public
@@ -186,9 +186,9 @@ dstable <- function(x, alpha, beta,
     ans <-
 	## Special Cases:
 	if (alpha == 2) {
-	    dnorm(x, mean = 0, sd = sqrt(2))
+	    dnorm(x, mean = 0, sd = sqrt(2), log=log)
 	} else if (alpha == 1 && beta == 0) {
-	    dcauchy(x)
+	    dcauchy(x, log=log)
 	} else {
 	    ## General Case
 	    if (alpha != 1) { ## 0 < alpha < 2	&  |beta| <= 1 from above
