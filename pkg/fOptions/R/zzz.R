@@ -29,30 +29,37 @@
 
 ################################################################################
 
+## .First.lib =
+## function(lib, pkg)
+## {
+##     # Startup Mesage and Desription:
+##     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+##     dsc <- packageDescription(pkg)
+##     if(interactive() || getOption("verbose")) {
+##         # not in test scripts
+##         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+##     }
 
-.First.lib =
-function(lib, pkg)
-{
-    # Startup Mesage and Desription:
-    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-    dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) {
-        # not in test scripts
-        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-    }
+##     # Load dll:
+##     library.dynam("fOptions", pkg, lib)
 
-    # Load dll:
-    library.dynam("fOptions", pkg, lib)
 
+##     .setfOptionsEnv(.runif.halton.seed = list())
+##     .setfOptionsEnv(.rnorm.halton.seed = list())
+##     .setfOptionsEnv(.runif.sobol.seed = list())
+##     .setfOptionsEnv(.rnorm.sobol.seed = list())
+
+
+## }
+
+.onLoad <- function(libname, pkgname) {
 
     .setfOptionsEnv(.runif.halton.seed = list())
     .setfOptionsEnv(.rnorm.halton.seed = list())
     .setfOptionsEnv(.runif.sobol.seed = list())
     .setfOptionsEnv(.rnorm.sobol.seed = list())
 
-
 }
-
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
     Sys.setenv <- Sys.putenv
@@ -60,4 +67,3 @@ if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
 
 
 ################################################################################
-
