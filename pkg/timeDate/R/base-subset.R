@@ -218,12 +218,12 @@ function(x = timeCalendar(), subset = "::")
 
     # Internal Functions:
     .completeStart = function(date) {
-        substr(paste(date, "-01-01", sep = ""), 1, 10) }
+        substr(paste0(date, "-01-01"), 1, 10) }
     .completeEnd = function(date) {
         if (nchar(date) == 4)
-            paste(date, "-12-31", sep = "") else
+            paste0(date, "-12-31") else
         if (nchar(date) == 7)
-            format(timeLastDayInMonth(paste(date, "-01", sep = ""))) else
+            format(timeLastDayInMonth(paste0(date, "-01"))) else
         if (nchar(date) == 10)
             date }
 

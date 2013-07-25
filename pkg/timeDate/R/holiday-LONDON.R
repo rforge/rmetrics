@@ -29,7 +29,7 @@ holidayLONDON <- function (year = getRmetricsOptions("currentYear")) {
         if (y >= 1834 & y <= 1870) {
             # 1 May, 1 November, Good Friday and Christmas are the
             # only England Bank Holidays
-            dts <- c(paste(y, "-05-01", sep = ""), paste(y, "-11-01", sep = ""))
+            dts <- c(paste0(y, "-05-01"), paste0(y, "-11-01"))
             holidays <- c(holidays, dts, as.character(GoodFriday(y)),
                           as.character(ChristmasDay(y)))
         }
@@ -49,14 +49,14 @@ holidayLONDON <- function (year = getRmetricsOptions("currentYear")) {
                 if (y == 2002) {
                     # Last Monday in May holiday moved to June 3, and
                     # Queen's Jubilee on June 4
-                    dts <- c(paste(y, "-06-03", sep = ""),
-                             paste(y, "-06-04", sep = ""))
+                    dts <- c(paste0(y, "-06-03"),
+                             paste0(y, "-06-04"))
                     holidays <- c(holidays, dts)
                 } else if (y == 2012) {
                     # Last Monday in May holiday moved to June 4, and
                     # Queen's Diamond Jubilee on June 5
-                    dts <- c(paste(y, "-06-04", sep = ""),
-                             paste(y, "-06-05", sep = ""))
+                    dts <- c(paste0(y, "-06-04"),
+                             paste0(y, "-06-05"))
                     holidays <- c(holidays, dts)
                 } else {
                     lon <- timeDate(.last.of.nday(y, 5, 31, 1), zone = "London",
@@ -113,18 +113,18 @@ holidayLONDON <- function (year = getRmetricsOptions("currentYear")) {
             if (y >= 1978) {
                 if (y == 1981) {
                     # Royal wedding was a public holiday
-                    dts <- paste(y, "-07-29", sep = "")
+                    dts <- paste0(y, "-07-29")
                     holidays <- c(holidays, dts)
                 }
                 if (y == 2011) {
                     # Royal wedding declared a public holiday
-                    dts <- paste(y, "-04-29", sep = "")
+                    dts <- paste0(y, "-04-29")
                     holidays <- c(holidays, dts)
                 }
                 # First Monday of May became a bank holiday
                 if (y == 1995) {
                     # Was moved to May 8 to celebrate VE Day's 50th anniversary
-                    dts <- paste(y, "-05-08", sep = "")
+                    dts <- paste0(y, "-05-08")
                     holidays <- c(holidays, dts)
                 } else {
                     lon <- timeDate(.on.or.after(y, 5, 1, 1), zone = "London",

@@ -39,7 +39,7 @@ setMethod("show", "timeDate", function (object)
         object <- object[seq.int(max)]
 
     output <- format(object)
-    layout <- paste("[", output, "]", sep = "")
+    layout <- paste0("[", output, "]")
     names(layout) <- names(output)
 
     # Print Results:

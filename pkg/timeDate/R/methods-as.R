@@ -241,7 +241,7 @@ as.data.frame.timeDate <-
     # Data Frame:
     ans <- as.data.frame.POSIXlt(x@Data, ...)
     nm <- paste(deparse(substitute(x), width.cutoff = 500), collapse = " ")
-    colnames(ans) <- paste(x@FinCenter, ":", nm, sep = "")
+    colnames(ans) <- paste0(x@FinCenter, ":", nm)
     attr(ans, "control") <- c(FinCenter = x@FinCenter)
 
     # Return Value:

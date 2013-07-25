@@ -76,7 +76,7 @@ rulesFinCenter <-
     #
     #        # Read the Rules:
     #        # Get IcalPath from .FirstLib
-    #        file = paste(IcalPath, FinCenter, sep = "")
+    #        file = paste0(IcalPath, FinCenter)
     #        zfile <- zip.file.extract(file, "Rdata.zip")
     #        ical = read.table(zfile, skip = 2)
     #

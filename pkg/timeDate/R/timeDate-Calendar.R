@@ -24,7 +24,7 @@
 
 
 timeCalendar <-
-    function(y = getRmetricsOptions("currentYear"), 
+    function(y = getRmetricsOptions("currentYear"),
     m = 1:12, d = 1, h = 0, min = 0, s = 0,
     zone = "", FinCenter = "")
 {
@@ -117,7 +117,7 @@ timeCalendar <-
         format = "%Y%m%d"
     } else {
         chartime = substr(as.character(xhhmmss), 2, 7)
-        charvec = paste(as.vector(chardate), as.vector(chartime), sep = "")
+        charvec = paste0(as.vector(chardate), as.vector(chartime))
         format = "%Y%m%d%H%M%S"
     }
 
