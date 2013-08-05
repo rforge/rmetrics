@@ -17,11 +17,17 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  norm                      Returns the norm of a matrix
+#  norm2                      Returns the norm2 of a matrix
 ################################################################################
 
 
-norm <-
+# IMPORTANT NOTICE:
+#   The function fBasics::norm() has become obsolete, use instead: 
+#   base::norm(x, type) - Note, the arguments are different.
+#   The original Rmetrics function is still available as fBasics:norm2()
+
+
+norm2 <-
 function(x, p = 2)
 {
     # A function implemented by Diethelm Wuertz
@@ -47,17 +53,17 @@ function(x, p = 2)
     # FUNCTION:
 
     # Compute Norm:
-    ans = NA
+    ans <- NA
     if (p == 1) {
-        x = abs(x)
-        ans = max(apply(x, 2, sum))
+        x <- abs(x)
+        ans <- max(apply(x, 2, sum))
     }
     if (p == 2) {
-        ans = sqrt(max(eigen(t(x) %*% x)$values))
+        ans <- sqrt(max(eigen(t(x) %*% x)$values))
     }
     if (p == Inf) {
-        x = abs(x)
-        ans = max(apply(x, 1, sum))
+        x <- abs(x)
+        ans <- max(apply(x, 1, sum))
     }
     if (is.na(ans)) stop("Invalid value for p")
 

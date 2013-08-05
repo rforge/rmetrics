@@ -340,7 +340,7 @@ export(
     "nigSkew",
     "nigSlider",
     "nigVar",
-    "norm",
+    "norm2",
     "normIQR",
     "normKURT",
     "normMED",

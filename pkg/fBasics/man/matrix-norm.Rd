@@ -1,7 +1,7 @@
 \name{norm}
 
 
-\alias{norm}
+\alias{norm2}
 
 
 \title{Matrix Norm}
@@ -15,7 +15,7 @@
 
 
 \usage{
-norm(x, p = 2)
+norm2(x, p = 2)
 }
 
 
@@ -40,10 +40,17 @@ norm(x, p = 2)
 }
 
 
+\value{
+
+    returns the value of the norm of the matrix.
+    
+}
+
+
 \details{
     
 
-    The function \code{norm} computes the norm of a matrix. Three choices 
+    The function \code{norm2} computes the norm of a matrix. Three choices 
     are possible: 
      
     \code{p=1} - The maximum absolute column sum norm which is defined 
@@ -57,6 +64,11 @@ norm(x, p = 2)
     \code{p=Inf} - The maximum absolute row sum norm is defined 
     as the maximum of the sum of the absolute valued elements
     of rows of the matrix.
+    
+    Note, the function \code{fBasics::norm()} has become obsolete, since 
+    \code{base::norm()} has become available in the R base environment.
+    To avoid conflicts with \code{norm()} we have renamed in the fBasics
+    package as \code{norm2}.
     
 }
 
@@ -72,11 +84,11 @@ Golub, van Loan, (1996);
 
 \examples{
 ## Create Pascal Matrix:
-   P = pascal(5)
+   P <- pascal(5)
    P                  
      
 ## Return the Norm of the Matrix:                      
-   norm(P)                                                       
+   norm2(P)                                                       
 }
 
 
