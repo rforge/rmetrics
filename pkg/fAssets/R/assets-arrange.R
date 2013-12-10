@@ -19,17 +19,17 @@
 # FUNCTION:                DESCRIPTION:
 # assetsArrange             Rearranges the columns in a deta set of assets
 #  .pcaArrange               Returns PCA correlation ordered column names
-#  .hclustArrange            Returns hierarchical clustered column names 
-#  .abcArrange               Returns sorted column names 
-#  .orderArrange             Returns ordered column names 
-#  .sampleArrange            Returns sampled column names 
+#  .hclustArrange            Returns hierarchical clustered column names
+#  .abcArrange               Returns sorted column names
+#  .orderArrange             Returns ordered column names
+#  .sampleArrange            Returns sampled column names
 #  .statsArrange             Returns statistically rearranged column names
 ################################################################################
 
 
 assetsArrange <-
     function(x, method = c("pca", "hclust", "abc"), ...)
-{ 
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -37,24 +37,24 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # FUNCTION:
-    
+
     # Settings:
     method = match.arg(method)
     FUN = paste(".", method, "Arrange", sep = "")
     arrange = match.fun(FUN)
-    
+
     # Return Value:
     arrange(x, ...)
 }
-    
+
 # ------------------------------------------------------------------------------
 
 
 .pcaArrange <-
     function(x, robust = FALSE, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -62,18 +62,16 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # FUNCTION:
 
     # Order:
     if (robust) {
-        if (require(robustbase))
             x.cor = covMcd(as.matrix(x), cor = TRUE, ...)$cor
-        else
-            stop("package \"robustbase\" cannot be loaded")
     } else {
         x.cor = cor(as.matrix(x), ...)
     }
+
     x.eigen = eigen(x.cor)$vectors[,1:2]
     e1 = x.eigen[, 1]
     e2 = x.eigen[, 2]
@@ -88,9 +86,9 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.hclustArrange <- 
+.hclustArrange <-
     function(x, method = c("euclidean", "complete"), ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -118,9 +116,9 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.abcArrange <- 
+.abcArrange <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -128,7 +126,7 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # FUNCTION:
 
     # Sort:
@@ -144,7 +142,7 @@ assetsArrange <-
 
 .orderArrange <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -152,7 +150,7 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # FUNCTION:
 
     # Order:
@@ -166,9 +164,9 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.sampleArrange <- 
+.sampleArrange <-
     function(x, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -176,7 +174,7 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # FUNCTION:
 
     # Sample:
@@ -190,9 +188,9 @@ assetsArrange <-
 # ------------------------------------------------------------------------------
 
 
-.statsArrange <- 
+.statsArrange <-
     function(x, FUN = colMeans, ...)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -200,7 +198,7 @@ assetsArrange <-
 
     # Arguments:
     #   x - S4 object of class 'timeSeries'
-    
+
     # Note:
     #   Example of function Candidates:
     #   colStats        calculates column statistics,
@@ -230,4 +228,3 @@ assetsArrange <-
 
 
 ################################################################################
-
