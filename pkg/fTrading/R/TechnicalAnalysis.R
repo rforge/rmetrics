@@ -1243,8 +1243,8 @@ function(high, low, close, lag = 20)
 
     # Indicator:
     n = lag
-    hh = rollMax(high, n, trim = FALSE)
-    ll = rollMin(low, n, trim = FALSE)
+    hh = rollFun(high, n, trim = FALSE, FUN = max)
+    ll = rollFun(low, n, trim = FALSE, FUN = min)
     williamsr = (hh-close)/(hh-ll)*100
     names(williamsr) = as.character(1:length(x))
 
@@ -1508,5 +1508,3 @@ function(Returns, Positions)
 
 
 ################################################################################
-
-

@@ -117,33 +117,33 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
 # ------------------------------------------------------------------------------
 
 
-rollMean =
-function(x, n = 9, trim = TRUE, na.rm = FALSE)
-{   # A function implemented by Diethelm Wuertz
+## rollMean =
+## function(x, n = 9, trim = TRUE, na.rm = FALSE)
+## {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Compute rolling mean
+##     # Description:
+##     #   Compute rolling mean
 
-    # Examples:
-    #
-    #   x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(),
-    #       units = "rnorm",FinCenter = "GMT")
-    #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
-    #   rollMean(x, n = 4, trim = TRUE, na.rm = FALSE)
-    #
-    #   series(x)[8, ] = NA
-    #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
-    #   rollMean(x, n = 4, trim = FALSE, na.rm = TRUE)
-    #   rollMean(x, n = 4, trim = TRUE, na.rm = TRUE)
+##     # Examples:
+##     #
+##     #   x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(),
+##     #       units = "rnorm",FinCenter = "GMT")
+##     #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
+##     #   rollMean(x, n = 4, trim = TRUE, na.rm = FALSE)
+##     #
+##     #   series(x)[8, ] = NA
+##     #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
+##     #   rollMean(x, n = 4, trim = FALSE, na.rm = TRUE)
+##     #   rollMean(x, n = 4, trim = TRUE, na.rm = TRUE)
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    # Roll Mean:
-    rmean = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+##     # Roll Mean:
+##     rmean = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
 
-    # Return Value:
-    rmean
-}
+##     # Return Value:
+##     rmean
+## }
 
 
 # ------------------------------------------------------------------------------
@@ -181,42 +181,41 @@ function(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 # ------------------------------------------------------------------------------
 
 
-rollMax  =
-function(x, n = 9, trim = TRUE, na.rm = FALSE)
-{   # A function implemented by Diethelm Wuertz
+## rollMax  =
+## function(x, n = 9, trim = TRUE, na.rm = FALSE)
+## {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Compute rolling maximum
+##     # Description:
+##     #   Compute rolling maximum
 
-    # FUNCTION:
+##     # FUNCTION:
 
-    # Roll Max:
-    rmax = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = max)
+##     # Roll Max:
+##     rmax = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = max)
 
-    # Return Value:
-    rmax
-}
-
-
-# ------------------------------------------------------------------------------
+##     # Return Value:
+##     rmax
+## }
 
 
-rollMin  =
-function(x, n = 9, trim = TRUE, na.rm = FALSE)
-{   # A function implemented by Diethelm Wuertz
+## # ------------------------------------------------------------------------------
 
-    # Description:
-    #   Compute rolling function minimum
 
-    # FUNCTION:
+## rollMin  =
+## function(x, n = 9, trim = TRUE, na.rm = FALSE)
+## {   # A function implemented by Diethelm Wuertz
 
-    # Roll Min:
-    rmin = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = min)
+##     # Description:
+##     #   Compute rolling function minimum
 
-    # Return Value:
-    rmin
-}
+##     # FUNCTION:
+
+##     # Roll Min:
+##     rmin = rollFun(x = x, n = n, trim = trim, na.rm = na.rm,  FUN = min)
+
+##     # Return Value:
+##     rmin
+## }
 
 
 ################################################################################
-
