@@ -1,5 +1,11 @@
+2013-06-23  chalabi
+
+	* DESCRIPTION, R/zzz.R, src/Makevars: updated Fortran flags,
+	  version number and removed .First.lib()
+
 2012-11-07  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC
 	* DESCRIPTION: Updated version number
 	* DESCRIPTION: Updated maintainer field
 	* man/PlainVanillaOptions.Rd: Fixed typo
