@@ -1,5 +1,12 @@
+2013-06-23  chalabi
+
+	* DESCRIPTION, R/zzz.R, src/Makevars: updated Fortran flags,
+	  version number and removed .First.lib()
+
 2012-12-10  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
+	  after submission to CRAN
 	* DESCRIPTION: Updated 'Author' and added 'Imports' fields to
 	  reflect third-party functions used in fRegression
 	* NAMESPACE: Updated NAMESPACE
