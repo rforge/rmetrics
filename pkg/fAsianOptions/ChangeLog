@@ -1,3 +1,12 @@
+2013-06-23  chalabi
+
+	* DESCRIPTION, src/Makevars: updated Fortran flags and version
+	  number
+
+2013-03-18  chalabi
+
+	* ChangeLog, DESCRIPTION: updated ChangeLog and DSC files
+
 2013-02-07  chalabi
 
 	* R/zzz.R: Removed deprecated .First.lib()
