@@ -195,57 +195,57 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.whittleFit =
-function()
-{
-    # whittleFit(
-    #   x, order = c(1, 1), subseries = 1,
-    #   method = c("fgn", "farma"),
-    #   trace = FALSE, spec = FALSE, title = NULL, description = NULL)
+## test.whittleFit =
+## function()
+## {
+##     # whittleFit(
+##     #   x, order = c(1, 1), subseries = 1,
+##     #   method = c("fgn", "farma"),
+##     #   trace = FALSE, spec = FALSE, title = NULL, description = NULL)
 
 
-    # Beran - Simulate:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = fgnSim(n = 1000, H = 0.7)
+##     # Beran - Simulate:
+##     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+##     set.seed(4711, kind = "Marsaglia-Multicarry")
+##     x = fgnSim(n = 1000, H = 0.7)
 
-    # Fit:
-    Hurst = whittleFit(x)@hurst$H
-    print(Hurst)
-    target = round(Hurst, 3)
-    print(target)
-    current = 0.701
-    checkEquals(target, current)
+##     # Fit:
+##     Hurst = whittleFit(x)@hurst$H
+##     print(Hurst)
+##     target = round(Hurst, 3)
+##     print(target)
+##     current = 0.701
+##     checkEquals(target, current)
 
-    # Durbin - Simulate:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = fgnSim(n = 1000, H = 0.7, method = "durbin")
+##     # Durbin - Simulate:
+##     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+##     set.seed(4711, kind = "Marsaglia-Multicarry")
+##     x = fgnSim(n = 1000, H = 0.7, method = "durbin")
 
-    # Fit:
-    Hurst = whittleFit(x)@hurst$H
-    print(Hurst)
-    target = round(Hurst, 3)
-    print(target)
-    current = 0.679
-    checkEquals(target, current)
+##     # Fit:
+##     Hurst = whittleFit(x)@hurst$H
+##     print(Hurst)
+##     target = round(Hurst, 3)
+##     print(target)
+##     current = 0.679
+##     checkEquals(target, current)
 
-    # Paxson - Simulate:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = fgnSim(n = 1000, H = 0.7, method = "paxson")
+##     # Paxson - Simulate:
+##     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+##     set.seed(4711, kind = "Marsaglia-Multicarry")
+##     x = fgnSim(n = 1000, H = 0.7, method = "paxson")
 
-    # Fit:
-    Hurst = whittleFit(x)@hurst$H
-    print(Hurst)
-    target = round(Hurst, 3)
-    print(target)
-    current = 0.728
-    checkEquals(target, current)
+##     # Fit:
+##     Hurst = whittleFit(x)@hurst$H
+##     print(Hurst)
+##     target = round(Hurst, 3)
+##     print(target)
+##     current = 0.728
+##     checkEquals(target, current)
 
-    # Return Value:
-    return()
-}
+##     # Return Value:
+##     return()
+## }
 
 
 # ------------------------------------------------------------------------------
@@ -357,4 +357,3 @@ function()
 
 
 ################################################################################
-

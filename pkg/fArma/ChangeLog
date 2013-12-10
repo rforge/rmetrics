@@ -1,3 +1,14 @@
+2013-06-23  chalabi
+
+	* NAMESPACE, R/whittle.R: Commenting out whittleFit() because it
+	  does not pass R CMD check
+	* DESCRIPTION, R/zzz.R, src/Makevars: updated Fortran flags,
+	  version number and removed .First.lib()
+
+2012-09-18  chalabi
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files.
+
 2012-09-17  chalabi
 
 	* DESCRIPTION: changed maintainer field
