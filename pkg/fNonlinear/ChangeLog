@@ -1,5 +1,11 @@
+2013-06-23  chalabi
+
+	* DESCRIPTION, R/zzz.R, src/Makevars: updated Fortran flags,
+	  version number and removed .First.lib()
+
 2012-12-10  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
 	* R/NonLinStatistics.R: Fixed partial argument match
 	* DESCRIPTION: Updated maintainer, note and version fields
 	* NAMESPACE: Added NAMESPACE
