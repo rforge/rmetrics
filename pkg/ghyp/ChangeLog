@@ -298,3 +298,9 @@ ghyp V1.5.6
 	* lik.ratio.test: pchisq(q, df, lower.tail = FALSE) instead of 1 -
 	pchisq(q, df, lower.tail = TRUE). Leads to increased numerical
 	stability. In courtesy of Saeed Ahmadi.
+
+2013-xx-xx David Luethi
+ghyp V1.5.7
+
+	* Vignette: Error corrected in formula 5.8 in courtesy of Steven
+	Chai.

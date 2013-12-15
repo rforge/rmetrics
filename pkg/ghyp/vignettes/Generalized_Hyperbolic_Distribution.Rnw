@@ -51,7 +51,7 @@
 \title{ghyp: A package on generalized hyperbolic distributions}
 \author{Wolfgang Breymann\footnote{Institute of Data Analysis and
     Process Design, e-mail:
-    wolfgang.breymann@zhaw.ch} \and David L\"uthi\footnote{SIM Global Advantage Investment Management, e-mail: luethid@gmail.com}}
+    wolfgang.breymann@zhaw.ch} \and David L\"uthi\footnote{Zurich Insurance Group, e-mail: luethid@gmail.com}}
 %\publishers{}
 \date{\today}
 \maketitle
@@ -598,7 +598,7 @@ MCECM algorithm are sketched as follows:
   }
 \item{Update $\MU$ and $\Sigma$:
     \begin{eqnarray}
-      \MU^{[k+1]} &=& \OneDivN \frac{\sumN \deltaIK \x_i-\GAMMA^{[k+1]}}
+      \MU^{[k+1]} &=& \OneDivN \frac{\sumN (\deltaIK \x_i-\GAMMA^{[k+1]})}
       {\bar{\delta}^{[k]}}\\
       \Sigma^{[k+1]} &=& \OneDivN \sumN \deltaIK (\x_i-\MU^{[k+1]})(\x_i-\MU^{[k+1]})'
       - \bar{\eta}^{[k]} \GAMMA^{[k+1]} \GAMMA^{[k+1]}\,'.
