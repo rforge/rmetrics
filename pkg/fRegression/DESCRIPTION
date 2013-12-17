@@ -11,9 +11,8 @@ Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
         G. Millo and D. Mitchell (for bgtest(), bptest(), dwtest(),
         gqtest(), harvtest(), hmctest(), raintest(), reset() and
         resettest() from lmtest package)
-Depends: R (>= 2.4.0), methods, mgcv, nnet, timeDate, timeSeries,
-        fBasics, fTrading, fMultivar
-Imports: polspline, lmtest
+Depends: R (>= 2.4.0), timeDate, timeSeries, fBasics, fTrading, fMultivar
+Imports: methods, mgcv, nnet, polspline, lmtest
 Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
