@@ -1,5 +1,10 @@
+2013-12-10  chalabi
+
+	* DESCRIPTION, R/assets-arrange.R, R/zzz.R:
+
 2012-09-24  chalabi
 
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files
 	* DESCRIPTION: Updated maintainer field.
 	* NAMESPACE, R/zzz.Deprecated.R: Removed external C call.
 
