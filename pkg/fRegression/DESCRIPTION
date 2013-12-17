@@ -1,7 +1,7 @@
 Package: fRegression
-Version: 3010.78
-Revision: 5525
-Date: 2013-06-23
+Version: 3010.79
+Revision: 5533
+Date: 2013-12-17
 Title: Regression Based Decision and Prediction
 Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
         from R's base and nnet() from nnet package); B.R. Ripley (for
@@ -11,8 +11,8 @@ Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
         G. Millo and D. Mitchell (for bgtest(), bptest(), dwtest(),
         gqtest(), harvtest(), hmctest(), raintest(), reset() and
         resettest() from lmtest package)
-Depends: R (>= 2.4.0), timeDate, timeSeries, fBasics, fTrading, fMultivar
-Imports: methods, mgcv, nnet, polspline, lmtest
+Depends: R (>= 2.4.0), fBasics, fTrading, fMultivar, nnet, mgcv
+Imports: methods, lmtest, polspline
 Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
