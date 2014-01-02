@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #  info@rmetrics.org
@@ -32,7 +32,7 @@
 #  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
 # S3-METHODS:           DESCRIPTION:
-#  print.fREG            Prints results from a regression model fit     
+#  print.fREG            Prints results from a regression model fit
 #  plot.fREG             Plots fit and diagnostics for a regression model
 #  summary.fREG           Summarizes fit and diagnostics for a regression model
 # S3-METHODS:           DESCRIPTION:
@@ -44,28 +44,28 @@
 ################################################################################
 
 
-test.regSim <- 
+test.regSim <-
     function()
 {
     # Plot Parameters:
     par(ask = FALSE)
     par(mfrow = c(3, 1))
-    
+
     # Simulate Artificial LM:
     X = regSim(model = "LM3", n = 365)
     head(X)
     plot(X[, "Y"], type = "l", main = "LM3", xlab = "1970", ylab = "Y")
-    
+
     # Simulate Artificial LOGIT:
     X = regSim(model = "LOGIT3", n = 365)
     head(X)
     plot(X[, "Y"], type = "l", main = "LOGIT3", xlab = "1970", ylab = "Y")
-    
+
     # Simulate Artificial GAM:
     X = regSim(model = "GAM3", n = 365)
     head(X)
     plot(X[, "Y"], type = "l", main = "GAM3", xlab = "1970", ylab = "Y")
-   
+
     # Return Value:
     return()
 }
@@ -74,50 +74,50 @@ test.regSim <-
 # ------------------------------------------------------------------------------
 
 
-test.regFit.dataframe <- 
+test.regFit.dataframe <-
     function()
 {
     # Working with timeSeries Objects ...
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
-    
+
     # Regression Fit:
-    LM       = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
-    RLM      = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM       = regFit(Y ~ X1 + X2, data = DATA, use = "gam")                
-    PPR      = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
-    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
-    NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")  
+    LM       = regFit(Y ~ X1 + X2, data = DATA, use = "lm")
+    RLM      = regFit(Y ~ X1 + X2, data = DATA, use = "rlm")
+    AM       = regFit(Y ~ X1 + X2, data = DATA, use = "gam")
+    PPR      = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars")
+    NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")
     # ... a note on AM the smoothing functions are added by default!
     # this is different to gam()
-    
-    
+
+
     # Print Method:
-    print(LM) 
+    print(LM)
     print(RLM)
-    print(AM)       
+    print(AM)
     print(PPR)
     print(POLYMARS)
-    print(NNET)  
-    
+    print(NNET)
+
     # Plot Method:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
     # plot(LM, which = "all")                             # CHECK which !!!
     # plot(RLM, which = "all")
-    # plot(AM, which = "all")            
+    # plot(AM, which = "all")
     # plot(PPR, which = "all")
     # plot(POLYMARS, which = "all")
-    # plot(NNET, which = "all")  
-    
+    # plot(NNET, which = "all")
+
     # Summary Method:
-    summary(LM) 
+    summary(LM)
     summary(RLM)
-    summary(AM)    
+    summary(AM)
     summary(PPR)
     summary(POLYMARS)
-    summary(NNET)  
+    summary(NNET)
 
     # Return Value:
     return()
@@ -127,25 +127,25 @@ test.regFit.dataframe <-
 # ------------------------------------------------------------------------------
 
 
-test.regFit.valueSlots <- 
+test.regFit.valueSlots <-
     function()
-{    
-    
+{
+
     # Working with timeSeries Objects ...
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
-    
+
     # Modelling:
-    LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
-    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam") 
-    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
-    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
-    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")   
-    
+    LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm")
+    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm")
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam")
+    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars")
+    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")
+
     # Extract:
-    
+
     # call = "call"
     # formula = "formula"
     # family = "character"
@@ -156,35 +156,35 @@ test.regFit.valueSlots <-
     # fitted.values = "timeSeries"
     # title = "character"
     # description = "character"
-    
+
     LM@call
     RLM@call
     AM@call
     PPR@call
     POLYMARS@call
     NNET@call
-    
+
     LM@formula
     RLM@formula
     AM@formula                                                       # CHECK !!!
     PPR@formula
     POLYMARS@formula
     NNET@formula
-    
+
     LM@family[1:2]
     RLM@family[1:2]
     AM@family[1:2]
     PPR@family[1:2]
     POLYMARS@family[1:2]
     NNET@family[1:2]
-    
+
     LM@method
     RLM@method
     AM@method
     PPR@method
     POLYMARS@method
     NNET@method
-    
+
     # Note the residuals are time tmeSeries objects!
     print(LM@residuals[c(1,100)])
     print(RLM@residuals[c(1,100)])
@@ -192,7 +192,7 @@ test.regFit.valueSlots <-
     print(PPR@residuals[c(1,100)])
     print(POLYMARS@residuals[c(1,100)])
     print(NNET@residuals[c(1,100)])
-    
+
     # Note the fitted values are time tmeSeries objects!
     print(LM@fitted[c(1,100)])
     print(RLM@fitted[c(1,100)])
@@ -200,7 +200,7 @@ test.regFit.valueSlots <-
     print(PPR@fitted[c(1,100)])
     print(POLYMARS@fitted[c(1,100)])
     print(NNET@fitted[c(1,100)])
-    
+
     # Returns a Title, by default the name of the algorithm applied:
     LM@title
     RLM@title
@@ -208,7 +208,7 @@ test.regFit.valueSlots <-
     PPR@title
     POLYMARS@title
     NNET@title
-    
+
     # Returns a Description, by default Date/Time and user:
     LM@description
     RLM@description
@@ -216,7 +216,7 @@ test.regFit.valueSlots <-
     PPR@description
     POLYMARS@description
     NNET@description
- 
+
     # Return Value:
     return()
 }
@@ -225,24 +225,24 @@ test.regFit.valueSlots <-
 # ------------------------------------------------------------------------------
 
 
-test.predict.fREG <- 
+test.predict.fREG <-
     function()
-{    
-    
+{
+
     # Working with timeSeries Objects ...
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
-    
+
     # Regression Fit:
 
-    LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
-    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam")       
-    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")  
-    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
-    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")   
-     
+    LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm")
+    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm")
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam")
+    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars")
+    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")
+
     # Just to rmember - Predict:
     #   predict.fREG(object, newdata, se.fit = FALSE, type = "response", ...)
 
@@ -250,31 +250,31 @@ test.predict.fREG <-
     set.seed(4711)
     N = round(runif(5, 1, 100), 0)
     N
-    
+
     # Predict Response:
-    predict(LM,    DATA[N, ])   
+    predict(LM,    DATA[N, ])
     predict(RLM,   DATA[N, ])
-    predict(AM,    DATA[N, ])     
+    predict(AM,    DATA[N, ])
     predict(PPR,   DATA[N, ])
     predict(POLYMARS, DATA[N, ])
-    predict(NNET,  DATA[N, ])   
-    
+    predict(NNET,  DATA[N, ])
+
     # Predict Response:
     predict(LM,    DATA[N, ], type = "response")
     predict(RLM,   DATA[N, ], type = "response")
-    predict(AM,    DATA[N, ], type = "response")       
+    predict(AM,    DATA[N, ], type = "response")
     predict(PPR,   DATA[N, ], type = "response")
     predict(POLYMARS, DATA[N, ], type = "response")
     predict(NNET,  DATA[N, ], type = "response")
-        
+
     # Predict Response with Standard Errors:
     predict(LM,    DATA[N, ], se.fit = TRUE)
     predict(RLM,   DATA[N, ], se.fit = TRUE)
-    predict(AM,    DATA[N, ], se.fit = TRUE)       
+    predict(AM,    DATA[N, ], se.fit = TRUE)
     predict(PPR,   DATA[N, ], se.fit = TRUE)
     predict(POLYMARS, DATA[N, ], se.fit = TRUE)
     predict(NNET,  DATA[N, ], se.fit = TRUE)
-    
+
     # Return Value:
     return()
 }
@@ -283,25 +283,22 @@ test.predict.fREG <-
 # ------------------------------------------------------------------------------
 
 
-test.regFit.nonDefaults <- 
+test.regFit.nonDefaults <-
     function()
-{   
-    # Requirements:
-    require(MASS)
-    require(polspline)
-    
+{
+
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
-    
+
     # Simulate Data - a timeSeries object:
     DATA = as.timeSeries(DATA)
     head(DATA)
     class(DATA)
-    
+
     # LM:
-    LM1 = regFit(Y ~ X1 + X2,      DATA, use = "lm") 
+    LM1 = regFit(Y ~ X1 + X2,      DATA, use = "lm")
     print(LM1)
     LM2 = regFit(Y ~ 1 + X1 + X2,  DATA)
     print(LM2)
@@ -309,47 +306,47 @@ test.regFit.nonDefaults <-
     print(LM3)
     LM4 = regFit(Y ~ X1 + log(X2), DATA)
     print(LM4)
-    
+
     # AM:
     AM1 = regFit(Y ~ s(X1) + s(X2), data = DATA, use = "gam")
     print(AM1)
-    # AM2 = regFit(Y ~ s(X1) + s(X2), DATA, "gam", 
+    # AM2 = regFit(Y ~ s(X1) + s(X2), DATA, "gam",
     #   method = gam.method(pearson = TRUE))
     # print(AM2)
-    
+
     # PPR:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
-    PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4, 
+    PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4,
         sm.method = "supsmu", use = "ppr")
-    PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4, 
+    PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4,
         sm.method = "spline", use = "ppr")
-    PPR3 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 3, 
+    PPR3 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 3,
         sm.method = "gcvspline", use = "ppr")
     ## termPlot(PPR1)
     ## termPlot(PPR2)
     ## termPlot(PPR3)
-    
+
     # POLYMARS:
     POLYMARS = regFit(Y ~ X1 + X2 + X3, DATA, use = "polymars")
     POLYMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATA, use = "polymars")
 
     # NNET
     # todo ...
-    
+
     # Return Value:
     return()
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
-test.generalizedModels <- 
+test.generalizedModels <-
     function()
 {
     # Generalized * Models:
-    
+
     M1 = matrix(c(
        1, 0.80, 0.83, 0.66, 1.9, 1.100, 0.996,
        1, 0.90, 0.36, 0.32, 1.4, 0.740, 0.992,
@@ -383,9 +380,9 @@ test.generalizedModels <-
     D1 = data.frame(M1)
     D1
 
-    # fit.glm = glm(Y ~ X1 + X2 + X3 + X4 + X5 + X6, data = D1, 
+    # fit.glm = glm(Y ~ X1 + X2 + X3 + X4 + X5 + X6, data = D1,
     #     family = binomial("logit"))
-    # fit.gam = gam(Y ~ s(X1) + s(X2) + s(X3) + s(X4) + s(X5) + s(X6), 
+    # fit.gam = gam(Y ~ s(X1) + s(X2) + s(X3) + s(X4) + s(X5) + s(X6),
     #     data = D1, family = binomial("logit"))
 
 
@@ -401,27 +398,26 @@ test.generalizedModels <-
         1,32,50,
         1,33,33),
        byrow = TRUE, ncol = 3)
-       
+
     colnames(M2) = c("Y", "X1", "X2")
     D2 = data.frame(M2)
     D2
-    
-    plot  (D2[1:5, "X1"], D2[1:5, "X2"], 
+
+    plot  (D2[1:5, "X1"], D2[1:5, "X2"],
         xlim = range(D2[, "X1"]), ylim = range(D2[, "X2"]),
         pch = 19, col = "blue")
-    points(D2[6:10,"X1"], D2[6:10,"X2"], 
+    points(D2[6:10,"X1"], D2[6:10,"X2"],
         pch = 19, col = "red")
-    U = range(D2[, "X1"])  
+    U = range(D2[, "X1"])
     V = 2*U - 6
     lines(U, V, lty = 3, col = "grey")
-    
+
     fit.glm = glm(Y ~ X1 + X2, data = D2, family = binomial("logit"))
     print(fit.glm)
-    
+
     # Return Value:
     return()
 }
 
 
 ################################################################################
-

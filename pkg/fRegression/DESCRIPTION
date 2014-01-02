@@ -1,5 +1,5 @@
 Package: fRegression
-Version: 3010.79
+Version: 3010.80
 Revision: 5533
 Date: 2013-12-17
 Title: Regression Based Decision and Prediction
@@ -11,8 +11,8 @@ Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
         G. Millo and D. Mitchell (for bgtest(), bptest(), dwtest(),
         gqtest(), harvtest(), hmctest(), raintest(), reset() and
         resettest() from lmtest package)
-Depends: R (>= 2.4.0), fBasics, fTrading, fMultivar, nnet, mgcv
-Imports: methods, lmtest, polspline
+Depends: R (>= 2.4.0), fBasics, fTrading, fMultivar, mgcv, nnet
+Imports: methods, polspline, lmtest, MASS
 Suggests: RUnit
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
