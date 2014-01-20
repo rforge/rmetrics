@@ -30,7 +30,7 @@
 ################################################################################
 
 
-.First.lib =
+.onLoad =
 function(lib, pkg)
 {
     # Startup Mesage and Desription:
