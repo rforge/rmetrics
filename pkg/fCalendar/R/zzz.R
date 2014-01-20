@@ -30,27 +30,27 @@
 ################################################################################
 
 
-# .First.lib =
-# function(lib, pkg)
-# {
-#     # Startup Mesage and Desription:
-#     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-#     dsc <- packageDescription(pkg)
-#     if(interactive() || getOption("verbose")) {
-#         # not in test scripts
-#         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-#     }
-# 
-#     # Load dll:
-#     # library.dynam("fCalendar", pkg, lib)
-# 
-#     MSG("")
-#     MSG("#################################################################")
-#     MSG("# The new version of 'fCalendar' has been renamed to 'timeDate' #")
-#     MSG("#################################################################")
-#     MSG("")
-# 
-# }
+.onLoad =
+function(lib, pkg)
+{
+    # Startup Mesage and Desription:
+    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+    dsc <- packageDescription(pkg)
+    if(interactive() || getOption("verbose")) {
+        # not in test scripts
+        MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
+    }
+
+    # Load dll:
+    # library.dynam("fCalendar", pkg, lib)
+
+    MSG("")
+    MSG("#################################################################")
+    MSG("# The new version of 'fCalendar' has been renamed to 'timeDate' #")
+    MSG("#################################################################")
+    MSG("")
+
+}
 
 
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
