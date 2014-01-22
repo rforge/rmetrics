@@ -76,10 +76,14 @@ nlFit <- function(x, freq = NULL, breaks = "FD", paramStart = NULL,
   }
 
   if (method == "nlminb") {
-    opOut <- nlminb(start = paramStart, llhood,
+    tempOpOut <- nlminb(start = paramStart, llhood,
                     lower = c(-Inf, 0, 0, 0),
                     upper = c(Inf, Inf, Inf, Inf),
                     control = controlNLMINB, ...)
+    opOut <- list(par = tempOpOut$par,
+                  value = tempOpOut$objective,
+                  counts = tempOpOut$iterations,
+                  convergence = tempOpOut$convergence)
   }
 
   param <- as.numeric(opOut[[1]])[1:4]       # parameter values

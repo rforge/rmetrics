@@ -2,10 +2,10 @@ library(HyperbolicDist)
 
 sampSize <- 100000
 param <- c(0,1,2,3)
-dataVector <- rnl(sampSize, param)
+dataVector <- rnl(sampSize, param = param)
 
 ### Test nlMean
-nlMean(param)
+nlMean(param=param)
 mean(dataVector)
 
 ddist <- function(x, order, param, about) {
@@ -18,9 +18,9 @@ integrate(ddist, -30,30, param = param, order = 1,
 
 
 ### Test nlVar
-nlVar(param)
+nlVar(param=param)
 var(dataVector)
-mn <- nlMean(param)
+mn <- nlMean(param=param)
 
 ddist <- function(x, order, param, about) {
   (x - about)^order * dnl(x, param = param)
@@ -33,35 +33,35 @@ integrate(ddist, -30,30, param = param, order = 2,
 
 
 ### Test nlSkew
-nlSkew(param)
+nlSkew(param=param)
 skewness(dataVector)
 
 ddist <- function(x, order, param, about) {
   (x - about)^order * dnl(x, param = param)
 }
 param <- c(0,1,2,3)
-mn <- nlMean(param)
-nlVar(param)
+mn <- nlMean(param=param)
+nlVar(param=param)
 m3<-integrate(ddist, -30,30, param = param, order = 3,
           about = mn, subdivisions = 1000,
           rel.tol = .Machine$double.eps^0.5)[[1]]
-sigma3<-nlVar(param)^(3/2)
+sigma3<-nlVar(param=param)^(3/2)
 nlSkew<-m3/sigma3
 nlSkew
 
 ### Test nlKurt
-nlKurt(param)
+nlKurt(param=param)
 kurtosis(dataVector)
 
 ddist <- function(x, order, param, about) {
   (x - about)^order * dnl(x, param = param)
 }
 param <- c(param)
-mn <- nlMean(param)
-nlVar(param)
+mn <- nlMean(param=param)
+nlVar(param=param)
 m4<-integrate(ddist, -30,30, param = param, order = 4,
           about = mn, subdivisions = 1000,
           rel.tol = .Machine$double.eps^0.5)[[1]]
-sigma4<-nlVar(param)^2
+sigma4<-nlVar(param=param)^2
 nlKurt<-m4/sigma4-3
 nlKurt
