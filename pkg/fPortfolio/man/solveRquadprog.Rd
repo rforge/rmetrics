@@ -20,7 +20,6 @@ solveRquadprog(data, spec, constraints)
 }
 
 
-
 \arguments{
 
     \item{data}{

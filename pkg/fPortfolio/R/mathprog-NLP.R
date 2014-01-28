@@ -29,7 +29,7 @@
 
 
 solnpNLP <- 
-function(
+    function(
     start, fun, 
     par.lower = NULL, par.upper = NULL,
     eqA = NULL, eqA.bound = NULL,
@@ -57,7 +57,7 @@ function(
     # FUNCTION:
     
     # Load Library:
-    require(Rsolnp)
+    # require(Rsolnp)
     
     # Environment Setting:
     env <- .GlobalEnv

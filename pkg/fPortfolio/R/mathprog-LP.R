@@ -28,7 +28,7 @@
 
 
 glpkLP <- 
-function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
+    function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -38,10 +38,10 @@ function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
     # FUNCTION:
     
     # Load:
-    require(Rglpk)
+    # require(Rglpk)
     
-    # Solve:
-    optim <- Rglpk::Rglpk_solve_LP(
+    # Solve with Rglpk::Rglpk_solve_LP():
+    optim <- Rglpk_solve_LP(
         obj = obj, 
         mat = mat, 
         dir = dir, 
@@ -90,7 +90,7 @@ glpkControl <-
 
 
 symphonyLP <- 
-function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
+    function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -100,9 +100,9 @@ function(obj, mat, dir, rhs, bounds=NULL, types=NULL, max=FALSE)
     # FUNCTION:
     
     # Load:
-    require(Rsymphony)
+    # require(Rsymphony)
     
-    # Solve:
+    # Solve with Rsymphony::Rsymphony_solve_LP():
     optim <- Rsymphony::Rsymphony_solve_LP(
         obj = obj, 
         mat = mat, 
@@ -152,7 +152,7 @@ symphonyControl <-
 
 
 .demoLP <- 
-function()
+    function()
 {  
     # A function implemented by Diethelm Wuertz
     

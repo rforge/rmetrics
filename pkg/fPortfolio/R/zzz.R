@@ -15,9 +15,11 @@
 # MA  02111-1307  USA
 ################################################################################
 
+
 .onLoad <-
 function(libname, pkgname)
 {
+    # Use RmetricsOptions from timeDate package:
     if(!is.numeric(getRmetricsOptions("length.print")))
 	setRmetricsOptions(length.print = 5)
 }

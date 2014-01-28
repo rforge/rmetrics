@@ -170,9 +170,10 @@ solveRquadprog <-
 
     # FUNCTION:
 
-    # Solve:
-    require(quadprog)
-    optim <- try(quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq), 
+    # Solve with quadprog::solve.QP():
+    # require(quadprog)
+        
+    optim <- try(solve.QP(Dmat, dvec, Amat, bvec, meq), 
         silent = TRUE)
     if (inherits(optim, "try-error")) {
         weights <- rep(0, length(dvec))

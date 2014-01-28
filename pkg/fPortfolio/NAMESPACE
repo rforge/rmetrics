@@ -1,286 +1,31 @@
 
 ################################################
-## import name space
+## Default Namespace
 ################################################
 
 import("methods")
-import("MASS")
-import("robustbase")
-import("Rglpk")
-import("spam")
-import("Rsymphony")
-import("quadprog")
-import("kernlab")
-import("Rdonlp2")
-import("Rsolnp")
-import("Rnlminb2")
+
 import("timeDate")
 import("timeSeries")
+
 import("fBasics")
 import("fAssets")
 
-################################################
-## S4 classes
-################################################
+import("MASS") 
+import("RUnit") 
+import("robustbase")
 
-exportClasses("fPFOLIOCON",
-              "fPFOLIODATA",
-              "fPFOLIOSPEC",
-              "fPFOLIOVAL",
-              "fPORTFOLIO" )
-exportMethods("show" )
+import("Rglpk") 
+import("spam")
+import("Rsymphony")
 
-################################################
-## S3 classes
-################################################
+import("quadprog")
+import("kernlab")  
 
-S3method("getA", "fPFOLIOSPEC")
-S3method("getA", "fPORTFOLIO")
-S3method("getAlpha", "fPFOLIOSPEC")
-S3method("getAlpha", "fPFOLIOVAL")
-S3method("getAlpha", "fPORTFOLIO")
-S3method("getConstraints", "fPORTFOLIO")
-S3method("getControl", "fPFOLIOSPEC")
-S3method("getControl", "fPORTFOLIO")
-S3method("getCov", "fPFOLIODATA")
-S3method("getCov", "fPORTFOLIO")
-S3method("getCovRiskBudgets", "fPFOLIOVAL")
-S3method("getCovRiskBudgets", "fPORTFOLIO")
-S3method("getData", "fPFOLIODATA")
-S3method("getData", "fPORTFOLIO")
-S3method("getEstimator", "fPFOLIODATA")
-S3method("getEstimator", "fPFOLIOSPEC")
-S3method("getEstimator", "fPORTFOLIO")
-S3method("getMean", "fPFOLIODATA")
-S3method("getMean", "fPORTFOLIO")
-S3method("getMessages", "fPFOLIOSPEC")
-S3method("getMu", "fPFOLIODATA")
-S3method("getMu", "fPORTFOLIO")
-S3method("getNAssets", "fPFOLIODATA")
-S3method("getNAssets", "fPORTFOLIO")
-S3method("getNFrontierPoints", "fPFOLIOSPEC")
-S3method("getNFrontierPoints", "fPFOLIOVAL")
-S3method("getNFrontierPoints", "fPORTFOLIO")
-S3method("getNames", "fPFOLIODATA")
-S3method("getNames", "fPORTFOLIO")
-S3method("getObjective", "fPFOLIOSPEC")
-S3method("getObjective", "fPORTFOLIO")
-S3method("getOptim", "fPFOLIOSPEC")
-S3method("getOptim", "fPORTFOLIO")
-S3method("getOptimize", "fPFOLIOSPEC")
-S3method("getOptimize", "fPORTFOLIO")
-S3method("getOptions", "fPFOLIOSPEC")
-S3method("getOptions", "fPORTFOLIO")
-S3method("getParams", "fPFOLIOSPEC")
-S3method("getParams", "fPORTFOLIO")
-S3method("getPortfolio", "fPFOLIOSPEC")
-S3method("getPortfolio", "fPFOLIOVAL")
-S3method("getPortfolio", "fPORTFOLIO")
-S3method("getRiskFreeRate", "fPFOLIOSPEC")
-S3method("getRiskFreeRate", "fPFOLIOVAL")
-S3method("getRiskFreeRate", "fPORTFOLIO")
-S3method("getSeries", "fPFOLIODATA")
-S3method("getSeries", "fPORTFOLIO")
-S3method("getSigma", "fPFOLIODATA")
-S3method("getSigma", "fPORTFOLIO")
-S3method("getSolver", "fPFOLIOSPEC")
-S3method("getSolver", "fPORTFOLIO")
-S3method("getSpec", "fPORTFOLIO")
-S3method("getStatistics", "fPFOLIODATA")
-S3method("getStatistics", "fPORTFOLIO")
-S3method("getStatus", "fPFOLIOSPEC")
-S3method("getStatus", "fPFOLIOVAL")
-S3method("getStatus", "fPORTFOLIO")
-S3method("getTailRisk", "fPFOLIODATA")
-S3method("getTailRisk", "fPFOLIOSPEC")
-S3method("getTailRisk", "fPORTFOLIO")
-S3method("getTailRiskBudgets", "fPORTFOLIO")
-S3method("getTargetReturn", "fPFOLIOSPEC")
-S3method("getTargetReturn", "fPFOLIOVAL")
-S3method("getTargetReturn", "fPORTFOLIO")
-S3method("getTargetRisk", "fPFOLIOSPEC")
-S3method("getTargetRisk", "fPFOLIOVAL")
-S3method("getTargetRisk", "fPORTFOLIO")
-S3method("getTrace", "fPFOLIOSPEC")
-S3method("getTrace", "fPORTFOLIO")
-S3method("getType", "fPFOLIOSPEC")
-S3method("getType", "fPORTFOLIO")
-S3method("getWeights", "fPFOLIOSPEC")
-S3method("getWeights", "fPFOLIOVAL")
-S3method("getWeights", "fPORTFOLIO")
-S3method("plot", "fPORTFOLIO")
-S3method("summary", "fPORTFOLIO")
+import("Rnlminb2")
+import("Rdonlp2")
+import("Rsolnp") 
 
-################################################
-## functions
-################################################
 
-export(
-    ".addlegend",
-    ".attributesWheel",
-    ".baggedEstimator",
-    ".bayesSteinEstimator",
-    ".cfgFit",
-    ".checkSpec",
-    ".checkSpecVsConstraints",
-    ".checkTargetReturn",
-    ".checkWeights",
-    ".covRisk",
-    ".cvarRglpkArguments",
-    ".cvarRisk",
-    ".cvarSolveTwoAssets",
-    ".donostahEstimator",
-    ".fportfolio.plot.1",
-    ".fportfolio.plot.2",
-    ".fportfolio.plot.3",
-    ".fportfolio.plot.4",
-    ".fportfolio.plot.5",
-    ".fportfolio.plot.6",
-    ".fportfolio.plot.7",
-    ".fportfolio.plot.8",
-    ".getCovRiskBudgets.fPORTFOLIO",
-    ".lambdaTailRisk",
-    ".ledoitWolfEstimator",
-    ".madRglpkArguments",
-    ".madSolveTwoAssets",
-    ".mvSolveTwoAssets",
-    ".notStackedWeightsPlot",
-    ".portfolioFrontier",
-    ".rdonlp2Arguments",
-    ".rglpk",
-    ".rglpkArguments",
-    ".rglpkControl",
-    ".rmtEstimator",
-    ".rquadprog",
-    ".rquadprogArguments",
-    ".rquadprogControl",
-    ".rshortExact",
-    ".rshortExactArguments",
-    ".rshortExactControl",
-    ".rsolnpArguments",
-    ".studentEstimator",
-    ".tailRiskBudgetsLinePlot",
-    ".varRisk",
-    ".weightsWheel",
-    "cmlLines",
-    "cmlPoints",
-    "covEstimator",
-    "covMcdEstimator",
-    "covOGKEstimator",
-    "covRisk",
-    "covRiskBudgetsLinePlot",
-    "covRiskBudgetsPie",
-    "covRiskBudgetsPlot",
-    "cvarRisk",
-    "efficientPortfolio",
-    "eqsumWConstraints",
-    "equalWeightsPoints",
-    "feasiblePortfolio",
-    "frontierPlot",
-    "frontierPlotControl",
-    "frontierPoints",
-    "getA",
-    "getAlpha",
-    "getConstraints",
-    "getConstraintsTypes",
-    "getControl",
-    "getCov",
-    "getCovRiskBudgets",
-    "getData",
-    "getEstimator",
-    "getMean",
-    "getMessages",
-    "getModel.fPFOLIOSPEC",
-    "getModel.fPORTFOLIO",
-    "getMu",
-    "getNAssets",
-    "getNFrontierPoints",
-    "getNames",
-    "getObjective",
-    "getOptim",
-    "getOptimize",
-    "getOptions",
-    "getParams",
-    "getPortfolio",
-    "getRiskFreeRate",
-    "getSeries",
-    "getSigma",
-    "getSolver",
-    "getSpec",
-    "getStatistics",
-    "getStatus",
-    "getTailRisk",
-    "getTailRiskBudgets",
-    "getTargetReturn",
-    "getTargetRisk",
-    "getTrace",
-    "getType",
-    "getWeights",
-    "kendallEstimator",
-    "listFConstraints",
-    "lpmEstimator",
-    "maxBConstraints",
-    "maxFConstraints",
-    "maxWConstraints",
-    "maxratioPortfolio",
-    "maxreturnPortfolio",
-    "maxsumWConstraints",
-    "mcdEstimator",
-    "minBConstraints",
-    "minFConstraints",
-    "minWConstraints",
-    "minriskPortfolio",
-    "minsumWConstraints",
-    "minvariancePoints",
-    "minvariancePortfolio",
-    "monteCarloPoints",
-    "mveEstimator",
-    "nnveEstimator",
-    "portfolioConstraints",
-    "portfolioData",
-    "portfolioFrontier",
-    "portfolioSpec",
-    "rollingCmlPortfolio",
-    "rollingMinvariancePortfolio",
-    "rollingPortfolioFrontier",
-    "rollingTangencyPortfolio",
-    "rollingWindows",
-    "setAlpha<-",
-    "setEstimator<-",
-    "setNFrontierPoints<-",
-    "setObjective<-",
-    "setOptimize<-",
-    "setParams<-",
-    "setRiskFreeRate<-",
-    "setSolver<-",
-    "setStatus<-",
-    "setTailRisk<-",
-    "setTargetReturn<-",
-    "setTargetRisk<-",
-    "setTrace<-",
-    "setType<-",
-    "setWeights<-",
-    "sharpeRatioLines",
-    "shrinkEstimator",
-    "singleAssetPoints",
-    "solveRdonlp2",
-    "solveRglpk",
-    "solveRquadprog",
-    "solveRshortExact",
-    "solveRsolnp",
-    "spearmanEstimator",
-    "tailRiskBudgetsPie",
-    "tailRiskBudgetsPlot",
-    "tailoredFrontierPlot",
-    "tangencyLines",
-    "tangencyPoints",
-    "tangencyPortfolio",
-    "twoAssetsLines",
-    "varRisk",
-    "weightedReturnsLinePlot",
-    "weightedReturnsPie",
-    "weightedReturnsPlot",
-    "weightsLinePlot",
-    "weightsPie",
-    "weightsPlot",
-    "weightsSlider" )
+exportPattern( "." )
+

@@ -43,8 +43,8 @@
         Type:       \tab Package\cr
         Date:       \tab 2009\cr
         License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Association\cr
-        URL:        \tab \url{http://www.rmetrics.org}
+        Copyright:  \tab (c) 1999-2014 Diethelm Wuertz and Rmetrics Core Team\cr
+        URL:        \tab \url{www.rmetrics.org}
     }
     
 }

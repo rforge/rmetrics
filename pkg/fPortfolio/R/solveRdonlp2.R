@@ -33,8 +33,7 @@ solveRdonlp2 <-
     #   spec - an object of class fPFOLIOSPEC
     #   constraints - an object of class character
     
-    # Example:
-    #   
+    # Example: 
     
     # FUNCTION:   
 
@@ -47,7 +46,8 @@ solveRdonlp2 <-
     # Compose Arguments for Solver:
     args <- .rdonlp2Arguments(data, spec, constraints)
     
-    # Solve Multiassets Portfolio:
+    # Solve Multiassets Portfolio with Rdonlp2::donlp2():
+    # require(Rdonlp)
     ans <- Rdonlp2::donlp2(
         par = args$par,
         fn = args$fn,

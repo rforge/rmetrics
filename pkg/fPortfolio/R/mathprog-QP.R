@@ -26,7 +26,7 @@
 
 
 quadprogQP <- 
-function(
+    function(
     objective=list(dvec=NULL, Dmat=NULL), 
     par.lower=NULL, par.upper=NULL, 
     eqA=NULL, eqA.bound=NULL,  
@@ -253,7 +253,8 @@ function()
      # Example from Package kernlab:
          
      # Solve the Support Vector Machine optimization problem
-     require(kernlab)
+     # require(kernlab)
+     
      data(spam)
      m <- 500
      set <- sample(1:dim(spam)[1],m)
@@ -284,7 +285,9 @@ function()
      
      # Example from Package quadprog:
        
-     require(quadprog)
+     # Require:
+     # require(quadprog)
+     
      Dmat <- matrix(0, 3, 3)
      diag(Dmat) <- 1
      dvec <- c(0, 5, 0)
