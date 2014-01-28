@@ -1,0 +1,18 @@
+Package: fAssets
+Version: 3002.80
+Revision: 5367
+Date: 2012-09-24
+Title: Rmetrics - Assets Selection and Modelling
+Author: Rmetrics Core Team and Diethelm Wuertz 
+Depends: R (>= 2.6.0), methods, MASS,
+        timeDate, timeSeries, fBasics, fCopulae, 
+        sn, robustbase, ecodist, energy, mvnormtest 
+Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
+Description: Environment for teaching "Financial Engineering and
+        Computational Finance"
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+LazyData: yes
+License: GPL (>= 2)
+URL: http://www.rmetrics.org
