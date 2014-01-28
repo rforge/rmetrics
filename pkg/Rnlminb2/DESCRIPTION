@@ -1,5 +1,5 @@
 Package: Rnlminb2
-Version: 3.0.0
+Version: 3002.10
 Date: 2009-04-12
 Title: An R extension library for constrained optimization with nlminb.
 Description: 
