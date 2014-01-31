@@ -59,14 +59,14 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = dst(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1], df = Inf)
+        ans <- dst(x, xi = xi[1], omega = as.vector(Omega)[1], 
+                   alpha = alpha[1], nu = Inf)
     }
     
     # Multivariate Case:
     if (is.matrix(x)) {
         if (dim == ncol(x)) {
-            ans = dmst(x = x, xi = xi, Omega = Omega, alpha = alpha, df = df)
+            ans <- dmst(x = x, xi = xi, Omega = Omega, alpha = alpha, nu = df)
         } 
     }
     
@@ -102,8 +102,8 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = pst(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1], df = df)
+        ans = pst(x, xi = xi[1], omega = as.vector(Omega)[1], 
+                  alpha = alpha[1], nu = df)
     }
     
     # Multivariate Case:
@@ -112,7 +112,7 @@ alpha = rep(0, dim), df = 4)
             ans = NULL
             for (i in 1:nrow(x) ) {
                 ans = c(ans, pmst(x = x[i,], xi = xi, Omega = Omega, 
-                    alpha = alpha, df = df))
+                    alpha = alpha, nu = df))
             }
         } 
     }
@@ -148,13 +148,13 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (dim == 1) {
-        ans = as.matrix(rst(n, location = xi[1], 
-            scale = as.vector(Omega)[1], shape = alpha[1], df = df))
+        ans <- as.matrix(rst(n, xi = xi[1], 
+            omega = as.vector(Omega)[1], alpha = alpha[1], nu = df))
     }
     
     # Multivariate Case:
     if (dim > 1) {
-        ans = rmst(n, xi = xi, Omega = Omega, alpha = alpha, df = df)
+        ans <- rmst(n, xi = xi, Omega = Omega, alpha = alpha, nu = df)
     }
     
     # Check for conflicting Dimensions:
