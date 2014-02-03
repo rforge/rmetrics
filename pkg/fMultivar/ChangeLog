@@ -1,3 +1,18 @@
+
+ChangeLog
+Package fMultivar
+
+
+2014-02-03  wuertz
+
+        * builtin functions from mvtnorm and sn are removed
+        * these packages are now used as Depends in DESCRIPTION file
+
+2014-02-02  wuertz
+
+        * src: adapt moved from fCopulae (fCopulae loads fMultivar)
+        * scripts renamed in: bvdist-, mvdist-, and utils
+
 2012-11-07  chalabi
 
 	* DESCRIPTION: Updated maintainer field to comply new CRAN policy
@@ -7,7 +22,7 @@
 
 2012-01-14  mmaechler
 
-	* R/cauchy2d.R: use nu =1 ! -- thanks to Rolf Turner
+	* R/cauchy2d.R: use nu=1 ! -- thanks to Rolf Turner
 
 2011-09-23  mmaechler
 

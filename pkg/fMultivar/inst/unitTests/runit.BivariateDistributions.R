@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
@@ -65,7 +53,7 @@ function()
 
 
 test.density2d =
-function()
+    function()
 {
     # Data:
     z = rnorm2d(1000)
@@ -84,7 +72,7 @@ function()
 
 
 test.hist2d =
-function()
+    function()
 {
     # Data:
     z = rnorm2d(1000)
@@ -103,7 +91,7 @@ function()
 
 
 test.integrate2d =
-function()
+    function()
 {
     # Data:
     z = rnorm2d(1000)
@@ -117,7 +105,7 @@ function()
 
 
 test.norm2d =
-function()
+    function()
 {
     #  pnorm2d - Computes bivariate Normal probability function
     #  dnorm2d - Computes bivariate Normal density function
@@ -148,7 +136,7 @@ function()
 
 
 test.cauchy2d =
-function()
+    function()
 {
     #  pcauchy2d - Computes bivariate Cauchy probability function
     #  dcauchy2d - Computes bivariate Cauchy density function
@@ -179,7 +167,7 @@ function()
 
 
 test.t2d =
-function()
+    function()
 {
     #  pt2d - Computes bivariate Student-t probability function
     #  dt2d - Computes bivariate Student-t density function
@@ -210,7 +198,7 @@ function()
 
 
 test.delliptical2d =
-function()
+    function()
 { 
     # Settings:
     xy = grid2d((-50:50)/10)
