@@ -1,3 +1,9 @@
+2014-02-03  wuertz
+
+	* AirbagPlusCertificate is missing
+	* man page moved to inst/missing
+	
+
 2010-05-13 (Version 0.5-2)
 --------------------------
 # Payoff-Diagramme als Bilder in die Doku --> Done
