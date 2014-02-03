@@ -27,8 +27,7 @@ ipopControl <-
     
     # Description:
     #	Returns list of control parameters
-    
-    
+       
     # FUNCTION:
     
     # Return Value:

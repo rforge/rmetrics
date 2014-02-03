@@ -1,4 +1,5 @@
 
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -35,14 +36,14 @@ solveRipop <-
     # FUNCTION:   
 
     # Transform Data:
-    Data = portfolioData(data, spec)
-    nAssets = getNAssets(Data)
+    Data <- portfolioData(data, spec)
+    nAssets <- getNAssets(Data)
     
     # Compile Arguments for Solver:
-    args = .ripopArguments(data, spec, constraints)
+    args <- .ripopArguments(data, spec, constraints)
     
     # Solve Multiassets Portfolio:
-    ans = .ripop(
+    ans <- .ripop(
         c = args$c,
         H = args$H,
         A = args$A,
@@ -72,10 +73,10 @@ solveRipop <-
     # FUNCTION:
     
     # Settings:
-    Data = portfolioData(data, spec)
-    Sigma = getSigma(Data)
-    nAssets = getNAssets(Data)
-    targetReturn = getTargetReturn(spec)
+    Data <- portfolioData(data, spec)
+    Sigma <- getSigma(Data)
+    nAssets <- getNAssets(Data)
+    targetReturn <- getTargetReturn(spec)
     
     # Set up A_mat of Constraints:
     eqsumW = eqsumWConstraints(data, spec, constraints)

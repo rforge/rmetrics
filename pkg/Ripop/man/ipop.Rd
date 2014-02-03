@@ -48,8 +48,9 @@ ipop(c, H, A, b, l, u, r, sigf = 12, maxiter = 100, margin = 1e-08, bound = 10, 
 
 
 \details{
-  	ipop uses an interior point method to solve the quadratic programming
-  	problem. \cr
+
+  	\code{ipop} uses an interior point method to solve the quadratic 
+    programming problem. \cr
   	The \eqn{H} matrix can also be provided in the decomposed form \eqn{Z}
   	where \eqn{ZZ' = H} in that case the Sherman Morrison Woodbury formula
   	is used internally.
@@ -72,6 +73,7 @@ A list with components:
 		Character string describing the type of convergence.}
 	\item{iterations.}{
 		Number of iterations the algorithm needed.}
+        
 }
 
 

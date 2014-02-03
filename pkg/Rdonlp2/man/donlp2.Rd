@@ -251,7 +251,7 @@ donlp2(
 
 \author{ 
 
-    Peter Speluccihas has written the original solver code,
+    Peter Spelucci has has written the original solver code,
     S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
     K. S. Cove has added dynamic memory allocation,
     Christoph Bergmeier has added passing objecive and constraints as external pointer,
