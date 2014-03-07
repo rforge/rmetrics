@@ -1,9 +1,0 @@
-
-
-lpSolveAPIControl <- 
-function()
-{
-  NA
-}
-
-
