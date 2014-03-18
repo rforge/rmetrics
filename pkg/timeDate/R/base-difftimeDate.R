@@ -20,7 +20,10 @@
 #  difftimeDate              Returns a difference of two 'timeDate' objects
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 difftimeDate <-
     function(time1, time2,
     units = c("auto", "secs", "mins", "hours", "days", "weeks"))

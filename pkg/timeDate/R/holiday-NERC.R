@@ -20,7 +20,10 @@
 #  holidayNERC               Returns holidays for full-day NERC calendar
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 holidayNERC <-
 function (year = getRmetricsOptions("currentYear"), FinCenter = "Eastern")
 {

@@ -20,7 +20,10 @@
 #  format.timeDate           Formats 'timeDate' as ISO conform string
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 format.timeDate <- function(x, format = "", tz = "", usetz = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi

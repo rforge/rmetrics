@@ -37,9 +37,18 @@
 ## # YC :midnigStandard2 returns object in POSIXct and avoid
 ## # wasting time in strptime
 
-if(getRversion() < "2.15")
-    paste0 <- function(...) paste(..., sep = '')
+if(getRversion() < "2.15") {
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
+paste0 <- function(...) paste(..., sep = '')
+}
 
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 midnightStandard2 <- function(charvec, format)
 {
     # A function written by Diethelm Wuertz
@@ -152,8 +161,11 @@ midnightStandard2 <- function(charvec, format)
     ans
 }
 
-# ------------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 midnightStandard <- function(charvec, format)
 {
     # YC: uses now the faster midngithStandard2() function
@@ -174,9 +186,10 @@ midnightStandard <- function(charvec, format)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 .midnightStandard <- midnightStandard
 
 

@@ -20,7 +20,10 @@
 #  frequency,timeDate      Returns the frequency of a timeDate vector
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("frequency", "timeDate", function(x, ...)
 {
     # A function implemented by Diethelm Wuertz

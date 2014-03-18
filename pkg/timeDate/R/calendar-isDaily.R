@@ -23,7 +23,10 @@
 #  isRegular,timeDate-method      Tests 'timeDate' has regular time stamps
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("isDaily", "timeDate", function(x)
 {
     # A function implemented by Diethelm Wuertz
@@ -56,7 +59,10 @@ setMethod("isDaily", "timeDate", function(x)
 
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("isMonthly", "timeDate", function(x)
 {
     # A function implemented by Diethelm Wuertz
@@ -92,7 +98,10 @@ setMethod("isMonthly", "timeDate", function(x)
 
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("isQuarterly", "timeDate", function(x)
 {
     # A function implemented by Diethelm Wuertz
@@ -130,8 +139,10 @@ setMethod("isQuarterly", "timeDate", function(x)
 
 ################################################################################
 
-
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("isRegular", "timeDate",  function(x)
 {
     # A function implemented by Diethelm Wuertz

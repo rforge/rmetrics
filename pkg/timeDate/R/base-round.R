@@ -21,7 +21,10 @@
 #  trunc.timeDate            Truncates objects of class 'timeDate'
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 round.timeDate <- function(x, digits = c("days", "hours", "mins"))
 {
     # A function implemented by Diethelm Wuertz
@@ -45,9 +48,10 @@ round.timeDate <- function(x, digits = c("days", "hours", "mins"))
 }
 
 
-# ------------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 trunc.timeDate <- function(x, units = c("days", "hours", "mins"), ...)
 {
     # A function implemented by Diethelm Wuertz

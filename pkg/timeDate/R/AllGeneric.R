@@ -17,20 +17,31 @@
 
 ################################################################################
 
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setGeneric("align", function(x, ...) standardGeneric("align"))
 
+#' @export
 setGeneric("atoms", function(x, ...) standardGeneric("atoms"))
 
+#' @export
 setGeneric("finCenter", function(x) standardGeneric("finCenter"))
 
+#' @export
 setGeneric("finCenter<-", function(x, value) standardGeneric("finCenter<-"))
 
+#' @export
 setGeneric("isDaily", function(x) standardGeneric("isDaily"))
 
+#' @export
 setGeneric("isQuarterly", function(x) standardGeneric("isQuarterly"))
 
+#' @export
 setGeneric("isMonthly", function(x) standardGeneric("isMonthly"))
 
+#' @export
 setGeneric("isRegular", function(x) standardGeneric("isRegular"))
 
 ################################################################################

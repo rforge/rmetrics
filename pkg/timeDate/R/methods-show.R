@@ -20,7 +20,10 @@
 #  show.timeDate             Prints 'timeDate' object
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setMethod("show", "timeDate", function (object)
 {
     # A function implemented by Yohan Chalabi and Diethelm Wuertz

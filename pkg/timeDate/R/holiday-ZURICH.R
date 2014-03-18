@@ -20,7 +20,10 @@
 #  holidayZURICH             Returns holidays for ZURICH calendar
 ################################################################################
 
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 holidayZURICH <- function(year = getRmetricsOptions("currentYear"))
 {
     # A function implemented by Diethelm Wuertz

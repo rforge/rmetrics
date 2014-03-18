@@ -24,9 +24,10 @@
 .RmetricsOptions <- new.env(hash = TRUE)
 
 
-# ------------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 setRmetricsOptions <- function(...)
 {
     # A function implemented by Yohan Chalabi
@@ -46,9 +47,10 @@ setRmetricsOptions <- function(...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 getRmetricsOption <-
     function(x = NULL, unset = "")
 {
@@ -60,6 +62,10 @@ getRmetricsOption <-
         ifnotfound = as.list(unset)))
 }
 
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 # YC : 2009-10-06
 # kept for compatibility purpose but should be eventually deprecated
 getRmetricsOptions <- getRmetricsOption

@@ -20,6 +20,10 @@
 #  holidayLONDON             Returns holidays for British Bank Holidays
 ################################################################################
 
+# ---------------------------------------------------------------------------- #
+# Roxygen Tags
+#' @export
+# ---------------------------------------------------------------------------- #
 holidayLONDON <- function (year = getRmetricsOptions("currentYear")) {
 
     # function implemented by Menon Murali

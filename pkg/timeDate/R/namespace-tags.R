@@ -16,29 +16,20 @@
 
 
 ################################################################################
-# MEHODS:                   DESCRIPTION:
-#  sample.timeDate           Resamples a 'timeDate' object
+# There are no methods specified within this file. It only serves to add
+# additional roxygenize tags such as packages to import or special export
+# directives.
 ################################################################################
 
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
-#' @export
+# Import Packages:
+#' @import graphics
+#' @import utils
+#' @import stats
+#' @import methods
+
+# Special: To avoid that zoo package masks as.Date.timeDate:
+#' @export as.Date.timeDate
 # ---------------------------------------------------------------------------- #
-setMethod("sample", "timeDate",
-    function(x, size, replace = FALSE, prob = NULL)
-{
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi
-
-    # FUNCTION:
-
-    # Sample:
-    ct <- sample(as.POSIXct(x), size, replace, prob)
-    ans <- timeDate(ct, zone = "GMT", FinCenter = x@FinCenter)
-
-    # Return Value:
-    ans
-})
-
-
-################################################################################
-
+NULL
