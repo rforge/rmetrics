@@ -24,10 +24,9 @@
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
 # Import Packages:
-#' @import graphics
-#' @import utils
-#' @import stats
-#' @import methods
+# Despite those packages are of class Depends they have to be imported to
+# generate some generics...
+#' @import graphics utils stats methods
 
 # Special: To avoid that zoo package masks as.Date.timeDate:
 #' @export as.Date.timeDate
