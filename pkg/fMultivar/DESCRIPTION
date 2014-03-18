@@ -1,17 +1,17 @@
 Package: fMultivar
-Version: 3003.79
+Version: 3003.78
 Revision: 5386
 Date: 2012-11-07
 Title: Rmetrics - Multivariate Return Distributions
 Author: Rmetrics Core Team
-Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics, mvtnorm, sn
+Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics, mvtnorm, sn
 Suggests: RUnit, tcltk
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: https://www.rmetrics.org
