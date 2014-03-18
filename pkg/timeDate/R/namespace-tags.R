@@ -24,8 +24,8 @@
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
 # Import Packages:
-# Despite those packages are of class Depends they have to be imported to
-# generate some generics...
+# According to the manual:
+# Almost always, packages mentioned in ‘Depends’ should also be imported
 #' @import graphics utils stats methods
 
 # Special: To avoid that zoo package masks as.Date.timeDate:
