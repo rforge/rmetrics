@@ -1,20 +1,12 @@
-
-
 ################################################
-## import name space
+## Manual Namespace
 ################################################
 
+exportPattern(".")
 import("methods")
-import("mvtnorm")
-import("sn")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
 import("fMultivar")
-
-
-################################################
-### Export Everything
-################################################
-
-exportPattern(".")
+import("mvtnorm")
+import("sn")

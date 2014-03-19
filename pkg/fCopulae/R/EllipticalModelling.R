@@ -116,13 +116,18 @@ ellipticalCopulaFit <-
     # Estimate Rho from Kendall's tau for all types of Copula:
     tau = cor(x = U, y = V, method = "kendall") #[1, 2]
     Rho = rho = sin((pi*tau/2))
+    
+    # Specify Bounds to be < and > instead of <= and >=
+    upper <- 1-.Machine$double.eps
+    lower <- -upper
      
     # Estimate "norm" Copula:
     if (type == "norm") {
         fun = function(x) {
             -mean( log(.dnormCopula(u = U, v = V, rho = x)) )
         }
-        fit = nlminb(start = rho, objective = fun, lower = -1, upper = 1, ...)
+        fit = nlminb(start = rho, objective = fun, lower = lower, upper = upper, 
+                     control = list(trace=TRUE), ...)
     }
     
     # Estimate "cauchy" Copula:
@@ -130,7 +135,7 @@ ellipticalCopulaFit <-
         fun = function(x) {
             -mean( log(.dcauchyCopula(u = U, v = V, rho = x)) ) 
         }
-        fit = nlminb(start = rho, objective = fun, lower = -1, upper = 1, ...)
+        fit = nlminb(start = rho, objective = fun, lower = lower, upper = upper, ...)
     }
     
     # Estimate "t" Copula:
@@ -139,7 +144,7 @@ ellipticalCopulaFit <-
             -mean( log(.dtCopula(u = U, v = V, rho = x[1], nu = x[2])) ) 
         }
         fit = nlminb(start = c(rho = rho, nu = 4), objective = fun, 
-             lower = c(-1, 1), upper = c(1, Inf), ...)
+             lower = c(lower, upper), upper = c(upper, Inf), ...)
         fit$Nu = 4
     }
     
@@ -150,7 +155,7 @@ ellipticalCopulaFit <-
             -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
         }
         fit = nlminb(start = c(), objective = fun, 
-             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+             lower = c(rho = lower, NA), upper = c(rho = upper, NA), ...)
     }
     
     # Estimate "laplace" Copula:
@@ -160,7 +165,7 @@ ellipticalCopulaFit <-
             -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
         }
         fit = nlminb(start = c(), objective = fun, 
-             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+             lower = c(rho = lower, NA), upper = c(rho = upper, NA), ...)
     }
     
     # Estimate "kotz" Copula:
@@ -170,7 +175,7 @@ ellipticalCopulaFit <-
             -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
         }
         fit = nlminb(start = c(), objective = fun, 
-             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+             lower = c(rho = lower, NA), upper = c(rho = upper, NA), ...)
     }
     
     # Estimate "epower" Copula:
@@ -180,7 +185,7 @@ ellipticalCopulaFit <-
             -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
         }
         fit = nlminb(start = c(), objective = fun, 
-             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+             lower = c(rho = lower, NA), upper = c(rho = upper, NA), ...)
     }
     
     # Keep Start Value:

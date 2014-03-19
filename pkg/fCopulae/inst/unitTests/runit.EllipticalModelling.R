@@ -89,7 +89,7 @@ function()
         R = ellipticalCopulaSim(n = 1000, rho = rho)
         fit = ellipticalCopulaFit(R)
         points(rho, fit$par)
-        print(c(rho-fit$par, fit$Rho-fit$par))
+        print(c(rho, fit$par))
     }
 
     # Fit Cauchy Copula:
@@ -103,7 +103,7 @@ function()
         R = ellipticalCopulaSim(n = 1000, rho = rho, type = "cauchy")
         fit = ellipticalCopulaFit(R, type = "cauchy")
         points(rho, fit$par)
-        print(c(rho-fit$par, fit$Rho-fit$par))
+        print(c(rho, fit$par))
     }
     
     # Fit Student-t Copula:
