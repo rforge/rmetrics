@@ -1,7 +1,16 @@
 ################################################
-## Default Namespace
+## Manual Namespace
 ################################################
 
-
-exportPattern( "." )
-
+exportPattern(".")
+import(methods)
+import(MASS)
+import(timeDate)
+import(timeSeries)
+import(fBasics)
+import(fCopulae)
+import(sn)
+import(robustbase)
+import(ecodist)
+import(energy)
+import(mvnormtest)

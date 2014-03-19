@@ -1,10 +1,9 @@
 Package: fAssets
-Version: 3003.81
-Revision: 5367
+Version: 3003.80
 Date: 2012-09-24
 Title: Rmetrics - Assets Selection and Modelling
 Author: Rmetrics Core Team
-Depends: R (>= 2.6.0), methods, MASS,
+Depends: R (>= 2.15.1), methods, MASS,
         timeDate, timeSeries, fBasics, fCopulae, 
         sn, robustbase, ecodist, energy, mvnormtest 
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
