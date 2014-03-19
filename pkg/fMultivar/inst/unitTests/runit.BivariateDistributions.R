@@ -20,7 +20,6 @@
 #  grid2d                Returns from two vectors x-y grid coordinates
 #  density2d             Returns 2D Kernel Density Estimates
 #  hist2d                Returns 2D Histogram Counts
-#  integrate2d           Integrates over a two dimensional unit square
 # FUNCTION:             BIVARIATE DISTRIBUTIONS:
 #  pnorm2d               Computes bivariate Normal probability function
 #  dnorm2d               Computes bivariate Normal density function
@@ -33,8 +32,9 @@
 #  rt2d                  Generates bivariate Student-t random deviates
 # FUNCTION:             ELLIPTICAL DISTRIBUTIONS:
 #  delliptical2d         Computes density for elliptical distributions
-#  .gfunc2d              Generator Function for elliptical distributions
-#  .delliptical2dSlider  Slider for bivariate densities
+# REQUIREMENTS:
+#  fBasics::.perspPlot
+#  fBasics::.contourPlot
 ################################################################################
 
 
@@ -56,7 +56,7 @@ test.density2d =
     function()
 {
     # Data:
-    z = rnorm2d(1000)
+    z <- rnorm2d(1000)
     
     # Density:
     D = density2d(x = z[, 1], y = z[, 2])
@@ -75,27 +75,13 @@ test.hist2d =
     function()
 {
     # Data:
-    z = rnorm2d(1000)
+    z <- rnorm2d(1000)
    
     # Histogram:
-    H = hist2d(x = z[, 1], y = z[, 2])
+    H <- hist2d(x = z[, 1], y = z[, 2])
     .perspPlot(H)
     .contourPlot(H)
 
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.integrate2d =
-    function()
-{
-    # Data:
-    z = rnorm2d(1000)
-  
     # Return Value:
     return()    
 }
@@ -204,7 +190,6 @@ test.delliptical2d =
     xy = grid2d((-50:50)/10)
     
     # Contour Plots:
-    par(ask = FALSE)
     par(mfrow = c(1, 1))
     contour(delliptical2d(xy, rho = 0.75, param = NULL, 
         type = "norm", output = "list"), main = "norm")

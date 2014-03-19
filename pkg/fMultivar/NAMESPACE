@@ -1,12 +1,29 @@
+
 ################################################
-## Manual Namespace
+## import name space
+################################################
+
+
+import("methods")
+import("mvtnorm")
+import("sn")
+#import("akima")
+#import("spatial")
+#import("cubature")
+#import("timeDate")
+#import("timeSeries")
+import("fBasics")
+
+
+################################################
+### Export Everything
 ################################################
 
 exportPattern(".")
-import("methods")
-import("timeDate")
-import("timeSeries")
-import("fBasics")
-import("mvtnorm")
-import("sn")
-useDynLib("fMultivar")
+
+
+################################################
+## useDynLib
+################################################
+
+# useDynLib("fMultivar")
