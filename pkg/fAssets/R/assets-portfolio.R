@@ -47,7 +47,7 @@ pfolioVaR <-
     # FUNCTION:
 
     # Transform:
-    x = as.matrix(x)
+    x <- as.matrix(x)
 
     # Compute Portfolio VaR:
     if (is.null(weights))
@@ -83,7 +83,7 @@ pfolioCVaRplus <-
     # FUNCTION:
 
     # Transform:
-    x = as.matrix(x)
+    x <- as.matrix(x)
 
     # Compute Portfolio CVaRplus:
     if (is.null(weights)) {
@@ -121,7 +121,7 @@ pfolioCVaR <-
     # FUNCTION:
 
     # Transform:
-    data = as.matrix(x)
+    data <- as.matrix(x)
 
     # Input Data:
     if (is.null(weights)) {

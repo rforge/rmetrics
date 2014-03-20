@@ -16,13 +16,13 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  assetsStarsPlot         Draws segment/star diagrams of a multivariate data
-# FUNCTION:               DESCRIPTION:
-#  assetsBasicStatsPlot    Displays a segment plot of basic return statistics
-#  assetsMomentsPlot       Displays a segment plot of distribution moments
-#  assetsBoxStatsPlot      Displays a segment plot of box plot statistics
-#  assetsNIGFitPlot        Displays a segment plot NIG parameter estimates
+# FUNCTION:                   DESCRIPTION:
+#  assetsStarsPlot             Draws segment/star diagrams of asset sets
+# FUNCTION:                   DESCRIPTION:
+#  assetsBasicStatsPlot        Displays a segment plot of basic return stats
+#  assetsMomentsPlot           Displays a segment plot of distribution moments
+#  assetsBoxStatsPlot          Displays a segment plot of box plot statistics
+#  assetsNIGFitPlot            Displays a segment plot NIG parameter estimates
 ################################################################################
 
 

@@ -16,7 +16,7 @@
 
 
 ################################################################################
-# FUNCTION:             INTERNAL USE:
+# FUNCTION:             DESCRIPTION:
 #  .cov.shrink           Builtin from Package 'corpcor'
 #  .cor.shrink
 #  .varcov
@@ -70,13 +70,13 @@ function(x, lambda, verbose = FALSE)
    x = as.matrix(x)
 
    # Shrinkage correlation coefficients
-   R.star = .cor.shrink(x, lambda = lambda, verbose=verbose)
+   R.star <- .cor.shrink(x, lambda = lambda, verbose=verbose)
 
    # Unbiased empirical variances
    V = apply(x, 2, var)
    
    resid.sd = sqrt(V)
-   ans = sweep(sweep(R.star, 1, resid.sd, "*"), 2, resid.sd, "*") 
+   ans <- sweep(sweep(R.star, 1, resid.sd, "*"), 2, resid.sd, "*") 
      
    # Return Value:
    ans
@@ -90,7 +90,7 @@ function(x, lambda, verbose = FALSE)
 function(x, lambda, verbose = FALSE)
 {
     # Standardize data (and turn x into a matrix)
-    sx = scale(x)  
+    sx <- scale(x)  
     
     p = dim(sx)[2]
     if(p == 1) return( as.matrix(1) ) 
