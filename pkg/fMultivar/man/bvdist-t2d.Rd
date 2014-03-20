@@ -81,7 +81,7 @@ Venables W.N., Ripley B.D., (2002);
 
 \author{
 
-    Adelchi Azzalini for the underlying pnorm2d function, \cr
+    Adelchi Azzalini for the underlying \code{pnorm2d} function, \cr
     Diethelm Wuertz for the Rmetrics \R-port.
     
 }

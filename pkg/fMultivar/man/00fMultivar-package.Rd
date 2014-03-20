@@ -10,20 +10,23 @@
 
 \description{
 
-  Package for modelling bivariate and multivariate financial
-  return distributions. 
+  The Rmetrics \code{fMultivar} package is a  collection of functions 
+  to manage, to investigate and to analyze bivariate and multivariate 
+  data sets of financial returns.
   
 }
 
 
 \details{
 
-  \tabular{ll}{Package:    \tab fMultivar\cr
+  \tabular{ll}{
+    Package:    \tab fMultivar\cr
     Type:       \tab Package\cr
     Version:    \tab 3001.80\cr
     Date:       \tab 2005-04-20 \cr
     License:    \tab GPL (>= 2)\cr
-    Copyright:  \tab (c) 1999-2014 Diethelm Wuertz and Rmetrics Association \cr
+    Copyright:  \tab (c) 2005-2014 Diethelm Wuertz and Rmetrics Association\cr
+    Repository: \tab R-FORGE\cr
     URL:        \tab \url{https://www.rmetrics.org}
   }
   
@@ -74,12 +77,12 @@
   contains functions to model bivariate density, probability,
   quantile functions, and to generate random numbers.
   
-  Functions:
+  \preformatted{
+  [dpr]cauchy2d         Bivariate Cauchy Distribution
+  [dpr]norm2d           Bivariate Normal Disribution
+  [dpr]t2d              Bivariate Student-t Disribution
   
-  \tabular{ll}{\code{[dpr]cauchy2d} \tab Bivariate Cauchy Distribution\cr 
-    \code{[dpr]norm2d} \tab Bivariate Normal Disribution\cr 
-    \code{[dpr]t2d} \tab Bivariate Student-t Disribution\cr
-    \code{delliptical2d} \tab Bivariate Elliptical Densities
+  delliptical2d         Bivariate Elliptical Densities
   }
   
 }
@@ -91,13 +94,12 @@
   to model multivariate density and probability functions, and to 
   generate random numbers for the skew Cauchy, Normal and Student-t
   distributions. Note the symmetric case is also included in these
-  functions
+  functions. The functions are:
   
-  The functions are:
-  
-  \tabular{ll}{\code{[dpr]msc} \tab Multivariate Skew Cauchy Distribution\cr 
-    \code{[dpr]msn} \tab Multivariate Skew Normal Distribution\cr 
-    \code{[dpr]mst} \tab Multivariate Skew Student-t Distribution
+  \preformatted{
+  [dpr]msc              Multivariate Skew Cauchy Distribution
+  [dpr]msn              Multivariate Skew Normal Distribution
+  [dpr]mst              Multivariate Skew Student-t Distribution
   }
     
   Note the functions are not part of the \code{fMultivar} package they
@@ -114,9 +116,10 @@
   
   For parameter estimation please use the simple wrapper functions:
   
-  \tabular{ll}{\code{mscFit} \tab Multivariate Skew Cauchy Fit\cr 
-    \code{msnFit} \tab Multivariate Skew Normal Fit\cr 
-    \code{mstFit} \tab Multivariate Skew Student-t Fit
+  \preformatted{
+  mscFit                Multivariate Skew Cauchy Fit
+  msnFit                Multivariate Skew Normal Fit
+  mstFit                Multivariate Skew Student-t Fit
   }
   
   Thes parameter estimation functions will be in the same style
@@ -140,20 +143,20 @@
   hexagonal binned histograms, 2-D kernel density estimates, 
   bivariate histogram plots:
   
-  \tabular{ll}{\code{grid2d} \tab Bivariate Square Grid of Coordinates\cr 
-    \code{binning2d} \tab Bivariate Square/Hexagonal Binning Plot\cr 
-    \code{density2d} \tab Bivariate Kernel Density Plot\cr 
-    \code{hist2d} \tab Bivariate Histogram Plot\cr 
-    \code{gridData} \tab Bivariate gridded data set \cr
-    \code{- persp} \tab Perspective plot from a gridded data set\cr
-    \code{- contour} \tab Contour plot from a gridded data set
-    }
+  \preformatted{
+  grid2d                Bivariate Square Grid of Coordinates
+  binning2d             Bivariate Square/Hexagonal Binning Plot
+  density2d             Bivariate Kernel Density Plot
+  hist2d                Bivariate Histogram Plot
+  gridData              Bivariate gridded data set
+  }
    
   For integration we have added two quadratur routines a simple one
   for the bivariate case and an adaptive one for the multivariate case:
   
-  \tabular{ll}{\code{integrate2d} \tab Bivariate Integration\cr
-    \code{adapt} \tab Multivariate adaptive Quadratur
+  \preformatted{
+  integrate2d           Bivariate Integration
+  adapt                 Multivariate adaptive Quadratur
   }
   
   The function \code{adapt} is a wrapper to the function 
@@ -165,7 +168,10 @@
 
 \author{
 
-  Rmetrics Core Team.
+  This package was created by Diethelm Wuertz (2005). 
+  It is authored and maintained by the Rmetrics Core Team,
+  Yohan Chalabi (2010-2013) and Tobias Setz (since 2014), 
+  and Diethelm Wuertz.
   
 }
 
