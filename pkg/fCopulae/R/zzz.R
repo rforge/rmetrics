@@ -34,9 +34,9 @@
   }
 
 .onLoad <- 
-    function(libname, pkgname) 
+  function(libname, pkgname) 
 {
-    setRmetricsOptions(.counter = NA)
+  setRmetricsOptions(.counter = NA)
 }
 
 ################################################################################
