@@ -26,8 +26,8 @@
     # messages using 
     
     packageStartupMessage( "\n" )
-    packageStartupMessage( "Rmetrics Package fMultivar" ) 
-    packageStartupMessage( "Analysing and Modeling Multivariate Financial Return Distributions" )
+    packageStartupMessage( "Rmetrics Package fAssets" ) 
+    packageStartupMessage( "Analysing and Modeling Financial Assets" )
     packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
     packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
     packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
