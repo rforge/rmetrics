@@ -13,28 +13,29 @@
 # Public License along with this library; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
+
+
+################################################################################
+# FUNCTION:                       DESCRIPTION:
+#  "fPFOLIOBACKTEST"               S4 Portfolio Backtest Class
 ################################################################################
 
-.onAttach <- 
-  function(libname, pkgname)
-  {
-    # do whatever needs to be done when the package is loaded
-    # some people use it to bombard users with messages using 
+
+setClass("fPFOLIOBACKTEST",
+   
+    # A function implemented by Diethelm Wuertz and William Chen
     
-    packageStartupMessage( "\n" )
-    packageStartupMessage( "Rmetrics Package fPortfolio" ) 
-    packageStartupMessage( "Designing and Optimizing Portfolios" )
-    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
-    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
-    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
-    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
-  }
+    # Description:
+    #   Represens S4 fPFOLIOBACKTEST Class
+     
+    representation(
+        windows = "list",
+        strategy = "list",
+        smoother = "list",
+        messages = "list")
+    )
 
-.onLoad <- 
-  function(libname, pkgname) 
-  {
-    if(!is.numeric(getRmetricsOptions("length.print")))
-      setRmetricsOptions(length.print = 5)
-  }
-
+    
 ################################################################################
+
+   
