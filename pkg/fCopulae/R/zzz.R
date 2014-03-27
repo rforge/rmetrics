@@ -36,7 +36,7 @@
 .onLoad <- 
   function(libname, pkgname) 
 {
-  setRmetricsOptions(.counter = NA)
+  timeDate::setRmetricsOptions(.counter = NA)
 }
 
 ################################################################################
