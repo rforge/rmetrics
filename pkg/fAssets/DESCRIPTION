@@ -1,15 +1,22 @@
 Package: fAssets
-Version: 3003.81
+Version: 3003.80
 Date: 2007-10-08
 Title: Rmetrics - Analysing and Modelling Financial Assets
-Author: Rmetrics Core Team
-Depends: R (>= 2.15.1), methods, MASS, timeDate, timeSeries, fBasics, fCopulae, sn,
-          robustbase, ecodist, energy, mvnormtest
+Author: Rmetrics Core Team,
+Author: Rmetrics Core Team,
+      Diethelm Wuertz [aut, cre],
+      Tobias Setz [ctb],
+      Yohan Chalabi [ctb]
+Depends: R (>= 2.15.1), fBasics, fMultivar
+Import: timeDate, timeSeries, fCopulae
+Suggests: methods, MASS, robustbase, sn, mnormt, ecodist, mvnormtest, 
+      energy, RUnit
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching "Financial Engineering and Computational Finance"
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE. THIS TYPICALLY
-          INCLUDES FUNCTION AND ARGUMENT NAMES, AS WELL AS DEFAULTS FOR ARGUMENTS AND
-          RETURN VALUES.
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance"
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 Repository: R-FORGE

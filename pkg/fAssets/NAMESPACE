@@ -3,14 +3,17 @@
 ################################################
 
 exportPattern(".")
-import(methods)
-import(MASS)
-import(timeDate)
-import(timeSeries)
+#import(timeDate)
 import(fBasics)
-import(fCopulae)
-import(sn)
-import(robustbase)
-import(ecodist)
-import(energy)
-import(mvnormtest)
+import(fMultivar)
+#import(robustbase)
+
+#import(methods)
+#import(MASS)
+#import(timeSeries)
+#import(fCopulae)
+#import(sn)
+#import(ecodist)
+#import(mvnormtest)
+#import(energy)
+

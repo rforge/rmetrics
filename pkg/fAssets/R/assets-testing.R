@@ -31,8 +31,8 @@ assetsTest <-
     #   Tests for multivariate Normal Assets
 
     # Example:
-    #   .mvnormTest(x = assetsSim(100))
-    #   .mvnormTest(x = assetsSim(100), method = "e", Replicates = 99)
+    #   mvnormTest(x = assetsSim(100))
+    #   mvnormTest(x = assetsSim(100), method = "e", Replicates = 99)
 
     # FUNCTION:
 
@@ -79,7 +79,7 @@ mvshapiroTest <-
     U <- t(as.matrix(x))
     
     # Test
-    test <- mshapiro.test(U)
+    test <- mvnormtest::mshapiro.test(U)
     
     # Return Value:
     test
@@ -110,7 +110,7 @@ mvenergyTest <-
     x <- as.matrix(x)
     
     # Test:
-    test <- mvnorm.etest(x, R = Replicates)
+    test <- energy::mvnorm.etest(x, R = Replicates)
     
     # Return Value:
     test
