@@ -41,7 +41,7 @@
 mscFit <- 
   function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
 {
-  fit <- mst.mple(x = rep(1, nrow(x)), y = x, fixed.nu=1,
+  fit <- sn::mst.mple(x = rep(1, nrow(x)), y = x, fixed.nu=1,
                   trace=trace, penalty=NULL, ...)
   fit$estimate <- list(
     xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]])

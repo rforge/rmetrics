@@ -113,6 +113,10 @@
 
 
 \examples{
+\dontrun{
+## Load Libray:
+   require(mvtnorm)
+   
 ## [dr]mvsnorm - 
    dmvsnorm(rnorm2d(100))
    rmvsnorm(100)
@@ -120,6 +124,7 @@
 ## [dr]mvst - 
    dmvst(rt2d(100))
    rmvst(100)
+}
 }
 
 

@@ -40,7 +40,7 @@
 
 msnFit <- function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
 {
-  fit <- msn.mle(x = rep(1, nrow(x)), y = x, trace=trace, ...)
+  fit <- sn::msn.mle(x = rep(1, nrow(x)), y = x, trace=trace, ...)
   fit$estimate <- list(
     xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]])
   

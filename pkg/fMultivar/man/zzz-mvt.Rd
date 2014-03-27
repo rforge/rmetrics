@@ -48,6 +48,10 @@
 
 
 \examples{
+\dontrun{
+## Load Libray:
+   require(mvtnorm)
+   
 ## dmvt - 
    # basic evaluation
    dmvt(x = c(0,0), sigma = diag(2))
@@ -88,6 +92,7 @@
    set.seed(271)
    x. <- rmvnorm(n, mean=mu, sigma=Sigma)
    stopifnot(identical(x, x.))
+}
 }
 
 

@@ -41,6 +41,10 @@
 
 
 \examples{
+\dontrun{
+## Load Libray:
+   require(mvtnorm)
+   
 ## dmvnorm - 
    # Multivariate Normal Density Function:
    mean <- c(1, 1)
@@ -73,6 +77,7 @@
    colMeans(x)
    var(x)
    plot(x, cex=0.5, pch=19, col="steelblue")
+}
 }
 
 

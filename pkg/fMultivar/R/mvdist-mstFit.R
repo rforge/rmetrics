@@ -42,7 +42,7 @@ mstFit <-
   function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
 {
   # Fit distributional Parameters:
-  fit <- mst.mple(x = rep(1, nrow(x)), y = x, trace=trace, penalty=NULL, ...)
+  fit <- sn::mst.mple(x = rep(1, nrow(x)), y = x, trace=trace, penalty=NULL, ...)
   fit$estimate <- list(
     xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]], nu=fit$dp[[4]])
   

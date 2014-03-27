@@ -3,7 +3,8 @@
 ################################################
 
 exportPattern(".")
-import("methods")
+
+#import("methods")
 import("mvtnorm")
 import("sn")
 import("akima")
