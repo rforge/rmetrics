@@ -1,13 +1,13 @@
 Package: fAssets
 Version: 3003.80
-Date: 2007-10-08
+Date: 08-Oct-2007
 Title: Rmetrics - Analysing and Modelling Financial Assets
 Author: Rmetrics Core Team,
-      Diethelm Wuertz [aut, cre],
+      Yohan Chalabi [ctb],
       Tobias Setz [ctb],
-      Yohan Chalabi [ctb]
-Depends: R (>= 2.15.1), fBasics, fMultivar
-Import: timeDate, timeSeries, fCopulae
+      Diethelm Wuertz [aut, cre]
+Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
+Import: fCopulae
 Suggests: methods, MASS, robustbase, sn, mnormt, ecodist, mvnormtest, 
       energy, RUnit
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>

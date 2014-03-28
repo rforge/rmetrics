@@ -76,7 +76,7 @@
    sampleArrange               Returns a re-sampled set of assets 
    statsArrange                Returns statistically rearranged column names
   }
-
+  
   In addition we have summarized and bundle of distance measure functions
   to determine the similarity or dissimilarity of individual assets from
   a set of multivariate financial return series. 
