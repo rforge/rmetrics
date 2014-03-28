@@ -4,10 +4,15 @@
 
 exportPattern(".")
 
-#import("methods")
-import("mvtnorm")
-import("sn")
-import("akima")
-import("spatial")
-import("cubature")
-import("fBasics")
+import(timeDate)
+import(timeSeries)
+import(fBasics)
+import(sn)
+
+import(mvtnorm)
+
+import(akima)
+import(spatial)
+import(cubature)
+
+#import(methods)
