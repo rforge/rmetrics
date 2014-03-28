@@ -1,25 +1,21 @@
 Package: fBasics
 Version: 3010.88
 Revision: 5503
-Date: 2013-04-30
+Date: 2004-07-04
 Title: Rmetrics - Markets and Basic Statistics
-Author: Diethelm Wuertz and Rmetrics core team members, uses code
-        builtin from the following R contributed packages: gmm from
-        Pierre Chauss, gld from Robert King, gss from Chong Gu, nortest
-        from Juergen Gross, HyperbolicDist from David Scott, sandwich
-        from Thomas Lumley and Achim Zeileis, fortran/C code from
-        Kersti Aas and akima (0.5-1: R code under GPL) from Albrecht
-        Gebhardt
-Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
-Depends: stats, MASS, methods, timeDate, timeSeries (>= 2100.84)
-Imports: stabledist, gss
-Suggests: akima, spatial, RUnit, tcltk
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance" NOTE: SEVERAL PARTS ARE STILL
-        PRELIMINARY AND MAY BE CHANGED IN THE FUTURE. THIS TYPICALLY
-        INCLUDES FUNCTION AND ARGUMENT NAMES, AS WELL AS DEFAULTS FOR
-        ARGUMENTS AND RETURN VALUES. Please donate, www.rmetrics.org,
-        to support future activities of the Rmetrics association.
+Author: Rmetrics Core Team,
+      Yohan Chalabi [ctb],
+      Tobias Setz [ctb],
+      Diethelm Wuertz [aut, cre]
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Depends: timeDate, timeSeries, stabledist
+Import: gss
+Suggests: methods, MASS, akima, spatial, RUnit, tcltk
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance" 
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

@@ -108,8 +108,13 @@ qqgldPlot(x, labels = TRUE, col = "steelblue", pch = 19,
 
 
 \examples{
+## data - 
+   SPI <- LPP2005REC[, "SPI"]
+   plot(SPI, type = "l", col = "steelblue", main = "SP500")
+   abline(h = 0, col = "grey")
+   
 ## qqPlot -
-   qqnormPlot(rnorm(100)) 
+   qqnormPlot(SPI) 
 }
 
 

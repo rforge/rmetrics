@@ -101,13 +101,13 @@ Taylor S.J. (1986);
 
 \examples{   
 ## data - 
-   # require(MASS)
-   plot(SP500, type = "l", col = "steelblue", main = "SP500")
+   SPI <- LPP2005REC[, "SPI"]
+   plot(SPI, type = "l", col = "steelblue", main = "SP500")
    abline(h = 0, col = "grey")
 
-## scalinglawPlot -
-   # Taylor Effect:
-   scalinglawPlot(SP500)
+## teffectPlot -
+   # Scaling Law Effect:
+   scalinglawPlot(SPI)
 }
 
 

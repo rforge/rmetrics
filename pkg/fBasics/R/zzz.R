@@ -14,44 +14,38 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
+
+################################################################################
+
+
+.onAttach <- 
+  function(libname, pkgname)
+  {
+    # do whatever needs to be done when the package is loaded
+    # some people use it to bombard users with 
+    # messages using 
+    
+    packageStartupMessage( "\n" )
+    packageStartupMessage( "Rmetrics Package fBasics" ) 
+    packageStartupMessage( "Analysing Markets and calculating Basic Statistics" )
+    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+    # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
+    # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
+    # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" ) 
+  }
 
 
 ################################################################################
 
 
-## .First.lib =
-## function(lib, pkg)
-## {
-
-## ###     # Startup Mesage and Desription:
-## ###     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-## ###     dsc <- packageDescription(pkg)
-## ###     if(interactive() || getOption("verbose")) {
-## ###         # not in test scripts
-## ###         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-## ###     }
-
-##     setRmetricsOptions(.x.save = NA)
-
-## }
-
-
-.onLoad <- function(libname, pkgname) setRmetricsOptions(.x.save = NA)
-
-
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+.onLoad <- 
+  function(libname, pkgname) 
+{
+  setRmetricsOptions(.x.save = NA)
+}
 
 
 ################################################################################
