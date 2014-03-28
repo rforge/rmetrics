@@ -9,8 +9,8 @@ Author: Rmetrics Core Team,
       Tobias Setz [aut],
       Yohan Chalabi [aut],
       William Chen [ctb]
-Depends: R (>= 2.15.1), timeDate, quadprog, fAssets
-Import: timeSeries, fBasics 
+Depends: R (>= 2.15.1), timeDate, timeSeries, quadprog, fAssets
+Import: fBasics 
 Suggests: RUnit, tcltk, methods, MASS, robustbase,
       Rglpk, spam, Rsymphony, kernlab, Rsolnp, Rdonlp2, Rnlminb2
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
