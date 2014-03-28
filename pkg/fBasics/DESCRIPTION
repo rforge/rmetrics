@@ -1,6 +1,5 @@
 Package: fBasics
-Version: 3010.88
-Revision: 5503
+Version: 3003.88
 Date: 2004-07-04
 Title: Rmetrics - Markets and Basic Statistics
 Author: Rmetrics Core Team,
@@ -9,11 +8,11 @@ Author: Rmetrics Core Team,
       Diethelm Wuertz [aut, cre]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Depends: timeDate, timeSeries, stabledist
-Import: gss
+Imports: gss
 Suggests: methods, MASS, akima, spatial, RUnit, tcltk
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance" 
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
       FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
       WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes

@@ -1,5 +1,5 @@
 Package: fCopulae
-Version: 3003.79
+Version: 3003.80
 Date: 2013-03-18
 Title: Rmetrics - Bivariate Dependence Structures with Copulae
 Author: Rmetrics Core Team,
@@ -7,7 +7,7 @@ Author: Rmetrics Core Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
-Import: mvtnorm, sn
+Imports: mvtnorm, sn
 Suggests: methods, RUnit, tcltk
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
