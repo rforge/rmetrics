@@ -25,9 +25,9 @@
   \tabular{ll}{
     Package:    \tab fAssets\cr
     Type:       \tab Package\cr
-    Date:       \tab 2007-10-08\cr
+    Date:       \tab 2014\cr
     License:    \tab GPL Version 2 or later\cr
-    Copyright:  \tab (c) 2007 Diethelm Wuertz and Rmetrics Association\cr
+    Copyright:  \tab (c) 1999-2014 Rmetrics Association\cr
     Repository: \tab R-FORGE\cr
     URL:        \tab \url{https://www.rmetrics.org}
     }
