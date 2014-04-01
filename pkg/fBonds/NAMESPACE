@@ -1,7 +1,6 @@
 
 ################################################
-## Note this file has been automatically
-## generated --- Do not edit it.
+## fBonds
 ################################################
 
 
@@ -12,6 +11,7 @@
 import("timeDate")
 import("timeSeries")
 import("fBasics")
+
 
 ################################################
 ## S4 classes
@@ -27,6 +27,6 @@ import("fBasics")
 ## functions
 ################################################
 
-export(
-    "NelsonSiegel",
-    "Svensson" )
+exportPattern(".")
+
+
