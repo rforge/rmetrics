@@ -21,11 +21,13 @@
 #  pssd             Returns spline smoothed probability estimate
 #  qssd             Returns spline smoothed quantiles estimate
 #  rssd             Returns spline smoothed random variates 
+# LIBRARY:             DESCRPTION:
+#  stabledist           Stable Duistribution
 ################################################################################
 
 
 dssd <- 
-function(x, param, log = FALSE) 
+   function(x, param, log = FALSE) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -35,10 +37,10 @@ function(x, param, log = FALSE)
     # FUNCTION:
     
     # Density:
-    ans = .dssden(object = param, x = x) 
+    ans <- gss::dssden(object = param, x = x) 
     
     # Log:
-    if(log) ans = log(ans)
+    if(log) ans <- log(ans)
     
     # Return Value:
     ans
@@ -49,7 +51,7 @@ function(x, param, log = FALSE)
 
  
 pssd <- 
-function(q, param) 
+    function(q, param) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -59,7 +61,7 @@ function(q, param)
     # FUNCTION:
     
     # Return Value:
-    .pssden(object = param, q = q) 
+    gss::pssden(object = param, q = q) 
 }
 
 
@@ -67,7 +69,7 @@ function(q, param)
 
 
 qssd <- 
-function(p, param) 
+    function(p, param) 
 {    
     # A function implemented by Diethelm Wuertz
 
@@ -77,7 +79,7 @@ function(p, param)
     # FUNCTION:
     
     # Return Value:
-    .qssden(object = param, p = p) 
+    gss::qssden(object = param, p = p) 
 }
 
 
@@ -85,7 +87,7 @@ function(p, param)
 
 
 rssd <-  
-function(n, param) 
+    function(n, param) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -95,9 +97,10 @@ function(n, param)
     # FUNCTION:
     
     # Return Value:
-    .qssden(object = param, p = runif(n)) 
+    gss::qssden(object = param, p = runif(n)) 
 }
 
 
 ################################################################################
+
 

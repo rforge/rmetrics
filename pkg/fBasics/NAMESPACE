@@ -1,3 +1,9 @@
+
+################################################
+## fBasics
+################################################
+
+
 ################################################
 ## useDynLib
 ################################################
@@ -11,37 +17,17 @@ useDynLib("fBasics")
 import("timeDate")
 import("timeSeries")
 
-import("stabledist")
 
-#import("MASS")
-#import("gss")
 #import("methods")
+#import("MASS")
+#import("stabledist")
+#import("gss")
 
-
-if(getRversion() >= "2.14.0") {
-    importFrom(stats, "getCall")
-    ## exportMethods("getCall" )
-} else {
-    export("getCall")
-}
-
-################################################
-## S4 classes
-################################################
-
-exportClasses("fDISTFIT", "fHTEST" )
-exportMethods("show" )
-
-################################################
-## S3 classes
-################################################
-
-S3method("stdev", "default")
-S3method("termPlot", "default")
-S3method("volatility", "default")
 
 ################################################
 ## Functions
 ################################################
 
 exportPattern(".")
+
+

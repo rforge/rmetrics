@@ -23,7 +23,7 @@
 
 
 ssdFit <-  
-function(x)
+    function(x)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -35,10 +35,10 @@ function(x)
     # FUNCTION:
     
     # Parameter Fit: 
-    ans = .ssden(~x)
+    ans <- gss::ssden(~x)
     
     # Return Value:
-    ans  
+    ans
 }
 
 
@@ -46,7 +46,7 @@ function(x)
 
 
 .print.ssd <- 
-function(x, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
     

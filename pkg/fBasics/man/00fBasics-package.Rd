@@ -1,6 +1,7 @@
 \name{fBasics-package}
 
 
+\alias{fBasics-package}
 \alias{fBasics}
 
 
@@ -27,13 +28,13 @@
 \details{
 
     \preformatted{
-        Package:    fBasics\cr
-        Type:       Package\cr
-        Version:    270.73\cr
-        Date:       2009\cr
-        License:    GPL Version 2 or later\cr
-        Copyright:  (c) 1999-2014 Rmetrics Assiciation\cr
-        URL:        \url{http://www.rmetrics.org}
+        Package:    \tab fBasics\cr
+        Type:       \tab Package\cr
+        Date:       \tab 2014\cr
+        License:    \tab GPL Version 2 or later\cr
+        Copyright:  \tab (c) 1999-2014 Rmetrics Association\cr
+        Repository: \tab R-FORGE\cr
+        URL:        \tab \url{https://www.rmetrics.org}
     }
     
 }

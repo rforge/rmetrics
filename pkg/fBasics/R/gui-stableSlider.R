@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             STABLE SLIDERS:
@@ -32,7 +21,8 @@
 ################################################################################
 
 
-stableSlider <- function(col= "steelblue", col.med = "gray30")
+stableSlider <- 
+    function(col= "steelblue", col.med = "gray30")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -53,19 +43,20 @@ stableSlider <- function(col= "steelblue", col.med = "gray30")
         pm    = .sliderMenu(no = 6)
 
         # Compute Data:
-        x.rng <- round(qstable(c(1,99)/100, alpha, beta, gamma, delta, pm),
-                       digits = 2)
+        x.rng <- round(
+          stabledist::qstable(c(1,99)/100, alpha, beta, gamma, delta, pm),
+          digits = 2)
         xmin <- x.rng[1]; xmax <- x.rng[2]
         s = seq(xmin, xmax, length = N)
-        f = dstable(s, alpha, beta, gamma, delta, pm)
-        F = pstable(s, alpha, beta, gamma, delta, pm)
-        med <- qstable(0.5, alpha, beta, gamma, delta, pm)
-        main1 = paste("Stable Density\n",
+        f = stabledist::dstable(s, alpha, beta, gamma, delta, pm)
+        F = stabledist::pstable(s, alpha, beta, gamma, delta, pm)
+        med <- stabledist::qstable(0.5, alpha, beta, gamma, delta, pm)
+        main1 <- paste("Stable Density\n",
             "alpha = ", as.character(alpha), " | ",
             "beta = ", as.character(beta), " | ",
             "gamma = ", as.character(gamma), " | ",
             "delta = ", as.character(delta))
-        main2 = paste("Stable Probability\n",
+        main2 <- paste("Stable Probability\n",
             "xmin [ 1%] = ", as.character(xmin), " | ",
             "xmax [99%] = ", as.character(xmax), " | ",
             "pm = ", as.character(pm))
@@ -79,14 +70,14 @@ stableSlider <- function(col= "steelblue", col.med = "gray30")
 
         # Probability:
         plot(s, F, type = "l", xlim = x.rng, ylim = c(0, 1),
-             col = col, main = main2)
+            col = col, main = main2)
         abline(h = 0:1, lty = 3)
         lines(c(par("usr")[1],med,med),
-              c(0.5 ,0.5,  0), lty = 2, col=col.med)
+            c(0.5 ,0.5,  0), lty = 2, col=col.med)
         text(med, 0.1, "median", adj=0, col=col.med)
         axis(1, labels=expression(delta), at = delta,
-             col = "red", col.axis="red", lwd=1.5,
-             line = .5, tck = 1/8, hadj = -1, padj = -4)
+            col = "red", col.axis="red", lwd=1.5,
+            line = .5, tck = 1/8, hadj = -1, padj = -4)
     }
 
     # Open Slider Menu:
@@ -100,4 +91,5 @@ stableSlider <- function(col= "steelblue", col.med = "gray30")
 
 
 ################################################################################
+
 

@@ -1,5 +1,9 @@
 Package: fBasics
+<<<<<<< .mine
+Version: 3010.88
+=======
 Version: 3003.88
+>>>>>>> .r5696
 Date: 2004-07-04
 Title: Rmetrics - Markets and Basic Statistics
 Author: Rmetrics Core Team,
@@ -7,9 +11,15 @@ Author: Rmetrics Core Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+<<<<<<< .mine
+Depends: R (>= 2.15.1), timeDate, timeSeries
+Imports: gss, stabledist
+Suggests: methods, MASS, spatial, RUnit, tcltk, akima
+=======
 Depends: timeDate, timeSeries, stabledist
 Imports: gss
 Suggests: methods, MASS, akima, spatial, RUnit, tcltk
+>>>>>>> .r5696
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance" 
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE

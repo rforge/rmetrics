@@ -23,11 +23,13 @@
 #  .qStableFit           Estimates parameters by McCulloch's approach
 #  .mleStableFit         Estimates stable parameters by MLE approach
 #  .stablePlot           Plots results of stable parameter estimates
+# LIBRARY:             DESCRPTION:
+#  stabledist           Stable Duistribution
 ################################################################################
 
 
 stableFit <-
-function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
+    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
     type = c("q", "mle"), doplot = TRUE, control = list(),
     trace = FALSE, title = NULL, description = NULL)
 {
@@ -63,8 +65,8 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
 # ------------------------------------------------------------------------------
 
 
-.phiStable =
-function()
+.phiStable <- 
+    function()
 {
     # A function implemented by Diethelm Wuertz
 
@@ -85,16 +87,21 @@ function()
     # phi1:
     phi1 = function(alpha, beta)
     {
-        ( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) ) /
-        ( qstable(0.75, alpha, beta) - qstable(0.25, alpha, beta) )
+        ( stabledist::qstable(0.95, alpha, beta) - 
+          stabledist::qstable(0.05, alpha, beta) ) /
+        ( stabledist::qstable(0.75, alpha, beta) - 
+          stabledist::qstable(0.25, alpha, beta) )
     }
 
     # phi2:
     phi2 = function(alpha, beta)
     {
-        ( ( qstable(0.95, alpha, beta) - qstable(0.50, alpha, beta) ) -
-        ( qstable(0.50, alpha, beta) - qstable(0.05, alpha, beta) ) ) /
-        ( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) )
+        ( ( stabledist::qstable(0.95, alpha, beta) - 
+            stabledist::qstable(0.50, alpha, beta) ) -
+          ( stabledist::qstable(0.50, alpha, beta) - 
+            stabledist::qstable(0.05, alpha, beta) ) ) /
+          ( stabledist::qstable(0.95, alpha, beta) - 
+            stabledist::qstable(0.05, alpha, beta) )
     }
 
     # Phi:
@@ -114,7 +121,7 @@ function()
         0.2, 0.4, 0.6, 0.8), col = "red",  labcex = 1.5, add = TRUE)
 
     # Result:
-    .PhiStable = list(Phi1 = Phi1, Phi2 = Phi2, alpha = alpha, beta = beta)
+    .PhiStable <- list(Phi1 = Phi1, Phi2 = Phi2, alpha = alpha, beta = beta)
 
     # Dump:
     if (FALSE) dump(".PhiStable", "PhiStable.R")
@@ -360,8 +367,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.qStableFit <-
-function(x, doplot = TRUE, title = NULL, description = NULL)
+.qStableFit <- 
+    function(x, doplot = TRUE, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -436,14 +443,15 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
     if (is.na(U) | is.na(V)) {
         GAM = NA
     } else {
-        phi3 = qstable(0.75, U, V) - qstable(0.25, U, V)
+        phi3 = stabledist::qstable(0.75, U, V) - 
+               stabledist::qstable(0.25, U, V)
         GAM = (q75-q25) / phi3
     }
 
     if (is.na(U) | is.na(V)) {
         DELTA = NA
     } else {
-        phi4 = -qstable(0.50, U, V) + V*tan(pi*U/2)
+        phi4 = -stabledist::qstable(0.50, U, V) + V*tan(pi*U/2)
         DELTA = phi4*GAM - V*GAM*tan(pi*U/2) + q50
     }
 
@@ -464,8 +472,8 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-.mleStableFit <-
-function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
+.mleStableFit <- 
+    function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
     control = list(), trace = FALSE, title = NULL, description = NULL)
 {
     # A function implemented by Diethelm Wuertz
@@ -487,7 +495,7 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
 
     # Log-likelihood Function:
     obj = function(x, y = x, trace = FALSE) {
-        f = -mean(log(dstable(y, 
+        f = -mean(log(stabledist::dstable(y, 
             alpha = x[1], beta = x[2], gamma = x[3], delta = x[4])))
         # Print Iteration Path:
         if (trace) {
@@ -537,7 +545,7 @@ function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE,
 
 
 .stablePlot <-
-function(x, alpha, beta, gamma, delta)
+    function(x, alpha, beta, gamma, delta)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -547,14 +555,14 @@ function(x, alpha, beta, gamma, delta)
     # FUNCTION:
     
     # Plot:
-    span.min = qstable(0.01, alpha, beta, gamma, delta)
-    span.max = qstable(0.99, alpha, beta, gamma, delta)
+    span.min <- stabledist::qstable(0.01, alpha, beta, gamma, delta)
+    span.max <- stabledist::qstable(0.99, alpha, beta, gamma, delta)
     span = seq(span.min, span.max, length = 100)
     par(err = -1)
     z = density(x, n = 100)
     x = z$x[z$y > 0]
     y = z$y[z$y > 0]
-    y.points = dstable(span, alpha, beta, gamma, delta)
+    y.points = stabledist::dstable(span, alpha, beta, gamma, delta)
     ylim = log(c(min(y.points), max(y.points)))
     plot(x, log(y), xlim = c(span[1], span[length(span)]),
         ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")

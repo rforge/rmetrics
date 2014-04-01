@@ -9,31 +9,20 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
+# You should have received A copy of the GNU Library General
 # Public License along with this library; if not, write to the
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:             STYLIZED FACTS GUI:
 #  .stylizedFactsGUI     Opens a GUI for stylized facts
 #  .lmacfPlot            Estimates and displays the long memory ACF
 #  .logpdfPlot           Displays a pdf plot on logarithmic scale(s)
 #  .ccfPlot              Displays tailored cross correlation function plot
 #  .qqgaussPlot          Displays a tailored Gaussian quantile-quantile plot
-################################################################################
+###############################################################################
 
 
 .lmacfPlot <-
