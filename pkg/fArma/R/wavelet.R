@@ -14,37 +14,27 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # PART IV: Wavelet Estimator
-# FUNCTIONS:          DESCRIPTION:
-#  waveletFit          Wavelet Estimator
+# FUNCTIONS:            DESCRIPTION:
+#  waveletFit            Wavelet Estimator
 #  .accessD
 #  .wd
 #  .filter.select
 #  .first.last
+# REQUIRES:             DESCRIPTION:
+#  fBasics::.sliderMenu
 ################################################################################
 
 
 ################################################################################
 # PART V: Statistical Tests and Slider
-# FUNCTIONS:          DESCRIPTION:
-#  .beranTest          Not yet ready for usage ...
-#  .rsTest             Not yet ready for usage ...
-#  .vsTest             Not yet ready for usage ...
-#  hurstSlider         HurstSlider
+# FUNCTIONS:            DESCRIPTION:
+#  .beranTest            Not yet ready for usage ...
+#  .rsTest               Not yet ready for usage ...
+#  .vsTest               Not yet ready for usage ...
+#  hurstSlider           HurstSlider
 ################################################################################
 
 
@@ -52,10 +42,11 @@
 # PART IV: Wavelet Estimator
 
 
-waveletFit =
-function(x, length = NULL, order = 2, octave = c(2, 8),
-doplot = FALSE, title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz
+waveletFit <- 
+    function(x, length = NULL, order = 2, octave = c(2, 8),
+    doplot = FALSE, title = NULL, description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Function to do the Wavelet estimator of H.
@@ -173,8 +164,8 @@ doplot = FALSE, title = NULL, description = NULL)
 # License: GPL version 2 or later
 
 
-.accessD =
-function(wd.obj, level, boundary = FALSE)
+.accessD <- 
+  function(wd.obj, level, boundary = FALSE)
 {   # A function copied from R-package wavethresh
 
     # FUNCTION:
@@ -206,10 +197,11 @@ function(wd.obj, level, boundary = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.wd =
-function(data, filter.number = 2, family = c("DaubExPhase", "DaubLeAsymm"),
-bc = c("periodic", "symmetric"), verbose = getOption("verbose"))
-{   # A function copied from R-package wavethresh
+.wd <- 
+    function(data, filter.number = 2, family = c("DaubExPhase", "DaubLeAsymm"),
+    bc = c("periodic", "symmetric"), verbose = getOption("verbose"))
+{   
+    # A function copied from R-package wavethresh
 
     # FUNCTION:
 
@@ -278,10 +270,11 @@ bc = c("periodic", "symmetric"), verbose = getOption("verbose"))
 # ------------------------------------------------------------------------------
 
 
-.filter.select =
-function(filter.number, family = c("DaubExPhase", "DaubLeAsymm"),
-constant = 1)
-{   # A function copied from R-package wavethresh
+.filter.select <- 
+    function(filter.number, family = c("DaubExPhase", "DaubLeAsymm"),
+    constant = 1)
+{   
+    # A function copied from R-package wavethresh
 
     # FUNCTION:
 
@@ -484,9 +477,11 @@ constant = 1)
 # ------------------------------------------------------------------------------
 
 
-.first.last =
-function(LengthH, DataLength, bc = c("periodic", "symmetric"))
-{   # A function copied from R-package wavethresh
+.first.last <- 
+    function(LengthH, DataLength, bc = c("periodic", "symmetric"))
+{   
+      
+    # A function copied from R-package wavethresh
 
     # FUNCTION:
 
@@ -547,9 +542,10 @@ function(LengthH, DataLength, bc = c("periodic", "symmetric"))
 # Statistical Tests:
 
 
-.beranTest =
-function()
-{   # A function implemented by Diethelm Wuertz
+.beranTest <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Result:
     ans = NA
@@ -562,9 +558,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.rsTest =
-function(x, q)
-{   # A function implemented by Diethelm Wuertz
+.rsTest <- 
+    function(x, q)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Calculates the statistic of the modified R/S test
@@ -618,9 +615,10 @@ function(x, q)
 # ------------------------------------------------------------------------------
 
 
-.vsTest =
-function(x, q)
-{   # A function implemented by Diethelm Wuertz
+.vsTest <- 
+    function(x, q)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Calculates the statistic of the modified V/S test
@@ -678,9 +676,10 @@ function(x, q)
 ## .xHurst = NA
 
 
-hurstSlider =
-function(x = fgnSim())
-{   # A function implemented by Diethelm Wuertz
+hurstSlider <- 
+    function(x = fgnSim())
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays interactively Hurst exponent estimates
@@ -698,11 +697,11 @@ function(x = fgnSim())
     refresh.code = function(...)
     {
         # Sliders:
-        method = fBasics:::.sliderMenu(no = 1)
-        levels = fBasics:::.sliderMenu(no = 2)
-        minnpts = fBasics:::.sliderMenu(no = 3)
-        lower  = fBasics:::.sliderMenu(no = 4)
-        range = fBasics:::.sliderMenu(no = 5)
+        method = .sliderMenu(no = 1)
+        levels = .sliderMenu(no = 2)
+        minnpts = .sliderMenu(no = 3)
+        lower  = .sliderMenu(no = 4)
+        range = .sliderMenu(no = 5)
 
         # Graph Frame:
         par(mfrow = c(1, 1))
@@ -759,7 +758,7 @@ function(x = fgnSim())
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
         names       = c("method", "levels", "minnpts", "lower", "range"),
         minima      = c(       1,       10,         1,     0.1,     0.1),
         maxima      = c(       7,      200,        10,     1.5,     3.0),
@@ -769,4 +768,5 @@ function(x = fgnSim())
 
 
 ################################################################################
+
 

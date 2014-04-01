@@ -14,24 +14,14 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:            DESCRIPTION:
 #  fgnTrueacf            Returns FGN true autocorrelation function
 #  fgnTruefft            Returns FGN true fast Fourier transform
 #  .fgnStatsSlider        Displays fgn true statistics
+# REQUIRES:             DESCRIPTION:
+#  fBasics::.sliderMenu
 ################################################################################
 
 
@@ -54,13 +44,14 @@
 
 
 fgnTrueacf =
-function(n =100, H = 0.7)
-{   # A function implemented by Diethelm Wuertz
+    function(n =100, H = 0.7)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # True ACF:
-    ans = .ckFGN0(n = n, H = H)
+    ans <- .ckFGN0(n = n, H = H)
 
     # Return Value:
     ans
@@ -70,14 +61,15 @@ function(n =100, H = 0.7)
 # ------------------------------------------------------------------------------
 
 
-fgnTruefft =
-function(n = 100, H = 0.7)
-{   # A function implemented by Diethelm Wuertz
+fgnTruefft <- 
+    function(n = 100, H = 0.7)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # True FFT:
-    ans = .gkFGN0(n = n, H = H)
+    ans <- .gkFGN0(n = n, H = H)
 
     # Return Value:
     ans
@@ -87,9 +79,10 @@ function(n = 100, H = 0.7)
 # ------------------------------------------------------------------------------
 
 
-fgnStatsSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
+fgnStatsSlider <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description
     #   Displays FGN true statistics: ACF and FFT
@@ -100,11 +93,11 @@ function()
     # FUNCTION:
 
     # Internal Function:
-    refresh.code = function(...)
+    refresh.code <- function(...)
     {
         # Sliders:
-        n = fBasics:::.sliderMenu(no = 1)
-        H = fBasics:::.sliderMenu(no = 2)
+        n = .sliderMenu(no = 1)
+        H = .sliderMenu(no = 2)
 
         # Frame:
         par(mfrow = c(2, 1), cex = 0.7)
@@ -128,7 +121,7 @@ function()
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
        names =       c(  "n",    "H"),
        minima =      c(   10,   0.01),
        maxima =      c(  200,   0.99),
@@ -140,9 +133,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.ckFGN0 =
-function(n, H)
-{   # A function implemented by Diethelm Wuertz
+.ckFGN0 <- 
+    function(n, H)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes covariances of a fractional Gaussian  process
@@ -170,9 +164,10 @@ function(n, H)
 # ------------------------------------------------------------------------------
 
 
-.gkFGN0 =
-function(n, H)
-{   # A function implemented by Diethelm Wuertz
+.gkFGN0 <- 
+  function(n, H)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Calculates gk = fft of V=(r(0),...,r(n-2),
@@ -206,8 +201,9 @@ function(n, H)
 
 
 .simFGN0 =
-function(n, H)
-{   # A function implemented by Diethelm Wuertz
+    function(n, H)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Simulates a series X(1),...,X(n) of a fractional Gaussian process
@@ -253,4 +249,5 @@ function(n, H)
 
 
 ################################################################################
+
 

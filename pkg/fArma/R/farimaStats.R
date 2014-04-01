@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:            DESCRIPTION:
@@ -35,7 +23,6 @@
 ################################################################################
 
 
-################################################################################
 # DESCRIPTION:
 #   The functions are from the appendix of J. Beran "Statistics for
 #   long-memory processes", Chapman and Hall 1984
@@ -53,10 +40,11 @@
 # ------------------------------------------------------------------------------
 
 
-farimaTrueacf =
-function(n = 100, H = 0.7)
-{   # A function implemented by Diethelm Wuertz
-
+farimaTrueacf <- 
+    function(n = 100, H = 0.7)
+{   
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
 
     # ACF:
@@ -77,7 +65,7 @@ function(n = 100, H = 0.7)
     # FUNCTION:
 
     # FFT:
-    ans = .gkFARIMA0(n = n, H = H)
+    ans <- .gkFARIMA0(n = n, H = H)
 
     # Return Value:
     ans
@@ -87,8 +75,8 @@ function(n = 100, H = 0.7)
 # ------------------------------------------------------------------------------
 
 
-.ckFARIMA0 =
-function(n, H)
+.ckFARIMA0 <- 
+    function(n, H)
 {
     # Description:
     #   Computes the covariances of a fractional ARIMA(0,d,0) process
@@ -135,9 +123,10 @@ function(n, H)
 # ------------------------------------------------------------------------------
 
 
-farimaStatsSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
+farimaStatsSlider <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description
     #   Displays farima true Statistics: ACF and FFT
@@ -148,24 +137,24 @@ function()
     # FUNCTION:
 
     # Internal Function:
-    refresh.code = function(...)
+    refresh.code <- function(...)
     {
         # Sliders:
-        n = fBasics:::.sliderMenu(no = 1)
-        H = fBasics:::.sliderMenu(no = 2)
+        n <- .sliderMenu(no = 1)
+        H <- .sliderMenu(no = 2)
 
         # Frame:
         par(mfrow = c(2, 1), cex = 0.7)
 
         # FGN ACF:
-        ans = farimaTrueacf(n = n, H = H)
+        ans <- farimaTrueacf(n = n, H = H)
         plot(ans, type = "h", col = "steelblue")
         title(main = "FARIMA True ACF")
         grid()
         abline(h = 0, col = "grey")
 
         # FGN FFT:
-        ans = farimaTruefft(n = n, H = H)
+        ans <- farimaTruefft(n = n, H = H)
         plot(Re(ans), type = "h", col = "steelblue")
         title(main = "FARIMA True FFT")
         grid()
@@ -176,7 +165,7 @@ function()
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
        names =       c(  "n",    "H"),
        minima =      c(   10,   0.01),
        maxima =      c(  200,   0.99),
@@ -188,8 +177,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.gkFARIMA0 =
-function(n, H)
+.gkFARIMA0 <- 
+    function(n, H)
 {
     # Description:
     #   Calculates  gk=fft of V=(r(0),...,r(n-2),r(n-1),r(n-2),...,r(1)),
@@ -197,8 +186,8 @@ function(n, H)
     #   variance 0
 
     # Arguments:
-    #   n = length of time series
-    #   H = self-similarity parameter
+    #   n <- length of time series
+    #   H <- self-similarity parameter
 
     # Value:
     #   gk = Fourier transform of V at the Fourier frequencies
@@ -222,8 +211,8 @@ function(n, H)
 # ------------------------------------------------------------------------------
 
 
-.simFARIMA0 =
-function(n, H)
+.simFARIMA0 <- 
+    function(n, H)
 {
     # Description:
     #   Simulates a series X(1),...,X(n) of a fractional ARIMA(0,d,0)
@@ -272,4 +261,5 @@ function(n, H)
 
 
 ################################################################################
+
 

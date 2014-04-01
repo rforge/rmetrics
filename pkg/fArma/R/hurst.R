@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:          HURST EXPONENT:
@@ -167,10 +155,11 @@ setMethod("show", "fHURST",
 # ------------------------------------------------------------------------------
 
 
-aggvarFit =
-function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+aggvarFit <- 
+    function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Aggregated Variance - [Taqqu 3.1]
@@ -250,10 +239,11 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-diffvarFit =
-function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+diffvarFit <- 
+    function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   # Differenced Aggregated Variance - [Taqqu 3.2]
@@ -341,10 +331,11 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-absvalFit =
-function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), moment = 1,
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+absvalFit <-
+    function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), moment = 1,
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Absolute Value/Moments Method - [Taqqu 3.3]
@@ -386,7 +377,6 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     }
     if(trace) cat("\n")
 
-
     # Fit:
     wt = trunc((sign((M-cut.off[1])*(cut.off[2]-M))+1)/2)
     fit = lsfit(log10(M), log10(ABSVAL), wt)
@@ -427,9 +417,10 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 
 
 higuchiFit =
-function(x, levels = 50, minnpts = 2, cut.off = 10^c(0.7, 2.5),
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+    function(x, levels = 50, minnpts = 2, cut.off = 10^c(0.7, 2.5),
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Higuchi Method / Fratal Dimension Method - [Taqqu 3.4]
@@ -516,11 +507,12 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-pengFit =
-function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
-method = c("mean", "median"),
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+pengFit <- 
+    function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
+    method = c("mean", "median"),
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Peng's Method / Variance of Residuals - [Taqqu 3.5]
@@ -616,10 +608,11 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-rsFit =
-function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+rsFit <- 
+    function(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5),
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   R/S Statistic Method - [Taqqu 3.6]
@@ -698,14 +691,14 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
-perFit =
-function(x, cut.off = 0.10,
-method = c("per", "cumper"), doplot = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+perFit <- 
+    function(x, cut.off = 0.10,
+    method = c("per", "cumper"), doplot = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Periodogram Method - [Taqqu 3.7]
@@ -795,10 +788,11 @@ method = c("per", "cumper"), doplot = FALSE, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-boxperFit =
-function(x, nbox = 100, cut.off = 0.10,
-doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
-{   # A functions implemented by Diethelm Wuertz
+boxperFit <- 
+    function(x, nbox = 100, cut.off = 0.10,
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+{   
+    # A functions implemented by Diethelm Wuertz
 
     # Description:
     #   Boxed (Modified) Periodogram Method - [Taqqu 3.8]
@@ -881,3 +875,5 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 
 
 ################################################################################
+
+

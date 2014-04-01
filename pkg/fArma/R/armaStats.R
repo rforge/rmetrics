@@ -14,30 +14,30 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:               TRUE ARMA STATISTICS:
 #  armaTrueacf             Returns True ARMA autocorrelation function
 #  armaRoots               Returns Roots of the ARMA characteristic polynomial
-################################################################################
+# FUNCTION:               DESCRIPTION:
+#  .armaToeplitz           Toeplitz Matrix
+#  .armaFischer            ARMA Fischer Information matrix
+# INTERNAL FUNCTIONS:     DESCRIPTION:
+#  .schurTest              Test for invertibility
+#  .toeplitzARMA           Toeplitz matrix
+#  .iARMA                  Information matrix ARMA
+#  .iFARMA                 Information matrix FARMA
+#  .psiwtsARMA             MA expansion coefficients
+#  .tacvfARMA              True acvf ARMA
+#  .tccfAR                 Cross covariances between ARs
+###############################################################################
 
 
-armaTrueacf = 
-function(model, lag.max = 20, type = c("correlation", "partial", "both"), 
-doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+armaTrueacf <- 
+    function(model, lag.max = 20, type = c("correlation", "partial", "both"), 
+    doplot = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   A synonyme to ARMAacf
@@ -49,8 +49,8 @@ doplot = TRUE)
     # FUNCTION:
     
     # Settings:
-    lag = 0:lag.max
-    result = NA
+    lag <- 0:lag.max
+    result <- NA
     
     # Partial:
     if (type == "partial" || type == "both") {
@@ -67,7 +67,7 @@ doplot = TRUE)
         }
     }
             
-    # Correlation
+    # Correlation:
     if (type == "correlation" || type == "both") {
         main = ylab = "True ACF"
         lag = 0:lag.max
@@ -91,8 +91,9 @@ doplot = TRUE)
 
 
 armaRoots = 
-function(coefficients, n.plot = 400, digits = 4, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(coefficients, n.plot = 400, digits = 4, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Calculates the roots of a characteristc polynomial
@@ -138,24 +139,14 @@ function(coefficients, n.plot = 400, digits = 4, ...)
 }
 
 
-################################################################################
-# FUNCTION:          DESCRIPTION:
-#  .armaToeplitz      Toeplitz Matrix
-#  .armaFischer       ARMA Fischer Information matrix
-# INTERNAL FUNCTION: DESCRIPTION:
-#  .schurTest          Test for invertibility
-#  .toeplitzARMA       Toeplitz matrix
-#  .iARMA              Information matrix ARMA
-#  .iFARMA             Information matrix FARMA
-#  .psiwtsARMA         MA expansion coefficients
-#  .tacvfARMA          True acvf ARMA
-#  .tccfAR             Cross covariances between ARs
-################################################################################
+###############################################################################
 
 
 .armaToeplitz =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+    function(x)
+{   
+    
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   x - a vector of autocovariances. The returned Toeplitz matrix is  
@@ -172,8 +163,9 @@ function(x)
 
 
 .armaFischer = 
-function(model = list(ar = c(0.5, -0.5), ma = 0.1))
-{   # A function implemented by Diethelm Wuertz
+    function(model = list(ar = c(0.5, -0.5), ma = 0.1))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -183,13 +175,14 @@ function(model = list(ar = c(0.5, -0.5), ma = 0.1))
 
 
 
-# ******************************************************************************
+# -----------------------------------------------------------------------------
 
 
-.schurTest = 
-function(phi)
-{   # A function implemented by Diethelm Wuertz
-
+.schurTest <- 
+    function(phi)
+{   
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Tests for invertibility
     
@@ -242,12 +235,13 @@ function(phi)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 .toeplitzARMA =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the Toeplitz Matrix
@@ -276,15 +270,16 @@ function(x)
 
 
 .iARMA = 
-function(phi = numeric(0), theta = numeric(0))
-{   # A function implemented by Diethelm Wuertz
-
+    function(phi = numeric(0), theta = numeric(0))
+{   
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Computes the Information Matrix of an ARMA Process
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
- 
+  
     # FUNCTION:
     
     # Check:
@@ -339,8 +334,9 @@ function(phi = numeric(0), theta = numeric(0))
 
 
 .iFARMA = 
-function(phi = numeric(0), theta = numeric(0), maxlag = 128)
-{   # A function implemented by Diethelm Wuertz
+    function(phi = numeric(0), theta = numeric(0), maxlag = 128)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the Information Matrix of a Fractional ARMA Process
@@ -405,9 +401,10 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 128)
 # ------------------------------------------------------------------------------
 
 
-.psiwtsARMA = 
-function(phi = numeric(0), theta = numeric(0), maxlag = 20)
-{   # A function implemented by Diethelm Wuertz
+.psiwtsARMA <- 
+    function(phi = numeric(0), theta = numeric(0), maxlag = 20)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes MA expansion coefficients
@@ -445,9 +442,10 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
 # ------------------------------------------------------------------------------
 
 
-.tacvfARMA = 
-function(phi = numeric(0), theta = numeric(0), maxlag = 20)
-{   # A function implemented by Diethelm Wuertz
+.tacvfARMA <- 
+    function(phi = numeric(0), theta = numeric(0), maxlag = 20)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes theoretical autocovariance function of an ARMA 
@@ -533,9 +531,10 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
 # ------------------------------------------------------------------------------
 
 
-.tccfAR = 
-function(phi, theta)
-{   # A function implemented by Diethelm Wuertz
+.tccfAR <- 
+    function(phi, theta)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the theoretical cross-covariance function of two 
@@ -577,7 +576,7 @@ function(phi, theta)
             }
         } 
     } 
-    ans = solve(A, rhs)
+    ans <- solve(A, rhs)
                 
     # Return Value:
     ans
@@ -585,4 +584,5 @@ function(phi, theta)
 
 
 ################################################################################
+
 

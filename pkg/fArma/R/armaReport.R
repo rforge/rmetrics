@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:               SIMULATION AND FITTING:
@@ -112,15 +100,10 @@ setMethod("show", "fARMA",
 # ------------------------------------------------------------------------------
 
 
-
-
-
-# ------------------------------------------------------------------------------
-
-
-summary.fARMA =
-function (object, doplot = TRUE, which = "all", ...)
-{   # A function implemented by Diethelm Wuertz
+summary.fARMA <- 
+    function (object, doplot = TRUE, which = "all", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Analyzes a Fitted ARMA timeSeries Object
@@ -135,7 +118,7 @@ function (object, doplot = TRUE, which = "all", ...)
     ans = NULL
 
     # Fit Call and Model:
-    x = object
+    x <- object
     object = x@fit
     ans$call = object$call
     ans$tsmodel = object$tstitle
@@ -257,9 +240,10 @@ function (object, doplot = TRUE, which = "all", ...)
 # ------------------------------------------------------------------------------
 
 
-plot.fARMA =
-function(x, which = "ask", gof.lag = 10, ...)
-{   # A function implemented by Diethelm Wuertz
+plot.fARMA <-
+    function(x, which = "ask", gof.lag = 10, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class 'fARMA'
@@ -295,8 +279,8 @@ function(x, which = "ask", gof.lag = 10, ...)
 # ------------------------------------------------------------------------------
 
 
-.plot.arma.1 <-
-function(x, ...)
+.plot.arma.1 <- 
+    function(x, ...)
 {
     # 1. Standardized Residuals Plot:
     object = x@fit
@@ -313,8 +297,8 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.plot.arma.2 <-
-function(x, ...)
+.plot.arma.2 <- 
+    function(x, ...)
 {
     # 2. ACF of Residuals:
     object = x@fit
@@ -327,8 +311,8 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.plot.arma.3 <-
-function(x, ...)
+.plot.arma.3 <- 
+    function(x, ...)
 {
     # 3. QQ Plot of Residuals:
     object = x@fit
@@ -347,8 +331,8 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.plot.arma.4 <-
-function(x, ...)
+.plot.arma.4 <- 
+    function(x, ...)
 {
     # 4. Ljung-Box p Values:
     object = x@fit
@@ -367,9 +351,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 .interactiveArmaPlot =
-function(x, choices = paste("Plot", 1:19),
-plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, choices = paste("Plot", 1:19),
+    plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class "template".
@@ -426,8 +411,8 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
 # ------------------------------------------------------------------------------
 
 
-.multArmaPlot =
-function (x, choices, ...)
+.multArmaPlot <- 
+    function (x, choices, ...)
 {
     # Internal "askPlot" Function:
 
@@ -460,4 +445,5 @@ function (x, choices, ...)
 
 
 ################################################################################
+
 

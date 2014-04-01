@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:            FRACTIONAL GAUSSIAN NOISE:
@@ -34,12 +22,15 @@
 #  .fgnSim.paxson         Paxson's Method
 #  .fgnSim.beran          Beran's Method
 #  .fgnSlider             Displays fgn simulated time Series
+# REQUIRES:
+#  fBasics::.sliderMenu
 ################################################################################
 
 
-fgnSim =
-function(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
-{   # A function implemented by Diethelm Wuertz
+fgnSim <- 
+    function(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a series of fractional Gaussian Noise
@@ -83,9 +74,10 @@ function(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
 # ------------------------------------------------------------------------------
 
 
-.fgnSim.durbin =
-function(n, H, mean, std)
-{   # A function implemented by Diethelm Wuertz
+.fgnSim.durbin <- 
+    function(n, H, mean, std)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Function to simulate a FGN  sequence, using the Durbin-Levinson
@@ -134,8 +126,8 @@ function(n, H, mean, std)
 # ------------------------------------------------------------------------------
 
 
-.fgnSim.paxson =
-function(n, H, mean, std)
+.fgnSim.paxson <- 
+    function(n, H, mean, std)
 {
     # Description:
     #   Generates a FGN sequence by Paxson's FFT-Algorithm
@@ -216,8 +208,8 @@ function(n, H, mean, std)
 # ------------------------------------------------------------------------------
 
 
-.fgnSim.beran =
-function(n, H = 0.7, mean = 0, std = 1)
+.fgnSim.beran <- 
+    function(n, H = 0.7, mean = 0, std = 1)
 {
     # Description:
     #   Generates a FGN sequence by Beran's FFT-Algorithm
@@ -271,8 +263,9 @@ function(n, H = 0.7, mean = 0, std = 1)
 
 
 .fgnSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description
     #   Displays fgn simulated time Series
@@ -283,9 +276,9 @@ function()
     refresh.code = function(...)
     {
         # Sliders:
-        n      = fBasics:::.sliderMenu(no = 1)
-        H      = fBasics:::.sliderMenu(no = 2)
-        method = fBasics:::.sliderMenu(no = 3)
+        n      = .sliderMenu(no = 1)
+        H      = .sliderMenu(no = 2)
+        method = .sliderMenu(no = 3)
 
         # Graph Frame:
         par(mfrow = c(1, 1))
@@ -306,7 +299,7 @@ function()
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
        names =       c(  "n",    "H", "method"),
        minima =      c(   10,   0.01,       1),
        maxima =      c(  200,   0.99,       3),
@@ -316,4 +309,5 @@ function()
 
 
 ################################################################################
+
 

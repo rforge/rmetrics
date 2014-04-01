@@ -1,12 +1,8 @@
 
 ################################################
-## import name space
+## fArma
 ################################################
 
-import("methods")
-import("timeDate")
-import("timeSeries")
-import("fBasics")
 
 ################################################
 ## useDynLib
@@ -14,125 +10,22 @@ import("fBasics")
 
 useDynLib("fArma")
 
-################################################
-## S4 classes
-################################################
-
-exportClasses("fARMA",
-              "fHURST" )
-exportMethods("$",
-              "$<-",
-              "+",
-              "-",
-              "[",
-              "[<-",
-              "cummax",
-              "cummin",
-              "cumprod",
-              "cumsum",
-              "dim",
-              "dim<-",
-              "dimnames",
-              "dimnames<-",
-              "is.na",
-              "names",
-              "names<-",
-              "show" )
 
 ################################################
-## S3 classes
+## import name space
 ################################################
 
-S3method("coef", "fARMA")
-S3method("fitted", "fARMA")
-S3method("plot", "fARMA")
-S3method("predict", "fARMA")
-S3method("residuals", "fARMA")
-S3method("summary", "fARMA")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+
+#import("methods")
+
 
 ################################################
-## functions
+## Export Functions
 ################################################
 
-export(
-#    ".CetaARIMA",
-#    ".CetaFGN",
-#    ".FGN.B.est",
-#    ".FGN.B.est.adjust",
-#    ".FGN.spectrum",
-#    ".Qeta",
-#    ".Qmin2",
-    ".accessD",
-    ".arFit",
-    ".arPredict",
-    ".arfimaFit",
-    ".arimaFit",
-    ".arimaPredict",
-    ".armaFischer",
-    ".armaToeplitz",
-    ".beranTest",
-    ".ckFARIMA0",
-    ".ckFGN0",
-    ".convol",
-    ".fbmSim.chol",
-    ".fbmSim.circ",
-    ".fbmSim.lev",
-    ".fbmSim.mvn",
-    ".fbmSim.wave",
-    ".fbmSlider",
-#    ".ffourier.FGN.est",
-    ".fgnSim.beran",
-    ".fgnSim.durbin",
-    ".fgnSim.paxson",
-    ".fgnSlider",
-    ".filter.select",
-    ".first.last",
-#    ".fspecARIMA",
-#    ".fspecFGN",
-    ".gkFARIMA0",
-    ".gkFGN0",
-    ".iARMA",
-    ".iFARMA",
-    ".interactiveArmaPlot",
-    ".modelSeries",
-    ".multArmaPlot",
-#    ".per",
-    ".plot.arma.1",
-    ".plot.arma.2",
-    ".plot.arma.3",
-    ".plot.arma.4",
-    ".psiwtsARMA",
-    ".rsTest",
-    ".schurTest",
-    ".simFARIMA0",
-    ".simFGN0",
-    ".tacvfARMA",
-    ".tccfAR",
-    ".toeplitzARMA",
-    ".vsTest",
-    ".wd",
-#    ".whittle",
-    "absvalFit",
-    "aggvarFit",
-    "armaFit",
-    "armaRoots",
-    "armaSim",
-    "armaTrueacf",
-    "boxperFit",
-    "diffvarFit",
-    "farimaSim",
-    "farimaStatsSlider",
-    "farimaTrueacf",
-    "farimaTruefft",
-    "fbmSim",
-    "fgnSim",
-    "fgnStatsSlider",
-    "fgnTrueacf",
-    "fgnTruefft",
-    "higuchiFit",
-    "hurstSlider",
-    "pengFit",
-    "perFit",
-    "rsFit",
-    "waveletFit")
-#    "whittleFit" )
+exportPattern(".")
+
+

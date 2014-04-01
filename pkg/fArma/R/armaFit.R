@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:               PARAMETER ESTIMATION:
@@ -36,11 +24,11 @@
 ################################################################################
 
 
-armaFit =
-function(
-formula, data, method = c("mle", "ols"),
-include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+armaFit <- 
+    function(formula, data, method = c("mle", "ols"), include.mean = TRUE, 
+    fixed = NULL, title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits Model Parameters for an ARMA Time Series Process
@@ -233,10 +221,11 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.arFit =
-function(x, order, include.mean, fixed = NULL,
-method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+.arFit <- 
+    function(x, order, include.mean, fixed = NULL,
+    method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits an AR time series model
@@ -312,10 +301,11 @@ method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.arimaFit =
-function (x, order, include.mean, fixed,
-method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+.arimaFit <- 
+    function (x, order, include.mean, fixed,
+    method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits an ARIMA time series model
@@ -356,9 +346,10 @@ method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
 
 
 .arfimaFit =
-function (x, order, include.mean, fixed, method = "arfima",
-M = 100, h = -1, ...)
-{   # A function implemented by Diethelm Wuertz
+    function (x, order, include.mean, fixed, method = "arfima",
+    M = 100, h = -1, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits an ARFIMA (FRACDIFF) time series model
@@ -499,4 +490,5 @@ M = 100, h = -1, ...)
 
 
 ################################################################################
+
 

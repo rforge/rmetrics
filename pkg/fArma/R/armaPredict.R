@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # S3 METHOD:              PREDICTION:
@@ -36,10 +24,11 @@
 ################################################################################
 
 
-predict.fARMA =
-function (object, n.ahead = 10, n.back = 50, conf = c(80, 95),
-doplot = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+predict.fARMA <- 
+    function (object, n.ahead = 10, n.back = 50, conf = c(80, 95),
+    doplot = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Predicts from an ARMA Time Series Process
@@ -168,15 +157,16 @@ doplot = TRUE, ...)
 
 
 .arPredict =
-function (object, n.ahead = 10, se.fit = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+    function (object, n.ahead = 10, se.fit = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # Predict - object@fit$tsmodel = "ar":
     fit = object@fit
     class(fit) = "ar"
-    ans = predict(object = fit, newdata = fit$x,
+    ans <- predict(object = fit, newdata = fit$x,
         n.ahead = n.ahead, se.fit = se.fit)
 
     # Return Value:
@@ -187,9 +177,10 @@ function (object, n.ahead = 10, se.fit = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.arimaPredict =
-function (object, n.ahead = 10, se.fit = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+.arimaPredict <- 
+    function (object, n.ahead = 10, se.fit = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -208,4 +199,5 @@ function (object, n.ahead = 10, se.fit = TRUE, ...)
 
 
 ################################################################################
+
 

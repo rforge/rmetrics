@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTIONS:            FRACTIONAL BROWNIAN MOTION:
@@ -37,13 +25,16 @@
 #  .fbmSim.wave           Wavelet synthesis
 #  .convol                Internal Convolution
 #  .fbmSlider             Displays fbm simulated time Series
+# REQUIRES:             DESCRIPTION:
+#  fBasics::.sliderMenu
 ################################################################################
 
 
-fbmSim =
-function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
-waveJ = 7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+fbmSim <- 
+    function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
+    waveJ = 7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Simulation of fractional Brownian motion by five different methods
@@ -70,7 +61,7 @@ waveJ = 7, doplot = TRUE, fgn = FALSE)
     # FUNCTION:
 
     # Initialization:
-    method = match.arg(method)
+    method <- match.arg(method)
 
     # Match Function:
     fun = paste(".fbmSim.", method, sep = "")
@@ -91,9 +82,10 @@ waveJ = 7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.mvn =
-function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+.fbmSim.mvn <- 
+    function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n : length of the desired sample
@@ -169,8 +161,9 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 
 
 .fbmSim.wave =
-function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+    function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n : length of the desired sample
@@ -333,9 +326,10 @@ function(n = 1000, H = 0.7, J = 7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.convol =
-function(x, y)
-{   # A function implemented by Diethelm Wuertz
+.convol <- 
+    function(x, y)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   x,y : vectors
@@ -368,8 +362,9 @@ function(x, y)
 
 
 .fbmSim.chol =
-function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+    function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n : length of the desired sample
@@ -438,9 +433,10 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.lev =
-function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+.fbmSim.lev <- 
+    function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n : length of the desired sample
@@ -522,9 +518,10 @@ function(n = 1000, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSim.circ =
-function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
-{   # A function implemented by Diethelm Wuertz
+.fbmSim.circ <- 
+    function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n : length of the desired sample
@@ -638,8 +635,9 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
 
 
 .fbmSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description
     #   Displays fbm simulated time Series
@@ -650,9 +648,9 @@ function()
     refresh.code = function(...)
     {
         # Sliders:
-        n      = fBasics:::.sliderMenu(no = 1)
-        H      = fBasics:::.sliderMenu(no = 2)
-        method = fBasics:::.sliderMenu(no = 3)
+        n      <- .sliderMenu(no = 1)
+        H      <- .sliderMenu(no = 2)
+        method <- .sliderMenu(no = 3)
 
         # Select Method:
         Method = c("mvn", "chol", "lev", "circ", "wave")
@@ -672,7 +670,7 @@ function()
     }
 
     # Open Slider Menu:
-    fBasics:::.sliderMenu(refresh.code,
+    .sliderMenu(refresh.code,
        names =       c(  "n",    "H", "method"),
        minima =      c(   10,   0.01,       1),
        maxima =      c(  200,   0.99,       5),
@@ -682,4 +680,5 @@ function()
 
 
 ################################################################################
+
 
