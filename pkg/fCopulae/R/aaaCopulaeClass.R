@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:                 COPULA SPECIFICATION:
 #  fCOPULA                   S4 class representation
 #  show                      S4 print method for copula specification

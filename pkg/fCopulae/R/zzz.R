@@ -17,6 +17,7 @@
 
 ################################################################################
 
+
 .onAttach <- 
   function(libname, pkgname)
   {
@@ -33,10 +34,12 @@
     packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
   }
 
+
 .onLoad <- 
   function(libname, pkgname) 
 {
   timeDate::setRmetricsOptions(.counter = NA)
 }
+
 
 ################################################################################

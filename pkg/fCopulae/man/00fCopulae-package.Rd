@@ -23,22 +23,21 @@
 
 \details{
 
-  \tabular{ll}{
-    Package:    \tab fCopulae\cr
-    Type:       \tab Package\cr
-    Version:    \tab 3003.79\cr
-    Date:       \tab 2005-04-20 \cr
-    License:    \tab GPL (>= 2)\cr
-    Copyright:  \tab (c) 2005-2014 Diethelm Wuertz and Rmetrics Association\cr
-    Repository: \tab R-FORGE\cr
-    URL:        \tab \url{https://www.rmetrics.org}
+    \tabular{ll}{
+        Package:    \tab fCopulae\cr
+        Type:       \tab Package\cr
+        Version:    \tab R 3.0.1\cr
+        Date:       \tab 2014\cr
+        License:    \tab GPL Version 2 or later\cr
+        Copyright:  \tab (c) 1999-2014 Rmetrics Assiciation\cr
+        URL:        \tab \url{https://www.rmetrics.org}
   }
   
 
 }
 
 
-\section{Introduction}{
+\section{1 Introduction}{
 
   The package \code{fCoplae} was written to explore and investigate
   bivariate copulae and dependence structures.
@@ -46,7 +45,7 @@
 }
 
 
-\section{Archimedean Copulae}{
+\section{2 Archimedean Copulae}{
 
   This chapter contains functions for analysing and modeling Archemedean
   copulae.
@@ -118,7 +117,7 @@
 }
 
 
-\section{Elliptical Copulae}{
+\section{3 Elliptical Copulae}{
 
   This chapter contains functions for analysing and modeling elliptical
   copulae.
@@ -176,7 +175,7 @@
 }
 
 
-\section{Extreme Value Copulae}{
+\section{4 Extreme Value Copulae}{
 
   This chapter contains functions for analysing and modeling extreme
   value copulae.
@@ -234,7 +233,7 @@
 }
 
 
-\section{Empirical Copula.}{
+\section{5 Empirical Copula.}{
 
   This chapter contains functions for analysing and modeling empirical
   copulae.
