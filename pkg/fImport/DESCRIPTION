@@ -1,17 +1,20 @@
 Package: fImport
 Version: 3010.83
-Revision: 5455
 Date: 2013-03-15
-Title: Rmetrics - Economic and Financial Data Import
-Author: Diethelm Wuertz and many others
-Depends: R (>= 2.13.0), methods, timeDate, timeSeries
-Suggests: RUnit, xlsx, gdata
-Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-Note: Several parts are still preliminary and may be changed in the
-        future. this typically includes function and argument names, as
-        well as defaults for arguments and return values.
+Title: Rmetrics - Importing Economic and Financial Data
+Author: Author: Rmetrics Core Team,
+      Yohan Chalabi [aut],
+      Tobias Setz [aut],
+      Diethelm Wuertz [aut, cre]
+Depends: R (>= 2.15.1), timeDate, timeSeries
+Imports: gdata, xlsx
+Suggests: methods, RUnit
+Maintainer: Tobias Setz <yohan.chalabi@rmetrics.org>
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance"
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, 
+      AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

@@ -2,8 +2,6 @@
 
 
 \alias{fImport-package}
-
-
 \alias{fImport}
 
 
@@ -15,8 +13,10 @@
 
 \description{
 
-    Package of some utility functions to download and manage data sets
-    from the Internet or from other sources.
+    The Rmetrics "fImport" package is a collection of utility functions 
+    to download and manage data sets from the Internet or from other 
+    sources.
+    
 }
 
 
@@ -25,10 +25,11 @@
     \tabular{ll}{
         Package:    \tab fImport\cr
         Type:       \tab Package\cr
-        Date:       \tab 2008, 2009, 2010\cr
+        Version:    \tab R 3.0.1\cr
+        Date:       \tab 2014\cr
         License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
-        URL:        \tab \url{http://www.rmetrics.org}
+        Copyright:  \tab (c) 1999-2014 Rmetrics Assiciation\cr
+        URL:        \tab \url{https://www.rmetrics.org}
     }
     
     Major package content:
@@ -140,6 +141,6 @@
 }
 
    
-\keyword{data} 
+\keyword{package} 
        
     

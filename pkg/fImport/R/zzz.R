@@ -14,16 +14,28 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C) for this R-port:
-#   1999 - 2012 Diethelm Wuertz, Zurich, <wuertz@itp.phys.ethz.ch>
-#   2009 - 2012 Rmetrics Association, Zurich, www.rmetrics.org
-
 
 ################################################################################
 
 
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+.onAttach <- 
+  function(libname, pkgname)
+  {
+    # do whatever needs to be done when the package is loaded
+    # some people use it to bombard users with 
+    # messages using 
+    
+    packageStartupMessage( "\n" )
+    packageStartupMessage( "Rmetrics Package fImport" ) 
+    packageStartupMessage( "Importing Economic and Financial Market Data" )
+    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+    # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
+    # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
+    # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" ) 
+  }
 
 
 ################################################################################
