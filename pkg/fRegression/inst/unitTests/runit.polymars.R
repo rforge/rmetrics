@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#  info@rmetrics.org
-#  www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#  see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#  see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             REGRESSION MODELLING DESCRIPTION:
@@ -41,10 +29,10 @@ test.polymars <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Original Polymars:
-    fit = polspline::polymars(responses = x[,1], predictors = x[,2:4])
+    fit <- polspline::polymars(responses = x[,1], predictors = x[,2:4])
     
     # Model Fitting:
     fit$fitting
@@ -58,7 +46,7 @@ test.polymars <-
     polspline::summary.polymars(fit)
     
     # Predict:
-    ans = polspline::predict.polymars(object = fit, x = x[,-1]) 
+    ans <- polspline::predict.polymars(object = fit, x = x[,-1]) 
     as.vector(ans)
     as.vector(fit$fitted)
     
@@ -99,7 +87,7 @@ test.polymarsDefault <-
     summary(fit1)
     
     # Predict:
-    ans = polspline::predict.polymars(object = fit1, x = x[,-1]) 
+    ans <- polspline::predict.polymars(object = fit1, x = x[,-1]) 
     as.vector(ans)
     as.vector(fit1$fitted)
     
@@ -111,7 +99,7 @@ test.polymarsDefault <-
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 test.polymarsFormula <- 
@@ -119,11 +107,11 @@ test.polymarsFormula <-
 {   
     # Simulate Artificial LM:
     set.seed(4711)
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Polymars Formula Wrapper:
-    fit2 = .polymarsFormula(formula = Y ~ X1 + X2 + X3, data = x)
-    fit2 = .polymars(formula = Y ~ X1 + X2 + X3, data = x)
+    fit2 <- .polymarsFormula(formula = Y ~ X1 + X2 + X3, data = x)
+    fit2 <- .polymars(formula = Y ~ X1 + X2 + X3, data = x)
     class(fit2)
     names(fit2)
     
@@ -141,29 +129,29 @@ test.polymarsFormula <-
     summary(fit2)
     
     # Predict:
-    fit2$model = fit2$coef
-    ans = polspline::predict.polymars(object = fit2, x = x[,-1]) 
+    fit2$model <- fit2$coef
+    ans <- polspline::predict.polymars(object = fit2, x = x[,-1]) 
     as.vector(ans)
     as.vector(fit2$fitted)
     
     # Check:
     fit2$ranges.and.medians 
-       
+    
     # Return Value:
     return()
 }
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 test.regFit.polymars <- 
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Polymars Formula Wrapper:
-    fit = regFit(formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
+    fit <- regFit(formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
     class(fit)
     
     # Model Fitting:
@@ -184,17 +172,18 @@ test.regFit.polymars <-
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 test.regFit.polymars.methods <- 
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 20)
+    x <- regSim(model = "LM3", n = 20)
     
     # Polymars Formula Wrapper:
-    polymarsfit = regFit(formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
+    polymarsfit <- regFit(
+      formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
    
     # Print:
     print(polymarsfit)
@@ -221,31 +210,31 @@ test.regFit.polymars.methods <-
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 test.regFit.polymars.predict <- 
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # regFit / Polymars Formula Wrapper:
-    fit = regFit(formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
+    fit <- regFit(formula = Y ~ X1 + X2 + X3, data = x, use = "polymars")
     class(fit)
     fit@fit$cmd
      
     # Predict from predict.polymars:
-    object = fit@fit
+    object <- fit@fit
     class(object) = "polymars"
     object
     object$model = object$coef
-    ans = polspline::predict.polymars(object = object, x = x[,-1]) 
+    ans <- polspline::predict.polymars(object = object, x = x[,-1]) 
     as.vector(ans)
     as.vector(fit@fitted)
     
     # Predict from predict.fREG:
-    ans = predict(object = fit, newdata = x) 
+    ans <- predict(object = fit, newdata = x) 
     as.vector(ans)
     as.vector(fit@fitted)
     
@@ -254,6 +243,6 @@ test.regFit.polymars.predict <-
 }
 
 
-################################################################################
-    
-    
+###############################################################################
+
+

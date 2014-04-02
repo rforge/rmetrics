@@ -14,33 +14,15 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#  info@rmetrics.org
-#  www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#  see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#  see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             REGRESSION MODELLING DESCRIPTION:
-#  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
-# S3-METHODS:           DESCRIPTION:
-#  print.fREG            Prints results from a regression model fit
-#  plot.fREG             Plots fit and diagnostics for a regression model
-#  summary.fREG           Summarizes fit and diagnostics for a regression model
-# S3-METHODS:           DESCRIPTION:
+#  regFit.dataframe
+#  regFit.valueSlots
 #  predict.fREG          Predicts values from a fitted regression model
-#  coefficients.fREG     Returns coefficients from a fitted regression model
-#  fitted.fREG           Returns fitted values from a fitted regression model
-#  residulals.fREG       Returns residuals from a fitted regression model
-#  vcov.fREG             Returns variance-covariance matrix from a fitted model
+#  regFit.nonDefaults
+#  generalizedModels
 ################################################################################
 
 
@@ -88,7 +70,7 @@ test.regFit.dataframe <-
     AM       = regFit(Y ~ X1 + X2, data = DATA, use = "gam")
     PPR      = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")
     POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars")
-    NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")
+    ## NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")
     # ... a note on AM the smoothing functions are added by default!
     # this is different to gam()
 
@@ -99,7 +81,7 @@ test.regFit.dataframe <-
     print(AM)
     print(PPR)
     print(POLYMARS)
-    print(NNET)
+    ## print(NNET)
 
     # Plot Method:
     par(ask = FALSE)
@@ -117,7 +99,7 @@ test.regFit.dataframe <-
     summary(AM)
     summary(PPR)
     summary(POLYMARS)
-    summary(NNET)
+    ## summary(NNET)
 
     # Return Value:
     return()
@@ -135,6 +117,8 @@ test.regFit.valueSlots <-
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
+    
+    require(mgcv)
 
     # Modelling:
     LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm")
@@ -228,14 +212,14 @@ test.regFit.valueSlots <-
 test.predict.fREG <-
     function()
 {
-
     # Working with timeSeries Objects ...
-    DATA = regSim(model = "GAM3", n = 100)
+    DATA <- regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
 
+   require(mgcv)
+    
     # Regression Fit:
-
     LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm")
     RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm")
     AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam")
@@ -248,8 +232,7 @@ test.predict.fREG <-
 
     # Selext some rows to predict:
     set.seed(4711)
-    N = round(runif(5, 1, 100), 0)
-    N
+    N <- round(runif(5, 1, 100), 0)
 
     # Predict Response:
     predict(LM,    DATA[N, ])
@@ -257,7 +240,7 @@ test.predict.fREG <-
     predict(AM,    DATA[N, ])
     predict(PPR,   DATA[N, ])
     predict(POLYMARS, DATA[N, ])
-    predict(NNET,  DATA[N, ])
+    ## predict(NNET,  DATA[N, ])
 
     # Predict Response:
     predict(LM,    DATA[N, ], type = "response")
@@ -265,7 +248,7 @@ test.predict.fREG <-
     predict(AM,    DATA[N, ], type = "response")
     predict(PPR,   DATA[N, ], type = "response")
     predict(POLYMARS, DATA[N, ], type = "response")
-    predict(NNET,  DATA[N, ], type = "response")
+    ## predict(NNET,  DATA[N, ], type = "response")
 
     # Predict Response with Standard Errors:
     predict(LM,    DATA[N, ], se.fit = TRUE)
@@ -273,7 +256,7 @@ test.predict.fREG <-
     predict(AM,    DATA[N, ], se.fit = TRUE)
     predict(PPR,   DATA[N, ], se.fit = TRUE)
     predict(POLYMARS, DATA[N, ], se.fit = TRUE)
-    predict(NNET,  DATA[N, ], se.fit = TRUE)
+    ## predict(NNET,  DATA[N, ], se.fit = TRUE)
 
     # Return Value:
     return()
@@ -307,6 +290,8 @@ test.regFit.nonDefaults <-
     LM4 = regFit(Y ~ X1 + log(X2), DATA)
     print(LM4)
 
+    require(mgcv)
+    
     # AM:
     AM1 = regFit(Y ~ s(X1) + s(X2), data = DATA, use = "gam")
     print(AM1)
@@ -328,8 +313,8 @@ test.regFit.nonDefaults <-
     ## termPlot(PPR3)
 
     # POLYMARS:
-    POLYMARS = regFit(Y ~ X1 + X2 + X3, DATA, use = "polymars")
-    POLYMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATA, use = "polymars")
+    POLYMARS <- regFit(Y ~ X1 + X2 + X3, DATA, use = "polymars")
+    POLYMARS <- regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATA, use = "polymars")
 
     # NNET
     # todo ...
@@ -347,7 +332,7 @@ test.generalizedModels <-
 {
     # Generalized * Models:
 
-    M1 = matrix(c(
+    M1 <- matrix(c(
        1, 0.80, 0.83, 0.66, 1.9, 1.100, 0.996,
        1, 0.90, 0.36, 0.32, 1.4, 0.740, 0.992,
        0, 0.80, 0.88, 0.70, 0.8, 0.176, 0.982,
@@ -386,7 +371,7 @@ test.generalizedModels <-
     #     data = D1, family = binomial("logit"))
 
 
-    M2 = matrix(c(
+    M2 <- matrix(c(
         0,29,62,
         0,30,83,
         0,31,74,

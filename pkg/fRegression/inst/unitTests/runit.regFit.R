@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#  info@rmetrics.org
-#  www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#  see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#  see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             REGRESSION MODELLING DESCRIPTION:
@@ -37,10 +25,10 @@ test.lmFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    lmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm") 
+    lmfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "lm") 
     
     print(lmfit)
     summary(lmfit)
@@ -69,10 +57,10 @@ test.rlmFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    rlmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "rlm") 
+    rlmfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "rlm") 
     
     print(rlmfit)
     summary(rlmfit)
@@ -102,10 +90,10 @@ test.glmFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    glmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "glm") 
+    glmfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "glm") 
     
     print(glmfit)
     summary(glmfit)
@@ -136,10 +124,10 @@ test.gamFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "GAM3", n = 50)
+    x <- regSim(model = "GAM3", n = 50)
     
     # Fit Parameters:
-    gamfit = regFit(Y ~ s(X1) + s(X2) + X3, data = x, use = "gam") 
+    gamfit <- regFit(Y ~ s(X1) + s(X2) + X3, data = x, use = "gam") 
     
     print(gamfit)
     summary(gamfit)
@@ -172,15 +160,14 @@ test.pprFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    pprfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "ppr") 
-    ppr = ppr(Y ~ X1 + X2 + X3, data = x, nterms = 2)
+    pprfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "ppr") 
+    ppr <- ppr(Y ~ X1 + X2 + X3, data = x, nterms = 2)
     
     print(pprfit)
     summary(pprfit)
-    
     # plot(pprfit)
     
     print(pprfit@fit)
@@ -206,18 +193,18 @@ test.pprFit <-
 # ------------------------------------------------------------------------------
 
 
+if (FALSE) { 
 test.nnetFit <- 
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    nnetfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "nnet") 
+    nnetfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "nnet") 
     
     print(nnetfit)
     summary(nnetfit)
-    
     # plot(nnetfit)
     
     print(nnetfit@fit)
@@ -238,6 +225,7 @@ test.nnetFit <-
     # Return Value:
     return()
 }
+}
 
 
 # ------------------------------------------------------------------------------
@@ -247,10 +235,10 @@ test.polymarsFit <-
     function()
 {   
     # Simulate Artificial LM:
-    x = regSim(model = "LM3", n = 50)
+    x <- regSim(model = "LM3", n = 50)
     
     # Fit Parameters:
-    polymarsfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars") 
+    polymarsfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars") 
     
     print(polymarsfit)
     summary(polymarsfit)
@@ -273,5 +261,5 @@ test.polymarsFit <-
 
 
 ################################################################################
-    
-    
+
+

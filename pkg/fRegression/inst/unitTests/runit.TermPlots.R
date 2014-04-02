@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 REGRESSION TERM PLOTS
@@ -39,20 +27,22 @@ test.termPlot <-
     function()
 {
 
-    x = regSim(model = "LM3", n = 100)
-    lmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
+    x <- regSim(model = "LM3", n = 100)
+    lmfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
 
 
     # Simulate Data - a data frame:
-    DATA = regSim(model = "GAM3", n = 100)
+    DATA <- regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
 
     # Convert to a timeSeries object:
-    DATATS = as.timeSeries(DATA)
+    DATATS <- as.timeSeries(DATA)
     head(DATATS)
     class(DATATS)
-
+    
+    require(mgcv)
+    
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm")
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm")
@@ -62,7 +52,7 @@ test.termPlot <-
     POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars")
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet")
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)
-
+    
     ## TODO: Term Plot:
     ## par(ask = FALSE)
     ## par(mfrow = c(1, 1))
@@ -97,24 +87,26 @@ test.termPersp <-
     function()
 {
     # Simulate Data - a data frame:
-    DATA = regSim(model = "GAM3", n = 100)
+    DATA <- regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
     # Convert to a timeSeries object:
-    DATATS = as.timeSeries(DATA)
+    DATATS <- as.timeSeries(DATA)
     head(DATATS)
     class(DATATS)
-
+    
+    require(mgcv)
+    
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm")
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm")
     AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "gam")
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr")
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4)
-    POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars")
+    POLYMARS = regFit(Y ~ X1 + X2 + X3,  data = DATATS, use = "polymars")
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet")
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)
-
+    
     ## TODO:  Bivariate Perspective Term Plot:
     ## par(ask = FALSE)
     ## par(mfrow = c(1, 1))
@@ -126,7 +118,7 @@ test.termPersp <-
     ## termPersp(POLYMARS, terms = c("X1", "X2"))
     ## termPersp(NNET,  terms = c("X1", "X2"))
     ## termPersp(NNET6, terms = c("X1", "X2"))
-
+    
     # Return Value:
     return()
 }
@@ -147,7 +139,9 @@ test.termContour <-
     DATATS = as.timeSeries(DATA)
     head(DATATS)
     class(DATATS)
-
+    
+    require(mgcsv)
+    
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm")
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm")
@@ -157,7 +151,7 @@ test.termContour <-
     POLYMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars")
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet")
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)
-
+    
     ## TODO: Bivariate Contour Term Plot:
     ## par(ask = FALSE)
     ## par(mfrow = c(1, 1))
@@ -169,7 +163,7 @@ test.termContour <-
     ## termContour(POLYMARS, terms = c("X1", "X2"))
     ## termContour(NNET,  terms = c("X1", "X2"))
     ## termContour(NNET6, terms = c("X1", "X2"))
-
+    
     # Return Value:
     return()
 }
@@ -178,29 +172,31 @@ test.termContour <-
 # ------------------------------------------------------------------------------
 
 
-test.termComparison <-
+test.termComparison <- 
     function()
 {
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
-
+    
     # Convert to a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
     class(DATATS)
-
+    
+    require(mgcv)
+    
     ## TODO:
     if (FALSE) {
-
+    
         # Comparison:
         par(ask = FALSE)
         par(mfrow = c(1, 1))
-
+    
         LM = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm")
         termPlot(LM)
-
+    
         AM = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3), data = DATATS, use = "gam")
         termPlot(AM)
         am = gam(formula = Y ~ s(X1) + s(X2) + s(X3), data = DATA)
@@ -215,4 +211,6 @@ test.termComparison <-
 }
 
 
-################################################################################
+###############################################################################
+
+
