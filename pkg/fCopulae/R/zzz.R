@@ -15,24 +15,27 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 
 
 .onAttach <- 
   function(libname, pkgname)
-  {
-    # do whatever needs to be done when the package is loaded
-    # some people use it to bombard users with 
-    # messages using 
-    
-    packageStartupMessage( "\n" )
-    packageStartupMessage( "Rmetrics Package fCopulae" ) 
-    packageStartupMessage( "Modeling Copulae" )
-    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
-    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
-    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
-    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
-  }
+{
+  # do whatever needs to be done when the package is loaded
+  # some people use it to bombard users with 
+  # messages using 
+  
+  packageStartupMessage( "\n" )
+  packageStartupMessage( "Rmetrics Package fCopulae" ) 
+  packageStartupMessage( "Modeling Copulae" )
+  packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+  packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+  packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+  packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+}
+
+
+###############################################################################
 
 
 .onLoad <- 

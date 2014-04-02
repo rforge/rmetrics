@@ -51,7 +51,7 @@
   copulae.
   
   
-  \emph{Archimedean Copula Density, Probability and Random Numbers}
+  \emph{Archimedean Copula Density, Probability and Random Numbers:}
   
   \preformatted{
   darchmCopula               Computes Archimedean copula density
@@ -68,7 +68,7 @@
   }
   
   
-  \emph{Archimedean Copula Dependency Structure}
+  \emph{Archimedean Copula Dependency Structure:}
   
   \preformatted{
   archmTau                   Returns Kendall's tau for Archemedean copulae
@@ -81,7 +81,7 @@
   }
   
   
-  \emph{Archimedean Copula Generator}
+  \emph{Archimedean Copula Generator:}
   
   \preformatted{
   archmList                  Returns list of implemented Archimedean copulae
@@ -98,7 +98,7 @@
   }
   
   
-  \emph{Archemedean Copula Modeling}
+  \emph{Archemedean Copula Modeling:}
   
   \preformatted{
   archmCopulaSim             Simulates bivariate elliptical copula
@@ -106,7 +106,7 @@
   }
   
   
-  \emph{Archemedean Copula Slider}
+  \emph{Archemedean Copula Slider:}
   
   \preformatted{
   darchmSlider               Displays interactively archimedean density
@@ -123,7 +123,7 @@
   copulae.
   
   
-  \emph{Elliptical Copula Density, Probability and Random Numbers}
+  \emph{Elliptical Copula Density, Probability and Random Numbers:}
   
   \preformatted{
   dellipticalCopula          Computes elliptical copula density
@@ -132,7 +132,7 @@
   }
   
   
-  \emph{Elliptical Copula Slider}
+  \emph{Elliptical Copula Slider:}
   
   \preformatted{
   dellipticalSlider          Generates interactive plots of density
@@ -140,7 +140,7 @@
   rellipticalSlider          Generates interactive plots of random variates
   }
   
-  \emph{Elliptical Copula Dependency Structures}
+  \emph{Elliptical Copula Dependency Structures:}
   
   \preformatted{
   ellipticalTau              Computes Kendall's tau for elliptical copulae
@@ -152,7 +152,7 @@
   ellipticalTailPlot         Plots tail dependence function
   }
   
-  \emph{Elliptical Copula Generator}
+  \emph{Elliptical Copula Generator:}
   
   \preformatted{
   ellipticalList             Returns list of implemented Elliptical copulae
@@ -166,7 +166,7 @@
   gfuncSlider                Slider for generator, density and probability
   }
   
-  \emph{Elliptical Copula Modeling}
+  \emph{Elliptical Copula Modeling:}
   \preformatted{
   ellipticalCopulaSim        Simulates bivariate elliptical copula
   ellipticalCopulaFit        Fits the paramter of an elliptical copula
@@ -180,7 +180,7 @@
   This chapter contains functions for analysing and modeling extreme
   value copulae.
   
-  \emph{Extremem Value Copula Density, Probability and Random Numbers}
+  \emph{Extremem Value Copula Density, Probability and Random Numbers:}
   
   \preformatted{
   devCopula                  Computes extreme value copula density
@@ -195,7 +195,7 @@
   }
   
   
-  \emph{Extreme Value Copula Dependeny Structures}
+  \emph{Extreme Value Copula Dependeny Structures:}
   
   \preformatted{
   evTau                      Returns Kendall's tau for extreme value copulae
@@ -208,7 +208,7 @@
   }
   
   
-  \emph{Extreme Value Copula Generator}
+  \emph{Extreme Value Copula Generator:}
   
   \preformatted{
   evList                    Returns list of implemented extreme value copulae
@@ -223,7 +223,7 @@
   }
   
   
-  \emph{Extreme Value Copula Modeling}
+  \emph{Extreme Value Copula Modeling:}
   
   \preformatted{
   evCopulaSim                Simulates bivariate extreme value copula
@@ -238,24 +238,22 @@
   This chapter contains functions for analysing and modeling empirical
   copulae.
   
-  \emph{Empirical Copulae Density and Probability}
-
-\preformatted{
+  \emph{Empirical Copulae Density and Probability:}
+  
+  \preformatted{
   pempiricalCopula           Computes empirical copula probability
   dempiricalCopula           Computes empirical copula density
   }
   
-  
 }
 
 
-\author{
+\section{About Rmetrics:}{
 
-  This package was created by Diethelm Wuertz (2005). 
-  It is authored and maintained by the Rmetrics Core Team,
-  Yohan Chalabi (2010-2013) and Tobias Setz (since 2014), 
-  and Diethelm Wuertz.
-  
+    The \code{fCopulae} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
 }
 
 
