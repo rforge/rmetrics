@@ -20,10 +20,6 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
-#import("methods")
-#import("graphics")
-#import("stats")
-
 
 ################################################
 ## functions

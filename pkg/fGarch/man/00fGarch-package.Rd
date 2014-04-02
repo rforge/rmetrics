@@ -95,6 +95,9 @@
     garchFit} \tab Fits the parameters of a GARCH process
     }
     
+    
+    \emph{Extractor Functions:}
+    
     \preformatted{
     residuals       extracts residuals from a fitted 'fGARCH' object
     fitted          extracts fitted values from a fitted 'fGARCH' object
@@ -122,12 +125,18 @@
 
     This section contains functions to model standardized distribution 
     functions.
-  
+    
+    
+    \emph{Skew Normal Distribution:}
+    
     \preformatted{
     [dpqr]norm      Normal distribution function
     [dpqr]snorm     Skew Normal distribution function
     [s]normFit      fits parameters of [skew] Normal distribution
     }
+    
+    
+    \emph{Skew Generalized Error Distribution:}
     
     \preformatted{
     [dpqr]ged       Generalized Error distribution function
@@ -135,12 +144,16 @@
     [s]gedFit       fits parameters of [skew] Generalized Error distribution
     }
     
+    
+    \emph{Skew Standardized Student-t Distribution:}
+    
     \preformatted{
     [dpqr]std       Standardized Student-t distribution function
     [dpqr]sstd      Skew standardized Student-t distribution function
     [s]stdFit       fits parameters of [skew] Student-t distribution
     }
     
+    \emph{Abdolute Moments:}
     \preformatted{
     absMoments      computes absolute Moments of these distribution
     } 
@@ -148,12 +161,17 @@
 }
 
 
-\author{
+\section{About Rmetrics:}{
 
-  Diethelm Wuertz and Yohan Chalabi, with contributions from 
-  Michal Miklovac, Pierre Chausse, and Chris Boudt.
-  
+    The \code{fImport} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
 }
+
+
+%  Diethelm Wuertz and Yohan Chalabi, with contributions from 
+%  Michal Miklovac, Pierre Chausse, and Chris Boudt.
 
 
 \keyword{package}
