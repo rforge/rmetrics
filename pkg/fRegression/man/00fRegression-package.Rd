@@ -37,9 +37,9 @@
     
 \section{1 Introduction}{
 
-    Regression modelling, especially linear modelling, LM, ?glmis a widely
-    used application in finance. In finance it mostly appears in the 
-    form that a variable is modelled as a linear or more complex 
+    Regression modelling, especially linear modelling, LM, is a widely
+    used application in financial engineering. In finance it mostly 
+    appears in form that a variable is modelled as a linear or more complex 
     relationship as a function of other variables. For example the 
     decision of buying or selling in a trading model may be triggered 
     by the outcome of a regression model, e.g. neural networks are a 
@@ -57,15 +57,14 @@
     argument \code{use} allows to select the desired model:
     
     \preformatted{
-    lm        stats       fits a linear model
-    rlm       MASS        fits a LM by robust regression using an M 
-                          estimator
-    glm       stats       fits a generliazed linear model
-    gam       mgcv        fits a generlized additive model with 
-                          integrated smoothness estimation
-    ppr       stats       fits a projection pursuit regression model
-    nnet      nnet        fits a single hidden-layer neural network model
-    polymars  polspline   fits an adaptive polynomial spline regression
+    regFit          fits regression models
+    - lm            fits a linear model [stats]
+    - rlm           fits a LM by robust regression [MASS]
+    - glm           fits a generliazed linear model [stats]
+    - gam           fits a generlized additive model [mgcv]
+    - ppr           fits a projection pursuit regression model [stats]
+    - nnet          fits a single hidden-layer neural network model [nnet]
+    - polymars      fits an adaptive polynomial spline regression [polspline]
     }
     
     An advantage of the \code{regFit} function is, that all the
@@ -92,11 +91,11 @@
 
 \section{2 Simulation of Regression Models}{
 
-    contains functions to simulate artificial regression models.
+    contains a function to simulate artificial regression models, 
+    mostly used for testing.
     
     \preformatted{
     regSim          simulates artificial regression model data sets
-                    for testing issues.
     }
     
 }
@@ -104,7 +103,7 @@
 
 \section{3 Extractor Functions}{
 
-    These are:
+    These generic functions are:
     
     \preformatted{
     fitted          extracts fitted values from a fitted 'fREG' object
@@ -113,23 +112,6 @@
     formula         extracts formula expression from a fitted 'fREG' object
     vcov            extracts variance-covariance matrix of fitted parameters
     }
-    
-    Function \code{fitted} will extract fitted values for the selected
-    regression model. 
-    
-    Function \code{residuals} will extract model residuals for the 
-    selection regression model.
-    
-    Function \code{coef} will extract the matrix of coefficients with 
-    standard errors, t-statistics and p-values.
-    
-    Function \code{formula} and its specific methods provide a way of 
-    extracting formulae which have been included in regression models.
-    
-    Function \code{vcov} returns the variance-covariance matrix of 
-    the parameters of the fitted regression model object.
-    
-    All functions are generic.
     
 }
 
@@ -158,9 +140,12 @@
     
 }
 
-\author{
 
-    Diethelm Wuertz.
+\section{About Rmetrics:}{
+
+    The \code{fImport} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
     
 }
 
