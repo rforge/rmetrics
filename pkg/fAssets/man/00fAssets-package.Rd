@@ -38,7 +38,7 @@
 \keyword{models}
 
 
-\section{Introduction}{
+\section{1 Introduction}{
 
   The package \code{fAssets} was written to explore and investigate
   data sets of financial asssets
@@ -59,7 +59,7 @@
 }
 
 
-\section{Assets Selection}{
+\section{2 Assets Selection}{
 
   The assets selection chapter containts functions which arrange assets
   from a data set according to different measaures applying ideas from
@@ -113,7 +113,7 @@
 }
 
 
-\section{Assets Covariance Robustification}{
+\section{3 Assets Covariance Robustification}{
 
   We provide several functions to compute robust measures for mean and/or
   covariance estimates which can be used for example in robustified
@@ -149,7 +149,7 @@
 }
 
 
-\section{Modelling Assets Sets and Testing for Normality}{
+\section{4 Modelling Assets Sets and Testing for Normality}{
 
   Functions are available to fit the parameters for skew-Normal and
   related financial return distributions. 
@@ -173,7 +173,7 @@
 }
 
 
-\section{Portfolio Measures}{
+\section{5 Portfolio Measures}{
 
   The \code{fAssets} package provides selected function to compute
   diverse risk Measure, Like VaR, CVaR, CVaR-Plus, and lambda-CVaR:
@@ -221,7 +221,7 @@
 }
 
 
-\section{Assets Time Series and Density Plot Functions}{
+\section{6 Assets Time Series and Density Plot Functions}{
 
   Dozens of tailored plot functions are included in the \code{fAssets}
   package. This makes it very easy to visualize properties and to 
@@ -251,7 +251,7 @@
 }
 
 
-\section{Assets Dependency and Structure Plot Functions}{
+\section{7 Assets Dependency and Structure Plot Functions}{
 
 
   Corellation and similarities are another source of information about 
@@ -296,13 +296,12 @@
 }
 
 
-\author{
+\section{About Rmetrics:}{
 
-  This package was created by Diethelm Wuertz (2005). 
-  It is authored and maintained by the Rmetrics Core Team,
-  Yohan Chalabi (2010-2013) and Tobias Setz (since 2014), 
-  and Diethelm Wuertz.
-  
+    The \code{fAssets} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
 }
 
 
