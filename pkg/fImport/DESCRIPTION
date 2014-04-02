@@ -9,7 +9,7 @@ Author: Author: Rmetrics Core Team,
 Depends: R (>= 2.15.1), timeDate, timeSeries
 Imports: gdata, xlsx
 Suggests: methods, RUnit
-Maintainer: Tobias Setz <yohan.chalabi@rmetrics.org>
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance"
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
