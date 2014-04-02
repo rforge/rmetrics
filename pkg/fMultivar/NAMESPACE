@@ -1,18 +1,22 @@
+
 ################################################
-## Manual Namespace
+## fMultivar
+################################################
+
+
+################################################
+## import name space
+################################################
+
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+
+
+################################################
+## functions
 ################################################
 
 exportPattern(".")
 
-import(timeDate)
-import(timeSeries)
-import(fBasics)
-import(sn)
 
-import(mvtnorm)
-
-import(akima)
-import(spatial)
-import(cubature)
-
-#import(methods)
