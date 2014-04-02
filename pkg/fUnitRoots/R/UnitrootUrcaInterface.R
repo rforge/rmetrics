@@ -14,23 +14,11 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                URCA INTERFACE [PFAFF] UNIT ROOT TESTS:
 #  urdfTest                 Performs Augmented Dickey-Fuller test for unit roots
-#  urersTest                PerformsElliott-Rothenberg-Stock test for unit roots
+#  urersTest                Performs Elliott-Rothenberg-Stock test for unit roots
 #  urkpssTest               Performs KPSS unit root test for stationarity
 #  urppTest                 Performs Phillips-Perron test for unit roots
 #  urspTest                 Performs Schmidt-Phillips test for unit roots
@@ -41,9 +29,10 @@
 # NOTE, THIS INTERFACE REQUIRES THE URCA PACKAGE !
 
 
-urdfTest =
-function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+urdfTest <-
+    function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Dickey-Fuller test for unit roots
@@ -51,23 +40,23 @@ function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
     # Notes:
     #   Requires "urca" which is not part of this distribution
     #   Wraps -
-    #       ur.df(y, type = c("none", "drift", "trend"), lags = 1)
+    #       urca::ur.df(y, type = c("none", "drift", "trend"), lags = 1)
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    if (type[1] == "nc") Type = "none"
-    if (type[1] == "c")  Type = "drift"
-    if (type[1] == "ct") Type = "trend"
+    x <- as.vector(x)
+    if (type[1] == "nc") Type <- "none"
+    if (type[1] == "c")  Type <- "drift"
+    if (type[1] == "ct") Type <- "trend"
 
-    urca = ur.df(x, type = Type, lags = lags)
-    output = capture.output(summary(urca))[-(1:4)]
+    urca <- urca::ur.df(x, type = Type, lags = lags)
+    output <- capture.output(summary(urca))[-(1:4)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
-    output = output[-length(output)][-3]
+    output <- output[-length(output)][-3]
 
     # Test Results:
-    ans = list(
+    ans <- list(
         name = "ur.df",
         test = urca,
         output = output
@@ -87,13 +76,14 @@ function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
-urersTest =
-function(x, type = c("DF-GLS", "P-test"), model = c("constant", "trend"),
-lag.max = 4, doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+urersTest <- 
+    function(x, type = c("DF-GLS", "P-test"), model = c("constant", "trend"),
+    lag.max = 4, doplot = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Elliott-Rothenberg-Stock test for unit roots
@@ -101,21 +91,21 @@ lag.max = 4, doplot = TRUE)
     # Notes:
     #   Requires "urca" which is not part of this distribution
     #   Wraps -
-    #       ur.ers(y, type = c("DF-GLS", "P-test"),
+    #       urca::ur.ers(y, type = c("DF-GLS", "P-test"),
     #       model = c("constant", "trend"), lag.max = 4)
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    urca = ur.ers(x, type = type[1], model = model[1], lag.max = lag.max)
-    output = capture.output(summary(urca))[-(1:4)]
+    x <- as.vector(x)
+    urca <- urca::ur.ers(x, type = type[1], model = model[1], lag.max = lag.max)
+    output <- capture.output(summary(urca))[-(1:4)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
-    output = output[-length(output)]
+    output <- output[-length(output)]
     if (type[1] == "DF-GLS") output = output[-(4:7)]
 
     # Test Results:
-    ans = list(
+    ans <- list(
         name = "ur.ers",
         test = urca,
         output = output
@@ -135,13 +125,14 @@ lag.max = 4, doplot = TRUE)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
-urkpssTest =
-function(x, type = c("mu", "tau"), lags = c("short", "long", "nil"),
-use.lag = NULL, doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+urkpssTest <- 
+    function(x, type = c("mu", "tau"), lags = c("short", "long", "nil"),
+    use.lag = NULL, doplot = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   KPSS unit root test for stationarity
@@ -149,14 +140,14 @@ use.lag = NULL, doplot = TRUE)
     # Notes:
     #   Requires "urca" which is not part of this distribution
     #   Wraps:
-    #       ur.kpss(y, type = c("mu", "tau"), lags = c("short", "long", "nil"),
+    #       urca::ur.kpss(y, type = c("mu", "tau"), lags = c("short", "long", "nil"),
     #       use.lag = NULL)
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    urca = ur.kpss(x, type = type[1], lags = lags[1], use.lag = use.lag)
+    x <- as.vector(x)
+    urca <- urca::ur.kpss(x, type = type[1], lags = lags[1], use.lag = use.lag)
     output = capture.output(summary(urca))[-(1:4)]
     output = output[-length(output)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
@@ -182,13 +173,14 @@ use.lag = NULL, doplot = TRUE)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
-urppTest =
-function(x, type = c("Z-alpha", "Z-tau"), model = c("constant", "trend"),
-lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
+urppTest <- 
+    function(x, type = c("Z-alpha", "Z-tau"), model = c("constant", "trend"),
+    lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Phillips-Perron test for unit roots
@@ -196,21 +188,21 @@ lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
     # Note:
     #   Requires "urca" which is not part of this distribution
     #   Wraps:
-    #       ur.pp(x, type = c("Z-alpha", "Z-tau"), model = c("constant",
+    #       urca::ur.pp(x, type = c("Z-alpha", "Z-tau"), model = c("constant",
     #       "trend"), lags = c("short", "long"), use.lag = NULL)
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    urca = ur.pp(x, type = type[1], model = model[1], lags = lags[1],
+    x <- as.vector(x)
+    urca <- urca::ur.pp(x, type = type[1], model = model[1], lags = lags[1],
         use.lag = use.lag)
-    output = capture.output(summary(urca))[-c(1:4, 7:10)]
+    output <- capture.output(summary(urca))[-c(1:4, 7:10)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
-    output = output[-length(output)]
+    output <- output[-length(output)]
 
     # Test Results:
-    ans = list(
+    ans <- list(
         name = "ur.pp",
         test = urca,
         output = output
@@ -230,12 +222,12 @@ lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 urspTest =
-function(x, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
-signif = c(0.01, 0.05, 0.10), doplot = TRUE)
+    function(x, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
+    signif = c(0.01, 0.05, 0.10), doplot = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -244,20 +236,21 @@ signif = c(0.01, 0.05, 0.10), doplot = TRUE)
     # Note:
     #   Requires "urca" which is not part of this distribution
     #   Wraps:
-    #       ur.sp(y, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
+    #       urca::ur.sp(y, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
     #       signif = c(0.01, 0.05, 0.1))
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    urca = ur.sp(x, type = type[1], pol.deg = pol.deg[1], signif = signif[1])
-    output = capture.output(summary(urca))[-(1:8)]
-    output = output[-length(output)]
+    x <- as.vector(x)
+    urca <- urca::ur.sp(
+      x, type = type[1], pol.deg = pol.deg[1], signif = signif[1])
+    output <- capture.output(summary(urca))[-(1:8)]
+    output <- output[-length(output)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
 
     # Test Results:
-    ans = list(
+    ans <- list(
         name = "ur.pp",
         test = urca,
         output = output
@@ -277,10 +270,10 @@ signif = c(0.01, 0.05, 0.10), doplot = TRUE)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
-urzaTest =
+urzaTest <- 
 function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -290,19 +283,19 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
     # Note:
     #   Requires "urca" which is not part of this distribution
     #   Wraps:
-    #       ur.za(y, model = c("intercept", "trend", "both"), lag)
+    #       urca::ur.za(y, model = c("intercept", "trend", "both"), lag)
 
     # FUNCTION:
 
     # Compute:
-    x = as.vector(x)
-    urca = ur.za(x, model = model[1], lag = lag)
-    output = capture.output(summary(urca))[-(1:8)]
-    output = output[-length(output)]
+    x <- as.vector(x)
+    urca <- urca::ur.za(x, model = model[1], lag = lag)
+    output <- capture.output(summary(urca))[-(1:8)]
+    output <- output[-length(output)]
     for (i in 1:length(output)) output[i] = paste(" ", output[i])
 
     # Test Results:
-    ans = list(
+    ans <- list(
         name = "ur.pp",
         test = urca,
         output = output
@@ -322,4 +315,6 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
 }
 
 
-################################################################################
+###############################################################################
+
+

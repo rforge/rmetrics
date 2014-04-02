@@ -14,20 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA 02111-1307 USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-# fEcofin::4E-MacKinnonPValues.R
 ################################################################################
 # FUNCTION:                 MAC KINNON'S PROBABILIY AND QUANTILES:
 #  punitroot                 Returns probability for unit root distributions
@@ -48,10 +35,11 @@
 #  unitrootTable             Returns MacKinnon's finite sample test table
 
 
-punitroot =
-function(q, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
-statistic = c("t", "n"), na.rm = FALSE) 
-{   # A function implemented by Diethelm Wuertz
+punitroot <-
+    function(q, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
+    statistic = c("t", "n"), na.rm = FALSE) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the cumulative probability for unit root distributions
@@ -114,9 +102,10 @@ statistic = c("t", "n"), na.rm = FALSE)
 
 
 qunitroot =
-function(p, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
-statistic = c("t", "n"), na.rm = FALSE)
-{   # A function implemented by Diethelm Wuertz
+    function(p, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
+    statistic = c("t", "n"), na.rm = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the quantile for unit root distributions
@@ -182,8 +171,9 @@ statistic = c("t", "n"), na.rm = FALSE)
 
 
 unitrootTable =
-function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
-{   # A function implemented by Diethelm Wuertz
+    function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns McKinnon's unitroot finite sample test table
@@ -227,9 +217,10 @@ function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
 #  .probsUrcval              Implements probability values
 
 
-.strsplitUrcval = 
-function(x, sep = " ") 
-{   # A function implemented by Diethelm Wuertz
+.strsplitUrcval <- 
+    function(x, sep = " ") 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Implements strsplit() function for SPlus compatibility
@@ -239,7 +230,7 @@ function(x, sep = " ")
     # Split:
     # if (exists("strsplit")) {
         # R:
-        ans = strsplit(x = x , split = sep)
+        ans <- strsplit(x = x , split = sep)
     # } else {
     #     # Splus:
     #     ans = lapply(lapply(X = x, FUN = unpaste, sep = sep), unlist)
@@ -253,9 +244,10 @@ function(x, sep = " ")
 # ------------------------------------------------------------------------------
 
 
-.urcval = 
-function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
-{   # A function implemented by Diethelm Wuertz
+.urcval <- 
+    function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Implements the unit root statists distribution 
@@ -320,7 +312,7 @@ function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
         print("Warning: Specified sample size may be too small")
         
     # Urcvals:
-    ans = NULL
+    ans <- NULL
     for (i in 1:length(arg)) {
         # Set size and stat and check for level 
         size = stat = arg[i]
@@ -366,7 +358,7 @@ function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
 
 
 .probsUrcval = 
-structure(list(
+    structure(list(
 
     V1 = c(1.0e-04, 2.0e-04, 5.0e-04, 0.001, 0.002, 0.003, 
     0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.01, 0.015, 0.02, 

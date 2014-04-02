@@ -14,20 +14,7 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-# fEcofin-DickeyFullerPValues.R
 ################################################################################
 # FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
 # adfTable              Finite sample p values for the Dickey-Fuller test
@@ -45,9 +32,11 @@
 # qadf                  Returns quantiles for the ADF Test given probabilities
 
 
-adfTable =
-function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), includeInf = TRUE)
-{   # A function implemented by Diethelm Wuertz
+adfTable <- 
+    function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), 
+    includeInf = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:     
     #   Tables critical values for augmented Dickey-Fuller test.
@@ -157,9 +146,10 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), includeInf = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.adfPlot =
-function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-{   # A function implemented by Diethelm Wuertz
+.adfPlot <- 
+    function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Match Arguments:
     trend = match.arg(trend)
@@ -187,13 +177,13 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
-padf = 
-function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-{   # A function implemented by Diethelm Wuertz
+padf <- 
+    function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns probabilities  for the ADF Test given quantiles
@@ -212,8 +202,8 @@ function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     # FUNCTION:
     
     # Match Arguments:
-    trend = match.arg(trend)
-    statistic = match.arg(statistic)
+    trend <- match.arg(trend)
+    statistic <- match.arg(statistic)
     
     # Check N:
     stopifnot(length(N) == 1)
@@ -250,8 +240,9 @@ function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
 
 qadf = 
-function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
-{   # A function implemented by Diethelm Wuertz
+    function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns quantiles for the ADF Test given probabilities
@@ -305,4 +296,5 @@ function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
 
 ################################################################################
+
 

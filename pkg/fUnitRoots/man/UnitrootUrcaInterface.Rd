@@ -11,10 +11,11 @@
 \alias{urzaTest}
 
 \description{
-  A collection and description of functions
-  for unit root testing.  This is a Rmetrics
-  conform interface to the unitroot tests implemented by B. Pfaff
-  available through the \R package "\pkg{urca}" which is required here.
+  
+  A collection and description of functions for unit root testing.  
+  This is an interface to the unitroot tests implemented by B. Pfaff
+  available through the \R package "\pkg{urca}" which is required 
+  here.
 
   Added functions based on the \pkg{urca} package include:
 
@@ -26,7 +27,9 @@
     \code{urspTest} \tab Schmidt--Phillips test for unit roots, \cr
     \code{urzaTest} \tab Zivot--Andrews test for unit roots.
   }
+  
 }
+
 
 \note{
   The functions \code{ur*Test()} fullfill the naming conventions
@@ -37,6 +40,7 @@
 
   Fur further details we refer to the manual pages of the
   \pkg{urca} package which is required for all these.
+  
 }
 
 

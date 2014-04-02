@@ -14,18 +14,6 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                ADF TESTS:
@@ -36,11 +24,11 @@
 ################################################################################
 
 
-
-adfTest =
-function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL,
-description = NULL)
-{   # A function implemented by Diethelm Wuertz
+adfTest <-
+    function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL,
+    description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests the null hypothesis of a unit root in y.
@@ -66,7 +54,7 @@ description = NULL)
     # Reference:
     #   S. E. SAID and D. A. DICKEY (1984): Testing for Unit Roots in
     #   Autoregressive-Moving Average Models of Unlag.diffnown Order.
-    #   Biometrika 71, 599–607.
+    #   Biometrika 71, 599?607.
 
     # Source:
     #   This function is an augmented version of Adrian Trapletti's
@@ -74,14 +62,14 @@ description = NULL)
     #   the types "c" and "nc" together with the appropriate statistics.
 
     # Call:
-    CALL = match.call()
+    CALL <- match.call()
 
     # Test:
-    test = list()
+    test <- list()
 
     # Data Set Name:
-    DNAME = deparse(substitute(x))
-    test$data.name = DNAME
+    DNAME <- deparse(substitute(x))
+    test$data.name <- DNAME
 
     # Transform:
     if (class(x) == "timeSeries") x = series(x)
@@ -91,15 +79,15 @@ description = NULL)
     if (lags < 0) stop("Lags are negative")
 
     # Settings:
-    doprint = FALSE
-    type = type[1]
-    lags = lags + 1
-    y = diff(x)
-    n = length(y)
-    z = embed(y, lags)
-    y.diff = z[, 1]
-    y.lag.1 = x[lags:n]
-    tt = lags:n
+    doprint <- FALSE
+    type <- type[1]
+    lags <- lags + 1
+    y <- diff(x)
+    n <- length(y)
+    z <- embed(y, lags)
+    y.diff <- z[, 1]
+    y.lag.1 <- x[lags:n]
+    tt <- lags:n
 
     # Regression:
     if (lags > 1) {
@@ -120,14 +108,14 @@ description = NULL)
     }
 
     # Regression Summary:
-    res.sum = summary(res)
+    res.sum <- summary(res)
     if (doprint) print(res.sum)
 
     # Statistic:
     if (type == "nc") coefNum = 1 else coefNum = 2
-    STAT = res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
-    names(STAT) = "Dickey-Fuller"
-    test$statistic = STAT
+    STAT <- res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
+    names(STAT) <- "Dickey-Fuller"
+    test$statistic <- STAT
 
     # P Value:
     if (type == "nc")
@@ -199,9 +187,10 @@ description = NULL)
 
 
 unitrootTest =
-function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL,
-description = NULL)
-{   # A function implemented by Diethelm Wuertz
+    function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL,
+    description = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tests the null hypothesis of a unit root in x.
@@ -228,7 +217,7 @@ description = NULL)
     # Reference:
     #   Said S.E., Dickey D.A. (1984): Testing for Unit Roots in
     #   Autoregressive-Moving Average Models of Unlag.diffnown Order.
-    #   Biometrika 71, 599–-607.
+    #   Biometrika 71, 599?-607.
 
     # Source:
     #   This function is an augmented version of Adrian Trapletti's
@@ -238,17 +227,17 @@ description = NULL)
     # FUNCTION:
 
     # Call:
-    CALL = match.call()
+    CALL <- match.call()
 
     # Test:
-    test = list()
+    test <- list()
 
     # Data Set Name:
-    DNAME = deparse(substitute(x))
-    test$data.name = DNAME
+    DNAME <- deparse(substitute(x))
+    test$data.name <- DNAME
 
     # Transform:
-    if (class(x) == "timeSeries") x = series(x)
+    if (class(x) == "timeSeries") x <- series(x)
     x = as.vector(x)
 
     # Check Arguments:
@@ -290,7 +279,7 @@ description = NULL)
 
     # Statistic:
     if (type == "nc") coefNum = 1 else coefNum = 2
-    STATISTIC =
+    STATISTIC <- 
         res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
     names(STATISTIC) = "DF"
     test$statistic = STATISTIC
@@ -306,14 +295,14 @@ description = NULL)
     # Statistic == "n" : itt = 2
     PVAL2 =
         .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 2, itv = itv, nc = 2)
-    PVAL = c(PVAL1, PVAL2)
+    PVAL <- c(PVAL1, PVAL2)
     names(PVAL) = c("t", "n")
     test$p.value = PVAL
 
     # Parameter:
-    PARAMETER = lags - 1
-    names(PARAMETER) = "Lag Order"
-    test$parameter = PARAMETER
+    PARAMETER <- lags - 1
+    names(PARAMETER) <- "Lag Order"
+    test$parameter <- PARAMETER
 
     # Add:
     if (is.null(title)) title = "Augmented Dickey-Fuller Test"
@@ -334,9 +323,10 @@ description = NULL)
 
 
 .urTest =
-function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
-"ursp", "urza"), title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
+    "ursp", "urza"), title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Unit Root Test Suite
@@ -344,10 +334,10 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
     # FUNCTION:
 
     # Match Function:
-    funTest = match.fun(paste(method[1], "Test", sep = ""))
+    funTest <- match.fun(paste(method[1], "Test", sep = ""))
 
     # Test:
-    ans = funTest(x = x, ...)
+    ans <- funTest(x = x, ...)
 
     # Add:
     if (!is.null(title)) ans@title = as.character(title)
