@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:           DESCRIPTION:
 #  dmvnorm             Multivariate Normal Density function
 #  pmvnorm             Multivariate Normal Probability function
@@ -24,4 +24,5 @@
 # REQUIRES:           DESCRIPTION:
 #  mvtnorm             Contributed R-Package
 ################################################################################
+
 

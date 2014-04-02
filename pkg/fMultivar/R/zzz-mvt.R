@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:           DESCRIPTION:
 #  dmvt                Multivariate Student-t Density function
 #  pmvt                Multivariate Student-t Probability function
@@ -23,4 +23,6 @@
 #  rmvt                Multivariate Student-t Random Nuber Generator
 # REQUIREMENTS:       DESCRIPTION:
 #  mvtnorm             Contributed R - Package
-################################################################################
+###############################################################################
+
+

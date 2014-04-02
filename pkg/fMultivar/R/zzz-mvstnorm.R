@@ -44,15 +44,15 @@
 
 dmvsnorm <- 
   function(x, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim))
-    dmsn(x=x, xi=mu, Omega=Omega, alpha=alpha)
+    sn::dmsn(x=x, xi=mu, Omega=Omega, alpha=alpha)
 
 pmvsnorm <- 
   function(q, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim))
-    pmsn(x=q, xi=mu, Omega=Omega, alpha=alpha)
+    sn::pmsn(x=q, xi=mu, Omega=Omega, alpha=alpha)
 
 rmvsnorm <- 
   function(n, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim))
-    rmsn(n=n, xi=mu, Omega=Omega, alpha=alpha)
+    sn::rmsn(n=n, xi=mu, Omega=Omega, alpha=alpha)
 
 
 # -----------------------------------------------------------------------------
@@ -60,15 +60,15 @@ rmvsnorm <-
 
 dmvst <- 
   function(x, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim), df=4)
-    dmst(x=x, xi=mu, Omega=Omega, alpha=alpha, nu=df)
+    sn::dmst(x=x, xi=mu, Omega=Omega, alpha=alpha, nu=df)
 
 pmvst <- 
   function(q, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim), df=4)
-    pmst(x=q, xi=mu, Omega=Omega, alpha=alpha, nu=df)
+    sn::pmst(x=q, xi=mu, Omega=Omega, alpha=alpha, nu=df)
 
 rmvst <- 
   function(n, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim), df=4)
-    rmst(n=n, xi=mu, Omega=Omega, alpha=alpha, nu=df)
+    sn::rmst(n=n, xi=mu, Omega=Omega, alpha=alpha, nu=df)
 
 
 ###############################################################################
@@ -94,7 +94,7 @@ mvFit <-
 
 }
 
-  #############################################################################
-  
-  
-  
+
+###############################################################################
+
+
