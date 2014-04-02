@@ -1,14 +1,9 @@
 
+
 ################################################
-## import name space
+## fGarch
 ################################################
 
-import("stats")
-import("graphics")
-import("methods")
-import("timeDate")
-import("timeSeries")
-import("fBasics")
 
 ################################################
 ## useDynLib
@@ -16,137 +11,24 @@ import("fBasics")
 
 useDynLib("fGarch")
 
-################################################
-## S4 classes
-################################################
-
-exportClasses("fGARCH",
-              "fGARCHSPEC",
-              "fUGARCHSPEC" )
-exportMethods("coef",
-              "fitted",
-              "formula",
-              "plot",
-              "predict",
-              "residuals",
-              "show",
-              "summary",
-              "update" )
 
 ################################################
-## S3 classes
+## import name space
 ################################################
 
-S3method("volatility", "fGARCH")
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+
+#import("methods")
+#import("graphics")
+#import("stats")
+
 
 ################################################
 ## functions
 ################################################
 
-export(
-    ".QMLECondDist",
-    ".aparchLLH.filter",
-    ".aparchLLH.internal",
-    ".aparchLLH.testing",
-    ".dsged",
-    ".dsnorm",
-    ".dsstd",
-    ".garchArgsParser",
-    ".garchFit",
-    ".garchInitParameters",
-    ".garchInitSeries",
-    ".garchKappaFun",
-    ".garchLLH",
-    ".garchModelSeries",
-    ".garchNames",
-    ".garchOptimizeLLH",
-    ".garchOptimizerControl",
-    ".garchRCDAGradient",
-    ".garchRCDAHessian",
-    ".garchRlbfgsb",
-    ".garchRnlminb",
-    ".garchRnm",
-    ".garchRoptimhess",
-    ".garchSetCondDist",
-    ".garchTSHessian",
-    ".gedCondDist",
-    ".gedFit",
-    ".getfGarchEnv",
-    ".gogarchFit",
-    ".hessian2sided",
-    ".interactiveGarchPlot",
-    ".multGarchPlot",
-    ".normCondDist",
-    ".plot.garch.1",
-    ".plot.garch.10",
-    ".plot.garch.11",
-    ".plot.garch.12",
-    ".plot.garch.13",
-    ".plot.garch.2",
-    ".plot.garch.3",
-    ".plot.garch.4",
-    ".plot.garch.5",
-    ".plot.garch.6",
-    ".plot.garch.7",
-    ".plot.garch.8",
-    ".plot.garch.9",
-    ".psged",
-    ".psnorm",
-    ".psstd",
-    ".qqDist",
-    ".qqLine",
-    ".qsged",
-    ".qsnorm",
-    ".qsstd",
-    ".rsged",
-    ".rsnorm",
-    ".rsstd",
-    ".setfGarchEnv",
-    ".sgedCondDist",
-    ".sgedFit",
-    ".snigCondDist",
-    ".snormCondDist",
-    ".snormFit",
-    ".sstdCondDist",
-    ".sstdFit",
-    ".stdCondDist",
-    ".stdFit",
-    ".truePersistence",
-    ".ugarchFit",
-    ".ugarchSpec",
-    "absMoments",
-    "dged",
-    "dsged",
-    "dsnorm",
-    "dsstd",
-    "dstd",
-    "garchFit",
-    "garchFitControl",
-    "garchKappa",
-    "garchSim",
-    "garchSpec",
-    "gedFit",
-    "gedSlider",
-    "pged",
-    "psged",
-    "psnorm",
-    "psstd",
-    "pstd",
-    "qged",
-    "qsged",
-    "qsnorm",
-    "qsstd",
-    "qstd",
-    "rged",
-    "rsged",
-    "rsnorm",
-    "rsstd",
-    "rstd",
-    "sgedFit",
-    "sgedSlider",
-    "snormFit",
-    "snormSlider",
-    "sstdFit",
-    "sstdSlider",
-    "stdFit",
-    "stdSlider" )
+exportPattern(".")
+
+

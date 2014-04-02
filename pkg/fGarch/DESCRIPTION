@@ -1,13 +1,17 @@
 Package: fGarch
 Version: 3010.82
-Revision: 5504
 Date: 2013-04-30
-Title: Rmetrics - Autoregressive Conditional Heteroskedastic Modelling
-Author: Diethelm Wuertz and Yohan Chalabi with contribution from Michal
-        Miklovic, Chris Boudt, Pierre Chausse and others
-Depends: R (>= 2.15.0), stats, graphics, methods, timeDate, timeSeries,
-        fBasics (>= 2100.78)
-Suggests: RUnit, Matrix, fastICA, tcltk
+Title: Rmetrics - Modelling Autoregressive Conditional Heteroskedasticity
+Author: Rmetrics Core Team,
+      Chris Boudt [ctb],
+      Yohan Chalabi [ctb],
+      Pierre Chausse [ctb],
+      Michal Miklovac [ctb]
+      Tobias Setz [ctb],
+      Diethelm Wuertz [aut, cre]
+Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
+Imports: fastICA, Matrix
+Suggests: methods, RUnit, tcltk
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
