@@ -54,6 +54,7 @@
 
 
 \examples{
+\dontrun{
 ## msnFit - 
    # Fit Example:
    N <- 1000
@@ -78,6 +79,8 @@
      xi=param$xi[1,], Omega=param$Omega, alpha=param$alpha), ncol=N)
    contour(x, y, Z, add=TRUE, col="green", lwd=2)
 }
+}
 
 
 \keyword{math}
+

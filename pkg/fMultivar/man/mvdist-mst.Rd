@@ -59,6 +59,7 @@
 
 
 \examples{
+\dontrun{ 
 ## Make 2-D Grid Coordinates:
    N <- 101
    x <- y <- seq(-3, 3, l=N)
@@ -84,6 +85,7 @@
    plot(hexBinning(r))
    contour(Z, add=TRUE, col="darkblue", lwd=2)
    grid(col="red")
+}
 }
 
 

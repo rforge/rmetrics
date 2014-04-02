@@ -60,6 +60,7 @@
 
 
 \examples{
+\dontrun{
 ## Make 2-D Grid Coordinates:
    N <- 101
    x <- y <- seq(-3, 3, l=N)
@@ -71,7 +72,7 @@
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
    # Compute skew Normal Density:
-   z <- dmsn(X, xi, Omega, alpha)
+   z <- sn::dmsn(X, xi, Omega, alpha)
    Z <- list(x=x, y=x, z=matrix(z, ncol = length(x)))
    # Plot:   
    image(Z)
@@ -80,10 +81,11 @@
    
 ## rmsn - 
    set.seed(4711)
-   r <- rmsn(n=5000, xi, Omega, alpha)
+   r <- sn::rmsn(n=5000, xi, Omega, alpha)
    plot(hexBinning(r))
    contour(Z, add=TRUE, col="darkblue", lwd=2)
    grid(col="red")
+}
 }
 
 

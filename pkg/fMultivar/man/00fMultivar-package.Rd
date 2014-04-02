@@ -3,14 +3,16 @@
 \alias{fMultivar-package}
 \alias{fMultivar}
 
+
 \docType{package}
+
 
 \title{Modelling Multivariate Return Distributions}
 
 
 \description{
 
-  The Rmetrics \code{fMultivar} package is a  collection of functions 
+  The Rmetrics "fMultivar"" package is a  collection of functions 
   to manage, to investigate and to analyze bivariate and multivariate 
   data sets of financial returns.
   
@@ -19,22 +21,20 @@
 
 \details{
 
-  \tabular{ll}{
-    Package:    \tab fMultivar\cr
-    Type:       \tab Package\cr
-    Version:    \tab 3001.80\cr
-    Date:       \tab 2005-04-20 \cr
-    License:    \tab GPL (>= 2)\cr
-    Copyright:  \tab (c) 2005-2014 Diethelm Wuertz and Rmetrics Association\cr
-    Repository: \tab R-FORGE\cr
-    URL:        \tab \url{https://www.rmetrics.org}
+    \tabular{ll}{
+        Package:    \tab fMultivar\cr
+    T   ype:        \tab Package\cr
+        Version:    \tab R 3.0.1\cr
+        Date:       \tab 2014\cr
+        License:    \tab GPL Version 2 or later\cr
+        Copyright:  \tab (c) 1999-2014 Rmetrics Assiciation\cr
+        URL:        \tab \url{https://www.rmetrics.org}
   }
-  
 
 }
 
 
-\section{Introduction}{
+\section{1 Introduction}{
 
   The package \code{fMultivar} was written to explore and investigate
   bivariate and multivariate financial return series. 
@@ -72,7 +72,7 @@
 }
 
 
-\section{Bivariate Distributions}{
+\section{2 Bivariate Distributions}{
 
   contains functions to model bivariate density, probability,
   quantile functions, and to generate random numbers.
@@ -88,7 +88,7 @@
 }
 
 
-\section{Multivariate SN Distributions}{
+\section{3 Multivariate SN Distributions}{
 
   We use the functions from the contributed package \code{"sn"} package 
   to model multivariate density and probability functions, and to 
@@ -128,7 +128,7 @@
 }
 
 
-\section{Multivariate GHYP Distributions}{
+\section{4 Multivariate GHYP Distributions}{
 
   We refer to the package \code{"ghyp"} authored by
   David Luethi and  Wolfgang Breymann,
@@ -136,7 +136,7 @@
 }
 
 
-\section{Utility Functions}{
+\section{5 Utility Functions}{
 
   We have also added some very useful utility functions for the
   bivariate case, these include 2-D grid generation, squared and

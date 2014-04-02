@@ -60,6 +60,7 @@
 
 
 \examples{
+\dontrun{
 ## Make 2-D Grid Coordinates:
    N <- 101
    x <- y <- seq(-3, 3, l=N)
@@ -71,12 +72,13 @@
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
    # Compute skew Cauch Density:
-   z <- dmsc(X, xi, Omega, alpha)
+   z <- sn::dmsc(X, xi, Omega, alpha)
    Z <- list(x=x, y=x, z=matrix(z, ncol = length(x)))
    # Plot:   
    image(Z)
    contour(Z)
    grid(col="red")
+}
 }
 
 \keyword{math}

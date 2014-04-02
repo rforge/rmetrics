@@ -54,15 +54,17 @@
 
 
 \examples{
+\dontrun{
 ## mscFit - 
    # Fit Example:
    N <- 1000
    xi <- c(0, 0) 
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
-   X <- rmsc(n=N, xi, Omega, alpha)
+   X <- sn::rmsc(n=N, xi, Omega, alpha)
    ans <- mscFit(X)
    ans
+}
 }
 
 
