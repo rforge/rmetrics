@@ -127,7 +127,8 @@
     \preformatted{
     gpdMoments      computes true mean and variance of GDP
     }
-       
+    
+    
     \emph{GPD Parameter Estimation}
     
     This section contains functions to fit and to simulate processes that
@@ -267,6 +268,15 @@
     exindexPlot          calculatess and plots Theta(1,2,3)
     exindexesPlot        calculates Theta(1,2) and plots Theta(1)
     }
+    
+}
+
+
+\section{About Rmetrics:}{
+
+    The \code{fImport} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
     
 }
 
