@@ -37,6 +37,13 @@
 
 \section{1 Introduction}{
 
+    The 'fUnitroots' provides four addons for analyzing trends and
+    unit roots in financial time series: (i) functions for the density
+    and probability of the augmented Dickey-Fuller Test, (ii) functions 
+    for the density and probability of MacKinnon's unit root test 
+    statistics, (iii) reimplementations for the ADF and MacKinnon
+    Test, and (iv) an 'urca' Unit Root Test Interface for Pfaff's
+    unit root test suite.
 }
 
 
@@ -82,7 +89,7 @@
 }
 
 
-\section{4 "urca"" Unit Root Interface}{
+\section{5 "urca"" Unit Root Test Interface}{
 
     This is an interface to the unitroot tests suite implemented by 
     Bernhard Pfaff available through the \R package "\pkg{urca}" 
@@ -96,6 +103,15 @@
     urzaTest        Zivot--Andrews test for unit roots
     }
   
+}
+
+
+\section{About Rmetrics:}{
+
+    The \code{fImport} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
 }
 
 
