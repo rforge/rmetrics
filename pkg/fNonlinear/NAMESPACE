@@ -1,19 +1,8 @@
 
 ################################################
-## Note this file has been automatically
-## generated --- Do not edit it.
+## fNonlinear
 ################################################
 
-
-################################################
-## import name space
-################################################
-
-import("methods")
-import("timeDate")
-import("timeSeries")
-import("fBasics")
-import("fGarch")
 
 ################################################
 ## useDynLib
@@ -21,42 +10,23 @@ import("fGarch")
 
 useDynLib("fNonlinear")
 
-################################################
-## S4 classes
-################################################
-
 
 ################################################
-## S3 classes
+## import name space
 ################################################
+
+import("timeDate")
+import("timeSeries")
+import("fBasics")
+# import("fGarch")
+
+#import("methods")
 
 
 ################################################
 ## functions
 ################################################
 
-export(
-    ".C2",
-    ".checkEmbParms",
-    ".d2",
-    ".embeddPSR",
-    ".find.nearest",
-    ".follow.points",
-    ".lyapunovFit",
-    ".rk4",
-    "bdsTest",
-    "falsennPlot",
-    "henonSim",
-    "ikedaSim",
-    "logisticSim",
-    "lorentzSim",
-    "lyapunovPlot",
-    "mutualPlot",
-    "recurrencePlot",
-    "roesslerSim",
-    "runsTest",
-    "separationPlot",
-    "tentSim",
-    "tnnTest",
-    "tsTest",
-    "wnnTest" )
+exportPattern(".")
+
+

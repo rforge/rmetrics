@@ -1,17 +1,19 @@
 Package: fNonlinear
 Version: 3010.78
-Revision: 5523
 Date: 2013-06-23
-Title: Nonlinear and Chaotic Time Series Modelling
-Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.4.0), methods, timeDate, timeSeries, fBasics, fGarch
-Suggests: RUnit, tcltk
+Title: Rmetrics - Nonlinear and Chaotic Time Series Modelling
+Author: Rmetrics Core Team,
+      Yohan Chalabi [ctb],
+      Tobias Setz [ctb],
+      Diethelm Wuertz [aut, cre]
+Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
+Suggests: methods, RUnit, tcltk
 Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-Note: Several parts are still preliminary and may be changed in the
-        future. this typically includes function and argument names, as
-        well as defaults for arguments and return values.
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance"
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

@@ -22,28 +22,12 @@
     The family of time series tests includes the following 
     hypothesis tests:
         
-    \tabular{ll}{
-    \code{bdsTest} \tab Brock--Dechert--Scheinkman test for iid series, \cr
-    \code{tnnTest} \tab Teraesvirta NN test for neglected nonlinearity, \cr
-    \code{wnnTest} \tab White NN test for neglected nonlinearity, \cr
-    \code{runsTest} \tab Runs test for detecting non-randomness.}
-    
-}
-
-
-\note{
-
-    There is nothing really new in this package. The benefit you will 
-    get from this help page, that we bring together a collection of 
-    time series tests from several \R-packages which may be of interest 
-    for economists and financial engineers.
-    
-    On the other hand the user can still use the underlying function
-    calls from the imported \R-packages.
-    
-    The output of the various hypothesis tests is an object of class
-    \code{htest}. The associated \code{print} method gives an unique 
-    report about the test results.
+    \preformatted{
+    bdsTest         Brock--Dechert--Scheinkman test for iid series
+    tnnTest         Teraesvirta NN test for neglected nonlinearity
+    wnnTest         White NN test for neglected nonlinearity
+    runsTest        Runs test for detecting non-randomness
+    }
     
 }
 
@@ -213,6 +197,14 @@ runsTest(x)
         a character string giving the name(s) of the data.
         }
         
+}
+
+
+\note{
+
+    The output of the various hypothesis tests is an object of class
+    \code{htest}. The associated \code{print} method gives an unique 
+    report about the test results.
 }
 
 
