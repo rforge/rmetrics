@@ -15,14 +15,14 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:               DESCRIPTION:
-#  read.lynx               Uses the links browser to read from a web page
-################################################################################
+#  read.links              Uses the links browser to read from a web page
+###############################################################################
 
 
 read.links <-
-function (url, intern = TRUE, bin = NULL, pipe = FALSE, ...) 
+    function (url, intern = TRUE, bin = NULL, pipe = FALSE, ...) 
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 

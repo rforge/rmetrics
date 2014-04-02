@@ -15,16 +15,16 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:               DESCRIPTION:
 #  dataSplit               Splits a data matrix from a downloaded file
 #  charvecSplit            Splits a charvec vector from a downloaded file
 #  stringSplit             Splits a string vector from a downloaded file
-################################################################################
+###############################################################################
 
 
 dataSplit <- 
-function (x, split=" ", col=-1) 
+    function (x, split=" ", col=-1) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -52,11 +52,11 @@ function (x, split=" ", col=-1)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 charvecSplit <-
-function (x, split=" ", col=1, format="%F") 
+    function (x, split=" ", col=1, format="%F") 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -84,11 +84,11 @@ function (x, split=" ", col=1, format="%F")
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 stringSplit <-
-function (x, split = " ", col = NULL) 
+    function (x, split = " ", col = NULL) 
 {
     # A function implemented by Diethelm Wuertz
     
@@ -116,5 +116,5 @@ function (x, split = " ", col = NULL)
 }
 
 
-################################################################################
+###############################################################################
 

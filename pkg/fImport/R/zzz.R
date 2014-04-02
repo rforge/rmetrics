@@ -15,27 +15,29 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 
 
 .onAttach <- 
   function(libname, pkgname)
-  {
-    # do whatever needs to be done when the package is loaded
-    # some people use it to bombard users with 
-    # messages using 
-    
-    packageStartupMessage( "\n" )
-    packageStartupMessage( "Rmetrics Package fImport" ) 
-    packageStartupMessage( "Importing Economic and Financial Market Data" )
-    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
-    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
-    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
-    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
-    # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
-    # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
-    # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" ) 
-  }
+{
+  # do whatever needs to be done when the package is loaded
+  # some people use it to bombard users with 
+  # messages using 
+  
+  packageStartupMessage( "\n" )
+  packageStartupMessage( "Rmetrics Package fImport" ) 
+  packageStartupMessage( "Importing Economic and Financial Market Data" )
+  packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+  packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+  packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+  packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+  # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
+  # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
+  # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" ) 
+}
 
 
-################################################################################
+###############################################################################
+
+

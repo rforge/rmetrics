@@ -20,13 +20,17 @@
 #  read.lines              A synonyme function call to readLines
 ################################################################################
 
+
 # wrapper function of read.lines to have consistent function names as
 # described in ebook.
 
+
 read.lines <- 
-function(con = stdin(), n = -1L, ok = TRUE, warn = FALSE,
+    function(con = stdin(), n = -1L, ok = TRUE, warn = FALSE,
     encoding = "unknown")
+{
     readLines(con = con, n = n, ok = ok, warn = warn, encoding = encoding)
+}
 
 ################################################################################
 

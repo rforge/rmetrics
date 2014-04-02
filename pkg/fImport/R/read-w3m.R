@@ -15,14 +15,14 @@
 # MA  02111-1307  USA
 
 
-################################################################################
+###############################################################################
 # FUNCTION:               DESCRIPTION:
 #  read.w3m                Uses the w3m browser to read from a web page
-################################################################################
+###############################################################################
 
 
 read.w3m <- 
-function(url, intern = TRUE, bin = NULL, pipe = FALSE, ...) 
+    function(url, intern = TRUE, bin = NULL, pipe = FALSE, ...) 
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
