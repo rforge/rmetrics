@@ -1,25 +1,19 @@
 Package: fRegression
 Version: 3010.80
-Revision: 5533
 Date: 2013-12-17
-Title: Regression Based Decision and Prediction
-Author: Diethelm Wuertz (for the Rmetrics port), R core team (for lm()
-        from R's base and nnet() from nnet package); B.R. Ripley (for
-        glm() from R's base); S.N. Wood (for gam() from mgcv package);
-        N.N. (for ppr() from modreg package); M. O' Connors (for
-        functions from polspline package); and T. Hothorn, A. Zeileis
-        G. Millo and D. Mitchell (for bgtest(), bptest(), dwtest(),
-        gqtest(), harvtest(), hmctest(), raintest(), reset() and
-        resettest() from lmtest package)
-Depends: R (>= 2.4.0), fBasics, fTrading, fMultivar, mgcv, nnet
-Imports: methods, polspline, lmtest, MASS
-Suggests: RUnit
-Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-Note: Several parts are still preliminary and may be changed in the
-        future. this typically includes function and argument names, as
-        well as defaults for arguments and return values.
-LazyData: yes
+Title: Rmetrics - Regression Based Decision and Prediction
+Author: Rmetrics Core Team,
+      Yohan Chalabi [ctb],
+      Tobias Setz [ctb],
+      Diethelm Wuertz [aut, cre]
+Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
+Imports: lmtest, mgcv, nnet, polspline
+Suggests: methods, MASS, RUnit
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance"
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

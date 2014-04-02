@@ -1,124 +1,27 @@
 
 ################################################
-## Note this file has been automatically
-## generated --- Do not edit it.
+## fRegression
 ################################################
+
+
+################################################
+## useDynLib
+################################################
+
+#useDynLib("fRegression")
 
 
 ################################################
 ## import name space
 ################################################
 
-import("methods")
-import("mgcv")
-import("nnet")
-import("polspline")
-import("lmtest")
-import("MASS")
-# import("timeDate")
-# import("timeSeries")
+import("timeDate")
+import("timeSeries")
 import("fBasics")
-import("fTrading")
-import("fMultivar")
 
-################################################
-## useDynLib
-################################################
-
-useDynLib("fRegression")
-
-################################################
-## S4 classes
-################################################
-
-exportClasses("fREG" )
-exportMethods("$",
-              "$<-",
-              "+",
-              "-",
-              "[",
-              "[<-",
-              "coef",
-              "cummax",
-              "cummin",
-              "cumprod",
-              "cumsum",
-              "dim",
-              "dim<-",
-              "dimnames",
-              "dimnames<-",
-              "fitted",
-              "formula",
-              "is.na",
-              "names",
-              "names<-",
-              "plot",
-              "predict",
-              "residuals",
-              "show",
-              "summary",
-              "terms",
-              "vcov" )
-
-################################################
-## S3 classes
-################################################
-
-S3method("termPlot", "fREG")
 
 ################################################
 ## functions
 ################################################
 
-export(
-    ".fittedContour",
-    ".fittedPersp",
-    ".fittedPlot",
-    ".gam",
-    ".glm",
-    ".interactiveRegPlot",
-    ".lm",
-    ".multRegPlot",
-    ".nnet",
-    ".plot.1",
-    ".plot.2",
-    ".plot.3",
-    ".plot.4",
-    ".plot.5",
-    ".plot.6",
-    ".plot.7",
-    ".plot.8",
-    ".plot.common",
-    ".plot.gam",
-    ".plot.glm",
-    ".plot.lm",
-    ".plot.nnet",
-    ".plot.polymars",
-    ".plot.ppr",
-    ".plot.rlm",
-    ".polymars",
-    ".polymarsDefault",
-    ".polymarsFormula",
-    ".ppr",
-    ".predict.gam",
-    ".predict.glm",
-    ".predict.lm",
-    ".predict.nnet",
-    ".predict.polymars",
-    ".predict.ppr",
-    ".predict.rlm",
-    ".rlm",
-    "GAM3",
-    "LM3",
-    "LOGIT3",
-    "bgTest",
-    "bpTest",
-    "dwTest",
-    "gqTest",
-    "harvTest",
-    "hmcTest",
-    "lmTest",
-    "rainTest",
-    "regFit",
-    "regSim",
-    "resetTest" )
+exportPattern(".")
