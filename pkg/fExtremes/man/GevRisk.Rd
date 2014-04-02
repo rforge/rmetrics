@@ -24,7 +24,7 @@
     The GEV modelling functions are:
     
     \tabular{ll}{
-    \code{gevrlevelPlot} \tab k-block return level with confidence intervals. }
+    \code{gevrlevelPlot} \tab k-block return level with confidence intervals.}
      
 }
 

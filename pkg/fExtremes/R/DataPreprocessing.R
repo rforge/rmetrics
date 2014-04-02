@@ -14,21 +14,9 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
-# FUNCTIONé         DESCRIPTION:
+# FUNCTION?         DESCRIPTION:
 #  blockMaxima       Returns block maxima from a time series
 #  findThreshold     Upper threshold for a given number of extremes
 #  pointProcess      Returns peaks over a threshold from a time series

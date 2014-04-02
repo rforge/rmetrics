@@ -32,7 +32,7 @@
     \code{dgpd} \tab Density of the GPD Distribution, \cr
     \code{pgpd} \tab Probability function of the GPD Distribution, \cr
     \code{qgpd} \tab Quantile function of the GPD Distribution, \cr
-    \code{rgpd} \tab random variates from the GEV distribution, \cr
+    \code{rgpd} \tab random variates from the GPD distribution, \cr
     \code{gpdMoments} \tab computes true mean and variance, \cr
     \code{gpdSlider} \tab displays density or rvs from a GPD.}
      

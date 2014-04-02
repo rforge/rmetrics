@@ -14,24 +14,41 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
-
-################################################################################
+###############################################################################
 # FUNCTION:                METRICS:
 #  .riskMetricsPlot  
 #  .garch11MetricsPlot     
-################################################################################
+###############################################################################
+
+
+.emaTA <- 
+  function (x, lambda = 0.1, startup = 0) 
+{
+  # Builtin from Package fTrading
+  TS <- is.timeSeries(x)
+  y <- as.vector(x)
+  if (lambda >= 1) lambda = 2/(lambda + 1)
+  if (startup == 0) startup = floor(2/lambda)
+  if (lambda == 0) ema = rep(mean(x), length(x))
+  if (lambda > 0) {
+    ylam = y * lambda
+    ylam[1] = mean(y[1:startup])
+    ema <- filter(ylam, filter = (1 - lambda), method = "rec") }
+  ema <- as.vector(ema)
+  if (TS) {
+    ema <- matrix(ema)
+    colnames(ema) <- "EMA"
+    rownames(ema) <- rownames(x)
+    series(x) <- ema
+  } else {
+    x <- ema
+  }
+  x
+}
+
+
+# -----------------------------------------------------------------------------
 
 
 .riskMetricsPlot <-
@@ -50,10 +67,10 @@
     stopifnot(isUnivariate(x))
     
     # Units:
-    units = colnames(x)
+    units <- colnames(x)
 
     # Filter:
-    riskMetrics = sqrt(emaTA(x^2, 1-lambda))
+    riskMetrics = sqrt(.emaTA(x^2, 1-lambda))
     
     # Plot:
     if (labels) {

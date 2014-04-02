@@ -29,12 +29,9 @@
   
   \tabular{ll}{
     \code{gpdQPlot} \tab estimation of high quantiles, \cr
-    \code{gpdQuantPlot} \tab variation of high quantiles with
-    threshold, \cr 
-    \code{gpdRiskMeasures} \tab prescribed quantiles and expected
-    shortfalls, \cr 
-    \code{gpdSfallPlot} \tab expected shortfall with confidence
-    intervals, \cr 
+    \code{gpdQuantPlot} \tab variation of high quantiles with threshold, \cr 
+    \code{gpdRiskMeasures} \tab prescribed quantiles and expected shortfalls, \cr 
+    \code{gpdSfallPlot} \tab expected shortfall with confidence intervals, \cr 
     \code{gpdShapePlot} \tab variation of shape with threshold, \cr 
     \code{gpdTailPlot} \tab plot of the tail, \cr 
     \code{tailPlot} \tab , \cr 
@@ -61,7 +58,7 @@ gpdTailPlot(object, plottype = c("xy", "x", "y", ""), doplot = TRUE,
 gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
 tailPlot(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, grid =
-TRUE, labels = TRUE, \dots) 
+    TRUE, labels = TRUE, \dots) 
 tailSlider(x)
 tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), \dots)
 }

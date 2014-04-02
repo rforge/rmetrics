@@ -19,14 +19,10 @@
 
 \description{
 
-    A collection and description to functions to compute
-    the generalized Pareto distribution and to
-    estimate its parameters. The functions compute 
-    density, distribution function, quantile function 
-    and generate random deviates for the GPD. Two 
-    approaches for parameter estimation are provided: 
-    Maximum likelihood estimation and the probability 
-    weighted moment method.
+    A collection and description to functions to fit and to simulate 
+    processes that are generated from the generalized Pareto distribution. 
+    Two approaches for parameter estimation are provided: Maximum 
+    likelihood estimation and the probability weighted moment method.
     \cr
 
     The GPD modelling functions are:
