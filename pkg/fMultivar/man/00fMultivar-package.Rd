@@ -23,7 +23,7 @@
 
     \tabular{ll}{
         Package:    \tab fMultivar\cr
-    T   ype:        \tab Package\cr
+        Type:       \tab Package\cr
         Version:    \tab R 3.0.1\cr
         Date:       \tab 2014\cr
         License:    \tab GPL Version 2 or later\cr
@@ -166,13 +166,12 @@
 }
 
 
-\author{
+\section{About Rmetrics:}{
 
-  This package was created by Diethelm Wuertz (2005). 
-  It is authored and maintained by the Rmetrics Core Team,
-  Yohan Chalabi (2010-2013) and Tobias Setz (since 2014), 
-  and Diethelm Wuertz.
-  
+    The \code{fImport} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
 }
 
 
