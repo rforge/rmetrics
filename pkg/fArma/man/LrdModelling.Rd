@@ -29,14 +29,11 @@
 
 \description{
 
-    A collection and description of functions 
-    to investigate the long range dependence or 
-    long memory behavior of an univariate time 
-    series process. Included are functions to 
-    simulate fractional Gaussian noise and 
-    fractional ARMA processes, and functions to 
-    estimate the Hurst exponent by several 
-    different methods.
+    A collection and description of functions to investigate the long 
+    range dependence or long memory behavior of an univariate time 
+    series process. Included are functions to simulate fractional 
+    Gaussian noise and fractional ARMA processes, and functions to 
+    estimate the Hurst exponent by several different methods.
     \cr
     
     The Functions and methods are:
@@ -71,6 +68,7 @@
     \code{hurstSlider} \tab Interactive Display of Hurst Estimates. }
        
     Function for the wavelet estimator:
+    
     \tabular{ll}{
     \code{waveletFit} \tab wavelet estimator. }
     

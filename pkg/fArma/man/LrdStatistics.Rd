@@ -16,9 +16,8 @@
 
 \description{
 
-    A collection and description of functions 
-    to investigate the true statistics of the
-    long range dependence or long memory behavior 
+    A collection and description of functions to investigate the true 
+    statistics of the long range dependence or long memory behavior 
     of an univariate time series process. 
     \cr
     

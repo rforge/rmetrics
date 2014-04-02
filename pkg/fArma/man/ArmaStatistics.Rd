@@ -11,9 +11,8 @@
 
 \description{
 
-    A collection and description of functions 
-    to compute statistics of a true ARMA time
-    series process.
+    A collection and description of functions to compute statistics of 
+    a true ARMA time series process.
     \cr
         
     The functions are:
