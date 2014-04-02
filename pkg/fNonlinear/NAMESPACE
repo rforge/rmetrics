@@ -18,9 +18,6 @@ useDynLib("fNonlinear")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
-# import("fGarch")
-
-#import("methods")
 
 
 ################################################
