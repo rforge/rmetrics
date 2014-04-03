@@ -32,8 +32,10 @@
         URL:        \tab \url{https://www.rmetrics.org}
     }
     
-    
-\section{1 Introduction}
+}
+
+
+\section{1 Introduction}{
     
     The major content of this package is to provide download functions 
     for financial market data from the Internet. For this we have 
@@ -106,8 +108,10 @@
     stringSplit     splits a string vector from a downloaded file
     }
 
+}
 
-\section{About Rmetrics:}{
+
+\section{About Rmetrics}{
 
     The \code{fImport} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
