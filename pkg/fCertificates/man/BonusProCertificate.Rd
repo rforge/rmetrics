@@ -5,8 +5,8 @@
   values a Bonus Pro Certificate using pricing by duplication
 }
 \usage{
-  BonusProCertificate(TypeFlag=c("poB1","pdoB2"), S, X, B, Time, time1 = 0, r, r_d, sigma, ratio = 1, 
-   barrierHit = FALSE)
+  BonusProCertificate(TypeFlag=c("poB1","pdoB2"), S, X, B, Time, time1 = 0, 
+   r, r_d, sigma, ratio = 1, barrierHit = FALSE)
 }
 
 \arguments{
@@ -73,15 +73,17 @@ Haug (2007). The complete Guide to Option Pricing Formulas, \emph{Wiley & Sons},
 
 \examples{
 ## payoff diagram
-S <- seq(50, 150)
+S <- seq(50, 130)
 p1 <- numeric(length(S))
 p2 <- numeric(length(S))
 for (i in seq(along=S))
 {
-  p1[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, Time=0.5, time1 = 0.25, 
+  p1[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, 
+     Time=0.5, time1 = 0.25, 
      r=0.01, r_d=0, sigma=0.3, ratio = 1)
-  p2[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, Time=0, time1 = 0, 
-    r=0.01, r_d=0, sigma=0.3, ratio = 1)
+  p2[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, 
+     Time=0, time1 = 0, 
+     r=0.01, r_d=0, sigma=0.3, ratio = 1)
 }   
 plot(S, p1, ylim=range(p1, p2, na.rm=TRUE), type="l", lwd=2, col="red",
   xlab="underlying price", ylab="payoff", main="Bonus Pro Certificate")
@@ -89,14 +91,16 @@ lines(S, p2, lwd=2, col="blue")
 abline(v=c(70, 100), lty=2, col="gray80")
     
 ## example: BonusPro vs. Bonus Certificate
-S <- seq(50, 150)
+S <- seq(50, 130)
 p1 <- numeric(length(S))
 p2 <- numeric(length(S))
 for (i in seq(along=S))
 {
-  p1[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, Time=1, time1 = 0.75, 
+  p1[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, 
+    Time=1, time1 = 0.75, 
     r=0.01, r_d=0, sigma=0.3, ratio = 1)
-  p2[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, Time=1, time1 = 0.25, 
+  p2[i] <- BonusProCertificate(TypeFlag="pdoB2", S=S[i], X=100, B=70, 
+    Time=1, time1 = 0.25, 
     r=0.01, r_d=0, sigma=0.3, ratio = 1)
 }
 p3 <- BonusCertificate(S=S, X=100, B=70, Time=1, r=0.01, r_d=0, sigma=0.3, ratio = 1)
