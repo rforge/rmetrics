@@ -116,8 +116,6 @@
     \code{ZhangTable} \tab Table from Zhang's paper, \cr
     \code{ZhangLongTable} \tab Long Table from Zhang's paper, \cr
     \code{ZhangShortTable} \tab Short Table from Zhang's paper. }
-    
-    Sorry - The Documentation is still Uncomplete.
 
 }
 
