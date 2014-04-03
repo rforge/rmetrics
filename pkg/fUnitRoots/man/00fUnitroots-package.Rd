@@ -44,6 +44,7 @@
     statistics, (iii) reimplementations for the ADF and MacKinnon
     Test, and (iv) an 'urca' Unit Root Test Interface for Pfaff's
     unit root test suite.
+    
 }
 
 
@@ -66,7 +67,7 @@
     The section provides functions to compute the distribution and 
     quantile functions for MacKinnon's unit root test statistics. 
     
-    \preformatted}{
+    \preformatted{
     punitroot       returns the cumulative probability
     qunitroot       returns the quantiles of the unit root test statistics
     unitrootTable   tables p values from MacKinnon's response surface
@@ -81,7 +82,7 @@
     time series, the ADF tests based on Banerjee's et al. tables and the
     unit root tests based on J.G. McKinnons' tables:
     
-    \preformatted{}
+    \preformatted{
     adfTest         augmented Dickey--Fuller test for unit roots
     unitrootTest    the same based on McKinnons's test statistics
     }
@@ -106,9 +107,9 @@
 }
 
 
-\section{About Rmetrics:}{
+\section{About Rmetrics}{
 
-    The \code{fImport} Rmetrics package is written for educational 
+    The \code{fUnitroots} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
     and licensed under the GPL.
     
