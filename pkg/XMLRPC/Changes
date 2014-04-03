@@ -1,0 +1,35 @@
+Version 0.2-4
+  
+  *  Removed trailing , in switch() call.
+
+Version 0.2-3
+  
+  *  Remove any newlines (\n) in base64 encoded content returned in an XMLRPC call.
+
+Version 0.2-1
+
+  *  Enclose <array> within a <value> node.
+
+Version 0.2-1
+
+  *  Handle string values that are returned as <value>string content</value> with no
+     outer <string>...</string>.  Doagnosed and suggested by Paul Shannon.
+
+Version 0.2-0
+ 
+  *  Put text in CDATA nodes.
+
+  *  Handle the conversion of results for lists better so as not to simplify them inappropriately.
+
+  *  Added serialization for raw vectors to base64 encoded content in base64 nodes.
+
+  *  convertToR doesn't try to simplify the results (i.e. it does not use xpathSApply) for each
+     of the value nodes in the response.
+
+Version 0.1-2
+
+  *  Patches from Andrea Bisognin to detect errors
+
+Version 0.1-1
+
+  *  Put primitive values inside a <value> node as they should be. (Strings are a special optional case.)

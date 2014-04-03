@@ -1,0 +1,28 @@
+<test>
+<int>10</int>
+<i4>11</i4>
+<string>A string</string>
+<double>3.1415</double>
+<boolean>1</boolean>
+<boolean>0</boolean>
+<dateTime.iso8601>19980717T14:08:55</dateTime.iso8601>
+<base64>eW91IGNhbid0IHJlYWQgdGhpcyE=</base64>
+<array>
+   <data>
+      <value><i4>12</i4></value>
+      <value><string>Egypt</string></value>
+      <value><boolean>0</boolean></value>
+      <value><i4>-31</i4></value>
+   </data>
+</array>
+<struct>
+   <member>
+      <name>lowerBound</name>
+      <value><i4>18</i4></value>
+   </member>
+   <member>
+      <name>upperBound</name>
+      <value><i4>139</i4></value>
+   </member>
+</struct>
+</test>
