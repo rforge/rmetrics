@@ -1,31 +1,21 @@
 
 ################################################
-## Default Namespace
+## fPortfolio
 ################################################
 
+################################################
+## Manual Namespace
+################################################
 
-import("timeDate")
-import("timeSeries")
-import("fAssets")
+import(timeDate)
+import(timeSeries)
+import(fBasics)
+import(fAssets)
 
-# import("fBasics")
+################################################
+## functions
+################################################
 
-# import("methods")
-# import("MASS") 
-# import("RUnit") 
-# import("robustbase")
+exportPattern(".")
 
-# import("Rglpk") 
-# import("spam")
-# import("Rsymphony")
-
-import("quadprog")
-# import("kernlab")  
-
-# import("Rnlminb2")
-# import("Rdonlp2")
-# import("Rsolnp") 
-
-
-exportPattern( "." )
 
