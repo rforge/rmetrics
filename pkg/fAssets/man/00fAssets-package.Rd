@@ -149,17 +149,8 @@
 }
 
 
-\section{4 Modelling Assets Sets and Testing for Normality}{
+\section{4 Testing Assets for Normality}{
 
-  Functions are available to fit the parameters for skew-Normal and
-  related financial return distributions. 
-
-  % assets-modelling.R
-  \preformatted{
-  assetsFit                   Fits the parameters of a set of assets
-  assetsSim                   Simulates a set of artificial assets
-  }
-  
   The multivariate Shapiro test and the E-Statistic Energy Test 
   allow to test multivariate Normality of financial returns.
   
@@ -173,43 +164,9 @@
 }
 
 
-\section{5 Portfolio Measures}{
-
-  The \code{fAssets} package provides selected function to compute
-  diverse risk Measure, Like VaR, CVaR, CVaR-Plus, and lambda-CVaR:
-
-  % assets-portfolio.R
-  \preformatted{
-  pfolioVaR                   Computes VaR for a portfolio of assets
-  pfolioCVaR                  Computes CVaR for a portfoluio of assets
-  pfolioCVaRplus              Computes CVaR-Plus for a portfolio of assets
-  lambdaCVaR                  Computes CVaR's atomic split value lambda
-  }
-  
-  Also some simple fund and portfolio performance measures are included: 
-  
-  % assets-portfolio.R
-  \preformatted{
-  pfolioMaxLoss               Computes maximum loss for a portfolio 
-  pfolioReturn                Computes return series for a portfolio
-  pfolioTargetReturn          Computes target return for a portfolio
-  pfolioTargetRisk            Computes target risk for a portfolio
-  pfolioHist                  Plots a histogram of portfolio returns
-  }
-  
-  The following functions compute marginal contributions to covariance
-  risk and covariance risk budgets:
-  
-  % assets-mcr.R
-  \preformatted{
-  covarRisk                   Computes covariance portfolio risk
-  mcr                         Computes marginal contribution to cov risk
-  mcrBeta                     Computes beta, the rescaled mcr to cov risk
-  riskContributions           Computes covariance risk contributions
-  riskBudgets                 Computes covariance risk budgets
-  }
-  
-  The computation of Lower partial moments is done by the follooing
+\section{5 Lower Partial Moments Measures}{
+    
+  The computation of Lower partial moments is done by the following
   two functions:
   
   % assets-lpm.R

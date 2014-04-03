@@ -35,16 +35,24 @@
 
 
 \section{1 Introduction}{
+
+  The \code{fExtremes} package provides functions for analyzing
+  and modeling extreme events in financial time Series. The
+  topics include: (i) data proeprocessing, (ii) explorative 
+  data analysis, (iii) peak over threshold modeling, (iv) block
+  maxima modeling, (v) estimation of VaR and CVaR, and (vi) the
+  computation of the extreme index.
+  
 }
 
 
 \section{2 Data and their Preprocessing}{
 
-    \emph{Data Sets}
+    \emph{Data Sets:}
     
     Data sets used in the examples of the timeSeries packages.
         
-    \emph{Data Preprocessing}
+    \emph{Data Preprocessing:}
     
     These are tools for data preprocessing, including functions to 
     separate data beyond a threshold value, to compute blockwise data 
@@ -89,7 +97,7 @@
     }
     
     
-    \emph{Parameter Fitting of Mean Excesses}
+    \emph{Parameter Fitting of Mean Excesses:}
     
     \preformatted{
     normMeanExcessFit    fits mean excesses with a normal density
@@ -104,7 +112,7 @@
 
 \section{3 GPD Peak over Threshold Modeling}{
 
-    \emph{GPD Distribution}
+    \emph{GPD Distribution:}
     
     A collection of functions to compute the generalized Pareto 
     distribution. The functions compute density, distribution 
@@ -122,14 +130,14 @@
     }
     
     
-    \emph{GPD Moments}
+    \emph{GPD Moments:}
     
     \preformatted{
     gpdMoments      computes true mean and variance of GDP
     }
     
     
-    \emph{GPD Parameter Estimation}
+    \emph{GPD Parameter Estimation:}
     
     This section contains functions to fit and to simulate processes that
     are generated from the generalized Pareto distribution. Two 
@@ -142,7 +150,7 @@
     }
     
     
-    \emph{GPD print, plot and summary methods}
+    \emph{GPD print, plot and summary methods:}
     
     \preformatted{
     print           print method for a fitted GPD object
@@ -151,7 +159,7 @@
     }
     
     
-    \emph{GDP Tail Risk}
+    \emph{GDP Tail Risk:}
     
     The following functions compute tail risk under the GPD approach.
     
@@ -175,7 +183,7 @@
 
 \section{4 GEV Block Maxima Modeling}{
 
-    \emph{GEV Distribution}
+    \emph{GEV Distribution:}
     
     This section contains functions to fit and to simulate processes 
     that are generated from the generalized extreme value distribution
@@ -190,14 +198,14 @@
     }
     
     
-    \emph{GEV Moments}
+    \emph{GEV Moments:}
     
     \preformatted{
     gevMoments      computes true mean and variance
     }
     
     
-    \emph{GEV Parameter Estimation}
+    \emph{GEV Parameter Estimation:}
     
     
     A collection to simulate and to estimate the parameters of
@@ -217,7 +225,7 @@
     }
     
     
-    \emph{GEV MDA Estimation}
+    \emph{GEV MDA Estimation:}
     
     Here we provide Maximum Domain of Attraction estimators and visualize 
     the results by a Hill plot and a common shape parameter plot from
@@ -229,7 +237,7 @@
     }
     
     
-    \emph{GEV Risk Estimation}
+    \emph{GEV Risk Estimation:}
     
     \preformatted{
     gevrlevelPlot   k-block return level with confidence intervals
@@ -274,7 +282,7 @@
 }
 
 
-\section{About Rmetrics:}{
+\section{About Rmetrics}{
 
     The \code{fExtremes} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 

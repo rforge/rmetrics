@@ -37,6 +37,10 @@
 
 
 \section{1 Introduction}{
+
+    The \code{fAsianOptions} package provides functions for pricing
+    and valuating Asian Options together with tools for analyzing
+    and modeling Exponential Brownian Motion, EBM.
 }
 
 
@@ -165,7 +169,7 @@
     modified Bessel functions of integer order of the first and second 
     kind as well as their derivatives.     
 
-    \preformatted{}
+    \preformatted{
     BesselI         computes modified Bessel function of the 1st kind
     BesselDI        computes its derivative
     BesselK         computes the modified Bessel function of the 3nd kind

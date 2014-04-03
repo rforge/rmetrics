@@ -7,7 +7,6 @@ Author: Rmetrics Core Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
-Imports: fCopulae
 Suggests: methods, MASS, robustbase, sn, mnormt, ecodist, mvnormtest, 
       energy, RUnit
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>

@@ -7,8 +7,7 @@ Author: Rmetrics Core Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
-Imports: mvtnorm, sn
-Suggests: methods, RUnit, tcltk
+Suggests: methods, RUnit, tcltk, mvtnorm, sn
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance"
