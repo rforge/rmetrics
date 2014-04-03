@@ -34,6 +34,36 @@
 }
 
 
-\keyword{models}
+\section{1 Introduction}{
+
+    This section provides functions to valuate Bonds and to
+    calculate term structures.
+    
+}
+
+
+\section{2 Term Structure Calculation}{
+
+    This section provides two functions for term structure modelling
+    based on the Nelson-Siegel, and on the Svennson approach.
+    
+    \preformatted{
+    NelsonSiegel    models Nelson-Siegel Term Structure
+    Svensson        models Nelson-Siegel-Svensson Term Structure
+    }
+    
+}
+
+
+\section{About Rmetrics}{
+
+    The \code{fBonds} Rmetrics package is written for educational 
+    support in teaching "Computational Finance and Financial Engineering" 
+    and licensed under the GPL.
+    
+}
+
+
+\keyword{package}
 
 
