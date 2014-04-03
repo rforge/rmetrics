@@ -47,13 +47,12 @@
   for the 2-dimensional Cauchy, Normal, and Student-t distributions.
   A generalisation is made for the family of 2-dimensional elliptical
   distributions. In this case we provide density functions for the 
-  \code{"norm"}, \code{"cauchy"}, \code{"t"}, \code{"logistic"}, 
-  \code{"laplace"}, \code{"kotz"}, and \code{"epower"} densities.
+  Normal, Cauchy, Student-t, Logistic, Laplace, Kotz, e-Power densities.
   
   In the case of multivariate distribution functions from the skew-normal 
   (SN) family and some related ones we recommend to 
   use the density funtions, probability functions and random number
-  generators provided by Azzalini's contributed package \code{"sn"}.
+  generators provided by Azzalini's contributed package 'sn'.
   The family of his SN-distributions cover the skew Cauchy, the skew
   Normal, and the skew Student-t distributions. For parameter fitting
   we have added three simple wrapper Functions for an easy to use
@@ -63,7 +62,7 @@
   hyperbolic (GHYP) family and some related ones we recommend to 
   use the density funtions, probability functions and random number
   generators provided by David Luethi and Wolfgang Breymann's contributed 
-  package \code{"ghyp"}.
+  package 'ghyp'.
   The family of their GHYP-distributions cover beside the General
   Hyperbolic distribution (GHYP) also the special cases for the
   Hyperbolic distribution (HYP), for the Normal Inverse Gaussian 
@@ -81,7 +80,9 @@
   [dpr]cauchy2d         Bivariate Cauchy Distribution
   [dpr]norm2d           Bivariate Normal Disribution
   [dpr]t2d              Bivariate Student-t Disribution
+  }
   
+  \preformatted{
   delliptical2d         Bivariate Elliptical Densities
   }
   
@@ -168,7 +169,7 @@
 
 \section{About Rmetrics:}{
 
-    The \code{fImport} Rmetrics package is written for educational 
+    The \code{fMultivar} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
     and licensed under the GPL.
     
