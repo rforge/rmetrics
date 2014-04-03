@@ -1,7 +1,6 @@
 
 ################################################
-## Note this file has been automatically
-## generated --- Do not edit it.
+## fTrading
 ################################################
 
 
@@ -9,68 +8,15 @@
 ## import name space
 ################################################
 
-import("methods")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
-
-################################################
-## S4 classes
-################################################
-
-
-################################################
-## S3 classes
-################################################
 
 
 ################################################
 ## functions
 ################################################
 
-export(
-    ".dailyTA",
-    ".hitRate",
-    ".tradeLengths",
-    ".tradeSignals",
-    "EWMA",
-    "SMA",
-    "accelTA",
-    "adiTA",
-    "adoscillatorTA",
-    "apdTA",
-    "biasTA",
-    "bollingerTA",
-    "cdoTA",
-    "cdsTA",
-    "chaikinoTA",
-    "chaikinvTA",
-    "emaTA",
-    "fpdTA",
-    "fpkTA",
-    "garmanklassTA",
-    "macdTA",
-    "maxDrawDown",
-    "medpriceTA",
-    "momTA",
-    "nviTA",
-    "obvTA",
-    "ohlcPlot",
-    "oscTA",
-    "pviTA",
-    "pvtrendTA",
-    "rocTA",
-    "rollFun",
-    "rollVar",
-    "rsiTA",
-    "sharpeRatio",
-    "spdTA",
-    "sterlingRatio",
-    "stochasticTA",
-    "typicalpriceTA",
-    "vohlTA",
-    "vorTA",
-    "wcloseTA",
-    "williamsadTA",
-    "williamsrTA",
-    "wprTA" )
+exportPattern(".")
+
+
