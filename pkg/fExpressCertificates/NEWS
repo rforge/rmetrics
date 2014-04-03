@@ -1,0 +1,15 @@
+Version 1.2 (2013-03)
+---------------------
+# refactoring
+# CRAN version
+
+Version 1.1 (2010-01-23)
+---------------------------------------
+# New methods simPricesAndMinimumFromGBM() and simPricesAndMinimumFromTruncatedGBM()
+  for simulation of joint distribution of prices and minimum
+# bugfix in calculateProbabilityGGBM()
+
+Version 1.0 (2009-10-11)
+------------------------
+# first draft
+# probability for Brownian motion
