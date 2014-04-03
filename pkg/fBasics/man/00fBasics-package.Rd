@@ -587,7 +587,7 @@
 
 \section{About Rmetrics:}{
 
-    The \code{fImport} Rmetrics package is written for educational 
+    The \code{fBasics} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
     and licensed under the GPL.
     
