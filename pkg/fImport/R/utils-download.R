@@ -23,7 +23,7 @@
 
 
 composeURL <- 
-function(..., prefix = "http://")
+    function(..., prefix = "http://")
 {
     # A function implemented by Diethelm Wuertz
     
@@ -41,7 +41,7 @@ function(..., prefix = "http://")
 
 
 indexGrep <- 
-function(pattern, x, ...)
+    function(pattern, x, ...)
 {
     # A function implemented by Diethelm Wuertz
     
