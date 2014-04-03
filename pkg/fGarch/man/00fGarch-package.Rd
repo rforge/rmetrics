@@ -92,7 +92,7 @@
     time series processes.
     
     \preformatted{
-    garchFit} \tab Fits the parameters of a GARCH process
+    garchFit        fits the parameters of a GARCH process
     }
     
     
@@ -161,9 +161,9 @@
 }
 
 
-\section{About Rmetrics:}{
+\section{About Rmetrics}{
 
-    The \code{fImport} Rmetrics package is written for educational 
+    The \code{fGarch} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
     and licensed under the GPL.
     
