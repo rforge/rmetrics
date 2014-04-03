@@ -1,18 +1,20 @@
 
 ################################################
-## Note this file has been automatically
-## generated --- Do not edit it.
+## fExoticOptions
 ################################################
+
 
 ################################################
 ## import name space
 ################################################
 
-import("methods")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
 import("fOptions")
+
+#import("methods")
+
 
 ################################################
 ## S4 classes
@@ -28,48 +30,5 @@ import("fOptions")
 ## functions
 ################################################
 
-export(
-    ".EOnEOption.CriticalPart2",
-    ".EOnEOption.CriticalPart3",
-    ".EOnEOption.CriticalPrice",
-    "AmericanExchangeOption",
-    "AssetOrNothingOption",
-    "BinaryBarrierOption",
-    "CashOrNothingOption",
-    "ComplexChooserOption",
-    "DiscreteBarrierOption",
-    "DoubleBarrierOption",
-    "EquityLinkedFXOption",
-    "EuropeanExchangeOption",
-    "ExchangeOnExchangeOption",
-    "ExecutiveStockOption",
-    "ExtremeSpreadOption",
-    "FEInDomesticFXOption",
-    "FixedStrikeLookbackOption",
-    "FloatingStrikeLookbackOption",
-    "ForwardStartOption",
-    "GapOption",
-    "GeometricAverageRateOption",
-    "HolderExtendibleOption",
-    "LevyAsianApproxOption",
-    "LookBarrierOption",
-    "OptionOnOption",
-    "PTFixedStrikeLookbackOption",
-    "PTFloatingStrikeLookbackOption",
-    "PTSingleAssetBarrierOption",
-    "PTTwoAssetBarrierOption",
-    "QuantoOption",
-    "RatchetOption",
-    "SimpleChooserOption",
-    "SoftBarrierOption",
-    "SpreadApproxOption",
-    "StandardBarrierOption",
-    "SuperShareOption",
-    "TakeoverFXOption",
-    "TimeSwitchOption",
-    "TurnbullWakemanAsianApproxOption",
-    "TwoAssetBarrierOption",
-    "TwoAssetCashOrNothingOption",
-    "TwoAssetCorrelationOption",
-    "TwoRiskyAssetsOption",
-    "WriterExtendibleOption" )
+exportPattern(".")
+
