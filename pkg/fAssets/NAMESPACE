@@ -1,20 +1,22 @@
+
+
 ################################################
-## Manual Namespace fAssets
+## fAssets
 ################################################
 
-exportPattern(".")
+################################################
+## Manual Namespace
+################################################
 
 import(timeDate)
 import(timeSeries)
 import(fBasics)
 import(fMultivar)
 
-#import(robustbase)
-#import(methods)
-#import(MASS)
-#import(fCopulae)
-#import(sn)
-#import(ecodist)
-#import(mvnormtest)
-#import(energy)
+################################################
+## functions
+################################################
+
+exportPattern(".")
+
 
