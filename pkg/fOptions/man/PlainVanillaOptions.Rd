@@ -30,11 +30,10 @@
 
 \description{
 
-    A collection and description of functions to valuate
-    plain vanilla options. Included are functions for the
-    Generalized Black-Scholes option pricing model, for
-    options on futures, some utility functions, and print
-    and summary methods for options.
+    A collection and description of functions to valuate plain vanilla 
+    options. Included are functions for the Generalized Black-Scholes 
+    option pricing model, for options on futures, some utility functions, 
+    and print and summary methods for options.
     \cr
 
     The functions are:

@@ -14,56 +14,36 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
 
+###############################################################################
 
-################################################################################
+.onAttach <- 
+  function(libname, pkgname)
+  {
+    # do whatever needs to be done when the package is loaded
+    # some people use it to bombard users with 
+    # messages using 
+    
+    packageStartupMessage( "\n" )
+    packageStartupMessage( "Rmetrics Package fOptions" ) 
+    packageStartupMessage( "Pricing and Evaluating Basic Options" )
+    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+  }
 
-## .First.lib =
-## function(lib, pkg)
-## {
-##     # Startup Mesage and Desription:
-##     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
-##     dsc <- packageDescription(pkg)
-##     if(interactive() || getOption("verbose")) {
-##         # not in test scripts
-##         MSG(sprintf("Rmetrics Package %s (%s) loaded.", pkg, dsc$Version))
-##     }
+###############################################################################
 
-##     # Load dll:
-##     library.dynam("fOptions", pkg, lib)
-
-
-##     .setfOptionsEnv(.runif.halton.seed = list())
-##     .setfOptionsEnv(.rnorm.halton.seed = list())
-##     .setfOptionsEnv(.runif.sobol.seed = list())
-##     .setfOptionsEnv(.rnorm.sobol.seed = list())
-
-
-## }
-
-.onLoad <- function(libname, pkgname) {
-
-    .setfOptionsEnv(.runif.halton.seed = list())
-    .setfOptionsEnv(.rnorm.halton.seed = list())
-    .setfOptionsEnv(.runif.sobol.seed = list())
-    .setfOptionsEnv(.rnorm.sobol.seed = list())
-
+.onLoad <- 
+  function(libname, pkgname) 
+{
+  .setfOptionsEnv(.runif.halton.seed = list())
+  .setfOptionsEnv(.rnorm.halton.seed = list())
+  .setfOptionsEnv(.runif.sobol.seed = list())
+  .setfOptionsEnv(.rnorm.sobol.seed = list())
 }
 
-if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
-    Sys.setenv <- Sys.putenv
+###############################################################################
 
 
-
-################################################################################

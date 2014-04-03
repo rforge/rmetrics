@@ -1,17 +1,17 @@
 Package: fOptions
 Version: 3010.84
-Revision: 5524
 Date: 2013-06-23
-Title: Rmetrics - Basics of Option Valuation
-Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: methods, timeDate, timeSeries, fBasics
-Suggests: RUnit, tcltk
-Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-Note: Several parts are still preliminary and may be changed in the
-        future. This typically includes function and argument names, as
-        well as defaults for arguments and return values.
+Title: Rmetrics - Pricing and Evaluating Basic Options
+Author: Author: Rmetrics Core Team,
+      Diethelm Wuertz [aut, cre]
+Depends: timeDate, timeSeries, fBasics
+Suggests: methods, RUnit, tcltk
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Description: Environment for teaching 
+      "Financial Engineering and Computational Finance"
+Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
+      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

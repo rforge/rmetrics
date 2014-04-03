@@ -14,18 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2004, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
@@ -37,7 +25,10 @@
 #  rnorm.sobol            Normal Sobol low discrepancy sequence
 ################################################################################
 
-runif.pseudo <- function(n, dimension, init = NULL) {
+
+runif.pseudo <- 
+  function(n, dimension, init = NULL) 
+{
     # Description:
     #   Uniform Pseudo Random number sequence
 
@@ -48,7 +39,9 @@ runif.pseudo <- function(n, dimension, init = NULL) {
 # ------------------------------------------------------------------------------
 
 
-rnorm.pseudo <- function(n, dimension, init = TRUE) {
+rnorm.pseudo <- 
+  function(n, dimension, init = TRUE) 
+{
 
     # Description:
     #   Normal Pseudo Random number sequence
@@ -60,8 +53,10 @@ rnorm.pseudo <- function(n, dimension, init = TRUE) {
 # -----------------------------------------------------------------------------
 
 
-runif.halton <- function (n, dimension, init = TRUE)
-{   # A function implemented by Diethelm Wuertz
+runif.halton <- 
+  function (n, dimension, init = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Uniform Halton Low Discrepancy Sequence
