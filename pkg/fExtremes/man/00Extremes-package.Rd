@@ -50,7 +50,7 @@
     separate data beyond a threshold value, to compute blockwise data 
     like block maxima, and to decluster point process data.
     
-    \preformatted{}
+    \preformatted{
     blockMaxima     extracts block maxima from a vector or a time series 
     findThreshold   finds upper threshold for a given number of extremes  
     pointProcess    extracts peaks over Threshold from a vector or a time series 
@@ -144,6 +144,7 @@
     
     \emph{GPD print, plot and summary methods}
     
+    \preformatted{
     print           print method for a fitted GPD object
     plot            plot method for a fitted GPD object
     summary         summary method for a fitted GPD object
@@ -247,6 +248,7 @@
     CVaR            computes conditional Value-at-Risk
     }
     
+}
 
 
 \section{5 Extreme Index}{
@@ -274,7 +276,7 @@
 
 \section{About Rmetrics:}{
 
-    The \code{fImport} Rmetrics package is written for educational 
+    The \code{fExtremes} Rmetrics package is written for educational 
     support in teaching "Computational Finance and Financial Engineering" 
     and licensed under the GPL.
     
