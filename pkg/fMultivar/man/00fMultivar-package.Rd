@@ -45,24 +45,26 @@
   
   In the case of bivariate distribution functions we provide functions
   for the 2-dimensional Cauchy, Normal, and Student-t distributions.
-  A generalisation is made for the family of 2-dimensional elliptical
-  distributions. In this case we provide density functions for the 
-  Normal, Cauchy, Student-t, Logistic, Laplace, Kotz, e-Power densities.
+  A generalisation (for the density only) is made for the family of 
+  2-dimensional elliptical distributions. In this case we provide density
+  functions for the Normal, Cauchy, Student-t, Logistic, Laplace, Kotz, 
+  e-Power distributions.
   
   In the case of multivariate distribution functions from the skew-normal 
   (SN) family and some related ones we recommend to 
   use the density funtions, probability functions and random number
-  generators provided by Azzalini's contributed package 'sn'.
+  generators provided by Azzalini's contributed package \code{sn}.
   The family of his SN-distributions cover the skew Cauchy, the skew
   Normal, and the skew Student-t distributions. For parameter fitting
-  we have added three simple wrapper Functions for an easy to use
-  approach to estimate the distributional parameters.
+  we have added three simple wrapper functions for an easy to use
+  approach to estimate the distributional parameters for financial
+  return series.
   
   In the case of multivariate distribution functions from the generalized
   hyperbolic (GHYP) family and some related ones we recommend to 
   use the density funtions, probability functions and random number
   generators provided by David Luethi and Wolfgang Breymann's contributed 
-  package 'ghyp'.
+  package \code{ghyp}.
   The family of their GHYP-distributions cover beside the General
   Hyperbolic distribution (GHYP) also the special cases for the
   Hyperbolic distribution (HYP), for the Normal Inverse Gaussian 
@@ -73,8 +75,9 @@
 
 \section{2 Bivariate Distributions}{
 
-  contains functions to model bivariate density, probability,
-  quantile functions, and to generate random numbers.
+  This section contains functions to model bivariate density, 
+  probability, quantile functions, and to generate random numbers
+  for three standard distributions.
   
   \preformatted{
   [dpr]cauchy2d         Bivariate Cauchy Distribution
@@ -82,9 +85,19 @@
   [dpr]t2d              Bivariate Student-t Disribution
   }
   
+  
+  The density function 
+  
+  
   \preformatted{
   delliptical2d         Bivariate Elliptical Densities
   }
+  
+  
+  computes for several bivariate elliptical distributions their
+  densities. Included distributions are the following types:
+  \code{"norm"}, \code{"cauchy"}, \code{"t"}, \code{"logistic"}, 
+  \code{"laplace"}, \code{"kotz"}, and \code{"epower"}.
   
 }
 

@@ -55,15 +55,34 @@
 
 \examples{
 \dontrun{
+## Load Library:
+   require(sn)
+   
 ## mscFit - 
    # Fit Example:
    N <- 1000
    xi <- c(0, 0) 
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
-   X <- sn::rmsc(n=N, xi, Omega, alpha)
+   set.seed(4711)
+   X <- rmsc(n=N, xi, Omega, alpha)
    ans <- mscFit(X)
-   ans
+
+   # 2-D Density Plot:
+   plot(hexBinning(X[,1], X[, 2], bins = 30))
+
+   # Add Contours:
+   N <- 101
+   x <- seq(min(X[, 1]), max(X[, 1]), l=N)
+   y <- seq(min(X[, 2]), max(X[, 2]), l=N)        
+   u <- grid2d(x, y)$x
+   v <- grid2d(x, y)$y
+   X <- cbind(u, v)
+   param <- ans@fit$estimate
+   Z <- matrix(dmsc(X, 
+     xi=param$xi[1,], Omega=param$Omega, alpha=param$alpha), ncol=N)
+   contour(x, y, Z, add=TRUE, col="green", lwd=2)
+   grid(col="brown", lty=3)
 }
 }
 

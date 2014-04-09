@@ -89,10 +89,10 @@ Venables W.N., Ripley B.D., (2002);
    X <- grid2d(x)
    z <- dnorm2d(X$x, X$y, rho = 0.5)
    ZD <- list(x = x, y = x, z = matrix(z, ncol = length(x)))
-   # Perspective Plot:
+   # Perspective Density Plot:
    persp(ZD, theta = -40, phi = 30, col = "steelblue")
-   # Contour Plot:
-   contour(ZD)
+   # Contour Density Plot:
+   contour(ZD, main="Bivariate Normal Density")
     
 ## pnorm2d -
    # Bivariate Normal Probability:
@@ -116,4 +116,5 @@ Venables W.N., Ripley B.D., (2002);
 
 
 \keyword{math}
+
 

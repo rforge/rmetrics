@@ -23,9 +23,10 @@
 ################################################################################
 
 
-pcauchy2d =
-function(x, y = x, rho = 0)
-{   # A function Implemented by Diethelm Wuertz
+pcauchy2d <- 
+    function(x, y = x, rho = 0)
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Computes bivariate Cauchy probability function
@@ -56,9 +57,10 @@ function(x, y = x, rho = 0)
 # ------------------------------------------------------------------------------
 
 
-dcauchy2d =
-function(x, y = x, rho = 0)
-{   # A function implemented by Diethelm Wuertz
+dcauchy2d <- 
+    function(x, y = x, rho = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   n - number of random deviates to be generated
@@ -74,8 +76,8 @@ function(x, y = x, rho = 0)
     # FUNCTION:
 
     # Density:
-    density = dt2d(x = x, y = y, rho = rho, nu = 1)
-    attr(density, "control") = c(rho = rho)
+    density <- dt2d(x = x, y = y, rho = rho, nu = 1)
+    attr(density, "control") <- c(rho = rho)
 
     # Return value:
     density
@@ -86,8 +88,9 @@ function(x, y = x, rho = 0)
 
 
 rcauchy2d =
-function(n, rho = 0)
-{   # A function implemented by Diethelm Wuertz
+    function(n, rho = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates bivariate Cauchy random deviates
@@ -104,8 +107,8 @@ function(n, rho = 0)
     # FUNCTION:
 
     # Random Deviates:
-    ans = rt2d(n = n, rho = rho, nu = 1)
-    attr(ans, "control") = c(rho = rho)
+    ans <- rt2d(n = n, rho = rho, nu = 1)
+    attr(ans, "control") <- c(rho = rho)
 
     # Return Value:
     ans
@@ -113,4 +116,5 @@ function(n, rho = 0)
 
 
 ################################################################################
+
 

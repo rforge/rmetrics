@@ -89,14 +89,15 @@ Venables W.N., Ripley B.D., (2002);
    z <- dcauchy2d(X$x, X$y, rho = 0.5)
    Z <- list(x = x, y = x, z = matrix(z, ncol = length(x)))
    
-## Perspective Plot:
+## Perspective Density Plot:
    persp(Z, theta = -40, phi = 30, col = "steelblue")
    
-## Image Plot with Contours:
-   image(Z)
+## Image Density Plot with Contours:
+   image(Z, main="Bivariate Cauchy")
    contour(Z, add=TRUE)
 }
 
 
 \keyword{math}
+
 

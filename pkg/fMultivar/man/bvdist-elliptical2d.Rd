@@ -97,10 +97,16 @@ Venables W.N., Ripley B.D., (2002);
    persp(Z, theta = -40, phi = 30, col = "steelblue")
    
 ## Image Plot with Contours:
-   image(Z)
-   contour(Z, add=TRUE)   
+   image(Z, main = "Bivariate Kotz")
+   contour(Z, add=TRUE)
+   
+## Internal Density Slider:
+   \dontrun{
+   .delliptical2dSlider()
+   }
 }
 
 
 \keyword{math}
+
 

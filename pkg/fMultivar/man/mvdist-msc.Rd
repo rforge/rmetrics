@@ -61,25 +61,46 @@
 
 \examples{
 \dontrun{
-## Make 2-D Grid Coordinates:
+## grid2d - 
+   # Make 2-D Grid Coordinates:
    N <- 101
    x <- y <- seq(-3, 3, l=N)
    X <- cbind(u=grid2d(x)$x, v=grid2d(x)$y)
    
-## dmsc - 
-   # Set Parameters:
+## Set Parameters:
    xi <- c(0, 0) 
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
-   # Compute skew Cauch Density:
+   
+## dmsc - 
+   # Compute skew Cauchy Density:
    z <- sn::dmsc(X, xi, Omega, alpha)
    Z <- list(x=x, y=x, z=matrix(z, ncol = length(x)))
    # Plot:   
-   image(Z)
-   contour(Z)
+   image(Z, main ="Skew Cauchy Density")
+   contour(Z, add=TRUE)
    grid(col="red")
+
+## pmsc - 
+   # Compute skew Cauchy Probability:
+   z <- NULL
+   for (i in 1:nrow(X)) z <- c(z, sn::pmsc(X[i, ], xi, Omega, alpha)[[1]])
+   Z <- list(x=x, y=x, z=matrix(z, ncol = length(x)))
+   # Plot:   
+   image(Z, main ="Skew Cauchy Probability")
+   contour(Z, add=TRUE)
+   grid(col="red")
+   
+## rmsc - 
+   # Skew Cauchy Random Deviates:
+   set.seed(4711)
+   r <- sn::rmsc(10000, xi, Omega, alpha)
+   plot(hexBinning(r[, 1], r[, 2]))
+   # Note, we have fat tails ...
 }
 }
 
+
 \keyword{math}
+
 

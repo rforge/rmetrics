@@ -51,16 +51,16 @@ delliptical2d <-
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type <- match.arg(type)
     
     # Settings:
     if (is.list(x)) {
-        y = x$y
-        x = x$x
+        y <- x$y
+        x <- x$x
     }
     if (is.matrix(x)) {
-        y = x[, 2]
-        x = x[, 2]
+        y <- x[, 2]
+        x <- x[, 2]
     }
 
     # Add Default Parameters:
@@ -71,11 +71,11 @@ delliptical2d <-
     }
     
     # Density:
-    xoy = ( x^2 - 2*rho*x*y + y^2 ) / (1-rho^2)
-    lambda = .gfunc2d(param = param, type = type)[[1]]
-    density = lambda * .gfunc2d(x = xoy, param = param, type = type) /
+    xoy <- ( x^2 - 2*rho*x*y + y^2 ) / (1-rho^2)
+    lambda <- .gfunc2d(param = param, type = type)[[1]]
+    density <- lambda * .gfunc2d(x = xoy, param = param, type = type) /
         sqrt(1 - rho^2)
-        
+    
     # Add attributes:
     if (is.null(param)) {
         attr(density, "control") = unlist(list(type = type, rho = rho))
@@ -105,7 +105,7 @@ delliptical2d <-
     "laplace", "kotz", "epower"))
 {   
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Generator function for elliptical distributions
     
@@ -302,4 +302,5 @@ delliptical2d <-
 
 
 ################################################################################
+
 

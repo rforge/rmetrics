@@ -55,6 +55,9 @@
 
 \examples{
 \dontrun{
+## Load Library:
+   require(sn)
+   
 ## mstFit - 
    # Fit Example:
    N <- 1000
@@ -62,6 +65,7 @@
    Omega <- diag(2); Omega[2,1] <- Omega[1,2] <- 0.5
    alpha <- c(2, -6)
    nu <- 4
+   set.seed(4711)
    X <- rmst(n=N, xi, Omega, alpha, nu=4)
    ans <- mstFit(X)
 
@@ -80,6 +84,7 @@
      xi=param$xi[1,], Omega=param$Omega, alpha=param$alpha, nu=param$nu), 
      ncol=N)
    contour(x, y, Z, add=TRUE, col="green", lwd=2)
+   grid(col="brown", lty=3)
 }
 }
 
