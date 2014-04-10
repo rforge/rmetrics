@@ -22,7 +22,7 @@
 #  rmsn                Multivariate Skew Normal Random Number generator
 # REQUIRES:           DESCRIPTION:
 #  sn                  Contributed R-Package
-#  fDISTSFIT          fBasics Package
+#  fDISTSFIT           fBasics Package
 ###############################################################################
 
 
@@ -38,14 +38,15 @@
 #   ms[cdt]Fit have been added.
 
 
-msnFit <- function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
+msnFit <- 
+  function(x, trace=FALSE, title=NULL, description=NULL)
 {
-  fit <- sn::msn.mle(x = rep(1, nrow(x)), y = x, trace=trace, ...)
-  fit$estimate <- list(
-    xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]])
+  fit <- sn::msn.mle(x = rep(1, nrow(x)), y = x, start=NULL, trace=trace)
+  fit$estimated <- fit$dp
   
   if (is.null(title)) 
     title <- "Skew Normal Parameter Estimation"
+  
   if (is.null(description)) 
     description <- description() 
   

@@ -42,7 +42,7 @@
   rmvst(n, dim=2, mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim), df=4)   
 
   mvFit(x, method = c("snorm", "st"), fixed.df = NA, 
-      title = NULL, description = NULL, trace = FALSE, ...)
+      title = NULL, description = NULL, trace = FALSE)
 }
 
 

@@ -122,5 +122,7 @@ adapt(ndim, lower, upper, functn, \dots)
    adapt(lower=-BIG, upper=BIG, functn=density, tol=1e-7)$integral   
 }
 
+
 \keyword{math}
+
 

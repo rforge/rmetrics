@@ -76,17 +76,17 @@ rmvst <-
 
 mvFit <- 
   function(x, method = c("snorm", "st"), fixed.df = NA, 
-           title = NULL, description = NULL, trace = FALSE, ...)
+           title = NULL, description = NULL, trace = FALSE)
 {   
   method <- match.arg(method)
 
   if (method == "snorm") {
-    ans <- msnFit(x, dp=NULL, trace=trace, ...)
+    ans <- msnFit(x, trace=trace)
   }
       
   if (method == "st") {
     if (is.na(fixed.df)) fixed.nu <- NULL else fixed.nu <- fixed.df
-    ans <- mstFit(x, dp=NULL, fixed.nu=fixed.nu, trace=trace, ...)
+    ans <- mstFit(x, fixed.nu=fixed.nu, trace=trace)
   }
 
   # Return Value:

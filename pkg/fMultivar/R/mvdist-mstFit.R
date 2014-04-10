@@ -22,7 +22,7 @@
 #  rmst                Multivariate Skew Student-t Random Number generator
 # REQUIRES:           DESCRIPTION:
 #  sn                  Contributed R-Package
-#  fDISTSFIT          fBasics Package
+#  fDISTSFIT           fBasics Package
 ################################################################################
 
 
@@ -39,16 +39,27 @@
 
 
 mstFit <- 
-  function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
+  function(x, fixed.nu=NULL, trace=FALSE, title=NULL, description=NULL)
 {
   # Fit distributional Parameters:
-  fit <- sn::mst.mple(x = rep(1, nrow(x)), y = x, trace=trace, penalty=NULL, ...)
-  fit$estimate <- list(
-    xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]], nu=fit$dp[[4]])
+  if (is.null(fixed.nu)) {
+    fit <- sn::mst.mple(
+      x = rep(1, nrow(x)), y = x, start=NULL, fixed.nu=NULL, 
+      trace=trace, penalty=NULL)
+    fit$estimated <- fit$dp
+  } else {
+    fit <- sn::mst.mple(
+      x = rep(1, nrow(x)), y = x, start=NULL, fixed.nu=fixed.nu, 
+      trace=trace, penalty=NULL)
+    fit$estimated <- fit$dp
+    fit$estimated$nu <- fixed.nu
+  }
+    
   
   # Add Title and Description:
   if (is.null(title)) 
     title <- "Student-t Parameter Estimation"
+  
   if (is.null(description)) 
     description <- description()
   

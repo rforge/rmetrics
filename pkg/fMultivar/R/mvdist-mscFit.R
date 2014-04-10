@@ -39,15 +39,16 @@
 
 
 mscFit <- 
-  function(x, dp=NULL, trace=FALSE, title=NULL, description=NULL, ...)
+  function(x, trace=FALSE, title=NULL, description=NULL)
 {
-  fit <- sn::mst.mple(x = rep(1, nrow(x)), y = x, fixed.nu=1,
-                  trace=trace, penalty=NULL, ...)
-  fit$estimate <- list(
-    xi=fit$dp[[1]], Omega=fit$dp[[2]], alpha=fit$dp[[3]])
+  fit <- sn::mst.mple(
+    x = rep(1, nrow(x)), y = x, start=NULL, fixed.nu=1, 
+    trace=trace, penalty=NULL)
+  fit$estimated <- fit$dp
   
   if (is.null(title)) 
     title <- "Skew Cauchy Parameter Estimation"
+  
   if (is.null(description)) 
     description <- description()
   

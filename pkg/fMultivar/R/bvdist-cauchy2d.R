@@ -46,7 +46,7 @@ pcauchy2d <-
 
     # Settings:
     # Probaility:
-    ans  = pt2d(x = x, y = y, rho = rho, nu = 1)
+    ans <- pt2d(x = x, y = y, rho = rho, nu = 1)
     attr(ans, "control") = c(rho = rho)
 
     # Return Value:
