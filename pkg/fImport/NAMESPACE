@@ -7,11 +7,8 @@
 ################################################
 ## import name space
 ################################################
-
 import("timeDate")
 import("timeSeries")
-import("gdata")
-import("xlsx")
 
 # import("methods")
 

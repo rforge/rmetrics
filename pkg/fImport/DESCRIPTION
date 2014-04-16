@@ -1,5 +1,5 @@
 Package: fImport
-Version: 3010.83
+Version: 3010.82
 Date: 2013-03-15
 Title: Rmetrics - Importing Economic and Financial Data
 Author: Author: Rmetrics Core Team,
@@ -7,7 +7,6 @@ Author: Author: Rmetrics Core Team,
       Tobias Setz [aut],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries
-Imports: gdata, xlsx
 Suggests: methods, RUnit
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
