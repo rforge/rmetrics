@@ -8,8 +8,8 @@ Author: Rmetrics Core Team,
       Diethelm Wuertz [aut, cre]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Depends: R (>= 2.15.1), timeDate, timeSeries
-Imports: gss, stabledist
-Suggests: methods, MASS, spatial, RUnit, tcltk, akima
+Imports: gss, stabledist, MASS
+Suggests: methods, spatial, RUnit, tcltk, akima
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance" 
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
