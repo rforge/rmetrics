@@ -29,7 +29,7 @@
 
 backtestPlot <-
     function(object, which = "all", labels = TRUE, legend = TRUE,
-    at = NULL, format = NULL, ...)
+    at = NULL, format = NULL, cex=0.6, font=1, family="mono")
 {
     # A function implemented by Diethelm Wuertz and William Chen
 
@@ -40,27 +40,26 @@ backtestPlot <-
     #   object - a list as returned by the function portfolioSmoothing()
     #   which - which plots should be displayed
     #   labels - a logical flag, should automated labels added to the plot
-    #   ... - optional arguments to be passed to the plot functions
     
     # FUNCTION:
     
     # Frame:
     if (any(which == "all"))
-    par(mfrow = c(3, 2), mar = c(1.5, 4, 5, 2), oma = c(5,1,0,1))
+    par(mfrow = c(3, 2), mar = c(1.5, 4, 5, 2), oma = c(5, 1, 0, 1))
        
     # Plot:
     if(any(which == "1") || which == "all")
-        backtestAssetsPlot (object, labels, legend, at, format, ...)
+        backtestAssetsPlot (object, labels, legend, at, format)
     if(any(which == "2") || which == "all")
-        backtestWeightsPlot (object, labels, legend, at, format, ...)
+        backtestWeightsPlot (object, labels, legend, at, format)
     if(any(which == "3") || which == "all")
-       backtestRebalancePlot (object, labels, legend, at, format, ...)
+       backtestRebalancePlot (object, labels, legend, at, format)
     if(any(which == "4") || which == "all")
-        backtestPortfolioPlot(object, labels, legend, at, format, ...)
+        backtestPortfolioPlot(object, labels, legend, at, format)
     if(any(which == "5") || which == "all")
-        backtestDrawdownPlot(object, labels, legend, at, format, ...)
+        backtestDrawdownPlot(object, labels, legend, at, format)
     if(any(which == "6" )|| which == "all")
-        backtestReportPlot(object, cex=NULL, ...)
+        backtestReportPlot(object, cex=cex, font=font, family=family)
         
     # Return Value:
     invisible()
@@ -72,19 +71,19 @@ backtestPlot <-
 
    
 backtestAssetsPlot <-
-    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, ...)
+    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
 {
     # A function implemented by Diethelm Wuertz and William Chen
     
     # Description:
     #   Plots assets used in a portfolio backtest
-
+    
     # Arguments:
     #   object - a list as returned by the function portfolioSmoothing()
     #   labels - a logical flag, should automated labels added to the plot
-
+    
     # FUNCTION:
-
+    
     # Settings:
     data <- object$data
     benchmark <- object$benchmarkName
@@ -104,7 +103,7 @@ backtestAssetsPlot <-
         xlab <- ""
         ylab <- ""  
     }
-
+    
     # Series:
     X <- data[, benchmark]
     
@@ -132,7 +131,7 @@ backtestAssetsPlot <-
     
     # Plot:
     plot(X, type = "n", xaxt = "n", at = at, format = Format,
-        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "", ...) 
+        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "") 
     grid(NA, ny = NULL)
     abline(v = as.POSIXct(at), lty = 3, col = "brown")
     
@@ -173,7 +172,7 @@ backtestAssetsPlot <-
 
 
 backtestWeightsPlot <-
-    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, ...)
+    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
 {
     # A function implemented by Diethelm Wuertz and William Chen
     
@@ -224,7 +223,7 @@ backtestWeightsPlot <-
     
     # Plot:
     plot(X, type = "n", xaxt = "n", las = 2, at = at, format = Format,
-        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "", ...) 
+        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "") 
     grid(NA, ny = NULL)
     abline(v = as.POSIXct(at), lty = 3, col = "brown")
     
@@ -270,7 +269,7 @@ backtestWeightsPlot <-
 
 
 backtestRebalancePlot <-
-    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, ...)
+    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
 {
     # A function implemented by Diethelm Wuertz and William Chen
     
@@ -329,7 +328,7 @@ backtestRebalancePlot <-
     
     # Plot:
     plot(X, type = "n", xaxt = "n", las = 2, at = at, format = Format,
-        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "", ...) 
+        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "") 
     grid(NA, ny = NULL)
     abline(v = as.POSIXct(at), lty = 3, col = "brown")
     abline(h=0, col="darkgrey")
@@ -378,7 +377,7 @@ backtestRebalancePlot <-
 
 
 backtestPortfolioPlot <-
-    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, ...)
+    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
 {
     # A function implemented by Diethelm Wuertz and William Chen
     
@@ -439,7 +438,7 @@ backtestPortfolioPlot <-
      
     # Plot:
     plot(X, type = "n", xaxt = "n", at = at, format = Format,
-        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "", ...) 
+        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "") 
     grid(NA, ny = NULL)
     abline(v = as.POSIXct(at), lty = 3, col = "brown")
     abline(h=0, col="darkgrey")
@@ -492,7 +491,7 @@ backtestPortfolioPlot <-
 
 
 backtestDrawdownPlot <- 
-    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, ...)
+    function(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
 {
     # A function implemented by Diethelm Wuertz and William Chen
 
@@ -559,7 +558,7 @@ backtestDrawdownPlot <-
     } else {n = length(Dates)
         Dates <- c(Dates, end(data))
     }
-
+    
     # Calculate the portfolio returns for the given weights:
     # assume we start investing the new weights on the rebalance date
     pf <- NULL
@@ -587,7 +586,7 @@ backtestDrawdownPlot <-
     
     # Plot:
     plot(X, type = "n", xaxt = "n", at = at, format = Format,
-        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "", ...) 
+        xlim = xlim, ylim = ylim, main = "", xlab = "", ylab = "") 
     grid(NA, ny = NULL)
     abline(v = as.POSIXct(at), lty = 3, col = "brown")
     
@@ -629,7 +628,7 @@ backtestDrawdownPlot <-
 
 
 backtestReportPlot <-
-    function(object, cex=NULL, ...)
+    function(object, cex=0.6, font=1, family="mono")
 {    
     # A function implemented by Diethelm Wuertz and William Chen
     
@@ -637,13 +636,13 @@ backtestReportPlot <-
     #   Prints backtest report as graphical plot
     
     # Arguments:
-    # Arguments:
     #   object - a list as returned by the function portfolioSmoothing()
     
     # FUNCTION:
-
+    
     # Settings:
-    if( is.null(cex)) CEX <- 0.6 
+    CEX <- cex
+    
     
     # Start Plot:
     plot.new()
@@ -653,30 +652,31 @@ backtestReportPlot <-
     z <- -2
         
     TEXT <- paste("Strategy:", getStrategyFun(object$backtest))
-    mtext(TEXT, side = 3, line =  z + 3, adj = 0, font=2, family="sans", cex=CEX, ...)
+    mtext(TEXT, side = 3, line =  z + 3, adj = 0, font=2, family="sans", 
+          cex=CEX)
         
     TEXT <-  capture.output(round(object$stats, 2))
-    mtext(TEXT[1], side = 3, line = z + +2, adj = 0, font=1, family="mono", cex=CEX, ...)
-    mtext(TEXT[2], side = 3, line = z + +1, adj = 0, font=1, family="mono", cex=CEX, ...)
-    mtext(TEXT[3], side = 3, line = z + +0, adj = 0, font=1, family="mono", cex=CEX, ...) 
-    mtext(TEXT[4], side = 3, line = z + -1, adj = 0, font=1, family="mono", cex=CEX, ...)
-    mtext(TEXT[5], side = 3, line = z + -2, adj = 0, font=1, family="mono", cex=CEX, ...) 
+    mtext(TEXT[1], side = 3, line = z + +2, adj = 0, font=font, family="mono", cex=CEX)
+    mtext(TEXT[2], side = 3, line = z + +1, adj = 0, font=font, family="mono", cex=CEX)
+    mtext(TEXT[3], side = 3, line = z + +0, adj = 0, font=font, family="mono", cex=CEX) 
+    mtext(TEXT[4], side = 3, line = z + -1, adj = 0, font=font, family="mono", cex=CEX)
+    mtext(TEXT[5], side = 3, line = z + -2, adj = 0, font=font, family="mono", cex=CEX) 
         
     TEXT <- capture.output(object$spec)[c(2,3,4,5,8)]
-    mtext("Portfolio Specification:", side = 3, line = z + -4, adj = 0, font=2, family="sans", cex=CEX, ...)
+    mtext("Portfolio Specification:", side = 3, line = z + -4, adj = 0, font=2, family="sans", cex=CEX)
         
     if (length(grep("CVaR",TEXT[2]))!=0) TEXT[2] = 
         gsub("CVaR", paste("CVaR |", getAlpha(object$spec)), TEXT[2])
        
-    mtext(TEXT[2], side = 3, line = z + -5, adj = 0, font=1, family="mono", cex=CEX, ...)
-    mtext(TEXT[3], side = 3, line = z + -6, adj = 0, font=1, family="mono", cex=CEX, ...)
-    mtext(TEXT[4], side = 3, line = z + -7, adj = 0, font=1, family="mono", cex=CEX, ...)
-    #text(TEXT[5], side = 3, line = z + -8, adj = 0, font=1, family="mono", cex=CEX, ...)
-  
+    mtext(TEXT[2], side = 3, line = z + -5, adj = 0, font=font, family=family, cex=CEX)
+    mtext(TEXT[3], side = 3, line = z + -6, adj = 0, font=font, family=family, cex=CEX)
+    mtext(TEXT[4], side = 3, line = z + -7, adj = 0, font=font, family=family, cex=CEX)
+    #text(TEXT[5], side = 3, line = z + -8, adj = 0, font=font, family=family, cex=CEX)
+    
     TEXT <- capture.output(object$constraints)[1]      
-    mtext("Constraints:", side = 3, line = z + -9, adj = 0, font=2, family="sans", cex=CEX, ...)
+    mtext("Constraints:", side = 3, line = z + -9, adj = 0, font=2, family="sans", cex=CEX)
     TEXT <- substr(TEXT[1], 4, 99)   
-    mtext(TEXT, side = 3, line = z + -10, adj = 0, font=1, family="mono", cex=CEX, ...)
+    mtext(TEXT, side = 3, line = z + -10, adj = 0, font=font, family=family, cex=CEX)
                         
     # Return Value:
     invisible()

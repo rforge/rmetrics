@@ -44,44 +44,6 @@
 ###############################################################################
 
 
-pfolioReturn <- 
-    function(x, weights, geometric=TRUE)
-{   
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #    Returns portfolio returns
-    
-    # Arguments:
-    #    x - a 'timeSeries' object
-    
-    # Details:
-    #    A fast(er) reimplementation
-    
-    # FUNCTION:
-    
-    # Compute Portfolio Returns:
-    weights <- as.vector(weights)
-    if(geometric) {
-        X <- t ( colCumprods(1+x) - 1 )
-        X <- rbind(diff(  t ( X * weights ) ))
-        Return <- x[, 1]
-        series(Return[+1, ]) <- x[1, ] %*% weights
-        series(Return[-1, ]) <- rowSums(X)
-    } else {
-        Return <- x[, 1]
-        series(Return) <- x %*% weights
-    }
-    colnames(Return) <- "pfolioRet"
-    
-    # Return Value:
-    Return
-}
-
-
-# -----------------------------------------------------------------------------
-
-
 sampleCOV <- 
     function(x)
 {
@@ -634,7 +596,7 @@ budgetsModifiedES <-
 
 
 ###############################################################################
-
+# DEPRECATED - DO NOT REMOVE - REQUIRED BY PACKAGE appRmetricsHandbook
 
 .covarRisk <-
     function(data, weights=NULL, FUN="cov", ...)

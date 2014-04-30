@@ -27,14 +27,15 @@
 % We should add a generic plot function for objects of class smoothed
 % portfolios. DW
 %
-backtestPlot(object, which="all", labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
+backtestPlot(object, which="all", labels=TRUE, legend=TRUE, at=NULL, 
+  format=NULL, cex=0.6, font=1, family="mono")
 
-backtestAssetsPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
-backtestWeightsPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
-backtestRebalancePlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
-backtestPortfolioPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
-backtestDrawdownPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL, \dots)
-backtestReportPlot(object, cex=NULL, \dots)
+backtestAssetsPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
+backtestWeightsPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
+backtestRebalancePlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
+backtestPortfolioPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
+backtestDrawdownPlot(object, labels=TRUE, legend=TRUE, at=NULL, format=NULL)
+backtestReportPlot(object, cex=0.6, font=1, family="mono")
 }
 
 
@@ -72,12 +73,9 @@ backtestReportPlot(object, cex=NULL, \dots)
         \code{format} is a POSIX format string, tthen the label
         formats are taken from this string.
         }
-    \item{cex}{
-        a numeric value, scales the font size of the report.
+    \item{cex, font, family}{
+        font size, font and font family specification for the report.
         }
-    \item{\dots}{
-        additional arguments passed to the function \code{plot}
-       }
 }
 
 

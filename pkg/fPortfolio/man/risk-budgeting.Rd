@@ -1,7 +1,7 @@
 \name{risk-budgeting}
 
 
-\alias{pfolioReturn}
+%\alias{pfolioReturn}
 \alias{sampleCOV}
 \alias{normalVaR}
 \alias{modifiedVaR}
@@ -24,8 +24,7 @@
 
 
 \usage{
-pfolioReturn(x, weights, geometric=TRUE)
-
+%pfolioReturn(x, weights, geometric=TRUE)
 sampleCOV(x)
 normalVaR(x, alpha=0.05)
 modifiedVaR(x, alpha=0.05)
@@ -47,8 +46,6 @@ budgetsModifiedES(x, weights, alpha=0.05, mu=NULL, Sigma=NULL,
 
     \item{x}{x}
     \item{weights}{weights}
-    
-    \item{geometric}{geometric}
     \item{alpha}{alpha}
     \item{mu,Sigma}{mean and covariance}
     \item{M3, M4}{M3 and M4}
@@ -66,4 +63,5 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 
 
 \keyword{models}
+
 
