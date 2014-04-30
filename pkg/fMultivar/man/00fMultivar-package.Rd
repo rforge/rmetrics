@@ -102,7 +102,20 @@
 }
 
 
-\section{3 Multivariate SN Distributions}{
+\section{3 Multivariate Symmetric Distributions}{
+
+  \preformatted{
+  [dpr]              Multivariate Cauchy Distribution
+  [dpr]              Multivariate Normal Distribution
+  [dpr]              Multivariate Student-t Distribution
+  
+  [dpr]              Multivariate Truncated Normal Distribution
+  }
+  
+}
+
+
+\section{3 Multivariate Skew Distributions}{
 
   We use the functions from the contributed package \code{"sn"} package 
   to model multivariate density and probability functions, and to 

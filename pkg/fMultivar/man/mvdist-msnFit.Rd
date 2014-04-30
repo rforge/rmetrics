@@ -77,8 +77,8 @@
    u <- grid2d(x, y)$x
    v <- grid2d(x, y)$y
    XY <- cbind(u, v)
-   param <- ans@fit$dp
-   Z <- matrix(dmsc(XY, param[[1]][1,], param[[2]], param[[3]]), ncol=N)
+   param <- ans@fit$estimate
+   Z <- matrix(dmsn(XY, param[[1]][1,], param[[2]], param[[3]]), ncol=N)
    contour(x, y, Z, add=TRUE, col="green", lwd=2)
    grid(col="brown", lty=3)
 }

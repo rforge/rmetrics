@@ -51,10 +51,8 @@ mstFit <-
     fit <- sn::mst.mple(
       x = rep(1, nrow(x)), y = x, start=NULL, fixed.nu=fixed.nu, 
       trace=trace, penalty=NULL)
-    fit$estimated <- fit$dp
-    fit$estimated$nu <- fixed.nu
+    fit$estimated <- list(fit$dp, nu=fixed.nu)
   }
-    
   
   # Add Title and Description:
   if (is.null(title)) 

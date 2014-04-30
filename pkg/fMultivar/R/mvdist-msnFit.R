@@ -63,3 +63,36 @@ msnFit <-
 ###############################################################################
 
 
+.mnFit <- 
+  function(x, trace = FALSE, title = NULL, description = NULL)
+  {
+    fit <- list()
+    fit$dp <- NA
+    fit$logL <- NA
+    fit$aux <- NA
+    fit$opt.method <- NA
+    fit$estimated <- list(
+      beta = colMeans(x),
+      Omega = cov(x),
+      alpha = rep(0, times = ncol(x)),
+      nu = Inf)
+    
+    if (is.null(title)) 
+      title <- "Normal Parameter Estimation"
+    
+    if (is.null(description)) 
+      description <- description()
+    
+    new("fDISTFIT", 
+        call = match.call(), 
+        model = "Skew Normal Distribution", 
+        data = as.data.frame(x), 
+        fit = fit, 
+        title = title, 
+        description = description)
+  }
+
+
+###############################################################################
+
+
