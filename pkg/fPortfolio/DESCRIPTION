@@ -7,13 +7,13 @@ Author: Rmetrics Corre Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fAssets
-Imports: Rglpk
-Suggests: MASS, methods, tcltk, 
-    slam, Rsymphony, quadprog, kernlab, Rsocp,
-    Rnlminb2, Rsolnp, Rdonlp2, 
-    lattice, fCopulae, sn, robustbase, 
-    bcp, dplR, fGarch, grid, mvoutlier, sp, energy,
-    rneos, XMLRPC
+Imports: Rglpk, Rsymphony
+Suggests: methods, tcltk, slam,
+	Rsocp, Rnlminb2, Rdonlp2, Rsolnp, kernlab, quadprog, rneos,
+	MASS, robustbase, dplR,
+    lattice, fCopulae, sn, 
+    bcp, fGarch, grid, mvoutlier, sp, energy,
+    XMLRPC
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance"
