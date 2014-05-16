@@ -7,8 +7,9 @@ Author: Rmetrics Corre Team,
       Tobias Setz [ctb],
       Diethelm Wuertz [aut, cre]
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fAssets
+Imports: Rglpk
 Suggests: MASS, methods, tcltk, 
-    slam, Rglpk, Rsymphony, quadprog, kernlab, Rsocp,
+    slam, Rsymphony, quadprog, kernlab, Rsocp,
     Rnlminb2, Rsolnp, Rdonlp2, 
     lattice, fCopulae, sn, robustbase, 
     bcp, dplR, fGarch, grid, mvoutlier, sp, energy,
