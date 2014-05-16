@@ -12,6 +12,9 @@ import(timeSeries)
 import(fBasics)
 import(fAssets)
 
+import(Rglpk)
+import(Rsymphony)
+
 ################################################
 ## functions
 ################################################
