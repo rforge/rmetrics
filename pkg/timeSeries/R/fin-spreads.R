@@ -21,7 +21,7 @@
 
 
 # DW:
-# Setting bid and ask for column names is maybe ot the best coice. Examples
+# Setting bid and ask for column names is maybe the best choice. Examples
 # are the TED spread or the Libo OIS spread. The spread between High and Low
 # is the range.
 
@@ -29,8 +29,8 @@
 # ------------------------------------------------------------------------------
 
 
-spreads =
-function(x, which = c("Bid", "Ask"), tickSize = NULL)
+spreads <-
+    function(x, which = c("Bid", "Ask"), tickSize = NULL)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -38,13 +38,24 @@ function(x, which = c("Bid", "Ask"), tickSize = NULL)
     #   Computes spreads from a 'timeSeries' object
      
     # FUNCTION:
+      
+    # Check arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
     
     # Compute Spread:
-    Spread = x[, which[2]] - x[, which[1]]
-    if (!is.null(tickSize)) series(Spread) = round(series(Spread)/tickSize)
+    spread <- x[, which[2]] - x[, which[1]]
+    if (!is.null(tickSize)) series(spread) <- round(series(spread)/tickSize)
 
+    # Preserve Title and Documentation:
+    spread@title <- Title
+    spread@documentation <- Documentation
+      
     # Return Value:
-    Spread
+    spread
 }
 
 
@@ -61,11 +72,22 @@ function(x, which = c("Bid", "Ask"))
      
     # FUNCTION:
     
+    # Check arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+  
     # Compute Mid Quotes:
-    midQuotes = 0.5 * ( x[, which[1]] + x[, which[2]] )
-
+    midquotes = 0.5 * ( x[, which[1]] + x[, which[2]] )
+   
+    # Preserve Title and Documentation:
+    midquotes@title <- Title
+    midquotes@documentation <- Documentation  
+  
     # Return Value:
-    midQuotes
+    midquotes
 }
 
 

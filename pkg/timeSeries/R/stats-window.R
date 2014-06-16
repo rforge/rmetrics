@@ -41,7 +41,15 @@
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
+      
+    # Check Arguments:
     stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
+    # Check for Signal Series
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
@@ -59,9 +67,14 @@
     end <- timeDate(end)
     Positions <- time(x)
     test <- (Positions >= start & Positions <= end)
-
-    # Return value:
-    x[test,]
+    ans <- x[test,]
+      
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation 
+      
+    # Return Value:
+    ans
 }
 
 

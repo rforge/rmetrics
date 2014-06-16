@@ -49,12 +49,16 @@ smoothSupsmu <-
     #   ... - further arguments passed to the function supsmu()
     
     # Example:
-    #   x = smoothSupsmu(MSFT[, 4], bass = 0.1); x; plot(x)
+    #   x <- smoothSupsmu(MSFT[, 4], bass = 0.1); x; plot(x)
     
     # FUNCTION:
     
     # Settings:
     stopifnot(isUnivariate(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
     
     # Handle Missing Values:
     x <- na.omit(x)
@@ -69,6 +73,10 @@ smoothSupsmu <-
     colnames(data) <- c(colnames(X), "supsmu")
     rownames(data) <- as.character(time(X))
     series(X) <- data
+      
+    # Preserve Title and Documentation:
+    X@title <- Title
+    X@documentation <- Documentation
     
     # Return Value:
     X
@@ -100,6 +108,10 @@ smoothLowess <-
     
     # Settings:
     stopifnot(isUnivariate(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
     
     # Handle Missing Values:
     x <- na.omit(x)
@@ -114,6 +126,10 @@ smoothLowess <-
     colnames(data) <- c(colnames(X), "lowess")
     rownames(data) <- as.character(time(X))
     series(X) <- data
+      
+    # Preserve Title and Documentation:
+    X@title <- Title
+    X@documentation <- Documentation
     
     # Return Value:
     X
@@ -151,6 +167,10 @@ smoothSpline <-
     
     # Settings:
     stopifnot(isUnivariate(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
     
     # Handle Missing Values:
     x <- na.omit(x)
@@ -165,6 +185,10 @@ smoothSpline <-
     colnames(data) <- c(colnames(X), "spline")
     rownames(data) <- as.character(time(X))
     series(X) <- data
+      
+    # Preserve Title and Documentation:
+    X@title <- Title
+    X@documentation <- Documentation
     
     # Return Value:
     X

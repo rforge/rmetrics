@@ -1,11 +1,14 @@
 \name{align-methods}
 
 \docType{methods}
+
+\alias{align}
 \alias{align-methods}
 \alias{align,timeSeries-method}
 
 
 \title{timeSeries Class, Functions and Methods}
+
 
 \description{
 

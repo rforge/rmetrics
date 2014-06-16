@@ -37,7 +37,7 @@
    plot(MSFT[, 5], type = "h")
    
 ## Plot USDCHF Example Data Set - 
-   plot(USDCHF, type = "l")
+   # plot(USDCHF)
 }
  
  

@@ -51,6 +51,13 @@ setMethod("lag" , "timeSeries",
 
     # FUNCTION:
 
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
     # Internal Function:
     tslagMat <- function(x, k = 1) {
         # Internal Function:
@@ -109,11 +116,17 @@ setMethod("lag" , "timeSeries",
     b <- paste("[", kcols, "]", sep="")
     ab <- paste(a, b, sep = "")
     units <- ab
-
+      
+    # Result:
+    ans <- timeSeries(data = z, charvec = pos, units = units,
+        format = x@format, FinCenter = x@FinCenter, recordIDs = df)
+     
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
+      
     # Return Value:
-    timeSeries(data = z, charvec = pos, units = units,
-        format = x@format, FinCenter = x@FinCenter, recordIDs = df,
-        title = x@title, documentation = x@documentation)
+    ans
 
 })
 

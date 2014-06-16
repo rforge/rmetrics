@@ -50,18 +50,31 @@ setMethod("filter", "timeSeries",
     
     # FUNCTION:
     
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
     # Filter:
     ans <- filter(getDataPart(x), filter = filter, method = method,
         sides = sides, circular = circular, init = init)
-    # -> Note : do not use as.matrix because ts objects might
-    # -> not be coerced properly
+    # Note: do not use as.matrix because ts objects might
+    #       not be coerced properly
     ans <- as(ans, "matrix")
     
     # Add Column Names:
     colnames(ans) <- colnames(x)
-    
+    ans <- setDataPart(x, ans)
+      
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
+      
     # Return Value:
-    setDataPart(x, ans)
+    ans
+    
 })
 
 

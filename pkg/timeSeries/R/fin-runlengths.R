@@ -44,8 +44,15 @@ runlengths <-
 
     # FUNCTION:
 
-    # Handle Missing Values:
+    # Check arguments:
+    stopifnot(is.timeSeries(x))
     stopifnot(isUnivariate(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
+    # Handle Missing Values:
     x[x == 0] <- NA
     x.vec = sign(as.vector(na.omit(x, ...)))
 
@@ -56,9 +63,13 @@ runlengths <-
     X = x[Index, ]
     series(X) <- matrix(diff(c(0L, Index)), ncol = 1)
 
-    # Reset recordIDs
+    # Reset recordIDs:
     X@recordIDs <- data.frame()
-
+    
+    # Preserve Title and Documentation:
+    X@title <- Title
+    X@documentation <- Documentation
+      
     # Return Value:
     X
 }

@@ -52,8 +52,10 @@ function(data, charvec, units = NULL, format, zone = "",
         units <- colnames(data)
     if (is.null(units))
         units <- paste("SS.", seq.int(dim(data)[2]), sep = "")
-    if (is.null(title)) title = "Signal Series Object"
-    if (is.null(documentation)) documentation = as.character(date())
+    if (is.null(title)) 
+        title = "Signal Series Object"
+    if (is.null(documentation)) 
+        documentation = as.character(date())
 
     # remove rownames of data but keep colnames for
     # functions like var, cov ...
@@ -87,12 +89,14 @@ function(data, charvec, units = NULL, format, zone = "",
 
 
 .timeSeries <-
+  SERIES <-
 function(data, charvec, units = NULL, format, zone = "",
     FinCenter = "", recordIDs = data.frame(), title = NULL,
     documentation = NULL, ...)
 {
     # Description:
-
+    #   Creates a time series from scratch
+  
     # Arguments:
 
     # Note:
@@ -111,14 +115,16 @@ function(data, charvec, units = NULL, format, zone = "",
         units <- colnames(data)
     if (is.null(units))
         units <- paste("TS.", seq.int(dim(data)[2]), sep = "")
-    if (is.null(title)) title = "Time Series Object"
-    if (is.null(documentation)) documentation = as.character(date())
+    if (is.null(title)) 
+        title <- "Time Series Object"
+    if (is.null(documentation)) 
+        documentation <- as.character(date())
     if (missing(format))
         format <- "%Y-%m-%d"
     if (identical("", FinCenter))
         FinCenter <- "GMT"
 
-    # remove rownames of data but keep colnames for
+    # Remove rownames of data but keep colnames for
     # functions like var, cov ...
     # Note that if it fails, new("timeSeries" should fail to - normal
     try(dimnames(data) <- list(NULL, units), silent = TRUE)

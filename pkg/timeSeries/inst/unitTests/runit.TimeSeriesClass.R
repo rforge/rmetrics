@@ -367,25 +367,26 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.ohlcDailyPlot =
-function()
-{
-    # ohlcDailyPlot - Plots open–high–low–close bar chart
-
-    # Price or Incdex Series:
-    setRmetricsOptions(myFinCenter = "GMT")
-    tS = MSFT[1:25, ]
-    print(tS)
-    dim(tS)
-    colnames(tS)
-
-    # Graph Frame:
-    par(mfrow = c(2, 1), cex = 0.7)
-    ohlcDailyPlot(tS)
-
-    # Return Value:
-    return()
-}
+## DW >
+## test.ohlcDailyPlot =
+## function()
+## {
+##     # ohlcDailyPlot - Plots open–high–low–close bar chart
+## 
+##     # Price or Incdex Series:
+##     setRmetricsOptions(myFinCenter = "GMT")
+##     tS = MSFT[1:25, ]
+##     print(tS)
+##     dim(tS)
+##     colnames(tS)
+## 
+##     # Graph Frame:
+##     par(mfrow = c(2, 1), cex = 0.7)
+##     ohlcDailyPlot(tS)
+## 
+##     # Return Value:
+##     return()
+## }
 
 
 # ------------------------------------------------------------------------------

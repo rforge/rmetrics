@@ -15,7 +15,7 @@
 
 ################################################################################
 # FUNCTION:                 COLUMN STATISTICS IN FUTILITIES:
-#  rank,timeSeries           Returns sample ranks of a timeSeries object
+#  rank,timeSeries           Returns sample ranks of a 'timeSeries' object
 ################################################################################
 
 
@@ -24,7 +24,7 @@ setMethod("rank", "timeSeries",
         ties.method = c("average", "first", "random", "max", "min"))
     {
         # Description:
-        #   Returns the sample ranks of the values in a timeSeries 
+        #   Returns the sample ranks of the values in a 'timeSeries' 
         
         # Arguments:
         #   x - an object of class 'timeSeries'

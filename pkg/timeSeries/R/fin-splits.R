@@ -54,14 +54,25 @@ setMethod("outlier", "ANY",
 
     # FUNCTION:
 
+    # Check arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
     # Find Outliers:
-    SD = sd * sd(x)
+    SD <- sd * sd(x)
     if (complement) {
-        ans  = x[x <= SD]
+        ans  <- x[x <= SD]
     } else {
-        ans = x[x > SD]
-        names(ans) = as.character(which(x > SD))
+        ans <- x[x > SD]
+        names(ans) <- as.character(which(x > SD))
     }
+      
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
 
     # Return Value:
     ans

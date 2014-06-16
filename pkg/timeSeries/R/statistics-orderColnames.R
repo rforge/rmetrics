@@ -25,7 +25,7 @@
 
 
 statsColnames =
-function(x, FUN = colMeans, ...)
+  function(x, FUN = colMeans, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -69,7 +69,7 @@ function(x, FUN = colMeans, ...)
 
 
 orderColnames =
-function(x, ...)
+  function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -93,7 +93,7 @@ function(x, ...)
 
 
 sortColnames =
-function(x, ...)
+  function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -117,7 +117,7 @@ function(x, ...)
 
 
 sampleColnames =
-function(x, ...)
+  function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -141,7 +141,7 @@ function(x, ...)
 
 
 pcaColnames =
-function(x, robust = FALSE, ...)
+  function(x, robust = FALSE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -178,7 +178,7 @@ function(x, robust = FALSE, ...)
 
 
 hclustColnames =
-function(x, method = c("euclidean", "complete"), ...)
+  function(x, method = c("euclidean", "complete"), ...)
 {   
     # A function implemented by Diethelm Wuertz
 

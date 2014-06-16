@@ -39,6 +39,13 @@ drawdowns <-
     #   returns an object of class 'timeSeries'.
 
     # FUNCTION:
+      
+    # Check Arguments
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
 
     # Handle Missing Values:
     r <- na.omit(x, ...)
@@ -58,6 +65,10 @@ drawdowns <-
     cummaxReturns <- colCummaxs(cumprodReturns)
     series(drawdowns) <- series(cumprodReturns)/series(cummaxReturns) - 1
     drawdowns <- drawdowns[-1, ]
+      
+    # Preserve Title and Documentation:
+    drawdowns@title <- Title
+    drawdowns@documentation <- Documentation
     
     # Return Value:
     drawdowns

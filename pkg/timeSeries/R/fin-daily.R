@@ -17,8 +17,9 @@
 # FUNCTION:                 DESCRIPTION:
 #  alignDailySeries          Aligns a 'timeSeries' object to new positions
 #  rollDailySeries           Rolls daily a 'timeSeries' on a given period
-#  ohlcDailyPlot             Plots open high low close bar chart
-#   .plotOHLC                 Internal called by function ohlcDailyPlot()
+# OBSOLETE:                 DESCRIPTION:
+#  .ohlcDailyPlot            Plots open high low close bar chart
+#  .plotOHLC                 Internal called by function ohlcDailyPlot()
 ################################################################################
 
 
@@ -47,7 +48,13 @@ function (x, method = c("before", "after", "interp", "fillNA",
 
     # Note: alignDailySeries is now based on align timeSeries method.
 
-    # adjust zone and FinCenter if provided
+    # FUNCTION:
+  
+    # Preserve Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+    
+    # Adjust zone and FinCenter if provided
     if (zone != "" || FinCenter != "") {
         if (zone == "")
             zone <- getRmetricsOptions("myFinCenter")
@@ -56,14 +63,15 @@ function (x, method = c("before", "after", "interp", "fillNA",
         x <- timeSeries(x, zone = zone, FinCenter = FinCenter)
     }
 
-    # FUNCTION:
+    # Run Generic Function align()
     ans <- .align.timeSeries(x = x, by = "1d", offset = "0s", method = method,
                              include.weekends = include.weekends, ...)
+  
+    ans@title <- Title
+    ans@documentation <- Documentation
 
     # Add New Units:
-    if (!is.null(units)){
-        colnames(ans) = units
-    }
+    if (!is.null(units)) colnames(ans) = units
 
     # Return Value:
     ans
@@ -93,9 +101,16 @@ function(x, period = "7d", FUN, ...)
 
     # FUNCTION:
 
+    # Check Arguments:
     stopifnot(is.timeSeries(x))
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], " is for time series and not for signal series.")
+  
+    # Check for Signal Series:
+    Message <- " is for time series and not for signal series."
+    if (x@format == "counts") stop(as.character(match.call())[1], Message)
+  
+    # Preserve Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
 
     # Fix missing matrix method for quantile(), still to do ...
     .quantile.matrix = function(x, probs = 0.95, ...) {
@@ -111,17 +126,20 @@ function(x, period = "7d", FUN, ...)
     from = to - periodLength*24*3600
 
     # Apply Function:
-    ans = applySeries(x = x, from = from, to = to, FUN = FUN, ...)
-
+    ans <- applySeries(x = x, from = from, to = to, FUN = FUN, ...)
+    ans@title <- Title
+    ans@documentation <- Documentation
+  
     # Return Value:
     ans
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# OBSOLETE:
 
 
-ohlcDailyPlot <-
+.ohlcDailyPlot <-
 function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab =
     c("Date", "Date"), ylab = c("Price", "Volume"),
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", ...)
@@ -181,7 +199,7 @@ function (x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     # A Copy from Contributed R Package 'tseries'
 
     # Description:
-    #   Internal called by function ohlcDailyPlot()
+    #   Internal called by function .ohlcDailyPlot()
 
     # FUNCTION:
 

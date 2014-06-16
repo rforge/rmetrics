@@ -39,9 +39,13 @@ durations <-
     #   Returns a S4 object of class 'timeSeries'.
 
     # FUNCTION:
-    
-    # Check for 'timeSeries' Object:
-    stopifnot(is(x, "timeSeries"))
+      
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
     
     # Check for Signal Series:
     if (x@format == "counts")
@@ -58,6 +62,10 @@ durations <-
     # Data Matrix:
     ans <- timeSeries(data = dur, charvec = pos, units = "Duration")
     if (trim) ans <- ans[-1, ]
+      
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
 
     # Return Series:
     ans

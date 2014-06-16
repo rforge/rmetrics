@@ -22,7 +22,7 @@
 .aggregate.timeSeries <- 
     function(x, by, FUN, ...)
 {
-    # A function implemented by Yohan Chalabi and  Diethelm Wuertz
+    # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
     #   Aggregates a 'timeSeries' object
@@ -62,6 +62,10 @@
     if (!((inherits(by, "timeDate") && x@format != "counts") ||
           (is.numeric(by) && x@format == "counts")))
         stop("'by' should be of the same class as 'time(x)'", call.=FALSE)
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
 
     # Make sure that x is sorted:
     if (is.unsorted(x))
@@ -78,9 +82,15 @@
     data <- matrix(apply(getDataPart(x), 2, tapply, INDEX, FUN), ncol=ncol(x))
     rownames(data) <- as.character(by[unique(na.omit(INDEX))])
     colnames(data) <- colnames(x)
+    ans <- timeSeries(data, ...)
 
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
+      
     # Return Value:
-    timeSeries(data, ...)
+    ans
+    
 }
 
 

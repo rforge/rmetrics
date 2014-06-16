@@ -35,6 +35,17 @@ setGeneric("series<-",
     function(x, value)
     standardGeneric("series<-"), package = "timeSeries")
 
+
+setGeneric("coredata", 
+    function(x) 
+    standardGeneric("coredata"), package = "timeSeries")
+    
+    
+setGeneric("coredata<-", 
+    function(x, value)
+    standardGeneric("coredata<-"), package = "timeSeries")
+
+
     
 ## setGeneric("index", function(x, ...)
 ##      standardGeneric("index"), package = "timeSeries")

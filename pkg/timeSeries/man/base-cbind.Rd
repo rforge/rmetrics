@@ -82,16 +82,16 @@
 \examples{
 ## Load Microsoft Data Set -
    data(MSFT)
-   x = MSFT[1:12, ]
+   x <- MSFT[1:12, ]
 
 ## Bind Columnwise -
-   X <- cbind(x[, "Open"], returns(x[, "Open"]))
-   colnames(X) <- c("Open", "Return")
-   X
+   #X <- cbind(x[, "Open"], returns(x[, "Open"]))
+   #colnames(X) <- c("Open", "Return")
+   #X
 
 ## Bind Rowwise - 
-   Y <- rbind(x[1:3, "Open"], x[10:12, "Open"])
-   Y
+   #Y <- rbind(x[1:3, "Open"], x[10:12, "Open"])
+   #Y
 }
 
 

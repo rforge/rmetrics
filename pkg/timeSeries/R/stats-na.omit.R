@@ -51,13 +51,20 @@
 
     # Arguments:
     #   object - an object of class timeSeries
-    #   method -
-    #   interp -
-    #   ... -
+    #   method - how to handle NAs
+    #   interp - how to interpolate NAs
+    #   ... - arguments passed to function approx()
 
     # FUNCTION:
 
     # Check Arguments:
+    stopifnot(is.timeSeries(object))
+      
+    # Extract Title and Documentation:
+    Title <- object@title
+    Documentation <- object@documentation
+      
+    # Settings:
     method <- match.arg(method)
     interp <- match.arg(interp)
 
@@ -122,6 +129,10 @@
         index <- attr(object, "n.action")
         recordIDs <- recordIDs[index, ]
     }
+      
+    # Preserve Title and Documentation:
+    object@title <- Title
+    object@documentation <- Documentation 
 
     # Return Value:
     object
@@ -157,16 +168,16 @@ na.omit.timeSeries <- function(object, ...) .na.omit.timeSeries(object, ...)
     stopifnot (is.matrix(x))
 
     # Match Arguments:
-    method = match.arg(method)
-    interp = match.arg(interp)
+    method <- match.arg(method)
+    interp <- match.arg(interp)
 
     # Handle NAs:
     if (method == "r") {
         # Remove NAs:
-        x = na.omit(x)
+        x <- na.omit(x)
     } else if (method == "z") {
         # Substitute NAs by Zero's:
-        x[is.na(x)] = 0
+        x[is.na(x)] <- 0
     } else if (substr(method, 1, 1) == "i") {
         # Interpolate:
         interp = match.arg(interp)

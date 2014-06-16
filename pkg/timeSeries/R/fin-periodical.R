@@ -47,6 +47,7 @@
     
     # Check:
     stopifnot(is.timeSeries(x))
+      
     if (x@format == "counts")
         stop(as.character(match.call())[1], 
             " is for time series and not for signal series.")
@@ -113,6 +114,7 @@
     
     # Check:
     stopifnot(is.timeSeries(x))
+      
     if (x@format == "counts")
         stop(as.character(match.call())[1], 
             " is for time series and not for signal series.")
@@ -226,6 +228,7 @@
     
     # Checks:
     stopifnot(is.timeSeries(x))
+      
     if (x@format == "counts")
         stop(as.character(match.call())[1], 
             " is for time series and not for signal series.")

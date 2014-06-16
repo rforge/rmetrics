@@ -13,6 +13,15 @@
 \alias{series<-,timeSeries,data.frame-method}
 \alias{series<-,timeSeries,vector-method}
 
+\alias{coredata}
+\alias{coredata<-}
+
+\alias{coredata,timeSeries-method}
+\alias{coredata<-,timeSeries,matrix-method}
+\alias{coredata<-,timeSeries,ANY-method}
+\alias{coredata<-,timeSeries,data.frame-method}
+\alias{coredata<-,timeSeries,vector-method}
+
 %\alias{getSeries}
 %\alias{getSeries.timeSeries}
 %\alias{setSeries<-}
@@ -22,8 +31,13 @@
 
 
 \description{
-    \code{series} returns \code{Data} slot a \code{timeSeries} object in a
-    \code{matrix} form. New series can also be assign to the \code{timeSeries}.
+
+    \code{series} returns the \code{@.Data} slot of a \code{timeSeries} 
+    object in \code{matrix} form. New series can also be assign to an
+    already existing \code{timeSeries}.
+    
+    \code{coredata} is a synonyme function nameing for \code{series}.
+    
 }
 
 

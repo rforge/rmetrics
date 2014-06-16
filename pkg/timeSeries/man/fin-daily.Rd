@@ -4,12 +4,13 @@
 \title{Special Daily Time Series}
 
 
+\alias{daily}
 \alias{dummyDailySeries}
 \alias{dummySeries}
 \alias{alignDailySeries}
 \alias{rollDailySeries}
 
-\alias{ohlcDailyPlot}
+%alias{ohlcDailyPlot}
 
 
 \description{
@@ -38,20 +39,21 @@ alignDailySeries(x, method = c("before", "after", "interp", "fillNA",
     include.weekends = FALSE, units = NULL, zone = "",
     FinCenter = "", ...)
 rollDailySeries(x, period = "7d", FUN, \dots)
-ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
-    xlab = c("Date", "Date"), ylab = c("Price", "Volume"),
-    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots)
+
+%ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
+%    xlab = c("Date", "Date"), ylab = c("Price", "Volume"),
+%    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots)
 }
 
 
 \arguments{
 
-    \item{colOrder}{
-        [ohlcDailyPlot] - \cr
-        an integer vector which gives the order of the prices and the
-        volume in the input object. By default the following order of
-        columns from 1 to 5 is assumed: Open, high, low, close, and volume.
-        }
+    %\item{colOrder}{
+    %    [ohlcDailyPlot] - \cr
+    %    an integer vector which gives the order of the prices and the
+    %    volume in the input object. By default the following order of
+    %    columns from 1 to 5 is assumed: Open, high, low, close, and volume.
+    %    }
     \item{FinCenter}{
         a character with the the location of the  financial center named
         as "continent/city".
@@ -61,20 +63,20 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         [applySeries] - \cr
         a function to use for aggregation, by default \code{colAvgs}.
         }
-    \item{grid.lty, grid.nx}{
-        [ohlcDailyPlot] - \cr
-        The type of grid line and the number of grid lines used in the
-        plot.
-        }
-     \item{include.weekends}{
-        [alignDailySeries] - \cr
-        a logical value. Should weekend dates be included or removed
-        from the series.
-        }
-    \item{main}{
-        [ohlcDailyPlot] - \cr
-        a character string to title the price and volume plot.
-        }
+    %\item{grid.lty, grid.nx}{
+    %    [ohlcDailyPlot] - \cr
+    %    The type of grid line and the number of grid lines used in the
+    %    plot.
+    %    }
+    \item{include.weekends}{
+         [alignDailySeries] - \cr
+         a logical value. Should weekend dates be included or removed
+         from the series.
+         }
+    %\item{main}{
+    %    [ohlcDailyPlot] - \cr
+    %    a character string to title the price and volume plot.
+    %    }
     \item{method}{
         [alignDailySeries] - \cr
         the method to be used for the alignment. A character string, one
@@ -96,25 +98,25 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         current column names of a \code{timeSeries} object. By default
         \code{NULL} which means that the column names are selected
         automatically.
-        \cr
-        [ohlcDailyPlot] - \cr
-        a numeric value, specifying in which multiples the volume should
-        be referenced on the plot labels. By default 1e6, i.e. in units
-        of 1 Million.
+        %\cr
+        %[ohlcDailyPlot] - \cr
+        %a numeric value, specifying in which multiples the volume should
+        %be referenced on the plot labels. By default 1e6, i.e. in units
+        %of 1 Million.
         }
-    \item{volume}{
-        [ohlcDailyPlot] - \cr
-        a logigical value. Should a volume plot added to the OHLC Plot.
-        By default \code{TRUE}.
-        }
+    %\item{volume}{
+    %    [ohlcDailyPlot] - \cr
+    %    a logigical value. Should a volume plot added to the OHLC Plot.
+    %    By default \code{TRUE}.
+    %    }
     \item{x}{
         an object of class \code{timeSeries}.
         }
-    \item{xlab, ylab}{
-        [ohlcDailyPlot] - \cr
-        two string vectors to name the x and y axis of the price and
-        volume plot.
-        }
+    %\item{xlab, ylab}{
+    %    [ohlcDailyPlot] - \cr
+    %    two string vectors to name the x and y axis of the price and
+    %    volume plot.
+    %    }
     \item{zone}{
         the time zone or financial center where the data were recorded.
         }
@@ -143,10 +145,10 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \cr
     returns an object of class \code{timeSeries} with rolling values,
     computed from the function \code{FUN}.
-    \cr
-
-    \code{ohlcDailyPlot}
-    displays a Open-High-Low-Close Plot of daily data records.
+    %\cr
+    %
+    %\code{ohlcDailyPlot}
+    %displays a Open-High-Low-Close Plot of daily data records.
 
 }
 
@@ -155,7 +157,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 ## Use Microsofts' OHLCV Price Series -
    head(MSFT)
    end(MSFT)
-
 
 ## Cut out April Data from 2001 -
    Close <- MSFT[, "Close"]

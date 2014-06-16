@@ -13,15 +13,15 @@
 #  ../../COPYING
 
 
-################################################################################
+###############################################################################
 # FUNCTION:                 DESCRIPTION:
 #  cumulated                 Computes cumulated series from financial returns
 #  cumulated.default         Computes cumulated series, default method
-################################################################################
+###############################################################################
 
 
 cumulated <-
-function(x, ...)
+  function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -37,7 +37,7 @@ function(x, ...)
 
 
 cumulated.default <-
-function(x, method = c("continuous", "discrete", "compound", "simple"),
+  function(x, method = c("continuous", "discrete", "compound", "simple"),
     percentage = FALSE, ...)
 {
     # A function implemented by Diethelm Wuertz
@@ -61,28 +61,39 @@ function(x, method = c("continuous", "discrete", "compound", "simple"),
 
     # FUNCTION:
 
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+    
     # Settings:
-    method = match.arg(method)
-
+    method <- match.arg(method)
+    
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+    
     # Handle Missing Values:
     # if (na.rm) x = na.omit(x, ...)
 
     # Transform data:
-    if (percentage) x = x/100
-    positions = time(x)
+    if (percentage) x <- x/100
+    positions <- time(x)
 
-    # Calculate Returns:
+    # Calculate Cumulates:
     # ... colCumsums and colCumprods are generic functions with
     #     methods for 'matrix' and 'timeSeries'.
     if(method == "geometric") {
-        ans = colCumsums(x)
+        ans <- colCumsums(x)
     }
     if(method == "compound" || method == "continuous") {
-        ans = exp(colCumsums(x))
+        ans <- exp(colCumsums(x))
     }
     if(method == "simple" || method == "discrete") {
-        ans = colCumprods(1+x)
+        ans <- colCumprods(1+x)
     }
+    
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
 
     # Return Value:
     ans

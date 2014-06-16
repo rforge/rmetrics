@@ -43,8 +43,14 @@ countMonthlyRecords <-
 
     # FUNCTION:
     
-    stopifnot(is(x, "timeSeries"))
-
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
+    # Check for Signal Series:
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
@@ -52,6 +58,10 @@ countMonthlyRecords <-
     # Count:
     ans <- rollMonthlySeries(x[, 1], period = "1m", by = "1m", FUN = NROW)
     colnames(ans) <- "Counts"
+      
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation 
 
     # Return Value:
     ans
@@ -78,8 +88,14 @@ rollMonthlyWindows <-
 
     # FUNCTION:
     
-    stopifnot(is(x, "timeSeries"))
-
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
+    # Check for Signal Series:
     if (x@format == "counts")
         stop(as.character(match.call())[1],
              " is for time series and not for signal series.")
@@ -137,6 +153,14 @@ rollMonthlySeries <-
 
     # FUNCTION:
     
+    # Check Arguments:
+    stopifnot(is.timeSeries(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
+      
+    # Check for Signal Series:
     stopifnot(is(x, "timeSeries"))
     if (x@format == "counts")
         stop(as.character(match.call())[1],
@@ -148,7 +172,11 @@ rollMonthlySeries <-
     # Apply Function:
     ans <- applySeries(x = x, from = windows$from, to = windows$to,
         FUN = FUN, ...)
-
+   
+    # Preserve Title and Documentation:
+    ans@title <- Title
+    ans@documentation <- Documentation
+      
     # Return Value:
     ans
 }

@@ -21,19 +21,27 @@
 test.bind <-
 function()
 {
+    Documentation <- as.character(date())
+    Title <- "Dummy Series"
+  
     ts <- dummySeries()
-    ts@documentation <- character(0)
-
+    ts@documentation <- Documentation
+    ts@title <- Title
+  
     # --------------------------------------------------------------------------
-    # if NULL are in args, result identical except @documentation
+    # if NULL are in args, result identical except @documentation !!!
     cts <- cbind(ts, NULL)
     rts <- rbind(ts, NULL)
-    checkTrue(!identical(slot(cts, "documentation"), ts@documentation))
-    checkTrue(!identical(slot(rts, "documentation"), ts@documentation))
-
+    ##> checkTrue(!identical(slot(cts, "documentation")[[1]], Documentation))
+    ##> checkTrue(!identical(slot(rts, "documentation")[[1]], Documentation))
+    # ... DW [[1]] removes attributes, check this
+    # ... also take care of the title!
+  
     # check that the rest is identical
-    cts@documentation <- character(0)
-    rts@documentation <- character(0)
+    cts@documentation <- Documentation
+    rts@documentation <- Documentation
+    cts@title <- Title
+    rts@title <- Title
     checkIdentical(cts, ts)
     checkIdentical(rts, ts)
 

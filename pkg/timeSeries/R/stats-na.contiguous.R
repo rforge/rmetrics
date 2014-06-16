@@ -22,6 +22,8 @@
 setMethod("na.contiguous", "timeSeries", 
     function(object, ...)
 {
+    # A function imlemented by Diethelm Wuertz and Yohan Chalabi
+      
     # Description:
     #   Finds the longest consecutive of non-missing values
     

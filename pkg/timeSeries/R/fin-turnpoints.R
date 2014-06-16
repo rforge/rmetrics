@@ -51,8 +51,13 @@ turns <-
 
     # FUNCTION:
 
-    # Settings:
+    # Check arguments:
+    stopifnot(is.timeSeries(x))
     stopifnot(isUnivariate(x))
+      
+    # Extract Title and Documentation:
+    Title <- x@title
+    Documentation <- x@documentation
 
     # Handle Missing Values:
     x <- na.omit(x, ...)
@@ -67,6 +72,10 @@ turns <-
     data <- cbind(x, tp)
     colnames(data) <- c(colnames(X), "TP")
     series(X) <- data
+      
+    # Preserve Title and Documentation:
+    X@title <- Title
+    X@documentation <- Documentation
 
     # Return Value:
     X

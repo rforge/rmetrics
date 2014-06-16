@@ -22,10 +22,10 @@
 
 
 setMethod("merge", c("timeSeries", "ANY"),
-    function(x,y, ...)
-    {
-        callGeneric(x, as(y, "timeSeries"), ...)
-    }
+function(x, y, ...)
+{
+    callGeneric(x, as(y, "timeSeries"), ...)
+}
 )
 
 
@@ -33,10 +33,10 @@ setMethod("merge", c("timeSeries", "ANY"),
 
 
 setMethod("merge", c("timeSeries", "missing"),
-    function(x,y, ...)
-    {
-        x
-    }
+function(x, y, ...)
+{
+    x
+}
 )
 
 
@@ -44,23 +44,22 @@ setMethod("merge", c("timeSeries", "missing"),
 
 
 setMethod("merge", c("timeSeries", "numeric"),
-    function(x, y, ...)
-    {
+function(x, y, ...)
+{
+    # Deal with names of numeric vectors
+    units <-  names(y)
+    if (is.null(units))
+        units <- paste((substitute(x)), collapse = ".")
 
-        # deal with names of numeric vectors
-        units <-  names(y)
-        if (is.null(units))
-            units <- paste((substitute(x)), collapse = ".")
-
-        if (length(y) == 1) {
-            y = rep(y, times = nrow(x))
-            return(merge(x, timeSeries(y, time(x), units = units), ...))
-        } else if (length(y) == nrow(x)) {
-            return(merge(x, timeSeries(y, time(x), units = units), ...))
-        } else {
-            stop("number of rows must match")
-        }
+    if (length(y) == 1) {
+        y <- rep(y, times = nrow(x))
+        return(merge(x, timeSeries(y, time(x), units = units), ...))
+    } else if (length(y) == nrow(x)) {
+        return(merge(x, timeSeries(y, time(x), units = units), ...))
+    } else {
+        stop("number of rows must match")
     }
+}
 )
 
 
@@ -68,21 +67,21 @@ setMethod("merge", c("timeSeries", "numeric"),
 
 
 setMethod("merge", c("timeSeries", "matrix"),
-    function(x, y, ...)
-    {
-        # deal with names of matrix
-        units <- colnames(y)
-        if (is.null(units)) {
-            units <- paste((substitute(y)), collapse = ".")
-            if ((nc <- ncol(y)) > 1)
-                units <- paste(units, seq(nc), sep = ".")
-        }
+function(x, y, ...)
+{
+    # deal with names of matrix
+    units <- colnames(y)
+    if (is.null(units)) {
+        units <- paste((substitute(y)), collapse = ".")
+        if ((nc <- ncol(y)) > 1)
+            units <- paste(units, seq(nc), sep = ".")
+    }
 
-        if (nrow(y) != nrow(x))
-            stop("number of rows must match")
-        else
-            merge(x, timeSeries(y, time(x), units = units), ...)
-    })
+    if (nrow(y) != nrow(x))
+        stop("number of rows must match")
+    else
+        merge(x, timeSeries(y, time(x), units = units), ...)
+})
 
 
 # ------------------------------------------------------------------------------'
@@ -96,9 +95,16 @@ setMethod("merge", c("timeSeries", "matrix"),
     #   Merges two objects of class 'timeSeries'
 
     # Arguments:
-    #   x,y - two objects of class 'timeSeries'
+    #   x, y - two objects of class 'timeSeries'
 
     # FUNCTION:
+  
+    # Compose Attributes - Documentation :
+    xAttributes <- getAttributes(x)
+    yAttributes <- getAttributes(y)
+    Attributes <- .appendList(xAttributes, yAttributes) 
+    Documentation <- as.character(date())
+    attr(Documentation, "Attributes") <- Attributes
 
     # Merge:
     if (is.signalSeries(x) | is.signalSeries(y)) {
@@ -137,9 +143,13 @@ setMethod("merge", c("timeSeries", "matrix"),
     charvec <- as.numeric(df[,1])
 
     # Return Value:
-    timeSeries(data = data, charvec = charvec, units = units,
+    ans <- timeSeries(data = data, charvec = charvec, units = units,
                zone = "GMT", FinCenter = finCenter(x), recordIDs = recordIDs)
+  
+    ans@documentation <- Documentation
+    ans
 }
+
 
 setMethod("merge", c("timeSeries", "timeSeries"),
           function(x, y, ...) .merge.timeSeries(x, y, ...))
@@ -152,23 +162,22 @@ merge.timeSeries <- function(x, y, ...) .merge.timeSeries(x, y, ...)
 
 
 setMethod("merge", c("numeric", "timeSeries"),
-    function(x, y, ...)
-    {
+function(x, y, ...)
+{
+    # Deal with names of numeric vectors
+    units <-  names(x)
+    if (is.null(units))
+        units <- paste((substitute(x)), collapse = ".")
 
-        # deal with names of numeric vectors
-        units <-  names(x)
-        if (is.null(units))
-            units <- paste((substitute(x)), collapse = ".")
-
-        if (length(x) == 1) {
-            x = rep(x, times = nrow(y))
-            return(merge(timeSeries(x, time(y), units = units), y, ...))
-        } else if (length(x) == nrow(y)) {
-            return(merge(timeSeries(x, time(y), units = units), y, ...))
-        } else {
-            stop("number of rows must match")
-        }
+    if (length(x) == 1) {
+        x = rep(x, times = nrow(y))
+        return(merge(timeSeries(x, time(y), units = units), y, ...))
+    } else if (length(x) == nrow(y)) {
+        return(merge(timeSeries(x, time(y), units = units), y, ...))
+    } else {
+        stop("number of rows must match")
     }
+}
 )
 
 
@@ -176,30 +185,29 @@ setMethod("merge", c("numeric", "timeSeries"),
 
 
 setMethod("merge", c("matrix", "timeSeries"),
-    function(x, y, ...)
-    {
+function(x, y, ...)
+{
+    # Deal with names of matrix
+    units <- colnames(x)
+    if (is.null(units)) {
+        units <- paste((substitute(x)), collapse = ".")
+        if ((nc <- ncol(x)) > 1)
+            units <- paste(units, seq(nc), sep = ".")
+    }
 
-        # deal with names of matrix
-        units <- colnames(x)
-        if (is.null(units)) {
-            units <- paste((substitute(x)), collapse = ".")
-            if ((nc <- ncol(x)) > 1)
-                units <- paste(units, seq(nc), sep = ".")
-        }
+    if (nrow(x) != nrow(y))
+        stop("number of rows must match")
+    else
+        merge(timeSeries(x, time(y), units = units), y, ...)
 
-        if (nrow(x) != nrow(y))
-            stop("number of rows must match")
-        else
-            merge(timeSeries(x, time(y), units = units), y, ...)
-
-    })
+})
 
 
 setMethod("merge", c("ANY", "timeSeries"),
-    function(x,y, ...)
-    {
-        callGeneric(as(x, "timeSeries"), y, ...)
-    }
+function(x, y, ...)
+{
+    callGeneric(as(x, "timeSeries"), y, ...)
+}
 )
 
 

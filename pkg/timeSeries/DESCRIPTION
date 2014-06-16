@@ -8,7 +8,7 @@ Author: Rmetrics Core Team,
       Yohan Chalabi [ctb]
 Depends: R (>= 2.15.1), graphics, grDevices, methods, stats, utils,
         timeDate (>= 2150.95)
-Suggests: robustbase, RUnit
+Suggests: robustbase, xts, PerformanceAnalytics, fTrading, RUnit
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
       "Financial Engineering and Computational Finance"

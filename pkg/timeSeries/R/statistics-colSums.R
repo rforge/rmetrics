@@ -14,17 +14,6 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
-# Copyrights (C)
-# for this R-port:
-#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   www.rmetrics.org
-# for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
-# for the code accessed (or partly included) from contributed R-ports
-# and other sources
-#   see Rmetrics's copyright file
-
 
 ################################################################################
 # FUNCTION:                 COLUMN STATISTICS:
@@ -38,18 +27,13 @@
 #  colMaxs                   Computes maximum values in each colum
 #  colMins                   Computes minimum values in each colum
 #  colProds                  Computes product of all values in each colum
-# FUNCTION:                 NO LONGER USED:
+#  colQuantiles              Computes quantiles of all values in each colum
+# DEPRECATED:               NO LONGER USED:
 #  colAvgs                   Computes sample mean by column
 #  colStdevs                 Computes sample standard deviation by column
 #  mean.timeSeries           Computes sample means by column
 #  var.timeSeries            Computes sample variance by column
 ################################################################################
-
-
-# .conflicts.OK = TRUE
-
-
-# ------------------------------------------------------------------------------
 
 
 colStats <-
@@ -73,7 +57,7 @@ colStats <-
 # ------------------------------------------------------------------------------
 
 
-# YC important because default colSums is unefficient since it retrive
+# YC important because default colSums is unefficient since it retrieves
 # full dimnames, i.e. rownames which is very time consuming
 
 
@@ -93,9 +77,11 @@ if (getRversion() < "2.9.0") {
           })
 }
 
+
 # ------------------------------------------------------------------------------
 
-# YC important because default colSums is unefficient since it retrive
+
+# YC important because default colSums is unefficient since it retrieves
 # full dimnames, i.e. rownames which is very time consuming
 
 
@@ -143,7 +129,7 @@ colProds <- function(x, ...) { colStats(x, "prod", ...) }
 
 
 colQuantiles <-
-function(x, prob = 0.05, ...)
+ function(x, prob = 0.05, ...)
 {
     # FUNCTION:
 
@@ -152,13 +138,29 @@ function(x, prob = 0.05, ...)
 }
 
 
+################################################################################
+# DEPRECATED:
+
+
+colAvgs <- 
+  function(x, ...) 
+{ 
+    # FUNCTION:
+    
+    colMeans(x, ...) 
+}
+
+
 # ------------------------------------------------------------------------------
 
 
-colAvgs <- function(x, ...) colMeans(x, ...)
-
-
-colStdevs <- colSds
+colStdevs <- 
+  function(x, ...) 
+{ 
+    # FUNCTION:
+    
+    colStats(x, "sd", ...) 
+}
 
 
 # ------------------------------------------------------------------------------

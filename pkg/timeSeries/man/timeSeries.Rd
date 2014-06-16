@@ -30,12 +30,6 @@
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with regular and irregular 
-    'timeSeries' objects. Dates and times are 
-    implemented as 'timeDate' objects. 
-    \cr
-    
     Functions to generate and modify 'timeSeries' objects:         
 
     \tabular{ll}{   
@@ -114,17 +108,11 @@ seriesData(object)
 \value{
 
     \code{timeSeries}\cr
-    \code{returnSeries}\cr
-    \cr
-    return a S4 object of class \code{timeSeries}.
+    returns a S4 object of class \code{timeSeries}.
     \cr
     
-    \code{orderStatistics}
-    \cr
-    returns ...
-    \cr
     
-    \code{series}\cr
+    \code{seriesData}\cr
     \cr
     extracts the \code{@.Data} slot from a \code{timeSeries} object and
     is equivalent to \code{as.amtrix}.
@@ -167,18 +155,18 @@ seriesData(object)
    head(MSFT)
 
 ## Create a timeSeries Object, The Direct Way ...
-   Close = MSFT[, 5]
+   Close <- MSFT[, 5]
    head(Close)
    
 ## Create a timeSeries Object from Scratch - 
-   data = as.matrix(MSFT[, 4])
-   charvec = rownames(MSFT)
-   Close = timeSeries(data, charvec, units = "Close")
+   data <- as.matrix(MSFT[, 4])
+   charvec <- rownames(MSFT)
+   Close <- timeSeries(data, charvec, units = "Close")
    head(Close)
    c(start(Close), end(Close))
     
 ## Cut out April Data from 2001 - 
-   tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
+   tsApril01 <- window(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
 ## Compute Continuous Returns - 
@@ -191,13 +179,13 @@ seriesData(object)
    returns(tsApril01, trim = FALSE)
    
 ## Compute Discrete Returns, Use Percentage Values - 
-   tsRet = returns(tsApril01, percentage = TRUE, trim = FALSE)
+   tsRet <- returns(tsApril01, percentage = TRUE, trim = FALSE)
    tsRet
      
 ## Aggregate Weekly - 
    GoodFriday(2001)
-   to = timeSequence(from = "2001-04-11", length.out = 3, by = "week") 
-   from = to - 6*24*3600
+   to <- timeSequence(from = "2001-04-11", length.out = 3, by = "week") 
+   from <- to - 6*24*3600
    from
    to
    applySeries(tsRet, from, to, FUN = sum)
