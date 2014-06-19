@@ -116,13 +116,10 @@ function()
 
     # All Rmetrics Packages:
     ans = c(
-        "fUtilities",
         "fEcofin",
-        "fCalendar",
         "timeSeries",
         "fImport",
         "fBasics",
-        "fArma",
         "fGarch",
         "fNonlinear",
         "fUnitRoots",
