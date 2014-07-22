@@ -58,32 +58,6 @@
 #define two_64_s "18446744073709551616"
 #define two_64m1_h 0xffffffffffffffff
 
-/* same as SFMT.h. see http://en.wikibooks.org/wiki/C_Programming/C_Reference/stdint.h */
-#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
-  #include <inttypes.h>
-  #define HAVE_INT32_64_DEFINED 1
-#elif defined(_MSC_VER) || defined(__BORLANDC__)
-  typedef unsigned int uint32_t;
-  typedef unsigned __int64 uint64_t;
-  #define inline __inline
-  #define HAVE_INT32_64_DEFINED 1
-#else
-  #include <inttypes.h>
-  #if defined(__GNUC__)
-    #define inline __inline__
-  #endif
-  #define HAVE_INT32_64_DEFINED 1
-#endif
-
-#ifndef PRIu64
-  #if defined(_MSC_VER) || defined(__BORLANDC__)
-    #define PRIu64 "I64u"
-    #define PRIx64 "I64x"
-  #else
-    #define PRIu64 "llu"
-    #define PRIx64 "llx"
-  #endif
-#endif
 
 
 
@@ -128,9 +102,9 @@ double user_unif_rand_congru_2()
 }
 
 // possible value of user_unif_init_selected in runifInterface.c
-void user_unif_init_congru(unsigned int seed)
+void user_unif_init_congru(uint32_t seed)
 {
-	congru_seed = seed;
+	congru_seed = (uint64_t) seed;
 }
 
 // called from randtoolbox.c from congruRand function

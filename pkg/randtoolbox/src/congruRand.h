@@ -54,16 +54,40 @@
 #include <Rmath.h>
 
 
+/* same as SFMT.h. see http://en.wikibooks.org/wiki/C_Programming/C_Reference/stdint.h */
+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+ #include <inttypes.h>
+ #define HAVE_INT32_64_DEFINED 1
+#elif defined(_MSC_VER) || defined(__BORLANDC__)
+ typedef unsigned int uint32_t;
+ typedef unsigned __int64 uint64_t;
+ #define inline __inline
+ #define HAVE_INT32_64_DEFINED 1
+#else
+ #include <inttypes.h>
+ #if defined(__GNUC__)
+ #define inline __inline__
+ #endif
+ #define HAVE_INT32_64_DEFINED 1
+#endif
+
+#ifndef PRIu64
+ #if defined(_MSC_VER) || defined(__BORLANDC__)
+ #define PRIu64 "I64u"
+ #define PRIx64 "I64x"
+#else
+ #define PRIu64 "llu"
+ #define PRIx64 "llx"
+ #endif
+#endif
+
 double user_unif_rand_congru();
-void user_unif_init_congru(unsigned int seed);
+void user_unif_init_congru(uint32_t seed);
 
 double get_congruRand();
-int check_congruRand(unsigned long long mod, unsigned long long mask,
-	unsigned long long mult, unsigned long long incr,
-	unsigned long long seed);
-void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
-		unsigned long long inp_incr, unsigned long long inp_seed);
-void get_seed_congruRand(unsigned long long *out_seed);
+int check_congruRand(uint64_t mod, uint64_t mask, uint64_t mult, uint64_t incr, uint64_t seed);
+void set_congruRand(uint64_t inp_mod, uint64_t inp_mult, uint64_t inp_incr, uint64_t inp_seed);
+void get_seed_congruRand(uint64_t *out_seed);
 
 void get_state_congru(char **params, char **seed);
 void check_state_congru(char **params, char **seed, int *err);

@@ -367,7 +367,7 @@ const int SFMT19937_SR2_ParamSet[NBSET] = {
     
     
 // MSK1 param
-const long int SFMT607_MSK1_ParamSet[NBSET] = {
+const int32_t SFMT607_MSK1_ParamSet[NBSET] = {
     0xfdff37ffU,    0xffbfffbfU,    0xdf7fffffU,    0x6fff7ffeU,
     0xff77fff7U,    0xbedf9cffU,    0xffefffffU,    0x7bfffbffU,
     0xffe7ffffU,    0xd3ddebfbU,    0x7fffd6beU,    0xfeffffdeU,
@@ -377,7 +377,7 @@ const long int SFMT607_MSK1_ParamSet[NBSET] = {
     0xffbbf77fU,    0xdfbf5fffU,    0xebffefffU,    0xffffffddU,
 0xffff7ebfU,    0xbeffbffbU,    0xf7ffb5fdU,    0xbfff7effU};
 
-const long int SFMT1279_MSK1_ParamSet[NBSET] = {
+const int32_t SFMT1279_MSK1_ParamSet[NBSET] = {
     0xfffffffbU,    0xf7fefffdU,    0xfffbbfffU,    0xfbefeffdU,
     0xfddfbf9fU,    0xfddf9f97U,    0xfffbffffU,    0xafffffffU,
     0xdeffffefU,    0xfffdfdfeU,    0xeff6fdedU,    0xffeecff3U,
@@ -387,7 +387,7 @@ const long int SFMT1279_MSK1_ParamSet[NBSET] = {
     0x4fdffdffU,    0xffdffbaeU,    0xbfdefeefU,    0xfffffff3U,
     0xfdffefffU,    0x7eafebffU,    0xffffbffdU,    0xcffdffdfU};
 
-const long int SFMT2281_MSK1_ParamSet[NBSET] = {
+const uint32_t SFMT2281_MSK1_ParamSet[NBSET] = {
     0xbff7ffbfU,    0xfbdffff7U,    0xdfffef7bU,    0xdbffedffU,
     0x3f7ffbffU,    0xff9ffff7U,    0xff6ffba9U,    0x7bffffdfU,
     0xf7bffff9U,    0xffffffbfU,    0xfff3ecfdU,    0xffffff1bU,
@@ -397,7 +397,7 @@ const long int SFMT2281_MSK1_ParamSet[NBSET] = {
     0xffffffdfU,    0xffbfbfffU,    0xfffefbefU,    0x7bffc3f9U,
 0xbbfffcffU,    0xffffffffU,    0xfdffffffU,    0xe7fffba3U};
 
-const long int SFMT4253_MSK1_ParamSet[NBSET] = {
+const int32_t SFMT4253_MSK1_ParamSet[NBSET] = {
     0x9f7bffffU,    0xdaeeedf7U,    0xdffff3ffU,    0xafffdffbU,
     0xbffdefffU,    0xbffffffbU,    0xe777f7fcU,    0x7fdff3fbU,
     0xffbfbe7fU,    0xfdffff4fU,    0xf8fefff7U,    0xffffffffU,
@@ -407,7 +407,7 @@ const long int SFMT4253_MSK1_ParamSet[NBSET] = {
     0xd73d23f7U,    0xefbfbff7U,    0xfff7dffdU,    0xefffffefU,
     0xef8ffffaU,    0x7bfffff7U,    0xffb7fffdU,    0xefbce7ffU};
 
-const long int SFMT11213_MSK1_ParamSet[NBSET] = {
+const int32_t SFMT11213_MSK1_ParamSet[NBSET] = {
     0xeffff7fbU,    0xff6ffcffU,    0x7ff7ffffU,    0xf5fbfffbU,
     0xddffdff7U,    0x5dffefcdU,    0xfbffd7ffU,    0x7defffffU,
     0xfffffebfU,    0xfff7effeU,    0xfffff9ffU,    0xfffefbf7U,
@@ -417,7 +417,7 @@ const long int SFMT11213_MSK1_ParamSet[NBSET] = {
     0xff3ebfbeU,    0xfdf7dbffU,    0xf77efedfU,    0xffcffdffU,
 0xffffffbdU,    0xdfffef7fU,    0xffbfeffeU,    0xfffaffffU};
     
-const long int SFMT19937_MSK1_ParamSet[NBSET] = {
+const int32_t SFMT19937_MSK1_ParamSet[NBSET] = {
     0xdfffffefU,    0xefefffffU,    0xeffdbfffU,    0xaefefbbdU,
     0xffffdffeU,    0xffefef5dU,    0xfdff7ffdU,    0xfef73bffU,
     0xfff8bfffU,    0x5fffffdfU,    0x7dbebfffU,    0xffeeffdfU,
@@ -430,7 +430,7 @@ const long int SFMT19937_MSK1_ParamSet[NBSET] = {
     
 
 // MSK2 param
-const long int SFMT607_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT607_MSK2_ParamSet[NBSET] = {
     0xef7f3f7dU,    0xcdffffffU,    0xf7ff77ffU,    0xf5fffffeU,
     0xfd77ffffU,    0xdfe6dfffU,    0x7e6ffa77U,    0xfba7ffbfU,
     0xff6fefffU,    0xffdfffdfU,    0xffbefdfcU,    0xfe8fbfb7U,
@@ -440,7 +440,7 @@ const long int SFMT607_MSK2_ParamSet[NBSET] = {
     0xff7ffbfbU,    0xcffd7effU,    0xfbfffaffU,    0xdff7bdf7U,
 0xfffd7fffU,    0xbffffffbU,    0xb76ff7fdU,    0x7fffbfefU};
 
-const long int SFMT1279_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT1279_MSK2_ParamSet[NBSET] = {
     0x37f5effbU,    0x7fefcfffU,    0xfffbdffbU,    0xffefffffU,
     0xeefffb37U,    0xf97fbff7U,    0xfffe96efU,    0xff37bffbU,
     0xdeb7effbU,    0xfbbffeffU,    0xfffffdfcU,    0xffffedffU,
@@ -450,7 +450,7 @@ const long int SFMT1279_MSK2_ParamSet[NBSET] = {
     0xc7feff7fU,    0x7ffbff3fU,    0xbffffeffU,    0xf7bbffffU,
     0x5ffbdffdU,    0x7fdfdefdU,    0xfffbffdfU,    0xffff6effU};
 
-const long int SFMT2281_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT2281_MSK2_ParamSet[NBSET] = {
     0xfdfffffeU,    0xcfbffffeU,    0xffefffffU,    0xfffbfffdU,
     0xfffffff9U,    0xfdffffffU,    0xfffff7f7U,    0x3ffb7fdbU,
     0x6efff7ffU,    0x7dffdfebU,    0xffffff77U,    0xffbff77bU,
@@ -460,7 +460,7 @@ const long int SFMT2281_MSK2_ParamSet[NBSET] = {
     0xdfffffffU,    0xffffbfffU,    0x7ffffbf7U,    0xddfff2fbU,
 0xf7bffcdfU,    0x7fbff9dfU,    0xffffdef7U,    0xffdf7fdfU};
 
-const long int SFMT4253_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT4253_MSK2_ParamSet[NBSET] = {
     0x9fffff5fU,    0xfff4eff7U,    0xffdebf7fU,    0xffffdfbfU,
     0xffaffeffU,    0x6f9ffbffU,    0xf7d7bf7dU,    0x57dfffdbU,
     0xffbfdf6dU,    0xfff7fbffU,    0xdfffffffU,    0xbdffffffU,
@@ -470,7 +470,7 @@ const long int SFMT4253_MSK2_ParamSet[NBSET] = {
     0xef7fffffU,    0xfb7fffffU,    0xffdd7fbdU,    0xfbdfb3ffU,
     0xfffbfff8U,    0xfff7fff3U,    0x9fefedfdU,    0xfeb7f77fU};
 
-const long int SFMT11213_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT11213_MSK2_ParamSet[NBSET] = {
     0xffffffefU,    0xbff77dffU,    0xafffcddeU,    0xffffffbfU,
     0x6baffff7U,    0xc6ffffdfU,    0xddf7f7e7U,    0x7d9bffffU,
     0xfdeffadfU,    0xbfb7afffU,    0xfb7fffffU,    0xeffffb7eU,
@@ -480,7 +480,7 @@ const long int SFMT11213_MSK2_ParamSet[NBSET] = {
     0xff7fffdeU,    0xfbffdffbU,    0xf7fffbebU,    0xfedffdffU,
 0xff7feffeU,    0xeff97fdfU,    0xfbfddbebU,    0xeffef9ffU};
 
-const long int SFMT19937_MSK2_ParamSet[NBSET] = {
+const int32_t SFMT19937_MSK2_ParamSet[NBSET] = {
     0xddfecb7fU,    0xef7dfffbU,    0xdfffffffU,    0xfeffffffU,
     0xfffefffbU,    0xff25ff7dU,    0xfbffee71U,    0x65eb7ff7U,
     0xffffffffU,    0xffffcfffU,    0x7ffffffeU,    0xffffdfffU,
@@ -493,7 +493,7 @@ const long int SFMT19937_MSK2_ParamSet[NBSET] = {
 
 
 // MSK3 param
-const long int SFMT607_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT607_MSK3_ParamSet[NBSET] = {
     0xff777b7dU,    0xeffbffedU,    0xfffff2ffU,    0xbffffffeU,
     0xfffffdcfU,    0xfdfffffaU,    0xfff7fffaU,    0xf7fffe3fU,
     0x7f3fffffU,    0xffbf9bffU,    0xf7ff73f5U,    0x63effffdU,
@@ -503,7 +503,7 @@ const long int SFMT607_MSK3_ParamSet[NBSET] = {
     0xbffff7f7U,    0xffbe3fffU,    0xf7fffeffU,    0xf3fff1ffU,
 0xdffdfdffU,    0xffffefffU,    0xfdfff7dfU,    0xfffbff7fU};
 
-const long int SFMT1279_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT1279_MSK3_ParamSet[NBSET] = {
     0xb3fdaff9U,    0xaff3ef3fU,    0xddfffdffU,    0xdfef7effU,
     0xfff7df7bU,    0x7fbfbff7U,    0xedd7ff2fU,    0xe7bdffddU,
     0xdf77defeU,    0xef6fffffU,    0xffffbfffU,    0xdbf7bfffU,
@@ -513,7 +513,7 @@ const long int SFMT1279_MSK3_ParamSet[NBSET] = {
     0xf5ffbe7fU,    0xffffab5bU,    0xfffefffbU,    0xfafff9fbU,
     0xefbbfff3U,    0xb7d7bff5U,    0xffffffffU,    0xfff5fff7U};
 
-const long int SFMT2281_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT2281_MSK3_ParamSet[NBSET] = {
     
     0xf7ffef7fU,    0xfdfffffbU,    0xfcfeffffU,    0xf7ffffdfU,
     0xbffffbfeU,    0xbf3f7fffU,    0xffdfdfffU,    0x3f777ffbU,
@@ -524,7 +524,7 @@ const long int SFMT2281_MSK3_ParamSet[NBSET] = {
     0xff6ffffaU,    0xfff7ceeeU,    0xffffffffU,    0xddfbf6fbU,
 0xe39ffffdU,    0x7f6fefcfU,    0xff3fffffU,    0xefbf7fffU};
 
-const long int SFMT4253_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT4253_MSK3_ParamSet[NBSET] = {
     0x3efffffbU,    0xffffebfeU,    0xffdfbdf7U,    0xfbffdf77U,
     0x9f3ebfceU,    0x7f9fe7f7U,    0xedff7f5fU,    0xfe9ffddfU,
     0xbfbffdfdU,    0xee7ffdffU,    0x7fffffffU,    0xe7fffffeU,
@@ -534,7 +534,7 @@ const long int SFMT4253_MSK3_ParamSet[NBSET] = {
     0xeeffffdfU,    0xfeeffdfbU,    0xffffbff7U,    0xfbf7f7fdU,
     0xf7ffbfe9U,    0xff9fbf9eU,    0x9edb6ffbU,    0xfff3ffbfU};
 
-const long int SFMT11213_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT11213_MSK3_ParamSet[NBSET] = {
     0xdfdfbfffU,    0x77dfffffU,    0xeffffeffU,    0xdf7ffcb7U,
     0x7bd5ffffU,    0xfe77bfffU,    0x9bffe71fU,    0xfdbff7eeU,
     0x7fb71fcfU,    0xb7dfffffU,    0xebeffdfeU,    0xfefdfbbfU,
@@ -544,7 +544,7 @@ const long int SFMT11213_MSK3_ParamSet[NBSET] = {
     0x5ffffbefU,    0xfbffbfd9U,    0xcbffffe7U,    0xfcbffffbU,
 0xb6ffd7ffU,    0xfff3fcfaU,    0xfbdfffffU,    0xfe7e9bdbU};
 
-const long int SFMT19937_MSK3_ParamSet[NBSET] = {
+const int32_t SFMT19937_MSK3_ParamSet[NBSET] = {
     0xbffaffffU,    0xbcfffeffU,    0xefffbfefU,    0xd7edffffU,
     0xbfbfffffU,    0xeebfefeeU,    0xfb3ff7dfU,    0x76ffffffU,
     0x5fffffbfU,    0xbdffdefeU,    0xded6ffefU,    0xbd6ff9ffU,
@@ -557,7 +557,7 @@ const long int SFMT19937_MSK3_ParamSet[NBSET] = {
     
     
 // MSK4 param
-const long int SFMT607_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT607_MSK4_ParamSet[NBSET] = {
     0x7ff7fb2fU,    0xfef8fbdcU,    0xffff473fU,    0xafdfffffU,
     0xfffffffaU,    0xdfff7efbU,    0xfbbffffbU,    0xf36fffffU,
     0xff7feffbU,    0xefefbfffU,    0x37fff7fbU,    0x7fe7b3f5U,
@@ -567,7 +567,7 @@ const long int SFMT607_MSK4_ParamSet[NBSET] = {
     0xefecdfffU,    0xfdbfff9fU,    0x7ffefffeU,    0xffff7ffeU,
 0xffa57bdfU,    0xeefbef3fU,    0xf9dffffeU,    0xeffeff6fU};
 
-const long int SFMT1279_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT1279_MSK4_ParamSet[NBSET] = {
     0xfffffd7dU,    0xb5ffff7fU,    0x57ffffbfU,    0xefeeffffU,
     0xfffefbefU,    0xbfbf1fffU,    0xf5f7f8edU,    0xfffdffddU,
     0xdfdfd5cfU,    0xff7f76efU,    0xcfefffffU,    0xd1ffdffdU,
@@ -577,7 +577,7 @@ const long int SFMT1279_MSK4_ParamSet[NBSET] = {
     0x3fddff97U,    0xe7fff35bU,    0xfbfbdffeU,    0xff77fddfU,
     0xff7e7bb7U,    0xf7bb7ff7U,    0xfedffde5U,    0xefffbfffU};
 
-const long int SFMT2281_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT2281_MSK4_ParamSet[NBSET] = {
     0xf2f7cbbfU,    0xbcdffffbU,    0xb6ff77cfU,    0xffff7ff7U,
     0x9ffff7ffU,    0xfbffff7cU,    0xf2ffffffU,    0xfffefdbbU,
     0xfff8ffbfU,    0xfeff69eeU,    0xb9d3ebddU,    0xfffbfaf5U,
@@ -587,7 +587,7 @@ const long int SFMT2281_MSK4_ParamSet[NBSET] = {
     0xffffdfffU,    0xffffefffU,    0x6fff7fffU,    0x77dfdfffU,
 0xf7bebfffU,    0xefffffdeU,    0xf37776f7U,    0xfd7cf7bfU};
 
-const long int SFMT4253_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT4253_MSK4_ParamSet[NBSET] = {
     0xfffff7bbU,    0xeff7febfU,    0xfbffffffU,    0x7d7cfef7U,
     0xbf9fffdfU,    0xbfeffffbU,    0xffbfff7fU,    0xfefdae7fU,
     0xfffffffdU,    0xdfbbfdffU,    0xfffdfbf7U,    0xf3b7f7efU,
@@ -597,7 +597,7 @@ const long int SFMT4253_MSK4_ParamSet[NBSET] = {
     0xfffbf6cfU,    0x7fbfebf9U,    0xffff9dffU,    0xfef7fffbU,
     0x77ffbffdU,    0xfffdafffU,    0xbedeb7ffU,    0xbfffb75fU};
 
-const long int SFMT11213_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT11213_MSK4_ParamSet[NBSET] = {
     0x7fffdbfdU,    0xfbfffffbU,    0xffffffffU,    0xdffff7ffU,
     0xefd3fbffU,    0xffefefffU,    0xff7ec3ffU,    0xdfffffffU,
     0xffff5fffU,    0xbf7f7fefU,    0xfbfbffffU,    0xe7ffffdfU,
@@ -607,7 +607,7 @@ const long int SFMT11213_MSK4_ParamSet[NBSET] = {
     0xfffefbfbU,    0xfffffdbdU,    0xfdfffbffU,    0xffeffebfU,
 0x97f9fe7fU,    0xfe7feeffU,    0xbfffffffU,    0xff7ffbfeU};
 
-const long int SFMT19937_MSK4_ParamSet[NBSET] = {
+const int32_t SFMT19937_MSK4_ParamSet[NBSET] = {
     0xbffffff6U,    0xfdffffc7U,    0xffef77ffU,    0xf7fdffbeU,
     0xfffffdffU,    0xfabfdfffU,    0xdeffffffU,    0xbfdeffebU,
     0xef7ff21eU,    0xfdfdffbfU,    0xfefeff6eU,    0xfdafebffU,
@@ -620,7 +620,7 @@ const long int SFMT19937_MSK4_ParamSet[NBSET] = {
 
 
 // PARITY1 param
-const long int SFMT607_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT607_PARITY1_ParamSet[NBSET] = {
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
@@ -630,7 +630,7 @@ const long int SFMT607_PARITY1_ParamSet[NBSET] = {
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,    
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U};
 
-const long int SFMT1279_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT1279_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
@@ -640,7 +640,7 @@ const long int SFMT1279_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,    
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U};
 
-const long int SFMT2281_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT2281_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
@@ -650,7 +650,7 @@ const long int SFMT2281_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,    
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U};
 
-const long int SFMT4253_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT4253_PARITY1_ParamSet[NBSET] = {
     0xa8000001U,    0xc0000001U,    0x20000001U,    0x20000001U,
     0xa0000001U,    0x40000001U,    0x40000001U,    0x42000001U,
     0x60000001U,    0xc0000001U,    0xa0000001U,    0xa0000001U,
@@ -660,7 +660,7 @@ const long int SFMT4253_PARITY1_ParamSet[NBSET] = {
     0x40000001U,    0xb0000001U,    0xe0000001U,    0x80000001U,    
 0x20000001U,    0xc0000001U,    0x40000001U,    0x48000001U};
 
-const long int SFMT11213_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT11213_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
@@ -670,7 +670,7 @@ const long int SFMT11213_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,    
 0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U};
 
-const long int SFMT19937_PARITY1_ParamSet[NBSET] = {
+const int32_t SFMT19937_PARITY1_ParamSet[NBSET] = {
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
     0x00000001U,    0x00000001U,    0x00000001U,    0x00000001U,
@@ -682,7 +682,7 @@ const long int SFMT19937_PARITY1_ParamSet[NBSET] = {
 
 
 // PARITY2 param
-const long int SFMT607_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT607_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -692,7 +692,7 @@ const long int SFMT607_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT1279_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT1279_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -702,7 +702,7 @@ const long int SFMT1279_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT2281_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT2281_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -712,7 +712,7 @@ const long int SFMT2281_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT4253_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT4253_PARITY2_ParamSet[NBSET] = {
     0xaf5390a3U,    0x078d2186U,    0x8b4ecd15U,    0x8ed2d92aU,
     0xd3bdda16U,    0x4e4b2758U,    0x7df3317aU,    0xeb34cfceU,
     0x045bc889U,    0xeb6e2a53U,    0xe4616943U,    0xe4d017d4U,
@@ -722,7 +722,7 @@ const long int SFMT4253_PARITY2_ParamSet[NBSET] = {
     0xbec29ed7U,    0xc49c2158U,    0x8ecaba1bU,    0xacaa212fU,
 0x8f3c8ae4U,    0x93fcf151U,    0x9ed70b6bU,    0x836a277aU};
     
-const long int SFMT11213_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT11213_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -732,7 +732,7 @@ const long int SFMT11213_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT19937_PARITY2_ParamSet[NBSET] = {
+const int32_t SFMT19937_PARITY2_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -744,7 +744,7 @@ const long int SFMT19937_PARITY2_ParamSet[NBSET] = {
 
 
 // PARITY3 param
-const long int SFMT607_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT607_PARITY3_ParamSet[NBSET] = {
     0x0U,    0x80000000U,    0x0U,    0x10000000U,
     0x20000000U,    0x80000000U,    0x0U,    0x0U,
     0x40000000U,    0x2000000U,    0x80000000U,    0x0U,
@@ -754,7 +754,7 @@ const long int SFMT607_PARITY3_ParamSet[NBSET] = {
     0x4000000U,    0x80000000U,    0x40000000U,    0x0U,
 0x80000000U,    0x0U,    0x0U,    0x0U};
 
-const long int SFMT1279_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT1279_PARITY3_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -764,7 +764,7 @@ const long int SFMT1279_PARITY3_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT2281_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT2281_PARITY3_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,
@@ -774,7 +774,7 @@ const long int SFMT2281_PARITY3_ParamSet[NBSET] = {
     0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U,    
 0x00000000U,    0x00000000U,    0x00000000U,    0x00000000U};
 
-const long int SFMT4253_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT4253_PARITY3_ParamSet[NBSET] = {
     0xb740b3f8U,    0xe690a4a9U,    0xb3480fc1U,    0xefc5d057U,
     0x4140113fU,    0xb998e05aU,    0xbbfeb4c7U,    0x3eab62b1U,
     0x7b26b276U,    0x4550962U,    0x0a9b362cU,    0xe32206c7U,
@@ -784,7 +784,7 @@ const long int SFMT4253_PARITY3_ParamSet[NBSET] = {
     0x722046bcU,    0xdd1db4e7U,    0x4a61645bU,    0xaa5340c9U,
     0xa3cf01c6U,    0x739a3cf7U,    0x661e1ca7U,    0xc4833eb6U};
 
-const long int SFMT11213_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT11213_PARITY3_ParamSet[NBSET] = {
     0xe8148000U,    0xbcaaa000U,    0x03dc0000U,    0xf73ca000U,
     0xf75e8000U,    0x6f4ea000U,    0x830e0000U,    0x5b202000U,
     0x953e8000U,    0xe1d70000U,    0x8a3d0800U,    0x5c142000U,
@@ -794,7 +794,7 @@ const long int SFMT11213_PARITY3_ParamSet[NBSET] = {
     0x0443a000U,    0x16d92000U,    0xbca5a000U,    0xf8270000U,
 0x22d14000U,    0x16f44800U,    0xa7420000U,    0x42c21400U};
 
-const long int SFMT19937_PARITY3_ParamSet[NBSET] = {
+const int32_t SFMT19937_PARITY3_ParamSet[NBSET] = {
     0x0U,    0x0U,    0x0U,    0x0U,
     0x40000000U,    0x2000000U,    0x0U,    0x40000000U,
     0x0U,    0x0U,    0x0U,    0x0U,
@@ -807,7 +807,7 @@ const long int SFMT19937_PARITY3_ParamSet[NBSET] = {
     
     
 // PARITY4 param
-const long int SFMT607_PARITY4_ParamSet[NBSET] = {
+const int32_t SFMT607_PARITY4_ParamSet[NBSET] = {
     0x5986f054U,    0x30b388afU,    0xb5a64116U,    0x6f6fec6aU,
     0xd63bbe55U,    0xa52af51dU,    0x57810851U,    0x170c7993U,
     0xf4112310U,    0x180e3080U,    0xcd8ababaU,    0x694481ddU,
@@ -817,7 +817,7 @@ const long int SFMT607_PARITY4_ParamSet[NBSET] = {
     0xf361b11fU,    0xd28269a7U,    0x39660c35U,    0x18ceeb85U,
     0x41d828efU,    0x2a5c3390U,    0xd99b3c70U,    0x85b22d17U};
 
-const long int SFMT1279_PARITY4_ParamSet[NBSET] = {
+const int32_t SFMT1279_PARITY4_ParamSet[NBSET] = {
     0x40000000U,    0x20000000U,    0x0U,    0x0U,
     0x0U,    0x20000000U,    0x40000000U,    0x80000000U,
     0x40000000U,    0x0U,    0x0U,    0x20000000U,
@@ -827,7 +827,7 @@ const long int SFMT1279_PARITY4_ParamSet[NBSET] = {
     0x80000000U,    0x0U,    0x0U,    0x80000000U,
     0x0U,    0x40000000U,    0x0U,    0x0U};
 
-const long int SFMT2281_PARITY4_ParamSet[NBSET] = {
+const int32_t SFMT2281_PARITY4_ParamSet[NBSET] = {
     0x41dfa600U,    0x92730900U,    0x907c9c00U,    0x0a826800U,
     0x92e7de00U,   0xc66e2000U,    0x1b40e800U,    0x3530d200U,
     0x48acb400U,    0x32455000U,   0xb05f9800U,    0x27b07600U,
@@ -837,7 +837,7 @@ const long int SFMT2281_PARITY4_ParamSet[NBSET] = {
     0x8a9b2080U,    0x859df000U,    0xcc1df840U,    0xf6dae320U,
     0xd324a000U,    0xcb8f6a00U,    0x16537800U,    0xc4cbc800U};
 
-const long int SFMT4253_PARITY4_ParamSet[NBSET] = {
+const int32_t SFMT4253_PARITY4_ParamSet[NBSET] = {
     0x6c11486dU,    0x7a5efbe5U,    0x35ab1967U,    0xa6e061d3U,
     0xd458c634U,    0xc4f1b268U,    0x13a23b1dU,    0x95b6f6ebU,
     0xf4e713f6U,    0xe0c0375fU,    0xe8730649U,    0xe65fe0eeU,
@@ -847,7 +847,7 @@ const long int SFMT4253_PARITY4_ParamSet[NBSET] = {
     0x7d6ac005U,    0x0da08972U,    0x6aac5023U,    0x5ca836d2U,
     0xa91d27ddU,    0x72b647f3U,    0xfd968985U,    0x22b0dc59U};
 
-const long int SFMT11213_PARITY4_ParamSet[NBSET] = { 
+const int32_t SFMT11213_PARITY4_ParamSet[NBSET] = {
     0xd0c7afa3U,    0x278c70beU,    0x1f9394f8U,    0x2ad648b9U,
     0xb53672e0U,    0x1b8db4baU,    0xcd4127afU,    0x95b190fdU,
     0xf7bd34c4U,    0x02717d9dU,    0x026e932dU,    0x0aaefe70U,
@@ -857,7 +857,7 @@ const long int SFMT11213_PARITY4_ParamSet[NBSET] = {
     0x35321b2aU,    0xacd93bf9U,    0x45e06438U,    0xf6fdf776U,
 0xf393e8a4U,    0x24ce4227U,    0xea7b6ca0U,    0xfde64440U};
 
-const long int SFMT19937_PARITY4_ParamSet[NBSET] = { 
+const int32_t SFMT19937_PARITY4_ParamSet[NBSET] = {
     0x13c9e684U,    0xfbdf63e3U,    0xdc0d7984U,    0x0116914cU,
     0x978e01e2U,    0xc9bbd290U,    0x8f2cf308U,    0x2bbdd900U,
     0xdb186980U,    0x21a2acc8U,    0x42530085U,    0x47a2caf4U,
@@ -877,10 +877,10 @@ int SL1;
 int SL2;
 int SR1;
 int SR2;
-long int MSK1;
-long int MSK2;
-long int MSK3;
-long int MSK4; 
+int32_t MSK1;
+int32_t MSK2;
+int32_t MSK3;
+int32_t MSK4;
 uint32_t parity[4];
 char IDSTR[70];
 

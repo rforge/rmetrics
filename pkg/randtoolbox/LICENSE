@@ -1,37 +1,12 @@
-----------------------------------------------------------------------
--- LICENSE
-----------------------------------------------------------------------
+Copyright (c) 2014, Yohan Chalabi, Christophe Dutang, Donald Knuth, Makoto Matsumoto, Mutsuo Saito, Petr Savicky, Diethelm Wuertz
+All rights reserved.
 
-YEAR: 2013
-COPYRIGHT HOLDER: Yohan Chalabi, Christophe Dutang, Petr Savicky, Diethelm Wuertz, Makoto Matsumoto, Mutsuo Saito and Donald Knuth 
-ORGANIZATION: ETH Zurich, Academy of Sciences of the Czech Republic, Hiroshima University and The University of Tokyo
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 
-----------------------------------------------------------------------
--- COMMENTS
-----------------------------------------------------------------------
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
-- Before version 1.13 (exclusively), there was a lot of different (and incompatible) 
-licenses in this package, namely, GPL, BSD, public domain, etc... 
-(cf. 1.08-version DESCRIPTION file of this package). 
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
-- From 1.13, all this code of this package is under the above BSD 3-clause 
-license, available at http://opensource.org/licenses/BSD-3-Clause. 
-
-- The package depends on the rngWELL package which is under the
-BSD 2-clause but has its own LICENSE file. The randtoolbox package 
-can be provided without this dependency on demand to the maintainer. 
-
-----------------------------------------------------------------------
--- DETAILED AUTHORSHIP
-----------------------------------------------------------------------
-
-- all the code of this package except the two codes listed below was written by Yohan Chalabi,
-Christophe Dutang, Petr Savicky and Diethelm Wuertz.
-
-- the C code for SF-Mersenne Twister belongs to M. Matsumoto and M. Saito, 
-see http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/LICENSE.txt 
-
-- the C code for Knuth-TAOCP-2002 generator belongs to D. E. Knuth, 
-see http://www-cs-faculty.stanford.edu/~uno/programs/rng-double.c.
-
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
