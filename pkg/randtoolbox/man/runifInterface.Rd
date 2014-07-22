@@ -116,10 +116,14 @@ x <- runif(10)
 #Park Miller congruential generator
 set.generator(name="congruRand", mod=2^31-1, mult=16807, incr=0, seed=12345)
 runif(5)
+setSeed(12345)
+congruRand(5, dim=1, mod=2^31-1, mult=16807, incr=0)
 
 # the Knuth Lewis RNG
 set.generator(name="congruRand", mod="4294967296", mult="1664525", incr="1013904223", seed=1)
 runif(5)
+setSeed(1)
+congruRand(5, dim=1, mod=4294967296, mult=1664525, incr=1013904223)
 
 #Restore the generator from storedState and regenerate the same numbers
 put.description(storedState)

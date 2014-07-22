@@ -45,7 +45,7 @@
 %%% 
 
 
-\documentclass[11pt, twocolumn, a4paper]{article}
+\documentclass[11pt, twocolumn]{article}
 
 %\VignetteIndexEntry{A note on random number generation}
 %\VignettePackage{randtoolbox}
@@ -58,7 +58,7 @@
 \usepackage{amsfonts,amssymb,amsmath}
 %english typography
 \usepackage[english]{babel}
-\usepackage{a4wide,courier,newlfont}
+\usepackage{courier,newlfont}
 
 % 8 bit accents 
 %\usepackage[applemac]{inputenc} %MAC encoding

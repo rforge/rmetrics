@@ -92,11 +92,11 @@ Software 33(4), 22.
 \examples{
 # (1) poisson approximation
 #
-coll.test(runif)
+coll.test(runif, 2^7, 2^10, 1, 100)
 
 # (2) exact distribution
 #
-coll.test(SFMT, 2^7, 2^10, 1, 10000)
+coll.test(SFMT, 2^7, 2^10, 1, 100)
 
 }
 \keyword{htest}
