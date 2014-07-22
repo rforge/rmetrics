@@ -6,12 +6,12 @@
  * @author Petr Savicky 
  *
  *
- * Copyright (C) 2009, Christophe Dutang, 
+ * Copyright (C) 2014, Christophe Dutang,
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
- * Copyright (c) 2009 Christophe Dutang, Petr Savicky. 
+ * Copyright (c) 2014 Christophe Dutang, Petr Savicky. 
  * All rights reserved.
  *
  *      Redistribution and use in source and binary forms, with or without
@@ -58,9 +58,38 @@
 #define two_64_s "18446744073709551616"
 #define two_64m1_h 0xffffffffffffffff
 
+/* same as SFMT.h. see http://en.wikibooks.org/wiki/C_Programming/C_Reference/stdint.h */
+#if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
+  #include <inttypes.h>
+  #define HAVE_INT32_64_DEFINED 1
+#elif defined(_MSC_VER) || defined(__BORLANDC__)
+  typedef unsigned int uint32_t;
+  typedef unsigned __int64 uint64_t;
+  #define inline __inline
+  #define HAVE_INT32_64_DEFINED 1
+#else
+  #include <inttypes.h>
+  #if defined(__GNUC__)
+    #define inline __inline__
+  #endif
+  #define HAVE_INT32_64_DEFINED 1
+#endif
+
+#ifndef PRIu64
+  #if defined(_MSC_VER) || defined(__BORLANDC__)
+    #define PRIu64 "I64u"
+    #define PRIx64 "I64x"
+  #else
+    #define PRIu64 "llu"
+    #define PRIx64 "llx"
+  #endif
+#endif
+
+
+
 // general linear congruential generator
 
-unsigned long long mod, mask, mult, incr, congru_seed;
+uint64_t mod, mask, mult, incr, congru_seed;
 
 // possible value of user_unif_rand_selected in runifInterface.c
 double user_unif_rand_congru_0()
@@ -117,9 +146,9 @@ double get_congruRand()
 }
 
 // check several criteria on parameters
-int check_congruRand(unsigned long long mod, unsigned long long mask,
-	unsigned long long mult, unsigned long long incr,
-	unsigned long long seed)
+int check_congruRand(uint64_t mod, uint64_t mask,
+	uint64_t mult, uint64_t incr,
+	uint64_t seed)
 {
 	if (mult == 0LL) return - 1;
 	if (mask == 0LL) {
@@ -138,8 +167,8 @@ int check_congruRand(unsigned long long mod, unsigned long long mask,
 }
 
 // set parameters
-void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
-		unsigned long long inp_incr, unsigned long long inp_seed)
+void set_congruRand(uint64_t inp_mod, uint64_t inp_mult,
+		uint64_t inp_incr, uint64_t inp_seed)
 {
 	mod = inp_mod;
 	mult = inp_mult;
@@ -148,7 +177,7 @@ void set_congruRand(unsigned long long inp_mod, unsigned long long inp_mult,
 }
 
 // get seed
-void get_seed_congruRand(unsigned long long *out_seed)
+void get_seed_congruRand(uint64_t *out_seed)
 {
 	*out_seed = congru_seed;
 }
@@ -157,35 +186,35 @@ void get_seed_congruRand(unsigned long long *out_seed)
 void get_state_congru(char **params, char **seed)
 {
 	if (mod != 0LL) {
-		Rprintf(params[0], "%llu", mod);
+		Rprintf(params[0], "%" PRIu64 "\n", mod);
 	} else {
 		strcpy(params[0], two_64_s);
 	}
-	Rprintf(params[1], "%llu", mult);
-	Rprintf(params[2], "%llu", incr);
-	Rprintf(seed[0], "%llu", congru_seed);
+	Rprintf(params[1], "%" PRIu64 "\n", mult);
+	Rprintf(params[2], "%" PRIu64 "\n", incr);
+	Rprintf(seed[0], "%" PRIu64 "\n", congru_seed);
 }
 
 // .C entry point used by put.description
 void put_state_congru(char **params, char **seed, int *err)
 {
-	unsigned long long inp_mod, inp_mask, inp_mult, inp_incr, inp_seed;
+	uint64_t inp_mod, inp_mask, inp_mult, inp_incr, inp_seed;
 	if (strcmp(params[0], two_64_s) == 0) {
 		inp_mod = 0;
 		inp_mask = two_64m1_h;
 	} else {
-		sscanf(params[0], "%llu", &inp_mod);
+		sscanf(params[0], "%" PRIu64 "\n", &inp_mod);
 		if ((inp_mod & (inp_mod - 1)) == 0) {
 			inp_mask = inp_mod - 1;
 		} else {
 			inp_mask = 0;
 		}
 	}
-	sscanf(params[1], "%llu", &inp_mult);
-	sscanf(params[2], "%llu", &inp_incr);
-	sscanf(seed[0], "%llu", &inp_seed);
+	sscanf(params[1], "%" PRIu64 "\n", &inp_mult);
+	sscanf(params[2], "%" PRIu64 "\n", &inp_incr);
+	sscanf(seed[0], "%" PRIu64 "\n", &inp_seed);
 	*err = check_congruRand(inp_mod, inp_mask, inp_mult, inp_incr, inp_seed);
-	//Rprintf("mod = %llu, mask = %llu, err = %d\n", inp_mod, inp_mask, *err);
+
 	if (*err < 0) return;
 	mod = inp_mod;
 	mask = inp_mask;
