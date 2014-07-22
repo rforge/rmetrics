@@ -44,6 +44,9 @@
     19.  fAssets            methods, robustbase, MASS, fBasics, fRegression
     20.  fPortfolio         quadprog, lpSolve, MASS, fAssets
 
+    21.  randtoolbox	    rngWELL
+    22.  rngWELL	
+
 
 # ------------------------------------------------------------------------------
 # PACKAGES IN USE:
