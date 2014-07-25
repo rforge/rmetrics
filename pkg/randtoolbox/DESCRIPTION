@@ -1,7 +1,7 @@
 Package: randtoolbox	
 Type: Package
 Title: toolbox for pseudo and quasi random number generation and RNG tests.
-Version: 1.15
+Version: 1.16
 Date: 2014-07-31
 Author: R port by Yohan Chalabi, Christophe Dutang, Petr Savicky and Diethelm Wuertz (underlying C codes of (i) the SFMT algorithm from M. Matsumoto and M. Saito, (ii) the Knuth-TAOCP RNG from D. Knuth). 
 Maintainer: Christophe Dutang <christophe.dutang@ensimag.fr>
