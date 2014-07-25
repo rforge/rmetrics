@@ -51,6 +51,6 @@
 
 void version_randtoolbox(char **s)
 {
-	s[0] = "1.15";
+	s[0] = "1.16";
 }
 

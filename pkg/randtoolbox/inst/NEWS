@@ -3,13 +3,15 @@
 Version 1.15
 =============
 
-- remove the use of 'long long' in some C code
-- update the licence file
-- no longer use a4 paper format in vignette
+- remove the use of 'long long' in some C code.
+- update LICENCE file.
+- move autoconf files to tools directory.
+- no longer use a4 paper format in vignette.
 
 Version 1.14
 =============
 
+- change licence from BSD_2_clause to BSD_3_clause.
 - minor change.
 
 Version 1.13
@@ -17,11 +19,11 @@ Version 1.13
 
 - this version is one of the last versions working with
 package rngWELL >= 0.11-0.
-- change licence from BSD to BSD_2_clause
+- change licence from BSD to BSD_2_clause.
 
 NOTES FIXES
 
-- remove NOTES appearing in R CMD check
+- remove NOTES appearing in R CMD check.
 
 Version 1.12
 =============

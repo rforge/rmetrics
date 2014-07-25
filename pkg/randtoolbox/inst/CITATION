@@ -1,4 +1,4 @@
-citHeader("To cite GNE in publications use:")
+citHeader("To cite randtoolbox in publications use:")
 
 
 year <- sub("-.*", "", meta$Date)
@@ -8,7 +8,6 @@ bibentry(bibtype = "Manual",
          title = "randtoolbox: Generating and Testing Random Numbers",
          author = c(person("Dutang", "Christophe"), person("Savicky","Petr")),
          year = year,
-         note = note,
-         url = "http://CRAN.R-project.org/package=GNE")
+         note = note)
 
 
