@@ -1,11 +1,14 @@
 Package: fPortfolio
-Date: 2009-09-28
-Version: 3010.80
-Title: Rmetrics - Portfolio Selection and Optimization 
-Author: Rmetrics Corre Team,
-      Yohan Chalabi [ctb],
-      Tobias Setz [ctb],
-      Diethelm Wuertz [aut, cre]
+Title: Rmetrics - Portfolio Selection and Optimization
+Date: 2014-09-05
+Version: 3011.81
+Author: Rmetrics Core Team,
+	Diethelm Wuertz [aut],
+	Tobias Setz [cre]
+	Yohan Chalabi [ctb]
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Description: Environment for teaching 
+	"Financial Engineering and Computational Finance".
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fAssets
 Imports: Rglpk, Rsymphony
 Suggests: methods, tcltk, slam,
@@ -14,9 +17,6 @@ Suggests: methods, tcltk, slam,
     lattice, fCopulae, sn, 
     bcp, fGarch, grid, mvoutlier, sp, energy,
     XMLRPC
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-      "Financial Engineering and Computational Finance"
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
       FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
       WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
