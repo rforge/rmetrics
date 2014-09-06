@@ -51,8 +51,8 @@ GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
 
   The incomplete Bessel K function is defined by
 
-  \deqn{K_\nu(x,y)=\int_1^\infty t^{-nu-1}\exp(-xt-y/t)\,dx}{%
-    K_nu(x,y)=integral_1^infinity t^{-nu-1} exp(-xt-y/t) dx}
+  \deqn{K_\nu(x,y)=\int_1^\infty t^{-nu-1}\exp(-xt-y/t)\,dt}{%
+    K_nu(x,y)=integral_1^infinity t^{-nu-1} exp(-xt-y/t) dt}
 
   see Slavinsky and Safouhi (2010), or Harris (2008).
 
