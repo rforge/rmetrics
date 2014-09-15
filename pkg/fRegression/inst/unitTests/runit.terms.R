@@ -162,7 +162,7 @@ test.polymarsFit <-
     
     # Fit Parameters:
     polymarsfit <- regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars") 
-    polymars <- .polymars(Y ~ X1 + X2 + X3, data = x)
+    polymars <- fRegression:::.polymars(Y ~ X1 + X2 + X3, data = x)
     
     # Terms:
     terms(polymarsfit@fit)

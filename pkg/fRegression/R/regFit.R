@@ -73,10 +73,15 @@ regFit <-
 
     # Match Arguments:
     use <- match.arg(use)
+    if (missing(data)) data <- NULL
 
     # Transform data into a dataframe
-    Data <- if (inherits(data, "timeSeries")) data else as.timeSeries(data)
-    data <- as.data.frame(data)
+    if (!is.null(data)) {
+      Data <- if (inherits(data, "timeSeries")) data else as.timeSeries(data)
+      data <- as.data.frame(data)
+    } else {
+      Data <- data <- NULL
+    }
 
     # Function to be called:
     fun <- paste(".", match.arg(use), sep = "")
@@ -99,12 +104,18 @@ regFit <-
     cmd <- match.call()
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]
     cmd[[1]] <- as.name(fun)
+    # Use this to access hidden functions in a parent frame:
+    #cmd[[1]] <- substitute(fRegression:::f, list(f=as.name(fun)))
 
     # Ensure that data is a data.frame
-    if (!is.null(cmd$data)) cmd$data <- call("as.data.frame", cmd$data)
+    if (!is.null(cmd$data)) cmd$data <- as.name("data")
+    # Use this to directly pass the argument from the parent frame:
+    #if (!is.null(cmd$data)) cmd$data <- call("as.data.frame", cmd$data)
 
     # Fit Regression Model:
-    fit <- eval(cmd, parent.frame())
+    fit <- eval(cmd)
+    # Use this to evaluate in parent frame:
+    #fit <- eval(cmd, parent.frame())
 
     # Add "cmd" to Fit:
     fit$cmd <- cmd
@@ -129,7 +140,7 @@ regFit <-
         formula = as.formula(formula),
         family = as.character(gaussian()),
         method = use,
-        # data is data.frame, Data original input:
+        # data is as.data.frame(data), Data is as.timeSeries(data):
         data = list(data = data, Data = Data),
         fit = fit,
         residuals = fit$residuals,

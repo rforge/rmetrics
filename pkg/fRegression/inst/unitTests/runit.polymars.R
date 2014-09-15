@@ -66,7 +66,7 @@ test.polymarsDefault <-
     x = regSim(model = "LM3", n = 50)
     
     # Polymars Wrapper:
-    fit1 = .polymarsDefault(responses = x[,1], predictors = x[, 2:4])
+    fit1 = fRegression:::.polymarsDefault(responses = x[,1], predictors = x[, 2:4])
     class(fit1)
     names(fit1)
     
@@ -110,8 +110,8 @@ test.polymarsFormula <-
     x <- regSim(model = "LM3", n = 50)
     
     # Polymars Formula Wrapper:
-    fit2 <- .polymarsFormula(formula = Y ~ X1 + X2 + X3, data = x)
-    fit2 <- .polymars(formula = Y ~ X1 + X2 + X3, data = x)
+    fit2 <- fRegression:::.polymarsFormula(formula = Y ~ X1 + X2 + X3, data = x)
+    fit2 <- fRegression:::.polymars(formula = Y ~ X1 + X2 + X3, data = x)
     class(fit2)
     names(fit2)
     

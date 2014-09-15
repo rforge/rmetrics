@@ -140,7 +140,7 @@ test.termContour <-
     head(DATATS)
     class(DATATS)
     
-    require(mgcsv)
+    require(mgcv)
     
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm")
