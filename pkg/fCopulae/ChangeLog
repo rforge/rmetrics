@@ -9,6 +9,7 @@ Package fCopulae
 	* NAMESPACE: Updated NAMESPACE; functions with a dot in front are no longer
 	  exported.
 	* R/ArchimedianSlider.R: Removed duplicated functions
+	* src and depending R functions moved to inst/obsolete/
 
 2014-02-03  wuertz
 
