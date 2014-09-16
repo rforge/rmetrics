@@ -36,12 +36,7 @@
 
 
 ################################################################################
-#  rarchmCopula               Generates Archimedean copula random variates 
-#  .r1Copula                  Generates rv's for copulae No 1
-#  .r2Copula                  Generates rv's for copulae No 2
- 
-
-rarchmCopula <-
+ rarchmCopula <-
     function(n, alpha = NULL, type = archmList())
 {   
     # A function implemented by Diethelm Wuertz
@@ -86,8 +81,6 @@ rarchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .rNo1Copula <- 
     function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 {   
@@ -133,8 +126,6 @@ rarchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .rNo2Copula <-  
     function(n, alpha = NULL, doplot = FALSE)
 {   
@@ -174,12 +165,6 @@ rarchmCopula <-
 
 
 ################################################################################
-# FUNCTION:                  ARCHIMEDEAN COPULAE PROBABILITY:
-#  parchmCopula               Computes Archimedean copula probability 
-#  .parchm1Copula              Utility Function
-#  .parchm2Copula              Utility Function
-
-
 parchmCopula <- 
     function(u = 0.5, v = u, alpha = NULL, type = archmList(),
     output = c("vector", "list"), alternative = FALSE )
@@ -235,8 +220,6 @@ parchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .parchm1Copula <-
     function(u = 0.5, v = u, alpha = NULL, type = archmList(), 
     output = c("vector", "list") )
@@ -339,8 +322,6 @@ parchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .parchm2Copula <- 
     function(u = 0.5, v = u, alpha = NULL, type = archmList(),
     output = c("vector", "list") )
@@ -532,12 +513,6 @@ parchmCopula <-
 
 
 ################################################################################
-# FUNCTION:                  ARCHIMEDEAN COPULAE DENSITY:
-#  darchmCopula               Computes Archimedean copula density 
-#  .darchm1Copula              Utility Function
-#  .darchm2Copula              Utility Function
-
-
 darchmCopula <- 
     function(u = 0.5, v = u, alpha = NULL, type = archmList(),
     output = c("vector", "list"), alternative = FALSE )
@@ -593,8 +568,6 @@ darchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .darchm1Copula = 
     function(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
     c("vector", "list")) 
@@ -659,8 +632,6 @@ darchmCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 .darchm2Copula <- 
     function(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
     c("vector", "list")) 
@@ -895,8 +866,6 @@ darchmCopula <-
 
 
 ################################################################################
-
-
 rgumbelCopula <- 
     function(n = 100, alpha = 2) 
 {   
@@ -927,8 +896,6 @@ rgumbelCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 pgumbelCopula <-
     function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
 {   
@@ -949,8 +916,6 @@ pgumbelCopula <-
 
 
 # ------------------------------------------------------------------------------
-
-
 dgumbelCopula <- 
     function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
 {   
@@ -968,7 +933,4 @@ dgumbelCopula <-
     # Return Value:
     ans
 }
-
-
-################################################################################
 

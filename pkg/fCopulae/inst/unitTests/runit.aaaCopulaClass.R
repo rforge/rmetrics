@@ -100,7 +100,7 @@ function()
     #     type = NULL, error = 1e-3, ...)
     
     # Elliptical:
-    .copulaRho(rho = 0.5, family = "elliptical", type = "norm")
+    fCopulae:::.copulaRho(rho = 0.5, family = "elliptical", type = "norm")
     
     # Return Value:
     return()    

@@ -2,6 +2,14 @@
 ChangeLog
 Package fCopulae
 
+2014-09-16  setz
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
+	  after submission to CRAN
+	* NAMESPACE: Updated NAMESPACE; functions with a dot in front are no longer
+	  exported.
+	* R/ArchimedianSlider.R: Removed duplicated functions
+
 2014-02-03  wuertz
 
 	* mvtnorm and sn are now loaded as Depends from fMultivar

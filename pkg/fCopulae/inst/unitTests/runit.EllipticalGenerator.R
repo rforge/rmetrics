@@ -187,31 +187,31 @@ function()
     S = NULL
     
     s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "norm")
+    fCopulae:::.pelliptical(q = q, param = NULL, type = "norm")
     S = c(S, as.integer(Sys.time() - s))
      
     s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "cauchy") 
+    fCopulae:::.pelliptical(q = q, param = NULL, type = "cauchy") 
     S = c(S, as.integer(Sys.time() - s))
     
     s = Sys.time()
-    .pelliptical(q = q, param = 2, type = "t") 
+    fCopulae:::.pelliptical(q = q, param = 2, type = "t") 
     S = c(S, as.integer(Sys.time() - s))
     
     s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "logistic") 
+    fCopulae:::.pelliptical(q = q, param = NULL, type = "logistic") 
     S = c(S, as.integer(Sys.time() - s))
     
     s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "laplace")
+    fCopulae:::.pelliptical(q = q, param = NULL, type = "laplace")
     S = c(S, as.integer(Sys.time() - s))
     
     s = Sys.time()
-    .pelliptical(q = q, param = c(r = 1), type = "kotz")  
+    fCopulae:::.pelliptical(q = q, param = c(r = 1), type = "kotz")  
     S = c(S, as.integer(Sys.time() - s))
     
     s = Sys.time()
-    .pelliptical(q = q, param = c(r = 1, s = 1), type = "epower")
+    fCopulae:::.pelliptical(q = q, param = c(r = 1, s = 1), type = "epower")
     S = c(S, as.integer(Sys.time() - s))
     
     # Return Value:
@@ -228,25 +228,25 @@ function()
     # Probability:
     N = 100
     x = (-1999:1999)/N
-    d = .delliptical(x = x, param = NULL, type = "norm")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "norm")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "cauchy")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "cauchy")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "t")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "t")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "logistic")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "logistic")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "laplace")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "laplace")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "kotz")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "kotz")
         sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "epower")
+    d = fCopulae:::.delliptical(x = x, param = NULL, type = "epower")
         sum(d)/N
         
     # Non-default Parameters:
-    d = .delliptical(x = (-100:100)/10, param = 1, type = "kotz")
+    d = fCopulae:::.delliptical(x = (-100:100)/10, param = 1, type = "kotz")
         sum(d)/N
-    d = .delliptical(x = (-100:100)/10, param = 1/2, type = "kotz")
+    d = fCopulae:::.delliptical(x = (-100:100)/10, param = 1/2, type = "kotz")
         sum(d)/N
         
     # Return Value:
@@ -262,13 +262,13 @@ function()
 {   
     # Probability:
     p = (0:10)/10
-    .qelliptical(p = p, param = NULL, type = "norm") 
-    .qelliptical(p = p, param = NULL, type = "cauchy") 
-    .qelliptical(p = p, param = 2, type = "t") 
-    .qelliptical(p = p, param = NULL, type = "logistic") 
-    .qelliptical(p = p, param = NULL, type = "laplace")
-    .qelliptical(p = p, param = c(r = 1), type = "kotz")  
-    .qelliptical(p = p, param = c(r = 1, s = 1), type = "epower") 
+    fCopulae:::.qelliptical(p = p, param = NULL, type = "norm") 
+    fCopulae:::.qelliptical(p = p, param = NULL, type = "cauchy") 
+    fCopulae:::.qelliptical(p = p, param = 2, type = "t") 
+    fCopulae:::.qelliptical(p = p, param = NULL, type = "logistic") 
+    fCopulae:::.qelliptical(p = p, param = NULL, type = "laplace")
+    fCopulae:::.qelliptical(p = p, param = c(r = 1), type = "kotz")  
+    fCopulae:::.qelliptical(p = p, param = c(r = 1, s = 1), type = "epower") 
     
     # Return Value:
     return() 

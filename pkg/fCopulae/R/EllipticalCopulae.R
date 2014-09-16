@@ -205,7 +205,7 @@ rellipticalSlider <-
     # FUNCTION:
 
     # Use: X = .rnorm2d(n, rho) or alternatively:
-    X = .rnorm2d(n = n, rho = rho)
+    X = fMultivar:::.rnorm2d(n = n, rho = rho)
 
     # Generate
     Z <- NULL
