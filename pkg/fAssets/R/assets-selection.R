@@ -23,7 +23,7 @@
 ################################################################################
 
 
-assetsSelect = 
+assetsSelect <- 
     function(x, method = c("hclust", "kmeans"), control = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -40,19 +40,19 @@ assetsSelect =
 
     # Selection:
     # do not method = match.arg(method) to allow for user specified clustering
-    method = method[1]   
+    method <- method[1]   
      
     # Transform to matrix:
     if (class(x) == "timeSeries") {
-        x = as.matrix(x)
+        x <- as.matrix(x)
     }
     
     # Compose Function:
-    fun = paste(".", method, "Select", sep = "")
-    FUN = match.fun(fun)
+    fun <- paste(".", method, "Select", sep = "")
+    FUN <- get(fun)
 
     # Cluster:
-    ans = FUN(x, control, ...)
+    ans <- FUN(x, control, ...)
     
     # Return Value:
     ans

@@ -1,3 +1,14 @@
+
+ChangeLog
+Package fAssets
+
+2014-09-17  setz
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
+	  after submission to CRAN
+	* NAMESPACE: Updated NAMESPACE; functions with a dot in front are no longer
+	  exported.
+
 2012-09-24  chalabi
 
 	* DESCRIPTION: Updated maintainer field.
