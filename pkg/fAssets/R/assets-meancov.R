@@ -40,11 +40,11 @@
 
 
 assetsMeanCov <- 
-function(x, 
-    method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
-    check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
-    ...)
-{   
+  function(x, 
+           method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
+           check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
+           ...)
+  {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -75,7 +75,7 @@ function(x,
     #       length 2 containing robust location and scale estimates. See 
     #       scaleTau2, s_Qn, s_Sn, s_mad or s_IQR for examples to be used as 
     #       sigmamu argument.
-        
+    
     # Note:
     #   The output of this function can be used for portfolio
     #   optimization.
@@ -103,74 +103,70 @@ function(x,
     method <- method[1]
     N <- ncol(x)
     assetNames <- colnames(x.mat)
-       
+    
     # Attribute Control List:
     control <- c(method = method[1])
     user <- TRUE
     
     # Compute Classical Covariance:
     if (method == "cov") {
-        # Classical Covariance Estimation:
-        ans = list(center = colMeans(x.mat), cov = cov(x.mat))
-        user = FALSE
+      # Classical Covariance Estimation:
+      ans = list(center = colMeans(x.mat), cov = cov(x.mat))
+      user = FALSE
     }
-        
+    
     # From R Package "robustbase":
     if (method == "MCD" | method == "Mcd") {
-      # require(robustbase)
-        ans <- robustbase::covMcd(x.mat, alpha = alpha, ...)
-        mu = ans$center
-        Sigma = ans$cov
-        user = FALSE
+      ans <- robustbase::covMcd(x.mat, alpha = alpha, ...)
+      mu = ans$center
+      Sigma = ans$cov
+      user = FALSE
     }   
     if (method == "OGK" | method == "Ogk") {
-      # require(robustbase)
-      ans <- robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
-        user = FALSE    
+      ans <- robustbase::covOGK(x.mat, sigmamu = sigmamu, ...)
+      user = FALSE
     }
     
     # [MASS] mve and mcd Routines:
     if (method == "mve") {
-        # require(MASS)
-        ans = MASS::cov.rob(x = x.mat, method = "mve")
-        user = FALSE
+      ans = MASS::cov.rob(x = x.mat, method = "mve", ...)
+      user = FALSE
     }
     if (method == "mcd") {
-        # require(MASS)
-        ans = MASS::cov.rob(x = x.mat, method = "mcd") 
-        user = FALSE
+      ans = MASS::cov.rob(x = x.mat, method = "mcd", ...) 
+      user = FALSE
     }    
-        
+    
     # [corpcor] Shrinkage and Bagging Routines 
     if (method == "shrink") {
-        fit = .cov.shrink(x = x.mat, ...)
-        ans = list(center = colMeans(x.mat), cov = fit)
-        user = FALSE
+      fit = .cov.shrink(x = x.mat, ...)
+      ans = list(center = colMeans(x.mat), cov = fit)
+      user = FALSE
     } 
     if (method == "bagged") {
-        fit = .cov.bagged(x = x.mat, R = baggedR, ...)
-        ans = list(center = colMeans(x.mat), cov = fit)
-        control = c(control, R = as.character(baggedR))
-        user = FALSE
+      fit = .cov.bagged(x = x.mat, R = baggedR, ...)
+      ans = list(center = colMeans(x.mat), cov = fit)
+      control = c(control, R = as.character(baggedR))
+      user = FALSE
     }
-        
+    
     # Nearest Neighbour Variance Estimation:
     if (method == "nnve") {
-        fit = .cov.nnve(datamat = x.mat, ...)
-        ans = list(center = colMeans(x.mat), cov = fit$cov)
-        user = FALSE
+      fit = .cov.nnve(datamat = x.mat, ...)
+      ans = list(center = colMeans(x.mat), cov = fit$cov)
+      user = FALSE
     }
     
     # User specified estimator:
     if(user) {
-        fun = match.fun(method[1])
-        ans = fun(x.mat, ...)
+      fun = match.fun(method[1])
+      ans = fun(x.mat, ...)
     }
     
     # Result:
     mu = center = ans$center
     Sigma = cov = ans$cov
-       
+    
     # Add Size to Control List:
     control = c(control, size = as.character(N))
     
@@ -180,19 +176,19 @@ function(x,
     
     # Check Positive Definiteness:
     if (check) {
-        result = isPositiveDefinite(Sigma)
-        if(result) {
-            control = c(control, posdef = "TRUE")
-        } else {
-            control = c(control, posdef = "FALSE")
-        }
+      result = isPositiveDefinite(Sigma)
+      if(result) {
+        control = c(control, posdef = "TRUE")
+      } else {
+        control = c(control, posdef = "FALSE")
+      }
     }
     
     # Check Positive Definiteness:
     control = c(control, forced = "FALSE")
     if (force) {
-        control = c(control, forced = "TRUE")
-        if (!result) Sigma = makePositiveDefinite(Sigma)       
+      control = c(control, forced = "TRUE")
+      if (!result) Sigma = makePositiveDefinite(Sigma)       
     }
     
     # Result:
@@ -201,15 +197,15 @@ function(x,
     
     # Return Value:
     ans
-}
+  }
 
 
 ################################################################################
-     
-    
+
+
 .covMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     #   Uses sample covariance estimation
     
@@ -229,15 +225,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
-    
+
 .mveMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -250,21 +246,21 @@ function(x, ...)
     N = ncol(x)
     assetNames = colnames(x)
     
-    ans <- cov.rob(x = x.mat, method = "mve")
+    ans <- MASS::cov.rob(x = x.mat, method = "mve")
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
-        
+
 .mcdMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -277,21 +273,21 @@ function(x, ...)
     N = ncol(x)
     assetNames = colnames(x)
     
-    ans <- cov.rob(x = x.mat, method = "mcd") 
+    ans <- MASS::cov.rob(x = x.mat, method = "mcd") 
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
     
     # Return Value:
     ans
-}
-  
+  }
+
 
 # ------------------------------------------------------------------------------
 
 
 .studentMeanCov <-
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -303,22 +299,22 @@ function(x, ...)
     x.mat = as.matrix(x)
     N = ncol(x)
     assetNames = colnames(x)
-        
-    ans <- cov.trob(x, ...)
+    
+    ans <- MASS::cov.trob(x, ...)
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
-      
+    
     # Return Value:  
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 .MCDMeanCov <- 
-function(x, alpha = 1/2, ...)
-{
+  function(x, alpha = 1/2, ...)
+  {
     # Description:
     
     # Arguments:
@@ -337,15 +333,15 @@ function(x, alpha = 1/2, ...)
     
     # Return Value:
     ans
-}
-  
+  }
+
 
 # ------------------------------------------------------------------------------
- 
-        
+
+
 .OGKMeanCov <- 
-function(x, sigmamu = scaleTau2, ...)
-{
+  function(x, sigmamu = scaleTau2, ...)
+  {
     # Description:
     
     # Arguments:
@@ -358,21 +354,21 @@ function(x, sigmamu = scaleTau2, ...)
     N = ncol(x)
     assetNames = colnames(x)
     
-    ans <- robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
+    ans <- robustbase::covOGK(x.mat, sigmamu = sigmamu, ...)
     names(ans$center) = assetNames
     rownames(ans$cov) = colnames(ans$cov) = assetNames
     
     # Return Value:
     ans    
-}
+  }
 
 
 # ------------------------------------------------------------------------------
-       
+
 
 .nnveMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -392,15 +388,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
-      
-   
+
+
 .shrinkMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -408,7 +404,7 @@ function(x, ...)
     
     # Note:                                              
     #   Based on a function borrowed from package corpcor
-
+    
     # FUNCTION:
     
     # Settings:
@@ -423,15 +419,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
- 
+  }
+
 
 # ------------------------------------------------------------------------------
-       
-         
+
+
 .baggedMeanCov <- 
-function(x, baggedR = 100, ...)
-{
+  function(x, baggedR = 100, ...)
+  {
     # Description:
     
     # Arguments:
@@ -441,7 +437,7 @@ function(x, baggedR = 100, ...)
     #   Based on a function borrowed from package corpcor
     
     # FUNCTION:
-        
+    
     # Settings:
     x.mat = as.matrix(x)
     N = ncol(x)
@@ -454,15 +450,15 @@ function(x, baggedR = 100, ...)
     
     # Return Value:
     ans
-}
- 
+  }
+
 
 # ------------------------------------------------------------------------------
-       
-         
+
+
 .arwMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     #   Adaptive reweighted estimator for multivariate location and scatter
     #   with hard-rejection weights and delta = chi2inv(1-d,p)
@@ -474,7 +470,7 @@ function(x, ...)
     #   Based on a function borrowed from package mvoutlier
     
     # FUNCTION:
-     
+    
     # Settings:
     x.mat = as.matrix(x)
     N = ncol(x)
@@ -487,15 +483,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 .donostahMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -515,15 +511,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 .bayesSteinMeanCov <- 
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     
     # Arguments:
@@ -538,7 +534,7 @@ function(x, ...)
     # This function encapsulates an example of shrinking the returns 
     #   and covariance using Bayes-Stein shrinkage as described in 
     #   Jorion, 1986.
-
+    
     # Settings:
     data <- getDataPart(x)
     mu <- as.matrix(apply(data,2, FUN = function(x) mean(x)))
@@ -566,25 +562,25 @@ function(x, ...)
     sigma.pred <- sqrt(diag(V.pred))
     
     result <- list(
-        mu = mu, mu.prior = mu.prior, mu.predict = mu.pred, 
-        V = S, V.post = V.post, V.pred = V.pred, Sigma = sqrt(diag(S)), 
-        Sigma.post = sigma.post, Sigma.predict = sigma.pred)
- 
+      mu = mu, mu.prior = mu.prior, mu.predict = mu.pred, 
+      V = S, V.post = V.post, V.pred = V.pred, Sigma = sqrt(diag(S)), 
+      Sigma.post = sigma.post, Sigma.predict = sigma.pred)
+    
     ans = list(center = result$mu.pred[,1], cov = result$V.pred)
     names(ans$center) = colnames(x)
     rownames(ans$cov) = colnames(ans$cov) = colnames(x)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 .ledoitWolfMeanCov <-
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     #   Perform shrinkage on a sample covariance towards a biased covariance
     
@@ -597,7 +593,7 @@ function(x, ...)
     #   using the getCorFilter.Shrinkage function, which handles the work 
     #   of constructing a shrinkage estimate of the covariance matrix of 
     #   returns (and consequently its corresponding correlation matrix).
-
+    
     # Note:
     #   Based on a function borrowed from package tawny
     #   Author: Brian Lee Yung Rowe
@@ -613,15 +609,15 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 .rmtMeanCov <-
-function(x, ...)
-{
+  function(x, ...)
+  {
     # Description:
     #   Perform Random Matrix Theory on correlation matrix
     
@@ -630,7 +626,7 @@ function(x, ...)
     
     # Author: 
     #   tawnyBrian Lee Yung Rowe
-
+    
     # Note:
     #   Based on a function borrowed from package tawny
     #   Author: Brian Lee Yung Rowe
@@ -646,8 +642,8 @@ function(x, ...)
     N = length(g)
     cov = 0*cor
     for (i in 1:N)
-        for (j in i:N)
-            cov[i,j] = cov[j,i] = g[i]*cor[i,j]*g[j]
+      for (j in i:N)
+        cov[i,j] = cov[j,i] = g[i]*cor[i,j]*g[j]
     
     ans = list(center = center, cov = cov)
     names(ans$center) = colnames(x)
@@ -655,29 +651,29 @@ function(x, ...)
     
     # Return Value:
     ans
-}
+  }
 
 
 ################################################################################
 
 
 getCenterRob <-
-function(object)
-{
+  function(object)
+  {
     # Return Value:
     object$center
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 getCovRob <-
-function(object)
-{
+  function(object)
+  {
     # Return Value:
     object$cov
-}
+  }
 
 
 ################################################################################

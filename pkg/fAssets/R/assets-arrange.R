@@ -71,7 +71,6 @@ pcaArrange <-
 
     # Order:
     if (robust) {
-        # require(robustbase)
         x.cor <- robustbase::covMcd(as.matrix(x), cor = TRUE, ...)$cor
     } else {
         x.cor <- cor(as.matrix(x), ...)

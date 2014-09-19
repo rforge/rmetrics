@@ -65,7 +65,7 @@ function(x, method = c("st", "sn", "sc"),
   colNames <- colnames(x)
   
   # Select Distribution:
-  FUN <- match.fun(paste0("m", method, "Fit"))
+  FUN <- get(paste0("m", method, "Fit"))
   
   # Fit Parameters:
   ans <- FUN(x=x, trace=FALSE, ...)
@@ -76,10 +76,9 @@ function(x, method = c("st", "sn", "sc"),
 
 ################################################################################
 
-
 assetsSim <- 
   function(n, method=c("st", "sn", "sc"),
-    model=list(xi=rep(0, 2), Omega=diag(2), alpha=rep(0, 2), nu=4), 
+    model=list(beta=rep(0, 2), Omega=diag(2), alpha=rep(0, 2), nu=4), 
     assetNames=NULL) 
 {
     # A function implemented by Diethelm Wuertz
@@ -90,15 +89,15 @@ assetsSim <-
     method <- match.arg(method)
     
     # Extract Parameters:
-    xi <- as.vector(model$xi)
+    xi <- as.vector(model$beta)
     Omega <- model$Omega
     alpha <- model$alpha
     nu <- model$nu
     
     # Create Random Numbers:
-    if (method == "st") ans <- rmst(n, xi, Omega, alpha, nu)
-    if (method == "sn") ans <- rmsn(n, xi, Omega, alpha)
-    if (method == "sc") ans <- rmsc(n, xi, Omega, alpha)
+    if (method == "st") ans <- sn::rmst(n, xi, Omega, alpha, nu)
+    if (method == "sn") ans <- sn::rmsn(n, xi, Omega, alpha)
+    if (method == "sc") ans <- sn::rmsc(n, xi, Omega, alpha)
     
     # Add Optional Asset Names:
     colnames(ans) <- assetNames

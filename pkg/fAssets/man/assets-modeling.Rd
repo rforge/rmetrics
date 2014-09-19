@@ -20,7 +20,7 @@ assetsFit(x, method = c("st", "sn", "sc"),
   title=NULL, description=NULL, fixed.df=NA, \dots)
 
 assetsSim(n, method=c("st", "sn", "sc"),
-    model=list(xi=rep(0, 2), Omega=diag(2), alpha=rep(0, 2), nu=4), 
+    model=list(beta=rep(0, 2), Omega=diag(2), alpha=rep(0, 2), nu=4), 
     assetNames=NULL)
 }
 
@@ -43,7 +43,7 @@ assetsSim(n, method=c("st", "sn", "sc"),
         }
     \item{model}{
         a list with the model parameters.
-        \code{xi} a numeric vector, representing the location,
+        \code{beta} a numeric vector, representing the location,
         \code{Omega} a symmetric positive-definite matrix (covariance matrix),
         \code{alpha} a numeric vector which regulates the skew of the density,
         \code{nu} a positive value representing the degrees of freedom.
@@ -91,7 +91,27 @@ Wuertz, D., Chalabi, Y., Chen W., Ellis A. (2009);
 }
 
 
-%\examples{}
+\examples{
+## LPP2005REC -
+   # Load Swiss Pension Fund Data as Percentual Returns:
+   LPP <- 100 * LPP2005REC[, 1:3]
+   head(LPP)
+   
+## assetsFit -
+   # Fit a Skew-Student-t Distribution: 
+   fit <- assetsFit(LPP)
+   # Extract the Model:
+   model <- fit@fit$dp
+   # Show Model Slot:
+   print(model)
+   
+## assetsSim -
+   # Simulate set with same statistical properties:
+   set.seed(1953)
+   LPP.SIM <- assetsSim(n=nrow(LPP), model=model)
+   colnames(LPP.SIM) <- colnames(LPP)
+   head(LPP.SIM) 
+}
 
 
 \keyword{models}
