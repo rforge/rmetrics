@@ -27,7 +27,7 @@
 
 
 dummySeries <- 
-function(...)
+  function(...)
 {
     # A function implemented by Diethelm Wuertz
     
@@ -48,7 +48,7 @@ function(...)
 
 
 dummyDailySeries <-
-    function(x = rnorm(365), units = NULL, zone = "", FinCenter = "")
+  function(x = rnorm(365), units = NULL, zone = "", FinCenter = "")
 {   
     # A function implemented by Diethelm Wuertz
 

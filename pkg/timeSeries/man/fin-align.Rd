@@ -50,7 +50,7 @@
 
 \value{
 
-    returns an aligned S4 object of class \code{timeSeries}.
+    Returns an aligned S4 'timeSeries' object.
 
 }
 

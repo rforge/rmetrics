@@ -15,8 +15,13 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  cbind.timeSeries          Binds columns of two 'timeSeries' objects
-#  rbind.timeSeries          Binds rows of two 'timeSeries' objects
+#                            Generic functions defined in {base}
+#  cbind.timeSeries          Combines two 'timeSeries' objects by column
+#  rbind.timeSeries          Combines two 'timeSeries' objects by row
+################################################################################
+#                            Generic functions defined in {methods}
+#  cbind2.timeSeries         Combines two objects by column
+#  rbind2.timeSeries         Combines two objects by row
 ################################################################################
 
 
@@ -29,6 +34,8 @@ function(..., deparse.level = 1)
     #     Binds columns of two 'timeSeries' objects
   
     # Arguments:
+    #   ...
+    #   deparse.level
 
     # FUNCTION:
 
@@ -202,12 +209,13 @@ function(..., deparse.level = 1)
     # A function implemented by Yohan Chalabi and Diethelm Wuertz
 
     # Description:
+    #     Binds rows of two 'timeSeries' objects
 
     # Arguments:
+    #   ...
+    #   deparse.level
 
     # FUNCTION:
-
-    # Columnwise bind:
 
     # Row bind:
     dots <- list(...)

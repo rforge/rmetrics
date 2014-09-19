@@ -14,6 +14,10 @@
 
 
 ################################################################################
+# FUNCTION:                   DESCRIPTION:
+# getDocumentation
+# setDocumentation
+################################################################################
 # FUNCTION:                   MANAGING ATTRIBUTES
 #  getAttributes
 #  setAttributes<-
@@ -27,6 +31,8 @@ getAttributes <-
 {
   # A function implemented by Diethelm Wuertz
     
+  # Description:
+    
   # FUNCTION:
     
   # Check Argument:
@@ -35,7 +41,7 @@ getAttributes <-
   # Extract Attributes:
   ans <- attr(obj@documentation, "Attributes")
     
-  # return Value:
+  # Return Value:
   ans
 }
 
@@ -47,6 +53,8 @@ getAttributes <-
   function(obj, value)
 {
   # A function implemented by Diethelm Wuertz
+    
+  # Description:
     
   # Example:
   #   obj <- dummySeries(); getAttributes(obj)
@@ -103,6 +111,7 @@ getAttributes <-
   
   # FUNCTION:
     
+  # Append list B to list A
   JOINED <- sapply(unique(c(names(A), names(B))), 
     function(x) list(c(A[[x]], B[[x]])))
   

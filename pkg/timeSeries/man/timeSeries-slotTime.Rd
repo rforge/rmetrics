@@ -28,11 +28,11 @@
 
 
 \usage{
-\S4method{time}{timeSeries}(x, \dots)
-\method{time}{timeSeries}(x) <- value
-
 getTime(x)         
 setTime(x) <- value
+
+\S4method{time}{timeSeries}(x, \dots)
+\method{time}{timeSeries}(x) <- value
 }
 
 
@@ -52,17 +52,24 @@ setTime(x) <- value
 
 \value{
 
-    returns a \code{timeSeries} object.
+    Returns a 'timeDate' object.
            
 }
 
 
 \examples{   
 ## Create Dummy timeSeries -      
-   X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
+   X <- timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
 ## Return Series Positions -
-   time(X)
+   getTime(X)
+   time(X)  
+  
+## Add / Subtract one Day from X
+   setTime(X) <- time(X) - 24*3600 # sec
+   X
+   time(X) <- time(X) + 24*3600 # sec
+   X
 }
 
 

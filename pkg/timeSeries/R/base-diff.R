@@ -20,13 +20,13 @@
 
 
 .diff.timeSeries <-
-function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+  function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
 {
     # A function implemented by Diethelm Wuertz
     # Modified by Yohan Chalabi
 
     # Description:
-    #   Difference 'timeSeries' objects.
+    #   Differences 'timeSeries' objects.
 
     # Arguments:
     #   x - a 'timeSeries' object.
@@ -92,9 +92,16 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
 }
 
 
+# -----------------------------------------------------------------------------
+
+
 setMethod("diff", "timeSeries",
           function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
-          .diff.timeSeries(x, lag, diff, trim, pad, ...))
+          .diff.timeSeries(x, lag, diff, trim, pad, ...)
+          ##x <- getDataPart(x)
+          ##callGeneric()
+          )
+
 
 # until UseMethod dispatches S4 methods in 'base' functions
 diff.timeSeries <- function(x, ...) .diff.timeSeries(x, ...)

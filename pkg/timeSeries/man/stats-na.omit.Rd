@@ -5,6 +5,7 @@
 
 
 \alias{na}
+
 \alias{na.omit}
 \alias{na.omit,timeSeries-method}
 \alias{na.omit.timeSeries}
@@ -16,9 +17,16 @@
 
 \description{
     
-    Functions for handling missing values in 'timeSeries' 
-    objects or in objects which can be transformed 
-    into a vector or a two dimensional matrix.
+    Functions for handling missing values in 'timeSeries' objects 
+    
+}
+
+
+\details{
+
+    Functions for handling missing values in 'timeSeries' objects 
+    and in objects which can be transformed into a vector or a two 
+    dimensional matrix.
     \cr
     
     The functions are listed by topic.
@@ -29,6 +37,24 @@
     \code{removeNA} \tab Removes NAs from a matrix object, \cr
     \code{substituteNA} \tab substitute NAs by zero, the column mean or median, \cr
     \code{interpNA} \tab interpolates NAs using R's "approx" function. }
+    
+
+    \bold{Missing Values in Price and Index Series:}
+    
+    Applied to \code{timeSeries} objects the function \code{removeNA}
+    just removes rows with NAs from the series. For an interpolation
+    of time series points one can use the function \code{interpNA}.
+    Three different methods of interpolation are offered: \code{"linear"}
+    does a linear interpolation, \code{"before"} uses the previous value,
+    and \code{"after"} uses the following value. Note, that the 
+    interpolation is done on the index scale and not on the time scale.
+    
+    \bold{Missing Values in Return Series:}
+    
+    For return series the function \code{substituteNA} may be useful. The 
+    function allows to fill missing values either by \code{method="zeros"}, 
+    the \code{method="mean"} or the \code{method="median"} value of the 
+    appropriate columns.
 
 }
 
@@ -88,33 +114,15 @@ interpNA(x, method = c("linear", "before", "after"), \dots)
 }
 
 
-\details{
-
-    \bold{Missing Values in Price and Index Series:}
-    
-    Applied to \code{timeSeries} objects the function \code{removeNA}
-    just removes rows with NAs from the series. For an interpolation
-    of time series points one can use the function \code{interpNA}.
-    Three different methods of interpolation are offered: \code{"linear"}
-    does a linear interpolation, \code{"before"} uses the previous value,
-    and \code{"after"} uses the following value. Note, that the 
-    interpolation is done on the index scale and not on the time scale.
-    
-    \bold{Missing Values in Return Series:}
-    
-    For return series the function \code{substituteNA} may be useful. The 
-    function allows to fill missing values either by \code{method="zeros"}, 
-    the \code{method="mean"} or the \code{method="median"} value of the 
-    appropriate columns.
-    
-}
-
-
 \note{
 
     The functions \code{removeNA}, \code{substituteNA} and \code{interpNA} 
     are older implementations. Please use in all cases if possible the 
     new function \code{na.omit}.
+    
+    When dealing with daily data sets, there exists another function 
+    \code{alignDaily Series} which can handle missing data in un-aligned 
+    calendarical 'timeSeries' objects.
     
 }   
 
@@ -131,28 +139,28 @@ Troyanskaya O., Cantor M., Sherlock G., Brown P., Hastie T.,
 
 \examples{
 ## Create a Matrix -
-   X = matrix(rnorm(100), ncol = 5)
+   X <- matrix(rnorm(100), ncol = 5)
    
 ## Replace a Single NA Inside - 
-   X[3, 5] = NA
+   X[3, 5] <- NA
    
 ## Replace Three in a Row Inside - 
-   X[17, 2:4] = c(NA, NA, NA)
+   X[17, 2:4] <- c(NA, NA, NA)
    
 ## Replace Three in a Column Inside - 
-   X[13:15, 4] = c(NA, NA, NA)
+   X[13:15, 4] <- c(NA, NA, NA)
    
 ## Replace Two at the Right Border - 
-   X[11:12, 5] = c(NA, NA)
+   X[11:12, 5] <- c(NA, NA)
    
 ## Replace One in the Lower Left Corner - 
-   X[20, 1] = NA
+   X[20, 1] <- NA
    print(X)
      
 ## Remove Rows with NAs - 
    removeNA(X)
    
-## Subsitute NA's by Zeros or Column Mean - 
+## Subsitute NA's by Zeros or Column Means - 
    substituteNA(X, type = "zeros")
    substituteNA(X, type = "mean")
    

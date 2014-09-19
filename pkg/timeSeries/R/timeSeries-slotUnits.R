@@ -19,7 +19,6 @@
 #  setUnits<-                Set new units slot to a 'timeSeries'
 ################################################################################
 
-
 getUnits <- 
     function(x)
 {

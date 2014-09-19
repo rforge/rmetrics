@@ -20,7 +20,9 @@
 #  cummin                    Returns cumulated minima
 #  cumprod                   Returns cumulated products
 #  cumsum                    Returns cumulated sums
-#  quantile,timeSeries       Sample qunatile of a timeSeries object
+#  ##diff,timeSeries           Differences a timeSeries object
+#  ##scale,timeSeries          Scales a timeSeries object
+#  quantile,timeSeries       Samples qunatiles of a timeSeries object
 ################################################################################
 
 
@@ -184,6 +186,24 @@ setMethod("cumprod", "timeSeries",
 
 setMethod("cumsum", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
+
+
+# ------------------------------------------------------------------------------
+
+
+## setMethod("diff", "timeSeries", function(x, ...) {
+##    x <- getDataPart(x)
+##    callGeneric()
+## })
+
+
+# ------------------------------------------------------------------------------
+
+
+## setMethod("scale", "timeSeries", function(x, ...) {
+##    x <- getDataPart(x)
+##    callGeneric()
+## })
 
 
 # ------------------------------------------------------------------------------

@@ -50,7 +50,7 @@ readSeries <-
     #       field than the number of columns.
     #   sep - he field separator character. Values on each line of 
     #       the file are separated by this character. If sep = "" (the 
-    #       default for read.table) the separator is ‘white space’, 
+    #       default for read.table) the separator is ?white space?, 
     #       that is one or more spaces, tabs, newlines or carriage 
     #       returns.
     #   zone - the time zone or financial center where the data were
@@ -76,19 +76,26 @@ readSeries <-
     df <- read.table(file = file, header = header, sep = sep,
         check.names = FALSE, ...)
 
-    # get timeDate from first column with header specifying the format
+    # Get 'timeDate' from first column with header specifying the format
     charvec <- as.character(df[[1]])
     if (missing(format)) format <- names(df)[1]
-    td <- timeDate(charvec = charvec, format = format, zone = zone,
-        FinCenter = FinCenter)
+    td <- try(timeDate(charvec = charvec, format = format, zone = zone,
+        FinCenter = FinCenter), silent=TRUE)
+      
+    # DW: 2014-09-16
+    # If sep=";" fails try with sep=",":
+    if (sep ==";" && class(td) == "try-error") {
+        return(readSeries(file, header = header, sep = ",", zone = zone, 
+          FinCenter = FinCenter, ...))
+    }
 
-    # if format provided in file or with format argument, try to guess it
+    # If format provided in file or with format argument, try to guess it
     if (all(is.na(td)))
         warning("Conversion of timestamps to timeDate objects produced only NAs.
   Are you sure you provided the proper format with argument 'format'
   or in the header of your file ?")
 
-    # extract data
+    # Extract data
     data <- as.matrix(df[-1])
 
     # Create Time Series from Data Frame:

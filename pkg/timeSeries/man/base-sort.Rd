@@ -10,11 +10,23 @@
 
 \description{
 
-    Sorts a 'timeSeries' according to increasing or
-    decreasing order of the time stamps.
+    Sorts a 'timeSeries' object with respect to its time stamps.
     
 }
 
+
+\details{
+
+    Sorts a time series either in increasing or decreasing time 
+    stamp order. Internally the function \code{order} from R's
+    base packahe is used. \code{order} generates a permutation 
+    which rearranges the time stamps in ascending or descending 
+    order.
+    
+    To find out if the series is unsorted, the function
+    \code{is.unsorted} from R's base package can be called.
+
+}
 
 
 \usage{
@@ -39,22 +51,30 @@
 
 \value{
 
-    returns a \code{timeSeries} object.
+    Returns a sorted 'timeSeries' object, which can be
+    increasing or decreasing in time.
            
 }
 
 
 \examples{   
-## Create Dummy timeSeries -    
-   tS <- dummySeries()
+## Monthly Calendar Series -    
+   x <- daily2monthly(LPP2005REC[, 1:2])[3:14, ]
    
-## Sort the Series in Decreasing Order -    
-   sort(tS, decreasing = TRUE)
-     
-## Sort the Series -
-   sort(tS)
+## Resample the Series with respect to the time stamps -    
+   resampled <- sample(x)
+   resampled
+   is.unsorted(resampled)
    
-
+## Now sort the serie in decreasing time order - 
+   sorted <- sort(resampled, , decreasing = TRUE)
+   sorted
+   is.unsorted(sorted)
+   
+## Is the reverted series ordered? - 
+   reverted <- rev(sorted)
+   reverted
+   is.unsorted(reverted)
 }
 
 

@@ -9,7 +9,7 @@
 
 \description{
     
-    Computes runlengths of an univariate \code{timeSeries} object.
+    Computes runlengths of an univariate 'timeSeries' object.
        
 }
 
@@ -22,7 +22,7 @@ runlengths(x, \dots)
 \arguments{
 
     \item{x}{
-        an univariate time series of class \code{timeSeries}.
+        an univariate time series of class 'timeSeries'.
         }
     \item{\dots}{
         arguments to be passed.

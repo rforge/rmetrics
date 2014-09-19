@@ -22,18 +22,19 @@
 
 \description{
     
-    Functions and methods handling columns and rows of 
-    'timeSeries' objects. 
-    \cr
+    Handling columns and rows of 'timeSeries' objects. 
     
+}
+
+
+\details{
+
     \tabular{ll}{
-    \code{dim} \tab Returns the dimension of a 'timeSeries' object, \cr
-    \code{dimnames} \tab Returns the dimension names of a 'timeSeries' object, \cr
-    \code{colnames<-} \tab Assigns column names to a 'timeSeries' object, \cr
-    \code{rownames<-} \tab Assigns row names to a 'timeSeries' object, \cr
-    %    \code{is.array} \tab Allows that NCOL and NROW work properly.
-  }
-    
+    \code{dim} \tab Returns the dimension of a 'timeSeries' object \cr
+    \code{dimnames} \tab Returns the dimension names of a 'timeSeries' object \cr
+    \code{colnames<-} \tab Assigns column names to a 'timeSeries' object \cr
+    \code{rownames<-} \tab Assigns row names to a 'timeSeries' object }
+
 }
 
 
@@ -59,33 +60,32 @@
 % }
 
 
-\arguments{
-   
-    \item{value}{
-        a valid value for names component of \code{dimnames(x)}. 
+%\arguments{
+%   
+%    \item{value}{
+%        a valid value for names component of \code{dimnames(x)}. 
 %         For a \code{"timeSeries"} object this is either \code{NULL} or a 
 %         character vector of length the column dimension. Not, row names
 %         cannot be assigne for a \code{"timeSeries"} object, the function
 %        \code{rownames()} will stop and return an error message.
-        }
-    \item{x}{
-        an object of class \code{timeSeries}.
-        }
-       
-}
+%        }
+%    \item{x}{
+%        an object of class \code{timeSeries}.
+%        }
+%       
+%}
 
 
 \value{
 
-    NA
+    Returns the dimensions and related numbers of a 'timeSeries' object.
     
 }
 
 
 \examples{
 ## Load Swiss Pension Fund Benchmark Data -
-   data(LPP2005REC)
-   X = LPP2005REC[1:10, 1:3]
+   X <- LPP2005REC[1:10, 1:3]
    
 ## Get Dimension - 
    dim(X)
@@ -93,11 +93,28 @@
 ## Get Column and Row Names -
    dimnames(X)
    
-## Get Column Names -
+## Get Column / Row Names -
    colnames(X)
-   
-## Get Row Names -
    rownames(X) 
+   
+## Try your own DIM - 
+   DIM <- function(x) {c(NROW(x), NCOL(x))}
+   DIM(X) 
+   DIM(X[, 1])
+
+## Try length / LENGTH - 
+   length(X)
+   length(X[, 1])
+   LENGTH <- function(X) NROW(X)
+   LENGTH(X)
+   
+## Columns / Rows - 
+   ncol(X); NCOL(X)
+   nrow(X); NROW(X)
+                
+## See also - 
+   isUnivariate(X)
+   isMultivariate(X)
 }
 
 

@@ -50,7 +50,7 @@
 
 \value{
 
-    returns a lagged S4 object of class \code{timeSeries}.
+    returns a lagged S4 object of class 'timeSeries'.
         
 }
 

@@ -24,7 +24,7 @@
 \arguments{
 
     \item{x}{
-        an uni- or multivariate \code{timeSeries} object.
+        an uni- or multivariate 'timeSeries' object.
         } 
         
 }
@@ -32,7 +32,7 @@
 
 \value{
 
-    returns a \code{timeSeries} object.
+    Returns a reversed 'timeSeries' object.
     
 }
 

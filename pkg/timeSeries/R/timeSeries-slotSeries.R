@@ -27,6 +27,7 @@
 #  getSeries.default
 #  getSeries.timeSeries             Get data slot from a 'timeSeries'  
 #  setSeries<-                      Set new data slot to a 'timeSeries' 
+################################################################################
 # DEPRECATED:                      DESCRIPTION:
 #  seriesData                       Deprecated, use series
 ################################################################################

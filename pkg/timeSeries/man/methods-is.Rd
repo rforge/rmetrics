@@ -4,11 +4,11 @@
 \title{timeSeries Class, Coercion and Transformation}
 
 
-
 \alias{is.timeSeries}
 \alias{is.signalSeries}
 \alias{is.na,timeSeries-method}
 \alias{is.unsorted,timeSeries-method}
+
 
 \description{
 
@@ -27,7 +27,7 @@ is.signalSeries(x)
 \arguments{
 
     \item{x}{  
-        an R object.
+        an object of class 'timeSeries'.
     }
   
 }
@@ -35,8 +35,8 @@ is.signalSeries(x)
 
 \value{
 
-    returns \code{TRUE} or \code{FALSE} depending on whether its
-    argument is of \code{timeSeries} type or not.
+    Returns \code{TRUE} or \code{FALSE} depending on whether its
+    argument is an object of class 'timeSeries' or not.
   
 }
 
@@ -44,9 +44,9 @@ is.signalSeries(x)
 \examples{
 ## Create an Artificial timeSeries Object - 
    setRmetricsOptions(myFinCenter = "GMT")
-   charvec = timeCalendar()
-   data = matrix(rnorm(12))
-   TS = timeSeries(data, charvec, units = "RAND")
+   charvec <- timeCalendar()
+   data <- matrix(rnorm(12))
+   TS <- timeSeries(data, charvec, units = "RAND")
    TS
 
 ## Test for timeSeries - 

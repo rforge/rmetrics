@@ -11,7 +11,7 @@
 
 \description{
     
-    Compute durations from an object of class 'timeSeries'.  
+    Computes durations from an object of class 'timeSeries'.  
        
 }
 
@@ -60,6 +60,9 @@ durations(x, trim = FALSE, units = c("secs", "mins", "hours", "days"))
 ## Compute Durations in days for the MSFT Sereries - 
    head(durations(MSFT, units = "days"))
    head(durations(MSFT, trim = TRUE, units = "days"))
+
+## The same in hours - 
+   head(durations(MSFT, trim = TRUE, units = "hours"))
 }
 
 

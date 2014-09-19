@@ -18,7 +18,9 @@
 #  scale,timeSeries          Centers and/or scales a 'timeSeries' object
 ################################################################################
 
-.scale.timeSeries <- function(x, center = TRUE, scale = TRUE)
+
+.scale.timeSeries <- 
+  function(x, center = TRUE, scale = TRUE)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 
@@ -33,13 +35,16 @@
     setDataPart(x, scale(x = getDataPart(x), center = center, scale = scale))
 }
 
+
 setMethod("scale", "timeSeries",
           function(x, center = TRUE, scale = TRUE)
           .scale.timeSeries(x, center = center, scale = scale))
 
+
 # until UseMethod dispatches S4 methods in 'base' functions
 scale.timeSeries <- function (x, center = TRUE, scale = TRUE)
     .scale.timeSeries(x, center = center, scale = scale)
+
 
 ################################################################################
 

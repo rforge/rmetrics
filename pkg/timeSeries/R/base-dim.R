@@ -103,6 +103,8 @@
 
 
 # Note it is faster to access attribute rather than accessing @.Data
+
+
 setMethod("dim", "timeSeries", function(x) attr(x, "dim"))
 
 # This should make functions like
@@ -125,7 +127,7 @@ setReplaceMethod("dim", "timeSeries",
 # ------------------------------------------------------------------------------
 
 
-# colnames # faster to have dedicated method than relying on dimnames[[2]]
+# colnames - faster to have dedicated method than relying on dimnames[[2]]
 
 
 setMethod("colnames", "timeSeries", # "signalSeries",
@@ -136,7 +138,7 @@ setMethod("colnames", "timeSeries", # "signalSeries",
 # ------------------------------------------------------------------------------
 
 
-# rownames #
+# rownames 
 
 
 ## setMethod("rownames", "signalSeries",
@@ -262,24 +264,28 @@ setMethod("dimnames<-", c("timeSeries", "list"), # c("signalSeries", "list"),
     }
 )
 
+
 # ------------------------------------------------------------------------------
 # important for completion with $
+
 
 setMethod("names", "timeSeries", # "signalSeries",
     function(x) c(colnames(x), names(x@recordIDs)))
 
-setReplaceMethod("names", "timeSeries", # "signalSeries",
-                 function(x, value) {
-                     nc <- ncol(x)
-                     nv <- length(value)
-                     nr <- length(x@recordIDs)
 
-                     # Note that using [][] ensure that length of the
-                     # names are equal to array extent
-                     colnames(x) <- value[seq.int(nv)][seq.int(nc)]
-                     if (nv > nc)
-                         names(x@recordIDs) <- value[-seq.int(nc)][seq.int(nr)]
-                     x
-                 })
+setReplaceMethod("names", "timeSeries", # "signalSeries",
+function(x, value) {
+   nc <- ncol(x)
+   nv <- length(value)
+   nr <- length(x@recordIDs)
+
+   # Note that using [][] ensure that length of the
+   # names are equal to array extent
+   colnames(x) <- value[seq.int(nv)][seq.int(nc)]
+   if (nv > nc)
+       names(x@recordIDs) <- value[-seq.int(nc)][seq.int(nr)]
+   x
+})
+
 
 ################################################################################

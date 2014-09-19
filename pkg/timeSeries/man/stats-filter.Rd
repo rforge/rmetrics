@@ -10,24 +10,28 @@
 
 \description{
 
-     Applies linear filtering to a univariate time series or to each
-     series separately of a multivariate time series.
+     Applies linear filtering to a univariate 'timeSeries'.
       
 }
 
 
 \value{
 
-  A timeSeries object without missing values.
+  A 'timeSeries' object without missing values.
   
 }
 
 
 \examples{
-## Dummy timeSeries
-   data <- matrix(rnorm(24), ncol = 2)
-   s <- timeSeries(data, timeCalendar())
+## Creata a Dummy Signal 'timeSeries' - 
+   data <- matrix(rnorm(100), ncol = 2)
+   s <- timeSeries(data, units=c("A", "B"))
+   head(s)
    
-## Filter
-   filter(s, rep(1, 3))
+## Filter the series - 
+   f <- filter(s, rep(1, 3))
+   head(f)
+   
+## Plot and Compare the first series - 
+   plot(cbind(s[, 1], f[, 1]), plot.type="s")
 }

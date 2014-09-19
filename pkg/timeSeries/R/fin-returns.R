@@ -17,6 +17,8 @@
 # FUNCTION:                 DESCRIPTION:
 #  returns,ANY               Computes returns from a 'matrix' object
 #  returns,timeSeries        Computes returns from a 'timeSeries' object
+# FUNCTION:                 DESCRIPTION:
+#  returns0                  Compute untrimmed returns
 # OLD FUNCTIONS:            KEEP THESE FUNCTIONS FOR COMPATIBILITY:
 #  returnSeries              Deprecated, use returns()
 #  getReturns                Deprecated, use returns()
@@ -68,7 +70,7 @@ setMethod("returns", "ANY",
 )
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 setMethod("returns", "timeSeries",
@@ -115,11 +117,36 @@ setMethod("returns", "timeSeries",
 )
 
 
-# ------------------------------------------------------------------------------
+###############################################################################
+
+
+returns0 <- 
+  function(x, ...) 
+{
+  # A function implemented by Diethelm Wuertz
+  
+  # Description:
+  #   Returns the untrimmed returns of an object of class 'timeSeries'
+
+  # Arguments:
+  #   x - an object of class 'timeSeries' 
+
+  # FUNCTION:
+
+  # Compute Untrimmed Returns:
+  x <- returns(x = x, trim = FALSE)
+  x[1, ] <-0
+    
+  # Return Value:
+  x 
+}
+
+###############################################################################
+# DEPRECATED:
 
 
 returnSeries <-
-function(...)
+  function(...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -130,11 +157,11 @@ function(...)
 }
 
 
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
 getReturns <-  
-function(...)
+  function(...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -149,5 +176,5 @@ function(...)
 }
 
 
-################################################################################
+###############################################################################
 

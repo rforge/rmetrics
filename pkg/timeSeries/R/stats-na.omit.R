@@ -50,7 +50,7 @@
     #   Spline interpolation like in zoo is not yet supported.
 
     # Arguments:
-    #   object - an object of class timeSeries
+    #   object - an object of class 'timeSeries'
     #   method - how to handle NAs
     #   interp - how to interpolate NAs
     #   ... - arguments passed to function approx()
@@ -74,7 +74,9 @@
     # Handle NAs:
     if (method == "r") {
         # Remove NAs:
-        object <- stats:::na.omit.default(object)
+        # DW:
+        # object <- stats:::na.omit.default(object)
+        object <- as.timeSeries(na.omit(series(object)))
     } else if (method == "z") {
         # Substitute NAs by Zero's:
         object[is.na(object)] <- 0
@@ -103,7 +105,9 @@
         modID = FALSE
         if (method == "ir") {
             # Remove Start and End NAs:
-            object = stats:::na.omit.default(object)
+            # DW:
+            # object <- stats:::na.omit.default(object)
+            object <- as.timeSeries(na.omit(series(object)))
         } else if (method == "iz") {
             # Set Start and End NAs to Zero:
             object[is.na(object)] = 0

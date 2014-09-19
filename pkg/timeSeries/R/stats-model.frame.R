@@ -19,7 +19,7 @@
 ################################################################################
 
 
-# YC : remove mode.frame because more problems than benefits. Rely on
+# YC : remove model.frame because more problems than benefits. Rely on
 # default model.frame as long as as.data.frame.timeSeries works in
 # 'base' function model.frame.default
 

@@ -30,7 +30,7 @@
 
 \value{
 
-    prints an object of class \code{timeSeries}.
+    Prints an object of class \code{timeSeries}.
         
 }
 
@@ -38,7 +38,7 @@
 \examples{
 ## Load Micsrosoft Data - 
    setRmetricsOptions(myFinCenter = "GMT")
-   LPP = MSFT[1:12, 1:4]
+   LPP <- MSFT[1:12, 1:4]
 
 ## Abbreviate Column Names - 
    colnames(LPP) <- abbreviate(colnames(LPP), 6)

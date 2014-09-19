@@ -12,11 +12,6 @@
 
     Methods for function in Package `base' for \code{timeSeries} object.
 
-    var
-
-    summary
-
-    var
 }
 
 \section{Methods}{

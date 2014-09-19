@@ -39,12 +39,15 @@
   
     Functions and methods dealing with the coercion of
     'timeSeries' objects.       
-    \cr
+}
+
+
+\details{
     
     Functions to create 'timeSeries' objects from other objects:
     
     \tabular{ll}{
-    \code{as.timeSeries} \tab Generic function to convert an object to a 'timeSeries' object, \cr
+    \code{as.timeSeries} \tab Generic to convert an object to a 'timeSeries', \cr
     \code{as.timeSeries.default} \tab Returns the unchanged  object, \cr
     \code{as.timeSeries.numeric} \tab Converts from a numeric vector, \cr 
     \code{as.timeSseries.data.frame} \tab Converts from a numeric vector, \cr 
@@ -56,18 +59,12 @@
     Functions to transform 'timeSeries' objects into other objects: 
     
     \tabular{ll}{
-    % \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector,
-%    \cr 
-%    \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric,
-%    \cr 
-    \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix,
-    \cr 
-    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a 
-    data.frame, \cr  
-    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts'
-    object. \cr
-      \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'logical'
-    object. } 
+    % \code{as.vector.timeSeries} \tab Coerces a 'timeSeries' to a vector, \cr 
+    % \code{as.numeric.timeSeries} \tab Coerces a 'timeSeries' to numeric, \cr 
+    \code{as.matrix.timeSeries} \tab Coerces a 'timeSeries' to a matrix, \cr 
+    \code{as.data.frame.timeSeries} \tab Coerces a 'timeSeries' to a data.frame, \cr  
+    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'ts' object. \cr
+    \code{as.ts.timeSeries} \tab S3: Coerces a 'timeSeries' to a 'logical' object. } 
   
 }
 
@@ -79,7 +76,6 @@
 \method{as.timeSeries}{character}(x, \dots) 
 \method{as.timeSeries}{zoo}(x, \dots) 
 
-
 \S4method{as.matrix}{timeSeries}(x, \dots)
 \S4method{as.ts}{timeSeries}(x, \dots)
 \S4method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = FALSE, \dots)
@@ -88,12 +84,7 @@
 
 
 \arguments{
-  
 
-%   \item{mode}{ 
-%       a character string giving an atomic mode or \code{"list"},
-%       or (not for 'vector') \code{"any"}.
-%   }
     \item{optional}{
         A logical value. If \code{TRUE}, setting row names and converting
         column names (to syntactic names) is optional.
@@ -114,17 +105,13 @@
 
 \value{
     
-    \code{as.timeSeries}\cr
-    \cr
-    returns a S4 object of class \code{timeSeries}.
-    \cr
+    Function \code{as.timeSeries}
+    returns a S4 object of class 'timeSeries'.\cr
     
-%   \code{as.vector}\cr
-    \code{as.numeric}\cr
-    \code{as.data.frame}\cr
-    \code{as.matrix}\cr
+    Functions \code{as.numeric},
+    \code{as.data.frame},
+    \code{as.matrix},
     \code{as.ts}
-    \cr
     return depending on the generic function a numeric vector, a 
     data frame, a matrix, or an object of class \code{ts}.
   
@@ -134,9 +121,9 @@
 \examples{
 ## Create an Artificial timeSeries Object - 
    setRmetricsOptions(myFinCenter = "GMT")
-   charvec = timeCalendar()
-   data = matrix(rnorm(12))
-   TS = timeSeries(data, charvec, units = "RAND")
+   charvec <- timeCalendar()
+   data <- matrix(rnorm(12))
+   TS <- timeSeries(data, charvec, units = "RAND")
    TS
 
 ## Coerce to Vector - 

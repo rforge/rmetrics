@@ -4,36 +4,36 @@
 \title{Get and Set Financial Center of a 'timeSeries'}
 
 
-\alias{finCenter,timeSeries-method}
-\alias{finCenter<-,timeSeries-method}
-
 \alias{getFinCenter}  
 \alias{setFinCenter<-}
+
+\alias{finCenter,timeSeries-method}
+\alias{finCenter<-,timeSeries-method}
 
 
 \description{
 
-    Print or assign new financial center to a \code{timeSeries} object.
+    Print or assign new financial center to a 'timeSeries' object.
     
 }
 
 
 \usage{
-\S4method{finCenter}{timeSeries}(x)
-\S4method{finCenter}{timeSeries}(x) <- value
-
 getFinCenter(x)         
 setFinCenter(x) <- value
+
+\S4method{finCenter}{timeSeries}(x)
+\S4method{finCenter}{timeSeries}(x) <- value
 }
 
 
 \arguments{
   
     \item{x}{
-        a \code{timeSeries} object.
+        a 'timeSeries' object.
         }
     \item{value}{
-        a character with the the location of the  financial center named 
+        a character with the the location of the financial center named 
         as "continent/city".
         }
 }

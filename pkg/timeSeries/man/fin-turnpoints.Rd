@@ -72,14 +72,20 @@ turnsStats(x, doplot = TRUE)
     returns an object of class \code{turnpoints} with the following entries:\cr 
     \code{data} - The dataset to which the calculation is done.\cr
     \code{n} - The number of observations.\cr
-    \code{points} - The value of the points in the series, after elimination of ex-aequos.\cr
-    \code{pos} - The position of the points on the time scale in the series (including ex-aequos).\cr
+    \code{points} - The value of the points in the series, after elimination 
+        of ex-aequos.\cr
+    \code{pos} - The position of the points on the time scale in the series 
+        (including ex-aequos).\cr
     \code{exaequos} - Location of exaequos (1), or not (0).\cr
     \code{nturns} - Total number of tunring points in the whole time series.\cr
-    \code{firstispeak} - Is the first turning point a peak (TRUE), or not (FALSE).\cr
-    \code{peaks} - Logical vector. Location of the peaks in the time series without ex-aequos.\cr
-    \code{pits} - Logical vector. Location of the pits in the time series without ex-aequos.\cr
-    \code{tppos} - Position of the turning points in the initial series (with ex-aequos).\cr
+    \code{firstispeak} - Is the first turning point a peak (TRUE), or 
+        not (FALSE).\cr
+    \code{peaks} - Logical vector. Location of the peaks in the time series 
+        without ex-aequos.\cr
+    \code{pits} - Logical vector. Location of the pits in the time series 
+        without ex-aequos.\cr
+    \code{tppos} - Position of the turning points in the initial series (with 
+        ex-aequos).\cr
     \code{proba} - Probability to find a turning point at this location.\cr 
     \code{info} - Quantity of information associated with this point.\cr
        
@@ -89,17 +95,17 @@ turnsStats(x, doplot = TRUE)
 
 \author{
 
-    Frederic Ibanez and Philippe Grosjean for code from the contributed R package 
-    \code{pastecs} and Rmetrics for the function wrapper.
+    Frederic Ibanez and Philippe Grosjean for code from the contributed 
+    R package \code{pastecs} and Rmetrics for the function wrapper.
     
 }
 
 
 \references{
 
-    Ibanez, F., 1982, Sur une nouvelle application de la theorie de l'information a 
-    la description des series chronologiques planctoniques. J. Exp. Mar. Biol. Ecol., 
-    4, 619--632
+    Ibanez, F., 1982, Sur une nouvelle application de la theorie de 
+    l'information a la description des series chronologiques planctoniques. 
+    J. Exp. Mar. Biol. Ecol., 4, 619--632
 
     Kendall, M.G., 1976, Time Series, 2nd ed. Charles Griffin and Co, London.
     

@@ -21,7 +21,9 @@
 
 .rev.timeSeries <-  function(x) x[NROW(x):1,]
 
+
 setMethod("rev", "timeSeries", function(x) .rev.timeSeries(x))
+
 
 # until UseMethod dispatches S4 methods in 'base' functions
 rev.timeSeries <- function(x) .rev.timeSeries(x)

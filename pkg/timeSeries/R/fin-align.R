@@ -41,6 +41,8 @@
 
     # Arguments:
     #   x - an object of class "timeSeries".
+    #   by - 
+    #   offset -
     #   method -
     #       "before" - use the data from the row whose position is
     #           just before the unmatched position;

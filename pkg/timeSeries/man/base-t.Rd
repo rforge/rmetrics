@@ -8,7 +8,7 @@
 
 
 \description{
-     Returns the transpose of a timeSries object.
+     Returns the transpose of a 'timeSeries' object.
 }
 
 
@@ -18,15 +18,18 @@
 
 
 \arguments{
-  \item{x}{
-    a timeSeries object.
-  }
+
+    \item{x}{
+    a 'timeSeries' object.
+    }
+    
 }
 
 
 \value{
 
-  A matrix object.
+    Returns a matrix object.
+  
 }
 
 
@@ -34,7 +37,12 @@
 ## Dummy timeSeries with NAs entries
    data <- matrix(1:24, ncol = 2)
    s <- timeSeries(data, timeCalendar())
+   s
    
-## transpose
+## Transpose 'timeSeries' -
    t(s)
 }
+
+
+\keyword{chron}
+

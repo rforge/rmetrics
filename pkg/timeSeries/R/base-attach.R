@@ -30,7 +30,7 @@ function(what, pos = 2, name = deparse(substitute(what)),
     
     # Details:
     #   The function works in the same way as in the case of a 
-    #   data.frame, i.e. the return value are vectors.
+    #   data.frame, i.e. the return values are vectors.
 
     # FUNCTION:
 

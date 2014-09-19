@@ -13,7 +13,7 @@
 
 \description{
 
-    Returns start and end time stamps of a 'timeSeries'.
+    Returns start and/or end time stamps of a 'timeSeries' object.
     
 }
 
@@ -46,13 +46,13 @@
 
 \examples{   
 ## Create Dummy timeSeries -    
-   tS <- dummySeries()
+   tS <- dummySeries()[, 1]
+   tS
    
-## Return Start Time Stamp -
-   start(tS)
+## Return Start and end Time Stamp -
+   c(start(tS), end(tS))
+   range(time(tS))
    
-## Return End Time Stamp -
-   end(tS)
 }
 
 

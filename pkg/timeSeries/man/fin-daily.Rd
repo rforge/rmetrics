@@ -16,18 +16,19 @@
 \description{
 
     Special daily 'timeSeries' functions.
-    \cr
+    
+}
+
+
+\details{
 
     \tabular{ll}{
-      \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries'
-      object, \cr
-      \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new
-      positions,\cr
-      \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given
-      period, \cr
-      \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr
-      \code{dummySeries} \tab Creates a dummy monthly 'timeSeries'
-      object}
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions,\cr
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr
+    \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr
+    \code{dummySeries} \tab Creates a dummy monthly 'timeSeries' object}
+      
 }
 
 

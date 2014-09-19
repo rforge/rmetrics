@@ -15,15 +15,14 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .endOfPeriodSeries        Returns series back to a given period
-#  .endOfPeriodStats         Returns statistics back to a given period
-#  .endOfPeriodBenchmarks    Returns benchmarks back to a given period
+#  endOfPeriodSeries         Returns series back to a given period
+#  endOfPeriodStats          Returns statistics back to a given period
+#  endOfPeriodBenchmarks     Returns benchmarks back to a given period
 ################################################################################
 
 
-.endOfPeriodSeries <- 
-    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
-    aggregate = c("monthly", "quarterly"), align = TRUE)
+endOfPeriodSeries <- 
+    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -31,65 +30,38 @@
     #   Returns series back to a given period
 
     # Arguments:
-    #   x - a daily 'timeSeries' object of returns
+    #   x - a monthly 'timeSeries' object of returns
     #   nYearsBack - a period string. How long back should the series
     #       be extracted? Options include values from 1 year to 10 years.
-    #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
-    #   aggregate - a character string which defines the aggregation level,
-    #       either "monthly", the default value, or "quarterly".
-    #   align - a logical flag, should the time series be aligned?  
-    #       If TRUE the function alignDailySeries() will be applied. 
-
-    # Note:
-    #   Add "1m"
+    #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD". 
 
     # FUNCTION:
     
     # Check:
     stopifnot(is.timeSeries(x))
       
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], 
-            " is for time series and not for signal series.")
-
-    # Should the series be aligned:
-    if (align) x <- alignDailySeries(x)
-
     # Match Arguments:
     nYearsBack <- match.arg(nYearsBack)
-    aggregate <- match.arg(aggregate)
     
     # Settings:
-    if (nYearsBack == "YTD") yearsBack = 0
-    else if (nYearsBack == "1y") yearsBack = 1
-    else if (nYearsBack == "2y") yearsBack = 2
-    else if (nYearsBack == "3y") yearsBack = 3
-    else if (nYearsBack == "5y") yearsBack = 5
-    else if (nYearsBack == "10y") yearsBack = 10
-
-    currentYear <- getRmetricsOptions("currentYear")
-    Year <- currentYear - yearsBack
-    fromDate <- timeDate(paste(Year, "-01-01", sep = ""))
-    if (yearsBack == 0) {
-        toDate <- end(x)
-    } else {
-        toDate <- timeDate(paste(currentYear-1, "-12-31", sep = ""))
-    }
-
-    # Are there enough Data Points?
-    stopifnot(start(x) < fromDate)
-
+    if (nYearsBack == "YTD") monthsBack = atoms(end(x))$m else 
+    if (nYearsBack == "1y") monthsBack = 12 else 
+    if (nYearsBack == "2y") monthsBack = 24 else 
+    if (nYearsBack == "3y") monthsBack = 36 else 
+    if (nYearsBack == "5y") monthsBack = 60 else 
+    if (nYearsBack == "10y") monthsBack = 120
+    stopifnot( nrow(x) >= monthsBack )
+      
     # ReturnValue:
-    cut(x, fromDate, toDate)
+    rev(rev(x)[1:monthsBack, ])
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.endOfPeriodStats <- 
-    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
-    aggregate = c("monthly", "quarterly"), align = TRUE)
+endOfPeriodStats <- 
+    function(x, nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -97,45 +69,27 @@
     #   Returns series statistics back to a given period
 
     # Arguments:
-    #   x - a daily 'timeSeries' object of returns
+    #   x - a monthly 'timeSeries' object of returns
     #   nYearsBack - a period string. How long back should the series
     #       be extracted? Options include values from 1 year to 10 years.
     #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
-    #   aggregate - a character string which defines the aggregation level,
-    #       either "monthly", the default value, or "quarterly".
-    #   align - a logical flag, should the time series be aligned?  
-    #       If TRUE the function alignDailySeries() will be applied. 
-
-
-    # Note:
-    #   Add "1m"
 
     # FUNCTION:
     
     # Check:
     stopifnot(is.timeSeries(x))
-      
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], 
-            " is for time series and not for signal series.")
 
     # Match Arguments:
-    nYearsBack = match.arg(nYearsBack)
-    aggregate <- match.arg(aggregate)
-    
-    # Should the series be aligned:
-    if (align) x = alignDailySeries(x)
+    nYearsBack <- match.arg(nYearsBack)
 
     # Series:
-    Series = .endOfPeriodSeries(x, nYearsBack = nYearsBack,
-        aggregate = aggregate, align = FALSE)
+    Series <- endOfPeriodSeries(x, nYearsBack = nYearsBack)
 
     # Internal Function:
     .cl.vals <- function(x, ci) {
         x = x[!is.na(x)]
         n = length(x)
-        if (n <= 1)
-            return(c(NA, NA))
+        if (n <= 1) return(c(NA, NA))
         se.mean = sqrt(var(x)/n)
         t.val = qt((1 - ci)/2, n - 1)
         mn = mean(x)
@@ -163,13 +117,13 @@
             "3. Quartile", "Mean", "Median", "Sum", "SE Mean",
             "LCL Mean", "UCL Mean", "Variance", "Stdev", "Skewness",
             "Kurtosis")
-        stats1 = matrix(z, ncol = 1)
-        row.names(stats) = znames
+        stats1 <- matrix(z, ncol = 1)
+        row.names(stats1) <- znames
 
         # Monthly Return Statistics:
-        xData = as.vector(x)
-        noNegativePeriods = length(xData[xData < 0 ])
-        noPositivePeriods = length(xData[xData > 0 ])
+        xData <- as.vector(x)
+        noNegativePeriods <- length(xData[xData < 0 ])
+        noPositivePeriods <- length(xData[xData > 0 ])
         stats1 = rbind(stats1,
             worstPeriod = min(xData),
             negativeValues = noNegativePeriods,
@@ -190,20 +144,20 @@
             stats <- stats1
         }
     }
+    colnames(stats) <- colnames(x) 
+    
 
     # Return Value:
     stats
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
-.endOfPeriodBenchmarks <- 
+endOfPeriodBenchmarks <- 
     function(x, benchmark = ncol(x),
-    nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"),
-    aggregate = c("monthly", "quarterly"), align = TRUE)
+    nYearsBack = c("1y", "2y", "3y", "5y", "10y", "YTD"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -211,40 +165,22 @@
     #   Returns benchmarks back to a given period
 
     # Arguments:
-    #   x - a daily 'timeSeries' object of returns
+    #   x - a monthly 'timeSeries' object of financial returns
     #   nYearsBack - a period string. How long back should the series
     #       be extracted? Options include values from 1 year to 10 years.
     #       and year to date: "1y", "2y", "3y", "5y", "10y", "YTD".
-    #   aggregate - a character string which defines the aggregation level,
-    #       either "monthly", the default value, or "quarterly".
-    #   align - a logical flag, should the time series be aligned?  
-    #       If TRUE the function alignDailySeries() will be applied. 
-
-
-    # Note:
-    #   Add "1m"
 
     # FUNCTION:
     
     # Checks:
     stopifnot(is.timeSeries(x))
-      
-    if (x@format == "counts")
-        stop(as.character(match.call())[1], 
-            " is for time series and not for signal series.")
 
     # Match Arguments:
     nYearsBack <- match.arg(nYearsBack)
-    aggregate <- match.arg(aggregate)
-    
-    # Should the series be aligned:
-    if (align) x <- alignDailySeries(x)
 
     # Series:
-    Series <- .endOfPeriodSeries(x[, -benchmark], nYearsBack = nYearsBack,
-        aggregate = aggregate, align = FALSE)
-    y <- Benchmark <- .endOfPeriodSeries(x[, benchmark], nYearsBack = nYearsBack,
-        aggregate = aggregate, align = FALSE)
+    Series <- endOfPeriodSeries(x[, -benchmark], nYearsBack = nYearsBack)
+    y <- Benchmark <- endOfPeriodSeries(x[, benchmark], nYearsBack = nYearsBack)
 
     stats <- NULL
     for (i in 1:ncol(Series))

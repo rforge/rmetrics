@@ -1,7 +1,7 @@
 \name{str-methods}
 
 
-\title{Object Str}
+\title{timeSeries Object Structure}
 
 
 \alias{str}
@@ -10,7 +10,7 @@
 
 \description{
     
-    Compactly Display the Structure of a 'timeSeries' Object.        
+    Compactly display the structure of a 'timeSeries' Object.        
     
 }
 
@@ -42,7 +42,7 @@
 \examples{
 ## Load Microsoft Data Set -
    data(MSFT)
-   X = MSFT[1:12, 1:4]
+   X <- MSFT[1:12, 1:4]
    colnames(X) <- abbreviate(colnames(X), 4)
     
 ## Display Structure - 

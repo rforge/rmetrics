@@ -8,6 +8,8 @@
 \alias{returns,ANY-method}
 \alias{returns,timeSeries-method}
 
+\alias{returns0}
+
 \alias{returnSeries}
 \alias{getReturns}
 
@@ -21,13 +23,14 @@
 
 \usage{
 returns(x, \dots)
+returns0(x, \dots)
 
 \S4method{returns}{ANY}(x, method = c("continuous", "discrete", 
     "compound", "simple"), percentage = FALSE, \dots)
 \S4method{returns}{timeSeries}(x, method = c("continuous", "discrete", 
     "compound", "simple"), percentage = FALSE, na.rm = TRUE, 
-    trim = TRUE, \dots)
-    
+    trim = TRUE, \dots) 
+
 getReturns(\dots)
 returnSeries(\dots)
 }
@@ -35,6 +38,9 @@ returnSeries(\dots)
 
 \arguments{
 
+    \item{x}{
+        an object of class \code{timeSeries}.
+        }
     \item{percentage}{
         a logical value. By default \code{FALSE}, if \code{TRUE} the 
         series will be expressed in percentage changes.
@@ -52,9 +58,6 @@ returnSeries(\dots)
         a logical value. Should the time series be trimmed? By Default 
         \code{TRUE}.
         }    
-    \item{x}{
-        an object of class \code{timeSeries}.
-        }
     \item{\dots}{
         arguments to be passed.
         }
@@ -65,6 +68,9 @@ returnSeries(\dots)
 \value{
 
     all functions return an object of class \code{timeSeries}.
+    
+    \code{returns0} returns am untrimmed series with the first
+    row of returns set to zero(s).
         
 }
 
@@ -72,7 +78,8 @@ returnSeries(\dots)
 \note{
 
     The functions \code{returnSeries}, \code{getReturns}, 
-    are synonymes for \code{returns.timeSeries}.
+    are synonymes for the function \code{returns}. We do
+    not recommend to use these functions.
 
 }
     
@@ -86,9 +93,10 @@ returnSeries(\dots)
 
 ## Continuous Returns - 
    returns(X)
+   returns0(X)
   
 ## Discrete Returns:
-   returns(X, type = "discrete")
+   returns(X, method = "discrete")
    
 ## Don't trim:
    returns(X, trim = FALSE)

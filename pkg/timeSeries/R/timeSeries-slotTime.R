@@ -21,6 +21,7 @@
 # FUNCTION:                 DESCRIPTION:
 #  getTime                   Get time slot from a 'timeSeries'  
 #  setTime<-                 Set new time slot to a 'timeSeries'
+################################################################################
 # DEPRECATED:               DESCRIPTION:
 #  seriesPositions           Deprecated, use time
 #  newPositions<-            Deprecated, use time<-
@@ -143,6 +144,7 @@ getTime <-
 
 
 ###############################################################################
+# DEPRECATED
 
 
 seriesPositions <-
@@ -171,6 +173,7 @@ seriesPositions <-
 
 
 # ------------------------------------------------------------------------------
+# Deprecated:
 
 
 "newPositions<-" <-

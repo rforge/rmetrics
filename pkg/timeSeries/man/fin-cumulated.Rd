@@ -10,8 +10,8 @@
 
 \description{
     
-    Compute cumulated financial series, e.g. prices 
-    or indexes, from financial returns.
+    Computes a cumulated financial 'timeSeries', 
+    e.g. prices or indexes, from financial returns.
 
 }
 
@@ -57,7 +57,7 @@ cumulated(x, \dots)
 
 \value{
 
-    returns a time series object of the same class as
+    Returns a 'timeSeries' object of the same class as
     the input argument \code{x}.
         
 }
@@ -72,7 +72,7 @@ cumulated(x, \dots)
 ## Compute Discrete Return -    
    MSFT.RET <- returns(MSFT.CL, method = "discrete")
    
-## Cumulative Series and Compare - 
+## Cumulated Series and Compare - 
    MSFT.CUM <- cumulated(MSFT.RET, method = "discrete") 
    head(cbind(MSFT.CL, MSFT.CUM))
 }

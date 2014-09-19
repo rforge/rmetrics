@@ -3,7 +3,7 @@
 
 \title{Bind two timeSeries objects}
 
-\alias{merge}
+%\alias{merge}
 \alias{cbind}
 \alias{rbind}
 \alias{cbind2}
@@ -17,16 +17,16 @@
 
 % \alias{c.timeSeries}
 
-\alias{merge,ANY,timeSeries-method}
-\alias{merge,timeSeries,ANY-method}
-\alias{merge,timeSeries,missing-method}
-\alias{merge,timeSeries,numeric-method}
-\alias{merge,timeSeries,matrix-method}
-\alias{merge,timeSeries,timeSeries-method}
-\alias{merge,matrix,timeSeries-method}
-\alias{merge,numeric,timeSeries-method}
+%\alias{merge,ANY,timeSeries-method}
+%\alias{merge,timeSeries,ANY-method}
+%\alias{merge,timeSeries,missing-method}
+%\alias{merge,timeSeries,numeric-method}
+%\alias{merge,timeSeries,matrix-method}
+%\alias{merge,timeSeries,timeSeries-method}
+%\alias{merge,matrix,timeSeries-method}
+%\alias{merge,numeric,timeSeries-method}
   
-\alias{merge.timeSeries}
+%\alias{merge.timeSeries}
 
 \alias{cbind2,ANY,timeSeries-method}
 \alias{cbind2,timeSeries,ANY-method}
@@ -40,7 +40,7 @@
 
 \description{
   
-    Binds two 'timeSeries' objects either by column or row.        
+    Binds two 'timeSeries' objects either by column or by row.        
   
 }
 
@@ -75,23 +75,24 @@
 
 \value{
 
-  returns a S4 object of class \code{timedate}. 
+  returns a S4 object of class \code{timeDate}. 
+  
 }
 
 
 \examples{
 ## Load Microsoft Data Set -
-   data(MSFT)
    x <- MSFT[1:12, ]
+   x
 
 ## Bind Columnwise -
-   #X <- cbind(x[, "Open"], returns(x[, "Open"]))
-   #colnames(X) <- c("Open", "Return")
-   #X
+   X <- cbind(x[, "Open"], returns(x[, "Open"]))
+   colnames(X) <- c("Open", "Return")
+   X
 
 ## Bind Rowwise - 
-   #Y <- rbind(x[1:3, "Open"], x[10:12, "Open"])
-   #Y
+   Y <- rbind(x[1:3, "Open"], x[10:12, "Open"])
+   Y
 }
 
 

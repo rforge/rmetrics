@@ -17,6 +17,7 @@ import("timeDate")
 exportClasses("index_timeSeries",
               "timeSeries",
               "time_timeSeries" )
+
 export("colCummaxs",
         "colCummins",
         "colCumprods",
@@ -27,9 +28,8 @@ export("colCummaxs",
         "rowCumsums",
         "series",
         "series<-",
-        "coredata",
-        "coredata<-",
         "timeSeries" )
+
 exportMethods("$",
               "$<-",
               "+",
@@ -94,7 +94,7 @@ exportMethods("$",
               "rownames",
               "rownames<-",
               "sample",
-              "scale",
+             #"scale",
               "setDataPart",
               "show",
               "sort",
@@ -148,6 +148,34 @@ S3method("window", "timeSeries")
 ################################################
 
 export(
+    # MODIFY - DELETE/ADD:
+      # "plotOHLC",
+      ".plotOHLC",
+      # .endOfPeriod*,
+      "endOfPeriodBenchmarks",
+      "endOfPeriodSeries",
+      "endOfPeriodStats",
+    # ADD:
+      "returns0",
+      "index2wealth",
+      "daily2monthly",
+      "daily2weekly",
+      "splits",
+    # DELETE
+      # ".plotTimeSeries",
+    # ADD
+      ".xtplot.timeSeries",
+      ".xtsPlot",
+      ".axTicksByTime2",
+      ".endpoints2",
+      ".periodicity2",
+      ".colorwheelPalette",
+    # ADD:
+      "getAttributes",      "setAttributes<-",      ".appendList"
+)
+
+
+export(
     ".DollarNames.timeSeries",
     ".aggregate.timeSeries",
     ".align.timeSeries",
@@ -156,15 +184,11 @@ export(
     ".as.list.timeSeries",
     ".as.matrix.timeSeries",
     ".as.ts.timeSeries",
-    ".colorwheelPalette",
     ".cut.timeSeries",
     ".description",
-    ".diff.timeSeries",
+    #".diff.timeSeries",
     ".dollar_assign",
     ".end.timeSeries",
-    ".endOfPeriodBenchmarks",
-    ".endOfPeriodSeries",
-    ".endOfPeriodStats",
     ".extract.turnpointsPastecs",
     ".fapply",
     ".findIndex",
@@ -180,7 +204,6 @@ export(
     ".old2newTimeSeries",
     ".plot.timeSeries",
     ".plot.turnpointsPastecs",
-    ".plotOHLC",
     ".points.timeSeries",
     ".print.timeSeries",
     ".rev.timeSeries",
@@ -208,7 +231,6 @@ export(
     ".validity_timeSeries",
     ".window.timeSeries",
     "alignDailySeries",
-    ".appendList",
     "applySeries",
     "as.timeSeries",
     "colAvgs",
@@ -232,7 +254,6 @@ export(
     "durationSeries",
     "durations",
     "fapply",
-    "getAttributes",
     "getFinCenter",
     "getReturns",
     "getTime",
@@ -246,7 +267,7 @@ export(
     "midquoteSeries",
     "midquotes",
     "newPositions<-",
-    ".ohlcDailyPlot",
+        ".ohlcDailyPlot",
     "orderColnames",
     "orderStatistics",
     "pcaColnames",
@@ -265,7 +286,6 @@ export(
     "sampleColnames",
     "seriesData",
     "seriesPositions",
-    "setAttributes<-",
     "setFinCenter<-",
     "setTime<-",
     "setUnits<-",

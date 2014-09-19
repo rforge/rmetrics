@@ -15,10 +15,32 @@
 
 \description{
 
-    Checks if a time series is regular. i.e. if a series is 
-    a daily, a monthly, or a weekly time series. If the series
-    is regular the frequency of the serie scan determined
-    calling the function frequency.
+    Checks if a time series is regular. 
+    
+}
+
+
+\details{
+
+    What is a regular time series? If a series is a daily, a monthly, 
+    or a weekly time series then we speak of a regular series.
+    This can be tested calling the functions \code{isDaily}, 
+    \code{isMonthly}, \code{isQuarterly}, or in general \code{isRegular}
+    If the series is regular then the frequency of the series can 
+    be determined calling the function \code{frequency}.
+
+    A time series is defined as daily if the series has not more than 
+    one date/time stamp per day.\cr
+    A time series is defined as monthly if the series has not more than 
+    one date/time stamp per month.\cr
+    A time series is defined as quarterly if the series has not more than 
+    one date/time stamp per quarter.\cr
+    Note, amonthly series is also a daily series, a quarterly series is 
+    alsona monthly series.\cr
+    With these definitions a regular series is either a monthly or a 
+    quarterly series.\cr
+   
+    NOT yet implemented is the case of weekly series.
   
 }
 
@@ -37,33 +59,12 @@
 \arguments{
 
     \item{x}{  
-        an R object of class \code{timeSeries}.
+        an R object of class 'timeSeries'.
     }
     \item{\dots}{
         arguments to be passed.
     }
-  
-}
 
-
-\details{
-
-    A time series is defined as daily if the series has not more than 
-    one date/time stamp per day.
-    
-    A time series is defined as monthly if the series has not more than 
-    one date/time stamp per month.
-    
-    A time series is defined as quarterly if the series has not more than 
-    one date/time stamp per quarter.
-    
-    A monthly series is also a daily series, a quarterly series is also
-    a monthly series.
-    
-    A regular series is either a monthly or a quarterly series.
-    
-    NOT yet implemented is the case of weekly series.
-    
 }
 
 

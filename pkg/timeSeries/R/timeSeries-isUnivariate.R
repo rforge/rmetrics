@@ -21,7 +21,7 @@
 
 
 isUnivariate <-
-function(x)
+  function(x)
 {
     # A function implemented by Diethelm Wuertz and Yohan Chalabi
 

@@ -19,20 +19,23 @@
 
 
 \arguments{
-  \item{x}{
-    a \code{timeSeries} object.
-  }
-  \item{value}{
-    a character string.
-  }
+  
+    \item{x}{
+        a \code{timeSeries} object.
+        }
+    \item{value}{
+        a character string - the comment.
+    }
+    
 }
 
 
 \examples{
-## Load Swiss Pension Fund Benchmark -
-   data(LPP2005REC)
-   
 ## Get Description from timeSeries -
+   comment(LPP2005REC)
+   
+## Add User to comment -
+   comment(LPP2005REC) <- paste(comment(LPP2005REC), "by User Rmetrics")
    comment(LPP2005REC)
 }
 

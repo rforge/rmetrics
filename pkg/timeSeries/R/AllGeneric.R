@@ -14,6 +14,22 @@
 
 
 ################################################################################
+# GENERIC:                   DESCRIPTION
+#  returns                    Computes returns
+#  rowCumsums                 Computes row cumulated sums
+#  series                     Extracts series data
+#  series<-                   Assigns series data  
+#  coredata                   Extracts series data
+#  index                      deprecated
+#  index <-                   deprecated
+#  outlier                    Returns outliers
+#  timeSeries                 Returns timeSeries
+#  colCumsums                 Computes column cumulated sums
+#  colCummaxs                 Computes column cumulated maxima
+#  colCummins                 Computes column cumulated minima
+#  colCumprods                Computes column cumulated products
+#  colCumreturns              Computes column cumulated returns
+################################################################################
 
 
 setGeneric("returns", 
