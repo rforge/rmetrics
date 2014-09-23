@@ -28,8 +28,8 @@
 
 
 backtestStats <- 
-    function(object, FUN = "rollingSigma", ...)
-{
+  function(object, FUN = "rollingSigma", ...)
+  {
     # A function implemented by William Chen
     
     # Description:
@@ -38,29 +38,29 @@ backtestStats <-
     # Arguments:
     #   object - a list as returned by the function portfolioBacktesting()
     #   FUN - a character string, the name of the statistics function
-        
+    
     # Example:
     #   data = returns(align(SPISECTOR))
     #   formula <- SPI ~ BASI+INDU+CONG+HLTH+CONS+TELE+UTIL+FINA+TECH
     #   backtests <- portfolioBacktesting(formula, data, trace = FALSE) 
     #   portfolios <- portfolioSmoothing(backtests, portfolioBacktest())
-         
+    
     # FUNCTION:
-
+    
     # Perform Statistics:
     statsFun <- match.fun(FUN)
     ans <- statsFun(object, ...)
-
+    
     # Return Value
     ans
-}
+  }
 
 # ------------------------------------------------------------------------------
 
 
 rollingSigma <-
-    function(object)
-{
+  function(object)
+  {
     # A function implemented by William Chen and Diethelm Wuertz
     
     # Description:
@@ -80,18 +80,18 @@ rollingSigma <-
     prtval <- lapply(portfolios, slot, "portfolio")
     ans <- sapply(prtval, function(x) getTargetRisk(x)["Sigma"])
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
+    
     # Return Value:
     timeSeries(ans, charvec = dates, units = "Sigma")
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 rollingVaR <-
-    function(object)
-{
+  function(object)
+  {
     # A function implemented by William Chen
     
     # Description:
@@ -107,31 +107,32 @@ rollingVaR <-
     
     # calculate VaR for one portfolio:
     .var <- function(x) {
-        alpha = getAlpha(x)
-        R = getSeries(x) %*% getWeights(x)
-        quantile.default(R, probs = alpha) }
-        
+      alpha <- getAlpha(x)
+      R <- as.numeric(getSeries(x) %*% getWeights(x))
+      quantile(R, probs = alpha)
+    }
+    
     # Get Portfolios:
     portfolios <- object$strategyList
     
     # Calculates VaR for all portfolios:
     ans <- sapply(portfolios, FUN = .var)
-
+    
     # Extracts the dates:
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
+    
     # Return Value:
     alpha <- getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("VaR", alpha, sep = "."))
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 rollingCVaR <- 
-    function(object)
-{
+  function(object)
+  {
     # A function implemented by William Chen
     
     # Description:
@@ -147,32 +148,33 @@ rollingCVaR <-
     
     # Calculate CVaR for one portfolio:
     .cvar <- function(x) {
-        alpha = getAlpha(x)
-        R = getSeries(x) %*% getWeights(x)
-        z = quantile.default(R, probs = alpha)
-        mean(as.numeric(R)[R <= z], na.rm = TRUE)}
-
+      alpha <- getAlpha(x)
+      R <- as.numeric(getSeries(x) %*% getWeights(x))
+      z <- quantile(R, probs = alpha)
+      mean(R[R <= z], na.rm = TRUE)
+    }
+    
     # Get Portfolios:
     portfolios <- object$strategyList
     
     # Calculate CVaR for all portfolios:
     ans <- sapply(portfolios, FUN = .cvar)
-
+    
     # Extract the Dates:
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
+    
     # Return:
     alpha <- getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("CVaR", alpha, sep = "."))
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 rollingDaR <-
-    function(object)
-{
+  function(object)
+  {
     # A function implemented by William Chen
     
     # Description:
@@ -188,32 +190,33 @@ rollingDaR <-
     
     # calculate DaR for one portfolio:
     .dar <- function(x) {
-        alpha = getAlpha(x)
-        R = getSeries(x) %*% getWeights(x)
-        dd = 100 * drawdowns(as.timeSeries(R)/100)
-        quantile.default(dd, probs = alpha)}
-
+      alpha <- getAlpha(x)
+      R <- as.numeric(getSeries(x) %*% getWeights(x))
+      dd <- 100 * drawdowns(as.timeSeries(R)/100)
+      quantile(dd, probs = alpha)
+    }
+    
     # Get Portfolios:
     portfolios <- object$strategyList
     
     # Calculates DaR for all portfolios:
     ans <- sapply(portfolios, FUN = .dar)
-
+    
     # Extracts the dates:
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
+    
     # Return:
     alpha <- getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("DaR", alpha, sep = "."))
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 rollingCDaR <- 
-    function(object)
-{
+  function(object)
+  {
     # A function implemented by William Chen
     
     # Description:
@@ -229,26 +232,26 @@ rollingCDaR <-
     
     # Calculate CDaR for one portfolio:
     .cdar <- function(x){
-        alpha = getAlpha(x)
-        R = as.numeric(getSeries(x) %*% getWeights(x))
-        dd = 100 * drawdowns(as.timeSeries(R)/100)
-        z = quantile.default(dd, probs = alpha)
-        mean(dd[dd <= z])
-        }
-
+      alpha <- getAlpha(x)
+      R <- as.numeric(getSeries(x) %*% getWeights(x))
+      dd <- 100 * drawdowns(as.timeSeries(R)/100)
+      z <- quantile(as.numeric(dd), probs = alpha)
+      mean(dd[dd <= z])
+    }
+    
     # Get Portfolios:
     portfolios <- object$strategyList
     
     # Calculate CVaR for all portfolios:
     ans <- sapply(portfolios, FUN = .cdar)
-
+    
     # Extract the dates:
     dates <- sapply(portfolios, function(x) rev(rownames(getSeries(x)))[1])
-
+    
     # Return:
     alpha <- getAlpha(portfolios[[1]])
     timeSeries(ans, charvec = dates, units = paste("CDaR", alpha, sep = "."))
-}
+  }
 
 
 ################################################################################

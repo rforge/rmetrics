@@ -139,7 +139,7 @@ solveRquadprog.CLA <-
     # FUNCION:
 
     # Optimize:
-    optim <- solve.QP(
+    optim <- quadprog::solve.QP(
         Dmat = Dmat, 
         dvec = dvec, 
         Amat = Amat, 

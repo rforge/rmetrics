@@ -23,8 +23,8 @@
 
 
 .amplExec <- 
-    function(project="ampl")
-{
+  function(project="ampl")
+  {
     # A function Implemented by Diethelm Wuertz
     
     # Description:
@@ -47,14 +47,14 @@
     
     # Return Value:
     invisible(solve)
-}
-   
+  }
+
 
 # -----------------------------------------------------------------------------
-    
+
 .amplExample <- 
-    function()
-{
+  function()
+  {
     # A function Implemented by Diethelm Wuertz
     
     # Description:
@@ -62,24 +62,28 @@
     
     # FUNCTION:
     
+    # Load Dataset
+    dataSet <- data("LPP2005REC", package="timeSeries", envir=environment())
+    LPP2005REC <- get(dataSet, envir=environment())
+    
     # Portfolio Data:
     nAssets <- 6
-    data <- 100 * LPP2005REC[, 1:nAssets]     
+    data <- 100 * LPP2005REC[, 1:nAssets]
     
     # Optimization Arguments: 
     objective <- list(dvec=rep(0, nAssets), Dmat=cov(data))
     lower <- 0
     upper <- 1
     linCons <- list(
-        mat = rbind(
-            budget = rep(1, times=nAssets), 
-            returns = colMeans(data)),
-        lower = c(
-            budget = 1, 
-            return = mean(data)),
-        upper = c(
-            budget = 1, 
-            return = mean(data)))
+      mat = rbind(
+        budget = rep(1, times=nAssets), 
+        returns = colMeans(data)),
+      lower = c(
+        budget = 1, 
+        return = mean(data)),
+      upper = c(
+        budget = 1, 
+        return = mean(data)))
     control <- list()
     
     # Default - AMPL Interface:
@@ -87,7 +91,7 @@
     
     # Return Value:
     ampl
-}
+  }
 
 
 ###############################################################################

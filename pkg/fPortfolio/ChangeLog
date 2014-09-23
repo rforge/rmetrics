@@ -1,3 +1,12 @@
+
+ChangeLog
+Package fPortfolio
+
+2014-09-22  setz
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
+	  after submission to CRAN
+
 2014-03-26 	wuertz
 
 	* fPortfolioBacktest Package functions from r-forge embedded

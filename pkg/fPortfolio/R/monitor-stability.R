@@ -35,11 +35,11 @@
 
 
 stabilityAnalytics <- 
-    function(index, method=c("turns", "drawdowns", "garch", 
-    "riskmetrics", "bcp", "pcout"), ...)
-{
+  function(index, method=c("turns", "drawdowns", "garch", 
+                           "riskmetrics", "bcp", "pcout"), ...)
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
-      
+    
     # Description:
     # Retroactive stability analytics 
     
@@ -52,16 +52,16 @@ stabilityAnalytics <-
     
     # Return Value:
     fun(index, ...)
-}
+  }
 
 
 ###############################################################################
 
 
 turnsAnalytics <- 
-    function(index, spar=0.5, main=NULL, 
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
-{
+  function(index, spar=0.5, main=NULL, 
+           trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -81,7 +81,7 @@ turnsAnalytics <-
     #   spline smoother.
     
     # FUNCTION:
-        
+    
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive Turnpoints Analytics"
@@ -89,7 +89,7 @@ turnsAnalytics <-
     # Smooth Return Series:
     rets <- returns(index)
     indexSmu <- smoothSpline(log(index), spar=spar)
-
+    
     # Turnpoints:
     warn <- getOption("warn")
     options(warn=-1)
@@ -103,11 +103,11 @@ turnsAnalytics <-
     
     # Trace Results:
     if (trace){
-        cat("Series:\n", colnames(index), "\n")
-        cat("Turning Points:", n.tps, "\n")
-        print(turns.tps) 
+      cat("Series:\n", colnames(index), "\n")
+      cat("Turning Points:", n.tps, "\n")
+      print(turns.tps) 
     }
-       
+    
     # Positions:
     positions <- sign(returns(exp(indexSmu[, 2]), trim=FALSE))
     positions[1, 1] <- 0
@@ -115,57 +115,57 @@ turnsAnalytics <-
     
     # Plot:
     if (doplot) {
-    
-        # Turnpoints:
-        range <- range(log(index))
-        ylim <- c(range[1], range[2] + diff(range(log(index)))/4)
-        plot(indexSmu[, 1], ylim=ylim, main="", ylab="", xlab="", las=2, 
-            at=at, format=format, col="black")
-        title(main=main, ylab=paste("log Index", colnames(index)), xlab="")
-        abline(v=ablines, lty=3, lwd=2, col="steelblue")
-        lines(indexSmu[, 1], col="black") 
-        lines(indexSmu[, 2], col="red") 
-        if (turns.tps[2] > 0) points(indexTurns[, 1], pch=19, col="red")
-        abline(v=as.POSIXct(at), col="darkgrey", lty=3)
-        box(col="white")
-        box(bty="l")
-        
-        # Add Returns:
-        center <- range[2] + diff(range(log(index)))/4/2
-        scale <- diff(range(log(index)))/4
-        returnsScaled <- (rets-mean(rets))/max(abs(rets)) * scale/2 + center
-        lines(returnsScaled, col="orange")
-        abline(h=mean(returnsScaled), col="darkgrey", lty=3)
-        box(col="white")
-        box(bty="l")
-        
-        # Add Rmwtrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      
+      # Turnpoints:
+      range <- range(log(index))
+      ylim <- c(range[1], range[2] + diff(range(log(index)))/4)
+      plot(indexSmu[, 1], ylim=ylim, main="", ylab="", xlab="", las=2, 
+           at=at, format=format, col="black")
+      title(main=main, ylab=paste("log Index", colnames(index)), xlab="")
+      abline(v=ablines, lty=3, lwd=2, col="steelblue")
+      lines(indexSmu[, 1], col="black") 
+      lines(indexSmu[, 2], col="red") 
+      if (turns.tps[2] > 0) points(indexTurns[, 1], pch=19, col="red")
+      abline(v=as.POSIXct(at), col="darkgrey", lty=3)
+      box(col="white")
+      box(bty="l")
+      
+      # Add Returns:
+      center <- range[2] + diff(range(log(index)))/4/2
+      scale <- diff(range(log(index)))/4
+      returnsScaled <- (rets-mean(rets))/max(abs(rets)) * scale/2 + center
+      lines(returnsScaled, col="orange")
+      abline(h=mean(returnsScaled), col="darkgrey", lty=3)
+      box(col="white")
+      box(bty="l")
+      
+      # Add Rmwtrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Check Turnpoints:
     if ( turns.tps[1] == "1" & turns.tps[2] == "0")
-    n.tps <- 0
-        
+      n.tps <- 0
+    
     # Return Value:
     invisible(list(
-        data=indexSmu, 
-        turns=turns.tps, 
-        positions=positions, 
-        ablines=ablines, 
-        n=n.tps, 
-        smooth=spar))
-}
- 
+      data=indexSmu, 
+      turns=turns.tps, 
+      positions=positions, 
+      ablines=ablines, 
+      n=n.tps, 
+      smooth=spar))
+  }
+
 
 ###############################################################################    
 
- 
+
 drawdownsAnalytics <- 
-    function(index, spar=0.5, main=NULL, 
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
-{
+  function(index, spar=0.5, main=NULL, 
+           trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -181,7 +181,7 @@ drawdownsAnalytics <-
     #   format -  a string describing the label format
     
     # FUNCTION:
-        
+    
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive Drawdowns Analytics"
@@ -198,34 +198,34 @@ drawdownsAnalytics <-
     
     # Plot:
     if(doplot) {
-    
-        # Plot:
-        plot(maxdd, main=main, xlab="", ylab=paste("Drawdwons", colnames(index)),
-            las=2, at=at, format=format)
-        abline(v=ablines, lty=3, lwd=2, col="steelblue")
-        lines(maxdd)
-        box(col="white")
-        box(bty="l")
-        
-        # Add Rmwtrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      
+      # Plot:
+      plot(maxdd, main=main, xlab="", ylab=paste("Drawdwons", colnames(index)),
+           las=2, at=at, format=format)
+      abline(v=ablines, lty=3, lwd=2, col="steelblue")
+      lines(maxdd)
+      box(col="white")
+      box(bty="l")
+      
+      # Add Rmwtrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Return Value:
     invisible(list(
-        index = index, 
-        series = maxdd))
-}
+      index = index, 
+      series = maxdd))
+  }
 
 
 ###############################################################################
 
 
 garchAnalytics <-
-    function (index, spar = 0.5, main=NULL, 
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
-{
+  function (index, spar = 0.5, main=NULL, 
+            trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Arguments:
@@ -248,9 +248,9 @@ garchAnalytics <-
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive Garch Analytics"
-        
+    
     # Fit Garch11 Model:
-    fit <- garchFit(data = 100 * returns(index), trace=trace)
+    fit <- fGarch::garchFit(data = 100 * returns(index), trace=trace)
     xseries <- as.timeSeries(fit@data)/100
     Index <- cumulated(xseries)
     colnames(Index) <- colnames(index)
@@ -262,49 +262,49 @@ garchAnalytics <-
     # Plot Return Series and Standard Deviations:
     xcsd <- timeSeries(data = fit@sigma.t/100, charvec = time(xseries))
     if (doplot) {
-    
-        # Plot:
-        sdPlus <- mean(xseries) + 2 * xcsd
-        sdMinus <- mean(xseries) - 2 * xcsd
-        range <- range(xseries, sdPlus, sdMinus)
-        plot(xseries, 
-            main=main, xlab="", ylab=paste("Volatility", colnames(index)), 
-            at=at, format=format, 
-            # type="l", 
-            col="steelblue", ylim=range)
-        abline(v = ablines, lty = 3, lwd = 2, col = "grey")
-        lines(xseries, col = "steelblue")
-        lines(sdPlus, col = "red", lwd = 2)
-        lines(sdMinus, col = "red", lwd = 2)
-        abline(h = 0, col = "grey", lty = 3)
-        box(col = "white")
-        box(bty = "l")
-        
-        # Margin Text:
-        # mtext("Volatility Band: 2 sd", adj = 0, side = 4, cex = 0.7, 
-        #     col = "darkgrey")
-        
-        # Add Rmwtrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      
+      # Plot:
+      sdPlus <- mean(xseries) + 2 * xcsd
+      sdMinus <- mean(xseries) - 2 * xcsd
+      range <- range(xseries, sdPlus, sdMinus)
+      plot(xseries, 
+           main=main, xlab="", ylab=paste("Volatility", colnames(index)), 
+           at=at, format=format, 
+           # type="l", 
+           col="steelblue", ylim=range)
+      abline(v = ablines, lty = 3, lwd = 2, col = "grey")
+      lines(xseries, col = "steelblue")
+      lines(sdPlus, col = "red", lwd = 2)
+      lines(sdMinus, col = "red", lwd = 2)
+      abline(h = 0, col = "grey", lty = 3)
+      box(col = "white")
+      box(bty = "l")
+      
+      # Margin Text:
+      # mtext("Volatility Band: 2 sd", adj = 0, side = 4, cex = 0.7, 
+      #     col = "darkgrey")
+      
+      # Add Rmwtrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Return Value:
     invisible(list(
-        index = index, 
-        residuals = xseries,
-        volatility = xcsd, 
-        fit = fit))
-}
+      index = index, 
+      residuals = xseries,
+      volatility = xcsd, 
+      fit = fit))
+  }
 
 
 ###############################################################################
 
 
 riskmetricsAnalytics <- 
-    function(index, spar=0.5, lambda=0.9, main=NULL, 
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
-{    
+  function(index, spar=0.5, lambda=0.9, main=NULL, 
+           trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
+  {    
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -320,7 +320,7 @@ riskmetricsAnalytics <-
     #   format -  a string describing the label format
     
     # FUNCTION:
-        
+    
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive RiskMetrics Analytics"
@@ -338,53 +338,53 @@ riskmetricsAnalytics <-
     
     # Plot:
     if(doplot) {
-    
-        # Plot:
-        sdPlus <- mean(rets) + 2 * sd
-        sdMinus <- mean(rets) - 2 * sd
-        range <- range(rets, sdPlus, sdMinus)
-        plot(rets, 
-            main="", xlab="", ylab=paste("Volatility", colnames(index)),
-            at=at, format=format,
-            ylim=range) 
-        abline(v=ablines, lty=3, lwd=2, col="grey")
-        lines(rets, col="steelblue")
-        lines(mean(rets) + 2*sd, col="orange", lwd=2)
-        lines(mean(rets) - 2*sd, col="orange", lwd=2)
-        lines(mean(rets) + 2*sigma, col="red", lwd=2)
-        lines(mean(rets) - 2*sigma, col="red", lwd=2)
-        abline(h=0, col="grey", lty=3)
-        box(col="white")
-        box(bty="l")
-        
-        # Margin Text:
-        # mtext(paste("sd/var Volatility Bands: 2 sd  |  lambda", lambda),
-        #   adj=0, side=4, cex=0.7, col="darkgrey")  
-            
-        # Add Rmwtrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      
+      # Plot:
+      sdPlus <- mean(rets) + 2 * sd
+      sdMinus <- mean(rets) - 2 * sd
+      range <- range(rets, sdPlus, sdMinus)
+      plot(rets, 
+           main="", xlab="", ylab=paste("Volatility", colnames(index)),
+           at=at, format=format,
+           ylim=range) 
+      abline(v=ablines, lty=3, lwd=2, col="grey")
+      lines(rets, col="steelblue")
+      lines(mean(rets) + 2*sd, col="orange", lwd=2)
+      lines(mean(rets) - 2*sd, col="orange", lwd=2)
+      lines(mean(rets) + 2*sigma, col="red", lwd=2)
+      lines(mean(rets) - 2*sigma, col="red", lwd=2)
+      abline(h=0, col="grey", lty=3)
+      box(col="white")
+      box(bty="l")
+      
+      # Margin Text:
+      # mtext(paste("sd/var Volatility Bands: 2 sd  |  lambda", lambda),
+      #   adj=0, side=4, cex=0.7, col="darkgrey")  
+      
+      # Add Rmwtrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Return Value:
     invisible(list(
-        index = index, 
-        analytics = sigma))
-}
+      index = index, 
+      analytics = sigma))
+  }
 
 
 ###############################################################################
 
 
 bcpAnalytics <-
-    function (index, spar=0.5, FUN=returns, method=c("prob", "mean", "var"),
-    main=NULL, trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
-{
+  function (index, spar=0.5, FUN=returns, method=c("prob", "mean", "var"),
+            main=NULL, trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y")
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
     #   Retroactive Bayesian Change Points Analytics
-  
+    
     # Arguments:
     #   index - an index or price S4 'timeSeries' object
     #   spar - a numeric between 0 and, the degree of smoothness
@@ -393,7 +393,7 @@ bcpAnalytics <-
     #   plot -  a logical, should the results be plotted
     #   at - generate pretty axis positions
     #   format -  a string describing the label format
-      
+    
     # FUNCTION:
     
     # Load Library:
@@ -402,7 +402,7 @@ bcpAnalytics <-
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive Change Points Analytics"
-        
+    
     # Turning Points:
     tps <- turnsAnalytics(index=index, spar=spar, trace=trace, doplot=FALSE)
     positions <- tps$positions
@@ -411,7 +411,7 @@ bcpAnalytics <-
     # BCP Analytics:
     fun <- match.fun(FUN)
     series <- fun(index)
-    analytics <- bcp(series)
+    analytics <- bcp::bcp(series)
     
     # Compose Series:
     method <- match.arg(method)
@@ -424,51 +424,51 @@ bcpAnalytics <-
     
     # Select:
     if (method == "prob") {
-        ylim <- c(0, 1) 
-        prob <- timeSeries(data=analytics$posterior.prob, charvec=time(series))
-        prob <- na.omit(prob)
+      ylim <- c(0, 1) 
+      prob <- timeSeries(data=analytics$posterior.prob, charvec=time(series))
+      prob <- na.omit(prob)
     } else {
-        ylim <- range(na.omit(series))
-        prob <- NA
+      ylim <- range(na.omit(series))
+      prob <- NA
     }
     
     # Plot:
     if (doplot) {
-    
-        # Plot:
-        plot(series, type="h", ylim=ylim, las=2, col="grey",
-            main=main, xlab="", ylab=ylab,
-            at=at, format=format)
-        abline(v=ablines, lty=3, lwd=2, col="steelblue")
-        points(series, pch=19, cex=0.5)       
-        
-        box(col = "white")
-        box(bty = "l")
-        
-        # MarginText:
-        # mtext(paste("Smooth:", spar), adj = 0, side = 4, cex = 0.7, col = "darkgrey")
-        
-        # Add Rmwtrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      
+      # Plot:
+      plot(series, type="h", ylim=ylim, las=2, col="grey",
+           main=main, xlab="", ylab=ylab,
+           at=at, format=format)
+      abline(v=ablines, lty=3, lwd=2, col="steelblue")
+      points(series, pch=19, cex=0.5)       
+      
+      box(col = "white")
+      box(bty = "l")
+      
+      # MarginText:
+      # mtext(paste("Smooth:", spar), adj = 0, side = 4, cex = 0.7, col = "darkgrey")
+      
+      # Add Rmwtrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Return Value:
     invisible(list(
-        index = index, 
-        analytics = analytics,
-        prob = prob))
-}
+      index = index, 
+      analytics = analytics,
+      prob = prob))
+  }
 
 
 ###############################################################################
 
-    
+
 pcoutAnalytics <-
-    function (index, spar=0.5, main=NULL, 
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y",
-    strong=TRUE, k=2, cs=0.25, outbound=0.25) 
-{
+  function (index, spar=0.5, main=NULL, 
+            trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y",
+            strong=TRUE, k=2, cs=0.25, outbound=0.25) 
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -491,7 +491,7 @@ pcoutAnalytics <-
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Retroactive Outlier Analytics"
-        
+    
     # Turning Points:
     tps <- turnsAnalytics(index=index, spar=spar, trace=trace, doplot=FALSE)   
     positions <- tps$positions
@@ -504,36 +504,36 @@ pcoutAnalytics <-
     u <- Y
     v <- lag(u, k=-k:k, trim=TRUE)
     U <- u[time(v), ]
-   
+    
     # Principal Component Outlier Analytics: 
-    ans <- pcout(v, makeplot=FALSE, explvar=0.99, crit.M1=1/3, 
-        crit.c1=2.5, crit.M2=1/4, crit.c2=0.99, cs=cs, 
-        outbound=outbound)
-        
+    ans <- mvoutlier::pcout(v, makeplot=FALSE, explvar=0.99, crit.M1=1/3, 
+                            crit.c1=2.5, crit.M2=1/4, crit.c2=0.99, cs=cs, 
+                            outbound=outbound)
+    
     # Plot: 
     colnames(X) <- paste(colnames(X), "X", sep=":")
     colnames(Y) <- paste(colnames(Y), "Y", sep=":")
     Z <- cbind(X[time(v), ], Y[time(v), ])
     Z@recordIDs <- data.frame(wfinal01=ans$wfinal01, wfinal=ans$wfinal, 
-        wloc=ans$wloc, wscat=ans$wscat, x.dist1=ans$x.dist1, 
-        x.dist2=ans$x.dist2)
+                              wloc=ans$wloc, wscat=ans$wscat, x.dist1=ans$x.dist1, 
+                              x.dist2=ans$x.dist2)
     rownames(Z@recordIDs) <- rownames(Z)
     wfinal01 <- ans$wfinal01
     
     if (strong) {
-        V <- as.timeSeries(Z@recordIDs)[, "wfinal01"]
-        W <- lag(V, k=k, trim=TRUE)
-        S <- timeSeries(data=rowSums(W))
-        Sfinal <- S == 0
-        z <- timeSeries(charvec=time(Z), data=ans$wfinal01)
-        z[time(S), ] <- as.integer(!Sfinal)
-        wfinal01 <- as.numeric(z)
-        Z@recordIDs[, "wfinal01"] <- wfinal01
+      V <- as.timeSeries(Z@recordIDs)[, "wfinal01"]
+      W <- lag(V, k=k, trim=TRUE)
+      S <- timeSeries(data=rowSums(W))
+      Sfinal <- S == 0
+      z <- timeSeries(charvec=time(Z), data=ans$wfinal01)
+      z[time(S), ] <- as.integer(!Sfinal)
+      wfinal01 <- as.numeric(z)
+      Z@recordIDs[, "wfinal01"] <- wfinal01
     }
     
     ans$wfinal <- ans$wfinal01 <- ans$wloc <- ans$wscat <- NULL
     ans$x.dist1 <- ans$x.dist2 <- NULL
-     
+    
     U <- Z[, 1]
     wfinal01 <- Z@recordIDs$wfinal01
     datapoints <- length(U)
@@ -548,60 +548,60 @@ pcoutAnalytics <-
     invWeights <- as.vector(Indicator)
     extreme = sum(invWeights[invWeights > 0.75]) / length(invWeights)
     analytics <- c(
-        mean = mean(1-weights), 
-        sd = sd(1-weights), 
-        extreme75 = extreme, 
-        indicator = Indicator)
-        
+      mean = mean(1-weights), 
+      sd = sd(1-weights), 
+      extreme75 = extreme, 
+      indicator = Indicator)
+    
     ylab <- paste("PC Outlier Prob", colnames(index))
     
     # Plot:
     if(doplot) {
-        
-        # Plot:
-        plot(Indicator, type="h", ylim=c(0, 1), las=2, col="grey", 
+      
+      # Plot:
+      plot(Indicator, type="h", ylim=c(0, 1), las=2, col="grey", 
            main=main, xlab="", ylab=ylab, 
            at=at, format=format)
-        abline(v=ablines, lty=3, lwd=2, col="steelblue")
-        points(Indicator, pch=19, cex=0.5)         
-        
-        # Add Grid and Box:
-        grid(NA, ny=NULL) 
-        box(col="white")
-        box(bty="l")
-        
-        # Margin Text:
-        # mtext(paste("Smooth:", spar), adj=0, side=4, cex=0.7, col="darkgrey")
-          
-        # Add Rmetrics - Do not Remove!
-        mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-        
+      abline(v=ablines, lty=3, lwd=2, col="steelblue")
+      points(Indicator, pch=19, cex=0.5)         
+      
+      # Add Grid and Box:
+      grid(NA, ny=NULL) 
+      box(col="white")
+      box(bty="l")
+      
+      # Margin Text:
+      # mtext(paste("Smooth:", spar), adj=0, side=4, cex=0.7, col="darkgrey")
+      
+      # Add Rmetrics - Do not Remove!
+      mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
+      
     }
     
     # Return Value:
     ans <- invisible(list(
-        index = index, 
-        pcout = ans, 
-        series = Z, 
-        analytics = analytics,
-        prob = Indicator))
+      index = index, 
+      pcout = ans, 
+      series = Z, 
+      analytics = analytics,
+      prob = Indicator))
     class(ans) <- c("analytics", "list")
     ans
-}
+  }
 
 
 # -----------------------------------------------------------------------------
 
 
 addRainbow <- 
-    function(analytics, palette=rainbow, a=0.3, b=0.8, K=100)
-{
+  function(analytics, palette=rainbow, a=0.3, b=0.8, K=100)
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Example:
     #    analytics <- pcoutAnalytics(index); addRainbow(analytics)
     #    analytics <- bcpAnalytics(index); addRainbow(analytics)
-
+    
     # FUNCTION:
     
     # Get Probability Indicator:
@@ -615,27 +615,27 @@ addRainbow <-
     # Add Spline Smoothed Indicators:
     k.spar <- seq(a, b, length=K)
     for (k in 1:K) {
-        curve <- timeSeries::smoothSpline(Indicator, spar=k.spar[k])[, 2]
-        if (k == 1) curve1 <- curve
-        if (k == K) diff <- curve - curve1
-        lines(curve, lwd=2, col=palette(K)[k]) }
-
+      curve <- timeSeries::smoothSpline(Indicator, spar=k.spar[k])[, 2]
+      if (k == 1) curve1 <- curve
+      if (k == K) diff <- curve - curve1
+      lines(curve, lwd=2, col=palette(K)[k]) }
+    
     # Add Difference Indicator Line:
     lines(diff + 0.5, lwd=2)
     abline(h=0.5, lwd=2, col="orange")
-
+    
     # Return Value:
     invisible()
-}
+  }
 
 
 ###############################################################################
 
 
 waveletSpectrum <-
-    function(index, spar=0.5, main=NULL,
-    trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y") 
-{
+  function(index, spar=0.5, main=NULL,
+           trace=TRUE, doplot=TRUE, at=pretty(index), format="%m/%y") 
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -658,12 +658,12 @@ waveletSpectrum <-
     # Settings:
     stopifnot(isUnivariate(index))
     if (is.null(main)) main <- "Morlet Wavelet Spectrum"
-        
+    
     # Index Returns:
     returns <- returns(index)
     Time <- 2:length(index)
     Returns <- as.vector(returns)
-
+    
     ans <- dplR::morlet(y1=returns, x1=Time)
     # Returns a list containing:
     # y          Numeric. The original time series.
@@ -674,7 +674,7 @@ waveletSpectrum <-
     # Scale      Numeric. The scale.
     # Signif     Numeric. The significant values.
     # Power      Numeric. The squared power.
-
+    
     # Turning Points:
     tps <- turnsAnalytics(index=index, spar=spar, trace=trace, doplot=FALSE)
     
@@ -682,17 +682,17 @@ waveletSpectrum <-
     p <- as.vector(ans$Power)
     vec <- c(mean=mean(p), sd=sd(p), skew=skewness(p), kurt=kurtosis(p))
     mat <- c(
-        O = base::norm(ans$Power, "O"), # "One Norm" 
-        I = base::norm(ans$Power, "I"), # "Inf Norm" 
-        F = base::norm(ans$Power, "F"), # "Frobenius" 
-        M = base::norm(ans$Power, "M")) # "Max Modulus" 
+      O = base::norm(ans$Power, "O"), # "One Norm" 
+      I = base::norm(ans$Power, "I"), # "Inf Norm" 
+      F = base::norm(ans$Power, "F"), # "Frobenius" 
+      M = base::norm(ans$Power, "M")) # "Max Modulus" 
     if (trace) {
-        cat("Stats Measures:\n")
-        print(vec)
-        print(mat)
+      cat("Stats Measures:\n")
+      print(vec)
+      print(mat)
     }
     analytics <- c(vec, mat)
-          
+    
     # Wavelet Parameters:  
     wave.list <- ans  
     wavelet.levels <- quantile(wave.list$Power, probs=seq(from=0, to=1, by=0.1))
@@ -760,50 +760,50 @@ waveletSpectrum <-
     
     # Add Contours: 
     contour(x, period2, Signif, levels=1, labels=siglvl, 
-        drawlabels=FALSE, axes=FALSE, frame.plot=FALSE, 
-        add=TRUE, lwd=2, col="black")
+            drawlabels=FALSE, axes=FALSE, frame.plot=FALSE, 
+            add=TRUE, lwd=2, col="black")
     
     # Add Coin of Influence:
     polygon(yr.vec.xx, coi2.yy, density=c(10, 20), 
-        angle=c(-45, 45), col="black")
-  
+            angle=c(-45, 45), col="black")
+    
     # Add Axis Labels:
     xtick <- NULL
     for (i in 1:length(time(index)))
-        xtick <- c(xtick, which.min(abs(time(index) - at[i])))
+      xtick <- c(xtick, which.min(abs(time(index) - at[i])))
     axis(1, at=xtick, labels=format(at, format=format))
     axis(2, at=ytick, labels=ytickv, las=2)   
-       
+    
     # Add Scale Legend:
     nCol<- length(key.cols)
     positions <- seq(min(x), max(x), length=nCol+1)
     colLevels <- paste(signif(wavelet.levels,2))
     for (i in 1:nCol) {
-        lines(x=c(positions[i], positions[i+1]), 
+      lines(x=c(positions[i], positions[i+1]), 
             y=c(1.03,1.03)*max(period2), lwd=3, col=key.cols[i])
-        text(x=(positions[i]+positions[i+1])/2, 1.07*max(period2), 
-            colLevels[i], cex=0.6) }
+      text(x=(positions[i]+positions[i+1])/2, 1.07*max(period2), 
+           colLevels[i], cex=0.6) }
     points(positions, rep(1.03*max(period2), length=nCol+1), 
-        pch=19, cex=0.7)
-        
+           pch=19, cex=0.7)
+    
     # Add Rmetrics - Do not Remove!
     mtext("Rmetrics", adj=0, side=4, cex=0.7, col="darkgrey")
-   
+    
     # Return Value:
     invisible(list(
-        index = index, 
-        spar = spar, 
-        wavelet = ans, 
-        analytics = list(Time=x, Period=period2, Power=Power)))
-}     
-   
+      index = index, 
+      spar = spar, 
+      wavelet = ans, 
+      analytics = list(Time=x, Period=period2, Power=Power)))
+  }     
+
 
 ###############################################################################
-    
+
 
 parAnalytics <- 
-    function()
-{
+  function()
+  {
     # A function implemented by Diethelm Wuertz and Tobias Setz
     
     # Description:
@@ -818,7 +818,7 @@ parAnalytics <-
     
     # Return Value:
     invisible()
-}
+  }
 
 
 ############################################################################### 

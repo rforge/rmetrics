@@ -37,7 +37,7 @@ rsolnpNLP <-
     # FUNCTION:
     
     # Load:
-    require(Rsolnp)
+    # require(Rsolnp)
     
     # Update Control List:
     ctrl <- solnpNLPControl()
@@ -186,7 +186,7 @@ solnpNLP <-
     # FUNCTION:
     
     # Load:
-    require(Rsolnp)
+    # require(Rsolnp)
     fun <- objective
     
     # Control List:

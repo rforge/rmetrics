@@ -103,9 +103,9 @@
        
     # Random Variates:
     r <- rbind(
-        if (N[1] > 0) rgumbelCopula(N[1], alpha[1]),
-        if (N[2] > 0) 1-rgumbelCopula(N[2], alpha[2]),
-        if (N[3] > 0) rellipticalCopula(N[3], rho, type = "norm") )
+        if (N[1] > 0) fCopulae::rgumbelCopula(N[1], alpha[1]),
+        if (N[2] > 0) 1-fCopulae::rgumbelCopula(N[2], alpha[2]),
+        if (N[3] > 0) fCopulae::rellipticalCopula(N[3], rho, type = "norm") )
     index <- sample(1:n)
     ans <- r[index, ]
     
@@ -150,9 +150,9 @@
     
     # Mixed Copula:
     weights <- c(weights, 1-sum(weights))
-    dCopula1 <- dgumbelCopula(u, v, alpha[1])
-    dCopula2 <- dgumbelCopula(1-u, 1-v, alpha[2])
-    dCopula3 <- dellipticalCopula(u, v, rho, type = "norm")
+    dCopula1 <- fCopulae::dgumbelCopula(u, v, alpha[1])
+    dCopula2 <- fCopulae::dgumbelCopula(1-u, 1-v, alpha[2])
+    dCopula3 <- fCopulae::dellipticalCopula(u, v, rho, type = "norm")
     c.uv <- weights[1]*dCopula1 + weights[2]*dCopula2 + weights[3]*dCopula3
     
     attr(c.uv, "control") <- c(alpha = alpha, rho = rho, weights = weights)

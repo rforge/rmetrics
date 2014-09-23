@@ -172,7 +172,7 @@ solveRampl.CVAR <-
     nScenarios <- nrow(getSeries(Data))
     Mean <- getMean(Data)
     targetReturn <- getTargetReturn(spec)
-    Alpha <- getAlpha(spec)
+    alpha <- getAlpha(spec)
     Type <- getType(spec)
     project <- "ampl"
     solver <- "ipopt"

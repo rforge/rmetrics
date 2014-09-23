@@ -22,11 +22,15 @@
 
 
 .vaniniFig <- 
-    function()
-{
+  function()
+  {
     # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
+    
+    # Load Dataset
+    dataSet <- data("LPP2005.RET", package="fPortfolio", envir=environment())
+    LPP2005.RET <- get(dataSet, envir=environment())
     
     # Example Data:
     data = 100 * LPP2005.RET[, 1:6]
@@ -45,7 +49,7 @@
     # Minimum Variance Point:
     xMV = 1/sqrt(C)
     yMV = A/C
-       
+    
     # Frontier Points:
     x = seq(xMV, 4*xMV, length = 500)
     a = C
@@ -53,7 +57,7 @@
     c = B - D * x^2
     yp = (-b + sqrt(b^2 - 4 * a * c))/(2 * a)
     ym = (-b - sqrt(b^2 - 4 * a * c))/(2 * a)
-        
+    
     # Asymptotic Slopes:
     slope = sqrt(D/C)
     intercept = A/C
@@ -65,7 +69,7 @@
     
     # Plot:
     plot(x,  yp, type = "l", xlim = c(0, max(x)), ylim = c(-0.08, 0.08),
-        axes = FALSE, xlab = "Covariance Risk", ylab = "Mean Retun")
+         axes = FALSE, xlab = "Covariance Risk", ylab = "Mean Retun")
     lines(x, ym)
     points(xMV, yMV, col = "orange", cex = 2, pch = 19)
     abline(intercept, slope, col = "blue", lty = 2)
@@ -74,10 +78,10 @@
     abline(v = 0, col = "grey", lty = 3)
     points(x.tg, y.tg, col = "red", cex = 2, pch = 19)
     abline(0, slope.tg, col = "brown", lty = 2)
-
+    
     # Return Value:
     invisible()
-}
+  }
 
 
 ################################################################################

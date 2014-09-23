@@ -6,9 +6,19 @@ exportPattern("^[^\\.]")
 ################################################################################
 ## Imports
 ################################################################################
+import(methods)
 import(timeDate)
 import(timeSeries)
 import(fBasics)
 import(fAssets)
+
+import(fCopulae)
+import(robustbase)
+import(MASS)
 import(Rglpk)
+import(slam)
 import(Rsymphony)
+import(Rsolnp)
+import(kernlab)
+import(quadprog)
+import(rneos)

@@ -165,12 +165,12 @@ neosLP <-
     
     # Setup NEOS and AMPL Specifications:
     amplSpec <- list(model=model, data=data, commands=run, comments="NEOS")
-    solverTemplate <- NgetSolverTemplate(category=category, solvername=solver, inputMethod="AMPL")
-    xmls <- CreateXmlString(neosxml=solverTemplate, cdatalist=amplSpec)
+    solverTemplate <- rneos::NgetSolverTemplate(category=category, solvername=solver, inputMethod="AMPL")
+    xmls <- rneos::CreateXmlString(neosxml=solverTemplate, cdatalist=amplSpec)
     
     # Submit and Fetch NEOS Job:
-    submittedJob <- NsubmitJob(xmlstring=xmls, user="rneos", interface="", id=0)
-    ans <- NgetFinalResults(obj=submittedJob, convert=TRUE)
+    submittedJob <- rneos::NsubmitJob(xmlstring=xmls, user="rneos", interface="", id=0)
+    ans <- rneos::NgetFinalResults(obj=submittedJob, convert=TRUE)
     out <- strsplit(ans@ans, split="\n")[[1]]
   
     # Get Weights:

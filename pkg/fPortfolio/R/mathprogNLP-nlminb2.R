@@ -205,7 +205,8 @@ nlminb2NLP <-
             if (length(eqFun) > 0)
                 for (i in 1:length(eqFun))
                     ans <- c(ans, eqFun[[i]](x) - eqFun.bound[i])
-            return(as.double(eval(ans, env))) }
+            return(as.double(eval(ans, env)))
+        }
     } else {
         eqfun <- NULL
     }

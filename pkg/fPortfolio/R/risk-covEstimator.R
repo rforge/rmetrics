@@ -345,7 +345,7 @@ function(x, spec = NULL, ...)
 
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)$cov
+    Sigma = robustbase::covOGK(x.mat, sigmamu = robustbase::scaleTau2, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
 
     # Return Value:
@@ -380,7 +380,7 @@ function(x, spec = NULL, ...)
 
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = .cov.shrink(x = x.mat, verbose = FALSE, ...)
+    Sigma = fAssets:::.cov.shrink(x = x.mat, verbose = FALSE, ...)
     attr(Sigma, "lambda.var") <- NULL
     attr(Sigma, "lambda.var.estimated") <- NULL
 
@@ -416,7 +416,7 @@ function(x, spec = NULL, ...)
 
     # Estimate:
     mu = colMeans(x.mat)
-    Sigma = .cov.nnve(datamat = x.mat, ...)$cov
+    Sigma = fAssets:::.cov.nnve(datamat = x.mat, ...)$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
 
     # Return Value:
@@ -454,7 +454,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .studentMeanCov(x.mat, ...)
+    robust = fAssets:::.studentMeanCov(x.mat, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -493,7 +493,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .baggedMeanCov(x, ...)
+    robust = fAssets:::.baggedMeanCov(x, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -532,7 +532,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .donostahMeanCov(x, ...)
+    robust = fAssets:::.donostahMeanCov(x, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -571,7 +571,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .bayesSteinMeanCov(x, ...)
+    robust = fAssets:::.bayesSteinMeanCov(x, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -610,7 +610,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .ledoitWolfMeanCov(x, ...)
+    robust = fAssets:::.ledoitWolfMeanCov(x, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -649,7 +649,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    robust = .rmtMeanCov(x, ...)
+    robust = fAssets:::.rmtMeanCov(x, ...)
     mu = robust$center
     Sigma = robust$cov
 
@@ -787,7 +787,7 @@ function(x, spec = NULL, ...)
     x.mat = getDataPart(x)
 
     # Estimate:
-    ans = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
+    ans = robustbase::covOGK(x.mat, sigmamu = robustbase::scaleTau2, ...)
     mu = ans$center
     Sigma = ans$cov
     colnames(Sigma) <- rownames(Sigma) <- names(mu)
@@ -803,16 +803,16 @@ function(x, spec = NULL, ...)
 .arwEstimator2 <-
 function (x, spec = NULL, ...) 
 {
-    x.mat = as.matrix(x)
-    N = ncol(x)
-    assetNames = colnames(x)
-    fit = .cov.arw(x = x.mat, center = colMeans(x.mat), cov = cov(x) , ...)
+    x.mat <- as.matrix(x)
+    N <- ncol(x)
+    assetNames <- colnames(x)
+    fit <- fAssets:::.cov.arw(x = x.mat, center = colMeans(x.mat), cov = cov(x) , ...)
     
     # Estimate:
-    mu = fit$center
-    Sigma = fit$cov
-    names(mu) = assetNames
-    rownames(Sigma) = colnames(Sigma) = assetNames
+    mu <- fit$center
+    Sigma <- fit$cov
+    names(mu) <- assetNames
+    rownames(Sigma) <- colnames(Sigma) <- assetNames
     
     # Return Value:
     list(mu = fit$center, Sigma = fit$cov)

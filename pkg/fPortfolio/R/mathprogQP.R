@@ -23,9 +23,9 @@
 
 
 rsolveQP <- 
-    function(objective, lower=0, upper=1, linCons, 
-    control=list(solver="quadprog", invoke=c("R", "AMPL", "NEOS")))
-{    
+  function(objective, lower=0, upper=1, linCons, 
+           control=list(solver="quadprog", invoke=c("R", "AMPL", "NEOS")))
+  {    
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -47,30 +47,34 @@ rsolveQP <-
     
     # Solve Linear Problem:
     if (invoke == "R") {
-        rfooLP <- match.fun ( paste("r", solver, "QP", sep=""))
-        ans <- rfooLP(objective, lower, upper, linCons, control)
+      rfooLP <- match.fun ( paste("r", solver, "QP", sep=""))
+      ans <- rfooLP(objective, lower, upper, linCons, control)
     }
     if (invoke == "AMPL" ) {
-        ans <- ramplQP(objective, lower, upper, linCons, control)
+      ans <- ramplQP(objective, lower, upper, linCons, control)
     }
     if (invoke == "NEOS" ) {
-        ans <- rneosQP(objective, lower, upper, linCons, control)
+      ans <- rneosQP(objective, lower, upper, linCons, control)
     }  
     ans$solver <- paste(invoke, ans$solver) 
     
     # Return Value:
     ans  
-}
+  }
 
 
 ###############################################################################
 
 
 .solveQP.MV.demo <- 
-    function()
-{
+  function()
+  {
     # Solve Mean-Variance Portfolio:
- 
+    
+    # Load Dataset
+    dataSet <- data("LPP2005REC", package="timeSeries", envir=environment())
+    LPP2005REC <- get(dataSet, envir=environment())
+    
     # Load Swiss Pension Fund Data:
     nAssets <- 6
     data <- 100 * LPP2005REC[, 1:nAssets]     
@@ -80,15 +84,15 @@ rsolveQP <-
     lower <- 0
     upper <- 1
     mat <- rbind(
-        budget = rep(1, times=nAssets), 
-        returns = colMeans(data))
+      budget = rep(1, times=nAssets), 
+      returns = colMeans(data))
     matLower <- c(
-        budget = 1, 
-        return = mean(data))
+      budget = 1, 
+      return = mean(data))
     matUpper <- matLower
     linCons <- list(mat, matLower, matUpper)
     control <- list()
-        
+    
     # R Contributed Solvers:
     rquadprogQP(objective, lower, upper, linCons)
     ripopQP(objective, lower, upper, linCons)
@@ -99,34 +103,34 @@ rsolveQP <-
     
     # All AMPL:
     for (solver in c(
-        "cplex", "donlp2", "loqo", "lpsolve", "minos", "snopt",
-        "ipopt", "bonmin", "couenne")) {
-        ans <- ramplQP(objective, lower, upper, linCons, 
-            control=list(solver=solver))
-        print(ans)
+      "cplex", "donlp2", "loqo", "lpsolve", "minos", "snopt",
+      "ipopt", "bonmin", "couenne")) {
+      ans <- ramplQP(objective, lower, upper, linCons, 
+                     control=list(solver=solver))
+      print(ans)
     }
     
     # NEOS:
-    require(rneos)
+    # require(rneos)
     neos <- rneosQP(objective, lower, upper, linCons, 
-        control=list(solver="ipopt", category="nco"))
+                    control=list(solver="ipopt", category="nco"))
     neos
     
     # nco: Using Nonlinear Constrained Optimization Solver:    
     for (solver in c(
-        "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
-        "pennon", "snopt")) 
+      "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
+      "pennon", "snopt")) 
     {   
-        ans <- rneosQP(objective, lower, upper, linCons, 
-            control=list(solver=solver, category="nco"))
-        print(ans)
+      ans <- rneosQP(objective, lower, upper, linCons, 
+                     control=list(solver=solver, category="nco"))
+      print(ans)
     }
     
     # KRESTREL:
     kestrel <- rkestrelQP(objective, lower, upper, linCons, 
-        control=list(solver="loqo"))
+                          control=list(solver="loqo"))
     kestrel
-}
+  }
 
 
 ###############################################################################

@@ -1,6 +1,6 @@
 Package: fPortfolio
 Title: Rmetrics - Portfolio Selection and Optimization
-Date: 2014-09-05
+Date: 2014-09-22
 Version: 3011.81
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
@@ -9,18 +9,14 @@ Author: Rmetrics Core Team,
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance".
-Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fAssets
-Imports: Rglpk, Rsymphony
-Suggests: methods, tcltk, slam,
-	Rsocp, Rnlminb2, Rdonlp2, Rsolnp, kernlab, quadprog, rneos,
-	MASS, robustbase, dplR,
-    lattice, fCopulae, sn, 
-    bcp, fGarch, grid, mvoutlier, sp, energy,
-    XMLRPC
+Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics
+Imports: fAssets, fCopulae, robustbase, MASS,
+	Rglpk, slam, Rsymphony, Rsolnp, kernlab, quadprog, rneos
+Suggests: Rsocp, Rnlminb2, Rdonlp2,
+	dplR, bcp, fGarch, mvoutlier
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
+	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
-Repository: R-FORGE
 URL: https://www.rmetrics.org

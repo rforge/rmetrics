@@ -22,38 +22,42 @@
 
 
 .solveNLP.demo <- 
-    function()
-{
+  function()
+  {
     # Solve Mean-Variance Portfolio:
- 
+    
+    # Load Dataset
+    dataSet <- data("LPP2005REC", package="timeSeries", envir=environment())
+    LPP2005REC <- get(dataSet, envir=environment())
+    
     # Load Swiss Pension Fund Data:
     nAssets <- 6
     data <- 100 * LPP2005REC[, 1:nAssets]     
     mu <- colMeans(data)
     Sigma <- cov(data)
-     
+    
     # Arguments: 
     start <- rep(1, nAssets)/nAssets
     objective <- function(x) { 0.5 * (x %*% Sigma %*% x)[[1]] }
     lower <- rep(0, nAssets)
     upper <- rep(1, nAssets)
     mat <- rbind(
-        budget = rep(1, times=nAssets), 
-        returns = colMeans(data))
+      budget = rep(1, times=nAssets), 
+      returns = colMeans(data))
     matLower <- c(
-        budget = 1, 
-        return = mean(data))
+      budget = 1, 
+      return = mean(data))
     matUpper <- matLower
     linCons <- list(mat, matLower, matUpper)
     control <- list()
-        
+    
     # donlp2 Solver:
     require(Rdonlp2)
     ans <- rdonlp2NLP(start, objective, lower, upper, linCons)
     ans
     
     # solnp Solver:
-    require(Rsolnp)
+    # require(Rsolnp)
     ans <- rsolnpNLP(start, objective, lower, upper, linCons)
     ans
     
@@ -61,7 +65,7 @@
     require(Rnlminb2)
     ans <- rnlminb2NLP(start, objective, lower, upper, linCons)
     ans
-}
+  }
 
 
 ################################################################################

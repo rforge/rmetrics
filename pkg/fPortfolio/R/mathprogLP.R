@@ -24,9 +24,9 @@
 
 
 rsolveLP <- 
-    function(objective, lower=0, upper=1, linCons, 
-    control=list(solver="glpk", invoke=c("R", "AMPL", "NEOS")))
-{    
+  function(objective, lower=0, upper=1, linCons, 
+           control=list(solver="glpk", invoke=c("R", "AMPL", "NEOS")))
+  {    
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -44,30 +44,34 @@ rsolveLP <-
     
     # Solve Linear Problem:
     if (invoke == "R") {
-        rfooLP <- match.fun ( paste("r", solver, "LP", sep=""))
-        ans <- rfooLP(objective, lower, upper, linCons, control)
+      rfooLP <- match.fun ( paste("r", solver, "LP", sep=""))
+      ans <- rfooLP(objective, lower, upper, linCons, control)
     }
     if (invoke == "AMPL" ) {
-        ans <- ramplLP(objective, lower, upper, linCons, control)
+      ans <- ramplLP(objective, lower, upper, linCons, control)
     }
     if (invoke == "NEOS" ) {
-        ans <- rneosLP(objective, lower, upper, linCons, control)
+      ans <- rneosLP(objective, lower, upper, linCons, control)
     }  
     ans$solver <- paste(invoke, ans$solver) 
     
     # Return Value:
     ans  
-}
+  }
 
 
 ###############################################################################
 
 
 .solveLP.MAD.demo <- 
-    function()
-{
+  function()
+  {
     # Solve MAD Portfolio:
- 
+    
+    # Load Dataset
+    dataSet <- data("LPP2005REC", package="timeSeries", envir=environment())
+    LPP2005REC <- get(dataSet, envir=environment())
+    
     # Load Swiss Pension Fund Data:
     nAssets <- 6
     nScenarios <- 100   
@@ -75,37 +79,37 @@ rsolveLP <-
     Mean <- colMeans(data)
     Data <- as.matrix(data)
     targetReturn <- mean(data)
-
+    
     # Objective Function:
     vec <- c(weights=rep(0, nAssets), scenarios=rep(1/nScenarios, nScenarios))
     
     # Set up Constraints Matrix:
     mat <- rbind(
-        MAD.LE = cbind(Data, -diag(nScenarios)),
-        MAD.GE = cbind(Data, +diag(nScenarios)),
-        RETURN = t(c(Mean, rep(0, nScenarios))),
-        BUDGET = t(c(rep(1, nAssets), rep(0, nScenarios))),
-        X = cbind(matrix(rep(0, nAssets*nScenarios),ncol=nAssets), diag(nScenarios)),
-        WEIGHTS = cbind(diag(nAssets), matrix(rep(0, nScenarios*nAssets), nrow=nAssets)))
+      MAD.LE = cbind(Data, -diag(nScenarios)),
+      MAD.GE = cbind(Data, +diag(nScenarios)),
+      RETURN = t(c(Mean, rep(0, nScenarios))),
+      BUDGET = t(c(rep(1, nAssets), rep(0, nScenarios))),
+      X = cbind(matrix(rep(0, nAssets*nScenarios),ncol=nAssets), diag(nScenarios)),
+      WEIGHTS = cbind(diag(nAssets), matrix(rep(0, nScenarios*nAssets), nrow=nAssets)))
     
     # Set up Right Hand Side of Constraints Equations:
     rhs <- c(
-        MAD.LE = rep(0, nScenarios),
-        MAD.GE = rep(0, nScenarios),
-        RETURN = targetReturn,
-        BUDGET = 1,
-        X = rep(0, nScenarios),
-        WEIGHTS = rep(0, nAssets))
+      MAD.LE = rep(0, nScenarios),
+      MAD.GE = rep(0, nScenarios),
+      RETURN = targetReturn,
+      BUDGET = 1,
+      X = rep(0, nScenarios),
+      WEIGHTS = rep(0, nAssets))
     
     # Set up Vector of Directions:
     dir <- c(
-        MAD.LE = rep("<=", nScenarios),
-        MAS.GE = rep(">=", nScenarios),
-        RETURN = "==",
-        BUDGET = "==",
-        X = rep(">=", nScenarios),
-        WEIGHTS = rep(">=", nAssets))
-
+      MAD.LE = rep("<=", nScenarios),
+      MAS.GE = rep(">=", nScenarios),
+      RETURN = "==",
+      BUDGET = "==",
+      X = rep(">=", nScenarios),
+      WEIGHTS = rep(">=", nAssets))
+    
     # Conversions:
     RHS <- rep(Inf, times=length(dir))
     RHS[dir == "<="] <- rhs[dir == "<="]
@@ -113,17 +117,17 @@ rsolveLP <-
     LHS <- rep(-Inf, times=length(dir))
     LHS[dir == ">="] <- rhs[dir == ">="]
     LHS[dir == "=="] <- rhs[dir == "=="]
-       
+    
     # Arguments: 
     objective <- vec
     lower <- 0
     upper <- 1
     linCons <- list(mat, LHS, RHS)
     control <- list()
-      
+    
     # Contributed R Solver - Original Function Calls:
-    Rglpk_solve_LP(vec, mat, dir, rhs)
-      
+    Rglpk::Rglpk_solve_LP(vec, mat, dir, rhs)
+    
     # Contributed R Solver - Interfaced  
     rglpkLP(objective, lower, upper, linCons)
     
@@ -132,39 +136,39 @@ rsolveLP <-
     
     # All AMPL:
     for (solver in c(
-        "cplex", "donlp2", "gurobi", "loqo", "lpsolve", "minos", "snopt",
-        "ipopt", "bonmin", "couenne")) {
-        ans <- ramplLP(objective=vec, lower, upper, linCons, control=list(solver=solver))
-        print(ans)
+      "cplex", "donlp2", "gurobi", "loqo", "lpsolve", "minos", "snopt",
+      "ipopt", "bonmin", "couenne")) {
+      ans <- ramplLP(objective=vec, lower, upper, linCons, control=list(solver=solver))
+      print(ans)
     }
     
     # NEOS:
-    require(rneos)
+    # require(rneos)
     # lp: Linear Programming Solver:
     for (solver in c("gurobi", "mosek", "ooqp"))   
-        print(rneosLP(objective=vec, lower, upper, linCons, 
-            control=list(solver=solver, category="lp"))) 
+      print(rneosLP(objective=vec, lower, upper, linCons, 
+                    control=list(solver=solver, category="lp"))) 
     # nco: Using Nonlinear Constrained Optimization Solver:    
     for (solver in c(
-        "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
-        "pennon", "snopt"))    
-        print(rneosLP(objective=vec, lower, upper, linCons, 
-            control=list(solver=solver, category="nco")))
-}
+      "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
+      "pennon", "snopt"))    
+      print(rneosLP(objective=vec, lower, upper, linCons, 
+                    control=list(solver=solver, category="nco")))
+  }
 
 
 # -----------------------------------------------------------------------------
 
 
 .solveLP.GLPK.demo <- 
-    function()
-{
+  function()
+  {
     # GLPK Demo from Help Rglpk Page:
     vec <- -c(2, 4, 3)
     mat <- matrix(c(
-        3, 2, 1, 
-        4, 1, 3, 
-        2, 2, 2), 3, 3)
+      3, 2, 1, 
+      4, 1, 3, 
+      2, 2, 2), 3, 3)
     dir <- c("<=", "<=", "<=")
     rhs <- c(60, 40, 80) 
     
@@ -179,10 +183,10 @@ rsolveLP <-
     upper <- Inf
     linCons <- list(mat, lower=-Inf, upper=rhs)
     control <- list()
-      
+    
     # Contributed R Solver - Original Function Calls:
-    Rglpk_solve_LP(vec, mat, dir, rhs)
-      
+    Rglpk::Rglpk_solve_LP(vec, mat, dir, rhs)
+    
     # Contributed R Solver - Interfaced  
     rglpkLP(objective, lower, upper, linCons)
     
@@ -191,25 +195,25 @@ rsolveLP <-
     
     # All AMPL:
     for (solver in c(
-        "cplex", "donlp2", "gurobi", "loqo", "lpsolve", "minos", "snopt",
-        "ipopt", "bonmin", "couenne")) {
-        ans <- ramplLP(objective=vec, lower, upper, linCons, control=list(solver=solver))
-        print(ans)
+      "cplex", "donlp2", "gurobi", "loqo", "lpsolve", "minos", "snopt",
+      "ipopt", "bonmin", "couenne")) {
+      ans <- ramplLP(objective=vec, lower, upper, linCons, control=list(solver=solver))
+      print(ans)
     }
     
     # NEOS:
-    require(rneos)
+    # require(rneos)
     # lp: Linear Programming Solver:
     for (solver in c("gurobi", "mosek", "ooqp"))   
-        print(rneosLP(objective=vec, lower, upper, linCons, 
-            control=list(solver=solver, category="lp"))) 
+      print(rneosLP(objective=vec, lower, upper, linCons, 
+                    control=list(solver=solver, category="lp"))) 
     # nco: Using Nonlinear Constrained Optimization Solver:    
     for (solver in c(
-        "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
-        "pennon", "snopt"))    
-        print(rneosLP(objective=vec, lower, upper, linCons, 
-            control=list(solver=solver, category="nco")))
-}
+      "conopt", "filter", "knitro", "lancelot", "loqo", "minos", "mosek",
+      "pennon", "snopt"))    
+      print(rneosLP(objective=vec, lower, upper, linCons, 
+                    control=list(solver=solver, category="nco")))
+  }
 
 
 ###############################################################################
