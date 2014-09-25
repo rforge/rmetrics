@@ -109,7 +109,7 @@ solveRsocp <-
     d3 <- c(rep(0, nAssets), rep(-1, nAssets))                # x[i] > 0
     
     # A - Cone Constraints:
-    A1 <- Rsocp:::.SqrtMatrix(Sigma)
+    A1 <- Rsocp::.SqrtMatrix(Sigma)
     A2 <- matrix(0, ncol = nAssets)
     A3 <- matrix(0, nrow = nrow(C3), ncol = nAssets)
     

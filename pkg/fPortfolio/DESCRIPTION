@@ -14,6 +14,7 @@ Imports: fAssets, fCopulae, robustbase, MASS,
 	Rglpk, slam, Rsymphony, Rsolnp, kernlab, quadprog, rneos
 Suggests: Rsocp, Rnlminb2, Rdonlp2,
 	dplR, bcp, fGarch, mvoutlier
+Additional_repositories: http://r-forge.r-project.org/
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
 	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
 	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
