@@ -9,8 +9,8 @@ Author: Rmetrics Core Team,
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance".
-Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics
-Imports: fAssets, fCopulae, robustbase, MASS,
+Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics, fAssets
+Imports: fCopulae, robustbase, MASS,
 	Rglpk, slam, Rsymphony, Rsolnp, kernlab, quadprog, rneos
 Suggests: Rsocp, Rnlminb2, Rdonlp2,
 	dplR, bcp, fGarch, mvoutlier
