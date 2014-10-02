@@ -53,7 +53,7 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
 
     # Default Settings:
     Title <- "Weights"
-    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    if (is.null(col)) col <- seqPalette(getNAssets(object), "Blues")
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
     # Get Weights:
@@ -65,26 +65,26 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     X <- Weights
     
     # Check for Negative Pie Segments:
-    nX = getNAssets(object)
-    Sign = rep("+", nX)
-    Sign[(1:nX)[X < 0]] = "-"
-    absX = abs(X)
-    Index = (1:nX)[X > 0]
+    nX <- getNAssets(object)
+    Sign <- rep("+", nX)
+    Sign[(1:nX)[X < 0]] <- "-"
+    absX <- abs(X)
+    Index <- (1:nX)[X > 0]
 
     # Take care of labels, they are also used by the function pie():
     if (!is.logical(labels)) {
-        Names = pieLabels = labels
-        labels = FALSE
+        Names <- pieLabels <- labels
+        labels <- FALSE
     } else  {
-        Names <- pieLabels <- getUnits(object)
+        Names <- pieLabels <- object@data@data$names
     }
 
     # Pie Chart:
-    col = col[Index]
-    legendAssets = Names[Index]
-    Labels = paste(Names, Sign)
+    col <- col[Index]
+    legendAssets <- Names[Index]
+    Labels <- paste(Names, Sign)
     Labels = Labels[X > 0]
-    Y = X[X > 0]
+    Y <- X[X > 0]
 
     # Plot:
     if (labels) {
@@ -94,7 +94,8 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     }
 
     # Add Title:
-    if (labels) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
+    if (labels) 
+        mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
 
     # Add Info:
     if (labels) {
@@ -106,9 +107,9 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     if (legend) {
         legend("topleft", legend = legendAssets, bty = "n", cex = CEX,
             fill = col)
-        legendY = as.character(round(100*Y, digits = 1))
-        legendY = paste(Sign[Index], legendY, sep = "")
-        legendY = paste(legendY, "%")
+        legendY <- as.character(round(100*Y, digits = 1))
+        legendY <- paste(Sign[Index], legendY, sep = "")
+        legendY <- paste(legendY, "%")
         legend("topright", legend = legendY, bty = "n", cex = CEX,
             fill = col)
     }
@@ -152,41 +153,41 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     # FUNCTION:
 
     # Default Settings:
-    Title = "Weighted Returns"
-    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
+    Title <- "Weighted Returns"
+    if (is.null(col)) col <- seqPalette(getNAssets(object), "Blues")
     if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
 
 
     # Get Weights:
     if (is.null(pos)) {
-        Weights = getWeights(object@portfolio)
+        Weights <- getWeights(object@portfolio)
     } else {
-        Weights = getWeights(object@portfolio)[pos, ]   
+        Weights <- getWeights(object@portfolio)[pos, ]   
     }  
     Returns = getStatistics(object)$mu
-    X = Weights * Returns
+    X <- Weights * Returns
 
     # Check for Negative Pie Segments:
-    nX = getNAssets(object)
-    Sign = rep("+", nX)
-    Sign[(1:nX)[X < 0]] = "-"
-    absX = abs(X)
-    Index = (1:nX)[X > 0]
+    nX <- getNAssets(object)
+    Sign <- rep("+", nX)
+    Sign[(1:nX)[X < 0]] <- "-"
+    absX <- abs(X)
+    Index <- (1:nX)[X > 0]
 
     # Take care of labels, they are also used by the function pie():
     if (!is.logical(labels)) {
-        Names = pieLabels = labels
-        labels = FALSE
+        Names <- pieLabels <- labels
+        labels <- FALSE
     } else  {
-        Names <- pieLabels <- getUnits(object)
+        Names <- pieLabels <- object@data@data$names
     }
 
     # Pie Chart:
-    col = col[Index]
-    legendAssets = Names[Index]
-    Labels = paste(Names, Sign)
-    Labels = Labels[X > 0]
-    Y = X[X > 0]
+    col <- col[Index]
+    legendAssets <- Names[Index]
+    Labels <- paste(Names, Sign)
+    Labels <- Labels[X > 0]
+    Y <- X[X > 0]
 
     # Plot:
     if (labels) {
@@ -196,7 +197,8 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     }
 
     # Add Title:
-    if (labels) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
+    if (labels) 
+        mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
 
     # Add Info:
     if (labels) {
@@ -206,8 +208,8 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
 
     # Add Legend:
     if (legend) {
-        legend("topleft", legend = legendAssets, bty = "n", cex = CEX,
-            fill = col)
+        legend("topleft", legend = legendAssets, bty = "n", cex = CEX, 
+        	fill = col)
         legendY = as.character(round(100*Y, digits = 1))
         legendY = paste(Sign[Index], legendY, sep = "")
         legendY = paste(legendY, "%")
@@ -259,37 +261,37 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
 
     # Default Settings:
     Title = "Covariance Risk Budgets"
-    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
-    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    if (is.null(col)) col <- seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX <- 0.9 else CEX <- 0.7
 
     # Get Cov Risk Budgets:
     if (is.null(pos)) {
-        X = getCovRiskBudgets(object@portfolio)
+        X <- getCovRiskBudgets(object@portfolio)
     } else {
-        X = getCovRiskBudgets(object@portfolio)[pos, ]   
+        X <- getCovRiskBudgets(object@portfolio)[pos, ]   
     }  
 
     # Check for Negative Pie Segments:
-    nX = getNAssets(object)
-    Sign = rep("+", nX)
-    Sign[(1:nX)[X < 0]] = "-"
-    absX = abs(X)
-    Index = (1:nX)[X > 0]
+    nX <- getNAssets(object)
+    Sign <- rep("+", nX)
+    Sign[(1:nX)[X < 0]] <- "-"
+    absX <- abs(X)
+    Index <- (1:nX)[X > 0]
 
     # Take care of labels, they are also used by the function pie():
     if (!is.logical(labels)) {
-        Names = pieLabels = labels
-        labels = FALSE
+        Names <- pieLabels <- labels
+        labels <- FALSE
     } else  {
-        Names <- pieLabels <- getUnits(object)
+        Names <- pieLabels <- object@data@data$names
     }
 
     # Legend Labels:
-    col = col[Index]
-    legendAssets = Names[Index]
-    Labels = paste(Names, Sign)
-    Labels = Labels[X > 0]
-    Y = X[X > 0]
+    col <- col[Index]
+    legendAssets <- Names[Index]
+    Labels <- paste(Names, Sign)
+    Labels <- Labels[X > 0]
+    Y <- X[X > 0]
 
     # Plot:
     if (labels) {
@@ -299,7 +301,8 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     }
 
     # Add Title:
-    if (labels) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
+    if (labels) 
+         mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
 
     # Add Info:
     if (labels) {
@@ -311,9 +314,9 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     if (legend) {
         legend("topleft", legend = legendAssets, bty = "n", cex = CEX,
             fill = col)
-        legendY = as.character(round(100*Y, digits = 1))
-        legendY = paste(Sign[Index], legendY, sep = "")
-        legendY = paste(legendY, "%")
+        legendY <- as.character(round(100*Y, digits = 1))
+        legendY <- paste(Sign[Index], legendY, sep = "")
+        legendY <- paste(legendY, "%")
         legend("topright", legend = legendY, bty = "n", cex = CEX,
             fill = col)
     }
@@ -363,9 +366,9 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     # FUNCTION:
 
     # Default Settings:
-    Title = "Tail Risk Budgets"
-    if (is.null(col)) col = seqPalette(getNAssets(object), "Blues")
-    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX = 0.9 else CEX = 0.7
+    Title <- "Tail Risk Budgets"
+    if (is.null(col)) col <- seqPalette(getNAssets(object), "Blues")
+    if (sum(c(par()$mfrow, par()$mfcol)) == 4) CEX <- 0.9 else CEX <- 0.7
 
     # Extracting weights position, if specified
     if(!is.null(pos)){
@@ -376,29 +379,29 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     # Check:
     stop("Not yet implemented")
     tailRiskMatrix = getTailRisk(object)
-    X = getCovRiskBudgets(object)
+    X <- getCovRiskBudgets(object)
 
     # Check for Negative Pie Segments:
-    nX = getNAssets(object)
-    Sign = rep("+", nX)
-    Sign[(1:nX)[X < 0]] = "-"
-    absX = abs(X)
-    Index = (1:nX)[X > 0]
+    nX <- getNAssets(object)
+    Sign <- rep("+", nX)
+    Sign[(1:nX)[X < 0]] <- "-"
+    absX <- abs(X)
+    Index <- (1:nX)[X > 0]
 
     # Take care of labels, they are also used by the function pie():
     if (!is.logical(labels)) {
-        Names = pieLabels = labels
-        labels = FALSE
+        Names <- pieLabels <- labels
+        labels <- FALSE
     } else  {
-        Names <- pieLabels <- getUnits(object)
+        Names <- pieLabels <- object@data@data$names    
     }
 
     # Legend Labels:
-    col = col[Index]
-    legendAssets = Names[Index]
-    Labels = paste(Names, Sign)
-    Labels = Labels[X > 0]
-    Y = X[X > 0]
+    col <- col[Index]
+    legendAssets <- Names[Index]
+    Labels <- paste(Names, Sign)
+    Labels <- Labels[X > 0]
+    Y <- X[X > 0]
 
     # Plot:
     if (labels) {
@@ -408,7 +411,8 @@ function(object, pos = NULL, labels = TRUE, col = NULL,
     }
 
     # Add Title:
-    if (labels) mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
+    if (labels) 
+        mtext(Title, adj = 0, line = 2.5, font = 2, cex = CEX+0.1)
 
     # Add Info:
     if (labels) {
