@@ -7,7 +7,7 @@
 ### Functions with name graphicstest.* are run by make if
 ### LEVEL=graphics in call to make
 
-test.distIneqMassart <- function()
+level2test.distIneqMassart <- function()
 {
   ## Purpose: Level 1 test of distIneqMassart
   ## ----------------------------------------------------------------------
@@ -19,7 +19,7 @@ test.distIneqMassart <- function()
   checkTrue(distIneqMassart()$check)
   ## Specify parameter values of normal
   checkTrue(distIneqMassart(mean = 1, sd = 2)$check)
-  
+
   ## Gamma distribution has no default value for shape
   checkTrue(distIneqMassart("gamma", shape = 1)$check)
 

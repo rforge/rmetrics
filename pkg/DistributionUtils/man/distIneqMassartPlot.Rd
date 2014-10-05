@@ -55,11 +55,14 @@ distIneqMassartPlot(densFn = "norm", param = NULL,
   Xinxing Li \email{xli053@aucklanduni.ac.nz}
 }
 \examples{
+\dontrun{
+### Not run because of timing requirements of CRAN
 ### The Massart Inequality plot for standard Normal Distribution
 distIneqMassartPlot()
 
 ### The Massart Inequality plot for Gamma Distribution
 distIneqMassartPlot("gamma", shape = 1)
+}
 }
 \keyword{distribution}
 \keyword{univar}

@@ -2,7 +2,6 @@ PKG=DistributionUtils
 TOP=../..
 SUITE=doRUnit.R
 R=R
-LEVEL=1
 
 all: inst test
 
