@@ -1,3 +1,7 @@
+2014-10-05    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION update to change RUnit to suggests, not depends
+
 2013-05-13    <d.scott@auckland.ac.nz>
 
 	* skewhypParam updated to avoid creating mu, delta, beta, and nu
