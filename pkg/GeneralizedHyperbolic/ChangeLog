@@ -1,3 +1,8 @@
+2014-10-05    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION changed, RUnit Suggests. Makefile fixed, LEVEL = 1
+	deleted. 
+
 2013-04-22    <d.scott@auckland.ac.nz>
 
 	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding

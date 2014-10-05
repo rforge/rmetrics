@@ -1,11 +1,11 @@
 Package: GeneralizedHyperbolic
-Version: 0.8-2
-Date: 2012-04-19
+Version: 0.8-3
+Date: 2014-10-05
 Title: The Generalized Hyperbolic Distribution
 Author: David Scott <d.scott@auckland.ac.nz>
 Maintainer: David Scott <d.scott@auckland.ac.nz>
-Depends: R (>= 2.10.0), DistributionUtils, RUnit
-Suggests: VarianceGamma, actuar, SkewHyperbolic, MASS
+Depends: R (>= 2.10.0), DistributionUtils
+Suggests: VarianceGamma, actuar, SkewHyperbolic, MASS, RUnit
 Encoding: latin1
 Description: This package provides functions for the hyperbolic and
         related distributions. Density, distribution and quantile
