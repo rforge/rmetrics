@@ -204,7 +204,7 @@ smoothSpline <-
     # FUNCTION:
     
     # Deprecated:
-    .Deprecated(".supsmuSmoother")
+    .Deprecated("smoothSupsmu")
     
     # Return Value:
     smoothSupsmu(...)
@@ -220,7 +220,7 @@ smoothSpline <-
     # FUNCTION:
     
     # Deprecated:
-    .Deprecated(".lowessSmoother")
+    .Deprecated("smoothLowess")
     
     # Return Value:
     smoothLowess(...)
@@ -236,7 +236,7 @@ smoothSpline <-
     # FUNCTION:
     
     # Deprecated:
-    .Deprecated(".splineSmoother")
+    .Deprecated("smoothSpline")
     
     # Return Value:
     smoothSpline(...)
