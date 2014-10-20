@@ -27,7 +27,7 @@
 
 
 if(getRversion() < "2.14") {
-    getCall <- function(x) slot(x, "call")
+  getCall <- function(x) slot(x, "call")
 } ## since 2.14.0, getCall() is an S3 generic in 'stats'
 ## *AND* its default method also works for S4 and a "call" slot
 
@@ -35,119 +35,130 @@ if(getRversion() < "2.14") {
 
 
 getModel <-
-function(object)
-{
-    # A function implemented by Rmetrics
+  function(object)
+  {
+    # A function implemented by Tobias Setz
+    
+    # FUNCTION: 
+    
+    # Return Value:
+    UseMethod("getModel")
+  }
 
+getModel.default <-
+  function(object)
+  {
+    # A function implemented by Rmetrics
+    
     # Description:
     #   gets the "model" slot from an object of class 4
-
+    
     # Arguments:
     #   object - an object of class S4
-
+    
     # FUNCTION:
-
+    
     # Return Value:
     slot(object, "model")
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 getTitle <-
-function(object)
-{
+  function(object)
+  {
     # A function implemented by Rmetrics
-
+    
     # Description:
     #   gets the "title" slot from an object of class 4
-
+    
     # Arguments:
     #   object - an object of class S4
-
+    
     # FUNCTION:
-
+    
     # Return Value:
     slot(object, "title")
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 getDescription <-
-function(object)
-{
+  function(object)
+  {
     # A function implemented by Rmetrics
-
+    
     # Description:
     #   Extracts the "description" slot from an object of class 4
-
+    
     # Arguments:
     #   object - an object of class S4
-
+    
     # FUNCTION:
-
+    
     # Return Value:
     slot(object, "description")
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 getSlot <-
-function(object, slotName)
-{
-
+  function(object, slotName)
+  {
+    
     # a simple wrapper around slot to avoid compatibilty troubles with
     # other packages.
-
+    
     # FUNCTION:
-
+    
     slot(object, slotName)
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 getArgs <-
-function(f, signature = character())
-{
+  function(f, signature = character())
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Shows the arguments of a S4 functiong
-
+    
     # Arguments:
     #   f - a generic function or the character-string name of one
     #   signature - the signature of classes to match to the arguments
     #       of f
-
+    
     # Note:
     #   such a function is missing in the methods package,
     #   see, e.g he function getMethod()
-
+    
     # FUNCTION:
-
+    
     # Get arguments:
     fun <- getMethod(f, signature)@.Data
     test <- class(try(body(fun)[[2]][[3]], silent = TRUE))
-
+    
     if (test == "function") {
-        ans <- args(body(fun)[[2]][[3]])
+      ans <- args(body(fun)[[2]][[3]])
     } else {
-        ans <- args(fun)
+      ans <- args(fun)
     }
-
+    
     cat(substitute(f), ",", paste(signature, collapse = ","), ":\n",
         sep = "")
-
+    
     # Return Value:
     ans
-}
+  }
 
 
 ################################################################################

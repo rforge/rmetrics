@@ -4,6 +4,7 @@
 \alias{getCall}
 \alias{getCall,ANY-method}
 \alias{getModel}
+\alias{getModel.default}
 \alias{getTitle}
 \alias{getDescription}
 \alias{getSlot}
