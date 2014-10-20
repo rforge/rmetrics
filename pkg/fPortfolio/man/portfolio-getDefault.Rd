@@ -11,7 +11,8 @@
 \alias{getEstimator}
 \alias{getMean}
 \alias{getMu}
-%\alias{getUnits}
+\alias{getUnits}
+\alias{getModel}
 \alias{getNAssets}
 \alias{getNFrontierPoints}
 \alias{getObjective}
@@ -58,7 +59,6 @@ getData(object)
 getEstimator(object)
 getMean(object)
 getMu(object)
-%getUnits(object)
 getNAssets(object)
 getNFrontierPoints(object)
 getObjective(object)

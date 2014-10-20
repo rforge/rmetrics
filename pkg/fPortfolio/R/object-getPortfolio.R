@@ -68,7 +68,7 @@ getSeries.fPORTFOLIO <-
 getNAssets.fPORTFOLIO <- 
     function(object) object@data@data$nAssets
 getUnits.fPORTFOLIO <- 
-    function(object) object@data@data$names
+  function(object) object@data@data$names
     
     
 getStatistics.fPORTFOLIO <- 
@@ -93,7 +93,6 @@ getSigma.fPORTFOLIO <-
 
 getSpec.fPORTFOLIO <- 
     function(object) object@spec 
-
 getModel.fPORTFOLIO <- 
     function(object) object@spec@model
 getType.fPORTFOLIO <- 
@@ -229,7 +228,7 @@ function (object)
     # FUNCTION:
     
     # Check if available:
-    Lambda = object@spec$spec@model$tailRisk$lower
+    Lambda = object@spec@model$tailRisk$lower
     if (is.null(Lambda)) return(NA)
     
     # Tail Risk Budgets:

@@ -45,45 +45,45 @@
 ################################################################################
 
 
-    # fPFOLIOSPEC:
-    
-    # model = list(
-    #   type = "MV",
-    #   optimize = "minRisk",
-    #   estimator = "covEstimator",
-    #   tailRisk = NULL,
-    #   params = list(alpha = 0.05, a = 1))
-    
-    # portfolio = list(
-    #   weights = NULL, 
-    #   targetReturn = NULL, 
-    #   targetRisk = NULL, 
-    #   targetAlpha = NULL,
-    #   riskFreeRate = 0, 
-    #   nFrontierPoints = 50,
-    #   status = 0)
-    
-    # optim = list(
-    #   solver = "solveRquadprog",
-    #   objective = NULL,
-    #   options = list(meq=2), 
-    #   control = list(),
-    #   trace = FALSE)
-    
-    # messages = list(NULL) 
+# fPFOLIOSPEC:
+
+# model = list(
+#   type = "MV",
+#   optimize = "minRisk",
+#   estimator = "covEstimator",
+#   tailRisk = NULL,
+#   params = list(alpha = 0.05, a = 1))
+
+# portfolio = list(
+#   weights = NULL, 
+#   targetReturn = NULL, 
+#   targetRisk = NULL, 
+#   targetAlpha = NULL,
+#   riskFreeRate = 0, 
+#   nFrontierPoints = 50,
+#   status = 0)
+
+# optim = list(
+#   solver = "solveRquadprog",
+#   objective = NULL,
+#   options = list(meq=2), 
+#   control = list(),
+#   trace = FALSE)
+
+# messages = list(NULL) 
 
 
 # ------------------------------------------------------------------------------
 
 
-getModel.fPFOLIOSPEC <- function(object) object@model  
-  getType.fPFOLIOSPEC <- function(object) object@model$type[1]
-  getOptimize.fPFOLIOSPEC <- function(object) object@model$optimize
-  getEstimator.fPFOLIOSPEC <- function(object) object@model$estimator
-  getTailRisk.fPFOLIOSPEC <- function(object) object@model$tailRisk
-  getParams.fPFOLIOSPEC <- function(object) object@model$params
-    getAlpha.fPFOLIOSPEC <- function(object) object@model$params$alpha
-    getA.fPFOLIOSPEC <- function(object) object@model$params$a 
+getModel.fPFOLIOSPEC <- function(object) object@model
+getType.fPFOLIOSPEC <- function(object) object@model$type[1]
+getOptimize.fPFOLIOSPEC <- function(object) object@model$optimize
+getEstimator.fPFOLIOSPEC <- function(object) object@model$estimator
+getTailRisk.fPFOLIOSPEC <- function(object) object@model$tailRisk
+getParams.fPFOLIOSPEC <- function(object) object@model$params
+getAlpha.fPFOLIOSPEC <- function(object) object@model$params$alpha
+getA.fPFOLIOSPEC <- function(object) object@model$params$a 
 
 .getEstimatorFun <- function(object) match.fun(getEstimator(object))
 
@@ -92,25 +92,25 @@ getModel.fPFOLIOSPEC <- function(object) object@model
 
 
 getPortfolio.fPFOLIOSPEC <- function(object) object@portfolio
-  getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
-  getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
-  getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk
-  getRiskFreeRate.fPFOLIOSPEC <- function(object) object@portfolio$riskFreeRate
-  getNFrontierPoints.fPFOLIOSPEC <- function(object) object@portfolio$nFrontierPoints
-  getStatus.fPFOLIOSPEC <-  function(object) object@portfolio$status
- 
-                    
+getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
+getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
+getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk
+getRiskFreeRate.fPFOLIOSPEC <- function(object) object@portfolio$riskFreeRate
+getNFrontierPoints.fPFOLIOSPEC <- function(object) object@portfolio$nFrontierPoints
+getStatus.fPFOLIOSPEC <-  function(object) object@portfolio$status
+
+
 # ------------------------------------------------------------------------------
 
 
 getOptim.fPFOLIOSPEC <- function(object) object@optim
-  getSolver.fPFOLIOSPEC <- function(object) object@optim$solver 
-  getObjective.fPFOLIOSPEC <- function(object) object@optim$objective 
-  getOptions.fPFOLIOSPEC <- function(object) object@optim$options  
-  getControl.fPFOLIOSPEC <- function(object) object@optim$control
-  getTrace.fPFOLIOSPEC <- function(object) object@optim$trace
+getSolver.fPFOLIOSPEC <- function(object) object@optim$solver 
+getObjective.fPFOLIOSPEC <- function(object) object@optim$objective 
+getOptions.fPFOLIOSPEC <- function(object) object@optim$options  
+getControl.fPFOLIOSPEC <- function(object) object@optim$control
+getTrace.fPFOLIOSPEC <- function(object) object@optim$trace
 
-  
+
 # ------------------------------------------------------------------------------
 
 

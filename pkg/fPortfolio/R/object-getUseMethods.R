@@ -536,17 +536,31 @@ getType <-
 # ------------------------------------------------------------------------------
 # DW: already defined in package timeSeries
 
+# getUnits <-
+#     function(object)
+# {
+#     # A function implemented by Diethelm Wuertz
+# 
+#     # FUNCTION: 
+#     
+#     # Return Value:
+#     UseMethod("getUnits")
+# }
 
-## getUnits <-
-##     function(object)
-## {
-##     # A function implemented by Diethelm Wuertz
-## 
-##     # FUNCTION: 
-##     
-##     # Return Value:
-##     UseMethod("getUnits")
-## }
+
+# ------------------------------------------------------------------------------
+# TS: already defined in package fBasics
+
+# getModel <-
+#   function(object)
+#   {
+#     # A function implemented by Tobias Setz
+#     
+#     # FUNCTION: 
+#     
+#     # Return Value:
+#     UseMethod("getModel")
+#   }
 
 
 # ------------------------------------------------------------------------------

@@ -33,50 +33,50 @@
 ################################################################################
 
 
-    # fPFOLIODATA:
-     
-    # data = list(
-    #   series
-    #   nAssets
-    #   names)
-    
-    # statistics = list(
-    #   mean,
-    #   Cov,
-    #   mu,
-    #   Sigma,
-    #   estimator) 
-    
-    # tailRisk = list()  
-    
+# fPFOLIODATA:
+
+# data = list(
+#   series
+#   nAssets
+#   names)
+
+# statistics = list(
+#   mean,
+#   Cov,
+#   mu,
+#   Sigma,
+#   estimator) 
+
+# tailRisk = list()  
+
 
 # ------------------------------------------------------------------------------t
-    
-    
+
+
 getData.fPFOLIODATA <- function(object) object@data
-    # Extracts the @data slot from a fPFOLIODATA object
-    getSeries.fPFOLIODATA <- function(object) object@data$series   
-    getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
-    getUnits.fPFOLIODATA <- function(object) object@data$names 
+# Extracts the @data slot from a fPFOLIODATA object
+getSeries.fPFOLIODATA <- function(object) object@data$series   
+getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
+getUnits.fPFOLIODATA <- function(object) object@data$names
 
 
 # ------------------------------------------------------------------------------
 
 
 getStatistics.fPFOLIODATA <- function(object) object@statistics
-    # Extracts the @statistics slot from a fPFOLIODATA object
-    getMean.fPFOLIODATA <- function(object) object@statistics$mean
-    getCov.fPFOLIODATA <- function(object) object@statistics$Cov
-    getEstimator.fPFOLIODATA <- function(object) object@statistics$estimator
-    getMu.fPFOLIODATA <- function(object) object@statistics$mu
-    getSigma.fPFOLIODATA <- function(object) object@statistics$Sigma
+# Extracts the @statistics slot from a fPFOLIODATA object
+getMean.fPFOLIODATA <- function(object) object@statistics$mean
+getCov.fPFOLIODATA <- function(object) object@statistics$Cov
+getEstimator.fPFOLIODATA <- function(object) object@statistics$estimator
+getMu.fPFOLIODATA <- function(object) object@statistics$mu
+getSigma.fPFOLIODATA <- function(object) object@statistics$Sigma
 
 
 # ------------------------------------------------------------------------------
 
 
 getTailRisk.fPFOLIODATA <- function(object) object@tailRisk
-    # Extracts the @tailRisk slot from a fPFOLIODATA object 
+# Extracts the @tailRisk slot from a fPFOLIODATA object 
 
 ################################################################################
 
