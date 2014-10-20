@@ -2,6 +2,7 @@
 
 
 \alias{getUnits}
+\alias{getUnits.default}
 \alias{setUnits<-}
 
 

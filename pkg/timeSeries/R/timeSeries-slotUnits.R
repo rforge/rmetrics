@@ -19,9 +19,21 @@
 #  setUnits<-                Set new units slot to a 'timeSeries'
 ################################################################################
 
-getUnits <- 
-    function(x)
-{
+
+getUnits <-
+  function(x)
+  {
+    # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION: 
+    
+    # Return Value:
+    UseMethod("getUnits")
+  }
+
+getUnits.default <- 
+  function(x)
+  {
     # Description:
     #   Get units slot from a 'timeSeries' object.
     
@@ -31,19 +43,19 @@ getUnits <-
     # FUNCTION:
     
     # Return Value:
-    colnames(x)    
-}
+    colnames(x)
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 "setUnits<-" <-
-    function(x, value)
-{
+  function(x, value)
+  {
     # Description:
     #   Set units slot to a 'timeSeries' object.
-
+    
     # Arguments:
     #   x - a 'timeSeries' object
     
@@ -54,7 +66,7 @@ getUnits <-
     
     # Return Value:
     x    
-}
+  }
 
 
 
