@@ -24,31 +24,31 @@
 
 
 dataSplit <- 
-    function (x, split=" ", col=-1) 
+  function (x, split=" ", col=-1) 
 {
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Splits a data matrix from a downloaded file
-    
-    # Arguments:
-    #   x - a vector of data records to be splitted
-    #   split - splitting separator
-    #   col - columns to be extracted
-    
-    # FUNCTION
-    
-    # Split Function:
-    FUN <- function(x, split, col) {
-        unlist(strsplit(x, split))[col] }
-    
-    # Split Data Set:
-    data <- unlist(lapply(x, FUN, split = split, col = col))
-    data <- gsub("NA", "NaN", data)
-    data <- matrix(as.numeric(data), byrow = TRUE, nrow = length(x))
-    
-    # Return Value:
-    data
+  # A function implemented by Diethelm Wuertz
+  
+  # Description:
+  #   Splits a data matrix from a downloaded file
+  
+  # Arguments:
+  #   x - a vector of data records to be splitted
+  #   split - splitting separator
+  #   col - columns to be extracted
+  
+  # FUNCTION
+  
+  # Split Function:
+  FUN <- function(x, split, col) {
+      unlist(strsplit(x, split))[col] }
+  
+  # Split Data Set:
+  data <- unlist(lapply(x, FUN, split = split, col = col))
+  data <- gsub("NA", "NaN", data)
+  data <- matrix(as.numeric(data), byrow = TRUE, nrow = length(x))
+  
+  # Return Value:
+  data
 }
 
 
@@ -56,31 +56,31 @@ dataSplit <-
 
 
 charvecSplit <-
-    function (x, split=" ", col=1, format="%F") 
+  function (x, split=" ", col=1, format="%F") 
 {
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Splits a charvec vector from a downloaded file
-    
-    # Arguments:
-    #   x - a vector of data records to be splitted
-    #   split - splitting separator
-    #   col - columns to be extracted
-    #   format - date format, by default "%F"
-    
-    # FUNCTION:
-    
-    # Split Function:
-    FUN <- function(x, split, col) {
-        unlist(strsplit(x, split))[col] }
-    
-    # Split Date Character Vector:
-    charvec <- unlist(lapply(x, FUN, split = split, col = col))
-    charvec <- format(strptime(charvec, format = format))
-    
-    # Return Value:
-    charvec
+  # A function implemented by Diethelm Wuertz
+  
+  # Description:
+  #   Splits a charvec vector from a downloaded file
+  
+  # Arguments:
+  #   x - a vector of data records to be splitted
+  #   split - splitting separator
+  #   col - columns to be extracted
+  #   format - date format, by default "%F"
+  
+  # FUNCTION:
+  
+  # Split Function:
+  FUN <- function(x, split, col) {
+      unlist(strsplit(x, split))[col] }
+  
+  # Split Date Character Vector:
+  charvec <- unlist(lapply(x, FUN, split = split, col = col))
+  charvec <- format(strptime(charvec, format = format))
+  
+  # Return Value:
+  charvec
 }
 
 
@@ -88,31 +88,31 @@ charvecSplit <-
 
 
 stringSplit <-
-    function (x, split = " ", col = NULL) 
+  function (x, split = " ", col = NULL) 
 {
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Splits a string vector from a downloaded file
-    
-    # Arguments:
-    #   x - a vector of data records to be splitted
-    #   split - splitting separator
-    #   col - columns to be extracted
-    #   format - date format, by default "%F"
-    
-    # FUNCTION:
-    
-    # Split Function:
-    FUN <- function(x, split, col) {
-        unlist(strsplit(x, split))[col] }
-    
-    # Split String Vector:    
-    data <- unlist(lapply(x, FUN, split = split, col = col))
-    data <- matrix(data, byrow = TRUE, nrow = length(x))
-    
-    # eturn Value:
-    data
+  # A function implemented by Diethelm Wuertz
+  
+  # Description:
+  #   Splits a string vector from a downloaded file
+  
+  # Arguments:
+  #   x - a vector of data records to be splitted
+  #   split - splitting separator
+  #   col - columns to be extracted
+  #   format - date format, by default "%F"
+  
+  # FUNCTION:
+  
+  # Split Function:
+  FUN <- function(x, split, col) {
+      unlist(strsplit(x, split))[col] }
+  
+  # Split String Vector:    
+  data <- unlist(lapply(x, FUN, split = split, col = col))
+  data <- matrix(data, byrow = TRUE, nrow = length(x))
+  
+  # eturn Value:
+  data
 }
 
 
