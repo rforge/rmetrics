@@ -7,7 +7,7 @@ Author: Diethelm Wuertz and Yohan Chalabi
 Depends: R (>= 2.10), graphics, grDevices, stats, methods, utils,
         timeDate (>= 2150.95)
 Suggests: robustbase, RUnit, xts, PerformanceAnalytics, fTrading
-Maintainer: Yohan Chalabi <yohan.chalabi@rmetrics.org>
+Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching "Financial Engineering and
         Computational Finance"
 Note: Several parts are still preliminary and may be changed in the
