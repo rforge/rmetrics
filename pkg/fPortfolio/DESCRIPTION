@@ -1,10 +1,10 @@
 Package: fPortfolio
 Title: Rmetrics - Portfolio Selection and Optimization
-Date: 2014-09-22
+Date: 2014-10-22
 Version: 3011.81
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
-	Tobias Setz [cre]
+	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
