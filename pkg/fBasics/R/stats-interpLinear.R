@@ -23,15 +23,15 @@
 
 
 linearInterp <-
-function(x, y = NULL, z = NULL, gridPoints = 21,
-    xo = seq(min(x), max(x), length = gridPoints),
-    yo = seq(min(y), max(y), length = gridPoints))
-{
+  function(x, y = NULL, z = NULL, gridPoints = 21,
+           xo = seq(min(x), max(x), length = gridPoints),
+           yo = seq(min(y), max(y), length = gridPoints))
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Interpolates Linearly Irregularly Distributed Data Points
-
+    
     # Arguments:
     #   x, y, z - either three numeric vectors of equal length or if
     #       y and z are NULL, a list with entries x, y, a, or named
@@ -39,63 +39,63 @@ function(x, y = NULL, z = NULL, gridPoints = 21,
     #       the third column.
     #   gridPoints - number of grid points in x and y direction.
     #   xo, yo, a sequence of data points spanning the grid
-
+    
     # Note:
     #   Extrapolation is not possible in the case of linear interpolation.
-
+    
     # Value:
     #   A list with three elements, $x and $y which are vectors of length
     #   'gridPoints' and $z which is a matrix of size 'gridPoints^2'.
-
+    
     # Requirements:
     #   akima Builtin Fortran Code.
-
+    
     # Example:
     #   set.seed(1953)
     #   x = runif(999)-0.5; y = runif(999)-0.5; z = cos(2*pi*(x^2+y^2))
     #   ans = linearInterp(x, y, z)
     #   persp(ans, theta = -50, phi = 30, col = "steelblue")
-
+    
     # Note:
     #   Uses Fortran akima Builtin
-
+    
     # FUNCTION:
-
+    
     if (!require(akima, quietly = TRUE))
-        stop("\n -- Package akima not available -- \n\n")
-
+      stop("\n -- Package akima not available -- \n\n")
+    
     # Arguments:
     if (is.list(x)) x = matrix(unlist(x), ncol = 3)
     if (is.data.frame(x)) x = as.matrix.data.frame(x)
     if (is.matrix(x)) {
-        z = x[, 3]
-        y = x[, 2]
-        x = x[, 1]
+      z = x[, 3]
+      y = x[, 2]
+      x = x[, 1]
     }
-
+    
     # Interpolation:
-    ans = interp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
-        duplicate = "median", dupfun = NULL)
-    colnames(ans$z) = as.character(signif(ans$x, round(log(gridPoints), 0)))
-    rownames(ans$z) = as.character(signif(ans$y, round(log(gridPoints), 0)))
-    class(ans) = "gridData"
-
+    ans <- interp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
+                      duplicate = "median", dupfun = NULL)
+    colnames(ans$z) <- as.character(signif(ans$x, round(log(gridPoints), 0)))
+    rownames(ans$z) <- as.character(signif(ans$y, round(log(gridPoints), 0)))
+    class(ans) <- "gridData"
+    
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
 
 
 linearInterpp <-
-function(x, y = NULL, z = NULL, xo, yo)
-{
+  function(x, y = NULL, z = NULL, xo, yo)
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Interpolates Linearly Irregularly Distributed Data Points
-
+    
     # Arguments:
     #   x, y, z - either three numeric vectors of equal length or if
     #       y and z are NULL, a list with entries x, y, a, or named
@@ -103,48 +103,49 @@ function(x, y = NULL, z = NULL, xo, yo)
     #       the third column.
     #   gridPoints - number of grid points in x and y direction.
     #   xo, yo, a sequence of data points for pointwise interpolation
-
+    
     # Note:
     #   Extrapolation is not possible in the case of linear interpolation.
-
+    
     # Value:
     #   A list with three elements, $x and $y which are vectors of length
     #   'gridPoints' and $z which is a matrix of size 'gridPoints^2'.
-
+    
     # Requirements:
     #   akima Builtin Fortran Code.
-
+    
     # Example:
     #   set.seed(1953)
     #   x = runif(999)-0.5; y = runif(999)-0.5; z = cos(2*pi*(x^2+y^2))
     #   ans = linearInterpp(x, y, z, c(mean(x), 0, 100), c(mean(y), 0, 100))
     #   persp(ans, theta = -50, phi = 30, col = "steelblue")
-
+    
     # Note:
     #   Uses Fortran akima Builtin
-
+    
     # FUNCTION:
-
+    
     if (!require(akima, quietly = TRUE))
-        stop("\n -- Package akima not available -- \n\n")
-
+      stop("\n -- Package akima not available -- \n\n")
+    
     # Arguments:
     if (is.list(x)) x = matrix(unlist(x), ncol = 3)
     if (is.data.frame(x)) x = as.matrix.data.frame(x)
     if (is.matrix(x)) {
-        z = x[, 3]
-        y = x[, 2]
-        x = x[, 1]
+      z = x[, 3]
+      y = x[, 2]
+      x = x[, 1]
     }
-
+    
     # Interpolation:
-    ans = akima:::interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
-        duplicate = "median", dupfun = NULL)
-    ans = data.frame(x = ans$x, y = ans$y, z = ans$z)
-
+    interpp.old <- eval(parse(text=paste0("akima",":::","interpp.old")))
+    ans <- interpp.old(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
+                       duplicate = "median", dupfun = NULL)
+    ans <- data.frame(x = ans$x, y = ans$y, z = ans$z)
+    
     # Return Value:
     ans
-}
+  }
 
 
 ################################################################################
