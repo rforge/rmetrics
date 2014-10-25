@@ -1,7 +1,0 @@
-=> portfolio optimization: extend vignette and examples
-=> doc: stepAIC.ghyp
-=> q/p.default: warn only once
-=> Student-t: use Gaussian if, e.g., dof >= 1e5
-=> vignette: describe stable property of NIG.
-=> Use \texorpdfstring{TEX text}{Bookmark Text} in vignette for parametrization subsections.
-=> Handle NA's in multivariate fits by using EM imputation

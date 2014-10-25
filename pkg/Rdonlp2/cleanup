@@ -1,8 +1,0 @@
-#! /bin/sh
-(cd src/DONLP2; 
-  if test -f Makefile; then
-    make distclean || true
-    make distclean SUBDIRS= || true
-  fi)
-rm -f config.* autom4te.cache src/DONLP2.ts src/Makevars
-exit 0

@@ -1,6 +1,0 @@
-# Default NAMESPACE
-
-# Export all names
-exportPattern(".")
-
-useDynLib("Rdonlp2")
