@@ -1,0 +1,28 @@
+2010-08-11 David Luethi
+schwartz97 V0.0.1
+	* Initial release
+
+2010-09-11 David Luethi
+schwartz97 V0.0.2
+	* plot-method for schwartz2f-objects modified: Show confidence
+	intervals instead of mean + sd.
+	* plot-method for schwartz2f.fit-objects modified: ... -argument
+	added in callNextMethod-call
+	* User guide added as vignette.
+	* Documentation extended.
+	* Check lengths of inputs in functions 'xfutures' and 'xstate'.
+	* data-set 'futures' enhanced by underlying tickers etc.
+
+2010-11-11 David Luethi
+schwartz97 V0.0.3
+	* fit.schwartz2f: is.matrix(x) changed to is(x, "matrix") as the
+	former did pass 'zoo' objects e.g.
+	* fit.schwartz2f: 'data' and 'ttm' are now tested for negative values.
+	
+2010-12-18 David Luethi
+schwartz97 V0.0.4
+	* Resaved Rda to xy
+	* Compressed vignettes
+	* Require R >= 2.10 instead of 2.8
+
+

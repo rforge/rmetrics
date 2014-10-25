@@ -1,0 +1,14 @@
+#  The following inhibits R CMD check from complaining about not
+# being able to load the namespace based on the specified dependencies.
+#import(methods)
+importFrom(methods, show)
+
+import(RCurl)
+import(XML)
+
+export(xml.rpc)
+
+# rpc.serialize - convert to XML-RPC from R
+# covertToR, xmlRPCToR - convert response from XML-RPC method call
+# createBody - for creating the body of the XML-RPC request
+

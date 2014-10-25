@@ -1,0 +1,136 @@
+<html><head><title>Function to Simulate a Time Series based on Markov Switching Process</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MS_Regress_Simul(fMarkovSwitching)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MS_Regress_Simul">
+<param name="keyword" value=" Function to Simulate a Time Series based on Markov Switching Process">
+</object>
+
+
+<h2>Function to Simulate a Time Series based on Markov Switching Process</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function simulates a time series based on the Markov Switching Model specified by the user
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>MS_Regress_Simul(nr, Coeff, k, distrib = "Normal")</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>nr</code></td>
+<td>
+Number of time periods to simulate (nr=number of rows)</td></tr>
+<tr valign="top"><td><code>Coeff</code></td>
+<td>
+A list with all coefficients (see example for details)</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+Number of states in the model (positive integer) (e.g. <code>k=2</code></td></tr>
+<tr valign="top"><td><code>distrib</code></td>
+<td>
+Assumed distribution for residue ("Normal" or "t") e.g <code>distrib&lt;-"Normal"</code></td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns a S4 Object of Class ""MS_Simul" with the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@nr </code></td>
+<td>
+Number of time periods (same as input)</td></tr>
+<tr valign="top"><td><code>@dep</code></td>
+<td>
+The simulated dependent Variable (a vector of size nr)</td></tr>
+<tr valign="top"><td><code>@Coeff</code></td>
+<td>
+A structure with all coefficients of the simulated series (same as input)</td></tr>
+<tr valign="top"><td><code>@trueStates</code></td>
+<td>
+A matrix with the time varying states of the simulated series (which state at each time t)</td></tr>
+<tr valign="top"><td><code>@indep</code></td>
+<td>
+A matrix with the independed variables (simulated normal random numbers)</td></tr>
+<tr valign="top"><td><code>@k</code></td>
+<td>
+Number of states in Model (the dimension of Coeff$P matrix)</td></tr>
+<tr valign="top"><td><code>@S</code></td>
+<td>
+The input argument that controls which variable switches (see example)</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK
+</p>
+
+
+<h3>References</h3>
+
+<p>
+<CITE>ALEXANDER, C. (2008) 'Market Risk Analysis: Practical Financial Econometrics' Wiley</CITE><br>
+<CITE>HAMILTON, J., D. (1994) 'Time Series Analysis' Princeton University Press</CITE><br>
+<CITE>HAMILTON, J., D. (2005) ‘Regime Switching Models’ Palgrave Dictionary of Economic</CITE><br>
+<CITE>KIM, C., J., NELSON, C., R. (1999) ‘State Space Model with Regime Switching: Classical and Gibbs-Sampling Approaches with Applications’ The MIT press</CITE>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="MS_Regress_Fit.html">MS_Regress_Fit</a></code>,<code><a href="MS_Regress_For.html">MS_Regress_For</a></code>,<code><a href="MS_Regress_Lik.html">MS_Regress_Lik</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+nr=500
+distrib&lt;-"Normal"
+k&lt;-2
+
+PVec&lt;-c(.8 ,.2,
+        .1 ,.9)
+        
+P&lt;-matrix(PVec,k,k)
+S&lt;-c(1,0,0)
+
+nS_param&lt;-matrix(c(.5,-.2),2,1)    # Setting up the coefficients at non switching parameters
+S_param&lt;-matrix(0,sum(S),k)
+S_param[,1]= .2             # Setting up the coefficients at switching parameters
+S_param[,2]=-.3
+
+sigma&lt;-matrix(0,1,k)
+sigma[1,1]=.05               # Setting up the standard deviavion of the model at State 1
+sigma[1,2]=.01               # Setting up the standard deviavion of the model at State 2
+
+Coeff&lt;-list(P=P               , # Build Coeff as a list
+            S=S               ,
+            nS_param=nS_param ,
+            S_param=S_param   ,
+            sigma=sigma       )
+
+mySimul&lt;-MS_Regress_Simul(nr,Coeff,k,distrib)
+
+print(mySimul)
+plot(mySimul)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fMarkovSwitching</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

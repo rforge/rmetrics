@@ -1,0 +1,15 @@
+Package: fCertificates
+Version: 0.5-3
+Date: 2013-02-25
+Title: fCertificates - Basics of Certificates and Structured Products
+        Valuation
+Author: Stefan Wilhelm <wilhelm@financial.com>
+Maintainer: Stefan Wilhelm <wilhelm@financial.com>
+Depends: R (>= 2.6.0), fBasics, fOptions, fExoticOptions
+Description: Collection of pricing by duplication methods for popular structured products ("Zertifikate")
+License: GPL (>= 2)
+URL: http://www.r-project.org
+Packaged: 2014-03-02 10:06:32 UTC; stefan
+NeedsCompilation: no
+Repository: CRAN
+Date/Publication: 2014-03-02 11:53:10

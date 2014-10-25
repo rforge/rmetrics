@@ -1,0 +1,19 @@
+Moran test needs unit test
+
+Unit tests also needed for pDist and qDist, distMode,
+distIneqMassartPlot (all to be done by Joyce)
+
+Add contour plots and 3-D plots for fitted distributions
+
+Add profile likelihoods for fitted distributions
+
+Add simple wrapper functions for optimizers: see fitdistrplus
+
+Sort data before using uniroot to find quantiles. Use algorithm which
+takes this into account---Joyce??
+
+Inversion tests need to be checked to make sure that they deal with
+distributions which are not on the whole real line, eg gig, but also
+gamma, uniform etc
+
+

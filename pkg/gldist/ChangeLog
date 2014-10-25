@@ -1,0 +1,53 @@
+2012-04-02  chalabi
+
+	* src/dgl.c: modified algorithm to avoid numerical erros on
+	  boundaries when inverting equations.
+	* src/rgl.c: beautify code
+	* src/pgl.c: beautify code
+	* src/qdgl.c, src/qgl.c, src/rgl.c: reduced mathematical expression
+	  of the special cases (chi = 1, xi = 0) and (chi = -1, xi = 0)
+	* inst/unitTests/runit.dgl.R, inst/unitTests/runit.pgl.R,
+	  inst/unitTests/runit.qdgl.R, inst/unitTests/runit.qgl.R,
+	  inst/unitTests/runit.rgl.R: added more cases in test units
+	* src/pgl.c: removed unused variable
+	* src/dgl.c, src/pgl.c: reduced mathematical expression of the
+	  special cases (chi = 1, xi = 0) and (chi = -1, xi = 0)
+	* src/qgl.c: removed extra tokens at end of #undef directive
+
+2012-03-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* src/dgl.c, src/qdgl.c, src/qgl.c, src/rgl.c: removed unused
+	  variables
+	* src/pgl.c: fixed boundary cases of pgl() on Windows platforms
+
+2012-03-27  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog
+	* src/dgl.c, src/pgl.c, src/qdgl.c, src/qgl.c, src/rgl.c: removed
+	  extra token after define and undef macros
+
+2012-03-26  chalabi
+
+	* DESCRIPTION, man/fitgl.Rd, man/gl.Rd, man/gldist-package.Rd,
+	  man/glshapeplot.Rd, man/params.Rd: updated DESCRIPTION and manual
+	  pages
+	* R/fitgl.R: modified bounds in optimization
+	* R/params.R: fixed typos
+
+2012-03-22  chalabi
+
+	* DESCRIPTION, NAMESPACE, R/params.R, inst/unitTests/runit.qdgl.R,
+	  inst/unitTests/runit.qgl.R, man/gl.Rd, man/gldist-package.Rd,
+	  man/params.Rd: fixed spelling of acronym FKML
+	* ., DESCRIPTION, NAMESPACE, R, R/dgl.R, R/fitgl.R,
+	  R/glshapeplot.R, R/params.R, R/pgl.R, R/qdgl.R, R/qgl.R, R/rgl.R,
+	  R/zzz.R, inst, inst/unitTests, inst/unitTests/runTests.R,
+	  inst/unitTests/runit.dgl.R, inst/unitTests/runit.pgl.R,
+	  inst/unitTests/runit.qdgl.R, inst/unitTests/runit.qgl.R,
+	  inst/unitTests/runit.rgl.R, man, man/fitgl.Rd, man/gl.Rd,
+	  man/gldist-package.Rd, man/glshapeplot.Rd, man/params.Rd, src,
+	  src/Makevars, src/dgl.c, src/gldist.h, src/params.c, src/pgl.c,
+	  src/qdgl.c, src/qgl.c, src/rgl.c, tests, tests/doRUnit.R: added
+	  new package on GLD
+

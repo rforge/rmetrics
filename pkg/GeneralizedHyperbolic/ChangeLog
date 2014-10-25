@@ -1,0 +1,107 @@
+2014-10-05    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION changed, RUnit Suggests. Makefile fixed, LEVEL = 1
+	deleted. 
+
+2013-04-22    <d.scott@auckland.ac.nz>
+
+	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding
+	the alpha and beta values to three decimal places. One decimal
+	place resulted in some alpha = abs(beta) cases.
+
+2013-04-19    <d.scott@auckland.ac.nz>
+
+	* ghypParam.rda, hyperbParam.rda, nigParam.rda changed by rounding
+	the alpha and beta values to one decimal place
+
+	* runit.dgig.R added to graphically test both standard and extreme
+	cases (being ones where omega > 700)
+
+	* dgig changed to avoid underflow. Log evaluated and
+	exponentially-scaled Bessel function used when omega > 700
+
+
+2012-04-13    <d.scott@auckland.ac.nz>
+
+	* ArkansasRiver added as a data set giving data provided by Eric
+	Morway from the US Geological Survey 
+
+	* hyperblmFit, hyperblm added to allow fitting of linear models
+	with hyperbolic errors
+
+
+2011-12-21    <d.scott@auckland.ac.nz>
+
+	* hyperbFitStand, hyperbFitStandStart, dsghyp, ghypStandPars added
+	to provide facility for standardized generalized hyperbolic
+	distribution which has mean zero and variance one. Functions still
+	need to be documented however.
+
+2011-01-04    <d.scott@auckland.ac.nz>
+
+	* ghypChangePars changed to add fifth parameterization. Also order
+	of parameters changed in second parameterization to make rho the
+	third element of the parameter vector. This to agree with the rule
+	that the third parameter should relate to the skewness
+
+2010-11-03    <d.scott@auckland.ac.nz>
+
+	* hyperbHessian, nigHessian, gigHessian all added for calculation
+	of hessians of likelihoods
+
+	* gigParam added for testing gig functions
+
+	* gigFit, gigFitStart, summary.gigFit and gig data fitting
+	examples added, mainly work of David Cusack
+
+
+2010-09-01    <d.scott@auckland.ac.nz>
+
+	* qqgig, ppgig defaults changed when calculating quantiles and
+	probabilities to make them quicker and more reliable---very large
+	tolerances used since differences won't be obvious in plots
+
+	* pgig, qgig changed so that pgig uses incompleteBesselK from
+	DistributionUtils, and qgig uses the two part split at the mode
+	and then optionally a spline fit or integration
+
+2010-08-04    <d.scott@auckland.ac.nz>
+
+	* nig functions added (dnig, pnig, qnig, rnig, nigFit,
+	nigFitStart, etc)
+
+
+2010-06-25    <d.scott@auckland.ac.nz>
+
+	* ghypParam recreated to avoid using ghypChangeParam which causes
+	errors when building or checking
+
+2010-06-22    <d.scott@auckland.ac.nz>
+
+	* pghyp, qghyp modified using split at the mode
+
+	* plotShapeTriangle added so parameter values can be plotted on it
+	in examples for ghypParam to give just one use
+
+2010-06-20    <d.scott@auckland.ac.nz>
+
+	* nig functions added by Christine Dong: nigFit, nigFitStart, dqpr
+	functions for nig, nigCalcRange, moments for the nig
+
+	* gigFit and gigFitStart added to allow for fitting of the
+	generalized inverse Gaussian. Plot, print and summary methods are
+	included with the fitting routines.
+
+	* gigParam added to allow testing of the generalized inverse Gaussian
+
+	* ghypParam changed to give spread of values over the shape
+	triangle
+
+
+2010-02-09    <d.scott@auckland.ac.nz>
+
+	* GeneralizedHyperbolic version 0.2-0 created. Eliminated
+	functions already in DistributionUtils and made depend on
+	DistributionUtils
+
+

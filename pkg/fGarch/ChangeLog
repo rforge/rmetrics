@@ -1,0 +1,193 @@
+2013-04-30  chalabi
+
+	* DESCRIPTION, R/zzz.R, src/llhGarch.f: fix array bound warning in
+	  Fortran code
+
+2012-09-18  chalabi
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files.
+	* DESCRIPTION: Changed maintainer field to comply with the new CRAN
+	  policy.
+	* inst/unitTests/runit.garchSolver.R: Removed superfluous unitTest.
+	* NAMESPACE, R/loglik-aparch.R: Removed .filter2() to avoid
+	  external .Call calls.
+
+2012-06-04  chalabi
+
+	* R/garch-Hessian.R, inst/unitTests/runit.garchSolver.R: using now
+	  optimHess to calculate the Hessian
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog files
+	* DESCRIPTION, R/garch-Hessian.R: using now optimHess to calculate
+	  the Hessian
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
+2010-10-26  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2010-04-14  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+
+2009-12-08  wuertz
+
+	* inst/unitTests/runit.snorm.R: norm test obsolete
+	* NAMESPACE, R/absMoments.R, R/dist-norm.R, R/dist-normFit.R,
+	  R/dist-snig.R, R/dist-snigFit.R, R/dist-stdSlider.R,
+	  man/absMoments.Rd, man/dist-absMoments.Rd, man/dist-ged.Rd,
+	  man/dist-gedFit.Rd, man/dist-gedSlider.Rd, man/dist-sged.Rd,
+	  man/dist-sgedFit.Rd, man/dist-sgedSlider.Rd, man/dist-snorm.Rd,
+	  man/dist-snormFit.Rd, man/dist-snormSlider.Rd, man/dist-sstd.Rd,
+	  man/dist-sstdFit.Rd, man/dist-sstdSlider.Rd, man/dist-std.Rd,
+	  man/dist-stdFit.Rd, man/dist-stdSlider.Rd: distribution functions
+	  updated
+	* R/dist-stdSlider.R: stdslider added
+
+2009-12-07  wuertz
+
+	* R/dist-absMoments.R, R/dist-ged.R, R/dist-gedFit.R,
+	  R/dist-gedSlider.R, R/dist-norm.R, R/dist-normFit.R,
+	  R/dist-sged.R, R/dist-sgedFit.R, R/dist-sgedSlider.R,
+	  R/dist-snig.R, R/dist-snigFit.R, R/dist-snorm.R,
+	  R/dist-snormFit.R, R/dist-snormSlider.R, R/dist-sstd.R,
+	  R/dist-sstdFit.R, R/dist-sstdSlider.R, R/dist-std.R,
+	  R/dist-stdFit.R: distribution functions updated
+	* man/dist-ged.Rd, man/dist-gedFit.Rd, man/dist-gedSlider.Rd,
+	  man/dist-sged.Rd, man/dist-sgedFit.Rd, man/dist-sgedSlider.Rd,
+	  man/dist-snorm.Rd, man/dist-sstd.Rd, man/sged.Rd, man/snorm.Rd,
+	  man/sstd.Rd: man pages updated
+
+2009-11-09  chalabi
+
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated DESC and Changelog file
+
+2009-11-05  chalabi
+
+	* R/methods-predict.R: small changes in predict,fGARCH-method to
+	  correct its output when n.ahead=1 since addition of conditional
+	  errors.
+
+2009-09-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated DESCR and ChangeLog
+
+2009-08-21  wuertz
+
+	* DESCRIPTION, NAMESPACE, R/methods-plot.R, R/methods-show.R,
+	  R/mgarch-FitFromFormula.R: .gogarchFit function added, show and
+	  plot adapted, NAMESPACE and DESCRIPTION updated
+	* R/methods-plot.R: Merge branch 'devel-fGarch'
+	* man/methods-predict.Rd: cosmetic changes in help page
+	* NAMESPACE: new NAMESPACE structure which should ease maintenance
+	  of packages.
+
+2009-06-25  chalabi
+
+	* DESCRIPTION, NAMESPACE: Merge branch 'devel-timeSeries'
+	  
+	  Conflicts:
+	  pkg/timeSeries/R/base-Extract.R
+	  pkg/timeSeries/R/timeSeries.R
+
+2009-05-21  wuertz
+
+	* NAMESPACE, R/garch-Distribution.R, R/garch-FitFromFormula.R,
+	  R/garch-FitFromSpec.R, R/garch-FitInternal.R, R/garch-LogLik.R,
+	  R/loglik-aparch.R, R/loglik-egarch.R, R/loglik.R,
+	  man/garchFit.Rd: working on new specification
+	* DESCRIPTION, R/garch-Distribution.R, R/garch-FitFromFormula.R,
+	  R/garch-FitInternal.R, R/garch-Hessian.R, R/garch-LogLik.R,
+	  R/garch-Solver.R, man/garchFit.Rd: different recursion methods
+	  added, new method to calculate hessian added
+	* R/garch-FitInternal.R, R/garch-LogLik.R: LLH function
+	  disentangled in shorter parts
+
+2009-05-20  wuertz
+
+	* R/garch-FitFromFormula.R, R/garch-FitFromSpec.R,
+	  R/garch-FitInternal.R: alternative garchFit interface (still
+	  hidden) now runs
+	* NAMESPACE, R/fGarchEnv.R, R/garch-FitFromFormula.R: NAMESPACE
+	  updated
+	* R/garch-FitFormula.R, R/garch-FitFromFormula.R,
+	  R/garch-FitInternal.R: R scripts disentangled and renamed
+	* R/garch-FitFromFormula.R: script file renamed
+	* R/garch-Fit.R, R/garch-FitControl.R, R/garch-FitFormula.R,
+	  R/garch-FitFromSpec.R, R/garch-FitInternal.R,
+	  R/garch-GlobalVars.R, R/garch-SolverControl.R: new interface for
+	  garchFit added, spec() based
+	* NAMESPACE, R/garch-Distribution.R, R/garch-LogLik.R: some smaller
+	  fixes and NAMESPACE adapted
+	* R/garch-Fit.R, R/garch-LogLik.R: garchLogLIk disentangled from
+	  script file garch-Fit.R
+	* R/garch-Distribution.R, R/garch-Fit.R, R/garch-Initialization.R:
+	  Initialization disentangled from garch-Fit script file
+	* R/dist-sged.R, R/dist-snig.R, R/dist-snorm.R, R/dist-sstd.R,
+	  R/garch-Distribution.R, R/garch-Fit.R, R/garch-FitControl.R,
+	  R/garch-Gradient.R, R/garch-Hessian.R, R/garch-Sim.R,
+	  R/garch-Solver.R, R/garch-Spec.R, R/garch-Stats.R, R/garchFit.R,
+	  R/garchFitControl.R, R/garchGradient.R, R/garchHessian.R,
+	  R/garchSim.R, R/garchSolver.R, R/garchSpec.R, R/garchStats.R,
+	  R/sged.R, R/snorm.R, R/sstd.R: script file renamed and
+	  disentangled
+
+2009-05-15  chaussep
+
+	* R/methods-predict.R, man/methods-predict.Rd: added a plot option
+	  to predict and adapted the manual
+
+2009-05-15  chalabi
+
+	* DESCRIPTION: added Pierre Chausse in DESC file for contribution
+
+2009-05-14  chaussep
+
+	* R/garchSim.R, man/garchSim.Rd: Just changed the definition of mu.
+	  It is the intercept, not the mean
+	* R/methods-predict.R, man/methods-predict.Rd: Added conditional
+	  errors to predict and updated nthe manual
+
+2009-04-19  chalabi
+
+	* DESCRIPTION: added explicit version number in Depends field for
+	  key packages
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-01-30  chalabi
+
+	* R/garchSpec.R:
+
+2009-01-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* DESCRIPTION: changed version number to match version on CRAN + 1
+
+2009-01-12  chalabi
+
+	* NAMESPACE, R/methods-update.R, man/class-fGARCH.Rd,
+	  man/class-fGARCHSPEC.Rd: added update method for fGARCH and
+	  fGARCHSPEC object
+
+2009-01-07  chalabi
+
+	* src/dist.f: fixed conditional distribution thanks to comments of
+	  Michal Miklovic.
+

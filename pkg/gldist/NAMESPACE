@@ -1,0 +1,19 @@
+
+# Functions
+export("dgl",
+       "pgl",
+       "qdgl",
+       "qgl",
+       "rgl",
+       "CSW2FKML",
+       "FKML2CSW",
+       "fitgl",
+       "glshapeplot")
+
+# C routines
+useDynLib("gldist",
+          "gldist_dgl",
+          "gldist_pgl",
+          "gldist_qdgl",
+          "gldist_qgl",
+          "gldist_rgl")

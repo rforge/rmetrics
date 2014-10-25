@@ -1,0 +1,46 @@
+2014-01-24  wuertz
+
+    * DESCRIPTION: Updated version number
+
+2012-12-10  chalabi
+
+	* DESCRIPTION: Updated version number
+	* DESCRIPTION: Updated maintainer field and 'Note' field in lower
+	* NAMESPACE: Added NAMESPACE
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2009-09-30  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-09-29  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+
+2009-09-22  chalabi
+
+	* R/TermStructure.R: fixed plot as suggested by Sergio Guirreri.
+	  Thanks !
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-02-24  chalabi
+
+	* R/TermStructure.R: thanks to Dott. Sergio S. Guirreri - wrong
+	  name assigned to fitted parameter in Svesson
+

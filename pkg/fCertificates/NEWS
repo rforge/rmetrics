@@ -1,0 +1,3 @@
+2014-02-25 (Version 0.5-3)
+--------------------------
+# fixed some issues with the R build process (R CMD build)

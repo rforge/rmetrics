@@ -1,0 +1,10 @@
+Create test parameter sets for normal Laplace and generalized normal
+Laplace
+
+Add lower.tail and possibly log and log.p arguments to dpqr functions
+
+Fix dpqr functions in the case where only the characteristic function
+is available: use Martin's approach from stabledist
+
+
+

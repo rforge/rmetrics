@@ -1,0 +1,20 @@
+Package: NormalLaplace
+Version: 0.2-0
+Date: 2011-01-10
+Title: The Normal Laplace Distribution
+Author: David Scott <d.scott@auckland.ac.nz>, Jason Shicong Fu and
+	Simon Potter
+Maintainer: David Scott <d.scott@auckland.ac.nz>
+Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic
+Suggests: RUnit
+Encoding: latin1
+Description: This package provides functions for the normal Laplace
+        distribution. It is currently under development and provides
+        only limited functionality. Density, distribution and quantile
+        functions, random number generation, and moments are provided.
+License: GPL (>= 2)
+Repository: R-Forge
+Repository/R-Forge/Project: rmetrics
+Repository/R-Forge/Revision: 4777
+Date/Publication: 2010-03-01 05:08:51
+Packaged: 2011-01-10 10:59:48 UTC; simon

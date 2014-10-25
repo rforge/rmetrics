@@ -1,0 +1,77 @@
+
+
+********************************************************************************
+*                                                                              *
+*      cosmo - Constrained search for motifs in DNA sequences                  *
+*      Authors: Oliver Bembom, Fabian Gallusser, and Sandrine Dudoit           *
+*                                                                              *
+*      Conditions of use:                                                      *
+*                                                                              *
+*    1. cosmo is under the exclusive copyright of Oliver Bembom,               *
+*       (bembom@berkeley.edu), the Regents of the University of California,    *
+*       and Peter Spellucci (spellucci@mathematik.tu-darmstadt.de).            *
+*                                                                              *
+*    2. Permission to use, copy, modify, and distribute any part of this       *
+*       software for research purposes, without fee and without a written      *
+*       agreement, is hereby granted, provided that this license appears in    *
+*       all copies. Commercial uses require permission and licensing from      *
+*       Oliver Bembom, the Regents of the University of California, and        *
+*       Peter Spellucci.                                                       *
+*                                                                              *
+*    3. If you use this software in your research, please cite                 *
+*                                                                              *
+*       O. Bembom, S. Keles, M.J. van der Laan (2007). Supervised Detection    *
+*       of Conserved Motifs in DNA Sequences with cosmo. Statistical           *
+*       Applications in Genetics and Molecular Biology: Vol. 6 : Iss. 1,       *
+*       Article 8. http://www.bepress.com/sagmb/vol6/iss1/art8.                *
+*                                                                              *
+*       cosmo makes use of the donlp2() function by Peter Spellucci.           *
+*       The use of donlp2() must be acknowledged in any publication which      *
+*       contains results obtained with cosmo or parts of it. Citation of the   *
+*       author's name and netlib-source is suitable.                           *
+*                                                                              *
+*    4. In no event shall the authors be liable to any party for direct, in-   *
+*       direct, special, incidental, or consequential damages, including lost  *
+*       profits, arising out of the use of this software, even if the authors  *
+*       have been advised of the possibility of such damage.                   *
+*                                                                              *
+*    5. cosmo is provided on an 'as is' basis, and the authors have no obli-   *
+*       gations to provide maintenance, support, updates, enhancements, or     *
+*       modifications. The authors make no representations and extends no      *
+*       warranties of any kind, either expressed or implied, including, but    *
+*       not limited to, the implied warranties of merchantability or fitness   *
+*       for a particular purpose, or that the use of the material will not     *
+*       infringe any patent, trademark or other rights.                        *
+*                                                                              *
+*                                                                              *
+********************************************************************************
+
+
+********************************************************************************
+*                                                                              *
+*      puma - Propagating Uncertainty in Microarray Analysis                   *
+*      Authors: Richard D. Pearson, Xuejun Liu, Magnus Rattray,                *
+*               Marta Milo, Neil D. Lawrence, Guido Sanguinetti                *
+*                                                                              *
+*    puma uses donlp which has the following conditions of use:                *
+*                                                                              *
+* 1. donlp2 is under the exclusive copyright of P. Spellucci                   *
+*    (e-mail:spellucci@mathematik.tu-darmstadt.de)                             *
+*    "donlp2" is a reserved name                                               *
+* 2. donlp2 and its constituent parts come with no warranty, whether ex-       *
+*    pressed or implied, that it is free of errors or suitable for any         *
+*    specific purpose.                                                         *
+*    It must not be used to solve any problem, whose incorrect solution        *
+*    could result in injury to a person , institution or property.             *
+*    It is at the users own risk to use donlp2 or parts of it and the          *
+*    author disclaims all liability for such use.                              *
+* 3. donlp2 is distributed "as is". In particular, no maintenance, support     *
+*    or trouble-shooting or subsequent upgrade is implied.                     *
+* 4. The use of donlp2 must be acknowledged, in any publication which          * 
+*    contains                                                                  *
+*    results obtained with it or parts of it. Citation of the authors name     *
+*    and netlib-source is suitable.                                            *
+* 5. The free use of donlp2 and parts of it is restricted for research         *
+*    purposes                                                                  *
+*    commercial uses require permission and licensing from P. Spellucci.       *
+********************************************************************************

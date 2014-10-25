@@ -1,0 +1,13 @@
+DONLP2_LIBS = -ldonlp2
+
+PKG_CPPFLAGS = @DONLP2_INCLUDE_PATH@
+PKG_LIBS = @DONLP2_LIB_PATH@ $(DONLP2_LIBS)
+
+.PHONY: all @DONLP2_TS@
+
+all: $(SHLIB)
+$(OBJECTS): @DONLP2_TS@ 
+
+DONLP2.ts:
+	@(cd DONLP2 && make)
+	touch $@

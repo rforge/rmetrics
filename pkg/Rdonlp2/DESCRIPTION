@@ -1,0 +1,23 @@
+Package: Rdonlp2
+Version: 3002.10
+Date: 2007-03-18
+Title: An R extension library to use Peter Spelluci's DONLP2 from R.
+Description: 
+   DONLP2 is a general purpose nonlinear constrained programming 
+   problem solver written by Peter Spelluci. The version here 
+   uses the C-Code implementation of S. Shoeffert and the Rdonlp2
+   limplementatation of Ryuichi Tamura.
+Author: 
+    Peter Speluccihas has written the original solver code,
+    S. Schoeffert has translated donlp2 from f77 to the ANSI C version,
+    K. S. Cove has added dynamic memory allocation,
+    Christoph Bergmeier has added passing objecive and constraints as external pointer,
+    Ryuichi Tamura has written the original Rdonlp2 interface,
+    Diethelm Wuertz has written the current Rdonlp2 interface.
+Maintainer: Diethelm Wuertz <wuertz@phys.ethz.ch>
+Depends: R (>= 2.12.0)
+License: 
+   GPL-2 for the R-code,
+   C-Code only free for research purpose. 
+   For details we refer to the license file.
+URL: https://r-forge.r-project.org/projects/rmetrics

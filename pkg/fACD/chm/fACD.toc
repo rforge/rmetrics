@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fACD:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fACD:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fACD-package">
+<param name="Local" value="fACD-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="acdModel-class">
+<param name="Local" value="acdModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ACD_Fit">
+<param name="Local" value="ACD_Fit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ACD_Lik">
+<param name="Local" value="ACD_Lik.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ACD_Simul">
+<param name="Local" value="ACD_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fACD">
+<param name="Local" value="fACD-package.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="myDur">
+<param name="Local" value="myDur.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plot.acdModel">
+<param name="Local" value="plot.acdModel.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.acdModel">
+<param name="Local" value="print.acdModel.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fACD:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="A Class for an ACD Model">
+<param name="Local" value="acdModel-class.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function for calculation of log likelihood of ACD model">
+<param name="Local" value="ACD_Lik.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function for Estimation of an ACD Model">
+<param name="Local" value="ACD_Fit.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function for Simulation of an ACD model">
+<param name="Local" value="ACD_Simul.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to plot an ACD S4 object">
+<param name="Local" value="plot.acdModel.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Function to print ACD model">
+<param name="Local" value="print.acdModel.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Just and example Data">
+<param name="Local" value="myDur.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package for Estimation and Simulation of ACD Models">
+<param name="Local" value="fACD-package.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

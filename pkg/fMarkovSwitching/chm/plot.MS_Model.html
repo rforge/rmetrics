@@ -1,0 +1,71 @@
+<html><head><title>Function to Plot the Fitted Processes of a Markov Switching Model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>plot.MS_Model(fMarkovSwitching)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   plot.MS_Model">
+<param name="keyword" value=" Function to Plot the Fitted Processes of a Markov Switching Model">
+</object>
+
+
+<h2>Function to Plot the Fitted Processes of a Markov Switching Model</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Using as input a S4 "MS_Model" object, this function plots:<br>
+-Fitted Filtered Probabilities (t¦t)<br>
+-Fitted Smoothed Probabilities (by means of Kim's Algorithm)<br>
+-Fitted Conditional Mean (based on filtered probabilities of t¦t)<br>
+-Fitted Conditional standard Deviation (based on filtered probabilities of t¦t)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>plot(MS_Model_In)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>MS_Model_In</code></td>
+<td>
+A S4 object (a output from MS_Regress_Fit)</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns Nothing. Plots the time series in a graphical device</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="MS_Regress_Fit.html">MS_Regress_Fit</a></code>,<code><a href="print.MS_Model.html">print.MS_Model</a></code>,<code><a href="dim.MS_Model.html">dim.MS_Model</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Assuming the mySimModel is a S4 object from the use of MS_Regress_Sim
+
+#plot(mySimModel)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fMarkovSwitching</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

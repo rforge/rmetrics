@@ -1,0 +1,5 @@
+name year A FA
+Dick 1963 0.42 0.12
+Gose 1970 0.26 0.57
+Rolf 1971 0.87 0.37
+Heleen 1974 0.86 0.15

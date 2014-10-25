@@ -1,0 +1,53 @@
+
+20140-01-24 wuertz
+
+    * DESCRPION: version number and title updated
+
+2012-11-07  chalabi
+
+	* DESCRIPTION: Updated version number and maintainer field
+	* NAMESPACE: Added NAMESPACE
+	* DESCRIPTION: Updated maintainer field to comply new CRAN policy
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2009-11-09  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-11-05  chalabi
+
+	* ChangeLog, DESCRIPTION: updated ChangeLog and DESCRIPTION
+
+2009-11-03  chalabi
+
+	* R/AsianOptions.R, R/BarrierOptions.R, R/BinaryOptions.R,
+	  R/CurrencyTranslatedOptions.R, R/LookbackOptions.R,
+	  R/MultipleAssetsOptions.R, R/MultipleExercisesOptions.R: Fixed
+	  wrong split of commands.
+	* R/zzz.R: Removed message on startup.
+
+2009-09-30  chalabi
+
+	* DESCRIPTION: updated version number
+
+2009-09-29  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+

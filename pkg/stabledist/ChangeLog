@@ -1,0 +1,97 @@
+2012-09-30  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable, .fct1): direct 'log' argument;
+	advantageous in few (only) cases.  New default 'zeta.tol=NULL' now
+	determines zeta.tol depending on parameters.
+
+2012-09-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable.smallA): new asymptotic (alpha -> 0)
+	formula for small alpha.
+
+	* DESCRIPTION (Version): 0.6-5,  released to CRAN on 2012-10-01
+
+2012-05-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-4,  released to CRAN on 2012-05-29
+
+2012-03-19  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-3,  released to CRAN on 2012-03-19
+
+2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable): new 'zeta.tol' argument; and checking
+	for  "absolut+relative" closeness to 'zeta'.
+	* R/dpqr-stable.R (dstable, pstable): lower the default 'tol' to
+	from  16 * epsC  to  64* epsC.
+
+2011-03-29  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-2.1, released to CRAN on 2011-03-30
+
+	* R/dpqr-stable.R (dstable(*, alpha=1) -> .fct2): "robustified" g()
+	* R/dpqr-stable.R (pstable(*, alpha=1) -> .FCT2): ditto + simplified (1 integ.)
+
+2011-03-28  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-2
+
+	* R/dpqr-stable.R (dstable -> .fct1): another round of
+	improvements, thanks to Dieter Schell's bug reports.
+
+2011-03-24  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (qstable): also add arguments lower.tail, log.p
+
+2011-03-23  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-1.1
+
+	* R/dpqr-stable.R (dstable -> .fct1 -> g): more careful computation
+	of g(), notably at +- pi/2 where it could become NaN instead of 0.
+	Numerically better but considerably (~ 30-40% ?) slower!
+	* tests/dstab-ex.R: testing that
+
+2011-03-21  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (pstable): new arguments (lower.tail=TRUE, log.p=FALSE)
+	not used "properly" yet
+	(dPareto, pPareto): new auxiliary functions for tail behavior; not
+	used yet - apart from tests:
+
+	* tests/tails.R: new: testing tail behavior.
+
+	* R/dpqr-stable.R (qstable): infinite while(.) now caught
+
+2011-03-12  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.6-0, released to CRAN, 2011-03-14
+
+	* R/dpqr-stable.R (dstable, .fct1): detect when the integration
+	seems completely unreliable and then also use the x=zeta value.
+	This cures all remaining big problems I've found.
+
+2011-03-10  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (dstable, .fct1): use uniroot() to find theta2; then
+	possibly split into four (instead just two) intervals for integration.
+
+2011-03-08  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dist-stableMode.R (stableMode): add 'tol' (and 'beta.max')
+	arguments which were implicit before.
+
+	* R/utils.R (.unirootNA): add 'tol' and 'maxiter' arguments.
+
+	* R/dpqr-stable.R (pstable): get rid of "Sversion" and add 'tol,
+	subdivisions' as arguments.
+	Slightly *increase* default tol(erance) - so .integrate2() no
+	longer warns, at least not for the examples.
+
+2011-02-02  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Package): renamed to 'stabledist' as Jim Lindsey has
+	maintained a non-CRAN package 'stable' forever (and it's used).
+	* TODO: added
+

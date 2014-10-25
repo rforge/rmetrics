@@ -1,0 +1,49 @@
+import(mvtnorm)
+import(tmvtnorm)
+import(fCertificates)
+importMethodsFrom(Matrix, "rowSums")
+
+# simulate paths for stochastic processes
+export(BM)
+export(BrownianMotion)
+export(GBM)
+export(GeometricBrownianMotion)
+export(GeometricBrownianMotionMatrix)                # TODO: integrate GeometricBrownianMotion() and GeometricBrownianMotionMatrix()
+
+# Brownian Bridge Minimum (density and random number generation)
+export(rBrownianBridgeMinimum)
+export(dBrownianBridgeMinimum)
+
+# calculate BM/GBM probabilities
+export(calcBMProbability)
+export(calcGBMProbability)
+
+# calculate Express certificates redemption/stop probabilities
+export(calcRedemptionProbabilities)
+export(simRedemptionProbabilities)
+export(getRedemptionTime)
+export(getRedemptionTimesForMatrix)
+
+# simulate prices and minimum at valuation dates (S(t_1),...,S(t_n);m(t_1),...,m(t_n))
+export(simPricesAndMinimumFromGBM)                # Simulation of joint prices+minimum of unrestricted GBM via finite-dimensional distribution (S(t_1), S(t_2),..., S(t_n), m(t_1),...,m(t_n))
+export(simPricesAndMinimumFromGBM2)               # Simulation of joint prices+minimum of unrestricted GBM via Euler-Scheme at valuation dates (S(t_1), S(t_2),..., S(t_n), m(t_1),...,m(t_n))
+export(simPricesAndMinimumFromTruncatedGBM)       # Simulation of joint prices+minimum of restricted! GBM via finite-dimensional distribution (S(t_1), S(t_2),..., S(t_n), m(t_1),...,m(t_n))
+
+# particular express payoff functions
+export(payoffExpressClassic)
+export(payoffExpressBonusType1)
+export(payoffExpressCappedBonusType1)
+export(payoffExpressML0AN5)
+
+# Pricing of Express Certificates
+export(simExpressPriceMVN)                                # Monte Carlo simulation of finite-dimensional distribution at (S(t_1), S(t_2),..., S(t_n); m(t_1),...,m(t_n))  
+export(simExpressPriceTMVN)                               # Monte Carlo simulation of restricted GBM (truncated normal) and pricing
+export(ExpressCertificate.Classic)                        # MVN + numerical integration at maturity for simple payoff functions of the form g(S(T))
+export(MonteCarlo.ExpressCertificate.Classic)             # Euler-Scheme + classic express payoff
+export(MonteCarlo.ExpressCertificate)                     # Euler-Scheme + various payoff functions
+#export(SimulateGenericExpressCertificate)                # generic payoff function; uses simulateExpressPaths für (S(t_1), S(t_2),..., S(t_n); m(t_1),...,m(t_n))  
+#export(SimulateExpressClassicCertificate)
+#export(SimulateExpressBonusCertificate)
+
+# pretty printing for class "express.certificate"
+export(print.express.certificate)

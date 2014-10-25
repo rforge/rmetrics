@@ -1,0 +1,516 @@
+2013-04-30  chalabi
+
+	* DESCRIPTION, R/base-format.R, R/calendar-nDay.R,
+	  inst/unitTests/runit.SpecialDates.R: adapt to new version of
+	  as.POSIXct
+
+2012-12-01  chalabi
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files.
+
+2012-09-26  chalabi
+
+	* NAMESPACE, R/calendar-endpoints.R, man/calendar-endpoints.Rd:
+	  Hidden back .endpoints() to avoid conflicts with
+	  xts:::endpoints()
+	* DESCRIPTION: Updated version number and package title.
+
+2012-09-24  chalabi
+
+	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESC files
+	* DESCRIPTION: Adapted version number.
+	* DESCRIPTION: Updated maintainer field.
+	* NAMESPACE, R/base-weekdays.R: Removed external C call.
+
+2012-08-04  mmaechler
+
+	* DESCRIPTION, R/base-weekdays.R: we "semi-depend" on package
+	  "date"
+
+2012-03-21  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+	* ChangeLog, DESCRIPTION: updated DESCRIPTION and ChangeLog
+	* DESCRIPTION: updated version number
+
+2012-03-20  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2012-03-20  wuertz
+
+	* man/calendar-endpoints.Rd: non-ASCII characters removed
+	* man/calendar-endpoints.Rd: man page for endpoints added
+	* NAMESPACE: .endpoints renamed to endpoints
+	* R/calendar-endpoints.R: .endpoints renamed yo endpoints and man
+	  page added
+
+2012-03-19  chalabi
+
+	* man/calendar-align.Rd, man/calendar-periods.Rd,
+	  man/graphics-plot.Rd: fixed manual pages
+
+2012-03-18  wuertz
+
+	* R/graphics-plot.R, R/methods-plot.R: graphics-plot.R renamed to
+	  methods-plot.R
+	* R/stats-frequency.R: description modified
+	* R/calendar-nDay.R: tabs removed
+	* R/calendar-isBizday.R, R/calendar-isWeekday.R: is Bizday and
+	  isWeekday scripts merged
+	* R/calendar-isDaily.R, R/calendar-isMonthly.R,
+	  R/calendar-isQuarterly.R, R/calendar-isRegular.R: isDaily,
+	  isMonthly, isQuarterly, isRegular merged to one script file
+	* NAMESPACE: align* functions added
+	* man/calendar-align.Rd: align help page updated
+	* R/calendar-dayOfWeek.R, R/calendar-dayOfYear.R: dayOfWeek and
+	  dayOfYear scripts merged
+	* R/calendar-months.R: obsolete calendar-months.R removed
+	* R/calendar-atoms.R: months, timeDate moved to calendar.atoms.R
+	* R/calendar-align.R: simple to use alignDaily, alignMonthly, and
+	  alignQuarterly functions added
+
+2012-03-17  wuertz
+
+	* NAMESPACE, R/graphics-plot.R, man/graphics-plot.Rd: pretty added
+
+2012-03-14  wuertz
+
+	* R/graphics-plot.R: bug in passing argument "labels" removed
+
+2012-02-22  mmaechler
+
+	* R/zzz.R: .First.lib is deprecated now (one should use .onLoad
+	  only)
+	* DESCRIPTION: updated version number
+	* R/calendar-align.R: align,timeDate-method is now based on
+	  seq.timeDate.
+	* R/timeDate-Sequence.R: seq.timeDate method now works with 'by =
+	  quarter' and accepts syntax without whitesapce, e.g. 'by =
+	  1week'.
+
+2011-10-24  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog file
+
+2011-10-20  chalabi
+
+	* NAMESPACE: Updated NAMESPACE such that zoo package is no longer
+	  masking as.Date.timeDate method.
+
+2011-09-26  mmaechler
+
+	* DESCRIPTION, R/calendar-nDay.R, R/zzz.R,
+	  inst/unitTests/runit.SpecialDates.R, man/calendar-nDay.Rd:
+	  timeNthNdayInMonth() {bug fix, thanks to Dave Winsenius}; do
+	  sensible unit tests; require reasonably recent R
+
+2011-09-23  mmaechler
+
+	* DESCRIPTION: remove deprecated "LazyLoad" entry
+	* NAMESPACE, R/holiday-Dates.R, R/holiday-GB.R,
+	  man/holiday-Dates.Rd, man/holiday-GB.Rd: added GB Bank holiday
+	  calendar contributed by Murali Menon
+
+2011-04-06  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+	* inst/doc: removed empty directory
+	* DESCRIPTION: updated version number
+	* R/calendar-isBizday.R, R/calendar-isWeekday.R,
+	  man/calendar-isBizday.Rd, man/calendar-isWeekday.Rd: added
+	  argument to isWeekend(), isWeekday(), isBizday() and isHoliday to
+	  specify days that should be considered as weekdays. By defaults
+	  it is from Mondays to Fridays
+
+2011-02-10  chalabi
+
+	* ChangeLog, DESCRIPTION: updated Date and Revision field in DESC
+	  file and updated Changelog file
+	* DESCRIPTION: updated DESC file
+
+2011-01-07  mmaechler
+
+	* ChangeLog, R/timeDate-Sequence.R, man/calendar-isBizday.Rd,
+	  man/timeDate-Sequence.Rd: fix seq.timeDate() [along R-devel`s
+	  seq.POSIXt()]
+
+2010-11-01  chalabi
+
+	* inst/doc/timeDate.pdf: removed old version of vignette to be
+	  replaced with new one.
+
+2010-10-27  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog file
+
+2010-10-12  chalabi
+
+	* R/AllClass.R: updated initialize,timeDate-method to remove
+	  superflous warning when no data is included in new timeDate
+	  objects.
+
+2010-09-30  chalabi
+
+	* NAMESPACE, man/timeDate-DaylightSavingTime.Rd, man/timeDate.Rd:
+	  updated NAMESPACE and manual pages with recent changes
+	* R/timeDate.R: improved DST conversion in the presence of NA's
+
+2010-09-29  chalabi
+
+	* R/timeDate-generateDST.R, R/tzone.R: added formal time zones in
+	  addition to the financial centers.
+	* R/calendar-dayOfWeek.R, R/calendar-dayOfYear.R,
+	  R/calendar-isWeekday.R, R/holiday-NERC.R, R/holiday-NYSE.R,
+	  R/holiday-ZURICH.R, inst/unitTests/runit.HolidayCalendars.R,
+	  inst/unitTests/runit.dayOfWeek.R,
+	  inst/unitTests/runit.dayOfYear.R,
+	  inst/unitTests/runit.isWeekday.R,
+	  inst/unitTests/runit.isWeekend.R: Using new argument of method
+	  as.POSIXlt.timeDate for better tzone management in holidays.
+	* R/base-format.R, R/base-length.R, R/base-round.R,
+	  R/base-subset.R, R/calendar-atoms.R, R/calendar-months.R,
+	  R/methods-show.R: cosmetic changes in order to use accessor
+	  functions rather than @
+	* R/methods-as.R: as.POSIXlt.timeDate and as.POSIXct.timeDate now
+	  accepts tz argument.
+	* R/methods-getDataPart.R: added getDataPart,timeDate method.
+	* R/options-RmetricsOptions.R: setRmetricsOption now returns the
+	  old setting as invisible.
+
+2010-09-24  chalabi
+
+	* DESCRIPTION, NAMESPACE: updated NAMESPACE and version number in
+	  DESC file
+	* R/timeDate-Sequence.R, man/timeDate-Sequence.Rd: by argument in
+	  timeSequence() is now the same as argument by in seq.timeDate()
+	  method.
+	* R/timeDate-DaylightSavingTime.R: updated DST rules
+
+2010-09-16  chalabi
+
+	* R/timeDate-midnightStandard.R: midnightStandard is now based on
+	  midnightStandard2
+
+2010-08-02  chalabi
+
+	* man/00fCalendar-package.Rd, man/00timeDate-package.Rd: renmaed
+	  package manual page
+
+2010-07-26  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and ChangeLog
+	* DESCRIPTION: updated version number
+
+2010-07-23  chalabi
+
+	* inst/DocCopying.pdf: removed DocCopying.pdf license is already
+	  specified in DESCRIPTION file
+
+2010-07-06  chalabi
+
+	* ChangeLog, DESCRIPTION: updated DESC and Changelog
+
+2010-07-05  chalabi
+
+	* R/timeDate-DaylightSavingTime.R: updated DST
+	* R/timeDate.R: code cleanup
+	* R/methods-show.R, R/zzz.R: added getRmetricsOption('max.print')
+	  for timeDate objects
+	* R/base-format.R, R/methods-names.R, man/methods-names.Rd: added
+	  names support
+	* R/timeDate-midnightStandard.R: midnightStandard() can also
+	  handling dates without leading zeros
+
+2010-07-02  mmaechler
+
+	* R/timeDate-midnightStandard.R, R/timeDate.R,
+	  inst/unitTests/runit.Class.R, man/timeDate-midnightStandard.Rd:
+	  more midnightStandard()/midnightStandard2(); improve help; add
+	  regression test for last fix
+
+2010-07-02  chalabi
+
+	* R/timeDate-midnightStandard.R: improved handling of dates without
+	  leading zeros and IS0 8601 midnight stantard
+
+2010-04-16  chalabi
+
+	* DESCRIPTION: updated version number
+	* DESCRIPTION: DESC and Changelog
+
+2010-04-13  chalabi
+
+	* R/stats-kurtosis.R, R/stats-skewness.R, R/timeDate.R: Applied
+	  patch for timeDate from Brian Ripley for internal changes of
+	  date-time classes in R-devel.
+
+2009-12-10  chalabi
+
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated Changelog and DESC file
+	* man/options-RmetricsOptions.Rd: updated getRmetricsOption man
+	  page
+	* R/timeDate-DaylightSavingTime.R: updated DST
+
+2009-10-12  chalabi
+
+	* NAMESPACE: updated NAMESPACE
+	* inst/doc, inst/doc/timeDate.pdf: added pdf file describing
+	  timeDate
+
+2009-09-28  chalabi
+
+	* DESCRIPTION: updated version number
+	* ChangeLog, DESCRIPTION: updated DESCR and ChangeLog
+	* R/timeDate-DaylightSavingTime.R, R/timeDate-generateDST.R:
+	  updated DST
+
+2009-09-15  chalabi
+
+	* NAMESPACE, R/timeDate-midnightStandard.R, R/timeDate.R,
+	  man/timeDate-midnightStandard.Rd: introduced midnightStandard2 to
+	  improve speed when converting character vectors to timeDate
+	  objects.
+	* NAMESPACE, R/AllGeneric.R, R/calendar-isDaily.R,
+	  R/calendar-isMonthly.R, R/calendar-isQuarterly.R,
+	  R/calendar-isRegular.R, R/stats-frequency.R: isDaily, isMonthly,
+	  isQuarterly, isRegular and frequency are now proper S4 generics
+	  and methods.
+	  isDaily, isMonthly, isQuarterly uses now numeric representation
+	  of time rather than characters for speed improvement.
+
+2009-08-29  wuertz
+
+	* R/AllGeneric.R, R/base-c.R, R/base-diff.R, R/base-difftimeDate.R,
+	  R/base-format.R, R/base-rev.R, R/base-round.R, R/base-sample.R,
+	  R/base-sort.R, R/base-subset.R, R/base-summary.R,
+	  R/base-unique.R, R/base-weekdays.R, R/calendar-Easter.R,
+	  R/calendar-align.R, R/calendar-atoms.R, R/calendar-dayOfWeek.R,
+	  R/calendar-dayOfYear.R, R/calendar-endpoints.R,
+	  R/calendar-firstDay.R, R/calendar-isBizday.R,
+	  R/calendar-isDaily.R, R/calendar-julian.R, R/calendar-months.R,
+	  R/calendar-nDay.R, R/calendar-onOrAfter.R, R/calendar-periods.R,
+	  R/class-timeDate.R, R/graphics-plot.R, R/holiday-Dates.R,
+	  R/holiday-Listing.R, R/holiday-NERC.R, R/holiday-NYSE.R,
+	  R/holiday-TSX.R, R/holiday-ZURICH.R, R/holiday.R, R/methods-as.R,
+	  R/methods-mathOps.R, R/methods-show.R,
+	  R/options-RmetricsOptions.R, R/options-currentYear.R,
+	  R/options-myFinCenter.R, R/options-myUnits.R,
+	  R/stats-blockStart.R, R/stats-frequency.R, R/stats-kurtosis.R,
+	  R/stats-na.fail.R, R/stats-skewness.R, R/stats-start.R,
+	  R/stats-window.R, R/timeDate-Calendar.R,
+	  R/timeDate-DaylightSavingTime.R, R/timeDate-Sequence.R,
+	  R/timeDate-Sys.timeDate.R, R/timeDate-finCenter.R,
+	  R/timeDate-generateDST.R, R/timeDate-listFinCenter.R,
+	  R/timeDate-midnightStandard.R, R/timeDate-rulesFinCenter.R,
+	  R/timeDate-whichFormat.R, R/timeDate.R: Descriptions added,
+	  copyrigth headers checked, should go now in the copyright file
+
+2009-08-28  wuertz
+
+	* inst/todo.txt: no longer required, clean up
+	* R/class-timeDate.R, R/graphics-plot.R: comments added
+	* R/timeDate-Sys.timeDate.R, R/timerDate-Sys.timeDate.R,
+	  man/listFinCenter.Rd, man/timeDate-listFinCenter.Rd: man and R
+	  files renamed
+	* man/DaylightSavingTime.Rd, man/Easter.Rd, man/RmetricsOptions.Rd,
+	  man/Sys.timeDate.Rd, man/align.Rd, man/base-c.Rd,
+	  man/base-diff.Rd, man/base-difftimeDate.Rd, man/base-format.Rd,
+	  man/base-length.Rd, man/base-rep.Rd, man/base-rev.Rd,
+	  man/base-round.Rd, man/base-sample.Rd, man/base-sort.Rd,
+	  man/base-start.Rd, man/base-subset.Rd, man/base-summary.Rd,
+	  man/base-unique.Rd, man/blockStart.Rd, man/c.Rd,
+	  man/calendar-Easter.Rd, man/calendar-align.Rd,
+	  man/calendar-dayOfWeek.Rd, man/calendar-dayOfYear.Rd,
+	  man/calendar-firstDay.Rd, man/calendar-isBizday.Rd,
+	  man/calendar-isRegular.Rd, man/calendar-isWeekday.Rd,
+	  man/calendar-julian.Rd, man/calendar-nDay.Rd,
+	  man/calendar-onOrAfter.Rd, man/calendar-periods.Rd,
+	  man/currentYear.Rd, man/dayOfWeek.Rd, man/dayOfYear.Rd,
+	  man/diff.Rd, man/difftimeDate.Rd, man/finCenter.Rd,
+	  man/firstDay.Rd, man/graphics-plot.Rd, man/holiday-Dates.Rd,
+	  man/holiday-Listing.Rd, man/holiday-NERC.Rd, man/holiday-NYSE.Rd,
+	  man/holiday-TSX.Rd, man/holiday-ZURICH.Rd, man/holidayDate.Rd,
+	  man/holidayNERC.Rd, man/holidayNYSE.Rd, man/holidayTSX.Rd,
+	  man/holidayZURICH.Rd, man/isBizday.Rd, man/isRegular.Rd,
+	  man/isWeekday.Rd, man/julian.Rd, man/kurtosis.Rd, man/length.Rd,
+	  man/listHolidays.Rd, man/methods-Ops.Rd, man/methods-format.Rd,
+	  man/methods-mathOps.Rd, man/methods-na.Rd, man/methods-plot.Rd,
+	  man/methods-summary.Rd, man/midnightStandard.Rd,
+	  man/myFinCenter.Rd, man/myUnits.Rd, man/nDay.Rd,
+	  man/onOrAfter.Rd, man/options-RmetricsOptions.Rd,
+	  man/options-currentYear.Rd, man/options-myFinCenter.Rd,
+	  man/options-myUnits.Rd, man/periods.Rd, man/rep.Rd, man/rev.Rd,
+	  man/round.Rd, man/rulesFinCenter.Rd, man/sample.Rd,
+	  man/skewness.Rd, man/sort.Rd, man/start.Rd,
+	  man/stats-blockStart.Rd, man/stats-kurtosis.Rd,
+	  man/stats-na-fail.Rd, man/stats-skewness.Rd, man/stats-window.Rd,
+	  man/subset.Rd, man/timeCalendar.Rd, man/timeDate-Calendar.Rd,
+	  man/timeDate-DaylightSavingTime.Rd, man/timeDate-Sequence.Rd,
+	  man/timeDate-Sys.timeDate.Rd, man/timeDate-finCenter.Rd,
+	  man/timeDate-midnightStandard.Rd, man/timeDate-rulesFinCenter.Rd,
+	  man/timeDate-whichFormat.Rd, man/timeSequence.Rd, man/unique.Rd,
+	  man/whichFormat.Rd, man/window.Rd: script files renamed
+	* R/RmetricsOptions.R, R/calendar--isQuarterly.R,
+	  R/calendar-align.R, R/calendar-endpoints.R,
+	  R/calendar-isQuarterly.R, R/calendar-isRegular.R,
+	  R/calendar-periods.R, R/endpoints.R, R/methods-Ops.R,
+	  R/methods-align.R, R/methods-mathOps.R, R/myFinCenter.R,
+	  R/myUnits.R, R/options-RmetricsOptions.R,
+	  R/options-currentYear.R, R/options-myFinCenter.R,
+	  R/options-myUnits.R, R/regular-isRegular.R, R/regular-periods.R,
+	  R/timeDate-currentYear.R: filenames renamed
+	* R/DaylightSavingTime.R, R/Sys.timeDate.R, R/base-c.R,
+	  R/base-diff.R, R/base-difftimeDate.R, R/base-format.R,
+	  R/base-length.R, R/base-rep.R, R/base-rev.R, R/base-round.R,
+	  R/base-sample.R, R/base-sort.R, R/base-subset.R,
+	  R/base-summary.R, R/base-unique.R, R/base-weekdays.R,
+	  R/blockStart.R, R/c.R, R/calendar--isQuarterly.R,
+	  R/calendar-Easter.R, R/calendar-atoms.R, R/calendar-dayOfWeek.R,
+	  R/calendar-dayOfYear.R, R/calendar-firstDay.R,
+	  R/calendar-isBizday.R, R/calendar-isDaily.R,
+	  R/calendar-isMonthly.R, R/calendar-isWeekday.R,
+	  R/calendar-julian.R, R/calendar-months.R, R/calendar-nDay.R,
+	  R/calendar-onOrAfter.R, R/currentYear.R, R/dayOfWeek.R,
+	  R/dayOfYear.R, R/diff.R, R/difftimeDate.R,
+	  R/genDaylightSavingTime.R, R/graphics-plot.R, R/holiday-Dates.R,
+	  R/holiday-Listing.R, R/holiday-NERC.R, R/holiday-NYSE.R,
+	  R/holiday-TSX.R, R/holiday-ZURICH.R, R/holidayDate.R,
+	  R/holidayNERC.R, R/holidayNYSE.R, R/holidayTSX.R,
+	  R/holidayZURICH.R, R/isBizday.R, R/isWeekday.R, R/julian.R,
+	  R/kurtosis.R, R/length.R, R/listFinCenter.R, R/listHolidays.R,
+	  R/methods-atoms.R, R/methods-finCenter.R, R/methods-format.R,
+	  R/methods-julian.R, R/methods-months.R, R/methods-na.R,
+	  R/methods-plot.R, R/methods-summary.R, R/midnightStandard.R,
+	  R/regular-frequency.R, R/regular-isDaily.R,
+	  R/regular-isMonthly.R, R/regular-isQuarterly.R, R/rep.R, R/rev.R,
+	  R/round.R, R/rulesFinCenter.R, R/sample.R, R/skewness.R,
+	  R/sort.R, R/specialDates-Easter.R, R/specialDates-firstDay.R,
+	  R/specialDates-nDay.R, R/specialDates-onOrAfter.R, R/start.R,
+	  R/stats-blockStart.R, R/stats-frequency.R, R/stats-kurtosis.R,
+	  R/stats-na.fail.R, R/stats-skewness.R, R/stats-start.R,
+	  R/stats-window.R, R/subset.R, R/timeCalendar.R,
+	  R/timeDate-Calendar.R, R/timeDate-DaylightSavingTime.R,
+	  R/timeDate-Sequence.R, R/timeDate-currentYear.R,
+	  R/timeDate-finCenter.R, R/timeDate-generateDST.R,
+	  R/timeDate-listFinCenter.R, R/timeDate-midnightStandard.R,
+	  R/timeDate-rulesFinCenter.R, R/timeDate-whichFormat.R,
+	  R/timeSequence.R, R/timerDate-Sys.timeDate.R, R/unique.R,
+	  R/whichFormat.R, R/window.R: file names renamed to get better
+	  order in the directory
+	* man/class-timeDate.Rd, man/timeDate.Rd: NAs in POSIX does not
+	  work any longer under windows 2.9.1 ? Removed from examples in
+	  man page
+	* NAMESPACE, R/regular-frequency.R, man/isRegular.Rd: namespace and
+	  man page updated for regular objects
+
+2009-08-28  wuertz
+
+	* R/regular-periods.R, man/isRegular.Rd, man/periods.Rd: periodical
+	  rolling updated
+	* NAMESPACE: obsolete ."rolling" functions from Namespace removed
+	* NAMESPACE: namespace updated for regular functions
+	* R/periods.R, R/regular-frequency.R, R/regular-isDaily.R,
+	  R/regular-isMonthly.R, R/regular-isQuarterly.R,
+	  R/regular-isRegular.R, R/regular-periods.R, man/isRegular.Rd:
+	  regular series check added
+	* R/isBizday.R, R/isWeekday.R: doubled function definitions removed
+
+2009-08-28  chalabi
+
+	* R/timeDate.R: Improved handling of time stamps prior to first
+	  entry in DST table.
+
+2009-08-28  wuertz
+
+	* R/Easter.R, R/firstDay.R, R/nDay.R, R/onOrAfter.R,
+	  R/specialDates-Easter.R, R/specialDates-firstDay.R,
+	  R/specialDates-nDay.R, R/specialDates-onOrAfter.R: script files
+	  for special dates renamed
+
+2009-08-14  chalabi
+
+	* NAMESPACE, R/zzz.R: new NAMESPACE structure which should ease
+	  maintenance of packages.
+	* NAMESPACE, R/methods-plot.R, man/methods-plot.Rd: Merge branch
+	  'devel-timeSeries'
+	  
+	  Conflicts:
+	  pkg/timeSeries/R/base-Extract.R
+	  pkg/timeSeries/R/timeSeries.R
+
+2009-05-13  wuertz
+
+	* R/timeDate.R: minor modification for using decimal date formats
+	* R/timeDate.R: Modification of setMethod("timeDate", "numeric") to
+	  handle
+	  decimal date like inputs (exactly that what "yearmon" does)
+	  also implemented in the ISO Standard
+	* R/endpoints.R: new function endpoints added
+	* NAMESPACE: endpoints added to namespace
+
+2009-05-07  wuertz
+
+	* DESCRIPTION, NAMESPACE, R/holidayNERC.R, man/holidayNERC.Rd:
+	  holiday NERC Calendar added
+
+2009-04-15  chalabi
+
+	* R/DaylightSavingTime.R: updated DST table
+
+2009-04-02  chalabi
+
+	* DESCRIPTION: more explicit depends and suggests field in DESC
+	  file.
+
+2009-04-01  chalabi
+
+	* DESCRIPTION: updated DESC file
+
+2009-03-06  chalabi
+
+	* R/methods-show.R: 'show' should return an invisible 'NULL'. as
+	  specified in ?show
+
+2009-02-23  chalabi
+
+	* NAMESPACE, R/periods.R, man/periods.Rd: added functions
+	  monthlyRolling, periodicallyRolling and periods
+
+2009-02-10  chalabi
+
+	* R/timeDate.R: in timeDate() charvec entries of different length
+	  are replaced with NA's
+	* R/subset.R: use POSIX character classes instead of ASCII classes
+	  to avoid compatibility problems with different locales.
+	* R/timeDate.R: timeDate() now returns timeDate(NA) if the format
+	  of charvec can not be found
+
+2009-02-04  chalabi
+
+	* ChangeLog:
+	* DESCRIPTION: updated version number
+
+2009-01-28  chalabi
+
+	* R/whichFormat.R:
+	* inst/unitTests/runit.Subsets.R: added subset RUnit tests
+	* R/midnightStandard.R, R/whichFormat.R: handling NA's with
+	  timeDate
+	* man/methods-na.Rd: added help page for is.na method of timeDate
+	* R/methods-na.R, R/midnightStandard.R, R/whichFormat.R: timeDate
+	  now handles NA's
+	* NAMESPACE: added is.na methods for timeDate objects
+	* DESCRIPTION: updated version number
+	* R/methods-na.R: added 'is.na' method for timeDate objects
+
+2009-01-12  chalabi
+
+	* man/methods-Ops.Rd, man/nDay.Rd: fixed few typos in man pages
+	* R/start.R: faster start,timeDate method
+	* R/sample.R: faster sample,timeDate method
+	* R/rev.R: faster rev,timeDate method
+	* R/rep.R: faster rep,timeDate method
+

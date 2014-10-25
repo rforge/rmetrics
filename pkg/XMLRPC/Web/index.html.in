@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<link rel="stylesheet" href="../OmegaTech.css"/>
+<title>@PKG_NAME@</title>
+</head>
+
+
+<body>
+<h1>@PKG_NAME@</h1>
+<p align=right><a href="@TAR_FILE@">@TAR_FILE@</a> (@DATE@)</p>
+
+<p>
+This package provides an implementation of XML-RPC, a
+relatively simple remote procedure call mechanism
+that uses HTTP and XML.  This can be used for
+communicating between processes on a single machine
+or for accessing Web services from within R.
+
+<p>
+One illustration of this package is the
+<a href="../RUbigraph">RUbigraph</a> package
+that  sends instructions from R to an Ubigraph
+server running on the same or a different machine
+and which draws a dynamic, interactive graph.
+
+
+<h2>The Software</h2>
+
+The primary (and only) function is <code>xml.rpc</code> and this is
+used to make a method call and specify zero or more arguments.
+There are numerous internal functions that implement the details
+of marshalling objects between the both sides of the interface.
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:duncan@wald.ucdavis.edu>&lt;duncan@wald.ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Fri Jul 10 16:34:31 PDT 2009
+<!-- hhmts end -->
+</body> </html>

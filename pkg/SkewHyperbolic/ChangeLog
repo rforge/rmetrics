@@ -1,0 +1,74 @@
+2014-10-05    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION update to change RUnit to suggests, not depends
+
+2013-05-13    <d.scott@auckland.ac.nz>
+
+	* skewhypParam updated to avoid creating mu, delta, beta, and nu
+	which might overwrite existing values
+
+	* dskewhyp updated to deal with underflow of Bessel function
+
+2013-02-26    <d.scott@auckland.ac.nz>
+
+	* version changed to 0.3-2
+
+	* testskewhypTailPlotLine.R changed to have a fixed seed when
+	simulating data, at request of CRAN maintainers
+
+2012-04-13    <d.scott@auckland.ac.nz>
+
+	* version changed to 0.3-1
+
+	* test.qskewhyp changed to level2test.qskewhyp in unitTests
+	because of intermittent failures
+
+2010-03-31    <d.scott@auckland.ac.nz>
+
+	* Version updated to 0.3-0
+
+	* skewhypParam introduced to enable unit testing. Unit tests
+	developed for pskewhyp, qskewhyp and skewhypCalcRange
+
+	* pskewhyp, qskewhyp totally altered to try and improve numeric
+	performance. Extra arguments added to allow specification of
+	tolerances in calls to integrate and uniroot. Integration to be
+	carried out from infinity closer to value than mode and
+	complementation used. lower.tail argument honoured.
+
+
+2010-03-18    <d.scott@auckland.ac.nz>
+
+	* skewhypCalcRange changed to refer to probability, not density
+	skewhypStepSize introduced to step out properly in long tail
+
+	* NAMESPACE changed to export all with 'skewhyp'
+
+2010-02-12    <d.scott@auckland.ac.nz>
+
+	* Depends changed to DistributionUtils and
+	GeneralizedHyperbolic. Version 0.2-0 completed.
+
+2010-01-11    <d.scott@auckland.ac.nz>
+
+	* SkewHyperbolic updated to 0.1-3
+
+	* ais (Australian Institute of Sport) data set added. Taken from
+	package sn
+
+	* plot.skewhypFit: dots added to curve function calls so
+	parameters can be supplied (e.g. n, the number of points)
+
+	* ppskewhyp and qqskewhyp subtitle default changed to match those
+	for hist and logHist (param = (parameter values vector))
+
+
+2009-10-10    <d.scott@auckland.ac.nz>
+
+	* SkewHyperbolic-package.Rd and skewhypMom.Rd edited to fix
+	problems with links to HyperbolicDist
+
+2009-10-08    <d.scott@auckland.ac.nz>
+
+	* skewhypMom.R added and updated version to 0.1-2, help files edited.
+

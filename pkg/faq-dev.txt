@@ -1,0 +1,28 @@
+Rmetrics Developer Frequently Asked Questions ...
+
+Questions:
+- Why are you using \dontrun{} command in some examples? 
+
+
+
+Answers:
+--------------------------------------------------------------------------------
+- Why are you using \dontrun{} command in examples?
+
+  The \dontrun tag in examples is or may be important in
+  the following situations:
+
+  The CRAN installation cannot check and run examples
+  when there is an internet access, it breaks installation in Vienna!
+  So \dontrun is essential in the manual pages for the commands
+  *Import and *Series with Internet.
+
+  All plot functions where the which="ask" argument ist set must
+  have a \dontrun. These examples are showing the users how
+  to use interactive plot tools. However if they are active  in
+  examples, they stop installation and package building
+  process on the CRAN server waiting for an interactive response.
+
+  All examples with tcl/tk are not allowed to run, they produce also
+  problems on the CRAN server.
+--------------------------------------------------------------------------------

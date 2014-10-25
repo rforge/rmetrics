@@ -1,0 +1,120 @@
+<html><head><title>Function to Forecast a Markov Switching Model in t+1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MS_Regress_For(fMarkovSwitching)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MS_Regress_For">
+<param name="keyword" value=" Function to Forecast a Markov Switching Model in t+1">
+</object>
+
+
+<h2>Function to Forecast a Markov Switching Model in t+1</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function will take as input a MS_Model object, the new set of explanatory variables and then forecast in t+1 
+the conditional mean and standard deviation of the model based on the filtered probabilities (conditional on t-1 (t¦t-1))
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>MS_Regress_For(myModel, newIndep)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>myModel</code></td>
+<td>
+A S4 object obtained with MS_Regress_Fit</td></tr>
+<tr valign="top"><td><code>newIndep</code></td>
+<td>
+A new set of independent/explanatory variables</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The function returns a list with the following items:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>$condMean</code></td>
+<td>
+Conditional Mean for t+1</td></tr>
+<tr valign="top"><td><code>$condStd</code></td>
+<td>
+Conditional Standard Deviation in t+1</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>
+<CITE>ALEXANDER, C. (2008) 'Market Risk Analysis: Practical Financial Econometrics' Wiley</CITE><br>
+<CITE>HAMILTON, J., D. (1994) 'Time Series Analysis' Princeton University Press</CITE><br>
+<CITE>HAMILTON, J., D. (2005) 'Regime Switching Models' Palgrave Dictionary of Economic</CITE><br>
+<CITE>KIM, C., J., NELSON, C., R. (1999) 'State Space Model with Regime Switching: Classical and Gibbs-Sampling Approaches with Applications' The MIT press</CITE>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="MS_Regress_Simul.html">MS_Regress_Simul</a></code>,<code><a href="MS_Regress_Fit.html">MS_Regress_Fit</a></code>,<code><a href="MS_Regress_Lik.html">MS_Regress_Lik</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+data(dep)
+data(indep)
+
+dep=as.matrix(dep)
+indep=as.matrix(indep)
+
+# input arguments
+
+S=c(1,0,0)
+distrib&lt;-"Normal"
+k&lt;-2
+
+# new dep and indep (without last observation, which will be forecasted)
+
+dep=dep[-nrow(dep)]        
+myNewIndep=indep[-nrow(indep),]
+
+# Fit the model with ex ante data
+
+myModel&lt;-MS_Regress_Fit(dep,myNewIndep,S,k,distrib)
+
+# new indep matrix is build as the last observations
+
+newIndep_For=as.matrix(t(indep[nrow(indep),])) 
+
+# forecast with MS_Regress_For
+
+myFor&lt;-MS_Regress_For(myModel,newIndep_For)
+
+cat("\nForecast for conditional Mean in t+1= ",myFor$condMean,"\n")
+cat("Forecast for conditional Standard deviation (sigma) in t+1= ",myFor$condStd,"\n")
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fMarkovSwitching</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>

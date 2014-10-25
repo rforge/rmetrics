@@ -1,0 +1,14 @@
+#############################################################################
+#   Copyright (c) 2009 Christophe Dutang and Petr Savicky                   #
+#                                                                           #
+#   This code can be used freely for personal, academic, or                 #
+#   non-commercial purposes. For commercial purposes, please contact        #
+#   P. L'Ecuyer at: lecuyer@iro.UMontreal.ca                                #
+#                                                                           #
+#                                                                           #
+#############################################################################
+### rngWELL package
+###
+###			'autoconf' config file 
+### 
+cp -p src/config.h.win src/config.h

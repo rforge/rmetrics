@@ -1,0 +1,77 @@
+<html><head><title>Function to plot an ACD S4 object</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>plot.acdModel(fACD)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   plot.acdModel">
+<param name="keyword" value=" Function to plot an ACD S4 object">
+</object>
+
+
+<h2>Function to plot an ACD S4 object</h2>
+
+
+<h3>Description</h3>
+
+<p>
+This function plots the results from the use of <code>ACD_Fit</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>plot.acdModel(modelOut)</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>modelOut</code></td>
+<td>
+A S4 object from <code>ACD_Fit</code></td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Returns nothing. Plot the graphics.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Marcelo Perlin - ICMA/UK &lt;<a href="mailto:marceloperlin@gmail.com">marceloperlin@gmail.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="ACD_Fit.html">ACD_Fit</a></code>,<code><a href="ACD_Simul.html">ACD_Simul</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+data(myDur)
+
+x=myDur
+pLag=1
+qLag=1
+distrib='exp'
+
+typeACD='ACD'
+
+modelOut&lt;-ACD_Fit(x,qLag,pLag,distrib,typeACD)
+plot(modelOut)
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fACD</em> version 1.0 <a href="00Index.html">Index]</a></div>
+
+</body></html>
