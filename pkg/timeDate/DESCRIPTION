@@ -1,13 +1,13 @@
 Package: timeDate
 Title: Rmetrics - Chronological and Calendar Objects
-Date: 2013-10-30
+Date: 2014-10-27
 Version: 3011.99
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb],
 	Martin Maechler [ctb],
-	W. Byers [ctb]
+	Joe W. Byers [ctb]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance".
