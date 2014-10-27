@@ -21,10 +21,10 @@
 
 
 \usage{
-assetsPairsPlot(x, labels = TRUE, \dots)
-assetsCorgramPlot(x, labels = TRUE, 
+assetsPairsPlot(x, \dots)
+assetsCorgramPlot(x,
     method = c("pie", "shade"), \dots)
-assetsCorTestPlot(x, labels = TRUE, \dots)
+assetsCorTestPlot(x, \dots)
 assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"), 
     use = c("pearson", "kendall", "spearman"), abbreviate = 3, \dots)
 }

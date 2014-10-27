@@ -25,7 +25,7 @@
 
 
 assetsPairsPlot <-
-    function(x, labels = TRUE, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -36,8 +36,6 @@ assetsPairsPlot <-
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    #   labels - a logical flag. Should default labels be printed?
-    #       Not implemented.
 
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
@@ -64,7 +62,7 @@ assetsPairsPlot <-
 
 
 assetsCorgramPlot <-
-    function(x, labels = TRUE, method = c(  "pie", "shade"), ...)
+    function(x, method = c(  "pie", "shade"), ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -75,9 +73,6 @@ assetsCorgramPlot <-
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    #   labels - a logical flag. Should default labels be printed?
-    #       Not implemented.
-    #   Added in call to .corrgram by DJS, 20/02/2010
 
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
@@ -129,7 +124,7 @@ assetsCorgramPlot <-
 
 
 assetsCorTestPlot <-
-    function(x, labels = TRUE, ...)
+    function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -140,8 +135,6 @@ assetsCorTestPlot <-
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    #   labels - a logical flag. Should default labels be printed?
-    #       Not implemented.
 
     # Example:
     #   x = as.timeSeries(data(LPP2005REC))[, 1:6]
