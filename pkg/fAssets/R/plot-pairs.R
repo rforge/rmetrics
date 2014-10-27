@@ -112,10 +112,13 @@ assetsCorgramPlot <-
     }
 
     # Plot Corellogram - Pies and Ellipses:
-    .corrgram(x, labels = labels,
-        lower.panel = .panel.lower,
-        upper.panel = .panel.upper,
-        text.panel = .panel.txt, ...)
+    pairs(x,
+          lower.panel = .panel.lower,
+          upper.panel = .panel.upper,
+          ...)
+    #   .corrgram(x, labels = labels, lower.panel = .panel.lower, 
+    #             upper.panel = .panel.upper, text.panel = .panel.txt, 
+    #             ...)
 
     # Return Value:
     invisible()
