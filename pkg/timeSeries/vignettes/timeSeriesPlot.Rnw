@@ -1367,10 +1367,10 @@ plot(returns(tS6), plot.type="m", col = .colorwheelPalette(6),
 \subsection{Adding an EMA to Multiple Index Plots}
 
 
-This example shows how to add an EMA indicator to each plot panel.
+This example shows how to add an EMA indicator to each plot panel. The
+\texttt{emaTA()} function is provided by the \texttt{fTrading} package.
 
 <<emaMultiple>>=
-require(fTrading)
 par(mfrow=c(1, 1))
 lines2 <- function(X, Y, type, xlab, ylab, col, pch, lty, lwd, cex) {
   lines(x=X, y=Y, type="l", col=col)

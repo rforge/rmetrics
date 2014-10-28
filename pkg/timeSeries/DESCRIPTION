@@ -1,6 +1,6 @@
 Package: timeSeries
 Title: Rmetrics - Financial Time Series Objects
-Date: 2014-10-22
+Date: 2014-10-28
 Version: 3011.98
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
@@ -11,7 +11,7 @@ Description: Environment for teaching
 	"Financial Engineering and Computational Finance".
 Depends: R (>= 2.10), graphics, grDevices, stats, methods, utils,
 	timeDate (>= 2150.95)
-Suggests: robustbase, RUnit, xts, PerformanceAnalytics, fTrading
+Suggests: RUnit, robustbase, xts, PerformanceAnalytics, fTrading
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
 	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
 	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
