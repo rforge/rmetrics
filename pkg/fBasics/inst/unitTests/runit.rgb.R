@@ -47,11 +47,11 @@ test.hexCode <-
  
     # Convert heximal numbers do decimal numbers
     # .hex.to.dec(b)
-    .hex.to.dec("AA")
+    fBasics:::.hex.to.dec("AA")
 
     # Convert decimal numbers do heximal numbers
     # .dec.to.hex(b)
-    .dec.to.hex(170)
+    fBasics:::.dec.to.hex(170)
 
     # Return Value:
     return()
