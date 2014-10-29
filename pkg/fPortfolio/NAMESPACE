@@ -2,14 +2,16 @@
 ## Exports
 ################################################################################
 exportPattern("^[^\\.]")
-exportPattern(.fportfolio.plot.1)
-exportPattern(.fportfolio.plot.2)
-exportPattern(.fportfolio.plot.3)
-exportPattern(.fportfolio.plot.4)
-exportPattern(.fportfolio.plot.5)
-exportPattern(.fportfolio.plot.6)
-exportPattern(.fportfolio.plot.7)
-exportPattern(.fportfolio.plot.8)
+
+# Needed within the portfolio book
+export(.fportfolio.plot.1)
+export(.fportfolio.plot.2)
+export(.fportfolio.plot.3)
+export(.fportfolio.plot.4)
+export(.fportfolio.plot.5)
+export(.fportfolio.plot.6)
+export(.fportfolio.plot.7)
+export(.fportfolio.plot.8)
 
 ################################################################################
 ## Imports
