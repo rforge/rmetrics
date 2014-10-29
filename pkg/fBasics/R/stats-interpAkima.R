@@ -79,8 +79,8 @@ akimaInterp <-
     }
     
     # Interpolation:
-    ans <- interp.new(x, y, z, xo, yo, linear = FALSE, ncp = NULL,
-                      extrap = extrap, duplicate = "median", dupfun = NULL)
+    ans <- akima::interp.new(x, y, z, xo, yo, linear = FALSE, ncp = NULL,
+                             extrap = extrap, duplicate = "median", dupfun = NULL)
     colnames(ans$z) <- as.character(signif(ans$x, round(log(gridPoints), 0)))
     rownames(ans$z) <- as.character(signif(ans$y, round(log(gridPoints), 0)))
     class(ans) <- "gridData"

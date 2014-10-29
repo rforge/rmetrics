@@ -1,3 +1,5 @@
+# \emph{World Federation of Stock Exchanges},
+# http://www.world-exchanges.org/statistics
 
 
 Capitalization <- matrix(c(

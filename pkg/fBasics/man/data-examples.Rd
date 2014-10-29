@@ -25,16 +25,16 @@
 \description{
   The following data sets are part of this package:
   \tabular{ll}{
-    \code{Capitalization} \tab Description Here, \cr
-    \code{cars2} \tab Description Here, \cr
-    \code{DowJones30} \tab Down Jones 30 Stocks, \cr
-    \code{HedgeFund} \tab Description Here, \cr
+    \code{Capitalization} \tab Market capitalization of domestic companies, \cr
+    \code{cars2} \tab Data for various car models, \cr
+    \code{DowJones30} \tab Down Jones 30 stocks, \cr
+    \code{HedgeFund} \tab Hennessee Hedge Fund Indices, \cr
     \code{msft.dat} \tab Daily Microsoft OHLC prices and volume, \cr
-    \code{nyse} \tab NYSE Composite Index, \cr
-    \code{PensionFund} \tab Pension Fund Portfolio, \cr
-    \code{swissEconomy} \tab Description Here, \cr
+    \code{nyse} \tab NYSE composite Index, \cr
+    \code{PensionFund} \tab Swiss Pension Fund LPP-2005, \cr
+    \code{swissEconomy} \tab Swiss Economic Data, \cr
     \code{SWXLP} \tab Swiss Pension Fund LPP-2000, \cr
-    \code{usdthb} \tab Description Here.
+    \code{usdthb} \tab Tick data of USD to THB.
   }    
 }
 
@@ -42,11 +42,14 @@
 \details{
  \bold{Capitalization:}\cr
  \code{Capitalization}
- contains ...
+ contains market capitalization of domestic companies from
+ 2003 - 2008 in USD millions.
  
  \bold{cars2:}\cr
  \code{cars2}
- contains ...
+ contains the price, country, reliability, mileage, type, weight,
+ engine displacement and net horsepower of various car
+ models.
  
  \bold{DowJones30:}\cr
  \code{DowJones30}
@@ -56,12 +59,13 @@
  
  \bold{HedgeFund:}\cr
  \code{HedgeFund}
- contains ...
+ contains monthly percentual returns of various hedge fund
+ strategies from Hennessee Group LLC.
  
  \bold{msft.dat:}\cr
  \code{msft.dat}
  contains daily prices (open, high, low and close) and
- volumes for the the Microsoft stocks.
+ volumes for the Microsoft stocks.
  
  \bold{nyse:}\cr
  \code{nyse}
@@ -69,11 +73,14 @@
  
  \bold{PensionFund:}\cr
  \code{PensionFund}
- contains ...
+ is a daily data set of the Swiss pension fund benchmark LPP-2005.
+ The data set ranges from 2005-11-01 to 2007-04-11.
+ The columns are named: SBI, SPI, SII, LMI, MPI, ALT, LPP25, LPP40, LPP60
  
  \bold{swissEconomy:}\cr
  \code{swissEconomy}
- contains ...
+ contains the GDP per capita, exports, imports, interest rates, inflation,
+ unemployment and population for the years 1964 - 1999 for Switzerland.
  
  \bold{SWXLP:}\cr
  \code{SWXLP}
@@ -83,42 +90,56 @@
  
  \bold{usdthb:}\cr
  \code{usdthb}
- contains ...
+ Tick data of US Dollar (USD) in Thailand Bhat (THB) colleted from
+ Reuters. Format: YYYYMMDDhhmm. Column variables: delay time,
+ contributer, bid and ask prices, and quality flag. It covers the 
+ Asia FX crisis in June 1997.
 }
 
 %--------------------------------------------------------------
 \references{
  \bold{Capitalization:}\cr
- Authors; \emph{Article}; Journal, pages
+ \emph{World Federation of Stock Exchanges},
+ http://www.world-exchanges.org/statistics.
  
  \bold{cars2:}\cr
- Authors; \emph{Article}; Journal, pages
+ Derived from the car90 dataset within the rpart package.
+ The car90 dataset is based on the car.all dataset in S-PLUS.
+ Original data comes from:
+ April 1990, \emph{Consumer Reports Magazine},
+ pages 235-255, 281-285 and 287-288.
+ % Package rpart (dataset: car90)
+ % This is derived (with permission) from the data set car.all
+ % in S-PLUS, but with some further clean up of variable names and definitions. 
+ % http://ftp.yzu.edu.tw/CRAN/doc/contrib/Lam-IntroductionToR_LHL.pdf
+ % http://www.uni-muenster.de/ZIV.BennoSueselbeck/s-html/helpfiles/car.all.html
  
  \bold{DowJones30}\cr
- Authors; \emph{Article}; Journal, pages
+ http://www.yahoo.com.
  
  \bold{HedgeFund:}\cr
- Authors; \emph{Article}; Journal, pages
+ http://www.hennesseegroup.com/indices/returns/year/2005.html.
  
  \bold{msft.dat:}\cr
- www.yahoo.com
+ http://www.yahoo.com.
  
  \bold{nyse:}\cr
- Authors; \emph{Article}; Journal, pages
+ http://www.nyse.com.
  
  \bold{PensionFund:}\cr
- Pictet (2005);
- \emph{Pension Fund Benchmark};
- www.pictet.ch
+ SBI, SPI, SII: SIX (Swiss Exchange Zurich);
+ LPP25, LPP40, LPP60: Banque Pictet Geneva;
+ LMI, MPI, ALT: Recalculated from the indices and benchmarks
  
  \bold{swissEconomy:}\cr
- Authors; \emph{Article}; Journal, pages
+ http://www.oecd.org/ and http://www.imf.org/.
  
  \bold{SWXLP:}\cr
- Authors; \emph{Article}; Journal, pages
+ SBI, SPI, SII: SIX (Swiss Exchange Zurich);
+ LPP25, LPP40, LPP60: Banque Pictet Geneva
  
  \bold{usdthb:}\cr
- Authors; \emph{Article}; Journal, pages
+ Reuters Select Feed Terminal (1997).
 
  % \bold{Example:}\cr
  % McCullough B.D., Renfro C.G. (1998);
