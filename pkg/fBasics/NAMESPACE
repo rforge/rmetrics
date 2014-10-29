@@ -1,13 +1,22 @@
 ################################################################################
 ## Exports
 ################################################################################
-exportPattern("^[^\\.]")
-exportPattern(.blue2redPalette)
-exportPattern(.green2redPalette)
-exportPattern(.blue2greenPalette)
-exportPattern(.purple2greenPalette)
-exportPattern(.blue2yellowPalette)
-exportPattern(.cyan2magentaPalette)
+exportPattern(".")
+
+# In the future this should be used:
+#exportPattern("^[^\\.]")
+
+# To do before implementation: 
+#The porfolio book needs:
+#export(.blue2redPalette)
+#export(.green2redPalette)
+#export(.blue2greenPalette)
+#export(.purple2greenPalette)
+#export(.blue2yellowPalette)
+#export(.cyan2magentaPalette)
+
+#fCouplae, fExtremes, fGarch, fMultivar and fRegression need a lot of exported
+#functions that start with a dot. This has to be fixed first...
 
 ################################################################################
 ## Imports
