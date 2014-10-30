@@ -2,7 +2,13 @@
 ChangeLog
 Package fAssets
 
-2014-09-17  setz
+2014-30-10  tsetz
+
+	* ecodist, mvnormtest and energy are import packages again
+	  since otherwise some functions within fPortfolio won't
+	  work.
+
+2014-09-17  tsetz
 
 	* ChangeLog, DESCRIPTION: Updated ChangeLog and DESCRIPTION files
 	  after submission to CRAN
