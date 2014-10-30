@@ -54,6 +54,8 @@ function(x, method = c("st", "sn", "sc"),
   # Notes:
   #   Requires function "msn.mle" and "mst.mle" from R's GPL licensed
   #     contributed package "sn", (C) 1998-2004 A. Azzalini.
+  #   The m[method]Fit functions where the "sn" functionality is used
+  #     are implemented within the fMultivar package.
   #   The object returned by this function can serve as input for the
   #     function assetsSim().
   
