@@ -68,7 +68,7 @@ getSeries.fPORTFOLIO <-
 getNAssets.fPORTFOLIO <- 
     function(object) object@data@data$nAssets
 getUnits.fPORTFOLIO <- 
-  function(object) object@data@data$names
+  function(x) x@data@data$names
     
     
 getStatistics.fPORTFOLIO <- 

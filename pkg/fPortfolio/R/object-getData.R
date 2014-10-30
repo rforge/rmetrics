@@ -57,7 +57,7 @@ getData.fPFOLIODATA <- function(object) object@data
 # Extracts the @data slot from a fPFOLIODATA object
 getSeries.fPFOLIODATA <- function(object) object@data$series   
 getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
-getUnits.fPFOLIODATA <- function(object) object@data$names
+getUnits.fPFOLIODATA <- function(x) x@data$names
 
 
 # ------------------------------------------------------------------------------

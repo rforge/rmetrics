@@ -87,7 +87,7 @@
 \method{getData}{fPORTFOLIO}(object)
 \method{getSeries}{fPORTFOLIO}(object)
 \method{getNAssets}{fPORTFOLIO}(object)
-\method{getUnits}{fPORTFOLIO}(object)
+\method{getUnits}{fPORTFOLIO}(x)
 \method{getStatistics}{fPORTFOLIO}(object)
 \method{getMean}{fPORTFOLIO}(object)
 \method{getCov}{fPORTFOLIO}(object)
@@ -133,6 +133,10 @@
 \arguments{
 
     \item{object}{
+        an object of class \code{fPORTFOLIO}, containing slots call, data,
+        specification, constraints, portfolio, title, description.
+        }
+    \item{x}{
         an object of class \code{fPORTFOLIO}, containing slots call, data,
         specification, constraints, portfolio, title, description.
         }

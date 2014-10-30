@@ -32,7 +32,7 @@
 \method{getData}{fPFOLIODATA}(object)
 \method{getSeries}{fPFOLIODATA}(object)
 \method{getNAssets}{fPFOLIODATA}(object)
-\method{getUnits}{fPFOLIODATA}(object)
+\method{getUnits}{fPFOLIODATA}(x)
 
 \method{getStatistics}{fPFOLIODATA}(object)
 \method{getMean}{fPFOLIODATA}(object)
@@ -48,6 +48,9 @@
 \arguments{
 
     \item{object}{
+        an object of class \code{fPFOLIODATA}.
+        }
+    \item{x}{
         an object of class \code{fPFOLIODATA}.
         }
 
