@@ -66,10 +66,10 @@
           return(.xtplot.timeSeries(
             x=x, y=y, FinCenter = FinCenter, 
             plot.type = plot.type,
-            format = format, at = at, 
-            widths = widths, heights = heights,
+            format = format, at = at,
             panel = panel, yax.flip = yax.flip,
-            mar.multi = mar.multi, oma.multi = oma.multi, ...)
+            mar.multi = mar.multi, oma.multi = oma.multi, 
+            axes=axes, ...)
             )
          } 
     }

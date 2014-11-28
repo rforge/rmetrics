@@ -48,11 +48,11 @@
 function(
   x,  y = NULL, FinCenter = NULL,           
   plot.type = c("single", "multiple"),
-  format = "auto", at = c("pretty", "chic"),                 
-  panel = lines,
-  yax.flip = FALSE, 
+  format = "auto", at = c("pretty", "chic"),
+  panel = lines, yax.flip = FALSE, 
   mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1), 
   oma.multi = c(7.75, 1.1, 6.1, 1.1), # oma.multi = c(6, 0, 5, 0),
+  axes = TRUE,
   ...)
 {
   # A function implemented by Diethelm Wuertz
@@ -73,10 +73,9 @@ function(
   if (is.null(dots$pch)) pch <- 20 else pch <- dots$pch
   if (is.null(dots$cex)) cex <- 1 else cex <- dots$cex
   if (is.null(dots$lty)) lty <- 1 else lty <- dots$lty
-  if (is.null(dots$lwd)) lwd <- 2 else lwd <- dots$lwd
+  if (is.null(dots$lwd)) lwd <- 1 else lwd <- dots$lwd
   if (is.null(dots$grid)) grid <- TRUE else grid <- dots$grid
   if (is.null(dots$frame.plot)) frame.plot <- TRUE else frame.plot <- dots$frame.plot
-  if (is.null(dots$axes)) axes <- TRUE else axes <- dots$axes
   if (is.null(dots$ann)) ann <- TRUE else ann <- dots$ann
   if (is.null(dots$cex.axis)) cex.axis <- 1 else cex.axis <- dots$cex.axis
   if (is.null(dots$cex.lab)) cex.lab <- 1 else cex.lab <- dots$cex.lab
@@ -142,11 +141,10 @@ function(
   if (plot.type == "single" || plot.type == "s") {
 
     # All curves in one Frame:
-    
-    ylim <- range(Y, na.rm = TRUE)
+    if (is.null(dots$ylim)) ylim <- range(Y, na.rm = TRUE) else ylim <- dots$ylim
     
     plot(X, Y[, 1], type= "n", ylim = ylim,
-      axes = FALSE, main = "", xlab = "", ylab = "")
+     axes = FALSE, main = "", xlab = "", ylab = "")
     for (i in 1:ncol(x)) {
       lines(X, series(x)[, i], type = type[i],
         col = col[i], lty = lty[i], lwd = lwd[i], pch = pch[i],
@@ -159,7 +157,7 @@ function(
     if (axes) {
       # X - Axis:
       if (AT == "counts") {
-        axis(1, cex.axis = 0.8 * cex.axis)
+        axis(1, cex.axis = cex.axis)
       } else if (AT == "pretty") {
         
         at <- pretty(time(x))
@@ -168,26 +166,26 @@ function(
           minor.at <- timeSequence(time(x)[1], time(x)[nrow(x)], 
             by = minor.ticks)
           axis.POSIXct(1, at=minor.at, labels=FALSE, col='#BBBBBB', 
-            cex.axis = 0.8 * cex.axis) }
-        axis.POSIXct(1, at = at, format = format, cex.axis = 0.8 * cex.axis)
+            cex.axis = cex.axis) }
+        axis.POSIXct(1, at = at, format = format, cex.axis = cex.axis)
         
       } else if (AT == "chic" ) {
         
         ep <- .axTicksByTime2(x, format=FORMAT)
         if (minor.ticks) axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB',
-          cex.axis = 0.8 * cex.axis)
+          cex.axis = cex.axis)
         axis.POSIXct(1, at = TIME[ep], labels=names(ep), 
-          las=1, lwd=1, mgp=c(3, 2, 0), cex.axis = 0.8 * cex.axis)
+          las=1, lwd=1, mgp=c(3, 2, 0), cex.axis = cex.axis)
       } else {
         if (minor.ticks) 
               axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB', 
-                cex.axis = 0.8 * cex.axis)
-        axis.POSIXct(1, at = at, format = format, cex.axis=0.8 * cex.axis)
+                cex.axis = cex.axis)
+        axis.POSIXct(1, at = at, format = format, cex.axis=cex.axis)
         
       }
       
       # Y - Axis:
-      axis(2, cex.axis = 0.8 * cex.axis)
+      axis(2, cex.axis = cex.axis)
     }
   
     if (frame.plot) {
