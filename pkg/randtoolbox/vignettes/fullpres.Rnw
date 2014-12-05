@@ -72,14 +72,11 @@
 %citation
 \usepackage{natbib}
 
-%short toc
-\usepackage{shorttoc}
-
 %reference hypertext
 \usepackage[pagebackref=true, hyperfootnotes=false]{hyperref}
 
 %footnote
-\usepackage[ stable]{footmisc}
+\usepackage[stable]{footmisc}
 \usepackage{perpage}
 \MakePerPage[1]{footnote}
 

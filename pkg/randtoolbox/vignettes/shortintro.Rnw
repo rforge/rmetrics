@@ -77,8 +77,6 @@
 %citation
 \usepackage{natbib}
 
-%short toc
-\usepackage{shorttoc}
 
 %reference hypertext
 \usepackage[pagebackref=true, hyperfootnotes=false]{hyperref}
