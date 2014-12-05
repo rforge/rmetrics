@@ -1,5 +1,9 @@
 === randtoolbox: an R package for random number generation and testing ===
 
+Version 1.17
+=============
+- change DESCRIPTION file.
+
 Version 1.16
 =============
 - change title and other minor things in vignettes.
