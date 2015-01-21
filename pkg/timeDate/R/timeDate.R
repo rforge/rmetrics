@@ -108,6 +108,7 @@ setMethod("timeDate", "character",
 
     ## Do conversion
     ## YC: .formatFinCenterNum faster than .formatFinCenter
+    ## TS: using zone is correct (charvec is converted to GMT)
     num <- .formatFinCenterNum(unclass(ct), zone, type = "any2gmt")
 
     ## Manually create the POSIXct object:
