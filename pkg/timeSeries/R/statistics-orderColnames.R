@@ -156,10 +156,7 @@ pcaColnames =
 
     # Order:
     if (robust) {
-        if (require(robustbase))
-            x.cor = robustbase::covMcd(as.matrix(x), cor = TRUE, ...)$cor
-        else
-            stop("package \"robustbase\" cannot be loaded")
+        x.cor = robustbase::covMcd(as.matrix(x), cor = TRUE, ...)$cor
     } else {
         x.cor = cor(as.matrix(x), ...)
     }

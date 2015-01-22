@@ -112,17 +112,17 @@ hclustColnames(x, method = c("euclidean", "complete"), \dots)
 
 \examples{
 ## Load Swiss Pension Fund Benchmark Data -
-   data(LPP2005REC)
+   data <- LPP2005REC[,1:6]
    
 ## Abbreviate Column Names -
-   colnames(LPP2005REC)
+   colnames(data)
 
 ## Sort Alphabetically - 
-   sortColnames(LPP2005REC)
+   sortColnames(data)
   
 ## Sort by Column Names by Hierarchical Clustering -
-   hclustColnames(LPP2005REC)
-   head(LPP2005REC[, hclustColnames(LPP2005REC)])
+   hclustColnames(data)
+   head(data[, hclustColnames(data)])
 }
 
 
