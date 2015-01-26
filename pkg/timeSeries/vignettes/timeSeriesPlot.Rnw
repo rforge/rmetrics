@@ -168,6 +168,9 @@ objects, we use the the daily index values from the Swiss Pension Fund
 Benchmark \emph{LPP2005}. The time series is part of the \texttt{timeSeries}
 package. For this we have introduced some abbreviations:
 
+<<environment, include=FALSE>>=
+Sys.setlocale("LC_ALL", "C")
+@
 
 <<library>>=
 require(timeSeries)

@@ -1,7 +1,7 @@
 Package: timeSeries
 Title: Rmetrics - Financial Time Series Objects
 Date: 2015-01-22
-Version: 3012.99
+Version: 3012.100
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
 	Tobias Setz [cre],
