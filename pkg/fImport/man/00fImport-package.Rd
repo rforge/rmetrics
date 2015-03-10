@@ -25,10 +25,10 @@
     \tabular{ll}{
         Package:    \tab fImport\cr
         Type:       \tab Package\cr
-        Version:    \tab R 3.0.1\cr
-        Date:       \tab 2014\cr
+        Version:    \tab R 3.1.2\cr
+        Date:       \tab 2015\cr
         License:    \tab GPL Version 2 or later\cr
-        Copyright:  \tab (c) 1999-2014 Rmetrics Assiciation\cr
+        Copyright:  \tab (c) 1999-2015 Rmetrics Assiciation\cr
         URL:        \tab \url{https://www.rmetrics.org}
     }
     

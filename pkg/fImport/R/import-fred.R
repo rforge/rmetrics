@@ -92,6 +92,16 @@ fredImport <-
             as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
         charvec <- substring(x1, 1, 10)
         X <- timeSeries(data, charvec, units = query)
+        
+        # Time Window:
+        if (is.null(to)) to <- start(X)
+        else to <- as.timeDate(to)
+        
+        if (!is.null(nDaysBack) && is.null(from)) from <- to - nDaysBack*24*3600
+        else if (is.null(from)) from <- start(X)
+        else from <- as.timeDate(from)
+        
+        X <- window(X, from, to)
     }
 
     # Save to file:
@@ -140,17 +150,15 @@ fredSeries <-
     # FUNCTION:
 
     # Download:
-    X <- fredImport(query = symbols[1], ...)@data
+    X <- fredImport(query = symbols[1],
+                    from = from, to = to, nDaysBack=nDaysBack, ...)@data
     N <- length(symbols)
     if (N > 1) {
         for (i in 2:N) {
-            X <- merge(X, fredImport(query = symbols[i], ...)@data)
+            X <- merge(X, fredImport(query = symbols[i],
+                                     from = from, to = to, nDaysBack=nDaysBack, ...)@data)
         }
     }
-
-    # Time Window:
-    if (is.null(from)) from <- to - nDaysBack*24*3600
-    X <- window(X, from, to)
 
     # Return Value:
     X

@@ -151,11 +151,10 @@ Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
 }
 
 
-%\examples{
-%## Check temporarily if functions work ...
-%   oandaImport("USD/CHF")
-%   oandaSeries("USD/CHF")
-%}
+\examples{
+oandaImport("USD/CHF")
+oandaSeries("USD/CHF")
+}
 
 
 \keyword{data}

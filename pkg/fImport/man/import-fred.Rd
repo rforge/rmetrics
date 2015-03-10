@@ -150,11 +150,10 @@ Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
 }
 
 
-%\examples{
-%## Check temporarily if functions work ...
-%   fredImport("DEXSZUS")
-%   fredSeries("DEXSZUS")
-%}
+\examples{
+fredImport("DEXSZUS")
+fredSeries("DEXSZUS")
+}
 
 
 \keyword{data}

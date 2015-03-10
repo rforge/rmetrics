@@ -196,11 +196,10 @@ Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
 }
 
 
-%\examples{
-%## Check temporarily if functions work ...
-%   yahooImport("^GDAXI")
-%   yahooSeries("^GDAXI")
-%}
+\examples{
+yahooImport("^GDAXI")
+yahooSeries("^GDAXI")
+}
 
 
 \keyword{data}
