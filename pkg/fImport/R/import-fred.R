@@ -23,25 +23,25 @@
 
 
 fredImport <-
-    function(query, file = "tempfile", source = NULL,
-    frequency = "daily",
-    from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
-    save = FALSE, sep = ";", try = TRUE)
-{
+  function(query, file = "tempfile", source = NULL,
+           frequency = "daily",
+           from = NULL, to = Sys.timeDate(), nDaysBack = NULL,
+           save = FALSE, sep = ";", try = TRUE)
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Downloads Monthly Market Data, Indices and Benchmarks from
     #   St. Louis FED, "research.stlouisfed.org".
-
+    
     # Value:
     #   An One Column data frame with row names denoting the dates
     #   given in the POSIX format "%Y%m%d". The column lists the
     #   downloaded data records.
-
+    
     # Examples:
     #   fredImport("DPRIME")
-
+    
     # Notes:
     #   This function is written for one-column daily data sets.
     #   Some example data sets include:
@@ -49,120 +49,123 @@ fredImport <-
     #     DEXSZUS   Switzerland / U.S. Foreign Exchange Rate
     #     DGS1      1-Year Treasury Constant Maturity Rate
     #     DPRIME    Bank Prime Loan Rate
-
+    
     # FUNCTION:
-
+    
     # Settings:
     stopifnot(length(query) == 1)
-
+    
     # Source"
     if (is.null(source))
-        source = "http://research.stlouisfed.org/fred2/series/"
-
+      source = "http://research.stlouisfed.org/fred2/series/"
+    
     # Check:
     if (frequency != "daily")
-        stop("Only daily data records are supported!")
-
+      stop("Only daily data records are supported!")
+    
     # Download:
     if (try) {
-        # Try for Internet Connection:
-        z = try(fredImport(query, file, source, frequency, from, to,
-            nDaysBack, save, sep, try = FALSE))
-        if (inherits(z, "try-error") || inherits(z, "Error")) {
-            return("No Internet Access")
-        } else {
-            return(z)
-        }
+      # Try for Internet Connection:
+      z = try(fredImport(query, file, source, frequency, from, to,
+                         nDaysBack, save, sep, try = FALSE))
+      if (inherits(z, "try-error") || inherits(z, "Error")) {
+        return("No Internet Access")
+      } else {
+        return(z)
+      }
     } else {
-        # Download File:
-        queryFile = paste(query, "/downloaddata/", query, ".txt", sep = "")
-        url = paste(source, queryFile, sep = "")
-        tmp = tempfile()
-        download.file(url = url, destfile = tmp)
-
-        # Scan the file:
-        x1 = scan(tmp, what = "", sep = "\n")
-
-        # Extract dates ^19XX and ^20XX:
-        x2 = x1[regexpr(pattern="^[12][90]", x1, perl=TRUE) > 0]
-        x1 = x2[regexpr(pattern=" .$", x2, perl=TRUE) < 0]
-
-        # Compose Time Series:
-        data <- matrix(
-            as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
-        charvec <- substring(x1, 1, 10)
-        X <- timeSeries(data, charvec, units = query)
-        
-        # Time Window:
-        if (is.null(to)) to <- start(X)
-        else to <- as.timeDate(to)
-        
-        if (!is.null(nDaysBack) && is.null(from)) from <- to - nDaysBack*24*3600
-        else if (is.null(from)) from <- start(X)
-        else from <- as.timeDate(from)
-        
-        X <- window(X, from, to)
+      # Download File:
+      queryFile = paste(query, "/downloaddata/", query, ".txt", sep = "")
+      url = paste(source, queryFile, sep = "")
+      tmp = tempfile()
+      download.file(url = url, destfile = tmp)
+      
+      # Scan the file:
+      x1 = scan(tmp, what = "", sep = "\n")
+      
+      # Extract dates ^19XX and ^20XX:
+      x2 = x1[regexpr(pattern="^[12][90]", x1, perl=TRUE) > 0]
+      x1 = x2[regexpr(pattern=" .$", x2, perl=TRUE) < 0]
+      
+      # Compose Time Series:
+      data <- matrix(
+        as.numeric(substring(x1, 11, 999)), byrow = TRUE, ncol = 1)
+      charvec <- substring(x1, 1, 10)
+      X <- timeSeries(data, charvec, units = query)
+      
+      # Time Window:
+      if (is.null(to)) to <- Sys.timeDate()
+      to <-  trunc(as.timeDate(to),"days")
+      
+      if (is.null(from)) {
+        if (is.null(nDaysBack)) {
+          from <- start(X)
+        } else {
+          from <- to - nDaysBack*24*3600
+        }
+      }
+      from <- trunc(as.timeDate(from),"days")
+      
+      X <- window(X, from, to)
     }
-
+    
     # Save to file:
     if (save) {
-        write.table(as.data.frame(X), file = file, sep = sep)
+      write.table(as.data.frame(X), file = file, sep = sep)
     } else {
-        unlink(file)
+      unlink(file)
     }
-
+    
     # Result:
     ans <- new("fWEBDATA",
-        call = match.call(),
-        param = c(
-            "Instrument" = query,
-            "Frequency " = frequency),
-        data = X,
-        title = "Data Import from research.stlouisfed.org",
-        description = description() )
-
+               call = match.call(),
+               param = c(
+                 "Instrument" = query,
+                 "Frequency " = frequency),
+               data = X,
+               title = "Data Import from research.stlouisfed.org",
+               description = description() )
+    
     # Return Value:
     ans
-}
+  }
 
 
 # ------------------------------------------------------------------------------
-
-
 fredSeries <-
-    function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
-{
+  function(symbols, from = NULL, to = Sys.timeDate(), nDaysBack = 366, ...)
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Downloads easily time series data from St. Louis FRED
-
+    
     # Arguments:
     #   symbols - a character vector of symbol names
     #   from - from date
     #   to - to date
     #   nDaysBack - number of n-days back
     #   ... - arguments passed to the *Import()
-
+    
     # Examples:
     #   fredSeries("DPRIME")[1:10, ]
-
+    
     # FUNCTION:
-
+    
     # Download:
     X <- fredImport(query = symbols[1],
                     from = from, to = to, nDaysBack=nDaysBack, ...)@data
     N <- length(symbols)
     if (N > 1) {
-        for (i in 2:N) {
-            X <- merge(X, fredImport(query = symbols[i],
-                                     from = from, to = to, nDaysBack=nDaysBack, ...)@data)
-        }
+      for (i in 2:N) {
+        X <- merge(X, fredImport(query = symbols[i],
+                                 from = from, to = to, nDaysBack=nDaysBack, ...)@data)
+      }
     }
-
+    
     # Return Value:
     X
-}
+  }
 
 
 ################################################################################
