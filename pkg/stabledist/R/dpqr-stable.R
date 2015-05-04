@@ -775,7 +775,7 @@ R.DT.CIv <- function(p, lower.tail, log.p) {
 
 qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
                     lower.tail = TRUE, log.p = FALSE,
-                    tol = .Machine$double.eps^0.25, maxiter = 1000,
+                    tol = .Machine$double.eps^0.25, maxiter = 1000, trace = 0,
                     integ.tol = 1e-7, subdivisions = 200)
 {
     ## A function implemented by Diethelm Wuertz
@@ -816,7 +816,7 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
             .qC <- function(p) qcauchy(p, lower.tail=lower.tail, log.p=log.p)
 
             ## Calculate:
-            vapply(p, function(pp) {
+            qst1 <- function(pp) {
 
 		## 1) Find narrow interval  [xmin, xmax]  -----------------------
 		##    NB: will deal with a too narrow interval later
@@ -834,12 +834,19 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 		    xmin <- if (left) .qC(pp) else .qN(pp)
 		    xmax <- if (left) .qN(pp) else .qC(pp)
 		}
+		if(xmin >= xmax) { # fixup interval such that xmin < xmax
+		    fdx <- if(xmin == xmax) .01*max(1e-7, abs(xmin)) else 1.01*(xmin-xmax)
+		    xmin <- xmin - fdx
+		    xmax <- xmax + fdx
+		    stopifnot(xmin < xmax)
+		}
 
                 ## 2) root-finding  pstable(..) = p  inside the interval: -------
 		dx <- 1
 		repeat {
 		    root <- .unirootNA(.froot, interval = c(xmin, xmax), p = pp,
-				       tol=tol, maxiter=maxiter)
+				       extendInt = if(lower.tail) "upX" else "downX",
+				       tol=tol, maxiter=maxiter, trace=trace)
 		    if(!is.na(root))
 			break
 		    xmin <- xmin- dx
@@ -849,7 +856,8 @@ qstable <- function(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
 		    dx <- dx * 2
 		}
 		root
-	    }, 0.)
+	    }
+	    vapply(p, qst1, 0.)
         }
 
     ## Result:

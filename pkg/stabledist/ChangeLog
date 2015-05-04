@@ -1,3 +1,10 @@
+2015-05-04  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* R/dpqr-stable.R (qstable): check that xmin < xmax before using
+	uniroot.  Fixes  qstable(0, .. beta=0)  bug found by Tobias Hudec.
+
+	* R/utils.R (.unirootNA): build on newer uniroot() --> need R >= 3.1.0
+
 2012-09-30  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dpqr-stable.R (dstable, .fct1): direct 'log' argument;

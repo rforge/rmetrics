@@ -31,7 +31,7 @@ pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
         tol = 64*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
-        tol = .Machine$double.eps^0.25, maxiter = 1000,
+        tol = .Machine$double.eps^0.25, maxiter = 1000, trace = 0,
         integ.tol = 1e-7, subdivisions = 200)
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 }
@@ -72,7 +72,8 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     package maintainer about it.}
   \item{subdivisions}{maximal number of intervals for integration, see
     \code{\link{integrate}}.}
-  \item{maxiter}{maximal number of iterations in \code{\link{uniroot}}.}
+  \item{maxiter, trace}{maximal number of iterations and verboseness in
+    \code{\link{uniroot}}, see there.}
 }
 
 \value{

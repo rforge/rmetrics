@@ -173,6 +173,12 @@ stopifnot(all.equal(qstable(0.6, alpha = 0.5, beta = 1,
 stopifnot(pstable(q= -1.1, alpha=0.5, beta=1) == 0,
 	  pstable(q= -2.1, alpha=0.6, beta=1) == 0)
 
+## Found by Tobias Hudec, 2 May 2015:
+stopifnot(
+    all.equal(1.5, qstable(p=0.5, alpha=1.5, beta=0, gamma=2,   delta = 1.5)),
+    all.equal(1.5, qstable(p=0.5, alpha=0.6, beta=0, gamma=0.2, delta = 1.5))
+)
+
 ## Stable(alpha = 1/2, beta = 1, gamma, delta, pm = 1)	<===>  Levy(delta, gamma)
 source(system.file("xtraR", "Levy.R", package = "stabledist"), keep.source=interactive())
 ##-> dLevy(x, mu, c, log)                and

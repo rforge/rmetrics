@@ -1,11 +1,14 @@
 ## This is from 'fBasics',  but so small we will not import
 ## nor export, but just use it ...
 
+## Now needs R >= 3.1.0 with its new argument(s) 'extendInt' etc
 .unirootNA <-
     function(f, interval, ...,
              lower = min(interval), upper = max(interval),
              f.lower = f(lower, ...), f.upper = f(upper, ...),
-             tol = .Machine$double.eps^0.25, maxiter = 1000)
+             extendInt = c("no", "yes", "downX", "upX"),
+             check.conv = FALSE,
+             tol = .Machine$double.eps^0.25, maxiter = 1000, trace = 0)
 {
     # Arguments:
     #   see 'uniroot'
@@ -25,7 +28,8 @@
     ## else there is one :
     uniroot(f, interval = interval, ...,
             lower=lower, upper=upper, f.lower=f.lower, f.upper=f.upper,
-            tol=tol, maxiter=maxiter)$root
+	    extendInt=extendInt, check.conv=check.conv,
+	    tol=tol, maxiter=maxiter, trace=trace)$root
 }
 
 ## Not exported, and only used because CRAN checks must be faster
