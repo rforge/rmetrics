@@ -2,6 +2,11 @@
 ChangeLog
 Package fPortfolio
 
+2015-05-13  wuertz
+
+	* New function pfolioCVaRoptim added. Computes CVaR along
+          mean-CVaR optimization approach.
+
 2014-09-30  tsetz
 
 	* Final version compatible to books and other packages.

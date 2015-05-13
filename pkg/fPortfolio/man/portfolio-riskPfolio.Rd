@@ -7,6 +7,7 @@
 \alias{pfolioCVaR}
 \alias{pfolioCVaRplus}
 \alias{lambdaCVaR}
+\alias{pfolioCVaRoptim}
 
 \alias{pfolioMaxLoss}
 \alias{pfolioReturn}
@@ -31,6 +32,7 @@
     \code{pfolioCVaRplus} \tab computes Value-at-Risk+ for a portfolio of assets, \cr
     \code{pfolioCVaR} \tab computes Conditional Value-at-Risk for a PF of assets, \cr
     \code{lambdaCVaR} \tab computes CVaR's atomic split value lambda, \cr
+    \code{pfolioCVaRoptim} \tab computes Conditional VaR from mean-CVaR optimization, \cr
     \code{pfolioMaxLoss} \tab computes Maximum Loss for a portfolio of assets, \cr
     \code{pfolioReturn} \tab computes return values of a portfolio, \cr
     \code{pfolioTargetReturn} \tab computes the target return of a portfolio, \cr
@@ -45,6 +47,7 @@ pfolioVaR(x, weights = NULL, alpha = 0.05)
 pfolioCVaRplus(x, weights = NULL, alpha = 0.05) 
 pfolioCVaR(x, weights = NULL, alpha = 0.05) 
 lambdaCVaR(n, alpha = 0.05) 
+pfolioCVaRoptim(x, weights = NULL, alpha = 0.05) 
 
 pfolioMaxLoss(x, weights = NULL)
 pfolioReturn(x, weights = NULL, geometric = FALSE) 

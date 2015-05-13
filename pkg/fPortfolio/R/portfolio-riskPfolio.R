@@ -16,50 +16,50 @@
 
 
 ################################################################################
-# FUNCTION:                   DESCRIPTION:
-#  pfolioVaR                   Computes VaR for a portfolio of assets
-#  pfolioCVaR                  Computes CVaR for a portfoluio of assets
-#  pfolioCVaRplus              Computes CVaR-Plus for a portfolio of assets
-#  lambdaCVaR                  Computes CVaR's atomic split value lambda
-# FUNCTION:                   DESCRIPTION:
-#  pfolioMaxLoss               Computes maximum loss for a portfolio 
-#  pfolioReturn                Computes return series for a portfolio
-#  pfolioTargetReturn          Computes target return for a portfolio
-#  pfolioTargetRisk            Computes target risk for a portfolio
-#  pfolioHist                  Plots a histogram of portfolio returns
+# FUNCTION:               DESCRIPTION:
+#  pfolioVaR                Computes VaR for a portfolio of assets
+#  pfolioCVaR               Computes CVaR for a portfoluio of assets
+#  pfolioCVaRplus           Computes CVaR-Plus for a portfolio of assets
+#  lambdaCVaR               Computes CVaR's atomic split value lambda
+#  pfolioCVaRoptim          Computes CVaR from mean-CVaR portfolio optimization
+# FUNCTION:               DESCRIPTION:
+#  pfolioMaxLoss            Computes maximum loss for a portfolio 
+#  pfolioReturn             Computes return series for a portfolio
+#  pfolioTargetReturn       Computes target return for a portfolio
+#  pfolioTargetRisk         Computes target risk for a portfolio
+#  pfolioHist               Plots a histogram of portfolio returns
 ################################################################################
 
 
 pfolioVaR <-
-function(x, weights = NULL, alpha = 0.05)
+  function(x, weights = NULL, alpha = 0.05)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Compute Value-at-Risk for a portfolio of assets
+  # Description:
+  #   Compute Value-at-Risk for a portfolio of assets
 
-    # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - a numeric vector of weights
-    #   alpha - the confidence level
+  # Arguments:
+  #   x - a time series, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - a numeric vector of weights
+  #   alpha - the confidence level
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x <- as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Compute Portfolio VaR:
-    if (is.null(weights))
-        weights <- rep(1/dim(x)[[2]], dim(x)[[2]])
-    n <- dim(x)[1]
-    x <- apply(t(t(x) * weights), 1, sum)
-    n.alpha <- max(floor(n * alpha))
-    ans <- as.vector(sort(x)[n.alpha])
-    names(ans) <- "VaR"
+  # Compute Portfolio VaR:
+  if (is.null(weights)) weights <- rep(1/dim(x)[[2]], dim(x)[[2]])
+  n <- dim(x)[1]
+  x <- apply(t(t(x) * weights), 1, sum)
+  n.alpha <- max(floor(n * alpha))
+  ans <- as.vector(sort(x)[n.alpha])
+  names(ans) <- "VaR"
 
-    # Return Value:
-    ans
+  # Return Value:
+  ans
 }
 
 
@@ -67,36 +67,34 @@ function(x, weights = NULL, alpha = 0.05)
 
 
 pfolioCVaRplus <-
-function(x, weights = NULL, alpha = 0.05)
+  function(x, weights = NULL, alpha = 0.05)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Compute Value-at-Risk Plus for a portfolio of assets
+  # Description:
+  #   Compute Value-at-Risk Plus for a portfolio of assets
 
-    # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - a numeric vector of weights
-    #   alpha - the confidence level
+  # Arguments:
+  #   x - a time series, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - a numeric vector of weights
+  #   alpha - the confidence level
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x = as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Compute Portfolio CVaRplus:
-    if (is.null(weights)) {
-        weights = rep(1/dim(x)[[2]], dim(x)[[2]])
-    }
-    n = dim(x)[1]
-    x = apply(t(t(x) * weights), 1, sum)
-    n.alpha = max(1, floor(n * alpha)-1)
-    ans = as.vector(mean(sort(x)[1:n.alpha]))
-    names(ans) = "CVaRplus"
+  # Compute Portfolio CVaRplus:
+  if (is.null(weights)) weights = rep(1/dim(x)[[2]], dim(x)[[2]])
+  n <- dim(x)[1]
+  x <- apply(t(t(x) * weights), 1, sum)
+  n.alpha <- max(1, floor(n * alpha)-1)
+  ans <- as.vector(mean(sort(x)[1:n.alpha]))
+  names(ans) <- "CVaRplus"
 
-    # Return Value:
-    ans
+  # Return Value:
+  ans
 }
 
 
@@ -104,51 +102,49 @@ function(x, weights = NULL, alpha = 0.05)
 
 
 pfolioCVaR <-
-function(x, weights = NULL, alpha = 0.05)
+  function(x, weights = NULL, alpha = 0.05)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Compute Conditional Value-at-risk for a portfolio of assets
+  # Description:
+  #   Compute Conditional Value-at-risk for a portfolio of assets
 
-    # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - a numeric vector of weights
-    #   alpha - the confidence level
-    #   lambda - split value
+  # Arguments:
+  #   x - a time series, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - a numeric vector of weights
+  #   alpha - the confidence level
+  #   lambda - split value
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    data = as.matrix(x)
+  # Transform:
+  data <- as.matrix(x)
 
-    # Input Data:
-    if (is.null(weights)) {
-        weights = rep(1/dim(data)[[2]], dim(data)[[2]])
-    }
-    n = dim(data)[1]
-    Rp = apply(t(t(data)*weights), 1, sum)
+  # Input Data:
+  if (is.null(weights)) weights = rep(1/dim(data)[[2]], dim(data)[[2]])
+  n <- dim(data)[1]
+  Rp <- apply(t(t(data)*weights), 1, sum)
 
-    # Sort the Portfolio returns Y
-    sorted = sort(Rp)
+  # Sort the Portfolio returns Y
+  sorted <- sort(Rp)
 
-    # Compute Portfolio VaR:
-    n.alpha = floor(n*alpha)
-    VaR = sorted[n.alpha]
+  # Compute Portfolio VaR:
+  n.alpha <- floor(n*alpha)
+  VaR <- sorted[n.alpha]
 
-    # Compute Portfolio CVaRplus:
-    n.alpha = max(1, floor(n*alpha)-1)
-    CVaRplus = mean(sorted[1:n.alpha])
+  # Compute Portfolio CVaRplus:
+  n.alpha <- max(1, floor(n*alpha)-1)
+  CVaRplus <- mean(sorted[1:n.alpha])
 
-    # Compute Portfolio CVaR:
-    lambda = 1 - floor(n*alpha)/(n*alpha)
-    ans = as.vector(lambda*VaR + (1-lambda)*CVaRplus)
-    names(ans) = "CVaR"
-    attr(ans, "control") = c(CVaRplus = CVaRplus, lambda = lambda)
+  # Compute Portfolio CVaR:
+  lambda <- 1 - floor(n*alpha)/(n*alpha)
+  ans <- as.vector(lambda*VaR + (1-lambda)*CVaRplus)
+  names(ans) <- "CVaR"
+  attr(ans, "control") = c(CVaRplus = CVaRplus, lambda = lambda)
 
-    # Return Value:
-    ans
+  # Return Value:
+  ans
 }
 
 
@@ -156,25 +152,66 @@ function(x, weights = NULL, alpha = 0.05)
 
 
 lambdaCVaR <-
-function(n, alpha = 0.05)
+  function(n, alpha = 0.05)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Computes CVaR's atomic split value lambda
+  # Description:
+  #   Computes CVaR's atomic split value lambda
 
-    # Arguments:
-    #   n - the number of oberservations
-    #   alpha - the confidence interval
+  # Arguments:
+  #   n - the number of oberservations
+  #   alpha - the confidence interval
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Compute CVaR lambda:
-    lambda = 1 - floor(alpha * n) / (alpha * n)
-    names(lambda) = "lambda"
+  # Compute CVaR lambda:
+  lambda <- 1 - floor(alpha * n) / (alpha * n)
+  names(lambda) <- "lambda"
 
-    # Return Value:
-    lambda
+  # Return Value:
+  lambda
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pfolioCVaRoptim <- 
+  function(x, weights = NULL, alpha=0.05)
+{
+  # A function implemented by Diethelm Wuertz
+
+  # Description:
+  #   Compute Conditional Value-at-risk by mean-CVaR portfolio Optimization
+
+  # Arguments:
+  #   x - a time series, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - a numeric vector of weights
+  #   alpha - the confidence level
+
+  # FUNCTION:
+
+  # Transform:
+  data <- as.matrix(x)
+    
+  if (is.null(weights)) weights <- rep(1/dim(data)[[2]], dim(data)[[2]])
+  Rp <- apply(t(t(data) * weights), 1, sum)
+  .f <- function(VaR, data, weights, alpha) {
+    S <- nrow(data)
+    X <- apply(t(t(data) * weights), 1, sum) -VaR
+    CVaR <- VaR + sum((X - abs(X))/2) / S / alpha
+    CVaR }
+    
+  # Compute optimized CVaR:
+  ans <- optimize(.f, interval=range(Rp), tol=.Machine$double.eps, 
+    maximum=TRUE, data=data, weights=weights, alpha=alpha) 
+  ans <- ans$objective
+  names(ans) <- "CVaRoptim"
+      
+  # Return Value:
+  ans
 }
 
 
@@ -182,33 +219,33 @@ function(n, alpha = 0.05)
 
 
 pfolioMaxLoss <-
-function(x, weights = NULL)
+  function(x, weights = NULL)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Computes maximum loss for a portfolio of assets
+  # Description:
+  #   Computes maximum loss for a portfolio of assets
 
-    # Arguments:
-    #   x - a timeSeries, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - the vector of weights
-    #   alpha - the confidence level
+  # Arguments:
+  #   x - a timeSeries, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - the vector of weights
+  #   alpha - the confidence level
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x = as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Compute MaxLoss [MinReturn]:
-    if (is.null(weights)) {
-        weights = rep(1/dim(x)[[2]], dim(x)[[2]])
-    }
-    x = apply(t(t(x)*weights), 1, sum)
-    ans = min(x)
+  # Compute MaxLoss [MinReturn]:
+  if (is.null(weights)) {
+      weights = rep(1/dim(x)[[2]], dim(x)[[2]])
+  }
+  x = apply(t(t(x)*weights), 1, sum)
+  ans = min(x)
 
-    # Return Value:
-    ans
+  # Return Value:
+  ans
 }
 
 
@@ -250,37 +287,33 @@ pfolioReturn <-
 }
 
 
-# -----------------------------------------------------------------------------
-
-
-
 # ------------------------------------------------------------------------------
 
 
 pfolioTargetReturn <-
-function(x, weights = NULL)
+  function(x, weights = NULL)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Computes return value of a portfolio
+  # Description:
+  #   Computes return value of a portfolio
 
-    # Arguments:
-    #   x - a timeSeries, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - the vector of weights
+  # Arguments:
+  #   x - a timeSeries, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - the vector of weights
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x = as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Compute Portfolio Returns:
-    ans = mean(pfolioReturn(x = x, weights = weights))
+  # Compute Portfolio Returns:
+  ans = mean(pfolioReturn(x = x, weights = weights))
 
-    # Return Value:
-    names(ans) = "TargetReturn"
-    ans
+  # Return Value:
+  names(ans) = "TargetReturn"
+  ans
 }
 
 
@@ -288,31 +321,31 @@ function(x, weights = NULL)
 
 
 pfolioTargetRisk <-
-function(x, weights = NULL)
+  function(x, weights = NULL)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Computes risk from covariance matrix of a portfolio
+  # Description:
+  #   Computes risk from covariance matrix of a portfolio
 
-    # Arguments:
-    #   x - a timeSeries, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - the vector of weights
+  # Arguments:
+  #   x - a timeSeries, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - the vector of weights
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x = as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Compute Portfolio Returns:
-    if (is.null(weights))
-        weights = rep(1/dim(x)[[2]], dim(x)[[2]])
-    ans = as.vector(sqrt(weights %*% cov(x) %*% weights))
+  # Compute Portfolio Returns:
+  if (is.null(weights))
+      weights = rep(1/dim(x)[[2]], dim(x)[[2]])
+  ans = as.vector(sqrt(weights %*% cov(x) %*% weights))
 
-    # Return Value:
-    names(ans) = "TargetRisk"
-    ans
+  # Return Value:
+  names(ans) = "TargetRisk"
+  ans
 }
 
 
@@ -320,80 +353,80 @@ function(x, weights = NULL)
 
 
 pfolioHist <-
-function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
+  function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
 {
-    # A function implemented by Diethelm Wuertz
+  # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Plots a histogram of the returns of a portfolio
+  # Description:
+  #   Plots a histogram of the returns of a portfolio
 
-    # Arguments:
-    #   x - a timeSeries, data.frame or any other rectangular object
-    #       of assets which can be written as a matrix object
-    #   weights - the vector of weights
+  # Arguments:
+  #   x - a timeSeries, data.frame or any other rectangular object
+  #       of assets which can be written as a matrix object
+  #   weights - the vector of weights
 
-    # FUNCTION:
+  # FUNCTION:
 
-    # Transform:
-    x = as.matrix(x)
+  # Transform:
+  x <- as.matrix(x)
 
-    # Suppress Warnings:
-    opt = options()
-    options(warn = -1)
+  # Suppress Warnings:
+  opt = options()
+  options(warn = -1)
 
-    # Plot Portfolio Returns:
-    Returns = pfolioReturn(x = x, weights = weights)
-    if (is.null(range)) {
-        lim = 1.05 * pfolioMaxLoss(x = x, weights = weights)[[1]]
-        xlim = c(lim, -lim)
-    } else {
-        xlim = range
-    }
-    Histogram = hist(Returns, xlim = xlim, xlab = "Portfolio Return %",
-        probability = TRUE, col = "steelblue4", border = "white", ...)
-    r = seq(xlim[1], xlim[2], length = 201)
-    lines(r, dnorm(r, mean = mean(Returns), sd = sd(Returns)), ...)
+  # Plot Portfolio Returns:
+  Returns = pfolioReturn(x = x, weights = weights)
+  if (is.null(range)) {
+      lim = 1.05 * pfolioMaxLoss(x = x, weights = weights)[[1]]
+      xlim = c(lim, -lim)
+  } else {
+      xlim = range
+  }
+  Histogram = hist(Returns, xlim = xlim, xlab = "Portfolio Return %",
+      probability = TRUE, col = "steelblue4", border = "white", ...)
+  r = seq(xlim[1], xlim[2], length = 201)
+  lines(r, dnorm(r, mean = mean(Returns), sd = sd(Returns)), ...)
 
-    points(Returns, rep(0, length(Returns)), pch = 20,
-        col = "orange", cex = 1.25)
+  points(Returns, rep(0, length(Returns)), pch = 20,
+      col = "orange", cex = 1.25)
 
-    # Add VaR, CVaRplus and MaxLoss:
-    V1 = pfolioVaR(x = x, weights = weights, alpha = alpha)[[1]]
-    abline(v = V1, col = "blue", ...)
-    V2 = pfolioCVaRplus(x = x, weights = weights, alpha = alpha)[[1]]
-    abline(v = V2, col = "red", ...)
-    V3 = pfolioMaxLoss(x = x, weights = weights)[[1]]
-    abline(v = V3, col = "green", ...)
-    V4 = as.vector(mean(Returns))[[1]]
-    V5 = as.vector(sd(Returns))[[1]]
+  # Add VaR, CVaRplus and MaxLoss:
+  V1 = pfolioVaR(x = x, weights = weights, alpha = alpha)[[1]]
+  abline(v = V1, col = "blue", ...)
+  V2 = pfolioCVaRplus(x = x, weights = weights, alpha = alpha)[[1]]
+  abline(v = V2, col = "red", ...)
+  V3 = pfolioMaxLoss(x = x, weights = weights)[[1]]
+  abline(v = V3, col = "green", ...)
+  V4 = as.vector(mean(Returns))[[1]]
+  V5 = as.vector(sd(Returns))[[1]]
 
-    yt = max(density(Returns)$y)
+  yt = max(density(Returns)$y)
 
-    text(V1, yt, as.character(round(V1, 2)), cex = 0.75, col = "orange")
-    text(V2, yt, as.character(round(V2, 2)), cex = 0.75, col = "orange")
-    text(V3, yt, as.character(round(V3, 2)), cex = 0.75, col = "orange")
-    text(V4, yt, as.character(round(V4, 2)), cex = 0.75, col = "orange")
+  text(V1, yt, as.character(round(V1, 2)), cex = 0.75, col = "orange")
+  text(V2, yt, as.character(round(V2, 2)), cex = 0.75, col = "orange")
+  text(V3, yt, as.character(round(V3, 2)), cex = 0.75, col = "orange")
+  text(V4, yt, as.character(round(V4, 2)), cex = 0.75, col = "orange")
 
-    yt = 0.95 * yt
-    text(V1, yt, "VaR", cex = 0.75, col = "orange")
-    text(V2, yt, "CVaR+", cex = 0.75, col = "orange")
-    text(V3, yt, "maxLoss", cex = 0.75, col = "orange")
-    text(V4, yt, "Mean", cex = 0.75, col = "orange")
+  yt = 0.95 * yt
+  text(V1, yt, "VaR", cex = 0.75, col = "orange")
+  text(V2, yt, "CVaR+", cex = 0.75, col = "orange")
+  text(V3, yt, "maxLoss", cex = 0.75, col = "orange")
+  text(V4, yt, "Mean", cex = 0.75, col = "orange")
 
-    # Result:
-    options(opt)
-    ans = list(VaR = V1, VaRplus = V2, maxLoss = V3, mean = V4, sd = V5)
-    if (details) {
-        cat("\nVaR:      ", V1)
-        cat("\nVaRplus:  ", V2)
-        cat("\nmax Loss: ", V3)
-        cat("\nMean:     ", V4)
-        cat("\nStDev:    ", V5)
-        cat("\n")
-    }
+  # Result:
+  options(opt)
+  ans = list(VaR = V1, VaRplus = V2, maxLoss = V3, mean = V4, sd = V5)
+  if (details) {
+      cat("\nVaR:      ", V1)
+      cat("\nVaRplus:  ", V2)
+      cat("\nmax Loss: ", V3)
+      cat("\nMean:     ", V4)
+      cat("\nStDev:    ", V5)
+      cat("\n")
+  }
 
-    # Return Value:
-    invisible(ans)
+  # Return Value:
+  invisible(ans)
 }
 
 
