@@ -135,9 +135,6 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
 	if(!exists(".halton.seed", envir=.randtoolboxEnv, mode="list"))
 		stop("Halton algorithm not initialized.")
 	
-#print(.randtoolboxEnv)
-#print(ls(envir=.randtoolboxEnv))
-	
 	rngEnv <- .getrandtoolboxEnv(".halton.seed")
     
 # Generate:
@@ -153,10 +150,6 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
                           init= as.integer( init ),
                           trans= as.integer( 0 ),
                           PACKAGE = "randtoolbox")    
-        
-#	print(result<-list(qn=1, base=1, offset=1))
-#	print(result)
-#	cat("--\n")
 	
 # For the next numbers save (if init=FALSE)
     .setrandtoolboxEnv(.halton.seed = result[c("base", "offset")])
@@ -233,7 +226,10 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
                                              seed = result[[9]]))
     
 # Deviates:
-    result = matrix(result[[1]], ncol = dim)
+    result <- matrix(result[[1]], ncol = dim)
+
+    if(any(result >= 1))
+      warning("A call to sobol() raised an error by generating numerics greater or equal than 1.")
 
 ## Normal transformation
     if(normal)

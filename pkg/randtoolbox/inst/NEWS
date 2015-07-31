@@ -3,6 +3,13 @@
 Version 1.17
 =============
 - change DESCRIPTION file.
+- update NAMESPACE for R 3.3.0.
+- update the LICENSE file.
+- raise a warning when scrambling for Sobol sequences is incocrrect.
+
+BUG REPORT (by Kemal Dincer Dingec and Marius Hofert)
+- scrambling = 1, 3 for Sobol sequences.
+
 
 Version 1.16
 =============

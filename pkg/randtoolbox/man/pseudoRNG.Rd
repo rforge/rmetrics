@@ -72,7 +72,7 @@ The currently available generator are given below.
 	In R, there is the integer version of this generator.	
 
 	All the C code for this generator called RAN\_ARRAY by Knuth is the code of 
-	D. Knuth (cf.  \url{http://www-cs-faculty.stanford.edu/\~knuth/news02.html\#rng})
+	D. Knuth (cf.  \url{http://www-cs-faculty.stanford.edu/~uno/programs.html})
     except some C code, we add, to \emph{interface} with R.}
 
     \item{\bold{Mersenne Twister 2002 generator:}}{

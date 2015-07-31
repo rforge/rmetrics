@@ -14,15 +14,14 @@
    
   This package has currently implementations for 
   state-of-the-art pseudo RNGs for simulations as well as the usual quasi RNGs.
-  There are also some RNG tests. See \code{\link{pseudoRNG}}
-  and \code{\link{quasiRNG}}.
+  See \code{\link{pseudoRNG}} and \code{\link{quasiRNG}}, respectively. 
+  There are also some RNG tests. 
 
-  We recommend first users to take a look at the first
-  part of the vignette. The second part is for people who
-  want a deeper presentation of this topic.
+  We recommend first users to take a look at the vignette 'Quick introduction of randtoolbox',
+  whereas advanced users whould have a look at the vigentte 'A note on random number generation'.
   
   The stable version is available on CRAN 
-  \url{http://cran.r-project.org/web/packages/randtoolbox/index.html},
+  \url{http://cran.r-project.org/package=randtoolbox},
   while the development version is hosted on R-forge
   \url{http://r-forge.r-project.org/projects/rmetrics/}.
   
@@ -31,9 +30,9 @@
 \tabular{ll}{
 Package: \tab randtoolbox\cr
 Type: \tab Package\cr
-Version: \tab 1.09\cr
-Date: \tab 2011-03-06\cr
-License: \tab GPL version 2 or later\cr
+Version: \tab 1.17\cr
+Date: \tab 2015, July\cr
+License: \tab BSD_3_clause + file LICENSE\cr
 }
 }
 \author{

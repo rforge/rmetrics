@@ -182,7 +182,7 @@ AC_DEFUN([AX_EXT],
 #
 #
 #	License
-#	Copyright © 2008 Guido U. Draheim <guidod@gmx.de>
+#	Copyright (c) 2008 Guido U. Draheim <guidod@gmx.de>
 #
 #	This program is free software; you can redistribute it and/or modify 
 #	it under the terms of the GNU General Public License as published by 
@@ -291,7 +291,7 @@ fi
 
 
 ### initialize
-AC_INIT([randtoolbox], 1.09, [christophe.dutang@ensimag.fr])
+AC_INIT([randtoolbox], 1.17, [christophe.dutang@ensimag.fr])
 
 ### check header (1st arg), preprocessor @DEFS@ (2nd arg) if found, nothing if not found (3rd arg) 
 AC_CHECK_HEADER([sys/time.h], 
