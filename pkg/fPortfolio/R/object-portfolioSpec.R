@@ -12,32 +12,42 @@
 portfolioSpec <-
 function(
     model = list(
-        type = "MV",                   # Alt: "LPM", "CVaR"
+        type = "MV",                   # Alt: "LPM", "CVaR", "LPM"
         optimize = "minRisk",          # Alt: "maxReturn"
         estimator = "covEstimator",    # Alt: "shrinkEstimator", 
-                                       #      "lpmEstimator"
         tailRisk = list(),
-        params = list(alpha = 0.05, a = 1)),
+        ## I think the LPM a=1 we don't need.
+        ## params = list(alpha = 0.05, a = 1)),
+        ## This is CVaR's alpha it should not be removed here, it is
+        ## ... required in any situation when it comes to the calculation
+        ## ... of VaR and CVaR Risk
+        params = list(alpha = 0.05),
     portfolio = list(
+        ## What is the here the meaning of NULL and what makes the 
+        ## difference here between NULL and NA?
+        ## ... NULL means, None of the three
         weights = NULL,
         targetReturn = NULL,
         targetRisk = NULL,
+        # Risk Free rate ...
         riskFreeRate = 0,
         nFrontierPoints = 50,
+        ## Should not be prined if NA
         status = NA),
     optim = list(
-         solver = "solveRquadprog",     # Alt: "solveRdonlp2" 
-                                        #      "solveRsolnp"
-                                        #      "solveRglpk", 
-                                        #      "solveRsymphony"
-                                        #      "solveRsocp" ...
-         objective = c(
+        solver = "solveRquadprog",  # Alt: "solveRdonlp2" 
+                                    #      "solveRsolnp"
+                                    #      "solveRglpk", 
+                                    #      "solveRsymphony"
+                                    #      "solveRsocp" ...
+        objective = c(
              "portfolioObjective", 
              "portfolioReturn", 
              "portfolioRisk"),
-         options = list(meq = 2),
-         control = list(),
-         trace = FALSE),
+        ## Should not be printed if type != MV and solver != quadprog
+        options = list(meq = 2),
+        control = list(),
+        trace = FALSE),
     messages = list(
         messages = FALSE,
         note = ""),

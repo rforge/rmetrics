@@ -230,8 +230,9 @@ setMethod("show", "fPFOLIOSPEC",
         as.character(object@portfolio$nFrontierPoints))
     }
 
-    cat("\n Status:                   ",
-        as.character(object@portfolio$status))
+    if (!is.na(object@portfolio$status)) {
+      cat("\n Status:                   ",
+        as.character(object@portfolio$status)) }
 
 
     # Optimization:

@@ -43,15 +43,34 @@
 
     # Description:                
     #   Sets the portfolio type for a portfolio structure
-    
+      
+    # Notes:
+    #   What types are valid?
+    #   MV     Standard Mean-Variance Portfolio
+    #          Objective   = Covariance Risk
+    #          Constraints = Budget 1'*W = 1
+    #          Allowed Constraints: Box + Group
+    #   CVaR   Standard Mean-CVaR portfolio
+    #          Objective   = Linearized CVaR Risk
+    #          Constraints = Budget 1'*W = 1
+    #          Allowed Constraints: Box + Group
+      
     # Arguments:
     
     # FUNCTION:
     
     # Type ?
-    spec@model$type = value
-    if (value == "CVaR") setSolver(spec) <- "solveRglpk"
-    
+    spec@model$type <- value
+    message("Solver set to solveRquadprog")
+      
+    # Set Solver:
+    if (value == "MV") {
+      setSolver(spec) <- "solveRquadprog"
+      message("setSolver: solveRquadprog") }
+    if (value == "CVaR") {
+      setSolver(spec) <- "solveRglpk" 
+      message("setSolver: solveRglpk") }
+     
     # Return Value:
     spec
 }
@@ -73,7 +92,7 @@
     # FUNCTION:
     
     # Type ?
-    spec@model$optimize = value
+    spec@model$optimize <- value
     
     # Return Value:
     spec
@@ -96,7 +115,7 @@
     # FUNCTION:
     
     # Estimator ?
-    spec@model$estimator = value 
+    spec@model$estimator <- value 
     
     # Return Value:
     spec
@@ -142,9 +161,9 @@
     # FUNCTION:
     
     # Weights ?
-    spec@portfolio$weights = value
-    spec@portfolio$targetReturn = NA
-    spec@portfolio$targetRisk = NA
+    spec@portfolio$weights <- value
+    spec@portfolio$targetReturn <- NA
+    spec@portfolio$targetRisk <- NA
     
     # Return Value:
     spec
@@ -167,12 +186,12 @@
     # FUNCTION:
 
     # Target Return ?
-    spec@portfolio$targetReturn = value
-    spec@portfolio$weights = NA
-    spec@portfolio$targetRisk = NA
+    spec@portfolio$targetReturn <- value
+    spec@portfolio$weights <- NA
+    spec@portfolio$targetRisk <- NA
     
     # What to optimize ?
-    spec@model$optimize = "minRisk"
+    spec@model$optimize <- "minRisk"
     
     # Return Value:
     spec
@@ -194,13 +213,13 @@
     
     # FUNCTION:
  
-    # Target Return ?
-    spec@portfolio$targetRisk = value
-    spec@portfolio$weights = NA
-    spec@portfolio$targetReturn = NA
+    # Target Risk ?
+    spec@portfolio$targetRisk <- value
+    spec@portfolio$weights <- NA
+    spec@portfolio$targetReturn <- NA
      
     # What to optimize ?
-    spec@model$optimize = "maxReturn"
+    spec@model$optimize <- "maxReturn"
     
     # Return Value:
     spec
@@ -223,7 +242,7 @@
     # FUNCTION:
  
     # Estimator ?
-    spec@model$params$alpha = value 
+    spec@model$params$alpha <- value 
     
     # Return Value:
     spec
@@ -250,7 +269,7 @@
     stopifnot(length(value) == 1)
     
     # Risk-Free Rate ?
-    spec@portfolio$riskFreeRate = value
+    spec@portfolio$riskFreeRate <- value
     
     # Return Value:
     spec
@@ -278,7 +297,7 @@
     stopifnot(value > 0)
     
     # Risk-Free Rate ?
-    spec@portfolio$nFrontierPoints = value
+    spec@portfolio$nFrontierPoints <- value
     
     # Return Value:
     spec
@@ -305,7 +324,7 @@
     stopifnot(length(value) == 1)
     
     # Risk-Free Rate ?
-    spec@portfolio$status = value
+    spec@portfolio$status <- value
     
     # Return Value:
     spec
@@ -336,7 +355,7 @@
     # FUNCTION:
     
     # Tail Risk ?
-    spec@model$tailRisk = value  
+    spec@model$tailRisk <- value  
     
     # Return Value:
     spec
@@ -359,7 +378,7 @@
     # FUNCTION:
       
     # Set Solver:
-    spec@optim$solver = value
+    spec@optim$solver <- value
     
     # Return Value:
     spec
@@ -382,7 +401,7 @@
     # FUNCTION:
       
     # Set Solver:
-    spec@optim$objective = value
+    spec@optim$objective <- value
     
     # Return Value:
     spec
@@ -405,7 +424,7 @@
     # FUNCTION:
     
     # Set Trace:
-    spec@optim$trace = value
+    spec@optim$trace <- value
     
     # Return Value:
     spec

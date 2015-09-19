@@ -726,8 +726,9 @@ waveletSpectrum <-
     coi2.yy <- c(coi2, rep(max(period2, na.rm=TRUE), length(coi2)))
     coi2.yy[is.na(coi2.yy)] <- coi[2]
     yr.vec.xx <- c(x, rev(x))
-    par.orig <- par(c("mar", "las", "mfrow"))
-    on.exit(par(par.orig))
+    # DW
+    # par.orig <- par(c("mar", "las", "mfrow"))
+    # on.exit(par(par.orig))
     nlevels <- length(wavelet.levels)
     key.labs <- formatC(wavelet.levels, digits=4, format="f")
     asp <- NA
@@ -737,15 +738,19 @@ waveletSpectrum <-
     ylim[2] <- ylim[2] * 1.1
     
     # Image Plot:
-    plot.new()
-    plot.window(xlim, ylim, xaxs="r", yaxs="r")
+    # DW
+    # ... now you can create more than one plot on one page
+    # plot.new()
+    # plot.window(xlim, ylim, xaxs="r", yaxs="r")
+    # Use instead:
+    plot(xlim, ylim, xaxs = "r", yaxs = "r", 
+      col = "white", axes=FALSE, frame=FALSE, ann=FALSE)
     
     # DW
     # .Internal(filledcontour()) no longer works on 3.0.
     # .Internal(filledcontour(
-    #     as.double(x), as.double(period2), Power, 
-    #     as.double(wavelet.levels), col=key.cols))
-    
+    #   as.double(x), as.double(period2), Power, 
+    #   as.double(wavelet.levels), col=key.cols))
     # Use instead:
     graphics::.filled.contour(
       x = as.double(x), 
@@ -760,12 +765,12 @@ waveletSpectrum <-
     
     # Add Contours: 
     contour(x, period2, Signif, levels=1, labels=siglvl, 
-            drawlabels=FALSE, axes=FALSE, frame.plot=FALSE, 
-            add=TRUE, lwd=2, col="black")
+      drawlabels=FALSE, axes=FALSE, frame.plot=FALSE, 
+      add=TRUE, lwd=2, col="black")
     
     # Add Coin of Influence:
     polygon(yr.vec.xx, coi2.yy, density=c(10, 20), 
-            angle=c(-45, 45), col="black")
+      angle=c(-45, 45), col="black")
     
     # Add Axis Labels:
     xtick <- NULL
