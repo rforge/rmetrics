@@ -21,7 +21,7 @@ function(
         ## This is CVaR's alpha it should not be removed here, it is
         ## ... required in any situation when it comes to the calculation
         ## ... of VaR and CVaR Risk
-        params = list(alpha = 0.05),
+        params = list(alpha = 0.05)),
     portfolio = list(
         ## What is the here the meaning of NULL and what makes the 
         ## difference here between NULL and NA?
