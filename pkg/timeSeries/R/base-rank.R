@@ -21,7 +21,7 @@
 
 setMethod("rank", "timeSeries",
     function(x,  na.last = TRUE,
-        ties.method = c("average", "first", "random", "max", "min"))
+        ties.method = eval(formals(rank)$ties.method))
     {
         # Description:
         #   Returns the sample ranks of the values in a 'timeSeries' 

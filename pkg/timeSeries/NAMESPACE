@@ -109,6 +109,7 @@ exportMethods("$",
 ## S3 classes
 ################################################
 
+S3method(".DollarNames", "timeSeries")
 S3method("aggregate", "timeSeries")
 S3method("as.data.frame", "timeSeries")
 S3method("as.list", "timeSeries")
@@ -124,6 +125,7 @@ S3method("cumulated", "default")
 S3method("cut", "timeSeries")
 S3method("diff", "timeSeries")
 S3method("end", "timeSeries")
+S3method("getUnits", "default")
 S3method("head", "timeSeries")
 S3method("lag", "timeSeries")
 S3method("lines", "timeSeries")

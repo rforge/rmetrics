@@ -1,3 +1,8 @@
+2015-11-09  tsetz
+
+	* updated rank function
+	* exported getUnits and .DollarNames as S3 methods
+
 2014-06-17  wuertz
 
 	* vignette 'plotting timeSeries objects' added

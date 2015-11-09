@@ -35,8 +35,7 @@
 
 
 \usage{
-    \S4method{rank}{timeSeries}(x, na.last = TRUE, ties.method =
-    c("average", "first", "random", "max", "min"))
+    \S4method{rank}{timeSeries}(x, na.last = TRUE, ties.method = )
 }
 
 
