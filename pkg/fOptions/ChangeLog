@@ -1,3 +1,7 @@
+2015-11-09  tsetz
+
+	* Updated Description and Namespace files
+
 2013-06-23  chalabi
 
 	* DESCRIPTION, R/zzz.R, src/Makevars: updated Fortran flags,
