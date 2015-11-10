@@ -58,17 +58,20 @@ test.gridDataPlot =
     #  contour.gridData    Generates a contour plot from a grid data object
       
     # Generate Akima interpolated Grid Data:
-    require(akima)
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = akimaInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Akima Interpolation") 
-    contour(ans)
-    title(main = "Akima Interpolation") 
+    # Does not run for r-solaris-x86
+    if (FALSE) {
+      require(akima)
+      RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+      set.seed(4711, kind = "Marsaglia-Multicarry")
+      x = runif(999)-0.5
+      y = runif(999)-0.5
+      z = cos(2*pi*(x^2+y^2))
+      ans = akimaInterp(x, y, z, extrap = FALSE)
+      persp(ans)
+      title(main = "Akima Interpolation") 
+      contour(ans)
+      title(main = "Akima Interpolation")
+    }
     
     # Generate Kriged Grid Data:
     require(spatial)
