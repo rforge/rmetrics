@@ -123,6 +123,8 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 
 
 \examples{ 
+\dontrun{
+## Does not run for r-solaris-x86
 ## akimaInterp -
    # Akima Interpolation:    
    if (require(akima)) {
@@ -135,6 +137,23 @@ akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
         xlab = "x", ylab = "y", zlab = "z")
      contour(ans)
    }
+}
+
+## Use spatial as alternative on r-solaris-x86
+## spatialInterp - 
+   # Generate Kriged Grid Data:
+    if (require(spatial)) {
+      RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+      set.seed(4711, kind = "Marsaglia-Multicarry")
+      x = runif(999)-0.5
+      y = runif(999)-0.5
+      z = cos(2*pi*(x^2+y^2))
+      ans = krigeInterp(x, y, z, extrap = FALSE)
+      persp(ans)
+      title(main = "Kriging") 
+      contour(ans)
+      title(main = "Kriging") 
+    }
 }
 
 
