@@ -1,7 +1,7 @@
 Package: fPortfolio
 Title: Rmetrics - Portfolio Selection and Optimization
-Date: 2014-10-30
-Version: 3011.81
+Date: 2015-11-11
+Version: 3022.82
 Author: Rmetrics Core Team,
 	Diethelm Wuertz [aut],
 	Tobias Setz [cre],
@@ -11,8 +11,8 @@ Description: Environment for teaching
 	"Financial Engineering and Computational Finance".
 Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics, fAssets
 Imports: fCopulae, robustbase, MASS,
-	Rglpk, slam, Rsymphony, Rsolnp, kernlab, quadprog, rneos
-Suggests: Rsocp, Rnlminb2, Rdonlp2,
+	Rglpk, slam, Rsolnp, kernlab, quadprog, rneos
+Suggests: Rsymphony, Rsocp, Rnlminb2, Rdonlp2,
 	dplR, bcp, fGarch, mvoutlier
 Additional_repositories: http://r-forge.r-project.org/
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE

@@ -120,8 +120,9 @@ rsymphonyLP <-
 # -----------------------------------------------------------------------------
 
 
-symphonyLP <- Rsymphony::Rsymphony_solve_LP
-
+symphonyLP <- function(...) {
+  Rsymphony::Rsymphony_solve_LP(...)
+}
 
 # -----------------------------------------------------------------------------
 
