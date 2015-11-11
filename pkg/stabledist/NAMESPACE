@@ -1,4 +1,4 @@
-importFrom(stats,
+importFrom("stats",
 	   dnorm, pnorm, qnorm, rnorm,
 	   dcauchy, pcauchy, qcauchy, rcauchy,
 	   runif,
