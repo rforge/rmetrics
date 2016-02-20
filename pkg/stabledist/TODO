@@ -1,3 +1,6 @@
+* pstable() bug beta ~= -1, found by Anastasija Sanina, Feb.2016
+  --->  ~/R/MM/Pkg-ex/stabledist/pstable-uniroot-bug.R
+
 * Compare with Jim Lindsey's "stable" package
   --> http://www.commanster.eu/rcode.html
   Maybe even ask him to make it CRANny

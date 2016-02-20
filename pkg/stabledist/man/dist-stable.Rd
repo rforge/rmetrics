@@ -27,7 +27,7 @@ dstable(x, alpha, beta, gamma = 1, delta = 0, pm = 0,
         tol = 64*.Machine$double.eps, zeta.tol = NULL,
         subdivisions = 1000)
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
-        lower.tail = TRUE, log.p = FALSE,
+        lower.tail = TRUE, log.p = FALSE, silent = FALSE,
         tol = 64*.Machine$double.eps, subdivisions = 1000)
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = 0,
         lower.tail = TRUE, log.p = FALSE,
@@ -38,8 +38,8 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 
 \arguments{
   \item{alpha, beta, gamma, delta}{
-    value of the index parameter \code{alpha} with \code{alpha = (0,2]};
-    skewness parameter \code{beta}, in the range [-1, 1];
+    value of the index parameter \code{alpha} in the interval= \eqn{(0, 2]};
+    skewness parameter \code{beta}, in the range \eqn{[-1, 1]};
     scale parameter \code{gamma}; and location (or \sQuote{shift})
     parameter \code{delta}.
   }
@@ -52,6 +52,8 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.}
+  \item{silent}{logical indicating that e.g., warnings should be
+    suppressed when \code{NaN} is produced (because of numerical problems).}
 
   \item{integ.tol}{positive number, the tolerance used for numerical
     integration, see \code{\link{integrate}}.}
@@ -89,16 +91,16 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
     \bold{Skew Stable Distribution:}
     \cr\cr
     The function uses the approach of J.P. Nolan for general stable
-    distributions. Nolan (1997) derived expressions in form of integrals
+    distributions.  Nolan (1997) derived expressions in form of integrals
     based on the characteristic function for standardized stable random
-    variables. For \code{dstable} and \code{pstable}, these integrals
+    variables.  For \code{dstable} and \code{pstable}, these integrals
     are numerically evaluated using \R's \code{\link{integrate}()}
     function.
     \cr
     \dQuote{S0} parameterization [pm=0]: based on the (M) representation
     of Zolotarev for an alpha stable distribution with skewness
-    beta. Unlike the Zolotarev (M) parameterization, gamma and
-    delta are straightforward scale and shift parameters. This
+    beta.  Unlike the Zolotarev (M) parameterization, gamma and
+    delta are straightforward scale and shift parameters.  This
     representation is continuous in all 4 parameters, and gives
     an intuitive meaning to gamma and delta that is lacking in
     other parameterizations.
@@ -111,7 +113,7 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = 0)
 
     \dQuote{S} or \dQuote{S1} parameterization [pm=1]: the parameterization used
     by Samorodnitsky and Taqqu in the book Stable Non-Gaussian
-    Random Processes. It is a slight modification of Zolotarev's
+    Random Processes.  It is a slight modification of Zolotarev's
     (A) parameterization.
     \cr
     \dQuote{S*} or \dQuote{S2} parameterization [pm=2]: a modification of the S0

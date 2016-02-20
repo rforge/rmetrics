@@ -46,7 +46,7 @@ pi2 <- pi/2 # - we use it so often
 ##' @return omega(.) = tan(pi/2 alpha) if alpha != 1 ...
 .om <- function(gamma,alpha) {
     if(alpha != round(alpha)) # non-integer usual case
-	tan(pi2*alpha)# not tanpi2() !
+	tan(pi2*alpha)# or tanpi(alpha/2) {but alpha is *not* integer} but not tanpi2() below
     else if(alpha == 1)
 	(2/pi)*log(gamma)
     else 0 # for alpha = 0 or = 2
@@ -88,7 +88,7 @@ tanpi2 <- function(x) {
 ##' @param x numeric vector
 ##' @return numeric vector of values cos(pi/2*x)
 ##' @author Martin Maechler
-cospi2 <- function(x) {
+cospi2 <- function(x) { ## _FIXME_ use  cospi() ?
     r <- x
     if(any(i <- x == round(x)))
 	r[i] <- as.numeric(x[i] == 0)# 1 or 0 - iff x \in [-1,1] !
@@ -520,7 +520,7 @@ dstable.smallA <- function(x, alpha, beta, log=FALSE) {
 
 
 pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
-                    lower.tail = TRUE, log.p = FALSE,
+                    lower.tail = TRUE, log.p = FALSE, silent = FALSE,
 		    tol = 64*.Machine$double.eps, subdivisions = 1000)
 {
     ## A function implemented by Diethelm Wuertz
@@ -593,7 +593,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 		    giveI <- !useLower && alpha > 1 # if TRUE, .FCT1() return 1-F
 		    .F1 <- .FCT1(z, zeta, alpha=alpha, theta0=theta0,
 				 giveI = giveI,
-				 tol = tol, subdivisions = subdivisions)
+				 tol=tol, subdivisions=subdivisions, silent=silent)
 		    if(giveI)
 			if(log.p) log(.F1) else .F1
 		    else retValue(.F1, useLower=useLower)
@@ -626,7 +626,7 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 
 ##' Auxiliary for pstable()  (for alpha != 1)
 .FCT1 <- function(x, zeta, alpha, theta0, giveI, tol, subdivisions,
-                  verbose = getOption("pstable.debug", default=FALSE))
+                  silent = FALSE, verbose = getOption("pstable.debug", default=FALSE))
 {
     if(is.infinite(x))
 	return(if(giveI) 0 else 1)
@@ -650,28 +650,38 @@ pstable <- function(q, alpha, beta, gamma = 1, delta = 0, pm = 0,
 	r
     }
 
-    if(verbose) cat(sprintf(".FCT1(%9g, %10g, th0=%.10g, %s..): ",
-			    x,zeta, theta0, if(giveI)"giveI=TRUE," else ""))
+    if(verbose) cat(sprintf(".FCT1(x=%9g, zeta=%10g, alpha=%10g, theta0=%.10g, %s..): ",
+			    x, zeta, alpha, theta0, if(giveI)"giveI=TRUE," else ""))
 
     ## as g() is montone, the integrand  exp(-g(.)) is too ==> maximum is at the boundary
     ## however, integration can be inaccuracte when g(.) quickly jumps from Inf to 0
     ## _BUT_  empirically I find that good values l.th / u.th below are *INDEPENDENT* of x,
     l.th <- .e.plus(-theta0, 1e-6)
     if(alpha > 1 && g(l.th) == Inf) {
-        ur <- uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=pi2,
-                      f.lower= -1, f.upper= 1, tol = 1e-8)
+	ur <- tryCatch(uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=pi2,
+			       f.lower= -1, f.upper= 1, tol = 1e-8),
+		       error = function(e) NA)
+	if(identical(NA, ur)) {
+	    if(!silent) warning(".FCT1(a. > 1): g() not usable :  pstable() |--> NaN")
+	    return(NaN)
+	}
         l.th <- ur$root
         if(verbose) cat(sprintf(" g(-th0 +1e-6)=Inf: unirt(%d it) -> l.th=%.10g ",
                                 ur$iter, l.th))
-    }
+    } else if(verbose) cat(sprintf(" l.th = .e.plus(-theta0, 1e-6) = %.10g ", l.th))
     u.th <- .e.minus(pi2, 1e-6)
     if(alpha < 1 && g(u.th) == Inf) {
-        ur <- uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=u.th,
-                      f.upper= -1, tol = 1e-8)
+	ur <- tryCatch(uniroot(function(t) 1-2*(g(t)==Inf), lower=l.th, upper=u.th,
+			       f.upper= -1, tol = 1e-8),
+		       error = function(e) NA)
+	if(identical(NA, ur)) {
+	    if(!silent) warning(".FCT1(a. < 1): g() not usable :  pstable() |--> NaN")
+	    return(NaN)
+	}
         u.th <- ur$root
         if(verbose) cat(sprintf(" g(pi/2 -1e-6)=Inf: unirt(%d it) -> u.th=%.10g ",
                                 ur$iter, u.th))
-    }
+    } else if(verbose) cat(" u.th = .e.minus(pi2, 1e-6) ")
     r <- .integrate2(function(th) exp(-g(th)),
                      lower = l.th, upper = u.th, subdivisions = subdivisions,
                      rel.tol = tol, abs.tol = tol)

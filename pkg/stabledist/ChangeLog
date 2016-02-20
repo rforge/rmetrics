@@ -1,3 +1,11 @@
+2016-02-20  Martin Mächler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 0.7-1, not yet released to CRAN
+
+	* R/dpqr-stable.R (pstable): when \code{uniroot} fails in
+	\code{.FCT1()} return \code{NaN}, with a warning unless (new)
+	\code{silent = TRUE}.
+
 2015-05-04  Martin Maechler  <maechler@stat.math.ethz.ch>
 
 	* R/dpqr-stable.R (qstable): check that xmin < xmax before using
