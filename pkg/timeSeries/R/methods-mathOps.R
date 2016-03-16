@@ -22,9 +22,9 @@
 #  cumsum                    Returns cumulated sums
 #  ##diff,timeSeries           Differences a timeSeries object
 #  ##scale,timeSeries          Scales a timeSeries object
-#  quantile,timeSeries       Samples qunatiles of a timeSeries object
+#  quantile,timeSeries       Samples quantiles of a timeSeries object
+#  median,timeSeries         Samples median of a timeSeries object
 ################################################################################
-
 
 setMethod("Ops", c("vector", "timeSeries"),
     function(e1, e2)
@@ -42,8 +42,6 @@ setMethod("Ops", c("vector", "timeSeries"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("array", "timeSeries"),
     function(e1, e2)
     {
@@ -61,8 +59,6 @@ setMethod("Ops", c("array", "timeSeries"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("ts", "timeSeries"),
     function(e1, e2)
     {
@@ -80,8 +76,6 @@ setMethod("Ops", c("ts", "timeSeries"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("timeSeries", "vector"),
     function(e1, e2)
     {
@@ -98,8 +92,6 @@ setMethod("Ops", c("timeSeries", "vector"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("timeSeries", "array"),
     function(e1, e2)
     {
@@ -116,8 +108,6 @@ setMethod("Ops", c("timeSeries", "array"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("timeSeries", "ts"),
     function(e1, e2)
     {
@@ -135,8 +125,6 @@ setMethod("Ops", c("timeSeries", "ts"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("Ops", c("timeSeries", "timeSeries"),
     function(e1, e2)
     {
@@ -161,36 +149,26 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("cummax", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("cummin", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("cumprod", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("cumsum", "timeSeries",
     function(x) callGeneric(getDataPart(x)))
 
 
 # ------------------------------------------------------------------------------
-
-
 ## setMethod("diff", "timeSeries", function(x, ...) {
 ##    x <- getDataPart(x)
 ##    callGeneric()
@@ -198,8 +176,6 @@ setMethod("cumsum", "timeSeries",
 
 
 # ------------------------------------------------------------------------------
-
-
 ## setMethod("scale", "timeSeries", function(x, ...) {
 ##    x <- getDataPart(x)
 ##    callGeneric()
@@ -207,11 +183,16 @@ setMethod("cumsum", "timeSeries",
 
 
 # ------------------------------------------------------------------------------
-
-
 setMethod("quantile", "timeSeries", function(x, ...) {
     x <- getDataPart(x)
     callGeneric()
+})
+
+
+# ------------------------------------------------------------------------------
+setMethod("median", "timeSeries", function(x, na.rm) {
+  x <- getDataPart(x)
+  callGeneric(x, na.rm=na.rm)
 })
 
 
