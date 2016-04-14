@@ -12,7 +12,7 @@ Description: Environment for teaching
 Depends: R (>= 2.15.1), methods, timeDate, timeSeries, fBasics, fAssets
 Imports: fCopulae, robustbase, MASS,
 	Rglpk, slam, Rsolnp, kernlab, quadprog, rneos
-Suggests: Rsymphony, Rsocp, Rnlminb2, Rdonlp2,
+Suggests: Rsocp, Rnlminb2, Rdonlp2,
 	dplR, bcp, fGarch, mvoutlier
 Additional_repositories: http://r-forge.r-project.org/
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE

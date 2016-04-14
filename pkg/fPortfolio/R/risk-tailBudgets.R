@@ -28,7 +28,7 @@
 # FUNCTION:                  COPULA FIT WITH NORM, NIG OR  GHT MARGINALS:
 #  .empiricalDependencyFit    Estimates tail dependence with empirical marginals
 #  .normDependencyFit         Estimates tail dependence with normal marginals
-#  .nigDependencyFit          Estimates tail dependence with NIG marginals  
+#  .gldDependencyFit          Estimates tail dependence with GLD marginals
 #  .ghtDependencyFit          Estimates tail dependence with GHT marginals     
 ################################################################################
 
@@ -452,7 +452,7 @@
 # ------------------------------------------------------------------------------
 
 
-.nigDependencyFit <- 
+.gldDependencyFit <- 
     function(x, doplot = TRUE, trace = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
@@ -466,48 +466,47 @@
     # FUNCTION:
     
     # Settings:
-    N = ncol(x)
-    lowerLambda = upperLambda = 0*diag(N)
-    assetsNames = colnames(x)
-    P = NULL
+    N <- ncol(x)
+    lowerLambda <- upperLambda <- 0*diag(N)
+    assetsNames <- colnames(x)
+    P <- NULL
     
     for (i in 1:(N-1)) {
         # First asset:
-        r1 = as.vector(x[, i])
-        fit1 = nigFit(r1, doplot = FALSE, trace = trace)
-        estim1 = fit1@fit$estimate
-        p1 = .pnigC(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
-        Main1 = assetsNames[i]
-        P = cbind(P, p1)
+        r1 <- as.vector(x[, i])
+        fit1 <- gldFit(r1, doplot = FALSE, trace = trace)
+        estim1 <- fit1@fit$estimate
+        p1 <- pgld(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
+        Main1 <- assetsNames[i]
+        P <- cbind(P, p1)
         for (j in (i+1):N) {  
             # Second asset:
-            r2 = as.vector(x[, j])
-            fit2 = nigFit(r2, doplot = FALSE, trace = trace) 
+            r2 <- as.vector(x[, j])
+            fit2 <- gldFit(r2, doplot = FALSE, trace = trace) 
             estim2 = fit2@fit$estimate      
-            p2 = .pnigC(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
-            Main2 = assetsNames[j]
+            p2 <- pgld(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
+            Main2 <- assetsNames[j]
             # Optional Plot:
             if (doplot) {
                 ## MainR = paste("Distribution:", Main1, "-", Main2)
                 ## plot(r1, r2, pch = 19, main = MainR)
                 ## grid()
-                MainP = paste("Copula:", Main1, "-", Main2)
-                plot(p1, p2, pch = 19, main = MainP, xlab = "", ylab = "")
+                MainP <- paste("Copula:", Main1, "-", Main2)
+                plot(p1, p2, pch = 19, main = MainP, xlab = "", ylab = "", cex=0.5)
                 grid()
             }
             # Fit GSG copula parameters:
-            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
-            if (trace)
-                cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
+            fit <- .gsgnormCopulaFit(u = p1, v = p2, trace = trace)
+            if (trace) cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
             # Compose lambda Matrix:
-            lowerLambda[i, j] = lowerLambda[j, i] = fit$lambda[1]
-            upperLambda[i, j] = upperLambda[j, i] = fit$lambda[2]
+            lowerLambda[i, j] <- lowerLambda[j, i] <- fit$lambda[1]
+            upperLambda[i, j] <- upperLambda[j, i] <- fit$lambda[2]
         }
     }
     
     # Result:
-    colnames(lowerLambda) = rownames(lowerLambda) = assetsNames
-    colnames(upperLambda) = rownames(upperLambda) = assetsNames
+    colnames(lowerLambda) <- rownames(lowerLambda) <- assetsNames
+    colnames(upperLambda) <- rownames(upperLambda) <- assetsNames
     ans = list(lower = lowerLambda, upper = upperLambda)
      
     # Return Value:
