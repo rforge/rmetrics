@@ -44,9 +44,9 @@ setClass("timeDate",
          #   Class representatation for 'timeDate' Objects.
 
          # CLASS:
-         representation(Data = "POSIXct",
-                        format = "character",
-                        FinCenter = "character"),
+         slots = c(Data = "POSIXct",
+                   format = "character",
+                   FinCenter = "character"),
          validity = function(object) {
              if(!identical(attr(object@Data, "tzone"), "GMT"))
                  return("@Data must be in \"GMT\" timezone.")
