@@ -83,7 +83,7 @@
     if (is.null(dots$cex.lab)) cex.lab <- 1 else cex.lab <- dots$cex.lab
     if (is.null(dots$cex.pch)) cex.pch <- 1 else cex.pch <- dots$cex.pch
     if (is.null(dots$log)) log <- "" else log <- dots$log
-    if (is.null(dots$equilogs)) equilogs <- "" else equilogs <- dots$equilogs
+    if (is.null(dots$equilogs)) equilogs <- TRUE else equilogs <- dots$equilogs
     if (is.null(dots$main)) main <- "" else main <- dots$main
     if (is.null(dots$xlab)) xlab <- "" else xlab <- dots$xlab
     if (is.null(dots$ylab)) {
@@ -92,7 +92,9 @@
     } else { 
       ylab <- dots$ylab
     }
-    if (is.null(dots$xax)) {xax <- FALSE} else {xax <- dots$xax}
+    if (is.null(dots[["xax"]])) {xax <- FALSE} else {xax <- dots$xax}
+    if (is.null(dots$xaxs)) {xaxs <- "r"} else {xaxs <- dots$xaxs}
+    if (is.null(dots$yaxs)) {yaxs <- "r"} else {yaxs <- dots$yaxs}
     
     # Continue ...
     if (minor.ticks == "auto") minor.ticks <- .periodicity2(x)$units
@@ -150,9 +152,11 @@
       
       # All curves in one Frame:
       if (is.null(dots$ylim)) ylim <- range(Y, na.rm = TRUE) else ylim <- dots$ylim
+      if (is.null(dots$xlim)) xlim <- NULL else xlim <- dots$xlim
       
-      plot(X, Y[, 1], type= "n", ylim = ylim,
-           axes = FALSE, main = "", xlab = "", ylab = "", log=log)
+      plot(X, Y[,1], type= "n", xlim = xlim, ylim = ylim,
+           axes = FALSE, main = "", xlab = "", ylab = "", log=log,
+           xaxs=xaxs, yaxs=yaxs)
       for (i in 1:ncol(x)) {
         lines(X, series(x)[, i], type = type[i],
               col = col[i], lty = lty[i], lwd = lwd[i], pch = pch[i],
@@ -548,15 +552,19 @@
       scale <- "hourly"
       label <- "hour"
     } else if (p == 86400) {
+      units <- "days"
       scale <- "daily"
       label <- "day"
     } else if (p <= 604800) {
+      units <- "weeks"
       scale <- "weekly"
       label <- "week"
     } else if (p <= 2678400) {
+      units <- "months"
       scale <- "monthly"
       label <- "month"
     } else if (p <= 7948800) {
+      units <- "quarter"
       scale <- "quarterly"
       label <- "quarter"
     }
