@@ -5,6 +5,7 @@
  * @author Christophe Dutang
  * @author Petr Savicky 
  *
+ * Copyright (C) 2016, Christophe Dutang
  *
  * Copyright (C) 2009, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
@@ -59,6 +60,9 @@
 #include "config.h"
 #include "locale.h"
 
+//Halton
+#include "LowDiscrepancy-halton.h"
+
 //congruRand
 #include "congruRand.h"
 
@@ -70,6 +74,12 @@
 
 //WELL RNGs
 #include "wellrng.h"
+
+//the first 100 000 prime numbers taken from http://primes.utm.edu/ is included 
+//in randtoolbox.c by #include "primes.h"
+
+
+
 
 
 //time header files
@@ -92,6 +102,7 @@
 
 /* Functions accessed from .Call() */
 SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed);
+SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed);
 SEXP doSetSeed(SEXP s);
 SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment, SEXP echo);
 SEXP doSFMersenneTwister(SEXP n, SEXP d, SEXP mersexpo, SEXP paramset);
@@ -100,6 +111,7 @@ SEXP doKnuthTAOCP(SEXP n, SEXP d);
 
 /* utility functions */
 void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int usetime);
+void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime);
 void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show);
 void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset);
 void knuthTAOCP(double *u, int nb, int dim);

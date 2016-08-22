@@ -1,13 +1,21 @@
 === randtoolbox: an R package for random number generation and testing ===
 
+
+Version 1.20
+=============
+- translate Fortran code of Diethelm Wuertz for Halton and Sobol sequences.
+
+BUG FIX: 
+- scrambling = 1, 3 for Sobol sequences.
+
 Version 1.17
 =============
 - change DESCRIPTION file.
 - update NAMESPACE for R 3.3.0.
 - update the LICENSE file.
-- raise a warning when scrambling for Sobol sequences is incocrrect.
+- raise a warning when scrambling for Sobol sequences is incorrect.
 
-BUG REPORT (by Kemal Dincer Dingec and Marius Hofert)
+BUG REPORT (by Kemal Dincer Dingec, Marius Hofert, Nicolas Chopin)
 - scrambling = 1, 3 for Sobol sequences.
 
 

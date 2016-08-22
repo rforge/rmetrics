@@ -17,7 +17,7 @@ get.primes(n)
   which may be used in \code{torus} algorithm.
 }
 \value{
-  Vetor of \code{min(n, 100000)} smallest primes.
+  Vector of \code{min(n, 100000)} smallest primes.
 }
 \seealso{
     \code{\link{torus}}

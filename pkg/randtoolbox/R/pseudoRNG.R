@@ -72,11 +72,9 @@ congruRand <- function(n, dim = 1, mod = 2^31-1, mult = 16807, incr = 0, echo)
            
         if(missing(echo))
                 echo <- FALSE
-    
-        if(length(n) > 1)
-                res <- .Call("doCongruRand", length(n), dim, mod, mult, incr, echo)
-        else
-                res <- .Call("doCongruRand", n, dim, mod, mult, incr, echo)	
+        nb <- ifelse(length(n)>1, length(n), n)
+        res <- .Call("doCongruRand", nb, dim, mod, mult, incr, echo)
+        
         if(dim == 1)    
                 as.vector(res)
         else
@@ -116,23 +114,15 @@ SFMT <- function(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, us
                 else
                     stop("invalid argument 'withtorus'")
         }
+        nb <- ifelse(length(n)>1, length(n), n)
     
         if(nbTorus == 0)
         {
-                if(length(n) > 1)
-                        res <- .Call("doSFMersenneTwister", length(n), dim, mexp, usepset)
-                else
-                        res <- .Call("doSFMersenneTwister", n, dim, mexp, usepset)	
-        }   
-        else
+                res <- .Call("doSFMersenneTwister", nb, dim, mexp, usepset)
+        }else
         {
                 restorus <- torus(nbTorus, dim, mixed = FALSE, usetime = usetime)
-            
-                if(length(n) > 1)
-                        res <- .Call("doSFMersenneTwister", length(n) - nbTorus, dim, mexp, usepset)
-                else
-                        res <- .Call("doSFMersenneTwister", n- nbTorus, dim, mexp, usepset)
-            
+                res <- .Call("doSFMersenneTwister", nb - nbTorus, dim, mexp, usepset)
                 res <- rbind(res, as.matrix( restorus, nbTorus, dim) )
         }
     
@@ -170,12 +160,8 @@ WELL <- function(n, dim = 1, order = 512, temper = FALSE, version = "a")
     if(version == "b" && order %in% c(512,  21701) ) 
         stop("this WELL RNG does not have a 'b' version")
     
-    if(length(n) > 1)
-        res <- .Call("doWELL", length(n), dim, order, temper, zeversion)
-    else
-        res <- .Call("doWELL", n, dim, order, temper, zeversion)	
-    
-
+    nb <- ifelse(length(n)>1, length(n), n)
+    res <- .Call("doWELL", nb, dim, order, temper, zeversion)
     
     if(dim == 1)
         as.vector(res)
@@ -190,10 +176,8 @@ knuthTAOCP <- function(n, dim = 1)
     if(dim < 1 || length(dim) >1)
         stop("invalid argument 'dim'")
     
-    if(length(n) > 1)
-        res <- .Call("doKnuthTAOCP", length(n), dim)
-    else
-        res <- .Call("doKnuthTAOCP", n, dim)	
+    nb <- ifelse(length(n)>1, length(n), n)
+    res <- .Call("doKnuthTAOCP", nb, dim)
     
     if(dim == 1)
         as.vector(res)

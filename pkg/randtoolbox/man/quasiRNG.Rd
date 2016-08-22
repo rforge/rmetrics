@@ -11,7 +11,9 @@
 	the Torus algorithm, the Sobol and Halton sequences.
 }
 \usage{
-halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE)
+halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
+                    mixed = FALSE, method=c("C", "Fortran"))
+
 sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE)
 torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
 normal=FALSE)
@@ -20,7 +22,7 @@ normal=FALSE)
   \item{n}{number of observations. If length(n) > 1, 
   	the length is taken to be the required number.}
   \item{dim}{dimension of observations default 1.}
-  \item{init}{ a logical, if TRUE the sequence is initialized and 
+  \item{init}{a logical, if TRUE the sequence is initialized and 
 	restarts, otherwise not. By default TRUE.}
   \item{normal}{a logical if normal deviates are needed, default FALSE}
   \item{scrambling}{
@@ -39,6 +41,8 @@ normal=FALSE)
   \item{mixed}{a logical to use the mixed Torus algorithm, default FALSE.}
   \item{usetime}{a logical to use the machine time to start the Torus sequence, 
   		   default TRUE. if FALSE, the Torus sequence start from the first term.}
+  \item{method}{a character string either \code{"C"} or \code{"Fortran"}.
+  Note that \code{mixed=TRUE} is only available when \code{method="C"}.}		   
 }
 \details{
 

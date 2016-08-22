@@ -46,12 +46,12 @@
 ### 
 ### 
 ###     to use it uncomment all the following lines with your favourite editor.
-
+# 
 # require(fExoticOptions)
 # require(randtoolbox)
-
-
-#
+# 
+# 
+# 
 # # comparison of QMC and MC methods for a Down Out Call
 # compBarrier <- function(nbsimumax, nbsimupoint, nbpointdiscr, trueRNG=FALSE, echo=FALSE)
 # {
@@ -74,8 +74,8 @@
 #     Toruserror <- vector("numeric", nbsimupoint)
 #     SFMTerror <- vector("numeric", nbsimupoint)
 #     PKerror <- vector("numeric", nbsimupoint)
-#	 if(trueRNG)
-#		trueRNGerror <- vector("numeric", nbsimupoint)
+# 	 if(trueRNG)
+# 		trueRNGerror <- vector("numeric", nbsimupoint)
 #     
 #     SFMTunif <- NULL
 #     Torusunif <- NULL
@@ -89,12 +89,12 @@
 #         asset_ti_1 <- rep(asset_t0, nbsimu[k])
 #         activate <- asset_ti_1 > H
 #         
-#		 if(echo) cat("1-", dim(SFMTunif), "\t")
+# 		 if(echo) cat("1-", dim(SFMTunif), "\t")
 #         
 #         SFMTunif <- rbind(SFMTunif, SFMT( nbsimu[k]-nbsimuprev, nbpointdiscr ))      
 #         
-#		 if(echo) cat("-", dim(SFMTunif), "\n")
-#		 
+# 		 if(echo) cat("-", dim(SFMTunif), "\n")
+# 		 
 #                  
 #         for(i in 1:nbpointdiscr)
 #         {
@@ -131,7 +131,7 @@
 #         
 #         asset_ti_1 <- rep(asset_t0, nbsimu[k])
 #         activate <- asset_ti_1 > H
-#
+# 
 #         if(echo) cat("3-", dim(PKunif), "\t")         
 #         PKunif <- rbind(PKunif, congruRand( nbsimu[k]-nbsimuprev, nbpointdiscr))
 #         if(echo) cat("-", dim(PKunif), "\n")
@@ -143,59 +143,59 @@
 #             asset_ti_1 <- asset_ti
 #         }
 #         
-##         rm(PKunif)
+# #         rm(PKunif)
 #         PKerror[k] <- ( mean( pmax(asset_ti - X, 0) * activate * exp(-r*T) ) - theoprice )/ theoprice
 #         
-#		if(echo) cat("-------\n")
+# 		if(echo) cat("-------\n")
 #         nbsimuprev <- NROW(SFMTunif)
 #     }
-#	 
-#	 if(trueRNG)
-#	 {
-#		 for(k in 1:nbsimupoint)
-#		 {         
-#			#--- with true randomness
-#			 
-#			 asset_ti_1 <- rep(asset_t0, nbsimu[k])
-#			 activate <- asset_ti_1 > H
-#			 
-#			 trueRNGunif <- trueRNG( nbsimu[k] , nbpointdiscr)
-#			 
-#			 for(i in 1:nbpointdiscr)
-#			 {
-#				 asset_ti <- asset_ti_1 * exp( (r-sigma^2/2) * steptime + sigma * sqrt(steptime) * qnorm( trueRNGunif[ ,i] ) )
-#				 activate <- activate & ( asset_ti > H)
-#				 asset_ti_1 <- asset_ti
-#			 }
-#			 
-#			 rm(trueRNGunif)
-#			 trueRNGerror[k] <- ( mean( pmax(asset_ti - X, 0) * activate * exp(-r*T) ) - theoprice )/ theoprice
-#			 
-#			 
-#		 }
-#	 }
-#	 
+# 	 
+# 	 if(trueRNG)
+# 	 {
+# 		 for(k in 1:nbsimupoint)
+# 		 {         
+# 			#--- with true randomness
+# 			 
+# 			 asset_ti_1 <- rep(asset_t0, nbsimu[k])
+# 			 activate <- asset_ti_1 > H
+# 			 
+# 			 trueRNGunif <- trueRNG( nbsimu[k] , nbpointdiscr)
+# 			 
+# 			 for(i in 1:nbpointdiscr)
+# 			 {
+# 				 asset_ti <- asset_ti_1 * exp( (r-sigma^2/2) * steptime + sigma * sqrt(steptime) * qnorm( trueRNGunif[ ,i] ) )
+# 				 activate <- activate & ( asset_ti > H)
+# 				 asset_ti_1 <- asset_ti
+# 			 }
+# 			 
+# 			 rm(trueRNGunif)
+# 			 trueRNGerror[k] <- ( mean( pmax(asset_ti - X, 0) * activate * exp(-r*T) ) - theoprice )/ theoprice
+# 			 
+# 			 
+# 		 }
+# 	 }
+# 	 
 #     limits <- c(-.02, .02)
 #     legtxt <- c("SFMT","Torus","Park Miller","zero")
 #     legcol <- c("red","black","blue","black")
 #     legtype <- c(1,1,1,2)     
 #     title <- "Down Out Call"
 #     
-#	 if(trueRNG)
-#	 {
-#		limits <- c(-.02, .02)
-#		legtxt <- c("SFMT","Torus","Park Miller","true RNG")
-#		legcol <- c("red","black","blue","green")	 
-#	 }
-#	 
+# 	 if(trueRNG)
+# 	 {
+# 		limits <- c(-.02, .02)
+# 		legtxt <- c("SFMT","Torus","Park Miller","true RNG")
+# 		legcol <- c("red","black","blue","green")	 
+# 	 }
+# 	 
 #     
 #     plot(nbsimu, SFMTerror, t='l', col="red", ylim=limits, xlab="simulation number", ylab="relative error", main=title) 
 #     lines(nbsimu, Toruserror, col = "black")
 #     lines(nbsimu, PKerror, col = "blue")
 #     if(trueRNG)
-#	 {	lines(nbsimu, trueRNGerror, col = "green")
-#	 }
-#		
+# 	 {	lines(nbsimu, trueRNGerror, col = "green")
+# 	 }
+# 		
 #     lines(nbsimu, rep(0, nbsimupoint), col="black", lty=2)
 #     if(limits[2] > 0.5 || limits[2]+limits[1] == 0)
 #         legend("topright",leg= legtxt, col=legcol , lty=legtype  )
@@ -203,9 +203,9 @@
 #         legend("bottomright",leg= legtxt, col= legcol, lty=legtype  )
 #     return(cbind(nbsimu, SFMTerror, Toruserror, PKerror))
 # }
-#
-# x <- compBarrier(100000, 201, 250, FALSE)
-#
+# 
+# x <- compBarrier(1000, 201, 250, FALSE)
+# 
 # # comparison of QMC and MC methods for a vanilla Call
 # compVanilla <- function(nbmax, nbsimupoint)
 # {
@@ -282,6 +282,6 @@
 #         
 #     return(cbind(nbsimu, SFMTerror, Toruserror, PKerror))     
 # }
-#
+# 
 # y <- compVanilla(100000, 201)
 

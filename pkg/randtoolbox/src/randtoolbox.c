@@ -192,6 +192,95 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
     isInit = 0;
 }
 
+SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed)
+{
+    if (!isNumeric(n) || !isNumeric(d) || !isLogical(timedseed) )
+        error(_("invalid argument"));
+    
+    //temporary working variables
+    int nb = asInteger( n ); //number of random vectors
+    int dim  = asInteger( d ); //dimension of vector
+    int seqstart = asInteger( offset ); //sequence starting point
+    int mixed = asLogical( ismixed ); //boolean to use the mixed Halton algo
+    int usetime = asLogical( timedseed ); //boolean to use the machine time
+    
+    //allocate result
+    double *u ; //result in C
+    SEXP resultinR; //result in R
+    PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
+    u = REAL( resultinR ); //plug the C pointer on the R type
+    
+    R_CheckStack();
+    
+    //computation step
+    if (primeNumber[2] == 1)
+        reconstruct_primes();
+    
+    halton(u, nb, dim, seqstart, mixed, usetime);
+        
+    UNPROTECT(1);
+    
+    return resultinR;
+}
+
+
+//compute the vector sequence of the Halton algorithm
+void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime)
+{
+  int i, j;
+  unsigned long state;
+  
+  if (!R_FINITE(nb) || !R_FINITE(dim))
+    error(_("non finite argument"));
+  
+  //sanity check
+  if(dim > 100000)
+    error(_("Torus algorithm not yet implemented for dimension %d"), dim);
+  
+  //init the seed of Halton algo
+  if(!isInit)
+    randSeed();
+  
+  //init the state of SF Mersenne Twister algo
+  if(ismixed)
+    SFMT_init_gen_rand(seed);
+  
+  
+  //u_ij is the Halton sequence term
+  //with n = state + i, s = j + 1, p = primeNumber[j]
+  //u is stored column by column
+  
+  if(ismixed) //SF Mersenne-Twister-mixed Torus algo
+  {
+    for(j = 0; j < dim; j++)
+    {
+      for(i = 0; i < nb; i++)
+      {
+        state = SFMT_gen_rand32();
+        //				Rprintf("state %lu\n", state);
+        
+        u[i + j * nb] = HALTONREC( j, state ) ;
+      }
+    }
+  }
+  else //classic Halton algo
+  {
+    if(usetime) //use the machine time
+      state = ((unsigned int) seed >> 16);
+    else
+      state  = offset;
+    
+    
+    //Rprintf("state %u %lu\n", state, state);
+    
+    for(j = 0; j < dim; j++)
+      for(i = 0; i < nb; i++)
+        u[i + j * nb] = HALTONREC( j, state + i ) ;
+  }
+  
+  isInit = 0;
+}
+
 
 /***********************************/
 /* pseudo random generation */ 
@@ -360,29 +449,8 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
         
 //        array = (unsigned int *) R_alloc(nb * dim, sizeof(__m128i));
         
-        //Rprintf("blocksize %d\n", blocksize);
-        
-        //Rprintf("mem %d \n", array);
-        
-        //int roundedsize = ( (nb*dim) / 4 ) *4;
-        //Rprintf("rounded size %d initial size %d\n", roundedsize, nb*dim);
         fill_array32(array32, nb*dim);
-        //Rprintf("fill_array32 ends\n");
-    
-//    for(j = 0; j < dim; j++)
-//        fill_array32( (array+ i*blocksize), rest);
-//    fill_array32( (array + i + j * nbblock), rest);
-//
-//    for(j = 0; j < dim; j++)
- //   {
-  //      for(i = 0; i < nb; i++) 
-   //     {
-    //        Rprintf("%u \t", array[i + j * nb] ); // real on ]0,1[ interval
-     //   }
-   // Rprintf("\n");
-//}
-    
-    
+        
     // compute u_ij
     for(j = 0; j < dim; j++)
         for(i = 0; i < nb; i++) 
@@ -626,50 +694,10 @@ void randSeedByArray(int length)
     
     if (!isInit) randSeed();
 
-//    Rprintf("length %d \n", length);
-  /*  for(i = 0; i < length/2; i++)
-    {
-        seedArray[i] = ( (unsigned long long) seed << (i+1) ) ^ ( (unsigned long long) seed >> (i+1) );
-        Rprintf("%lu \t", seedArray[i]);
-           seedArray[i] = ( (unsigned long long) seed << (i+1)/4 ) | ( (unsigned long long) seed >> (i/4+1) ) ^ ( (unsigned long long) seed << (i+1)/4 ) & ( (unsigned long long) seed >> (i/4+1) );
-    }
-    for(i = 0; i < length; i++)
-        seedArray[i] = ( seed << (i+0)/4 ) & ( seed >> (i+1)/4 ) ^ ( (seed << (i+2)/4) ) | ( seed >> (i+3)/4 );
-
-    
-    for(i = 0; i < length-1; i++)
-        seedArray[i] = i+1;
-    seedArray[length-1] = seed;
-
-    
-    for(i=0;i<length;i++)
-        Rprintf("- %lu %d %d %d %d \n", seedArray[i], i/4, (i+1)/4, (i+2)/4, (i+3)/4);
-    
-    Rprintf("\n");
-*/    
-    
-/*    
-    for(i = 0; i < length; i++)
-        seedArray[i] =  seed * ( i+1) ;
-    
-    for(i=0;i<length;i++)
-    Rprintf("- %lu \n", seedArray[i]);
-    
-    Rprintf("\n");
-*/    
     // same initialisation as dSFMT 1.3.0 from Matsumoto and Saito
     seedArray[0] = seed;
     for (i = 1; i < length; i++) 
         seedArray[i] = 1812433253UL * ( seedArray[i - 1] ^ ( seedArray[i - 1] >> 30 ) ) + i;
-    
-    
-   /*
-    for(i=0;i<length;i++)
-        Rprintf("- %lu \n", seedArray[i]);
-    
-    Rprintf("\n");
-    */
-    
     
     isInit = 0;
     isInitByArray = 1;

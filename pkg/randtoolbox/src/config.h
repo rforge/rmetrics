@@ -48,13 +48,16 @@
 #define PACKAGE_NAME "randtoolbox"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "randtoolbox 1.09"
+#define PACKAGE_STRING "randtoolbox 1.20"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "randtoolbox"
 
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
+
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.09"
+#define PACKAGE_VERSION "1.20"
 
 /* The size of `unsigned long long', as computed by sizeof. */
 #define SIZEOF_UNSIGNED_LONG_LONG 8

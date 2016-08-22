@@ -61,6 +61,7 @@
 static const R_CallMethodDef callMethods[] = 
 {
         {"doTorus", (DL_FUNC) &doTorus, 6},
+        {"doHalton", (DL_FUNC) &doHalton, 5},
         {"doSetSeed", (DL_FUNC) &doSetSeed, 1},
         {"doCongruRand", (DL_FUNC) &doCongruRand, 6},
         {"doSFMersenneTwister", (DL_FUNC) &doSFMersenneTwister, 4},
@@ -80,6 +81,7 @@ void R_init_randtoolbox(DllInfo *info)
 		
         //make randtoolbox C functions available for other packages
         R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
+        R_RegisterCCallable("randtoolbox", "halton", (DL_FUNC) halton);
         R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
         R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
         R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);
