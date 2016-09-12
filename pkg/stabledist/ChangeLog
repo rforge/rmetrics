@@ -1,6 +1,6 @@
 2016-02-20  Martin Mächler  <maechler@stat.math.ethz.ch>
 
-	* DESCRIPTION (Version): 0.7-1, not yet released to CRAN
+	* DESCRIPTION (Version): 0.7-1, released to CRAN on 2016-09-12
 
 	* R/dpqr-stable.R (pstable): when \code{uniroot} fails in
 	\code{.FCT1()} return \code{NaN}, with a warning unless (new)
