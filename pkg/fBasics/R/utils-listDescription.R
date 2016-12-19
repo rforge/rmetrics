@@ -29,22 +29,19 @@ function(package, character.only = FALSE)
     # Description:
     #   Extracts package description
 
-    # Example:
-    #   listDescription("fSeries")
+## MM: I would
+### .Deprecated("packageDescription")
 
     # FUNCTION:
 
     # Extract Description:
-    if (!character.only)
+    if (!character.only && !missing(package))
         package <- as.character(substitute(package))
-    cmd = paste("library(help =", package, ")", sep = "" )
-    ans = eval(parse(text = cmd))
-    name = ans$name
-    parh = ans$path
-    description = ans$info[[1]]
-    # DW: next line for proper insertion added 
-    description = gsub("\n", "\n    ", description)
-    index = ans$info[[2]]
+    if(missing(package) || length(package) == 0)
+        stop("Must specify a package by name")
+    ans <- library(help = package, character.only=TRUE)
+    ## DW: gsub(): for proper insertion added
+    description <- gsub("\n", "\n    ", ans$info[[1]])
     cat("\n", package, "Description:\n\n")
     cat(paste(" ", description), sep = "\n")
 }

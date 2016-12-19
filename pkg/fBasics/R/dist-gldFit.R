@@ -100,7 +100,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     #   Fits parameters of a GLD using maximum log-likelihood
 
     # Example:
-    #   require(fBasics)
     #   set.seed(4711); x=rgld(5000); fit=gldFit.mle(x)@fit$estimate; fit
 
     # FUNCTION:
@@ -198,7 +197,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     #   Fits parameters of a GLD using maximum product spacings
 
     # Example:
-    #   require(fBasics)
     #   set.seed(4711); x=rgld(5000); fit=.gldFit.mps(x)@fit$estimate; fit
 
     # FUNCTION:
@@ -328,7 +326,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     #   Fits parameters of a GLD using GoF Statistics
 
     # Example:
-    #   require(fBasics)
     #   set.seed(4711); x=rgld(5000); fit=.gldFit.gof(x)@fit$estimate; fit
 
     # FUNCTION:
@@ -434,7 +431,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     #   Fits parameters of a GLD using a histogram fit
 
     # Example:
-    #   require(fBasics)
     #   set.seed(4711); x=rgld(5000); fit=gldFit.hist(x)@fit$estimate; fit
 
     # FUNCTION:
@@ -537,7 +533,6 @@ function(x, lambda1 = 0, lambda2 = -1, lambda3 = -1/8, lambda4 = -1/8,
     #   Fits parameters of a GLD using robust moments (quantile) fit
 
     # Example:
-    #   require(fBasics)
     #   set.seed(4711); x=rgld(5000); fit=.gldFit.rob(x)@fit$estimate; fit
 
     # FUNCTION:

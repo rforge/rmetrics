@@ -1,20 +1,19 @@
 Package: fBasics
 Title: Rmetrics - Markets and Basic Statistics
-Date: 2015-11-11
+Date: 2016-12-19
 Version: 3022.88
-Author: Rmetrics Core Team,
-	Diethelm Wuertz [aut],
+Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
+	Martin Maechler [ctb]
 Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
+Description: Environment for teaching
 	"Financial Engineering and Computational Finance".
 Depends: R (>= 2.15.1), timeDate, timeSeries
-Imports: gss, stabledist, MASS
-Suggests: methods, spatial, RUnit, tcltk, akima
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Imports: stats, grDevices, graphics, methods, utils, MASS, spatial, gss, stabledist
+ImportsNote: akima not in Imports because of non-GPL licence.
+Suggests: akima, RUnit, tcltk
 LazyData: yes
 License: GPL (>= 2)
+Encoding: UTF-8
 URL: https://www.rmetrics.org

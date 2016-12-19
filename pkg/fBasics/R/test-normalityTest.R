@@ -212,23 +212,22 @@ function(x, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-.skewness.test <-
-function(x)
+.skewness.test <- function(x)
 {
     # Internal Function for D'Agostino Normality Test:
 
     # Note:
     #   D'Agostino Test
     #   http://adela.karlin.mff.cuni.cz/~klaster/vyuka/
-    #   Materià¥‡ly pro cvicenö€Œ, kterà¥‡ byla v labu, jsou zde: cv01.txt,
+    #   Materi???ly pro cvicen????, kter??? byla v labu, jsou zde: cv01.txt,
     #   cv02.txt, cv03.txt, cv05.txt, cv06.txt, data maths, police a
-    #   vysky a makro dagost.r. Vö€œber nejakö€œch prö€Œkladu ze cvicenö€Œ je
+    #   vysky a makro dagost.r. V????ber nejak????ch pr????kladu ze cvicen???? je
     #   tady.
-    #   Program R lze zdarma (GNU General Public Licence) stà¥‡hnout z
-    #   www.r-project.org. Alespon k letmà¤¼mu nahlà¤¼dnutö€Œ doporucuji tà¤¼ž
-    #   minimanuà¥‡l An Introduction to R, kterö€œ roste tamtà¤¼ž. Dalšö€Œ
-    #   materià¥‡ly vcetne dvou zacà¥‡tecnickö€œch prö€Œrucek najdete na
-    #   strà¥‡nkà¥‡ch Dr. Kulicha.
+    #   Program R lze zdarma (GNU General Public Licence) st???hnout z
+    #   www.r-project.org. Alespon k letm???mu nahl???dnut???? doporucuji t????
+    #   minimanu??/l An Introduction to R, kter???? roste tamt????. Dal?????
+    #   materi???ly vcetne dvou zac???tecnick????ch pr????rucek najdete na
+    #   str???nk???ch Dr. Kulicha.
 
     # FUNCTION:
 

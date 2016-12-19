@@ -1,4 +1,43 @@
 ################################################################################
+## Libraries
+################################################################################
+useDynLib("fBasics")
+
+################################################################################
+## Imports
+################################################################################
+importFrom("grDevices", as.graphicsAnnot, cm.colors, col2rgb,
+             colors, contourLines, gray.colors, heat.colors,
+             rainbow, rgb, terrain.colors, topo.colors,
+             xy.coords)
+importFrom("graphics", axis, barplot, box, boxplot, contour,
+             grid, hist, layout, locator, matplot, mtext,
+             panel.smooth, par, persp, pie, plot.new,
+             plot.window, polygon, rect, rug, symbols, text,
+             title)
+importFrom("stats", acf, ansari.test, approx, ar, arima,
+             complete.cases, constrOptim, cor, cor.test,
+             density, dnorm, dt, integrate, ks.test, lsfit,
+             median, model.matrix, model.response, nlm, nlminb,
+             numericDeriv, optim, optimize, pacf, pchisq, pf,
+             pnorm, ppoints, qchisq, qf, qnorm, qqline,
+             qqnorm, qt, residuals, rexp, rnorm, runif, sd,
+             shapiro.test, spline, t.test, uniroot, var)
+importFrom("utils", menu)
+
+importFrom("methods", getMethod, is, new, slot)
+
+importFrom("spatial", prmat, surf.gls)
+
+## 'akima' is *not* here because of its non-GPL Licence
+## importFrom("akima", interp, interpp)
+
+
+## (MM:) FIXME: Only import what you need!
+import("timeDate")
+import("timeSeries")
+
+################################################################################
 ## Exports
 ################################################################################
 exportPattern(".")
@@ -6,7 +45,7 @@ exportPattern(".")
 # In the future this should be used:
 #exportPattern("^[^\\.]")
 
-# To do before implementation: 
+# To do before implementation:
 #The porfolio book needs:
 #export(.blue2redPalette)
 #export(.green2redPalette)
@@ -18,13 +57,3 @@ exportPattern(".")
 #fCouplae, fExtremes, fGarch, fMultivar and fRegression need a lot of exported
 #functions that start with a dot. This has to be fixed first...
 
-################################################################################
-## Imports
-################################################################################
-import("timeDate")
-import("timeSeries")
-
-################################################################################
-## Libraries
-################################################################################
-useDynLib("fBasics")

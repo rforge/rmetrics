@@ -24,25 +24,20 @@
 listIndex <-
 function(package, character.only = FALSE)
 {
-    # A function implemented by Diethelm Wuertz & Yohan Chalabi
+    ## A function implemented by Diethelm Wuertz & Yohan Chalabi
 
-    # Description:
-    #   Extracts R package index
+    ## Extracts R package index
 
-    # Example:
-    #   listIndex("fSeries")
+    ## Example:
+    ##   listIndex("timeSeries")
 
-    # FUNCTION:
+### --> ../man/utils-listIndex.Rd
+    ##         ~~~~~~~~~~~~~~~~~~
 
-    # Extract Index:
     if (!character.only)
         package <- as.character(substitute(package))
-    cmd = paste("library(help =", package, ")", sep = "" )
-    ans = eval(parse(text = cmd))
-    name = ans$name
-    parh = ans$path
-    description = ans$info[[1]]
-    index = ans$info[[2]]
+    ans <- library(help = package, character.only=TRUE)
+    index <- ans$info[[2]]
     cat("\n", package, "Index:\n\n")
     cat(paste(" ", index), sep = "\n")
 }

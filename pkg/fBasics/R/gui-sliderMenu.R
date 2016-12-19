@@ -42,8 +42,8 @@
   # FUNCTION:
   
   # Requirement:
-  if (!require(tcltk, quietly = TRUE))
-    stop("\n -- Package tcltk not available -- \n\n")
+  if (!requireNamespace("tcltk", quietly = TRUE))
+    stop("Package 'tcltk' not available (should *not* happen, please report!)\n")
   
   # Environment:
   if (!exists(".slider.env")) {
@@ -136,8 +136,8 @@
     # FUNCTION:
     
     # Requirement:
-    if (!require(tcltk, quietly = TRUE))
-      stop("\n -- Package tcltk not available -- \n\n")
+    if (!requireNamespace("tcltk", quietly = TRUE))
+      stop("Package 'tcltk' not available (should *not* happen, please report!)\n")
     
     # Setup:
     if(!missing(no)) {

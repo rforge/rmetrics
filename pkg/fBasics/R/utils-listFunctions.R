@@ -41,17 +41,16 @@ function(package, character.only = FALSE)
     # List:
     if (!character.only)
         package <- as.character(substitute(package))
-    if(require(package, character.only = TRUE, quietly = TRUE)) {
-        env <- paste("package", package, sep = ":")
-        nm <- ls(env, all.names = TRUE)
-        ans = nm[unlist(lapply(nm, function(n) exists(n, where = env,
-            mode = "function", inherits = FALSE)))]
+    pkgNm <- paste("package", package, sep = ":")
+    ## return
+    if(!is.na(match(pkgNm, search())) ||
+        require(package, character.only = TRUE, quietly = TRUE)) {
+        nm <- ls(env <- as.environment(pkgNm), all.names = TRUE)
+        nm[unlist(lapply(nm, function(n)
+            exists(n, where = env, mode = "function", inherits = FALSE)))]
     } else {
-        ans = character(0)
+        character(0)
     }
-
-    # Return Value:
-    ans
 }
 
 
