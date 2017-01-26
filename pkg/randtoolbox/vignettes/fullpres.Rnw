@@ -210,7 +210,7 @@ The package
 well as statistical tests to quantify the quality of generated random numbers.
 
 
-\section{Overview of random generation algoritms\label{rng}}
+\section{Overview of random generation algorithms\label{rng}}
 In this section, we present first the pseudo random number generation and second the quasi random
 number generation. By ``random numbers'', we mean random variates of the uniform $\mathcal U(0,1)$ distribution. 
 More complex distributions can be generated with uniform variates and rejection or inversion methods.
@@ -880,17 +880,17 @@ To interface the Fortran routines to the R environment some modifications had to
 \subsubsection{Kronecker sequences}
 Another kind of low-discrepancy sequence uses irrational number and fractional part.
 The fractional part of a real $x$ is denoted by $\{x\} = x-\lfloor x \rfloor$. The infinite
-sequence $(n \{\alpha\})_{n\leq 0}$ has a bound for its discrepancy
+sequence $(\{n\alpha\})_{n\leq 0}$ has a bound for its discrepancy
 $$
 D_n \leq C\frac{1+\log n}{n}.
 $$
-This family of infinite sequence $(n \{\alpha\})_{n\leq 0}$ is called the Kronecker sequence.
+This family of infinite sequence $(\{n\alpha\})_{n\leq 0}$ is called the Kronecker sequence.
 
 A special case of the Kronecker sequence is the Torus algorithm where irrational number $\alpha$
 is a square root of a prime number. 
 The $n$th term of the $d$-dimensional Torus algorithm is defined by
 $$
-\left( n \{\sqrt{p_1}\} , \dots, n \{\sqrt{p_d}\} \right) \in I^d,
+\left( \{n\sqrt{p_1}\} , \dots, \{n\sqrt{p_d}\} \right) \in I^d,
 $$
 where $(p_1, \dots,p_d)$ are prime numbers, generally the first $d$ prime numbers.
 With the previous inequality, we can derive an estimate of the Torus algorithm discrepancy:
@@ -1598,7 +1598,7 @@ of boolean $D_i$.
 
 In the following, we set $T=1$, $r=5\%$, $s_{t_0}=100$, $H=K=50$, $d=250$ and $\sigma=20\%$. 
 We test crude Monte Carlo methods with Park Miller and SF-Mersenne Twister generators and
-a quasi-Monte Carlo method with (multidimensional) Torus algoritm on the figure \ref{doc}.
+a quasi-Monte Carlo method with (multidimensional) Torus algorithm on the figure \ref{doc}.
 
 \begin{figure}[!htb]
 \begin{center}
