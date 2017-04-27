@@ -1,19 +1,19 @@
 /*
 C ##############################################################################
-C PART I: HALTON SEQUENCE:
+C PART II: SOBOL SEQUENCE:
 C ##############################################################################
 
-C--------------------------------------------------------------------------
-C @file  LowDiscrepancy.f
-C @brief Halton sequence
+ C-------------------------------------------------------------------------- 
+ C @file  LowDiscrepancy.f
+C @brief Sobol sequence
 C
-C @author Diethelm Wuertz
+C @author Diethelm Wuertz 
 C @author Christophe Dutang
 C
 C Copyright (C) Aug. 2016, Christophe Dutang, C translation of the Fortran code
 C
 C Copyright (C) Apr. 2011, Christophe Dutang, remove implicit declaration: the code now pass
-C > gfortran -c -fsyntax-only -fimplicit-none LowDiscrepancy.f
+C > gfortran -c -fsyntax-only -fimplicit-none LowDiscrepancy.f 
 C without error.
 C
 C Copyright (C) Oct. 2009, Christophe Dutang, slightly modified (better accuracy and speed).
@@ -26,17 +26,17 @@ C
 C      Redistribution and use in source and binary forms, with or without
 C      modification, are permitted provided that the followingConditions are
 C      met:
-C
+C      
 C          - Redistributions of sourceCode must retain the aboveCopyright
 C          notice, this list ofConditions and the following disclaimer.
 C          - Redistributions in binary form must reproduce the above
 C         Copyright notice, this list ofConditions and the following
 C          disclaimer in the documentation and/or other materials provided
 C          with the distribution.
-C          - Neither the name of the ETH Zurich nor the names of its Contributors
-C          may be used to endorse or promote products derived from this software
+C          - Neither the name of the ETH Zurich nor the names of itsContributors 
+C          may be used to endorse or promote products derived from this software 
 C          without specific prior written permission.
-C
+C     
 C      THIS SOFTWARE IS PROVIDED BY THECOPYRIGHT HOLDERS ANDCONTRIBUTORS
 C      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 C      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -61,6 +61,5 @@ C--------------------------------------------------------------------------
 
 /* utility functions to be called in randtoolbox.c */
 
-double HALTONREC(int DIMEN, int OFFSET);
-void INITHALTON(int DIMEN, double *QUASI); // not used
-void reconstruct_prime(); //same as void reconstruct_primes()
+void INITSOBOL(int DIMEN, double *QUASI, int *LL, int COUNT, int *SV, int IFLAG, int iSEED);
+

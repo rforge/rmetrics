@@ -63,7 +63,7 @@ static int primeNumber[100000];
 
 
 //old translation of Fortran code
-/*
+
 void INITHALTON(int DIMEN, double *QUASI)
 {
     //in Fortran code BASE contains prime numbers
@@ -89,7 +89,7 @@ void INITHALTON(int DIMEN, double *QUASI)
     }
     OFFSET = OFFSET + 1;
     
-}*/
+}
 
 //compute the radical inverse function of integer OFFSET with base primeNumber[DIMEN]
 double HALTONREC(int DIMEN, int OFFSET)

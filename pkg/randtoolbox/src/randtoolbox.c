@@ -235,7 +235,7 @@ void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime)
   
   //sanity check
   if(dim > 100000)
-    error(_("Torus algorithm not yet implemented for dimension %d"), dim);
+    error(_("Halton algorithm not yet implemented for dimension %d"), dim);
   
   //init the seed of Halton algo
   if(!isInit)
@@ -280,6 +280,92 @@ void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime)
   
   isInit = 0;
 }
+
+
+
+SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed)
+{
+  if (!isNumeric(n) || !isNumeric(d) || !isLogical(timedseed) )
+    error(_("invalid argument"));
+  
+  //temporary working variables
+  int nb = asInteger( n ); //number of random vectors
+  int dim  = asInteger( d ); //dimension of vector
+  int seqstart = asInteger( offset ); //sequence starting point
+  int mixed = asLogical( ismixed ); //boolean to use the mixed Halton algo
+  int usetime = asLogical( timedseed ); //boolean to use the machine time
+  
+  //allocate result
+  double *u ; //result in C
+  SEXP resultinR; //result in R
+  PROTECT(resultinR = allocMatrix(REALSXP, nb, dim)); //allocate a n x d matrix
+  u = REAL( resultinR ); //plug the C pointer on the R type
+
+  R_CheckStack();
+  
+  //computation step
+  if (primeNumber[2] == 1)
+    reconstruct_primes();
+  
+  sobol(u, nb, dim, seqstart, mixed, usetime);
+  
+  UNPROTECT(1);
+  
+  return resultinR;
+}
+
+
+
+//compute the vector sequence of the Halton algorithm
+void sobol(double *u, int nb, int dim, int offset, int ismixed, int usetime)
+{
+  //temporary working variables
+  int i, j;
+  int ll;
+  unsigned long state;
+  
+  int *sv; //possibly scrambled direction numbers
+  int maxbit=30; //maximum number of bits for direction numbers
+  //allocate temporary variables
+  sv = (int *) R_alloc(maxbit*dim, sizeof(int));
+  
+  
+  if (!R_FINITE(nb) || !R_FINITE(dim))
+    error(_("non finite argument"));
+  
+  //sanity check
+  if(dim > 1111)
+    error(_("Sobol algorithm not yet implemented for dimension %d"), dim);
+  
+  //init the seed of Halton algo
+  if(!isInit)
+    randSeed();
+  
+  //init the state of SF Mersenne Twister algo
+  if(ismixed)
+    SFMT_init_gen_rand(seed);
+  
+  INITSOBOL(dim, u, &ll, nb, sv, 0, seed);
+  
+  for(j = 0; j < dim; j++)
+  {
+    Rprintf("Direction %u\n", j);
+    for(i = 0; i < maxbit; i++)
+      Rprintf("%u,", sv[i + j * maxbit]);
+    Rprintf("\n");
+  }
+  
+  //u_ij is the Sobol sequence term
+  //with n = state + i, s = j + 1, p = primeNumber[j]
+  //u is stored column by column
+  
+  for(j = 0; j < dim; j++)
+    for(i = 0; i < nb; i++)
+      u[i + j * nb] = 0.0;
+ 
+  isInit = 0;
+}
+
 
 
 /***********************************/
