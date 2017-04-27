@@ -5,8 +5,8 @@ Version 1.20
 =============
 - translate Fortran code of Diethelm Wuertz for Halton and Sobol sequences.
 
-BUG FIX: 
-- scrambling = 1, 3 for Sobol sequences.
+BUG FIX
+- scrambling = 1, 3 for Sobol sequences; provided by Makoto Matsumoto
 
 Version 1.17
 =============
