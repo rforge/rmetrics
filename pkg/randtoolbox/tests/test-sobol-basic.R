@@ -1,5 +1,7 @@
 library(randtoolbox)
 
+p13 <- int2bit(13)
+prevterm <- sapply(c(1,3,3), int2bit)
 
 #page 307 of Glassermann
 trueval <- c(16, 24,  8, 12, 28, 20,  4, 30, 14,  6, 22, 18,  2, 10, 26,  5, 21, 29, 13,  9, 25, 17,  1, 27, 11,  3, 19, 23,  7, 15, 31)/32

@@ -12,11 +12,12 @@
 }
 \usage{
 halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
-                    mixed = FALSE, method=c("C", "Fortran"))
+                    mixed = FALSE, method="C")
 
-sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE)
+sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
+                   mixed = FALSE, method="Fortran")
 torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
-normal=FALSE)
+                  normal=FALSE)
 }
 \arguments{
   \item{n}{number of observations. If length(n) > 1, 

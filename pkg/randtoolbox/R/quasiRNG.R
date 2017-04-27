@@ -50,12 +50,15 @@
 
 ### quasi random generation ###
 
-torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, normal=FALSE)
+torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
+                  normal=FALSE)
 {
   ## Check arguments
   if(n <0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(dim < 1 || length(dim) >1)
+    stop("invalid argument 'dim'")
+  if(dim > 100000)
     stop("invalid argument 'dim'")
   if(!is.logical(usetime))
     stop("invalid argument 'usetime'")
@@ -107,17 +110,21 @@ get.primes <- function(n)
 
 #(n, dim = 1, prime, init = TRUE, usetime = FALSE, normal=FALSE)
 halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
-                    mixed = FALSE, method=c("C", "Fortran"))
+                    mixed = FALSE, method="C")
 {   
-  # A function implemented by Diethelm Wuertz
+  # A function based on Diethelm Wuertz's code
   
   if(n < 0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(dim < 1 || length(dim) >1)
-    stop("invalid argument 'dim'")    
+    stop("invalid argument 'dim'")   
+  if(dim > 100000)
+    stop("invalid argument 'dim'")
   method <- match.arg(method, c("C", "Fortran"))
   if(!is.logical(usetime))
     stop("invalid argument 'usetime'")
+  if(!is.logical(mixed))
+    stop("invalid argument 'mixed'")
   
   # Description:
   #   Uniform Halton Low Discrepancy Sequence
@@ -186,13 +193,15 @@ runif.halton <- halton
 
 
 sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
-                   mixed = FALSE, method=c("Fortran", "C"))
+                   mixed = FALSE, method="Fortran")
 {   
   # A function implemented by Diethelm Wuertz
   if(n <0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(dim < 1 || dim > 1111 || length(dim) >1)
     stop("invalid argument 'dim'")    
+  if(dim > 100000)
+    stop("invalid argument 'dim'")
   if( !any(scrambling == 0:3) )
     stop("invalid argument 'scrambling'")    
   method <- match.arg(method, c("C", "Fortran"))
@@ -210,9 +219,6 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   #           N : LD numbers to create
   #  SCRAMBLING : One of the numbers 0,1,2,3
   #
-  
-  # FUNCTION:
-  
   
   # Restart Settings:
   if (init) 
@@ -250,7 +256,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   }else #method == "C"
   {
     result <- .Call("doSobol", nb, dim, 0, FALSE, FALSE)
-    stop("here")
+    stop("not yet implemented")
   }
     
   

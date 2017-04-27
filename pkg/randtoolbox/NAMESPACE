@@ -27,4 +27,4 @@ importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL, setSeed4WELL, WELL
 ### Other imports
 importFrom("graphics", hist)
 importFrom("stats", dpois, pchisq, qnorm, runif)
-importFrom("utils", packageDescription)
+importFrom("utils", packageDescription, head)
