@@ -5,9 +5,8 @@
 # @author Christophe Dutang
 # @author Diethelm Wuertz 
 #
-#
-# Copyright (C) 2009, Christophe Dutang, 
-# Diethelm Wuertz, ETH Zurich. 
+# Copyright (C) 2017, Christophe Dutang, 
+# Copyright (C) 2009, Diethelm Wuertz, ETH Zurich. 
 # All rights reserved.
 #
 # The new BSD License is applied to this software.
@@ -186,7 +185,8 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
 runif.halton <- halton
 
 
-sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE)
+sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
+                   mixed = FALSE, method=c("Fortran", "C"))
 {   
   # A function implemented by Diethelm Wuertz
   if(n <0 || is.array(n) || !is.numeric(n))
@@ -195,8 +195,13 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     stop("invalid argument 'dim'")    
   if( !any(scrambling == 0:3) )
     stop("invalid argument 'scrambling'")    
+  method <- match.arg(method, c("C", "Fortran"))
   
+  nb <- ifelse(length(n)>1, length(n), n)
   
+  if(method == "Fortran")
+  {  
+    
   # Description:
   #   Uniform Sobol Low Discrepancy Sequence
   
@@ -217,12 +222,12 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     stop("Sobol algorithm not initialized.")
   
   # Generate:
-  qn = numeric(ifelse(length(n)>1, length(n), n) * dim)
+  qn = numeric(nb * dim)
   
   # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
   result <- .Fortran("sobol",
                      as.double( qn ),
-                     as.integer( ifelse(length(n)>1, length(n), n) ),
+                     as.integer( nb ),
                      as.integer( dim ),
                      as.double ( .getrandtoolboxEnv(".runif.sobol.seed")$quasi ),
                      as.integer( .getrandtoolboxEnv(".runif.sobol.seed")$ll ),
@@ -241,6 +246,13 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   
   # Deviates:
   result <- matrix(result[[1]], ncol = dim)
+  
+  }else #method == "C"
+  {
+    result <- .Call("doSobol", nb, dim, 0, FALSE, FALSE)
+    stop("here")
+  }
+    
   
   if(any(result >= 1))
     warning("A call to sobol() raised an error by generating numerics greater or equal than 1.")
