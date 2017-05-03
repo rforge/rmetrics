@@ -12,38 +12,40 @@
 }
 \usage{
 halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
-                    mixed = FALSE, method="C")
-
+                    mixed = FALSE, method="C", mexp = 19937)
 sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
-                   mixed = FALSE, method="Fortran")
+                   mixed = FALSE, method="Fortran", mexp = 19937)
 torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
-                  normal=FALSE)
+                  normal=FALSE, mexp = 19937)
 }
 \arguments{
   \item{n}{number of observations. If length(n) > 1, 
   	the length is taken to be the required number.}
   \item{dim}{dimension of observations default 1.}
   \item{init}{a logical, if TRUE the sequence is initialized and 
-	restarts, otherwise not. By default TRUE.}
-  \item{normal}{a logical if normal deviates are needed, default FALSE}
+	restarts, otherwise not. By default \code{TRUE}.}
+  \item{normal}{a logical if normal deviates are needed, default \code{FALSE}.}
   \item{scrambling}{
-	an integer value, if 1, 2 or 3 the sequence is scrambled
-       otherwise not. If 1, Owen type type of scrambling is 
-       applied, if 2, Faure-Tezuka type of scrambling, is
-       applied, and if 3, both Owen+Faure-Tezuka type of
+	    an integer value, if 1, 2 or 3 the sequence is scrambled
+       otherwise not. If \code{scrambling=1}, Owen type type of scrambling is 
+       applied, if \code{scrambling=2}, Faure-Tezuka type of scrambling, is
+       applied, and if \code{scrambling=3}, both Owen+Faure-Tezuka type of
        scrambling is applied. By default 0.}
   \item{seed}{
         an integer value, the random seed for initialization
-        of the scrambling process. By default 4711. On effective
+        of the scrambling process. By default \code{4711}. On effective
         if \code{scrambling>0}.
         }
   \item{prime}{a single prime number or a vector of prime numbers to be used
   		 in the Torus sequence. (optional argument).}
-  \item{mixed}{a logical to use the mixed Torus algorithm, default FALSE.}
+  \item{mixed}{a logical to combine the Torus algorithm with SFMT algorithm, default \code{FALSE}.}
   \item{usetime}{a logical to use the machine time to start the Torus sequence, 
-  		   default TRUE. if FALSE, the Torus sequence start from the first term.}
+  		   default \code{FALSE}, i.e. when \code{usetime=FALSE} the Torus sequence start from the first term.
+  		   \code{usetime} is only used when \code{mixed=FALSE}.}
   \item{method}{a character string either \code{"C"} or \code{"Fortran"}.
-  Note that \code{mixed=TRUE} is only available when \code{method="C"}.}		   
+      Note that \code{mixed=TRUE} is only available when \code{method="C"}.}		 
+  \item{mexp}{an integer for the Mersenne exponent of SFMT algorithm,
+      only used when \code{mixed=TRUE}.}    
 }
 \details{
 

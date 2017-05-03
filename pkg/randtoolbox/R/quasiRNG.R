@@ -51,10 +51,10 @@
 ### quasi random generation ###
 
 torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
-                  normal=FALSE)
+                  normal=FALSE, mexp = 19937)
 {
   ## Check arguments
-  if(n <0 || is.array(n) || !is.numeric(n))
+  if(n < 0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(dim < 1 || length(dim) >1)
     stop("invalid argument 'dim'")
@@ -75,6 +75,11 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
     dim <- length(prime)
     prime <- as.integer( prime )
   }
+  ## Mersenne exponent only used when mixed=TRUE
+  authorizedParam <- c(607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091)
+  if( !(mexp %in% authorizedParam) )
+    stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}.")
+  
   
   ## Restart Settings:
   if(init) 
@@ -85,14 +90,18 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
   ## Compute        
   nb <- ifelse(length(n)>1, length(n), n)
   startpt <- .getrandtoolboxEnv(".torus.seed")$offset
+  print(startpt)
   
-  res <- .Call("doTorus", nb, dim, prime, startpt, mixed, usetime)
+  res <- .Call("doTorus", nb, dim, prime, startpt, mixed, usetime, mexp)
+  
+  if(any(res > 1 | res < 0))
+    warning("A call to torus() generate numerics outside (0,1).")
   
   ## Normal transformation
   if(normal)
     res <- qnorm(res)
   
-  ## For the next numbers save (if init=FALSE)
+  ## For the next numbers save (only used if init=FALSE in the next call)
   .setrandtoolboxEnv(.torus.seed = list(offset = startpt+nb))	
   
   ## Result	
@@ -110,7 +119,7 @@ get.primes <- function(n)
 
 #(n, dim = 1, prime, init = TRUE, usetime = FALSE, normal=FALSE)
 halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
-                    mixed = FALSE, method="C")
+                    mixed = FALSE, method="C", mexp = 19937)
 {   
   # A function based on Diethelm Wuertz's code
   
@@ -165,17 +174,25 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
                        init= as.integer( init ),
                        trans= as.integer( 0 ),
                        PACKAGE = "randtoolbox")
-    # For the next numbers save (if init=FALSE)
+    # For the next numbers save (only used if init=FALSE in the next call)
     .setrandtoolboxEnv(.halton.seed = result[c("base", "offset")])
     # Deviates:
     result <- matrix(result[["qn"]], ncol = dim)
     
   }else #method == "C"
   {
-    result <- .Call("doHalton", nb, dim, rngEnv$offset, mixed, usetime)
-    # For the next numbers save (if init=FALSE)
+    ## Mersenne exponent only used when mixed=TRUE
+    authorizedParam <- c(607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091)
+    if( !(mexp %in% authorizedParam) )
+      stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}. ")
+    
+    result <- .Call("doHalton", nb, dim, rngEnv$offset, mixed, usetime, mexp)
+    # For the next numbers save (only used if init=FALSE in the next call)
     .setrandtoolboxEnv(.halton.seed = list("base"=get.primes(dim), "offset"=rngEnv$offset+nb))
   }
+  
+  if(any(result > 1 | result < 0))
+    warning("A call to halton() generate numerics outside (0,1).")
   
   ## Normal transformation
   if(normal)
@@ -193,7 +210,7 @@ runif.halton <- halton
 
 
 sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
-                   mixed = FALSE, method="Fortran")
+                   mixed = FALSE, method="Fortran", mexp = 19937)
 {   
   # A function implemented by Diethelm Wuertz
   if(n <0 || is.array(n) || !is.numeric(n))
@@ -245,7 +262,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
                      as.integer( 0 ),
                      PACKAGE = "randtoolbox")
   
-  # For the next numbers save (if init=FALSE)
+  # For the next numbers save (only used if init=FALSE in the next call)
   .setrandtoolboxEnv(.runif.sobol.seed = list(quasi = result[[4]], ll = result[[5]],
                                               count = result[[6]], sv = result[[7]], 
                                               seed = result[[9]]))
@@ -255,13 +272,18 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   
   }else #method == "C"
   {
-    result <- .Call("doSobol", nb, dim, 0, FALSE, FALSE)
+    ## Mersenne exponent only used when mixed=TRUE
+    authorizedParam <- c(607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091)
+    if( !(mexp %in% authorizedParam) )
+      stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}. ")
+    
+    result <- .Call("doSobol", nb, dim, 0, FALSE, FALSE, mexp)
     stop("not yet implemented")
   }
     
   
-  if(any(result >= 1))
-    warning("A call to sobol() raised an error by generating numerics greater or equal than 1.")
+  if(any(result > 1 | result < 0))
+    warning("A call to sobol() generate numerics outside (0,1).")
   
   ## Normal transformation
   if(normal)

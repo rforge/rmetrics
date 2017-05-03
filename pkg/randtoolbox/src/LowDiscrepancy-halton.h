@@ -61,6 +61,6 @@ C--------------------------------------------------------------------------
 
 /* utility functions to be called in randtoolbox.c */
 
-double HALTONREC(int DIMEN, int OFFSET);
+double HALTONREC(int DIMEN, unsigned long long OFFSET);
 void INITHALTON(int DIMEN, double *QUASI); // not used
 void reconstruct_prime(); //same as void reconstruct_primes()

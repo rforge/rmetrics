@@ -104,9 +104,9 @@
 
 
 /* Functions accessed from .Call() */
-SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed);
-SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed);
-SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed);
+SEXP doTorus(SEXP n, SEXP d, SEXP p, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mersexpo);
+SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mersexpo);
+SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mersexpo);
 SEXP doSetSeed(SEXP s);
 SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment, SEXP echo);
 SEXP doSFMersenneTwister(SEXP n, SEXP d, SEXP mersexpo, SEXP paramset);
@@ -114,9 +114,9 @@ SEXP doWELL(SEXP n, SEXP d, SEXP order, SEXP tempering, SEXP version);
 SEXP doKnuthTAOCP(SEXP n, SEXP d);
 
 /* utility functions */
-void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int usetime);
-void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime);
-void sobol(double *u, int nb, int dim, int offset, int ismixed, int usetime);
+void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int usetime, int mexp);
+void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
+void sobol(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
 void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show);
 void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset);
 void knuthTAOCP(double *u, int nb, int dim);

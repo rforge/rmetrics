@@ -39,7 +39,7 @@ setSeed(seed)
   \item{mult}{an integer defining the multiplier of the linear congruential generator.}
   \item{incr}{an integer defining the increment of the linear congruential generator.}
   \item{echo}{a logical to plot the seed while computing the sequence.}
-  \item{mexp}{an integer for the mersenne exponent of SFMT algorithm. see details}
+  \item{mexp}{an integer for the Mersenne exponent of SFMT algorithm. See details}
   \item{withtorus}{a numeric in ]0,1] defining the proportion of the torus
                     sequence appended to the SFMT sequence; 
                     or a logical equals to FALSE (default).}

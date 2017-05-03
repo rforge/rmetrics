@@ -92,10 +92,10 @@ void INITHALTON(int DIMEN, double *QUASI)
 }
 
 //compute the radical inverse function of integer OFFSET with base primeNumber[DIMEN]
-double HALTONREC(int DIMEN, int OFFSET)
+double HALTONREC(int DIMEN, unsigned long long OFFSET)
 {
     //in Fortran code BASE contains prime numbers
-    int ITER, DIGIT;
+    unsigned long long ITER, DIGIT;
     double HALF;
     double QUASI;
     

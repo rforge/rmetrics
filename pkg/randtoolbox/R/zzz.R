@@ -67,9 +67,9 @@
 		
 		packageStartupMessage("<<-- randtoolbox - version ", PkgVersion, " - building date ", BuildDate)
 		packageStartupMessage("with ",Rversion, " on the platform ", OStype) 
-		packageStartupMessage("-->> For overview, type 'help(\"randtoolbox\")'.")
+		packageStartupMessage("-->> For an overview, type 'help(\"randtoolbox\")'.")
 	}else
-		packageStartupMessage("This is randtoolbox. For overview, type 'help(\"randtoolbox\")'.")
+		packageStartupMessage("This is randtoolbox. For an overview, type 'help(\"randtoolbox\")'.")
 	
 }
 

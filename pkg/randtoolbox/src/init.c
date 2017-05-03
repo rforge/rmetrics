@@ -6,7 +6,7 @@
  * @author Petr Savicky 
  *
  *
- * Copyright (C) 2013, Christophe Dutang, 
+ * Copyright (C) 2017, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
  * All rights reserved.
  *
@@ -60,9 +60,9 @@
 //table of registration
 static const R_CallMethodDef callMethods[] = 
 {
-        {"doTorus", (DL_FUNC) &doTorus, 6},
-        {"doHalton", (DL_FUNC) &doHalton, 5},
-        {"doSobol", (DL_FUNC) &doSobol, 5},
+        {"doTorus", (DL_FUNC) &doTorus, 7},
+        {"doHalton", (DL_FUNC) &doHalton, 6},
+        {"doSobol", (DL_FUNC) &doSobol, 6},
         {"doSetSeed", (DL_FUNC) &doSetSeed, 1},
         {"doCongruRand", (DL_FUNC) &doCongruRand, 6},
         {"doSFMersenneTwister", (DL_FUNC) &doSFMersenneTwister, 4},

@@ -46,3 +46,53 @@ for(i in 0:10)
 }
 
 }
+
+
+
+
+#Code by Art Owen
+
+simsobcheck = function( nlist=2^c(1:10), d=3, rep=10, verbose=FALSE ){
+  # First check convergence rate
+  # The result is that it clearly gets only O( n^-2 ) variance not O( n^-3 )
+  
+  f = function(u){
+    sum(u)^2
+  }
+  
+  ans = matrix(0,length(nlist),rep )
+  
+  seed = 0
+  for( i in 1:length(nlist) ){
+    n = nlist[i]
+    for( j in 1:rep ){
+      seed = seed+1
+      u = sobol(n,dim=d,scrambling=1,seed=seed)
+      if( d==1 )
+        u = matrix(u,ncol=1)
+      mu = mean(apply(u,1,f))
+      ans[i,j] = mu
+    }
+    if( verbose) print(ans[i,])
+  }  
+  ans
+}
+
+figsimsobcheck = function(fn="figsimsobcheck.pdf", export=TRUE){
+  
+  if(export) 
+    pdf(fn)
+  
+  nlist = 2^c(2:17)
+  plot(nlist,apply(simsobcheck(nlist = nlist,d=3 ),1,var),log="xy",xlab="n",ylab="variance",
+       main = "Variance vs n, references 1/n 1/n^2 1/n^3")
+  lines(nlist,nlist^-1)
+  lines(nlist,nlist^-2)
+  lines(nlist,nlist^-3)
+  
+  if(export) 
+    dev.off()
+}
+if(FALSE)
+figsimsobcheck(export=FALSE)
+

@@ -49,8 +49,7 @@
 
 .randtoolboxEnv <- new.env(hash = TRUE)
 
-.setrandtoolboxEnv <-
-    function(...)
+.setrandtoolboxEnv <- function(...)
 {
     x <- list(...)
     nm <- names(x)
@@ -61,8 +60,7 @@
     invisible()
 }
 
-.getrandtoolboxEnv <-
-    function(x = NULL, unset = "")
+.getrandtoolboxEnv <- function(x, unset = "")
 {
     if (is.null(x))
         x <- ls(all.names = TRUE, envir = .randtoolboxEnv)

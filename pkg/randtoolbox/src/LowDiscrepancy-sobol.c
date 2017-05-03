@@ -1026,7 +1026,8 @@ void INITSOBOL(int DIMEN, double *QUASI, int *LL, int COUNT, int *SV, int IFLAG,
 {
     int ATMOST,TAUS,MAXCOL,S;
     int I,J,K,L,M,NEWV;
-    int MAXX, MAX, TEMP01;
+    int MAX;
+    //int MAXX, TEMP01;
     int INCLUD[MAXDEG]; //originally LOGICAL INCLUD(MAXDEG)
     int SHIFT[MAXDIM]; //originally INTEGER SHIFT(1111)
       

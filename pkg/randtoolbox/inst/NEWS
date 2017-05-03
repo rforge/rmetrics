@@ -5,9 +5,11 @@ Version 1.20
 =============
 - translate Fortran code of Diethelm Wuertz for Halton sequence.
 - start to translate Fortran code of Diethelm Wuertz for Sobol sequence.
+- add defensive programming for QMC.
 
-BUG FIX (provided by Makoto Matsumoto and Mutsuo Saito)
-- scrambling = 1, 3 for Sobol sequences.
+BUG FIX
+- scrambling = 1, 3 for Sobol sequences. (provided by Makoto Matsumoto and Mutsuo Saito) 
+- mixed = TRUE for QMC sequences. 
 
 Version 1.17
 =============
@@ -16,9 +18,11 @@ Version 1.17
 - update the LICENSE file.
 - raise a warning when scrambling for Sobol sequences is incorrect.
 
-BUG REPORT (by Dan Souther, Kemal Dincer Dingec, Marius Hofert, Nicolas Chopin)
+BUG REPORT 
+(by Dan Souther, Kemal Dincer Dingec, Marius Hofert, Nicolas Chopin)
 - scrambling = 1, 3 for Sobol sequences.
-
+(by Hiroyuki Kawakatsu)
+- mixed = TRUE for QMC sequences. 
 
 Version 1.16
 =============
