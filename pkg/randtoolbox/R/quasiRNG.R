@@ -56,9 +56,9 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
   ## Check arguments
   if(n < 0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
-  if(dim < 1 || length(dim) >1)
+  if(length(dim) >1)
     stop("invalid argument 'dim'")
-  if(dim > 100000)
+  if(dim < 1 || dim > 100000)
     stop("invalid argument 'dim'")
   if(!is.logical(usetime))
     stop("invalid argument 'usetime'")
@@ -125,9 +125,9 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
   
   if(n < 0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
-  if(dim < 1 || length(dim) >1)
+  if(length(dim) >1)
     stop("invalid argument 'dim'")   
-  if(dim > 100000)
+  if(dim < 1 || dim > 100000)
     stop("invalid argument 'dim'")
   method <- match.arg(method, c("C", "Fortran"))
   if(!is.logical(usetime))
@@ -215,9 +215,9 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   # A function implemented by Diethelm Wuertz
   if(n <0 || is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
-  if(dim < 1 || dim > 1111 || length(dim) >1)
+  if(length(dim) >1)
     stop("invalid argument 'dim'")    
-  if(dim > 100000)
+  if(dim < 1 || dim > 1111) #prepare the future release
     stop("invalid argument 'dim'")
   if( !any(scrambling == 0:3) )
     stop("invalid argument 'scrambling'")    
