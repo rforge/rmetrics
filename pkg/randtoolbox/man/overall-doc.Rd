@@ -21,7 +21,7 @@
   whereas advanced users whould have a look at the vigentte 'A note on random number generation'.
   
   The stable version is available on CRAN 
-  \url{http://cran.r-project.org/package=randtoolbox},
+  \url{https://CRAN.R-project.org/package=randtoolbox},
   while the development version is hosted on R-forge
   \url{http://r-forge.r-project.org/projects/rmetrics/}.
   

@@ -77,25 +77,26 @@ static const R_CallMethodDef callMethods[] =
 //table of registered routines
 void R_init_randtoolbox(DllInfo *info)
 {
-        //register method accessed with .Call
-        R_registerRoutines(info, NULL, callMethods, NULL, NULL); 
-		
-        //make randtoolbox C functions available for other packages
-        R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
-        R_RegisterCCallable("randtoolbox", "halton", (DL_FUNC) halton);
-        R_RegisterCCallable("randtoolbox", "sobol", (DL_FUNC) halton);
-        R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
-        R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
-        R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);
-        R_RegisterCCallable("randtoolbox", "pokerTest", (DL_FUNC) pokerTest);
-        R_RegisterCCallable("randtoolbox", "collisionTest", (DL_FUNC) collisionTest);
-        R_RegisterCCallable("randtoolbox", "knuthTAOCP", (DL_FUNC) knuthTAOCP); 
-		 
-		//retrieve WELL rng entry point in the rngWELL pkg
-		WELLrng = (void (*) (double *, int, int, int, int, int)) R_GetCCallable("rngWELL", "WELLrng");
-		WELL_get_set_entry_point =(void (*) (void (*)())) R_GetCCallable("rngWELL", "WELL_get_set_entry_point");
-		/*getRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "getRngWELL");
-		putRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "putRngWELL");
-		initMT2002 = (void (*) (unsigned int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "initMT2002");*/
+  //register method accessed with .Call
+  R_registerRoutines(info, NULL, callMethods, NULL, NULL); 
+  
+  //make randtoolbox C functions available for other packages
+  R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
+  R_RegisterCCallable("randtoolbox", "halton", (DL_FUNC) halton);
+  R_RegisterCCallable("randtoolbox", "sobol", (DL_FUNC) halton);
+  R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
+  R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
+  R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);
+  R_RegisterCCallable("randtoolbox", "pokerTest", (DL_FUNC) pokerTest);
+  R_RegisterCCallable("randtoolbox", "collisionTest", (DL_FUNC) collisionTest);
+  R_RegisterCCallable("randtoolbox", "knuthTAOCP", (DL_FUNC) knuthTAOCP); 
+  
+  //retrieve WELL rng entry point in the rngWELL pkg
+  WELLrng = (void (*) (double *, int, int, int, int, int)) R_GetCCallable("rngWELL", "WELLrng");
+  WELL_get_set_entry_point =(void (*) (void (*)())) R_GetCCallable("rngWELL", "WELL_get_set_entry_point");
+  /*getRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "getRngWELL");
+   putRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "putRngWELL");
+   initMT2002 = (void (*) (unsigned int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "initMT2002");*/
+  
 }
 

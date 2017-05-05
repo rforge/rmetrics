@@ -38,6 +38,7 @@ func <- function(i, n)
 }
 
 clus <- parallel::makeCluster(2, type = type)
+parallel::clusterEvalQ(clus, library(randtoolbox))
 res <- parallel::parSapply(clus, 1:2, func, n=1e4)
 parallel::stopCluster(clus)
 
