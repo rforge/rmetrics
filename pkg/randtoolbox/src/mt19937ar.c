@@ -41,11 +41,7 @@
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 
-#include <stdio.h>
-#include <R.h>
-#include <Rinternals.h>
-#include <Rdefines.h>
-#include <R_ext/Error.h>
+#include "mt19937ar.h"
 
 /* Period parameters */  
 #define N 624
@@ -180,7 +176,6 @@ double MT2002_genrand_res53(void)
 } 
 /* These real versions are due to Isaku Wada, 2002/01/09 added */
 
-#include "runifInterface.h"
 int initialization, resolution;
 
 void initMersenneTwister(int *type, int *nseed, unsigned int *iseed, unsigned int *state)

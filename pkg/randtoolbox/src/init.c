@@ -53,32 +53,62 @@
 
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
+#include <R_ext/Visibility.h>
 #include "randtoolbox.h"
 #include "runifInterface.h"
+#include "mt19937ar.h"
 #include "testrng.h"
+#include "version.h"
 
-//table of registration
+//table of registration routines accessed with .C()
+static const R_CMethodDef cMethods[] = {
+  {"set_noop", (DL_FUNC) &set_noop, 0}, //runifInterface.h
+  {"current_generator", (DL_FUNC) &current_generator, 1},
+  {"put_user_unif_set_generator", (DL_FUNC) &put_user_unif_set_generator, 0},
+  {"get_state_congru", (DL_FUNC) &get_state_congru, 2}, //congruRand.h
+  {"put_state_congru", (DL_FUNC) &put_state_congru, 3},
+  {"initMersenneTwister", (DL_FUNC) &initMersenneTwister, 4}, //mt19937ar.h
+  {"putMersenneTwister", (DL_FUNC) &putMersenneTwister, 3}, 
+  {"getMersenneTwister", (DL_FUNC) &getMersenneTwister, 3}, 
+  {"get_primes", (DL_FUNC) &get_primes, 2}, //randtoolbox.h
+  {"version_randtoolbox", (DL_FUNC) &version_randtoolbox, 1}, //version.h
+  {NULL, NULL, 0}
+};
+
+
+//table of registration routines accessed with .Call()
 static const R_CallMethodDef callMethods[] = 
 {
-        {"doTorus", (DL_FUNC) &doTorus, 7},
+        {"doTorus", (DL_FUNC) &doTorus, 7}, //randtoolbox.h
         {"doHalton", (DL_FUNC) &doHalton, 6},
         {"doSobol", (DL_FUNC) &doSobol, 6},
         {"doSetSeed", (DL_FUNC) &doSetSeed, 1},
         {"doCongruRand", (DL_FUNC) &doCongruRand, 6},
         {"doSFMersenneTwister", (DL_FUNC) &doSFMersenneTwister, 4},
-        {"doPokerTest", (DL_FUNC) &doPokerTest, 3},
-        {"doCollisionTest", (DL_FUNC) &doCollisionTest, 3},
         {"doWELL", (DL_FUNC) &doWELL, 5},
         {"doKnuthTAOCP", (DL_FUNC) &doKnuthTAOCP, 2},
+        {"doPokerTest", (DL_FUNC) &doPokerTest, 3}, //testrng.h
+        {"doCollisionTest", (DL_FUNC) &doCollisionTest, 3},
         {NULL, NULL, 0}
 };
 
+/* DOES NOT WORK => dynamic search
+//table of registration routines accessed with .Fortran()
+static const R_FortranMethodDef FortEntries[] = {
+  {"halton", (DL_FUNC) &F77_NAME(halton),  7},
+  {"sobol", (DL_FUNC) &F77_NAME(sobol),  11},
+  {NULL, NULL, 0}
+};*/
 
-//table of registered routines
-void R_init_randtoolbox(DllInfo *info)
+
+//there is no routine accessed with .External()
+
+//table of all registered routines
+void R_init_randtoolbox(DllInfo *dll)
 {
-  //register method accessed with .Call
-  R_registerRoutines(info, NULL, callMethods, NULL, NULL); 
+  //register method accessed with .C, .Call, .Fortran, .External respectively
+  R_registerRoutines(dll, cMethods, callMethods, NULL, NULL); 
+  R_useDynamicSymbols(dll, TRUE); 
   
   //make randtoolbox C functions available for other packages
   R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);

@@ -51,3 +51,7 @@ void user_unif_set_generator(int gener, void (*selected_init)(unsigned int), dou
 
 void (*WELL_get_set_entry_point)(void (* user_unif_set_generator)());
 
+/* Functions accessed from .C() */
+void set_noop();
+void current_generator(int *pgener);
+void put_user_unif_set_generator();

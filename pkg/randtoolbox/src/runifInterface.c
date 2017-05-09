@@ -100,7 +100,7 @@ void no_operation(unsigned int seed)
 }
 
 // .C entry point
-void set_noop(void)
+void set_noop()
 {
 	user_unif_init_selected = no_operation;
 }
