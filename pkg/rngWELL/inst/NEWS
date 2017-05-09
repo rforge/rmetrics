@@ -1,5 +1,15 @@
 === rngWELL: WELL random number generators ===
 
+Version 0.10-5
+=============
+- fix NOTE using R_useDynamicSymbols to preclude compilation
+NOTEs, better registration of native routines and reduced
+symbol visibility.
+ 
+
+Version 0.10-4
+=============
+- update LICENCE file.
 
 Version 0.10-3
 =============

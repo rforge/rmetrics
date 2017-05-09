@@ -48,13 +48,13 @@
 #define PACKAGE_NAME "rngWELL"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "rngWELL 0.10-4"
+#define PACKAGE_STRING "rngWELL 1.00"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "rngwell"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "0.10-4"
+#define PACKAGE_VERSION "1.00"
 
 /* The size of `unsigned long long', as computed by sizeof. */
 #define SIZEOF_UNSIGNED_LONG_LONG 8

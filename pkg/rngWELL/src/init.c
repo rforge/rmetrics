@@ -54,28 +54,40 @@
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 #include "rngWELL.h"
+#include "version.h"
 
-//table of registration
-static const R_CallMethodDef callMethods[] = 
+
+//table of registration routines accessed with .C()
+static const R_CMethodDef cMethods[] = 
 {
-        {"doSetSeed4WELL", (DL_FUNC) &doSetSeed4WELL, 1},
-        {"doWELL", (DL_FUNC) &doWELL, 5},
-		{"initMT2002", (DL_FUNC) &initMT2002, 3},
-		{"putRngWELL", (DL_FUNC) &putRngWELL, 3},
-		{"getRngWELL", (DL_FUNC) &getRngWELL, 3},
-        {NULL, NULL, 0}
+  {"initMT2002", (DL_FUNC) &initMT2002, 3},
+  {"putRngWELL", (DL_FUNC) &putRngWELL, 3},
+  {"getRngWELL", (DL_FUNC) &getRngWELL, 3},
+  {"version_rngWELL", (DL_FUNC) &version_rngWELL, 1}, //version.h
+  {NULL, NULL, 0}
 };
 
-void R_init_rngWELL(DllInfo *info)
+//table of registration routines accessed with .Call()
+static const R_CallMethodDef callMethods[] = 
 {
-        //register method accessed with .Call
-        R_registerRoutines(info, NULL, callMethods, NULL, NULL); 
-        //make rngWELL C functions available for other packages
-        R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
-        R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
-        R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
-        /*R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
-        R_RegisterCCallable("rngWELL", "putRngWELL", (DL_FUNC) putRngWELL);
-        R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);*/
+  {"doSetSeed4WELL", (DL_FUNC) &doSetSeed4WELL, 1},
+  {"doWELL", (DL_FUNC) &doWELL, 5},
+  {NULL, NULL, 0}
+};
+
+//register method accessed with .C, .Call, .Fortran, .External respectively
+void R_init_rngWELL(DllInfo *dll)
+{
+  //register method accessed with .Call
+  R_registerRoutines(dll, cMethods, callMethods, NULL, NULL); 
+  R_useDynamicSymbols(dll, FALSE); 
+  
+  //make rngWELL C functions available for other packages
+  R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
+  R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
+  R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
+  /*R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
+   R_RegisterCCallable("rngWELL", "putRngWELL", (DL_FUNC) putRngWELL);
+   R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);*/
 }
 

@@ -51,8 +51,5 @@
 
 #include <R.h>
 
-void version_rngWELL(char **s)
-{
-	s[0] = "0.10-5";
-}
+void version_rngWELL(char **s);
 
