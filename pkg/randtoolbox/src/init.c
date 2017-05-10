@@ -51,9 +51,9 @@
  *
  */
 
+#include <stdlib.h> //for NULL
 #include <Rinternals.h>
 #include <R_ext/Rdynload.h>
-#include <R_ext/Visibility.h>
 #include "randtoolbox.h"
 #include "runifInterface.h"
 #include "mt19937ar.h"
@@ -61,44 +61,50 @@
 #include "version.h"
 
 //table of registration routines accessed with .C()
-static const R_CMethodDef cMethods[] = {
-  {"set_noop", (DL_FUNC) &set_noop, 0}, //runifInterface.h
-  {"current_generator", (DL_FUNC) &current_generator, 1},
-  {"put_user_unif_set_generator", (DL_FUNC) &put_user_unif_set_generator, 0},
-  {"get_state_congru", (DL_FUNC) &get_state_congru, 2}, //congruRand.h
-  {"put_state_congru", (DL_FUNC) &put_state_congru, 3},
-  {"initMersenneTwister", (DL_FUNC) &initMersenneTwister, 4}, //mt19937ar.h
-  {"putMersenneTwister", (DL_FUNC) &putMersenneTwister, 3}, 
-  {"getMersenneTwister", (DL_FUNC) &getMersenneTwister, 3}, 
-  {"get_primes", (DL_FUNC) &get_primes, 2}, //randtoolbox.h
-  {"version_randtoolbox", (DL_FUNC) &version_randtoolbox, 1}, //version.h
+static const R_CMethodDef CEntries[] = {
+  {"set_noop",                    (DL_FUNC) &set_noop, 0}, //runifInterface.h
+  {"current_generator",           (DL_FUNC) &current_generator, 1}, //runifInterface.h
+  {"put_user_unif_set_generator", (DL_FUNC) &put_user_unif_set_generator, 0}, //runifInterface.h
+  {"get_state_congru",            (DL_FUNC) &get_state_congru, 2}, //congruRand.h
+  {"put_state_congru",            (DL_FUNC) &put_state_congru, 3}, //congruRand.h
+  {"initMersenneTwister",         (DL_FUNC) &initMersenneTwister, 4}, //mt19937ar.h
+  {"putMersenneTwister",          (DL_FUNC) &putMersenneTwister, 3}, //mt19937ar.h 
+  {"getMersenneTwister",          (DL_FUNC) &getMersenneTwister, 3}, //mt19937ar.h 
+  {"get_primes",                  (DL_FUNC) &get_primes, 2}, //randtoolbox.h
+  {"version_randtoolbox",         (DL_FUNC) &version_randtoolbox, 1}, //version.h
   {NULL, NULL, 0}
 };
 
 
 //table of registration routines accessed with .Call()
-static const R_CallMethodDef callMethods[] = 
+static const R_CallMethodDef CallEntries[] = 
 {
-        {"doTorus", (DL_FUNC) &doTorus, 7}, //randtoolbox.h
-        {"doHalton", (DL_FUNC) &doHalton, 6},
-        {"doSobol", (DL_FUNC) &doSobol, 6},
-        {"doSetSeed", (DL_FUNC) &doSetSeed, 1},
-        {"doCongruRand", (DL_FUNC) &doCongruRand, 6},
-        {"doSFMersenneTwister", (DL_FUNC) &doSFMersenneTwister, 4},
-        {"doWELL", (DL_FUNC) &doWELL, 5},
-        {"doKnuthTAOCP", (DL_FUNC) &doKnuthTAOCP, 2},
-        {"doPokerTest", (DL_FUNC) &doPokerTest, 3}, //testrng.h
-        {"doCollisionTest", (DL_FUNC) &doCollisionTest, 3},
-        {NULL, NULL, 0}
+  {"doCongruRand",        (DL_FUNC) &doCongruRand, 6}, //randtoolbox.h
+  {"doHalton",            (DL_FUNC) &doHalton, 6}, //randtoolbox.h
+  {"doKnuthTAOCP",        (DL_FUNC) &doKnuthTAOCP, 2}, //randtoolbox.h
+  {"doSetSeed",           (DL_FUNC) &doSetSeed, 1}, //randtoolbox.h
+  {"doSFMersenneTwister", (DL_FUNC) &doSFMersenneTwister, 4}, //randtoolbox.h
+  {"doSobol",             (DL_FUNC) &doSobol, 6}, //randtoolbox.h
+  {"doTorus",             (DL_FUNC) &doTorus, 7}, //randtoolbox.h
+  {"doWELL",              (DL_FUNC) &doWELL, 5}, //randtoolbox.h
+  {"doPokerTest",         (DL_FUNC) &doPokerTest, 3}, //testrng.h
+  {"doCollisionTest",     (DL_FUNC) &doCollisionTest, 3}, //testrng.h
+  {NULL, NULL, 0}
 };
 
-/* DOES NOT WORK => dynamic search
+
+/* .Fortran calls defined LowDiscrepancy.f 
+ * C version of these Fortran routines are halton_c() and sobol_c() in randtoolbox.c
+ */
+extern void F77_NAME(halton_f)(void *, void *, void *, void *, void *, void *, void *);
+extern void F77_NAME(sobol_f)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
+
 //table of registration routines accessed with .Fortran()
-static const R_FortranMethodDef FortEntries[] = {
-  {"halton", (DL_FUNC) &F77_NAME(halton),  7},
-  {"sobol", (DL_FUNC) &F77_NAME(sobol),  11},
+static const R_FortranMethodDef FortranEntries[] = {
+  {"halton_f", (DL_FUNC) &F77_NAME(halton_f),  7},
+  {"sobol_f", (DL_FUNC) &F77_NAME(sobol_f),  11},
   {NULL, NULL, 0}
-};*/
+};
 
 
 //there is no routine accessed with .External()
@@ -107,13 +113,13 @@ static const R_FortranMethodDef FortEntries[] = {
 void R_init_randtoolbox(DllInfo *dll)
 {
   //register method accessed with .C, .Call, .Fortran, .External respectively
-  R_registerRoutines(dll, cMethods, callMethods, NULL, NULL); 
-  R_useDynamicSymbols(dll, TRUE); 
+  R_registerRoutines(dll, CEntries, CallEntries, FortranEntries, NULL); 
+  R_useDynamicSymbols(dll, FALSE); 
   
   //make randtoolbox C functions available for other packages
   R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
-  R_RegisterCCallable("randtoolbox", "halton", (DL_FUNC) halton);
-  R_RegisterCCallable("randtoolbox", "sobol", (DL_FUNC) halton);
+  R_RegisterCCallable("randtoolbox", "halton_c", (DL_FUNC) halton_c);
+  R_RegisterCCallable("randtoolbox", "sobol_c", (DL_FUNC) halton_c);
   R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
   R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
   R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);

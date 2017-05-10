@@ -115,8 +115,8 @@ SEXP doKnuthTAOCP(SEXP n, SEXP d);
 
 /* utility functions */
 void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int usetime, int mexp);
-void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
-void sobol(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
+void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
+void sobol_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
 void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show);
 void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset);
 void knuthTAOCP(double *u, int nb, int dim);
@@ -126,5 +126,7 @@ void randSeedByArray(int length);
 void randSeed();
 
 void reconstruct_primes();
+
+/* Functions accessed from .C() */
 void get_primes(int *n, int *pri);
 

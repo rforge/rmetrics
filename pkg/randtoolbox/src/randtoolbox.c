@@ -225,7 +225,7 @@ SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP me
   if (primeNumber[2] == 1)
     reconstruct_primes();
   
-  halton(u, nb, dim, seqstart, mixed, usetime, mexp);
+  halton_c(u, nb, dim, seqstart, mixed, usetime, mexp);
   
   UNPROTECT(1);
   
@@ -234,7 +234,7 @@ SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP me
 
 
 //compute the vector sequence of the Halton algorithm
-void halton(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
+void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
 {
   int i, j;
   unsigned long long state;
@@ -314,7 +314,7 @@ SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mer
   if (primeNumber[2] == 1)
     reconstruct_primes();
   
-  sobol(u, nb, dim, seqstart, mixed, usetime, mexp);
+  sobol_c(u, nb, dim, seqstart, mixed, usetime, mexp);
   
   UNPROTECT(1);
   
@@ -324,7 +324,7 @@ SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mer
 
 
 //compute the vector sequence of the Halton algorithm
-void sobol(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
+void sobol_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
 {
   //temporary working variables
   int i, j;

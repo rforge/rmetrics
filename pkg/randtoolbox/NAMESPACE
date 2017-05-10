@@ -1,3 +1,14 @@
+### use dynamic library for C code
+useDynLib(randtoolbox, .registration = TRUE)
+
+### Import of rngWELL package for R code
+importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL, setSeed4WELL, WELL2test)
+
+### Other imports
+importFrom("graphics", hist)
+importFrom("stats", dpois, pchisq, qnorm, runif)
+importFrom("utils", packageDescription, head)
+
 ### Exports
 export(torus, runif.halton, halton, runif.sobol, sobol)
 export(sobol.directions, int2bit, bit2int, bit2unitreal, sobol.basic, sobol.R)
@@ -18,13 +29,3 @@ export(stirling, permut, get.primes)
 # export(version.randtoolbox)
 
 
-### use dynamic library for C code
-useDynLib(randtoolbox, .registration = TRUE)
-
-### Import of rngWELL package for R code
-importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL, setSeed4WELL, WELL2test)
-
-### Other imports
-importFrom("graphics", hist)
-importFrom("stats", dpois, pchisq, qnorm, runif)
-importFrom("utils", packageDescription, head)

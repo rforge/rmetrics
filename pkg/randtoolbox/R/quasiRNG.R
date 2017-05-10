@@ -165,7 +165,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
     qn <- numeric(nb * dim)
     
     # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
-    result <- .Fortran("halton",
+    result <- .Fortran("halton_f",
                        qn= as.double( qn ),
                        n= as.integer( nb ),
                        dim= as.integer( dim ),
@@ -248,7 +248,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   qn = numeric(nb * dim)
   
   # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-  result <- .Fortran("sobol",
+  result <- .Fortran("sobol_f",
                      as.double( qn ),
                      as.integer( nb ),
                      as.integer( dim ),
