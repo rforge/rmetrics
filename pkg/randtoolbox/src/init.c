@@ -96,6 +96,7 @@ static const R_CallMethodDef CallEntries[] =
 /* .Fortran calls defined LowDiscrepancy.f 
  * C version of these Fortran routines are halton_c() and sobol_c() in randtoolbox.c
  */
+/* DOES NOT WORK
 extern void F77_NAME(halton_f)(void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(sobol_f)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
@@ -104,7 +105,7 @@ static const R_FortranMethodDef FortranEntries[] = {
   {"halton_f", (DL_FUNC) &F77_NAME(halton_f),  7},
   {"sobol_f", (DL_FUNC) &F77_NAME(sobol_f),  11},
   {NULL, NULL, 0}
-};
+};*/
 
 
 //there is no routine accessed with .External()
@@ -113,8 +114,8 @@ static const R_FortranMethodDef FortranEntries[] = {
 void R_init_randtoolbox(DllInfo *dll)
 {
   //register method accessed with .C, .Call, .Fortran, .External respectively
-  R_registerRoutines(dll, CEntries, CallEntries, FortranEntries, NULL); 
-  R_useDynamicSymbols(dll, FALSE); 
+  R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL); 
+  R_useDynamicSymbols(dll, TRUE); 
   
   //make randtoolbox C functions available for other packages
   R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
