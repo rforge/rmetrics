@@ -73,9 +73,10 @@
 
 #ifndef PRIu64
  #if defined(_MSC_VER) || defined(__BORLANDC__)
+ #include <stdio.h>
  #define PRIu64 "I64u"
  #define PRIx64 "I64x"
-#else
+ #else
  #define PRIu64 "llu"
  #define PRIx64 "llx"
  #endif

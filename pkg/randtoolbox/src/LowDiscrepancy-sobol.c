@@ -1024,110 +1024,109 @@ SUBROUTINE INITSOBOL(DIMEN, QUASI, LL, COUNT, SV,
 
 void INITSOBOL(int DIMEN, double *QUASI, int *LL, int COUNT, int *SV, int IFLAG, int iSEED)
 {
-    int ATMOST,TAUS,MAXCOL,S;
-    int I,J,K,L,M,NEWV;
-    int MAX;
-    //int MAXX, TEMP01;
-    int INCLUD[MAXDEG]; //originally LOGICAL INCLUD(MAXDEG)
-    int SHIFT[MAXDIM]; //originally INTEGER SHIFT(1111)
-      
-    double RECIPD;
+  int ATMOST,TAUS,MAXCOL,S;
+  int I,J,K,L,M,NEWV;
+  //int MAX, MAXX, TEMP01;
+  int INCLUD[MAXDEG]; //originally LOGICAL INCLUD(MAXDEG)
+  int SHIFT[MAXDIM]; //originally INTEGER SHIFT(1111)
+  
+  double RECIPD;
+  
+  //working direction numbers
+  int *V; //originally declared as INTEGER V(DIMEN,MAXBIT)
+  V = (int *) R_alloc(MAXBIT*DIMEN, sizeof(int));
+  
+  
+  /*C     CHECK PARAMETERS:*/
+  //MAX = 30;
+  ATMOST = R_pow_di(2, 30)-1;
+  S = DIMEN;
+  Rprintf("S:%u\n", S);
+  if(S <= MAXDEG) 
+    TAUS = TAU[S];
+  else
+    /*C        RETURN A DUMMY VALUE TO THE CALLING PROGRAM*/
+    TAUS = -1;
+  Rprintf("TAUS:%u\n", TAUS);
+  
+  //C     FIND NUMBER OF BITS IN ATMOST:
+  I = ATMOST;
+  MAXCOL = 0;
+  do
+  {
+    MAXCOL = MAXCOL + 1;
+    I = I/2; 
+  } while (I > 0);
+  Rprintf("MAXCOL:%u\n", MAXCOL);
+  
+  //C     INITIALIZE ROW 1 OF V
+  for(I = 0; I < MAXCOL; I++)
+  {
+    V[I*MAXCOL] = 1;
+  }
+  
+  //C     INITIALIZE REMAINING ROWS OF V:
+  for(I = 1; I < S; I++)
+  {
+    //C        THE BIT PATTERN OF POLYNOMIAL I GIVES ITS FORM
+    //C        FIND DEGREE OF POLYNOMIAL I FROM BINARY ENCODING
+    J = POLY[I];
+    M = -1; //originally 0, but M was not incremented
+    do
+    {
+      J = J/2;
+      M = M + 1;
+    } while (J > 0);
     
-    //working direction numbers
-    int *V; //originally declared as INTEGER V(DIMEN,MAXBIT)
-    V = (int *) R_alloc(MAXBIT*DIMEN, sizeof(int));
-    
-
-//C     CHECK PARAMETERS:
-      MAX = 30;
-      ATMOST = R_pow_di(2, 30)-1;
-      S = DIMEN;
-    Rprintf("S:%u\n", S);
-      if(S <= MAXDEG) 
-         TAUS = TAU[S];
-      else
-//C        RETURN A DUMMY VALUE TO THE CALLING PROGRAM
-         TAUS = -1;
-    Rprintf("TAUS:%u\n", TAUS);
-
-//C     FIND NUMBER OF BITS IN ATMOST:
-      I = ATMOST;
-      MAXCOL = 0;
-      do
-      {
-        MAXCOL = MAXCOL + 1;
-        I = I/2; 
-      } while (I > 0);
-    Rprintf("MAXCOL:%u\n", MAXCOL);
-    
-//C     INITIALIZE ROW 1 OF V
-      for(I = 0; I < MAXCOL; I++)
-      {
-        V[I*MAXCOL] = 1;
-      }
-      
-//C     INITIALIZE REMAINING ROWS OF V:
-      for(I = 1; I < S; I++)
-      {
-        //C        THE BIT PATTERN OF POLYNOMIAL I GIVES ITS FORM
-        //C        FIND DEGREE OF POLYNOMIAL I FROM BINARY ENCODING
-        J = POLY[I];
-        M = -1; //originally 0, but M was not incremented
-        do
-        {
-          J = J/2;
-          M = M + 1;
-        } while (J > 0);
-        
-        //C        WE EXPAND THIS BIT PATTERN TO SEPARATE COMPONENTS
-        //C        OF THE LOGICAL ARRAY INCLUD.
-        J = POLY[I];
-        for(K = M; K > 0; K--)
-        {
-          INCLUD[K-1] = (J % 2) == 1;
-          J = J/2;
-        }
-        //C        THE LEADING ELEMENTS OF ROW I COME FROM VINIT
-        for(J = 0; J < M; J++)
-        {
-          V[I+J*MAXCOL] = VINIT[I+J*MAXCOL];
-        }
-        //C        CALCULATE REMAINING ELEMENTS OF ROW I AS EXPLAINED
-        //C        IN BRATLEY AND FOX, SECTION 2
-        for(J = M; J < MAXCOL; J++)
-        {
-          NEWV = V[I+(J-M)*MAXCOL];
-          L = 1;
-          for(K = 0; K < M; K++)
-          {
-            if(INCLUD[K])
-              NEWV = NEWV^(L*V[I+(J-K)*MAXCOL]); //bitwise exclusive OR
-          }
-          V[I+J*MAXCOL] = NEWV;
-        }
-      }
-
-//C     MULTIPLY COLUMNS OF V BY APPROPRIATE POWER OF 2:
+    //C        WE EXPAND THIS BIT PATTERN TO SEPARATE COMPONENTS
+    //C        OF THE LOGICAL ARRAY INCLUD.
+    J = POLY[I];
+    for(K = M; K > 0; K--)
+    {
+      INCLUD[K-1] = (J % 2) == 1;
+      J = J/2;
+    }
+    //C        THE LEADING ELEMENTS OF ROW I COME FROM VINIT
+    for(J = 0; J < M; J++)
+    {
+      V[I+J*MAXCOL] = VINIT[I+J*MAXCOL];
+    }
+    //C        CALCULATE REMAINING ELEMENTS OF ROW I AS EXPLAINED
+    //C        IN BRATLEY AND FOX, SECTION 2
+    for(J = M; J < MAXCOL; J++)
+    {
+      NEWV = V[I+(J-M)*MAXCOL];
       L = 1;
-      for(J = MAXCOL-1; J > 0; J--)
+      for(K = 0; K < M; K++)
       {
-        L = 2*L;
-        for(I = 0; I < S; I++)
-          V[I+J*MAXCOL] = V[I+J*MAXCOL]*L; 
+        if(INCLUD[K])
+          NEWV = NEWV^(L*V[I+(J-K)*MAXCOL]); //bitwise exclusive OR
       }
-      
-
-//C>>> SCRAMBLING START
-      if(IFLAG == 0)
-      {
-        for(I = 0; I < S; I++)
-        {
-          for(J = 0; J < MAXCOL; J++)
-            SV[I+J*MAXCOL] = V[I+J*MAXCOL];
-          SHIFT[I] = 0;
-        }
-        LL[0]= R_pow_di(2, MAXCOL);
-      }
+      V[I+J*MAXCOL] = NEWV;
+    }
+  }
+  
+  //C     MULTIPLY COLUMNS OF V BY APPROPRIATE POWER OF 2:
+  L = 1;
+  for(J = MAXCOL-1; J > 0; J--)
+  {
+    L = 2*L;
+    for(I = 0; I < S; I++)
+      V[I+J*MAXCOL] = V[I+J*MAXCOL]*L; 
+  }
+  
+  
+  //C>>> SCRAMBLING START
+  if(IFLAG == 0)
+  {
+    for(I = 0; I < S; I++)
+    {
+      for(J = 0; J < MAXCOL; J++)
+        SV[I+J*MAXCOL] = V[I+J*MAXCOL];
+      SHIFT[I] = 0;
+    }
+    LL[0]= R_pow_di(2, MAXCOL);
+  }
       /*
       IF (IFLAG .EQ. 0) THEN
          DO I = 1, S
