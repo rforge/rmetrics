@@ -1,8 +1,12 @@
 Package: stabledist
-Version: 0.7-1
-Date: 2016-09-12
+Version: 0.7-2
+Date: 2017-xx-yy
 Title: Stable Distribution Functions
-Author: Diethelm Wuertz, Martin Maechler and Rmetrics core team members.
+Author: Diethelm Wuertz [aut], Martin Maechler [cre, aut] and Yohan Chalabi [ctb].
+Authors@R: c(person("Diethelm", "Wuertz", role="aut", comment = "original code")
+ ,person("Martin","Maechler", role=c("aut","cre"), email="maechler@stat.math.ethz.ch")
+ ,person("Yohan", "Chalabi", role="ctb", comment= "namespace; admin")
+ )
 Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
 Depends: R (>= 3.1.0)
 Imports: stats
@@ -12,4 +16,4 @@ Description: Density, Probability and Quantile functions, and random number
   Nolan.
 LazyData: yes
 License: GPL (>= 2)
-URL: http://www.rmetrics.org, https://r-forge.r-project.org/scm/viewvc.php/pkg/stabledist/?root=rmetrics
+URL: https://r-forge.r-project.org/scm/viewvc.php/pkg/stabledist/?root=rmetrics
