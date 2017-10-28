@@ -14,7 +14,7 @@ skewhypCalcRange <- function(mu = 0, delta = 1, beta = 1, nu = 1,
     nu <- param[4]
     distMode <- skewhypMode(param = param)
 
-    if (density == TRUE){
+    if (density) {
         xHigh <- distMode + delta
         while (dskewhyp(xHigh, param = param) > tol){
             xHigh <- xHigh +

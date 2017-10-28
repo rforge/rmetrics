@@ -1,11 +1,12 @@
 Package: SkewHyperbolic
 Type: Package
 Version: 0.3-4
-Date: 2013-05-13
+Date: 2017-10-28
 Title: The Skew Hyperbolic Student t-Distribution
 Author: David Scott <d.scott@auckland.ac.nz>, Fiona Grimson
 Maintainer: David Scott <d.scott@auckland.ac.nz>
-Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic, 
+Depends: R (>= 2.15.0)
+Imports: grDevices, graphics, stats, DistributionUtils, GeneralizedHyperbolic
 Suggests: RUnit
 Encoding: latin1
 Description: Functions are provided for the density function,
@@ -18,3 +19,4 @@ Description: Functions are provided for the density function,
 	     any centre. To assess goodness of fit, there are
 	     functions to generate a Q-Q plot, a P-P plot and a tail plot.
 License: GPL (>= 2)
+URL: https://r-forge.r-project.org/projects/rmetrics/

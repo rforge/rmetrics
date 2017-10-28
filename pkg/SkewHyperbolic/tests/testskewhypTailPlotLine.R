@@ -1,5 +1,6 @@
 require(SkewHyperbolic)
 ## source("../R/skewhypTailPlotLine.R")
+tailPlot <- DistributionUtils :: tailPlot  ## for convenience below
 ### Draw tail plot of some data
 param <- c(0,1,2,10)
 set.seed(101, kind = "default", normal.kind = "default")

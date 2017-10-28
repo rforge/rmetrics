@@ -33,7 +33,7 @@ dskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
         dskewhyp <- gamma((nu + 1)/2) / (sqrt(pi)*delta*gamma(nu/2)) *
                       (1 + ((x - mu)^2)/delta^2)^(-(nu + 1)/2)
     }
-    if (log == TRUE) dskewhyp <- log(dskewhyp)
+    if (log) dskewhyp <- log(dskewhyp) ## FIXME much better to work *above* in log-scale
     return(dskewhyp)
 }
 
@@ -51,7 +51,7 @@ ddskewhypScale <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-    if (log == TRUE)
+    if (log)
         stop("This function is not yet implemented")
 
     if(abs(beta) >  tolerance){
@@ -106,7 +106,7 @@ pskewhyp <- function (q, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-    if (log.p == TRUE)
+    if (log.p)
         stop("This function is not yet implemented")
 
     distMode <- skewhypMode(param = param)
@@ -139,7 +139,7 @@ pskewhyp <- function (q, mu = 0, delta = 1, beta = 1, nu = 1,
         err[i] <- intRes$abs.error
     }
 
-    if (lower.tail == TRUE) {
+    if (lower.tail) {
         if (length(q > distMode) > 0){
             ##cat("q =", q, "distMode = ", distMode, "prob = ", prob, "\n")
             prob[q > distMode] <- 1 - prob[q > distMode]
@@ -150,7 +150,7 @@ pskewhyp <- function (q, mu = 0, delta = 1, beta = 1, nu = 1,
         }
     }
 
-    if (log.p == TRUE) {
+    if (log.p) {
         prob <- log(prob)
     }
 
@@ -165,16 +165,16 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
                       nInterpol = 501, uniTol = .Machine$double.eps^0.25,
                       subdivisions = 100, intTol = uniTol, ...)
 {
+    if (log.p) stop("'log.p = TRUE' is not yet implemented")
+    stopifnot(0 <= p, p <= 1)
     parResult <- skewhypCheckPars(param)
     case <- parResult$case
     errMessage <- parResult$errMessage
     if (case == "error")
         stop(errMessage)
-    if (log.p == TRUE)
-        stop("This function is not yet implemented")
     if(!lower.tail){
       p <- 1 - p
-      lower.tail == TRUE
+      lower.tail
     }
     method <- match.arg(method)
     param <- as.numeric(param)
@@ -188,9 +188,6 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
     xRange <- skewhypCalcRange(param = param, tol = 10^(-7))
 
     quant <- rep(NA, length(p))
-    invalid <- which(p < 0 | p > 1)
-    pFinite <- which((p > 0) & (p < 1))
-
     ## deal with limit values
     quant[p == 0] <- -Inf
     quant[p == 1] <- Inf
@@ -206,14 +203,10 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
                     skewhypStepSize(distMode - xLow, delta, beta, nu, "left")
             }
             xRange <- c(xLow,distMode)
-            zeroFn <- function(x, param, p) {
-                return(pskewhyp(x, param = param,
-                                subdivisions = subdivisions,
-                                intTol = intTol) - p)
-            }
             for (i in less){
-                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
-                                    interval = xRange, tol = uniTol)$root
+                quant[i] <- uniroot(function(x)
+                    pskewhyp(x, param=param, subdivisions=subdivisions, intTol=intTol) - p[i],
+                    interval = xRange, tol = uniTol)$root
             }
         }
         greater <-  which((p > pModeDist) & (p < 1))
@@ -228,11 +221,9 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
                     skewhypStepSize(xHigh - distMode, delta, beta, nu, "right")
             }
             xRange <- c(distMode,xHigh)
-            zeroFn <- function(x, param, p) {
-                return(pskewhyp(x, param = param, lower.tail = FALSE,
-                                subdivisions = subdivisions,
-                                intTol = intTol) - p)
-            }
+            zeroFn <- function(x, param, p)
+                pskewhyp(x, param = param, lower.tail = FALSE,
+                         subdivisions = subdivisions, intTol = intTol) - p
             for (i in greater){
                 quant[i] <- uniroot(zeroFn, param = param, p = p[i],
                                     interval = xRange, tol = uniTol)$root
@@ -285,7 +276,7 @@ rskewhyp <- function (n, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-    if (log == TRUE)
+    if (log)
         stop("This function is not yet implemented")
     y <- 1/rgamma(n, shape = nu/2, scale = 2/delta^2)
     sigma <- sqrt(y)
@@ -308,10 +299,10 @@ ddskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
     delta <- param[2]
     beta <- param[3]
     nu <- param[4]
-    if (log == TRUE)
-        stop("This function is not yet implemented")
-    if (abs(beta) > tolerance) {
-        ddskewhyp <- 1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2 *
+    if (log) stop("'log = TRUE' is not yet implemented")
+    ## return
+    if (abs(beta) > tolerance) { ## usual case,  FIXME: simplify !!
+        1/2*2^(1/2 - 1/2*nu)*delta^nu*abs(beta)^(1/2 *
             nu + 1/2)*(-besselK(nu = 1/2*nu + 3/2, x = (beta^2 *
             (delta^2 + (x - mu)^2))^(1/2)) + (1/2*nu + 1/2)/(beta^2 *
             (delta^2 + (x - mu)^2))^(1/2)*besselK(nu = 1/2 *
@@ -333,9 +324,8 @@ ddskewhyp <- function (x, mu = 0, delta = 1, beta = 1, nu = 1,
                 mu^2)*(2*x - 2*mu)
     }
     else {
-        ddskewhyp <- 2*gamma(1/2*nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2 *
+        2*gamma(1/2*nu + 1/2)/pi^(1/2)/delta^3/gamma(1/2 *
             nu)*(1 + (x - mu)^2/delta^2)^(-1/2*nu - 1/2) *
             (-1/2*nu - 1/2)*(x - mu)/(1 + (x - mu)^2/delta^2)
     }
-    return(ddskewhyp)
 }

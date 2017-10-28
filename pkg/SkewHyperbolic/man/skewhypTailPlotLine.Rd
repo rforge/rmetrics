@@ -1,9 +1,6 @@
 \name{skewhypTailPlotLine}
 \alias{skewhypTailPlotLine}
-
-\title{
-Tail Plot Line
-}
+\title{Tail Plot Line}
 \description{
 Adds skew hyperbolic \emph{t}-distribution line to a tail plot
 }
@@ -12,7 +9,6 @@ skewhypTailPlotLine(x, mu = 0, delta = 1, beta = 1, nu = 1,
                     param = c(mu,delta,beta,nu),
                     side = c("right", "left"), ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{A vector of values for which the tail plot has been drawn.}
   \item{side}{Character. \code{"right"} (the default) if the tail plot
@@ -29,7 +25,7 @@ skewhypTailPlotLine(x, mu = 0, delta = 1, beta = 1, nu = 1,
 \details{
   The function \code{tailPlot} from \pkg{DistributionUtils} can be used
   to draw either a left-hand or right-hand tail plot of
-  the data \code{x}. See for example Resnick (2007), p.105. The
+  the data \code{x}.  See for example Resnick (2007), p.105. The
   left-hand tail plot plots the empirical distribution of the data
   against the order statistics, for order statistic values below the
   median. The right-hand tail plot plots one minus the empirical
@@ -58,6 +54,7 @@ skewhypTailPlotLine(x, mu = 0, delta = 1, beta = 1, nu = 1,
 }
 \examples{
 ### Draw tail plot of some data
+tailPlot <- DistributionUtils :: tailPlot  ## for convenience below
 param <- c(0,1,1,10)
 x <- rskewhyp(200, param = param)
 tailPlot(x)

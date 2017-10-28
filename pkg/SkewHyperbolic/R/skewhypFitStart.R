@@ -1,9 +1,9 @@
 ###### start values function ##############################################
 skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
-                             paramStart = NULL)   {
-
+                             paramStart = NULL)
+{
     if (startValues == "US") {
-    #user supplied starting values
+        ## user supplied starting values
         x <- as.numeric(na.omit(x))
         svName <- "User Specified"
         if (is.null(paramStart))  stop("paramStart must be specified")
@@ -24,25 +24,24 @@ skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
         midpoints <- histData$mids
         empDens <- ifelse(!is.finite(log(histData$density)), NA,
                           histData$density)
-        maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]
-
-        out <- list(paramStart = paramStart, breaks = breaks,
-                    midpoints = midpoints, empDens = empDens, svName = svName)
+        ## maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]
+        list(paramStart = paramStart, breaks = breaks,
+             midpoints = midpoints, empDens = empDens, svName = svName)
     }
-
-    if(startValues == "LA"){
-    #combination of moments and linear approx to log density
+    else if(startValues == "LA") {
+        ## combination of moments and linear approx to log density
         x <- as.numeric(na.omit(x))
         svName <- "Linear Approximation"
         start <- skewhypFitStartLA(x, breaks = breaks)
-        param <- c(start$param[1], log(start$param[2]), start$param[3],
-                   log(start$param[4]))
-        names(param) <- c("mu", "log(delta)","beta" , "log(nu)")
-        out <- list(paramStart = param, breaks = start$breaks,
-                    midpoints = start$mids, empDens = start$dens,
-                    svName = svName)
-    }
-    return(out)
+        par <- as.vector(start$param)
+        list(paramStart = c(mu  = par[1], "log(delta)" = log(par[2]),
+                            beta= par[3], "log(nu)"    = log(par[4])),
+             breaks = start$breaks,
+             midpoints = start$mids,
+             empDens = start$dens,
+             svName = svName)
+    } else
+        stop("invalid 'startValues' string: ", startValues)
 }
 
 ###### Linear Approximation function #######################################
@@ -52,7 +51,7 @@ skewhypFitStartLA <- function(x, breaks = NULL){
     #to the log density in the tails
 
     #histogram
-    ifelse(is.null(breaks), breaks <- 30, breaks <- breaks)
+    if(is.null(breaks)) breaks <- 30
     histInfo <- hist(x, plot = FALSE, breaks = breaks)
     mids <- as.matrix(histInfo$mids)
     #density
@@ -73,11 +72,10 @@ skewhypFitStartLA <- function(x, breaks = NULL){
     if( length(xLower) < 4 | length(xUpper) < 4 )
         stop("not enough points to model tail behaviour")
 
-    #determine skewness
+    ## determine skewness
     skew <- skewness(x)
 
-    ##SYMMETRY ##
-    if( abs(skew) < 0.1 ) {
+    if( abs(skew) < 0.1 ) {     ## SYMMETRY ##
         beta <- 0
         mu <-  mean(x)
         #fit models
@@ -93,38 +91,37 @@ skewhypFitStartLA <- function(x, breaks = NULL){
         #find delta
         delta <- sqrt( var(x)*(nu - 2) )
     }
-
-    ## POSITIVE SKEW ##
-    if( skew >= 0.1 ){#heavy tail is upper tail
-        #fit models
+    else if( skew >= 0.1 ) {    ## POSITIVE SKEW ##
+        ## heavy tail is upper tail
+                                        #fit models
         lowerModel <- lm( log(yLower) ~ log(abs(xLower)) + abs(xLower) )
         upperModel <- lm( log(yUpper) ~ log(abs(xUpper)) )
-        #estimates
+                                        #estimates
         estLow <- lowerModel$coeff[c(2,3)]
         nuLow <- -2*(estLow[1] + 1)
         betaLow <- (estLow[2]/ - 2)
         estUpp <- upperModel$coeff[2]
         nuUpp <- -2*(estUpp + 1)
-        #nu must be > 0
-        ifelse(nuLow > 0, nu <- nuLow, nu <- nuUpp)
+                                        # nu must be > 0
+        nu <- if(nuLow > 0) nuLow else nuUpp
         beta <- betaLow
-        #nu must be > 4
+                                        # nu must be > 4
         if(nu <= 4) nu <- 4.01
-        #solve for delta
+                                        # solve for delta
         var <- var(x)
         sol1 <- - 1/4*(nu - 4 - (nu^2 - 8*nu + 16 + 8*beta^2*var*nu -
                                  32*beta^2*var)^(1/2))/beta^2*(nu - 2)
         sol2 <- -1/4*(nu - 4 + (nu^2 - 8*nu + 16 + 8*beta^2*var*nu -
                                 32*beta^2*var)^(1/2))/beta^2*(nu - 2)
-        #delta^2 must be positive
-        ifelse(sol1 > 0, delta2 <- sol1, delta2 <- sol2)
+                                        #delta^2 must be positive
+        delta2 <- if(sol1 > 0) sol1 else sol2
         delta <- sqrt(delta2)
-        #solve for mu
+                                        #solve for mu
         mu <-  mean(x) - beta*delta2/(nu - 2)
     }
 
     ## NEGATIVE SKEW ##
-    if( skew <= -0.1){ #heavy tail is lower tail
+    if(skew <= -0.1) { # heavy tail is lower tail
         #fit models
         lowerModel <- lm( log(yLower) ~ log(abs(xLower)) )
         upperModel <- lm( log(yUpper) ~ log(abs(xUpper)) + abs(xUpper) )
@@ -134,19 +131,19 @@ skewhypFitStartLA <- function(x, breaks = NULL){
         estUpp <- upperModel$coeff[c(2,3)]
         nuUpp <- -2*(estUpp[1] + 1)
         betaUpp <- -(estUpp[2] / -2)
-        #nu must be > 0
-        ifelse(nuLow > 0, nu <- nuLow, nu <- nuUpp)
+        ## nu must be > 0
+        nu <- if(nuLow > 0) nuLow else nuUpp
         beta <- betaUpp
-        #nu must be > 4
+        ## nu must be > 4
         if(nu <= 4) nu <- 4.1
-        #solve for delta
+        ## solve for delta
         var <- var(x)
         sol1 <- -1/4*(nu - 4 - (nu^2 - 8*nu + 16 + 8*beta^2*var*nu -
                                 32*beta^2*var)^(1/2))/beta^2*(nu - 2)
         sol2 <- -1/4*(nu - 4 + (nu^2 - 8*nu + 16 + 8*beta^2*var*nu -
                               32*beta^2*var)^(1/2))/beta^2*(nu - 2)
-        #delta^2 must be positive
-        ifelse(sol1 > 0, delta2 <- sol1, delta2 <- sol2)
+        ## delta^2 must be positive
+        delta2 <- if(sol1 > 0) sol1 else sol2
         delta <- sqrt(delta2)
         #solve for mu
         mu <- mean(x) - beta*delta2/(nu-2)

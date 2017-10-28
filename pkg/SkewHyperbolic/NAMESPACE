@@ -1,14 +1,22 @@
-exportPattern("skewhyp")
-S3method(print,skewhypFit)
-S3method(plot,skewhypFit)
-S3method(summary,skewhypFit)
+importFrom("grDevices", dev.interactive)
+importFrom("graphics", abline, curve, hist, lines, par, plot, title)
+importFrom("stats", integrate, lm, na.omit, nlm, optim, ppoints, qqplot, quantile,
+           rgamma, rnorm, splinefun, uniroot)
 
-importFrom(GeneralizedHyperbolic, dskewlap)
-importFrom(GeneralizedHyperbolic, hyperbChangePars, ghypChangePars)
-importFrom(DistributionUtils, logHist)
-importFrom(DistributionUtils, safeIntegrate)
-importFrom(GeneralizedHyperbolic, momRecursion)
-importFrom(DistributionUtils, momIntegrated, momChangeAbout)
-importFrom(GeneralizedHyperbolic, gigMom, gigRawMom, gammaRawMom)
-importFrom(DistributionUtils, skewness, kurtosis)
-importFrom(DistributionUtils, besselRatio, is.wholenumber)
+importFrom("DistributionUtils", logHist, safeIntegrate,
+           momIntegrated, momChangeAbout,
+           skewness, kurtosis, besselRatio, is.wholenumber)
+
+importFrom("GeneralizedHyperbolic",
+           dskewlap, hyperbChangePars, ghypChangePars,
+           momRecursion,
+           gigMom, gigRawMom, gammaRawMom)
+
+## ========== Exports ========================
+
+exportPattern("skewhyp")# << FIXME?, also exports S3 methods
+
+S3method(print,  skewhypFit)
+S3method(plot,   skewhypFit)
+S3method(summary,skewhypFit)
+S3method(print,summary.skewhypFit)

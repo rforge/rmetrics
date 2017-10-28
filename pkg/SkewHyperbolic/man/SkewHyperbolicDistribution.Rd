@@ -170,7 +170,7 @@ ddskewhyp(x, mu = 0, delta = 1, beta = 1, nu = 1,
 \author{
   David Scott \email{d.scott@auckland.ac.nz}, Fiona Grimson
 }
-\seealso{ 
+\seealso{
   \code{\link[DistributionUtils]{safeIntegrate}},
   \code{\link{integrate}} for its shortfalls,
   \code{\link{skewhypCheckPars}},
@@ -197,8 +197,8 @@ curve(dskewhyp(x, param = param), range(data)[1], range(data)[2],
       n = 1000, col = 2)
 hist(data, freq = FALSE, add = TRUE)
 title("Density and Histogram of the\n Skew Hyperbolic Distribution")
-logHist(data, main = "Log-Density and Log-Histogram of\n the Skew
-      Hyperbolic Distribution")
+DistributionUtils::logHist(data, main =
+  "Log-Density and Log-Histogram of\n the Skew Hyperbolic Distribution")
 curve(dskewhyp(x, param = param, log = TRUE),
       range(data)[1], range(data)[2],
       n = 500, add = TRUE, col = 2)
@@ -210,17 +210,17 @@ title("Density of the Skew\n Hyperbolic Distribution")
 curve(ddskewhyp(x, param = param), range[1], range[2], n = 1000)
 title("Derivative of the Density\n of the Skew Hyperbolic Distribution")
 
-##example of density and random numbers for beta large and nu small
+##  example of density and random numbers for beta large and nu small
 par(mfrow = c(1,2))
 param1 <- c(0,1,10,1)
 data1 <- rskewhyp(1000, param = param1)
 curve(dskewhyp(x, param = param1), range(data1)[1], range(data1)[2],
-      n = 1000, col = 2)
+      n = 1000, col = 2, main = "Density and Histogram -- when nu is small")
 hist(data1, freq = FALSE, add = TRUE)
-title("Density and Histogram\n when nu is small")
-logHist(data1, main = "Log-Density and Log-Histogram\n when nu is small")
+
+DistributionUtils::logHist(data1, main =
+      "Log-Density and Log-Histogram -- when nu is small")
 curve(dskewhyp(x, param = param1, log = TRUE),
-      range(data1)[1], range(data1)[2],
-      n = 500, add = TRUE, col = 2)
+      from = min(data1), to = max(data1), n = 500, add = TRUE, col = 2)
 }
 \keyword{distribution}

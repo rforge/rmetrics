@@ -35,9 +35,8 @@ skewhypFit <- function (x, freq = NULL, breaks = NULL, startValues = "LA",
         param[4] <- exp(param[4])
         -sum(dskewhyp(x, param = param, log = TRUE),
              na.rm = TRUE)}
-    output <- numeric(7)
-    ind <- 1:4
 
+    ind <- 1:4
     if (method == "BFGS") {
         opOut <- optim(paramStart, llfunc, NULL, method = "BFGS",
             hessian = hessian, control = controlBFGS, ...)
@@ -61,20 +60,18 @@ skewhypFit <- function (x, freq = NULL, breaks = NULL, startValues = "LA",
     conv <- as.numeric(opOut[[ind[4]]])
     iter <- as.numeric(opOut[[ind[3]]])[1]
     paramStart <- c(paramStart[1], exp(paramStart[2]), paramStart[3],
-        exp(paramStart[4]))#unlog the logged parameters
+                    exp(paramStart[4]))#unlog the logged parameters
     fitResults <- list(param=param , maxLik = maxLik,
-        hessian = if (hessian) opOut$hessian else NULL,
-        method = method, conv = conv, iter = iter, x=x, xName = xName,
-        paramStart = paramStart, svName = svName, startValues = startValues,
-        breaks = breaks, midpoints = midpoints, empDens = empDens)
-
+                       hessian = if (hessian) opOut$hessian else NULL,
+                       method = method, conv = conv, iter = iter, x=x, xName = xName,
+                       paramStart = paramStart, svName = svName, startValues = startValues,
+                       breaks = breaks, midpoints = midpoints, empDens = empDens)
     class(fitResults) <- "skewhypFit"
-    if (printOut == TRUE) {
+    if (printOut)
         print.skewhypFit(fitResults, ...)
-    }
-    if (plots == TRUE) {
+    if (plots)
         plot.skewhypFit(fitResults, ...)
-    }
+
     return(fitResults)
 }
 

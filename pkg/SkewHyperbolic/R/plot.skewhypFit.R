@@ -6,7 +6,7 @@ plot.skewhypFit <- function(x, which = 1:4,
                             ask = prod(par("mfcol")) < length(which) &&
                             dev.interactive(), ...) {
 
-    if (!class(x) == "skewhypFit")
+    if (!inherits(x, "skewhypFit"))
         stop("Object must belong to class skewhypFit")
 
     if (ask) {
@@ -20,7 +20,7 @@ plot.skewhypFit <- function(x, which = 1:4,
     param <- x$param
     breaks <- x$breaks
     empDens <- x$empDens
-    mipoints <- x$midpoints
+    ## mipoints <- x$midpoints
     obs <- x$x
     obsName <- x$xName
     skewhypDens <- function(obs) {
