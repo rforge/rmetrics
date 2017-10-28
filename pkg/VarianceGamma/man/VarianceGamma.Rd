@@ -1,14 +1,11 @@
-% --- Source file: dvg.Rd ---
 \name{VarianceGammaDistribution}
+\title{The Variance Gamma Distribution}
 \alias{dvg}
 \alias{pvg}
 \alias{qvg}
 \alias{rvg}
 \alias{ddvg}
 \alias{vgBreaks}
-
-\title{The Variance Gamma Distribution}
-
 \description{
   Density function, distribution function, quantiles and
   random number generation for the variance gamma distribution
@@ -18,7 +15,6 @@
   to find suitable break points for use in determining the distribution
   function.
 }
-
 \usage{
   dvg(x, vgC = 0, sigma = 1, theta = 0, nu = 1,
     param = c(vgC,sigma,theta,nu), log = FALSE,
@@ -40,7 +36,6 @@
     param = c(vgC,sigma,theta,nu), small = 10^(-6), tiny = 10^(-10),
     deriv = 0.3, \dots)
 }
-
 \arguments{
   \item{x,q}{Vector of quantiles.}
 	\item{p}{Vector of probabilities.}
@@ -76,7 +71,7 @@
   \item{\dots}{Passes arguments to \code{uniroot}.  See \bold{Details}.}
 }
 
-\details{  
+\details{
   Users may either specify the values of the parameters individually or
   as a vector. If both forms are specifed but with different values,
   then the values specified by vector \code{param} will always overwrite
@@ -170,7 +165,7 @@
 
 }
 
-  \value{
+\value{
   \code{dvg} gives the density function, \code{pvg} gives the distribution
   function, \code{qvg} gives the quantile function and \code{rvg}
   generates random variates. An estimate of the accuracy of the
@@ -181,38 +176,38 @@
   \code{ddvg} gives the derivative of \code{dvg}.
 
   \code{vgBreaks} returns a list with components:
-   \item{xTiny}{Value such that probability to the left is less than
-     \code{tiny}.}
-   \item{xSmall}{Value such that probability to the left is less than
-     \code{small}.}
-   \item{lowBreak}{Point to the left of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode.}
-   \item{highBreak}{Point to the right of the mode such that the
-     derivative of the density is \code{deriv} times its maximum value
-     on that side of the mode.}
-   \item{xLarge}{Value such that probability to the right is less than
-     \code{small}.}
-   \item{xHuge}{Value such that probability to the right is less than
-     \code{tiny}.}
-   \item{modeDist}{The mode of the given variance gamma distribution.}
-  }
- 
- \references{
+  \item{xTiny}{Value such that probability to the left is less than
+    \code{tiny}.}
+  \item{xSmall}{Value such that probability to the left is less than
+    \code{small}.}
+  \item{lowBreak}{Point to the left of the mode such that the
+    derivative of the density is \code{deriv} times its maximum value
+    on that side of the mode.}
+  \item{highBreak}{Point to the right of the mode such that the
+    derivative of the density is \code{deriv} times its maximum value
+    on that side of the mode.}
+  \item{xLarge}{Value such that probability to the right is less than
+    \code{small}.}
+  \item{xHuge}{Value such that probability to the right is less than
+    \code{tiny}.}
+  \item{modeDist}{The mode of the given variance gamma distribution.}
+}
+
+\references{
   Seneta, E. (2004). Fitting the variance-gamma model to financial data.
   \emph{J. Appl. Prob.}, 41A:177--187.
   Kotz, S, Kozubowski, T. J., and \enc{Podgórski}{Podgorski},
-  K. (2001). 
+  K. (2001).
   The Laplace Distribution and Generalizations. \emph{Birkhauser},
   Boston, 349 p.
-  }  
- \author{David Scott \email{d.scott@auckland.ac.nz}, 
+}
+\author{David Scott \email{d.scott@auckland.ac.nz},
   Christine Yang Dong \email{c.dong@auckland.ac.nz}}
- \seealso{
+\seealso{
   \code{\link{vgChangePars}},
   \code{\link{vgCalcRange}}
- } 
- 
+}
+
 \examples{
 ## Use the following rules for vgCalcRange when plotting graphs for dvg,
 ## ddvg and pvg.
@@ -244,15 +239,13 @@ curve(pvg(x, param = param), from = vgRange[1], to = vgRange[2], n = 1000)
 title("Distribution Function of the Variance Gamma Distribution")
 
 ## For rvg
-dataVector <- rvg(500, param = param)
-curve(dvg(x, param = param), range(dataVector)[1], range(dataVector)[2],
-      n = 500)
-hist(dataVector, freq = FALSE, add =TRUE)
+X1 <- rvg(500, param = param)
+curve(dvg(x, param = param), min(X1), max(X1), n = 500)
+hist(X1, freq = FALSE, add =TRUE)
 title("Density and Histogram of the Variance Gamma Distribution")
-logHist(dataVector, main =
+DistributionUtils::logHist(X1, main =
    "Log-Density and Log-Histogramof the Generalized Hyperbolic Distribution")
-curve(log(dvg(x, param = param)), add = TRUE,
-      range(dataVector)[1], range(dataVector)[2], n = 500)
+curve(log(dvg(x, param = param)), min(X1), max(X1), n = 500, add = TRUE)
 
 ## For dvg and ddvg
 par(mfrow = c(2,1))
@@ -276,15 +269,13 @@ curve(pvg(x, param = param), from = vgRange[1], to = vgRange[2],
 title("Distribution Function of the Variance Gamma Distribution")
 
 ## For rvg
-dataVector <- rvg(500, param = param)
-curve(dvg(x, param = param), range(dataVector)[1], range(dataVector)[2],
-      n = 500)
-hist(dataVector, freq = FALSE, add =TRUE)
+X2 <- rvg(500, param = param)
+curve(dvg(x, param = param), min(X2), max(X2), n = 500)
+hist(X2, freq = FALSE, add =TRUE)
 title("Density and Histogram of the Variance Gamma Distribution")
-logHist(dataVector, main =
+DistributionUtils::logHist(X2, main =
    "Log-Density and Log-Histogramof the Generalized Hyperbolic Distribution")
-curve(log(dvg(x, param = param)), add = TRUE,
-      range(dataVector)[1], range(dataVector)[2], n = 500)
+curve(log(dvg(x, param = param)), add = TRUE, min(X2), max(X2), n = 500)
 
 ## For dvg and ddvg
 par(mfrow = c(2,1))
@@ -328,5 +319,5 @@ curve(dvg(x, param = param), from = vgRange[1], to = vgRange[2],
       n = 1000)
 bks <- vgBreaks(param = param)
 abline(v = bks)
-title("Density of the Variance Gamma Distribution with breaks")  
+title("Density of the Variance Gamma Distribution with breaks")
 }

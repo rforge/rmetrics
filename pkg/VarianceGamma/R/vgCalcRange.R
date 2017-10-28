@@ -13,7 +13,7 @@ vgCalcRange <- function (vgC = 0, sigma = 1, theta = 0, nu = 1,
   theta <- param[3]
   nu <- param[4]
 
-  if (density == FALSE) {
+  if (!density) {
     stop("Distribution function bounds not yet implemented")
   }
 

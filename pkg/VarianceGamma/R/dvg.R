@@ -14,8 +14,8 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
   theta <- param[3]
   nu <- param[4]
 
-  if (log == TRUE) {
-    stop ("This function is not yet implemented")
+  if (log) {
+    stop (" 'log = TRUE' is not yet implemented")
   } else {
     if (abs(nu - 2) < tolerance) {
       vgDens <- ifelse(abs(x - vgC) < tolerance, Inf,
@@ -54,8 +54,8 @@ dvg <- function (x, vgC = 0, sigma = 1, theta = 0, nu = 1,
 pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
                  param = c(vgC,sigma,theta,nu), lower.tail = TRUE,
                  log.p = FALSE, small = 10^(-6), tiny = 10^(-10),
-                 deriv = 0.3, subdivisions = 100, accuracy = FALSE, ...) {
-
+                 deriv = 0.3, subdivisions = 100, accuracy = FALSE, ...)
+{
   ## check parameters
   parResult <- vgCheckPars(param = param)
   case <- parResult$case
@@ -68,8 +68,8 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
   theta <- param[3]
   nu <- param[4]
 
-  if (lower.tail == TRUE) {
-    if (log.p == FALSE){
+  if (lower.tail) {
+    if (!log.p) {
       bks <- vgBreaks(param = param, small = small, tiny = tiny,
                       deriv = deriv, ...)
       xTiny <- bks$xTiny
@@ -126,7 +126,7 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
       intLow <- intSmall + resLow$value
       intHigh <- intLarge + resHigh$value
       errLow <- errSmall + resLow$abs.error
-      errHigh <- errLarge + resHigh$abs.error
+      ## errHigh <- errLarge + resHigh$abs.error
       for (i in qSmall) {
         intRes <- safeIntegrate(dvgInt, xTiny, qSort[i], subdivisions, ...)
         intFun[i] <- intRes$value
@@ -164,15 +164,15 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
       }
     }
 
-    if (log.p == TRUE) {
-      stop("This function is not yet implemented")
+    if (log.p) {
+      stop(" 'log.p = TRUE' is not yet implemented")
     }
   }
-  if (lower.tail == FALSE) {
-    stop("This function is not yet implemented")
-    if (log.p == FALSE) {
+  if (!lower.tail) {
+    stop("'lower.tail = FALSE'  is not yet implemented")
+    if (!log.p) {
     }
-    if (log.p == TRUE) {
+    if (log.p) {
     }
   }
 }
@@ -180,8 +180,8 @@ pvg <- function (q, vgC = 0, sigma = 1, theta = 0, nu = 1,
 qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
                  param = c(vgC,sigma,theta,nu), lower.tail = TRUE,
                  log.p = FALSE, small = 10^(-6), tiny = 10^(-10),
-                 deriv = 0.3, nInterpol = 100, subdivisions = 100, ...) {
-
+                 deriv = 0.3, nInterpol = 100, subdivisions = 100, ...)
+{
   ## check parameters
   parResult <- vgCheckPars(param = param)
   case <- parResult$case
@@ -194,8 +194,8 @@ qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
   theta <- param[3]
   nu <- param[4]
 
-  if (lower.tail == TRUE) {
-    if (log.p == FALSE){
+  if (lower.tail) {
+    if (!log.p) {
       bks <- vgBreaks(param = param, small = small, tiny = tiny,
                       deriv = deriv, ...)
       xTiny <- bks$xTiny
@@ -406,15 +406,15 @@ qvg <- function (p, vgC = 0, sigma = 1, theta = 0, nu = 1,
       }
       return(qSort[rank(p)])
     }
-  if (log.p == TRUE) {
-      stop("This function is not yet implemented")
+    else { ## if (log.p)
+        stop(" 'log.p = TRUE' is not yet implemented")
     }
   }
-  if (lower.tail == FALSE) {
-    stop("This function is not yet implemented")
-    if (log.p == FALSE) {
+  else { ## if (!lower.tail) {
+    stop("'lower.tail = FALSE'  is not yet implemented")
+    if (!log.p) {
     }
-    if (log.p == TRUE) {
+    if (log.p) {
     }
   }
 }
@@ -444,8 +444,8 @@ rvg <- function (n, vgC = 0, sigma = 1, theta = 0, nu = 1,
   rgamma1 <- rgamma(n, shape = tau, rate = 1)
   rgamma2 <- rgamma(n, shape = tau, rate = 1)
 
-  X <- kkp1Theta + (kkp1Sigma/sqrt(2))*((1/kappa)*rgamma1 - kappa*rgamma2)
-  return(X)
+  ## return X
+  kkp1Theta + (kkp1Sigma/sqrt(2)) * ((1/kappa)*rgamma1 - kappa*rgamma2)
 }
 
 ddvg <- function (x,  vgC = 0, sigma = 1, theta = 0, nu = 1,
@@ -464,8 +464,8 @@ ddvg <- function (x,  vgC = 0, sigma = 1, theta = 0, nu = 1,
   theta <- param[3]
   nu <- param[4]
 
-  if (log == TRUE) {
-    stop ("This function is not yet implemented")
+  if (log) {
+    stop (" 'log = TRUE' is not yet implemented")
   } else {
     if (abs(nu - 2) < tolerance) {
       ddvg <- ifelse(abs(x - vgC) < tolerance, NA,

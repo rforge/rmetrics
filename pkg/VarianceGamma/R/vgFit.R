@@ -70,10 +70,9 @@ vgFit <- function (x, freq = NULL, breaks = NULL, paramStart = NULL,
                        breaks = breaks, midpoints = midpoints,
                        empDens = empDens)
     class(fitResults) <- "vgFit"
-    if (printOut == TRUE) {
+    if (printOut)
         print(fitResults, ...)
-    }
-    if (plots == TRUE) {
+    if (plots) {
         plot.vgFit(fitResults, ...)
     }
     return(fitResults)

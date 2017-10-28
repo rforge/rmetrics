@@ -183,7 +183,7 @@ vgChangePars <- function (from, to, param, noNames = FALSE) {
       output == c(lambda = lambda,alpha = alpha,beta = beta,mu = mu)
   }
 
-  if (noNames == TRUE)
+  if (noNames)
     names(output) <- NULL
   output
 }
