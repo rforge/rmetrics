@@ -46,7 +46,7 @@ hyperbCvMTestPValue <- function(delta = 1, alpha = 1, beta = 0,
   exactChi <- FALSE
   exactXi <- FALSE
   warn <- c(FALSE, FALSE)
-  data(hyperbWSqTable)
+  ## data(hyperbWSqTable) -- really from sysdata.rda
   wsqTable <- hyperbWSqTable
 
   if (abs(chi) > xi)

@@ -80,7 +80,7 @@ curve(dskewlap(x, param = param), range(dataVector)[1], range(dataVector)[2],
       n = 500)
 hist(dataVector, freq = FALSE, add = TRUE)
 title("Density and Histogram\n of the Skew-Laplace Distribution")
-logHist(dataVector, main =
+DistributionUtils::logHist(dataVector, main =
         "Log-Density and Log-Histogram\n of the Skew-Laplace Distribution")
 curve(log(dskewlap(x, param = param)), add = TRUE,
       range(dataVector)[1], range(dataVector)[2], n = 500)

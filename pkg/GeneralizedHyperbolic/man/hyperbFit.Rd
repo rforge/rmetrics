@@ -146,28 +146,22 @@
 \references{
   Barndorff-Nielsen, O. (1977)
   Exponentially decreasing distributions for the logarithm of particle size,
-  \emph{Proc. Roy. Soc. Lond.},
-  A\bold{353}, 401--419.
+  \emph{Proc. Roy. Soc. Lond.} A\bold{353}, 401--419.
 
   Fieller, N. J., Flenley, E. C. and Olbricht, W. (1992)
   Statistics of particle size data.
-  \emph{Appl. Statist.},
-  \bold{41}, 127--146.
-
+  \emph{Appl. Statist.} \bold{41}, 127--146.
 }
-
 \author{David Scott \email{d.scott@auckland.ac.nz},
   Ai-Wei Lee, Jennifer Tso, Richard Trendall, Thomas Tran,
-  Christine Yang Dong}
-
-
+  Christine Yang Dong
+}
 \seealso{
   \code{\link{optim}}, \code{\link{nlm}}, \code{\link{nlminb}},
   \code{\link{constrOptim}}, \code{\link{par}},
-  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}},
+  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}} (pkg \CRANpkg{DistributionUtils}),
   \code{\link{qqhyperb}}, \code{\link{pphyperb}}, \code{\link{dskewlap}}
   and \code{\link{hyperbFitStart}}.
-
 }
 
 \examples{

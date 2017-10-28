@@ -13,7 +13,7 @@
   \tabular{rll}{
     [, 1] \tab midpoints  \tab midpoints of intervals (ohm) \cr
     [, 2] \tab counts     \tab number of observations in interval \cr
-  }    
+  }
 }
 \source{
     Hahn, Gerald J. and Shapiro, Samuel S. (1967)
@@ -22,10 +22,9 @@
     page 207.
 }
 \references{
-    Chen, Hanfeng, and Kamburowska, Grazyna (2001) 
+    Chen, Hanfeng, and Kamburowska, Grazyna (2001)
     Fitting data to the Johnson system.
-    \emph{J. Statist. Comput. Simul.},
-    \bold{70}, 21--32.
+    \emph{J. Statist. Comput. Simul.} \bold{70}, 21--32.
 }
 \examples{
 data(resistors)
@@ -34,12 +33,11 @@ str(resistors)
 ### at midpoints of intervals
 resistances <- rep(resistors$midpoints, resistors$counts)
 hist(resistances)
-logHist(resistances)
+DistributionUtils::logHist(resistances)
 ## Fit the hyperbolic distribution
-hyperbFit(resistances) 
+hyperbFit(resistances)
 
 ## Actually fit.hyperb can deal with frequency data
 hyperbFit(resistors$midpoints, freq = resistors$counts)
-
 }
 \keyword{datasets}

@@ -35,6 +35,7 @@ test.ghypMom <- function()
   results <- matrix(nrow = nv, ncol = 5 + length(orders)*2)
   differences <- matrix(nrow = nv, ncol = 5 + length(orders))
 
+  momIntegrated <- DistributionUtils :: momIntegrated
   ## loop over param values
   for (i in 1:nv){
     param <- as.numeric(paramVals[i,])

@@ -162,7 +162,7 @@ curve(dhyperb(x, param = param), range(dataVector)[1], range(dataVector)[2],
       n = 500)
 hist(dataVector, freq = FALSE, add =TRUE)
 title("Density and Histogram\n of the Hyperbolic Distribution")
-logHist(dataVector, main =
+DistributionUtils::logHist(dataVector, main =
         "Log-Density and Log-Histogram\n of the Hyperbolic Distribution")
 curve(log(dhyperb(x, param = param)), add = TRUE,
       range(dataVector)[1], range(dataVector)[2], n = 500)

@@ -16,11 +16,10 @@
 }
 
 \arguments{
-  \item{x}{Data vector.}
-  \item{startValues}{Vector of the different starting values to consider.
-    See \bold{Details}.}
-  \item{paramStart}{Starting values for param if \code{startValues =
-      "US"}.}
+  \item{x}{data vector.}
+  \item{startValues}{a \code{\link{character}} strin specifying the
+    method for starting values to consider.  See \bold{Details}.}
+  \item{paramStart}{starting values for param if \code{startValues = "US"}.}
   \item{startMethodMoM}{Method used by call to \code{\link{optim}} in
     finding method of moments estimates.}
   \item{\dots}{Passes arguments to \code{\link{hist}} and
@@ -32,7 +31,8 @@
   \itemize{
     \item{\code{"US"}}{User-supplied.}
     \item{\code{"FN"}}{A fitted normal distribution.}
-    \item{\code{"Cauchy"}}{Based on a fitted Cauchy distribution.}
+    \item{\code{"Cauchy"}}{Based on a fitted Cauchy distribution, from
+      \code{\link[MASS]{fitdistr}()} of the \CRANpkg{MASS} package.}
     \item{\code{"MoM"}}{Method of moments.}
   }
   If \code{startValues = "US"} then a value must be supplied for
@@ -80,11 +80,9 @@
   Statistics of particle size data.
   \emph{Appl. Statist.},
   \bold{41}, 127--146.
-
 }
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, Christine Yang Dong}
-
 
 \seealso{
   \code{\link{dnig}}, \code{\link{dskewlap}},

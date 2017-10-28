@@ -143,12 +143,10 @@
 
 \author{David Scott \email{d.scott@auckland.ac.nz}, David Cusack}
 
-
 \seealso{
   \code{\link{optim}}, \code{\link{par}},
-  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}},
+  \code{\link{hist}}, \code{\link[DistributionUtils]{logHist}} (pkg \CRANpkg{DistributionUtils}),
   \code{\link{qqgig}}, \code{\link{ppgig}}, and \code{\link{gigFitStart}}.
-
 }
 
 \examples{

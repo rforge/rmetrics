@@ -69,7 +69,7 @@ test.ghypSkew <- function(testParam = ghypSmallShape, n = 10000,
     x <- rghyp(n, param = param)
 
     # Compute skewness of the sample data:
-    sampleSkew <- skewness(x)
+    sampleSkew <- DistributionUtils::skewness(x)
 
     # Get skewness value from vgSkew function:
     funSkew <- ghypSkew(param = param)
@@ -98,7 +98,7 @@ test.ghypKurt <- function(testParam = ghypSmallShape, n = 10000,
     x <- rghyp(n, param = param)
 
     # Compute kurtosis of the sample data:
-    sampleKurt <- kurtosis(x)
+    sampleKurt <- DistributionUtils::kurtosis(x)
 
     # Get kurtosis value from vgKurt function:
     funKurt <- ghypKurt(param = param)

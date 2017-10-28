@@ -1,10 +1,35 @@
 ################################################
+### Imports
+################################################
+
+importFrom("grDevices", dev.interactive)
+
+importFrom("graphics", abline, axis, curve, hist,
+           hist.default, mtext, par, plot, segments, title)
+
+importFrom("stats", .getXlevels, coef, constrOptim, density,
+           integrate, is.empty.model, lm, median,
+           model.matrix, model.offset, model.response,
+           model.weights, na.omit, nlm, nlminb, optim,
+           optimize, ppoints, printCoefmat, pt, qqplot,
+           rexp, rnorm, runif, sd, splinefun, uniroot, var)
+
+## importFrom("utils", data)
+
+importFrom("MASS", fitdistr)
+
+import(DistributionUtils)
+# FIXME:
+# importFrom("DistributionUtils", .....)
+
+################################################
 ## S3 classes
 ################################################
 S3method(print,hyperbFit)
 S3method(print,nigFit)
 S3method(print,gigFit)
 S3method(print,hyperblm)
+S3method(plot,hyperblm)
 S3method(plot,hyperbFit)
 S3method(plot,nigFit)
 S3method(plot,gigFit)
@@ -28,6 +53,7 @@ S3method(vcov,gigFit)
 ################################################
 ## Functions
 ################################################
+## MM: don't like this *Pattern(): exports much too much, incl all S3 methods
 exportPattern("hyperb")
 exportPattern("nig")
 exportPattern("ghyp")

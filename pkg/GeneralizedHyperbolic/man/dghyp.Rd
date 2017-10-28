@@ -1,14 +1,10 @@
 \name{GeneralizedHyperbolicDistribution}
+\title{Generalized Hyperbolic Distribution}
 \alias{dghyp}
 \alias{pghyp}
 \alias{qghyp}
 \alias{rghyp}
 \alias{ddghyp}
-
-
-\title{
-  Generalized Hyperbolic Distribution
-}
 \description{
   Density function, distribution function, quantiles and random number
   generation for the generalized hyperbolic distribution, with
@@ -201,8 +197,8 @@ curve(dghyp(x, param = param), range(data)[1], range(data)[2],
       n = 1000, col = 2)
 hist(data, freq = FALSE, add = TRUE)
 title("Density and Histogram of the\n Generalized Hyperbolic Distribution")
-logHist(data, main = "Log-Density and Log-Histogram of\n the Generalized
-      Hyperbolic Distribution")
+DistributionUtils::logHist(data,
+    main = "Log-Density and Log-Histogram of\n the Generalized Hyperbolic Distribution")
 curve(log(dghyp(x, param = param)),
       range(data)[1], range(data)[2],
       n = 500, add = TRUE, col = 2)

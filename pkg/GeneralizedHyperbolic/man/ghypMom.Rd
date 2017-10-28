@@ -80,14 +80,15 @@ ghypMom(order, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
 \seealso{
-
-  \code{\link{ghypChangePars}},
+  \code{\link{ghypChangePars}} and from package \CRANpkg{DistributionUtils}:
+  \code{\link[DistributionUtils]{logHist}},
   \code{\link[DistributionUtils]{is.wholenumber}},
-  \code{\link[DistributionUtils]{momChangeAbout}},
-  \code{\link[DistributionUtils]{momIntegrated}},
-  \code{\link{ghypMean}}, \code{\link{ghypVar}}, \code{\link{ghypSkew}},
-  \code{\link{ghypKurt}}.}
+  \code{\link[DistributionUtils]{momChangeAbout}}, and
+  \code{\link[DistributionUtils]{momIntegrated}}.
 
+  Further, \code{\link{ghypMean}}, \code{\link{ghypVar}}, \code{\link{ghypSkew}},
+  \code{\link{ghypKurt}}.
+}
 
 \examples{
 param <- c(1, 2, 2, 1, 2)
@@ -96,6 +97,10 @@ mu <- param[1]
 m1 <- ghypMean(param = param)
 m1 - mu
 ghypMom(1, param = param, momType = "mu")
+
+## Comparison, using momIntegrated from pkg 'DistributionUtils':
+momIntegrated <- DistributionUtils :: momIntegrated
+
 momIntegrated("ghyp", order = 1, param = param, about = mu)
 ghypMom(2, param = param, momType = "mu")
 momIntegrated("ghyp", order = 2, param = param, about = mu)

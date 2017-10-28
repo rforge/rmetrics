@@ -92,15 +92,19 @@ gammaRawMom(order, shape = 1, rate = 1, scale = 1/rate)
 \author{David Scott \email{d.scott@auckland.ac.nz}}
 
 \seealso{
-  \code{\link{gigCheckPars}}, \code{\link{gigChangePars}},
+  \code{\link{gigCheckPars}}, \code{\link{gigChangePars}}
+  and from package \CRANpkg{DistributionUtils}:
   \code{\link[DistributionUtils]{is.wholenumber}},
   \code{\link[DistributionUtils]{momChangeAbout}},
-  \code{\link[DistributionUtils]{momIntegrated}}, \code{\link{gigMean}},
+  \code{\link[DistributionUtils]{momIntegrated}}
+
+  Further, \code{\link{gigMean}},
   \code{\link{gigVar}}, \code{\link{gigSkew}}, \code{\link{gigKurt}}.
 }
-
-
 \examples{
+## Computations, using momIntegrated from pkg 'DistributionUtils':
+momIntegrated <- DistributionUtils :: momIntegrated
+
 ### Raw moments of the generalized inverse Gaussian distribution
 param <- c(5, 2.5, -0.5)
 gigRawMom(1, param = param)

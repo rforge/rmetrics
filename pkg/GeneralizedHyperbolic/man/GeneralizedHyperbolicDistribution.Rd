@@ -19,7 +19,8 @@ kurtosis and mode of a given hyperbolic distribution are given by
 \code{hyperbMean}, \code{hyperbVar}, \code{hyperbSkew},
 \code{hyperbKurt}, and \code{hyperbMode} respectively. For assessing the
 fit of the hyperbolic distribution to a set of data, the log-histogram
-is useful. See \code{\link[DistributionUtils]{logHist}}. Q-Q and P-P
+is useful.  See \code{\link[DistributionUtils]{logHist}} from package
+\CRANpkg{DistributionUtils}. Q-Q and P-P
 plots are also provided for assessing the fit of a hyperbolic
 distribution. A \enc{Crämer}{Cramer}-von~Mises test of the goodness of
 fit of data to a hyperbolic distribution is given by
@@ -92,12 +93,10 @@ fit of a skew-Laplace distribution.
   University of Freiburg.
 }
 
-
 \section{LICENCE}{
-This library and its documentation are usable under the terms of the
+This package and its documentation are usable under the terms of the
 "GNU General Public License", a copy of which is distributed with the
 package.
 }
-
 
 \keyword{distribution}

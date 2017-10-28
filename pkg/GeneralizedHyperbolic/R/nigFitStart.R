@@ -58,7 +58,6 @@ nigFitStart <- function(x, startValues = c("FN","Cauchy","MoM","US"),
   }
 
   if (startValues == "Cauchy") {
-    require(MASS)
     svName <- "Cauchy"
     cauchyFit <- fitdistr(x, "Cauchy")
     mu <- cauchyFit$estimate[[1]]
