@@ -1,21 +1,18 @@
 \name{incompleteBesselK}
+\title{The Incomplete Bessel K Function}
 \alias{incompleteBesselK}
 \alias{incompleteBesselKR}
 \alias{SSFcoef}
 \alias{combinatorial}
 \alias{GDENOM}
 \alias{GNUM}
-
-\title{
-The Incomplete Bessel K Function
-}
 \description{
-Calculates the incomplete Bessel K function using the algorithm and code
-provided by Slavinsky and Safouhi (2009).
+  Calculates the incomplete Bessel K function using the algorithm and code
+  provided by Slavinsky and Safouhi (2009).
 }
 \usage{
-incompleteBesselK(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 120)
-incompleteBesselKR(x, y, nu, tol = (.Machine$double.eps)^(0.85), nmax = 120)
+incompleteBesselK (x, y, nu, tol = .Machine$double.eps^0.85, nmax = 120)
+incompleteBesselKR(x, y, nu, tol = .Machine$double.eps^0.85, nmax = 120)
 SSFcoef(nmax, nu)
 combinatorial(nu)
 GDENOM(n, x, y, nu, An, nmax, Cnp)
@@ -57,25 +54,24 @@ GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
   see Slavinsky and Safouhi (2010), or Harris (2008).
 
   \code{incompleteBesselK} calls a Fortran routine to carry out the
-  calculations. \code{incompleteBesselKR} is a pure R version of the
+  calculations. \code{incompleteBesselKR()} is a pure R version of the
   routine for computing the incomplete Bessel K function.
 
   The functions \code{SSFcoef}, \code{combinatorial}, \code{GDENOM}, and
-  \code{GNUM} are subroutines used in the function
-  \code{incompleteBesselKR}. They are not expected to be called by the
-  user and the user is not required to specify input values for these
-  functions.
+  \code{GNUM} are \dQuote{subroutines}, i.e., auxiliary functions used in
+  \code{incompleteBesselKR()}.  They are not expected to be called by the
+  user.
 
   The approximation to the incomplete Bessel K function returned by
-  \code{incompleteBesselK} is highly accurate. The default value of
-  \code{tol} is about 10^(-14) on a 32-bit computer. It appears that
-  even higher accuracy is possible when \code{x > y}. Then the tolerance
+  \code{incompleteBesselK} is highly accurate.  The default value of
+  \code{tol} is about 10^(-14) on a 32-bit computer.  It appears that
+  even higher accuracy is possible when \code{x > y}.  Then the tolerance
   can be taken as \code{.Machine$double.eps} and the number of correct
   figures essentially coincides with the number of figures representable
   in the machine being used.
 
   \code{incompleteBesselKR} is very slow compared to the Fortran version
-  and is only included for those who wish to see the algorithm in R
+  and is only included for those who wish to see the algorithm in \R
   rather than Fortran.
 }
 
@@ -85,17 +81,19 @@ GNUM(n, x, y, nu, Am, An, nmax, Cnp, GM, GN)
 }
 
 \references{
-  Harris, Frank E. (2008) Incomplete Bessel, generalized incomplete
-  gamma, or leaky aquifer functions. \emph{J. Comp. Appl. Math.},
-  \bold{215}, 260--269.
+  Harris, Frank E. (2008)
+  Incomplete Bessel, generalized incomplete gamma, or leaky aquifer functions.
+  \emph{J. Comp. Appl. Math.} \bold{215}, 260--269.
 
-  Slevinsky, Richard M., and Safouhi, Hassan (2009) New formulae for
-  higher order derivatives and applications. \emph{J. Comp. Appl. Math.}
-  \bold{233}, 405--419.
+  Slevinsky, Richard M., and Safouhi, Hassan (2009)
+  New formulae for higher order derivatives and applications.
+  \emph{J. Comp. Appl. Math.} \bold{233}, 405--419.
 
-  Slevinsky, Richard M., and Safouhi, Hassan (2010) A recursive
-  algorithm for the G transformation and accurate computation of
-  incomplete Bessel functions. \emph{Appl. Numer. Math.}, In press.
+  Slevinsky, Richard M., and Safouhi, Hassan (2010)
+  A recursive algorithm for the G transformation and accurate
+  computation of incomplete Bessel functions.
+  \emph{Applied Numerical Mathematics} \bold{60}(12), 1411--1417,
+  \url{https://doi.org/10.1016/j.apnum.2010.04.005}.
 }
 \author{
   David Scott \email{d.scott@auckland.ac.nz}, Thomas Tran, Richard
