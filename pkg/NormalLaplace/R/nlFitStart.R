@@ -12,7 +12,7 @@ nlFitStart <- function(x, breaks = "FD",
 
   midpoints <- histData$mids
   empDens <- ifelse(!is.finite(log(histData$density)), NA, histData$density)
-  maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]
+  ## maxIndex <- order(empDens, na.last = FALSE)[length(empDens)]
 
   if (startValues == "US") {
     svName <- "User Specified"

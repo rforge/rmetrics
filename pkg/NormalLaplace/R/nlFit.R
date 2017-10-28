@@ -140,11 +140,10 @@ plot.nlFit <- function(x, which = 1:4,
                                             "P-P Plot of "),
                                           x$obsName, sep = ""),
                        ask = prod(par("mfcol")) < length(which) &
-                             dev.interactive(), ...) {
-
-  if (! "nlFit" %in% class(x))
+                           dev.interactive(), ...)
+{
+  if (!inherits(x, "nlFit"))
     stop("Object must belong to class nlFit")
-
   if (ask) {
     op <- par(ask = TRUE)
     on.exit(par(op))
@@ -156,18 +155,16 @@ plot.nlFit <- function(x, which = 1:4,
   param <- x$param
   breaks <- x$breaks
   empDens <- x$empDens
-  midpoints <- x$midpoints
+  ## midpoints <- x$midpoints
   obs <- x$obs
-  obsName <- x$obsName
+  ## obsName <- x$obsName
 
-  nlDens <- function(x)
-    dnl(x, param = param)
+  nlDens <- function(x) dnl(x, param = param)
 
-  lognlDens <- function(x)
-    log(dnl(x, param = param))
+  lognlDens <- function(x) log(dnl(x, param = param))
 
   ymax <- 1.06*max(nlDens(seq(min(breaks), max(breaks), 0.1)),
-                     empDens, na.rm = TRUE)
+                   empDens, na.rm = TRUE)
 
   if (show[1]) {
     hist.default(obs, breaks, right = FALSE, freq = FALSE, ylim = c(0, ymax),
