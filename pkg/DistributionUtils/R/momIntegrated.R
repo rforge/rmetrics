@@ -1,7 +1,7 @@
 momIntegrated <- function(densFn = "ghyp", param = NULL,
-                          order,  about = 0, absolute = FALSE, ...) {
-
-  if (missing(densFn) | !(is.function(densFn) | is.character(densFn)))
+                          order,  about = 0, absolute = FALSE, ...)
+{
+  if (!is.character(densFn) && !is.function(densFn))
     stop("'densFn' must be supplied as a function or name")
 
   ## Set default integration limits
@@ -10,10 +10,10 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
 
   if (is.character(densFn)) {
     if (densFn == "ghyp" || densFn == "hyperb" || densFn == "gig" || densFn == "vg") {
-      if (!exists(paste("d", densFn, sep = ""), mode = "function"))
+      if (!exists(paste0("d", densFn), mode = "function"))
         stop("Relevant package must be loaded for densFn ", densFn)
     }
-    else if (densFn == "invgamma" || densFn == "inverse gamma") {
+    if (densFn == "invgamma" || densFn == "inverse gamma") {
       stopifnot(is.numeric( shape <- list(...)$shape ))
       if(shape <= order)
         stop("Order must be less than shape parameter for inverse gamma")
