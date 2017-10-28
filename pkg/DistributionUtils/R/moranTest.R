@@ -3,7 +3,7 @@ moranTest <- function(x, densFn, param = NULL, ...)
     if (missing(densFn) | !(is.function(densFn) | is.character(densFn)))
     stop("'densFn' must be supplied as a function or name")
 
-    CALL <- match.call()
+    ## CALL <- match.call()
     pfun <- match.fun(paste("p", densFn, sep = ""))
 
     METHOD <- "Moran Goodness-of-Fit Test"

@@ -1,8 +1,10 @@
 distIneqMassartPlot <- function(densFn = "norm", param = NULL,
-                                nSamp = 50, n = 100, ...){
+                                nSamp = 50, n = 100, ...)
+{
   ## Using repeated sampling to get the LHS probability
-  CALL <- match.call()
-  dfun <- match.fun(paste("d", densFn, sep = ""))
+
+  ## CALL <- match.call()
+  ## dfun <- match.fun(paste("d", densFn, sep = ""))
   pfun <- match.fun(paste("p", densFn, sep = ""))
   rfun <- match.fun(paste("r", densFn, sep = ""))
   ## RHS bound

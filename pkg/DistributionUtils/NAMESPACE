@@ -1,28 +1,35 @@
 ################################################
+### Imports
+################################################
+importFrom("graphics",
+           hist.default, lines, plot, points, segments)
+importFrom("stats",
+           integrate, median, optimize, pchisq, pgamma, pnorm, ppoints, pt,
+           quantile, sd, splinefun, uniroot, var)
+
+################################################
 ### Functions
 ################################################
 #export(newIBFR)
-export(besselRatio)
-export(incompleteBesselK)
-export(incompleteBesselKR)
-export(distIneqMassart, distIneqMassartPlot)
-export(integrateDens)
-export(inversionTestpq, inversionTestqp)
-export(is.wholenumber)
-export(logHist)
-export(momChangeAbout)
-export(momIntegrated)
-export(momSE)
-export(safeIntegrate)
-export(skewness, kurtosis)
-export(tailPlot, tailPlotLine)
-export(normTailPlotLine, tTailPlotLine, gammaTailPlotLine)
-export(tsHessian)
-export(pDist, qDist)
-export(distCalcRange, distMode, distStepSize)
-export(moranTest)
+export(besselRatio,
+       distIneqMassart, distIneqMassartPlot,
+       incompleteBesselK, incompleteBesselKR,
+       integrateDens,
+       inversionTestpq, inversionTestqp,
+       is.wholenumber,
+       logHist,
+       momChangeAbout, momIntegrated, momSE,
+       safeIntegrate,
+       skewness, kurtosis,
+       tailPlot, tailPlotLine,
+       normTailPlotLine, tTailPlotLine, gammaTailPlotLine,
+       tsHessian,
+       pDist, qDist,
+       distCalcRange, distMode, distStepSize,
+       moranTest)
 
 ################################################
 ### useDynLib
 ################################################
-useDynLib("DistributionUtils")
+useDynLib(DistributionUtils, .registration = TRUE)
+

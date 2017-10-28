@@ -31,7 +31,7 @@ C     implicit integer (i-n)
       double precision GM(1:nmax),GN(0:nmax)
       double precision Am(0:nmax,0:nmax)
       double precision An(0:nmax,0:nmax)
-      double precision BI(0:numax),BK(0:numax)
+c      double precision BI(0:numax),BK(0:numax)
       double precision Cnp(0:(nmax+1)*(nmax+2)/2)
 
       call combinatorial(nmax, Cnp)
@@ -41,11 +41,11 @@ C     implicit integer (i-n)
       	call SSFcoef(nmax,-nu-1D0,An)
       	call GDENOM(0,x,y,nu,An,nmax,Cnp,GN)
       	call GDENOM(1,x,y,nu,An,nmax,Cnp,GN)
-      	call GNUM(1,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+      	call GNUM(1,x,y,nu,Am,nmax,Cnp,GM,GN)
       	G(1) = x**nu*GM(1)/GN(1)
       	do n=2,nmax
            call GDENOM(n,x,y,nu,An,nmax,Cnp,GN)
-           call GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+           call GNUM(n,x,y,nu,Am,nmax,Cnp,GM,GN)
            G(n) = x**nu*GM(n)/GN(n)
 c          write(*,*) G(n),n
            if(dabs(G(n)-G(n-1)).lt.eps) then
@@ -58,11 +58,11 @@ c      	call IKV(nu,2D0*dsqrt(x*y),pnu,BI,BK)
       	call SSFcoef(nmax,nu-1D0,An)
       	call GDENOM(0,y,x,-nu,An,nmax,Cnp,GN)
       	call GDENOM(1,y,x,-nu,An,nmax,Cnp,GN)
-      	call GNUM(1,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
+      	call GNUM(1,y,x,-nu,Am,nmax,Cnp,GM,GN)
       	G(1) = y**(-nu)*GM(1)/GN(1)
       	do n=2,nmax
            call GDENOM(n,y,x,-nu,An,nmax,Cnp,GN)
-           call GNUM(n,y,x,-nu,Am,An,nmax,Cnp,GM,GN)
+           call GNUM(n,y,x,-nu,Am,nmax,Cnp,GM,GN)
            G(n) = y**(-nu)*GM(n)/GN(n)
 c          write(*,*) G(n),n
            if(dabs(G(n)-G(n-1)).lt.eps) then
@@ -114,13 +114,12 @@ c             write(*,*) 'BK',BK(int(nu))
       return
       end
 
-      subroutine GNUM(n,x,y,nu,Am,An,nmax,Cnp,GM,GN)
+      subroutine GNUM(n,x,y,nu,Am, nmax,Cnp,GM,GN)
       implicit double precision(a-h,o-z)
       implicit integer (i-n)
       integer n,nmax
       double precision x,y,nu
       double precision Am(0:nmax,0:nmax)
-      double precision An(0:nmax,0:nmax)
       double precision Cnp(0:*),GM(1:nmax),GN(0:nmax)
       GM(n) = 0D0
       do ir=1,n

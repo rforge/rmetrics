@@ -9,28 +9,19 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
   high <- Inf
 
   if (is.character(densFn)) {
-
-    if (is.null(densFn))
-      stop("unsupported distribution")
-    if (densFn == "ghyp" | densFn == "hyperb" |
-        densFn == "gig" | densFn == "vg")
-    {
+    if (densFn == "ghyp" || densFn == "hyperb" || densFn == "gig" || densFn == "vg") {
       if (!exists(paste("d", densFn, sep = ""), mode = "function"))
-        stop("Relevant package must be loaded")
+        stop("Relevant package must be loaded for densFn ", densFn)
     }
 
-
-
-    if (densFn == "invgamma" | densFn == "inverse gamma"){
-      l <- list(...)
-      shape <- l$shape
+    if (densFn == "invgamma" || densFn == "inverse gamma") {
+      stopifnot(is.numeric( shape <- list(...)$shape ))
       if(shape <= order)
         stop("Order must be less than shape parameter for inverse gamma")
       low <- 0
       dinvgamma <- function(x, shape, rate = 1, scale = 1/rate) {
-        dens <- ifelse(x <= 0, 0,
-                       (scale/x)^shape*exp(-scale/x)/(x*gamma(shape)))
-        return(dens)
+        ifelse(x <= 0, 0,
+               (scale/x)^shape*exp(-scale/x)/(x*gamma(shape)))
       }
 
       if (!absolute) {
@@ -45,8 +36,7 @@ momIntegrated <- function(densFn = "ghyp", param = NULL,
     } else {
       dfun <- match.fun(paste("d", densFn, sep = ""))
       if (densFn == "gamma"){
-        l <- list(...)
-        shape <- l$shape
+        stopifnot(is.numeric( shape <- list(...)$shape ))
         if(order <= -(shape))
           stop("Order must be greater than shape parameter for gamma")
         low <- 0

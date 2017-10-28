@@ -3,7 +3,7 @@ pDist <- function(densFn = "norm", q, param = NULL,
                   intTol = .Machine$double.eps^0.25,
                   valueOnly = TRUE, ...)
 {
-    CALL <- match.call()
+    ## CALL <- match.call()
     dfun <- match.fun(paste("d", densFn, sep = ""))
     mode <- distMode(densFn, param = param, ...)
     ## match the density function for different distributions
@@ -46,19 +46,15 @@ pDist <- function(densFn = "norm", q, param = NULL,
         err[i] <- intRes$abs.error
     }
 
-    if (lower.tail == TRUE)
-   {
+    if (lower.tail)
        prob[q > mode] <- 1 - prob[q > mode]
-   }
-   else
-   {
+    else
        prob[q <= mode] <- 1 - prob[q <= mode]
-   }
-
-    # Return Value:
-    ifelse(valueOnly, return(prob),
-           return(list(value = prob, error = err)))
-
+    # Return:
+    if(valueOnly)
+        prob
+    else
+        list(value = prob, error = err)
 }
 
 
@@ -67,7 +63,8 @@ qDist <- function(densFn = "norm", p, param = NULL,
                   uniTol = .Machine$double.eps^0.25, subdivisions = 100,
                   intTol = uniTol, ...)
 {
-    CALL <- match.call()
+    ## CALL <- match.call()
+    stopifnot(0 <= p, p <= 1)
     if (!lower.tail) {
         p <- 1 - p
         lower.tail <- TRUE
@@ -75,13 +72,9 @@ qDist <- function(densFn = "norm", p, param = NULL,
     mode <- distMode(densFn, param = param, ...)
     pMode <- pDist(densFn, q = mode, param = param, intTol = intTol, ...)
     quant <- rep(NA, length(p))
-    invalid <- which((p < 0) | (p > 1))
-    pFinite <- which((p > 0) & (p < 1))
-    if(densFn == "skewhyp"){
-        l <- list(...)
-        delta <- ifelse(is.null(param), l$delta, param[2])
-    } else delta <- 0
-
+    delta <- if(densFn == "skewhyp") {
+                 if(is.null(param)) list(...)$delta else param[2]
+             } else 0
     xRange <- distCalcRange(densFn, param = param, tol = 10^(-5), ...)
 
     if (method == "integrate"){
@@ -108,12 +101,9 @@ qDist <- function(densFn = "norm", p, param = NULL,
                 }
             }
             xRange <- c(xLow, mode)
-            zeroFn <- function(x, p){
-                return(pDist(densFn, x, param = param,
-                             intTol = intTol, ...) - p)
-            }
-            for (i in less)
-            {
+            zeroFn <- function(x, p)
+                pDist(densFn, x, param = param, intTol = intTol, ...) - p
+            for (i in less) {
                 quant[i] <- uniroot(zeroFn, p = p[i],
                                     interval = xRange, tol = uniTol)$root
             }
@@ -167,12 +157,8 @@ qDist <- function(densFn = "norm", p, param = NULL,
         yVals <- pDist(densFn, xVals, param = param,
                        subdivisions = subdivisions, intTol = intTol, ...)
         splineFit <- splinefun(xVals, yVals)
-        zeroFn <- function(x, p){
-            return(splineFit(x) - p)
-        }
-
         for (i in inRange){
-            quant[i] <- uniroot(zeroFn, p = p[i],
+            quant[i] <- uniroot(function(x) splineFit(x) - p[i],
                                 interval = xRange, tol = uniTol)$root
         }
 
@@ -185,8 +171,6 @@ qDist <- function(densFn = "norm", p, param = NULL,
                                     intTol = intTol, ...)
         }
     }
-
-
     return(quant)
 }
 

@@ -16,4 +16,23 @@ Inversion tests need to be checked to make sure that they deal with
 distributions which are not on the whole real line, eg gig, but also
 gamma, uniform etc
 
+---------------------------
+
+* Can we easily move  incompleteBesselK() [and the pure-R versions] to Bessel?
+
+2017-10-28:  CRAN reports the following reverse dependencies:
+
+Reverse depends: GeneralizedHyperbolic, NormalLaplace, SkewHyperbolic, VarianceGamma
+Reverse imports: spectral.methods, trelliscope
+
+The first four are also in Rmetric's R-forge:
+- GeneralizedHyperbolic: --> uses incompleteBesselK (and more -- TODO: importFrom(.))
+- NormalLaplace:  now has nice importsFrom(..): 9 fns, among which  besselRatio
+- SkewHyperbolic: now has nice importsFrom(..): ca. 8 fns, among which  besselRatio
+- VarianceGamma:  now has nice importsFrom(..): 8 fn, among which  besselRatio()
+
+These *import* only, so we can see what they use (NAMESPACE, also checked R/*):
+
+- spectral.methods: importFrom(DistributionUtils, logHist)
+- trelliscope:      importFrom(DistributionUtils, skewness)
 
