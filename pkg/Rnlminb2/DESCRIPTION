@@ -1,7 +1,7 @@
 Package: Rnlminb2
 Version: 3042.11
 Title: Rmetrics - An R extension library for constrained optimization with nlminb
-Date: 017-11-12
+Date: 2017-11-12
 Description: 
     NLMINB2 is an interior point nonlinear constrained programming 
     problem interface written by Dietgelm Wuertz. The version here 
