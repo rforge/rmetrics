@@ -42,6 +42,20 @@ import("timeSeries")
 ################################################################################
 exportPattern(".")
 
+# There is no "default" function for these;
+# so I don't know if all of them are really meant to be generic...
+S3method(".plot", "histogram")
+S3method(".print", "ssd")
+S3method(".summary", "gel")
+S3method(".summary", "gmm")
+
+# I don't know if all of them are really meant to be generic...
+S3method("getModel", "default")
+S3method("print", "control")
+S3method("stdev", "default")
+S3method("termPlot", "default")
+S3method("volatility", "default")
+
 # In the future this should be used:
 #exportPattern("^[^\\.]")
 
