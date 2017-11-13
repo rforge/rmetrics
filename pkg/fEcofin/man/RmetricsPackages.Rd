@@ -7,7 +7,6 @@
 \alias{dem2gbp}
 \alias{DEM98NYC}
 \alias{DEM98ZRH}
-\alias{DowJones30}
 \alias{klein}
 \alias{kmenta}
 \alias{recession}

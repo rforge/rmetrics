@@ -2,10 +2,6 @@
 
 \alias{RforQuantsData}
 
-\alias{bmwRet}
-
-
-
 \title{Time Series Data Sets fro the ebook RforQuants} 
 
 
