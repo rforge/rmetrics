@@ -2,3 +2,6 @@
 
 # Export all names
 exportPattern(".")
+
+importFrom("stats", nlminb)
+importFrom("utils", packageDescription)
