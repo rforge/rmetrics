@@ -7,8 +7,7 @@ Author: Diethelm Wuertz [aut],
 	Yohan Chalabi [ctb]
 	Martin Maechler [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Environment for teaching
-	"Financial Engineering and Computational Finance".
+Description: Markets and Basic Statistics.
 Depends: R (>= 2.15.1), timeDate, timeSeries
 Imports: stats, grDevices, graphics, methods, utils, MASS, spatial, gss, stabledist
 ImportsNote: akima not in Imports because of non-GPL licence.
