@@ -5,7 +5,7 @@ Package fAssets
 2014-30-10  tsetz
 
 	* ecodist, mvnormtest and energy are import packages again
-	  since otherwise some functions within fPortfolio won't
+	  since otherwise some functions within fPortfolio will not
 	  work.
 
 2014-09-17  tsetz
