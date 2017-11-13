@@ -18,10 +18,9 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
-importFrom("graphics", "text")
-importFrom("methods", "new")
-importFrom("stats", "dnorm", "integrate", "nlm", "rnorm", "runif",
-           "uniroot", "var")
+importFrom("graphics", text)
+importFrom("methods", new)
+importFrom("stats", dnorm, integrate, nlm, rnorm, runif, uniroot, var)
 
 ################################################################################
 ## Libraries
