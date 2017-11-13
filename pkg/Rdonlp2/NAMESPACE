@@ -3,4 +3,6 @@
 # Export all names
 exportPattern(".")
 
+importFrom("utils", packageDescription)
+
 useDynLib("Rdonlp2")

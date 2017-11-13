@@ -1,7 +1,7 @@
 Package: Rdonlp2
-Version: 3002.10
-Date: 2007-03-18
-Title: An R extension library to use Peter Spelluci's DONLP2 from R.
+Version: 3042.11
+Title: Rmetrics - An R extension library to use Peter Spelluci's DONLP2 from R
+Date: 2017-11-12
 Description: 
    DONLP2 is a general purpose nonlinear constrained programming 
    problem solver written by Peter Spelluci. The version here 
@@ -14,8 +14,9 @@ Author:
     Christoph Bergmeier has added passing objecive and constraints as external pointer,
     Ryuichi Tamura has written the original Rdonlp2 interface,
     Diethelm Wuertz has written the current Rdonlp2 interface.
-Maintainer: Diethelm Wuertz <wuertz@phys.ethz.ch>
+Maintainer: Tobias Setz <tobias.setz@live.com>
 Depends: R (>= 2.12.0)
+Imports: utils
 License: 
    GPL-2 for the R-code,
    C-Code only free for research purpose. 
