@@ -18,6 +18,11 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
+importFrom("graphics", persp)
+importFrom("methods", new)
+importFrom("stats", approx, embed, lm)
+importFrom("utils", capture.output)
+
 
 ################################################
 ## functions

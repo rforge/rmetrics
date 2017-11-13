@@ -1,17 +1,15 @@
 Package: fUnitRoots
-Version: 3010.78
-Date: 2013-06-23
 Title: Rmetrics - Modelling Trends and Unit Roots
-Author: Author: Rmetrics Core Team,
-      Yohan Chalabi [aut],
-      Tobias Setz [aut],
-      Diethelm Wuertz [aut, cre]
+Date: 2017-11-12
+Version: 3042.79
+Author: Diethelm Wuertz [aut],
+	Tobias Setz [cre],
+	Yohan Chalabi [ctb]
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: Modelling Trends and Unit Roots.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
-Imports: urca
+Imports: urca, graphics, methods, stats, utils
 Suggests: RUnit
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-      "Financial Engineering and Computational Finance"
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
       FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
       WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
