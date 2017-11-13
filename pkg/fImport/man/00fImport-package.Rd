@@ -48,8 +48,8 @@
     \code{timeSeries} objects.
     
     Examples are provided for downloading data from the Federal Reserve
-    data base in St. Louis, from Oanda FX, and from Yahoo Finance
-    web portal.
+    data base in St. Louis web portal.
+    % from Oanda FX, and from Yahoo Finance
     
     The data part contains instruments listings from the American Stock 
     Exchange, from the FED H15 Report, from the NASDAQ Stock Market,
@@ -71,8 +71,8 @@
     
     \preformatted{
     fredSeries      downloads data from research.stlouisfed.org
-    oandaSeries     downloads data from www.oanda.com
-    yahooSeries     downloads data from chart.yahoo.com
+    %oandaSeries     downloads data from www.oanda.com
+    %yahooSeries     downloads data from chart.yahoo.com
     }
     
     The economic and financial time series data are extractes as objects 
