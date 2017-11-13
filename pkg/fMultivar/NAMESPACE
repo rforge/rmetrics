@@ -9,3 +9,8 @@ exportPattern("^[^\\.]")
 import("timeDate")
 import("timeSeries")
 import("fBasics")
+
+importFrom("grDevices", heat.colors)
+importFrom("graphics", box, contour, image, par, persp, polygon, rug, title)
+importFrom("methods", new)
+importFrom("stats", cov, dnorm, mahalanobis, pnorm, rchisq, rnorm, var)

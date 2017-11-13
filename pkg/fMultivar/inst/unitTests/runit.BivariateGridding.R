@@ -48,47 +48,47 @@ test.gridData =
 
 
 # ------------------------------------------------------------------------------
+## Cannot be checked on CRAN because of the akima library
 
-
-test.gridDataPlot = 
-    function()
-{   
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
-      
-    # Generate Akima interpolated Grid Data:
-    # Does not run for r-solaris-x86
-    if (FALSE) {
-      require(akima)
-      RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-      set.seed(4711, kind = "Marsaglia-Multicarry")
-      x = runif(999)-0.5
-      y = runif(999)-0.5
-      z = cos(2*pi*(x^2+y^2))
-      ans = akimaInterp(x, y, z, extrap = FALSE)
-      persp(ans)
-      title(main = "Akima Interpolation") 
-      contour(ans)
-      title(main = "Akima Interpolation")
-    }
-    
-    # Generate Kriged Grid Data:
-    require(spatial)
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = krigeInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Kriging") 
-    contour(ans)
-    title(main = "Kriging") 
-    
-    # Return Value:
-    return()    
-}
+# test.gridDataPlot = 
+#     function()
+# {   
+#     #  gridData            Generates a grid data set
+#     #  persp.gridData      Generates a perspective plot from a grid data object
+#     #  contour.gridData    Generates a contour plot from a grid data object
+#       
+#     # Generate Akima interpolated Grid Data:
+#     # Does not run for r-solaris-x86
+#     if (FALSE) {
+#       require(akima)
+#       RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+#       set.seed(4711, kind = "Marsaglia-Multicarry")
+#       x = runif(999)-0.5
+#       y = runif(999)-0.5
+#       z = cos(2*pi*(x^2+y^2))
+#       ans = akimaInterp(x, y, z, extrap = FALSE)
+#       persp(ans)
+#       title(main = "Akima Interpolation") 
+#       contour(ans)
+#       title(main = "Akima Interpolation")
+#     }
+#     
+#     # Generate Kriged Grid Data:
+#     require(spatial)
+#     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+#     set.seed(4711, kind = "Marsaglia-Multicarry")
+#     x = runif(999)-0.5
+#     y = runif(999)-0.5
+#     z = cos(2*pi*(x^2+y^2))
+#     ans = krigeInterp(x, y, z, extrap = FALSE)
+#     persp(ans)
+#     title(main = "Kriging") 
+#     contour(ans)
+#     title(main = "Kriging") 
+#     
+#     # Return Value:
+#     return()    
+# }
 
 
 ################################################################################

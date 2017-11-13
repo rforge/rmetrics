@@ -23,7 +23,7 @@ adapt(ndim, lower, upper, functn, \dots)
     In 2007 the package \code{adapt} was removed from the CRAN 
     repository, due to unclear license conditions. Nevertheless,
     formerly available versions can still be obtained from the CRAN 
-    \href{http://cran.r-project.org/src/contrib/Archive/adapt/}{archive}.
+    \href{https://cran.r-project.org/package=adapt}{archive}.
     Package \code{adapt} used FORTRAN code from Professor Genz.
     
     From 2007 until 2013 the package \code{fMultivar} used an builtin
@@ -107,6 +107,7 @@ adapt(ndim, lower, upper, functn, \dots)
 
 
 \examples{
+\donttest{
 ## Check that dnorm2d is normalized:
   
    # Normal Density:
@@ -119,7 +120,8 @@ adapt(ndim, lower, upper, functn, \dots)
     
    # Using the Wrapper:
    adapt(lower=-BIG, upper=BIG, functn=density) 
-   adapt(lower=-BIG, upper=BIG, functn=density, tol=1e-7)$integral   
+   adapt(lower=-BIG, upper=BIG, functn=density, tol=1e-7)$integral
+}
 }
 
 
