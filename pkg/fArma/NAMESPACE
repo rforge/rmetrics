@@ -19,6 +19,16 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
+importFrom("grDevices", "heat.colors", "palette")
+importFrom("graphics", grid, mtext, par, polygon, title)
+importFrom("methods", new)
+importFrom("stats", ARMAacf, Box.test, acf, ar, arima,
+	as.formula, diffinv, fft, lm.fit, ls.print,
+	lsfit, model.frame, na.pass, pnorm, predict,
+	printCoefmat, qnorm, qqline, qqnorm, rexp,
+	rnorm, runif, ts, tsp, var)
+importFrom("utils", capture.output, menu)
+
 
 ################################################
 ## Export Functions

@@ -251,8 +251,8 @@ int reflect(
 /* ************************************************************************** */
 
 
-#define ACCESSC(l,r)    *(C + *(offsetC+(l)) + (r) - *(firstC+(l)))
-#define ACCESSD(l,r)    *(D + *(offsetD+(l)) + (r) - *(firstD+(l)))
+/* #define ACCESSC(l,r)    *(C + *(offsetC+(l)) + (r) - *(firstC+(l))) */
+/* #define ACCESSD(l,r)    *(D + *(offsetD+(l)) + (r) - *(firstD+(l))) */
 
 
 void wavedecomp(
