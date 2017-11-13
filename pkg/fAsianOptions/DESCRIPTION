@@ -1,17 +1,14 @@
 Package: fAsianOptions
-Version: 3010.81
-Date: 2013-06-23
 Title: Rmetrics - EBM and Asian Option Valuation
-Author: Rmetrics Core Team,
-      Diethelm Wuertz [aut, cre]
+Date: 2017-11-12
+Version: 3042.82
+Author: Diethelm Wuertz [aut],
+	Tobias Setz [cre]
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: EBM and Asian Option Valuation.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fOptions
+Imports: stats
 Suggests: methods, RUnit
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-      "Financial Engineering and Computational Finance"
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

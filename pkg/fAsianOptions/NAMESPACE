@@ -20,6 +20,9 @@ import("timeSeries")
 import("fBasics")
 import("fOptions")
 
+importFrom("stats", dgamma, dlnorm, dnorm, integrate, pgamma, 
+	plnorm, pnorm, uniroot)
+
 
 ################################################
 ## functions
