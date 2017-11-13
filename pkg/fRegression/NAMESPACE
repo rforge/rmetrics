@@ -2,6 +2,7 @@
 ## Exports
 ################################################################################
 exportPattern("^[^\\.]")
+S3method("termPlot", "fREG")
 
 ###############################################################################
 ## Imports
@@ -9,6 +10,12 @@ exportPattern("^[^\\.]")
 import(timeDate)
 import(timeSeries)
 import(fBasics)
+
+importFrom("methods", new, slot)
+importFrom("stats", as.formula, delete.response, gaussian, model.frame,
+	model.matrix, model.response, pf, printCoefmat, rnorm, runif, sd, symnum,
+	termplot, var)
+importFrom("utils", menu)
 
 ###############################################################################
 ## useDynLib

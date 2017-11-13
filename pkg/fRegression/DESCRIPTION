@@ -1,20 +1,15 @@
 Package: fRegression
 Title: Rmetrics - Regression Based Decision and Prediction
-Date: 2013-12-17
-Version: 3011.81
-Author: Rmetrics Core Team,
-	Diethelm Wuertz [aut],
-	Tobias Setz [cre]
+Date: 2017-11-12
+Version: 3042.82
+Author: Diethelm Wuertz [aut],
+	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-	"Financial Engineering and Computational Finance".
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: Regression Based Decision and Prediction.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
-Imports: lmtest, mgcv, nnet, polspline
-Suggests: methods, MASS, RUnit
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Imports: lmtest, mgcv, nnet, polspline, methods, stats, utils
+Suggests: MASS, RUnit
 LazyData: yes
 License: GPL (>= 2)
 URL: https://www.rmetrics.org
