@@ -26,15 +26,12 @@
 \alias{\%*\%,timeSeries,ANY-method}
 \alias{\%*\%,ANY,timeSeries-method}
 
-%\alias{diff,timeSeries-method}
-%\alias{scale,timeSeries-method}
-
-\alias{quantile,timeSeries-method}
-
-\alias{diff.timeSeries}
+%\alias{diff.timeSeries}
 %\alias{scale.timeSeries}
-
 \alias{quantile.timeSeries}
+\alias{quantile,timeSeries-method}
+\alias{median.timeSeries}
+\alias{median,timeSeries-method}
 
 
 \title{Mathematical Time Series Operations}

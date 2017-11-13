@@ -1,12 +1,11 @@
 Package: timeSeries
 Title: Rmetrics - Financial Time Series Objects
-Date: 2015-11-09
-Version: 3022.101
-Author: Rmetrics Core Team,
-	Diethelm Wuertz [aut],
+Date: 2017-11-12
+Version: 3042.102
+Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Maintainer: Tobias Setz <tobias.setz@live.com>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance".
 	Managing financial time series objects.

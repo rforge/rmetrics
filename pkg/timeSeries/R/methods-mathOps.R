@@ -150,22 +150,19 @@ setMethod("Ops", c("timeSeries", "timeSeries"),
 
 # ------------------------------------------------------------------------------
 setMethod("cummax", "timeSeries",
-    function(x) callGeneric(getDataPart(x)))
-
+          function(x) callGeneric(getDataPart(x)))
 
 # ------------------------------------------------------------------------------
 setMethod("cummin", "timeSeries",
-    function(x) callGeneric(getDataPart(x)))
-
+          function(x) callGeneric(getDataPart(x)))
 
 # ------------------------------------------------------------------------------
 setMethod("cumprod", "timeSeries",
-    function(x) callGeneric(getDataPart(x)))
-
+          function(x) callGeneric(getDataPart(x)))
 
 # ------------------------------------------------------------------------------
 setMethod("cumsum", "timeSeries",
-    function(x) callGeneric(getDataPart(x)))
+          function(x) callGeneric(getDataPart(x)))
 
 
 # ------------------------------------------------------------------------------
@@ -174,20 +171,17 @@ setMethod("cumsum", "timeSeries",
 ##    callGeneric()
 ## })
 
-
 # ------------------------------------------------------------------------------
 ## setMethod("scale", "timeSeries", function(x, ...) {
 ##    x <- getDataPart(x)
 ##    callGeneric()
 ## })
 
-
 # ------------------------------------------------------------------------------
 setMethod("quantile", "timeSeries", function(x, ...) {
-    x <- getDataPart(x)
-    callGeneric()
+  x <- getDataPart(x)
+  callGeneric()
 })
-
 
 # ------------------------------------------------------------------------------
 setMethod("median", "timeSeries", function(x, na.rm) {

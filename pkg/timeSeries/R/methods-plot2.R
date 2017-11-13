@@ -43,6 +43,14 @@
 #  oma.multi = c(7.75, 1.1, 6.1, 1.1)
 #  dots <- list()
 
+# y = NULL; FinCenter = NULL
+# plot.type = c("single", "multiple")
+# format = "auto"; at = c("pretty", "chic")
+# panel = lines; yax.flip = FALSE
+# mar.multi = c(0, 5.1, 0, if (yax.flip) 5.1 else 2.1)
+# oma.multi = c(7.75, 1.1, 6.1, 1.1)
+# axes = TRUE
+# ... <- NULL
 
 .xtplot.timeSeries <-
   function(
@@ -98,8 +106,8 @@
     
     # Continue ...
     if (minor.ticks == "auto") minor.ticks <- .periodicity2(x)$units
-    if (at[1] == "chic") minor.ticks = TRUE
-    if (format != "auto") minor.ticks = TRUE
+    if (at[1] == "chic") minor.ticks <- TRUE
+    if (format != "auto") minor.ticks <- TRUE
     
     # FinCenter - take care of it:
     if (!is.null(FinCenter)) {
@@ -135,15 +143,22 @@
     if (length(cex.pch) == 1) cex.pch = rep(cex.pch, times=NCOL(x))
     if (length(ylab) == 1) ylab = rep(ylab, times=NCOL(x))
     
-    X <- as.POSIXct(time(x))
+    TIME <- time(x)
+    if (is.integer(TIME)) {
+      X <- TIME
+      AT <- "counts"
+    } else {
+      X <- as.POSIXct(TIME)
+    }
     Y <- series(x)
     
     if (AT == "pretty") {
-      at <- pretty(x) }
+      at <- pretty(x)
+    }
     if (AT == "chic" ) {
       ep <- .axTicksByTime2(x, format=FORMAT)
-      at <- time(x)[ep] } 
-    TIME <- time(x)
+      at <- TIME[ep]
+    }
     
     
     # SINGLE PLOT:
@@ -176,29 +191,23 @@
         if (AT == "counts") {
           axis(1, cex.axis = cex.axis)
         } else if (AT == "pretty") {
-          
           at <- pretty(time(x))
           if (FORMAT == "auto") format <- "%Y-%m-%d"
           if (!is.null(minor.ticks)) {
-            minor.at <- timeSequence(time(x)[1], time(x)[nrow(x)], 
-                                     by = minor.ticks)
-            axis.POSIXct(1, at=minor.at, labels=FALSE, col='#BBBBBB', 
-                         cex.axis = cex.axis) }
+            minor.at <- timeSequence(time(x)[1], time(x)[nrow(x)],by = minor.ticks)
+            axis.POSIXct(1, at=minor.at, labels=FALSE, col='#BBBBBB',cex.axis = cex.axis)
+          }
           axis.POSIXct(1, at = at, format = format, cex.axis = cex.axis)
           
         } else if (AT == "chic" ) {
-          
           ep <- .axTicksByTime2(x, format=FORMAT)
-          if (minor.ticks) axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB',
-                                        cex.axis = cex.axis)
-          axis.POSIXct(1, at = TIME[ep], labels=names(ep), 
-                       las=1, lwd=1, mgp=c(3, 1, 0), cex.axis = cex.axis)
+          if (minor.ticks) axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB',cex.axis = cex.axis)
+          axis.POSIXct(1, at = TIME[ep], labels=names(ep),las=1, lwd=1, mgp=c(3, 1, 0), cex.axis = cex.axis)
         } else {
-          if (minor.ticks) 
-            axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB', 
-                         cex.axis = cex.axis)
-          axis.POSIXct(1, at = at, format = format, cex.axis=cex.axis)
-          
+          if (minor.ticks) {
+            axis.POSIXct(1, at=TIME, labels=FALSE, col='#BBBBBB', cex.axis = cex.axis)
+            axis.POSIXct(1, at = at, format = format, cex.axis=cex.axis)
+          }
         }
       }
       
@@ -207,6 +216,7 @@
       }
       
       if(grid) {
+        if (!(AT %in% c("pretty","chic"))) at <- axTicks(1)
         abline(v = at, lty = 3, col = col.grid, lwd = lwd.grid)
         grid(NA, NULL, lty = 3, col = col.grid, lwd = lwd.grid, equilogs=equilogs)
       }
@@ -248,6 +258,7 @@
           if (do.xax) {
             if (AT == "counts") {
               axis(1, cex.axis = 1.2 * cex.axis)
+              at <- axTicks(1)
             } else if (AT == "pretty") {
               at <- pretty(time(x))
               if (FORMAT == "auto") format <- "%Y-%m-%d"
