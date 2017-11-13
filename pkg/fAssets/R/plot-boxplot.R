@@ -112,9 +112,9 @@ assetsBoxPercentilePlot <-
         delta = 1/(n + 1)
         prob = seq(delta, 1 - delta, delta)
         quan = sort(y)
-        med = median(y)
-        q1 = median(y[y < med])
-        q3 = median(y[y > med])
+        med = stats::median(y)
+        q1 = stats::median(y[y < med])
+        q3 = stats::median(y[y > med])
         first.half.p = prob[quan <= med]
         second.half.p = 1 - prob[quan > med]
         plotx = c(first.half.p, second.half.p)

@@ -76,7 +76,7 @@ function(datamat, k = 12, pnoise = 0.05, emconv = 0.001, bound = 1.5,
     d = dim(datamat)[2]
     n = dim(datamat)[1]
     pd = dim(datamat)[2]
-    S.mean = apply(datamat, 2, median)
+    S.mean = apply(datamat, 2, stats::median)
     S.sd = apply(datamat, 2, mad)
 
     #  NNC based on original data

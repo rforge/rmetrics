@@ -18,4 +18,11 @@ import(energy)
 
 # Only importing what we need from "sn" since it exports a function
 # called "vech"; as "fBasics" does...
-importFrom(sn, rmst, rmsn, rmsc)
+importFrom("sn", rmst, rmsn, rmsc)
+
+importFrom("grDevices", cm.colors, palette, rainbow, rgb, xy.coords)
+importFrom("graphics", Axis, arrows, axis, box, boxplot, grid, hist, image, legend,
+	mtext, pairs, par, plot.xy, polygon, rect, segments, stars, strwidth, text, title)
+importFrom("stats", approx, as.dist, cor, cor.test, cov, cov2cor, density, dist,
+	dnorm, hclust, kmeans, lowess, mad, mahalanobis, pchisq, qchisq, qf, runif,
+	sd, symnum, var)

@@ -133,7 +133,7 @@ function(x)
         center = if(length(center) > 1) rep(0, p) else sdlist$center,
 		cov = sdlist$cov)
 
-    consistency.correction <- median(dist) / qchisq(0.5, p)
+    consistency.correction <- stats::median(dist) / qchisq(0.5, p)
 	sdlist$cov <- sdlist$cov * consistency.correction
 	sdlist$dist <- dist / consistency.correction
 
