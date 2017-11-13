@@ -1,19 +1,15 @@
 Package: fExtremes
-Version: 3010.81
-Date: 2013-04-30
 Title: Rmetrics - Modelling Extreme Events in Finance
-Author: Rmetrics Core Team,
-      Yohan Chalabi [ctb],
-      Tobias Setz [ctb],
-      Diethelm Wuertz [aut, cre]
+Date: 2017-11-12
+Version: 3042.82
+Author: Diethelm Wuertz [aut],
+	Tobias Setz [cre],
+	Yohan Chalabi [ctb]
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: Modelling Extreme Events in Finance.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fGarch
-Suggests: methods, RUnit, tcltk
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Description: Environment for teaching 
-      "Financial Engineering and Computational Finance"
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+Imports: methods, graphics, stats
+Suggests: RUnit, tcltk
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org

@@ -131,7 +131,7 @@ doplot = TRUE, plottype = c("both", "upper"))
     if (plottype == "both") bothTails = TRUE else bothTails = FALSE
 
     # Median Plot:
-    index = which.min(abs(tails-median(tails)))
+    index = which.min(abs(tails-stats::median(tails)))
     DOPLOT = rep(FALSE, length(tails))
     DOPLOT[index] = TRUE
     selected.tail = tails[index]
