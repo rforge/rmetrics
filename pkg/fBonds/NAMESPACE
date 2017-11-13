@@ -12,6 +12,9 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
+importFrom("graphics", contour, grid, image, persp, title)
+importFrom("stats", nlminb)
+
 
 ################################################
 ## functions
