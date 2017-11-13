@@ -36,4 +36,9 @@ importFrom("utils", capture.output, menu)
 
 exportPattern(".")
 
-
+S3method("fitted", "fARMA")
+S3method("plot", "fARMA")
+S3method("predict", "fARMA")
+S3method("residuals", "fARMA")
+S3method("summary", "fARMA")
+S3method("coef", "fARMA")
