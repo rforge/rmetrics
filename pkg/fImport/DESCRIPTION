@@ -1,17 +1,17 @@
 Package: fImport
 Title: Rmetrics - Importing Economic and Financial Data
-Date: 2015-03-11
-Version: 3012.83
-Author: Rmetrics Core Team,
-	Diethelm Wuertz [aut],
+Date: 2017-11-12
+Version: 3042.84
+Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Maintainer: Tobias Setz <tobias.setz@live.com>
 Description: Environment for teaching 
 	"Financial Engineering and Computational Finance".
 	Importing Economic and Financial Data.
 Depends: R (>= 2.15.1), timeDate, timeSeries
-Suggests: methods, RUnit
+Imports: methods, utils
+Suggests: RUnit
 Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
 	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
 	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.

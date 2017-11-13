@@ -10,7 +10,8 @@
 import("timeDate")
 import("timeSeries")
 
-# import("methods")
+importFrom("methods", new)
+importFrom("utils", download.file, write.table)
 
 
 ################################################

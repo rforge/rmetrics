@@ -125,13 +125,13 @@ fredImport(query, file = "tempfile", source = NULL, frequency = "daily",
 }
 
 
-\seealso{
-       
-    Two further download functions \code{\link{oandaImport}} and 
-    \code{\link{yahooImport}} allow to import data from Oanda and 
-    from Yahoo Finance.
-     
-}
+%\seealso{
+%       
+%    Two further download functions \code{\link{oandaImport}} and 
+%    \code{\link{yahooImport}} allow to import data from Oanda and 
+%    from Yahoo Finance.
+%     
+%}
 
 
 \author{
