@@ -52,7 +52,7 @@
     control <- list()
     
     # donlp2 Solver:
-    require(Rdonlp2)
+    # require(Rdonlp2)
     ans <- rdonlp2NLP(start, objective, lower, upper, linCons)
     ans
     
@@ -62,7 +62,7 @@
     ans
     
     # nlminb2 Solver:
-    require(Rnlminb2)
+    # require(Rnlminb2)
     ans <- rnlminb2NLP(start, objective, lower, upper, linCons)
     ans
   }

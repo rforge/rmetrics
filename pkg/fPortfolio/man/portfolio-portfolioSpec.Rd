@@ -19,7 +19,7 @@ portfolioSpec(
     model = list(
         type = "MV", optimize = "minRisk",           
         estimator = "covEstimator", tailRisk = list(),
-        params = list(alpha = 0.05, a = 1)),
+        params = list(alpha = 0.05)),
     portfolio = list(
         weights = NULL, targetReturn = NULL,
         targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50,

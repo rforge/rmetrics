@@ -243,7 +243,7 @@ garchAnalytics <-
     # FUNCTION:
     
     # Load Library:
-    require(fGarch)
+    # require(fGarch)
     
     # Settings:
     stopifnot(isUnivariate(index))
@@ -397,7 +397,7 @@ bcpAnalytics <-
     # FUNCTION:
     
     # Load Library:
-    require(bcp)
+    # require(bcp)
     
     # Settings:
     stopifnot(isUnivariate(index))
@@ -486,7 +486,7 @@ pcoutAnalytics <-
     # FUNCTION:
     
     # Load Library:
-    require(mvoutlier)
+    # require(mvoutlier)
     
     # Settings:
     stopifnot(isUnivariate(index))
@@ -653,7 +653,7 @@ waveletSpectrum <-
     # FUNCTION:
     
     # Load Library:
-    require(dplR)
+    # require(dplR)
     
     # Settings:
     stopifnot(isUnivariate(index))
