@@ -19,6 +19,10 @@ import("timeDate")
 import("timeSeries")
 import("fBasics")
 
+importFrom("methods", new)
+importFrom("stats", as.formula, embed, lm, pchisq, pf, pnorm,
+	prcomp, residuals, runif, sd, ts)
+
 
 ################################################
 ## functions
