@@ -24,16 +24,16 @@
     # some people use it to bombard users with 
     # messages using 
     
-    packageStartupMessage( "\n" )
-    packageStartupMessage( "Rmetrics Package fExoticOptions" ) 
-    packageStartupMessage( "Pricing and Evaluating Exotic Options" )
-    packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
-    packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
-    packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
-    packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
-    # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
-    # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
-    # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" ) 
+    # packageStartupMessage( "\n" )
+    # packageStartupMessage( "Rmetrics Package fExoticOptions" ) 
+    # packageStartupMessage( "Pricing and Evaluating Exotic Options" )
+    # packageStartupMessage( "Copyright (C) 2005-2014 Rmetrics Association Zurich" )  
+    # packageStartupMessage( "Educational Software for Financial Engineering and Computational Science" ) 
+    # packageStartupMessage( "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY." ) 
+    # packageStartupMessage( "https://www.rmetrics.org --- Mail to: info@rmetrics.org" ) 
+    # # packageStartupMessage("Documentation: www.rmetrics.org/ebooks-portfolio" ) 
+    # # packageStartupMessage("Rmetrics User/Developer Workshop and Summer School 2012\n" ) 
+    # # packageStartupMessage("  June 24-28, 2012 - Meielisalp, Lake Thune, Switzerland\n\n" )
   }
 
 ###############################################################################

@@ -13,7 +13,7 @@ import("timeSeries")
 import("fBasics")
 import("fOptions")
 
-#import("methods")
+importFrom("methods", new)
 
 
 ################################################
