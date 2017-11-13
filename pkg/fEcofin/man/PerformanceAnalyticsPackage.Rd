@@ -91,7 +91,7 @@ Vaissie Mathieu (2003);
 Carl P., Peterson B.G. (2007);
    \emph{PerformanceAnalytics: Econometric Tools for Performance and 
     Risk Analysis}, \cr
-    \url{http://cran.r-project.org/doc/packages/PerformanceAnalytics.pdf}.
+    \url{https://CRAN.R-project.org/package=PerformanceAnalytics}.
 }
 
 

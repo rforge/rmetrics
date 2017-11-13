@@ -1,17 +1,15 @@
 Package: fEcofin
-Version: 2100.77
-Revision: 4910
-Date: 2011-04-05
-Title: Economic and Financial Data Sets
-Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.6.0), utils
+Version: 3042.78
+Title: Rmetrics - Economic and Financial Data Sets
+Date: 2017-11-12
+Author: Diethelm Wuertz [aut],
+	Tobias Setz [cre],
+	and many others (see SOURCE file)
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Description: Economic and Financial Data Sets.
+Depends: R (>= 2.6.0)
+Imports: utils
 Suggests: RUnit
-Maintainer: Rmetrics Core Team <Rmetrics-core@r-project.org>
-Description: Environment for teaching "Financial Engineering and
-        Computational Finance"
-NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-        FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-        WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: http://www.rmetrics.org
