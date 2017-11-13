@@ -25,7 +25,7 @@
 # Roxygen Tags
 # Import Packages:
 # According to the manual:
-# Almost always, packages mentioned in ‘Depends’ should also be imported
+# Almost always, packages mentioned in 'Depends' should also be imported
 #' @import graphics utils stats methods
 
 # Special: To avoid that zoo package masks as.Date.timeDate:
