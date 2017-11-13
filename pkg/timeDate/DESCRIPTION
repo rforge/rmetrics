@@ -11,9 +11,6 @@ Maintainer: Tobias Setz <tobias.setz@live.com>
 Description: Chronological and Calendar Objects.
 Depends: R (>= 2.15.1), graphics, utils, stats, methods
 Suggests: date, RUnit
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-	FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-	WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: https://www.rmetrics.org

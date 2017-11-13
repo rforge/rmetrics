@@ -10,9 +10,6 @@ Description: Bivariate Dependence Structures with Copulae.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
 Imports: grDevices, graphics, stats
 Suggests: methods, RUnit, tcltk, mvtnorm, sn
-Note: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE
-      FUTURE. THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES, AS
-      WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
 LazyData: yes
 License: GPL (>= 2)
 URL: https://www.rmetrics.org
