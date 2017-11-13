@@ -19,6 +19,7 @@ socp(f, A, b, C, d, N, x, z, w, control = list())
 }
 
 
+
 \arguments{
     \item{f}{
         Vector defining linear objective, 
@@ -33,8 +34,8 @@ socp(f, A, b, C, d, N, x, z, w, control = list())
         b(2); \ldots b(L)]
         }
     \item{C}{
-        Matrix with the \code{c(i)'} vertically stacked: C = [ c(1)';
-        c(2)'; \ldots c(L)']
+        Matrix with the \code{c(i)\'} vertically stacked: C = [ c(1)\';
+        c(2)\'; \ldots c(L)\']
         }
     \item{d}{
         Vector with the \code{d(i)} vertically stacked: d = [ d(1);
@@ -58,7 +59,6 @@ socp(f, A, b, C, d, N, x, z, w, control = list())
         A list of control parameters. See below for details.
         }
 }
-
 
 \details{
     minimize \deqn{f'*x}{f'*x}

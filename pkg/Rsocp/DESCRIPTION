@@ -1,10 +1,13 @@
 Package: Rsocp
-Title: An R extenstion library to use SOCP from R.
-Version: 271.1
-Date: 2008-31-01
-Author: Yohan Chalabi and Diethelm Wuertz
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
-Depends: R (>= 2.4.0), utils
+Version: 3042.2
+Title: Rmetrics - An R extenstion library to use SOCP from R
+Date: 2017-11-12
+Author: Yohan Chalabi [aut],
+	Diethelm Wuertz [aut],
+	Tobias Setz [cre]
+Maintainer: Tobias Setz <tobias.setz@live.com>
+Depends: R (>= 2.4.0)
+Imports: utils
 Description: Second-order cone programming solver written by M. Lobo, L. 
     Vandenberghe, and S. Boyd. Rsocp is a wrapper library to use it from R.
     THIS PACKAGE IS USED FOR PORTFOLIO OPTIMIZATION WITH RMETRICS.
