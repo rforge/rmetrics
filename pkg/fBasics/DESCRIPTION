@@ -1,12 +1,12 @@
 Package: fBasics
 Title: Rmetrics - Markets and Basic Statistics
-Date: 2016-12-19
-Version: 3022.88
+Date: 2017-11-12
+Version: 3042.89
 Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 	Martin Maechler [ctb]
-Maintainer: Tobias Setz <tobias.setz@rmetrics.org>
+Maintainer: Tobias Setz <tobias.setz@live.com>
 Description: Environment for teaching
 	"Financial Engineering and Computational Finance".
 Depends: R (>= 2.15.1), timeDate, timeSeries
