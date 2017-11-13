@@ -20,7 +20,8 @@
 
 
 \usage{
-\S4method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),plot=FALSE,nx=NULL,crit_val=NULL,conf=NULL,\dots)
+\S4method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, mse = c("cond","uncond"),
+        plot=FALSE, nx=NULL, crit_val=NULL, conf=NULL, \dots)
 }
 
 

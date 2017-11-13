@@ -40,7 +40,7 @@ setMethod(f = "fitted", signature(object = "fGARCH"), definition =
 
     # Get original time series class:
     ans = slot(object, "data")
-    Name = as.character(fit@formula[2])
+    Name = as.character(object@formula[2])
     attr(ans, "Name") <- Name
     # Return Value:
     ans

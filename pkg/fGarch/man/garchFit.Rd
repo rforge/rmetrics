@@ -15,7 +15,7 @@
 
 
 \usage{    
-garchFit(formula = ~ garch(1, 1), data = dem2gbp, 
+garchFit(formula = ~ garch(1, 1), data = fGarch::dem2gbp, 
     init.rec = c("mci", "uev"), 
     delta = 2, skew = 1, shape = 4, 
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd", 

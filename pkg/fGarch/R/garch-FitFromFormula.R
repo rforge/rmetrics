@@ -28,7 +28,7 @@
 garchFit <-
 function(
     formula = ~ garch(1,1), 
-    data = dem2gbp,
+    data = fGarch::dem2gbp,
     init.rec = c("mci", "uev"),
     delta = 2, 
     skew = 1, 
