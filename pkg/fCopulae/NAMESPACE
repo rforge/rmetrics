@@ -10,3 +10,8 @@ import(timeDate)
 import(timeSeries)
 import(fBasics)
 import(fMultivar)
+
+importFrom("grDevices", heat.colors)
+importFrom("graphics", contour, grid, image, mtext, par, persp, text, title)
+importFrom("stats", approx, cor, dnorm, dt, integrate, nlminb, optimize, pnorm,
+	pt, qcauchy, qnorm, qt, rexp, rgamma, runif, uniroot, var)
