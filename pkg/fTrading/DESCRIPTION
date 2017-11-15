@@ -6,7 +6,9 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Trading and Rebalancing Financial Instruments.
+Description:  A collection of functions for trading and rebalancing financial
+	instruments. It implements various technical indicators to analyse time series such
+	as moving averages or stochastic oscillators.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: graphics, stats
 Suggests: methods, RUnit, tcltk

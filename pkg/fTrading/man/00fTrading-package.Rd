@@ -35,28 +35,23 @@
 }
 
 
-\section{1 Introduction}{
-
-    The package includes three sections, benchmar analysis,
-    rolling analysis, and technical analysis.
-}
-
-
-\section{2 Benchmark Analysis}{
-
-    OBSOLETE ...
-    
-}
+%\section{1 Introduction}{
+%  The package includes three sections, benchmark analysis,
+%  rolling analysis, and technical analysis.
+%}
 
 
-\section{3 Rolling Analysis}{
-
-  OBSOLETE ...
-  
-}
+%\section{2 Benchmark Analysis}{
+%  OBSOLETE ...
+%}
 
 
-\section{4 Technical Analysis}{
+%\section{3 Rolling Analysis}{
+%  OBSOLETE ...
+%}
+
+
+\section{Content}{
 
     \emph{Utility Functions:}
     
