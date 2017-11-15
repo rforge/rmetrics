@@ -1,7 +1,6 @@
 \name{LrdModelling}
 
 \alias{LrdModelling}
-
 \alias{fbmSim}
 \alias{fgnSim}
 \alias{farimaSim}
@@ -18,7 +17,7 @@
 \alias{rsFit}
 \alias{perFit}
 \alias{boxperFit}
-\alias{whittleFit}
+%\alias{whittleFit}
 
 \alias{waveletFit}
 
@@ -64,7 +63,7 @@
     \code{rsFit} \tab R/S Rescaled Range Statistic method, \cr
     \code{perFit} \tab periodogram method, \cr
     \code{boxperFit} \tab boxed (modified) periodogram method, \cr
-    \code{whittleFit} \tab Whittle estimator, \cr
+    %\code{whittleFit} \tab Whittle estimator, \cr
     \code{hurstSlider} \tab Interactive Display of Hurst Estimates. }
        
     Function for the wavelet estimator:
@@ -99,8 +98,8 @@ perFit(x, cut.off = 0.1, method = c("per", "cumper"),
     doplot = FALSE, title = NULL, description = NULL)
 boxperFit(x, nbox = 100, cut.off = 0.10, 
     doplot = FALSE, trace = FALSE, title = NULL, description = NULL)      
-whittleFit(x, order = c(1, 1), subseries = 1, method = c("fgn", "farma"), 
-    trace = FALSE, spec = FALSE, title = NULL, description = NULL)
+%whittleFit(x, order = c(1, 1), subseries = 1, method = c("fgn", "farma"), 
+%    trace = FALSE, spec = FALSE, title = NULL, description = NULL)
 hurstSlider(x = fgnSim())
   
 waveletFit(x, length = NULL, order = 2, octave = c(2, 8), 
@@ -170,11 +169,11 @@ waveletFit(x, length = NULL, order = 2, octave = c(2, 8),
         a string naming the method how to fit the data, either
         using the peridogram itself \code{"per"}, or using the
         cumulated periodogram \code{"cumper"}. 
-        \cr
-        [whittleFit] - \cr
-        a string naming the underlying time series process to 
-        be estimated, either \code{"fgn"} for FGN processes, or
-        \code{"farima"}for FARIMA models.
+        %\cr
+        %[whittleFit] - \cr
+        %a string naming the underlying time series process to 
+        %be estimated, either \code{"fgn"} for FGN processes, or
+        %\code{"farima"}for FARIMA models.
         }
     \item{minnpts}{
         [*Fit] - \cr
@@ -223,16 +222,16 @@ waveletFit(x, length = NULL, order = 2, octave = c(2, 8),
         the order of the wavelet. An integer value, by default 
         \code{2}.
         }
-    \item{spec}{
-        [whittleFit] - \cr
-        Should the periodogram be returned? A logical flag, by default 
-        FALSE.
-        }
-    \item{subseries}{
-        [whittleFit] - \cr
-        allows optionally to subdivide the series into subseries. A
-        numeric value, by default 1.
-        }
+    %\item{spec}{
+        %[whittleFit] - \cr
+        %Should the periodogram be returned? A logical flag, by default 
+        %FALSE.
+        %}
+    %\item{subseries}{
+        %[whittleFit] - \cr
+        %allows optionally to subdivide the series into subseries. A
+        %numeric value, by default 1.
+        %}
     \item{title}{
         a character string which allows for a project title.
         }
@@ -478,21 +477,21 @@ waveletFit(x, length = NULL, order = 2, octave = c(2, 8),
     
     
     %% 3.9
-    \emph{The Whittle Estimator:}
-    \cr
-    The function \code{whittleFit} performs also a periodogram analysis.
-    The algorithm is based on the minimization of a likelihood function
-    defined in the frequency domain. For FGN and FARIMA(0,d,0) processes
-    the parameter \emph{H} or \emph{d} is the unknown parameter which
-    minimizes the function. This approach also allows to compute confidence
-    intervals. Unlike the previous eight estimators the Whittle estimator
-    is not a graphical method, it just returns the values of \emph{H}
-    or \emph{d} together with their confidence intervals. The function
-    allows also to investigate FARIMA(p,d,q) models, then the parameter
-    set to be optimized is enlarged by the AR and MA coefficients. It
-    is worth to remark, that the empirical series is required to be a 
-    Gaussian process and that the underlying form must be specified. 
-    \cr
+    %\emph{The Whittle Estimator:}
+    %\cr
+    %The function \code{whittleFit} performs also a periodogram analysis.
+    %The algorithm is based on the minimization of a likelihood function
+    %defined in the frequency domain. For FGN and FARIMA(0,d,0) processes
+    %the parameter \emph{H} or \emph{d} is the unknown parameter which
+    %minimizes the function. This approach also allows to compute confidence
+    %intervals. Unlike the previous eight estimators the Whittle estimator
+    %is not a graphical method, it just returns the values of \emph{H}
+    %or \emph{d} together with their confidence intervals. The function
+    %allows also to investigate FARIMA(p,d,q) models, then the parameter
+    %set to be optimized is enlarged by the AR and MA coefficients. It
+    %is worth to remark, that the empirical series is required to be a 
+    %Gaussian process and that the underlying form must be specified. 
+    %\cr
        
     The original functions were written by V. Teverovsky and W. Willinger
     for SPLUS calling internal functions written in C. The software can 
