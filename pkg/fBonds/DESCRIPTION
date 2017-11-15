@@ -5,7 +5,8 @@ Version: 3042.78
 Author: Diethelm Wuertz [aut],
     Tobias Setz [cre]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Pricing and Evaluating Bonds.
+Description: It implements the Nelson-Siegel and the Nelson-Siegel-Svensson
+	term structures.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: graphics, stats
 Suggests: RUnit
