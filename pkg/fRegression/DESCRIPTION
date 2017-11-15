@@ -6,7 +6,9 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Regression Based Decision and Prediction.
+Description: A collection of functions for linear and non-linear regression modelling. 
+	It implements a wrapper for several regression models available in the base and
+	contributed packages of R. 
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: lmtest, mgcv, nnet, polspline, methods, stats, utils
 Suggests: MASS, RUnit
