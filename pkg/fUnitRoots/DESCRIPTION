@@ -6,7 +6,13 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Modelling Trends and Unit Roots.
+Description: Provides four addons for analyzing trends and
+    unit roots in financial time series: (i) functions for the density
+    and probability of the augmented Dickey-Fuller Test, (ii) functions 
+    for the density and probability of MacKinnon's unit root test 
+    statistics, (iii) reimplementations for the ADF and MacKinnon
+    Test, and (iv) an 'urca' Unit Root Test Interface for Pfaff's
+    unit root test suite.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: urca, graphics, methods, stats, utils
 Suggests: RUnit
