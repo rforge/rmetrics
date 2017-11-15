@@ -48,6 +48,11 @@ S3method("stdev", "default")
 S3method("termPlot", "default")
 S3method("volatility", "default")
 
+S3method(".plot", "histogram")
+S3method(".print", "ssd")
+S3method(".summary", "gel")
+S3method(".summary", "gmm")
+
 # In the future this should be used:
 #exportPattern("^[^\\.]")
 
