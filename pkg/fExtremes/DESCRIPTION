@@ -6,7 +6,12 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Modelling Extreme Events in Finance.
+Description: Provides functions for analyzing
+  and modeling extreme events in financial time Series. The
+  topics include: (i) data proeprocessing, (ii) explorative 
+  data analysis, (iii) peak over threshold modeling, (iv) block
+  maxima modeling, (v) estimation of VaR and CVaR, and (vi) the
+  computation of the extreme index.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fGarch
 Imports: methods, graphics, stats
 Suggests: RUnit, tcltk
