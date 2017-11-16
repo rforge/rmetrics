@@ -6,7 +6,9 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Analysing and Modelling Financial Assets.
+Description: Provides a  collection of functions 
+  to manage, to investigate and to analyze data sets of financial 
+  assets from different points of view.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: fMultivar, robustbase, MASS, sn, ecodist, mvnormtest, energy,
 	grDevices, graphics, stats
