@@ -6,7 +6,10 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Bivariate Dependence Structures with Copulae.
+Description: Provides a  collection of functions to 
+	manage, to investigate and to analyze bivariate financial returns by  
+	Copulae. Included are the families of Archemedean, Elliptical, 
+	Extreme Value, and Empirical Copulae.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fMultivar
 Imports: grDevices, graphics, stats
 Suggests: methods, RUnit, tcltk, mvtnorm, sn
