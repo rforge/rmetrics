@@ -6,7 +6,9 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Financial Time Series Objects.
+Description: Provides a class and various tools for financial time series.
+	This includes basic functions such as scaling and sorting, subsetting,
+	mathematical operations and statistical functions.
 Depends: R (>= 2.10), graphics, grDevices, stats, methods, utils,
 	timeDate (>= 2150.95)
 Suggests: RUnit, robustbase, xts, PerformanceAnalytics, fTrading
