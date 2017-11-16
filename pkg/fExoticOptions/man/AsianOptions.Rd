@@ -12,7 +12,7 @@
 
 \description{
   
-    This is a collection of functions to valuate Asian 
+    This is a collection of functions to valuate asian 
     options. Asian options are path-dependent options, 
     with payoffs that depend on the average price of the 
     underlying asset or the average exercise price. 

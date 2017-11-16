@@ -5,7 +5,10 @@ Version: 3042.80
 Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Pricing and Evaluating Exotic Option.
+Description: Provides a colletion of funtions to evaluate
+	barrier options, asian options, binary options, currency 
+    translated options, lookback options, multiple asset options
+	and multiple exercise options.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fOptions
 Imports: methods
 Suggests: RUnit
