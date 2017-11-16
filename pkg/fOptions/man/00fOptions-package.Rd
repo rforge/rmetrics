@@ -13,7 +13,7 @@
 \description{
 
     The Rmetrics "Options" package is a collection of functions to 
-    valuate basic pptions. 
+    valuate basic options.
     
 }
 

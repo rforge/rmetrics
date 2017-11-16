@@ -6,7 +6,10 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Pricing and Evaluating Basic Options.
+Description: Provides a collection of functions to 
+    valuate basic options. This includes the generalized
+	Black-Scholes option, options on futures and options on
+	commodity futures.
 Depends: timeDate, timeSeries, fBasics
 Imports: graphics, methods, stats
 Suggests: RUnit, tcltk
