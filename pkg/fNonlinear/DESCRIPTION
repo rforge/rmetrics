@@ -6,7 +6,11 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Nonlinear and Chaotic Time Series Modelling.
+Description: Provides a collection of functions for testing various aspects of
+	univariate time series including independence and neglected
+	nonlinearities. Further provides functions to investigate the chaotic
+	behavior of time series processes and to simulate different types of chaotic
+	time series maps.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: methods, stats
 Suggests: RUnit, tcltk
