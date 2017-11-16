@@ -7,7 +7,13 @@ Author: Diethelm Wuertz [aut],
 	Yohan Chalabi [ctb]
 	Martin Maechler [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Markets and Basic Statistics.
+Description: Provides a collection of functions to 
+    explore and to investigate basic properties of financial returns 
+    and related quantities.
+    The covered fields include techniques of explorative data analysis
+    and the investigation of distributional properties, including
+    parameter estimation and hypothesis testing. Evenmore there are
+    several utility functions for data handling and managemnet.
 Depends: R (>= 2.15.1), timeDate, timeSeries
 Imports: stats, grDevices, graphics, methods, utils, MASS, spatial, gss, stabledist
 ImportsNote: akima not in Imports because of non-GPL licence.
