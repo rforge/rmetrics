@@ -9,7 +9,9 @@ Author: Diethelm Wuertz [aut],
     Pierre Chausse [ctb],
     Michal Miklovac [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Autoregressive Conditional Heteroskedastic Modelling.
+Description: Provides a collection of functions to 
+  analyze and model heteroskedastic behavior in financial time
+  series models.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics
 Imports: fastICA, Matrix, graphics, methods, stats, utils
 Suggests: RUnit, tcltk
