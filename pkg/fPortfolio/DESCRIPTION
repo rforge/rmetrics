@@ -7,7 +7,9 @@ Author: Diethelm Wuertz [aut],
 	Yohan Chalabi [ctb],
 	William Chen [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Portfolio Selection and Optimization.
+Description: Provides a collection
+	of functions to optimize portfolios and to analyze them from
+    different points of view.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fAssets
 Imports: fCopulae, robustbase, MASS, Rglpk, slam, Rsolnp, quadprog, kernlab, 
 	rneos, methods, grDevices, graphics, stats, utils

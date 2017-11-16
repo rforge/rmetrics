@@ -14,7 +14,7 @@
 
     The Rmetrics "fPortfolio" package is a very powerful collection
     of functions to optimize portfolios and to analyze them from
-    different points ov view.
+    different points of view.
 
 }
 
