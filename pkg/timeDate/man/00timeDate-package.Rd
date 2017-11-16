@@ -43,7 +43,7 @@
   
   The 'timeDate' class fulfils the conventions of the ISO 8601 
   standard as well as of the ANSI C and POSIX standards. Beyond
-  these standards Rmetrics has added the "Financial Center" concept
+  these standards it provides the "Financial Center" concept
   which allows to handle data records collected in different time 
   zones and mix them up to have always the proper time stamps with 
   respect to your personal financial center, or alternatively to the GMT
