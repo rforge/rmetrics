@@ -21,35 +21,35 @@
 
 .sort.timeSeries <- function (x, decreasing = FALSE, ...)
 {
-    # A function implemented by Diethelm Wuertz and Yohan Chalabi
-
-    # Description:
-    #   Time sorts a 'timeSeries' object
-
-    # Arguments:
-    #   x - a 'timeSeries' object.
-
-    # Value:
-    #   Returns a time sorted object of class 'timeSeries'.
-
-    # FUNCTION:
-
-    # check if really necessary to sort x
-    # important in order to improve efficiency
-    if (!decreasing && !is.unsorted(x)) return(x)
-
-    if (length(x@positions)>0)
-        x[order(x@positions, decreasing = decreasing), ]
-    else
-        x
+  # A function implemented by Diethelm Wuertz and Yohan Chalabi
+  
+  # Description:
+  #   Time sorts a 'timeSeries' object
+  
+  # Arguments:
+  #   x - a 'timeSeries' object.
+  
+  # Value:
+  #   Returns a time sorted object of class 'timeSeries'.
+  
+  # FUNCTION:
+  
+  # check if really necessary to sort x
+  ## NB: is.unsorted can return NA
+  if (!decreasing && !isTRUE(is.unsorted(x@positions))) return(x)
+  
+  if (length(x@positions)>0)
+    x[order(x@positions, decreasing = decreasing), ]
+  else
+    x
 }
 
 setMethod("sort", "timeSeries", function (x, decreasing = FALSE, ...)
-          .sort.timeSeries(x, decreasing = decreasing, ...))
+  .sort.timeSeries(x, decreasing = decreasing, ...))
 
 # until UseMethod dispatches S4 methods in 'base' functions
 sort.timeSeries <- function(x, decreasing = FALSE, ...)
-    .sort.timeSeries(x, decreasing = decreasing, ...)
+  .sort.timeSeries(x, decreasing = decreasing, ...)
 
 ################################################################################
 

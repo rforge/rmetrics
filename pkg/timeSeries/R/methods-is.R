@@ -20,40 +20,40 @@
 
 
 is.timeSeries <-
-    function (x)
-{
+  function (x)
+  {
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Tests for a 'timeSeries' object.
-
+    
     # Arguments:
     #   object - a 'timeSeries' object to be tested.
-
+    
     # Value:
     #   Returns 'TRUE' or 'FALSE' depending on whether its
     #   argument is of 'timeSeries' type or not.
-
+    
     # Changes:
     #
-
+    
     # FUNCTION:
-
+    
     # Check:
     ans <- is(x, "timeSeries")
-
+    
     # Return Value:
     ans
-}
+  }
 
 # ------------------------------------------------------------------------------
 
 
 is.signalSeries <-
-    function(x)
-{
+  function(x)
+  {
     !as.logical(length(x@positions))
-}
+  }
 
 
 # ------------------------------------------------------------------------------
@@ -65,20 +65,28 @@ is.signalSeries <-
 
 
 setMethod("is.na", "timeSeries", function(x)
-    setDataPart(x, is.na(getDataPart(x))))
+  setDataPart(x, is.na(getDataPart(x))))
 
 
 # ------------------------------------------------------------------------------
 
+# something like this would be needed if is.unsorted again became an internal generic
+#if(getRversion() >= "3.3.0") {
+#    setGeneric("is.unsorted", signature = "x", useAsDefault = base::is.unsorted)
+#}
 
-if (getRversion() < "2.8.0") 
-{
-    setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE)
-        callGeneric(x@positions, na.rm = na.rm))
-} else {
-    setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE, strictly = FALSE)
-         callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
-}
+setMethod("is.unsorted", "timeSeries",
+          function(x, na.rm = FALSE, strictly = FALSE)
+            callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
+
+# if (getRversion() < "2.8.0") 
+# {
+#   setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE)
+#     callGeneric(x@positions, na.rm = na.rm))
+# } else {
+#   setMethod("is.unsorted", "timeSeries", function(x, na.rm = FALSE, strictly = FALSE)
+#     callGeneric(x@positions, na.rm = na.rm, strictly = strictly))
+# }
 
 
 ################################################################################
