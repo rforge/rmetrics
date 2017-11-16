@@ -6,7 +6,9 @@ Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre],
 	Yohan Chalabi [ctb]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Importing Economic and Financial Data.
+Description: Provides a collection of utility functions 
+    to download and manage data sets from the Internet or from other 
+    sources.
 Depends: R (>= 2.15.1), timeDate, timeSeries
 Imports: methods, utils
 Suggests: RUnit
