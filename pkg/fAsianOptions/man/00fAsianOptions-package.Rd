@@ -40,7 +40,7 @@
 
     The \code{fAsianOptions} package provides functions for pricing
     and valuating Asian Options together with tools for analyzing
-    and modeling Exponential Brownian Motion, EBM.
+    and modeling Exponential Brownian Motion (EBM).
 }
 
 

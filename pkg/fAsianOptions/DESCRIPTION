@@ -5,7 +5,9 @@ Version: 3042.82
 Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: EBM and Asian Option Valuation.
+Description: Provides functions for pricing
+	and valuating Asian Options together with tools for analyzing
+    and modeling Exponential Brownian Motion (EBM).
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fOptions
 Imports: stats
 Suggests: methods, RUnit
