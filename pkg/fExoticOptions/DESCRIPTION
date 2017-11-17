@@ -5,8 +5,8 @@ Version: 3042.80
 Author: Diethelm Wuertz [aut],
 	Tobias Setz [cre]
 Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Provides a colletion of funtions to evaluate
-	barrier options, asian options, binary options, currency 
+Description: Provides a collection of functions to evaluate
+	barrier options, Asian options, binary options, currency 
     translated options, lookback options, multiple asset options
 	and multiple exercise options.
 Depends: R (>= 2.15.1), timeDate, timeSeries, fBasics, fOptions
