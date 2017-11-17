@@ -12,8 +12,8 @@ Description: Provides a collection of functions to
     and related quantities.
     The covered fields include techniques of explorative data analysis
     and the investigation of distributional properties, including
-    parameter estimation and hypothesis testing. Evenmore there are
-    several utility functions for data handling and managemnet.
+    parameter estimation and hypothesis testing. Even more there are
+    several utility functions for data handling and management.
 Depends: R (>= 2.15.1), timeDate, timeSeries
 Imports: stats, grDevices, graphics, methods, utils, MASS, spatial, gss, stabledist
 ImportsNote: akima not in Imports because of non-GPL licence.
