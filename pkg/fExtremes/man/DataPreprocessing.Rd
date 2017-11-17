@@ -165,34 +165,34 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \examples{ 
 ## findThreshold -
-   # Threshold giving (at least) fifty exceedances for Danish data:
-   x = as.timeSeries(data(danishClaims))
-   findThreshold(x, n = c(10, 50, 100))    
-   
-## blockMaxima -
-   # Block Maxima (Minima) for left tail of BMW log returns:
-   BMW = as.timeSeries(data(bmwRet))
-   colnames(BMW) = "BMW.RET"
-   head(BMW)
-   x = blockMaxima( BMW, block = 65)
-   head(x)
-   y = blockMaxima(-BMW, block = 65)    
-   head(y) 
-   y = blockMaxima(-BMW, block = "monthly")    
-   head(y)
+# Threshold giving (at least) fifty exceedances for Danish data:
+x <- as.timeSeries(data(danishClaims))
+findThreshold(x, n = c(10, 50, 100))    
 
-   
+## blockMaxima -
+# Block Maxima (Minima) for left tail of BMW log returns:
+BMW <- as.timeSeries(data(bmwRet))
+colnames(BMW) <- "BMW.RET"
+head(BMW)
+x <- blockMaxima( BMW, block = 65)
+head(x)
+\dontrun{
+y <- blockMaxima(-BMW, block = 65)    
+head(y) 
+y <- blockMaxima(-BMW, block = "monthly")    
+head(y)}
+
 ## pointProcess -
-   # Return Values above threshold in negative BMW log-return data:
-   PP = pointProcess(x = -BMW, u = quantile(as.vector(x), 0.75))
-   PP
-   nrow(PP)
- 
+# Return Values above threshold in negative BMW log-return data:
+PP = pointProcess(x = -BMW, u = quantile(as.vector(x), 0.75))
+PP
+nrow(PP)
+
 ## deCluster -
-   # Decluster the 200 exceedances of a particular  
-   DC = deCluster(x = PP, run = 15, doplot = TRUE) 
-   DC
-   nrow(DC)
+# Decluster the 200 exceedances of a particular  
+DC = deCluster(x = PP, run = 15, doplot = TRUE) 
+DC
+nrow(DC)
 }
 
 
