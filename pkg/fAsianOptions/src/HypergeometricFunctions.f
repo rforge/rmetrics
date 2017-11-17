@@ -982,8 +982,8 @@ C *****************************************************************************
      
       SUBROUTINE CHFM(ZRE,ZIM,ARE,AIM,BRE,BIM,CRE,CIM,N,LNCHF,IP)
       
-      REAL*8 ZRE(N), ZIM(N), CRE(N), CIM(N)
-      REAL*8 ARE, AIM, BRE, BIM
+      real(8) ZRE(N), ZIM(N), CRE(N), CIM(N)
+      real(8) ARE, AIM, BRE, BIM
       COMPLEX*16 Z, A, B, CHF, CONHYP
       
       A = CMPLX(ARE, AIM)
@@ -1003,7 +1003,7 @@ C *****************************************************************************
 
 
 C      SUBROUTINE DRIVER_CHF()
-C      REAL*8 ZRE(2), ZIM(2), ARE, AIM, BRE, BIM, CRE(2), CIM(2)C
+C      real(8) ZRE(2), ZIM(2), ARE, AIM, BRE, BIM, CRE(2), CIM(2)C
 
 C      ZRE(1) =  1.1D0
 C      ZIM(1) =  0.6D0

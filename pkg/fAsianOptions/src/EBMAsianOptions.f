@@ -25,7 +25,7 @@ c$$$
 c$$$      SUBROUTINE PDETEST()
 c$$$CC     NOT USED BY R
 c$$$CC     FOR TESTING AND DEBUGGING UNDER FORTRAN
-c$$$      IMPLICIT REAL*8 (A-H, O-Z)
+c$$$      IMPLICIT real(8) (A-H, O-Z)
 c$$$      PARAMETER(MNP=10)
 c$$$      DIMENSION PRICE(MNP+1), XBYS(MNP+1)
 c$$$C
@@ -131,7 +131,7 @@ C ------------------------------------------------------------------------------
      &  MF1, NPDE1, KORD1, MX1, NCC1, MAXDER1,
      &  XBYS, XBKPT, WORK, IWORK)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
       PARAMETER(MKORD=4, MDERV=0)
       DIMENSION WORK
      *   (KORD1+NPDE1*(4+9*NPDE1)+(KORD1+(MX1-1)*(KORD1-NCC1))*
@@ -216,7 +216,7 @@ C ------------------------------------------------------------------------------
 
       SUBROUTINE F(T, X, U, UX, UXX, FVAL, NPDE)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
       DIMENSION U(NPDE), UX(NPDE), UXX(NPDE), FVAL(NPDE)
       COMMON /GEAR0/ HUSED, NQUSED, NS, NF, NJ
       COMMON /PARAMS/ PI
@@ -243,7 +243,7 @@ C ------------------------------------------------------------------------------
 
       SUBROUTINE BNDRY(T, X, U, UX, DBDU, DBDUX, DZDT, NPDE)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
       DIMENSION U(NPDE), UX(NPDE), DZDT(NPDE)
       DIMENSION DBDU(NPDE,NPDE), DBDUX(NPDE,NPDE)
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
@@ -290,7 +290,7 @@ C ------------------------------------------------------------------------------
 
       SUBROUTINE UINIT(X, U, NPDE)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
       DIMENSION U(NPDE)
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
@@ -312,7 +312,7 @@ C ------------------------------------------------------------------------------
 
       SUBROUTINE DERIVF(T, X, U, UX, UXX, DFDU, DFDUX, DFDUXX, NPDE)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
       DIMENSION U(NPDE), UX(NPDE), UXX(NPDE)
       DIMENSION DFDU(NPDE,NPDE), DFDUX(NPDE,NPDE), DFDUXX(NPDE,NPDE)
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
@@ -380,7 +380,7 @@ C
       SUBROUTINE PDECOL(T0, TOUT, DT, XBKPT, EPS, NINT, KORD,
      *   NCC, NPDE, MF, INDEX, WORK, IWORK)
 
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 
       EXTERNAL REALPR, INTPR
 
@@ -1351,7 +1351,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE VALUES(X,USOL,SCTCH,NDIM1,NDIM2,NPTS,NDERV,WORK)
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C SUBROUTINE VALUES COMPUTES THE SOLUTION U AND THE FIRST NDERV
 C DERIVATIVES OF U AT THE NPTS POINTS X AND AT TIME TOUT AND RETURNS
@@ -1431,7 +1431,7 @@ C ##############################################################################
 C
 C
       BLOCK DATA
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C IN THE FOLLOWING DATA STATEMENT, SET..
 C    LOUT   = THE LOGICAL UNIT NUMBER FOR THE OUTPUT OF MESSAGES DURING
@@ -1461,7 +1461,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE INITAL(K,A,RHS,X,XT,XC,PW,IPIV,ILEFT)
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C INITAL IS CALLED ONLY ONCE BY PDECOL TO PERFORM INITIALIZATION TASKS.
 C THESE TASKS INCLUDE - 1) DEFINING THE PIECEWISE POLYNOMIAL SPACE
@@ -1553,7 +1553,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE COLPNT(X, XC, XT)
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C COLPNT IS CALLED ONLY ONCE BY INITAL TO DEFINE THE REQUIRED COLLOCA-
 C TION POINTS WHICH ARE TO BE USED WITH THE USER SELECTED PIECEWISE
@@ -1782,7 +1782,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE BSPLVD ( XT, K, X, ILEFT, VNIKX, NDERIV )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C THIS SUBROUTINE IS PART OF THE B-SPLINE PACKAGE FOR THE STABLE
 C EVALUATION OF ANY B-SPLINE BASIS FUNCTION OR DERIVATIVE VALUE.
@@ -1861,7 +1861,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE BSPLVN ( XT, JHIGH, INDEX, X, ILEFT, VNIKX )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C THIS SUBROUTINE IS PART OF THE B-SPLINE PACKAGE FOR THE STABLE
 C EVALUATION OF ANY B-SPLINE BASIS FUNCTION OR DERIVATIVE VALUE.
@@ -1915,7 +1915,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE INTERV ( XT, LXT, X, ILEFT, MFLAG )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C THIS SUBROUTINE IS PART OF THE B-SPLINE PACKAGE FOR THE STABLE
 C EVALUATION OF ANY B-SPLINE BASIS FUNCTION OR DERIVATIVE VALUE.
@@ -2012,7 +2012,7 @@ C
 C
       SUBROUTINE STIFIB (N0,Y,YMAX,ERROR,SAVE1,SAVE2,SAVE3,
      *                   PW,IPIV,WORK,IWORK)
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C STIFIB PERFORMS ONE STEP OF THE INTEGRATION OF AN INITIAL VALUE
 C PROBLEM FOR A SYSTEM OF ORDINARY DIFFERENTIAL EQUATIONS OF THE FORM,
@@ -2445,7 +2445,7 @@ C
 C
       SUBROUTINE GFUN ( T,C,UDOT,NPDE,NCPTS,A,BC,DBDU,DBDUX,DZDT,
      *                 XC,UVAL,ILEFT )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL.
 C
@@ -2521,7 +2521,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE EVAL( ICPT,NPDE,C,UVAL,A,ILEFT )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL.
 C
@@ -2555,7 +2555,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE DIFFUN( N, T, Y, YDOT, IER, PW, IPIV, WORK, IWORK )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL.
 C
@@ -2593,7 +2593,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE ADDA( PW,N0,A,ILEFT,BC,NPDE )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL AND STIFIB.
 C
@@ -2647,7 +2647,7 @@ C
 C
       SUBROUTINE RES( T,H,C,V,R,NPDE,NCPTS,A,ILEFT,BC,DBDU,DBDUX,DZDT,
      *               XC,UVAL )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-------------------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL.
 C
@@ -2708,7 +2708,7 @@ C
 C
       SUBROUTINE PSETIB( C,PW,N0,CON,MITER,IER,A,ILEFT,XC,UVAL,
      *    SAVE2,IPIV,CMAX,DFDU,DFDUX,DFDUXX,DZDT,DBDU,DBDUX,BC,NPDE )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL AND STIFIB.
 C
@@ -2821,7 +2821,7 @@ C
 C
       SUBROUTINE DIFFF( T,X,IPT,U,UX,UXX,DFDU,DFDUX,DFDUXX,NPDE,CMAX,
      *                 SAVE2)
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN PDECOL.
 C
@@ -2873,7 +2873,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE INTERP ( TOUT, Y, N0, Y0 )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C CALLING ARGUMENTS ARE DEFINED BELOW AND IN STIFIB
 C
@@ -2913,7 +2913,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE COSET ( METH, NQ, EL, TQ )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C COSET IS CALLED BY THE INTEGRATOR AND SETS COEFFICIENTS USED THERE.
 C THE VECTOR EL, OF LENGTH NQ + 1, DETERMINES THE BASIC METHOD.
@@ -3098,7 +3098,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE DECB ( NDIM, N, ML, MU, B, IPIV, IER )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C SUBROUTINES DECB AND SOLB FORM A TWO SUBROUTINE PACKAGE FOR THE
 C DIRECT SOLUTION OF A SYSTEM OF LINEAR EQUATIONS IN WHICH THE
@@ -3191,7 +3191,7 @@ C ##############################################################################
 C
 C
       SUBROUTINE SOLB ( NDIM, N, ML, MU, B, Y, IPIV )
-      IMPLICIT REAL*8 (A-H, O-Z)
+      IMPLICIT real(8) (A-H, O-Z)
 C-----------------------------------------------------------------------
 C SUBROUTINES DECB AND SOLB FORM A TWO SUBROUTINE PACKAGE FOR THE
 C DIRECT SOLUTION OF A SYSTEM OF LINEAR EQUATIONS IN WHICH THE
