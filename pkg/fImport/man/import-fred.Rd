@@ -151,8 +151,10 @@ Diethelm Wuertz, Yohan Chalabi, and Andrew Ellis, (2010);
 
 
 \examples{
+\donttest{
 fredImport("DEXSZUS")
 fredSeries("DEXSZUS")
+}
 }
 
 
