@@ -16,7 +16,7 @@ NOTE FIX
 NOTEs, better registration of native routines and reduced
 symbol visibility.
 
-Version 1.17
+Version 1.17 and 1.17.1
 =============
 - change DESCRIPTION file.
 - update NAMESPACE for R 3.3.0.

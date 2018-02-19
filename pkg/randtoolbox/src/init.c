@@ -120,7 +120,7 @@ void R_init_randtoolbox(DllInfo *dll)
   //make randtoolbox C functions available for other packages
   R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
   R_RegisterCCallable("randtoolbox", "halton_c", (DL_FUNC) halton_c);
-  R_RegisterCCallable("randtoolbox", "sobol_c", (DL_FUNC) halton_c);
+  R_RegisterCCallable("randtoolbox", "sobol_c", (DL_FUNC) sobol_c);
   R_RegisterCCallable("randtoolbox", "setSeed", (DL_FUNC) setSeed);
   R_RegisterCCallable("randtoolbox", "congruRand", (DL_FUNC) congruRand);
   R_RegisterCCallable("randtoolbox", "SFmersennetwister", (DL_FUNC) SFmersennetwister);
