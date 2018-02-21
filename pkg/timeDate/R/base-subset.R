@@ -126,7 +126,7 @@ setMethod("[", signature(x="timeDate", i="ANY", j="missing", drop="ANY"),
     # Subsets:
     z <- as.POSIXlt(x)
     value <- as.POSIXlt(value)
-    val <- "[<-"(z, ..., value)
+    val <- "[<-"(z, ..., value=value)
     val <- as.POSIXct(val)
 
     # Return Value:
