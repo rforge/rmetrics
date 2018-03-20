@@ -91,8 +91,8 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
   nb <- ifelse(length(n)>1, length(n), n)
   startpt <- .getrandtoolboxEnv(".torus.seed")$offset
   print(startpt)
-  
-  res <- .Call("doTorus", nb, dim, prime, startpt, mixed, usetime, mexp)
+  #implemented in src/randtoolbox.c
+  res <- .Call(CF_doTorus, nb, dim, prime, startpt, mixed, usetime, mexp)
   
   if(any(res > 1 | res < 0))
     warning("A call to torus() generate numerics outside (0,1).")
@@ -164,8 +164,9 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
     # Generate:
     qn <- numeric(nb * dim)
     
-    # SUBROUTINE HALTON(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
-    result <- .Fortran("halton_f",
+    # SUBROUTINE HALTON_F(QN, N, DIMEN, BASE, OFFSET, INIT, TRANSFORM)
+    #implemented in src/LowDiscrepancy.f
+    result <- .Fortran(CF_halton_f,
                        qn= as.double( qn ),
                        n= as.integer( nb ),
                        dim= as.integer( dim ),
@@ -186,7 +187,8 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
     if( !(mexp %in% authorizedParam) )
       stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}. ")
     
-    result <- .Call("doHalton", nb, dim, rngEnv$offset, mixed, usetime, mexp)
+    #implemented in src/randtoolbox.c
+    result <- .Call(CF_doHalton, nb, dim, rngEnv$offset, mixed, usetime, mexp)
     # For the next numbers save (only used if init=FALSE in the next call)
     .setrandtoolboxEnv(.halton.seed = list("base"=get.primes(dim), "offset"=rngEnv$offset+nb))
   }
@@ -247,8 +249,9 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   # Generate:
   qn = numeric(nb * dim)
   
-  # SSOBOL(QN,N,DIMEN,QUASI,LL,COUNT,SV,IFLAG,SEED,INIT,TRANSFORM)
-  result <- .Fortran("sobol_f",
+  #  SUBROUTINE SOBOL_F(QN, N, DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED, INIT, TRANSFORM)
+  #implemented in src/LowDiscrepancy.f
+  result <- .Fortran(CF_sobol_f,
                      as.double( qn ),
                      as.integer( nb ),
                      as.integer( dim ),
@@ -277,7 +280,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     if( !(mexp %in% authorizedParam) )
       stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}. ")
     
-    result <- .Call("doSobol", nb, dim, 0, FALSE, FALSE, mexp)
+    result <- .Call(CF_doSobol, nb, dim, 0, FALSE, FALSE, mexp)
     stop("not yet implemented")
   }
     

@@ -98,12 +98,13 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
 		size <- ceiling(as.numeric(parameters["order"])/32)
+		
+		#implemented in rngWELL package, see NAMESPACE
 		state <- doinitMT2002(seed, size, size)[[3]]
-#		state <- .C("initMT2002",
-#					as.integer(seed),
-#					as.integer(size),
-#					integer(size),
-#					PACKAGE="rngWELL")[[3]]
+
+		#old call was
+		#		state <- .C("initMT2002", as.integer(seed), as.integer(size), integer(size), PACKAGE="rngWELL")[[3]]
+		
 		description <- list(name=name, parameters=parameters, state=state)
 	} else if (name == "MersenneTwister")
 	{
@@ -121,7 +122,9 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 			stop("resolution \"", parameters["resolution"], "\" is not in c(\"32\", \"53\")")
 		if (is.null(seed))
 			seed <- floor(2^31 * runif(1))
-		state <- .C("initMersenneTwister",
+		
+		#implemented in src/mt19937ar.c
+		state <- .C(CF_initMersenneTwister,
 					as.integer(type),
 					length(seed),
 					as.integer(seed),
@@ -138,6 +141,8 @@ set.generator <- function(name=c("congruRand", "WELL", "MersenneTwister", "defau
 		stop("unsupported generator: ", name)
 	if (only.dsc)
 		return(description)
+	cat("to be removed\n")
+	print(description)
 	put.description(description)
 	invisible(NULL)
 }
@@ -149,7 +154,8 @@ put.description <- function(description)
 	state <- description$state
 	if (name == "congruRand")
 	{
-		aux <- .C("put_state_congru",
+	  #implemented in src/congruRand.c
+		aux <- .C(CF_put_state_congru,
 			parameters,
 			state,
 			err = integer(1),
@@ -158,9 +164,11 @@ put.description <- function(description)
 			stop("check congruRand error: ", aux$err)
 		if (RNGkind()[1] != "user-supplied")
 		{
-			.C("set_noop", PACKAGE="randtoolbox")
+		  #implemented in src/runifInterface.c
+			.C(CF_set_noop, PACKAGE="randtoolbox")
 			RNGkind("user-supplied")
-			aux <- .C("put_state_congru",
+			#implemented in src/congruRand.c
+			aux <- .C(CF_put_state_congru,
 				parameters,
 				state,
 				err = integer(1),
@@ -170,8 +178,10 @@ put.description <- function(description)
 		}
 	} else if (name == "WELL")
 	{
-		.C("set_noop", PACKAGE="randtoolbox")
+	  #implemented in src/runifInterface.c
+		.C(CF_set_noop, PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
+		#implemented in rngWELL package, see NAMESPACE
 		doputRngWELL(parameters["order"], parameters["version"], state)
 #		.C("putRngWELL",
 #			as.integer(parameters["order"]),
@@ -180,9 +190,11 @@ put.description <- function(description)
 #			PACKAGE="rngWELL")
 	} else if (name == "MersenneTwister")
 	{
-		.C("set_noop", PACKAGE="randtoolbox")
+	  #implemented in src/runifInterface.c
+		.C(CF_set_noop, PACKAGE="randtoolbox")
 		RNGkind("user-supplied")
-		.C("putMersenneTwister",
+		#implemented in src/mt19937ar.c
+		.C(CF_putMersenneTwister,
 			match(parameters["initialization"], c("init2002", "array2002"), nomatch=0),
 			as.integer(parameters["resolution"]),
 			as.integer(state),
@@ -197,14 +209,17 @@ get.description <- function()
 {
 	if (RNGkind(NULL)[1] != "user-supplied")
 		stop("For R base generators, use .Random.seed, not get.description()")
-	generator <- .C("current_generator",
+  
+  #implemented in src/runifInterface.c
+	generator <- .C(CF_current_generator,
 		integer(1),
 		PACKAGE="randtoolbox")[[1]]
 	if (generator == 1)
 	{
 		name <- "congruRand"
 		outspace <- "18446744073709551616" # 2^64
-		aux <- .C("get_state_congru",
+		#implemented in src/congruRand.c
+		aux <- .C(CF_get_state_congru,
 			parameters=rep(outspace, times=3),
 			seed=outspace,
 			PACKAGE="randtoolbox")
@@ -227,6 +242,7 @@ get.description <- function()
 	} else if (generator == 2)
 	{
 		name <- "WELL"
+		#implemented in rngWELL package, see NAMESPACE
 		tmp <- dogetRngWELL(1, 1, 2000)
 #		tmp <- .C("getRngWELL",
 #			order = integer(1),
@@ -243,7 +259,8 @@ get.description <- function()
 	} else if (generator == 3)
 	{
 		name <- "MersenneTwister"
-		tmp <- .C("getMersenneTwister",
+		#implemented in src/mt19937.c
+		tmp <- .C(CF_getMersenneTwister,
 			initialization = integer(1),
 			resolution = integer(1),
 			state = integer(625),

@@ -48,6 +48,7 @@
 
 version.randtoolbox <- function()
 {
-	.C("version_randtoolbox", character(1))[[1]]
+  #implemented in src/version.c
+	.C(CF_version_randtoolbox, character(1))[[1]]
 }
 

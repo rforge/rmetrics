@@ -10,6 +10,7 @@ Version 1.20
 BUGS FIX
 - scrambling = 1, 3 for Sobol sequences. (provided by Makoto Matsumoto and Mutsuo Saito) 
 - mixed = TRUE for QMC sequences. 
+- correct use of 64-bit integer type
 
 NOTE FIX
 - usage of R_useDynamicSymbols to preclude compilation

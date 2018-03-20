@@ -99,7 +99,7 @@ Parameters for the Mersenne Twister 2002 is a character vector with components
 and \code{put.description()} return \code{NULL}.
 }
 \seealso{
-\code{RNGkind}
+\code{\link{RNGkind}} and \code{\link{.Random.seed}} for random number generation in R.
 }
 \author{
  Petr Savicky and Christophe Dutang

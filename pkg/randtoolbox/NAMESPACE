@@ -1,5 +1,6 @@
-### use dynamic library for C code
-useDynLib(randtoolbox, .registration = TRUE)
+### do not use dynamic library for C code
+## Refer to all C/Fortran routines by their name prefixed by CF_
+useDynLib(randtoolbox, .registration = TRUE, .fixes = "CF_")
 
 ### Import of rngWELL package for R code
 importFrom(rngWELL, doinitMT2002, doputRngWELL, dogetRngWELL, setSeed4WELL, WELL2test)

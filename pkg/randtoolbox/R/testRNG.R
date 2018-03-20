@@ -177,7 +177,8 @@ poker.test <- function(u , nbcard = 5, echo = TRUE)
     
     
 #compute observed hands
-    obshands <- .Call("doPokerTest", hands, nbl, nbcard)
+    #implemented in src/testrng.c
+    obshands <- .Call(CF_doPokerTest, hands, nbl, nbcard)
     
 #compute expected hands
     fact <- vector("numeric", nbcard+1)
@@ -482,7 +483,8 @@ coll.test <- function(rand, lenSample = 2^14, segments = 2^10, tdim = 2, nbSampl
 		# compute urn numbers i.e. integers in {0, ..., nbCell-1}
         num <- c(rbind(segments^(1:tdim - 1)) %*% uint)
 		# compute the number of collisions
-        NumColl <- .Call("doCollisionTest", as.integer(num), lenSample, nbCell)
+        #implemented in src/testrng.c
+        NumColl <- .Call(CF_doCollisionTest, as.integer(num), lenSample, nbCell)
     }
     
 	# observed numbers of collisions for 'nbSample' random samples 

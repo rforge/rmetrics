@@ -96,16 +96,16 @@ static const R_CallMethodDef CallEntries[] =
 /* .Fortran calls defined LowDiscrepancy.f 
  * C version of these Fortran routines are halton_c() and sobol_c() in randtoolbox.c
  */
-/* DOES NOT WORK
+/* DOES NOT WORK*/
 extern void F77_NAME(halton_f)(void *, void *, void *, void *, void *, void *, void *);
 extern void F77_NAME(sobol_f)(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
 
 //table of registration routines accessed with .Fortran()
 static const R_FortranMethodDef FortranEntries[] = {
-  {"halton_f", (DL_FUNC) &F77_NAME(halton_f),  7},
-  {"sobol_f", (DL_FUNC) &F77_NAME(sobol_f),  11},
+  {"halton_f", (DL_FUNC) &F77_NAME(halton_f),  7}, //LowDiscrepancy.f
+  {"sobol_f", (DL_FUNC) &F77_NAME(sobol_f),  11}, //LowDiscrepancy.f
   {NULL, NULL, 0}
-};*/
+};
 
 
 //there is no routine accessed with .External()
@@ -114,8 +114,14 @@ static const R_FortranMethodDef FortranEntries[] = {
 void R_init_randtoolbox(DllInfo *dll)
 {
   //register method accessed with .C, .Call, .Fortran, .External respectively
-  R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL); 
-  R_useDynamicSymbols(dll, TRUE); 
+  R_registerRoutines(dll, CEntries, CallEntries, FortranEntries, NULL); 
+  
+  /*dynamic lookup only for
+  double *user_unif_rand(void);
+  void user_unif_init(unsigned int seed);
+  in src/runifInterface.h*/
+  R_useDynamicSymbols(dll, TRUE);
+  
   
   //make randtoolbox C functions available for other packages
   R_RegisterCCallable("randtoolbox", "torus", (DL_FUNC) torus);
@@ -128,12 +134,14 @@ void R_init_randtoolbox(DllInfo *dll)
   R_RegisterCCallable("randtoolbox", "collisionTest", (DL_FUNC) collisionTest);
   R_RegisterCCallable("randtoolbox", "knuthTAOCP", (DL_FUNC) knuthTAOCP); 
   
-  //retrieve WELL rng entry point in the rngWELL pkg
+  //retrieve RNG function coming from rngWELL package, see files rngWELL.c(h) in that pkg
   WELLrng = (void (*) (double *, int, int, int, int, int)) R_GetCCallable("rngWELL", "WELLrng");
   WELL_get_set_entry_point =(void (*) (void (*)())) R_GetCCallable("rngWELL", "WELL_get_set_entry_point");
-  /*getRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "getRngWELL");
-   putRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "putRngWELL");
-   initMT2002 = (void (*) (unsigned int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "initMT2002");*/
+  /* // well RNG function coming from rngWELL package, see files runifInterface.c(h) in that pkg
+  getRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "getRngWELL");
+  putRngWELL = (void (*) (int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "putRngWELL");
+  initMT2002 = (void (*) (unsigned int *, int *, unsigned int *)) R_GetCCallable("rngWELL", "initMT2002");*/
+  
   
 }
 

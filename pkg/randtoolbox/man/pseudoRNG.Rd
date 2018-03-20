@@ -158,7 +158,14 @@ See the pdf vignette for details.
 }
 \value{
   \code{SFMT}, \code{WELL}, \code{congruRand} and \code{knuthTAOCP} generate random variables in ]0,1[,  [0,1[ and [0,1[ respectively. It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim}>1 otherwise a vector of length \code{n}.
-
+  
+  \code{congruRand} may raise an error code if parameters are not correctly specified: 
+  \code{-1} if the multiplier is zero;
+  \code{-2} if the multiplier is greater or equal than the modulus;
+  \code{-3} if the increment is greater or equal than the modulus;
+  \code{-4} if the multiplier times the modulus minus 1 is greater than \code{2^64-1} minus the increment;
+  \code{-5} if the seed is greater or equal than the modulus.
+  
   \code{setSeed} sets the seed of the \code{randtoolbox} package 
 (i.e. both for the \code{knuthTAOCP}, \code{SFMT}, \code{WELL} and \code{congruRand} functions).
 }

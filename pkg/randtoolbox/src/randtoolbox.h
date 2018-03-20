@@ -117,7 +117,7 @@ SEXP doKnuthTAOCP(SEXP n, SEXP d);
 void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int usetime, int mexp);
 void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
 void sobol_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp);
-void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show);
+void congruRand(double *u, int nb, int dim, uint64_t mod, uint64_t mult, uint64_t incr, uint64_t mask, int show);
 void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset);
 void knuthTAOCP(double *u, int nb, int dim);
 

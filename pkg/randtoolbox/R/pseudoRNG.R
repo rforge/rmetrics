@@ -73,7 +73,8 @@ congruRand <- function(n, dim = 1, mod = 2^31-1, mult = 16807, incr = 0, echo)
         if(missing(echo))
                 echo <- FALSE
         nb <- ifelse(length(n)>1, length(n), n)
-        res <- .Call("doCongruRand", nb, dim, mod, mult, incr, echo)
+        #implemented in src/randtoolbox.c
+        res <- .Call(CF_doCongruRand, nb, dim, mod, mult, incr, echo) 
         
         if(dim == 1)    
                 as.vector(res)
@@ -118,11 +119,13 @@ SFMT <- function(n, dim = 1, mexp = 19937, usepset = TRUE, withtorus = FALSE, us
     
         if(nbTorus == 0)
         {
-                res <- .Call("doSFMersenneTwister", nb, dim, mexp, usepset)
+                #implemented in src/randtoolbox.c
+                res <- .Call(CF_doSFMersenneTwister, nb, dim, mexp, usepset)
         }else
         {
                 restorus <- torus(nbTorus, dim, mixed = FALSE, usetime = usetime)
-                res <- .Call("doSFMersenneTwister", nb - nbTorus, dim, mexp, usepset)
+                #implemented in src/randtoolbox.c
+                res <- .Call(CF_doSFMersenneTwister, nb - nbTorus, dim, mexp, usepset)
                 res <- rbind(res, as.matrix( restorus, nbTorus, dim) )
         }
     
@@ -161,7 +164,8 @@ WELL <- function(n, dim = 1, order = 512, temper = FALSE, version = "a")
         stop("this WELL RNG does not have a 'b' version")
     
     nb <- ifelse(length(n)>1, length(n), n)
-    res <- .Call("doWELL", nb, dim, order, temper, zeversion)
+    #implemented in src/randtoolbox.c
+    res <- .Call(CF_doWELL, nb, dim, order, temper, zeversion)
     
     if(dim == 1)
         as.vector(res)
@@ -177,7 +181,8 @@ knuthTAOCP <- function(n, dim = 1)
         stop("invalid argument 'dim'")
     
     nb <- ifelse(length(n)>1, length(n), n)
-    res <- .Call("doKnuthTAOCP", nb, dim)
+    #implemented in src/randtoolbox.c
+    res <- .Call(CF_doKnuthTAOCP, nb, dim)
     
     if(dim == 1)
         as.vector(res)

@@ -71,7 +71,8 @@ static int primeNumber[100000];
 
 // pi
 const long double constpi = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679 ;
-
+const long double two_64_d = 18446744073709551616.0;
+const uint64_t two_64m1_h = 0xffffffffffffffff;
 
 /*********************************/
 /*          utility functions         */
@@ -384,10 +385,39 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
   int nb = asInteger( n ); //number of random vectors
   int dim  = asInteger( d ); //dimension of vector
   int show =  asLogical( echo ); //to show the seed
+  double modultemp = asReal( modulus ) ; //modulus as a double numeric
+  double multtemp = asReal( multiplier ) ; //multiplier as a double numeric
+  double incrtemp = asReal( increment ) ; //increment as a double numeric
+  uint64_t mod, mult, incr, mask; //modulus, multiplier, increment, mask
   
-  unsigned long long mod = asReal( modulus ); //modulus
-  unsigned long long mult = asReal( multiplier ); //modulus
-  unsigned long long incr = asReal( increment ); //modulus    
+  Rprintf("mod %f\n", modultemp);
+  
+  //define a mask as in congruRand.c (function put_state_congru())
+  if (modultemp < two_64_d) //modulus lesser than 2^64 => mask=2^d-1 if mod = 2^d
+  {  
+    mod = (uint64_t) modultemp; //modulus below 2^64
+    if ((mod & (mod-1)) == 0)
+      mask = mod-1;
+    else
+      mask = 0;
+  }else //modulus greater or equal than 2^64 => mask=2^64-1 and mod=0 
+  {
+    mod = 0;
+    mask = two_64m1_h; 
+  }
+  if (multtemp < two_64_d) 
+    mult = (uint64_t) multtemp; //multiplier below 2^64
+  else
+    error(_("multiplier greater than 2^64-1"));
+  if (incrtemp < two_64_d) 
+    incr = (uint64_t) incrtemp; //increment below 2^64  
+  else
+    error(_("increment greater than 2^64-1"));
+  
+  Rprintf("mask: %llu\n", mask);
+  Rprintf("modulus: %llu\n", mod);
+  Rprintf("multiplier: %llu\n", mult);
+  Rprintf("increment: %llu\n", incr);
   
   //result
   double *u ; //result in C
@@ -398,7 +428,7 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
   R_CheckStack();
   
   //computation step
-  congruRand(u, nb, dim, mod, mult, incr, show);
+  congruRand(u, nb, dim, mod, mult, incr, mask, show);
   
   UNPROTECT(1);
   
@@ -406,10 +436,10 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
 }
 
 //compute the sequence of a general congruential linear generator
-void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned long long mult, unsigned long long incr, int show)
+void congruRand(double *u, int nb, int dim, uint64_t mod, uint64_t mult, uint64_t incr, uint64_t mask, int show)
 {
   int i, j, err;
-  unsigned long long temp;
+  uint64_t temp;
   
   if (!R_FINITE(nb) || !R_FINITE(dim))
     error(_("non finite argument"));
@@ -425,11 +455,12 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
   //u_ij is the nth (n = i + j * nb) term of a general congruential linear generator
   //i.e. u_ij = [ ( mult * x_{n-1}  + incr ) % mod ] / mod
   //u is stored column by column
-  if (mod > 0) seed = seed % mod;
-  err = check_congruRand(mod, 0, mult, incr, (unsigned long long) seed);
-  if (err)
+  if (mod > 0) 
+    seed = seed % mod;
+  err = check_congruRand(mod, mask, mult, incr, (uint64_t) seed);
+  if (err < 0)
     error(_("incorrect parameters of the generator %d"), err);
-  set_congruRand(mod, mult, incr, (unsigned long long) seed);
+  set_congruRand(mod, mult, incr, (uint64_t) seed, mask);
   
   if(!show) 
   {
@@ -447,7 +478,7 @@ void congruRand(double *u, int nb, int dim, unsigned long long mod, unsigned lon
       for(j = 0; j < dim; j++) 
       {
         get_seed_congruRand((uint64_t*) &temp);
-        Rprintf("%u th integer generated : %llu\n", 1+ i + j * nb, temp);
+        Rprintf("%u th integer generated : %" PRIu64 "\n", 1+ i + j * nb, temp);
         u[i + j * nb] = get_congruRand();
       }
     }

@@ -52,7 +52,8 @@
 .onLoad <- function(lib, pkg)
 {
 	library.dynam("randtoolbox", pkg, lib)
-	.C("put_user_unif_set_generator", PACKAGE="randtoolbox")
+  #implemented in src/runifInterface.c
+	.C(CF_put_user_unif_set_generator, PACKAGE="randtoolbox")
 }
 
 .onAttach <- function(lib, pkg)
