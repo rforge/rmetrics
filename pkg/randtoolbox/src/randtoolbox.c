@@ -238,7 +238,7 @@ SEXP doHalton(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP me
 void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
 {
   int i, j;
-  unsigned long long state;
+  uint32_t state;
   
   if (!R_FINITE(nb) || !R_FINITE(dim))
     error(_("non finite argument"));
