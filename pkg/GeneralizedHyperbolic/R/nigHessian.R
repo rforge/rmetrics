@@ -5,8 +5,8 @@
 ### CYD 01/04/10
 ### 1:4 param = hyperbChangePars 1:4;
 ### 5 = log scale of number 2 and 4 elements of param
-nigHessian <- function(x, param, hessianMethod = c("tsHessian", "exact"),
-                          whichParam = 1:5, ...) {
+nigHessian <- function(x, param, hessianMethod = "tsHessian",
+                       whichParam = 1:5, ...) {
   if (hessianMethod == "exact") {
     stop("Exact hessian not implemented yet. Use method tsHessian instead.")
   }
@@ -42,7 +42,7 @@ nigHessian <- function(x, param, hessianMethod = c("tsHessian", "exact"),
         llparam <- param
         return(sum(log(dnig(x = x, param = llparam))))
       }
-      
+
     } else if (whichParam == 5) {
       llfuncH <- function(param) {
         mu <- param[1]
@@ -58,7 +58,7 @@ nigHessian <- function(x, param, hessianMethod = c("tsHessian", "exact"),
         return(sum(log(nigDens)))
       }
     }
-    
+
     hessian <- tsHessian(param = param, fun = llfuncH)
   }
   if (whichParam == 1) {

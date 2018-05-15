@@ -3,7 +3,7 @@
 ###
 ### DJS 11/08/06
 summary.nigFit <- function(object, hessian = FALSE,
-                           hessianMethod = c("exact", "tsHessian"), ...) {
+                           hessianMethod = "tsHessian", ...) {
 
   if (! "nigFit" %in% class(object))
     stop("Object must belong to class nigFit")

@@ -10,7 +10,7 @@ Calculates the Hessian of a function, either exactly or approximately. Used to
 obtain the information matrix for maximum likelihood estimation.
 }
 \usage{
-hyperbHessian(x, param, hessianMethod = c("exact", "tsHessian"),
+hyperbHessian(x, param, hessianMethod = "exact",
               whichParam = 1:5)
 sumX(x, mu, delta, r, k)
 }

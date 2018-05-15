@@ -4,7 +4,7 @@
 \title{Summarizing Hyperbolic Distribution Fit}
 \usage{
 \method{summary}{hyperbFit}(object, hessian = FALSE,
-        hessianMethod = c("exact", "tsHessian"), ...)
+        hessianMethod = "exact", ...)
 
 \method{print}{summary.hyperbFit}(x,
                                   digits = max(3, getOption("digits") - 3), ...)
@@ -13,9 +13,8 @@
   \item{object}{An object of class \code{"hyperbFit"}, resulting from a call to
     \code{\link{hyperbFit}}.}
   \item{hessian}{Logical. If \code{TRUE} the Hessian is printed.}
-  \item{hessianMethod}{Either the exact Hessian is used (the default) or
-    the two-sided Hessian approximation given by \code{tsHessian} from
-    the package \code{DistributionUtils} is used.}
+  \item{hessianMethod}{Two methods are available to calculate the
+    Hessian exactly (\code{"exact"}) or approximately (\code{"tsHessian")}.}
   \item{x}{An object of class \code{"summary.hyperbFit"}, resulting from
     a call to \code{summary.hyperbFit}.}
   \item{digits}{The number of significant digits to use when printing.}

@@ -9,7 +9,7 @@ Calculates the Hessian of a function, either exactly or approximately. Used to
 obtaining the information matrix for maximum likelihood estimation.
 }
 \usage{
-nigHessian(x, param, hessianMethod = c("tsHessian", "exact"),
+nigHessian(x, param, hessianMethod = "tsHessian",
               whichParam = 1:5, ...)
 }
 \arguments{

@@ -3,7 +3,7 @@
 ###
 ### DJS 2/10/10
 summary.gigFit <- function(object, hessian = FALSE,
-                           hessianMethod = c("tsHessian","exact"), ...) {
+                           hessianMethod = "tsHessian", ...) {
 
   if (! "gigFit" %in% class(object))
     stop("Object must belong to class gigFit")

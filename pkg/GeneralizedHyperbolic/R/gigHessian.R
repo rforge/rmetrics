@@ -1,5 +1,5 @@
 ### Calculate Hessian given fitted parameters
-gigHessian <- function(x, param, hessianMethod = c("tsHessian", "exact"),
+gigHessian <- function(x, param, hessianMethod = "tsHessian",
                        whichParam = 1) {
   if (hessianMethod == "exact") {
     stop("Exact hessian not available yet. Use method tsHessian instead.")

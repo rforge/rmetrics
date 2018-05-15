@@ -4,7 +4,7 @@
 \title{Summarizing Normal Inverse Gaussian Distribution Fit}
 \usage{
 \method{summary}{gigFit}(object, hessian = FALSE,
-        hessianMethod = c("tsHessian","exact"), ...)
+        hessianMethod = "tsHessian", ...)
 
 \method{print}{summary.gigFit}(x,
                                digits = max(3, getOption("digits") - 3), ...)
@@ -13,9 +13,9 @@
   \item{object}{An object of class \code{"gigFit"}, resulting from a call to
     \code{\link{gigFit}}.}
   \item{hessian}{Logical. If \code{TRUE} the Hessian is printed.}
-  \item{hessianMethod}{Either the exact Hessian is used (the default) or
-    the two-sided Hessian approximation given by \code{tsHessian} from
-    the package \code{DistributionUtils} is used.}
+  \item{hessianMethod}{The two-sided Hessian approximation given by
+    \code{tsHessian} from the package \code{DistributionUtils} is the
+    only method implemented so far.}
   \item{x}{An object of class \code{"summary.gigFit"}, resulting from
     a call to \code{summary.gigFit}.}
   \item{digits}{The number of significant digits to use when printing.}
