@@ -2,19 +2,20 @@
 ### Imports
 ################################################
 
-importFrom("grDevices", dev.interactive)
+importFrom("grDevices", "dev.interactive")
 
-importFrom("graphics", abline, axis, curve, hist,
-           hist.default, mtext, par, plot, segments, title)
+importFrom("graphics", "abline", "axis", "curve", "hist",
+           "hist.default", "mtext", "par", "plot", "segments", "title")
 
-importFrom("stats", .getXlevels, coef, constrOptim, density,
-           integrate, is.empty.model, lm, median,
-           model.matrix, model.offset, model.response,
-           model.weights, na.omit, nlm, nlminb, optim,
-           optimize, ppoints, printCoefmat, pt, qqplot,
-           rexp, rnorm, runif, sd, splinefun, uniroot, var)
+importFrom("stats", ".getXlevels", "coef", "constrOptim", "density",
+           "integrate", "is.empty.model", "lm", "median",
+           "model.matrix", "model.offset", "model.response",
+           "model.weights", "na.omit", "nlm", "nlminb", "optim",
+           "optimize", "ppoints", "printCoefmat", "pt", "qqplot",
+           "rexp", "rnorm", "runif", "sd", "splinefun", "uniroot",
+           "var")
+importFrom("utils", "data")
 
-## importFrom("utils", data)
 
 importFrom("MASS", fitdistr)
 
