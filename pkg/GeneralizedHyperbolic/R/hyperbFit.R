@@ -278,18 +278,19 @@ plot.hyperbFit <- function(x, which = 1:4,
   obs <- x$obs
   obsName <- x$obsName
 
-  hypDens <- function(x)
-    dhyperb(x, param = param)
+  hypDens <- function(t)
+    dhyperb(t, param = param)
 
-  logHypDens <- function(x)
-    log(dhyperb(x, param = param))
+  logHypDens <- function(y)
+    log(dhyperb(t, param = param))
 
   ymax <- 1.06 * max(hypDens(seq(min(breaks), max(breaks), 0.1)),
                      empDens, na.rm = TRUE)
   if (show[1]) {
     hist.default(obs, breaks, right = FALSE, freq = FALSE, ylim = c(0, ymax),
                  main = plotTitles[1], ...)
-    curve(hypDens, min(breaks) - 1, max(breaks) + 1, add = TRUE, ylab = NULL)
+    curve(hypDens, min(breaks) - 1, max(breaks) + 1,
+          xname = "t", add = TRUE, ylab = NULL)
     title(sub = paste("param = (",
           round(param[1], 3), ", ", round(param[2], 3), ", ",
           round(param[3], 3), ", ", round(param[4], 3), ")", sep = ""))
@@ -298,8 +299,8 @@ plot.hyperbFit <- function(x, which = 1:4,
   if (show[2]) {
     logHist(obs, breaks, include.lowest = TRUE, right = FALSE,
             main = plotTitles[2], ...)
-    curve(logHypDens, min(breaks) - 1, max(breaks) + 1, add = TRUE,
-          ylab = NULL, xlab = NULL)
+    curve(logHypDens, min(breaks) - 1, max(breaks) + 1,
+          xname = "t", add = TRUE, ylab = NULL, xlab = NULL)
     title(sub = paste("param = (",
           round(param[1], 3), ", ", round(param[2], 3), ", ",
           round(param[3], 3), ", ", round(param[4], 3), ")", sep = ""))
