@@ -157,7 +157,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
                 xLow <- xLow - sqrt(ghypVar(param = param))
             }
             xRange <- c(xLow, modeDist)
-            zeroFn <- function(x, param, p)
+            zeroFnLess <- function(x, param, p)
             {
                 return(pghyp(x, param = param,
                              subdivisions = subdivisions,
@@ -165,7 +165,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
             }
             for (i in less)
             {
-                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+                quant[i] <- uniroot(zeroFnLess, param = param, p = p[i],
                                     interval = xRange, tol = uniTol)$root
             }
         }
@@ -182,7 +182,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
                 xHigh <- xHigh + sqrt(ghypVar(param = param))
             }
             xRange <- c(modeDist, xHigh)
-            zeroFn <- function(x, param, p)
+            zeroFnGreater <- function(x, param, p)
             {
                 return(pghyp(x, param = param, lower.tail = FALSE,
                              subdivisions = subdivisions,
@@ -190,7 +190,7 @@ qghyp <- function (p, mu = 0, delta = 1, alpha = 1, beta = 0, lambda = 1,
             }
             for (i in greater)
             {
-                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+                quant[i] <- uniroot(zeroFnGreater, param = param, p = p[i],
                                     interval = xRange, tol = uniTol)$root
             }
         }

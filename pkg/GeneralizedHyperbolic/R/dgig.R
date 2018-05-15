@@ -130,12 +130,12 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
       ## }
       xLow <- 0
       xRange <- c(xLow, modeDist)
-      zeroFn <- function(x, param, p)
+      zeroFnLess <- function(x, param, p)
       {
         return(pgig(x, param = param, ibfTol = ibfTol) - p)
       }
       for (i in less){
-        quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+        quant[i] <- uniroot(zeroFnLess, param = param, p = p[i],
                             interval = xRange, tol = uniTol)$root
       }
     }
@@ -150,13 +150,13 @@ qgig <- function(p, chi = 1, psi = 1, lambda = 1,
         xHigh <- xHigh + sqrt(gigVar(param = param))
       }
       xRange <- c(modeDist,xHigh)
-      zeroFn <- function(x, param, p)
+      zeroFnGreater <- function(x, param, p)
       {
         return(pgig(x, param = param, lower.tail = FALSE,
                      ibfTol = ibfTol) - p)
       }
       for (i in greater){
-        quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+        quant[i] <- uniroot(zeroFnGreater, param = param, p = p[i],
                             interval = xRange, tol = uniTol)$root
       }
     }
