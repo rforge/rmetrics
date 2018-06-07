@@ -80,7 +80,7 @@ skewhypKurt <- function (mu = 0, delta = 1, beta = 1, nu = 1,
 
     skewhypKurt <- (6/((2*beta^2*delta^2+(nu-2)*(nu-4))^2))*
         ((nu-2)^2*(nu-4)+(16*beta^2*delta^2*(nu-2)*(nu-4))/(nu-6)
-         +(8*beta^4*delta^4*(5*nu-22))/(nu-6)*(nu-8))
+         +(8*beta^4*delta^4*(5*nu-22))/((nu-6)*(nu-8)))
 
     return(skewhypKurt)
 }
