@@ -30,7 +30,8 @@ skewhypFit(x, freq = NULL, breaks = NULL, startValues = "LA",
     then 30 breaks are used by default.}
   \item{startValues}{Code giving the method of determining starting
     values for finding the maximum likelihood estimates of the
-    parameters.}  \item{paramStart}{If \code{startValues = "US"} the
+    parameters.}
+  \item{paramStart}{If \code{startValues = "US"} the
     user must specify a vector of starting parameter values in the form
     \code{c(mu,delta,beta,nu)}.}
   \item{method}{Different optimisation methods to consider, see

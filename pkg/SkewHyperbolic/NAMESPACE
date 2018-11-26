@@ -1,12 +1,10 @@
 importFrom("grDevices", dev.interactive)
 importFrom("graphics", abline, curve, hist, lines, par, plot, title)
-importFrom("stats", integrate, lm, na.omit, nlm, optim, ppoints, qqplot, quantile,
-           rgamma, rnorm, splinefun, uniroot)
-
+importFrom("stats", integrate, lm, na.omit, nlm, optim, ppoints,
+           qqplot, quantile, rgamma, rnorm, splinefun, uniroot)
 importFrom("DistributionUtils", logHist, safeIntegrate,
            momIntegrated, momChangeAbout,
            skewness, kurtosis, besselRatio, is.wholenumber)
-
 importFrom("GeneralizedHyperbolic",
            dskewlap, hyperbChangePars, ghypChangePars,
            momRecursion,
@@ -16,7 +14,7 @@ importFrom("GeneralizedHyperbolic",
 
 exportPattern("skewhyp")# << FIXME?, also exports S3 methods
 
-S3method(print,  skewhypFit)
-S3method(plot,   skewhypFit)
-S3method(summary,skewhypFit)
-S3method(print,summary.skewhypFit)
+S3method(print, skewhypFit)
+S3method(plot, skewhypFit)
+S3method(summary, skewhypFit)
+S3method(print, summary.skewhypFit)

@@ -1,3 +1,12 @@
+2018-06-08    <d.scott@auckland.ac.nz>
+
+	* skewhypMeanVarMode.R changed to fix some errors in skewhypKurt
+	function noted by Alexios Ghalanos, email 9/8/13
+
+	* DESCRIPTION updated to add imports, grDevices, graphics, stats,
+	DistributionUtils, GeneralizedHyperbolic and change depends to >=
+	2.15.0
+
 2014-10-05    <d.scott@auckland.ac.nz>
 
 	* DESCRIPTION update to change RUnit to suggests, not depends
