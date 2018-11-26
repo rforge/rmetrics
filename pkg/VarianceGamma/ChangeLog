@@ -1,3 +1,7 @@
+2018-11-26    <d.scott@auckland.ac.nz>
+
+	* DESCRIPTION and NAMESPACE updated to appease CRAN
+
 2010-02-10    <d.scott@auckland.ac.nz>
 
 	* Depends changed to DistributionUtils, GeneralizedHyperbolic
