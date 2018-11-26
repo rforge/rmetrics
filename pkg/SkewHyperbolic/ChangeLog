@@ -5,7 +5,7 @@
 
 	* DESCRIPTION updated to add imports, grDevices, graphics, stats,
 	DistributionUtils, GeneralizedHyperbolic and change depends to >=
-	2.15.0
+	3.0.1
 
 2014-10-05    <d.scott@auckland.ac.nz>
 
