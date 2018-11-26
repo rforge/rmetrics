@@ -1,16 +1,43 @@
 Package: NormalLaplace
+<<<<<<< .mine
+Version: 0.3-0
+Date: 2018-11-26
+||||||| .r5846
+Version: 0.2-0
+Date: 2011-01-10
+=======
 Version: 0.2-1
 Date: 2017-10-28
+>>>>>>> .r6126
 Title: The Normal Laplace Distribution
 Author: David Scott <d.scott@auckland.ac.nz>, Jason Shicong Fu and
 	Simon Potter
 Maintainer: David Scott <d.scott@auckland.ac.nz>
+<<<<<<< .mine
+Depends: R (>= 3.0.1),
+Imports: DistributionUtils, GeneralizedHyperbolic
+||||||| .r5846
+Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic
+=======
 Depends: R (>= 3.0.1)
 Imports: grDevices, graphics, stats, DistributionUtils, GeneralizedHyperbolic
+>>>>>>> .r6126
 Suggests: RUnit
 Encoding: latin1
+<<<<<<< .mine
+Description: Functions for the normal Laplace distribution. The package is
+        under development and provides only limited functionality.
+	Density, distribution and quantile functions, random number generation,
+	and moments are provided.
+||||||| .r5846
+Description: This package provides functions for the normal Laplace
+        distribution. It is currently under development and provides
+        only limited functionality. Density, distribution and quantile
+        functions, random number generation, and moments are provided.
+=======
 Description: Functions for the normal Laplace distribution.  Currently, it
  provides limited functionality.  Density, distribution and quantile
  functions, random number generation, and moments are provided.
+>>>>>>> .r6126
 License: GPL (>= 2)
 URL: https://r-forge.r-project.org/projects/rmetrics/

@@ -1,3 +1,17 @@
+<<<<<<< .mine
+################################################
+### Imports
+################################################
+importFrom("grDevices", "dev.interactive")
+importFrom("graphics", "abline", "curve", "hist", "hist.default",
+           "par", "plot", "title")
+importFrom("stats", "dnorm", "na.omit", "nlm", "nlminb", "optim",
+           "pnorm", "ppoints", "rnorm", "splinefun", "uniroot", "var")
+
+||||||| .r5846
+exportPattern("nl")
+export(millsR)
+=======
 importFrom("grDevices", dev.interactive)
 
 importFrom("graphics", abline, curve, hist, hist.default, par, plot, title)
@@ -18,10 +32,21 @@ importFrom("GeneralizedHyperbolic", rskewlap)
 
 exportPattern("nl") ## "Pattern" FIXME: rather not the S3 methods below
 export(millsR)
+>>>>>>> .r6126
 
+
+################################################
+## S3 classes
+################################################
 S3method(print,nlFit)
 S3method(plot,nlFit)
 S3method(coef,nlFit)
 S3method(vcov,nlFit)
 S3method(summary,nlFit)
 S3method(print,summary.nlFit)
+
+################################################
+## Functions
+################################################
+exportPattern("nl")
+export(millsR)
