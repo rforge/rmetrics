@@ -1,4 +1,3 @@
-<<<<<<< .mine
 ################################################
 ### Imports
 ################################################
@@ -7,48 +6,13 @@ importFrom("graphics", "abline", "curve", "hist", "hist.default",
            "par", "plot", "title")
 importFrom("stats", "lm", "na.omit", "nlm", "optim", "ppoints",
            "qqplot", "rgamma", "splinefun", "uniroot", "var")
-||||||| .r5003
-exportPattern("vg")
-S3method(print,vgFit)
-S3method(plot,vgFit)
-S3method(summary,vgFit)
-S3method(print,summary.vgFit)
-
-=======
-importFrom("grDevices", dev.interactive)
-
-importFrom("graphics", abline, curve, hist, hist.default, par, plot, title)
-
-importFrom("stats", lm, na.omit, nlm, optim, ppoints,
-           qqplot, rgamma, splinefun, uniroot, var)
-
 importFrom("DistributionUtils",
            besselRatio, is.wholenumber, logHist,
            momIntegrated, momChangeAbout, safeIntegrate, skewness, kurtosis)
-
 importFrom("GeneralizedHyperbolic",
            dskewlap, gigMom, gigRawMom, gammaRawMom,
            hyperbChangePars, ghypChangePars, momRecursion)
 
-## ----------------------------
-exportPattern("vg") ## "Pattern" FIXME: rather not the S3 methods below
-
-S3method(print,vgFit)
-S3method(plot,vgFit)
-S3method(summary,vgFit)
-S3method(print,summary.vgFit)
-
->>>>>>> .r6127
-<<<<<<< .mine
-importFrom(GeneralizedHyperbolic, dskewlap)
-importFrom(GeneralizedHyperbolic, hyperbChangePars, ghypChangePars)
-importFrom(DistributionUtils, logHist)
-importFrom(DistributionUtils, safeIntegrate)
-importFrom(GeneralizedHyperbolic, momRecursion)
-importFrom(DistributionUtils, momIntegrated, momChangeAbout)
-importFrom(GeneralizedHyperbolic, gigMom, gigRawMom, gammaRawMom)
-importFrom(DistributionUtils, skewness, kurtosis)
-importFrom(DistributionUtils, besselRatio, is.wholenumber)
 
 ################################################
 ## S3 classes
@@ -62,15 +26,3 @@ S3method(print,summary.vgFit)
 ## Functions
 ################################################
 exportPattern("vg")
-||||||| .r5003
-importFrom(GeneralizedHyperbolic, dskewlap)
-importFrom(GeneralizedHyperbolic, hyperbChangePars, ghypChangePars)
-importFrom(DistributionUtils, logHist)
-importFrom(DistributionUtils, safeIntegrate)
-importFrom(GeneralizedHyperbolic, momRecursion)
-importFrom(DistributionUtils, momIntegrated, momChangeAbout)
-importFrom(GeneralizedHyperbolic, gigMom, gigRawMom, gammaRawMom)
-importFrom(DistributionUtils, skewness, kurtosis)
-importFrom(DistributionUtils, besselRatio, is.wholenumber)
-=======
->>>>>>> .r6127

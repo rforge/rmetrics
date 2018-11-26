@@ -19,7 +19,5 @@ Description: Provides functions for the variance gamma
         validity of parameters and to interchange different sets of
         parameterizations for the variance gamma distribution.
 License: GPL(>=2)
-NeedsCompilation: no
-Packaged: 2018-11-26 09:52:51 UTC; dsco036
-Built: R 3.4.3; ; 2018-11-26 09:54:16 UTC; windows
+
 

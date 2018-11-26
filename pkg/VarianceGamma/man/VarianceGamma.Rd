@@ -239,26 +239,16 @@ curve(pvg(x, param = param), from = vgRange[1], to = vgRange[2], n = 1000)
 title("Distribution Function of the Variance Gamma Distribution")
 
 ## For rvg
-<<<<<<< .mine
 require(DistributionUtils)
 dataVector <- rvg(500, param = param)
 curve(dvg(x, param = param), range(dataVector)[1], range(dataVector)[2],
       n = 500)
 hist(dataVector, freq = FALSE, add = TRUE)
-||||||| .r5003
-dataVector <- rvg(500, param = param)
-curve(dvg(x, param = param), range(dataVector)[1], range(dataVector)[2],
-      n = 500)
-hist(dataVector, freq = FALSE, add =TRUE)
-=======
-X1 <- rvg(500, param = param)
-curve(dvg(x, param = param), min(X1), max(X1), n = 500)
-hist(X1, freq = FALSE, add =TRUE)
->>>>>>> .r6127
 title("Density and Histogram of the Variance Gamma Distribution")
-DistributionUtils::logHist(X1, main =
-   "Log-Density and Log-Histogramof the Generalized Hyperbolic Distribution")
-curve(log(dvg(x, param = param)), min(X1), max(X1), n = 500, add = TRUE)
+logHist(dataVector, main =
+   "Log-Density and Log-Histogram of the Generalized Hyperbolic Distribution")
+curve(log(dvg(x, param = param)), add = TRUE,
+      range(dataVector)[1], range(dataVector)[2], n = 500)
 
 ## For dvg and ddvg
 par(mfrow = c(2,1))
