@@ -1,58 +1,25 @@
 Package: VarianceGamma
-<<<<<<< .mine
 Version: 0.4-0
 Date: 2018-11-26
-||||||| .r5315
-Version: 0.3-1
-Date: 2012-04-13
-=======
-Version: 0.3-2
-Date: 2017-10-28
->>>>>>> .r6127
 Title: The Variance Gamma Distribution
 Author: David Scott <d.scott@auckland.ac.nz> and
         Christine Yang Dong <c.dong@auckland.ac.nz>
-<<<<<<< .mine
-Maintainer: David Scott <d.scott@auckland.ac.nz> 
-Depends: R (>= 3.0.1),
-Imports: grDevices, graphics, stats, DistributionUtils, GeneralizedHyperbolic
-Suggests: RUnit
-||||||| .r5315
-Maintainer: David Scott <d.scott@auckland.ac.nz> 
-Depends: R (>= 2.3.0), DistributionUtils, GeneralizedHyperbolic, RUnit
-=======
 Maintainer: David Scott <d.scott@auckland.ac.nz>
-Depends: R (>= 2.15.0)
-Imports: DistributionUtils, GeneralizedHyperbolic
+Depends: R (>= 3.0.1),
+Imports: grDevices, graphics, stats, DistributionUtils,
+        GeneralizedHyperbolic
 Suggests: RUnit
->>>>>>> .r6127
 Encoding: latin1
-<<<<<<< .mine
 Description: Provides functions for the variance gamma
         distribution. Density, distribution and quantile functions.
         Functions for random number generation and fitting of the
         variance gamma to data. Also, functions for computing moments
         of the variance gamma distribution of any order about any
-||||||| .r5315
-Description: This package provides functions for the variance gamma
-        distributions. Density, distribution and quantile functions.
-        Functions for random number generation and fitting of the
-        variance gamma to data. Also, functions for computing moments
-        of the variance gamma distribution of any order about any
-=======
-Description: Functions for the variance gamma distributions.  Density,
-  distribution and quantile functions.  Random number generation and
-  fitting of the variance gamma to data.  Also, functions for computing
-  moments of the variance gamma distribution of any order about any
->>>>>>> .r6127
         location. In addition, there are functions for checking the
         validity of parameters and to interchange different sets of
-        parameterisations for the variance gamma distribution.
+        parameterizations for the variance gamma distribution.
 License: GPL(>=2)
-<<<<<<< .mine
+NeedsCompilation: no
+Packaged: 2018-11-26 09:52:51 UTC; dsco036
+Built: R 3.4.3; ; 2018-11-26 09:54:16 UTC; windows
 
-||||||| .r5315
-URL: http://www.r-project.org
-=======
-URL: https://r-forge.r-project.org/projects/rmetrics/
->>>>>>> .r6127
