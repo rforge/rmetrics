@@ -1,17 +1,20 @@
 \name{tailPlot}
-\title{Tail Plot Functions}
 \alias{tailPlot}
 \alias{tailPlotLine}
 \alias{normTailPlotLine}
 \alias{tTailPlotLine}
 \alias{gammaTailPlotLine}
+
+\title{
+Tail Plot Functions
+}
 \description{
-  Create a left or right tail plot of a data set using
-  \code{tailPlot}.  Add a line for any distribution with parameters given
-  by an argument named \code{param}, using \code{tailPlotLine}.
-  Add normal, \eqn{t}, or gamma distribution lines to
-  the plot using \code{normTailPlotLine}, \code{tTailPlotLine}, or
-  \code{gammaTailPlotLine}
+Create a left or right tail plot of a data set using
+\code{tailPlot}. Add a line for any distribution with parameters given
+by an argument named \code{param}, using \code{tailPlotLine}.
+Add normal, \eqn{t}, or gamma distribution lines to
+the plot using \code{normTailPlotLine}, \code{tTailPlotLine}, or
+\code{gammaTailPlotLine}
 }
 \usage{
 tailPlot(x, log = "y", side = c("right", "left"), main = NULL,
@@ -22,6 +25,7 @@ tTailPlotLine(x, df = Inf, side = c("right", "left"), ...)
 gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
                   side = c("right", "left"), ...)
 }
+%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{A vector of values for which the tail plot is to be drawn.}
   \item{log}{A character string which contains \code{"x"} if the x-axis
@@ -75,7 +79,7 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
   derived respectively from the given normal, \eqn{t}, or gamma
   distribution to an already drawn tail plot.
 }
-\value{Returns \code{\link{NULL}} invisibly.
+\value{Returns \code{NULL} invisibly.
 }
 \references{
   Aas, Kjersti and \enc{Hobæk}{Hobaek} Haff, Ingrid (2006)
@@ -84,9 +88,9 @@ gammaTailPlotLine(x, shape = 1, rate = 1, scale = 1/rate,
 
   Resnick, S. (2007) \emph{Heavy-Tail Phenomena}, New York: Springer.
 
-  Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine (2009)
-  \emph{Software for Distributions in R}.
-  UseR: The R User Conference 2009
+  Scott, David J. and \enc{Würtz}{Wuertz}, Diethelm and Dong, Christine
+  (2009) Software for Distributions in R. UseR: The R User
+  Conference 2009
   \url{https://www.r-project.org/conferences/useR-2009/slides/Scott+Wuertz+Dong.pdf}
 }
 \author{

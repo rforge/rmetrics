@@ -2,13 +2,12 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* .Fortran calls */
+/* FIXME: 
+   Check these declarations against the C/Fortran source code.
+*/
 
-// ./IncompleteBessel.f :
-extern void F77_NAME(incompletebesselk)(double *x, double *y, double *nu, double *eps,
-					int *nmax, double *KNu,
-					// => result
-					double *IBF, int *status);
+/* .Fortran calls */
+extern void F77_NAME(incompletebesselk)(void *, void *, void *, void *, void *, void *, void *, void *);
 
 static const R_FortranMethodDef FortranEntries[] = {
     {"incompletebesselk", (DL_FUNC) &F77_NAME(incompletebesselk), 8},

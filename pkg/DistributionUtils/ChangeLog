@@ -1,3 +1,10 @@
+2018-11-27    <d.scott@auckland.ac.nz>
+
+	* momIntegrated checks at start changed to eliminate is.function
+	check which caused failures of examples
+
+	* DESCRIPTION and NAMESPACE changed to appease CRAN
+
 2014-10-05    <d.scott@auckland.ac.nz>
 
 	* distIneqMassart example and test changed to \dontrun and level 2
