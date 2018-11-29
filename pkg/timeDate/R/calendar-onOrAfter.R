@@ -19,7 +19,7 @@
 # FUNCTION:                 DESCRIPTION:
 #  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER
 #  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE
-# DEPRECATED:               
+# DEPRECATED:
 #  .on.or.after
 #  .on.or.before
 #  .nth.of.nday
@@ -145,41 +145,41 @@ timeNdayOnOrBefore <-
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.on.or.after <- 
-function(year, month, day, nday) 
+.on.or.after <-
+function(year, month, day, nday)
 {
     .sdate <- year*10000+month*100+day
-    .sdate(.sjulian(.sdate)+(nday-.day.of.week(month, day, year)) %% 7) 
+    .sdate(.sjulian(.sdate)+(nday-.day.of.week(month, day, year)) %% 7)
 }
 
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.on.or.before <- 
-function(year, month, day, nday) 
+.on.or.before <-
+function(year, month, day, nday)
 {
     .sdate <- year*10000+month*100+day
-    .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,day,year))) %% 7) 
+    .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,day,year))) %% 7)
 }
 
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.nth.of.nday <- 
-function(year, month, nday, nth) 
+.nth.of.nday <-
+function(year, month, nday, nth)
 {
     .sdate <- year*10000+month*100+1
-    .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-.day.of.week(month,1,year)) %% 7) 
+    .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-.day.of.week(month,1,year)) %% 7)
 }
 
 # ---------------------------------------------------------------------------- #
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.last.of.nday <- 
-function(year, month, lastday, nday) 
+.last.of.nday <-
+function(year, month, lastday, nday)
 {
     .sdate <- year*10000 + month*100 + lastday
     .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,lastday,year))) %% 7)
@@ -189,8 +189,8 @@ function(year, month, lastday, nday)
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.sdate <- 
-function (julians, origin = 19600101) 
+.sdate <-
+function (julians, origin = 19600101)
 {
     year0 <- origin %/% 10000
     month0 <- (origin-10000*year0) %/% 100
@@ -205,8 +205,8 @@ function (julians, origin = 19600101)
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.month.day.year <- 
-function(jul, origin = c(1, 1, 1960)) 
+.month.day.year <-
+function(jul, origin = c(1, 1, 1960))
 {
     # shift = .julian(1, 1, 1960, 0)
     shift <- 2436935
@@ -231,8 +231,8 @@ function(jul, origin = c(1, 1, 1960))
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.sjulian <- 
-function (.sdates, origin = 19600101) 
+.sjulian <-
+function (.sdates, origin = 19600101)
 {
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
@@ -249,16 +249,16 @@ function (.sdates, origin = 19600101)
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.JULIAN <- 
-function(m, d, y, origin = c(month = 1, day = 1, year = 1960)) 
+.JULIAN <-
+function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
 {
     only.origin <- all(missing(m), missing(d), missing(y))
     if (only.origin) m = d = y = NULL
     nms <- names(d)
     max.len <- max(length(m), length(d), length(y))
-    m <- c(origin[1], rep(m, length = max.len))
-    d <- c(origin[2], rep(d, length = max.len))
-    y <- c(origin[3], rep(y, length = max.len))
+    m <- c(origin[1], rep(m, length.out = max.len))
+    d <- c(origin[2], rep(d, length.out = max.len))
+    y <- c(origin[3], rep(y, length.out = max.len))
     y <- y + ifelse(m > 2, 0, -1)
     m <- m + ifelse(m > 2, -3, 9)
     c <- y %/% 100
@@ -275,8 +275,8 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.sday.of.week <- 
-function(.sdates) 
+.sday.of.week <-
+function(.sdates)
 {
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
@@ -293,8 +293,8 @@ function(.sdates)
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.day.of.week <- 
-function (month, day, year) 
+.day.of.week <-
+function (month, day, year)
 {
     .sday.of.week(year * 10000 + month * 100 + day)
 }
@@ -303,8 +303,8 @@ function (month, day, year)
 # Roxygen Tags
 #' @export
 # ---------------------------------------------------------------------------- #
-.sleap.year <- 
-function(.sdates) 
+.sleap.year <-
+function(.sdates)
 {
     if(is(.sdates, ".sdate"))
         .sdates <- as.vector(.sdates)
