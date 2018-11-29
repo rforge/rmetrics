@@ -27,6 +27,7 @@ skewhypFitStartMM(x, nuTol = 1e-6, nuStart = 5, ...)
     vector of starting parameter values in the form
     \code{c(mu,delta,beta,nu)}.}
   \item{...}{Passes additional arguments to \code{\link{skewhypFitStartMM}}
+  }
 }
 \details{
   \code{startValues} can be either \code{"US"}(User-supplied),
