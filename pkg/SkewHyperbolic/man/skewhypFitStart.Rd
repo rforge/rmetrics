@@ -1,8 +1,10 @@
 \name{skewhypFitStart}
 \alias{skewhypFitStart}
 \alias{skewhypFitStartLA}
+\alias{skewhypFitStartMM}
+
 \title{
-Find Starting Values for Fittting a Skew Hyperbolic Student
+Find Starting Values for Fitting a Skew Hyperbolic Student
 t-Distribution
 }
 \description{
@@ -26,6 +28,10 @@ skewhypFitStartMM(x, nuTol = 1e-6, nuStart = 5, ...)
   \item{paramStart}{If \code{startValues = "US"} the user must specify a
     vector of starting parameter values in the form
     \code{c(mu,delta,beta,nu)}.}
+  \item{nuTol}{Tolerance for numerical determination of \code{nu} in
+    \code{\link{skewhypFitStartMM}}}
+  \item{nuStart}{Initial value for numerical determinationof \code{nu}
+    in \code{\link{skewhypFitStartMM}}}
   \item{...}{Passes additional arguments to \code{\link{skewhypFitStartMM}}
   }
 }

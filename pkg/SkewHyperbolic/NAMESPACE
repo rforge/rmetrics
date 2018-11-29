@@ -1,3 +1,6 @@
+################################################
+### Imports
+################################################
 importFrom("DistributionUtils", logHist, safeIntegrate,
            momIntegrated, momChangeAbout,
            skewness, kurtosis, besselRatio, is.wholenumber)
@@ -10,12 +13,23 @@ importFrom("graphics", "abline", "curve", "hist", "lines", "par",
            "plot", "title")
 importFrom("stats", "integrate", "lm", "na.omit", "nlm", "optim",
            "ppoints", "qqplot", "quantile", "rgamma", "rnorm",
-           "splinefun", "uniroot")
+           "splinefun", "uniroot", "var")
 
-## ========== Exports ========================
+################################################
+## Functions
+################################################
+export(skewhypCalcRange)
+export(skewhypCheckPars)
+export(dskewhyp,pskewhyp,qskewhyp,rskewhyp,ddskewhyp, ppskewhyp,qqskewhyp)
+export(skewhypFit)
+export(skewhypFitStart)
+export(skewhypMean, skewhypVar, skewhypSkew, skewhypKurt, skewhypMode)
+export(skewhypMom)
+export(skewhypTailPlotLine)
 
-exportPattern("skewhyp")# << FIXME?, also exports S3 methods
-
+################################################
+## S3 classes
+################################################
 S3method(print, skewhypFit)
 S3method(plot, skewhypFit)
 S3method(summary, skewhypFit)

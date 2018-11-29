@@ -1,4 +1,4 @@
-skewhypFitStart <- function(x, breaks = NULL, startValues = "LA",
+skewhypFitStart <- function (x, breaks = NULL, startValues = "LA",
                              paramStart = NULL, ...)
 {
   if (startValues == "US") {
@@ -174,8 +174,6 @@ skewhypFitStartLA <- function(x, breaks = NULL){
 skewhypFitStartMM <- function(x, nuTol = 1e-6, nuStart = 5, ...){
 
   ## from Aas& Haff (2004)
-  require(DistributionUtils)
-  require(numDeriv)
   ## Calculate moments
   m1 <- mean(x, na.rm = TRUE)
   m2 <- var(x, na.rm = TRUE)
@@ -218,5 +216,4 @@ skewhypFitStartMM <- function(x, nuTol = 1e-6, nuStart = 5, ...){
     return(out)
   }
 }
-
 

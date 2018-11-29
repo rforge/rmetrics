@@ -84,43 +84,5 @@ skewhypFit <- function (x, freq = NULL, breaks = NULL, startValues = "LA",
   return(fitResults)
 }
 
-skewhypFitEM <- function(x, freq = NULL, breaks = NULL, startValues = "LA",
-                         paramStart = NULL,  method = "Nelder-Mead",
-                         hessian = TRUE, plots = FALSE, printOut = TRUE,
-                         controlBFGS = list(maxit = 200),
-                         controlNM = list(maxit = 1000),
-                         maxitNLM = 1500, ...){
-  xName <- paste(deparse(substitute(x), 500), collapse = "\n")
-
-  ## allow frequency data
-  if (!is.null(freq)) {
-    if (length(freq) != length(x)) {
-      stop("vectors x and freq are not of the same length")}
-    x <- rep(x, freq)
-  }
-
-  ## get the starting value information
-  if (startValues == "US") {
-    startInfo <- skewhypFitStart(x, breaks = breaks,
-                                 startValues = startValues,
-                                 paramStart = paramStart)
-  }
-  if(startValues == "LA"){
-    startInfo <- skewhypFitStart(x, breaks = breaks,
-                                 startValues = startValues)
-  }
-  if(startValues == "MM"){
-    startInfo <- skewhypFitStart(x, breaks = breaks,
-                                 startValues = startValues, ...)
-  }
-  paramStart <- startInfo$paramStart
-  svName <- startInfo$svName
-  breaks <- startInfo$breaks
-  empDens <- startInfo$empDens
-  midpoints <- startInfo$midpoints
 
 
-
-}
-
-skewhypFitEStep <- function(

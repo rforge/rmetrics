@@ -205,7 +205,8 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
             xRange <- c(xLow,distMode)
             for (i in less){
                 quant[i] <- uniroot(function(x)
-                    pskewhyp(x, param=param, subdivisions=subdivisions, intTol=intTol) - p[i],
+                  pskewhyp(x, param = param, subdivisions = subdivisions,
+                           intTol = intTol) - p[i],
                     interval = xRange, tol = uniTol)$root
             }
         }
@@ -221,11 +222,11 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
                     skewhypStepSize(xHigh - distMode, delta, beta, nu, "right")
             }
             xRange <- c(distMode,xHigh)
-            zeroFn <- function(x, param, p)
+            zeroFn1 <- function(x, param, p)
                 pskewhyp(x, param = param, lower.tail = FALSE,
                          subdivisions = subdivisions, intTol = intTol) - p
             for (i in greater){
-                quant[i] <- uniroot(zeroFn, param = param, p = p[i],
+                quant[i] <- uniroot(zeroFn1, param = param, p = p[i],
                                     interval = xRange, tol = uniTol)$root
             }
         }
@@ -241,11 +242,11 @@ qskewhyp <- function (p, mu = 0, delta = 1, beta = 1, nu = 1,
         yVals <- pskewhyp(xVals, param = param, subdivisions = subdivisions,
                           intTol = intTol)
         splineFit <- splinefun(xVals, yVals)
-        zeroFn <- function(x, p) {
+        zeroFn2 <- function(x, p) {
             return(splineFit(x) - p)
         }
         for (i in inRange){
-            quant[i] <- uniroot(zeroFn, p = p[i],
+            quant[i] <- uniroot(zeroFn2, p = p[i],
                                 interval = xRange, tol = uniTol)$root
         }
 
