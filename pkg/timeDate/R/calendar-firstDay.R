@@ -29,7 +29,7 @@
 # ---------------------------------------------------------------------------- #
 timeLastDayInMonth <-
     function(charvec, format = "%Y-%m-%d", zone = "",
-    FinCenter = "")
+             FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
@@ -47,6 +47,7 @@ timeLastDayInMonth <-
     #   'timeDate' object.
 
     # FUNCTION:
+    if (length(charvec) == 0) stop("charvec must have length > 0")
     if (zone == "")
         zone = getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
@@ -61,7 +62,8 @@ timeLastDayInMonth <-
     lt$mday = last.day[1 + lt$mon] + leap.day
 
     # Return Value:
-    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone,
+             FinCenter = FinCenter)
 }
 
 
@@ -71,17 +73,18 @@ timeLastDayInMonth <-
 # ---------------------------------------------------------------------------- #
 timeFirstDayInMonth <-
     function(charvec, format = "%Y-%m-%d", zone = "",
-    FinCenter = "")
+             FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes the last day in a given month and year
+    #   Computes the first day in a given month and year
 
     # Changes:
     #
 
     # FUNCTION:
+    if (length(charvec) == 0) stop("charvec must have length > 0")
     if (zone == "")
         zone = getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
@@ -92,7 +95,8 @@ timeFirstDayInMonth <-
     lt$mday = 1
 
     # Return Value:
-    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone,
+             FinCenter = FinCenter)
 }
 
 
@@ -102,14 +106,15 @@ timeFirstDayInMonth <-
 # ---------------------------------------------------------------------------- #
 timeLastDayInQuarter <-
     function(charvec, format = "%Y-%m-%d", zone = "",
-    FinCenter = "")
+             FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes the last day in a given month and year
+    #   Computes the last day in a given quarter and year
 
     # FUNCTION:
+    if (length(charvec) == 0) stop("charvec must have length > 0")
     if (zone == "")
         zone = getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
@@ -117,18 +122,18 @@ timeLastDayInQuarter <-
 
     # First Day in Month:
     charvec = timeFirstDayInMonth(charvec = charvec, format = format,
-        FinCenter = FinCenter)
+                                  FinCenter = FinCenter)
 
     # Last Day in Quarter:
     lt = strptime(charvec, format, tz = "GMT")
     last.quarter = rep(c(3,6,9,12), each = 3) - 1
     lt$mon = last.quarter[1 + lt$mon]
     charvec = timeDate(format(lt), format = "%Y-%m-%d", zone = zone,
-        FinCenter = FinCenter)
+                       FinCenter = FinCenter)
 
     # Return Value:
     timeLastDayInMonth(charvec = charvec, format = format,
-        zone = zone, FinCenter = FinCenter)
+                       zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -138,24 +143,25 @@ timeLastDayInQuarter <-
 # ---------------------------------------------------------------------------- #
 timeFirstDayInQuarter <-
     function(charvec, format = "%Y-%m-%d", zone = "",
-    FinCenter = "")
+             FinCenter = "")
 {
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes the last day in a given month and year
+    #   Computes the first day in a given quarter and year
 
     # Changes:
     #
 
     # FUNCTION:
+    if (length(charvec) == 0) stop("charvec must have length > 0")
     if (zone == "")
         zone = getRmetricsOptions("myFinCenter")
     if (FinCenter == "")
         FinCenter = getRmetricsOptions("myFinCenter")
 
     # First Day in Month:
-    charvec = timeFirstDayInMonth(charvec =charvec, format = format,
+    charvec = timeFirstDayInMonth(charvec = charvec, format = format,
         FinCenter = FinCenter)
 
     # First Day in Quarter:
@@ -164,7 +170,8 @@ timeFirstDayInQuarter <-
     lt$mon = first.quarter[1 + lt$mon]
 
     # Return Value:
-    timeDate(format(lt), format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
+    timeDate(format(lt), format = "%Y-%m-%d", zone = zone,
+             FinCenter = FinCenter)
 }
 
 

@@ -1,3 +1,15 @@
+2018-11-29    <d.scott@auckland.ac.nz>
+
+	* timeFirstDayInMonth, timeLastDayInMonth,
+	timeFirstQuarterInMonth, timeLastQuarterInMonth all have test
+	added to preclude charvec value of length 0 being allowed in
+	response to bug #1742 
+
+	* .JULIAN changed to fix bug #6419 as suggested by reporter,
+	argument length in calls to rep replaced by full argument
+	length.out
+
+
 2013-04-30  chalabi
 
 	* DESCRIPTION, R/base-format.R, R/calendar-nDay.R,
