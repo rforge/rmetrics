@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2009, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * Christophe Dutang, see http://dutangc.free.fr
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
@@ -53,6 +54,8 @@
 #include <R.h>
 #include <Rmath.h>
 
+#include "locale.h"
+
 
 /* 
  * 64-bit int size type
@@ -83,13 +86,8 @@
 /*64-bit int size specification for printf family*/
 #ifndef PRIu64
  #if defined(_MSC_VER) || defined(__BORLANDC__)
-  #include <stdio.h>
   #define PRIu64 "I64u"
   #define PRIx64 "I64x"
- #elif defined(__LP64__) || defined(__powerpc64__)
-  #include <stdio.h>
-  #define PRIu64 "lu"
-  #define PRIx64 "lx"
  #else
   #define PRIu64 "llu"
   #define PRIx64 "llx"
@@ -99,11 +97,7 @@
 /*64-bit int size specification for scanf family*/
 #ifndef SCNu64
  #if defined(_MSC_VER) || defined(__BORLANDC__)
-  #include <stdio.h>
-  #define SCNu64 "U64"
- #elif defined(__LP64__) || defined(__powerpc64__)
-  #include <stdio.h>
-  #define SCNu64 "lu"
+  #define SCNu64 "I64u"
  #else
   #define SCNu64 "llu"
  #endif

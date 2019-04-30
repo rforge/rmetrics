@@ -282,8 +282,7 @@ for detailed explanations).
 <<example1, fig=FALSE, echo=TRUE, eval=TRUE>>=
 RNGkind()
 library(randtoolbox)
-paramParkMiller <- c(mod=2^31-1, mult=16807, incr=0)
-set.generator(name="congruRand", parameters=paramParkMiller, seed=1)
+set.generator("MersenneTwister", initialization="init2002", resolution=53, seed=1)
 get.description()
 RNGkind()
 runif(10)

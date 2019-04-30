@@ -19,10 +19,11 @@ C without error.
 C
 C Copyright (C) Oct. 2009, Christophe Dutang, slightly modified (better accuracy and speed).
 C
-C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C Copyright (C) Sept. 2002, Diethelm Wuertz.
 C
 C The new BSD License is applied to this software.
 C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C Christophe Dutang, see http://dutangc.free.fr  
 C
 C      Redistribution and use in source and binary forms, with or without
 C      modification, are permitted provided that the followingConditions are
@@ -1225,142 +1226,3 @@ void INITSOBOL(int DIMEN, double *QUASI, int *LL, int COUNT, int *SV, int IFLAG,
       }
 }
 
-/*
-C ------------------------------------------------------------------------------
-
-
-      SUBROUTINE SGENSCRML(MAX, LSM, SHIFT, S, MAXCOL, iSEED)
-
-C     GENERATING LOWER TRIANGULAR SCRAMBLING MATRICES AND SHIFT VECTORS.
-      DOUBLE PRECISION UNIS
-      INTEGER S,MAXCOL,P,I,J,MAX,TEMP,STEMP,L,LL
-      INTEGER SHIFT(1111),LSM(1111,31)
-      INTEGER iSEED
-      
-      DO P = 1, S
-         SHIFT(P) = 0
-         L = 1
-         DO I = MAX, 1, -1
-            LSM(P, I) = 0
-            STEMP =  MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
-            SHIFT(P) = SHIFT(P) + STEMP*L
-            L = 2 * L
-            LL = 1
-            DO J = MAXCOL, 1, -1
-               IF (J .EQ. I) THEN
-                  TEMP = 1
-               ELSEIF (J .LT. I)  THEN 
-                  TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
-               ELSE
-                  TEMP = 0
-               ENDIF
-               LSM(P ,I) = LSM(P, I) + TEMP*LL
-               LL = 2 * LL            
-            ENDDO
-         ENDDO 
-      ENDDO
-      RETURN
-      END   
-
-     
-C ------------------------------------------------------------------------------
-
-
-      SUBROUTINE SGENSCRMU(USM, USHIFT, S, MAXCOL, iSEED)
-
-C     GENERATING UPPER TRIANGULAR SCRMABLING MATRICES AND SHIFT VECTORS.
-      DOUBLE PRECISION UNIS
-      INTEGER USM(31,31),MAXCOL,I,J
-      INTEGER USHIFT(31),S,TEMP,STEMP
-      INTEGER iSEED
-      
-      DO I = 1, MAXCOL
-         STEMP =  MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
-         USHIFT(I) = STEMP               
-         DO J = 1, MAXCOL
-            IF (J .EQ. I) THEN
-               TEMP = 1
-            ELSEIF (J .GT. I)  THEN 
-               TEMP = MOD((INT(UNIS(iSEED)*1000.0D0)), 2)
-            ELSE
-               TEMP = 0
-            ENDIF
-            USM(I, J) = TEMP        
-         ENDDO
-      ENDDO 
-      RETURN
-      END   
-
-
-C-------------------------------------------------------------------------------
-      
-      
-      DOUBLE PRECISION FUNCTION UNIS(IX)
-C       PORTABLE PSEUDORANDOM NUMBER
-C       GENERATOR IMPLEMENTING THE RECURSION
-C       IX=16807*IX MOD(2**31-1)
-C       UNIF=IX/(2**31-1)
-C       USING ONLY 32 BITS INCLUDING SIGN
-C       INPUT:
-C        IX =INTEGER STRICTLY BETWEEN 0 AND 2** 31 -1
-C       OUTPUTS:
-C        IX=NEW PSEUDORANDOM INTEGER
-C           STRICTLY BETWEEN 0 AND 2**31-1
-C        UNIF=UNIFORM VARIATE (FRACTION)
-C           STRICTLY BETWEEN 0 AND 1
-C      FOR JUSTIFICATION, SEE P. BRATLEY,
-C      B.L. FOX, AND L.E. SCHRAGE (1983)
-C      "A GUIDE TO SIMULATION"
-C      SPRINGER-VERLAG, PAGES 201-202
-      INTEGER K1,IX
-      K1 = IX/127773
-      IX = 16807*(IX-K1*127773)-K1*2836
-      IF (IX.LT.0) IX=IX+2147483647
-      UNIS = IX*4.656612875D-10
-      RETURN
-      END
-
-
-C-------------------------------------------------------------------------------   
-
-
-      SUBROUTINE NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
-
-C     GENERATES A NEW QUASIRANDOM VECTOR WITH EACH CALL. IT ADAPTS THE 
-C     IDEAS OF ANTONOV AND SALEEV, USSR COMPUT. MATHS. MATH. PHYS. 19, 
-C     (1980), 252-256. "INITSOBOL" MUST BE CALLED BEFORE CALLING "NEXTSOBOL". 
-C     ARGUMENTS:
-C       DIMEN     - DIMENSION OF THE SEQUENCY
-C       QUASI     - LAST POINT IN THE SEQUENDE
-C       LL        - COMMON DENOMINATOR OF THE ELEMENTS IN SV
-C       COUNT     - SEQUENCE NUMBER OF THE CALL
-      
-      INTEGER DIMEN,MAXBIT,I,L,COUNT
-      PARAMETER (MAXBIT=30)
-      INTEGER SV(DIMEN,MAXBIT)
-      DOUBLE PRECISION QUASI(DIMEN)
-      INTRINSIC MOD, IEOR
-
-C     >>> remove implicit type declaration <<<
-      INTEGER LL
-      
-      L = 0
-      I = COUNT
-   10 L = L + 1
-      IF (MOD(I, 2).EQ.1) THEN
-         I = I/2
-         GOTO 10
-      END IF
-
-C     CALCULATE THE NEW COMPONENTS OF QUASI,
-C     FIRST THE NUMERATORS, THEN NORMALIZED
-      DO I = 1, DIMEN
-         QUASI(I) = REAL(IEOR(INT(QUASI(I)*LL), SV(I, L)))/LL
-      ENDDO
-
-      COUNT = COUNT + 1
-      RETURN
-      END
-
-*/      
-      

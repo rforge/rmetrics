@@ -11,7 +11,7 @@ random numbers, for example \code{runif()}, \code{rnorm()}, \code{sample()}
 and \code{set.seed()}.
 }
 \usage{
-set.generator(name=c("congruRand", "WELL", "MersenneTwister", "default"),
+set.generator(name=c("WELL", "MersenneTwister", "default"),
               parameters=NULL, seed=NULL, \dots, only.dsc=FALSE)
 
 put.description(description)		
@@ -113,6 +113,7 @@ runif(5)
 storedState <- get.description()
 x <- runif(10)
 
+\dontrun{
 #Park Miller congruential generator
 set.generator(name="congruRand", mod=2^31-1, mult=16807, incr=0, seed=12345)
 runif(5)
@@ -124,6 +125,7 @@ set.generator(name="congruRand", mod="4294967296", mult="1664525", incr="1013904
 runif(5)
 setSeed(1)
 congruRand(5, dim=1, mod=4294967296, mult=1664525, incr=1013904223)
+}
 
 #Restore the generator from storedState and regenerate the same numbers
 put.description(storedState)

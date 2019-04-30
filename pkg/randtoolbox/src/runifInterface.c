@@ -54,7 +54,13 @@
 #include "congruRand.h"
 #include "runifInterface.h"
 
-static int generator;
+/* generator code : 
+ * 1 for LCG set by put_state_congru() in congruRand.c 
+ * 2 for WELL set by dogetRngWELL() see package rngWELL
+ * 3 for MT19937 set by putMersenneTwister() in mt19937.c
+ */
+static int generator; 
+
 static double (*user_unif_rand_selected) (void); // not (double *) as user_unif_rand
 static void (*user_unif_init_selected) (unsigned int seed);
 

@@ -12,4 +12,4 @@ sobol.directions(p13, 3, sapply(c(1,1,1), int2bit), 0, echo=FALSE)
 sobol.directions(p13, 3, sapply(c(1,3,5), int2bit), 0, echo=FALSE)
 sobol.directions(p13, 3, sapply(c(1,1,7), int2bit), 0, echo=FALSE)
 
-sobol(1, 3)
+sobol(2, 3)

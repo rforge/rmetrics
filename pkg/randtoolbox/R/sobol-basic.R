@@ -10,6 +10,7 @@
 #
 # The new BSD License is applied to this software.
 # Copyright (c) 2017 Christophe Dutang. 
+# Christophe Dutang, see http://dutangc.free.fr
 # All rights reserved.
 #
 #      Redistribution and use in source and binary forms, with or without

@@ -8,6 +8,7 @@
  *
  * Copyright (C) 2017, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * Christophe Dutang, see http://dutangc.free.fr 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.

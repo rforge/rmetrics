@@ -6,6 +6,7 @@
  *
  *
  * Copyright (C) 2009, Christophe Dutang. 
+ * Christophe Dutang, see http://dutangc.free.fr 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.

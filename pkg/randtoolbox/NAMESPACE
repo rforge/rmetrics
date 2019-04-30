@@ -16,8 +16,6 @@ export(sobol.directions, int2bit, bit2int, bit2unitreal, sobol.basic, sobol.R)
 
 export(setSeed, congruRand, SFMT, WELL, knuthTAOCP)
 
-#export(trueRNG) future features
-
 export(set.generator, put.description, get.description)
 
 export(rngWELLScriptR, getWELLState)

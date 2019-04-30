@@ -6,12 +6,13 @@
  * @author Petr Savicky 
  *
  *
- * Copyright (C) 2014, Christophe Dutang,
+ * Copyright (C) 2019, Christophe Dutang,
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * Christophe Dutang, see http://dutangc.free.fr
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
- * Copyright (c) 2014 Christophe Dutang, Petr Savicky. 
+ * Copyright (c) 2019 Christophe Dutang, Petr Savicky. 
  * All rights reserved.
  *
  *      Redistribution and use in source and binary forms, with or without
@@ -186,9 +187,11 @@ void get_state_congru(char **params, char **seed)
 // .C entry point used by put.description
 void put_state_congru(char **params, char **seed, int *err)
 {
+  error(_("temporarily disabled function"));
+  
+  /*
 	uint64_t inp_mod, inp_mask, inp_mult, inp_incr, inp_seed;
-  Rprintf("p1\n");
-	if (strcmp(params[0], two_64_s) == 0) {
+  if (strcmp(params[0], two_64_s) == 0) {
 		inp_mod = 0;
 		inp_mask = two_64m1_h;
 	} else {
@@ -203,16 +206,7 @@ void put_state_congru(char **params, char **seed, int *err)
 	sscanf(params[2], "%" SCNu64 "\n", &inp_incr);
 	sscanf(seed[0], "%" SCNu64 "\n", &inp_seed);
 	
-	Rprintf("mult", "%" PRIu64 "\n", inp_mult);
-	Rprintf("mod", "%" PRIu64 "\n", inp_mod);
-	Rprintf("mask", "%" PRIu64 "\n", inp_mask);
-	Rprintf("incr", "%" PRIu64 "\n", inp_incr);
-	Rprintf("seed", "%" PRIu64 "\n", inp_seed);
-	
-	
 	*err = check_congruRand(inp_mod, inp_mask, inp_mult, inp_incr, inp_seed);
-	
-  Rprintf("\nresult of check_congruRand() %d\n", *err);
 	
 	if (*err < 0) return;
 	mod = inp_mod;
@@ -231,5 +225,6 @@ void put_state_congru(char **params, char **seed, int *err)
 		user_unif_set_generator(1, user_unif_init_congru, user_unif_rand_congru_2);
 	}
 	*err = 0;
+	*/
 }
 

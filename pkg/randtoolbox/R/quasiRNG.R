@@ -5,12 +5,13 @@
 # @author Christophe Dutang
 # @author Diethelm Wuertz 
 #
-# Copyright (C) 2017, Christophe Dutang, 
 # Copyright (C) 2009, Diethelm Wuertz, ETH Zurich. 
+# Copyright (C) 2019, Christophe Dutang, 
+# Christophe Dutang, see http://dutangc.free.fr
 # All rights reserved.
 #
 # The new BSD License is applied to this software.
-# Copyright (c) 2009 Christophe Dutang, Diethelm Wuertz. 
+# Copyright (c) 2019 Christophe Dutang, Diethelm Wuertz. 
 # All rights reserved.
 #
 #      Redistribution and use in source and binary forms, with or without
@@ -54,7 +55,7 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
                   normal=FALSE, mexp = 19937)
 {
   ## Check arguments
-  if(n < 0 || is.array(n) || !is.numeric(n))
+  if(is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(length(dim) >1)
     stop("invalid argument 'dim'")
@@ -89,8 +90,10 @@ torus <- function(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE
   
   ## Compute        
   nb <- ifelse(length(n)>1, length(n), n)
+  if(nb < 0) stop("invalid argumet 'n'")
+  if(nb == 0) return(numeric(0))
   startpt <- .getrandtoolboxEnv(".torus.seed")$offset
-  print(startpt)
+  
   #implemented in src/randtoolbox.c
   res <- .Call(CF_doTorus, nb, dim, prime, startpt, mixed, usetime, mexp)
   
@@ -123,7 +126,7 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
 {   
   # A function based on Diethelm Wuertz's code
   
-  if(n < 0 || is.array(n) || !is.numeric(n))
+  if(is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(length(dim) >1)
     stop("invalid argument 'dim'")   
@@ -157,6 +160,8 @@ halton <- function (n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE,
     stop("Halton algorithm not initialized.")
   
   nb <- ifelse(length(n)>1, length(n), n)
+  if(nb < 0) stop("invalid argumet 'n'")
+  if(nb == 0) return(numeric(0))
   rngEnv <- .getrandtoolboxEnv(".halton.seed")
   
   if(method == "Fortran")
@@ -215,7 +220,7 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
                    mixed = FALSE, method="Fortran", mexp = 19937)
 {   
   # A function implemented by Diethelm Wuertz
-  if(n <0 || is.array(n) || !is.numeric(n))
+  if(is.array(n) || !is.numeric(n))
     stop("invalid argument 'n'")
   if(length(dim) >1)
     stop("invalid argument 'dim'")    
@@ -226,7 +231,8 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
   method <- match.arg(method, c("C", "Fortran"))
   
   nb <- ifelse(length(n)>1, length(n), n)
-  
+  if(nb < 0) stop("invalid argumet 'n'")
+  if(nb == 0) return(numeric(0))
   if(method == "Fortran")
   {  
     
@@ -279,9 +285,10 @@ sobol <- function (n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal 
     authorizedParam <- c(607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091)
     if( !(mexp %in% authorizedParam) )
       stop("'mexp' must be in {607, 1279, 2281, 4253, 11213, 19937, 44497, 86243, 132049, 216091}. ")
-    
+    warning("not yet implemented")
+    return(NULL)
     result <- .Call(CF_doSobol, nb, dim, 0, FALSE, FALSE, mexp)
-    stop("not yet implemented")
+    
   }
     
   

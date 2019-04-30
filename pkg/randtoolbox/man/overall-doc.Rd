@@ -8,9 +8,8 @@
 \description{The randtoolbox-package started in 2007 
   during an ISFA (France) working group. From then, it
   grew quickly thanks to the contribution of Diethelm Wuertz
-  and Petr Savicky. It was presented in the Rmetrics 
-  Meielisalp workshop in 2009. Slides can be found
-  here: \url{http://www.rmetrics.org/Meielisalp2009/Presentations/Dutang.pdf}.
+  and Petr Savicky. It was presented at the Rmetrics 
+  workshop in 2009 in Meielisalp, Switzerland. 
    
   This package has currently implementations for 
   state-of-the-art pseudo RNGs for simulations as well as the usual quasi RNGs.
@@ -22,16 +21,15 @@
   
   The stable version is available on CRAN 
   \url{https://CRAN.R-project.org/package=randtoolbox},
-  while the development version is hosted on R-forge
-  \url{http://r-forge.r-project.org/projects/rmetrics/}.
+  while the development version is hosted on R-forge in the rmetric project.
   
 } 
 \details{
 \tabular{ll}{
 Package: \tab randtoolbox\cr
 Type: \tab Package\cr
-Version: \tab 1.17\cr
-Date: \tab 2015, July\cr
+Version: \tab 1.30.0\cr
+Date: \tab 2019\cr
 License: \tab BSD_3_clause + file LICENSE\cr
 }
 }

@@ -6,12 +6,13 @@
  * @author Petr Savicky 
  *
  *
- * Copyright (C) 2009, Christophe Dutang, 
+ * Copyright (C) 2019, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * Christophe Dutang, see http://dutangc.free.fr 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
- * Copyright (c) 2009 Christophe Dutang, Petr Savicky. 
+ * Copyright (c) 2019 Christophe Dutang, Petr Savicky. 
  * All rights reserved.
  *
  *      Redistribution and use in source and binary forms, with or without
@@ -165,17 +166,12 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
     //init the seed of SF Mersenne Twister algo
     SFMT_init_gen_rand(seed);
     
-    
-    //Rprintf("state %lu\n", seed);
-    
     //compute
     for(j = 0; j < dim; j++)
     {    
       for(i = 0; i < nb; i++) 
       {
         state = SFMT_gen_rand32();
-        //Rprintf("state %lu\n", state);
-        
         u[i + j * nb] = fracPart( state * sqrt( prime[j] ) ) ;
       }
     }
@@ -189,9 +185,6 @@ void torus(double *u, int nb, int dim, int *prime, int offset, int ismixed, int 
       state = ((unsigned int) seed >> 16);
     }else 
       state  = offset;
-    
-    
-    //Rprintf("state %u %lu\n", state, state);
     //compute
     for(j = 0; j < dim; j++)
       for(i = 0; i < nb; i++) 					
@@ -263,8 +256,6 @@ void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, 
       for(i = 0; i < nb; i++)
       {
         state = SFMT_gen_rand32();
-        Rprintf("state %u %lu\n", state, state);
-        
         u[i + j * nb] = HALTONREC( j, state ) ;
       }
     }
@@ -279,7 +270,6 @@ void halton_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, 
     }else
       state  = offset;
     
-    //Rprintf("state %u %lu\n", state, state);
     for(j = 0; j < dim; j++)
       for(i = 0; i < nb; i++)
         u[i + j * nb] = HALTONREC( j, state + i ) ;
@@ -324,7 +314,7 @@ SEXP doSobol(SEXP n, SEXP d, SEXP offset, SEXP ismixed, SEXP timedseed, SEXP mer
 
 
 
-//compute the vector sequence of the Halton algorithm
+//compute the vector sequence of the Sobol algorithm
 void sobol_c(double *u, int nb, int dim, int offset, int ismixed, int usetime, int mexp)
 {
   //temporary working variables
@@ -390,8 +380,6 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
   double incrtemp = asReal( increment ) ; //increment as a double numeric
   uint64_t mod, mult, incr, mask; //modulus, multiplier, increment, mask
   
-  Rprintf("mod %f\n", modultemp);
-  
   //define a mask as in congruRand.c (function put_state_congru())
   if (modultemp < two_64_d) //modulus lesser than 2^64 => mask=2^d-1 if mod = 2^d
   {  
@@ -413,11 +401,6 @@ SEXP doCongruRand(SEXP n, SEXP d, SEXP modulus, SEXP multiplier, SEXP increment,
     incr = (uint64_t) incrtemp; //increment below 2^64  
   else
     error(_("increment greater than 2^64-1"));
-  
-  Rprintf("mask: %llu\n", mask);
-  Rprintf("modulus: %llu\n", mod);
-  Rprintf("multiplier: %llu\n", mult);
-  Rprintf("increment: %llu\n", incr);
   
   //result
   double *u ; //result in C
@@ -543,12 +526,6 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
   //int rest = nb % blocksize;
   
   
-  
-  //Rprintf("zog\n");
-  
-  //    PROTECT(array = allocMatrix(INTSXP, nb, dim)); //allocate a n x d matrix
-  
-  
   /*
    * @param size the number of 32-bit pseudorandom integers to be
    * generated.  size must be a multiple of 4, and greater than or equal
@@ -557,16 +534,9 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
 #if defined(HAVE_SSE2)    
   if(nb * dim >= blocksize)
   {
-    
-    //unsigned int *array;
-    //        static __m128i array1[BLOCK_SIZE / 4];
-    //        static __m128i array2[10000 / 4];
-    
     __m128i array1[nb * dim*4];
     
     uint32_t *array32 = (uint32_t *)array1;
-    
-    //        array = (unsigned int *) R_alloc(nb * dim, sizeof(__m128i));
     
     fill_array32(array32, nb*dim);
     
@@ -575,13 +545,10 @@ void SFmersennetwister(double *u, int nb, int dim, int mexp, int usepset)
       for(i = 0; i < nb; i++) 
         u[i + j * nb] = to_real3( array32[i + j * nb] ); // real on ]0,1[ interval
     
-    
-    //Free(array);
   }
   else
   {
 #endif        
-    
     
     // compute u_ij
     for(j = 0; j < dim; j++)
@@ -669,8 +636,6 @@ void knuthTAOCP(double *u, int nb, int dim)
   //init TAOCP RNG
   ranf_start( seed );
   
-  //ranf_arr_cycle();
-  
   // compute u_ij's
   // declare an array a little bit longer than KK (100) long lag if too short
   // see Knuth's file for details
@@ -688,7 +653,6 @@ void knuthTAOCP(double *u, int nb, int dim)
   else
     ranf_array( u, nb*dim );
 
-  //Rprintf("1st term %.20f --- seed  %u\n", u[0], seed);
   isInit = 0;
 }
 

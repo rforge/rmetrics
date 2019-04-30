@@ -5,14 +5,13 @@
  * @author Christophe Dutang
  * @author Petr Savicky 
  *
- * Copyright (C) 2016, Christophe Dutang
- *
- * Copyright (C) 2009, Christophe Dutang, 
+ * Copyright (C) 2019, Christophe Dutang, 
  * Petr Savicky, Academy of Sciences of the Czech Republic. 
+ * Christophe Dutang, see http://dutangc.free.fr 
  * All rights reserved.
  *
  * The new BSD License is applied to this software.
- * Copyright (c) 2009 Christophe Dutang, Petr Savicky. 
+ * Copyright (c) 2019 Christophe Dutang, Petr Savicky. 
  * All rights reserved.
  *
  *      Redistribution and use in source and binary forms, with or without

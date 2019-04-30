@@ -18,10 +18,11 @@ C without error.
 C
 C Copyright (C) Oct. 2009, Christophe Dutang, slightly modified (better accuracy and speed).
 C
-C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C Copyright (C) Sept. 2002, Diethelm Wuertz
 C
 C The new BSD License is applied to this software.
 C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
+C Christophe Dutang, see http://dutangc.free.fr 
 C
 C      Redistribution and use in source and binary forms, with or without
 C      modification, are permitted provided that the followingConditions are
@@ -104,7 +105,6 @@ double HALTONREC(int DIMEN, unsigned long long OFFSET)
     HALF = 1.0 / primeNumber[DIMEN];
     if (primeNumber[2] == 1)
       reconstruct_prime();
-    //Rprintf("DIMEN %u, prime %u\n", DIMEN, primeNumber[DIMEN]);
     do
     {
         DIGIT = ITER % primeNumber[DIMEN];
