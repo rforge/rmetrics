@@ -1,7 +1,12 @@
+2019-09-01    <d.scott@auckland.ac.nz>
+
+	* nigFitStartMoM, hyperbFitStartMom changed to correct kurtosis to
+	be positive, that is, don't subtract 3 when calculating kurtosis.
+
 2014-10-05    <d.scott@auckland.ac.nz>
 
 	* DESCRIPTION changed, RUnit Suggests. Makefile fixed, LEVEL = 1
-	deleted. 
+	deleted.
 
 2013-04-22    <d.scott@auckland.ac.nz>
 
@@ -24,7 +29,7 @@
 2012-04-13    <d.scott@auckland.ac.nz>
 
 	* ArkansasRiver added as a data set giving data provided by Eric
-	Morway from the US Geological Survey 
+	Morway from the US Geological Survey
 
 	* hyperblmFit, hyperblm added to allow fitting of linear models
 	with hyperbolic errors

@@ -162,7 +162,7 @@ hyperbFitStartMoM <- function(x, startMethodMoM = "Nelder-Mead", ...) {
   ## Determine starting values for parameters using
   ## Barndorff-Nielsen et al "The Fascination of Sand" in
   ## A Celebration of Statistics pp.78--79
-  xi <- sqrt(kurtosis(x)/3)
+  xi <- sqrt(kurtosis(x)/3 + 1)
   chi <- skewness(x)/3  # Ensure 0 <= |chi| < xi < 1
 
   if (xi >= 1)
