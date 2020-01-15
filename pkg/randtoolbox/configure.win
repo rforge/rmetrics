@@ -21,4 +21,4 @@
 ###
 ###			'autoconf' config file 
 ### 
-cp -p src/config.h.win src/config.h
+cp src/config.h.win src/config.h
