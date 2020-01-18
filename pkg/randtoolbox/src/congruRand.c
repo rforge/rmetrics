@@ -52,7 +52,7 @@
 
 
 #include "congruRand.h"
-#include "runifInterface.h"
+
 
 #define two_64_d 18446744073709551616.0
 #define two_64m1 18446744073709551615ULL

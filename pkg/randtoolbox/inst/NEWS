@@ -2,9 +2,10 @@
 
 Version 1.30.1
 =============
-- bug fixes on array limit issues in Fortran code.
-- warning fix on unused variable in Fortran code.
-- bug fixes on multiple defintion issues in C header files.
+- bug fixes on array limit issues in Fortran code (in INITSOBOL).
+- warning fix on unused variable in Fortran code (in SGENSCRMU).
+- bug fixes on multiple defintion issues (for WELL_get_set_entry_point, 
+WELLrng, setSeed4WELL) in C header files.
 
 Version 1.30.0 (Version in Memoriam of Diethelm and Barbara Wuertz)
 =============

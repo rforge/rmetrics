@@ -146,3 +146,7 @@ void R_init_randtoolbox(DllInfo *dll)
   
 }
 
+
+/* Define imports from package rngWELL */
+void (*WELLrng)(double *u, int nb, int dim, int order, int temper, int version);
+void (*setSeed4WELL)(double *u, int nb, int dim, int order, int temper, int version);

@@ -57,7 +57,7 @@ The currently available generator are given below.
 			    u_k = (frac(k sqrt(p_1)), ..., frac(k sqrt(p_d)) )}
 	where \eqn{p_i} denotes the ith prime number, \eqn{frac} the fractional part
 	(i.e. \eqn{frac(x) = x-floor(x)}). We use the 100 000 first prime numbers
-	from \url{http://primes.utm.edu/}, thus the dimension is limited to 100 000. 
+	from \url{https://primes.utm.edu/}, thus the dimension is limited to 100 000. 
 	If the user supplys prime numbers through
 	the argument \code{prime}, we do NOT check for primality and we cast numerics
 	to integers, (i.e. \code{prime=7.1234} will be cast to \code{prime=7} before
