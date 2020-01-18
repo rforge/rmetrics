@@ -110,6 +110,6 @@ void randSeed();
 
 void WELL_get_set_entry_point(void * p_user_unif_set_generator);
 void initMT2002(unsigned int *seed, int *n, unsigned int *state);
-void putRngWELL(int *order, unsigned int *state);
-void getRngWELL(int *order, unsigned int *state);
+extern void putRngWELL(int *porder, int *pversion, unsigned int *state);
+extern void getRngWELL(int *porder, int *pversion, unsigned int *state);
 

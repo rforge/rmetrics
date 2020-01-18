@@ -53,6 +53,6 @@
 
 void version_rngWELL(char **s)
 {
-	s[0] = "0.10-5";
+	s[0] = "0.10-6";
 }
 

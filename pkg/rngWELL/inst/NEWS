@@ -1,11 +1,15 @@
 === rngWELL: WELL random number generators ===
 
+Version 0.10-6
+=============
+- bug fixes on multiple defintion issues in C header files (see https://www.stats.ox.ac.uk/pub/bdr/LTO/rngWELL.out).
+- mismatch of C functions between header and source files.
+
 Version 0.10-5
 =============
 - fix NOTE using R_useDynamicSymbols to preclude compilation
 NOTEs, better registration of native routines and reduced
 symbol visibility.
- 
 
 Version 0.10-4
 =============

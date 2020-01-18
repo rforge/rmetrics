@@ -281,7 +281,7 @@ fi
 
 
 ### initialize
-AC_INIT([rngWELL], 0.10-4, [christophe.dutang@ensimag.fr])
+AC_INIT([rngWELL], 0.10-6, [christophe.dutang@ensimag.fr])
 
 ### check header (1st arg), preprocessor @DEFS@ (2nd arg) if found, nothing if not found (3rd arg) 
 AC_CHECK_HEADER([sys/time.h], 

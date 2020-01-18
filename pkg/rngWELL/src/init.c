@@ -63,10 +63,10 @@
 //table of registration routines accessed with .C()
 static const R_CMethodDef cMethods[] = 
 {
-  {"initMT2002",      (DL_FUNC) &initMT2002, 3}, //rngWELL.h
-  {"putRngWELL",      (DL_FUNC) &putRngWELL, 3}, //rngWELL.h
-  {"getRngWELL",      (DL_FUNC) &getRngWELL, 3}, //rngWELL.h
-  {"version_rngWELL", (DL_FUNC) &version_rngWELL, 1}, //version.h
+  {"initMT2002",      (DL_FUNC) &initMT2002, 3}, //rngWELL.h -> runifInterface.c
+  {"putRngWELL",      (DL_FUNC) &putRngWELL, 3}, //rngWELL.h -> runifInterface.c
+  {"getRngWELL",      (DL_FUNC) &getRngWELL, 3}, //rngWELL.h -> runifInterface.c
+  {"version_rngWELL", (DL_FUNC) &version_rngWELL, 1}, //version.h -> version.c
   {NULL, NULL, 0}
 };
 
@@ -74,8 +74,8 @@ static const R_CMethodDef cMethods[] =
 //table of registration routines accessed with .Call()
 static const R_CallMethodDef callMethods[] = 
 {
-  {"doSetSeed4WELL",  (DL_FUNC) &doSetSeed4WELL, 1}, //rngWELL.h
-  {"doWELL",          (DL_FUNC) &doWELL, 5}, //rngWELL.h
+  {"doSetSeed4WELL",  (DL_FUNC) &doSetSeed4WELL, 1}, //rngWELL.h -> rngWELL.c
+  {"doWELL",          (DL_FUNC) &doWELL, 5}, //rngWELL.h -> rngWELL.c
   {NULL, NULL, 0}
 };
 
@@ -91,9 +91,6 @@ void R_init_rngWELL(DllInfo *dll)
   R_RegisterCCallable("rngWELL", "setSeed4WELL", (DL_FUNC) setSeed4WELL);
   R_RegisterCCallable("rngWELL", "WELLrng", (DL_FUNC) WELLrng);
   R_RegisterCCallable("rngWELL", "WELL_get_set_entry_point", (DL_FUNC) WELL_get_set_entry_point);
-  /*R_RegisterCCallable("rngWELL", "initMT2002", (DL_FUNC) initMT2002);
-   R_RegisterCCallable("rngWELL", "putRngWELL", (DL_FUNC) putRngWELL);
-   R_RegisterCCallable("rngWELL", "getRngWELL", (DL_FUNC) getRngWELL);*/
 }
 
 
