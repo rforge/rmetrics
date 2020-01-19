@@ -33,12 +33,12 @@ torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE,
        scrambling is applied. By default 0.}
   \item{seed}{
         an integer value, the random seed for initialization
-        of the scrambling process. By default \code{4711}. On effective
+        of the scrambling process. By default \code{4711}. Only used
         if \code{scrambling>0}.
         }
   \item{prime}{a single prime number or a vector of prime numbers to be used
   		 in the Torus sequence. (optional argument).}
-  \item{mixed}{a logical to combine the Torus algorithm with SFMT algorithm, default \code{FALSE}.}
+  \item{mixed}{a logical to combine the QMC algorithm with the SFMT algorithm, default \code{FALSE}.}
   \item{usetime}{a logical to use the machine time to start the Torus sequence, 
   		   default \code{FALSE}, i.e. when \code{usetime=FALSE} the Torus sequence start from the first term.
   		   \code{usetime} is only used when \code{mixed=FALSE}.}
@@ -50,6 +50,8 @@ torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE,
 \details{
 
 The currently available generator are given below.
+Whatever the sequence, when \code{normal=TRUE}, outputs are transformed with
+the standard normal quantile (\code{qnorm}).
 \describe{
     \item{\bold{Torus algorithm:}}{
 	The \eqn{k}th term of the Torus algorithm in d dimension is given by
@@ -63,18 +65,21 @@ The currently available generator are given below.
 	to integers, (i.e. \code{prime=7.1234} will be cast to \code{prime=7} before
 	computing Torus sequence).
 	The Torus sequence starts from \eqn{k=1} when initialized with 
-	\code{init = TRUE} and no not depending on machine time 
-	\code{usetime = FALSE}. This is the default. When {init = FALSE}, the sequence
-	is not initialized (to 1) and starts from the last term. We can also use the
-	machine time to start the sequence with \code{usetime = TRUE}, which overrides
-	\code{init}.}
+	\code{init = TRUE} and so not depending on machine time 
+	\code{usetime = FALSE}. This is the default. When \code{init = FALSE}, the sequence
+	is not initialized (to 1) and starts from the last term. 
+	We can also use the machine time to start the sequence with \code{usetime = TRUE}, 
+	which overrides \code{init} or a randomized when \code{mixed = TRUE}.}
 
-    \item{\bold{scrambled Sobol sequences}}{
-	Calculates a matrix of uniform and normal deviated Sobol low 
-    	discrepancy numbers. Optional scrambling of the sequence can 
-    	be selected.
-	The Sobol sequence restarts and is initialized when 
-	\code{init = TRUE} and otherwise not.
+    \item{\bold{(scrambled) Sobol sequences}}{
+	Computes uniform Sobol low discrepancy numbers. 
+	The sequence starts from \eqn{k=1} when initialized with 
+	\code{init = TRUE} (default).
+	When \code{scrambling > 0}, a scrambling is performed
+	or when \code{mixed = TRUE}, a randomized seed is performed.
+  If some number of Sobol sequences are generated outside (0,1) with scrambling,
+  the seed is randomized until we obtain all numbers in (0,1).
+	
 	}
 
     \item{\bold{Halton sequences}}{
@@ -82,18 +87,21 @@ The currently available generator are given below.
     	discrepancy numbers. Let us note that Halton sequence in dimension is the
 	Van Der Corput sequence.
 	The Halton sequence starts from \eqn{k=1} when initialized with 
-	\code{init = TRUE} and no not depending on machine time 
-	\code{usetime = FALSE}. This is the default. When {init = FALSE}, the sequence
+	\code{init = TRUE} (default) and no not depending on machine time 
+	\code{usetime = FALSE}. 
+	When \code{init = FALSE}, the sequence
 	is not initialized (to 1) and starts from the last term. We can also use the
 	machine time to start the sequence with \code{usetime = TRUE}, which overrides
 	\code{init}.
+  If \code{method = "C"}, \code{mixed} argument can be used to randomized
+  the Halton sequences.
 	}	
 
 }%end of describe
 See the pdf vignette for details.
 }
 \value{
-  \code{torus}, \code{halton} and \code{sobol} generates random variables in ]0,1[. It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim}>1 otherwise a vector of length \code{n}.
+  \code{torus}, \code{halton} and \code{sobol} generates random variables in (0,1). It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim>1} otherwise a vector of length \code{n}.
 }
 \references{
 
