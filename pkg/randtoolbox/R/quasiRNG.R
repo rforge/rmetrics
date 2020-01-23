@@ -6,7 +6,7 @@
 # @author Diethelm Wuertz 
 #
 # Copyright (C) 2009, Diethelm Wuertz, ETH Zurich. 
-# Copyright (C) 2019, Christophe Dutang, 
+# Copyright (C) 2020, Christophe Dutang, 
 # Christophe Dutang, see http://dutangc.free.fr
 # All rights reserved.
 #

@@ -57,6 +57,8 @@ If the vector \code{parameters} is not supplied and the arguments in \code{...}
 are not sufficient to create it, an error message is produced.
 
 \subsection{Linear congruential generators}{
+Currently disabled.
+
 Parameters for the linear congruential generators (\code{name="congruRand"})
 are integers represented either as a character or a numeric vector. The
 components are

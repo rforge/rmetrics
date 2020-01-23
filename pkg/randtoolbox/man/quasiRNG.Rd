@@ -79,6 +79,8 @@ the standard normal quantile (\code{qnorm}).
 	or when \code{mixed = TRUE}, a randomized seed is performed.
   If some number of Sobol sequences are generated outside (0,1) with scrambling,
   the seed is randomized until we obtain all numbers in (0,1).
+  Two versions of Sobol sequences are available the current version in 
+	Fortran (\code{method = "Fortran"}) and the development version in C (\code{method = "C"}).
 	
 	}
 
@@ -93,6 +95,8 @@ the standard normal quantile (\code{qnorm}).
 	is not initialized (to 1) and starts from the last term. We can also use the
 	machine time to start the sequence with \code{usetime = TRUE}, which overrides
 	\code{init}.
+	Two versions of Halton sequences are available the historical version in 
+	Fortran (\code{method = "Fortran"}) and the new version in C (\code{method = "C"}).
   If \code{method = "C"}, \code{mixed} argument can be used to randomized
   the Halton sequences.
 	}	

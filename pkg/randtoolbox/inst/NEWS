@@ -2,13 +2,17 @@
 
 Version 1.30.1
 =============
+- update the man page for quasi random sequences.
+- allow the use of randomized seed for Sobol sequences (either from
+scrambling argument or mixed argument).
+
 BUGS FIX
 - bug fixes on array limit issues in Fortran code (in INITSOBOL).
 - warning fix on unused variable in Fortran code (in SGENSCRMU).
 - bug fixes on multiple defintion issues (for WELL_get_set_entry_point, 
 WELLrng, setSeed4WELL) in C header files.
-- scrambling = 1, 3 for Sobol sequences may generate 0.0, so randomized
-is performed in that case.
+- scrambling = 1, 3 for Sobol sequences may generate 0.0, so randomizing
+the seed is performed in that case.
 
 
 Version 1.30.0 (Version in Memoriam of Diethelm and Barbara Wuertz)
