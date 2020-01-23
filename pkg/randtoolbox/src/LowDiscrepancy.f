@@ -13,15 +13,16 @@ C
 C @author Diethelm Wuertz 
 C @author Christophe Dutang
 C
-C Copyright (C) Jan. 2020, Christophe Dutang, remove array limit issues and unused variables
-C "gfortran -fno-optimize-sibling-calls  -fpic  -g -O2 -mtune=native -Wall -fallow-argument-mismatch LowDiscrepancy.f" without error.
+C Copyright (C) Jan-2020, Christophe Dutang, remove array limit issues and unused variables
+C gfortran -S -fimplicit-none -mtune=native -Wall -pedantic -Wlto-type-mismatch LowDiscrepancy.f
+C gfortran -c -fsyntax-only -fimplicit-none -mtune=native -Wall -pedantic -Wlto-type-mismatch LowDiscrepancy.f
 C
-C Copyright (C) Apr. 2011, Christophe Dutang, remove implicit declaration: the code now pass
-C "gfortran -c -fsyntax-only -fimplicit-none LowDiscrepancy.f" without error.
+C Copyright (C) Apr-2011, Christophe Dutang, remove implicit declaration: the code passes without error.
+C "gfortran -c -fsyntax-only -fimplicit-none LowDiscrepancy.f" .
 C
-C Copyright (C) Oct. 2009, Christophe Dutang, slightly modified (better accuracy and speed).
+C Copyright (C) Oct-2009, Christophe Dutang, slightly modified (better accuracy and speed).
 C
-C Copyright (C) Sept. 2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
+C Copyright (C) Sep-2002, Diethelm Wuertz, ETH Zurich. All rights reserved.
 C
 C The new BSD License is applied to this software.
 C Copyright (c) Diethelm Wuertz, ETH Zurich. All rights reserved.
