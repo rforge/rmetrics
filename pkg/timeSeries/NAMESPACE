@@ -3,13 +3,77 @@
 ## import name space
 ################################################
 
-## MM: This (importing all) is stupid:
-import("graphics")
-import("grDevices")
-import("methods")
-import("stats")
-import("utils")
-import("timeDate")
+## MM: Importing all is almost surely a waste [FIXME!]
+import("methods") # , show
+
+
+importFrom("timeDate"
+         , abline # the S4 generic from here, not "graphics"
+         ##--- For these we provide and export methods :
+         , lines, plot, points
+         , frequency
+         , isDaily, isMonthly, isQuarterly, isRegular
+         ##---- end of generics for which we define/export methods
+         , getRmetricsOptions, setRmetricsOptions
+         , align, as.timeDate, atoms, dayOfWeek
+         , finCenter
+         , "finCenter<-"
+         , isWeekday
+         , kurtosis, skewness
+         , timeCalendar, timeDate
+         , timeFirstDayInMonth, timeFirstDayInQuarter
+         , timeLastDayInMonth, timeLastDayInQuarter
+         , timeSequence
+           )
+
+importFrom("grDevices"
+         , col2rgb, rgb
+         , xy.coords
+           )
+
+## From "timeDate" we get 4 generics for which we provide methods.
+##       --------  We should *not* additionally import them for their base packages,
+## as we then get warnings such as
+
+##   Warning: replacing previous import ‘timeDate::lines’ by ‘graphics::lines’
+##            when loading ‘timeSeries’
+
+## gen.fn.:  lines     plot	points	  frequency
+## package:  graphics  graphics	graphics  stats
+
+importFrom("graphics"
+## from timeDate:  , lines, plot, points # <- for these we export methods
+         , axTicks, axis, axis.POSIXct
+         , box, grid, layout
+         , mtext
+         , par
+         , plot.default, plot.new, plot.window
+         , segments, text, title
+           )
+
+importFrom("stats"
+         , approx, approxfun
+         , cor, deltat, dist
+         , hclust, is.mts, qt
+         , rnorm, runif, runmed
+         , spline, splinefun, ts, var
+           ## for these, we provide methods :
+         , aggregate, as.ts
+         , start, end, time, window
+         , filter
+## from timeDate:  , frequency
+         , lag
+         , median, quantile
+         , na.contiguous, na.omit
+       )
+
+importFrom("utils"
+         , .DollarNames # as we provide an S3 method
+         , head.matrix, read.table, tail.matrix
+           ## provide methods for these :
+         , head, tail
+         , str
+           )
 
 
 ################################################
@@ -34,8 +98,8 @@ export("colCummaxs",
 
 exportMethods("$",
               "$<-",
-              "+",
-              "-",
+              ## "+",
+              ## "-",
               "Ops",
               "[",
               "[<-",
@@ -176,7 +240,9 @@ export(
       ".periodicity2",
       ".colorwheelPalette",
     # ADD:
-      "getAttributes",      "setAttributes<-",      ".appendList"
+    "getAttributes",
+    "setAttributes<-",
+    ".appendList"
 )
 
 
