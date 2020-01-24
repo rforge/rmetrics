@@ -61,28 +61,21 @@ head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.tail.timeSeries <- 
-    function(x, n = 6, recordIDs = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the tail of a 'timeSeries' object
-
-    # Arguments:
-    #   x - a 'timeSeries' object.
-    #   n - a single integer. If positive, number of the last n records (rows)
-    #       to be returned. If negative, all but the n last number of 
-    #       elements of x are returned.    
-    #   recordIDs - a logical flag, should the record identification
-    #       be shown? By default FALSE.
-    #   ... - 
-
-    # Value:
-    #   Returns the tail of an object of class 'timeSeries'.
-
-    # FUNCTION:
-
-    # Tail:
+##' @title Returns the tail of a 'timeSeries' object
+##'
+##' @param x   a 'timeSeries' object.
+##' @param n   a single integer. If positive, number of the last n records (rows)
+##'       to be returned. If negative, all but the n last number of 
+##'       elements of x are returned.    
+##' @param recordIDs  a logical flag, should the record identification
+##'       be shown? By default FALSE.
+##' @param ... 
+##'
+##' @return
+##'   Returns the tail of an object of class 'timeSeries'.
+##'
+.tail.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
+{
     if (recordIDs & dim(x)[1] == dim(x@recordIDs)[1])
         cbind(tail.matrix(x, n = n, addrownums = FALSE, ...),
               tail(x@recordIDs, n = n, addrownums = FALSE, ...))
@@ -90,12 +83,22 @@ head.timeSeries <- function(x, ...) .head.timeSeries(x, ...)
         tail.matrix(x, n = n, addrownums = FALSE, ...)
 }
 
+## Martin Maechler:
+if("keepnums" %in% names(formals(tail.matrix))) ## R-devel (2020-01; R >= 4.0.0 in future)
+.tail.timeSeries <- function(x, n = 6, recordIDs = FALSE, ...)
+{ 
+    if (recordIDs && nrow(x) == nrow(x@recordIDs))
+        cbind(tail.matrix(x, n = n, keepnums = FALSE, ...),
+              tail(x@recordIDs, n = n, keepnums = FALSE, ...))
+    else
+        tail.matrix(x, n = n, keepnums = FALSE, ...)
+}
 
 setMethod("tail", "timeSeries", function(x, n = 6, recordIDs = FALSE, ...)
           .tail.timeSeries(x, n, recordIDs, ...))
 
           
-# until UseMethod dispatches S4 methods in 'base' functions
+##' until UseMethod dispatches S4 methods in 'base' functions
 tail.timeSeries <- function(x, ...) .tail.timeSeries(x, ...)
 
 
