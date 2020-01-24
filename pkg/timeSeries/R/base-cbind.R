@@ -53,7 +53,7 @@ function(..., deparse.level = 1)
   
     for (i in 1:length(dots)) 
     {
-      if (class(dots[[i]]) == "timeSeries") 
+      if (inherits(dots[[i]], "timeSeries")) 
       {
         nextAttributes <- getAttributes(dots[[i]])
         Attributes <- .appendList(Attributes, nextAttributes) 
@@ -231,7 +231,7 @@ function(..., deparse.level = 1)
   
     for (i in 1:length(dots)) 
     {
-      if (class(dots[[i]]) == "timeSeries") 
+      if (inherits(dots[[i]], "timeSeries")) 
       {
         nextAttributes <- getAttributes(dots[[i]])
         Attributes <- .appendList(Attributes, nextAttributes) 

@@ -62,7 +62,7 @@ applySeries <-
     # .Deprecated("aggregate", "timeSeries")
 
     # Check object:
-    if (class(x) != "timeSeries")
+    if (!inherits(x, "timeSeries"))
         stop("s is not a timeSeries object")
 
     ###     if (x@format == "counts")
@@ -259,7 +259,7 @@ function(x, from, to, FUN, ...)
     # FUNCTION:
 
     # Check object:
-    if (class(x) != "timeSeries") stop("s is not a timeSeries object")
+    if (!inherits(x, "timeSeries")) stop("s is not a timeSeries object")
 
     # Monthly and Quarterly from and to:
     if (is.null(from) & is.null(to)) {

@@ -1,17 +1,17 @@
 Package: timeSeries
-Title: Rmetrics - Financial Time Series Objects
-Date: 2017-11-12
-Version: 3042.102
-Author: Diethelm Wuertz [aut],
-	Tobias Setz [cre],
-	Yohan Chalabi [ctb]
-Maintainer: Tobias Setz <tobias.setz@live.com>
-Description: Provides a class and various tools for financial time series.
-	This includes basic functions such as scaling and sorting, subsetting,
-	mathematical operations and statistical functions.
-Depends: R (>= 2.10), graphics, grDevices, stats, methods, utils,
-	timeDate (>= 2150.95)
+Title: Financial Time Series Objects (Rmetrics)
+Date: 2020-01-24
+Version: 3062.100
+Authors@R: c(person("Diethelm", "Wuertz", role="aut", comment = "original code")
+	   , person("Tobias", "Setz", role = "cre", email = "tobias.setz@live.com")
+	   , person("Yohan", "Chalabi", role = "ctb")
+	   , person("Martin","Maechler", role="ctb", email="maechler@stat.math.ethz.ch", comment = c(ORCID = "0000-0002-8685-9910"))
+	   )
+Description: 'S4' classes and various tools for financial time series:
+  Basic functions such as scaling and sorting, subsetting,
+  mathematical operations and statistical functions.
+Depends: graphics, grDevices, stats, methods, utils, timeDate (>= 2150.95)
 Suggests: RUnit, robustbase, xts, PerformanceAnalytics, fTrading
 LazyData: yes
 License: GPL (>= 2)
-URL: http://www.rmetrics.org
+URL: https://r-forge.r-project.org/scm/viewvc.php/pkg/timeSeries/?root=rmetrics, http://www.rmetrics.org

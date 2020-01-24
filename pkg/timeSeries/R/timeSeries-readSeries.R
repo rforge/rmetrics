@@ -84,7 +84,7 @@ readSeries <-
       
     # DW: 2014-09-16
     # If sep=";" fails try with sep=",":
-    if (sep ==";" && class(td) == "try-error") {
+    if (sep == ";" && inherits(td, "try-error")) {
         return(readSeries(file, header = header, sep = ",", zone = zone, 
           FinCenter = FinCenter, ...))
     }

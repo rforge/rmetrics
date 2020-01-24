@@ -347,8 +347,7 @@ function(object)
     # FUNCTION:
 
     # Test:
-    if (class(object) != "timeSeries")
-        stop("Object is not a time Series")
+    stopifnot(inherits(object, "timeSeries"))
 
     # Deprecated
     .Deprecated(new = "series", package = "timeSeries")

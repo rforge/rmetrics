@@ -36,7 +36,7 @@ getAttributes <-
   # FUNCTION:
     
   # Check Argument:
-  stopifnot(class(obj) == "timeSeries")
+  stopifnot(inherits(obj, "timeSeries"))
   
   # Extract Attributes:
   ans <- attr(obj@documentation, "Attributes")
@@ -64,10 +64,9 @@ getAttributes <-
   # FUNCTION:
     
   # Check Arguments:
-  stopifnot(class(obj) == "timeSeries")
-  stopifnot(is.list(value))
-  stopifnot(length(value) == 1)
-  stopifnot(!is.null(value))
+  stopifnot(inherits(obj, "timeSeries")
+          , is.list(value)
+          , length(value) == 1)
   
   # Compose New Attribute:
   name <- names(value)
