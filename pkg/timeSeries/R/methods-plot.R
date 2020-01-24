@@ -144,7 +144,7 @@ plot.timeSeries <- function(x, y, ...) .plot.timeSeries(x, y, ...)
     nser <- NCOL(x)
     if (format == "auto") format = x@format
     X <- if (x@format == "counts") time(x) else as.POSIXct(time(x))
-    if (is.character(at) && at == "auto") {
+    if (is.character(at) && identical(at, "auto")) {
       # Index = round(seq(1, length(time(x)), length = 6))
       # at = X[Index]
       at = seq(X[1], X[length(X)], length = 6)

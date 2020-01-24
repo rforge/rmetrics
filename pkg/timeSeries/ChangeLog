@@ -1,3 +1,18 @@
+2020-01-24  Martin Maechler  <maechler@stat.math.ethz.ch>
+
+	* DESCRIPTION (Version): 3062.100 ;  using Authors@R
+
+	* R/utils-head.R: tail.matrix() in R-devel uses 'keepnums'.
+
+	* R/timeSeries-readSeries.R (et all): do *NOT* use
+	  `if(class(.) == "timeSeries")` but use `inherits(*, "...")` !!
+
+	* R/methods-plot.R (.plotTimeSeries): fix wrong logic in
+	  `if(.. && at == "auto")` when `at` can be a vector (!)
+
+	* R/aaa-utils.R (`%||%`): utility, to be used extensively in
+	* R/methods-plot2.R (.xtplot.timeSeries).
+
 2015-11-09  tsetz
 
 	* updated rank function
@@ -487,7 +502,7 @@
 	  R/base-merge.R, R/methods-Ops.R, R/methods-as.R,
 	  R/methods-show.R, R/timeSeries.R, inst/unitTests/runit.bind.R,
 	  man/methods-bind.Rd: Merge branch 'devel-timeSeries'
-	  
+
 	  Conflicts:
 	  pkg/timeSeries/R/base-Extract.R
 	  pkg/timeSeries/R/timeSeries.R

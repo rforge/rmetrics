@@ -62,7 +62,7 @@
     oma.multi = c(7.75, 1.1, 6.1, 1.1), # oma.multi = c(6, 0, 5, 0),
     axes = TRUE,
     ...)
-  {
+{
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -75,34 +75,34 @@
     # FUNCTION:
     
     dots <- list(...)
-    if (is.null(dots$minor.ticks)) minor.ticks <- "auto" else minor.ticks <- dots$minor.ticks
-    if (is.null(dots$type)) type <- "l" else type <- dots$type
-    if (is.null(dots[["col"]])) col <- 1:NCOL(x) else col <- dots$col
-    if (is.null(dots$pch)) pch <- 20 else pch <- dots$pch
-    if (is.null(dots$cex)) cex <- 1 else cex <- dots$cex
-    if (is.null(dots$lty)) lty <- 1 else lty <- dots$lty
-    if (is.null(dots[["lwd"]])) lwd <- 1 else lwd <- dots$lwd
-    if (is.null(dots$grid)) grid <- TRUE else grid <- dots$grid
-    if (is.null(dots$col.grid)) col.grid <- "darkgrey" else col.grid <- dots$col.grid
-    if (is.null(dots$lwd.grid)) lwd.grid <- 1 else lwd.grid <- dots$lwd.grid
-    if (is.null(dots$frame.plot)) frame.plot <- TRUE else frame.plot <- dots$frame.plot
-    if (is.null(dots$ann)) ann <- TRUE else ann <- dots$ann
-    if (is.null(dots$cex.axis)) cex.axis <- 1 else cex.axis <- dots$cex.axis
-    if (is.null(dots$cex.lab)) cex.lab <- 1 else cex.lab <- dots$cex.lab
-    if (is.null(dots$cex.pch)) cex.pch <- 1 else cex.pch <- dots$cex.pch
-    if (is.null(dots$log)) log <- "" else log <- dots$log
-    if (is.null(dots$equilogs)) equilogs <- TRUE else equilogs <- dots$equilogs
-    if (is.null(dots$main)) main <- "" else main <- dots$main
-    if (is.null(dots$xlab)) xlab <- "" else xlab <- dots$xlab
-    if (is.null(dots$ylab)) {
-      ylab <- colnames(x)
-      if(length(ylab) > 1 &&  (plot.type == "single" || plot.type == "s")) ylab <- "Values"
-    } else { 
-      ylab <- dots$ylab
+    minor.ticks <- dots$minor.ticks %||% "auto"
+    type <-  dots$type %||% "l"
+    col  <- dots[["col"]]  %||% { 1:NCOL(x) }
+    pch  <- dots$pch %||% 20
+    cex  <- dots$cex %||% 1
+    lty  <- dots$lty %||% 1
+    lwd  <- dots[["lwd"]] %||% 1
+    grid <- dots$grid %||% TRUE
+    col.grid <- dots$col.grid %||% "darkgrey" 
+    lwd.grid <- dots$lwd.grid %||% 1
+    frame.plot <- dots$frame.plot %||% TRUE
+    ann  <- dots$ann %||% TRUE
+    cex.axis <- dots$cex.axis %||% 1
+    cex.lab <- dots$cex.lab  %||% 1
+    cex.pch <- dots$cex.pch  %||% 1
+    log <- dots$log %||% ""
+    equilogs <- dots$equilogs %||% TRUE
+    main <- dots$main %||% ""
+    xlab <- dots$xlab %||% ""
+    ylab <- dots$ylab %||% {
+      cn <- colnames(x)
+      if(length(cn) > 1 && (plot.type == "single" || plot.type == "s"))
+          "Values" else cn
     }
-    if (is.null(dots[["xax"]])) {xax <- FALSE} else {xax <- dots$xax}
-    if (is.null(dots$xaxs)) {xaxs <- "r"} else {xaxs <- dots$xaxs}
-    if (is.null(dots$yaxs)) {yaxs <- "r"} else {yaxs <- dots$yaxs}
+
+    xax <- dots[["xax"]] %||% FALSE
+    xaxs <- dots$xaxs %||% "r"
+    yaxs <- dots$yaxs %||% "r"
     
     # Continue ...
     if (minor.ticks == "auto") minor.ticks <- .periodicity2(x)$units
@@ -134,14 +134,14 @@
     # if (is.null(lwd)) lwd <- 2
     
     if(is.null(type[1])) type <- "l"
-    if (length(type) == 1) type = rep(type, times=NCOL(x))
-    if (length(col) == 1) col = rep(col, times=NCOL(x))
-    if (length(pch) == 1) pch = rep(pch, times=NCOL(x))
-    if (length(cex) == 1) cex = rep(cex, times=NCOL(x))
-    if (length(lty) == 1) lty = rep(lty, times=NCOL(x))
-    if (length(lwd) == 1) lwd = rep(lwd, times=NCOL(x))
-    if (length(cex.pch) == 1) cex.pch = rep(cex.pch, times=NCOL(x))
-    if (length(ylab) == 1) ylab = rep(ylab, times=NCOL(x))
+    if (length(type) == 1) type <- rep(type, times=NCOL(x))
+    if (length(col) == 1) col <- rep(col, times=NCOL(x))
+    if (length(pch) == 1) pch <- rep(pch, times=NCOL(x))
+    if (length(cex) == 1) cex <- rep(cex, times=NCOL(x))
+    if (length(lty) == 1) lty <- rep(lty, times=NCOL(x))
+    if (length(lwd) == 1) lwd <- rep(lwd, times=NCOL(x))
+    if (length(cex.pch) == 1) cex.pch <- rep(cex.pch, times=NCOL(x))
+    if (length(ylab) == 1) ylab <- rep(ylab, times=NCOL(x))
     
     TIME <- time(x)
     if (is.integer(TIME)) {
@@ -166,8 +166,8 @@
     if (plot.type == "single" || plot.type == "s") {
       
       # All curves in one Frame:
-      if (is.null(dots$ylim)) ylim <- range(Y, na.rm = TRUE) else ylim <- dots$ylim
-      if (is.null(dots$xlim)) xlim <- NULL else xlim <- dots$xlim
+      ylim <- dots$ylim %||% range(Y, na.rm=TRUE)
+      xlim <- dots$xlim # even if it is NULL
       
       plot(X, Y[,1], type= "n", xlim = xlim, ylim = ylim,
            axes = FALSE, main = "", xlab = "", ylab = "", log=log,
@@ -351,7 +351,7 @@
     #     nice axis positions and Lebels
     
     # Example:
-    #     x = 100 * cumulated(LPP2005REC[, 2]); xtsPlot(x)
+    #     x <- 100 * cumulated(LPP2005REC[, 2]); xtsPlot(x)
     
     # Settings:
     
@@ -411,7 +411,7 @@
     #   x - a 'timeSerie' Object
     
     # Example:
-    #     x = 100 * cumulated(LPP2005REC[, 2]); .axTicksByTime2(x)
+    #     x <- 100 * cumulated(LPP2005REC[, 2]); .axTicksByTime2(x)
     
     tick.opts <- c(
       "years", "months", "weeks", "days", "hours", "minutes", "seconds")
@@ -438,12 +438,11 @@
       ck <- as.numeric(strsplit(nms, " ")[[1]][2])
     }     
     
-    if (is.null(cl)) 
-      ep <- NULL else  ep <- .endpoints2(x, cl, ck) 
+    ep <- if (is.null(cl)) NULL else .endpoints2(x, cl, ck) 
     
     if(ends) 
       ep <- ep + c(rep(1,length(ep)-1),0)
-    
+
     if (labels) {
       if(is.logical(format.labels) || is.character(format.labels)) {
         # format by level of time detail, and platform 
@@ -612,10 +611,10 @@
     x <- seq(0, 1, , 11)
     xg <- seq(0, 1, , n)
     for (k in 1:3) {
-      hold = spline(x, rgb.tim[, k], n = n)$y
-      hold[hold < 0] = 0
-      hold[hold > 255] = 255
-      temp[, k] = round(hold)
+      hold <- spline(x, rgb.tim[, k], n = n)$y
+      hold[hold < 0] <- 0
+      hold[hold > 255] <- 255
+      temp[, k] <- round(hold)
     }
     ans <- rgb(temp[, 1], temp[, 2], temp[, 3], maxColorValue = 255)
     
