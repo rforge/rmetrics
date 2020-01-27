@@ -10,8 +10,6 @@ import("methods") # , show
 importFrom("timeDate"
          , abline # the S4 generic from here, not "graphics"
          ##--- For these we provide and export methods :
-         , "+", "-", "Ops"
-         , "[", "[<-"
          , lines, plot, points
          , frequency
          , isDaily, isMonthly, isQuarterly, isRegular
@@ -27,6 +25,11 @@ importFrom("timeDate"
          , timeLastDayInMonth, timeLastDayInQuarter
          , timeSequence
            )
+
+importMethodsFrom("timeDate"
+         , "+", "-", "Ops"
+         , "[", "[<-"
+)
 
 importFrom("grDevices"
          , col2rgb, rgb
