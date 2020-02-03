@@ -60,8 +60,14 @@
 
 
 //well RNG function coming from rngWELL package, see files rngWELL.c(h) in that pkg
-extern void (*WELLrng)(double *u, int nb, int dim, int order, int temper, int version);
-extern void (*setSeed4WELL)(double *u, int nb, int dim, int order, int temper, int version);
+#ifndef define_here
+extern
+#endif
+void (*WELLrng)(double *u, int nb, int dim, int order, int temper, int version);
+#ifndef define_here
+extern
+#endif
+void (*setSeed4WELL)(double *u, int nb, int dim, int order, int temper, int version);
 
 //well RNG function coming from rngWELL package, see files runifInterface.c(h) in that pkg
 /*void (*getRngWELL)(int *porder, int *pversion, unsigned int *state);
