@@ -13,7 +13,7 @@
 \usage{
 halton(n, dim = 1, init = TRUE, normal = FALSE, usetime = FALSE, 
                     mixed = FALSE, method="C", mexp = 19937)
-sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = 4711, normal = FALSE,
+sobol(n, dim = 1, init = TRUE, scrambling = 0, seed = NULL, normal = FALSE,
                    mixed = FALSE, method="Fortran", mexp = 19937)
 torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE, 
                   normal=FALSE, mexp = 19937)
@@ -33,8 +33,9 @@ torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE,
        scrambling is applied. By default 0.}
   \item{seed}{
         an integer value, the random seed for initialization
-        of the scrambling process. By default \code{4711}. Only used
-        if \code{scrambling>0}.
+        of the scrambling process (only for \code{sobol}
+        with \code{scrambling>0}). 
+        If \code{NULL}, set to \code{4711}. 
         }
   \item{prime}{a single prime number or a vector of prime numbers to be used
   		 in the Torus sequence. (optional argument).}
@@ -52,6 +53,9 @@ torus(n, dim = 1, prime, init = TRUE, mixed = FALSE, usetime = FALSE,
 The currently available generator are given below.
 Whatever the sequence, when \code{normal=TRUE}, outputs are transformed with
 the standard normal quantile (\code{qnorm}).
+If \code{init=TRUE}, the default, unscrambled and unmixed-SFMT quasi-random 
+sequences start from (0,\dots,0) as recommended by Owen (2020).
+
 \describe{
     \item{\bold{Torus algorithm:}}{
 	The \eqn{k}th term of the Torus algorithm in d dimension is given by
@@ -77,10 +81,10 @@ the standard normal quantile (\code{qnorm}).
 	\code{init = TRUE} (default).
 	When \code{scrambling > 0}, a scrambling is performed
 	or when \code{mixed = TRUE}, a randomized seed is performed.
-  If some number of Sobol sequences are generated outside (0,1) with scrambling,
-  the seed is randomized until we obtain all numbers in (0,1).
-  Two versions of Sobol sequences are available the current version in 
-	Fortran (\code{method = "Fortran"}) and the development version in C (\code{method = "C"}).
+  If some number of Sobol sequences are generated outside [0,1) with scrambling,
+  the seed is randomized until we obtain all numbers in [0,1).
+  One version of Sobol sequences is available the current version in 
+	Fortran (\code{method = "Fortran"}) since \code{method = "C"} is under development.
 	
 	}
 
@@ -105,25 +109,31 @@ the standard normal quantile (\code{qnorm}).
 See the pdf vignette for details.
 }
 \value{
-  \code{torus}, \code{halton} and \code{sobol} generates random variables in (0,1). It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim>1} otherwise a vector of length \code{n}.
+  \code{torus}, \code{halton} and \code{sobol} generates random variables in [0,1). 
+  It returns a \eqn{n}x\eqn{dim} matrix, when \code{dim>1} 
+  otherwise a vector of length \code{n}.
 }
 \references{
 
-Bratley P., Fox B.L. (1988);
+Bratley P., Fox B.L. (1988),
     \emph{Algorithm 659: Implementing Sobol's Quasirandom
     Sequence Generator},
     ACM Transactions on Mathematical Software 14, 88--100.
 
-Joe S., Kuo F.Y. (1998);
+Joe S., Kuo F.Y. (1998),
     \emph{Remark on Algorithm 659: Implementing Sobol's Quaisrandom
     Seqence Generator}.
+
+Owen A.B. (2020), \emph{On dropping the first Sobol' point},
+\url{https://arxiv.org/abs/2008.08051}.
 
 Planchet F., Jacquemin J. (2003), \emph{L'utilisation de methodes de 
 simulation en assurance}. Bulletin Francais d'Actuariat, vol. 6, 11, 3-69. (available online)
 
 }
 \seealso{
-    \code{\link{pseudoRNG}} for pseudo random number generation, \code{\link{.Random.seed}} for what is done in R about random number generation. 
+    \code{\link{pseudoRNG}} for pseudo random number generation, 
+    \code{\link{.Random.seed}} for what is done in R about random number generation. 
 }
 \author{
  Christophe Dutang and Diethelm Wuertz

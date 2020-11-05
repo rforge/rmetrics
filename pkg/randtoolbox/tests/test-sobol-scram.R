@@ -1,6 +1,8 @@
 library(randtoolbox)
 
-
+#simple check
+umat <- sobol(n=1e5, dim=1111)
+sum(umat > 1 | umat < 0)
 
 #Kemal Dincer, bug report
 umat<- sobol(n=2^15,dim=12,scrambling=3,seed=1776)
@@ -33,18 +35,27 @@ if(FALSE)
   sum(umat > 1)
 }
 
+# guido gruetzner bug report
+if(FALSE)
+{
+  umat <- sobol(10, dim=1, init=TRUE, seed=4711, scrambling=1)
+  sum(umat >1)
+  tt <- sobol(500, dim = 80, init = FALSE, scrambling = 1)
+  sum(tt > 1)
+  sum(tt < 0)
+}
 
 #further tests
 if(FALSE)
 {
-umat<- sobol(n=10^4,dim=1111,scrambling=3)
-sum(umat > 1)
-for(i in 0:10)
-{
-  umat<- sobol(n=10^5,dim=1111,scrambling=3, seed=i*10^5)
-  cat("seed", i*10^5, "error", sum(umat > 1), "\n")
-}
-
+  umat<- sobol(n=10^4,dim=1111,scrambling=1)
+  sum(umat > 1)
+  for(i in 0:10)
+  {
+    umat<- sobol(n=10^5,dim=1111,scrambling=3, seed=i*10^5)
+    cat("seed", i*10^5, "error", sum(umat > 1), "\n")
+  }
+  
 }
 
 

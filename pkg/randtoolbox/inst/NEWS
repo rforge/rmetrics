@@ -2,7 +2,7 @@
 
 Version 1.30.2
 =============
-- New devel version
+- Starting QRNG from 0, see https://arxiv.org/abs/2008.08051 by Art Owen
 
 Version 1.30.1
 =============
