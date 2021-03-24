@@ -100,12 +100,12 @@ solveRsocp <-
     
     # C - Cone Constraints:
     C1 <- rep(0, nAssets)                                     # xCx
-    C2 <- eqsumW[2, -1]                                       # sum(x)
+    C2 <- eqsumW[1, -1]                                       # sum(x)
     C3 <- rbind(diag(nAssets), -diag(nAssets) )               # x[i]>0
     
     # d - Cone Constraints:
     d1 <- targetRisk                                          # xCx = risk
-    d2 <- eqsumW[2, 1]                                        # sum(x) <= 1
+    d2 <- eqsumW[1, 1]                                        # sum(x) <= 1
     d3 <- c(rep(0, nAssets), rep(-1, nAssets))                # x[i] > 0
     
     # A - Cone Constraints:
