@@ -1,6 +1,6 @@
 Package: VarianceGamma
-Version: 0.4-0
-Date: 2018-11-26
+Version: 0.4-1
+Date: 2021-05-21
 Title: The Variance Gamma Distribution
 Author: David Scott <d.scott@auckland.ac.nz> and
         Christine Yang Dong <c.dong@auckland.ac.nz>

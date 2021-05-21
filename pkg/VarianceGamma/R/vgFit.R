@@ -118,33 +118,34 @@ plot.vgFit <- function (x, which = 1:4,
     obsName <- x$obsName
     vgDens <- function(obs) dvg(obs, param = param,
                                 tolerance = .Machine$double.eps ^ 0.5)
-    logvgDens <- function(obs) log(dvg(obs, param = param,
-                                       tolerance = .Machine$double.eps ^ 0.5))
-    ymax <- 1.06 * max(vgDens(seq(min(breaks), max(breaks), 0.1)),
+    logvgDens <- function(obs) {
+        log(dvg(obs, param = param, tolerance = .Machine$double.eps ^ 0.5))
+    }
+    ymax <- 1.06 * max(vgDens(seq(min(breaks), max(breaks),
+                                  length = length(obs))),
                        empDens, na.rm = TRUE)
-    if (show[1]) {
+    if (show[1]) {#histogram
         hist.default(obs, breaks, right = FALSE, freq = FALSE,
                      ylim = c(0, ymax), main = plotTitles[1], ...)
-        curve(vgDens, min(breaks) - 1, max(breaks) + 1, add = TRUE,
-              ylab = NULL)
+        curve(vgDens, add = TRUE, col = 2,  ...)
         title(sub = paste("param = (", round(param[1], 3), ",",
               round(param[2], 3), ",", round(param[3], 3), ",",
               round(param[4], 3), ")", sep = ""))
     }
-    if (show[2]) {
+    if (show[2]) {#log histogram
         logHist(obs, breaks, include.lowest = TRUE, right = FALSE,
-                main = plotTitles[2], ...)
-        curve(logvgDens, min(breaks) - 1, max(breaks) + 1, add = TRUE,
-              ylab = NULL, xlab = NULL)
+                main = paste(plotTitles[2], obsName), ...)
+        curve(logvgDens, add = TRUE,
+              ylab = NULL, xlab =, col = 2, ...)
         title(sub = paste("param = (", round(param[1], 3), ",",
               round(param[2], 3), ",", round(param[3], 3), ",",
               round(param[4], 3), ")", sep = ""))
     }
-    if (show[3]) {
-      qqvg(obs, param = param, main = plotTitles[3], ...)
+    if (show[3]) {#qq
+      qqvg(obs, param = param, main = paste(plotTitles[3], obsName), ...)
     }
-    if (show[4]) {
-      ppvg(obs, param = param, main = plotTitles[4], ...)
+    if (show[4]) {#pp
+      ppvg(obs, param = param, main = paste(plotTitles[4], obsName), ...)
     }
     invisible()
 }

@@ -1,3 +1,7 @@
+2021-05-21    <d.scott@auckland.ac.nz>
+
+	* Changed plot.vgFit to better display density and log density
+
 2018-11-26    <d.scott@auckland.ac.nz>
 
 	* DESCRIPTION and NAMESPACE updated to appease CRAN
