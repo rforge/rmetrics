@@ -1,3 +1,7 @@
+2021-05-21    <d.scott@auckland.ac.nz>
+
+	* plot.skewhypFit changed to plot log-density better on log-histogram
+
 2018-06-08    <d.scott@auckland.ac.nz>
 
 	* skewhypMeanVarMode.R changed to fix some errors in skewhypKurt
